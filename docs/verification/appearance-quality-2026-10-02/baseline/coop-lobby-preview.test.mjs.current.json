@@ -1,0 +1,69 @@
+{
+  "file": "game/test/coop-lobby-preview.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-lobby-preview.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 32.27,
+  "failures": [
+    {
+      "test": "relay-yard ready lobby hides the picture centre until an earned win",
+      "location": "game/test/coop-lobby-preview.test.mjs:186:3",
+      "detail": "\n  ---\n  duration_ms: 143.261667\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:186:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /optional full preview; viewing earns no progress/i. Input:\n    \n    'Relay Yard teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Relay Yard teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n  operator: 'match'\n  stack: |-\n    assertMysteryPreview (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:90:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:189:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "first-connection ready lobby hides the picture centre until an earned win",
+      "location": "game/test/coop-lobby-preview.test.mjs:186:3",
+      "detail": "\n  ---\n  duration_ms: 96.803583\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:186:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /optional full preview; viewing earns no progress/i. Input:\n    \n    'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n  operator: 'match'\n  stack: |-\n    assertMysteryPreview (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:90:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:189:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "held artwork completes behind Settings without reclaiming its selector or starting an arena",
+      "location": "game/test/coop-lobby-preview.test.mjs:232:1",
+      "detail": "\n  ---\n  duration_ms: 155.506666\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:232:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /optional full preview; viewing earns no progress/i. Input:\n    \n    'Relay Yard teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'Relay Yard teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n  operator: 'match'\n  stack: |-\n    assertMysteryPreview (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:90:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:256:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "required original decode failure shows no lobby art and Retry prepares the same exact slot",
+      "location": "game/test/coop-lobby-preview.test.mjs:337:1",
+      "detail": "\n  ---\n  duration_ms: 5062.057209\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:337:1'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:355:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "historical import prepares shared artwork, loss keeps preview outside Results, and reset restores exact starter art",
+      "location": "game/test/coop-lobby-preview.test.mjs:386:1",
+      "detail": "\n  ---\n  duration_ms: 110.66975\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:386:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /optional full preview; viewing earns no progress/i. Input:\n    \n    'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n  operator: 'match'\n  stack: |-\n    assertMysteryPreview (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:90:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:399:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "earned First Connection victory keeps preview in the hidden lobby and Change setup reuses its exact lease",
+      "location": "game/test/coop-lobby-preview.test.mjs:508:1",
+      "detail": "\n  ---\n  duration_ms: 11350.201042\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:508:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    The input did not match the regular expression /optional full preview; viewing earns no progress/i. Input:\n    \n    'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n  actual: 'First Connection teaser \u00b7 preview only \u00b7 scenery is not collision geometry.'\n  operator: 'match'\n  stack: |-\n    assertMysteryPreview (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:90:10)\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:517:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "preview-only failure does not move Retry into play or Pause, and focused keyboard Retry returns to enabled Start",
+      "location": "game/test/coop-lobby-preview.test.mjs:529:1",
+      "detail": "\n  ---\n  duration_ms: 213.670084\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:529:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'unavailable'\n    - 'ready'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'ready'\n  actual: 'unavailable'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:560:10)\n    runNextTicks (node:internal/process/task_queues:60:5)\n    process.processTimers (node:internal/timers:516:9)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "required read failure clears preview while a rejected starter import preserves the accepted arena",
+      "location": "game/test/coop-lobby-preview.test.mjs:574:1",
+      "detail": "\n  ---\n  duration_ms: 5146.083667\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:574:1'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:601:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "Settings close and queued older close cannot enable Browse over pending artwork or a reopened visit",
+      "location": "game/test/coop-lobby-preview.test.mjs:674:1",
+      "detail": "\n  ---\n  duration_ms: 2760.350208\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-lobby-preview.test.mjs:674:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected \"actual\" to be reference-equal to \"expected\":\n    + actual - expected ... Lines skipped\n    \n    + <ref *79> Element {\n    - <ref *171> Element {\n        _rect: [Object],\n    +   _text: 'Display & Language',\n    -   _text: '',\n        attributes: [Map],\n        captureListeners: Map(0) {},\n        captures: Set(0) {},\n        checked: false,\n    +   children: [],\n    +   classList: [Classes],\n    +   clientHeight: 44,\n    +   dataset: [Object],\n    +   disabled: [Getter/Setter: false],\n    +   hidden: [Getter/Setter: false],\n    +   id: 'coop-settings-tab-display',\n    +   inert: false,\n    +   listeners: Map(2) {\n    +     'click' => Set(1) {\n    +       [Function: click]\n    +     },\n    +     'keydown' => Set(1) {\n    +       [Function: keydown]\n    +     }\n    +   },\n    +   nodeName: 'BUTTON',\n    +   nodeType: 1,\n    +   open: false,\n    +   options: [],\n    +   ownerDocument: <ref *1> Document {\n    ...\n    -   children: [\n    -     Element {\n    -       _rect: {\n    -         height: 44,\n    -         width: 100,\n    -         x: 0,\n    -         y: 0\n    -       },\n    -       _text: 'Standard',\n    -       attributes: Map(2) {\n    -         'data-i18n' => 'interface:display.textSize.standard',\n    -         'value' => 'standard'\n    -       },\n    -       captureListeners: Map(0) {},\n    -       captures: Set(0) {},\n    -       checked: false,\n    -       children: [],\n    -       classList: Classes {\n    -         values: Set(0) {}\n    -       },\n    -       clientHeight: 44,\n    ...\n  code: 'ERR_TEST_FAILURE'"
+    }
+  ],
+  "summary": [
+    "# tests 20",
+    "# pass 11",
+    "# fail 9",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 32241.794958"
+  ]
+}

@@ -1,0 +1,65 @@
+TAP version 13
+# Subtest: Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+ok 1 - Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+  ---
+  duration_ms: 11.693459
+  ...
+# Subtest: bank/continue transactions settle once and preserve resources without free repairs
+ok 2 - bank/continue transactions settle once and preserve resources without free repairs
+  ---
+  duration_ms: 12.708208
+  ...
+# Subtest: losing the last airframe forfeits the entire unbanked chain, retry restarts it
+ok 3 - losing the last airframe forfeits the entire unbanked chain, retry restarts it
+  ---
+  duration_ms: 9.725042
+  ...
+# Subtest: five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+ok 4 - five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+  ---
+  duration_ms: 52.91275
+  ...
+# Subtest: variant records have independent contexts and shared durable/session storage semantics
+ok 5 - variant records have independent contexts and shared durable/session storage semantics
+  ---
+  duration_ms: 4.031958
+  ...
+# Subtest: pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+ok 6 - pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+  ---
+  duration_ms: 5.553709
+  ...
+# Subtest: an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+ok 7 - an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+  ---
+  duration_ms: 774.032625
+  ...
+# Subtest: Marathon buttons bank once, refresh results and continue only with the host guard
+ok 8 - Marathon buttons bank once, refresh results and continue only with the host guard
+  ---
+  duration_ms: 9.192166
+  ...
+# Subtest: Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+ok 9 - Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+  ---
+  duration_ms: 7.120875
+  ...
+# Subtest: medal formatting carries rounded hundredths across minute boundaries
+ok 10 - medal formatting carries rounded hundredths across minute boundaries
+  ---
+  duration_ms: 0.150208
+  ...
+# Subtest: the last legal three-card choice cannot immediately open an exhausted queued draft
+ok 11 - the last legal three-card choice cannot immediately open an exhausted queued draft
+  ---
+  duration_ms: 2.598792
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1149.35125

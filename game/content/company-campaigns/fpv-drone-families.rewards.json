@@ -1,0 +1,1158 @@
+[
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drone-families",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drone-families-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "The same aircraft can be described along more than one axis.",
+        "title": "A View, Not a Shape"
+      },
+      "uk": {
+        "teaser": "Один апарат можна описати за різними ознаками.",
+        "title": "Спосіб бачити, а не форма"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-01-reveal-v1",
+          "sha256": "43b5eb213c9e6aea5565587f3cb45bb592175982b7140de666b6ac049e5a2b7d"
+        },
+        "id": "fpv-drone-families-01-image",
+        "locales": {
+          "en": {
+            "alt": "A viewing-goggles sculpture stands apart from three different inert aircraft shapes in a museum hall.",
+            "title": "A View, Not a Shape"
+          },
+          "uk": {
+            "alt": "Скульптура окулярів перегляду стоїть окремо від трьох різних неактивних форм літальних апаратів у музейній залі.",
+            "title": "Спосіб бачити, а не форма"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drone-families-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "EASA explains FPV as viewing live images from an onboard camera on a display such as goggles. That describes a viewing method, not a single aircraft shape.",
+              "Give our fictional museum card separate fields for view and airframe. A camera icon belongs under view; four-rotor geometry belongs under airframe. Do not infer range, autonomy or legal permission from either icon."
+            ],
+            "sources": [
+              {
+                "title": "EASA — First Person View: goggles and drone racing",
+                "url": "https://www.easa.europa.eu/en/light/topics/drone-racing-and-flying-drone-goggles-first-person-view-fpv"
+              }
+            ],
+            "title": "A View, Not a Shape"
+          },
+          "uk": {
+            "paragraphs": [
+              "EASA пояснює FPV як перегляд живого зображення бортової камери на дисплеї, наприклад в окулярах. Це спосіб спостереження, а не єдина форма апарата.",
+              "Створіть на музейній картці окремі поля для огляду й конструкції. Значок камери стосується огляду, чотири ротори — конструкції. Жоден значок не доводить дальність, автономність чи законність польоту."
+            ],
+            "sources": [
+              {
+                "title": "EASA — First Person View: goggles and drone racing",
+                "url": "https://www.easa.europa.eu/en/light/topics/drone-racing-and-flying-drone-goggles-first-person-view-fpv"
+              }
+            ],
+            "title": "Спосіб бачити, а не форма"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Put the camera-view icon under viewing method and the rotor outline under airframe. Explain why FPV does not name one shape."
+              ],
+              "title": "Make the distinction: A View, Not a Shape"
+            },
+            "uk": {
+              "paragraphs": [
+                "Помістіть значок виду камери до способу перегляду, а контур роторів — до конструкції. Чому FPV не називає одну форму?"
+              ],
+              "title": "Розрізніть поняття: Спосіб бачити, а не форма"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Together, point to the viewing equipment and then the aircraft shape. Can these describe different aspects of the same exhibit?"
+              ],
+              "title": "Explore together: A View, Not a Shape"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом покажіть обладнання перегляду, а тоді форму апарата. Чи описують вони різні сторони одного експоната?"
+              ],
+              "title": "Дослідіть разом: Спосіб бачити, а не форма"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A new fictional card says only FPV. List which airframe and assistance details remain unknown rather than inferring them from the viewing method."
+              ],
+              "title": "Apply and question: A View, Not a Shape"
+            },
+            "uk": {
+              "paragraphs": [
+                "Нова вигадана картка каже лише FPV. Які деталі конструкції й допомоги невідомі, замість виведення їх зі способу перегляду?"
+              ],
+              "title": "Застосуйте й запитайте: Спосіб бачити, а не форма"
+            }
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "reference-fpv-ar-drone-prototype",
+          "sha256": "9b990e53725e07fdf08f93f99aaeeb2eae0746db4bc696c3146ea570fb13abdf"
+        },
+        "id": "reference-fpv-ar-drone-prototype-image",
+        "locales": {
+          "en": {
+            "alt": "A photographed Parrot AR.Drone prototype with four visible rotor assemblies and a central body.",
+            "title": "A historical AR.Drone prototype"
+          },
+          "uk": {
+            "alt": "Фотографія прототипу Parrot AR.Drone з чотирма видимими роторними вузлами й центральним корпусом.",
+            "title": "Історичний прототип AR.Drone"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "reference-fpv-ar-drone-prototype-credit",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Nicolas Halftermeyer’s historical photograph of a Parrot AR.Drone prototype. Use it to identify the four-rotor structure; the photograph does not establish its present capabilities, settings or operating permission.",
+              "Nicolas Halftermeyer — Ardrone-img5-front.jpg — CC BY 3.0 (https://creativecommons.org/licenses/by/3.0). Unchanged source bytes; renamed for the edition asset registry."
+            ],
+            "sources": [
+              {
+                "title": "A historical AR.Drone prototype",
+                "url": "https://commons.wikimedia.org/wiki/File:Ardrone-img5-front.jpg"
+              },
+              {
+                "title": "License and sharing terms",
+                "url": "https://creativecommons.org/licenses/by/3.0"
+              }
+            ],
+            "title": "A historical AR.Drone prototype"
+          },
+          "uk": {
+            "paragraphs": [
+              "Історичне фото прототипу Parrot AR.Drone авторства Nicolas Halftermeyer. Воно допомагає розпізнати чотирироторну конструкцію, але не доводить нинішні можливості, налаштування чи дозвіл на використання.",
+              "Nicolas Halftermeyer — Ardrone-img5-front.jpg — CC BY 3.0 (https://creativecommons.org/licenses/by/3.0). Unchanged source bytes; renamed for the edition asset registry."
+            ],
+            "sources": [
+              {
+                "title": "Історичний прототип AR.Drone",
+                "url": "https://commons.wikimedia.org/wiki/File:Ardrone-img5-front.jpg"
+              },
+              {
+                "title": "Ліцензія та умови поширення",
+                "url": "https://creativecommons.org/licenses/by/3.0"
+              }
+            ],
+            "title": "Історичний прототип AR.Drone"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "37a3ef76337526ad" },
+            { "difficulty": "standard", "gameplayId": "8ed56e8e80303c73" },
+            { "difficulty": "expert", "gameplayId": "347c6f202256403e" }
+          ],
+          "missionId": "fpv-drone-families-01"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-01", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drone-families",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drone-families-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A family name describes a configuration, not a score.",
+        "title": "More Than Four Rotors"
+      },
+      "uk": {
+        "teaser": "Назва родини описує конструкцію, а не оцінку.",
+        "title": "Не лише чотири ротори"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-02-reveal-v1",
+          "sha256": "d6c316fe11726eecc47d18894e0a880da2b33f5b68d22bb1f39801e2661df385"
+        },
+        "id": "fpv-drone-families-02-image",
+        "locales": {
+          "en": {
+            "alt": "Three museum silhouettes compare four, six and eight rotor positions without ranking their performance.",
+            "title": "More Than Four Rotors"
+          },
+          "uk": {
+            "alt": "Три музейні силуети порівнюють чотири, шість і вісім позицій роторів без оцінювання їхніх характеристик.",
+            "title": "Не лише чотири ротори"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drone-families-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "PX4 lists multiple multicopter configurations, including quad-, hexa- and octocopters. Rotor count alone does not establish a particular aircraft’s payload, endurance or safety.",
+              "Sort our original silhouettes by visible configuration, then move an unsupported “best” label to the question tray. To compare two real designs, first state the civilian task and find documented limits for each exact model."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Vehicle Types and Setup",
+                "url": "https://docs.px4.io/main/en/airframes/"
+              }
+            ],
+            "title": "More Than Four Rotors"
+          },
+          "uk": {
+            "paragraphs": [
+              "PX4 перелічує різні мультикоптери, зокрема квадро-, гекса- й октокоптери. Саме число роторів не визначає вантажність, тривалість польоту чи безпечність конкретного апарата.",
+              "Розподіліть оригінальні силуети за видимою конструкцією та відкладіть бездоказовий напис «найкращий». Для реального порівняння спершу сформулюйте цивільне завдання й знайдіть документовані обмеження точних моделей."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Vehicle Types and Setup",
+                "url": "https://docs.px4.io/main/en/airframes/"
+              }
+            ],
+            "title": "Не лише чотири ротори"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Sort the four-, six- and eight-position silhouettes. Identify a performance claim that cannot be concluded from those counts alone."
+              ],
+              "title": "Make the distinction: More Than Four Rotors"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розподіліть силуети з чотирма, шістьма й вісьмома позиціями. Який висновок про характеристики не випливає лише з кількості?"
+              ],
+              "title": "Розрізніть поняття: Не лише чотири ротори"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Count the visible rotor positions together. Compare the family names without turning the count into a best-to-worst ranking."
+              ],
+              "title": "Explore together: More Than Four Rotors"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом порахуйте видимі місця роторів. Порівняйте назви родин без перетворення кількості на рейтинг від кращого до гіршого."
+              ],
+              "title": "Дослідіть разом: Не лише чотири ротори"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Compare two fictional designs with different rotor counts but no documented limits. State the civilian question and evidence needed before judging suitability."
+              ],
+              "title": "Apply and question: More Than Four Rotors"
+            },
+            "uk": {
+              "paragraphs": [
+                "Порівняйте дві вигадані конструкції з різною кількістю роторів без задокументованих меж. Назвіть цивільне завдання й потрібні дані для оцінки придатності."
+              ],
+              "title": "Застосуйте й запитайте: Не лише чотири ротори"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "3ef9e576c1494ea3" },
+            { "difficulty": "standard", "gameplayId": "65afbbcbcec7c9df" },
+            { "difficulty": "expert", "gameplayId": "fdad8ce98578b75c" }
+          ],
+          "missionId": "fpv-drone-families-02"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-02", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drone-families",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drone-families-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Compare how two structures relate to lift.",
+        "title": "Wings Tell Another Story"
+      },
+      "uk": {
+        "teaser": "Порівняйте зв’язок двох конструкцій із підіймальною силою.",
+        "title": "Крила розповідають інакше"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-03-reveal-v1",
+          "sha256": "802bbc7a54eeb0a538832d06bb411be02b8e7bc4cc9a5f8a5c98c8b76e2eb180"
+        },
+        "id": "fpv-drone-families-03-image",
+        "locales": {
+          "en": {
+            "alt": "A broad-winged civilian glider and a four-disc multicopter form a structural comparison.",
+            "title": "Wings Tell Another Story"
+          },
+          "uk": {
+            "alt": "Цивільний планер із широким крилом і мультикоптер із чотирма дисками утворюють порівняння конструкцій.",
+            "title": "Крила розповідають інакше"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drone-families-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "NASA describes wings as the airplane parts that generate most of its lift. PX4 also distinguishes fixed-wing aircraft from multicopters and VTOL configurations.",
+              "Our museum comparison asks only a structural question: which drawing has a fixed wing and which has several lifting rotors? Leave range and operating conditions blank until model-specific evidence is available. The exhibit is not an aircraft selection or construction guide."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Airplane Parts and Function",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/airplane-parts-function/"
+              },
+              {
+                "title": "PX4 — Vehicle Types and Setup",
+                "url": "https://docs.px4.io/main/en/airframes/"
+              }
+            ],
+            "title": "Wings Tell Another Story"
+          },
+          "uk": {
+            "paragraphs": [
+              "NASA описує крила як частини літака, що створюють основну підіймальну силу. PX4 також відрізняє літаки з нерухомим крилом, мультикоптери й конфігурації VTOL.",
+              "Музейне порівняння ставить лише питання конструкції: де нерухоме крило, а де кілька підіймальних роторів? Дальність і умови лишаються невідомими без даних конкретної моделі. Це не посібник вибору чи будівництва апарата."
+            ],
+            "sources": [
+              {
+                "title": "NASA Glenn — Airplane Parts and Function",
+                "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/airplane-parts-function/"
+              },
+              {
+                "title": "PX4 — Vehicle Types and Setup",
+                "url": "https://docs.px4.io/main/en/airframes/"
+              }
+            ],
+            "title": "Крила розповідають інакше"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Separate the fixed-wing and multicopter drawings by structure. Leave operating conditions blank when the exhibit provides no model-specific evidence."
+              ],
+              "title": "Make the distinction: Wings Tell Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Розрізніть малюнки літака з нерухомим крилом і мультикоптера за конструкцією. Не заповнюйте умови роботи без даних конкретної моделі."
+              ],
+              "title": "Розрізніть поняття: Крила розповідають інакше"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Point together to a broad fixed wing and separate rotor discs. Describe the visible structure without guessing how far either craft travels."
+              ],
+              "title": "Explore together: Wings Tell Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом покажіть широке нерухоме крило й окремі диски роторів. Опишіть конструкцію без здогадів про дальність польоту."
+              ],
+              "title": "Дослідіть разом: Крила розповідають інакше"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A third fictional design combines features. Explain why one visible feature is insufficient to invent its transition behaviour or performance envelope."
+              ],
+              "title": "Apply and question: Wings Tell Another Story"
+            },
+            "uk": {
+              "paragraphs": [
+                "Третя вигадана конструкція поєднує ознаки. Чому однієї видимої ознаки недостатньо, щоб вигадати її переходи між режимами чи межі характеристик?"
+              ],
+              "title": "Застосуйте й запитайте: Крила розповідають інакше"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "65a0bf82df44fe75" },
+            { "difficulty": "standard", "gameplayId": "dbf9b058f45b917a" },
+            { "difficulty": "expert", "gameplayId": "a6b7fb72f28c9222" }
+          ],
+          "missionId": "fpv-drone-families-03"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-03", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drone-families",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drone-families-04-discovery",
+    "locales": {
+      "en": { "teaser": "A track is also a shared agreement.", "title": "A Sport Has a Setting" },
+      "uk": { "teaser": "Траса — це також спільна домовленість.", "title": "Спорт має свої умови" }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-04-reveal-v1",
+          "sha256": "db4151cdb72326a815a779f1b8bf8684e9899d036088d981fcfb0828d35a7649"
+        },
+        "id": "fpv-drone-families-04-image",
+        "locales": {
+          "en": {
+            "alt": "An exhibition combines a demonstration court, separate viewing gallery and prominent pause symbol.",
+            "title": "A Sport Has a Setting"
+          },
+          "uk": {
+            "alt": "Виставка поєднує демонстраційний майданчик, окрему глядацьку галерею й помітний символ паузи.",
+            "title": "Спорт має свої умови"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drone-families-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "FAI’s Drone Racing World Cup is a series of international events on different tracks. Its existence does not mean any location is an approved race venue.",
+              "Our fictional club poster lists an organized setting, a published route and an agreed pause signal. Compare it with a poster that names only speed. Add the missing context without prescribing real regulations or a competition-ready aircraft setup."
+            ],
+            "sources": [
+              {
+                "title": "FAI — Drone Racing World Cup",
+                "url": "https://www.fai.org/event/fai-drone-racing-world-cup"
+              }
+            ],
+            "title": "A Sport Has a Setting"
+          },
+          "uk": {
+            "paragraphs": [
+              "Кубок світу FAI з дронових перегонів складається з міжнародних подій на різних трасах. Існування спорту не означає, що будь-яке місце дозволене для перегонів.",
+              "Вигаданий клубний плакат містить організоване місце, опублікований маршрут і погоджений сигнал паузи. Порівняйте з плакатом, що називає лише швидкість. Додайте контекст без приписування реальних норм чи налаштувань перегонового апарата."
+            ],
+            "sources": [
+              {
+                "title": "FAI — Drone Racing World Cup",
+                "url": "https://www.fai.org/event/fai-drone-racing-world-cup"
+              }
+            ],
+            "title": "Спорт має свої умови"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Find the route, viewing area and agreed pause idea in the fictional exhibition. Explain why a sport also needs shared arrangements."
+              ],
+              "title": "Make the distinction: A Sport Has a Setting"
+            },
+            "uk": {
+              "paragraphs": [
+                "Знайдіть маршрут, глядацьку зону й узгоджену паузу на вигаданій виставці. Чому спорту також потрібні спільні домовленості?"
+              ],
+              "title": "Розрізніть поняття: Спорт має свої умови"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Compare two club posters together: one shows an organized setting, the other only speed. What helpful context would you add?"
+              ],
+              "title": "Explore together: A Sport Has a Setting"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом порівняйте два клубні плакати: один має організовані умови, інший — лише швидкість. Який корисний контекст додати?"
+              ],
+              "title": "Дослідіть разом: Спорт має свої умови"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Another fictional event advertises an impressive track photograph. Identify which permission and organization claims the photograph does not establish."
+              ],
+              "title": "Apply and question: A Sport Has a Setting"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інша вигадана подія рекламує ефектне фото траси. Які твердження про дозвіл та організацію саме фото не підтверджує?"
+              ],
+              "title": "Застосуйте й запитайте: Спорт має свої умови"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "cd1c5b7a457aa6ba" },
+            { "difficulty": "standard", "gameplayId": "8bf6ed015991ff98" },
+            { "difficulty": "expert", "gameplayId": "ac37e3a9895368c0" }
+          ],
+          "missionId": "fpv-drone-families-04"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-04", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drone-families",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drone-families-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "A useful comparison starts with what someone needs to learn or do.",
+        "title": "Purpose Changes the Questions"
+      },
+      "uk": {
+        "teaser": "Корисне порівняння починається з потреби людини.",
+        "title": "Мета змінює запитання"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-05-reveal-v1",
+          "sha256": "96fd3b75b810745a1c87ebed3d4055162d4789e0a436c9d0177ebcc05aa88676"
+        },
+        "id": "fpv-drone-families-05-image",
+        "locales": {
+          "en": {
+            "alt": "Three separate alcoves present a classroom model, a still-life camera and a fictional parcel-study desk.",
+            "title": "Purpose Changes the Questions"
+          },
+          "uk": {
+            "alt": "Три окремі ніші представляють навчальну модель, камеру натюрморту й стіл вигаданого дослідження посилок.",
+            "title": "Мета змінює запитання"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drone-families-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "NASA reports research supporting coordinated commercial drone deliveries in approved areas. This is a specific use and operating context, not a capability shared by every FPV aircraft.",
+              "Compare three fictional briefs: a classroom demonstration, a museum photograph and a parcel-service study. For each, ask what information is missing about setting, approval and equipment. Do not rank designs using an unsupported single “power” score."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Drone package delivery research, 2024",
+                "url": "https://www.nasa.gov/aeronautics/drones/delivering-closer-to-reality/"
+              }
+            ],
+            "title": "Purpose Changes the Questions"
+          },
+          "uk": {
+            "paragraphs": [
+              "NASA повідомляє про дослідження скоординованих доставок дронами у дозволених районах. Це конкретне застосування й умови, а не спільна можливість усіх FPV-апаратів.",
+              "Порівняйте три вигадані завдання: навчальну демонстрацію, фото музею та дослідження доставки. Для кожного запитайте про місце, дозвіл і обладнання. Не ранжуйте конструкції за бездоказовим єдиним показником «потужності»."
+            ],
+            "sources": [
+              {
+                "title": "NASA — Drone package delivery research, 2024",
+                "url": "https://www.nasa.gov/aeronautics/drones/delivering-closer-to-reality/"
+              }
+            ],
+            "title": "Мета змінює запитання"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Name one missing fact for each fictional brief: setting, approval or equipment. Explain why one power score would hide these differences."
+              ],
+              "title": "Make the distinction: Purpose Changes the Questions"
+            },
+            "uk": {
+              "paragraphs": [
+                "Назвіть відсутній факт для кожного вигаданого завдання: умови, дозвіл чи обладнання. Чому один бал потужності приховає ці відмінності?"
+              ],
+              "title": "Розрізніть поняття: Мета змінює запитання"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Choose a classroom, photography or parcel-study card together. Ask what the person wants to learn before choosing a comparison."
+              ],
+              "title": "Explore together: Purpose Changes the Questions"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом оберіть картку класу, фотографування чи дослідження доставки. Запитайте, що людина хоче дізнатися, перш ніж порівнювати."
+              ],
+              "title": "Дослідіть разом: Мета змінює запитання"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "A different civilian brief changes its purpose but keeps the same aircraft silhouette. Revise the evidence questions without assuming the equipment became suitable."
+              ],
+              "title": "Apply and question: Purpose Changes the Questions"
+            },
+            "uk": {
+              "paragraphs": [
+                "Інше цивільне завдання змінює мету, зберігаючи силует апарата. Оновіть питання до доказів, не припускаючи, що обладнання стало придатним."
+              ],
+              "title": "Застосуйте й запитайте: Мета змінює запитання"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "15decbd1e5ec5bf4" },
+            { "difficulty": "standard", "gameplayId": "34c94e44cb451f8a" },
+            { "difficulty": "expert", "gameplayId": "2752cd4f91c9bb1d" }
+          ],
+          "missionId": "fpv-drone-families-05"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-05", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drone-families",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drone-families-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "An honest “unknown” can make an atlas more useful.",
+        "title": "Curate the Family Atlas"
+      },
+      "uk": {
+        "teaser": "Чесне «невідомо» робить атлас кориснішим.",
+        "title": "Упорядкуйте атлас родин"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-06-reveal-v1",
+          "sha256": "879ae84c35afadd6a8f220656dd311ec279ccf6e162af8b6b642b5969dfdc358"
+        },
+        "id": "fpv-drone-families-06-image",
+        "locales": {
+          "en": {
+            "alt": "An illustrated family atlas has separate classification columns and intentionally empty fields.",
+            "title": "Curate the Family Atlas"
+          },
+          "uk": {
+            "alt": "Ілюстрований атлас родин має окремі стовпці класифікації та навмисно порожні поля.",
+            "title": "Упорядкуйте атлас родин"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drone-families-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Our finished atlas keeps four independent fields: airframe, viewing method, assistance and intended civilian use. A silhouette may fill one field while leaving the others unknown.",
+              "Review an invented “camera-equipped hexacopter” card. Identify which facts follow from that description, which need a manual and which need the operator’s declared purpose. Explain one revision to an earlier label before completing the exhibit."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Vehicle Types and Setup",
+                "url": "https://docs.px4.io/main/en/airframes/"
+              },
+              {
+                "title": "EASA — First Person View: goggles and drone racing",
+                "url": "https://www.easa.europa.eu/en/light/topics/drone-racing-and-flying-drone-goggles-first-person-view-fpv"
+              }
+            ],
+            "title": "Curate the Family Atlas"
+          },
+          "uk": {
+            "paragraphs": [
+              "Готовий атлас має чотири незалежні поля: конструкція, спосіб огляду, допомога й цивільне призначення. Силует може заповнити одне поле, залишивши інші невідомими.",
+              "Перегляньте вигадану картку «гексакоптер із камерою». Визначте, що випливає з опису, що потребує інструкції, а що — заявленої мети користувача. Перед завершенням виставки поясніть одне виправлення попереднього напису."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Vehicle Types and Setup",
+                "url": "https://docs.px4.io/main/en/airframes/"
+              },
+              {
+                "title": "EASA — First Person View: goggles and drone racing",
+                "url": "https://www.easa.europa.eu/en/light/topics/drone-racing-and-flying-drone-goggles-first-person-view-fpv"
+              }
+            ],
+            "title": "Упорядкуйте атлас родин"
+          }
+        },
+        "profiles": {
+          "beginners": {
+            "en": {
+              "paragraphs": [
+                "Read camera-equipped hexacopter and sort what it tells you about airframe and viewing. Keep assistance and purpose separate."
+              ],
+              "title": "Make the distinction: Curate the Family Atlas"
+            },
+            "uk": {
+              "paragraphs": [
+                "Прочитайте «гексакоптер із камерою» й визначте, що це каже про конструкцію та перегляд. Допомогу керування й мету розглядайте окремо."
+              ],
+              "title": "Розрізніть поняття: Упорядкуйте атлас родин"
+            }
+          },
+          "families": {
+            "en": {
+              "paragraphs": [
+                "Fill the atlas together, leaving room for unknowns. Explain why an honest blank can be more useful than a confident guess."
+              ],
+              "title": "Explore together: Curate the Family Atlas"
+            },
+            "uk": {
+              "paragraphs": [
+                "Разом заповніть атлас, залишивши місце для невідомого. Чому чесне порожнє поле корисніше за впевнений здогад?"
+              ],
+              "title": "Дослідіть разом: Упорядкуйте атлас родин"
+            }
+          },
+          "hobbyists": {
+            "en": {
+              "paragraphs": [
+                "Apply the four-field atlas to a new fictional description. Cite the words supporting each filled field and mark anything requiring another source."
+              ],
+              "title": "Apply and question: Curate the Family Atlas"
+            },
+            "uk": {
+              "paragraphs": [
+                "Застосуйте атлас із чотирьох полів до нового вигаданого опису. Назвіть слова на підтвердження кожного поля й позначте потребу в іншому джерелі."
+              ],
+              "title": "Застосуйте й запитайте: Упорядкуйте атлас родин"
+            }
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b789dcccb0430abe" },
+            { "difficulty": "standard", "gameplayId": "74df78eae026fade" },
+            { "difficulty": "expert", "gameplayId": "c77f2b3a1641899c" }
+          ],
+          "missionId": "fpv-drone-families-06"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families-06", "kind": "mission" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
+  },
+  {
+    "brandId": "fpv-learning",
+    "campaignId": "fpv-drone-families",
+    "format": "revealline-completion-reward.v1",
+    "id": "fpv-drone-families-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six distinct missions to complete this discovery exhibit.",
+        "title": "An Atlas of Different Questions"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести різних місіях, щоб завершити виставку відкриттів.",
+        "title": "Атлас різних завдань"
+      }
+    },
+    "payloads": [
+      {
+        "id": "fpv-drone-families-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Curate six comparison cards using separate columns for airframe, viewing method, control assistance and civilian purpose. A racing craft, survey aircraft and classroom model answer different questions. Keep uncertainty visible: appearance alone does not establish autonomy, capability or permission to operate."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Vehicle Types and Setup",
+                "url": "https://docs.px4.io/main/en/airframes/"
+              }
+            ],
+            "title": "An Atlas of Different Questions"
+          },
+          "uk": {
+            "paragraphs": [
+              "Упорядкуйте шість карток з окремими графами для конструкції, способу спостереження, допомоги керуванню та цивільної мети. Перегоновий дрон, апарат для знімання та навчальна модель розв’язують різні завдання. Залишайте невизначеність видимою: зовнішність не доводить автономність, можливості чи дозвіл на використання."
+            ],
+            "sources": [
+              {
+                "title": "PX4 — Vehicle Types and Setup",
+                "url": "https://docs.px4.io/main/en/airframes/"
+              }
+            ],
+            "title": "Атлас різних завдань"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-01-reveal-v1",
+          "sha256": "43b5eb213c9e6aea5565587f3cb45bb592175982b7140de666b6ac049e5a2b7d"
+        },
+        "id": "fpv-drone-families-01-image",
+        "locales": {
+          "en": {
+            "alt": "A viewing-goggles sculpture stands apart from three different inert aircraft shapes in a museum hall.",
+            "title": "A View, Not a Shape"
+          },
+          "uk": {
+            "alt": "Скульптура окулярів перегляду стоїть окремо від трьох різних неактивних форм літальних апаратів у музейній залі.",
+            "title": "Спосіб бачити, а не форма"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-02-reveal-v1",
+          "sha256": "d6c316fe11726eecc47d18894e0a880da2b33f5b68d22bb1f39801e2661df385"
+        },
+        "id": "fpv-drone-families-02-image",
+        "locales": {
+          "en": {
+            "alt": "Three museum silhouettes compare four, six and eight rotor positions without ranking their performance.",
+            "title": "More Than Four Rotors"
+          },
+          "uk": {
+            "alt": "Три музейні силуети порівнюють чотири, шість і вісім позицій роторів без оцінювання їхніх характеристик.",
+            "title": "Не лише чотири ротори"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-03-reveal-v1",
+          "sha256": "802bbc7a54eeb0a538832d06bb411be02b8e7bc4cc9a5f8a5c98c8b76e2eb180"
+        },
+        "id": "fpv-drone-families-03-image",
+        "locales": {
+          "en": {
+            "alt": "A broad-winged civilian glider and a four-disc multicopter form a structural comparison.",
+            "title": "Wings Tell Another Story"
+          },
+          "uk": {
+            "alt": "Цивільний планер із широким крилом і мультикоптер із чотирма дисками утворюють порівняння конструкцій.",
+            "title": "Крила розповідають інакше"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-04-reveal-v1",
+          "sha256": "db4151cdb72326a815a779f1b8bf8684e9899d036088d981fcfb0828d35a7649"
+        },
+        "id": "fpv-drone-families-04-image",
+        "locales": {
+          "en": {
+            "alt": "An exhibition combines a demonstration court, separate viewing gallery and prominent pause symbol.",
+            "title": "A Sport Has a Setting"
+          },
+          "uk": {
+            "alt": "Виставка поєднує демонстраційний майданчик, окрему глядацьку галерею й помітний символ паузи.",
+            "title": "Спорт має свої умови"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-05-reveal-v1",
+          "sha256": "96fd3b75b810745a1c87ebed3d4055162d4789e0a436c9d0177ebcc05aa88676"
+        },
+        "id": "fpv-drone-families-05-image",
+        "locales": {
+          "en": {
+            "alt": "Three separate alcoves present a classroom model, a still-life camera and a fictional parcel-study desk.",
+            "title": "Purpose Changes the Questions"
+          },
+          "uk": {
+            "alt": "Три окремі ніші представляють навчальну модель, камеру натюрморту й стіл вигаданого дослідження посилок.",
+            "title": "Мета змінює запитання"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "fpv-drone-families-06-reveal-v1",
+          "sha256": "879ae84c35afadd6a8f220656dd311ec279ccf6e162af8b6b642b5969dfdc358"
+        },
+        "id": "fpv-drone-families-06-image",
+        "locales": {
+          "en": {
+            "alt": "An illustrated family atlas has separate classification columns and intentionally empty fields.",
+            "title": "Curate the Family Atlas"
+          },
+          "uk": {
+            "alt": "Ілюстрований атлас родин має окремі стовпці класифікації та навмисно порожні поля.",
+            "title": "Упорядкуйте атлас родин"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "fpv-drone-families-official-source",
+        "locales": {
+          "en": { "title": "Explore the official source" },
+          "uk": { "title": "Відкрити офіційне джерело" }
+        },
+        "qr": true,
+        "type": "url",
+        "url": "https://docs.px4.io/main/en/airframes/"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "37a3ef76337526ad" },
+            { "difficulty": "standard", "gameplayId": "8ed56e8e80303c73" },
+            { "difficulty": "expert", "gameplayId": "347c6f202256403e" }
+          ],
+          "missionId": "fpv-drone-families-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "3ef9e576c1494ea3" },
+            { "difficulty": "standard", "gameplayId": "65afbbcbcec7c9df" },
+            { "difficulty": "expert", "gameplayId": "fdad8ce98578b75c" }
+          ],
+          "missionId": "fpv-drone-families-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "65a0bf82df44fe75" },
+            { "difficulty": "standard", "gameplayId": "dbf9b058f45b917a" },
+            { "difficulty": "expert", "gameplayId": "a6b7fb72f28c9222" }
+          ],
+          "missionId": "fpv-drone-families-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "cd1c5b7a457aa6ba" },
+            { "difficulty": "standard", "gameplayId": "8bf6ed015991ff98" },
+            { "difficulty": "expert", "gameplayId": "ac37e3a9895368c0" }
+          ],
+          "missionId": "fpv-drone-families-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "15decbd1e5ec5bf4" },
+            { "difficulty": "standard", "gameplayId": "34c94e44cb451f8a" },
+            { "difficulty": "expert", "gameplayId": "2752cd4f91c9bb1d" }
+          ],
+          "missionId": "fpv-drone-families-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "b789dcccb0430abe" },
+            { "difficulty": "standard", "gameplayId": "74df78eae026fade" },
+            { "difficulty": "expert", "gameplayId": "c77f2b3a1641899c" }
+          ],
+          "missionId": "fpv-drone-families-06"
+        }
+      ]
+    },
+    "revision": "4",
+    "scope": { "id": "fpv-drone-families", "kind": "campaign" },
+    "teaserImage": {
+      "asset": {
+        "assetId": "fpv-drone-families-key-v1",
+        "sha256": "7dff7e193639178dd15000dd60a005e043b8ab6b37b89707d73747f1ba1e00e1"
+      },
+      "locales": {
+        "en": {
+          "alt": "A fictional aircraft museum compares separate multicopter and fixed-wing display models beside a viewing-goggles exhibit."
+        },
+        "uk": {
+          "alt": "Уявний музей літальних апаратів порівнює окремі моделі мультикоптерів і літака поруч зі стендом окулярів для спостереження."
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "source": "d1d48b2b7ad67a0915532a1489f300abccd778ae",
+  "checksPassed": 283,
+  "overallPassed": true,
+  "runtimeOverlays": 0,
+  "scope": "Exact admitted candidate lifecycle, native rendering/storage, scripted public DOM controls, genuine practice and recovery. Does not repeat historical baseline or claim trusted pointer/keyboard, offline, hardware performance or current public deployment.",
+  "files": [
+    {
+      "path": "fpv-language-phase-8953-admitted.json.gz",
+      "bytes": 137460,
+      "sha256": "d8ffadf177318faa05a2040f7f05c61946d6713070ca71422b499614e1315317",
+      "storedBytes": 14164,
+      "storedSha256": "ce2b80c7f189eff3233d4ea6ab1a300517f5b98fa81b9ab9ca05ce9ef8cbb1b9"
+    },
+    {
+      "path": "fpv-language-phase-8953-admitted.png",
+      "bytes": 58891,
+      "sha256": "25a2aeea8635d1c080e8ef08112f3e5c2296ff4ea6590e58544474991e0bf2f4",
+      "storedBytes": 58891,
+      "storedSha256": "25a2aeea8635d1c080e8ef08112f3e5c2296ff4ea6590e58544474991e0bf2f4"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+TAP version 13
+# Subtest: actual installed Standard/Gentle catalogue exposes ten curated and six qualified live sources lazily
+ok 1 - actual installed Standard/Gentle catalogue exposes ten curated and six qualified live sources lazily
+  ---
+  duration_ms: 3024.391042
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 2 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 78.273209
+  ...
+# Subtest: current main Journey host retains the expanded base showcase without pretending the clips belong to Journey
+ok 3 - current main Journey host retains the expanded base showcase without pretending the clips belong to Journey
+  ---
+  duration_ms: 6909.407125
+  ...
+# Subtest: actual public company editions cannot select base or another company showcase
+ok 4 - actual public company editions cannot select base or another company showcase
+  ---
+  duration_ms: 3689.058917
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 5 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 35.09875
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 6 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 133.74425
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 7 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 261.31725
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 8 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 13.963292
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 9 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.282416
+  ...
+# Subtest: frozen runtime variants are selected only after strict verification of the identical pinned input trace
+ok 10 - frozen runtime variants are selected only after strict verification of the identical pinned input trace
+  ---
+  duration_ms: 509.16475
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 11 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 2212.388875
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 12 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 5.841333
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 13 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.393334
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17862.069083

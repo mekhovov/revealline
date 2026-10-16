@@ -8,6 +8,7 @@ import {
   emptyJourneyProfile,
   validateJourneyProfile,
 } from '../journey/profile.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 const campaigns = [
@@ -82,6 +83,54 @@ test('skipping never grants a clear; exact legal completion removes skip and is 
     () => applyJourneyEvent(initial, { ...complete, difficulty: 'invented' }),
     /receipt/,
   );
+});
+
+test('completion keeps verified stars in the separate store while v1 receipts remain unchanged', async () => {
+  const backend = createJourneyBackend(managedIndexedDB());
+  const profile = createJourneyProfileStore({ backend });
+  profile.record(complete);
+  assert.equal(await profile.flush(), true);
+  assert.equal(profile.bestStars('solo', id), null);
+  for (const [runId, stars, best] of [
+    ['run-2', 2, 2],
+    ['run-3', 1, 2],
+    ['run-4', 3, 3],
+  ]) {
+    profile.record({ ...complete, runId, stars });
+    assert.equal(await profile.flush(), true);
+    assert.equal(profile.bestStars('solo', id), best);
+    assert.deepEqual(Object.keys((await backend.read()).clears.solo[id]), [
+      'runId',
+      'gameplayId',
+      'difficulty',
+    ]);
+  }
+  const before = profile.snapshot();
+  profile.record({ ...complete, runId: 'run-4', stars: 3 });
+  assert.equal(await profile.flush(), true);
+  assert.deepEqual(profile.snapshot(), before, 'the same verified result is idempotent');
+  assert.equal((await backend.readState()).stars.best.solo[id], 3);
+});
+
+test('Journey profile and storage errors follow the active locale', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const invalid = { ...emptyJourneyProfile(), format: 'future' };
+  const unsupported = { ...emptyJourneyProfile(), future: true };
+  const malformed = null;
+  const validateUnsupportedLater = () => validateJourneyProfile(unsupported);
+  setLocale('uk', { persist: false });
+  assert.throws(() => validateJourneyProfile(invalid), /Профіль Подорожі пошкоджений/);
+  assert.throws(() => validateJourneyProfile(malformed), /Дані Подорожі мають бути об’єктом/);
+  assert.throws(validateUnsupportedLater, /непідтримуване поле: future/);
+  await assert.rejects(
+    createJourneyBackend({ indexedDB: null }).read(),
+    /Сховище Подорожі недоступне/,
+  );
+  setLocale('en', { persist: false });
+  assert.throws(() => validateJourneyProfile(invalid), /Unsupported or damaged Journey profile/);
+  assert.throws(() => validateJourneyProfile(malformed), /Journey data must be an object/);
+  assert.throws(validateUnsupportedLater, /unsupported field: future/);
 });
 
 test('IndexedDB progress survives store recreation and merges concurrent tab writes atomically', async () => {

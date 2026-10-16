@@ -1,0 +1,92 @@
+{
+  "format": "OverflightFocusedChecksV1",
+  "recordedAt": "2026-10-05T06:01:32.837Z",
+  "executedOnUTCDate": "2026-10-05",
+  "implementationBaseMainSha": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "command": "node --test game/test/overflight-core.test.mjs game/test/overflight-renderer.test.mjs",
+  "environment": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "exitCode": 0,
+  "tests": 42,
+  "passed": 42,
+  "failed": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "observedDurationMs": 42839.162958,
+  "sourceBindings": [
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "bytes": 52635,
+      "sha256": "6c754a7111b7bdeb3080de6bea9a2019b2e60dee97cb191bfcd2b781b51f7df8"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "bytes": 2552,
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "bytes": 10115,
+      "sha256": "265d3b65111f54c0afc7ca6c0daa8d7a6ba018618de461a59b3003e934230c62"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "bytes": 13183,
+      "sha256": "033bb6802dc52e77b3844b83d7f81cb2f841f5163275d52f0c6c924316d1dbe7"
+    },
+    {
+      "path": "game/overflight/renderer.mjs",
+      "bytes": 21102,
+      "sha256": "ee2be4f8705eb9719bc70372dbf1fedc6ab2c37c73676fa29733f900f1a57e76"
+    },
+    {
+      "path": "game/overflight/atlas.mjs",
+      "bytes": 10254,
+      "sha256": "81b73babe10e4dc55c91571a3dec7c75e5d96ee5699968d64791d21ee0b273ac"
+    },
+    {
+      "path": "game/overflight/benchmark.mjs",
+      "bytes": 6752,
+      "sha256": "5bba8a44cd0a781cfb3aa4911f2fbdd314def10708afc15fffc25ea125a681a9"
+    },
+    {
+      "path": "game/presentation/overflight-motion.mjs",
+      "bytes": 3411,
+      "sha256": "40aec991021863bbb5c080f1e56485e748d46a602ada2228d3bb32a5b56f9a31"
+    },
+    {
+      "path": "game/presentation/overflight-field-kit-art.mjs",
+      "bytes": 4688,
+      "sha256": "b86032fe18ac326c4ff0029c883e8ee0ceeeea4719edbfa1c7a6ef010325c4e7"
+    },
+    {
+      "path": "game/test/overflight-core.test.mjs",
+      "bytes": 27380,
+      "sha256": "f21c5c84680965c193fdadf1264e3d1528311be2329fa9b8e20785676584de7a"
+    },
+    {
+      "path": "game/test/overflight-renderer.test.mjs",
+      "bytes": 22040,
+      "sha256": "a3bd98c4f701f61c1eaeee638e8c41dfb63b265473797ac7805d80ba3b588145"
+    }
+  ],
+  "sourceSetSha256": "aba9a75be80ff52ef6dca180cf06134a9dee487c3f8de4d067241a459a962fd7",
+  "scope": [
+    "30 core tests cover exact 2,500-target area damage, XP conservation, legal upgrades, fixed-step inputs, deterministic seeds, projectiles, airframe continuity, terminal precedence and native family adaptations: sprinter warning/burst/travel, optional courier/refuge rewards, bounded non-stacking support, rally direction, source-death cancellation and support-only attack exclusions.",
+    "Both fixtures simulate 901 seconds with real family behaviors, six support and two aimed-attack specialists, retain 1500/700 or 2500/1200 counts, at least 45/60 occupied screen regions, maximum 100 or 160 actors per region, and distinct visible positions at 390/600/901 seconds.",
+    "12 renderer tests use finite Phaser/DOM adapters. Actual renderer.present calls test phase/reward cues, reduced-effects parity, no per-frame painting/uploading, and no simulation mutation. Paired real cores run for 600 ticks and retain equal full simulation and summary."
+  ],
+  "limits": [
+    "No actual browser or GPU driver is exercised by the finite renderer adapter.",
+    "Node duration is not FPS, heap stability, thermal or target-device acceptance.",
+    "The source list binds the directly qualified mode/compiler/test files; it is not a complete repository or release-source manifest."
+  ]
+}

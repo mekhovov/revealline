@@ -1,0 +1,26 @@
+# Interim observation review — 621.3938 seconds
+
+Read-only review of [the preserved ten-minute snapshot](browser-observation-10min.json), **not the live browser or a final result**. The snapshot starts at `2026-09-29T03:30:56.950Z` and ends at checkpoint `2026-09-29T03:41:18.349Z`: 621.3938 seconds of a requested 7,200 seconds, 124 samples and 33 events. It is 316,249 bytes, SHA-256 `02bdf44aa1924d49630941aa036b5291fc6489fe22da2add2947f2a116266b61`. The linked copy is retained separately from the continually updated running checkpoint.
+
+The running source is pinned by the parent qualification task to `55c5ec57cc1ed478b44e065951073c0bdd3c3ead`. This checkpoint still reports terminal source/storage comparisons **pending**, `sourceInventoryStable:null`, `observationValidForPinnedSources:false`, `observationComplete:false` and `releaseQualified:false`. This review did not edit sources, the saved JSON or browser state, run tests, start another observation, or manufacture terminal checks.
+
+## What the samples show
+
+- **Rotation:** 14 contiguous real-level visits are visible in the samples: eight recorded-play visits and six live-autoplay visits. There are no immediate same-level repeats in that sequence. Recorded levels include First Signal, Night Patrol, Relay Orchard and Crosswind. Both qualified live maps, **Orchard Crossing** and **Courtyard Exits**, appear three times each. One additional sample catches the preparation label. DOM change events bracket 13 preparation intervals between 0.4061 and 0.7883 seconds; none remains pending at the checkpoint.
+- **Live progress:** the first sampled Orchard Crossing visit advances from 0% / 4s to 48% / 32s. Its later visits reach sampled values of 51% and 85%. Courtyard Exits visits reach sampled values of 74%, 77% and 46% before subsequent source changes. All sampled real-level status labels retain three lives. These are displayed status observations, not extra authoritative replay/seed verification; samples need not capture each scene's actual final frame or reason for departure.
+- **Music paused independently:** from samples at 25.3995–40.6005 seconds, music reports `paused` while the demo remains unpaused, changes from First Signal to Night Patrol, and Night Patrol's displayed timer advances from 4s to 14s with changing board checksums.
+- **Demo paused independently:** DOM events show demo Pause at 43.9428 seconds and Resume at 89.5030 seconds. The nine intervening samples at 45.6700–86.0924 seconds retain Night Patrol at 13% / three lives / 17s and the same scaled canvas checksum `d0e5afb7`; music reports `playing` throughout those samples. Rotation continues after Resume. These labels establish UI/board separation, not audible output.
+- **Visible focus loss:** all 124 samples report both parent and child visibility as `visible`. In 56 samples neither has focus, and gameplay/status/scene changes continue across that visible-unfocused portion. This is no evidence of truly hidden-tab, OS freeze, screen-lock or native background execution.
+- **Health:** all samples have an available/open spectator demo; none enters practice. The snapshot records zero child navigation, zero attachment failures, zero captured diagnostics, zero dropped samples/events/diagnostics, zero long gaps or clock discontinuities, and a maximum callback gap of 5.2074 seconds. No observed loading or playback failure requires changing the frozen run from this snapshot alone.
+
+Source/level changes can include deliberate Next actions; the observer does not log input causality. The evidence therefore confirms observed rotation and continuity, not that every transition was autonomous, every source variant was visited, or every scene completed.
+
+## Memory and music limits
+
+Browser-reported used JavaScript heap ranges from **113.424 to 310.668 MiB**, starting at 138.500 MiB and ending at 166.117 MiB. The reported heap limit is 4,192 MiB; the allocated heap ranges from 247.672 to 350.956 MiB. Successive roughly two-minute used-heap medians are 198.760, 219.360, 187.004, 179.726 and 194.167 MiB. The samples fluctuate rather than showing a monotonic increase. This short, uncontrolled allocation/collection series does not establish a leak-free steady state and does not measure total process/Worker/GPU memory, thermal behavior, battery use or frame pacing.
+
+The song title remains **Carol of the Bells (Metal Version)** in every sample. Transport status is `playing` in 119 samples, `paused` in four, and `loading` in one at 228.4603 seconds; it returns to `playing` in the following sample. The shipped catalogue lists that track at approximately 270.054 seconds, but the observer captures neither playback position, ended events nor selected-track repeat intent. A constant title may reflect permitted repetition; it is not enough to infer a player defect or claim verified song-boundary transitions. Actual audible output and song transitions still need separate evidence.
+
+## Outstanding boundary
+
+Continue the existing observation without changing its source. Its final report must still collect terminal inventory/storage checks and establish its actual elapsed duration. This interim review does not complete the two-hour browser gate, hidden/native lifecycle, practice/input hardware, physical audio, resource stability, unfamiliar-viewer evaluation or release admission.

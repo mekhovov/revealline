@@ -1,0 +1,22 @@
+{
+  "format": "FPVPublicLaunchEvidence.v1",
+  "observationDateUtc": "2026-10-02",
+  "sourceRevision": "e48adf3185dc7536555d142fe3d1165de31c05f9",
+  "markerUrl": "https://mekhovov.github.io/revealline/main-deployment.json",
+  "playerUrl": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html",
+  "includesMergedPRs": [
+    960,
+    961
+  ],
+  "observations": [
+    "Public marker identifies a descendant of merged meadow960 and courtyard961.",
+    "Actual public catalogue shows148 challenges and14worlds.",
+    "Roofline survey launches with prepared scene, Ready status and enabled Arm/resume.",
+    "No captured application warnings or errors during launch."
+  ],
+  "screenshot": "/tmp/fpv-courtyard-public-20261002.png",
+  "limitations": [
+    "Browser launch only; no new physical-device, novice-player, art or FPS acceptance.",
+    "Woodland C4 is still local and is not certified live by this receipt."
+  ]
+}

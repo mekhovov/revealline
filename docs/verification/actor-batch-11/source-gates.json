@@ -1,0 +1,61 @@
+{
+  "parent": "b20348a1b69ac142a941a0527e898e4ab1b75af3",
+  "tests": "Focused cohorts; long automated suites remain waived, not passed.",
+  "results": [
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    {
+      "name": "format",
+      "command": "npm run format:check",
+      "exitCode": 0
+    },
+    {
+      "name": "native-format",
+      "command": "npm run format:native:check",
+      "exitCode": 0
+    },
+    {
+      "name": "validate",
+      "command": "npm run validate",
+      "exitCode": 0
+    },
+    {
+      "name": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "exitCode": 0
+    },
+    {
+      "name": "ordinary-build",
+      "command": "npm run build -- --out /private/tmp/revealline-actor-batch-11-build",
+      "exitCode": 0
+    }
+  ],
+  "productionReview": {
+    "pass": 6,
+    "fail": 2,
+    "log": "production-guard.tap",
+    "blocking": "Changed Team recipe sources require new reviewed successors; historical approvals preserved"
+  },
+  "finalFocused": {
+    "globalRemains": {
+      "tests": 100,
+      "pass": 100
+    },
+    "teamFreeze": {
+      "tests": 91,
+      "pass": 91
+    },
+    "practiceBrief": {
+      "tests": 134,
+      "pass": 134
+    },
+    "independentHostReview": {
+      "tests": 22,
+      "pass": 22
+    },
+    "note": "Cohorts overlap; not a whole-suite or public-release claim."
+  }
+}

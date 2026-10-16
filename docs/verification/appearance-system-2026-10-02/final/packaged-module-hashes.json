@@ -1,0 +1,13 @@
+{
+  "game/app.mjs": "079106473ff9c494d9192cb43a3ebdec5b3a5268cbab0c43b9e3464351917717",
+  "game/presentation/theme-host.mjs": "e8135fcf21b003e9ecaa4899a2cf934b2e0aa492fb004fda9b5dab7fd9f8527e",
+  "game/presentation/theme-system.mjs": "4460d1bdf8d27c7d69444c86ba3089bc5e37a50c09bf08a23379aadd30ccfb3e",
+  "game/presentation/theme-bootstrap.mjs": "69bd96e8a33ea529c2ec269190eb882e868f571ada354913421b0c54e90b3095",
+  "site/launch.mjs": "26f2e8769a27deaaf9014450bbedb70c90aa77390cc1f7b9304eb7a28f51dacc",
+  "game/presentation/industrial-workshop.css": "fd4135764eb762b80bcd329986301dc8298ca4a5ac10dc94263876ecacd959b0",
+  "optional-practice/civilian-fpv/sim-presentation.mjs": "d5c872541f1ebd7f2ce5440161d970b9ef5eef71571e3ca1944bbb196b179da4",
+  "authoring/asset-studio/studio.mjs": "143b64cb8a6e3922115332e8a6a4bd325acffc51d58e877e3950ad19994c79ad",
+  "authoring/asset-studio/theme-workbench.mjs": "198c2be0bb4340e94282e3a91bc6d80c5ec7c9341711bf7090d91a8c15961513",
+  "game/ui/theme-family-controls.mjs": "b383bc4bb3b78f61b5c016a6b77e8b2026a230814a919b22b522a21fa5bf3298",
+  "game/presentation/runtime-transfer.mjs": "043c8381d0b9fbc7ff1b744e330b672883f61a76e7c719e4b973561d00a26c2e"
+}

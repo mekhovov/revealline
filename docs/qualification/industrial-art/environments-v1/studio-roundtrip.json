@@ -1,0 +1,52 @@
+{
+  "source": "1717a5348111ae673209056b0eeef3e15e220f58",
+  "file": "revealline-fpv-r106 (1).rltheme",
+  "bytes": 8810992,
+  "sha256": "558e9333894054f13708a123cf353815f7a5e4dd3249aceb502aa7ce51133dda",
+  "slots": 335,
+  "hashes": [
+    {
+      "slot": "terrain.wall",
+      "sha256": "b9402c295ebc1cc92a0eec7036409579a90a741eedbeca36d53adfbc0f7ae6d0"
+    },
+    {
+      "slot": "terrain.slow",
+      "sha256": "c4a0e570516c0ab1b0833e0ca5310d6a5c32d6ce6c72cb7eb85f183a06266af5"
+    },
+    {
+      "slot": "terrain.lethal",
+      "sha256": "060d24a27ca599259249cf1023b4b395d927d5792742483a636557f077349d9f"
+    }
+  ],
+  "verified": true,
+  "scope": "Native Studio UI Guarded Crossings import, local save 3, export; every retained file verified and chapter terrain hashes exact",
+  "roundTrip": {
+    "chapter": "Guarded Crossings",
+    "importedRevision": 106,
+    "savedGeneration": 3,
+    "reimportedRevision": 107,
+    "savedAfterReimport": 4,
+    "reloadedRevision": 107,
+    "previews": ["Saved preview: Ready", "Draft preview: Ready"],
+    "screenshot": "studio-guarded-crossings-roundtrip.jpg"
+  },
+  "format": "revealline-native-studio-roundtrip-evidence.v1",
+  "originalReceiptSha256": "6a9cca4b73a75ae5f16430e204cc2bb28dbcef64f2c6bbfb26e2ee9a3349dc0b",
+  "exportArchiveBundled": false,
+  "importedChapterPackage": {
+    "path": "authoring/industrial-art-review/environments-v1/pursuit-guarded-crossings.rltheme",
+    "bytes": 988382,
+    "sha256": "a8db4031ec7e369972a33019b0a11067c84711e1e0e8e147f5c7dc58108e4f0c",
+    "pathBase": "repository-root"
+  },
+  "chapterDefinition": {
+    "id": "industrial-env-pursuit-guarded-crossings",
+    "revision": 1,
+    "appearanceSha256": "a7107e5ed7e49f981bcff2065282bbcaccc20dfbb6ab0e394b6f33860b420623"
+  },
+  "limitations": [
+    "One chapter was exercised through the native Studio UI; this is not interactive browser coverage of all fourteen packages.",
+    "The full export contains retained native workspace sources and is not bundled with this small review package.",
+    "Saved/Draft preview Ready establishes asset admission and reload, not artistic, gameplay or physical-device qualification."
+  ]
+}

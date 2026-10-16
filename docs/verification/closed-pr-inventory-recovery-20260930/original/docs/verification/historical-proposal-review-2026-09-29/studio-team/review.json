@@ -1,0 +1,29 @@
+{
+  "reviewed_at_utc": "2026-09-29T15:12:40.782462+00:00",
+  "credential_and_path_scan": "All 50 full source files and therefore all donor hunks; bounded signatures/assignments, private absolute paths, URL credentials, merge-conflict markers, UTF-8 and NUL checks. No flags. This is not a proof against every possible secret encoding.",
+  "structural_checks": "Allowlisted .mjs/.md/.html/.css; no source symlinks, dependency payloads or binary media. Archives contain only declared safe relative regular-file names. Full-index tracked patches reconstructed in memory to all 31 captured modified postimages.",
+  "excluded": [
+    "node_modules links/directories",
+    "ignored files",
+    "build outputs",
+    "screenshots and media",
+    "browser/profile data"
+  ],
+  "malformed_source_flags": [],
+  "syntax_or_behavior_tests_run": false,
+  "historical_test_counts": "Any test or native-review claims inside original donor docs are historical, not rerun or current acceptance.",
+  "adoption_holds": {
+    "p04-reference-prototype-r1": "Explicit prototype v2 reference/provenance workspace, format dispatch, IDB/storage and compiler integration. Must reconcile current document-codec, current 5 MiB metadata/portable formats and history ownership before any runtime port.",
+    "p05-team-large-v621": "R12 Large cue symbols, 3/5px objective locators, selected-relay HUD/Objectives, threat summaries and non-touch landscape layout. Donor docs explicitly withhold composed/dense-map/touch/native/public acceptance. Preserve current Team host ownership and localization when porting.",
+    "p05-team-large-cues-next": "Older area-first full-caption enlargement variant. Later v621 notes report native crowding/owner-association failure of this approach. Preserve exact evidence but do not stack it as a second runtime change or call it accepted."
+  },
+  "audit_updated_utc": "2026-09-29T15:15:47.334618+00:00",
+  "candidate_reference_correction": "The first packet incorrectly combined PR numbers with abbreviated heads and reported those malformed identifiers as unavailable objects. Correct full PR795 and PR796 commit IDs were supplied, resolved locally, and inspected; the unavailability claim is withdrawn.",
+  "corrected_candidate_comparison": "PR795 at 81df80dda259ba8e1cef5378af1cec91260eb51e and PR796 at c99fbbac348691bb91bd16a7e1e281f5a9e2b69b both resolve locally. For each: 0 of 50 exact donor blobs in tree or reachable history, 0 of 18 distinct new-source paths directly present, 49 distinct verification patch/patch-source blobs scanned including gzip, and 0 new-source path hits.",
+  "recursive_metadata_private_path_check": {
+    "text_artifacts_scanned": 12,
+    "scope": "All root and cohort metadata, README, tracked diffs and new-source patches; private home, temporary, Windows-user and file-URI paths and local username signatures.",
+    "flags": []
+  },
+  "metadata_correction_integrity": "All 12 cohort artifacts (archives, patches and manifests) remain byte-identical; all 50 donor files, HEADs and statuses rechecked stable. Only root README, manifest and review metadata changed."
+}

@@ -1,0 +1,51 @@
+TAP version 13
+# Subtest: a prepared Team preview is not pinned; deliberate Start waits for retention and cancelled work cannot start later
+ok 1 - a prepared Team preview is not pinned; deliberate Start waits for retention and cancelled work cannot start later
+  ---
+  duration_ms: 1518.470667
+  ...
+# Subtest: Team starts online without downloaded files or an install popup
+ok 2 - Team starts online without downloaded files or an install popup
+  ---
+  duration_ms: 1343.304375
+  ...
+# Subtest: published Solo boots the starter and starts an unprepared chapter online without a popup
+ok 3 - published Solo boots the starter and starts an unprepared chapter online without a popup
+  ---
+  duration_ms: 1994.893
+  ...
+# Subtest: an exact saved campaign restores online and retains explicitly prepared offline bytes
+    # Subtest: online restore needs no offline preparation
+    ok 1 - online restore needs no offline preparation
+      ---
+      duration_ms: 1715.254041
+      ...
+    # Subtest: first preparation preserves and pins the exact saved campaign
+    ok 2 - first preparation preserves and pins the exact saved campaign
+      ---
+      duration_ms: 1940.525875
+      ...
+    # Subtest: a reopened page restores the deselected chapter from retained bytes with network blocked
+    ok 3 - a reopened page restores the deselected chapter from retained bytes with network blocked
+      ---
+      duration_ms: 1707.14125
+      ...
+    1..3
+ok 4 - an exact saved campaign restores online and retains explicitly prepared offline bytes
+  ---
+  duration_ms: 5470.458458
+  ...
+# Subtest: ordinary mode departure opens Versus without offline preparation
+ok 5 - ordinary mode departure opens Versus without offline preparation
+  ---
+  duration_ms: 598.862875
+  ...
+1..5
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18015.588875

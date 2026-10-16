@@ -62,6 +62,10 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
   const summary = h.$('offline-details').parentElement.querySelector('summary');
   summary.focus();
   summary.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' });
+  const downloads = h.doc.activeElement;
+  assert.equal(downloads.getAttribute('href'), 'downloads.html');
+  assert.equal(downloads.textContent, 'Install app · Game and soundtrack downloads');
+  downloads.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' });
   assert.equal(h.doc.activeElement, h.$('storage-retention-button'));
   assert.ok(
     h
@@ -121,6 +125,8 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
   assert.equal(h.$('settings-panel-data').hidden, false);
   summary.focus();
   summary.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' });
+  assert.equal(h.doc.activeElement, downloads);
+  downloads.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' });
   assert.equal(h.doc.activeElement, h.$('storage-retention-button'));
   h.frame();
   pulse(0);

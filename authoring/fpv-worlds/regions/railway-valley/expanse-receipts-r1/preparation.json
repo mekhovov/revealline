@@ -1,0 +1,443 @@
+{
+  "format": "FPVRailwayExpansePreparation.v1",
+  "id": "railway-valley-expanse",
+  "revision": "districts-r1",
+  "actualExtentM": [
+    4096,
+    4096
+  ],
+  "sampleSpacingM": 8,
+  "terrainCells": 256,
+  "seams": 480,
+  "sceneryCells": 52,
+  "knownEmptySceneryCells": 204,
+  "sourceBytes": 17844865,
+  "terrainManifestSHA256": "71f1330ce107aecd34adef19041c6f48c5492bb0ea1b668d147e4a148f108b69",
+  "sceneryManifestSHA256": "b94730367c57670d8844007bff2953c05e282f5ac29352cf7914d25041bfe642",
+  "originalArchitecturePieces": 1021,
+  "licensedPlacements": 6,
+  "maxNineCellResourceBytes": 3156260,
+  "maxRetainedCandidateResourceBytes": 6312520,
+  "districts": [
+    {
+      "id": "freight",
+      "x": 640,
+      "z": 640,
+      "en": "Freight exchange",
+      "uk": "Вантажний вузол"
+    },
+    {
+      "id": "viaduct",
+      "x": 2048,
+      "z": 2048,
+      "en": "River viaduct",
+      "uk": "Річковий віадук"
+    },
+    {
+      "id": "quarry",
+      "x": 3456,
+      "z": 640,
+      "en": "Quarry transfer",
+      "uk": "Кар’єрний термінал"
+    },
+    {
+      "id": "station",
+      "x": 640,
+      "z": 3200,
+      "en": "Station settlement",
+      "uk": "Привокзальне селище"
+    },
+    {
+      "id": "foundry",
+      "x": 2048,
+      "z": 3200,
+      "en": "Foundry works",
+      "uk": "Ливарний завод"
+    },
+    {
+      "id": "sidings",
+      "x": 3456,
+      "z": 3200,
+      "en": "Timber sidings",
+      "uk": "Лісовий роз’їзд"
+    }
+  ],
+  "landmarks": [
+    [
+      "freight-halls",
+      588,
+      640
+    ],
+    [
+      "loading-apron",
+      730,
+      640
+    ],
+    [
+      "river-trestle",
+      2048,
+      2048
+    ],
+    [
+      "north-bridge-portal",
+      2048,
+      1792
+    ],
+    [
+      "quarry-terraces",
+      3544,
+      640
+    ],
+    [
+      "transfer-tower",
+      3398,
+      696
+    ],
+    [
+      "station-canopy",
+      640,
+      3200
+    ],
+    [
+      "station-street",
+      576,
+      3200
+    ],
+    [
+      "foundry-chimneys",
+      1983,
+      3145
+    ],
+    [
+      "foundry-hall",
+      2110,
+      3200
+    ],
+    [
+      "timber-cranes",
+      3456,
+      3136
+    ],
+    [
+      "timber-stacks",
+      3521,
+      3200
+    ]
+  ],
+  "routes": [
+    {
+      "id": "freight-hall",
+      "from": [
+        588,
+        72,
+        574
+      ],
+      "to": [
+        588,
+        72,
+        706
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "freight-apron",
+      "from": [
+        500,
+        72,
+        550
+      ],
+      "to": [
+        780,
+        72,
+        550
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "viaduct-river-gap",
+      "from": [
+        1984,
+        36,
+        2048
+      ],
+      "to": [
+        2112,
+        36,
+        2048
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "viaduct-above-deck",
+      "from": [
+        2048,
+        72,
+        1760
+      ],
+      "to": [
+        2048,
+        72,
+        2336
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "quarry-under-conveyor",
+      "from": [
+        3456,
+        75,
+        554
+      ],
+      "to": [
+        3456,
+        75,
+        726
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "quarry-low-transfer",
+      "from": [
+        3336,
+        72,
+        560
+      ],
+      "to": [
+        3490,
+        72,
+        560
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "station-canopy",
+      "from": [
+        640,
+        71,
+        3128
+      ],
+      "to": [
+        640,
+        71,
+        3272
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "station-street",
+      "from": [
+        608,
+        70,
+        3096
+      ],
+      "to": [
+        608,
+        70,
+        3304
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "foundry-gantries",
+      "from": [
+        2048,
+        76,
+        3104
+      ],
+      "to": [
+        2048,
+        76,
+        3296
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "foundry-hall",
+      "from": [
+        2110,
+        75,
+        3108
+      ],
+      "to": [
+        2110,
+        75,
+        3292
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "timber-crane-line",
+      "from": [
+        3456,
+        72,
+        3104
+      ],
+      "to": [
+        3456,
+        72,
+        3296
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "timber-side-aisle",
+      "from": [
+        3427,
+        72,
+        3104
+      ],
+      "to": [
+        3427,
+        72,
+        3296
+      ],
+      "halfWidth": 2
+    }
+  ],
+  "spawns": [
+    {
+      "id": "freight-hall",
+      "position": {
+        "x": 588000,
+        "y": 72000,
+        "z": 574000
+      }
+    },
+    {
+      "id": "viaduct-river-gap",
+      "position": {
+        "x": 1984000,
+        "y": 36000,
+        "z": 2048000
+      }
+    },
+    {
+      "id": "quarry-under-conveyor",
+      "position": {
+        "x": 3456000,
+        "y": 75000,
+        "z": 554000
+      }
+    },
+    {
+      "id": "station-canopy",
+      "position": {
+        "x": 640000,
+        "y": 71000,
+        "z": 3128000
+      }
+    },
+    {
+      "id": "foundry-gantries",
+      "position": {
+        "x": 2048000,
+        "y": 76000,
+        "z": 3104000
+      }
+    },
+    {
+      "id": "timber-crane-line",
+      "position": {
+        "x": 3456000,
+        "y": 72000,
+        "z": 3104000
+      }
+    }
+  ],
+  "solidProbes": [
+    {
+      "id": "freight-wall",
+      "from": [
+        570,
+        72,
+        620
+      ],
+      "to": [
+        582,
+        72,
+        620
+      ]
+    },
+    {
+      "id": "quarry-terrace",
+      "from": [
+        3506,
+        68,
+        640
+      ],
+      "to": [
+        3530,
+        68,
+        640
+      ]
+    },
+    {
+      "id": "station-home",
+      "from": [
+        552,
+        69,
+        3200
+      ],
+      "to": [
+        580,
+        69,
+        3200
+      ]
+    },
+    {
+      "id": "foundry-stack",
+      "from": [
+        1970,
+        90,
+        3145
+      ],
+      "to": [
+        1992,
+        90,
+        3145
+      ]
+    },
+    {
+      "id": "timber-stack",
+      "from": [
+        3510,
+        67,
+        3200
+      ],
+      "to": [
+        3532,
+        67,
+        3200
+      ]
+    }
+  ],
+  "modelInputs": [
+    [
+      "north-tank-a",
+      "railway-1-0.json",
+      "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9",
+      [
+        234,
+        14.6,
+        58
+      ]
+    ],
+    [
+      "north-timber-a",
+      "railway-2-0.json",
+      "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b",
+      [
+        266,
+        14.6,
+        58
+      ]
+    ]
+  ],
+  "playerReady": false,
+  "limitations": [
+    "Original source composition; no Library or final-art acceptance.",
+    "Eight-metre terrain samples; narrower flight openings use matching visible/collision geometry.",
+    "Six representative districts and routes, not an uninterrupted whole-map playtest.",
+    "No moving trains, gameplay rewards or scored proof changes."
+  ]
+}

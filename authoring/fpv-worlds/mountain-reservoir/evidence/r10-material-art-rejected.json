@@ -1,0 +1,31 @@
+{
+  "format": "FPVReservoirMaterialArtReview.v1",
+  "candidate": "60b5161950563d76ef4bf87c97ed6f6d3f716632",
+  "revision": "r10",
+  "status": "rejected",
+  "method": "Actual unchanged admitted renderer at frozen52695; root visual observations, independently inspected retained images.",
+  "improvements": [
+    "Grass and gravel replace the former shared cracked-rock appearance.",
+    "Gravel reads as aggregate; geometry remains unchanged."
+  ],
+  "blockingIssue": "Grass close and ground approach have obvious repeating brown spots in diagonal regular rows, resembling a planted crop or checker pattern.",
+  "nextScope": "Remove the low-frequency brown soil motif while retaining128px dimensions, map count, UV metre scales, gravel, all geometry/material batches and physical courses. Freeze a distinct revision and preview.",
+  "screenshots": [
+    {
+      "path": "r9-grass-before-material-review.png",
+      "bytes": 104238,
+      "sha256": "2c926cd7894e288a12c6259cdfe0ba39db5d7acd8082667bf5d70b333a858df4"
+    },
+    {
+      "path": "r10-grass-after-material-review.png",
+      "bytes": 98222,
+      "sha256": "f55629e3d1eb8ba6dcebfface9ef3e7a610b09a711e18ca755aba5c83b9b23b2"
+    },
+    {
+      "path": "r10-gravel-after-material-review.png",
+      "bytes": 121847,
+      "sha256": "87cf211345c1794a45cb25a52deff00fe9c4e07a8788a0e6482e700d0288f3fa"
+    }
+  ],
+  "scope": "Visual art rejection despite passing asset and ordinary-flight/replay qualification; prior proofs and immutable candidate are retained."
+}

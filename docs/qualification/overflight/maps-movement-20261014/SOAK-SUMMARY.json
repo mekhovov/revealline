@@ -1,0 +1,2027 @@
+{
+  "schema": "OverflightReferenceSoakSummaryV1",
+  "runtimeCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "rawSha256": "b9547ec71e4f6a77be7b82bd5c78045cfc1e1ce14964e5769085a8e5e06a7db6",
+  "capturedAt": "2026-10-14T15:12:00.652Z",
+  "lifecycleCompleted": true,
+  "performancePassed": false,
+  "environmentNote": "Background build and other desktop work were present; retained as observed, not removed from the result.",
+  "trialValid": true,
+  "invalidReasons": [],
+  "clock": {
+    "steps": 55801,
+    "droppedSeconds": 0,
+    "accumulator": 0.0038333333333531
+  },
+  "measurementWindow": {
+    "index": 1,
+    "complete": true,
+    "measuredSeconds": 899.9860999999996,
+    "cadenceMs": {
+      "samples": 78764,
+      "p50": 9.700000000186265,
+      "p95": 22.59999999962747,
+      "p99": 30.100000000558794,
+      "worst": 258.20000000018626
+    },
+    "cadenceHz": 87.51690720556688,
+    "slowFraction": 0.005484739220963892,
+    "passes": false
+  },
+  "resourceSampleCount": 62,
+  "resourceRangeSeconds": [
+    0,
+    915.1
+  ],
+  "canvasCounts": [
+    1
+  ],
+  "atlasByteCounts": [
+    28467840
+  ],
+  "poolConfigurations": [
+    {
+      "effects": 512,
+      "enemies": 2500,
+      "pickups": 2048
+    }
+  ],
+  "spriteTimeline": [
+    {
+      "time": 0,
+      "allocatedSprites": 1355
+    },
+    {
+      "time": 15,
+      "allocatedSprites": 1801
+    },
+    {
+      "time": 60,
+      "allocatedSprites": 1808
+    },
+    {
+      "time": 135.01666666666668,
+      "allocatedSprites": 1815
+    },
+    {
+      "time": 150.01666666666668,
+      "allocatedSprites": 1823
+    },
+    {
+      "time": 435.05,
+      "allocatedSprites": 1829
+    },
+    {
+      "time": 495.05,
+      "allocatedSprites": 1843
+    }
+  ],
+  "spriteStableSampleCount": 29,
+  "spriteStableFromSeconds": 495.05,
+  "finalRendererAllocatedSprites": 1843,
+  "contextLosses": 0,
+  "contextRestores": 0,
+  "heapUsedBytes": {
+    "min": 51112505,
+    "max": 119408327,
+    "first": 51475642,
+    "last": 58969502
+  },
+  "heapTotalBytes": {
+    "min": 73236739,
+    "max": 182106935,
+    "first": 144014226,
+    "last": 121191598
+  },
+  "limitations": [
+    "Lifecycle completion does not imply performance acceptance.",
+    "Fixed reference workload, not all full-content operations.",
+    "Heap snapshots are observational and are not retained-object or leak proof.",
+    "No repeated graphics loss was injected during this soak; restoration has separate evidence.",
+    "External target devices and player trials remain skipped, not passed."
+  ],
+  "resourceSamples": [
+    {
+      "time": 0,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 0,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 144,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1361,
+      "allocatedSprites": 1355,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 51475642,
+      "heapTotalBytes": 144014226,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 15,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 151,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1540,
+      "allocatedSprites": 1801,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 116215302,
+      "heapTotalBytes": 182097538,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 30,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 183,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1585,
+      "allocatedSprites": 1801,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 105988576,
+      "heapTotalBytes": 182102260,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 45,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 176,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1569,
+      "allocatedSprites": 1801,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 119408327,
+      "heapTotalBytes": 182106935,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 60,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 7,
+      "pickups": 480,
+      "warnings": 5,
+      "behaviorCues": 145,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1375,
+      "allocatedSprites": 1808,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 74424147,
+      "heapTotalBytes": 130898219,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 75,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 173,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1394,
+      "allocatedSprites": 1808,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 72758294,
+      "heapTotalBytes": 126698122,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 90,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 153,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1555,
+      "allocatedSprites": 1808,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 71614689,
+      "heapTotalBytes": 126961565,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 105.01666666666667,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 3,
+      "behaviorCues": 171,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1393,
+      "allocatedSprites": 1808,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 68356032,
+      "heapTotalBytes": 126958684,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 120.01666666666667,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 119,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 144,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1482,
+      "allocatedSprites": 1808,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 54535812,
+      "heapTotalBytes": 126698064,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 135.01666666666668,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 220,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1611,
+      "allocatedSprites": 1815,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 64074338,
+      "heapTotalBytes": 126434406,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 150.01666666666668,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 3,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1405,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 53960969,
+      "heapTotalBytes": 126698269,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 165.01666666666668,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 16,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1408,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 78323659,
+      "heapTotalBytes": 126961679,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 180.01666666666668,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 145,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1368,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 68059200,
+      "heapTotalBytes": 127224592,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 195.01666666666668,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 171,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 173,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1561,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 51112505,
+      "heapTotalBytes": 125140545,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 210.01666666666668,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 11,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1415,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 73260087,
+      "heapTotalBytes": 125404335,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 225.01666666666668,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 3,
+      "pickups": 480,
+      "warnings": 3,
+      "behaviorCues": 171,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1395,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 76623126,
+      "heapTotalBytes": 124615798,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 240.01666666666668,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 144,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1365,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 53778072,
+      "heapTotalBytes": 124617304,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 255.01666666666668,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 12,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1401,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 63515916,
+      "heapTotalBytes": 124877212,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 270.01666666666665,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 8,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1411,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 64154998,
+      "heapTotalBytes": 125139918,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 285.01666666666665,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 99,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1492,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 72838713,
+      "heapTotalBytes": 125811245,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 300.01666666666665,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 338,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 145,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1700,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 66479786,
+      "heapTotalBytes": 125550790,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 315.01666666666665,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 1,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 173,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1395,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 67185688,
+      "heapTotalBytes": 125812036,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 330.03333333333336,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 4,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1409,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 57746815,
+      "heapTotalBytes": 125549027,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 345.03333333333336,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 184,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 171,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1572,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 64924730,
+      "heapTotalBytes": 126074850,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 360.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 144,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1365,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 68347671,
+      "heapTotalBytes": 126336371,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 375.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 1,
+      "pickups": 480,
+      "warnings": 3,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1393,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 58174969,
+      "heapTotalBytes": 126336117,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 390.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 278,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1682,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 72871303,
+      "heapTotalBytes": 126597351,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 405.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 1,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1390,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 66117508,
+      "heapTotalBytes": 126598292,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 420.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 11,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 145,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1375,
+      "allocatedSprites": 1823,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 77464849,
+      "heapTotalBytes": 127221741,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 435.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 250,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 173,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1644,
+      "allocatedSprites": 1829,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 62953887,
+      "heapTotalBytes": 127072035,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 450.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 5,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1409,
+      "allocatedSprites": 1829,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 60131216,
+      "heapTotalBytes": 127076056,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 465.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 174,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 171,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1562,
+      "allocatedSprites": 1829,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 73063439,
+      "heapTotalBytes": 127617779,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 480.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 144,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1365,
+      "allocatedSprites": 1829,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 62683135,
+      "heapTotalBytes": 127601067,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 495.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 89,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1482,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 69191270,
+      "heapTotalBytes": 127335586,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 510.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 11,
+      "pickups": 480,
+      "warnings": 3,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1416,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 62363471,
+      "heapTotalBytes": 127599243,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 525.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 3,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1392,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 70590489,
+      "heapTotalBytes": 127862109,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 540.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 10,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 145,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1374,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 77346583,
+      "heapTotalBytes": 128124411,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 555.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 184,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 173,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1576,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 71935568,
+      "heapTotalBytes": 138075424,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 570.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 235,
+      "pickups": 480,
+      "warnings": 1,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1638,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 82805717,
+      "heapTotalBytes": 138080129,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 585.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 1,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 171,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1391,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 69006680,
+      "heapTotalBytes": 138084820,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 600.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 255,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 144,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1619,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 76764956,
+      "heapTotalBytes": 138089448,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 615.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 43,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1434,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 69850071,
+      "heapTotalBytes": 138307159,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 630.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 1,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1403,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 82884856,
+      "heapTotalBytes": 139147756,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 645.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 203,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1596,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 77422931,
+      "heapTotalBytes": 139152547,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 660.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 111,
+      "pickups": 480,
+      "warnings": 1,
+      "behaviorCues": 145,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1474,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 59576503,
+      "heapTotalBytes": 73236739,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 675.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 251,
+      "pickups": 480,
+      "warnings": 3,
+      "behaviorCues": 173,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1644,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 53951716,
+      "heapTotalBytes": 87128896,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 690.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 209,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1615,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 65285122,
+      "heapTotalBytes": 89227334,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 705.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 7,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 171,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1398,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 65780434,
+      "heapTotalBytes": 89490022,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 720.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 11,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 144,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1372,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 60763313,
+      "heapTotalBytes": 113083321,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 735.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 3,
+      "pickups": 480,
+      "warnings": 1,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1393,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 79220125,
+      "heapTotalBytes": 112821545,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 750.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 1,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1405,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 59290132,
+      "heapTotalBytes": 113083792,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 765.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 96,
+      "pickups": 480,
+      "warnings": 1,
+      "behaviorCues": 172,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1486,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 66642087,
+      "heapTotalBytes": 113346903,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 780.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 48,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 145,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1412,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 76602889,
+      "heapTotalBytes": 113605177,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 795.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 3,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 173,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1393,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 69558384,
+      "heapTotalBytes": 114130604,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 810.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 235,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 185,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1640,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 55018918,
+      "heapTotalBytes": 114393762,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 825.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 55,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 171,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1443,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 63299772,
+      "heapTotalBytes": 115965676,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 840.05,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 203,
+      "pickups": 480,
+      "warnings": 3,
+      "behaviorCues": 144,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1567,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 59700864,
+      "heapTotalBytes": 115180288,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 855.1,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 172,
+      "pickups": 480,
+      "warnings": 1,
+      "behaviorCues": 168,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1558,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 72680317,
+      "heapTotalBytes": 115441937,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 870.1,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 162,
+      "pickups": 480,
+      "warnings": 1,
+      "behaviorCues": 186,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1566,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 71406486,
+      "heapTotalBytes": 120683950,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 885.1,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 3,
+      "behaviorCues": 177,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1399,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 59765527,
+      "heapTotalBytes": 121354355,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 900.1,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 159,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 150,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1530,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 77022762,
+      "heapTotalBytes": 121405398,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 915.1,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 7,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 169,
+      "remains": {
+        "stored": 0,
+        "capacity": 1024,
+        "sequence": 0,
+        "evicted": 0,
+        "missed": 0
+      },
+      "defeats": 0,
+      "quads": 1394,
+      "allocatedSprites": 1843,
+      "atlasBytes": 28467840,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 58969502,
+      "heapTotalBytes": 121191598,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    }
+  ]
+}

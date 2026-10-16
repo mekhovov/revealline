@@ -1,0 +1,296 @@
+{
+  "sourceRevision": "25d086cbd580de5dc5b745ce088af283434df5ae",
+  "rendererSource": "Exact extracted package; no renderer overrides",
+  "origin": "http://127.0.0.1:9020",
+  "indexSHA256": "1e32c1fc5476d83bf67355efdfdd55959c56170c79420b4ec03d60ada57c31ea",
+  "worldCount": 20,
+  "packBytes": 15605575,
+  "files": {
+    "index.html": "5027db1d1a8d13a6facd84c7d7d0f69d258543788037353f6e521682762fb680",
+    "review.mjs": "c80a4e5ac3ce97eccf9da99f5a68d292c58f8d4044f2d48fd044f1062d95168d"
+  },
+  "storage": "No store imported, no install/save/worker registration calls. Separate origin.",
+  "status": "passed-bounded-native-first-course-static-render",
+  "worlds": [
+    {
+      "id": "mountain-reservoir",
+      "revision": "r16",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "bytes": 1379988,
+      "courses": 8,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-01.png",
+        "bytes": 99306,
+        "sha256": "45b5fd7af0a302a45fecf0db22a59d885fa46e61a92a1e45157defd28167a28f"
+      }
+    },
+    {
+      "id": "festival-grounds",
+      "revision": "r5",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "bytes": 1256875,
+      "courses": 8,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-02.png",
+        "bytes": 95371,
+        "sha256": "b6c709508439e77a75f7c24e03fe668efb5b1e07174d5c48c87655d021d03832"
+      }
+    },
+    {
+      "id": "harbor-docks",
+      "revision": "r4",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "bytes": 879213,
+      "courses": 8,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-03.png",
+        "bytes": 83140,
+        "sha256": "9fe388d765e2a112b530a8999f0644608bf6ba4eff6b56088d682ff1a951188c"
+      }
+    },
+    {
+      "id": "cc0-castle-court",
+      "revision": "r1",
+      "sha256": "ee6d8ee8ea5d981f49cdeaa52282a33d36de3f98321883b0cb7cbcc630356ed0",
+      "bytes": 160544,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-04.png",
+        "bytes": 61514,
+        "sha256": "c6b4a3cbea21a1bc4bf76a35f383e9b9821aeba7fbb77033372cd091633e655f"
+      }
+    },
+    {
+      "id": "cc0-city-plaza",
+      "revision": "r1",
+      "sha256": "08dd572b3812ffeac3ba1e87ef1890afa7e3d3f127493c189197d1739f1e78ce",
+      "bytes": 1289830,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-05.png",
+        "bytes": 68680,
+        "sha256": "974ff3953742dc5b3babbb792ee9640dd772c369be047a85c5c062f43da11be7"
+      }
+    },
+    {
+      "id": "cc0-construction-site",
+      "revision": "r1",
+      "sha256": "8d6f217d626c570815722fc23d04cd5297093ab0ff6a1f6886897a5d96ffe062",
+      "bytes": 2368301,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-06.png",
+        "bytes": 75138,
+        "sha256": "95e8199afa519f6f92929048f6f4dda4430d1fd08a80b215f18e4b76019d6851"
+      }
+    },
+    {
+      "id": "cc0-frontier-camp",
+      "revision": "r1",
+      "sha256": "4c9b122ccfb6b28b46dd2b198b8d15477fde456d91a2f416498bf40948a5e92b",
+      "bytes": 172377,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-07.png",
+        "bytes": 58731,
+        "sha256": "51c8038e227cffe744f3d563e858077f4c3acda26a9553174b3c7d29a98027f8"
+      }
+    },
+    {
+      "id": "cc0-industrial-yard",
+      "revision": "r1",
+      "sha256": "74fc5afb38af089a0bf58740640b070532d36cdd181011b9ef2fb8742d496273",
+      "bytes": 1054654,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-08.png",
+        "bytes": 62077,
+        "sha256": "745dd88b1ea4ff49ea97badf703f8a535bd5c8e79eaaa97fade708f61dad8a12"
+      }
+    },
+    {
+      "id": "cc0-orbital-workshop",
+      "revision": "r1",
+      "sha256": "916d8da5a1b2b29ddc20ef7bf090fbc38038ea926d7bdd1a0e560ce513c5e71c",
+      "bytes": 155913,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-09.png",
+        "bytes": 61024,
+        "sha256": "ee056d5e0f00ab183436c8457f2780f685021384c4cf6d8af39f6c2665c9da9f"
+      }
+    },
+    {
+      "id": "cc0-pine-clearing",
+      "revision": "r1",
+      "sha256": "59c448a1226ad03a3881322ff7d9d766cc7ca35ef888267665fe66399cfe8b3f",
+      "bytes": 131266,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-10.png",
+        "bytes": 60550,
+        "sha256": "48062d7e26d3d84bb361e6b50b667d1ab9eed407eff22f5d52a77e8be7472564"
+      }
+    },
+    {
+      "id": "cc0-platform-garden",
+      "revision": "r1",
+      "sha256": "019d00195bcb03dd9f202e12cd948d369cdda271517bf4d493e68440b8e406b0",
+      "bytes": 159176,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-11.png",
+        "bytes": 58798,
+        "sha256": "b23086a69e2fefc3c9c677de26f3afc930ed16bfb5f3e857d1a5ff7f70bb5ce1"
+      }
+    },
+    {
+      "id": "cc0-race-paddock",
+      "revision": "r1",
+      "sha256": "33443ec2cb18a9d4c8874f564e3644fd0cd36c03680d1b37cfd01bab1f9a949e",
+      "bytes": 394615,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-12.png",
+        "bytes": 59559,
+        "sha256": "de84cd3b93f6332a2ba07b33304e6b9cc2d718c1a7ce9f987cef842d6a940de1"
+      }
+    },
+    {
+      "id": "cc0-road-lab",
+      "revision": "r1",
+      "sha256": "97fe29db831659500a8850ed0e0a0252c37b6a6c893b37536e1967404683c355",
+      "bytes": 63754,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-13.png",
+        "bytes": 63923,
+        "sha256": "123659257ff36680b3baa3375cddaf94e5dcf01e5cc950cd62a6c9adda216dd5"
+      }
+    },
+    {
+      "id": "cc0-rock-grotto",
+      "revision": "r1",
+      "sha256": "8f4809f5f07d625046ec58f810fca9d52d14ad177b5564f16f0ee73da187a2f5",
+      "bytes": 1433783,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-14.png",
+        "bytes": 64956,
+        "sha256": "a77d9389c06a89cc831d648100b4745827a94f7f7bacafe0a9523c2271a57c3d"
+      }
+    },
+    {
+      "id": "cc0-ruined-halls",
+      "revision": "r1",
+      "sha256": "01eb7bd2874bb07ff7617f792fa765ca1d8d3e6cad72445013a4c72e8c21324a",
+      "bytes": 1750695,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-15.png",
+        "bytes": 64677,
+        "sha256": "52cffb9a3cde3671c1ba26b9da10a0f309e2366be0dc0dd1fec429d938f33dd2"
+      }
+    },
+    {
+      "id": "cc0-shipyard",
+      "revision": "r1",
+      "sha256": "5b3f2251ff0fcbdfbd645a7f6394b2f13d23f544adc57fe2b8a8ccdcdce14e98",
+      "bytes": 608177,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-16.png",
+        "bytes": 59394,
+        "sha256": "d9f5fbe39447c174304af8ee97060a772eb816a87204c922d04e58f559812df2"
+      }
+    },
+    {
+      "id": "cc0-skate-plaza",
+      "revision": "r1",
+      "sha256": "388c68e57c43b4d3d450c57890b112408c0316e4e5e2d0e9eae00d9cb151e03b",
+      "bytes": 214473,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-17.png",
+        "bytes": 62863,
+        "sha256": "26ec4d2e2f1869459525c6dc28564f10d50c2c1beb7facc7f91ee9cb2c0e38e0"
+      }
+    },
+    {
+      "id": "cc0-village-green",
+      "revision": "r1",
+      "sha256": "3ca6c466023b6b764c47c70c15013b64d0af7ca4577104ff777707527d4192af",
+      "bytes": 620228,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-18.png",
+        "bytes": 59079,
+        "sha256": "83821147347446692b344a288637dadce562efda8b5c2c1a7a21b6604bac05fa"
+      }
+    },
+    {
+      "id": "cc0-woodland-camp",
+      "revision": "r1",
+      "sha256": "a7b0f6d52411131f6e03d25f5db1ef25209be2875422e0aad8fd0f155735b93c",
+      "bytes": 310434,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-19.png",
+        "bytes": 59419,
+        "sha256": "3c708316183b5fbe94be74952cb3ddd32bb1f4686d63d04f0d66fec20ab98161"
+      }
+    },
+    {
+      "id": "cc0-coaster-park",
+      "revision": "r1",
+      "sha256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "bytes": 1201279,
+      "courses": 1,
+      "nativeResult": "recognizable-nonblank-first-course-static-render",
+      "screenshot": {
+        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/world-review-20.png",
+        "bytes": 69633,
+        "sha256": "d909c44755da4dab9e2a0a3ccd5b5dea1405f0cc597ad979b746fa0048d5fc8f"
+      }
+    }
+  ],
+  "fixtureCorrection": "Initial import of world-library.mjs was HTTP 404 because package bundles that UI module. Review parses only SHA-pinned frozen index locally; production compiler/runtime/renderer remain exact package bytes.",
+  "nativeReview": {
+    "camera": "overview",
+    "quality": "balanced",
+    "flight": "disarmed tick 0, no simulation advancement",
+    "observations": [
+      "All twenty worlds were explicitly loaded in catalogue order. Exact identity, shader preparation and draw-returned-true outcomes were visible in the DOM.",
+      "Actual canvases were inspected and captured for each world. All had recognizable nonblank geometry and materials; no missing-scene visual failures were observed.",
+      "Coaster FPV view also showed a valid visible spawn.",
+      "No console errors observed."
+    ],
+    "qualityLimit": "Sixteen CC0 discovery layouts are mostly sparse props on flat square floors. This is not acceptance against the rich finished-world art standard.",
+    "limitations": [
+      "First authored course only for each world",
+      "Static rendering, not flight or mission completion",
+      "Balanced/Overview only across all twenty, not all presets or cameras",
+      "Not sustained FPS, physical-device, quota/eviction, browser-restart or network-wide offline qualification",
+      "Custom harness layout is not shipping HUD layout acceptance"
+    ]
+  }
+}

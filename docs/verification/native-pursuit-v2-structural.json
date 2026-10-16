@@ -1,0 +1,441 @@
+{
+  "format": "native-pursuit-structural-review.v1",
+  "date": "2026-10-04",
+  "sourceHead": "b754c4bf9c82d27e3f2cabedf67cdd158d524958",
+  "sourceState": "mutable-working-tree",
+  "committedSourceVerified": false,
+  "automatedSuites": "authored-not-run",
+  "stepsExecuted": 0,
+  "humanQualification": false,
+  "deviceQualification": false,
+  "publicReleaseQualified": false,
+  "retainedPackIdentity": "fpv-native-pursuit:49a87f729321e198",
+  "successorPackIdentity": "fpv-native-pursuit:0233a9dda4d96084",
+  "playlist": {
+    "format": "FPVPlaylist.v1",
+    "id": "native-pursuit",
+    "revision": "r2",
+    "title": {
+      "en": "Native Pursuit · Ground intentions",
+      "uk": "Наземне переслідування · Наміри цілей"
+    },
+    "entries": [
+      {
+        "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+        "levelId": "native-pursuit-runner-court"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+        "levelId": "native-pursuit-burst-lanes"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:0233a9dda4d96084",
+        "levelId": "native-pursuit-refuge-return"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+        "levelId": "native-pursuit-switchback-crossing"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:0233a9dda4d96084",
+        "levelId": "native-pursuit-meeting-yard"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+        "levelId": "native-pursuit-armor-windows"
+      }
+    ]
+  },
+  "transport": {
+    "packBytes": 7117,
+    "editableZipBytes": 7176,
+    "nativePackRoundTrip": true,
+    "studioEditableRoundTrip": true
+  },
+  "sources": [
+    {
+      "path": "optional-practice/civilian-fpv/world-pursuit.mjs",
+      "bytes": 25289,
+      "sha256": "e496582854670dae5ed75e3f5e0fdeb3d19b7c3a6973d0fdd8d14f6187861f13"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "bytes": 59130,
+      "sha256": "95b4547019dcc44d2fb7dd426718fe01ee824ad714967a61edf7ccafb0f71ce2"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-pursuit-editor.mjs",
+      "bytes": 8986,
+      "sha256": "c1ab754353a095a4c6206d4d353e0d500fd30440d2ed73b2aa426d0ec9b75270"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "bytes": 7559,
+      "sha256": "2d35af03d1df8b026c340b465577df9517e7d6f59df002b1f75235e611311992"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "bytes": 240703,
+      "sha256": "7b4fa89cf98335aee201b8061049c9c6818446c073ff938328e8f75a7344ef76"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "bytes": 932062,
+      "sha256": "6e9f6fe4c15a9218413cd71a8be022ad3b4685e132943ba91a109a97fd03afa1"
+    }
+  ],
+  "cases": [
+    {
+      "course": "native-pursuit-runner-court",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9801,
+      "mode": "self-level",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-runner-court",
+        "courseIdentity": "e498cea230650845",
+        "worldIdentity": "aef16c73b66d0475",
+        "mode": "self-level",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afb17d2d9aa14459",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-runner-court",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9801,
+      "mode": "acro",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-runner-court",
+        "courseIdentity": "e498cea230650845",
+        "worldIdentity": "aef16c73b66d0475",
+        "mode": "acro",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afb17d2d9aa14459",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-burst-lanes",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9802,
+      "mode": "self-level",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-burst-lanes",
+        "courseIdentity": "31e56ffcc92b07f6",
+        "worldIdentity": "8a34be53d787c63d",
+        "mode": "self-level",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afae7d2d9a9f0e82",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-burst-lanes",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9802,
+      "mode": "acro",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-burst-lanes",
+        "courseIdentity": "31e56ffcc92b07f6",
+        "worldIdentity": "8a34be53d787c63d",
+        "mode": "acro",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afae7d2d9a9f0e82",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-refuge-return",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9803,
+      "mode": "self-level",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-refuge-return",
+        "courseIdentity": "cdf69cc0a00914ca",
+        "worldIdentity": "0961d50abf122bb5",
+        "mode": "self-level",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afaa792d9a9b1edf",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-refuge-return",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9803,
+      "mode": "acro",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-refuge-return",
+        "courseIdentity": "cdf69cc0a00914ca",
+        "worldIdentity": "0961d50abf122bb5",
+        "mode": "acro",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afaa792d9a9b1edf",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-switchback-crossing",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9804,
+      "mode": "self-level",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-switchback-crossing",
+        "courseIdentity": "6f94db4ddde4db77",
+        "worldIdentity": "e5411a917f106d88",
+        "mode": "self-level",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afc2792d9aafb0c0",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-switchback-crossing",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9804,
+      "mode": "acro",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-switchback-crossing",
+        "courseIdentity": "6f94db4ddde4db77",
+        "worldIdentity": "e5411a917f106d88",
+        "mode": "acro",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afc2792d9aafb0c0",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-meeting-yard",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9805,
+      "mode": "self-level",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-meeting-yard",
+        "courseIdentity": "c582bd2cb5259724",
+        "worldIdentity": "e58fb0d301083b68",
+        "mode": "self-level",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afbf7d2d9aad81b5",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-meeting-yard",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9805,
+      "mode": "acro",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-meeting-yard",
+        "courseIdentity": "c582bd2cb5259724",
+        "worldIdentity": "e58fb0d301083b68",
+        "mode": "acro",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afbf7d2d9aad81b5",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-armor-windows",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9806,
+      "mode": "self-level",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-armor-windows",
+        "courseIdentity": "89d7eda8f49e58ec",
+        "worldIdentity": "46ab8f8de952ac12",
+        "mode": "self-level",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afbb7d2d9aa998de",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-armor-windows",
+      "revision": "r1",
+      "pursuit": "FlightPursuit.v1",
+      "seed": 9806,
+      "mode": "acro",
+      "identity": {
+        "model": "civilian-world-pursuit.v1",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-armor-windows",
+        "courseIdentity": "89d7eda8f49e58ec",
+        "worldIdentity": "46ab8f8de952ac12",
+        "mode": "acro",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afbb7d2d9aa998de",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-refuge-return",
+      "revision": "r2",
+      "pursuit": "FlightPursuit.v2",
+      "seed": 9803,
+      "mode": "self-level",
+      "identity": {
+        "model": "civilian-world-pursuit.v2",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-refuge-return",
+        "courseIdentity": "52b994833254a11e",
+        "worldIdentity": "0961d50abf122bb5",
+        "mode": "self-level",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afaa792d9a9b1edf",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-refuge-return",
+      "revision": "r2",
+      "pursuit": "FlightPursuit.v2",
+      "seed": 9803,
+      "mode": "acro",
+      "identity": {
+        "model": "civilian-world-pursuit.v2",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-refuge-return",
+        "courseIdentity": "52b994833254a11e",
+        "worldIdentity": "0961d50abf122bb5",
+        "mode": "acro",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afaa792d9a9b1edf",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-meeting-yard",
+      "revision": "r2",
+      "pursuit": "FlightPursuit.v2",
+      "seed": 9805,
+      "mode": "self-level",
+      "identity": {
+        "model": "civilian-world-pursuit.v2",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-meeting-yard",
+        "courseIdentity": "bc5b1fbf5f0ea130",
+        "worldIdentity": "e58fb0d301083b68",
+        "mode": "self-level",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afbf7d2d9aad81b5",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    },
+    {
+      "course": "native-pursuit-meeting-yard",
+      "revision": "r2",
+      "pursuit": "FlightPursuit.v2",
+      "seed": 9805,
+      "mode": "acro",
+      "identity": {
+        "model": "civilian-world-pursuit.v2",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "native-pursuit-meeting-yard",
+        "courseIdentity": "bc5b1fbf5f0ea130",
+        "worldIdentity": "e58fb0d301083b68",
+        "mode": "acro",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "afbf7d2d9aad81b5",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "nativeGeometryAdmission": true,
+      "studioCompileIdentity": true,
+      "stepsExecuted": 0,
+      "completionRecording": null
+    }
+  ]
+}

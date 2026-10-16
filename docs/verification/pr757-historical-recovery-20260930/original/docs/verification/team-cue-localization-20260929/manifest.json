@@ -1,0 +1,104 @@
+{
+  "parent": "f09146837cfcc5191c89e54d7f9afea56b2ef8e9",
+  "productionReview": "deferred-not-passed",
+  "cohorts": [
+    {
+      "name": "six focused files",
+      "pass": 67,
+      "fail": 0,
+      "skip": 0,
+      "durationMs": 1628.947625
+    },
+    {
+      "name": "complete actor layout",
+      "pass": 29,
+      "fail": 0,
+      "skip": 0,
+      "durationMs": 732.366
+    }
+  ],
+  "files": [
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 38347,
+      "sha256": "508e6531266bda057937165fd6228c18116a6c3328e584bb0e6e05e1a4d196b3"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1000071,
+      "sha256": "c4a49a9eb66ad73404c35eeb7c1e6ea0edbf2ac4bcb87d3768552b250d409e06"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "bytes": 446225,
+      "sha256": "406d8f892c041702351e02d432df51b16cdc86baec4c713c79d3b3663f4223c0"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 727993,
+      "sha256": "0d40a97d50a5f5a57813f33634ef51f782e2614dac5692a9f45f38dbdc30d29d"
+    },
+    {
+      "path": "game/test/coop-actor-layout.test.mjs",
+      "bytes": 38658,
+      "sha256": "7c5e5d4b4e79c069ac12c3911289b0d9ec6298cf11a1312c9e6423d093c2c1dd"
+    },
+    {
+      "path": "game/test/coop-cue-localization.test.mjs",
+      "bytes": 13078,
+      "sha256": "7dff99903975f708cb540922d03c4217c1475ad3c989a4864c31121490030e94"
+    },
+    {
+      "path": "authoring/prompts/team-responsive-layout.md",
+      "bytes": 4500,
+      "sha256": "df3b21f1450485df0f8c6ea40d81bcf33a26173f0c07563450834ebe027a057e"
+    },
+    {
+      "path": "docs/team-cue-overflow.md",
+      "bytes": 3272,
+      "sha256": "e9bbfc7efea01c81e1344cf26eaa984bb51ead52efe86af6f16a3d5cdb0da8a5"
+    },
+    {
+      "path": "docs/verification/team-cue-localization-20260929/README.md",
+      "bytes": 3806,
+      "sha256": "0e85475efbef79c594b141a53d819e8cbbf0fddacd7c3674d9720c4c3ae23ab2"
+    },
+    {
+      "path": "docs/verification/team-cue-localization-20260929/catalog-check.txt",
+      "bytes": 280,
+      "sha256": "65268f0b6856b833d1ae357958d3e6965ead5327947eaa5969b0fe1bb0edbeab"
+    },
+    {
+      "path": "docs/verification/team-cue-localization-20260929/focused.tap",
+      "bytes": 16180,
+      "sha256": "ba4fbabc1c11fe99c6e8401e4e712c01841df5e7518749a74350d68f86ff7fcd"
+    },
+    {
+      "path": "docs/verification/team-cue-localization-20260929/layout.tap",
+      "bytes": 6856,
+      "sha256": "f17d02a97bbc96863ac1fae71b32db10428111c6892b4c954f345763e5d261a1"
+    },
+    {
+      "path": "docs/verification/team-cue-localization-20260929/parent-label-red.tap.gz",
+      "bytes": 956,
+      "sha256": "59c3182a9e2368022851cc32f0983c8ab1ee8cbbd4432bb64bf155c5633eb7ab"
+    },
+    {
+      "path": "docs/verification/team-cue-localization-20260929/stale-layout-expectations.tap.gz",
+      "bytes": 2294,
+      "sha256": "c42a8461e96eae2862ed2c604aac540f901e8e86248e5a5906432c57ae2ff281"
+    }
+  ],
+  "preservedLogDecoding": [
+    {
+      "path": "docs/verification/team-cue-localization-20260929/parent-label-red.tap.gz",
+      "decodedBytes": 8552,
+      "decodedSha256": "25fb0a5fe1d6b80c5f29176379a5e062c60868a8a4cc8fb90ac12650d337ee6b"
+    },
+    {
+      "path": "docs/verification/team-cue-localization-20260929/stale-layout-expectations.tap.gz",
+      "decodedBytes": 13713,
+      "decodedSha256": "1ef5d63f80e796e01563f0f796b6b75abd1907ca07557b2345e62739c488004f"
+    }
+  ]
+}

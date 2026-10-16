@@ -1,0 +1,105 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-95",
+    "repository": "mekhovov/revealline-archive-95",
+    "url": "https://mekhovov.github.io/revealline-archive-95/"
+  },
+  "preservedRelease": {
+    "version": "v0.141.0",
+    "sourceRevision": "5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb",
+    "sourceTree": "32004bcd9834d335cd37e556d2fc424072bd12c2",
+    "tagObject": "e0829b8c93b4a60148b94ea5c44a40af65d97287",
+    "releaseId": 397251376,
+    "distributionSha256": "3d77fc686ade255c9e45506967dd88e3a92f9d6326977f0597e761be22f95354"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "6039fc4fce7ea06242d3ba03e460eb5601a090dc",
+    "mergeCommit": "f4aa06bd3986f5dac30e63b97b64123c6e6ecefa",
+    "mergeTree": "72a4589a606d360a0d2853d29305fb6c0d99fd38",
+    "review": "HOSTED_EXACT_HEAD_AND_MAIN_GATES_PASS",
+    "reviewNote": "No separate GitHub review object exists; the selector PR reviews the immutable archive authority and acceptance evidence."
+  },
+  "hosted": {
+    "exactHeadPrRun": 36251116270,
+    "exactMainRun": 36251208824,
+    "mainRunAttempt": 2,
+    "buildJob": 108429691437,
+    "deployJob": 108429821664,
+    "initialDeploymentAttempt": {
+      "attempt": 1,
+      "result": "FAIL",
+      "reason": "The new repository had not yet enabled workflow-based GitHub Pages; deploy-pages returned HTTP 404 after the complete build passed.",
+      "correction": "Enabled workflow-based Pages and reran the unchanged merge commit."
+    },
+    "receiptsArtifact": {
+      "id": 10909230920,
+      "name": "archive95-verification-receipts",
+      "size_in_bytes": 69151,
+      "digest": "sha256:dacbd16be0837805c115cfa1c4403162079e96bdf56629c5de1f3d8c0619e08e"
+    },
+    "pagesArtifact": {
+      "id": 10909146044,
+      "name": "github-pages",
+      "size_in_bytes": 545452449,
+      "digest": "sha256:863a74f65f97b6373e369ea19aff8320f577d1675ae3c243e6d20e7bfb7e9a0c"
+    },
+    "deployment": {
+      "id": 6680536506,
+      "statusId": 18878964112,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-95/",
+      "createdAt": "2026-09-26T15:16:40Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "37d860ffa2f7618991262eb22e1eec63b41a8490fbd29c789534b1fb1fef713c",
+      "receiptSha256": "3515a2297413fdc1b54ea554f9cd1c6a39e114f43f2abae01ade12088abf4382",
+      "zipReceiptSha256": "b2bd1c266fe60c30a24d16dac6803f25749d9870f9da72f9843941d0619051b3",
+      "files": 1312,
+      "bytes": 612009118,
+      "toolingCommit": "c45cd78bdc522bf95c267615fe3ad93dd77dff98",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies; HEAD every path to confirm exact final URL",
+    "files": 1312,
+    "bytes": 612009118,
+    "failures": 0,
+    "transportRetries": 0,
+    "skips": 0,
+    "allFinalURLsExact": true,
+    "authorityUnchanged": true,
+    "elapsedSeconds": 120.524,
+    "hostMetadataObservation": "GitHub Pages labels the retained MP3 audio/mp3. The audit accepted the previously observed project-host label and still verified the complete exact body; no media playback claim is added by this archive check."
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex built-in browser",
+    "base": "https://mekhovov.github.io/revealline-archive-95/",
+    "observations": [
+      "The Archive95 index identified the original v0.141.0 build and exposed its canonical Play v0.141.0 route.",
+      "The preserved route loaded the archived v0.141.0 RevealLine shell with Missions, Collection, and Settings controls.",
+      "Mission 01 First return showed one enemy and a Start mission action.",
+      "Continue and Start mission entered active gameplay; Pause was available, the timer advanced to 0:05, and status reported Reclaimed ground.",
+      "The built-in browser reported no page errors or warnings during the bounded journey."
+    ],
+    "pageErrors": 0,
+    "pageWarnings": 0,
+    "reloads": 0,
+    "retries": 0
+  },
+  "testPolicy": {
+    "longSourceSuites": "waived",
+    "reportedAsPassed": false,
+    "blockingEvidence": [
+      "exact original release ZIP extraction",
+      "complete inventory reread",
+      "full public byte audit",
+      "bounded archive browser journey"
+    ]
+  },
+  "scope": "Immutable v0.141.0 preservation, exact public-byte audit, and bounded archive index, game-shell, mission-entry, and active-gameplay acceptance. Physical-device/controller, renewed offline, soundtrack listening, and extended gameplay acceptance are outside this archive admission."
+}

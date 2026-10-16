@@ -1,0 +1,51 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-94",
+  "infrastructureCommit": "7aa32a48e9817b7ca867cb0735c99f72f6d67b96",
+  "deploymentId": 6679236898,
+  "deploymentStatusId": 18876086811,
+  "versions": [
+    "v0.132.5"
+  ],
+  "surface": "agent-browser Chromium",
+  "sequence": [
+    "Opened the Archive94 index and observed the original v0.132.5 preservation label and Play v0.132.5 route.",
+    "Opened the preserved route and observed the RevealLine game shell for the archived v0.132.5 build.",
+    "Activated Start and observed the First return mission screen with its mission-entry controls.",
+    "Inspected browser page errors before and after mission entry; none were reported."
+  ],
+  "observed": {
+    "archiveDocumentTitle": "RevealLine archive 94",
+    "archiveHeading": "RevealLine archive 94",
+    "archiveReleaseLabel": "The original v0.132.5 build, preserved for comparison and historical play.",
+    "gameDocumentTitle": "Reveal / Line",
+    "gameShellLoaded": true,
+    "gameShellControls": [
+      "Start",
+      "Versus",
+      "Team",
+      "Missions",
+      "Collection",
+      "Settings",
+      "More"
+    ],
+    "missionEntryLoaded": true,
+    "missionHeading": "First return",
+    "pageErrors": 0,
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Historical online preservation: complete exact-byte public audit plus a fresh bounded archive index, archived game-shell, and mission-entry check.",
+  "limitations": [
+    "Long source suites remained waived under the temporary fast-release policy and are not reported as passed.",
+    "No renewed physical touch/controller, comprehensive offline, or extended gameplay acceptance is claimed.",
+    "This admission preserves v0.132.5; v0.141.0 is the separate immutable release selected by the controller change."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-94-v01325/public-acceptance.json",
+      "sha256": "1f218baef5e1344830c8fc398999c76a3affd14f18d00efc411b542e0468ea41"
+    }
+  ]
+}

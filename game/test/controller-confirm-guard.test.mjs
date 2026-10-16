@@ -1,406 +1,270 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
-import { createControllerRouter } from '../ui/controller-router.mjs';
-import { resolveControllerBindings } from '../controller-bindings.mjs';
 
-function setup(t, options = {}) {
-  const { guardNow, ...routerOptions } = options;
-  const pad = {
-    index: 0,
-    id: 'Steam Deck',
-    connected: true,
-    mapping: 'standard',
-    axes: [0, 0, 0, 0],
-    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
-  };
-  let pads = [pad],
-    unavailable = false,
-    nativeEvents = 0;
-  const router = createControllerRouter({
-    autoJoin: true,
-    navigationAliases: true,
-    eventTarget: null,
-    readPads: () => {
-      if (unavailable) throw new Error('Unavailable');
-      return pads;
-    },
-    ...routerOptions,
-  });
+function setup(t) {
+  let time = 100,
+    nativeActivations = 0,
+    programmaticActivations = 0;
   const doc = new EventTarget();
   doc.defaultView = new EventTarget();
   const guard = attachControllerConfirmGuard({
     document: doc,
-    confirmPressed: router.menuConfirmPressed,
-    ...(guardNow ? { now: guardNow } : {}),
+    now: () => time,
   });
-  for (const type of [
-    'keydown',
-    'keypress',
-    'keyup',
-    'pointerdown',
-    'pointerup',
-    'mousedown',
-    'mouseup',
-    'click',
-  ])
-    doc.addEventListener(type, () => nativeEvents++);
-  const sample = (scope = 'menu') => router.sample({ scope });
   const emit = (type, properties = {}) => {
     const event = new Event(type, { cancelable: true });
     for (const [key, value] of Object.entries(properties))
       Object.defineProperty(event, key, { value });
     doc.dispatchEvent(event);
-    return event.defaultPrevented;
+    return event;
   };
-  sample();
-  t.after(() => {
-    guard.destroy();
-    router.destroy();
+  const target = {
+    id: 'sound',
+    click() {
+      const event = emit('click', { button: 0, detail: 0, isTrusted: false });
+      if (!event.defaultPrevented) programmaticActivations++;
+    },
+  };
+  doc.addEventListener('click', (event) => {
+    if (!event.defaultPrevented && event.isTrusted === true) nativeActivations++;
   });
+  t.after(() => guard.destroy());
   return {
-    pad,
-    router,
-    guard,
     doc,
-    sample,
+    guard,
+    target,
     emit,
-    get nativeEvents() {
-      return nativeEvents;
+    setTime(value) {
+      time = value;
     },
-    setPads: (value) => {
-      pads = value;
+    get nativeActivations() {
+      return nativeActivations;
     },
-    deny: () => {
-      unavailable = true;
+    get programmaticActivations() {
+      return programmaticActivations;
     },
   };
 }
 
-for (const key of ['Enter', ' '])
-  for (const order of ['native-first', 'gamepad-first'])
-    test(`${key === ' ' ? 'Space' : 'Enter'} mirrored from A is consumed ${order}, including keyup`, (t) => {
-      const h = setup(t);
-      h.pad.buttons[0].pressed = true;
-      if (order === 'gamepad-first') assert.equal(h.sample().ui.confirm, true);
-      assert.equal(h.emit('keydown', { key }), true);
-      if (order === 'native-first') assert.equal(h.sample().ui.confirm, true);
-      assert.equal(h.emit('keydown', { key, repeat: true }), true);
-      assert.equal(h.sample().ui.confirm, false, 'Holding A cannot apply twice');
-      h.pad.buttons[0].pressed = false;
-      h.sample();
-      assert.equal(
-        h.emit('keyup', { key }),
-        true,
-        'Space release cannot activate a second control',
-      );
-      assert.equal(h.nativeEvents, 0, 'No native input reaches the menu cancellation handler');
-      h.pad.buttons[0].pressed = true;
-      assert.equal(h.sample().ui.confirm, true, 'A separate press is still accepted');
-    });
+test('Gamepad-first keyboard, pointer, and click echoes are consumed until release commit', (t) => {
+  const h = setup(t);
+  h.guard.begin(h.target, { buttons: [0], gamepadTimestamp: 10 });
+  for (const type of ['keydown', 'keypress', 'keyup'])
+    assert.equal(h.emit(type, { key: 'Enter' }).defaultPrevented, true);
+  const pointer = {
+    button: 0,
+    pointerId: 7,
+    pointerType: 'touch',
+    isPrimary: true,
+    isTrusted: true,
+    sourceCapabilities: { firesTouchEvents: true },
+  };
+  for (const type of ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click'])
+    assert.equal(h.emit(type, pointer).defaultPrevented, true);
+  assert.equal(h.guard.activate(h.target), true);
+  assert.equal(h.programmaticActivations, 1);
+  h.guard.finish();
+  assert.equal(h.emit('click', pointer).defaultPrevented, true);
+  assert.equal(h.programmaticActivations, 1);
+});
 
-for (const order of ['native-first', 'gamepad-first'])
-  test(`A plus a desktop mouse click is consumed ${order}, while controller .click() runs`, (t) => {
+test('a release-only trusted click cannot reverse a committed controller action', (t) => {
+  const h = setup(t);
+  h.guard.begin(h.target);
+  assert.equal(h.guard.activate(h.target), true);
+  h.guard.finish();
+  h.setTime(1100);
+  assert.equal(h.emit('click', { button: -1, detail: 0, isTrusted: true }).defaultPrevented, true);
+  assert.equal(h.programmaticActivations, 1);
+  assert.equal(h.nativeActivations, 0);
+});
+
+test('click activation uses the primary button, not the PointerEvent isPrimary default', (t) => {
+  const h = setup(t);
+  const click = {
+    button: 0,
+    pointerId: 1,
+    pointerType: 'mouse',
+    isPrimary: false,
+    isTrusted: true,
+  };
+  h.guard.begin(h.target);
+  h.emit('pointerdown', { ...click, isPrimary: true });
+  h.guard.activate(h.target);
+  h.guard.finish();
+  h.emit('pointerup', { ...click, isPrimary: true });
+  assert.equal(h.emit('click', click).defaultPrevented, true);
+  assert.equal(h.programmaticActivations, 1);
+  assert.equal(h.nativeActivations, 0);
+  h.setTime(1400);
+  assert.equal(h.emit('click', click).defaultPrevented, false);
+  h.setTime(1420);
+  assert.equal(h.guard.begin(h.doc), 'native');
+  assert.equal(h.guard.activate(h.target), false);
+  assert.equal(h.programmaticActivations, 1);
+  assert.equal(h.nativeActivations, 1);
+});
+
+for (const event of [
+  { button: 0, pointerId: 1, pointerType: 'mouse', isPrimary: true, isTrusted: true },
+  { button: 0, pointerId: 2, pointerType: 'touch', isPrimary: true, isTrusted: true },
+  { button: 0, pointerId: 3, pointerType: 'pen', isPrimary: true, isTrusted: true },
+  {
+    button: 0,
+    pointerId: 4,
+    pointerType: 'mouse',
+    isPrimary: true,
+    isTrusted: true,
+    sourceCapabilities: { firesTouchEvents: true },
+  },
+])
+  test(`a primary ${event.pointerType} representation is owned by the transaction`, (t) => {
     const h = setup(t);
-    const mouse = { button: 0, pointerType: 'mouse', detail: 1, isTrusted: true };
-    h.pad.buttons[0].pressed = true;
-    if (order === 'gamepad-first') assert.equal(h.sample().ui.confirm, true);
-    assert.equal(h.emit('pointerdown', mouse), true);
-    assert.equal(h.emit('mousedown', mouse), true);
-    if (order === 'native-first') assert.equal(h.sample().ui.confirm, true);
-    assert.equal(
-      h.emit('click', { button: 0, detail: 0 }),
-      false,
-      'Programmatic controller click reaches its target',
-    );
-    h.pad.buttons[0].pressed = false;
-    h.sample();
-    assert.equal(h.emit('pointerup', mouse), true);
-    assert.equal(h.emit('mouseup', mouse), true);
-    assert.equal(h.emit('click', mouse), true);
-    assert.equal(h.nativeEvents, 1);
-    assert.equal(h.emit('pointerdown', mouse), false, 'Next ordinary mouse gesture is usable');
-    assert.equal(h.emit('click', mouse), false);
+    h.guard.begin(h.target);
+    assert.equal(h.emit('pointerdown', event).defaultPrevented, true);
+    assert.equal(h.emit('pointerup', event).defaultPrevented, true);
+    assert.equal(h.emit('click', event).defaultPrevented, true);
+    assert.equal(h.guard.activate(h.target), true);
+    h.guard.finish();
+    assert.equal(h.programmaticActivations, 1);
   });
 
-test('menu confirm survives resume and its native tail cannot pause the new flight', (t) => {
+test('a trusted native-first activation remains the winner for a five-second hold', (t) => {
   const h = setup(t);
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.sample().ui.confirm, true);
-  h.router.clear();
-  h.sample('flight');
-  assert.equal(h.emit('keydown', { key: ' ' }), true);
-  h.pad.buttons[0].pressed = false;
-  h.sample('flight');
-  assert.equal(h.emit('keyup', { key: ' ' }), true);
-  h.pad.buttons[0].pressed = true;
-  assert.equal(
-    h.emit('keydown', { key: ' ' }),
-    false,
-    'A new flight gesture is not a menu confirm',
-  );
+  assert.equal(h.emit('click', { button: -1, detail: 0, isTrusted: true }).defaultPrevented, false);
+  assert.equal(h.nativeActivations, 1);
+  h.setTime(120);
+  assert.equal(h.guard.begin(h.doc), 'native');
+  h.setTime(5120);
+  assert.equal(h.guard.activate(h.target), false);
+  h.guard.finish();
+  assert.equal(h.programmaticActivations, 0);
+  assert.equal(h.nativeActivations, 1);
 });
 
-test('a sampled Confirm owns delayed keyboard and mouse echoes after A is released', (t) => {
-  let time = 100;
-  const h = setup(t, { guardNow: () => time });
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.sample().ui.confirm, true);
+test('an unrelated or stale native activation does not suppress release commit', (t) => {
+  const h = setup(t);
+  h.emit('click', { button: 0, detail: 1, isTrusted: true });
+  h.setTime(400);
+  h.guard.begin(h.target);
+  assert.equal(h.guard.activate(h.target), true);
+  h.guard.finish();
+  assert.equal(h.nativeActivations, 1);
+  assert.equal(h.programmaticActivations, 1);
+});
+
+test('rapid deliberate transactions each activate once', (t) => {
+  const h = setup(t);
+  h.guard.begin(h.target, { buttons: [0] });
+  h.guard.activate(h.target);
+  h.guard.finish();
+  h.setTime(132);
+  h.guard.begin(h.target, { buttons: [0] });
+  h.guard.activate(h.target);
+  h.guard.finish();
+  assert.equal(h.programmaticActivations, 2);
+});
+
+test('legacy observed hosts activate once per press without opening a release transaction', (t) => {
+  const h = setup(t);
   h.guard.observe(true);
-  h.pad.buttons[0].pressed = false;
-  h.sample();
+  assert.equal(h.guard.activate(h.target), true);
+  assert.equal(h.guard.activate(h.target), false);
+  assert.equal(h.guard.active(), false);
   h.guard.observe(false);
-
-  time = 350;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), true);
-  assert.equal(h.emit('keypress', { key: 'Enter' }), true);
-  assert.equal(h.emit('keyup', { key: 'Enter' }), true);
-  const mouse = { button: 0, pointerType: 'mouse', detail: 1, isTrusted: true };
-  assert.equal(h.emit('pointerdown', mouse), true);
-  assert.equal(h.emit('pointerup', mouse), true);
-  assert.equal(h.emit('click', mouse), true);
-
-  time = 1351;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), false);
-  assert.equal(h.emit('pointerdown', mouse), false);
-});
-
-test('a trusted click-only Steam echo is consumed while controller click() remains usable', (t) => {
-  let time = 100;
-  const h = setup(t, { guardNow: () => time });
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.sample().ui.confirm, true);
+  h.setTime(1400);
   h.guard.observe(true);
-  assert.equal(
-    h.emit('click', { button: 0, detail: 0 }),
-    false,
-    'the controller adapter programmatic click reaches the chosen control',
-  );
-  h.pad.buttons[0].pressed = false;
-  h.sample();
-  h.guard.observe(false);
-
-  time = 1100;
-  assert.equal(
-    h.emit('click', { button: 0, detail: 0, isTrusted: true }),
-    true,
-    'a release-activated trusted Chrome click cannot apply the action twice',
-  );
-  time = 1351;
-  assert.equal(
-    h.emit('click', { button: 0, detail: 0, isTrusted: true }),
-    false,
-    'a later independent trusted click remains usable',
-  );
+  assert.equal(h.guard.activate(h.target), true);
+  assert.equal(h.guard.active(), false);
+  assert.equal(h.programmaticActivations, 2);
 });
 
-test('a trusted Steam click arriving before the next gamepad frame is consumed', (t) => {
+test('synchronous host input cleanup cannot split a committed release transaction', (t) => {
+  const events = [];
+  let guard;
+  const doc = new EventTarget();
+  doc.defaultView = new EventTarget();
+  const target = {
+    id: 'start',
+    click() {
+      guard.cancel('input-clear');
+    },
+  };
+  guard = attachControllerConfirmGuard({
+    document: doc,
+    now: () => 100,
+    onTrace: (event) => events.push(event.event),
+  });
+  t.after(() => guard.destroy());
+  guard.begin(target);
+  assert.equal(guard.activate(target), true);
+  guard.finish();
+  assert.deepEqual(events.slice(0, 3), ['transaction-start', 'commit', 'transaction-finish']);
+});
+
+for (const boundary of ['blur', 'visibilitychange'])
+  test(`a synchronous ${boundary} inside activation cannot poison the next Confirm`, (t) => {
+    const h = setup(t);
+    let handedOff = false;
+    h.doc.addEventListener('click', (event) => {
+      if (handedOff || event.defaultPrevented) return;
+      handedOff = true;
+      const target = boundary === 'blur' ? h.doc.defaultView : h.doc;
+      target.dispatchEvent(new Event(boundary));
+    });
+    h.guard.begin(h.target);
+    assert.equal(h.guard.activate(h.target), true);
+    h.guard.finish();
+    assert.equal(h.programmaticActivations, 1);
+
+    // Model a fresh neutral-gated gesture after focus returns and the echo expires.
+    h.setTime(1500);
+    h.guard.begin(h.target);
+    assert.equal(h.guard.activate(h.target), true);
+    h.guard.finish();
+    assert.equal(h.programmaticActivations, 2);
+    assert.equal(h.emit('click', { button: 0, isTrusted: true }).defaultPrevented, true);
+    assert.equal(h.nativeActivations, 0, 'The new gesture still owns its native echo.');
+  });
+
+test('cancel and blur retire a transaction without activation', (t) => {
   const h = setup(t);
-  h.pad.buttons[0].pressed = true;
-  assert.equal(
-    h.emit('click', { button: 0, detail: 0, isTrusted: true }),
-    true,
-    'the live gamepad probe owns a native-first click',
-  );
-  assert.equal(h.sample().ui.confirm, true, 'the same press still reaches controller navigation');
-  assert.equal(
-    h.emit('click', { button: 0, detail: 0 }),
-    false,
-    'controller navigation can still invoke the selected control',
-  );
-});
-
-test('a native click that wins the first frame suppresses the matching controller click', (t) => {
-  let time = 100;
-  const h = setup(t, { guardNow: () => time });
-
-  assert.equal(
-    h.emit('click', {
-      button: -1,
-      pointerId: -1,
-      pointerType: '',
-      detail: 0,
-      isTrusted: true,
-    }),
-    false,
-    'the first trusted activation remains usable before Gamepad state catches up',
-  );
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.sample().ui.confirm, true);
-  h.guard.observe(true);
-  time = 116;
-  assert.equal(
-    h.emit('click', { button: 0, detail: 0 }),
-    true,
-    'the later controller .click() cannot apply the same press twice',
-  );
-  assert.equal(h.nativeEvents, 1, 'exactly one activation reaches the control');
-});
-
-test('a long-held A owns its keyboard and non-pointer release without a polling deadline', (t) => {
-  let time = 100;
-  const h = setup(t, { guardNow: () => time });
-
-  assert.equal(h.emit('keydown', { key: ' ' }), false, 'native input can lead Gamepad state');
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.sample().ui.confirm, true);
-  h.guard.observe(true);
-
-  time = 10_000;
-  h.pad.buttons[0].pressed = false;
-  h.sample();
-  h.guard.observe(false);
-  assert.equal(h.emit('keyup', { key: ' ' }), true, 'release default is canceled');
-  assert.equal(
-    h.emit('click', {
-      button: -1,
-      pointerId: -1,
-      pointerType: '',
-      detail: 0,
-      isTrusted: true,
-    }),
-    true,
-    'the release click is consumed even when it is not a mouse click',
-  );
-  assert.equal(h.nativeEvents, 1, 'only the leading keydown reaches native listeners');
-});
-
-test('a delayed native tail cannot activate the first control after paused Home opens', (t) => {
-  let time = 100,
-    homeOpen = false,
-    resumed = false;
-  const h = setup(t, { guardNow: () => time });
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.sample().ui.confirm, true);
-  h.guard.observe(true);
-  homeOpen = true;
-  h.pad.buttons[0].pressed = false;
-  h.sample();
-
-  time = 260;
-  const prevented = h.emit('keydown', { key: 'Enter' });
-  if (!prevented) {
-    homeOpen = false;
-    resumed = true;
-  }
-  h.emit('keyup', { key: 'Enter' });
-  assert.equal(prevented, true);
-  assert.equal(homeOpen, true);
-  assert.equal(resumed, false);
-});
-
-test('the echo window follows a long-held A press through its release', (t) => {
-  let time = 100;
-  const h = setup(t, { guardNow: () => time });
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.sample().ui.confirm, true);
-  h.guard.observe(true);
-  time = 1200;
-  h.guard.observe(true);
-  h.pad.buttons[0].pressed = false;
-  h.sample();
-  h.guard.observe(false);
-
-  time = 1600;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), true);
-  assert.equal(h.emit('keyup', { key: 'Enter' }), true);
-  time = 2451;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), false);
-});
-
-test('a lifecycle boundary blocks stale Confirm until a neutral frame, then restores keyboard', (t) => {
-  let time = 100;
-  const h = setup(t, { guardNow: () => time });
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.sample().ui.confirm, true);
-  h.guard.observe(true);
-  h.guard.requireNeutral();
-
-  time = 5000;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), true, 'held Confirm remains authoritative');
-  assert.equal(h.emit('keyup', { key: 'Enter' }), true);
-  h.pad.buttons[0].pressed = false;
-  h.sample();
-  h.guard.observe(false);
-  assert.equal(h.emit('keydown', { key: 'Enter' }), false, 'fresh keyboard works after neutral');
-});
-
-test('idle controllers do not suppress keyboard, mouse, touch, pen, text, or shortcuts', (t) => {
-  const h = setup(t);
-  for (const key of ['Enter', ' ', 'x', 'ArrowDown'])
-    assert.equal(h.emit('keydown', { key }), false);
-  assert.equal(h.emit('pointerdown', { button: 0, pointerType: 'mouse' }), false);
-  h.pad.buttons[0].pressed = true;
-  for (const pointerType of ['touch', 'pen']) {
-    const event = { button: 0, pointerType, detail: 1 };
-    for (const type of ['pointerdown', 'pointerup', 'click'])
-      assert.equal(h.emit(type, event), false);
-  }
-  assert.equal(
-    h.emit('pointerdown', { button: 0, sourceCapabilities: { firesTouchEvents: true } }),
-    false,
-  );
-  assert.equal(h.emit('pointerdown', { button: 2, pointerType: 'mouse' }), false);
-  assert.equal(h.emit('keydown', { key: 'x' }), false);
-  assert.equal(h.emit('keydown', { key: 'Enter', altKey: true }), false);
-});
-
-test('the guard follows custom Confirm bindings and default West alias', (t) => {
-  const h = setup(t);
-  h.pad.buttons[2].pressed = true;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), true);
-  h.emit('keyup', { key: 'Enter' });
-  h.pad.buttons[2].pressed = false;
-  const bindings = resolveControllerBindings(null);
-  [bindings.menu.buttons.confirm, bindings.menu.buttons.back] = [
-    bindings.menu.buttons.back,
-    bindings.menu.buttons.confirm,
-  ];
-  h.router.setBindings(bindings);
-  h.sample();
-  for (const index of [0, 2]) {
-    h.pad.buttons[index].pressed = true;
-    assert.equal(h.emit('keydown', { key: 'Enter' }), false);
-    h.pad.buttons[index].pressed = false;
-  }
-  h.pad.buttons[1].pressed = true;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), true);
-  assert.equal(h.sample().ui.confirm, true);
-});
-
-test('the live probe neither consumes edges nor adopts a different/disconnected controller', (t) => {
-  const h = setup(t);
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.router.menuConfirmPressed(), true);
-  assert.equal(h.router.menuConfirmPressed(), true);
-  assert.equal(h.sample().ui.confirm, true);
-  h.setPads([{ ...h.pad, id: 'Replacement controller' }]);
-  assert.equal(h.router.menuConfirmPressed(), false);
-  h.setPads([{ ...h.pad, connected: false }]);
-  assert.equal(h.router.menuConfirmPressed(), false);
-  h.setPads([{ ...h.pad, mapping: '' }]);
-  assert.equal(h.router.menuConfirmPressed(), false);
-  h.deny();
-  assert.equal(h.router.menuConfirmPressed(), false);
-});
-
-test('blur and disposal retire incomplete native gestures', (t) => {
-  const h = setup(t);
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), true);
+  h.guard.begin(h.target);
+  h.guard.cancel('disconnect');
+  assert.equal(h.programmaticActivations, 0);
+  h.setTime(1500);
+  h.guard.begin(h.target);
   h.doc.defaultView.dispatchEvent(new Event('blur'));
-  h.pad.buttons[0].pressed = false;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), false);
-  h.guard.destroy();
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.emit('keydown', { key: 'Enter' }), false);
+  assert.equal(h.guard.active(), false);
+  assert.equal(h.programmaticActivations, 0);
 });
 
-test('a canceled mouse gesture cannot suppress a later click', (t) => {
+test('touchscreen and keyboard work after the release grace period', (t) => {
   const h = setup(t);
-  h.pad.buttons[0].pressed = true;
-  assert.equal(h.emit('pointerdown', { button: 0, pointerType: 'mouse' }), true);
-  h.emit('pointercancel', { button: -1, pointerType: 'mouse' });
-  h.pad.buttons[0].pressed = false;
-  assert.equal(h.emit('click', { button: 0, pointerType: 'mouse', detail: 1 }), false);
+  h.guard.begin(h.target);
+  h.guard.activate(h.target);
+  h.guard.finish();
+  h.setTime(1351);
+  const touch = {
+    button: 0,
+    pointerId: 8,
+    pointerType: 'touch',
+    isPrimary: true,
+    isTrusted: true,
+  };
+  assert.equal(h.emit('pointerdown', touch).defaultPrevented, false);
+  assert.equal(h.emit('pointerup', touch).defaultPrevented, false);
+  assert.equal(h.emit('click', touch).defaultPrevented, false);
+  assert.equal(h.emit('keydown', { key: 'Enter' }).defaultPrevented, false);
+});
+
+test('modified keys and secondary clicks are never treated as Confirm echoes', (t) => {
+  const h = setup(t);
+  h.guard.begin(h.target);
+  assert.equal(h.emit('keydown', { key: 'Enter', altKey: true }).defaultPrevented, false);
+  assert.equal(
+    h.emit('pointerdown', { button: 2, pointerType: 'mouse', isTrusted: true }).defaultPrevented,
+    false,
+  );
 });

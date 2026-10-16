@@ -8,6 +8,13 @@ import { createServer } from 'node:http';
 import { gzipSync, brotliCompressSync } from 'node:zlib';
 import { setImmediate as nextTurn } from 'node:timers/promises';
 import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
+import { createOfficialDownloads, verifiedDownload } from '../official-downloads.mjs';
+import {
+  readOfflineDestination,
+  downloadOfflineDestination,
+  continueOfflineDestination,
+} from '../offline-navigation-recovery.mjs';
+import { downloadFiles } from '../download-catalogue.mjs';
 import { CONTENT_PROJECT_ITEM_LIMITS, CONTENT_ASSET_MAX_BYTES } from '../content-design/limits.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 const template = await fs.readFile(
@@ -28,7 +35,302 @@ const marker = {
 };
 const documentRef = { querySelector: () => ({ content: JSON.stringify(marker) }) };
 const locationRef = { href: `${scope}game/` };
+
+function navigationRequest(url) {
+  const request = new Request(url);
+  Object.defineProperty(request, 'mode', { value: 'navigate' });
+  return request;
+}
+
+test('explicit offline recovery preserves selection, then opens verified bytes', async () => {
+  const entries = [
+    ['game/index.html', 'Solo menu'],
+    ['game/downloads.html', 'Download confirmation'],
+  ];
+  const optional = [
+    ['game/couch/index.html', 'Versus document'],
+    ['game/couch/couch.mjs', 'Versus runtime'],
+    ['game/content/versus-chapter.json', 'Original chapter'],
+  ];
+  const files = optional.map(([path, body]) => ({
+    path,
+    kind: 'gameplay',
+    bytes: Buffer.byteLength(body),
+    sha256: digest(body),
+    mime: 'text/plain',
+  }));
+  const catalogue = {
+    format: 'revealline-offline-content.v2',
+    version: '2',
+    files,
+    groups: [
+      {
+        id: 'versus:exact',
+        title: 'Exact chapter',
+        kind: 'gameplay',
+        requires: [],
+        files: files.map((file) => file.path),
+      },
+    ],
+    destinations: [
+      {
+        path: 'game/couch/',
+        mode: 'versus',
+        routeId: 'whole-spatial-v11',
+        libraryId: 'opaque-original-owner',
+        groups: ['versus:exact'],
+        runtimeGroups: ['versus:exact'],
+      },
+    ],
+  };
+  let offline = false;
+  const h = host({ packageConsent: true, downloadFiles: files }, new Map(), {
+    entries,
+    fetch: (request) => {
+      if (offline) throw new Error('actual outbound requests blocked');
+      return new Response(
+        new Map(
+          [...entries, ...optional].map(([path, body]) => [new URL(path, scope).href, body]),
+        ).get(request.url),
+      );
+    },
+  });
+  await h.dispatch('install');
+  h.calls.length = 0;
+  offline = true;
+  const original = new URL(
+    'game/couch/?journey=whole-spatial-v11&library-mission=opaque-original-owner&return=team&return-token-v2=opaque%2Bvalue',
+    scope,
+  ).href;
+  await assert.rejects(h.dispatch('fetch', { request: navigationRequest(original) }), /outbound/);
+  const recoveryURL = new URL('game/downloads.html', scope);
+  recoveryURL.searchParams.set('offline-destination', original);
+  const confirmation = await h.dispatch('fetch', { request: navigationRequest(recoveryURL) });
+  assert.equal(await confirmation.text(), 'Download confirmation');
+  h.calls.length = 0;
+  const request = readOfflineDestination({ pageURL: recoveryURL, scope, catalogue, version: '2' });
+  const store = createOfficialDownloads({
+    caches: h.caches,
+    origin: new URL(scope).origin,
+    locks: { request: async (_name, _options, work) => work() },
+    fetch: (url, options) => h.dispatch('fetch', { request: new Request(url, options) }),
+  });
+  // A pre-existing broader selection must remain a separate durable owner.
+  await store.download({
+    edition: scope,
+    group: 'gameplay',
+    selection: ['base', 'solo:existing'],
+    files: [],
+    baseURL: scope,
+  });
+  const previous = structuredClone(
+    (await store.states()).find((state) => state.group === 'gameplay'),
+  );
+  const visits = [],
+    verify = (groups, options) =>
+      store.inspect(downloadFiles(catalogue, groups), { ...options, verify: true });
+  await assert.rejects(
+    continueOfflineDestination({ request, verify, navigate: (href) => visits.push(href) }),
+    /not ready offline/,
+  );
+  assert.deepEqual(h.calls, []);
+  assert.deepEqual(visits, []);
+  // This explicit call models the page's Download and open button approval.
+  offline = false;
+  await downloadOfflineDestination(store, {
+    request,
+    edition: scope,
+    files: downloadFiles(catalogue, request.groups),
+    baseURL: scope,
+  });
+  assert.deepEqual(
+    (await store.states()).find((state) => state.group === 'gameplay'),
+    previous,
+  );
+  assert.equal(
+    (await store.states()).find((state) => state.group === request.checkpoint).complete,
+    true,
+  );
+  assert(
+    !request.checkpoint.includes('opaque'),
+    'Checkpoints contain package identities, never return tokens.',
+  );
+  offline = true;
+  const transfers = [...h.calls];
+  await continueOfflineDestination({ request, verify, navigate: (href) => visits.push(href) });
+  assert.deepEqual(visits, [original]);
+  const mode = await h.dispatch('fetch', { request: navigationRequest(visits[0]) });
+  assert.equal(await mode.text(), 'Versus document');
+  assert.deepEqual(
+    h.calls,
+    transfers,
+    'The verified destination opens with all outbound requests blocked.',
+  );
+});
+
+test('ordinary mode navigation and artwork use the network without download redirects', async () => {
+  const paths = ['game/couch/relay-rescue.html', 'game/couch/index.html', 'game/picture.png'];
+  const files = paths.map((path) => ({ path, bytes: 4, sha256: digest(path) }));
+  const h = host({ packageConsent: true, downloadFiles: files });
+  for (const path of paths) {
+    const url = new URL(path, scope).href;
+    h.network.set(url, 'Online content');
+    assert.equal(
+      await (await h.dispatch('fetch', { request: navigationRequest(url) })).text(),
+      'Online content',
+    );
+  }
+  assert.equal(h.writes.length, 0, 'ordinary online requests do not install official packages');
+  assert.equal(
+    await h.dispatch('fetch', { request: navigationRequest('https://outside.invalid/game/') }),
+    null,
+  );
+});
+
+test('a cached Solo shell opens archived bookmarks without requiring an offline bootstrap', async () => {
+  const body = '{"id":"whole-spatial-v2","source":{}}';
+  const file = {
+    path: 'game/content-design/runtime/whole-spatial-v2.json',
+    bytes: Buffer.byteLength(body),
+    sha256: digest(body),
+  };
+  const h = host(
+    {
+      packageConsent: true,
+      downloadFiles: [file],
+      navigationBootstraps: [
+        { path: 'game/index.html', routeId: 'whole-spatial-v2', files: [file.path] },
+      ],
+    },
+    new Map(),
+    {
+      entries: [
+        ['game/index.html', 'Solo shell'],
+        ['game/downloads.html', 'Consent'],
+      ],
+    },
+  );
+  await h.dispatch('install');
+  h.calls.length = 0;
+  h.network.clear();
+  const original = new URL(
+    'game/?journey=whole-spatial-v2&library-mission=exact-old-owner&return-token=opaque%2Bvalue',
+    scope,
+  ).href;
+  const missing = await h.dispatch('fetch', { request: navigationRequest(original) });
+  assert.equal(await missing.text(), 'Solo shell');
+  for (const path of [
+    'game/',
+    'game/?journey=whole-spatial-v11',
+    'game/?journey=unknown',
+    'game/?journey=whole-spatial-v2&journey=legacy',
+  ]) {
+    const response = await h.dispatch('fetch', {
+      request: navigationRequest(new URL(path, scope)),
+    });
+    assert.equal(
+      await response.text(),
+      'Solo shell',
+      'Current and invalid route handling remains with the existing host.',
+    );
+  }
+  const cache = await h.caches.open('revealline-official-content-v1');
+  const key = `https://game.example/.revealline-official/sha256/${file.sha256}`;
+  await cache.put(key, new Response(body, { headers: { 'Content-Length': String(file.bytes) } }));
+  assert.equal(
+    await (await h.dispatch('fetch', { request: navigationRequest(original) })).text(),
+    'Solo shell',
+  );
+  await cache.put(
+    key,
+    new Response('x'.repeat(file.bytes), { headers: { 'Content-Length': String(file.bytes) } }),
+  );
+  assert.equal(
+    await (await h.dispatch('fetch', { request: navigationRequest(original) })).text(),
+    'Solo shell',
+    'Offline bootstrap readiness does not gate ordinary navigation.',
+  );
+  assert.deepEqual(h.calls, [], 'Navigation never fetches an unapproved historical runtime.');
+});
+
+test('package editions load unseen artwork online without installing it', async () => {
+  const body = 'original picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] });
+  const url = new URL(file.path, scope).href;
+  h.network.set(url, body);
+  const blocked = await h.dispatch('fetch', { request: new Request(url) });
+  assert.equal(await blocked.text(), body);
+  assert.deepEqual(h.calls, [url]);
+  assert.equal(h.writes.length, 0, 'online play does not prepare offline downloads');
+  const accepted = await h.dispatch('fetch', { request: new Request(url, { cache: 'no-store' }) });
+  assert.equal(await accepted.text(), body);
+  assert.deepEqual(h.calls, [url, url]);
+});
+
+test('a downloaded chapter is served locally even when every outbound request fails', async () => {
+  const body = 'original picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] }, new Map(), {
+    fetch: () => {
+      throw new Error('actual outbound requests blocked');
+    },
+  });
+  const cache = await h.caches.open('revealline-official-content-v1');
+  await cache.put(
+    `https://game.example/.revealline-official/sha256/${file.sha256}`,
+    new Response(body, { headers: { 'Content-Length': String(file.bytes) } }),
+  );
+  const response = await h.dispatch('fetch', { request: new Request(new URL(file.path, scope)) });
+  assert.equal(response.status, 200);
+  assert.equal(await response.text(), body);
+  assert.deepEqual(h.calls, []);
+});
+
+test('denied browser storage cannot block online gameplay assets or the core shell', async () => {
+  const body = 'online picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] });
+  const url = new URL(file.path, scope).href;
+  h.network.set(url, body);
+  h.caches.open = async () => {
+    throw new Error('Storage denied');
+  };
+  assert.equal(await (await h.dispatch('fetch', { request: new Request(url) })).text(), body);
+  assert.equal(
+    (await h.dispatch('fetch', { request: navigationRequest(`${scope}game/`) })).status,
+    200,
+  );
+  assert.equal(h.writes.length, 0);
+});
+
+test('explicit verified repair bypasses a same-sized corrupt official cache entry', async () => {
+  const body = 'original picture';
+  const file = { path: 'game/picture.png', bytes: Buffer.byteLength(body), sha256: digest(body) };
+  const h = host({ packageConsent: true, downloadFiles: [file] });
+  const url = new URL(file.path, scope).href;
+  const cache = await h.caches.open('revealline-official-content-v1');
+  const key = `https://game.example/.revealline-official/sha256/${file.sha256}`;
+  const corrupt = 'x'.repeat(file.bytes);
+  await cache.put(
+    key,
+    new Response(corrupt, { headers: { 'Content-Length': String(file.bytes) } }),
+  );
+  h.network.set(url, body);
+  const repaired = await verifiedDownload(file, url, {
+    fetch: (target, options) => h.dispatch('fetch', { request: new Request(target, options) }),
+  });
+  assert.equal(await repaired.text(), body);
+  assert.deepEqual(h.calls, [url]);
+  assert.equal(
+    await (await cache.match(key)).text(),
+    corrupt,
+    'the worker does not commit network bytes before the downloader verifies them',
+  );
+});
+
 function host(configPatch = {}, storage = new Map(), options = {}) {
+  const scope = options.scope ?? 'https://game.example/releases/v2/site/';
   const entries = new Map(
     options.entries ?? [
       ['game/index.html', '<title>Game</title>'],
@@ -59,6 +361,9 @@ function host(configPatch = {}, storage = new Map(), options = {}) {
       if (!storage.has(key)) storage.set(key, new Map());
       const data = storage.get(key);
       return {
+        async keys() {
+          return [...data.keys()].map((url) => new Request(url));
+        },
         async match(url) {
           await options.beforeMatch?.({ key, url });
           const entry = data.get(typeof url === 'string' ? url : url.url);
@@ -246,6 +551,395 @@ test('a cached version supports nested navigations and sibling shipped assets wi
     request: new Request(`${scope}authoring/motion-lab/animation.mjs`),
   });
   assert.match(await asset.text(), /animation=true/);
+  assert.equal(h.calls.length, 0);
+});
+
+test('one installed PWA serves first-visit Survivor, Raid and Snake bookmarks and recorded audio offline', async () => {
+  const entries = [
+    ['game/index.html', 'Main game home'],
+    ['game/overflight/play.html', 'Survivor document'],
+    ['game/overflight/raid.html', 'Raid document'],
+    ['game/snake/index.html', 'Snake hub'],
+    ['game/snake/play.html', 'Classic Snake document'],
+    ['game/overflight/app.mjs', 'Shared Survivor and Raid runtime'],
+    ['game/overflight/raid-core.mjs', 'Raid rules'],
+    ['game/snake/classic-app.mjs', 'Snake runtime'],
+    ['game/vendor/phaser-4.2.1.min.js', 'Local Phaser'],
+  ];
+  const recording = {
+    path: 'game/audio/effects/human-reaction-1.wav',
+    bytes: 4,
+    sha256: digest('RIFF'),
+  };
+  for (const scope of ['https://game.example/', 'https://game.example/releases/v2/site/']) {
+    const h = host({ downloadFiles: [recording] }, new Map(), { entries, scope });
+    await h.dispatch('install');
+    await h.dispatch('activate');
+    const official = await h.caches.open('revealline-official-content-v1');
+    await official.put(
+      new URL(`/.revealline-official/sha256/${recording.sha256}`, scope).href,
+      new Response('RIFF', { headers: { 'Content-Length': '4' } }),
+    );
+    h.network.clear();
+    h.calls.length = 0;
+    for (const [path, body] of entries) {
+      const url = new URL(`${path}?lang=uk&seed=37&from=home#menu`, scope);
+      const request = path.endsWith('.html') ? navigationRequest(url) : new Request(url);
+      assert.equal(await (await h.dispatch('fetch', { request })).text(), body, url.href);
+    }
+    const sound = await h.dispatch('fetch', {
+      request: new Request(new URL(recording.path, scope)),
+    });
+    assert.equal(await sound.text(), 'RIFF');
+    assert.equal((await h.report()).status, 'ready');
+    assert.equal(h.calls.length, 0, 'first offline visits never need a prewarmed mode page');
+    assert.equal(h.claimed, 1, 'the main worker owns all three modes');
+  }
+});
+
+test('durable runtime resumes verified files after quota failure and worker replacement', async () => {
+  const storage = new Map();
+  let fail = true;
+  const first = host({ downloadFiles: [] }, storage, {
+    beforePut({ url }) {
+      if (fail && url.endsWith('/game/app.mjs'))
+        throw new DOMException('full', 'QuotaExceededError');
+    },
+  });
+  await assert.rejects(first.dispatch('install'), /full/);
+  assert.equal((await first.report()).status, 'not-ready');
+  fail = false;
+  const reopened = host({ downloadFiles: [] }, storage);
+  await reopened.dispatch('install');
+  assert.equal((await reopened.report()).status, 'ready');
+  assert.equal(reopened.calls.includes(`${scope}game/index.html`), false);
+  assert.equal(reopened.calls.length, 2);
+});
+
+test('an edition update reuses verified hashes and only downloads changed runtime files', async () => {
+  const storage = new Map(),
+    first = host({ downloadFiles: [] }, storage);
+  await first.dispatch('install');
+  const changed = host({ downloadFiles: [], buildId: 'b'.repeat(64) }, storage, {
+    entries: [
+      ['game/index.html', '<title>New edition</title>'],
+      ['game/app.mjs', 'export const game=true;'],
+    ],
+  });
+  await changed.dispatch('install');
+  assert.deepEqual(changed.calls, [`${scope}game/index.html`]);
+  assert.equal((await changed.report()).status, 'ready');
+  assert.equal((await first.report()).status, 'ready');
+});
+
+test('identical runtime bytes at different URLs download once but remain addressable offline', async () => {
+  const h = host({ downloadFiles: [] }, new Map(), {
+    entries: [
+      ['icons/icon.png', 'same image'],
+      ['app/icon.png', 'same image'],
+    ],
+  });
+  await h.dispatch('install');
+  h.network.clear();
+  assert.equal(h.calls.length, 1);
+  const response = await h.dispatch('fetch', { request: new Request(`${scope}app/icon.png`) });
+  assert.equal(await response.text(), 'same image');
+  assert.equal((await h.report()).status, 'ready');
+});
+
+test('explicit pause stops durable preparation after its atomic file checkpoint', async () => {
+  const storage = new Map();
+  const h = host({ downloadFiles: [] }, storage, {
+    async beforePut({ url }) {
+      if (url.endsWith('/game/index.html'))
+        await h.dispatch('message', {
+          source: { url: `${scope}game/downloads.html` },
+          data: { type: 'revealline.offline-pause', buildId: 'a'.repeat(64) },
+        });
+    },
+  });
+  await assert.rejects(h.dispatch('install'), { name: 'AbortError' });
+  assert.equal((await h.report()).status, 'not-ready');
+  const resume = host({ downloadFiles: [] }, storage);
+  await resume.dispatch('install');
+  assert.equal(resume.calls.includes(`${scope}game/index.html`), false);
+  assert.equal((await resume.report()).status, 'ready');
+});
+
+test('the stable updater can prepare and inspect its exact immutable worker only', async () => {
+  const source = 'https://game.example/app/update.html?return=%2Fgame%2F';
+  const request = {
+    protocol: 'revealline.offline-progress.v1',
+    requestId: 'stable-update',
+    scope,
+    buildId: marker.buildId,
+  };
+  const h = host({ downloadFiles: [] });
+  for (const type of ['revealline.offline-prepare', 'revealline.offline-check']) {
+    const reports = [];
+    await h.dispatch('message', {
+      source: { url: source },
+      data: { ...request, type },
+      ports: [{ postMessage: (report) => reports.push(report), close() {} }],
+    });
+    assert.equal(reports.at(-1).status, 'ready');
+    assert.equal(reports.at(-1).buildId, marker.buildId);
+  }
+  for (const [url, patch] of [
+    ['https://other.example/app/update.html', {}],
+    ['https://game.example/app/other.html', {}],
+    [source, { protocol: undefined }],
+    [source, { scope: 'https://game.example/' }],
+    [source, { buildId: 'b'.repeat(64) }],
+  ]) {
+    const rejected = host({ downloadFiles: [] });
+    const reports = [];
+    await rejected.dispatch('message', {
+      source: { url },
+      data: { ...request, type: 'revealline.offline-prepare', ...patch },
+      ports: [{ postMessage: (report) => reports.push(report), close() {} }],
+    });
+    assert.deepEqual(reports, []);
+    assert.deepEqual(rejected.calls, []);
+    assert.equal(rejected.storage.size, 0);
+  }
+});
+
+test('an explicit updater awaits discovery before addressing a same-URL worker and rejects other builds', async () => {
+  const candidateMarker = {
+    ...marker,
+    version: '2.0.0',
+    scope,
+    worker: `${scope}service-worker.js`,
+    downloadCatalogue: true,
+  };
+  const updateMarker = {
+    format: 'revealline-app-update.v1',
+    scope,
+    buildId: candidateMarker.buildId,
+  };
+  for (const [label, discoveredBuild] of [
+    ['candidate', candidateMarker.buildId],
+    ['stale', 'b'.repeat(64)],
+    ['newer publication', 'c'.repeat(64)],
+  ]) {
+    const calls = [];
+    const worker = (name, buildId) => ({
+      state: 'activated',
+      scriptURL: candidateMarker.worker,
+      postMessage(request, ports) {
+        calls.push(name);
+        ports[0].postMessage({
+          format: 'revealline.offline-progress.v1',
+          kind: 'terminal',
+          requestId: request.requestId,
+          scope,
+          buildId,
+          status: 'ready',
+        });
+        ports[0].close();
+      },
+    });
+    const registration = {
+      scope,
+      active: worker('old worker', 'b'.repeat(64)),
+      async update() {
+        calls.push('update');
+        registration.active = worker('discovered worker', discoveredBuild);
+        return registration;
+      },
+    };
+    const preparing = prepareOffline({
+      secure: true,
+      MessageChannelImpl: MessageChannel,
+      locationRef: { href: 'https://game.example/app/update.html' },
+      documentRef: {
+        querySelector: (selector) => ({
+          content: JSON.stringify(
+            selector.includes('revealline-update') ? updateMarker : candidateMarker,
+          ),
+        }),
+      },
+      navigatorRef: {
+        serviceWorker: {
+          async register() {
+            calls.push('register');
+            return registration;
+          },
+        },
+      },
+    });
+    if (label === 'candidate') assert.equal((await preparing).status, 'ready');
+    else await assert.rejects(preparing, { offlineCode: 'differentBuild' }, label);
+    assert.deepEqual(calls, ['register', 'update', 'discovered worker'], label);
+  }
+});
+
+test('updater activation waits naturally and preserves bounded failure outcomes', async (t) => {
+  for (const outcome of [
+    'activated',
+    'waiting',
+    'activating',
+    'redundant',
+    'replaced',
+    'aborted',
+  ]) {
+    await t.test(outcome, async (t) => {
+      t.mock.timers.enable({ apis: ['setTimeout'] });
+      const observed = deferred();
+      const controller = new AbortController();
+      const pauses = [];
+      const candidate = {
+        ...marker,
+        version: '2.0.0',
+        scope,
+        worker: `${scope}service-worker.js`,
+        downloadCatalogue: true,
+      };
+      const worker = Object.assign(new EventTarget(), {
+        state: 'installed',
+        scriptURL: candidate.worker,
+        postMessage(request, ports) {
+          if (request.type === 'revealline.offline-pause') return pauses.push(request);
+          ports[0].postMessage({
+            format: 'revealline.offline-progress.v1',
+            kind: 'terminal',
+            requestId: request.requestId,
+            scope,
+            buildId: candidate.buildId,
+            status: 'ready',
+          });
+          ports[0].close();
+        },
+      });
+      const listen = worker.addEventListener.bind(worker);
+      let subscriptions = 0;
+      worker.addEventListener = (type, ...args) => {
+        listen(type, ...args);
+        if (type === 'statechange' && ++subscriptions === 2) observed.resolve();
+      };
+      const registration = Object.assign(new EventTarget(), {
+        scope,
+        active: { old: true },
+        waiting: worker,
+        async update() {},
+      });
+      const preparing = prepareOffline({
+        secure: true,
+        cancelPreparation: true,
+        signal: controller.signal,
+        activationTimeout: 30000,
+        MessageChannelImpl: MessageChannel,
+        locationRef: { href: 'https://game.example/app/update.html' },
+        documentRef: {
+          querySelector: (selector) => ({
+            content: JSON.stringify(
+              selector.includes('revealline-update')
+                ? { format: 'revealline-app-update.v1', scope, buildId: candidate.buildId }
+                : candidate,
+            ),
+          }),
+        },
+        navigatorRef: { serviceWorker: { register: async () => registration } },
+      });
+      let settled = false;
+      void preparing.then(
+        () => {
+          settled = true;
+        },
+        () => {
+          settled = true;
+        },
+      );
+      await observed.promise;
+      assert.equal(settled, false, 'Verified installed bytes are not active yet.');
+      if (outcome === 'activated' || outcome === 'activating') {
+        registration.waiting = null;
+        registration.active = worker;
+        worker.state = 'activating';
+        worker.dispatchEvent(new Event('statechange'));
+        await nextTurn();
+        assert.equal(settled, false, 'Activation itself must finish before readiness.');
+        if (outcome === 'activated') {
+          worker.state = 'activated';
+          worker.dispatchEvent(new Event('statechange'));
+          assert.equal((await preparing).status, 'ready');
+        } else {
+          t.mock.timers.tick(30001);
+          assert.equal((await preparing).status, 'unconfirmed');
+        }
+      } else if (outcome === 'waiting') {
+        t.mock.timers.tick(30001);
+        assert.equal((await preparing).status, 'waiting');
+        assert.equal(registration.active.old, true);
+      } else {
+        const rejected = assert.rejects(
+          preparing,
+          outcome === 'aborted'
+            ? { name: 'AbortError' }
+            : { offlineCode: outcome === 'redundant' ? 'downloadFailed' : 'workerChanged' },
+        );
+        if (outcome === 'aborted') controller.abort();
+        else if (outcome === 'redundant') {
+          worker.state = 'redundant';
+          worker.dispatchEvent(new Event('statechange'));
+        } else {
+          registration.installing = { another: true };
+          registration.dispatchEvent(new Event('updatefound'));
+        }
+        await rejected;
+        if (outcome === 'aborted') {
+          assert.equal(pauses.length, 1);
+          assert.equal(pauses[0].buildId, candidate.buildId);
+          assert.equal(pauses[0].scope, scope);
+        }
+      }
+    });
+  }
+});
+
+test('outside-scope updater pause requires the exact streaming worker binding', async () => {
+  for (const valid of [false, true]) {
+    const h = host({ downloadFiles: [] }, new Map(), {
+      async beforePut({ url }) {
+        if (url.endsWith('/game/index.html'))
+          await h.dispatch('message', {
+            source: { url: 'https://game.example/app/update.html' },
+            data: {
+              type: 'revealline.offline-pause',
+              buildId: marker.buildId,
+              ...(valid ? { protocol: 'revealline.offline-progress.v1', scope } : {}),
+            },
+          });
+      },
+    });
+    if (valid) await assert.rejects(h.dispatch('install'), { name: 'AbortError' });
+    else await h.dispatch('install');
+    assert.equal((await h.report()).status, valid ? 'not-ready' : 'ready');
+  }
+});
+
+test('complete cached files serve audio byte ranges without caching a partial response', async () => {
+  const h = host({ downloadFiles: [] }, new Map(), { entries: [['game/tone.mp3', '0123456789']] });
+  await h.dispatch('install');
+  h.network.clear();
+  h.calls.length = 0;
+  for (const [range, body] of [
+    ['bytes=2-5', '2345'],
+    ['bytes=-3', '789'],
+    ['bytes=8-', '89'],
+  ]) {
+    const response = await h.dispatch('fetch', {
+      request: new Request(`${scope}game/tone.mp3`, { headers: { Range: range } }),
+    });
+    assert.equal(response.status, 206);
+    assert.equal(await response.text(), body);
+  }
+  const bad = await h.dispatch('fetch', {
+    request: new Request(`${scope}game/tone.mp3`, { headers: { Range: 'bytes=99-' } }),
+  });
+  assert.equal(bad.status, 416);
+  assert.equal((await h.report()).status, 'ready');
   assert.equal(h.calls.length, 0);
 });
 
@@ -475,13 +1169,13 @@ test('stream overruns are cancelled before copying and malformed bodies never cr
 
 test('generated byte and file budgets reject malformed inventory before body allocation or fetch', () => {
   const file = { path: 'game/data.bin', bytes: 0, sha256: digest('') };
-  for (const bytes of [-1, 0.5, Number.MAX_SAFE_INTEGER, 64 * 1024 * 1024 + 1])
+  for (const bytes of [-1, 0.5, Number.MAX_SAFE_INTEGER, 80 * 1024 * 1024 + 1])
     assert.throws(() => host({ files: [{ ...file, bytes }] }), /byte budget/);
   assert.throws(
     () =>
       host({
         files: [
-          { ...file, bytes: 64 * 1024 * 1024 },
+          { ...file, bytes: 80 * 1024 * 1024 },
           { ...file, path: 'game/other.bin', bytes: 1 },
         ],
       }),
@@ -877,7 +1571,7 @@ test('asset and marker cache-write failures clean only the partial build and nev
   }
 });
 
-test('repair cache-write failure returns 503 and keeps unrelated verified entries', async () => {
+test('repair cache-write failure still serves verified online bytes and keeps existing entries', async () => {
   let fail = false;
   const h = host({}, new Map(), {
     beforePut: ({ url }) => {
@@ -891,10 +1585,29 @@ test('repair cache-write failure returns 503 and keeps unrelated verified entrie
   cache.delete(`${scope}game/app.mjs`);
   fail = true;
   const response = await h.dispatch('fetch', { request: new Request(`${scope}game/app.mjs`) });
-  assert.equal(response.status, 503);
+  assert.equal(response.status, 200);
   assert.equal(cache.has(`${scope}game/app.mjs`), false);
   assert.equal(await cache.get(`${scope}game/index.html`).clone().text(), untouched);
   assert.equal(await cache.get(`${scope}.offline-ready`).clone().text(), marker);
+});
+
+test('published pack growth does not inherit the old twelve imported-pack slot limit', () => {
+  for (const count of [14, 200]) {
+    const config = {
+      ...marker,
+      downloadCatalogue: true,
+      optionalPacks: Array.from({ length: count }, (_, i) => ({ name: `Official chapter ${i}` })),
+    };
+    const env = {
+      documentRef: { querySelector: () => ({ content: JSON.stringify(config) }) },
+      locationRef,
+      secure: true,
+      navigatorRef: { serviceWorker: {} },
+    };
+    assert.equal(offlineAvailability(env).available, true);
+    config.optionalPacks.push({ name: 42 });
+    assert.equal(offlineAvailability(env).available, false);
+  }
 });
 
 test('optional pack preparation and verification explicitly distinguish core cache from already-installed device packs', async () => {
@@ -1528,4 +2241,134 @@ test('prepare joins a pending cached inspection before repair and final verifica
   assert.equal((await preparing).status, 'ready');
   assert.equal(h.calls.length, 6);
   assert.equal((await h.report()).status, 'ready');
+});
+
+const expandedOverflightPaths = [
+  'game/overflight/play.html',
+  'game/overflight/raid.html',
+  'game/overflight/app.mjs',
+  'game/overflight/raid-mode.mjs',
+  'game/overflight/riy-mode.mjs',
+  'game/overflight/raid-variants.mjs',
+  'game/overflight/battlefields.mjs',
+  'game/overflight/motion.mjs',
+  'game/overflight/coordinated-movement.mjs',
+  'game/overflight/terrain.mjs',
+  'game/overflight/worlds.mjs',
+  'game/overflight/world-layout-presentation.mjs',
+  'game/presentation/overflight-world-art.mjs',
+  'game/presentation/overflight-world-art-v2.mjs',
+  'game/presentation/overflight-world-slots.mjs',
+  'game/snake/classic-structure-art.mjs',
+];
+async function expandedOverflightFixture() {
+  const { OVERFLIGHT_BATTLEFIELDS } = await import('../overflight/battlefields.mjs'),
+    { OVERFLIGHT_OPERATIONS } = await import('../overflight/operation-view.mjs'),
+    entries = await Promise.all(
+      expandedOverflightPaths.map(async (name) => [
+        name,
+        await fs.readFile(new URL(`../../${name}`, import.meta.url)),
+      ]),
+    );
+  assert.equal(OVERFLIGHT_BATTLEFIELDS.length, 18);
+  assert.equal(OVERFLIGHT_OPERATIONS.length, 5);
+  return {
+    entries,
+    bookmarks(base) {
+      return OVERFLIGHT_BATTLEFIELDS.flatMap((layout) =>
+        OVERFLIGHT_OPERATIONS.map((operation) => {
+          const url = new URL(operation.path, new URL('game/overflight/play.html', base));
+          url.searchParams.set('layout', layout.id);
+          url.searchParams.set('lang', 'uk');
+          url.searchParams.set('seed', '37');
+          return url;
+        }),
+      );
+    },
+  };
+}
+async function verifyExpandedOverflightOffline(runtime, fixture, base) {
+  const sources = new Map(fixture.entries);
+  runtime.network.clear();
+  runtime.calls.length = 0;
+  for (const url of fixture.bookmarks(base)) {
+    const path = url.pathname.slice(new URL(base).pathname.length),
+      response = await runtime.dispatch('fetch', { request: navigationRequest(url) });
+    assert.equal(response.status, 200, url.href);
+    assert.equal(digest(await response.arrayBuffer()), digest(sources.get(path)), url.href);
+  }
+  for (const [path, bytes] of fixture.entries) {
+    const response = await runtime.dispatch('fetch', { request: new Request(new URL(path, base)) });
+    assert.equal(digest(await response.arrayBuffer()), digest(bytes), path);
+  }
+  assert.deepEqual(
+    runtime.calls,
+    [],
+    'first visits use verified cache bytes without page prewarming',
+  );
+}
+
+test('fresh installed PWA serves all 18 real layouts in all five operations and their new native resources offline', async () => {
+  const fixture = await expandedOverflightFixture();
+  for (const base of ['https://game.example/', scope]) {
+    const runtime = host({ downloadFiles: [] }, new Map(), {
+      entries: fixture.entries,
+      scope: base,
+    });
+    await runtime.dispatch('install');
+    await runtime.dispatch('activate');
+    assert.equal((await runtime.report()).status, 'ready');
+    await verifyExpandedOverflightOffline(runtime, fixture, base);
+    assert.equal(runtime.claimed, 1);
+  }
+});
+
+test('interrupted coordinated-movement update preserves prior native resources and retry commits the exact expanded sortie bytes', async () => {
+  const fixture = await expandedOverflightFixture(),
+    storage = new Map(),
+    changedPaths = new Set([
+      'game/overflight/motion.mjs',
+      'game/overflight/coordinated-movement.mjs',
+    ]),
+    previousEntries = fixture.entries.map(([name, bytes]) => [
+      name,
+      changedPaths.has(name)
+        ? Buffer.concat([bytes, Buffer.from('\n// Prior verified build fixture.\n')])
+        : bytes,
+    ]),
+    previous = host({ downloadFiles: [] }, storage, { entries: previousEntries });
+  await previous.dispatch('install');
+  await previous.dispatch('activate');
+  const candidate = host({ downloadFiles: [], buildId: 'b'.repeat(64) }, storage, {
+      entries: fixture.entries,
+    }),
+    failedURL = new URL('game/overflight/coordinated-movement.mjs', scope).href;
+  candidate.network.set(failedURL, () => {
+    throw new Error('interrupted movement download');
+  });
+  await assert.rejects(candidate.dispatch('install'), /interrupted movement download/);
+  assert.equal((await candidate.report()).status, 'not-ready');
+  await assert.rejects(candidate.dispatch('activate'), /Incomplete/);
+  assert.equal(candidate.claimed, 0);
+  assert.equal(
+    (await previous.report()).status,
+    'ready',
+    'the accepted previous build stays complete',
+  );
+  await verifyExpandedOverflightOffline(previous, { ...fixture, entries: previousEntries }, scope);
+  candidate.network.set(
+    failedURL,
+    new Map(fixture.entries).get('game/overflight/coordinated-movement.mjs'),
+  );
+  candidate.calls.length = 0;
+  await candidate.dispatch('install');
+  assert.deepEqual(
+    candidate.calls,
+    [failedURL],
+    'retry reuses already verified files and fetches only the interrupted source',
+  );
+  await candidate.dispatch('activate');
+  assert.equal((await candidate.report()).status, 'ready');
+  await verifyExpandedOverflightOffline(candidate, fixture, scope);
+  assert.equal(candidate.claimed, 1);
 });

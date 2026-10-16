@@ -1,0 +1,28 @@
+{
+  "scope": "Native static source appearance, not player install/flight/default Library admission",
+  "frozenSourceCommit": "345a185",
+  "publishedRebasedCommit": "7f2b74dfc186f14c712aa548151bd5baf3eeebf1",
+  "rebaseFunctionalReceiptParity": true,
+  "observations": [
+    "Balanced overview, covered pier and palms rendered with textures and foliage cutouts.",
+    "Quality hut inspected from both sides: canvas and plank materials preserved.",
+    "Performance under-pier view shows a clear opening.",
+    "Each view reported Prepared; native console contained no warnings/errors.",
+    "Dispose reported source, geometry, texture, resource and reservation bytes zero; collision worlds/colliders zero."
+  ],
+  "limitations": [
+    "Bounded source study accepted, not full quality-standard completion.",
+    "Broad scene remains sparse; water is flat and has no water physics.",
+    "No native commanded flight, full package, real-device FPS or default admission claim."
+  ],
+  "screenshots": [
+    {
+      "name": "coastal-quality-hut-20261015.png",
+      "sha256": "2567877cf6c29175349867cd048e33b45f624f53318b233fc0c68fa729418f31"
+    },
+    {
+      "name": "coastal-performance-under-pier-20261015.png",
+      "sha256": "5fedad6d6b4aa4a4c4cbed098383f879c59667bba851c7a2d211745f6eb8f711"
+    }
+  ]
+}

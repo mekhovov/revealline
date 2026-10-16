@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 1 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 86.945167
+  ...
+# Subtest: Solo startup graph retains boot styles and production assets while mode hosts stay separate
+ok 2 - Solo startup graph retains boot styles and production assets while mode hosts stay separate
+  ---
+  duration_ms: 1.46375
+  ...
+# Subtest: catalogue references never pull selected chapter or soundtrack bytes back into core
+ok 3 - catalogue references never pull selected chapter or soundtrack bytes back into core
+  ---
+  duration_ms: 0.173333
+  ...
+# Subtest: public community entries own their shared loader offline without opting into creator tools or company artwork
+ok 4 - public community entries own their shared loader offline without opting into creator tools or company artwork
+  ---
+  duration_ms: 1.023667
+  ...
+# Subtest: decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+ok 5 - decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+  ---
+  duration_ms: 0.691625
+  ...
+# Subtest: effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+ok 6 - effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+  ---
+  duration_ms: 0.220083
+  ...
+# Subtest: radio redistribution metadata stays core while source recordings remain selectable
+ok 7 - radio redistribution metadata stays core while source recordings remain selectable
+  ---
+  duration_ms: 0.26125
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 405.601292

@@ -1,0 +1,5067 @@
+{
+  "format": "FPVReservoirWorldQualification.v1",
+  "status": "failed",
+  "pack": {
+    "path": "/tmp/fpv-mountain-reservoir-world-r7/prepared/mountain-reservoir.r7.rlpack",
+    "bytes": 1312019,
+    "sha256": "a8117091f28d1c15c4f1c749ca9340806f34c7b388c8bec68baae8a1d28143be",
+    "identity": "fpv-pack:a8117091f28d1c15c4f1c749ca9340806f34c7b388c8bec68baae8a1d28143be"
+  },
+  "checks": [
+    {
+      "name": "One shared physical world across eight courses",
+      "passed": true
+    },
+    {
+      "name": "Lake outside all playable bounds",
+      "passed": true
+    },
+    {
+      "name": "Named shore pad supports all eight starts",
+      "passed": true
+    },
+    {
+      "name": "platform-shore-pad solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-shore-pad retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-shore-pad eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "building-maintenance solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "building-maintenance retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "building-maintenance eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "building-maintenance-roof solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "building-maintenance-roof retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "building-maintenance-roof eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-dam solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-dam retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-dam eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-dam-crest solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-dam-crest retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-dam-crest eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-0 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-0 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-0 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-4 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-4 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-4 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-8 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-8 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-8 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-12 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-12 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-12 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-16 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-16 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-16 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-20 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-20 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-20 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-24 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-24 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-24 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-28 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-28 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-28 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-32 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-32 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-32 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-36 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-36 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-36 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-40 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-40 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-40 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-44 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-44 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-44 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-48 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-48 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-48 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-52 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-52 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-52 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-56 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-56 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-56 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-60 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-60 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-60 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-64 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-64 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-64 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-68 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-68 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-post-68 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-low solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-low retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-low eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-high solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-high retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-shore-high eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-0 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-0 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-0 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-1 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-1 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-1 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-2 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-2 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-2 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-3 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-3 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-pad-bollard-3 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-intake-gallery solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-intake-gallery retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-intake-gallery eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "building-intake-controls solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "building-intake-controls retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "building-intake-controls eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-intake-front solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-intake-front retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-intake-front eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-intake-west solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-intake-west retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-intake-west eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-intake-east solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-intake-east retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-intake-east eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "building-intake-service-cabinet solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "building-intake-service-cabinet retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "building-intake-service-cabinet eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-dry-spillway solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-dry-spillway retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-dry-spillway eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-dry-spillway-west solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-dry-spillway-west retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-dry-spillway-west eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "rail-dry-spillway-east solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "rail-dry-spillway-east retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "rail-dry-spillway-east eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-spillway-head solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-spillway-head retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-spillway-head eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "building-spillway-head-pier solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "building-spillway-head-pier retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "building-spillway-head-pier eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "building-spillway-support-north solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "building-spillway-support-north retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "building-spillway-support-north eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "building-spillway-support-south solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "building-spillway-support-south retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "building-spillway-support-south eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-spillway-apron solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-spillway-apron retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-spillway-apron eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "mountain-reservoir-01/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 3800,
+          "z": 24000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -30000,
+          "y": 3800,
+          "z": 24000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 3800,
+          "z": 24000
+        },
+        "to": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        },
+        "to": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 7000,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        },
+        "to": {
+          "x": -30000,
+          "y": 7000,
+          "z": 26000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-shore-pad",
+        "top": 450
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 3800,
+          "z": 24000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -30000,
+          "y": 3800,
+          "z": 24000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 3800,
+          "z": 24000
+        },
+        "to": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        },
+        "to": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 7000,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        },
+        "to": {
+          "x": -30000,
+          "y": 7000,
+          "z": 26000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-01/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-shore-pad",
+        "top": 450
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        },
+        "to": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 12000,
+          "z": -22000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        },
+        "to": {
+          "x": -10000,
+          "y": 12000,
+          "z": -22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -7000,
+          "z": -27900,
+          "y": 11500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 12000,
+          "z": -22000
+        },
+        "to": {
+          "x": -7000,
+          "z": -27900,
+          "y": 11500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -500,
+          "z": -27900,
+          "y": 11500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -7000,
+          "z": -27900,
+          "y": 11500
+        },
+        "to": {
+          "x": -500,
+          "z": -27900,
+          "y": 11500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "z": -27900,
+          "y": 11500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -500,
+          "z": -27900,
+          "y": 11500
+        },
+        "to": {
+          "x": -2000,
+          "z": -27900,
+          "y": 11500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 4500,
+          "z": -27900,
+          "y": 11500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "z": -27900,
+          "y": 11500
+        },
+        "to": {
+          "x": 4500,
+          "z": -27900,
+          "y": 11500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 3000,
+          "y": 11500,
+          "z": -27900
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 4500,
+          "z": -27900,
+          "y": 11500
+        },
+        "to": {
+          "x": 3000,
+          "y": 11500,
+          "z": -27900
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 1000,
+          "y": 12050,
+          "z": -27900
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 3000,
+          "y": 11500,
+          "z": -27900
+        },
+        "to": {
+          "x": 1000,
+          "y": 12050,
+          "z": -27900
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-dam-crest",
+        "top": 9850
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 5000,
+          "z": 15000
+        },
+        "to": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "y": 12000,
+          "z": -22000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 7000,
+          "z": -12000
+        },
+        "to": {
+          "x": -10000,
+          "y": 12000,
+          "z": -22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -8000,
+          "z": -27900,
+          "y": 11700
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "y": 12000,
+          "z": -22000
+        },
+        "to": {
+          "x": -8000,
+          "z": -27900,
+          "y": 11700
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -1500,
+          "z": -27900,
+          "y": 11700
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -8000,
+          "z": -27900,
+          "y": 11700
+        },
+        "to": {
+          "x": -1500,
+          "z": -27900,
+          "y": 11700
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -3000,
+          "z": -27900,
+          "y": 11700
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -1500,
+          "z": -27900,
+          "y": 11700
+        },
+        "to": {
+          "x": -3000,
+          "z": -27900,
+          "y": 11700
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 3500,
+          "z": -27900,
+          "y": 11700
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -3000,
+          "z": -27900,
+          "y": 11700
+        },
+        "to": {
+          "x": 3500,
+          "z": -27900,
+          "y": 11700
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 2800,
+          "y": 11700,
+          "z": -27900
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 3500,
+          "z": -27900,
+          "y": 11700
+        },
+        "to": {
+          "x": 2800,
+          "y": 11700,
+          "z": -27900
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 1000,
+          "y": 12050,
+          "z": -27900
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 2800,
+          "y": 11700,
+          "z": -27900
+        },
+        "to": {
+          "x": 1000,
+          "y": 12050,
+          "z": -27900
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-02/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-dam-crest",
+        "top": 9850
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -3000,
+          "y": 5200,
+          "z": 12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -3000,
+          "y": 5200,
+          "z": 12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -9000,
+          "x": 2200,
+          "y": 6200
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -3000,
+          "y": 5200,
+          "z": 12000
+        },
+        "to": {
+          "z": -9000,
+          "x": 2200,
+          "y": 6200
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -15500,
+          "x": 2200,
+          "y": 6200
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -9000,
+          "x": 2200,
+          "y": 6200
+        },
+        "to": {
+          "z": -15500,
+          "x": 2200,
+          "y": 6200
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -4000,
+          "y": 5400,
+          "z": -18500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -15500,
+          "x": 2200,
+          "y": 6200
+        },
+        "to": {
+          "x": -4000,
+          "y": 5400,
+          "z": -18500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -4000,
+          "y": 5400,
+          "z": -18500
+        },
+        "to": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        },
+        "to": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-intake-gallery",
+        "top": 3350
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 1800,
+          "y": 6000,
+          "z": 12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": 1800,
+          "y": 6000,
+          "z": 12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -8000,
+          "x": 1800,
+          "y": 6000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 1800,
+          "y": 6000,
+          "z": 12000
+        },
+        "to": {
+          "z": -8000,
+          "x": 1800,
+          "y": 6000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -14500,
+          "x": 1800,
+          "y": 6000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -8000,
+          "x": 1800,
+          "y": 6000
+        },
+        "to": {
+          "z": -14500,
+          "x": 1800,
+          "y": 6000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 1000,
+          "z": -17000,
+          "y": 5600
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -14500,
+          "x": 1800,
+          "y": 6000
+        },
+        "to": {
+          "x": 1000,
+          "z": -17000,
+          "y": 5600
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -5500,
+          "z": -17000,
+          "y": 5600
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 1000,
+          "z": -17000,
+          "y": 5600
+        },
+        "to": {
+          "x": -5500,
+          "z": -17000,
+          "y": 5600
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -4000,
+          "y": 5400,
+          "z": -18500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -5500,
+          "z": -17000,
+          "y": 5600
+        },
+        "to": {
+          "x": -4000,
+          "y": 5400,
+          "z": -18500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -4000,
+          "y": 5400,
+          "z": -18500
+        },
+        "to": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        },
+        "to": {
+          "x": 2200,
+          "y": 5800,
+          "z": -22650
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-03/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-intake-gallery",
+        "top": 3350
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15000,
+          "y": 7000,
+          "z": -17000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -15000,
+          "y": 7000,
+          "z": -17000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15000,
+          "y": 12000,
+          "z": -22000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15000,
+          "y": 7000,
+          "z": -17000
+        },
+        "to": {
+          "x": -15000,
+          "y": 12000,
+          "z": -22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -11000,
+          "y": 12200,
+          "z": -27000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15000,
+          "y": 12000,
+          "z": -22000
+        },
+        "to": {
+          "x": -11000,
+          "y": 12200,
+          "z": -27000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -25000,
+          "x": -11000,
+          "y": 10500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -11000,
+          "y": 12200,
+          "z": -27000
+        },
+        "to": {
+          "z": -25000,
+          "x": -11000,
+          "y": 10500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -18500,
+          "x": -11000,
+          "y": 10500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -25000,
+          "x": -11000,
+          "y": 10500
+        },
+        "to": {
+          "z": -18500,
+          "x": -11000,
+          "y": 10500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -19000,
+          "x": -11000,
+          "y": 7600
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -18500,
+          "x": -11000,
+          "y": 10500
+        },
+        "to": {
+          "z": -19000,
+          "x": -11000,
+          "y": 7600
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -12500,
+          "x": -11000,
+          "y": 7600
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -19000,
+          "x": -11000,
+          "y": 7600
+        },
+        "to": {
+          "z": -12500,
+          "x": -11000,
+          "y": 7600
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -11000,
+          "y": 7600,
+          "z": -15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -12500,
+          "x": -11000,
+          "y": 7600
+        },
+        "to": {
+          "x": -11000,
+          "y": 7600,
+          "z": -15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -13000,
+          "x": -11000,
+          "y": 4900
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -11000,
+          "y": 7600,
+          "z": -15000
+        },
+        "to": {
+          "z": -13000,
+          "x": -11000,
+          "y": 4900
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -6500,
+          "x": -11000,
+          "y": 4900
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -13000,
+          "x": -11000,
+          "y": 4900
+        },
+        "to": {
+          "z": -6500,
+          "x": -11000,
+          "y": 4900
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -7000,
+          "x": -11000,
+          "y": 2800
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -6500,
+          "x": -11000,
+          "y": 4900
+        },
+        "to": {
+          "z": -7000,
+          "x": -11000,
+          "y": 2800
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -500,
+          "x": -11000,
+          "y": 2800
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -7000,
+          "x": -11000,
+          "y": 2800
+        },
+        "to": {
+          "z": -500,
+          "x": -11000,
+          "y": 2800
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level nominal point13 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -11000,
+          "y": 2800,
+          "z": -2000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level swept segment13 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -500,
+          "x": -11000,
+          "y": 2800
+        },
+        "to": {
+          "x": -11000,
+          "y": 2800,
+          "z": -2000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-spillway-apron",
+        "top": 350
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15000,
+          "y": 7500,
+          "z": -17000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -15000,
+          "y": 7500,
+          "z": -17000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15000,
+          "y": 12500,
+          "z": -22000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15000,
+          "y": 7500,
+          "z": -17000
+        },
+        "to": {
+          "x": -15000,
+          "y": 12500,
+          "z": -22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -11000,
+          "y": 12400,
+          "z": -27000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15000,
+          "y": 12500,
+          "z": -22000
+        },
+        "to": {
+          "x": -11000,
+          "y": 12400,
+          "z": -27000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -25000,
+          "x": -11000,
+          "y": 10700
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -11000,
+          "y": 12400,
+          "z": -27000
+        },
+        "to": {
+          "z": -25000,
+          "x": -11000,
+          "y": 10700
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -18500,
+          "x": -11000,
+          "y": 10700
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -25000,
+          "x": -11000,
+          "y": 10700
+        },
+        "to": {
+          "z": -18500,
+          "x": -11000,
+          "y": 10700
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -19000,
+          "x": -11000,
+          "y": 7800
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -18500,
+          "x": -11000,
+          "y": 10700
+        },
+        "to": {
+          "z": -19000,
+          "x": -11000,
+          "y": 7800
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -12500,
+          "x": -11000,
+          "y": 7800
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -19000,
+          "x": -11000,
+          "y": 7800
+        },
+        "to": {
+          "z": -12500,
+          "x": -11000,
+          "y": 7800
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -13000,
+          "x": -11000,
+          "y": 5100
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -12500,
+          "x": -11000,
+          "y": 7800
+        },
+        "to": {
+          "z": -13000,
+          "x": -11000,
+          "y": 5100
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -6500,
+          "x": -11000,
+          "y": 5100
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -13000,
+          "x": -11000,
+          "y": 5100
+        },
+        "to": {
+          "z": -6500,
+          "x": -11000,
+          "y": 5100
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -7000,
+          "x": -11000,
+          "y": 3000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -6500,
+          "x": -11000,
+          "y": 5100
+        },
+        "to": {
+          "z": -7000,
+          "x": -11000,
+          "y": 3000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -500,
+          "x": -11000,
+          "y": 3000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -7000,
+          "x": -11000,
+          "y": 3000
+        },
+        "to": {
+          "z": -500,
+          "x": -11000,
+          "y": 3000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -11000,
+          "y": 3000,
+          "z": -2000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -500,
+          "x": -11000,
+          "y": 3000
+        },
+        "to": {
+          "x": -11000,
+          "y": 3000,
+          "z": -2000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-04/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-spillway-apron",
+        "top": 350
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28400,
+          "y": 2100,
+          "z": 17000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -28400,
+          "y": 2100,
+          "z": 17000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28400,
+          "y": 1650,
+          "z": -7500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment2 extra0.5m clearance",
+      "passed": false,
+      "detail": {
+        "from": {
+          "x": -28400,
+          "y": 2100,
+          "z": 17000
+        },
+        "to": {
+          "x": -28400,
+          "y": 1650,
+          "z": -7500
+        },
+        "contacts": [
+          {
+            "id": "rock-west-lower",
+            "toi": 0.8776171207427979,
+            "normal": {
+              "x": 955776,
+              "y": 52,
+              "z": 294095
+            },
+            "moving": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -9000,
+          "x": -28400,
+          "y": 1650
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -28400,
+          "y": 1650,
+          "z": -7500
+        },
+        "to": {
+          "z": -9000,
+          "x": -28400,
+          "y": 1650
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -15500,
+          "x": -28400,
+          "y": 1650
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -9000,
+          "x": -28400,
+          "y": 1650
+        },
+        "to": {
+          "z": -15500,
+          "x": -28400,
+          "y": 1650
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -15000,
+          "x": -28400,
+          "y": 1650
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -15500,
+          "x": -28400,
+          "y": 1650
+        },
+        "to": {
+          "z": -15000,
+          "x": -28400,
+          "y": 1650
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -21500,
+          "x": -28400,
+          "y": 1650
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -15000,
+          "x": -28400,
+          "y": 1650
+        },
+        "to": {
+          "z": -21500,
+          "x": -28400,
+          "y": 1650
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28400,
+          "y": 1650,
+          "z": -21000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -21500,
+          "x": -28400,
+          "y": 1650
+        },
+        "to": {
+          "x": -28400,
+          "y": 1650,
+          "z": -21000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28400,
+          "y": 7000,
+          "z": -21000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -28400,
+          "y": 1650,
+          "z": -21000
+        },
+        "to": {
+          "x": -28400,
+          "y": 7000,
+          "z": -21000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -12000,
+          "y": 7000,
+          "z": -8000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -28400,
+          "y": 7000,
+          "z": -21000
+        },
+        "to": {
+          "x": -12000,
+          "y": 7000,
+          "z": -8000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 7000,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -12000,
+          "y": 7000,
+          "z": -8000
+        },
+        "to": {
+          "x": -30000,
+          "y": 7000,
+          "z": 26000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-shore-pad",
+        "top": 450
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28300,
+          "y": 2300,
+          "z": 17000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -28300,
+          "y": 2300,
+          "z": 17000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28300,
+          "y": 1800,
+          "z": -7500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment2 extra0.5m clearance",
+      "passed": false,
+      "detail": {
+        "from": {
+          "x": -28300,
+          "y": 2300,
+          "z": 17000
+        },
+        "to": {
+          "x": -28300,
+          "y": 1800,
+          "z": -7500
+        },
+        "contacts": [
+          {
+            "id": "rock-west-lower",
+            "toi": 0.8910738229751587,
+            "normal": {
+              "x": 970910,
+              "y": -17,
+              "z": 239445
+            },
+            "moving": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -9500,
+          "x": -28300,
+          "y": 1800
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -28300,
+          "y": 1800,
+          "z": -7500
+        },
+        "to": {
+          "z": -9500,
+          "x": -28300,
+          "y": 1800
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -16000,
+          "x": -28300,
+          "y": 1800
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -9500,
+          "x": -28300,
+          "y": 1800
+        },
+        "to": {
+          "z": -16000,
+          "x": -28300,
+          "y": 1800
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -15500,
+          "x": -28300,
+          "y": 1800
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -16000,
+          "x": -28300,
+          "y": 1800
+        },
+        "to": {
+          "z": -15500,
+          "x": -28300,
+          "y": 1800
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -22000,
+          "x": -28300,
+          "y": 1800
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -15500,
+          "x": -28300,
+          "y": 1800
+        },
+        "to": {
+          "z": -22000,
+          "x": -28300,
+          "y": 1800
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28300,
+          "y": 1800,
+          "z": -21500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -22000,
+          "x": -28300,
+          "y": 1800
+        },
+        "to": {
+          "x": -28300,
+          "y": 1800,
+          "z": -21500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28300,
+          "y": 7500,
+          "z": -21500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -28300,
+          "y": 1800,
+          "z": -21500
+        },
+        "to": {
+          "x": -28300,
+          "y": 7500,
+          "z": -21500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -22000,
+          "z": -8000,
+          "y": 7500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -28300,
+          "y": 7500,
+          "z": -21500
+        },
+        "to": {
+          "x": -22000,
+          "z": -8000,
+          "y": 7500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15500,
+          "z": -8000,
+          "y": 7500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -22000,
+          "z": -8000,
+          "y": 7500
+        },
+        "to": {
+          "x": -15500,
+          "z": -8000,
+          "y": 7500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 7500,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15500,
+          "z": -8000,
+          "y": 7500
+        },
+        "to": {
+          "x": -30000,
+          "y": 7500,
+          "z": 26000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-05/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-shore-pad",
+        "top": 450
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -35000,
+          "y": 4400,
+          "z": 16000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -35000,
+          "y": 4400,
+          "z": 16000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -35000,
+          "y": 4500,
+          "z": 7000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -35000,
+          "y": 4400,
+          "z": 16000
+        },
+        "to": {
+          "x": -35000,
+          "y": 4500,
+          "z": 7000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -39000,
+          "y": 7200,
+          "z": 4000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level swept segment3 extra0.5m clearance",
+      "passed": false,
+      "detail": {
+        "from": {
+          "x": -35000,
+          "y": 4500,
+          "z": 7000
+        },
+        "to": {
+          "x": -39000,
+          "y": 7200,
+          "z": 4000
+        },
+        "contacts": [
+          {
+            "id": "rock-west-middle",
+            "toi": 0.45845359563827515,
+            "normal": {
+              "x": 430313,
+              "y": 497745,
+              "z": 753047
+            },
+            "moving": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -39000,
+          "y": 10200,
+          "z": 4000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -39000,
+          "y": 7200,
+          "z": 4000
+        },
+        "to": {
+          "x": -39000,
+          "y": 10200,
+          "z": 4000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -41000,
+          "y": 10200,
+          "z": -9000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -39000,
+          "y": 10200,
+          "z": 4000
+        },
+        "to": {
+          "x": -41000,
+          "y": 10200,
+          "z": -9000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -41000,
+          "y": 10700,
+          "z": -10000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -41000,
+          "y": 10200,
+          "z": -9000
+        },
+        "to": {
+          "x": -41000,
+          "y": 10700,
+          "z": -10000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "rock-west-upper",
+        "top": 8500
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -35000,
+          "y": 4600,
+          "z": 16000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -35000,
+          "y": 4600,
+          "z": 16000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 13000,
+          "x": -35000,
+          "y": 4600
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -35000,
+          "y": 4600,
+          "z": 16000
+        },
+        "to": {
+          "z": 13000,
+          "x": -35000,
+          "y": 4600
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 6500,
+          "x": -35000,
+          "y": 4600
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 13000,
+          "x": -35000,
+          "y": 4600
+        },
+        "to": {
+          "z": 6500,
+          "x": -35000,
+          "y": 4600
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -35000,
+          "y": 4600,
+          "z": 7000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 6500,
+          "x": -35000,
+          "y": 4600
+        },
+        "to": {
+          "x": -35000,
+          "y": 4600,
+          "z": 7000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 7000,
+          "x": -39000,
+          "y": 7300
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -35000,
+          "y": 4600,
+          "z": 7000
+        },
+        "to": {
+          "z": 7000,
+          "x": -39000,
+          "y": 7300
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": false,
+      "detail": {
+        "lowerPoint": {
+          "z": 500,
+          "x": -39000,
+          "y": 7300
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment6 extra0.5m clearance",
+      "passed": false,
+      "detail": {
+        "from": {
+          "z": 7000,
+          "x": -39000,
+          "y": 7300
+        },
+        "to": {
+          "z": 500,
+          "x": -39000,
+          "y": 7300
+        },
+        "contacts": [
+          {
+            "id": "rock-west-upper",
+            "toi": 0.6400473713874817,
+            "normal": {
+              "x": 514479,
+              "y": 129,
+              "z": 857503
+            },
+            "moving": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -39000,
+          "y": 10300,
+          "z": 3500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment7 extra0.5m clearance",
+      "passed": false,
+      "detail": {
+        "from": {
+          "z": 500,
+          "x": -39000,
+          "y": 7300
+        },
+        "to": {
+          "x": -39000,
+          "y": 10300,
+          "z": 3500
+        },
+        "contacts": [
+          {
+            "id": "rock-west-upper",
+            "toi": 0,
+            "normal": {
+              "x": -919145,
+              "y": -1,
+              "z": -393920
+            },
+            "moving": false
+          },
+          {
+            "id": "rock-west-upper",
+            "toi": 0.0866667851805687,
+            "normal": {
+              "x": 0,
+              "y": -1000000,
+              "z": 0
+            },
+            "moving": false
+          },
+          {
+            "id": "rock-west-upper",
+            "toi": 0.290222704410553,
+            "normal": {
+              "x": -514495,
+              "y": 0,
+              "z": -857493
+            },
+            "moving": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -4000,
+          "x": -41000,
+          "y": 10300
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -39000,
+          "y": 10300,
+          "z": 3500
+        },
+        "to": {
+          "z": -4000,
+          "x": -41000,
+          "y": 10300
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -10500,
+          "x": -41000,
+          "y": 10300
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -4000,
+          "x": -41000,
+          "y": 10300
+        },
+        "to": {
+          "z": -10500,
+          "x": -41000,
+          "y": 10300
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -41000,
+          "y": 10700,
+          "z": -10000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -10500,
+          "x": -41000,
+          "y": 10300
+        },
+        "to": {
+          "x": -41000,
+          "y": 10700,
+          "z": -10000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-06/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "rock-west-upper",
+        "top": 8500
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -27000,
+          "y": 4000,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -27000,
+          "y": 4000,
+          "z": 26000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -6000,
+          "z": 26000,
+          "y": 4000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -27000,
+          "y": 4000,
+          "z": 26000
+        },
+        "to": {
+          "x": -6000,
+          "z": 26000,
+          "y": 4000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 500,
+          "z": 26000,
+          "y": 4000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -6000,
+          "z": 26000,
+          "y": 4000
+        },
+        "to": {
+          "x": 500,
+          "z": 26000,
+          "y": 4000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 2000,
+          "y": 5000,
+          "z": 15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 500,
+          "z": 26000,
+          "y": 4000
+        },
+        "to": {
+          "x": 2000,
+          "y": 5000,
+          "z": 15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 7000,
+          "x": 2000,
+          "y": 6000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 2000,
+          "y": 5000,
+          "z": 15000
+        },
+        "to": {
+          "z": 7000,
+          "x": 2000,
+          "y": 6000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 500,
+          "x": 2000,
+          "y": 6000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 7000,
+          "x": 2000,
+          "y": 6000
+        },
+        "to": {
+          "z": 500,
+          "x": 2000,
+          "y": 6000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -9000,
+          "x": 2000,
+          "y": 9500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 500,
+          "x": 2000,
+          "y": 6000
+        },
+        "to": {
+          "z": -9000,
+          "x": 2000,
+          "y": 9500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -15500,
+          "x": 2000,
+          "y": 9500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -9000,
+          "x": 2000,
+          "y": 9500
+        },
+        "to": {
+          "z": -15500,
+          "x": 2000,
+          "y": 9500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 1000,
+          "y": 12000,
+          "z": -18500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -15500,
+          "x": 2000,
+          "y": 9500
+        },
+        "to": {
+          "x": 1000,
+          "y": 12000,
+          "z": -18500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -11000,
+          "z": -20000,
+          "y": 12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 1000,
+          "y": 12000,
+          "z": -18500
+        },
+        "to": {
+          "x": -11000,
+          "z": -20000,
+          "y": 12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -17500,
+          "z": -20000,
+          "y": 12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -11000,
+          "z": -20000,
+          "y": 12000
+        },
+        "to": {
+          "x": -17500,
+          "z": -20000,
+          "y": 12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -32000,
+          "y": 12000,
+          "z": -4000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -17500,
+          "z": -20000,
+          "y": 12000
+        },
+        "to": {
+          "x": -32000,
+          "y": 12000,
+          "z": -4000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point13 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 13000,
+          "x": -32000,
+          "y": 12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment13 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -32000,
+          "y": 12000,
+          "z": -4000
+        },
+        "to": {
+          "z": 13000,
+          "x": -32000,
+          "y": 12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point14 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 19500,
+          "x": -32000,
+          "y": 12000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment14 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 13000,
+          "x": -32000,
+          "y": 12000
+        },
+        "to": {
+          "z": 19500,
+          "x": -32000,
+          "y": 12000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point15 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 5000,
+          "z": 23000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment15 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 19500,
+          "x": -32000,
+          "y": 12000
+        },
+        "to": {
+          "x": -30000,
+          "y": 5000,
+          "z": 23000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level nominal point16 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 5000,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level swept segment16 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 5000,
+          "z": 23000
+        },
+        "to": {
+          "x": -30000,
+          "y": 5000,
+          "z": 26000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-shore-pad",
+        "top": 450
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -27000,
+          "y": 4500,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -27000,
+          "y": 4500,
+          "z": 26000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -6000,
+          "z": 26000,
+          "y": 4500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -27000,
+          "y": 4500,
+          "z": 26000
+        },
+        "to": {
+          "x": -6000,
+          "z": 26000,
+          "y": 4500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 500,
+          "z": 26000,
+          "y": 4500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -6000,
+          "z": 26000,
+          "y": 4500
+        },
+        "to": {
+          "x": 500,
+          "z": 26000,
+          "y": 4500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 15000,
+          "x": 2000,
+          "y": 5500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 500,
+          "z": 26000,
+          "y": 4500
+        },
+        "to": {
+          "z": 15000,
+          "x": 2000,
+          "y": 5500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 8500,
+          "x": 2000,
+          "y": 5500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 15000,
+          "x": 2000,
+          "y": 5500
+        },
+        "to": {
+          "z": 8500,
+          "x": 2000,
+          "y": 5500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 5000,
+          "x": 2000,
+          "y": 7000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 8500,
+          "x": 2000,
+          "y": 5500
+        },
+        "to": {
+          "z": 5000,
+          "x": 2000,
+          "y": 7000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -1500,
+          "x": 2000,
+          "y": 7000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 5000,
+          "x": 2000,
+          "y": 7000
+        },
+        "to": {
+          "z": -1500,
+          "x": 2000,
+          "y": 7000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -9000,
+          "x": 2000,
+          "y": 10000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -1500,
+          "x": 2000,
+          "y": 7000
+        },
+        "to": {
+          "z": -9000,
+          "x": 2000,
+          "y": 10000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -15500,
+          "x": 2000,
+          "y": 10000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -9000,
+          "x": 2000,
+          "y": 10000
+        },
+        "to": {
+          "z": -15500,
+          "x": 2000,
+          "y": 10000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 1000,
+          "y": 12500,
+          "z": -18500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -15500,
+          "x": 2000,
+          "y": 10000
+        },
+        "to": {
+          "x": 1000,
+          "y": 12500,
+          "z": -18500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -11000,
+          "z": -20000,
+          "y": 12500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 1000,
+          "y": 12500,
+          "z": -18500
+        },
+        "to": {
+          "x": -11000,
+          "z": -20000,
+          "y": 12500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -17500,
+          "z": -20000,
+          "y": 12500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -11000,
+          "z": -20000,
+          "y": 12500
+        },
+        "to": {
+          "x": -17500,
+          "z": -20000,
+          "y": 12500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point13 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -32000,
+          "y": 12500,
+          "z": -4000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment13 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -17500,
+          "z": -20000,
+          "y": 12500
+        },
+        "to": {
+          "x": -32000,
+          "y": 12500,
+          "z": -4000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point14 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 13000,
+          "x": -32000,
+          "y": 12500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment14 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -32000,
+          "y": 12500,
+          "z": -4000
+        },
+        "to": {
+          "z": 13000,
+          "x": -32000,
+          "y": 12500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point15 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 19500,
+          "x": -32000,
+          "y": 12500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment15 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 13000,
+          "x": -32000,
+          "y": 12500
+        },
+        "to": {
+          "z": 19500,
+          "x": -32000,
+          "y": 12500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point16 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 5500,
+          "z": 23000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment16 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 19500,
+          "x": -32000,
+          "y": 12500
+        },
+        "to": {
+          "x": -30000,
+          "y": 5500,
+          "z": 23000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro nominal point17 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 5500,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro swept segment17 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 5500,
+          "z": 23000
+        },
+        "to": {
+          "x": -30000,
+          "y": 5500,
+          "z": 26000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-07/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-shore-pad",
+        "top": 450
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -16000,
+          "y": 6500,
+          "z": 8000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -16000,
+          "y": 6500,
+          "z": 8000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -4000,
+          "x": -16000,
+          "y": 6500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -16000,
+          "y": 6500,
+          "z": 8000
+        },
+        "to": {
+          "z": -4000,
+          "x": -16000,
+          "y": 6500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -10500,
+          "x": -16000,
+          "y": 6500
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -4000,
+          "x": -16000,
+          "y": 6500
+        },
+        "to": {
+          "z": -10500,
+          "x": -16000,
+          "y": 6500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -16000,
+          "y": 6500,
+          "z": -15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -10500,
+          "x": -16000,
+          "y": 6500
+        },
+        "to": {
+          "x": -16000,
+          "y": 6500,
+          "z": -15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -22000,
+          "y": 6500,
+          "z": -15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -16000,
+          "y": 6500,
+          "z": -15000
+        },
+        "to": {
+          "x": -22000,
+          "y": 6500,
+          "z": -15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -22000,
+          "y": 6650,
+          "z": -15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -22000,
+          "y": 6500,
+          "z": -15000
+        },
+        "to": {
+          "x": -22000,
+          "y": 6650,
+          "z": -15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "building-maintenance-roof",
+        "top": 4450
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15000,
+          "y": 7000,
+          "z": 9000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -30000,
+          "y": 2650,
+          "z": 26000
+        },
+        "to": {
+          "x": -15000,
+          "y": 7000,
+          "z": 9000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -3000,
+          "x": -15000,
+          "y": 7000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15000,
+          "y": 7000,
+          "z": 9000
+        },
+        "to": {
+          "z": -3000,
+          "x": -15000,
+          "y": 7000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -9500,
+          "x": -15000,
+          "y": 7000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -3000,
+          "x": -15000,
+          "y": 7000
+        },
+        "to": {
+          "z": -9500,
+          "x": -15000,
+          "y": 7000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -16000,
+          "y": 7000,
+          "z": -15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -9500,
+          "x": -15000,
+          "y": 7000
+        },
+        "to": {
+          "x": -16000,
+          "y": 7000,
+          "z": -15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -17000,
+          "z": -15000,
+          "y": 7000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -16000,
+          "y": 7000,
+          "z": -15000
+        },
+        "to": {
+          "x": -17000,
+          "z": -15000,
+          "y": 7000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -23500,
+          "z": -15000,
+          "y": 7000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -17000,
+          "z": -15000,
+          "y": 7000
+        },
+        "to": {
+          "x": -23500,
+          "z": -15000,
+          "y": 7000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -22000,
+          "y": 7000,
+          "z": -15000
+        }
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -23500,
+          "z": -15000,
+          "y": 7000
+        },
+        "to": {
+          "x": -22000,
+          "y": 7000,
+          "z": -15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "mountain-reservoir-08/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "building-maintenance-roof",
+        "top": 4450
+      }
+    }
+  ],
+  "flights": [],
+  "scope": "Static source/collision survey only; no ordinary-flight or visual acceptance.",
+  "pilot": "Existing adventureAuthoringPilot ordinary inputs. Explicit surveyed legs bypass its coarse AABB detour planner through empty authoring navigation boxes; actual flight retains every real collider. For flat-top terrain, navigation metadata supplies its measured maximum Y without changing the actual course. Gentle48% throttle replaces early motor cut only in the final65mm until contact.",
+  "error": "Error: Static collision survey failed; see every failed check before flight generation\n    at file:///private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/mountain-reservoir/qualify-world.mjs:200:50"
+}
