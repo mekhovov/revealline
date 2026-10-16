@@ -1,0 +1,139 @@
+{
+  "format": "fpv-root-inventory-checkpoint-upload.v1",
+  "releaseId": 414505790,
+  "assetId": 646138870,
+  "assetName": "fpv-root-inventory-checkpoint-3a21779bfcdab44f1ac01863a7b66425ebe8d1563606df5ba2be0d1babdf16d2.zip",
+  "bytes": 7290648,
+  "sha256": "3a21779bfcdab44f1ac01863a7b66425ebe8d1563606df5ba2be0d1babdf16d2",
+  "serverDigestMatch": true,
+  "authenticatedFullReadbackMatch": true,
+  "zipMemberHashesMatch": true,
+  "files": [
+    {
+      "path": "RECOVERY.md",
+      "bytes": 3177,
+      "sha256": "af543729312b5f1250eead3a9222f7ddaec6211157c79e68eb7da5291c337994"
+    },
+    {
+      "path": "app-files.jsonl",
+      "bytes": 22903283,
+      "sha256": "63bd5a897e7c874b814102543d1d44ace2ad5bdf8e7f567c35593c5601202642"
+    },
+    {
+      "path": "app-supplement-flat.jsonl",
+      "bytes": 2133,
+      "sha256": "e5ebac4e46fa8380e1be7bd522464c8a39adc86669f74acaa2039b83e91f742e"
+    },
+    {
+      "path": "app-supplement-workingtrees-delta.jsonl",
+      "bytes": 3145205,
+      "sha256": "6caced4cf06bd0d73d24d3204138a40ab7a39137687de2b04dcad6b2b3e0cb4d"
+    },
+    {
+      "path": "app-supplement-workingtrees.jsonl",
+      "bytes": 6713412,
+      "sha256": "a8931a78a6b0c83ca7657d4e4addda87b867586028cf082ab5245d8e2c1e4e8e"
+    },
+    {
+      "path": "exact-policy-clearance-batch001.json",
+      "bytes": 4064,
+      "sha256": "ef9a7e6d4b93b0d5208b9b58f8595c9303a279f6240dfa10c969e7a9ce3588c7"
+    },
+    {
+      "path": "exact-policy-clearance-primary-0407.json",
+      "bytes": 119707,
+      "sha256": "d6728a22e6ddab119d5ef7593098b97039b7b0cf36c214538aa0c0b37f25812f"
+    },
+    {
+      "path": "exact-policy-clearance-secondary-0424.json",
+      "bytes": 6592,
+      "sha256": "ae55e70073cb42f894fcaeda828a809a66da77433fd3f47640077ea11cd2875a"
+    },
+    {
+      "path": "final-delta-inventory.py",
+      "bytes": 4552,
+      "sha256": "9d89931d2fc46ad4bf5eb32a93f166bd7ec78deeb2c8678709006412ad9edf20"
+    },
+    {
+      "path": "independent-github-restore-initial-negative.txt",
+      "bytes": 396,
+      "sha256": "41233c2a638c9ad31bdfc39fa199798b9f0861682974bb7852ad7c3d14e16e15"
+    },
+    {
+      "path": "independent-github-restore-receipt.json",
+      "bytes": 29935,
+      "sha256": "e5d93d51a39961a758c9690f9303b89fecb5bb4145572a0c6dffc1b6f37b544c"
+    },
+    {
+      "path": "inventory-state.json",
+      "bytes": 187,
+      "sha256": "0d8b623400c335ae0279baf7558588a66e69b87fa65a12010761905f06c0b7a2"
+    },
+    {
+      "path": "inventory.py",
+      "bytes": 5608,
+      "sha256": "36ac2d82b0e4c7893d38d47c7d61147f763307fe567c2b6bb2c9d5465ea261b3"
+    },
+    {
+      "path": "local-dependency-repair.json",
+      "bytes": 2079,
+      "sha256": "e10862ba578bead2cd91cc3e5855336e6aac998d73cf135cbc8a786177265400"
+    },
+    {
+      "path": "recovery/internal-recovery-copy.json",
+      "bytes": 1136,
+      "sha256": "bc5c032073ac03e73cd51784760237190d0f7b61523925656527ab1fa211ce42"
+    },
+    {
+      "path": "recovery/plans/fpv-continuous-delivery.md",
+      "bytes": 365344,
+      "sha256": "6fb3401f7f9807e259831b36c7bd7f8e15e739f27a685eb03498a0d17d5d8eca"
+    },
+    {
+      "path": "recovery/plans/fpv-large-worlds-delivery-plan.md",
+      "bytes": 109752,
+      "sha256": "3b42816bb9dc800c02142fa9d403187c581e51818ab5ec252aaf2427a48a5b73"
+    },
+    {
+      "path": "recovery/plans/fpv-plan-review-20261016.md",
+      "bytes": 31929,
+      "sha256": "0146e6236b9c34940a8d53279ddc725512f7ba4006120f802342815d18c0b91c"
+    },
+    {
+      "path": "recovery/pre-preservation-fpv-handoff.md",
+      "bytes": 119674,
+      "sha256": "80082b0dbc17e0d382bc0c03f1eb4830001520f724197f37a077d5c82b45c424"
+    },
+    {
+      "path": "secondary-delta-inventory-state.json",
+      "bytes": 142,
+      "sha256": "5368c24edbe09b20ce4d7828de1d36e2e6ae2d54b9be6d9391529a10df9030b8"
+    },
+    {
+      "path": "secondary-delta-roots-frozen.json",
+      "bytes": 283,
+      "sha256": "be1136d125177de23475d9464894c23f7dd460b3e792d3c1903046af93908ab3"
+    },
+    {
+      "path": "secondary-inventory-state.json",
+      "bytes": 160,
+      "sha256": "919cd5f2a117a18589af95a17eb0e425d3d06463561c41b1fa6e74bdfdf83768"
+    },
+    {
+      "path": "secondary-roots-frozen.json",
+      "bytes": 983,
+      "sha256": "ea255b65db45159cb2cdeabb37c08151b8f573e6622255ab175ec4164417aff1"
+    },
+    {
+      "path": "supplement-inventory-delta.py",
+      "bytes": 2782,
+      "sha256": "f4158f9de892fb6bba1582e7dff1b2eb318f588104cda5f5a38b8c5ef5ea0beb"
+    },
+    {
+      "path": "supplement-inventory.py",
+      "bytes": 2756,
+      "sha256": "3cb7fb36130b29cfccd009eeb2523e7679f35bfcfbac336a3cfc444152b53b0b"
+    }
+  ],
+  "preservationComplete": false
+}
