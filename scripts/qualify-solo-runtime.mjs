@@ -17,6 +17,12 @@ import {
 } from './solo-qualification-export.mjs';
 import { createQualificationCpuProfile } from './solo-qualification-cpu-profile.mjs';
 import {
+  qualificationCadenceOption,
+  prepareCadenceViewport,
+  observeSettledCadence,
+  calibrateSettledCadence,
+} from './solo-qualification-cadence.mjs';
+import {
   validateQualification,
   qualificationDisplayOptions,
   qualificationCacheMode,
@@ -44,7 +50,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--work-probe] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--work-probe] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -72,7 +78,9 @@ assert(
   'Audio identity profiling retains media elements; run memory profiling separately',
 );
 const baselineRuntime = flags.includes('--baseline-runtime'),
-  workProbe = flags.includes('--work-probe');
+  workProbe = flags.includes('--work-probe'),
+  cadenceProtocol = qualificationCadenceOption(flags);
+assert(cadenceProtocol === 'blank30' || workProbe, 'Settled cadence requires the work probe');
 assert(
   !baselineRuntime || (workProbe && /^[0-9a-f]{40}$/.test(option('source-revision', ''))),
   'Baseline mode requires the same --work-probe as candidate and a full --source-revision',
@@ -126,6 +134,7 @@ const report = {
   cacheMode,
   baselineRuntime,
   workProbe,
+  cadenceProtocol,
   audioProof,
   sourceRevision: option('source-revision', null),
   scenarioSHA256: createHash('sha256').update(bytes).digest('hex'),
@@ -330,9 +339,24 @@ try {
   if (workProbe) {
     assert.equal(page.url(), 'about:blank', 'Cadence must precede every game request');
     await page.bringToFront();
-    report.externalCadenceCalibration = calibrateLowWorkCadence(
-      await page.evaluate(observeLowWorkCadence, { timeoutMs: 5000 }),
-    );
+    if (cadenceProtocol === 'settled120') {
+      const expected = { ...display.viewport, dpr: display.deviceScaleFactor };
+      report.blankViewportFixture = await page.evaluate(prepareCadenceViewport, expected);
+      await page.waitForFunction(
+        ({ width, height, dpr }) =>
+          window.innerWidth === width &&
+          window.innerHeight === height &&
+          window.devicePixelRatio === dpr,
+        expected,
+        { timeout: 2000 },
+      );
+      report.externalCadenceCalibration = calibrateSettledCadence(
+        await page.evaluate(observeSettledCadence, { expected }),
+      );
+    } else
+      report.externalCadenceCalibration = calibrateLowWorkCadence(
+        await page.evaluate(observeLowWorkCadence, { timeoutMs: 5000 }),
+      );
     await save();
   }
   if (audioProof) await page.addInitScript(installAudioProof);
