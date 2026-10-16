@@ -923,3 +923,91 @@ test('historical authority pins both helpers and refuses changed authority at co
   assert.equal(none.length, 0);
   assert.deepEqual(paths, []);
 });
+
+test('download retry restoration rejects changed pointers, missing original workers and temporary resources', () => {
+  const scope = '/revealline/practice/civilian-flight/releases/v0.0.1/site/',
+    baseline = {
+      keys: { gym: 'prepared' },
+      workers: [{ scope: '/original/', active: 'activated' }],
+    },
+    valid = { ...baseline, caches: ['original-cache'] };
+  const check = (state) =>
+    runInNewContext(`(${observerFunction('retainedDownloadOwnership')})(state,'civilian-flight')`, {
+      assert,
+      baseline,
+      state,
+      failedFixture: 'v0.0.1',
+      site: () => scope.slice(1),
+      assertQuotaFailedScopeAbsent: runInNewContext(
+        `(${observerFunction('assertQuotaFailedScopeAbsent')})`,
+        { assert },
+      ),
+    });
+  check(valid);
+  for (const state of [
+    { ...valid, keys: { gym: 'changed' } },
+    { ...valid, workers: [] },
+    { ...valid, workers: [{ scope: '/original/', active: 'installing' }] },
+    { ...valid, caches: [...valid.caches, 'temporary:' + scope] },
+    {
+      ...valid,
+      workers: [
+        ...valid.workers,
+        { scope: scope + 'optional-practice/civilian-flight/', active: null },
+      ],
+    },
+  ])
+    assert.throws(() => check(state));
+});
+
+test('download restoration freshly exports both Academy records and reads the saved World again', async () => {
+  for (const changed of [null, 'proof', 'profiles', 'world']) {
+    const events = [],
+      world = { card: { id: 'same', title: 'retained' }, database: { hash: 'same' } };
+    const operation = runInNewContext(`(${observerFunction('retainedDownloadRecords')})()`, {
+      assert,
+      fpv: 'civilian-fpv',
+      worlds: 'fpv-worlds',
+      priorVersion: 'prior',
+      page: {},
+      savedProof: 'exact-proof',
+      savedProfiles: 'exact-profiles',
+      worldSeed: { baseline: world },
+      open: async (id, version) => events.push(['open', id, version]),
+      exportedProof: async () => {
+        events.push('proof');
+        return changed === 'proof' ? 'changed' : 'exact-proof';
+      },
+      exportedProfiles: async () => {
+        events.push('profiles');
+        return changed === 'profiles' ? 'changed' : 'exact-profiles';
+      },
+      openInstallationWorldTab: async () => events.push('world-tab'),
+      readInstallationWorldCard: async () => {
+        events.push('card');
+        return world.card;
+      },
+      readWorldDatabase: async () => {
+        events.push('database');
+        return changed === 'world' ? { hash: 'changed' } : world.database;
+      },
+      assertInstallationWorldSeed: (actual, expected) => {
+        assert.deepEqual(actual.card, expected.card);
+        assert.deepEqual(actual.database, expected.database);
+      },
+    });
+    if (changed) await assert.rejects(operation);
+    else {
+      await operation;
+      assert.deepEqual(events, [
+        ['open', 'civilian-fpv', 'prior'],
+        'proof',
+        'profiles',
+        ['open', 'fpv-worlds', undefined],
+        'world-tab',
+        'card',
+        'database',
+      ]);
+    }
+  }
+});
