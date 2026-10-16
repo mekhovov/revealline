@@ -3,11 +3,19 @@ import { hashPresentationBytes } from '../../game/presentation/bundle.mjs';
 import { freezePresentation } from '../../game/presentation/model.mjs';
 import { validatePack } from '../../game/packs.mjs';
 import { campaignKey } from '../../game/library.mjs';
-import { required } from '../../game/data-json.mjs';
+import { describeAuthoringError } from '../../game/content-design/authoring-error.mjs';
 
 const rootURL = new URL('../../', import.meta.url);
 const check = (signal) => {
   if (signal?.aborted) throw new DOMException('Picture context cancelled.', 'AbortError');
+};
+const required = (condition, message, key, values = {}) => {
+  if (!condition)
+    throw describeAuthoringError(
+      new TypeError(message),
+      `tools:studio.pictureContext.${key}`,
+      values,
+    );
 };
 
 /** Code-owned mission metadata only. No original image, player library or installation. */
@@ -26,7 +34,11 @@ export async function pictureOwnerContext(
   let { level, theme } = descriptor;
   if (!level || !theme) {
     const pin = descriptor.source?.pack;
-    required(pin, 'Exact picture owner metadata is unavailable. No substitute board was used.');
+    required(
+      pin,
+      'Exact picture owner metadata is unavailable. No substitute board was used.',
+      'metadataUnavailable',
+    );
     const base = new URL(baseURL),
       url = new URL(pin.path, base);
     required(
@@ -39,6 +51,7 @@ export async function pictureOwnerContext(
         url.origin === base.origin &&
         url.href.startsWith(base.href),
       'Picture context requires its matching same-origin distribution.',
+      'sameOrigin',
     );
     const response = await request(url.href, {
       signal,
@@ -50,12 +63,19 @@ export async function pictureOwnerContext(
       required(
         response.ok,
         `Exact owner pack unavailable (HTTP ${response.status}). Open the matching release; no substitute board was used.`,
+        'unavailable',
+        { status: response.status },
       );
       required(
         !response.redirected && (!response.url || response.url === url.href),
         'Owner pack moved from its registered source.',
+        'moved',
       );
-      required(response.body?.getReader, 'Bounded owner metadata reads are unavailable.');
+      required(
+        response.body?.getReader,
+        'Bounded owner metadata reads are unavailable.',
+        'boundedReads',
+      );
     } catch (error) {
       await response.body?.cancel?.().catch(() => {});
       throw error;
@@ -78,7 +98,11 @@ export async function pictureOwnerContext(
           break;
         }
         total += part.value.byteLength;
-        required(total <= pin.bytes, 'Owner pack exceeds its registered byte budget.');
+        required(
+          total <= pin.bytes,
+          'Owner pack exceeds its registered byte budget.',
+          'byteBudget',
+        );
         parts.push(part.value);
       }
     } finally {
@@ -95,11 +119,14 @@ export async function pictureOwnerContext(
     required(
       total === pin.bytes && (await hashPresentationBytes(bytes)) === pin.sha256,
       'Owner pack differs from its immutable source pin.',
+      'sourcePin',
     );
     check(signal);
     const pack = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
     const checked = validatePack(pack);
-    required(checked.valid, `Owner pack is invalid: ${checked.errors.join('; ')}`);
+    required(checked.valid, `Owner pack is invalid: ${checked.errors.join('; ')}`, 'invalidPack', {
+      error: checked.errors.join('; '),
+    });
     const campaign = pack.campaigns.find(
       (candidate) =>
         campaignKey({
@@ -117,6 +144,7 @@ export async function pictureOwnerContext(
       level.revision === descriptor.owner.levelRevision &&
       theme?.id === descriptor.owner.themeId,
     'Picture owner level or theme differs. No substitute board was used.',
+    'ownerMismatch',
   );
   check(signal);
   return freezePresentation({

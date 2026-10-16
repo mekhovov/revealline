@@ -10,6 +10,12 @@ import {
   FIELD_KIT_RETAINED_RUNTIME as pin,
   FIELD_KIT_RETAINED_RUNTIME_58 as pin58,
   FIELD_KIT_RETAINED_RUNTIME_60 as pin60,
+  FIELD_KIT_RETAINED_RUNTIME_62 as pin62,
+  FIELD_KIT_RETAINED_DISCOVERY101 as pinDiscovery101,
+  FIELD_KIT_RETAINED_DISCOVERY102 as pinDiscovery102,
+  FIELD_KIT_RETAINED_DISCOVERY103 as pinDiscovery103,
+  FIELD_KIT_RETAINED_MAIN101 as pinMain101,
+  FIELD_KIT_RETAINED_RADIO_PREDECESSOR102 as pinRadio102,
   readFieldKitRetainedOutput,
 } from '../../scripts/field-kit-retained-runtime.mjs';
 import { compileFieldKitProduction } from '../../scripts/produce-field-kit-theme.mjs';
@@ -129,7 +135,7 @@ function fixture() {
   })());
 }
 
-test('retained production input has three code-owned original paths and validates raw bytes', async () => {
+test('retained production inputs preserve nine exact paths across independent lineages', async () => {
   const { original, production } = await fixture();
   const reads = [];
   const files = await readFieldKitRetainedOutput({
@@ -139,19 +145,41 @@ test('retained production input has three code-owned original paths and validate
       return read(path);
     },
   });
-  assert.deepEqual(reads, [pin.path, pin58.path, pin60.path]);
+  assert.deepEqual(reads, [
+    pin.path,
+    pin58.path,
+    pin60.path,
+    pin62.path,
+    pinDiscovery101.path,
+    pinDiscovery102.path,
+    pinDiscovery103.path,
+    pinMain101.path,
+    pinRadio102.path,
+  ]);
   assert.equal(pin.commit, 'b810521a53af7be145acb8dedce0a01a747339cf');
   assert.equal(pin.originalPath, 'game/presentation/compiled/runtime.json');
-  assert.equal(sha(files.get('runtime.json')), pin60.sha256);
-  assert.deepEqual(files.get('runtime.json'), await read(pin60.path));
+  assert.equal(sha(files.get('runtime.json')), pinRadio102.sha256);
+  assert.deepEqual(files.get('runtime.json'), await read(pinRadio102.path));
+  assert.deepEqual(files.get(`runtime.${pinMain101.sha256}.json`), await read(pinMain101.path));
+  assert.equal(pinRadio102.commit, '280321ca77eef81d1bce9de8c23247548ae9dd03');
+  assert.equal(pinRadio102.bytes, 1073942);
+  assert.equal(
+    pinRadio102.sha256,
+    "649a6f8b94cac1fd2f81e05c5647e0e85e16cd7858c592ae5bdbdc85481b384f",
+  );
   assert.deepEqual(files.get(`runtime.${pin.sha256}.json`), original);
   assert.equal(pin58.commit, '6842203fbf24db198da21759e23d5c5c64d499dd');
   assert.equal(pin58.originalPath, 'game/presentation/compiled/runtime.json');
-  assert.equal(pin58.bytes, 979746);
-  assert.equal(pin58.sha256, 'ae9949a7c8c8a24775e68317e5825e9b4b2e5ae1dfb9bcffdd749a5adc4cce54');
+  assert.equal(pin58.bytes, 820068);
+  assert.equal(pin58.sha256, "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c");
   assert.deepEqual(files.get(`runtime.${pin58.sha256}.json`), await read(pin58.path));
   assert.equal(pin60.commit, 'bc8b7565f2c4277145b4763d76d928c45e024f1c');
-  assert.equal(pin60.sha256, '38a3c4cc207ee9b136d1cada405f74385c44f3a4a20bc21d91e09c4fc386e39f');
+  assert.equal(pin60.sha256, "3d1cfb93d141f08b1f9cee06a3a528e10aab688634a36eed665a7d4e7e912b9b");
+  assert.deepEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
+  assert.equal(pin62.commit, '2e64c130d219dfece5134ba9119b85a5bf34904d');
+  assert.equal(pin62.originalPath, 'game/presentation/compiled/runtime.json');
+  assert.equal(pin62.bytes, 921950);
+  assert.equal(pin62.sha256, "af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972");
   await verifyPresentationOutput(files);
   const corrupt = Buffer.from(original);
   corrupt[10] ^= 1;
@@ -185,7 +213,7 @@ test('retained runtime refuses missing and corrupt lazy dependency originals', a
   );
 });
 
-test('production regeneration retains raw runtime54,58 and60 and originals without changing current output or history', async () => {
+test('production regeneration retains raw runtime54,58,60 and62 and originals without changing current output or history', async () => {
   const { original, production, inventory, originals } = await fixture();
   const before = structuredClone(production.document);
   const payloads = await assertExactPayloadSet(production.assets, originals);
@@ -198,7 +226,17 @@ test('production regeneration retains raw runtime54,58 and60 and originals witho
     read: async (path) => {
       reads.push(path);
       assert.ok(
-        [pin.path, pin58.path, pin60.path].includes(path),
+        [
+          pin.path,
+          pin58.path,
+          pin60.path,
+          pin62.path,
+          pinDiscovery101.path,
+          pinDiscovery102.path,
+          pinDiscovery103.path,
+          pinMain101.path,
+          pinRadio102.path,
+        ].includes(path),
         'no incidental compiled-output history read',
       );
       return read(path);
@@ -206,12 +244,46 @@ test('production regeneration retains raw runtime54,58 and60 and originals witho
   };
   const first = await compileFieldKitProduction(production, options);
   const second = await compileFieldKitProduction(production, options);
-  assert.deepEqual(reads, [pin.path, pin58.path, pin60.path, pin.path, pin58.path, pin60.path]);
+  assert.deepEqual(reads, [
+    ...[
+      pin.path,
+      pin58.path,
+      pin60.path,
+      pin62.path,
+      pinDiscovery101.path,
+      pinDiscovery102.path,
+      pinDiscovery103.path,
+      pinMain101.path,
+      pinRadio102.path,
+    ],
+    ...[
+      pin.path,
+      pin58.path,
+      pin60.path,
+      pin62.path,
+      pinDiscovery101.path,
+      pinDiscovery102.path,
+      pinDiscovery103.path,
+      pinMain101.path,
+      pinRadio102.path,
+    ],
+  ]);
   assert.deepEqual([...first.files], [...second.files], 'repeat generation is byte-identical');
   await verifyPresentationOutput(first.files);
   assert.deepEqual(first.files.get(`runtime.${pin.sha256}.json`), original);
   assert.deepEqual(first.files.get(`runtime.${pin58.sha256}.json`), await read(pin58.path));
   assert.deepEqual(first.files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
+  assert.deepEqual(first.files.get(`runtime.${pin62.sha256}.json`), await read(pin62.path));
+  assert.deepEqual(
+    first.files.get(`runtime.${pin62.sha256}.json`),
+    await read(`game/presentation/compiled/runtime.${pin62.sha256}.json`),
+    'published retained62 alias matches its immutable authoring input',
+  );
+  assert.deepEqual(
+    first.files.get('manifest.json'),
+    await read('game/presentation/compiled/manifest.json'),
+    'compiled ownership includes the complete retained output',
+  );
   for (const file of inventory.files)
     assert.equal(sha(first.files.get(file.path)), file.sha256, file.path);
   for (const name of ['runtime.json', 'studio.json', 'theme.css'])
@@ -222,8 +294,8 @@ test('production regeneration retains raw runtime54,58 and60 and originals witho
     );
   assert.equal(
     first.files.size,
-    139,
-    '127 originals, five exact equipment payloads, current output and three retained runtimes',
+    145,
+    '127 originals, five exact equipment payloads, current output and nine retained runtimes',
   );
   const reformatted = await compileFieldKitProduction(production, {
     ...options,
@@ -237,6 +309,7 @@ test('production regeneration retains raw runtime54,58 and60 and originals witho
   );
   assert.deepEqual(reformatted.files.get(`runtime.${pin58.sha256}.json`), await read(pin58.path));
   assert.deepEqual(reformatted.files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
+  assert.deepEqual(reformatted.files.get(`runtime.${pin62.sha256}.json`), await read(pin62.path));
   await verifyPresentationOutput(reformatted.files);
   assert.deepEqual(production.document, before, 'all immutable records including 54–58 remain');
   assert.equal(production.assets.size, payloads.size);
@@ -332,5 +405,69 @@ test('accepted58 is byte-exact, dependency-complete and fails closed without los
     );
   }
   assert.deepEqual(files.get(`runtime.${pin.sha256}.json`), await read(pin.path));
-  assert.deepEqual(files.get('runtime.json'), await read(pin60.path));
+  assert.deepEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
+  assert.deepEqual(files.get('runtime.json'), await read(pinRadio102.path));
+});
+
+test('explicit62 preserves all lazy dependencies and rejects changed original manifest bytes', async () => {
+  const { production } = await fixture();
+  const original = await read(pin62.path);
+  const inventory = await inspectPresentationDependencies(original, {
+    retainedManifestSha256: pin62.sha256,
+  });
+  const files = await readFieldKitRetainedOutput({ assets: production.assets, read });
+  assert.equal(inventory.source.revision, 62);
+  assert.equal(inventory.theme.revision, 62);
+  assert.equal(inventory.collection, null);
+  for (const file of inventory.files) {
+    assert.equal(files.get(file.path)?.length, file.bytes, file.path);
+    assert.equal(sha(files.get(file.path)), file.sha256, file.path);
+  }
+  for (const body of [Buffer.from(original), original.subarray(1)]) {
+    if (body.length === original.length) body[10] ^= 1;
+    await assert.rejects(
+      readFieldKitRetainedOutput({
+        assets: production.assets,
+        read: (path) => (path === pin62.path ? body : read(path)),
+      }),
+      /runtime input hash differs|runtime byte count differs/,
+    );
+  }
+});
+
+test('colliding preview and canonical revision101 retain different exact manifest authorities', async () => {
+  const { production } = await fixture();
+  const files = await readFieldKitRetainedOutput({ assets: production.assets, read });
+  const pins = [pinDiscovery101, pinDiscovery102, pinDiscovery103, pinMain101, pinRadio102];
+  const identities = [];
+  for (const item of pins) {
+    const original = await read(item.path);
+    assert.equal(original.length, item.bytes);
+    assert.equal(sha(original), item.sha256);
+    const retained = files.get(
+      item === pinRadio102 ? 'runtime.json' : `runtime.${item.sha256}.json`,
+    );
+    assert.deepEqual(retained, original);
+    const inventory = await inspectPresentationDependencies(retained, {
+      retainedManifestSha256: item.sha256,
+    });
+    identities.push(inventory.theme.revision);
+    for (const file of inventory.files) {
+      assert.equal(files.get(file.path)?.length, file.bytes);
+      assert.equal(sha(files.get(file.path)), file.sha256);
+    }
+    const corrupt = Buffer.from(original);
+    corrupt[10] ^= 1;
+    await assert.rejects(
+      readFieldKitRetainedOutput({
+        assets: production.assets,
+        read: (path) => (path === item.path ? corrupt : read(path)),
+      }),
+      /runtime input hash differs/,
+    );
+  }
+  assert.deepEqual(identities, [101, 102, 103, 101, 102]);
+  assert.notEqual(pinDiscovery101.sha256, pinMain101.sha256);
+  assert.notEqual(pinDiscovery102.sha256, pinRadio102.sha256);
+  await verifyPresentationOutput(files);
 });

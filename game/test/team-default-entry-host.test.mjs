@@ -4,12 +4,18 @@ import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
-import { teamPressureFixtures } from './helpers/team-pressure-fixtures.mjs';
+import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
 import { createModeReturn } from '../mode-return.mjs';
+import { createJourneyBackend } from '../journey/profile.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { playTeamEditionRoute } from './helpers/team-edition-host-route.mjs';
+import {
+  createTeamSpatialOriginalCandidates,
+  TEAM_SPATIAL_PROFILE_KEY,
+} from '../content-design/team-spatial-originals.mjs';
 
 const base = 'http://localhost/game/couch/relay-rescue.html';
-const source = createTeamSpatialOriginalCandidates();
+const source = createTeamImpactOriginalCandidates();
 const originals = new Map(
   await Promise.all(
     source.assets.map(async (asset) => [
@@ -18,21 +24,23 @@ const originals = new Map(
     ]),
   ),
 );
-const routes = await teamPressureFixtures();
+const decodedOriginals = new WeakSet();
 const enter = (f, id) => {
   f.$(id).focus();
   f.tap('Enter');
 };
 
 async function fresh(t, href = base, extra = {}) {
+  const { journeyIndexedDB = null, ...pageOptions } = extra;
   return page(t, {
     href,
     nativeFocus: true,
     nativeVisibility: true,
     retainInitialDifficulty: true,
-    ...extra,
+    ...pageOptions,
     beforeImport({ install }) {
-      const BaseImage = globalThis.Image;
+      const BaseImage = globalThis.Image,
+        actorFetch = globalThis.fetch;
       class OriginalImage extends BaseImage {
         async decode() {
           if (!this.source.startsWith('data:image/png;base64,')) return super.decode();
@@ -40,14 +48,16 @@ async function fresh(t, href = base, extra = {}) {
           this.width = this.naturalWidth = bytes.readUInt32BE(16);
           this.height = this.naturalHeight = bytes.readUInt32BE(20);
           this.sha256 = createHash('sha256').update(bytes).digest('hex');
+          decodedOriginals.add(this);
         }
       }
       install('Image', { value: OriginalImage });
       install('crypto', { value: webcrypto });
+      if (journeyIndexedDB) install('indexedDB', { value: journeyIndexedDB });
       install('fetch', {
         value: async (url) => {
           const asset = source.assets.find((row) => new URL(url).pathname.endsWith('/' + row.path));
-          assert(asset, 'Only registered original artwork is requested');
+          if (!asset) return actorFetch(url);
           return new Response(originals.get(asset.path));
         },
       });
@@ -55,15 +65,62 @@ async function fresh(t, href = base, extra = {}) {
   });
 }
 
+test('a current Team win retains only its exact accepted Team original', async (t) => {
+  const memory = managedIndexedDB(),
+    rewardSource = createTeamSpatialOriginalCandidates(),
+    f = await fresh(t, `${base}?journey=team-spatial-originals-1`, {
+      journeyIndexedDB: memory.indexedDB,
+    }),
+    mission = rewardSource.missions[0];
+  enter(f, 'coop-start');
+  playTeamEditionRoute(f, rewardSource, mission.id, 'standard');
+  const backend = createJourneyBackend({
+    ...memory,
+    profileKey: TEAM_SPATIAL_PROFILE_KEY,
+  });
+  let state;
+  for (let attempt = 0; attempt < 400; attempt++) {
+    state = await backend.readState();
+    if (state.pictures.records.length) break;
+    await new Promise((resolve) => setTimeout(resolve, 10));
+  }
+  assert.equal(
+    state.pictures.records.length,
+    1,
+    `Expected one Team original after the legal win: ${JSON.stringify(state.profile.clears)}`,
+  );
+  const record = state.pictures.records[0],
+    asset = rewardSource.assets.find((item) => item.id === mission.presentation.backgroundAssetId);
+  assert.equal(record.mode, 'team');
+  assert.equal(record.editionId, TEAM_SPATIAL_PROFILE_KEY);
+  assert.equal(record.missionId.endsWith('/' + mission.id), true);
+  assert.deepEqual(record.asset, asset);
+  assert.deepEqual(state.profile.clears.solo, {});
+  assert.deepEqual(state.profile.clears.versus, {});
+  assert(state.profile.clears.team[record.missionId]);
+  f.$('coop-journey-pictures').focus();
+  f.$('coop-journey-pictures').click();
+  await waitFor(
+    () =>
+      f.$('team-journey-pictures')?.open &&
+      f.$('team-journey-pictures').querySelectorAll('.journey-mode-picture-card').length === 1,
+  );
+  assert.match(f.$('team-journey-pictures').textContent, /1 earned Team original/);
+  assert.match(f.$('team-journey-pictures').textContent, new RegExp(mission.name, 'i'));
+  assert.doesNotMatch(f.$('team-journey-pictures').textContent, /earned Solo|earned Versus/);
+  f.$('team-journey-pictures').querySelector('header').querySelector('button').click();
+  assert.equal(f.doc.activeElement, f.$('coop-journey-pictures'));
+});
+
 test('queryless Team offers all twelve original missions across five campaigns and starts directly', async (t) => {
   const f = await fresh(t);
   assert.equal(source.missions.length, 12);
   assert.equal(source.campaigns.length, 5);
   assert.equal(f.$('coop-level').value, source.missions[0].id);
-  assert.match(f.$('coop-boot').textContent, /Team Journey.*12 missions.*original artwork/);
+  assert.equal(f.$('coop-boot').textContent, 'Team Journey · 12 missions');
   assert.match(
-    f.$('coop-boot').textContent,
-    /Pictures need a connection; core offline preparation does not save them/,
+    f.$('coop-advanced-note').textContent,
+    /Original pictures need a connection; core offline preparation does not save them/,
   );
   assert.doesNotMatch(f.$('coop-boot').textContent, /test|candidate|validation pending/);
   assert.doesNotMatch(f.$('coop-pack-status').textContent, /test|candidate|validated/);
@@ -100,30 +157,19 @@ test('queryless Team offers all twelve original missions across five campaigns a
   enter(f, 'journey-back');
   enter(f, 'coop-start');
   assert.equal(f.$('coop-menu').hidden, true);
-  f.tick(2);
   const first = source.missions[0];
-  assert.equal(
-    f.drawImages.at(-1).sha256,
-    source.assets.find((asset) => asset.id === first.presentation.backgroundAssetId).sha256,
+  const expectedBackground = source.assets.find(
+    (asset) => asset.id === first.presentation.backgroundAssetId,
+  ).sha256;
+  assert(
+    f.drawImages.some((image) => image.sha256 === expectedBackground),
+    'The arena paints its original background alongside the default actor material.',
   );
-  const route = routes.find((row) => row.missionId === first.id && row.difficulty === 'standard');
-  const keys = [
-    { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-    { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-  ];
-  let previous = [null, null];
-  for (const segment of route.log) {
-    for (const [seat, direction] of [segment.a, segment.b].entries())
-      if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-    previous = [segment.a, segment.b];
-    for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) f.tick();
-    if (!f.$('coop-overlay').hidden) break;
-  }
-  assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-  enter(f, 'coop-next');
+  enter(f, 'coop-journey-skip');
+  enter(f, 'coop-journey-skip-confirm');
   await waitFor(() => f.$('coop-overlay').hidden);
   assert.equal(f.$('coop-level').value, source.missions[1].id);
-  assert.equal(f.$('coop-menu').hidden, true, 'Next does not require another Start');
+  assert.equal(f.$('coop-menu').hidden, true, 'Skip does not require another Start');
   assert.deepEqual(f.visits, []);
 });
 
@@ -141,16 +187,14 @@ test('explicit legacy retains both arenas and provides a deliberate New journey 
 test('explicit spatial review entry retains its original review labels and exact first artwork', async (t) => {
   const f = await fresh(t, base + '?journey=team-spatial-originals-1');
   assert.match(
-    f.$('coop-boot').textContent,
+    f.$('coop-advanced-note').textContent,
     /changing-return pressure edition.*human validation pending/,
   );
   assert.match(f.$('coop-pack-status').textContent, /Original-art candidate.*not human validated/);
   enter(f, 'coop-discovery-open');
   await waitFor(() => f.$('journey-chooser')?.open);
   const caption = f.$('journey-cards').querySelector('.journey-card-edition');
-  // Shared cards name the same immutable edition in both entry routes; the
-  // explicit review host retains its qualification warnings above.
-  assert.equal(caption.textContent, 'Team Journey');
+  assert.match(caption.textContent, /Team Journey.*team-spatial-originals-1/);
   assert.match(f.$('journey-cards').querySelector('.journey-card-tags').textContent, /Journey/);
   enter(f, 'journey-back');
   enter(f, 'coop-start');
@@ -158,7 +202,7 @@ test('explicit spatial review entry retains its original review labels and exact
   const asset = source.assets.find(
     (item) => item.id === source.missions[0].presentation.backgroundAssetId,
   );
-  assert.equal(f.drawImages.at(-1).sha256, asset.sha256);
+  assert(f.drawImages.some((image) => image.sha256 === asset.sha256));
 });
 
 test('catalogue switching keeps origin but clears legacy return tokens and requires unfinished-attempt confirmation', async (t) => {

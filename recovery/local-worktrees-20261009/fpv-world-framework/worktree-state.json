@@ -1,0 +1,23 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/fpv-world-framework/go_test",
+  "branch": "codex/fpv-art-combined-verification",
+  "head": "f643ef77767fafab6324a5c2d564fc6b995ab4a4",
+  "status": [
+    " M docs/fpv-continuous-delivery.md"
+  ],
+  "localCommitCountOutsideOriginMain": 64,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "61c74a7f19b185bf3e4fd7cf0461ecc44ce848a1fbf4c3527fae57e555f0ee85",
+      "bytes": 10039
+    },
+    "untrackedArchive": null,
+    "localCommitPatch": {
+      "path": "local-commits.patch",
+      "sha256": "0c15eb52fc191c49c125b6e39bc12309a9b7950d784fc7d4fd7e96d1c7b92125",
+      "bytes": 633398
+    },
+    "conflictStages": 0
+  }
+}

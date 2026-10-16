@@ -1,11 +1,11 @@
 {
   "name": "revealline-desktop",
-  "productName": "Reveal Line",
+  "productName": "FPV LINE",
   "version": "0.21.0",
   "private": true,
   "type": "module",
   "main": "main.mjs",
-  "description": "Local desktop shell for a validated Reveal Line static distribution",
+  "description": "Local desktop shell for a validated FPV / LINE static distribution",
   "engines": {
     "node": ">=22.22.2"
   },

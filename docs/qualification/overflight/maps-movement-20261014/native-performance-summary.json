@@ -1,0 +1,562 @@
+{
+  "format": "OverflightNativePerformanceSummaryV2",
+  "sourceCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "runtimeHashes": {
+    "game/overflight/app.mjs": "efb7f8e02de907766ba210b6ecb48fdd5470755c5fa8514c9a35e1a4c7e5c6cd",
+    "game/overflight/core.mjs": "08cca38201299c4215cf4a4efb8e0a3e4604533e699df8a0afa5a7a2ac77551a",
+    "game/overflight/renderer.mjs": "0af039ee18743f73e0dc87a68143448378eac87621b78c0ec9e439b710cd98f9",
+    "game/overflight/benchmark.mjs": "2dae427c7d79c90a7bb2e1a1c569ef2e5c2490fc261d60b178cb1ef74d7b2bbb",
+    "game/overflight/host-loop.mjs": "e8b4b3e07884bc097a2a8e261638b13f3cc1a99b4c47e123fd9c55d64908bfef",
+    "game/overflight/tactics.mjs": "b260abe4451b853c677208b11eff8a6dddadbe1066f1f7c5c159114544042c93",
+    "game/overflight/coordinated-movement.mjs": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0",
+    "game/overflight/terrain.mjs": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146"
+  },
+  "device": {
+    "model": "Apple M4 Pro host",
+    "cpuCores": 14,
+    "gpuCores": 20,
+    "memoryGB": 48,
+    "os": "macOS 26.7.1",
+    "osBuild": "25G241",
+    "browser": "Codex in-app Chromium 155",
+    "viewport": {
+      "width": 936,
+      "height": 1143,
+      "devicePixelRatio": 2
+    },
+    "backing": {
+      "width": 960,
+      "height": 540
+    },
+    "displayRefresh": "Approximately 120 Hz",
+    "power": "AC"
+  },
+  "scope": "Local browser reference fixture only; not Iris Xe/Windows or M1 Safari acceptance.",
+  "conditions": {
+    "foreground": true,
+    "normalProductionBuildActive": true,
+    "otherDesktopGraphicsWorkActive": true,
+    "causation": "These concurrent conditions were observed, but their contribution is not measured by this report.",
+    "scope": "Original trials only; quieter repeat conditions are recorded separately."
+  },
+  "protocol": {
+    "fixture": "reference",
+    "alive": 1500,
+    "visible": 700,
+    "pickups": 480,
+    "seed": 17031991,
+    "warmupSeconds": 30,
+    "measurementSeconds": 120,
+    "separatelyRestartedTrials": 3,
+    "recordingDuringMeasurements": false,
+    "thresholds": {
+      "minimumFPS": 59,
+      "p95Ms": 18,
+      "p99Ms": 33.3,
+      "fractionAbove33_3MsLessThan": 0.01
+    }
+  },
+  "cpuAnalysisMethod": "Select renderer rawIntervals with window=1. Join submission by exact endMs; join simulation tick to its first host frame at equal array index (array lengths verified). Render/host cadence correlation is recorded. Combined CPU excludes host UI/audio and cannot measure GPU, compositor or scheduler wait. Catch-up simulation time is also normalized by step count.",
+  "trials": [
+    {
+      "trial": 1,
+      "raw": "native/reference-trial-1.json.gz",
+      "rawSHA256": "d8a00fc5c26770d8615cdadfdbd6265fe5fa2f7aa0f59c79c606dda3a6a935bc",
+      "capturedAt": "2026-10-14T14:48:59.818Z",
+      "valid": true,
+      "invalidReasons": [],
+      "complete": true,
+      "measuredSeconds": 119.9887,
+      "frames": 11542,
+      "averageFPS": 96.1924,
+      "cadenceMs": {
+        "p50": 8.8,
+        "p95": 21.7,
+        "p99": 28.1,
+        "max": 71.4
+      },
+      "framesOver18Ms": 866,
+      "framesOver33_3Ms": 37,
+      "fractionOver33_3Ms": 0.0032,
+      "passed": false,
+      "failedCriteria": ["cadence p95 >18ms"],
+      "droppedSimulationSeconds": 0,
+      "rawOverflow": 0,
+      "cpu": {
+        "submissionMs": {
+          "samples": 11542,
+          "mean": 1.5393,
+          "p50": 1.4,
+          "p95": 2.5,
+          "p99": 2.9,
+          "max": 3.8
+        },
+        "simulationPerRenderedFrameMs": {
+          "samples": 11542,
+          "mean": 0.6619,
+          "p50": 0.8,
+          "p95": 1.8,
+          "p99": 2.2,
+          "max": 4.5
+        },
+        "simulationPerStepMs": {
+          "samples": 6746,
+          "mean": 1.0732,
+          "p50": 0.9,
+          "p95": 1.9,
+          "p99": 2.1,
+          "max": 2.7
+        },
+        "combinedMeasuredMs": {
+          "samples": 11542,
+          "mean": 2.2012,
+          "p50": 2.1,
+          "p95": 3.8,
+          "p99": 4.6,
+          "max": 6.5
+        },
+        "slowFramesMeasuredCPUOver18Ms": 0,
+        "correlation": {
+          "cadenceWithSubmission": -0.0823,
+          "cadenceWithSimulation": 0.5497,
+          "cadenceWithSimulationPerStep": 0.0192,
+          "cadenceWithHostFrame": 0.9733
+        }
+      },
+      "resources": {
+        "atlasRGBABytes": 28467840,
+        "atlasSpriteRGBABytes": 16026240,
+        "worldRGBABytes": 12441600,
+        "alive": 1500,
+        "visible": 700,
+        "rendered": 700,
+        "effectsHighWater": 418,
+        "allocatedSprites": 1823,
+        "contextLosses": 0,
+        "contextRestores": 0
+      },
+      "audio": {
+        "audioEnabled": true,
+        "contextState": "running",
+        "masterMuted": true,
+        "commentator": {
+          "cache": {
+            "buffers": 0,
+            "decodedBytes": 0,
+            "loading": 0,
+            "generation": 4,
+            "closed": false
+          },
+          "incidents": 0,
+          "suspended": false,
+          "speaking": false
+        }
+      },
+      "reducedEffects": false,
+      "projectIdentity": "663de52a773259b5",
+      "visualIdentity": "eb5cda0d8f2f7bbb"
+    },
+    {
+      "trial": 2,
+      "raw": "native/reference-trial-2.json.gz",
+      "rawSHA256": "2407cd0f00c15e8c61d176297f24084fac93613c48154bd758cf1b617694bc3b",
+      "capturedAt": "2026-10-14T14:52:10.499Z",
+      "valid": true,
+      "invalidReasons": [],
+      "complete": true,
+      "measuredSeconds": 120,
+      "frames": 11530,
+      "averageFPS": 96.0833,
+      "cadenceMs": {
+        "p50": 8.9,
+        "p95": 18.8,
+        "p99": 27.2,
+        "max": 66.6
+      },
+      "framesOver18Ms": 739,
+      "framesOver33_3Ms": 28,
+      "fractionOver33_3Ms": 0.0024,
+      "passed": false,
+      "failedCriteria": ["cadence p95 >18ms"],
+      "droppedSimulationSeconds": 0,
+      "rawOverflow": 0,
+      "cpu": {
+        "submissionMs": {
+          "samples": 11530,
+          "mean": 1.7617,
+          "p50": 1.6,
+          "p95": 2.9,
+          "p99": 3.4,
+          "max": 4.1
+        },
+        "simulationPerRenderedFrameMs": {
+          "samples": 11530,
+          "mean": 0.807,
+          "p50": 1,
+          "p95": 2.2,
+          "p99": 2.6,
+          "max": 5.2
+        },
+        "simulationPerStepMs": {
+          "samples": 6901,
+          "mean": 1.3034,
+          "p50": 1.1,
+          "p95": 2.3,
+          "p99": 2.6,
+          "max": 3.2
+        },
+        "combinedMeasuredMs": {
+          "samples": 11530,
+          "mean": 2.5686,
+          "p50": 2.4,
+          "p95": 4.4,
+          "p99": 5.3,
+          "max": 7.8
+        },
+        "slowFramesMeasuredCPUOver18Ms": 0,
+        "correlation": {
+          "cadenceWithSubmission": -0.1192,
+          "cadenceWithSimulation": 0.56,
+          "cadenceWithSimulationPerStep": 0.0629,
+          "cadenceWithHostFrame": 0.9586
+        }
+      },
+      "resources": {
+        "atlasRGBABytes": 28467840,
+        "atlasSpriteRGBABytes": 16026240,
+        "worldRGBABytes": 12441600,
+        "alive": 1500,
+        "visible": 700,
+        "rendered": 700,
+        "effectsHighWater": 418,
+        "allocatedSprites": 1823,
+        "contextLosses": 0,
+        "contextRestores": 0
+      },
+      "audio": {
+        "audioEnabled": true,
+        "contextState": "running",
+        "masterMuted": true,
+        "commentator": {
+          "cache": {
+            "buffers": 0,
+            "decodedBytes": 0,
+            "loading": 0,
+            "generation": 4,
+            "closed": false
+          },
+          "incidents": 0,
+          "suspended": false,
+          "speaking": false
+        }
+      },
+      "reducedEffects": false,
+      "projectIdentity": "663de52a773259b5",
+      "visualIdentity": "eb5cda0d8f2f7bbb"
+    },
+    {
+      "trial": 3,
+      "raw": "native/reference-trial-3.json.gz",
+      "rawSHA256": "f188efaea091e5db0eca53394936f6f1bf4efed2a5332e3ec406a6aa828912cf",
+      "capturedAt": "2026-10-14T14:55:30.206Z",
+      "valid": true,
+      "invalidReasons": [],
+      "complete": true,
+      "measuredSeconds": 119.9975,
+      "frames": 10121,
+      "averageFPS": 84.3434,
+      "cadenceMs": {
+        "p50": 10,
+        "p95": 24.3,
+        "p99": 30.4,
+        "max": 197.2
+      },
+      "framesOver18Ms": 1129,
+      "framesOver33_3Ms": 58,
+      "fractionOver33_3Ms": 0.0057,
+      "passed": false,
+      "failedCriteria": ["cadence p95 >18ms"],
+      "droppedSimulationSeconds": 0,
+      "rawOverflow": 0,
+      "cpu": {
+        "submissionMs": {
+          "samples": 10121,
+          "mean": 1.6361,
+          "p50": 1.5,
+          "p95": 2.8,
+          "p99": 3.3,
+          "max": 4.7
+        },
+        "simulationPerRenderedFrameMs": {
+          "samples": 10121,
+          "mean": 0.9283,
+          "p50": 1,
+          "p95": 2.4,
+          "p99": 2.8,
+          "max": 6.8
+        },
+        "simulationPerStepMs": {
+          "samples": 6774,
+          "mean": 1.3206,
+          "p50": 1.1,
+          "p95": 2.4,
+          "p99": 2.7,
+          "max": 3.5
+        },
+        "combinedMeasuredMs": {
+          "samples": 10121,
+          "mean": 2.5644,
+          "p50": 2.4,
+          "p95": 4.6,
+          "p99": 5.5,
+          "max": 8.2
+        },
+        "slowFramesMeasuredCPUOver18Ms": 0,
+        "correlation": {
+          "cadenceWithSubmission": -0.0226,
+          "cadenceWithSimulation": 0.5202,
+          "cadenceWithSimulationPerStep": 0.0555,
+          "cadenceWithHostFrame": 0.9698
+        }
+      },
+      "resources": {
+        "atlasRGBABytes": 28467840,
+        "atlasSpriteRGBABytes": 16026240,
+        "worldRGBABytes": 12441600,
+        "alive": 1500,
+        "visible": 700,
+        "rendered": 700,
+        "effectsHighWater": 418,
+        "allocatedSprites": 1823,
+        "contextLosses": 0,
+        "contextRestores": 0
+      },
+      "audio": {
+        "audioEnabled": true,
+        "contextState": "running",
+        "masterMuted": true,
+        "commentator": {
+          "cache": {
+            "buffers": 0,
+            "decodedBytes": 0,
+            "loading": 0,
+            "generation": 4,
+            "closed": false
+          },
+          "incidents": 0,
+          "suspended": false,
+          "speaking": false
+        }
+      },
+      "reducedEffects": false,
+      "projectIdentity": "663de52a773259b5",
+      "visualIdentity": "eb5cda0d8f2f7bbb"
+    }
+  ],
+  "result": "Three original concurrent-condition trials fail p95; all three quieter repeats pass the unchanged thresholds. Both groups are preserved. The 15-minute soak completed lifecycle observation but failed p95. No causal attribution or external-device acceptance.",
+  "pending": [
+    "Actual full-content Survivor/Riy/Raid workloads; the reference fixture is controlled capacity evidence.",
+    "Any new candidate with relevant source or presentation changes requires an explicit evidence applicability review."
+  ],
+  "externalDeviceAndFivePlayerTrials": "Skipped as previously waived; not passed.",
+  "initialTrialsResult": "All three original valid, complete trials fail p95; original trial data and raw evidence retained unchanged.",
+  "quietRepeat": {
+    "sourceCommit": "3739ca96785095f5b5484f6321a8469370957c48",
+    "combatAndMeasuredRuntimeEquivalentTo": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+    "verifiedUnchangedPaths": [
+      "game/overflight/app.mjs",
+      "game/overflight/core.mjs",
+      "game/overflight/renderer.mjs",
+      "game/overflight/benchmark.mjs",
+      "game/overflight/host-loop.mjs",
+      "game/overflight/tactics.mjs",
+      "game/overflight/coordinated-movement.mjs",
+      "game/overflight/terrain.mjs"
+    ],
+    "runtimeHashes": {
+      "game/overflight/app.mjs": "efb7f8e02de907766ba210b6ecb48fdd5470755c5fa8514c9a35e1a4c7e5c6cd",
+      "game/overflight/core.mjs": "08cca38201299c4215cf4a4efb8e0a3e4604533e699df8a0afa5a7a2ac77551a",
+      "game/overflight/renderer.mjs": "0af039ee18743f73e0dc87a68143448378eac87621b78c0ec9e439b710cd98f9",
+      "game/overflight/benchmark.mjs": "2dae427c7d79c90a7bb2e1a1c569ef2e5c2490fc261d60b178cb1ef74d7b2bbb",
+      "game/overflight/host-loop.mjs": "e8b4b3e07884bc097a2a8e261638b13f3cc1a99b4c47e123fd9c55d64908bfef",
+      "game/overflight/tactics.mjs": "b260abe4451b853c677208b11eff8a6dddadbe1066f1f7c5c159114544042c93",
+      "game/overflight/coordinated-movement.mjs": "16bed958751f89d37ed1bfb3b0c3dbd34110929add1ed45a31b157e9de7a83f0",
+      "game/overflight/terrain.mjs": "a9b73f78abfb185d542cbb8fa1ebb3cb5cc40cc7feff0e2ebe2a4b046391e146"
+    },
+    "conditions": "Production preparation completed; no concurrent agent simulation jobs or active gameplay recording. Other user desktop apps were left intact. This is reduced concurrency, not an isolated-machine or Iris Xe test. Same in-app Chromium, viewport936x1143 DPR2 and960x540backing, master muted, normal effects as earlier failed trials. An initial new warm-up was restarted before measurement to load the recorded integration commit; its incomplete attempt is not a completed trial.",
+    "rawHashesVerified": true,
+    "measuredRawIntervalsVerified": true,
+    "trials": [
+      {
+        "trial": 1,
+        "raw": "native/reference-repeat-1.json.gz",
+        "rawSHA256": "b7df9e22a3c72dd8523779638e565689e5965ec1b55ec9e11efb1fc38fbb8124",
+        "capturedAt": "2026-10-14T15:25:20.818Z",
+        "valid": true,
+        "invalidReasons": [],
+        "complete": true,
+        "measuredSeconds": 120.00090000000037,
+        "frames": 14401,
+        "averageFPS": 120.00743327758337,
+        "cadenceMs": {
+          "samples": 14401,
+          "p50": 8.300000000745058,
+          "p95": 9.600000000558794,
+          "p99": 10.5,
+          "worst": 12.899999999441206
+        },
+        "framesOver18Ms": 0,
+        "framesOver33_3Ms": 0,
+        "fractionOver33_3Ms": 0,
+        "passed": true,
+        "failedCriteria": [],
+        "rawOverflow": 0,
+        "droppedSimulationSeconds": 0,
+        "counts": {
+          "alive": 1500,
+          "visible": 700,
+          "rendered": 700,
+          "effects": 3,
+          "pickups": 480,
+          "warnings": 0,
+          "behaviorCues": 185,
+          "remains": 0,
+          "defeats": 0,
+          "quads": 1405
+        },
+        "atlasRGBABytes": 28467840,
+        "projectIdentity": "663de52a773259b5",
+        "visualIdentity": "eb5cda0d8f2f7bbb",
+        "reducedEffects": false,
+        "backing": {
+          "width": 960,
+          "height": 540
+        },
+        "contextLosses": 0,
+        "contextRestores": 0,
+        "masterMuted": true
+      },
+      {
+        "trial": 2,
+        "raw": "native/reference-repeat-2.json.gz",
+        "rawSHA256": "47deac86c5de86d2b21eeb6ea540ec838d03b99d7b1af0d439b6edda39526b17",
+        "capturedAt": "2026-10-14T15:28:56.883Z",
+        "valid": true,
+        "invalidReasons": [],
+        "complete": true,
+        "measuredSeconds": 119.99910000000055,
+        "frames": 14400,
+        "averageFPS": 120.00090000674949,
+        "cadenceMs": {
+          "samples": 14400,
+          "p50": 8.300000000745058,
+          "p95": 9.800000000745058,
+          "p99": 10.599999999627471,
+          "worst": 11.599999999627471
+        },
+        "framesOver18Ms": 0,
+        "framesOver33_3Ms": 0,
+        "fractionOver33_3Ms": 0,
+        "passed": true,
+        "failedCriteria": [],
+        "rawOverflow": 0,
+        "droppedSimulationSeconds": 0,
+        "counts": {
+          "alive": 1500,
+          "visible": 700,
+          "rendered": 700,
+          "effects": 3,
+          "pickups": 480,
+          "warnings": 0,
+          "behaviorCues": 185,
+          "remains": 0,
+          "defeats": 0,
+          "quads": 1405
+        },
+        "atlasRGBABytes": 28467840,
+        "projectIdentity": "663de52a773259b5",
+        "visualIdentity": "eb5cda0d8f2f7bbb",
+        "reducedEffects": false,
+        "backing": {
+          "width": 960,
+          "height": 540
+        },
+        "contextLosses": 0,
+        "contextRestores": 0,
+        "masterMuted": true
+      },
+      {
+        "trial": 3,
+        "raw": "native/reference-repeat-3.json.gz",
+        "rawSHA256": "f9c4d30b991fbf611c1329470769ce3c878ab596cc807eef9a1762a5def30a36",
+        "capturedAt": "2026-10-14T15:32:22.098Z",
+        "valid": true,
+        "invalidReasons": [],
+        "complete": true,
+        "measuredSeconds": 119.99939999999852,
+        "frames": 14402,
+        "averageFPS": 120.01726675300192,
+        "cadenceMs": {
+          "samples": 14402,
+          "p50": 8.300000000745058,
+          "p95": 10,
+          "p99": 10.699999999254942,
+          "worst": 12.5
+        },
+        "framesOver18Ms": 0,
+        "framesOver33_3Ms": 0,
+        "fractionOver33_3Ms": 0,
+        "passed": true,
+        "failedCriteria": [],
+        "rawOverflow": 0,
+        "droppedSimulationSeconds": 0,
+        "counts": {
+          "alive": 1500,
+          "visible": 700,
+          "rendered": 700,
+          "effects": 3,
+          "pickups": 480,
+          "warnings": 0,
+          "behaviorCues": 185,
+          "remains": 0,
+          "defeats": 0,
+          "quads": 1405
+        },
+        "atlasRGBABytes": 28467840,
+        "projectIdentity": "663de52a773259b5",
+        "visualIdentity": "eb5cda0d8f2f7bbb",
+        "reducedEffects": false,
+        "backing": {
+          "width": 960,
+          "height": 540
+        },
+        "contextLosses": 0,
+        "contextRestores": 0,
+        "masterMuted": true
+      }
+    ],
+    "result": "All three separately restarted quiet repeats pass every unchanged cadence threshold; zero measured intervals above33.3ms in each trial.",
+    "causation": "Observed differences between conditions do not identify the cause of the original failures."
+  },
+  "additionalEvidence": {
+    "soak": {
+      "summary": "SOAK-SUMMARY.json",
+      "raw": "native/reference-soak.json.gz",
+      "sourceCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+      "lifecycleCompleted": true,
+      "performancePassed": false,
+      "p95Ms": 22.6,
+      "rawSHA256": "b9547ec71e4f6a77be7b82bd5c78045cfc1e1ce14964e5769085a8e5e06a7db6"
+    },
+    "stress": {
+      "raw": "native/stress-trial-1.json.gz",
+      "sourceCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+      "completeTrials": 1,
+      "passed": true,
+      "alive": 2500,
+      "visible": 1200,
+      "p95Ms": 17,
+      "rawSHA256": "8b8e302d6a9f001f5b754684675488ab1100aa0ddcb1800a6330e54651628d53"
+    }
+  }
+}

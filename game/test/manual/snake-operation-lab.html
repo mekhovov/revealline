@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Snake continuous operations — prototype lab</title>
+  <link rel="stylesheet" href="../../ui/touch-controls-view.css" />
+  <style>
+    :root {
+      color-scheme: dark;
+      font: 16px system-ui;
+      background: #172329;
+      color: #f5efd9;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 12px;
+    }
+    main {
+      max-width: 1040px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin: 0 0 8px;
+    }
+    p {
+      line-height: 1.5;
+      margin: 8px 0;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    label {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+    button,
+    select {
+      font: inherit;
+      min-height: 44px;
+      max-width: 100%;
+      background: #31474d;
+      color: inherit;
+      border: 1px solid #a9b3a2;
+      padding: 7px;
+    }
+    button:focus-visible,
+    select:focus-visible {
+      outline: 3px solid #edc677;
+    }
+    #boards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 12px;
+      margin: 12px 0;
+    }
+    article {
+      min-width: 0;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      touch-action: none;
+    }
+    .shared-touch-controls {
+      position: relative;
+      min-height: 150px;
+      margin-top: 6px;
+    }
+    #transport {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #172329;
+      padding: 8px 0;
+    }
+    #status {
+      font-weight: 650;
+      color: #ffe3a6;
+    }
+    details {
+      margin: 8px 0;
+    }
+  </style>
+  <main>
+    <h1 id="title">Continuous operations</h1>
+    <p id="notice">Eight review prototypes. No progress, records or preferences are saved.</p>
+    <details id="setup" open>
+      <summary id="setupLabel">Lab setup</summary>
+      <div class="controls">
+        <label
+          ><span id="missionLabel">Mission</span
+          ><select id="mission"></select
+        ></label>
+        <label
+          ><span id="modeLabel">Mode</span
+          ><select id="mode">
+            <option value="solo">Solo</option>
+            <option value="team">Team</option>
+            <option value="versus">Versus · Mission Race</option>
+          </select></label
+        >
+        <label
+          ><span id="lookLabel">Look</span
+          ><select id="look">
+            <option value="comparison">Compare three directions</option>
+            <option value="living-circuit">Lively FPV</option>
+            <option value="toybox">Toybox</option>
+            <option value="atmospheric-ruins">Atmospheric Ruins</option>
+            <option value="night-arcade">Night Arcade</option>
+            <option value="theme">Game Theme</option>
+            <option value="retro">Retro Field</option>
+          </select></label
+        >
+        <label
+          ><span id="languageLabel">Language</span
+          ><select id="language">
+            <option value="en">English</option>
+            <option value="uk">Українська</option>
+          </select></label
+        >
+      </div>
+    </details>
+    <div id="transport" class="controls">
+      <button id="start">Play</button><button id="retry">Retry</button>
+      <button id="sound" aria-pressed="false">Sound off</button>
+    </div>
+    <p id="status" role="status"></p>
+    <div id="boards"></div>
+    <details id="help" open>
+      <summary id="helpLabel">Mission information</summary>
+      <p id="hint"></p>
+      <div class="controls">
+        <button id="step">One move</button><button id="proof">Watch verified route</button>
+      </div>
+      <p id="keys">
+        P1: arrows. P2: WASD. Space: pause. Touch: shared D-pad. Parcels and matching docks have the
+        same letter; the extraction arrow lights when ready.
+      </p>
+    </details>
+  </main>
+  <script type="module" src="./snake-operation-lab.mjs"></script>
+</html>

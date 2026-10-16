@@ -1,0 +1,31 @@
+{
+  "comparisons": 1212,
+  "mutationIsolation": "passed",
+  "acceptedBenchmarkTicks": 20000,
+  "node": "v20.19.5",
+  "milliseconds": {
+    "before": [
+      903.7718339999992,
+      916.3991659999992,
+      987.7180420000004,
+      923.3634170000005,
+      1038.499042000003
+    ],
+    "after": [
+      567.6403329999994,
+      573.016916999999,
+      571.6654159999998,
+      576.1448749999981,
+      642.2420829999974
+    ]
+  },
+  "medianMs": {
+    "before": 923.3634170000005,
+    "after": 573.016916999999
+  },
+  "limitation": "Node CPU workload; no browser/device FPS or GPU claim",
+  "baselineCommit": "2bfe33aaa4a63402ce78f24a78fa317ab8ed909e",
+  "baselineSessionResolvedSHA256": "7cb067411bf98dd4dd70eb04b28abbc87ba2d3f89d5ad85c70c2f186a7d0c0c5",
+  "currentSessionSHA256": "1db7e545ae2b732db3f4f7ae3471ee8a2965d04b005c36a7ef788ff593106db7",
+  "method": "Real Urban mixed-r2 verified terrain/scenery, shared production flight; paired states in both modes; five alternating 2000-tick grounded rounds per implementation after 200 warm-up ticks, excluding preparation"
+}

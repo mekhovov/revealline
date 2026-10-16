@@ -1,11 +1,16 @@
 # Reveal Line cross-mode execution register
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
 > **Current status:** use the
-> [completed and remaining delivery plan](plan-status-2026-09-23.md) for released
-> features, active promotion, prioritized remaining work and evidence limits.
-> Dated “current” versions and “next” queues below are historical. Default
-> Journey and unified-library delivery are complete; whole-game qualification
-> is not. Update the linked status register after each public acceptance.
+> [30 September plan and source audit](plan-status-2026-09-30.md).
+> Immutable v0.142.3, current main and active source inputs have separate
+> acceptance boundaries. Historical release queues below are not today’s
+> execution order. Whole-game and physical-device qualification remain open.
 
 ## Original whole-game phases: remaining-work crosswalk
 

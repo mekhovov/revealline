@@ -1,0 +1,104 @@
+{
+  "format": "revealline-pending-ux-source-proposals.v1",
+  "captured_at_utc": "2026-09-30T05:11:30.099273+00:00",
+  "main_audit_commit": "451b82dc13dc8a8545ff964ffb724d3d756ac62a",
+  "status": "pending_current_main_adaptation",
+  "scope": "Two bounded historical source proposals; no runtime adoption and no release/public/physical-input acceptance.",
+  "integrity_method": "Each unified patch was applied in memory to the exact source HEAD blob, then compared byte-for-byte with the original dirty postimage. Source postimages were reread before writing to detect concurrent changes. Git blob SHA-1 and SHA-256 cover the complete original files; only bounded diffs are included.",
+  "verification": "Patch reconstruction and source integrity checks only. No tests, builds, runtime execution, staging, commits or pushes.",
+  "excluded": "No private audio or unrelated files; no complete old HTML, skill or test file copies; existing Resume source and regression files are unchanged by this preservation step.",
+  "proposals": [
+    {
+      "id": "still-media-close-focus",
+      "source_worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-close-focus-tests",
+      "source_branch": "codex/p03-close-focus-tests",
+      "patch_base_commit": "ef1430174dfd35a9df441233988b8737d0401851",
+      "source_head_at_capture": "ef1430174dfd35a9df441233988b8737d0401851",
+      "patch_file": "still-media-close-focus.patch",
+      "patch_bytes": 4410,
+      "patch_sha256": "3000fad7a61306ce376984fde8eec734c2b7cc73589d85b25c514c00a0ea271f",
+      "intent": "Retain the 49 added and 5 removed lines of focused Close-before-Open, cleanup persistence, and late-read focus assertions.",
+      "adaptation_required": "Adapt these assertions to the current Still Media host and its current storage/presentation contracts. This is a historical test proposal, not evidence that the current implementation passes it.",
+      "files": [
+        {
+          "path": "game/test/still-media-host.test.mjs",
+          "source_head_blob": {
+            "bytes": 16484,
+            "sha256": "88c9d5e3536999cae767766c0ef273340e809873aa3e80be64cadd6c91532700",
+            "git_blob_sha1": "9a18a3fb04a3b8908845205e61f26c5b62ddfc8a"
+          },
+          "original_dirty_postimage": {
+            "bytes": 18649,
+            "sha256": "e0cf60be041ffba3e3c22e8ba11a571e96af6143e36e1e59559c24dbbbf2cce1",
+            "git_blob_sha1": "ee381480476bc93b742fa064362a63a906fbeb9f"
+          },
+          "added_lines": 49,
+          "removed_lines": 5,
+          "patch_reconstructs_original_dirty_postimage": true
+        }
+      ]
+    },
+    {
+      "id": "enemy-actions-focus-clearance",
+      "source_worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-action-wrap-next",
+      "source_branch": "codex/p03-enemy-action-wrap-next",
+      "patch_base_commit": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+      "source_head_at_capture": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+      "patch_file": "enemy-actions-focus-clearance.patch",
+      "patch_bytes": 9059,
+      "patch_sha256": "b5f57423a5edc1128f9a78cb8824e4dbac43fbd2aae85d1c95192c006f67cee5",
+      "intent": "Preserve the wrapping action-group proposal, 16px spacing for outward focus paint, 44px minimum targets, and its two small documentation/maintenance hunks.",
+      "adaptation_required": "Current main has five localized actions and Workshop return ownership. Preserve all current actions, localization attributes, native menu/return behavior and focus ownership while adapting the spacing intent. Do not replace current HTML or the maintenance skill with these historical versions. Historical three-action and unchanged-link prose requires revision.",
+      "files": [
+        {
+          "path": "authoring/enemy-catalog/index.html",
+          "source_head_blob": {
+            "bytes": 2496,
+            "sha256": "bad9b572099658506952017b2fa3285af417a7e0d008f599a3fe5e99a2085c4a",
+            "git_blob_sha1": "d5751e85e9b6dd13b1a4b973aad3ec5ae367c252"
+          },
+          "original_dirty_postimage": {
+            "bytes": 2757,
+            "sha256": "965a844092a3828dbb75d2d9763d4bff28db6d88cef1e282952324ce375c1738",
+            "git_blob_sha1": "2cb629e504a51e3f432aa96e3715a2efc01710fd"
+          },
+          "added_lines": 20,
+          "removed_lines": 13,
+          "patch_reconstructs_original_dirty_postimage": true
+        },
+        {
+          "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+          "source_head_blob": {
+            "bytes": 225057,
+            "sha256": "6ddc545b92891126cb00a5e2e55b30668947c117f535ebfff67502bfa9bb9d49",
+            "git_blob_sha1": "8f12347634abd992ec2116f1919880f5c4c1d332"
+          },
+          "original_dirty_postimage": {
+            "bytes": 225673,
+            "sha256": "2a00bf98a18065a0f72ceed7618a0c7348c90093d73ff6fb8cb71492de6415f1",
+            "git_blob_sha1": "358af6bcf5ff50a72ea84225d6aa6aeaee5caa4d"
+          },
+          "added_lines": 2,
+          "removed_lines": 0,
+          "patch_reconstructs_original_dirty_postimage": true
+        },
+        {
+          "path": "docs/enemy-catalog.md",
+          "source_head_blob": {
+            "bytes": 14461,
+            "sha256": "342bb8d2b2b9616dbbace48c6b1d3f2df1191cde958d2f242eb9cda879cae2ad",
+            "git_blob_sha1": "a4de23ab452d4bed19e3384249cdaa55cf67c8e1"
+          },
+          "original_dirty_postimage": {
+            "bytes": 15173,
+            "sha256": "4a14ec2f93986f0aaa40b5c90494d1b61e159f0287e1b5b51056683e44573002",
+            "git_blob_sha1": "6b7e5c4b6dddebea1daf1926a6c04ded2d45d803"
+          },
+          "added_lines": 2,
+          "removed_lines": 0,
+          "patch_reconstructs_original_dirty_postimage": true
+        }
+      ]
+    }
+  ]
+}

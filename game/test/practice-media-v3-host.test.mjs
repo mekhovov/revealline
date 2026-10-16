@@ -12,6 +12,7 @@ import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 
 const scenario = JSON.parse(
   await readFile(new URL('../content/scenarios/line-impact-demo.json', import.meta.url), 'utf8'),
@@ -102,6 +103,22 @@ async function journey(t, mode, version) {
   const storage = memoryStorage(),
     audio = { ...audioHarness(), durationSeconds: f.original.track.asset.durationSeconds };
   const page = await soloPage(t, {
+    // Isolate the shared-media read-only contract with an authored campaign
+    // that has no release-art import. A fresh released First Signal legitimately imports its
+    // approved artwork at boot, independently of these music controls.
+    ...(mode === 'ordinary'
+      ? {
+          campaign: {
+            ...mediaFixture().campaign,
+            id: 'ordinary-audio-host',
+            title: 'Retained media fixture',
+            classRecipes: JSON.parse(
+              await readFile(new URL('../content/classes.json', import.meta.url)),
+            ),
+          },
+        }
+      : {}),
+    pictures: { Image: PNGImage },
     search:
       mode === 'practice'
         ? '?practice=1'
@@ -162,7 +179,7 @@ async function journey(t, mode, version) {
   assert.deepEqual(page.errors, []);
 }
 for (const mode of ['ordinary', 'practice', 'course'])
-  test(`${mode}: shared v3 custom music reads and plays without changing existing audio/still history`, async (t) =>
+  test(`${mode}: retained-media host reads and plays v3 custom music without changing existing audio/still history`, async (t) =>
     journey(t, mode, 3));
 for (const version of [1, 2])
   test(`practice: current-edition v${version} to DB5 opening preserves every original and metadata row`, async (t) =>

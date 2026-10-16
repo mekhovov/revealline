@@ -1,0 +1,7957 @@
+{
+  "format": "CurrentTeamSpecializedHostRoutesV1",
+  "ruleset": "gameplay-pressure.v4",
+  "seed": 17,
+  "rows": [
+    {
+      "kind": "inner-partial",
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "twin-depots",
+      "difficulty": "gentle",
+      "authoredIdentity": "23635ee3f3208bfb",
+      "tunedIdentity": "2daf63aa8a789937",
+      "tick": 1357,
+      "status": "running",
+      "coverage": 0.08460076045627377,
+      "closed": [0, 2],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 501,
+          "player": 1,
+          "reason": "return",
+          "cells": 29,
+          "cell": 1552,
+          "innerConnected": false,
+          "coverage": 0.013783269961977186
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1356,
+          "player": 1,
+          "reason": "return",
+          "cells": 149,
+          "cell": 1065,
+          "innerConnected": false,
+          "coverage": 0.08460076045627377
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 107,
+          "player": 1,
+          "cell": 1278,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 1002,
+          "player": 1,
+          "cell": 1048,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 108,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 502,
+          "coverage": 0.013783269961977186,
+          "reserves": 4
+        },
+        {
+          "tick": 1003,
+          "coverage": 0.013783269961977186,
+          "reserves": 4
+        },
+        {
+          "tick": 1357,
+          "coverage": 0.08460076045627377,
+          "reserves": 4
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 95
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 392
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 170
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 62
+        }
+      ]
+    },
+    {
+      "kind": "inner-full",
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "twin-depots",
+      "difficulty": "gentle",
+      "authoredIdentity": "23635ee3f3208bfb",
+      "tunedIdentity": "2daf63aa8a789937",
+      "tick": 5246,
+      "status": "won",
+      "coverage": 0.7618821292775665,
+      "closed": [1, 7],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 501,
+          "player": 1,
+          "reason": "return",
+          "cells": 29,
+          "cell": 1552,
+          "innerConnected": false,
+          "coverage": 0.013783269961977186
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1356,
+          "player": 1,
+          "reason": "return",
+          "cells": 149,
+          "cell": 1065,
+          "innerConnected": false,
+          "coverage": 0.08460076045627377
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 107,
+          "player": 1,
+          "cell": 1278,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 1002,
+          "player": 1,
+          "cell": 1048,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 108,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 502,
+          "coverage": 0.013783269961977186,
+          "reserves": 4
+        },
+        {
+          "tick": 1003,
+          "coverage": 0.013783269961977186,
+          "reserves": 4
+        },
+        {
+          "tick": 1357,
+          "coverage": 0.08460076045627377,
+          "reserves": 4
+        },
+        {
+          "tick": 1618,
+          "coverage": 0.08460076045627377,
+          "reserves": 4
+        },
+        {
+          "tick": 1930,
+          "coverage": 0.10693916349809886,
+          "reserves": 4
+        },
+        {
+          "tick": 2217,
+          "coverage": 0.10693916349809886,
+          "reserves": 4
+        },
+        {
+          "tick": 2394,
+          "coverage": 0.3840304182509506,
+          "reserves": 4
+        },
+        {
+          "tick": 2519,
+          "coverage": 0.3840304182509506,
+          "reserves": 4
+        },
+        {
+          "tick": 2681,
+          "coverage": 0.435361216730038,
+          "reserves": 4
+        },
+        {
+          "tick": 3850,
+          "coverage": 0.435361216730038,
+          "reserves": 4
+        },
+        {
+          "tick": 4312,
+          "coverage": 0.6131178707224335,
+          "reserves": 4
+        },
+        {
+          "tick": 4532,
+          "coverage": 0.6131178707224335,
+          "reserves": 4
+        },
+        {
+          "tick": 4993,
+          "coverage": 0.7309885931558935,
+          "reserves": 4
+        },
+        {
+          "tick": 5070,
+          "coverage": 0.7309885931558935,
+          "reserves": 4
+        },
+        {
+          "tick": 5246,
+          "coverage": 0.7618821292775665,
+          "reserves": 4
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 60
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 95
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 392
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 170
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 62
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 68
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 320
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 170
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 293
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 170
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 353
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 808
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 218
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        }
+      ]
+    },
+    {
+      "kind": "inner-partial",
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "twin-depots",
+      "difficulty": "standard",
+      "authoredIdentity": "78895a1f2fd1f045",
+      "tunedIdentity": "1b2625eaf0f10fce",
+      "tick": 1043,
+      "status": "running",
+      "coverage": 0.08460076045627377,
+      "closed": [0, 2],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 442,
+          "player": 1,
+          "reason": "return",
+          "cells": 29,
+          "cell": 1552,
+          "innerConnected": false,
+          "coverage": 0.013783269961977186
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1042,
+          "player": 1,
+          "reason": "return",
+          "cells": 149,
+          "cell": 1065,
+          "innerConnected": false,
+          "coverage": 0.08460076045627377
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 48,
+          "player": 1,
+          "cell": 1278,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 688,
+          "player": 1,
+          "cell": 1048,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 49,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 443,
+          "coverage": 0.013783269961977186,
+          "reserves": 2
+        },
+        {
+          "tick": 689,
+          "coverage": 0.013783269961977186,
+          "reserves": 2
+        },
+        {
+          "tick": 1043,
+          "coverage": 0.08460076045627377,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 95
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 137
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 170
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 62
+        }
+      ]
+    },
+    {
+      "kind": "inner-full",
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "twin-depots",
+      "difficulty": "standard",
+      "authoredIdentity": "78895a1f2fd1f045",
+      "tunedIdentity": "1b2625eaf0f10fce",
+      "tick": 6588,
+      "status": "won",
+      "coverage": 0.7623574144486692,
+      "closed": [6, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 442,
+          "player": 1,
+          "reason": "return",
+          "cells": 29,
+          "cell": 1552,
+          "innerConnected": false,
+          "coverage": 0.013783269961977186
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1042,
+          "player": 1,
+          "reason": "return",
+          "cells": 149,
+          "cell": 1065,
+          "innerConnected": false,
+          "coverage": 0.08460076045627377
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 48,
+          "player": 1,
+          "cell": 1278,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 688,
+          "player": 1,
+          "cell": 1048,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 49,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 443,
+          "coverage": 0.013783269961977186,
+          "reserves": 2
+        },
+        {
+          "tick": 689,
+          "coverage": 0.013783269961977186,
+          "reserves": 2
+        },
+        {
+          "tick": 1043,
+          "coverage": 0.08460076045627377,
+          "reserves": 2
+        },
+        {
+          "tick": 1092,
+          "coverage": 0.08460076045627377,
+          "reserves": 2
+        },
+        {
+          "tick": 1268,
+          "coverage": 0.09077946768060836,
+          "reserves": 2
+        },
+        {
+          "tick": 2167,
+          "coverage": 0.09077946768060836,
+          "reserves": 2
+        },
+        {
+          "tick": 2344,
+          "coverage": 0.3179657794676806,
+          "reserves": 2
+        },
+        {
+          "tick": 2672,
+          "coverage": 0.3179657794676806,
+          "reserves": 2
+        },
+        {
+          "tick": 3134,
+          "coverage": 0.4358365019011407,
+          "reserves": 2
+        },
+        {
+          "tick": 4127,
+          "coverage": 0.4358365019011407,
+          "reserves": 2
+        },
+        {
+          "tick": 4589,
+          "coverage": 0.5327946768060836,
+          "reserves": 2
+        },
+        {
+          "tick": 4660,
+          "coverage": 0.5327946768060836,
+          "reserves": 2
+        },
+        {
+          "tick": 5121,
+          "coverage": 0.6135931558935361,
+          "reserves": 2
+        },
+        {
+          "tick": 6023,
+          "coverage": 0.6135931558935361,
+          "reserves": 2
+        },
+        {
+          "tick": 6177,
+          "coverage": 0.7385931558935361,
+          "reserves": 2
+        },
+        {
+          "tick": 6479,
+          "coverage": 0.7385931558935361,
+          "reserves": 2
+        },
+        {
+          "tick": 6588,
+          "coverage": 0.7623574144486692,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 136
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 95
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 137
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 170
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 62
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 231
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 69
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 116
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 39
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 69
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 116
+        }
+      ]
+    },
+    {
+      "kind": "inner-partial",
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "twin-depots",
+      "difficulty": "expert",
+      "authoredIdentity": "6b7546c038eb0282",
+      "tunedIdentity": "602c4cdcfa73da4b",
+      "tick": 1486,
+      "status": "running",
+      "coverage": 0.1596958174904943,
+      "closed": [0, 2],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 417,
+          "player": 1,
+          "reason": "return",
+          "cells": 27,
+          "cell": 1049,
+          "innerConnected": false,
+          "coverage": 0.012832699619771864
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1484,
+          "player": 1,
+          "reason": "return",
+          "cells": 309,
+          "cell": 1569,
+          "innerConnected": false,
+          "coverage": 0.1596958174904943
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 48,
+          "player": 1,
+          "cell": 1065,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 1007,
+          "player": 1,
+          "cell": 1553,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 49,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 418,
+          "coverage": 0.012832699619771864,
+          "reserves": 1
+        },
+        {
+          "tick": 1008,
+          "coverage": 0.012832699619771864,
+          "reserves": 1
+        },
+        {
+          "tick": 1485,
+          "coverage": 0.1596958174904943,
+          "reserves": 1
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 218
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 76
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 481
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 218
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 130
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        }
+      ]
+    },
+    {
+      "kind": "inner-full",
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "twin-depots",
+      "difficulty": "expert",
+      "authoredIdentity": "6b7546c038eb0282",
+      "tunedIdentity": "602c4cdcfa73da4b",
+      "tick": 4776,
+      "status": "won",
+      "coverage": 0.7685361216730038,
+      "closed": [1, 5],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 417,
+          "player": 1,
+          "reason": "return",
+          "cells": 27,
+          "cell": 1049,
+          "innerConnected": false,
+          "coverage": 0.012832699619771864
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1484,
+          "player": 1,
+          "reason": "return",
+          "cells": 309,
+          "cell": 1569,
+          "innerConnected": false,
+          "coverage": 0.1596958174904943
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 48,
+          "player": 1,
+          "cell": 1065,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 1007,
+          "player": 1,
+          "cell": 1553,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 49,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 418,
+          "coverage": 0.012832699619771864,
+          "reserves": 1
+        },
+        {
+          "tick": 1008,
+          "coverage": 0.012832699619771864,
+          "reserves": 1
+        },
+        {
+          "tick": 1485,
+          "coverage": 0.1596958174904943,
+          "reserves": 1
+        },
+        {
+          "tick": 1502,
+          "coverage": 0.1596958174904943,
+          "reserves": 1
+        },
+        {
+          "tick": 1678,
+          "coverage": 0.16587452471482889,
+          "reserves": 1
+        },
+        {
+          "tick": 3052,
+          "coverage": 0.16587452471482889,
+          "reserves": 1
+        },
+        {
+          "tick": 3514,
+          "coverage": 0.4139733840304182,
+          "reserves": 1
+        },
+        {
+          "tick": 4318,
+          "coverage": 0.4139733840304182,
+          "reserves": 1
+        },
+        {
+          "tick": 4413,
+          "coverage": 0.6634980988593155,
+          "reserves": 1
+        },
+        {
+          "tick": 4545,
+          "coverage": 0.6634980988593155,
+          "reserves": 1
+        },
+        {
+          "tick": 4776,
+          "coverage": 0.7685361216730038,
+          "reserves": 1
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 218
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 76
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 481
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 218
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 130
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 177
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 177
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 720
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 218
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 55
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 239
+        }
+      ]
+    },
+    {
+      "kind": "partner-full",
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "shared-lookout",
+      "difficulty": "gentle",
+      "authoredIdentity": "fe31917deb35a373",
+      "tunedIdentity": "a15192de4ed4d7e5",
+      "tick": 5316,
+      "status": "won",
+      "coverage": 0.7432432432432432,
+      "closed": [3, 5],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 347,
+          "player": 0,
+          "reason": "return",
+          "cells": 19,
+          "cell": 1112,
+          "innerConnected": false,
+          "coverage": 0.008853681267474371
+        },
+        {
+          "type": "cut.closed",
+          "tick": 354,
+          "player": 1,
+          "reason": "return",
+          "cells": 19,
+          "cell": 1479,
+          "innerConnected": false,
+          "coverage": 0.017707362534948742
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 89,
+          "player": 0,
+          "cell": 950,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 96,
+          "player": 1,
+          "cell": 1641,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 90,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 97,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 348,
+          "coverage": 0.008853681267474371,
+          "reserves": 4
+        },
+        {
+          "tick": 355,
+          "coverage": 0.017707362534948742,
+          "reserves": 4
+        },
+        {
+          "tick": 457,
+          "coverage": 0.017707362534948742,
+          "reserves": 4
+        },
+        {
+          "tick": 458,
+          "coverage": 0.017707362534948742,
+          "reserves": 4
+        },
+        {
+          "tick": 614,
+          "coverage": 0.05032618825722274,
+          "reserves": 4
+        },
+        {
+          "tick": 1166,
+          "coverage": 0.05032618825722274,
+          "reserves": 4
+        },
+        {
+          "tick": 1926,
+          "coverage": 0.07642124883504194,
+          "reserves": 4
+        },
+        {
+          "tick": 3463,
+          "coverage": 0.07642124883504194,
+          "reserves": 4
+        },
+        {
+          "tick": 3653,
+          "coverage": 0.4170549860205033,
+          "reserves": 4
+        },
+        {
+          "tick": 4823,
+          "coverage": 0.4170549860205033,
+          "reserves": 4
+        },
+        {
+          "tick": 4905,
+          "coverage": 0.7208760484622554,
+          "reserves": 4
+        },
+        {
+          "tick": 5207,
+          "coverage": 0.7208760484622554,
+          "reserves": 4
+        },
+        {
+          "tick": 5316,
+          "coverage": 0.7432432432432432,
+          "reserves": 4
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 34
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 278
+        },
+        {
+          "a": "down",
+          "b": "left",
+          "ticks": 7
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 162
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 96
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 21
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 177
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 13
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 768
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 67
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 21
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 530
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 598
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 366
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 476
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 116
+        }
+      ]
+    },
+    {
+      "kind": "partner-full",
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "shared-lookout",
+      "difficulty": "standard",
+      "authoredIdentity": "62a3cea11c91e544",
+      "tunedIdentity": "6e3f47e042c44f50",
+      "tick": 2836,
+      "status": "won",
+      "coverage": 0.825722273998136,
+      "closed": [4, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 347,
+          "player": 0,
+          "reason": "return",
+          "cells": 19,
+          "cell": 1112,
+          "innerConnected": false,
+          "coverage": 0.008853681267474371
+        },
+        {
+          "type": "cut.closed",
+          "tick": 354,
+          "player": 1,
+          "reason": "return",
+          "cells": 19,
+          "cell": 1479,
+          "innerConnected": false,
+          "coverage": 0.017707362534948742
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 89,
+          "player": 0,
+          "cell": 950,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 96,
+          "player": 1,
+          "cell": 1641,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 90,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 97,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 348,
+          "coverage": 0.008853681267474371,
+          "reserves": 2
+        },
+        {
+          "tick": 355,
+          "coverage": 0.017707362534948742,
+          "reserves": 2
+        },
+        {
+          "tick": 457,
+          "coverage": 0.017707362534948742,
+          "reserves": 2
+        },
+        {
+          "tick": 458,
+          "coverage": 0.017707362534948742,
+          "reserves": 2
+        },
+        {
+          "tick": 614,
+          "coverage": 0.05032618825722274,
+          "reserves": 2
+        },
+        {
+          "tick": 635,
+          "coverage": 0.05032618825722274,
+          "reserves": 2
+        },
+        {
+          "tick": 988,
+          "coverage": 0.06244175209692451,
+          "reserves": 2
+        },
+        {
+          "tick": 2087,
+          "coverage": 0.06244175209692451,
+          "reserves": 2
+        },
+        {
+          "tick": 2549,
+          "coverage": 0.5848089468779124,
+          "reserves": 2
+        },
+        {
+          "tick": 2646,
+          "coverage": 0.5848089468779124,
+          "reserves": 2
+        },
+        {
+          "tick": 2836,
+          "coverage": 0.825722273998136,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 34
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 278
+        },
+        {
+          "a": "down",
+          "b": "left",
+          "ticks": 7
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 162
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 96
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 286
+        }
+      ]
+    },
+    {
+      "kind": "partner-full",
+      "sourceId": "team-spatial-originals-review",
+      "sourceRevision": "return-network-1",
+      "missionId": "shared-lookout",
+      "difficulty": "expert",
+      "authoredIdentity": "d5245fd102eb220e",
+      "tunedIdentity": "f1ab53669d13e892",
+      "tick": 4871,
+      "status": "won",
+      "coverage": 0.7455731593662628,
+      "closed": [5, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 347,
+          "player": 0,
+          "reason": "return",
+          "cells": 19,
+          "cell": 1112,
+          "innerConnected": false,
+          "coverage": 0.008853681267474371
+        },
+        {
+          "type": "cut.closed",
+          "tick": 354,
+          "player": 1,
+          "reason": "return",
+          "cells": 19,
+          "cell": 1479,
+          "innerConnected": false,
+          "coverage": 0.017707362534948742
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 89,
+          "player": 0,
+          "cell": 950,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 96,
+          "player": 1,
+          "cell": 1641,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 90,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 97,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 348,
+          "coverage": 0.008853681267474371,
+          "reserves": 1
+        },
+        {
+          "tick": 355,
+          "coverage": 0.017707362534948742,
+          "reserves": 1
+        },
+        {
+          "tick": 457,
+          "coverage": 0.017707362534948742,
+          "reserves": 1
+        },
+        {
+          "tick": 458,
+          "coverage": 0.017707362534948742,
+          "reserves": 1
+        },
+        {
+          "tick": 614,
+          "coverage": 0.05032618825722274,
+          "reserves": 1
+        },
+        {
+          "tick": 1194,
+          "coverage": 0.05032618825722274,
+          "reserves": 1
+        },
+        {
+          "tick": 1954,
+          "coverage": 0.07642124883504194,
+          "reserves": 1
+        },
+        {
+          "tick": 2997,
+          "coverage": 0.07642124883504194,
+          "reserves": 1
+        },
+        {
+          "tick": 3755,
+          "coverage": 0.4422180801491146,
+          "reserves": 1
+        },
+        {
+          "tick": 4367,
+          "coverage": 0.4422180801491146,
+          "reserves": 1
+        },
+        {
+          "tick": 4462,
+          "coverage": 0.5973904939422181,
+          "reserves": 1
+        },
+        {
+          "tick": 4708,
+          "coverage": 0.5973904939422181,
+          "reserves": 1
+        },
+        {
+          "tick": 4871,
+          "coverage": 0.7455731593662628,
+          "reserves": 1
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 34
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 278
+        },
+        {
+          "a": "down",
+          "b": "left",
+          "ticks": 7
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": "left",
+          "ticks": 162
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 96
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 21
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 177
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 768
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 135
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 466
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 67
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 21
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 95
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 170
+        }
+      ]
+    },
+    {
+      "kind": "depot-pickup-free",
+      "sourceId": "team-depot-spatial-review",
+      "sourceRevision": "depot-spatial-1",
+      "missionId": "depot-dash",
+      "difficulty": "gentle",
+      "authoredIdentity": "4bb8830ce509720e",
+      "tunedIdentity": "f216cb209b49be74",
+      "tick": 2518,
+      "status": "won",
+      "coverage": 0.7926944971537002,
+      "closed": [3, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 236,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 11,
+          "innerConnected": false,
+          "coverage": 0.006166982922201139
+        },
+        {
+          "type": "cut.closed",
+          "tick": 849,
+          "player": 0,
+          "reason": "return",
+          "cells": 687,
+          "cell": 2542,
+          "innerConnected": false,
+          "coverage": 0.33206831119544594
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 60,
+          "player": 0,
+          "cell": 1019,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 388,
+          "player": 0,
+          "cell": 22,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 61,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 237,
+          "coverage": 0.006166982922201139,
+          "reserves": 4
+        },
+        {
+          "tick": 389,
+          "coverage": 0.006166982922201139,
+          "reserves": 4
+        },
+        {
+          "tick": 850,
+          "coverage": 0.33206831119544594,
+          "reserves": 4
+        },
+        {
+          "tick": 1286,
+          "coverage": 0.33206831119544594,
+          "reserves": 4
+        },
+        {
+          "tick": 1747,
+          "coverage": 0.7647058823529411,
+          "reserves": 4
+        },
+        {
+          "tick": 1796,
+          "coverage": 0.7647058823529411,
+          "reserves": 4
+        },
+        {
+          "tick": 1972,
+          "coverage": 0.7708728652751423,
+          "reserves": 4
+        },
+        {
+          "tick": 2014,
+          "coverage": 0.7708728652751423,
+          "reserves": 4
+        },
+        {
+          "tick": 2082,
+          "coverage": 0.777988614800759,
+          "reserves": 4
+        },
+        {
+          "tick": 2097,
+          "coverage": 0.777988614800759,
+          "reserves": 4
+        },
+        {
+          "tick": 2518,
+          "coverage": 0.7926944971537002,
+          "reserves": 4
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 13
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 434
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 428
+        }
+      ]
+    },
+    {
+      "kind": "depot-pickup-free",
+      "sourceId": "team-depot-spatial-review",
+      "sourceRevision": "depot-spatial-1",
+      "missionId": "depot-dash",
+      "difficulty": "standard",
+      "authoredIdentity": "543ec2dfcfb5bf64",
+      "tunedIdentity": "d09302b6e1ecea81",
+      "tick": 2506,
+      "status": "won",
+      "coverage": 0.7926944971537002,
+      "closed": [3, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 224,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 11,
+          "innerConnected": false,
+          "coverage": 0.006166982922201139
+        },
+        {
+          "type": "cut.closed",
+          "tick": 837,
+          "player": 0,
+          "reason": "return",
+          "cells": 687,
+          "cell": 2542,
+          "innerConnected": false,
+          "coverage": 0.33206831119544594
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 48,
+          "player": 0,
+          "cell": 1019,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 376,
+          "player": 0,
+          "cell": 22,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 49,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 225,
+          "coverage": 0.006166982922201139,
+          "reserves": 2
+        },
+        {
+          "tick": 377,
+          "coverage": 0.006166982922201139,
+          "reserves": 2
+        },
+        {
+          "tick": 838,
+          "coverage": 0.33206831119544594,
+          "reserves": 2
+        },
+        {
+          "tick": 1274,
+          "coverage": 0.33206831119544594,
+          "reserves": 2
+        },
+        {
+          "tick": 1735,
+          "coverage": 0.7647058823529411,
+          "reserves": 2
+        },
+        {
+          "tick": 1784,
+          "coverage": 0.7647058823529411,
+          "reserves": 2
+        },
+        {
+          "tick": 1960,
+          "coverage": 0.7708728652751423,
+          "reserves": 2
+        },
+        {
+          "tick": 2002,
+          "coverage": 0.7708728652751423,
+          "reserves": 2
+        },
+        {
+          "tick": 2070,
+          "coverage": 0.777988614800759,
+          "reserves": 2
+        },
+        {
+          "tick": 2085,
+          "coverage": 0.777988614800759,
+          "reserves": 2
+        },
+        {
+          "tick": 2506,
+          "coverage": 0.7926944971537002,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 434
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 428
+        }
+      ]
+    },
+    {
+      "kind": "depot-pickup-free",
+      "sourceId": "team-depot-spatial-review",
+      "sourceRevision": "depot-spatial-1",
+      "missionId": "depot-dash",
+      "difficulty": "expert",
+      "authoredIdentity": "9fce8d08990484b7",
+      "tunedIdentity": "b082570afb5b6cc7",
+      "tick": 5758,
+      "status": "won",
+      "coverage": 0.782258064516129,
+      "closed": [3, 5],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 224,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 11,
+          "innerConnected": false,
+          "coverage": 0.006166982922201139
+        },
+        {
+          "type": "cut.closed",
+          "tick": 837,
+          "player": 0,
+          "reason": "return",
+          "cells": 687,
+          "cell": 2542,
+          "innerConnected": false,
+          "coverage": 0.33206831119544594
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 48,
+          "player": 0,
+          "cell": 1019,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 376,
+          "player": 0,
+          "cell": 22,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 49,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 225,
+          "coverage": 0.006166982922201139,
+          "reserves": 1
+        },
+        {
+          "tick": 377,
+          "coverage": 0.006166982922201139,
+          "reserves": 1
+        },
+        {
+          "tick": 838,
+          "coverage": 0.33206831119544594,
+          "reserves": 1
+        },
+        {
+          "tick": 1871,
+          "coverage": 0.33206831119544594,
+          "reserves": 1
+        },
+        {
+          "tick": 2333,
+          "coverage": 0.46110056925996207,
+          "reserves": 1
+        },
+        {
+          "tick": 2437,
+          "coverage": 0.46110056925996207,
+          "reserves": 1
+        },
+        {
+          "tick": 2613,
+          "coverage": 0.4981024667931689,
+          "reserves": 1
+        },
+        {
+          "tick": 3538,
+          "coverage": 0.4981024667931689,
+          "reserves": 1
+        },
+        {
+          "tick": 4081,
+          "coverage": 0.5360531309297912,
+          "reserves": 1
+        },
+        {
+          "tick": 4274,
+          "coverage": 0.5360531309297912,
+          "reserves": 1
+        },
+        {
+          "tick": 4708,
+          "coverage": 0.6888045540796964,
+          "reserves": 1
+        },
+        {
+          "tick": 5308,
+          "coverage": 0.6888045540796964,
+          "reserves": 1
+        },
+        {
+          "tick": 5634,
+          "coverage": 0.7556925996204934,
+          "reserves": 1
+        },
+        {
+          "tick": 5663,
+          "coverage": 0.7556925996204934,
+          "reserves": 1
+        },
+        {
+          "tick": 5758,
+          "coverage": 0.782258064516129,
+          "reserves": 1
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 556
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 55
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 183
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 475
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 442
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 550
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 442
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 442
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 375
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 21
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 102
+        }
+      ]
+    },
+    {
+      "kind": "window-pickup-free",
+      "sourceId": "team-window-spatial-review",
+      "sourceRevision": "window-spatial-1",
+      "missionId": "window-exchange",
+      "difficulty": "gentle",
+      "authoredIdentity": "f6531d96dfbf91de",
+      "tunedIdentity": "abf7a3f7a4a2617a",
+      "tick": 3597,
+      "status": "won",
+      "coverage": 0.7490842490842491,
+      "closed": [3, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 224,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 14,
+          "innerConnected": false,
+          "coverage": 0.005952380952380952
+        },
+        {
+          "type": "cut.closed",
+          "tick": 449,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 57,
+          "innerConnected": false,
+          "coverage": 0.011904761904761904
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 48,
+          "player": 0,
+          "cell": 1022,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 273,
+          "player": 1,
+          "cell": 1065,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 49,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 225,
+          "coverage": 0.005952380952380952,
+          "reserves": 4
+        },
+        {
+          "tick": 274,
+          "coverage": 0.005952380952380952,
+          "reserves": 4
+        },
+        {
+          "tick": 450,
+          "coverage": 0.011904761904761904,
+          "reserves": 4
+        },
+        {
+          "tick": 792,
+          "coverage": 0.011904761904761904,
+          "reserves": 4
+        },
+        {
+          "tick": 969,
+          "coverage": 0.44642857142857145,
+          "reserves": 4
+        },
+        {
+          "tick": 1012,
+          "coverage": 0.44642857142857145,
+          "reserves": 4
+        },
+        {
+          "tick": 1473,
+          "coverage": 0.6868131868131868,
+          "reserves": 4
+        },
+        {
+          "tick": 2141,
+          "coverage": 0.6868131868131868,
+          "reserves": 4
+        },
+        {
+          "tick": 2603,
+          "coverage": 0.7335164835164835,
+          "reserves": 4
+        },
+        {
+          "tick": 3135,
+          "coverage": 0.7335164835164835,
+          "reserves": 4
+        },
+        {
+          "tick": 3597,
+          "coverage": 0.7490842490842491,
+          "reserves": 4
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 191
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 279
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 14
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        }
+      ]
+    },
+    {
+      "kind": "window-pickup-free",
+      "sourceId": "team-window-spatial-review",
+      "sourceRevision": "window-spatial-1",
+      "missionId": "window-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "a1a5107816ff7d1c",
+      "tunedIdentity": "420a80ce3cd8ebeb",
+      "tick": 3281,
+      "status": "won",
+      "coverage": 0.7417582417582418,
+      "closed": [3, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 224,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 57,
+          "innerConnected": false,
+          "coverage": 0.005952380952380952
+        },
+        {
+          "type": "cut.closed",
+          "tick": 449,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 14,
+          "innerConnected": false,
+          "coverage": 0.011904761904761904
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 48,
+          "player": 1,
+          "cell": 1065,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 273,
+          "player": 0,
+          "cell": 1022,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 49,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 225,
+          "coverage": 0.005952380952380952,
+          "reserves": 2
+        },
+        {
+          "tick": 274,
+          "coverage": 0.005952380952380952,
+          "reserves": 2
+        },
+        {
+          "tick": 450,
+          "coverage": 0.011904761904761904,
+          "reserves": 2
+        },
+        {
+          "tick": 547,
+          "coverage": 0.011904761904761904,
+          "reserves": 2
+        },
+        {
+          "tick": 724,
+          "coverage": 0.47023809523809523,
+          "reserves": 2
+        },
+        {
+          "tick": 1039,
+          "coverage": 0.47023809523809523,
+          "reserves": 2
+        },
+        {
+          "tick": 1215,
+          "coverage": 0.6831501831501832,
+          "reserves": 2
+        },
+        {
+          "tick": 2316,
+          "coverage": 0.6831501831501832,
+          "reserves": 2
+        },
+        {
+          "tick": 2778,
+          "coverage": 0.7261904761904762,
+          "reserves": 2
+        },
+        {
+          "tick": 2820,
+          "coverage": 0.7261904761904762,
+          "reserves": 2
+        },
+        {
+          "tick": 3281,
+          "coverage": 0.7417582417582418,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 278
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 380
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 713
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 40
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        }
+      ]
+    },
+    {
+      "kind": "window-pickup-free",
+      "sourceId": "team-window-spatial-review",
+      "sourceRevision": "window-spatial-1",
+      "missionId": "window-exchange",
+      "difficulty": "expert",
+      "authoredIdentity": "a0eefee8a5a0de63",
+      "tunedIdentity": "ea2c7b77ced7b960",
+      "tick": 5951,
+      "status": "won",
+      "coverage": 0.7481684981684982,
+      "closed": [7, 7],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 224,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 57,
+          "innerConnected": false,
+          "coverage": 0.005952380952380952
+        },
+        {
+          "type": "cut.closed",
+          "tick": 449,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 14,
+          "innerConnected": false,
+          "coverage": 0.011904761904761904
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 48,
+          "player": 1,
+          "cell": 1065,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 273,
+          "player": 0,
+          "cell": 1022,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 49,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 225,
+          "coverage": 0.005952380952380952,
+          "reserves": 1
+        },
+        {
+          "tick": 274,
+          "coverage": 0.005952380952380952,
+          "reserves": 1
+        },
+        {
+          "tick": 450,
+          "coverage": 0.011904761904761904,
+          "reserves": 1
+        },
+        {
+          "tick": 765,
+          "coverage": 0.011904761904761904,
+          "reserves": 1
+        },
+        {
+          "tick": 941,
+          "coverage": 0.3228021978021978,
+          "reserves": 1
+        },
+        {
+          "tick": 1173,
+          "coverage": 0.3228021978021978,
+          "reserves": 1
+        },
+        {
+          "tick": 1323,
+          "coverage": 0.41025641025641024,
+          "reserves": 1
+        },
+        {
+          "tick": 1814,
+          "coverage": 0.41025641025641024,
+          "reserves": 1
+        },
+        {
+          "tick": 1991,
+          "coverage": 0.5357142857142857,
+          "reserves": 1
+        },
+        {
+          "tick": 2319,
+          "coverage": 0.5357142857142857,
+          "reserves": 1
+        },
+        {
+          "tick": 2469,
+          "coverage": 0.5961538461538461,
+          "reserves": 1
+        },
+        {
+          "tick": 3516,
+          "coverage": 0.5961538461538461,
+          "reserves": 1
+        },
+        {
+          "tick": 3693,
+          "coverage": 0.6474358974358975,
+          "reserves": 1
+        },
+        {
+          "tick": 3884,
+          "coverage": 0.6474358974358975,
+          "reserves": 1
+        },
+        {
+          "tick": 4047,
+          "coverage": 0.6913919413919414,
+          "reserves": 1
+        },
+        {
+          "tick": 4212,
+          "coverage": 0.6913919413919414,
+          "reserves": 1
+        },
+        {
+          "tick": 4280,
+          "coverage": 0.7051282051282052,
+          "reserves": 1
+        },
+        {
+          "tick": 5002,
+          "coverage": 0.7051282051282052,
+          "reserves": 1
+        },
+        {
+          "tick": 5179,
+          "coverage": 0.717032967032967,
+          "reserves": 1
+        },
+        {
+          "tick": 5440,
+          "coverage": 0.717032967032967,
+          "reserves": 1
+        },
+        {
+          "tick": 5521,
+          "coverage": 0.7225274725274725,
+          "reserves": 1
+        },
+        {
+          "tick": 5620,
+          "coverage": 0.7225274725274725,
+          "reserves": 1
+        },
+        {
+          "tick": 5661,
+          "coverage": 0.7266483516483516,
+          "reserves": 1
+        },
+        {
+          "tick": 5676,
+          "coverage": 0.7266483516483516,
+          "reserves": 1
+        },
+        {
+          "tick": 5717,
+          "coverage": 0.728021978021978,
+          "reserves": 1
+        },
+        {
+          "tick": 5760,
+          "coverage": 0.728021978021978,
+          "reserves": 1
+        },
+        {
+          "tick": 5951,
+          "coverage": 0.7481684981684982,
+          "reserves": 1
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 278
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 197
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 157
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 157
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 556
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 299
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 305
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 285
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 55
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 56
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 34
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 49
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 56
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 143
+        }
+      ]
+    },
+    {
+      "kind": "window-cooperation",
+      "sourceId": "team-window-spatial-review",
+      "sourceRevision": "window-spatial-1",
+      "missionId": "window-exchange",
+      "difficulty": "gentle",
+      "authoredIdentity": "f6531d96dfbf91de",
+      "tunedIdentity": "abf7a3f7a4a2617a",
+      "tick": 3845,
+      "status": "won",
+      "coverage": 0.7509157509157509,
+      "closed": [3, 4],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 644,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 14,
+          "innerConnected": false,
+          "coverage": 0.005952380952380952
+        },
+        {
+          "type": "cut.closed",
+          "tick": 658,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 2577,
+          "innerConnected": false,
+          "coverage": 0.011904761904761904
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 468,
+          "player": 0,
+          "cell": 1022,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 482,
+          "player": 1,
+          "cell": 1569,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 469,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 483,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 645,
+          "coverage": 0.005952380952380952,
+          "reserves": 4
+        },
+        {
+          "tick": 659,
+          "coverage": 0.011904761904761904,
+          "reserves": 4
+        },
+        {
+          "tick": 768,
+          "coverage": 0.011904761904761904,
+          "reserves": 4
+        },
+        {
+          "tick": 1230,
+          "coverage": 0.027472527472527472,
+          "reserves": 4
+        },
+        {
+          "tick": 1409,
+          "coverage": 0.027472527472527472,
+          "reserves": 4
+        },
+        {
+          "tick": 1420,
+          "coverage": 0.027472527472527472,
+          "reserves": 4
+        },
+        {
+          "tick": 1852,
+          "coverage": 0.16804029304029305,
+          "reserves": 4
+        },
+        {
+          "tick": 1882,
+          "coverage": 0.24587912087912087,
+          "reserves": 4
+        },
+        {
+          "tick": 2661,
+          "coverage": 0.24587912087912087,
+          "reserves": 4
+        },
+        {
+          "tick": 2770,
+          "coverage": 0.6181318681318682,
+          "reserves": 4
+        },
+        {
+          "tick": 3763,
+          "coverage": 0.6181318681318682,
+          "reserves": 4
+        },
+        {
+          "tick": 3845,
+          "coverage": 0.7509157509157509,
+          "reserves": 4
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 421
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 14
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 52
+        },
+        {
+          "a": "left",
+          "b": "down",
+          "ticks": 7
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 118
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 5
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 363
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 76
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 30
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 124
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 177
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 117
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 387
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 299
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 218
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 88
+        }
+      ]
+    },
+    {
+      "kind": "window-cooperation",
+      "sourceId": "team-window-spatial-review",
+      "sourceRevision": "window-spatial-1",
+      "missionId": "window-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "a1a5107816ff7d1c",
+      "tunedIdentity": "420a80ce3cd8ebeb",
+      "tick": 3037,
+      "status": "won",
+      "coverage": 0.7445054945054945,
+      "closed": [5, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 284,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 14,
+          "innerConnected": false,
+          "coverage": 0.005952380952380952
+        },
+        {
+          "type": "cut.closed",
+          "tick": 298,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 2577,
+          "innerConnected": false,
+          "coverage": 0.011904761904761904
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 108,
+          "player": 0,
+          "cell": 1022,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 122,
+          "player": 1,
+          "cell": 1569,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 109,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 123,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 285,
+          "coverage": 0.005952380952380952,
+          "reserves": 2
+        },
+        {
+          "tick": 299,
+          "coverage": 0.011904761904761904,
+          "reserves": 2
+        },
+        {
+          "tick": 408,
+          "coverage": 0.011904761904761904,
+          "reserves": 2
+        },
+        {
+          "tick": 870,
+          "coverage": 0.027472527472527472,
+          "reserves": 2
+        },
+        {
+          "tick": 1049,
+          "coverage": 0.027472527472527472,
+          "reserves": 2
+        },
+        {
+          "tick": 1060,
+          "coverage": 0.027472527472527472,
+          "reserves": 2
+        },
+        {
+          "tick": 1492,
+          "coverage": 0.16804029304029305,
+          "reserves": 2
+        },
+        {
+          "tick": 1522,
+          "coverage": 0.24587912087912087,
+          "reserves": 2
+        },
+        {
+          "tick": 2285,
+          "coverage": 0.24587912087912087,
+          "reserves": 2
+        },
+        {
+          "tick": 2394,
+          "coverage": 0.6217948717948718,
+          "reserves": 2
+        },
+        {
+          "tick": 2796,
+          "coverage": 0.6217948717948718,
+          "reserves": 2
+        },
+        {
+          "tick": 2851,
+          "coverage": 0.7326007326007326,
+          "reserves": 2
+        },
+        {
+          "tick": 2860,
+          "coverage": 0.7326007326007326,
+          "reserves": 2
+        },
+        {
+          "tick": 3037,
+          "coverage": 0.7445054945054945,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 61
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 14
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 52
+        },
+        {
+          "a": "left",
+          "b": "down",
+          "ticks": 7
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 118
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 5
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 363
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 76
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 30
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 123
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 101
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 102
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 191
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 62
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 185
+        }
+      ]
+    },
+    {
+      "kind": "window-relocation",
+      "sourceId": "team-window-spatial-review",
+      "sourceRevision": "window-spatial-1",
+      "missionId": "window-exchange",
+      "difficulty": "gentle",
+      "authoredIdentity": "f6531d96dfbf91de",
+      "tunedIdentity": "abf7a3f7a4a2617a",
+      "tick": 4385,
+      "status": "won",
+      "coverage": 0.7696886446886447,
+      "closed": [4, 4],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 1394,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 14,
+          "innerConnected": false,
+          "coverage": 0.005952380952380952
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1408,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 2577,
+          "innerConnected": false,
+          "coverage": 0.011904761904761904
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 1218,
+          "player": 0,
+          "cell": 1022,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 1232,
+          "player": 1,
+          "cell": 1569,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 1219,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 1233,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 1395,
+          "coverage": 0.005952380952380952,
+          "reserves": 4
+        },
+        {
+          "tick": 1409,
+          "coverage": 0.011904761904761904,
+          "reserves": 4
+        },
+        {
+          "tick": 1518,
+          "coverage": 0.011904761904761904,
+          "reserves": 4
+        },
+        {
+          "tick": 1980,
+          "coverage": 0.027472527472527472,
+          "reserves": 4
+        },
+        {
+          "tick": 2096,
+          "coverage": 0.027472527472527472,
+          "reserves": 4
+        },
+        {
+          "tick": 2558,
+          "coverage": 0.21886446886446886,
+          "reserves": 4
+        },
+        {
+          "tick": 2747,
+          "coverage": 0.21886446886446886,
+          "reserves": 4
+        },
+        {
+          "tick": 3209,
+          "coverage": 0.4413919413919414,
+          "reserves": 4
+        },
+        {
+          "tick": 3371,
+          "coverage": 0.4413919413919414,
+          "reserves": 4
+        },
+        {
+          "tick": 3752,
+          "coverage": 0.532051282051282,
+          "reserves": 4
+        },
+        {
+          "tick": 4105,
+          "coverage": 0.532051282051282,
+          "reserves": 4
+        },
+        {
+          "tick": 4275,
+          "coverage": 0.6117216117216118,
+          "reserves": 4
+        },
+        {
+          "tick": 4317,
+          "coverage": 0.6117216117216118,
+          "reserves": 4
+        },
+        {
+          "tick": 4385,
+          "coverage": 0.7696886446886447,
+          "reserves": 4
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1171
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 14
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": "down",
+          "b": "down",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 468
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 176
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 468
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 149
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 244
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 144
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 231
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 68
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 34
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 75
+        }
+      ]
+    },
+    {
+      "kind": "window-relocation",
+      "sourceId": "team-window-spatial-review",
+      "sourceRevision": "window-spatial-1",
+      "missionId": "window-exchange",
+      "difficulty": "standard",
+      "authoredIdentity": "a1a5107816ff7d1c",
+      "tunedIdentity": "420a80ce3cd8ebeb",
+      "tick": 6412,
+      "status": "won",
+      "coverage": 0.7939560439560439,
+      "closed": [4, 6],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 1034,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 14,
+          "innerConnected": false,
+          "coverage": 0.005952380952380952
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1048,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 2577,
+          "innerConnected": false,
+          "coverage": 0.011904761904761904
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 858,
+          "player": 0,
+          "cell": 1022,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 872,
+          "player": 1,
+          "cell": 1569,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 859,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 873,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 1035,
+          "coverage": 0.005952380952380952,
+          "reserves": 2
+        },
+        {
+          "tick": 1049,
+          "coverage": 0.011904761904761904,
+          "reserves": 2
+        },
+        {
+          "tick": 1794,
+          "coverage": 0.011904761904761904,
+          "reserves": 2
+        },
+        {
+          "tick": 2108,
+          "coverage": 0.15613553113553114,
+          "reserves": 2
+        },
+        {
+          "tick": 2216,
+          "coverage": 0.15613553113553114,
+          "reserves": 2
+        },
+        {
+          "tick": 2678,
+          "coverage": 0.1717032967032967,
+          "reserves": 2
+        },
+        {
+          "tick": 2741,
+          "coverage": 0.1717032967032967,
+          "reserves": 2
+        },
+        {
+          "tick": 3036,
+          "coverage": 0.27976190476190477,
+          "reserves": 2
+        },
+        {
+          "tick": 3170,
+          "coverage": 0.27976190476190477,
+          "reserves": 2
+        },
+        {
+          "tick": 3481,
+          "coverage": 0.3415750915750916,
+          "reserves": 2
+        },
+        {
+          "tick": 4179,
+          "coverage": 0.3415750915750916,
+          "reserves": 2
+        },
+        {
+          "tick": 4288,
+          "coverage": 0.34523809523809523,
+          "reserves": 2
+        },
+        {
+          "tick": 4602,
+          "coverage": 0.34523809523809523,
+          "reserves": 2
+        },
+        {
+          "tick": 4942,
+          "coverage": 0.6153846153846154,
+          "reserves": 2
+        },
+        {
+          "tick": 5853,
+          "coverage": 0.6153846153846154,
+          "reserves": 2
+        },
+        {
+          "tick": 6084,
+          "coverage": 0.7307692307692307,
+          "reserves": 2
+        },
+        {
+          "tick": 6330,
+          "coverage": 0.7307692307692307,
+          "reserves": 2
+        },
+        {
+          "tick": 6412,
+          "coverage": 0.7939560439560439,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 811
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 11
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 3
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 4
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 188
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 470
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 81
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 242
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 74
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 94
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 464
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 5
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 136
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 222
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 121
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 202
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 115
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 121
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 202
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 349
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 13
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 108
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 8
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 347
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 216
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 218
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 204
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 89
+        }
+      ]
+    },
+    {
+      "kind": "window-cooperation",
+      "sourceId": "team-window-spatial-review",
+      "sourceRevision": "window-spatial-1",
+      "missionId": "window-exchange",
+      "difficulty": "expert",
+      "authoredIdentity": "a0eefee8a5a0de63",
+      "tunedIdentity": "ea2c7b77ced7b960",
+      "tick": 7949,
+      "status": "won",
+      "coverage": 0.7403846153846154,
+      "closed": [5, 5],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 2428,
+          "player": 0,
+          "reason": "return",
+          "cells": 11,
+          "cell": 1224,
+          "innerConnected": false,
+          "coverage": 0.005036630036630037
+        },
+        {
+          "type": "cut.closed",
+          "tick": 2791,
+          "player": 0,
+          "reason": "return",
+          "cells": 80,
+          "cell": 1232,
+          "innerConnected": false,
+          "coverage": 0.041666666666666664
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 2278,
+          "player": 0,
+          "cell": 1236,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 2306,
+          "player": 1,
+          "cell": 1569,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 2279,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 2307,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 2429,
+          "coverage": 0.005036630036630037,
+          "reserves": 1
+        },
+        {
+          "tick": 2566,
+          "coverage": 0.005036630036630037,
+          "reserves": 1
+        },
+        {
+          "tick": 2792,
+          "coverage": 0.041666666666666664,
+          "reserves": 1
+        },
+        {
+          "tick": 2795,
+          "coverage": 0.07692307692307693,
+          "reserves": 1
+        },
+        {
+          "tick": 2899,
+          "coverage": 0.07692307692307693,
+          "reserves": 1
+        },
+        {
+          "tick": 3075,
+          "coverage": 0.26053113553113555,
+          "reserves": 1
+        },
+        {
+          "tick": 3977,
+          "coverage": 0.26053113553113555,
+          "reserves": 1
+        },
+        {
+          "tick": 4483,
+          "coverage": 0.42536630036630035,
+          "reserves": 1
+        },
+        {
+          "tick": 4665,
+          "coverage": 0.42536630036630035,
+          "reserves": 1
+        },
+        {
+          "tick": 4842,
+          "coverage": 0.5407509157509157,
+          "reserves": 1
+        },
+        {
+          "tick": 5129,
+          "coverage": 0.5407509157509157,
+          "reserves": 1
+        },
+        {
+          "tick": 5305,
+          "coverage": 0.6144688644688645,
+          "reserves": 1
+        },
+        {
+          "tick": 5388,
+          "coverage": 0.6144688644688645,
+          "reserves": 1
+        },
+        {
+          "tick": 5578,
+          "coverage": 0.6373626373626373,
+          "reserves": 1
+        },
+        {
+          "tick": 6480,
+          "coverage": 0.6373626373626373,
+          "reserves": 1
+        },
+        {
+          "tick": 7621,
+          "coverage": 0.7115384615384616,
+          "reserves": 1
+        },
+        {
+          "tick": 7854,
+          "coverage": 0.7115384615384616,
+          "reserves": 1
+        },
+        {
+          "tick": 7949,
+          "coverage": 0.7403846153846154,
+          "reserves": 1
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2245
+        },
+        {
+          "a": "left",
+          "b": "down",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 50
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 53
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 32
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 98
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 112
+        },
+        {
+          "a": "down",
+          "b": "left",
+          "ticks": 17
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 3
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 62
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 217
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 900
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 242
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 113
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 242
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 102
+        }
+      ]
+    },
+    {
+      "kind": "window-relocation",
+      "sourceId": "team-window-spatial-review",
+      "sourceRevision": "window-spatial-1",
+      "missionId": "window-exchange",
+      "difficulty": "expert",
+      "authoredIdentity": "a0eefee8a5a0de63",
+      "tunedIdentity": "ea2c7b77ced7b960",
+      "tick": 7949,
+      "status": "won",
+      "coverage": 0.7403846153846154,
+      "closed": [5, 5],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 2428,
+          "player": 0,
+          "reason": "return",
+          "cells": 11,
+          "cell": 1224,
+          "innerConnected": false,
+          "coverage": 0.005036630036630037
+        },
+        {
+          "type": "cut.closed",
+          "tick": 2791,
+          "player": 0,
+          "reason": "return",
+          "cells": 80,
+          "cell": 1232,
+          "innerConnected": false,
+          "coverage": 0.041666666666666664
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 2278,
+          "player": 0,
+          "cell": 1236,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 2306,
+          "player": 1,
+          "cell": 1569,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 2279,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 2307,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 2429,
+          "coverage": 0.005036630036630037,
+          "reserves": 1
+        },
+        {
+          "tick": 2566,
+          "coverage": 0.005036630036630037,
+          "reserves": 1
+        },
+        {
+          "tick": 2792,
+          "coverage": 0.041666666666666664,
+          "reserves": 1
+        },
+        {
+          "tick": 2795,
+          "coverage": 0.07692307692307693,
+          "reserves": 1
+        },
+        {
+          "tick": 2899,
+          "coverage": 0.07692307692307693,
+          "reserves": 1
+        },
+        {
+          "tick": 3075,
+          "coverage": 0.26053113553113555,
+          "reserves": 1
+        },
+        {
+          "tick": 3977,
+          "coverage": 0.26053113553113555,
+          "reserves": 1
+        },
+        {
+          "tick": 4483,
+          "coverage": 0.42536630036630035,
+          "reserves": 1
+        },
+        {
+          "tick": 4665,
+          "coverage": 0.42536630036630035,
+          "reserves": 1
+        },
+        {
+          "tick": 4842,
+          "coverage": 0.5407509157509157,
+          "reserves": 1
+        },
+        {
+          "tick": 5129,
+          "coverage": 0.5407509157509157,
+          "reserves": 1
+        },
+        {
+          "tick": 5305,
+          "coverage": 0.6144688644688645,
+          "reserves": 1
+        },
+        {
+          "tick": 5388,
+          "coverage": 0.6144688644688645,
+          "reserves": 1
+        },
+        {
+          "tick": 5578,
+          "coverage": 0.6373626373626373,
+          "reserves": 1
+        },
+        {
+          "tick": 6480,
+          "coverage": 0.6373626373626373,
+          "reserves": 1
+        },
+        {
+          "tick": 7621,
+          "coverage": 0.7115384615384616,
+          "reserves": 1
+        },
+        {
+          "tick": 7854,
+          "coverage": 0.7115384615384616,
+          "reserves": 1
+        },
+        {
+          "tick": 7949,
+          "coverage": 0.7403846153846154,
+          "reserves": 1
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2245
+        },
+        {
+          "a": "left",
+          "b": "down",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": "down",
+          "ticks": 50
+        },
+        {
+          "a": "up",
+          "b": "right",
+          "ticks": 53
+        },
+        {
+          "a": "up",
+          "b": "up",
+          "ticks": 32
+        },
+        {
+          "a": "right",
+          "b": "up",
+          "ticks": 98
+        },
+        {
+          "a": "down",
+          "b": "up",
+          "ticks": 112
+        },
+        {
+          "a": "down",
+          "b": "left",
+          "ticks": 17
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 3
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 62
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 217
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 900
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 265
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 242
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 113
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 242
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 116
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 102
+        }
+      ]
+    },
+    {
+      "kind": "depot-relocation",
+      "sourceId": "team-depot-spatial-review",
+      "sourceRevision": "depot-spatial-1",
+      "missionId": "depot-dash",
+      "difficulty": "gentle",
+      "authoredIdentity": "4bb8830ce509720e",
+      "tunedIdentity": "f216cb209b49be74",
+      "tick": 5240,
+      "status": "won",
+      "coverage": 0.7870018975332068,
+      "closed": [3, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 2035,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 60,
+          "innerConnected": false,
+          "coverage": 0.006166982922201139
+        },
+        {
+          "type": "cut.closed",
+          "tick": 2805,
+          "player": 1,
+          "reason": "return",
+          "cells": 18,
+          "cell": 391,
+          "innerConnected": false,
+          "coverage": 0.014705882352941176
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 1859,
+          "player": 1,
+          "cell": 1068,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 2594,
+          "player": 1,
+          "cell": 19,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 1860,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 2036,
+          "coverage": 0.006166982922201139,
+          "reserves": 4
+        },
+        {
+          "tick": 2595,
+          "coverage": 0.006166982922201139,
+          "reserves": 4
+        },
+        {
+          "tick": 2806,
+          "coverage": 0.014705882352941176,
+          "reserves": 4
+        },
+        {
+          "tick": 2917,
+          "coverage": 0.014705882352941176,
+          "reserves": 4
+        },
+        {
+          "tick": 3177,
+          "coverage": 0.026091081593927895,
+          "reserves": 4
+        },
+        {
+          "tick": 3213,
+          "coverage": 0.026091081593927895,
+          "reserves": 4
+        },
+        {
+          "tick": 3322,
+          "coverage": 0.02988614800759013,
+          "reserves": 4
+        },
+        {
+          "tick": 4275,
+          "coverage": 0.02988614800759013,
+          "reserves": 4
+        },
+        {
+          "tick": 4737,
+          "coverage": 0.7386148007590133,
+          "reserves": 4
+        },
+        {
+          "tick": 4779,
+          "coverage": 0.7386148007590133,
+          "reserves": 4
+        },
+        {
+          "tick": 5240,
+          "coverage": 0.7870018975332068,
+          "reserves": 4
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1812
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 557
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 74
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 131
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 261
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 700
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 40
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 462
+        }
+      ]
+    },
+    {
+      "kind": "depot-relocation",
+      "sourceId": "team-depot-spatial-review",
+      "sourceRevision": "depot-spatial-1",
+      "missionId": "depot-dash",
+      "difficulty": "standard",
+      "authoredIdentity": "543ec2dfcfb5bf64",
+      "tunedIdentity": "d09302b6e1ecea81",
+      "tick": 7645,
+      "status": "won",
+      "coverage": 0.786527514231499,
+      "closed": [3, 4],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 2035,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 60,
+          "innerConnected": false,
+          "coverage": 0.006166982922201139
+        },
+        {
+          "type": "cut.closed",
+          "tick": 2805,
+          "player": 1,
+          "reason": "return",
+          "cells": 18,
+          "cell": 391,
+          "innerConnected": false,
+          "coverage": 0.014705882352941176
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 1859,
+          "player": 1,
+          "cell": 1068,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 2594,
+          "player": 1,
+          "cell": 19,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 1860,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 2036,
+          "coverage": 0.006166982922201139,
+          "reserves": 2
+        },
+        {
+          "tick": 2595,
+          "coverage": 0.006166982922201139,
+          "reserves": 2
+        },
+        {
+          "tick": 2806,
+          "coverage": 0.014705882352941176,
+          "reserves": 2
+        },
+        {
+          "tick": 2917,
+          "coverage": 0.014705882352941176,
+          "reserves": 2
+        },
+        {
+          "tick": 3177,
+          "coverage": 0.026091081593927895,
+          "reserves": 2
+        },
+        {
+          "tick": 4602,
+          "coverage": 0.026091081593927895,
+          "reserves": 2
+        },
+        {
+          "tick": 5553,
+          "coverage": 0.5678368121442126,
+          "reserves": 2
+        },
+        {
+          "tick": 6391,
+          "coverage": 0.5678368121442126,
+          "reserves": 2
+        },
+        {
+          "tick": 6825,
+          "coverage": 0.7666034155597723,
+          "reserves": 2
+        },
+        {
+          "tick": 7248,
+          "coverage": 0.7666034155597723,
+          "reserves": 2
+        },
+        {
+          "tick": 7438,
+          "coverage": 0.7798861480075902,
+          "reserves": 2
+        },
+        {
+          "tick": 7455,
+          "coverage": 0.7798861480075902,
+          "reserves": 2
+        },
+        {
+          "tick": 7645,
+          "coverage": 0.786527514231499,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1812
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 557
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 74
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 131
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 261
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 313
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 137
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 15
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 163
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 82
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 448
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 958
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 163
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 55
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 203
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 442
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 415
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 197
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 15
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 191
+        }
+      ]
+    },
+    {
+      "kind": "depot-relocation",
+      "sourceId": "team-depot-spatial-review",
+      "sourceRevision": "depot-spatial-1",
+      "missionId": "depot-dash",
+      "difficulty": "expert",
+      "authoredIdentity": "9fce8d08990484b7",
+      "tunedIdentity": "b082570afb5b6cc7",
+      "tick": 5556,
+      "status": "won",
+      "coverage": 0.7969639468690702,
+      "closed": [4, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 2137,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 60,
+          "innerConnected": false,
+          "coverage": 0.006166982922201139
+        },
+        {
+          "type": "cut.closed",
+          "tick": 2907,
+          "player": 1,
+          "reason": "return",
+          "cells": 18,
+          "cell": 391,
+          "innerConnected": false,
+          "coverage": 0.014705882352941176
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 1961,
+          "player": 1,
+          "cell": 1068,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 2696,
+          "player": 1,
+          "cell": 19,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 1962,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 2138,
+          "coverage": 0.006166982922201139,
+          "reserves": 1
+        },
+        {
+          "tick": 2697,
+          "coverage": 0.006166982922201139,
+          "reserves": 1
+        },
+        {
+          "tick": 2908,
+          "coverage": 0.014705882352941176,
+          "reserves": 1
+        },
+        {
+          "tick": 3019,
+          "coverage": 0.014705882352941176,
+          "reserves": 1
+        },
+        {
+          "tick": 3279,
+          "coverage": 0.026091081593927895,
+          "reserves": 1
+        },
+        {
+          "tick": 3315,
+          "coverage": 0.026091081593927895,
+          "reserves": 1
+        },
+        {
+          "tick": 3424,
+          "coverage": 0.02988614800759013,
+          "reserves": 1
+        },
+        {
+          "tick": 4577,
+          "coverage": 0.02988614800759013,
+          "reserves": 1
+        },
+        {
+          "tick": 5010,
+          "coverage": 0.6266603415559773,
+          "reserves": 1
+        },
+        {
+          "tick": 5228,
+          "coverage": 0.6266603415559773,
+          "reserves": 1
+        },
+        {
+          "tick": 5310,
+          "coverage": 0.7685009487666035,
+          "reserves": 1
+        },
+        {
+          "tick": 5353,
+          "coverage": 0.7685009487666035,
+          "reserves": 1
+        },
+        {
+          "tick": 5556,
+          "coverage": 0.7969639468690702,
+          "reserves": 1
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1914
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 557
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 74
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 131
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 109
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 261
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 245
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 900
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 344
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 211
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 88
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 34
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 211
+        }
+      ]
+    },
+    {
+      "kind": "coolant-relocation",
+      "sourceId": "journey-team-timed-review",
+      "sourceRevision": "greybox-1",
+      "missionId": "coolant-crossing",
+      "difficulty": "gentle",
+      "authoredIdentity": "e94f29603dc72425",
+      "tunedIdentity": "18e9188b97bc369d",
+      "tick": 7098,
+      "status": "won",
+      "coverage": 0.7642792384406165,
+      "closed": [4, 4],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 863,
+          "player": 0,
+          "reason": "return",
+          "cells": 14,
+          "cell": 1224,
+          "innerConnected": false,
+          "coverage": 0.006346328195829556
+        },
+        {
+          "type": "cut.closed",
+          "tick": 863,
+          "player": 1,
+          "reason": "return",
+          "cells": 14,
+          "cell": 1295,
+          "innerConnected": false,
+          "coverage": 0.006346328195829556
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 768,
+          "player": 0,
+          "cell": 1232,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 768,
+          "player": 1,
+          "cell": 1287,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 769,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 864,
+          "coverage": 0.006346328195829556,
+          "reserves": 4
+        },
+        {
+          "tick": 1081,
+          "coverage": 0.006346328195829556,
+          "reserves": 4
+        },
+        {
+          "tick": 1977,
+          "coverage": 0.28195829555757024,
+          "reserves": 4
+        },
+        {
+          "tick": 2106,
+          "coverage": 0.28195829555757024,
+          "reserves": 4
+        },
+        {
+          "tick": 2927,
+          "coverage": 0.3019038984587489,
+          "reserves": 4
+        },
+        {
+          "tick": 3715,
+          "coverage": 0.3019038984587489,
+          "reserves": 4
+        },
+        {
+          "tick": 4349,
+          "coverage": 0.4483227561196736,
+          "reserves": 4
+        },
+        {
+          "tick": 4681,
+          "coverage": 0.4483227561196736,
+          "reserves": 4
+        },
+        {
+          "tick": 4749,
+          "coverage": 0.4551223934723481,
+          "reserves": 4
+        },
+        {
+          "tick": 4911,
+          "coverage": 0.4551223934723481,
+          "reserves": 4
+        },
+        {
+          "tick": 5277,
+          "coverage": 0.5961015412511332,
+          "reserves": 4
+        },
+        {
+          "tick": 6881,
+          "coverage": 0.5961015412511332,
+          "reserves": 4
+        },
+        {
+          "tick": 7098,
+          "coverage": 0.7642792384406165,
+          "reserves": 4
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 721
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 176
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 149
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 774
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 122
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 285
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 543
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 774
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 81
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 81
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 475
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 3
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 27
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 160
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 900
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 374
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 322
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 224
+        }
+      ]
+    },
+    {
+      "kind": "depot-reserve",
+      "sourceId": "team-depot-spatial-review",
+      "sourceRevision": "depot-spatial-1",
+      "missionId": "depot-dash",
+      "difficulty": "gentle",
+      "authoredIdentity": "4bb8830ce509720e",
+      "tunedIdentity": "f216cb209b49be74",
+      "tick": 7765,
+      "status": "won",
+      "coverage": 0.8889943074003795,
+      "closed": [5, 5],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 2683,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 11,
+          "innerConnected": false,
+          "coverage": 0.006166982922201139
+        },
+        {
+          "type": "cut.closed",
+          "tick": 3479,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 2580,
+          "innerConnected": false,
+          "coverage": 0.012333965844402278
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 2507,
+          "player": 0,
+          "cell": 1019,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 3242,
+          "player": 0,
+          "cell": 52,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 2508,
+          "coverage": 0,
+          "reserves": 4
+        },
+        {
+          "tick": 2684,
+          "coverage": 0.006166982922201139,
+          "reserves": 4
+        },
+        {
+          "tick": 3243,
+          "coverage": 0.006166982922201139,
+          "reserves": 4
+        },
+        {
+          "tick": 3304,
+          "coverage": 0.006166982922201139,
+          "reserves": 4
+        },
+        {
+          "tick": 3480,
+          "coverage": 0.012333965844402278,
+          "reserves": 5
+        },
+        {
+          "tick": 3528,
+          "coverage": 0.19876660341555977,
+          "reserves": 5
+        },
+        {
+          "tick": 4047,
+          "coverage": 0.19876660341555977,
+          "reserves": 5
+        },
+        {
+          "tick": 4508,
+          "coverage": 0.5246679316888045,
+          "reserves": 5
+        },
+        {
+          "tick": 5026,
+          "coverage": 0.5246679316888045,
+          "reserves": 5
+        },
+        {
+          "tick": 5392,
+          "coverage": 0.6029411764705882,
+          "reserves": 5
+        },
+        {
+          "tick": 5612,
+          "coverage": 0.6029411764705882,
+          "reserves": 5
+        },
+        {
+          "tick": 6005,
+          "coverage": 0.6684060721062619,
+          "reserves": 5
+        },
+        {
+          "tick": 6373,
+          "coverage": 0.6684060721062619,
+          "reserves": 5
+        },
+        {
+          "tick": 6754,
+          "coverage": 0.7210626185958254,
+          "reserves": 5
+        },
+        {
+          "tick": 6838,
+          "coverage": 0.7210626185958254,
+          "reserves": 5
+        },
+        {
+          "tick": 7191,
+          "coverage": 0.74573055028463,
+          "reserves": 5
+        },
+        {
+          "tick": 7234,
+          "coverage": 0.74573055028463,
+          "reserves": 5
+        },
+        {
+          "tick": 7329,
+          "coverage": 0.7556925996204934,
+          "reserves": 5
+        },
+        {
+          "tick": 7413,
+          "coverage": 0.7556925996204934,
+          "reserves": 5
+        },
+        {
+          "tick": 7765,
+          "coverage": 0.8889943074003795,
+          "reserves": 5
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2460
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 557
+        },
+        {
+          "a": "down",
+          "b": "down",
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": "down",
+          "b": "down",
+          "ticks": 40
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 516
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 421
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 14
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 13
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 400
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 360
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 388
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 55
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 21
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 360
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 96
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 360
+        }
+      ]
+    },
+    {
+      "kind": "coolant-relocation",
+      "sourceId": "journey-team-timed-review",
+      "sourceRevision": "greybox-1",
+      "missionId": "coolant-crossing",
+      "difficulty": "standard",
+      "authoredIdentity": "64149e4bf831d465",
+      "tunedIdentity": "d05df6f9d3d439b9",
+      "tick": 6594,
+      "status": "won",
+      "coverage": 0.7747053490480508,
+      "closed": [5, 3],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 323,
+          "player": 0,
+          "reason": "return",
+          "cells": 14,
+          "cell": 1224,
+          "innerConnected": false,
+          "coverage": 0.006346328195829556
+        },
+        {
+          "type": "cut.closed",
+          "tick": 323,
+          "player": 1,
+          "reason": "return",
+          "cells": 14,
+          "cell": 1295,
+          "innerConnected": false,
+          "coverage": 0.006346328195829556
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 228,
+          "player": 0,
+          "cell": 1232,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 228,
+          "player": 1,
+          "cell": 1287,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 229,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 324,
+          "coverage": 0.006346328195829556,
+          "reserves": 2
+        },
+        {
+          "tick": 541,
+          "coverage": 0.006346328195829556,
+          "reserves": 2
+        },
+        {
+          "tick": 1437,
+          "coverage": 0.28195829555757024,
+          "reserves": 2
+        },
+        {
+          "tick": 1566,
+          "coverage": 0.28195829555757024,
+          "reserves": 2
+        },
+        {
+          "tick": 2387,
+          "coverage": 0.3019038984587489,
+          "reserves": 2
+        },
+        {
+          "tick": 3175,
+          "coverage": 0.3019038984587489,
+          "reserves": 2
+        },
+        {
+          "tick": 3809,
+          "coverage": 0.31640979147778786,
+          "reserves": 2
+        },
+        {
+          "tick": 3843,
+          "coverage": 0.31640979147778786,
+          "reserves": 2
+        },
+        {
+          "tick": 4128,
+          "coverage": 0.3354487760652765,
+          "reserves": 2
+        },
+        {
+          "tick": 5140,
+          "coverage": 0.3354487760652765,
+          "reserves": 2
+        },
+        {
+          "tick": 5506,
+          "coverage": 0.6246600181323663,
+          "reserves": 2
+        },
+        {
+          "tick": 6350,
+          "coverage": 0.6246600181323663,
+          "reserves": 2
+        },
+        {
+          "tick": 6594,
+          "coverage": 0.7747053490480508,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 181
+        },
+        {
+          "a": "left",
+          "b": "right",
+          "ticks": 143
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 176
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 149
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 774
+        },
+        {
+          "a": "right",
+          "b": "right",
+          "ticks": 7
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 122
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 285
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 543
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 7
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 774
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 81
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 81
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 475
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 3
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 6
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 27
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 286
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 262
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 374
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 374
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 96
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 197
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 272
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 108
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 68
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 251
+        }
+      ]
+    },
+    {
+      "kind": "depot-reserve",
+      "sourceId": "team-depot-spatial-review",
+      "sourceRevision": "depot-spatial-1",
+      "missionId": "depot-dash",
+      "difficulty": "standard",
+      "authoredIdentity": "543ec2dfcfb5bf64",
+      "tunedIdentity": "d09302b6e1ecea81",
+      "tick": 6919,
+      "status": "won",
+      "coverage": 0.8282732447817837,
+      "closed": [5, 5],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 2749,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 11,
+          "innerConnected": false,
+          "coverage": 0.006166982922201139
+        },
+        {
+          "type": "cut.closed",
+          "tick": 3545,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 2580,
+          "innerConnected": false,
+          "coverage": 0.012333965844402278
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 2573,
+          "player": 0,
+          "cell": 1019,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 3308,
+          "player": 0,
+          "cell": 52,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 2574,
+          "coverage": 0,
+          "reserves": 2
+        },
+        {
+          "tick": 2750,
+          "coverage": 0.006166982922201139,
+          "reserves": 2
+        },
+        {
+          "tick": 3309,
+          "coverage": 0.006166982922201139,
+          "reserves": 2
+        },
+        {
+          "tick": 3370,
+          "coverage": 0.006166982922201139,
+          "reserves": 2
+        },
+        {
+          "tick": 3546,
+          "coverage": 0.012333965844402278,
+          "reserves": 3
+        },
+        {
+          "tick": 3580,
+          "coverage": 0.021821631878557873,
+          "reserves": 3
+        },
+        {
+          "tick": 4099,
+          "coverage": 0.021821631878557873,
+          "reserves": 3
+        },
+        {
+          "tick": 4560,
+          "coverage": 0.34772296015180265,
+          "reserves": 3
+        },
+        {
+          "tick": 4589,
+          "coverage": 0.34772296015180265,
+          "reserves": 3
+        },
+        {
+          "tick": 4738,
+          "coverage": 0.4501897533206831,
+          "reserves": 3
+        },
+        {
+          "tick": 5107,
+          "coverage": 0.4501897533206831,
+          "reserves": 3
+        },
+        {
+          "tick": 5568,
+          "coverage": 0.5868121442125237,
+          "reserves": 3
+        },
+        {
+          "tick": 5611,
+          "coverage": 0.5868121442125237,
+          "reserves": 3
+        },
+        {
+          "tick": 5760,
+          "coverage": 0.6537001897533207,
+          "reserves": 3
+        },
+        {
+          "tick": 5844,
+          "coverage": 0.6537001897533207,
+          "reserves": 3
+        },
+        {
+          "tick": 6197,
+          "coverage": 0.7106261859582542,
+          "reserves": 3
+        },
+        {
+          "tick": 6307,
+          "coverage": 0.7106261859582542,
+          "reserves": 3
+        },
+        {
+          "tick": 6619,
+          "coverage": 0.7637571157495257,
+          "reserves": 3
+        },
+        {
+          "tick": 6824,
+          "coverage": 0.7637571157495257,
+          "reserves": 3
+        },
+        {
+          "tick": 6919,
+          "coverage": 0.8282732447817837,
+          "reserves": 3
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2526
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 557
+        },
+        {
+          "a": "down",
+          "b": "down",
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 95
+        },
+        {
+          "a": "down",
+          "b": "down",
+          "ticks": 54
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 516
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 21
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 156
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 367
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 462
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 41
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 150
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 361
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 102
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 319
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 143
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 54
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 102
+        }
+      ]
+    },
+    {
+      "kind": "coolant-relocation",
+      "sourceId": "journey-team-timed-review",
+      "sourceRevision": "greybox-1",
+      "missionId": "coolant-crossing",
+      "difficulty": "expert",
+      "authoredIdentity": "c113c5ec287329bf",
+      "tunedIdentity": "7bb076641aec28cd",
+      "tick": 7103,
+      "status": "won",
+      "coverage": 0.7601994560290117,
+      "closed": [3, 6],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 2635,
+          "player": 0,
+          "reason": "return",
+          "cells": 14,
+          "cell": 11,
+          "innerConnected": false,
+          "coverage": 0.006346328195829556
+        },
+        {
+          "type": "cut.closed",
+          "tick": 2869,
+          "player": 0,
+          "reason": "return",
+          "cells": 36,
+          "cell": 443,
+          "innerConnected": false,
+          "coverage": 0.022665457842248413
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 2445,
+          "player": 0,
+          "cell": 1091,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 2719,
+          "player": 0,
+          "cell": 17,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 2446,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 2636,
+          "coverage": 0.006346328195829556,
+          "reserves": 1
+        },
+        {
+          "tick": 2720,
+          "coverage": 0.006346328195829556,
+          "reserves": 1
+        },
+        {
+          "tick": 2870,
+          "coverage": 0.022665457842248413,
+          "reserves": 1
+        },
+        {
+          "tick": 3118,
+          "coverage": 0.022665457842248413,
+          "reserves": 1
+        },
+        {
+          "tick": 3580,
+          "coverage": 0.33635539437896644,
+          "reserves": 1
+        },
+        {
+          "tick": 3656,
+          "coverage": 0.33635539437896644,
+          "reserves": 1
+        },
+        {
+          "tick": 3860,
+          "coverage": 0.34315503173164097,
+          "reserves": 1
+        },
+        {
+          "tick": 4161,
+          "coverage": 0.34315503173164097,
+          "reserves": 1
+        },
+        {
+          "tick": 4351,
+          "coverage": 0.4700815956482321,
+          "reserves": 1
+        },
+        {
+          "tick": 4762,
+          "coverage": 0.4700815956482321,
+          "reserves": 1
+        },
+        {
+          "tick": 5291,
+          "coverage": 0.5938349954669084,
+          "reserves": 1
+        },
+        {
+          "tick": 5375,
+          "coverage": 0.5938349954669084,
+          "reserves": 1
+        },
+        {
+          "tick": 5741,
+          "coverage": 0.6527651858567544,
+          "reserves": 1
+        },
+        {
+          "tick": 6274,
+          "coverage": 0.6527651858567544,
+          "reserves": 1
+        },
+        {
+          "tick": 6695,
+          "coverage": 0.7511332728921124,
+          "reserves": 1
+        },
+        {
+          "tick": 6832,
+          "coverage": 0.7511332728921124,
+          "reserves": 1
+        },
+        {
+          "tick": 7103,
+          "coverage": 0.7601994560290117,
+          "reserves": 1
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2412
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 76
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 75
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 82
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 469
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 41
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 238
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 211
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 251
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 374
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 537
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 75
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 374
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 435
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 89
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 429
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "right",
+          "ticks": 129
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 278
+        }
+      ]
+    },
+    {
+      "kind": "depot-reserve",
+      "sourceId": "team-depot-spatial-review",
+      "sourceRevision": "depot-spatial-1",
+      "missionId": "depot-dash",
+      "difficulty": "expert",
+      "authoredIdentity": "9fce8d08990484b7",
+      "tunedIdentity": "b082570afb5b6cc7",
+      "tick": 5168,
+      "status": "won",
+      "coverage": 0.7817836812144212,
+      "closed": [5, 6],
+      "banks": [
+        {
+          "type": "cut.closed",
+          "tick": 2623,
+          "player": 0,
+          "reason": "return",
+          "cells": 13,
+          "cell": 11,
+          "innerConnected": false,
+          "coverage": 0.006166982922201139
+        },
+        {
+          "type": "cut.closed",
+          "tick": 3419,
+          "player": 1,
+          "reason": "return",
+          "cells": 13,
+          "cell": 2580,
+          "innerConnected": false,
+          "coverage": 0.012333965844402278
+        }
+      ],
+      "departures": [
+        {
+          "type": "cut.started",
+          "tick": 2447,
+          "player": 0,
+          "cell": 1019,
+          "innerConnected": false
+        },
+        {
+          "type": "cut.started",
+          "tick": 3182,
+          "player": 0,
+          "cell": 52,
+          "innerConnected": false
+        }
+      ],
+      "states": [
+        {
+          "tick": 2448,
+          "coverage": 0,
+          "reserves": 1
+        },
+        {
+          "tick": 2624,
+          "coverage": 0.006166982922201139,
+          "reserves": 1
+        },
+        {
+          "tick": 3183,
+          "coverage": 0.006166982922201139,
+          "reserves": 1
+        },
+        {
+          "tick": 3244,
+          "coverage": 0.006166982922201139,
+          "reserves": 1
+        },
+        {
+          "tick": 3420,
+          "coverage": 0.012333965844402278,
+          "reserves": 2
+        },
+        {
+          "tick": 3468,
+          "coverage": 0.022296015180265655,
+          "reserves": 2
+        },
+        {
+          "tick": 3729,
+          "coverage": 0.022296015180265655,
+          "reserves": 2
+        },
+        {
+          "tick": 3756,
+          "coverage": 0.023244781783681213,
+          "reserves": 2
+        },
+        {
+          "tick": 3772,
+          "coverage": 0.023244781783681213,
+          "reserves": 2
+        },
+        {
+          "tick": 3799,
+          "coverage": 0.024193548387096774,
+          "reserves": 2
+        },
+        {
+          "tick": 4250,
+          "coverage": 0.024193548387096774,
+          "reserves": 2
+        },
+        {
+          "tick": 4277,
+          "coverage": 0.025142314990512334,
+          "reserves": 2
+        },
+        {
+          "tick": 4293,
+          "coverage": 0.025142314990512334,
+          "reserves": 2
+        },
+        {
+          "tick": 4320,
+          "coverage": 0.026091081593927895,
+          "reserves": 2
+        },
+        {
+          "tick": 4336,
+          "coverage": 0.026091081593927895,
+          "reserves": 2
+        },
+        {
+          "tick": 4363,
+          "coverage": 0.027039848197343452,
+          "reserves": 2
+        },
+        {
+          "tick": 4378,
+          "coverage": 0.027039848197343452,
+          "reserves": 2
+        },
+        {
+          "tick": 4405,
+          "coverage": 0.027988614800759013,
+          "reserves": 2
+        },
+        {
+          "tick": 4854,
+          "coverage": 0.027988614800759013,
+          "reserves": 2
+        },
+        {
+          "tick": 5031,
+          "coverage": 0.6821631878557874,
+          "reserves": 2
+        },
+        {
+          "tick": 5060,
+          "coverage": 0.6821631878557874,
+          "reserves": 2
+        },
+        {
+          "tick": 5168,
+          "coverage": 0.7817836812144212,
+          "reserves": 2
+        }
+      ],
+      "segments": [
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2400
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 224
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "right",
+          "b": null,
+          "ticks": 557
+        },
+        {
+          "a": "down",
+          "b": "down",
+          "ticks": 89
+        },
+        {
+          "a": "right",
+          "b": "down",
+          "ticks": 109
+        },
+        {
+          "a": "down",
+          "b": "down",
+          "ticks": 40
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 48
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 2
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 258
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 89
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 110
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 95
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 149
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 14
+        },
+        {
+          "a": "up",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 14
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": "left",
+          "b": null,
+          "ticks": 13
+        },
+        {
+          "a": "down",
+          "b": null,
+          "ticks": 28
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 34
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 407
+        },
+        {
+          "a": null,
+          "b": "up",
+          "ticks": 184
+        },
+        {
+          "a": null,
+          "b": null,
+          "ticks": 1
+        },
+        {
+          "a": null,
+          "b": "down",
+          "ticks": 21
+        },
+        {
+          "a": null,
+          "b": "left",
+          "ticks": 115
+        }
+      ]
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { canonicalJSON } from '../data-json.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { FORMATS, LIMITS, validateThemeBundle } from '../presentation/model.mjs';
+import { PRESENTATION_METADATA_LIMITS } from '../presentation/document-codec.mjs';
 import {
   exportThemeBundle,
   importThemeBundle,
@@ -13,6 +14,11 @@ import { pngBytes } from './helpers/media-fixtures.mjs';
 
 const encode = (value) => new TextEncoder().encode(canonicalJSON(value));
 const bytesOf = async (blob) => new Uint8Array(await blob.arrayBuffer());
+const nodeCount = (value) =>
+  1 +
+  (value && typeof value === 'object'
+    ? Object.values(value).reduce((count, entry) => count + nodeCount(entry), 0)
+    : 0);
 function transfer(version, manifest, payloads = []) {
   const body = encode(manifest),
     header = new Uint8Array(12);
@@ -94,7 +100,56 @@ function nearLimit(source) {
   return validateThemeBundle(document);
 }
 
+function postLegacyHistory() {
+  const document = structuredClone(createDefaultThemeBundle()),
+    original = document.assets.find((asset) => asset.kind === 'recipe');
+  let revision = 2;
+  while (document.assets.length < 2048) {
+    document.assets.push({
+      ...structuredClone(original),
+      revision,
+      description: 'Bounded immutable history fixture',
+      provenance: {
+        ...structuredClone(original.provenance),
+        source: 'Test',
+        prompt: 'Test',
+        parent: { id: original.id, revision: revision - 1 },
+      },
+      quality: {
+        stage: 'source',
+        evidence: Array.from({ length: 16 }, (_, index) => `Test ${index}`),
+      },
+    });
+    revision++;
+  }
+  let current = document.themes.find(
+      (theme) =>
+        theme.id === document.selection.theme.id &&
+        theme.revision === document.selection.theme.revision,
+    ),
+    themeRevision =
+      Math.max(
+        ...document.themes
+          .filter((theme) => theme.id === current.id)
+          .map((theme) => theme.revision),
+      ) + 1;
+  while (nodeCount(document) <= PRESENTATION_METADATA_LIMITS.legacyNodes) {
+    const next = {
+      ...structuredClone(current),
+      revision: themeRevision,
+      parent: { id: current.id, revision: current.revision },
+    };
+    document.themes.push(next);
+    document.selection.theme = { id: next.id, revision: next.revision };
+    current = next;
+    themeRevision++;
+  }
+  return { document: validateThemeBundle(document), assets: new Map() };
+}
+
 test('fitting v1 exports retain exact legacy bytes, sorted unique payloads and duplicate history', async () => {
+  assert.equal(PRESENTATION_METADATA_LIMITS.legacyNodes, 100000);
+  assert.equal(PRESENTATION_METADATA_LIMITS.legacyEnvelopeNodes, 110000);
   const { document, assets } = await fixture(),
     sorted = sortedAssets(assets);
   const manifest = {
@@ -148,6 +203,31 @@ test('only oversized v1 envelopes fall back to deterministic v2 without changing
   const next = await exportThemeBundle(oversized, f.assets);
   assert.equal(new TextDecoder().decode((await bytesOf(next)).subarray(0, 8)), 'RLTHM3\r\n');
   assert.deepEqual((await importThemeBundle(next, { decodeImage: null })).document, oversized);
+});
+
+test('post-legacy logical history exports as v3 while v1/v2 keep their exact frozen limits', async () => {
+  const { document, assets } = postLegacyHistory(),
+    table = [...assets]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([sha256, blob]) => ({ sha256, bytes: blob.size })),
+    payloads = [...assets].sort(([a], [b]) => a.localeCompare(b)).map(([, blob]) => blob);
+  assert.ok(nodeCount(document) > PRESENTATION_METADATA_LIMITS.legacyNodes);
+  assert.ok(nodeCount(document) <= PRESENTATION_METADATA_LIMITS.nodes);
+  for (const [version, manifest] of [
+    [1, { document, assets: table }],
+    [2, { document }],
+  ]) {
+    assert.ok(nodeCount(manifest) <= PRESENTATION_METADATA_LIMITS.legacyEnvelopeNodes);
+    assert.ok(encode(manifest).length <= LIMITS.manifestBytes);
+    await assert.rejects(
+      importThemeBundle(transfer(version, manifest, payloads), { decodeImage: null }),
+      /structural budget/,
+    );
+  }
+  const exported = await exportThemeBundle(document, assets),
+    bytes = await bytesOf(exported);
+  assert.equal(new TextDecoder().decode(bytes.subarray(0, 8)), 'RLTHM3\r\n');
+  assert.deepEqual((await importThemeBundle(exported, { decodeImage: null })).document, document);
 });
 
 test('both headers reject malformed manifests, bad lengths, missing payloads and trailing bytes', async () => {

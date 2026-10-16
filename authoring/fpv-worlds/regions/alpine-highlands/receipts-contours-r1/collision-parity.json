@@ -1,0 +1,16 @@
+{
+  "format": "FPVAlpineContourVerification.v1",
+  "beforeTerrainSHA256": "ce45cfcfc2f5ae829c863a926e8b7aa8133bedb404ceff3df4e4ed9a5dfd93a3",
+  "afterTerrainSHA256": "c1218b914e01346414dd160e2535fdd115a057a18b511a29577526675b6a90b0",
+  "beforeScenerySHA256": "692d5727473f4c99ec43e66fda667fe24112d174d89080409858a53d9a031fb7",
+  "afterScenerySHA256": "73d63d56158b300b006bcd3e1750477ba23304af51665cda7080aec891ed5a61",
+  "exactTerrainFiles": 512,
+  "exactSolidSurfaces": 28,
+  "exactOtherVisualSurfaces": 7,
+  "contourVertices": 74246,
+  "contourTriangles": 132152,
+  "interpolatedVertices": 8164,
+  "maxTerrainErrorMm": 0.5000000004074536,
+  "maxHeightContourErrorMm": 4,
+  "nativeVisualAcceptance": false
+}

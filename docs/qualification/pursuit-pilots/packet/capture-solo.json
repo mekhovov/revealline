@@ -1,0 +1,193 @@
+{
+  "format": "ContentProjectV1",
+  "id": "pursuit-solo-pilots-project",
+  "revision": "pursuit-pilots-2",
+  "name": "Pursuit routes · prototype",
+  "policyId": "journey-arcade-v2",
+  "actorCatalogId": "journey-actors-v1",
+  "difficultyCatalogId": "journey-difficulty-v1",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "id": "crossing-post-map",
+      "revision": "1",
+      "name": "Crossing Post",
+      "width": 72,
+      "height": 36,
+      "walls": [
+        {
+          "x": 34,
+          "y": 7,
+          "w": 3,
+          "h": 10
+        },
+        {
+          "x": 34,
+          "y": 22,
+          "w": 3,
+          "h": 7
+        }
+      ],
+      "foundations": [
+        {
+          "x": 12,
+          "y": 15,
+          "w": 5,
+          "h": 5
+        },
+        {
+          "x": 53,
+          "y": 15,
+          "w": 5,
+          "h": 5
+        }
+      ],
+      "terrain": [],
+      "spawns": [
+        {
+          "id": "home",
+          "x": 16.5,
+          "y": 0.5
+        }
+      ]
+    }
+  ],
+  "missions": [
+    {
+      "format": "MissionDesignV5",
+      "id": "crossing-post",
+      "revision": "pursuit-2",
+      "name": "Crossing Post",
+      "map": {
+        "id": "crossing-post-map",
+        "revision": "1"
+      },
+      "spawnId": "home",
+      "modes": [
+        "solo",
+        "versus"
+      ],
+      "actors": [
+        {
+          "id": "keeper",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 60.5,
+          "y": 29.5,
+          "heading": [
+            -1,
+            1
+          ]
+        }
+      ],
+      "objectives": [],
+      "bonuses": [],
+      "coverage": 0.55,
+      "timeLimitSeconds": 0,
+      "design": {
+        "routeDecision": "Use either side island as a return. Intercept the patrol beside the central gap, or intercept the optional courier between delivery stops.",
+        "lesson": "The cap marks a circuit patroller; the parcel marks an optional courier. Both disappear on one touch. Capture remains the only required objective.",
+        "counterplay": "Choose a short return before pursuing. The round keeper still threatens the pilot and exposed line.",
+        "captureConsequence": "Capturing a target removes it once for 50 Hunt points; contact earns 100. Neither changes the territory objective.",
+        "introduces": [
+          "humanoid-contact"
+        ],
+        "practices": [
+          "enemy-seeded-closure"
+        ],
+        "combines": [],
+        "memorableMoment": "Catch both targets by contact while keeping the ordinary keeper away from your exposed line.",
+        "mastery": "Catch both targets by contact while keeping the ordinary keeper away from your exposed line.",
+        "durationSeconds": [
+          30,
+          150
+        ],
+        "difficulty": {
+          "band": 2,
+          "planning": 2,
+          "execution": 2,
+          "threatDensity": 2,
+          "timePressure": 0,
+          "mechanicLoad": 2,
+          "coordination": 0
+        }
+      },
+      "presentation": {
+        "themeId": "horizon",
+        "backgroundAssetId": null
+      },
+      "pursuit": {
+        "version": "mission-pursuit.v1",
+        "actors": [
+          {
+            "id": "post-patrol",
+            "behavior": "patroller",
+            "x": 22.5,
+            "y": 8.5,
+            "waypoints": [
+              {
+                "x": 30.5,
+                "y": 8.5
+              },
+              {
+                "x": 30.5,
+                "y": 24.5
+              },
+              {
+                "x": 22.5,
+                "y": 24.5
+              },
+              {
+                "x": 22.5,
+                "y": 8.5
+              }
+            ]
+          },
+          {
+            "id": "yard-courier",
+            "behavior": "courier",
+            "x": 44.5,
+            "y": 12.5,
+            "waypoints": [
+              {
+                "x": 45.5,
+                "y": 7.5
+              },
+              {
+                "x": 56.5,
+                "y": 12.5
+              },
+              {
+                "x": 44.5,
+                "y": 26.5
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "campaigns": [
+    {
+      "format": "CampaignDesignV1",
+      "id": "pursuit-solo-pilot",
+      "revision": "1",
+      "name": "Pursuit routes · prototype",
+      "band": 2,
+      "missionIds": [
+        "crossing-post"
+      ]
+    }
+  ],
+  "packs": [
+    {
+      "format": "PackDesignV1",
+      "id": "journey-pursuit-solo",
+      "revision": "1",
+      "name": "Pursuit routes · prototype",
+      "campaignIds": [
+        "pursuit-solo-pilot"
+      ]
+    }
+  ]
+}

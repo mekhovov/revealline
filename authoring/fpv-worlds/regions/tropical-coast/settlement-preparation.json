@@ -1,0 +1,1644 @@
+{
+  "format": "FPVTropicalCoastPreparation.v1",
+  "scope": "Bounded 768 m settlement composition study; not final archipelago/player admission",
+  "regionId": "tropical-coastal-districts",
+  "revision": "districts-r2",
+  "sizeM": [
+    768,
+    768
+  ],
+  "terrainManifestSHA256": "3946fc2ffed922dadc171e609753c63590ef3daade337c04395b6356612448a5",
+  "sceneryManifestSHA256": "ba0339e6e3f8285169a4f10fe1dc456de2fab36632496412b9a7104a6e1ae4c9",
+  "resources": {
+    "geometryBytes": 969240,
+    "textureBytes": 2599580,
+    "resourceBytes": 3568820,
+    "textures": 18,
+    "terrainGeometryBytes": 456408,
+    "retainedAndCandidateBytes": 8050456
+  },
+  "cells": [
+    {
+      "id": "coast-0-0",
+      "sourceBytes": 459006,
+      "sceneBytes": 278452,
+      "surfaces": 7,
+      "triangles": 986,
+      "textures": 4,
+      "solid": 6,
+      "visualOnly": 1
+    },
+    {
+      "id": "coast-1-0",
+      "sourceBytes": 605388,
+      "sceneBytes": 323944,
+      "surfaces": 7,
+      "triangles": 2378,
+      "textures": 4,
+      "solid": 6,
+      "visualOnly": 1
+    },
+    {
+      "id": "coast-2-0",
+      "sourceBytes": 314700,
+      "sceneBytes": 152728,
+      "surfaces": 4,
+      "triangles": 2306,
+      "textures": 2,
+      "solid": 3,
+      "visualOnly": 1
+    },
+    {
+      "id": "coast-0-1",
+      "sourceBytes": 854627,
+      "sceneBytes": 481212,
+      "surfaces": 20,
+      "triangles": 3440,
+      "textures": 4,
+      "solid": 5,
+      "visualOnly": 15
+    },
+    {
+      "id": "coast-1-1",
+      "sourceBytes": 980474,
+      "sceneBytes": 488828,
+      "surfaces": 20,
+      "triangles": 3040,
+      "textures": 4,
+      "solid": 20,
+      "visualOnly": 0
+    },
+    {
+      "id": "coast-2-1",
+      "sourceBytes": 408934,
+      "sceneBytes": 231968,
+      "surfaces": 8,
+      "triangles": 2112,
+      "textures": 2,
+      "solid": 4,
+      "visualOnly": 4
+    },
+    {
+      "id": "coast-0-2",
+      "sourceBytes": 398433,
+      "sceneBytes": 243768,
+      "surfaces": 24,
+      "triangles": 1888,
+      "textures": 2,
+      "solid": 2,
+      "visualOnly": 22
+    },
+    {
+      "id": "coast-1-2",
+      "sourceBytes": 411119,
+      "sceneBytes": 256800,
+      "surfaces": 9,
+      "triangles": 756,
+      "textures": 3,
+      "solid": 9,
+      "visualOnly": 0
+    },
+    {
+      "id": "coast-2-2",
+      "sourceBytes": 350535,
+      "sceneBytes": 207060,
+      "surfaces": 6,
+      "triangles": 1584,
+      "textures": 2,
+      "solid": 3,
+      "visualOnly": 3
+    }
+  ],
+  "placements": [
+    {
+      "id": "harbour-covered-pier",
+      "asset": "covered-jetty",
+      "x": 96,
+      "z": 150,
+      "scale": 1,
+      "yaw": 0,
+      "y": -3
+    },
+    {
+      "id": "harbour-return-pier",
+      "asset": "covered-jetty",
+      "x": 175,
+      "z": 147,
+      "scale": 1,
+      "yaw": 1.5707963267948966,
+      "y": -3
+    },
+    {
+      "id": "lagoon-open-pier",
+      "asset": "open-jetty",
+      "x": 350,
+      "z": 145,
+      "scale": 1,
+      "yaw": 0,
+      "y": -1.5
+    },
+    {
+      "id": "lagoon-turning-pier",
+      "asset": "open-jetty",
+      "x": 430,
+      "z": 165,
+      "scale": 1,
+      "yaw": 1.5707963267948966,
+      "y": -1.5
+    },
+    {
+      "id": "landmark-rock-0",
+      "asset": "beach-rock",
+      "x": 400,
+      "z": 205,
+      "scale": 1.3,
+      "yaw": 0,
+      "y": 3.458
+    },
+    {
+      "id": "landmark-rock-1",
+      "asset": "beach-rock",
+      "x": 460,
+      "z": 210,
+      "scale": 1.6,
+      "yaw": 0.7,
+      "y": 3.076
+    },
+    {
+      "id": "landmark-rock-2",
+      "asset": "beach-rock",
+      "x": 610,
+      "z": 170,
+      "scale": 1.8,
+      "yaw": 1.4,
+      "y": 1.111
+    },
+    {
+      "id": "landmark-rock-3",
+      "asset": "beach-rock",
+      "x": 650,
+      "z": 182,
+      "scale": 2.2,
+      "yaw": 2.0999999999999996,
+      "y": 11.286
+    },
+    {
+      "id": "landmark-rock-4",
+      "asset": "beach-rock",
+      "x": 700,
+      "z": 160,
+      "scale": 1.5,
+      "yaw": 2.8,
+      "y": 7.132
+    },
+    {
+      "id": "landmark-rock-5",
+      "asset": "beach-rock",
+      "x": 70,
+      "z": 590,
+      "scale": 1.2,
+      "yaw": 3.5,
+      "y": 26.32
+    },
+    {
+      "id": "landmark-rock-6",
+      "asset": "beach-rock",
+      "x": 195,
+      "z": 600,
+      "scale": 1.4,
+      "yaw": 4.199999999999999,
+      "y": 28.495
+    },
+    {
+      "id": "valley-palm-0",
+      "asset": "palm",
+      "x": 70,
+      "z": 330,
+      "scale": 1,
+      "yaw": 0,
+      "y": 5
+    },
+    {
+      "id": "valley-palm-1",
+      "asset": "palm",
+      "x": 100,
+      "z": 365,
+      "scale": 1,
+      "yaw": 0.6,
+      "y": 5
+    },
+    {
+      "id": "valley-palm-2",
+      "asset": "palm",
+      "x": 130,
+      "z": 335,
+      "scale": 1,
+      "yaw": 1.2,
+      "y": 5
+    },
+    {
+      "id": "valley-palm-3",
+      "asset": "palm",
+      "x": 165,
+      "z": 380,
+      "scale": 1,
+      "yaw": 1.7999999999999998,
+      "y": 5
+    },
+    {
+      "id": "stilt-hut-west",
+      "asset": "jungle-hut",
+      "x": 350,
+      "z": 355,
+      "scale": 1,
+      "yaw": 0,
+      "y": 14
+    },
+    {
+      "id": "stilt-hut-east",
+      "asset": "jungle-hut",
+      "x": 415,
+      "z": 390,
+      "scale": 1,
+      "yaw": 3.141592653589793,
+      "y": 14
+    },
+    {
+      "id": "ridge-bamboo-0",
+      "asset": "young-bamboo",
+      "x": 595,
+      "z": 330,
+      "scale": 1.5,
+      "yaw": 0,
+      "y": 24
+    },
+    {
+      "id": "ridge-bamboo-1",
+      "asset": "young-bamboo",
+      "x": 620,
+      "z": 365,
+      "scale": 1.5,
+      "yaw": 0.8,
+      "y": 24
+    },
+    {
+      "id": "ridge-bamboo-2",
+      "asset": "young-bamboo",
+      "x": 650,
+      "z": 340,
+      "scale": 1.5,
+      "yaw": 1.6,
+      "y": 24
+    },
+    {
+      "id": "ridge-bamboo-3",
+      "asset": "young-bamboo",
+      "x": 675,
+      "z": 380,
+      "scale": 1.5,
+      "yaw": 2.4000000000000004,
+      "y": 24
+    },
+    {
+      "id": "ridge-bamboo-4",
+      "asset": "young-bamboo",
+      "x": 610,
+      "z": 610,
+      "scale": 1.5,
+      "yaw": 3.2,
+      "y": 26.163
+    },
+    {
+      "id": "ridge-bamboo-5",
+      "asset": "young-bamboo",
+      "x": 650,
+      "z": 650,
+      "scale": 1.5,
+      "yaw": 4,
+      "y": 39.182
+    },
+    {
+      "id": "ridge-bamboo-6",
+      "asset": "young-bamboo",
+      "x": 690,
+      "z": 620,
+      "scale": 1.5,
+      "yaw": 4.800000000000001,
+      "y": 32.356
+    },
+    {
+      "id": "dune-grass-0",
+      "asset": "beach-grass",
+      "x": 35,
+      "z": 540,
+      "scale": 3,
+      "yaw": 0,
+      "y": 10.284
+    },
+    {
+      "id": "dune-grass-1",
+      "asset": "beach-grass",
+      "x": 93,
+      "z": 540,
+      "scale": 3,
+      "yaw": 0.9,
+      "y": 11.743
+    },
+    {
+      "id": "dune-grass-2",
+      "asset": "beach-grass",
+      "x": 151,
+      "z": 540,
+      "scale": 3,
+      "yaw": 1.8,
+      "y": 10.059
+    },
+    {
+      "id": "dune-grass-3",
+      "asset": "beach-grass",
+      "x": 209,
+      "z": 540,
+      "scale": 3,
+      "yaw": 2.7,
+      "y": 10.363
+    },
+    {
+      "id": "dune-grass-4",
+      "asset": "beach-grass",
+      "x": 35,
+      "z": 605,
+      "scale": 3,
+      "yaw": 3.6,
+      "y": 20.176
+    },
+    {
+      "id": "dune-grass-5",
+      "asset": "beach-grass",
+      "x": 93,
+      "z": 605,
+      "scale": 3,
+      "yaw": 4.5,
+      "y": 21.753
+    },
+    {
+      "id": "dune-grass-6",
+      "asset": "beach-grass",
+      "x": 151,
+      "z": 605,
+      "scale": 3,
+      "yaw": 5.4,
+      "y": 16.819
+    },
+    {
+      "id": "dune-grass-7",
+      "asset": "beach-grass",
+      "x": 209,
+      "z": 605,
+      "scale": 3,
+      "yaw": 6.3,
+      "y": 25.55
+    },
+    {
+      "id": "dune-grass-8",
+      "asset": "beach-grass",
+      "x": 35,
+      "z": 670,
+      "scale": 3,
+      "yaw": 7.2,
+      "y": 7.759
+    },
+    {
+      "id": "dune-grass-9",
+      "asset": "beach-grass",
+      "x": 93,
+      "z": 670,
+      "scale": 3,
+      "yaw": 8.1,
+      "y": 7.565
+    },
+    {
+      "id": "dune-grass-10",
+      "asset": "beach-grass",
+      "x": 151,
+      "z": 670,
+      "scale": 3,
+      "yaw": 9,
+      "y": 7.744
+    },
+    {
+      "id": "dune-grass-11",
+      "asset": "beach-grass",
+      "x": 209,
+      "z": 670,
+      "scale": 3,
+      "yaw": 9.9,
+      "y": 8.147
+    },
+    {
+      "id": "village-cargo-0",
+      "asset": "crate",
+      "x": 360,
+      "z": 650,
+      "scale": 1.4,
+      "yaw": 0,
+      "y": 14
+    },
+    {
+      "id": "village-cargo-1",
+      "asset": "crate",
+      "x": 380,
+      "z": 665,
+      "scale": 1.4,
+      "yaw": 1.5707963267948966,
+      "y": 14
+    },
+    {
+      "id": "village-cargo-2",
+      "asset": "crate",
+      "x": 400,
+      "z": 650,
+      "scale": 1.4,
+      "yaw": 3.141592653589793,
+      "y": 14
+    },
+    {
+      "id": "village-street-hut-0",
+      "asset": "jungle-hut",
+      "x": 366,
+      "z": 328,
+      "y": 14,
+      "scale": 1,
+      "yaw": 0
+    },
+    {
+      "id": "village-street-hut-1",
+      "asset": "jungle-hut",
+      "x": 366,
+      "z": 414,
+      "y": 14,
+      "scale": 1,
+      "yaw": 1.5707963267948966
+    },
+    {
+      "id": "village-street-hut-2",
+      "asset": "jungle-hut",
+      "x": 400,
+      "z": 355,
+      "y": 14,
+      "scale": 1,
+      "yaw": 3.141592653589793
+    },
+    {
+      "id": "valley-return-palm-0",
+      "asset": "palm",
+      "x": 78,
+      "z": 400,
+      "y": 5,
+      "scale": 1,
+      "yaw": 0
+    },
+    {
+      "id": "dune-corridor-grass-0",
+      "asset": "beach-grass",
+      "x": 100,
+      "z": 570,
+      "y": 16.687,
+      "scale": 2.5,
+      "yaw": 0
+    },
+    {
+      "id": "dune-corridor-grass-1",
+      "asset": "beach-grass",
+      "x": 109,
+      "z": 570,
+      "y": 14.446,
+      "scale": 2.5,
+      "yaw": 0.7
+    },
+    {
+      "id": "dune-corridor-grass-2",
+      "asset": "beach-grass",
+      "x": 118,
+      "z": 570,
+      "y": 12.4,
+      "scale": 2.5,
+      "yaw": 1.4
+    },
+    {
+      "id": "dune-corridor-grass-3",
+      "asset": "beach-grass",
+      "x": 127,
+      "z": 570,
+      "y": 11.011,
+      "scale": 2.5,
+      "yaw": 2.0999999999999996
+    },
+    {
+      "id": "dune-corridor-grass-4",
+      "asset": "beach-grass",
+      "x": 136,
+      "z": 570,
+      "y": 11.595,
+      "scale": 2.5,
+      "yaw": 2.8
+    },
+    {
+      "id": "dune-corridor-grass-5",
+      "asset": "beach-grass",
+      "x": 100,
+      "z": 602,
+      "y": 19.679,
+      "scale": 2.5,
+      "yaw": 3.5
+    },
+    {
+      "id": "dune-corridor-grass-6",
+      "asset": "beach-grass",
+      "x": 109,
+      "z": 602,
+      "y": 16.626,
+      "scale": 2.5,
+      "yaw": 4.199999999999999
+    },
+    {
+      "id": "dune-corridor-grass-7",
+      "asset": "beach-grass",
+      "x": 118,
+      "z": 602,
+      "y": 13.751,
+      "scale": 2.5,
+      "yaw": 4.8999999999999995
+    },
+    {
+      "id": "dune-corridor-grass-8",
+      "asset": "beach-grass",
+      "x": 127,
+      "z": 602,
+      "y": 11.989,
+      "scale": 2.5,
+      "yaw": 5.6
+    },
+    {
+      "id": "dune-corridor-grass-9",
+      "asset": "beach-grass",
+      "x": 136,
+      "z": 602,
+      "y": 12.464,
+      "scale": 2.5,
+      "yaw": 6.3
+    }
+  ],
+  "water": {
+    "cells": [
+      "coast-0-0",
+      "coast-1-0",
+      "coast-2-0"
+    ],
+    "meaning": "Visual sea at0m above actual terrain seabed; no buoyancy or water-damage behavior"
+  },
+  "routes": [
+    {
+      "id": "shoreline-crossings",
+      "points": [
+        [
+          40,
+          36,
+          232
+        ],
+        [
+          220,
+          36,
+          232
+        ],
+        [
+          400,
+          36,
+          232
+        ],
+        [
+          580,
+          36,
+          232
+        ],
+        [
+          730,
+          36,
+          232
+        ]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "covered-harbour-bay",
+      "points": [
+        [
+          81,
+          4.4,
+          150
+        ],
+        [
+          111,
+          4.4,
+          150
+        ]
+      ],
+      "halfWidth": 1
+    },
+    {
+      "id": "under-harbour-pier",
+      "points": [
+        [
+          81,
+          0.7,
+          150
+        ],
+        [
+          111,
+          0.7,
+          150
+        ]
+      ],
+      "halfWidth": 0.8
+    },
+    {
+      "id": "harbour-headland-contour",
+      "points": [
+        [
+          150,
+          20,
+          203
+        ],
+        [
+          183,
+          24,
+          214
+        ],
+        [
+          215,
+          20,
+          210
+        ]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "lagoon-pier-approach",
+      "points": [
+        [
+          325,
+          10,
+          145
+        ],
+        [
+          375,
+          10,
+          145
+        ],
+        [
+          405,
+          10,
+          155
+        ],
+        [
+          450,
+          10,
+          175
+        ]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "reef-bluff-traverse",
+      "points": [
+        [
+          585,
+          34,
+          220
+        ],
+        [
+          640,
+          40,
+          240
+        ],
+        [
+          700,
+          40,
+          240
+        ],
+        [
+          735,
+          32,
+          210
+        ]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "palm-valley-slalom",
+      "points": [
+        [
+          55,
+          12,
+          330
+        ],
+        [
+          70,
+          12,
+          321
+        ],
+        [
+          100,
+          12,
+          355
+        ],
+        [
+          130,
+          12,
+          325
+        ],
+        [
+          178,
+          12,
+          385
+        ]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "dune-pass",
+      "points": [
+        [
+          130,
+          26,
+          530
+        ],
+        [
+          130,
+          26,
+          600
+        ],
+        [
+          130,
+          26,
+          680
+        ]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "hillside-village-street",
+      "points": [
+        [
+          380,
+          20,
+          315
+        ],
+        [
+          380,
+          20,
+          365
+        ],
+        [
+          385,
+          20,
+          420
+        ]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "cargo-square-braking",
+      "points": [
+        [
+          349,
+          16,
+          665
+        ],
+        [
+          373,
+          16,
+          672
+        ],
+        [
+          402,
+          16,
+          672
+        ],
+        [
+          416,
+          16,
+          650
+        ]
+      ],
+      "halfWidth": 1.5
+    },
+    {
+      "id": "bamboo-grove-corridor",
+      "points": [
+        [
+          580,
+          33,
+          350
+        ],
+        [
+          610,
+          33,
+          340
+        ],
+        [
+          640,
+          33,
+          360
+        ],
+        [
+          690,
+          33,
+          355
+        ]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "ridge-overlook",
+      "points": [
+        [
+          590,
+          44,
+          580
+        ],
+        [
+          620,
+          50,
+          615
+        ],
+        [
+          660,
+          53,
+          675
+        ],
+        [
+          710,
+          44,
+          690
+        ]
+      ],
+      "halfWidth": 2
+    }
+  ],
+  "inputs": [
+    {
+      "id": "beach-grass",
+      "inputSha256": "068086ac550ebf5e0eb9430d9bddc30cbac229fbcfbc3b42b711c09a4f288fff",
+      "sourceBytes": 90888,
+      "sourceSha256": "cac6cd1324a9084510d5d283ec79b259e731dd361ecdc70002a7e6a342e9a384",
+      "glbBytes": 68700,
+      "glbSha256": "22cb8760519b68efe5cdbe604183a2c7bf858a2cb76a9224e9d327e422299bbe",
+      "inputTriangles": 16,
+      "outputVertices": 24,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 16,
+      "solidSurfaces": 0,
+      "visualOnlySurfaces": 1,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [
+            400,
+            388
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "c2d8f75e2a9f9ff6c3614f20aef93d8a1853b6f290308a3db046b1d551466809",
+          "rgbaSha256": "8735e9752ec52b7177f302392a5967890cfe26fd471e175bdce7148436199984"
+        }
+      ]
+    },
+    {
+      "id": "young-bamboo",
+      "inputSha256": "cb46c82d438724875cfeabed78f8119e4a431d751383374c08a8258fc628e9d8",
+      "sourceBytes": 232118,
+      "sourceSha256": "b04e3282d0d2b4817314cae42130b394e89067b171a5a0b4233614bd5fffece1",
+      "glbBytes": 157100,
+      "glbSha256": "1c492b6a7f4881efebd2ecf8a877ffbd8cd429558129e5c587691f0a8a8c547d",
+      "inputTriangles": 528,
+      "outputVertices": 520,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 528,
+      "solidSurfaces": 1,
+      "visualOnlySurfaces": 1,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "91d47d4a5883800f89899de39ae7df6ad1dcd0dd8e8e48772eb9f91e535f65e7",
+          "rgbaSha256": "82f5342aacbfe77e5c6347b079e95fb2e41389c99dbe5781a5c868608c0aeef6"
+        },
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "3ba386d684affd3ad9fb541af19d8b3fb9c832b1398046fc97815b9f0f3df483",
+          "rgbaSha256": "4952e391c70f3890f824db054994959845489066b67a80de98f283b95c8acd7b"
+        }
+      ]
+    },
+    {
+      "id": "crate",
+      "inputSha256": "b279533730d4eeb36ecceb1c888cb5cf786cc7332ecf3d564b9f3063b80ea8a7",
+      "sourceBytes": 307527,
+      "sourceSha256": "c08cb432b2559b5087a705bfa86f7674b653cb247e3c0419dd2abbebdc61060b",
+      "glbBytes": 217620,
+      "glbSha256": "4786e5669e3703ebe75409e0160a457c479d849630f85177f609844b0aaba6a7",
+      "inputTriangles": 252,
+      "outputVertices": 426,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 252,
+      "solidSurfaces": 3,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88",
+          "rgbaSha256": "062c581bb2b807a83bf0834378deaf58805f4e32a094b0f8783302dce8ee6de5"
+        },
+        {
+          "sourceDimensions": [
+            512,
+            256
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b30c259ef85c55552795af4a4580b85842ee0649951d5e0d4a7455083e7788d6",
+          "rgbaSha256": "2aad3a2f62a216b9f45900e9a04105f989d7552d06a113eaeff723c10275a0fa"
+        },
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "2907231248a9af860fb30bc811ec69888a23456337d2d9cd2838cc67ed5a0540",
+          "rgbaSha256": "7ef92f1f4cfcb14447e403562dc5e824f2c417c0bb9d9b34a4c07c0a0a89572b"
+        }
+      ]
+    },
+    {
+      "id": "covered-jetty",
+      "inputSha256": "ed0359301c0025ad1c544af29d255087fe4dfe159977d82a212eb61de8a05d0e",
+      "sourceBytes": 350531,
+      "sourceSha256": "8ba989e1860e8294351d1e82465dd34f585dc3d09dee253fdcc840cae045fb24",
+      "glbBytes": 237576,
+      "glbSha256": "e8d1801ff2d286494f1d6fa235c5cd63497542d4688a785b4a2189550366938a",
+      "inputTriangles": 492,
+      "outputVertices": 960,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 492,
+      "solidSurfaces": 3,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [
+            512,
+            256
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "0f6affe984bcf6ca50b286a0ea2dbfcfa33b4728ca9c119d863eee4ea8e68268",
+          "rgbaSha256": "a55a5b55444178d4b6f735bdfea0b5092d4a613bd86183bfca254cc46e44e0f6"
+        },
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88",
+          "rgbaSha256": "062c581bb2b807a83bf0834378deaf58805f4e32a094b0f8783302dce8ee6de5"
+        },
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "094c51bf8dddb0ab12246d8106c68f85c52dac575a921d1adebaa49b142e2428",
+          "rgbaSha256": "f8ced190271c39d79764d93d98d5caffe54b0b1f5af47d7f2076e7b85486a74a"
+        }
+      ]
+    },
+    {
+      "id": "open-jetty",
+      "inputSha256": "b7f948b08f175087d1af698a7d7a61d7cf7ab4551d3d6d1a5774004e1c1523b2",
+      "sourceBytes": 262158,
+      "sourceSha256": "e89be50dc037b7d9d985fec2c13dc0fb10ab34f40b31d95b106dc3338aefe3a0",
+      "glbBytes": 165996,
+      "glbSha256": "7d4f2f87c7783f534b2ffe825c9e87ca2013db71dec0e34c80ab2241afa18ab2",
+      "inputTriangles": 420,
+      "outputVertices": 840,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 420,
+      "solidSurfaces": 2,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [
+            512,
+            256
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "0f6affe984bcf6ca50b286a0ea2dbfcfa33b4728ca9c119d863eee4ea8e68268",
+          "rgbaSha256": "a55a5b55444178d4b6f735bdfea0b5092d4a613bd86183bfca254cc46e44e0f6"
+        },
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88",
+          "rgbaSha256": "062c581bb2b807a83bf0834378deaf58805f4e32a094b0f8783302dce8ee6de5"
+        }
+      ]
+    },
+    {
+      "id": "jungle-hut",
+      "inputSha256": "d724de1ae5db55cbfc0c4a91f91b06e98e3022c1663cc4cd728785ca18248718",
+      "sourceBytes": 468555,
+      "sourceSha256": "34e43d9410bacb1715c7efc2bb7359265b7b394e8c0f173dcb58ad37a5125d0a",
+      "glbBytes": 308916,
+      "glbSha256": "73a550bc07051ab555a7a75bf9970f9f53642e266cff6b84434c124f8a6ccaf2",
+      "inputTriangles": 608,
+      "outputVertices": 1053,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 608,
+      "solidSurfaces": 4,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "32342553e5ca9e00b5034537e36c441e2d53745e2a87c985890ec6c041df2b74",
+          "rgbaSha256": "c30cdabd0bfd5e72743768ece5f1ec468409d4f5073015877a57b9f4d57a429e"
+        },
+        {
+          "sourceDimensions": [
+            256,
+            1024
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "acb775330a6fd245f14d31408d0ecb7881f3dd04e074ecdb83be85800f9706ff",
+          "rgbaSha256": "be46b8606f712b12a69b52e6f39eba7b42d20d8cf05f2ff6dc76b76573a505e2"
+        },
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "1c6681aaaf30c100829a1815f320ff051c0da81494c42c4006655c5bc890967e",
+          "rgbaSha256": "2e05bc124aa3a88f2564f89e646b2669507f713ed0bcd0ea3340d31dd12d828e"
+        },
+        {
+          "sourceDimensions": [
+            700,
+            700
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b468762f33b846eef33cfdb35618712f9b8a284568ffdb7a1182c81014c61a09",
+          "rgbaSha256": "9617859387ee24e2242f55b9dc2d7538b1e4c1e127620b6600abf20a7107b079"
+        }
+      ]
+    },
+    {
+      "id": "beach-rock",
+      "inputSha256": "48f193286c5a555d4f67d3749ff9b5171107a1c3dd4143ee31811e79e735ab8c",
+      "sourceBytes": 161556,
+      "sourceSha256": "845005c12f41280e1d4585fd8101414a0dafc39f9d95bd6c8873315c498dddc9",
+      "glbBytes": 94620,
+      "glbSha256": "9c72f85037c2e3d002c8f86ac8c5ed8e5ebe5ab770854c11f4edf59dd7cd659e",
+      "inputTriangles": 768,
+      "outputVertices": 569,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 768,
+      "solidSurfaces": 1,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [
+            1024,
+            1024
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "dcf714a10d4cea4c30f30078b9df4d01ed5efc937ed3c5becc0774871b0b8f3b",
+          "rgbaSha256": "4890b58ef08f6095b45030798085ebb6633bf90a802d24e5d11101827a2ca022"
+        }
+      ]
+    },
+    {
+      "id": "palm",
+      "inputSha256": "6dead7023338bc9f6c4d3edb74359b7f8ca83bed52c4790af83003aaf2a99d21",
+      "sourceBytes": 449781,
+      "sourceSha256": "a105294cf830eda0ca167bd095d417f0b670e5ea4c8c320c6164267e21620c70",
+      "glbBytes": 307400,
+      "glbSha256": "78651cff55aa6d7d354f7a681558563c04309e8b415c85a23b907688d25970d4",
+      "inputTriangles": 688,
+      "outputVertices": 638,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 688,
+      "solidSurfaces": 1,
+      "visualOnlySurfaces": 3,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "e276ba5f5fea0c8f7806bc157155327c8be3cbd6120598d632d476b223b02f7a",
+          "rgbaSha256": "b4254fec21130c7503bc9c204c81fb066296a866e4087ba2f5d97a3218d8e614"
+        },
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "56ec6ee782af4f5de8b677a733f81ce5adc104b0cba021c2234b2350039868b5",
+          "rgbaSha256": "10823ba50bd2661bb86c654030826ad1191fdbab2c6e3597642a8823717de80d"
+        },
+        {
+          "sourceDimensions": [
+            512,
+            512
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "7ba06af8d751632a01d42d4a13415e9c314887e07db41a3d3a74994c3803d013",
+          "rgbaSha256": "988dd3bbb141a13e6b6c016a2c0f1e1445ddfa570c3503a32a3e95c1feb57866"
+        },
+        {
+          "sourceDimensions": [
+            600,
+            600
+          ],
+          "derivedDimensions": [
+            128,
+            128
+          ],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "a52bb5fbcab637ae8ffceff39ace5961ec8c0f1a3129320ce990be14db6e2198",
+          "rgbaSha256": "634f5f1a996c2f4c6b759af4ff004a3834c3d6335d0dc085f211b04adb3a3c47"
+        }
+      ]
+    }
+  ],
+  "districts": [
+    {
+      "id": "harbour",
+      "title": "Covered harbour and headland",
+      "cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "landmarks": [
+        "covered-harbour",
+        "harbour-headland"
+      ]
+    },
+    {
+      "id": "lagoon",
+      "title": "Lagoon piers and sandbar",
+      "cells": [
+        [
+          1,
+          0
+        ]
+      ],
+      "landmarks": [
+        "lagoon-piers",
+        "lagoon-sandbar"
+      ]
+    },
+    {
+      "id": "reef",
+      "title": "Rock reef and coastal bluff",
+      "cells": [
+        [
+          2,
+          0
+        ]
+      ],
+      "landmarks": [
+        "reef-rocks",
+        "reef-bluff"
+      ]
+    },
+    {
+      "id": "valley",
+      "title": "Palm valley and dune pass",
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "landmarks": [
+        "palm-valley",
+        "dune-pass"
+      ]
+    },
+    {
+      "id": "village",
+      "title": "Hillside huts and cargo square",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "landmarks": [
+        "hillside-huts",
+        "cargo-square"
+      ]
+    },
+    {
+      "id": "ridge",
+      "title": "Bamboo grove and ridge overlook",
+      "cells": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "landmarks": [
+        "bamboo-grove",
+        "ridge-overlook"
+      ]
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "covered-harbour",
+      "position": {
+        "x": 96000,
+        "y": 13000,
+        "z": 150000
+      }
+    },
+    {
+      "id": "harbour-headland",
+      "position": {
+        "x": 183000,
+        "y": 30000,
+        "z": 214000
+      }
+    },
+    {
+      "id": "lagoon-piers",
+      "position": {
+        "x": 350000,
+        "y": 14500,
+        "z": 145000
+      }
+    },
+    {
+      "id": "lagoon-sandbar",
+      "position": {
+        "x": 446000,
+        "y": 20861,
+        "z": 130000
+      }
+    },
+    {
+      "id": "reef-rocks",
+      "position": {
+        "x": 650000,
+        "y": 27286,
+        "z": 182000
+      }
+    },
+    {
+      "id": "reef-bluff",
+      "position": {
+        "x": 687000,
+        "y": 42337,
+        "z": 226000
+      }
+    },
+    {
+      "id": "palm-valley",
+      "position": {
+        "x": 100000,
+        "y": 21000,
+        "z": 350000
+      }
+    },
+    {
+      "id": "dune-pass",
+      "position": {
+        "x": 130000,
+        "y": 27989,
+        "z": 600000
+      }
+    },
+    {
+      "id": "hillside-huts",
+      "position": {
+        "x": 380000,
+        "y": 30000,
+        "z": 365000
+      }
+    },
+    {
+      "id": "cargo-square",
+      "position": {
+        "x": 380000,
+        "y": 30000,
+        "z": 650000
+      }
+    },
+    {
+      "id": "bamboo-grove",
+      "position": {
+        "x": 630000,
+        "y": 40000,
+        "z": 355000
+      }
+    },
+    {
+      "id": "ridge-overlook",
+      "position": {
+        "x": 660000,
+        "y": 55584,
+        "z": 650000
+      }
+    }
+  ],
+  "verificationProbes": [
+    {
+      "id": "harbour-open-bay",
+      "from": [
+        81,
+        4.4,
+        150
+      ],
+      "to": [
+        111,
+        4.4,
+        150
+      ],
+      "clear": true
+    },
+    {
+      "id": "harbour-below-deck",
+      "from": [
+        81,
+        0.7,
+        150
+      ],
+      "to": [
+        111,
+        0.7,
+        150
+      ],
+      "clear": true
+    },
+    {
+      "id": "harbour-roof",
+      "from": [
+        92,
+        12,
+        150
+      ],
+      "to": [
+        92,
+        4,
+        150
+      ],
+      "clear": false
+    },
+    {
+      "id": "palm-trunk",
+      "from": [
+        66,
+        7.912,
+        330.5
+      ],
+      "to": [
+        75,
+        7.912,
+        330.5
+      ],
+      "clear": false
+    },
+    {
+      "id": "palm-leaves",
+      "from": [
+        68,
+        16.912,
+        330
+      ],
+      "to": [
+        68,
+        10.912,
+        330
+      ],
+      "clear": true
+    },
+    {
+      "id": "hut-roof",
+      "from": [
+        348,
+        27,
+        355
+      ],
+      "to": [
+        348,
+        19,
+        355
+      ],
+      "clear": false
+    },
+    {
+      "id": "cargo-box",
+      "from": [
+        356,
+        14.6,
+        650
+      ],
+      "to": [
+        364,
+        14.6,
+        650
+      ],
+      "clear": false
+    },
+    {
+      "id": "sea-visual-only",
+      "from": [
+        20,
+        2,
+        20
+      ],
+      "to": [
+        20,
+        -2,
+        20
+      ],
+      "clear": true
+    }
+  ],
+  "contactProbes": [
+    {
+      "id": "palm-trunk",
+      "from": [
+        66,
+        7.912,
+        330.5
+      ],
+      "to": [
+        75,
+        7.912,
+        330.5
+      ],
+      "maxX": 71
+    },
+    {
+      "id": "cargo-box",
+      "from": [
+        356,
+        14.6,
+        650
+      ],
+      "to": [
+        364,
+        14.6,
+        650
+      ],
+      "maxX": 360
+    },
+    {
+      "id": "covered-pier-roof",
+      "from": [
+        92,
+        10,
+        150
+      ],
+      "falling": true,
+      "minY": 5.5
+    }
+  ]
+}

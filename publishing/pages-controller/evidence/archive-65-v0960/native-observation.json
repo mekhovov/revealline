@@ -1,0 +1,48 @@
+{
+  "format": "revealline-native-browser-observation.v1",
+  "status": "PASS_WITH_LIMITS",
+  "observedAt": "2026-09-24T05:24:00Z",
+  "archiveId": "archive-65",
+  "repository": "mekhovov/revealline-archive-65",
+  "infrastructureCommit": "cca5acb23db5d0c7991255ddd08884d2a12634ca",
+  "workflowRunId": 35959521293,
+  "deploymentId": 6630815744,
+  "deploymentStatusId": 18766139595,
+  "version": "v0.96.0",
+  "sourceRevision": "781e1c3b82236003bf8600a2cac0b5022e4298c1",
+  "browser": "Codex in-app browser",
+  "viewport": {
+    "cssWidth": 1280,
+    "cssHeight": 720,
+    "devicePixelRatio": 2,
+    "zoom": "No browser zoom override applied"
+  },
+  "inputs": [
+    "native browser keyboard press/release",
+    "semantic browser clicks; not touch certification"
+  ],
+  "observations": [
+    {
+      "route": "https://mekhovov.github.io/revealline-archive-65/",
+      "result": "Archive65 title, explicit Play v0.96.0 and current-release explorer links rendered. Play link opened its exact preserved Solo route."
+    },
+    {
+      "route": "https://mekhovov.github.io/revealline-archive-65/releases/v0.96.0/site/game/",
+      "result": "Visible loading styles status then illustrated Home. Version v0.96.0, New Journey /91 missions and existing Continue destination First return rendered. Did not start or replace the existing saved Solo attempt."
+    },
+    {
+      "route": "https://mekhovov.github.io/revealline-archive-65/releases/v0.96.0/site/game/couch/relay-rescue.html?return=solo&journey-return=whole-spatial-v5",
+      "result": "Team link retained archive path. Exact Team picture prepared with visible loading/cancel then focused Start. Twelve-mission Journey, Stepping exchange, 66% target. Return started both numbered craft over decoded original artwork; native S input banked a cut, territory1.0%, two reserves. Escape paused at0:15 with Resume together focused. Mode change offered Stay/Discard, and deliberate Tab+Return discarded only this temporary test attempt before opening Versus."
+    },
+    {
+      "route": "https://mekhovov.github.io/revealline-archive-65/releases/v0.96.0/site/game/couch/?journey=whole-spatial-v5",
+      "result": "91-mission Versus lobby prepared First return /Horizon School. Return started two original-art boards. Native S/D input moved player1 and ordinary life loss recovered with two lives while player2 retained three. Escape paused both boards and focused Resume race. Temporary tab closed."
+    }
+  ],
+  "limits": [
+    "The test computer's full physical disk caused existing origin IndexedDB writes to fail with FILE_ERROR_NO_SPACE. Both Couch hosts retained session play and visibly exposed Retry saving/Export. Persistence, backup, offline and successful recovery are not passed.",
+    "The historical storage failure message exposes a raw database error. Improve player-facing recovery copy under UX5; preserving this immutable release does not fix it.",
+    "This is bounded archive route/artwork/keyboard/play/pause acceptance, not UX0 v0.98 public acceptance, exhaustive progression, balance, hardware controller/touch, responsive/zoom/accessibility or audio certification.",
+    "No clean-console claim. No Solo progress replacement, earned award, export or data cleanup was performed. All temporary native tabs were closed."
+  ]
+}

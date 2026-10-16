@@ -1,0 +1,15 @@
+{
+  "output": "/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/qualified-reliability-cdbe38ff",
+  "version": "v0.151.1",
+  "sourceRevision": "cdbe38ff4561db4a0710d7994d0ef4934b552e0a",
+  "sourceTree": "33c7d4a9cf5b72afec170ce908f0064db2b8a549",
+  "packageIds": [
+    "civilian-flight",
+    "civilian-fpv",
+    "fpv-worlds"
+  ],
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "publicEligible": false
+}

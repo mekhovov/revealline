@@ -1,0 +1,104 @@
+{
+  "format": "fpv-checkpoint-functional.v1",
+  "generatedAt": "2026-10-02T15:21:13.231Z",
+  "sourceHead": "2fcb3a2ce003e5d0340a9df8cad78e59b9202a5a",
+  "sourceFiles": {
+    "world-model.mjs": {
+      "bytes": 52975,
+      "sha256": "719cbb0761bac1ef47846f4f08d7f65b959da00c85afbf43fb86c53c6c088478"
+    },
+    "world-progress.mjs": {
+      "bytes": 6772,
+      "sha256": "032fa513f09104efde3a3e64f09d0534d889465bba9baa771ac6f0e1d830077c"
+    },
+    "world-catalogue.mjs": {
+      "bytes": 239978,
+      "sha256": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6"
+    },
+    "world-demonstrations.mjs": {
+      "bytes": 2207074,
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+    }
+  },
+  "scope": "Actual fixed-step simulation and recorded command replay. No browser, physical controller, new unit coverage or live deployment claim.",
+  "passed": 8,
+  "total": 8,
+  "results": [
+    {
+      "name": "Independently replay every bundled v2 proof and retain exact objective boundaries",
+      "pass": true,
+      "proofs": 154,
+      "frames": 312948,
+      "actorBoundaries": 312,
+      "movingBoundaries": 759
+    },
+    {
+      "name": "Every supported checkpoint restores exact entry state or safe original-route fallback",
+      "pass": true,
+      "checkpoints": 1331,
+      "restored": 768,
+      "fallbacks": 563,
+      "oldSpawnFailures": [
+        {
+          "checkpoint": "beginner-52/acro/3",
+          "error": "Drone spawn overlaps solid geometry"
+        },
+        {
+          "checkpoint": "beginner-52/acro/5",
+          "error": "Drone spawn overlaps solid geometry"
+        },
+        {
+          "checkpoint": "beginner-53/acro/3",
+          "error": "Drone spawn overlaps solid geometry"
+        },
+        {
+          "checkpoint": "beginner-56/acro/6",
+          "error": "Drone spawn overlaps solid geometry"
+        }
+      ],
+      "byWorld": {
+        "coast": 54,
+        "quarry": 48,
+        "rooftops": 58,
+        "orchard": 46,
+        "solar-farm": 50,
+        "rail-depot": 48,
+        "woodland": 120,
+        "courtyard": 111,
+        "warehouse": 112,
+        "stadium": 158,
+        "container-yard": 68,
+        "garage": 74,
+        "gym": 64,
+        "field": 320
+      }
+    },
+    {
+      "name": "Incomplete recorded attempt restores a reached objective and falls back for an unreached objective",
+      "pass": true,
+      "course": "woodland-01",
+      "prefixTicks": 211
+    },
+    {
+      "name": "Tampered, wrong-mode and incompatible revision proofs fail closed to unscored original start",
+      "pass": true
+    },
+    {
+      "name": "Caller mutation across asynchronous yields cannot change verified checkpoint commands",
+      "pass": true,
+      "yields": 8
+    },
+    {
+      "name": "Cancellation during proof verification and prefix replay yields no usable flight",
+      "pass": true
+    },
+    {
+      "name": "Checkpoint contracts reject out-of-range indices and scored practice endpoints",
+      "pass": true
+    },
+    {
+      "name": "Bound source bytes remain unchanged during verification",
+      "pass": true
+    }
+  ]
+}

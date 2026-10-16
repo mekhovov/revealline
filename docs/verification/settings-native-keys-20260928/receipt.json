@@ -1,0 +1,61 @@
+{
+  "base": "bb9b3640270dc26633d37cfdf4a306aecda277b6",
+  "node": "v20.19.5",
+  "componentBaseline": {
+    "tests": 12,
+    "pass": 8,
+    "fail": 4
+  },
+  "navigationCandidate": {
+    "tests": 235,
+    "pass": 235,
+    "fail": 0,
+    "skip": 0
+  },
+  "soloHostCandidate": {
+    "tests": 1,
+    "pass": 1,
+    "fail": 0,
+    "skip": 0
+  },
+  "static": {
+    "eslint": "pass: runtime + two new tests",
+    "prettier": "pass: changed code and docs",
+    "diffCheck": "pass"
+  },
+  "notRun": [
+    "full suite",
+    "ordinary/frozen build",
+    "public gameplay",
+    "offline installation/recovery",
+    "screen-reader listening",
+    "physical phone/controller"
+  ],
+  "browserScope": "Actual shared component loaded in isolated local in-app-browser fixture; native Home/End and live language switch verified. No full-game browser claim.",
+  "sources": {
+    "game/ui/settings-panels.mjs": "90d17782b091abc1b41a2d9640af7a973b6ee80cda939be5b2a661a1e59e725a",
+    "game/test/settings-panels-locale.test.mjs": "708aaaa7f87b99a536ab0f1b2cf6924b9101de071bd30cea6eb02a34a2629eeb",
+    "game/test/settings-panels-locale-host.test.mjs": "96b69e97786a8231a0cb244fecab17decbb5af06754e260b4613d68f61c5698c",
+    "game/test/settings-panels.test.mjs": "74ca353c470e8f208ade840f4a708b7e26295b3706b84cdf45f44b985c101fb6",
+    "game/test/controller-navigation.test.mjs": "405df18422179cbd11eac50f4e7a1eec3818865f8658e62550a28ba0984ef2c1",
+    "game/test/modal-navigation.test.mjs": "1cbe6e842e7941025d83219c35cb403d022f898b098e7d9f804564fc9bd09951"
+  },
+  "logs": {
+    "original-component-red.tap.gz": {
+      "uncompressedSha256": "edffa1c3bddcef5655964e887253e7175d92e88c89ee1955894d7de1c0844445",
+      "gzipSha256": "b3d8cc36237f9a34551d6ae7d687f3591a679d07773d44f294adca29b959b36d"
+    },
+    "navigation-green.tap.gz": {
+      "uncompressedSha256": "789d458014430bb56b11c5206ace8f91db77498982ef62ac79334b2a1cd5d428",
+      "gzipSha256": "ac4c67212c4e8597d8243f56b8364043013eaf37e57e6298560f6ce21b28007d"
+    },
+    "solo-host-green.tap.gz": {
+      "uncompressedSha256": "813d64044f25d30604b3bcf0eb52b524b1970167d9649fad7134ca66feb70301",
+      "gzipSha256": "f9ae84e3bf229d4157b95706a61a941cd18082629bace75cd6c9e7242131cd1c"
+    },
+    "incomplete-fixture-attempt.tap.gz": {
+      "uncompressedSha256": "fbdbe810ce33ac8beb008c7ecd57ec643ab4afa5b0febe0908e2fa6e27f0e68d",
+      "gzipSha256": "dd9770e3339e694746e9f971c9db231c0d5314301a0609173dc3249fc0bf3368"
+    }
+  }
+}

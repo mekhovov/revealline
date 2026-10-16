@@ -1,0 +1,45 @@
+{
+  "format": "FPVAdventureOrchardIntegration.v1",
+  "candidate": "5e4abe27305ef06f4bbecb8f9365c218dee55979",
+  "historicalBrowserCandidate": "bf167a4fdfc81d7327fd94518da65ac82d64eb7e",
+  "checks": [
+    {
+      "name": "only incoming production difference is qualified Orchard surfaces",
+      "passed": true
+    },
+    {
+      "name": "all94 other admitted input bytes exact; Orchard map source matches independently qualified7313",
+      "passed": true
+    },
+    {
+      "name": "incoming source growth exactly4204B with unchanged95-input membership",
+      "passed": true
+    },
+    {
+      "name": "all Adventure course, physics, host, record and bundled-example bytes unchanged",
+      "passed": true
+    }
+  ],
+  "changedInputs": [
+    {
+      "before": {
+        "bytes": 154862,
+        "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+        "sha256": "053f74a1d42db8373994350010f347ff0d306dfebd05cbdd9bf7df838b73d9e0"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+        "bytes": 159066,
+        "sha256": "7313e7328635ac5d662eae9676b8d75fbbd9de848ffe461a4deb35aebadf7417"
+      }
+    }
+  ],
+  "inputCount": 95,
+  "originalBytes": 16767015,
+  "headroom": 10201,
+  "scope": "The merged Orchard map changes apply to five Adventure Orchard courses. They are independently qualified by their preserved source/package96checks43pairs, ten exact physics replays and actual-player observation. This data-only increment changes no production module. Historical Adventure browser evidence remains bound to bf/9efa, not newer pixels.",
+  "limitations": [
+    "Input equality/capacity audit, not a new package build.",
+    "No new actual browser run on5e4 is claimed."
+  ]
+}

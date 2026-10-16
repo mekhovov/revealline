@@ -12,6 +12,10 @@ import {
   exportPackLibrary,
 } from '../packs.mjs';
 import { preparedPackIdentity } from '../mission-library/pack-identity.mjs';
+import {
+  CLASSIC_RULES_CURRENT,
+  CLASSIC_RULES_ORIGINAL,
+} from '../mission-library/classic-current-rules.mjs';
 import { campaignKey } from '../library.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
@@ -216,6 +220,28 @@ for (const source of ['bundled', 'archived'])
     assert(h.images.length > 0 && h.images.every((image) => image.releases === 1));
     await h.preserved();
   });
+
+test('indexed installer accepts only the two known Classic rules projections', async (t) => {
+  const h = await setup(t);
+  await assert.rejects(
+    h.service.installIndexed({ ...h.f.row, rulesEdition: 'untrusted-rules' }),
+    /supported Classic rules edition/,
+  );
+  assert.equal(h.requests.length, 0);
+
+  const installed = await h.service.installIndexed({
+    ...h.f.row,
+    rulesEdition: CLASSIC_RULES_ORIGINAL,
+  });
+  assert.equal(installed.committed, true);
+  const reused = await h.service.installIndexed({
+    ...h.f.row,
+    rulesEdition: CLASSIC_RULES_CURRENT,
+  });
+  assert.equal(reused.reused, true);
+  assert.equal(h.requests.length, 1);
+  await h.preserved();
+});
 
 for (const id of ['night-shift', 'fpv-arcade-r4'])
   test(`real generated ${id} index matches exact published bytes and prepared identity`, async (t) => {

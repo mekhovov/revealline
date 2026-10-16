@@ -1,0 +1,24 @@
+{
+  "scope": "Unversioned local development build; not exact integrated release qualification",
+  "version": "0.141.7",
+  "sourceRevision": null,
+  "files": 1803,
+  "totalBytes": 744565505,
+  "manifestSha256": "dce2f4b52842468a96fb1e069ecb2b2f3e180899a9aad10f72d6676bb1ccd4b0",
+  "allManifestBytesVerified": true,
+  "affectedRuntimeModulesMatchSource": [
+    "game/encounter-display-preferences.mjs",
+    "game/ui/encounter-display-controls.mjs",
+    "game/ui/practice-presentation.mjs",
+    "game/ui/settings.css",
+    "game/app.mjs",
+    "game/couch/couch.mjs",
+    "game/couch/relay-rescue.mjs",
+    "game/couch/coop-actor-presentation.mjs",
+    "game/replay-theater/app.mjs",
+    "game/studio/studio.mjs",
+    "game/i18n/catalogs.mjs"
+  ],
+  "builtMarkup": "All three settings retain native enemy-remains checkbox, translated label and recovery status; expected offline/PWA HTML augmentation retained",
+  "sourceArtwork": "New cultural cohort not a runtime mission binding or production dependency"
+}

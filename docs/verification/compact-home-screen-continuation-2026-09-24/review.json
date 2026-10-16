@@ -1,0 +1,37 @@
+{
+  "format": "revealline-scoped-screen-continuation-review.v1",
+  "status": "bounded functional screen review; frozen, public, physical-device and human acceptance pending",
+  "candidate": "c323e3222ebe82de2524826afe12286d14bca3ba",
+  "scope": "Continue the seven required screen-background recipes after the compact Home and global More-menu change. This approves the exact shared screen-style fingerprint as a functional presentation continuation; it does not approve subjective art quality or complete navigation accessibility.",
+  "screens": {
+    "priorFingerprintSHA256": "ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996",
+    "currentFingerprintSHA256": "acf6426f5cd47f21a85ec5ae9da9549ed58fbe330b097c979dc85b87afe2d68a",
+    "changedInput": {
+      "path": "game/ui/field-kit-flow.css",
+      "priorSHA256": "02c73cb46d9f76da039cade2e6691002b9298539e817bbf40d216c06f7a09708",
+      "currentSHA256": "afd79d33a7be7622d5f6f17f496af9e5ddeeff5fed7859db078ab3bf0b95862b",
+      "assessment": "Compacts the ordinary Home layout, adds the More-menu surface and keeps existing Field Kit tokens, focus treatment and responsive control sizing. It does not change game-board geometry, simulation, collision, mission content, asset payloads or data ownership."
+    },
+    "continuedSlots": 7
+  },
+  "qualification": {
+    "focusedAutomated": [
+      "The Field Kit flow cohort passed 18 of 18 focused checks.",
+      "The legacy authoring-tool return cohort passed its three selected focus-restoration cases.",
+      "The exact PR381 head 40c56628ace42533ad49bfcbc8ac7d6a231c3353 passed release-critical validation and its deterministic hosted build in run 36042109389; the automated test job was skipped under the active user waiver and is not represented as passing.",
+      "The production-ledger repair PR386 head 9ee75b1f3683d9122c49742b6aabb7e70365760d passed exact-source preflight, release-critical validation, artifact build and post-build source verification in run 36045326268."
+    ],
+    "visual": "The compact Home and More menu were reviewed in a source-native browser at 1280 by 720. This is bounded layout evidence, not frozen/public or physical-device certification."
+  },
+  "preservation": [
+    "The seven screen recipes remain runtime CSS recipes; no image, audio or font payload bytes are replaced.",
+    "Historical production revisions remain retained and selectable.",
+    "The continuation does not alter mission runtime identities, progress, saved attempts, uploaded media or custom content."
+  ],
+  "excluded": [
+    "No complete route, screen-reader, forced-colour, every-viewport, touch, controller or physical-device qualification.",
+    "No subjective pixel-art quality or human usability claim.",
+    "No frozen-build, offline or public Pages acceptance until the exact successor source passes release qualification."
+  ],
+  "decision": "Continue only the seven required screen recipes when the exact screen fingerprint and this review record match. Any screen input or review-byte change reopens the group."
+}

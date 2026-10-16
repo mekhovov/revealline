@@ -1,0 +1,150 @@
+TAP version 13
+# Subtest: new-tab link assertions distinguish real attributes from data-prefixed substitutes
+ok 1 - new-tab link assertions distinguish real attributes from data-prefixed substitutes
+  ---
+  duration_ms: 0.712208
+  ...
+# Subtest: Studio descendant links preserve only Journey in the exact edition http://localhost/
+ok 2 - Studio descendant links preserve only Journey in the exact edition http://localhost/
+  ---
+  duration_ms: 1.318666
+  ...
+# Subtest: Studio descendant links preserve only Journey in the exact edition https://example.test/releases/v0.73.0/site/
+ok 3 - Studio descendant links preserve only Journey in the exact edition https://example.test/releases/v0.73.0/site/
+  ---
+  duration_ms: 0.612375
+  ...
+# Subtest: Studio descendant links preserve only Journey in the exact edition https://example.test/archive/releases/v0.69.0/site/
+ok 4 - Studio descendant links preserve only Journey in the exact edition https://example.test/archive/releases/v0.69.0/site/
+  ---
+  duration_ms: 0.278208
+  ...
+# Subtest: duplicate or malformed Journey and unrelated return hints cannot rewrite fixed destinations
+ok 5 - duplicate or malformed Journey and unrelated return hints cannot rewrite fixed destinations
+  ---
+  duration_ms: 1.323791
+  ...
+# Subtest: early link mount assigns destinations before enabling and never focuses, reads a draft or mounts another opener
+ok 6 - early link mount assigns destinations before enabling and never focuses, reads a draft or mounts another opener
+  ---
+  duration_ms: 0.239583
+  ...
+# Subtest: Studio preview has an exact owner and nearby returns while intentional new-tab mode tests retain their contracts
+ok 7 - Studio preview has an exact owner and nearby returns while intentional new-tab mode tests retain their contracts
+  ---
+  duration_ms: 4.584875
+  ...
+# Subtest: Studio launch keeps one compiled edition across the media wait and scenario construction
+ok 8 - Studio launch keeps one compiled edition across the media wait and scenario construction
+  ---
+  duration_ms: 41.336083
+  ...
+# Subtest: Horizon has an explicit valid presentation and mismatched preview themes fail closed
+ok 9 - Horizon has an explicit valid presentation and mismatched preview themes fail closed
+  ---
+  duration_ms: 2145.567334
+  ...
+# Subtest: Studio and CLI resolve exactly the same candidate across all three difficulty presets
+ok 10 - Studio and CLI resolve exactly the same candidate across all three difficulty presets
+  ---
+  duration_ms: 1147.356541
+  ...
+# Subtest: CLI rejects contradictory or duplicate options and never claims release qualification
+ok 11 - CLI rejects contradictory or duplicate options and never claims release qualification
+  ---
+  duration_ms: 934.3635
+  ...
+# Subtest: Versus-only geometry can be inspected without silently launching a Solo practice game
+ok 12 - Versus-only geometry can be inspected without silently launching a Solo practice game
+  ---
+  duration_ms: 19.087541
+  ...
+# Subtest: autosave coalesces edits during an in-flight checkpoint without falsely marking them saved
+ok 13 - autosave coalesces edits during an in-flight checkpoint without falsely marking them saved
+  ---
+  duration_ms: 0.598292
+  ...
+# Subtest: failed or conflicting autosave keeps editable/exportable work and never blindly overwrites
+ok 14 - failed or conflicting autosave keeps editable/exportable work and never blindly overwrites
+  ---
+  duration_ms: 2.354041
+  ...
+# Subtest: unavailable and hung storage settle truthfully and can be retried
+ok 15 - unavailable and hung storage settle truthfully and can be retried
+  ---
+  duration_ms: 12.434291
+  ...
+# Subtest: Studio slow preview warns once, then accepts later exact-document readiness
+ok 16 - Studio slow preview warns once, then accepts later exact-document readiness
+  ---
+  duration_ms: 0.913625
+  ...
+# Subtest: Studio accepts ready without depending on the iframe load event
+ok 17 - Studio accepts ready without depending on the iframe load event
+  ---
+  duration_ms: 0.108708
+  ...
+# Subtest: Studio terminal boot failure settles even after a slow warning
+ok 18 - Studio terminal boot failure settles even after a slow warning
+  ---
+  duration_ms: 0.097166
+  ...
+# Subtest: stale, blank and foreign preview documents cannot report ready
+ok 19 - stale, blank and foreign preview documents cannot report ready
+  ---
+  duration_ms: 0.168917
+  ...
+# Subtest: replaced previews stop before reading or notifying, including queued callbacks
+ok 20 - replaced previews stop before reading or notifying, including queued callbacks
+  ---
+  duration_ms: 0.069958
+  ...
+# Subtest: closing or leaving Studio cancels the owned monitor and late callbacks
+ok 21 - closing or leaving Studio cancels the owned monitor and late callbacks
+  ---
+  duration_ms: 0.104417
+  ...
+# Subtest: inaccessible frame remains unknown and does not throw or claim successful boot
+ok 22 - inaccessible frame remains unknown and does not throw or claim successful boot
+  ---
+  duration_ms: 0.24125
+  ...
+# Subtest: owned practice observes a post-ready render failure without repeating readiness
+ok 23 - owned practice observes a post-ready render failure without repeating readiness
+  ---
+  duration_ms: 0.080625
+  ...
+# Subtest: foreign or replaced practice cannot overwrite an accepted ready status with failure
+ok 24 - foreign or replaced practice cannot overwrite an accepted ready status with failure
+  ---
+  duration_ms: 0.166834
+  ...
+# Subtest: practice render failure before first readiness is visible without a ready flash
+ok 25 - practice render failure before first readiness is visible without a ready flash
+  ---
+  duration_ms: 0.113625
+  ...
+# Subtest: Studio pagehide persisted=false retires pending media without focus or late launch
+ok 26 - Studio pagehide persisted=false retires pending media without focus or late launch
+  ---
+  duration_ms: 55.168208
+  ...
+# Subtest: Studio pagehide persisted=true retires pending media without focus or late launch
+ok 27 - Studio pagehide persisted=true retires pending media without focus or late launch
+  ---
+  duration_ms: 30.308
+  ...
+# Subtest: Studio BFcache retirement stops post-ready monitoring and deliberate relaunch gets a fresh owner
+ok 28 - Studio BFcache retirement stops post-ready monitoring and deliberate relaunch gets a fresh owner
+  ---
+  duration_ms: 47.377083
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4465.23225

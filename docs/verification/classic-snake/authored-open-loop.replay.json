@@ -1,0 +1,119 @@
+{
+  "version": "classic-snake-replay.v1",
+  "ruleset": "classic-snake-core.v1",
+  "level": {
+    "version": "classic-snake-level.v1",
+    "id": "classic-snake-open-loop",
+    "revision": "1",
+    "name": "Open Loop",
+    "width": 24,
+    "height": 18,
+    "walls": [],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 8,
+    "stepMs": 200,
+    "speedupEvery": 0,
+    "minStepMs": 200,
+    "wrap": false,
+    "targetMovement": "still",
+    "fleeEvery": 3
+  },
+  "levelIdentity": "5f286bbd6eb04450",
+  "mode": "solo",
+  "seed": 17,
+  "steps": 93,
+  "turns": [
+    {
+      "tick": 0,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 6,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 11,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 12,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 14,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 21,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 22,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 30,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 34,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 40,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 41,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 53,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 69,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 75,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 83,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 90,
+      "playerId": 0,
+      "direction": "left"
+    }
+  ],
+  "checkpoint": "9e02903265275c30"
+}

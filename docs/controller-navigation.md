@@ -22,6 +22,10 @@ Flight equipment is available only under the current level policy. First Light A
 
 Confirm a campaign, class or other select to preview its choices. Directions move through enabled options without restarting the game. Confirm applies the choice; Back cancels. Volume sliders use the same preview/commit behavior. Existing keyboard and touch controls remain usable, and using them ends the controller's current edit.
 
+Solo navigation help and controller connection status live under **Settings → Controls → Controller navigation help**, with full flight instructions also in **How to play**. They stay in the menu's normal document flow and never float over gameplay.
+
+The solo host guards duplicate Enter/Space and primary mouse events while its assigned gamepad's menu Confirm is physically held. This handles desktop-emulation input arriving before or after the controller sample, without cancelling a dropdown draft or activating a button twice. The paired native release is consumed even if Confirm has already opened another menu or resumed flight. Touch, pen, standalone keyboard/mouse input, remapped Confirm, and ordinary gamepad-only input retain their existing paths. See the [Steam Deck input verification](verification/steamdeck-menu-input.md) for the reproduced failure and physical-device limit.
+
 The open dialog owns navigation. Back follows its cancellation rules: a picture returns to the collection, a cancellable earlier-release check can be aborted, and a backup commit cannot be closed through its busy guard. Returning from a gallery picture restores its page, search and originating card; removed content receives a valid fallback.
 
 Disconnecting the selected pad pauses the flight even if another pad remains connected. A replacement must join deliberately. Blur, a hidden page, a scope change and applied keyboard/controller settings clear held commands. A button used to resume or confirm a hangar cannot also use an ability in the resumed flight.

@@ -1,0 +1,35 @@
+{
+  "format": "revealline-company-ci-observation.v1",
+  "sourceRevision": "db4b2c8e89f3c9a3c0b67d6e7e5f64f08ea3c6ef",
+  "run": {
+    "id": 36519210034,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/36519210034",
+    "conclusion": "failure"
+  },
+  "company": {
+    "jobId": 109248181154,
+    "passed": 1149,
+    "failed": 0,
+    "cancelled": 1,
+    "skipped": 0,
+    "tests": 1150,
+    "failure": "real Threads showcase timed out after 60000ms; observed 66617.516025ms",
+    "frozenCompanyArtifactsProduced": false,
+    "log": {
+      "name": "discovery-candidate-db4.log",
+      "bytes": 461699,
+      "sha256": "862d7fdbdd2e51e4193dfdd730437af538c7c85a706569ec085bc1019262635e"
+    }
+  },
+  "optional": {
+    "jobId": 109248181291,
+    "conclusion": "success",
+    "artifact": {
+      "id": 11011369833,
+      "bytes": 1302636,
+      "sha256": "4ac094ff743ac3435fab0e8842249b11c4ff235f8a3f35b0cdfa04620ba887c2",
+      "downloadedLocally": false
+    }
+  },
+  "scope": "Historical db4 source, before latest-main merge and lesson recovery. Not a clean candidate, default capacity, hardware, performance or publication qualification. Isolated showcase scheduling is a subsequent change requiring its own results."
+}

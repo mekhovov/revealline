@@ -1,0 +1,37 @@
+- button "Game menu":
+  - img "FPV / LINE"
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - progressbar "Picture revealed": 34.3%
+    - emphasis: TARGET 65%
+    - generic: LIVES
+    - strong: ◆
+    - generic: TIME
+    - strong: 3:21
+    - generic: SCORE
+    - strong: "08160"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; change craft G; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again."
+    - status: Paused
+    - button "Resume →" [active]
+    - region "Missions":
+      - heading "Missions" [level=3]
+      - button "Restart mission"
+      - button "Skip mission"
+      - button "Choose mission"
+      - generic "Mission info"
+    - region "Sound":
+      - heading "Sound" [level=3]
+      - 'button "Sound: on" [pressed]'
+      - button "Next song"
+    - region "Config":
+      - heading "Config" [level=3]
+      - button "Settings"
+      - button "Enter fullscreen": Full screen
+    - button "Home"
+    - strong: Paused
+    - generic: Close a line to reveal the picture
+    - status: Your line was caught. The territory you revealed is kept.
+    - status
+    - status
+- text: + + + + + + + +

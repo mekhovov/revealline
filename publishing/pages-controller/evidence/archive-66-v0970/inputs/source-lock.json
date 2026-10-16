@@ -1,0 +1,37 @@
+{
+  "format": "revealline-archive-originals.v2",
+  "archiveId": "archive-66",
+  "repository": "mekhovov/revealline-archive-66",
+  "sourceRepository": "mekhovov/revealline",
+  "toolingCommit": "30530b3436a1a9737be93f67f308587f89b2f8bc",
+  "extractorPath": "publishing/pages-controller/extract-current.py",
+  "extractorSha256": "38081b1791b49cb7328d18b4d4325c2876bb3bc8d7db03f4610f8d8a7c4bf91b",
+  "budgetBytes": 800000000,
+  "releases": [
+    {
+      "version": "v0.97.0",
+      "sourceRevision": "1518e15e248b59c6470cc6931023eaf6f1ac363c",
+      "sourceTree": "c618b5d01fd0742a5dfc8c55c9d851d1d21d58e8",
+      "tagObject": "2a65f2917d2ed86a273d1fb2e45f25de232e3563",
+      "distributionSha256": "1b87a11577263b909b8ce06024938c4b67c459ea645abe5d7cd0ace6d6ad1dda",
+      "distributionBytes": 595070842,
+      "metadata": {
+        "release.json": "04496b2fb369194f4d34a9d089a458a61c3e5c85896b88354ea05c23c8be7c84",
+        "manifest.json": "c24422d298192f6de4d79d01188790c7d1d603a6737d6673e7efc4ba8685bad4",
+        "distribution.zip.sha256": "bc40d573a83049dba50f2794aec6a73ac52cc2244122a1031c7c93382ddbf62d"
+      },
+      "sourceQualification": {
+        "bytes": 14164,
+        "sha256": "dcea76d94239d0aab2306979cd4f98346074a04c0ee7fec2a5d24dfc8a05ca7c",
+        "policyEvidence": {
+          "path": "publishing/test-policy.json",
+          "bytes": 490,
+          "sha256": "b6887ba7f2b84a007b96de14fc867ac38ac8135d7c231c7ade7ebc52ba31704a"
+        }
+      }
+    }
+  ],
+  "expectedInventorySha256": "1d1eb8d4dff55f46c8a3f322f1479ea96f2f89ee93f5e42b5cc759e8f62d5bc5",
+  "expectedFiles": 1121,
+  "expectedBytes": 594897841
+}

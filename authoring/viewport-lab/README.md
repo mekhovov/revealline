@@ -8,12 +8,16 @@ From the repository root, use the existing server:
 node scripts/game-cli.mjs serve --port 8768
 ```
 
-Open [the viewport lab](http://127.0.0.1:8768/authoring/viewport-lab/). This is a source authoring surface; it is not added to a release or offline bundle.
+Open [the viewport lab](http://127.0.0.1:8768/authoring/viewport-lab/). The development build admits this supporting tool through the optional Workshop package. Installed use requires explicitly preparing Workshop; a Couch preview additionally requires the Versus runtime and its selected content. The lab does not automatically download those packages. Source and package admission do not qualify installed offline delivery.
 
 1. Select **Solo** or **Couch**, then press **Load selected game**. No game starts loading before this action.
 2. Play using the game’s ordinary menus and controls. For touch-control layout inspection, select **Always** in the game’s options; Couch has a separate preference for each player.
 3. Change **Viewport size**. This changes the dimensions of the same iframe without setting its URL again or recreating it. Scroll the stage to inspect every edge. The header shows the selected dimensions and loaded game.
 4. To switch games, select the other target and press **Load selected game**. Selecting a target alone leaves the current game running. Use the game’s own save and pause controls before replacing it. **Open directly** opens the selected game in a separate tab.
+
+Use **Sections** to reach Preview controls, Game viewport preview, or How to inspect. **Read and scroll** beside the preview owns both scroll axes: arrows move within the full-size stage, Home/End reach its corners, and Confirm/Back returns to that same action. The notes have a separate reader. Reading never enters or sends commands to the game. Use **Enter preview** for the explicit child handoff and its **Return to editor** action to return. Changing focus, hiding or leaving the page retires reading without restoring an old focus owner.
+
+The lab has no project editor, Save, import, or export operation. Loading and resizing do not establish child readiness; inspect the actual game menu before entering. These local parent controls preserve one iframe until an explicit different-target Load changes its source.
 
 ## Reading preferences and startup
 

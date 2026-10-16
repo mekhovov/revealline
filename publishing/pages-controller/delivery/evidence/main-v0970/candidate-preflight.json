@@ -1,0 +1,12 @@
+{
+  "status": "CANDIDATE_CANONICAL_PINS_CHECKED_REVIEW_PENDING",
+  "canonicalOriginalsVerified": 1116,
+  "allHTTPInventoryRows": 4271,
+  "totalBytes": 625227678,
+  "setupBytes": 1708640,
+  "maxSetupBytes": 4194304,
+  "currentFreeBytes": 78168064,
+  "minFreeBytes": 62914560,
+  "networkRequestsToPublicSite": 0,
+  "fullExecutionBinding": "Not admitted until reviewed:true approved; candidate remains false"
+}

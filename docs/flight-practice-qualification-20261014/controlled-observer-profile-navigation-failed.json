@@ -1,0 +1,114 @@
+{
+  "format": "OptionalInstallationObservation.v1",
+  "passed": false,
+  "browserPreparationPassed": false,
+  "createdAt": "2026-10-14T12:27:53.599Z",
+  "sourceRevision": "6a2466cac4638ac810b3ded99840987ca96e3943",
+  "sourceTree": "4d5ea65154610619afae44218468c972e55afce9",
+  "envelopeSha256": "e375764098612094c62fba1d46e188bc2f60c6c0a6fe039669a3021ba5eb1f99",
+  "artifacts": [
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 3635776,
+        "path": "distribution-optional-civilian-flight.zip",
+        "sha256": "c55f7786a4d6795918023b3d6f534ecb371a2b124afe26c34140180a5404c650"
+      },
+      "entry": "optional-practice/civilian-flight/index.html",
+      "id": "civilian-flight",
+      "manifest": {
+        "bytes": 15177,
+        "path": "manifest-optional-civilian-flight.json",
+        "sha256": "2b6a3af15d1e3e6713afc415920f404c73ed28c347e51ce88ff5dde4ffda686c"
+      },
+      "revision": "8c3c89c44a347beeb87ba2a57f4147045551883147df2c9d94cc8c9a36f65905",
+      "sourceArchive": {
+        "bytes": 3666336,
+        "path": "source-optional-civilian-flight.zip",
+        "sha256": "8598b6c1f1c23494b6d3db3fcfb11f2874c655c45055e79e35feb1a04df30fec"
+      },
+      "sourceInventory": {
+        "bytes": 24924,
+        "path": "source-inventory-optional-civilian-flight.json",
+        "sha256": "156235bb814e1c239ac11154d0fc67b430918365ea278c492c1fb2933e3b467d"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 6633306,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "c4dab89a8d9a4e7fffe0bb42beb4b6acf1e4f2d29a240d8572a5ae9f3b9d0244"
+      },
+      "entry": "optional-practice/civilian-fpv/index.html",
+      "id": "civilian-fpv",
+      "manifest": {
+        "bytes": 16323,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "0500619c143c255828c51320017711e5d6040b6a1581054ff46d3cb90c9bc19f"
+      },
+      "revision": "90844e3ddddd2458a7be2cb0b1fa1050cf73a0a41f16522bd0e7698666646ef8",
+      "sourceArchive": {
+        "bytes": 6664862,
+        "path": "source-optional-civilian-fpv.zip",
+        "sha256": "ac5639dcbdc297d84250e92f8ba9a3c05bd16f47a778aefa7bb0e540cfea55ca"
+      },
+      "sourceInventory": {
+        "bytes": 27172,
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "sha256": "31fc12d0ae5306b43d95fc528a06271f487f7d51477d6b4ee8aaaa8774256c83"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 17051421,
+        "path": "distribution-optional-fpv-worlds.zip",
+        "sha256": "39fc57f90e71c896b1bb2ae86ada856baf97654952591c7d24922037ffa86edf"
+      },
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "id": "fpv-worlds",
+      "manifest": {
+        "bytes": 22892,
+        "path": "manifest-optional-fpv-worlds.json",
+        "sha256": "4a51ec0f63e06353fae44dabd61bed643e30768fdf58ff93145fd8055b18dc7a"
+      },
+      "revision": "0267d7b8f4f8b4fd2b9f1dec1367e60bf12fb388321372ad07be67e8e7149ace",
+      "sourceArchive": {
+        "bytes": 17088198,
+        "path": "source-optional-fpv-worlds.zip",
+        "sha256": "daa0ab572e95b41a6e8bb2f798acd9408a8457729d46ee1194f7cf6d17bc91b8"
+      },
+      "sourceInventory": {
+        "bytes": 38954,
+        "path": "source-inventory-optional-fpv-worlds.json",
+        "sha256": "92aa94f81d4928a1518f7330f7ea8ed4afb7fe2419634455556bbf29ba44afc8"
+      }
+    }
+  ],
+  "transition": {
+    "kind": "same-payload-path-fixture",
+    "fromVersion": "v0.0.0",
+    "toVersion": "v9.0.0",
+    "changedFiles": [],
+    "previous": null
+  },
+  "harnessSha256": "6a5ad56f2984d6ae5c5a33435a1ab6d197b91da2b0443a6da102a914236517a1",
+  "helperSha256": "96f56b61250605c6c0bd1bf388d6984728bbf564e58fa2c2e0908e8d9ec56b5c",
+  "inputRoute": {
+    "academyOfflineDisclosure": "Native summary keyboard Enter",
+    "offlineActions": "Native button keyboard Enter with fresh status/progress observation",
+    "limitation": "A first pointer press can shift the disclosure layout before mouseup; this observer does not qualify that pointer interaction."
+  },
+  "failure": "locator.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Profile JSON', exact: true })\u001b[22m\n",
+  "osApps": [],
+  "checkpoints": [],
+  "errors": [],
+  "cleanup": {
+    "errors": [],
+    "temporaryProfileRemoved": true
+  }
+}

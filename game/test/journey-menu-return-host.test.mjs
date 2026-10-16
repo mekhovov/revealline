@@ -1,3 +1,4 @@
+import { openMissionLibrary } from './helpers/library-selection.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -47,9 +48,7 @@ async function setup(t, route = 'authored') {
 }
 async function open(p, id, missionId = currentMission.get(p)) {
   const opener = p.$(id);
-  opener.focus();
-  opener.click();
-  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  await openMissionLibrary(p, id);
   assert.equal(p.$('journey-chooser').open, true);
   const expected = [...p.$('journey-cards').children].find(
     (card) => card.dataset.missionId === missionId,
@@ -94,7 +93,7 @@ for (const route of ['1', 'opening', 'authored'])
       const { p, backend } = await setup(t, route);
       const before = await backend.read();
       const opener = await open(p, 'shell-play');
-      assert.equal(p.$('journey-back').textContent, 'Back to menu');
+      assert.equal(p.$('journey-back').textContent, 'Back to menu →');
       back(p, method, t);
       assert.equal(p.$('shell-home').open, true);
       assert.equal(p.doc.activeElement, opener);
@@ -135,7 +134,7 @@ for (const origin of ['field', 'home'])
     const opener = await open(p, origin === 'home' ? 'shell-play' : 'shell-packs');
     assert.equal(
       p.$('journey-back').textContent,
-      origin === 'home' ? 'Back to menu' : 'Back to game',
+      origin === 'home' ? 'Back to menu →' : 'Back to game',
     );
     p.$('journey-search').value = 'Two keepers';
     p.$('journey-search').emit('input');

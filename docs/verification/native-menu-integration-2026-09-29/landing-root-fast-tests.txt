@@ -1,0 +1,215 @@
+TAP version 13
+# Subtest: shared interference is deterministic monochrome snow with independent picture seeds and frames
+ok 1 - shared interference is deterministic monochrome snow with independent picture seeds and frames
+  ---
+  duration_ms: 29.066542
+  ...
+# Subtest: strength reduces interference energy without changing the source or creating digital color noise
+ok 2 - strength reduces interference energy without changing the source or creating digital color noise
+  ---
+  duration_ms: 4.058916
+  ...
+# Subtest: source fingerprint distinguishes arrangements and dimensions even when the palette is identical
+ok 3 - source fingerprint distinguishes arrangements and dimensions even when the palette is identical
+  ---
+  duration_ms: 0.406292
+  ...
+# Subtest: shared signal rejects unbounded buffers and invalid phase/amplitude inputs
+ok 4 - shared signal rejects unbounded buffers and invalid phase/amplitude inputs
+  ---
+  duration_ms: 0.615958
+  ...
+# Subtest: fullscreen control follows the browser state and exits through the same explicit control
+ok 5 - fullscreen control follows the browser state and exits through the same explicit control
+  ---
+  duration_ms: 2.160375
+  ...
+# Subtest: installed standalone PWAs report their display state without browser fullscreen
+ok 6 - installed standalone PWAs report their display state without browser fullscreen
+  ---
+  duration_ms: 0.280625
+  ...
+# Subtest: iOS Home Screen games report standalone display state
+ok 7 - iOS Home Screen games report standalone display state
+  ---
+  duration_ms: 0.198083
+  ...
+# Subtest: iPhone Safari offers the truthful Home Screen route instead of a dead fullscreen control
+ok 8 - iPhone Safari offers the truthful Home Screen route instead of a dead fullscreen control
+  ---
+  duration_ms: 0.72925
+  ...
+# Subtest: touch-capable iPad desktop identity receives the same Home Screen route
+ok 9 - touch-capable iPad desktop identity receives the same Home Screen route
+  ---
+  duration_ms: 0.153166
+  ...
+# Subtest: display-mode changes update state and detach releases the listener
+ok 10 - display-mode changes update state and detach releases the listener
+  ---
+  duration_ms: 0.277792
+  ...
+# Subtest: unsupported browsers retain their responsive game layout without an inoperable control
+ok 11 - unsupported browsers retain their responsive game layout without an inoperable control
+  ---
+  duration_ms: 0.180042
+  ...
+# Subtest: fullscreen retry clears a prior denial only after an accepted transition
+ok 12 - fullscreen retry clears a prior denial only after an accepted transition
+  ---
+  duration_ms: 0.628958
+  ...
+# Subtest: repeated activation while fullscreen is pending sends one browser request
+ok 13 - repeated activation while fullscreen is pending sends one browser request
+  ---
+  duration_ms: 0.451709
+  ...
+# Subtest: retired fullscreen owner ignores a late resolve after replacement
+ok 14 - retired fullscreen owner ignores a late resolve after replacement
+  ---
+  duration_ms: 0.161958
+  ...
+# Subtest: retired fullscreen owner ignores a late reject after replacement
+ok 15 - retired fullscreen owner ignores a late reject after replacement
+  ---
+  duration_ms: 0.074791
+  ...
+# Subtest: landing and Settings share one pending browser request and follow native Escape
+ok 16 - landing and Settings share one pending browser request and follow native Escape
+  ---
+  duration_ms: 0.678584
+  ...
+# Subtest: mirrored controls expose the same denied request without claiming fullscreen succeeded
+ok 17 - mirrored controls expose the same denied request without claiming fullscreen succeeded
+  ---
+  duration_ms: 0.285875
+  ...
+# Subtest: locale changes refresh every registered label and status without another browser request
+ok 18 - locale changes refresh every registered label and status without another browser request
+  ---
+  duration_ms: 0.5305
+  ...
+# Subtest: document teardown releases shared registrations while a retained page keeps its owner
+ok 19 - document teardown releases shared registrations while a retained page keeps its owner
+  ---
+  duration_ms: 0.1365
+  ...
+# Subtest: landing Escape never takes ownership of gameplay, Settings or a hidden menu
+ok 20 - landing Escape never takes ownership of gameplay, Settings or a hidden menu
+  ---
+  duration_ms: 0.670208
+  ...
+# Subtest: landing Escape during a pending entrance exits once after that request settles
+ok 21 - landing Escape during a pending entrance exits once after that request settles
+  ---
+  duration_ms: 0.744458
+  ...
+# Subtest: a decoded bitmap renders once before readiness, with bounded opaque single-texture output
+ok 22 - a decoded bitmap renders once before readiness, with bounded opaque single-texture output
+  ---
+  duration_ms: 3.498958
+  ...
+# Subtest: pending/replaced images keep the original fallback until the matching whole bitmap renders
+ok 23 - pending/replaced images keep the original fallback until the matching whole bitmap renders
+  ---
+  duration_ms: 0.430166
+  ...
+# Subtest: the owned clock is capped, preserves phase through pause and ignores long background gaps
+ok 24 - the owned clock is capped, preserves phase through pause and ignores long background gaps
+  ---
+  duration_ms: 2.616042
+  ...
+# Subtest: the scene camera stays fixed for two minutes while bounded local picture phases animate
+ok 25 - the scene camera stays fixed for two minutes while bounded local picture phases animate
+  ---
+  duration_ms: 15.076125
+  ...
+# Subtest: art without qualified regions stays at source scale and never owns an animation callback
+ok 26 - art without qualified regions stays at source scale and never owns an animation callback
+  ---
+  duration_ms: 0.704292
+  ...
+# Subtest: single-source sky drift visibly moves smooth painted features and remains inside each qualified anchor
+ok 27 - single-source sky drift visibly moves smooth painted features and remains inside each qualified anchor
+  ---
+  duration_ms: 10.460583
+  ...
+# Subtest: steam flow resets only its zero-weight sample while its source column can sway
+ok 28 - steam flow resets only its zero-weight sample while its source column can sway
+  ---
+  duration_ms: 1.879125
+  ...
+# Subtest: only validated source-coordinate environment anchors move, with portrait selection independent of upload
+ok 29 - only validated source-coordinate environment anchors move, with portrait selection independent of upload
+  ---
+  duration_ms: 0.3845
+  ...
+# Subtest: context loss falls back, restoration retains phase, and disposal releases handles and listeners
+ok 30 - context loss falls back, restoration retains phase, and disposal releases handles and listeners
+  ---
+  duration_ms: 0.232458
+  ...
+# Subtest: unavailable, failed shader and rejected upload all leave the untouched image fallback
+ok 31 - unavailable, failed shader and rejected upload all leave the untouched image fallback
+  ---
+  duration_ms: 0.268625
+  ...
+# Subtest: a subsequent successful image load recovers a failed source without duplicate owners
+ok 32 - a subsequent successful image load recovers a failed source without duplicate owners
+  ---
+  duration_ms: 0.115708
+  ...
+# Subtest: idle owns one random delay and performs no drawing before the first burst
+ok 33 - idle owns one random delay and performs no drawing before the first burst
+  ---
+  duration_ms: 22.675291
+  ...
+# Subtest: one smooth bounded burst recovers fully and leaves only its longer next delay
+ok 34 - one smooth bounded burst recovers fully and leaves only its longer next delay
+  ---
+  duration_ms: 40.234917
+  ...
+# Subtest: the receiver uses monochrome actual source pixels, shifted rows and shared analog noise
+ok 35 - the receiver uses monochrome actual source pixels, shifted rows and shared analog noise
+  ---
+  duration_ms: 9.765625
+  ...
+# Subtest: portrait source sampling is aspect-preserving and bounded
+ok 36 - portrait source sampling is aspect-preserving and bounded
+  ---
+  duration_ms: 0.982792
+  ...
+# Subtest: off and hidden immediately discard a burst, reject stale work and restart without catch-up
+ok 37 - off and hidden immediately discard a burst, reject stale work and restart without catch-up
+  ---
+  duration_ms: 5.980375
+  ...
+# Subtest: source reset cancels old callbacks and disposal releases every owned timer and listener
+ok 38 - source reset cancels old callbacks and disposal releases every owned timer and listener
+  ---
+  duration_ms: 1.874125
+  ...
+# Subtest: canvas failures stop quietly until an explicit source reset
+ok 39 - canvas failures stop quietly until an explicit source reset
+  ---
+  duration_ms: 1.486166
+  ...
+# Subtest: absent or fully transparent source skips interference instead of producing a dark frame
+ok 40 - absent or fully transparent source skips interference instead of producing a dark frame
+  ---
+  duration_ms: 3.161958
+  ...
+# Subtest: injected random values stay within the authored timing ranges
+ok 41 - injected random values stay within the authored timing ranges
+  ---
+  duration_ms: 26.17875
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 41
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 231.619167

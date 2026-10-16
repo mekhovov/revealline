@@ -19,6 +19,7 @@ import { prepareStillAsset } from '../media-still.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { campaignKey, loadLibrary } from '../library.mjs';
+import { AUTO_NEXT_MS, VICTORY_CELEBRATION_MS } from '../ui/continuous-play.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const themes = JSON.parse(readFileSync(new URL('../content/themes.json', import.meta.url))).themes;
@@ -153,9 +154,31 @@ async function win(p) {
   await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
   p.key('ArrowDown', false);
-  for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+  // A frame below the app's long-frame safety threshold executes the same
+  // fixed simulation steps in one scene update. It preserves the real win and
+  // reward-recording path without spending hundreds of render turns per case.
+  for (let i = 0; i < 30 && p.rendered.run.status !== 'won'; i++) p.frame(250);
   assert.equal(p.rendered.run.status, 'won');
-  if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  assert.equal(
+    p.$('game-overlay').hidden,
+    true,
+    'The earned picture gets its full-screen celebration before result actions appear.',
+  );
+  p.$('skip-celebration').onclick();
+  assert.equal(p.$('show-result').hidden, false);
+  // This suite exercises result actions, so return from the presentation
+  // explicitly instead of spending each scenario's budget on the automatic hold.
+  p.$('show-result').click();
+  assert.equal(
+    p.$('game-overlay').hidden,
+    false,
+    'The result opens after returning from the earned-picture hold.',
+  );
+  assert.equal(
+    p.$('skip-celebration').hidden,
+    true,
+    'No picture gate precedes the actual result actions.',
+  );
   p.frame(0);
   assert.equal(p.$('game-overlay').dataset.kind, 'won');
   await settle(
@@ -223,10 +246,14 @@ for (const policy of ['immediate', 'grid-center'])
     ticks(p, 30);
     kept(p, before);
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
-    assert.equal(p.$('next-button').disabled, true);
-    assert.equal(p.$('flight-preparation-cancel').hidden, false);
-    assert.equal(p.doc.activeElement.id, 'flight-preparation-cancel');
-    assert.match(p.$('flight-preparation-status').textContent, /next-cut/);
+    assert.equal(p.$('next-button').disabled, false);
+    assert.equal(p.$('next-button').getAttribute('aria-disabled'), 'true');
+    assert.equal(p.$('flight-preparation-cancel').hidden, true);
+    assert.equal(p.doc.activeElement.id, 'next-button');
+    assert.match(
+      p.$('flight-preparation-status').textContent,
+      /Opening this flight’s original picture|next-cut/,
+    );
     gate.resolve();
     await running(p, 'next-cut');
     assert.notEqual(p.rendered.run, before.run);
@@ -238,12 +265,81 @@ for (const policy of ['immediate', 'grid-center'])
     assert.equal(p.rendered.run.tick, 0);
     assert.equal(p.rendered.paused, false);
     assert.equal(p.$('game-overlay').hidden, true);
+    assert.equal(p.doc.body.dataset.winPicture, 'off');
+    assert.equal(p.$('show-result').hidden, true);
     assert.equal(p.doc.activeElement.id, 'game-canvas');
     const stored = loadLibrary(p.storage, profileKey, { campaigns: [campaign] });
     assert.ok(Array.isArray(stored.library.pictureReceipts));
     assert.equal(stored.library.pictureReceipts.length, 1);
     assert.deepEqual(p.errors, []);
   });
+
+test('picture view keeps a direct Next action and clears the old full-screen reward before the next flight paints', async (t) => {
+  const { p } = await setup(t);
+  await win(p);
+  const flowControls = p.$('result-flow-controls');
+  if (flowControls) {
+    assert.equal(flowControls.parentElement, p.$('next-button').parentElement);
+    assert.equal(p.$('overlay-reading-unit').querySelector('.enemy-stats').dataset.variant, 'panel');
+  }
+  const more = p.$('earned-result-more');
+  if (more) {
+    assert.equal(more.open, false);
+    for (const id of ['view-picture', 'result-random-level', 'result-choose-mission'])
+      assert.equal(p.$(id).closest('details'), more);
+    for (const id of ['next-button', 'retry-button', 'overlay-menu', 'result-flow-controls'])
+      assert.equal(p.$(id).closest('details'), null);
+    more.querySelector('summary').click();
+  }
+  p.$('view-picture').click();
+  assert.equal(p.doc.body.dataset.winPicture, 'settled');
+  const dock = p.doc.querySelector('.continuous-play-quick-actions');
+  if (dock) {
+    assert.equal(dock.hidden, false);
+    dock.querySelector('[data-result-target="next-button"]').click();
+  } else {
+    // The ordinary Solo host has no edition-only quick-action dock. Returning
+    // to its result preserves the same Next authority without fabricating
+    // optional presentation chrome in this fixture.
+    p.$('show-result').click();
+    p.$('next-button').click();
+  }
+  await running(p, 'next-cut');
+  assert.equal(p.doc.body.dataset.winPicture, 'off');
+  assert.equal(p.$('show-result').hidden, true);
+  if (dock) assert.equal(dock.hidden, true);
+  assert.deepEqual(p.errors, []);
+});
+
+test('automatic Next survives launch clearing the sampled controller frame and the new flight keeps advancing', async (t) => {
+  const { p } = await setup(t);
+  await win(p);
+  const completed = p.rendered.run;
+  for (let elapsed = 0; elapsed < VICTORY_CELEBRATION_MS + AUTO_NEXT_MS; elapsed += 100)
+    p.frame(100);
+  await running(p, 'next-cut');
+  assert.notEqual(p.rendered.run, completed);
+  assert.equal(p.doc.body.dataset.winPicture, 'off');
+  assert.equal(p.$('game-overlay').hidden, true);
+  assert.equal(p.$('show-result').hidden, true);
+  assert.deepEqual(
+    p.errors,
+    [],
+    'The countdown launch must not dereference a cleared input sample.',
+  );
+  const beforeTick = p.rendered.run.tick;
+  ticks(p, 4);
+  assert.ok(
+    p.rendered.run.tick > beforeTick,
+    'The new board continues simulating after auto-next.',
+  );
+  const runTotal = p.$('score').parentElement.querySelector('.enemy-stats-run');
+  if (runTotal) {
+    assert.equal(runTotal.hidden, false, 'The current run is visible even before its first defeat.');
+    assert.equal(runTotal.querySelector('strong').textContent, '0');
+  }
+  assert.deepEqual(p.errors, []);
+});
 
 for (const outcome of [
   'cancel',
@@ -441,37 +537,61 @@ test('a newer Missions difficulty choice cancels held Next and a subsequent Next
 });
 
 for (const departure of ['missions', 'another-mission'])
-  test(`post-adoption drawable release hands input to ${departure} without automatic Resume`, async (t) => {
-    const { p, onRelease } = await setup(t);
-    await win(p);
-    const before = snapshot(p);
-    let released = false;
-    onRelease(before.image, () => {
-      released = true;
-      if (departure === 'another-mission') {
-        openRetainedSetup(p);
-        p.$('missions').children[0].click();
-      } else p.$('shell-packs').click();
-    });
-    p.$('next-button').click();
-    await settle(() => released);
-    await settle(() => {
-      p.frame(0);
-      return (
-        p.doc.body.dataset.pictureState === 'ready' &&
-        p.rendered.run.levelId === (departure === 'missions' ? 'next-cut' : 'first-cut')
-      );
-    });
-    if (departure === 'missions')
-      await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
-    else assert.equal(p.$('shell-missions').open, true);
-    assert.notEqual(p.rendered.run, before.run);
-    assert.equal(p.rendered.paused, true);
-    assert.equal(p.rendered.run.tick, 0);
-    assert.equal(p.$('game-overlay').dataset.kind, 'ready');
-    assert.notEqual(p.doc.activeElement.id, 'game-canvas');
-    assert.equal(before.image.releases, 1);
-    ticks(p, 20);
-    assert.equal(p.rendered.run.tick, 0);
-    assert.deepEqual(p.errors, []);
-  });
+  test(
+    `post-adoption drawable release hands input to ${departure} without automatic Resume`,
+    { timeout: 120000 },
+    async (t) => {
+      const { p, onRelease } = await setup(t);
+      await win(p);
+      const before = snapshot(p);
+      let released = false,
+        missionsPreparation;
+      onRelease(before.image, () => {
+        released = true;
+        if (departure === 'another-mission') {
+          openRetainedSetup(p);
+          p.$('missions').children[0].click();
+        } else {
+          const opener = p.$('shell-packs'),
+            handler = opener.onclick;
+          // Preserve the release callback's real click and focus. Join its owned
+          // catalogue operation instead of racing cold metadata with a poll timer.
+          opener.onclick = (...args) => (missionsPreparation = handler.apply(opener, args));
+          try {
+            opener.click();
+          } finally {
+            opener.onclick = handler;
+          }
+          assert(
+            missionsPreparation instanceof Promise,
+            'Missions activation owns its preparation.',
+          );
+          assert.equal(p.$('mission-library-opening-status').getAttribute('role'), 'status');
+          assert.equal(p.$('mission-library-opening-status').textContent, 'Preparing missions…');
+        }
+      });
+      p.$('next-button').click();
+      await settle(() => released);
+      await settle(() => {
+        p.frame(0);
+        return (
+          p.doc.body.dataset.pictureState === 'ready' &&
+          p.rendered.run.levelId === (departure === 'missions' ? 'next-cut' : 'first-cut')
+        );
+      });
+      if (departure === 'missions') {
+        await missionsPreparation;
+        assert.equal(p.$('journey-chooser').open, true);
+        assert(p.$('journey-collection'));
+      } else assert.equal(p.$('shell-missions').open, true);
+      assert.notEqual(p.rendered.run, before.run);
+      assert.equal(p.rendered.paused, true);
+      assert.equal(p.rendered.run.tick, 0);
+      assert.equal(p.$('game-overlay').dataset.kind, 'ready');
+      assert.notEqual(p.doc.activeElement.id, 'game-canvas');
+      assert.equal(before.image.releases, 1);
+      ticks(p, 20);
+      assert.equal(p.rendered.run.tick, 0);
+      assert.deepEqual(p.errors, []);
+    },
+  );

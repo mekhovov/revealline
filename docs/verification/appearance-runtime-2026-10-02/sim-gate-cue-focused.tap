@@ -1,0 +1,305 @@
+TAP version 13
+# Subtest: fixed acceptance routes cover every current environment without changing course data
+ok 1 - fixed acceptance routes cover every current environment without changing course data
+  ---
+  duration_ms: 33.722333
+  ...
+# Subtest: paired comparison rejects changed conditions or incomplete runs and retains both directional results
+ok 2 - paired comparison rejects changed conditions or incomplete runs and retains both directional results
+  ---
+  duration_ms: 0.325917
+  ...
+# Subtest: percentiles use bounded actual samples and reject missing timing data
+ok 3 - percentiles use bounded actual samples and reject missing timing data
+  ---
+  duration_ms: 0.179958
+  ...
+# Subtest: snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+ok 4 - snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+  ---
+  duration_ms: 424.6735
+  ...
+# Subtest: authoring controls cannot bypass pending or failed source verification
+ok 5 - authoring controls cannot bypass pending or failed source verification
+  ---
+  duration_ms: 3.481458
+  ...
+# Subtest: failed scene changes block mislabeled reviews and recover only after a successful install
+ok 6 - failed scene changes block mislabeled reviews and recover only after a successful install
+  ---
+  duration_ms: 6.6945
+  ...
+# Subtest: closing the page while source verification waits never installs into a disposed renderer
+ok 7 - closing the page while source verification waits never installs into a disposed renderer
+  ---
+  duration_ms: 2.637958
+  ...
+# Subtest: measurement hashing failures release controls and disposal cannot reactivate them
+ok 8 - measurement hashing failures release controls and disposal cannot reactivate them
+  ---
+  duration_ms: 6.451
+  ...
+# Subtest: SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+ok 9 - SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+  ---
+  duration_ms: 1.696583
+  ...
+# Subtest: first successful arm freezes accepted appearance until a new attempt, even after disarming
+ok 10 - first successful arm freezes accepted appearance until a new attempt, even after disarming
+  ---
+  duration_ms: 0.237833
+  ...
+# Subtest: recording metadata is bounded, portable and independent of Academy proof/reward identity
+ok 11 - recording metadata is bounded, portable and independent of Academy proof/reward identity
+  ---
+  duration_ms: 67.40725
+  ...
+# Subtest: replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+ok 12 - replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+  ---
+  duration_ms: 53.013541
+  ...
+# Subtest: World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+ok 13 - World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+  ---
+  duration_ms: 84.429625
+  ...
+# Subtest: World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+ok 14 - World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+  ---
+  duration_ms: 6.238458
+  ...
+# Subtest: World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+ok 15 - World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+  ---
+  duration_ms: 513.723792
+  ...
+# Subtest: World archive preserves the versioned profile fallback inside its unchanged course/proof record
+ok 16 - World archive preserves the versioned profile fallback inside its unchanged course/proof record
+  ---
+  duration_ms: 16.860958
+  ...
+# Subtest: objective plates pair readable text with every collection panel while authored profiles retain the old path
+ok 17 - objective plates pair readable text with every collection panel while authored profiles retain the old path
+  ---
+  duration_ms: 2.76425
+  ...
+# Subtest: active label projection uses the current lens and CSS height, caps world size, and fixes the original lower edge
+ok 18 - active label projection uses the current lens and CSS height, caps world size, and fixes the original lower edge
+  ---
+  duration_ms: 1.06575
+  ...
+# Subtest: inactive, behind-camera and invalid viewport labels retain original bounds
+ok 19 - inactive, behind-camera and invalid viewport labels retain original bounds
+  ---
+  duration_ms: 0.368417
+  ...
+# Subtest: real renderer path enlarges only the active themed badge with depth occlusion and authored appearance preserved
+ok 20 - real renderer path enlarges only the active themed badge with depth occlusion and authored appearance preserved
+  ---
+  duration_ms: 87.316958
+  ...
+# Subtest: active gate bracket geometry stays outside the original frame on both axes with bounded paired contrast
+ok 21 - active gate bracket geometry stays outside the original frame on both axes with bounded paired contrast
+  ---
+  duration_ms: 11.301583
+  ...
+# Subtest: renderer exposes only the active themed gate brackets at every quality and releases shared resources once
+ok 22 - renderer exposes only the active themed gate brackets at every quality and releases shared resources once
+  ---
+  duration_ms: 446.568291
+  ...
+# Subtest: optional SIM re-exports the same shared offline collection authority
+ok 23 - optional SIM re-exports the same shared offline collection authority
+  ---
+  duration_ms: 0.579833
+  ...
+# Subtest: versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+ok 24 - versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+  ---
+  duration_ms: 3.114459
+  ...
+# Subtest: collection effect palettes are immutable semantic cues with exact-revision fallback
+ok 25 - collection effect palettes are immutable semantic cues with exact-revision fallback
+  ---
+  duration_ms: 0.287375
+  ...
+# Subtest: SIM appearance resolution preserves authored profiles and never mutates course data
+ok 26 - SIM appearance resolution preserves authored profiles and never mutates course data
+  ---
+  duration_ms: 7.061333
+  ...
+# Subtest: industrial textures are deterministic local sRGB art with quality-capped world filtering
+ok 27 - industrial textures are deterministic local sRGB art with quality-capped world filtering
+  ---
+  duration_ms: 3.998667
+  ...
+# Subtest: bevel calibration normals are bounded deterministic linear tangent-space data
+ok 28 - bevel calibration normals are bounded deterministic linear tangent-space data
+  ---
+  duration_ms: 9.575458
+  ...
+# Subtest: all built-in environments have industrial materials without moving world geometry
+ok 29 - all built-in environments have industrial materials without moving world geometry
+  ---
+  duration_ms: 527.808625
+  ...
+# Subtest: flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+ok 30 - flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+  ---
+  duration_ms: 40.019208
+  ...
+# Subtest: container detail batches retain all fittings outside flight bounds without per-container draws
+ok 31 - container detail batches retain all fittings outside flight bounds without per-container draws
+  ---
+  duration_ms: 3.582458
+  ...
+# Subtest: instanced replacements retain and release registered shadow owners without a later world traversal
+ok 32 - instanced replacements retain and release registered shadow owners without a later world traversal
+  ---
+  duration_ms: 170.267541
+  ...
+# Subtest: specimen collections bind the same model roles and geometry to distinct material palettes
+ok 33 - specimen collections bind the same model roles and geometry to distinct material palettes
+  ---
+  duration_ms: 63.464666
+  ...
+# Subtest: calibration disposal releases shared resources exactly once
+ok 34 - calibration disposal releases shared resources exactly once
+  ---
+  duration_ms: 3.578708
+  ...
+# Subtest: imported mesh material bindings are opt-in, bounded and revision-specific
+ok 35 - imported mesh material bindings are opt-in, bounded and revision-specific
+  ---
+  duration_ms: 1.436291
+  ...
+# Subtest: transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+ok 36 - transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+  ---
+  duration_ms: 0.849667
+  ...
+# Subtest: a glTF mesh-node binding covers only its own loader-identified primitives
+ok 37 - a glTF mesh-node binding covers only its own loader-identified primitives
+  ---
+  duration_ms: 0.636708
+  ...
+# Subtest: eight collections cover every environment with protected course data and exterior dressing
+ok 38 - eight collections cover every environment with protected course data and exterior dressing
+  ---
+  duration_ms: 439.890291
+  ...
+# Subtest: family surface recipes provide distinct luminance structure beyond a global tint
+ok 39 - family surface recipes provide distinct luminance structure beyond a global tint
+  ---
+  duration_ms: 15.703791
+  ...
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 40 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 434.457834
+  ...
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 41 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 74.484083
+  ...
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 42 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 330.360083
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 43 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 150.805292
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 44 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 150.041792
+  ...
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 45 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 183.121208
+  ...
+# Subtest: world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+ok 46 - world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+  ---
+  duration_ms: 4.227209
+  ...
+# Subtest: static sphere sweep cannot tunnel through a thin wall or rotated box
+ok 47 - static sphere sweep cannot tunnel through a thin wall or rotated box
+  ---
+  duration_ms: 48.950958
+  ...
+# Subtest: drone takes off from support and refuses a solid-overlap spawn
+ok 48 - drone takes off from support and refuses a solid-overlap spawn
+  ---
+  duration_ms: 6.345
+  ...
+# Subtest: elevated triangle platform supports a landing objective with exact surface identity
+ok 49 - elevated triangle platform supports a landing objective with exact surface identity
+  ---
+  duration_ms: 557.035667
+  ...
+# Subtest: moving actor relative sweep catches crossing trajectories between endpoints
+ok 50 - moving actor relative sweep catches crossing trajectories between endpoints
+  ---
+  duration_ms: 0.903583
+  ...
+# Subtest: a moving hazard contacts a resting drone after its floor movement is resolved
+ok 51 - a moving hazard contacts a resting drone after its floor movement is resolved
+  ---
+  duration_ms: 0.528333
+  ...
+# Subtest: fictional pulses damage targets, obey cooldown and complete verified combat
+ok 52 - fictional pulses damage targets, obey cooldown and complete verified combat
+  ---
+  duration_ms: 8.052875
+  ...
+# Subtest: enemy pulses can defeat the drone, while intervening geometry blocks both sides
+ok 53 - enemy pulses can defeat the drone, while intervening geometry blocks both sides
+  ---
+  duration_ms: 16.745334
+  ...
+# Subtest: authored ground and vehicle patrols stop at solid map obstacles
+ok 54 - authored ground and vehicle patrols stop at solid map obstacles
+  ---
+  duration_ms: 50.324334
+  ...
+# Subtest: ground patrols climb authored 0.15 m steps and supported slopes
+ok 55 - ground patrols climb authored 0.15 m steps and supported slopes
+  ---
+  duration_ms: 18.101084
+  ...
+# Subtest: projectile admission remains bounded while firing continuously
+ok 56 - projectile admission remains bounded while firing continuously
+  ---
+  duration_ms: 66.783291
+  ...
+# Subtest: pause freezes every subsystem; recovered command prefix resumes with the same final hash
+ok 57 - pause freezes every subsystem; recovered command prefix resumes with the same final hash
+  ---
+  duration_ms: 16.718917
+  ...
+# Subtest: reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+ok 58 - reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+  ---
+  duration_ms: 9.461084
+  ...
+# Subtest: recorder requires the consumed command and rejects skipped ticks
+ok 59 - recorder requires the consumed command and rejects skipped ticks
+  ---
+  duration_ms: 0.817458
+  ...
+1..59
+# tests 59
+# suites 0
+# pass 59
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1868.084208

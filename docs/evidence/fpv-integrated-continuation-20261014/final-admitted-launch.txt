@@ -1,0 +1,41 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- dialog:
+  - banner:
+    - button "Menu"
+    - generic: FPV SIM · Worlds
+    - button "Change camera · V / R3 · FPV": "View: FPV"
+    - button "Resume"
+  - button "Arm / resume"
+  - generic: +
+  - generic "Yaw 0%, Throttle 0%":
+    - generic: Yaw / Throttle
+    - status: 0% · held
+  - generic "Roll 0%, Pitch 0%":
+    - generic: Roll / Pitch
+  - complementary "Drone response. Paused · actual pose retained descending. 57.3 m · -1.1 m/s vertical · 3.1 m/s drift":
+    - button "Hide drone response": ×
+    - status: Paused · actual pose retained · Drone upright
+  - text: +
+  - region "Enemies defeated":
+    - generic: Enemies
+    - generic: Lifetime
+    - strong: "0"
+  - group "Height · Ready. Choose your controls, then arm.":
+    - generic "Height · Ready. Choose your controls, then arm.": Ready. Choose your controls, then arm.
+    - generic: Height
+    - img "Height. Outside the target band"
+    - progressbar "Earned progress":
+      - generic: Hold
+    - generic "Height band": ○ Height
+    - generic "Inside marker": ○ Zone
+    - generic "Slow enough": ○ Speed
+    - generic "Tilt band": ✓ Tilt
+  - button "Explain the current objective": "?"
+  - generic: ♥ 100 · 99.5 s
+  - generic: ➜
+  - generic: Target zone
+  - status: Ready. Choose your controls, then arm.
+- text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- status: Preparing flight…
+- text: ⌃ +

@@ -134,7 +134,27 @@ def extract_current(zip_path, target, record, manifest_bytes, checksum_bytes):
         except BaseException:
             shutil.rmtree(stage)
             raise
-    return {'distributionSha256': record['distributionSha256'], 'manifestSha256': record['manifestSha256'], 'gameSourceRevision': record['sourceRevision'], 'version': record['version'], 'membersVerified': len(expected), 'manifestFilesVerified': len(expected) - 1, 'uncompressedBytesVerified': total + len(manifest_bytes), 'crcAndHashesVerified': True}
+    files = [
+        {'path': name, 'bytes': row['bytes'], 'sha256': row['sha256']}
+        for name, row in expected.items()
+    ]
+    files.extend([
+        {'path': '.xonix-build.json', 'bytes': len(MARKER), 'sha256': hashlib.sha256(MARKER).hexdigest()},
+        {'path': 'distribution.zip.sha256', 'bytes': len(checksum_bytes), 'sha256': hashlib.sha256(checksum_bytes).hexdigest()},
+    ])
+    files.sort(key=lambda row: row['path'])
+    return {
+        'format': 'revealline-current-extraction.v1',
+        'distributionSha256': record['distributionSha256'],
+        'manifestSha256': record['manifestSha256'],
+        'gameSourceRevision': record['sourceRevision'],
+        'version': record['version'],
+        'membersVerified': len(expected),
+        'manifestFilesVerified': len(expected) - 1,
+        'uncompressedBytesVerified': total + len(manifest_bytes),
+        'crcAndHashesVerified': True,
+        'files': files,
+    }
 
 def main():
     parser = argparse.ArgumentParser()

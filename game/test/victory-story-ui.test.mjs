@@ -911,3 +911,134 @@ test('actual story controls keep modal Tab at Close and Cinematic volume without
   assert.equal(h.video.playCalls, 0);
   assert.deepEqual(h.player.snapshot(), before);
 });
+
+test('Ukrainian-first story controls and accepted notices switch without changing playback ownership', async (t) => {
+  const { setLocale, getLocale } = await import('../i18n/index.mjs');
+  const previous = getLocale();
+  setLocale('uk', { persist: false });
+  try {
+    const h = await setup(t);
+    h.ready();
+    const play = h.button('Відтворити');
+    assert.ok(play, 'Playback controls have stable action identities when created in Ukrainian.');
+    assert.equal(play.disabled, false);
+    play.click();
+    await microtasks();
+    assert.equal(h.player.snapshot().state, 'playing');
+    const pause = h.button('Пауза');
+    pause.focus();
+    const video = h.video;
+    const playing = {
+      snapshot: h.player.snapshot(),
+      playCalls: video.playCalls,
+      pauseCalls: video.pauseCalls,
+      changes: h.changes.length,
+      urls: [...h.urls.keys()],
+      revoked: [...h.revoked],
+      timers: [...h.timeouts.keys()],
+      intervals: [...h.intervals.keys()],
+      frames: [...video.frames.keys()],
+    };
+    setLocale('en', { persist: false });
+    assert.equal(h.button('Pause'), pause);
+    assert.equal(h.doc.activeElement, pause);
+    assert.deepEqual(h.player.snapshot(), playing.snapshot);
+    assert.equal(video.playCalls, playing.playCalls);
+    assert.equal(video.pauseCalls, playing.pauseCalls);
+    assert.equal(h.changes.length, playing.changes);
+    assert.deepEqual([...h.urls.keys()], playing.urls);
+    assert.deepEqual(h.revoked, playing.revoked);
+    assert.deepEqual([...h.timeouts.keys()], playing.timers);
+    assert.deepEqual([...h.intervals.keys()], playing.intervals);
+    assert.deepEqual([...video.frames.keys()], playing.frames);
+    assert.match(h.player.element.querySelector('.operation-status').textContent, /Story playing/);
+    pause.click();
+    assert.equal(h.player.snapshot().state, 'paused');
+    const resume = h.button('Resume story');
+    resume.focus();
+    const paused = { time: video.currentTime, calls: video.playCalls, changes: h.changes.length };
+    setLocale('uk', { persist: false });
+    assert.equal(h.doc.activeElement, resume);
+    assert.equal(h.player.snapshot().state, 'paused');
+    assert.equal(video.currentTime, paused.time);
+    assert.equal(video.playCalls, paused.calls);
+    assert.equal(h.changes.length, paused.changes);
+    assert.match(
+      h.player.element.querySelector('.operation-status').textContent,
+      /Історію призупинено/,
+    );
+    h.video.emit('error');
+    const failed = h.player.snapshot();
+    assert.equal(failed.state, 'error');
+    assert.match(h.player.element.querySelector('.operation-status').textContent, /[Вв]ідео/);
+    setLocale('en', { persist: false });
+    assert.equal(h.player.snapshot().state, failed.state);
+    assert.equal(h.player.snapshot().positionSeconds, failed.positionSeconds);
+    assert.match(
+      h.player.element.querySelector('.operation-status').textContent,
+      /Video decoding failed/,
+    );
+    h.player.dispose();
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('earned video starts once after its exact poster is ready, then stays available for replay', async (t) => {
+  const f = await setup(t, { autoplay: true });
+  f.ready();
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(f.video.playCalls, 1);
+  assert.equal(f.player.snapshot().state, 'playing');
+  f.video.at(f.descriptor.segment.endSeconds);
+  assert.equal(f.player.snapshot().state, 'poster');
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.playCalls, 1);
+});
+
+test('reduced motion and background cancellation prevent automatic earned-video playback', async (t) => {
+  const reduced = await setup(t, { autoplay: true, reducedMotion: true });
+  reduced.ready();
+  assert.equal(reduced.video.playCalls, 0);
+  assert.equal(reduced.poster.hidden, false);
+  const blurred = await setup(t, { autoplay: true });
+  blurred.win.emit('blur');
+  blurred.ready();
+  assert.equal(blurred.video.playCalls, 0);
+});
+
+test('blocked earned autoplay leaves the exact poster and an explicit Play retry', async (t) => {
+  const f = await setup(t, { autoplay: true });
+  f.video.playResult = () =>
+    Promise.reject(new DOMException('Activation required', 'NotAllowedError'));
+  f.ready();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.player.snapshot().state, 'blocked');
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.playCalls, 1);
+  f.video.playResult = () => Promise.resolve();
+  assert.equal(await f.player.play(), true);
+  assert.equal(f.video.playCalls, 2);
+});
+
+test('cinematic arrival keeps the exact poster through starting and fades only decoded playback', async (t) => {
+  const f = await setup(t, { autoplay: true, cinematicTransition: true });
+  const started = deferred();
+  f.video.playResult = () => started.promise;
+  const animations = [];
+  f.video.animate = (...args) => animations.push(args);
+  f.ready();
+  assert.equal(f.player.snapshot().state, 'starting');
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.hidden, true);
+  started.resolve();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.player.snapshot().state, 'playing');
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.hidden, false);
+  assert.equal(animations.length, 1);
+  f.video.at(f.descriptor.segment.endSeconds);
+  assert.equal(f.poster.hidden, false);
+  assert.equal(f.video.hidden, true);
+});

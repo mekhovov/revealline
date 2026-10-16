@@ -1,0 +1,73 @@
+{
+  "format": "FPVPublicLibraryCheckpoint.v1",
+  "revision": "8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2",
+  "observer": "Root coordinator, native public browser",
+  "scope": "Public deployment and build markers, ordinary Start/briefing/Arm at zero throttle/active/Pause, Library Browse optional worlds showing No published worlds yet.",
+  "limits": "No finished Reservoir catalogue row, hardware FPS, or new offline acceptance is claimed.",
+  "files": [
+    {
+      "source": "/tmp/fpv-public-marker-20261004-now.json",
+      "path": "fpv-public-marker-20261004-now.json.gz",
+      "bytes": 308,
+      "sha256": "fa54abbaf5e2d0619c73862992af76e5b2c373df772e54fb333b7ac536251c8a",
+      "storedBytes": 223,
+      "storedSha256": "6f37253a52fdcd72b08fe0586aa46b66e9e1e50dd5cf00691691629adf6b9202"
+    },
+    {
+      "source": "/tmp/fpv-public-build-20261004-now.json",
+      "path": "fpv-public-build-20261004-now.json.gz",
+      "bytes": 143,
+      "sha256": "8223f229211396954be56c1c571c5bc70e7780143549bfcdf326b2b702f4dec4",
+      "storedBytes": 134,
+      "storedSha256": "ac16c6973aed608bec70d1324f95cb173df830723783c105f551f1e4bde88138"
+    },
+    {
+      "source": "/tmp/fpv-public-8e5-library-discovery.txt",
+      "path": "fpv-public-8e5-library-discovery.txt.gz",
+      "bytes": 2768,
+      "sha256": "35e33908cdfc30d5db75633e38d0241a60c69664a8ea76c62c1805ae84a70d53",
+      "storedBytes": 1101,
+      "storedSha256": "e4bade72fb57c48e1e904048f1c5cf29ed25c37db1f1a9d2c312dacc53df9368"
+    },
+    {
+      "source": "/tmp/fpv-public-8e5-library-launch.txt",
+      "path": "fpv-public-8e5-library-launch.txt.gz",
+      "bytes": 1798,
+      "sha256": "a76fb781179c526072bf4daa4b3eac3fa92ab0e63b87a52cf41ef2ce763e35ef",
+      "storedBytes": 768,
+      "storedSha256": "94fa29c16dd0e5519568df3a9e89a2ffb3e713feb40576dab4243d2e90593b1e"
+    },
+    {
+      "source": "/tmp/fpv-public-8e5-library.txt",
+      "path": "fpv-public-8e5-library.txt.gz",
+      "bytes": 2751,
+      "sha256": "da60f9df053fd20aaef3810e15aeb42b6499739befd8cf44af2a9f4402ece875",
+      "storedBytes": 1095,
+      "storedSha256": "6613547b269203bee44a0da484693bafe08c4e000475ea93075bd0f62062b3a8"
+    },
+    {
+      "source": "/tmp/fpv-public-8e5-library-discovery.png",
+      "path": "fpv-public-8e5-library-discovery.png",
+      "bytes": 74516,
+      "sha256": "e61a499e4fb9e306af02ae342a97a8c8ee2e8821eeea389e2c51464ec2875386",
+      "storedBytes": 74516,
+      "storedSha256": "e61a499e4fb9e306af02ae342a97a8c8ee2e8821eeea389e2c51464ec2875386"
+    },
+    {
+      "source": "/tmp/fpv-public-8e5-library-launch.png",
+      "path": "fpv-public-8e5-library-launch.png",
+      "bytes": 58385,
+      "sha256": "df1eb53e3bbc49b67f970a651a516cec8780af52726b113b364c8056c81c261f",
+      "storedBytes": 58385,
+      "storedSha256": "df1eb53e3bbc49b67f970a651a516cec8780af52726b113b364c8056c81c261f"
+    },
+    {
+      "source": "/tmp/fpv-public-8e5-library.png",
+      "path": "fpv-public-8e5-library.png",
+      "bytes": 80842,
+      "sha256": "c57a73b5a058cb1f1d4e57a60fc30d2443fbb08c7f4cc12d7d8d84d10f6e9a62",
+      "storedBytes": 80842,
+      "storedSha256": "c57a73b5a058cb1f1d4e57a60fc30d2443fbb08c7f4cc12d7d8d84d10f6e9a62"
+    }
+  ]
+}

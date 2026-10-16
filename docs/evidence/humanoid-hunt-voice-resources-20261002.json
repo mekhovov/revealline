@@ -1,0 +1,498 @@
+{
+  "format": "humanoid-hunt-native-resource-observations.v1",
+  "observedAt": "2026-10-02T20:38:48.676Z",
+  "method": "Read-only afinfo inspection, container SHA-256 and transcript comparison. No audio audition or automated suite.",
+  "machine": {
+    "os": "26.7.1",
+    "hardware": "Mac16,7",
+    "chip": "Apple M4 Pro"
+  },
+  "clipCount": 16,
+  "totalContainerBytes": 343420,
+  "minDurationSeconds": 1.379637,
+  "maxDurationSeconds": 2.792608,
+  "nativeMonoPcmFloatBytesEstimate": 2958780,
+  "clips": [
+    {
+      "file": "guide-0-en.m4a",
+      "lineId": "journey-reaction.v1/guide/0",
+      "locale": "en",
+      "containerBytes": 23110,
+      "sha256": "58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.249025,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Samantha",
+        "rate": 155,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.36843537414966,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 909480
+    },
+    {
+      "file": "guide-0-uk.m4a",
+      "lineId": "journey-reaction.v1/guide/0",
+      "locale": "uk",
+      "containerBytes": 24070,
+      "sha256": "999c06841d4ffc209732cc3dd5cd2e497430e65947da98472b7dd939d5140d9b",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.365351,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 155,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.461315192743764,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 945152
+    },
+    {
+      "file": "guide-capture-0-en.m4a",
+      "lineId": "journey-incidental.v1/guide/capture/0",
+      "locale": "en",
+      "containerBytes": 16018,
+      "sha256": "8cec12f5da013e765a6b056384ff520a9ec82244060e962f4f515fbb4e32419c",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 1.401451,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Samantha",
+        "rate": 155,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 1.5325170068027212,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 588488
+    },
+    {
+      "file": "guide-capture-0-uk.m4a",
+      "lineId": "journey-incidental.v1/guide/capture/0",
+      "locale": "uk",
+      "containerBytes": 20518,
+      "sha256": "433631c972d042e82030f5e4559d0d11cf88b889b2fa468f03fa8f9208c91aa6",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 1.959002,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 155,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.089795918367347,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 802488
+    },
+    {
+      "file": "engineer-0-en.m4a",
+      "lineId": "journey-reaction.v1/engineer/0",
+      "locale": "en",
+      "containerBytes": 26177,
+      "sha256": "284c41fcc8bccb3203001f63287e6d2246c3a2154e381cf3bfacccea5dec89df",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.441315,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 165,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.5541950113378684,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 980816
+    },
+    {
+      "file": "engineer-0-uk.m4a",
+      "lineId": "journey-reaction.v1/engineer/0",
+      "locale": "uk",
+      "containerBytes": 25980,
+      "sha256": "b9374b0497e3021ae5b572da741935aa0e3995792f1ea0f53801c341a69c7412",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.444263,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 165,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.5541950113378684,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 980816
+    },
+    {
+      "file": "engineer-capture-0-en.m4a",
+      "lineId": "journey-incidental.v1/engineer/capture/0",
+      "locale": "en",
+      "containerBytes": 17202,
+      "sha256": "737156beb735cb2202749e3ebc411bc14478caa17563275d334a26ff93e44cf9",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 1.454467,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 165,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 1.5789569160997732,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 606320
+    },
+    {
+      "file": "engineer-capture-0-uk.m4a",
+      "lineId": "journey-incidental.v1/engineer/capture/0",
+      "locale": "uk",
+      "containerBytes": 20518,
+      "sha256": "f31b61207464ac2a173e486bafd955a307c8e0a9a79716b8bc781d2497998722",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 1.959002,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 165,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.089795918367347,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 802488
+    },
+    {
+      "file": "rival-0-en.m4a",
+      "lineId": "journey-reaction.v1/rival/0",
+      "locale": "en",
+      "containerBytes": 25231,
+      "sha256": "9a7a6f62be6e4a60c496ba88d5d6440ccda263587f24c2f652bac9e8a151516f",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.481406,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Karen",
+        "rate": 175,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.6006349206349206,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 998648
+    },
+    {
+      "file": "rival-0-uk.m4a",
+      "lineId": "journey-reaction.v1/rival/0",
+      "locale": "uk",
+      "containerBytes": 28181,
+      "sha256": "d4fa7345de6753794d5e1709fa31983d254eb19549ab2aa5325078bbfa7ad5e9",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.792608,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 175,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.9257142857142857,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 1123480
+    },
+    {
+      "file": "rival-capture-0-en.m4a",
+      "lineId": "journey-incidental.v1/rival/capture/0",
+      "locale": "en",
+      "containerBytes": 15493,
+      "sha256": "76d45144f3249a70d2f2faca1e9b378b1dddaec8414a9430b9c831de57c872f8",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 1.379637,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Karen",
+        "rate": 175,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 1.486077097505669,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 570656
+    },
+    {
+      "file": "rival-capture-0-uk.m4a",
+      "lineId": "journey-incidental.v1/rival/capture/0",
+      "locale": "uk",
+      "containerBytes": 20518,
+      "sha256": "4c8ea615be61b2ea24acf801e9a1d87ed34fe5f610955e346793eddaada1d3ca",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 1.959002,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 175,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.089795918367347,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 802488
+    },
+    {
+      "file": "sentinel-0-en.m4a",
+      "lineId": "journey-reaction.v1/sentinel/0",
+      "locale": "en",
+      "containerBytes": 17879,
+      "sha256": "b40bbeb6fadbef7bd8a3d5399b008ccf7d2e309b946ceb0514c63ef1ad2344b6",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.154331,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Fred",
+        "rate": 145,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.2755555555555556,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 873816
+    },
+    {
+      "file": "sentinel-0-uk.m4a",
+      "lineId": "journey-reaction.v1/sentinel/0",
+      "locale": "uk",
+      "containerBytes": 21677,
+      "sha256": "d96d5d5a671d09276a0fe1193512911f12ff32625a99016aac449f3b44afae95",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.166485,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 145,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.2755555555555556,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 873816
+    },
+    {
+      "file": "sentinel-capture-0-en.m4a",
+      "lineId": "journey-incidental.v1/sentinel/capture/0",
+      "locale": "en",
+      "containerBytes": 18562,
+      "sha256": "08336f37ef077c8cb0d1f436396577b074f8c4b4d52892b77b1ece0d0f13c14a",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.184036,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Fred",
+        "rate": 145,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.3219954648526078,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 891648
+    },
+    {
+      "file": "sentinel-capture-0-uk.m4a",
+      "lineId": "journey-incidental.v1/sentinel/capture/0",
+      "locale": "uk",
+      "containerBytes": 22286,
+      "sha256": "7532c7185bd851f7fdf9fde71a0b1b49b160ab416d82dab9968f7d64ad469634",
+      "manifestHashMatches": true,
+      "manifestBytesMatch": true,
+      "transcriptMatches": true,
+      "channels": 1,
+      "sampleRate": 22050,
+      "durationSeconds": 2.154694,
+      "provenance": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 145,
+        "kind": "generated",
+        "releaseStatus": "pilot-review-required",
+        "note": "Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending."
+      },
+      "codec": "aac",
+      "predecodeAdmission": {
+        "channels": 1,
+        "decodeChannels": 2,
+        "sampleRate": 22050,
+        "maxDecodedSeconds": 2.2755555555555556,
+        "format": "aac-lc-m4a"
+      },
+      "expectedPcmBudgetAt48kHz": 873816
+    }
+  ],
+  "predecodeAdmissionMethod": "Direct resource inspection with the conservative PCM WAV/AAC-LC M4A parser; no audio output or suite."
+}

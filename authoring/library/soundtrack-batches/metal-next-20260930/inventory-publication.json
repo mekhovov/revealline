@@ -1,0 +1,11 @@
+{
+  "verifiedAt": "2026-09-30T17:23:11.144803+00:00",
+  "url": "https://mekhovov.github.io/revealline-soundtracks/admissions/metal-next-20260930.json",
+  "status": 200,
+  "bytes": 1383,
+  "sha256": "9e92ce2757f17568ff9753be21f07268314490153520273eb2034ef06534c560",
+  "cors": "*",
+  "pullRequest": "https://github.com/mekhovov/revealline-soundtracks/pull/67",
+  "mergeCommit": "9cc5274ad0675d1411a12c16bb83ede3546889e3",
+  "deployRunURL": "https://github.com/mekhovov/revealline-soundtracks/actions/runs/36750444819"
+}

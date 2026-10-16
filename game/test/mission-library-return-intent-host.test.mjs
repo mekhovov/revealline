@@ -11,6 +11,7 @@ import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { readMissionLibraryReturn } from '../mission-library/handoff.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
 
 const settle = (condition) => waitFor(condition, { timeoutMs: 10000 });
 // Compiling the real Journey before the held request is a boot precondition,
@@ -87,10 +88,34 @@ async function versus(t, options = {}) {
   });
 }
 async function open(p, host, mode) {
-  const opener = host === 'solo' ? 'shell-play' : 'race-library-switch';
-  p.$(opener).focus();
-  p.$(opener).click();
-  await settle(() => p.$('journey-chooser')?.open && p.$('journey-mode'));
+  if (host === 'solo') await openMissionLibrary(p, 'shell-play');
+  else {
+    const opener = p.$('race-library-switch'),
+      listeners = opener.listeners.get('click'),
+      pending = [];
+    opener.listeners.set(
+      'click',
+      new Set(
+        [...listeners].map((listener) => (event) => {
+          const result = listener.call(opener, event);
+          if (result instanceof Promise) pending.push(result);
+          return result;
+        }),
+      ),
+    );
+    try {
+      opener.focus();
+      opener.click();
+    } finally {
+      opener.listeners.set('click', listeners);
+    }
+    assert.equal(pending.length, 1, 'The visible Missions action owns preparation.');
+    assert.match(p.$('race-message').textContent, /Preparing missions/);
+    await pending[0];
+    assert.equal(p.$('journey-chooser').open, true);
+  }
+  p.$('journey-lifecycle').value = '';
+  p.$('journey-lifecycle').emit('change');
   p.$('journey-mode').value = mode;
   p.$('journey-mode').emit('change');
   return [...p.$('journey-cards').children];
@@ -258,7 +283,7 @@ for (const source of ['legacy', 'whole-spatial-v5', 'opening'])
     assert.equal(target.searchParams.get('library-mission'), selected);
     assert.equal(
       target.searchParams.get('journey'),
-      source === 'legacy' ? 'team-spatial-originals-1' : 'legacy',
+      source === 'legacy' ? 'team-cultural-specialist-originals-2' : 'legacy',
     );
     assert.deepEqual(readMissionLibraryReturn(target.searchParams, { mode: 'team' }), {
       mode: 'solo',
@@ -331,7 +356,7 @@ test('Legacy Solo → Journey Versus → Solo restores browsing independently of
     assert.equal(browse.selectedId, selected);
     assert.equal(browse.mode, 'versus');
     assert.equal(new URL(target).searchParams.get('library-mission'), selected);
-    assert.equal(new URL(target).searchParams.get('journey'), 'whole-spatial-v5');
+    assert.equal(new URL(target).searchParams.get('journey'), 'whole-spatial-v25');
     assert.match(new URL(target).searchParams.get('return-token-v2'), /^[0-9a-f]{32}$/);
   });
   await t.test(
@@ -501,7 +526,7 @@ test('late Classic checked return without saved browse state uses the retained m
       const card = cards.find((item) => JSON.parse(item.dataset.missionId)[3] === 'signal-12');
       assert.ok(card);
       missionId = card.dataset.missionId;
-      card.click();
+      await activateMissionCard(card);
       await settle(() => {
         p.frame(0);
         return (

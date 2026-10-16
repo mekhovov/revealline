@@ -1,0 +1,26 @@
+{
+  "commitBefore": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "sourceRunner": "qualify-raid.mjs",
+  "sourceRunnerSHA256": "65a792a61a73be2f354e063f4e4f3a461c01d0aa752973a5e494eaa9a42f4f5c",
+  "selection": "First authored layout in each of six worlds; baseline objective route and earned Pursuer five-contract Marathon.",
+  "selectionOnlyEdits": [
+    [
+      "const layoutList = OVERFLIGHT_BATTLEFIELDS.filter((layout) => !selected || layout.id === selected);",
+      "const layoutList = OVERFLIGHT_BATTLEFIELDS.filter((layout, index, all) => all.findIndex((item) => item.world === layout.world) === index);"
+    ],
+    [
+      "  trial(layout, 'objectives', false);\n",
+      ""
+    ],
+    [
+      "  trial(layout, 'packs', false);\n",
+      ""
+    ],
+    [
+      "  trial(layout, 'objectives', false, 'time-attack');\n",
+      ""
+    ]
+  ],
+  "adaptedRunnerSHA256": "7fb3dccf3c2808abf4a9c74578e012da10dbdd0d53e6282e95a45813bc0fb467",
+  "note": "Exact existing trial implementation, settings, inputs, limits and output schema; only trial selection differs. No gameplay source mutation."
+}

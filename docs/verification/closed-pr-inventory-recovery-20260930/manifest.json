@@ -1,0 +1,527 @@
+{
+  "format": "revealline-closed-pr-inventory-preservation.v1",
+  "base": "d1b0705c916b8987159d56985db3a701d1bb4272",
+  "classification": "historical originals only; not current feature or recovery approval",
+  "originalFiles": 50,
+  "originalBytes": 2618117,
+  "sourcePRs": [
+    {
+      "number": 780,
+      "head": "5d942540e5720d739568d8580ae35d5551253481"
+    },
+    {
+      "number": 802,
+      "head": "cb775a9ad9588b993bc3725a03d12058bab1f809"
+    },
+    {
+      "number": 804,
+      "head": "bbe8bdc523e5b4a27984e080431a1502ee6598b8"
+    }
+  ],
+  "files": [
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/plan-status-2026-09-29-levels.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/plan-status-2026-09-29-levels.md",
+      "blob": "d9445e7175061267614d7c1ea199eff62946fe85",
+      "bytes": 57004,
+      "sha256": "f1113589108b61177663576e42d80891fe44d23fe16e29ac66c8707527917a7b",
+      "priorDisposition": "different"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/README.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/README.md",
+      "blob": "f9ddffdfefe78c38d8a25f449226e445321d92cd",
+      "bytes": 8364,
+      "sha256": "e6165b8a9c834aa42672e0f3c35060b1f117ab37658f4e8bb6df7a6b62f71e64",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/controller-refresh-review.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/controller-refresh-review.md",
+      "blob": "460cc177ba784b975d703051735abfeddfed448b",
+      "bytes": 6614,
+      "sha256": "dfce7ffa527ebb9f0ab1737a7f8d8c6f63bfca92888c61dd80d5629f0fb83469",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/historical-donors/README.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/historical-donors/README.md",
+      "blob": "017b6f5554539f11096d742150cf4f2bb0b95280",
+      "bytes": 6899,
+      "sha256": "a22f4d510d421ad7eecf189436b94e391c5150cd3600ac3ed5c2fe0ece249568",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/historical-donors/manifest.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/historical-donors/manifest.json",
+      "blob": "2cdb3ca5d2d967b7ac86003443c365787162c758",
+      "bytes": 2116,
+      "sha256": "c0a40f8776a1a6ef4a879c4f0a9c7f60078b7578d00e074a43d8915b5d8d7a3b",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/historical-donors/p03-enemy-workshop-reading-source-only.patch",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/historical-donors/p03-enemy-workshop-reading-source-only.patch",
+      "blob": "b3e1c37afb0aaad14e71ce0f2cd3efe94c25e417",
+      "bytes": 13506,
+      "sha256": "78e848c20e1e72f69ad9aa5a7679e80194f2aeac474a50c4323dfb59f01c02e8",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/historical-donors/p05-narrow-hud-source-only.patch",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/historical-donors/p05-narrow-hud-source-only.patch",
+      "blob": "41e92ddd8abe96b081ec426e1d6544a87bbd18e5",
+      "bytes": 7297,
+      "sha256": "51fb6827de1083d2ad5fd40f5795df914434feb4a52e694a39cb70f22e92efd4",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/native-menu-review.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/native-menu-review.json",
+      "blob": "c76ff47f58932b054260d5e59e33e15028b9d9cc",
+      "bytes": 2288,
+      "sha256": "dc066e653ca86d582299ee98116677d21294e2e35ecc7b717866c5aa1de0d0a7",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/primary-inventory.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/primary-inventory.json",
+      "blob": "a774102de63ca091ba2b08ab62810073f14af893",
+      "bytes": 105143,
+      "sha256": "42296946a1cd0818caaff6043eab0d7a5b0315ce3514d1d11bc160924fbc7c57",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/primary-review.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/primary-review.md",
+      "blob": "8b57917d9d419fd50fe5259899d3ca321c3dd190",
+      "bytes": 45297,
+      "sha256": "ab36d07084667b5dc78dfed2089273e9089a3be61faad004fa9563e9847fb52d",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/refresh.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/refresh.json",
+      "blob": "6c5b7ce47355afd4fa4df3e727c27422f4b77503",
+      "bytes": 201250,
+      "sha256": "6778f43a6664a536fb2cecba14ccc83b956c86d230393e221b334e710324c894",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/remaining-branches.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/remaining-branches.json",
+      "blob": "b3b04950ca3801140e0ee404944a5fff3b290b31",
+      "bytes": 111718,
+      "sha256": "e0232a46502a732544491a479b34bddb927bad992a802b4faf5ddaf5243433bd",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/remaining-branches.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/remaining-branches.md",
+      "blob": "1246cc4bdc3788a87efca56fc3e9c75384ea4d83",
+      "bytes": 10059,
+      "sha256": "ce9eb1e33f52038da511b92752a4002e18d3988959fbf41c8a2fbd84f52f4f3a",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/source-intake-update.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/source-intake-update.md",
+      "blob": "921e6806729634e50aa5eb30a2ae379e2da4523a",
+      "bytes": 10713,
+      "sha256": "35ddfbe5be261c1d052c408d062951aef3938e079de2a8e939e64029f734fcb5",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/team-batch-fingerprints.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/team-batch-fingerprints.json",
+      "blob": "c11f66b934d86ba90df6dc7e3cc6e90f79c47df1",
+      "bytes": 645,
+      "sha256": "8c24df9b67588a7aa7b93db1456d20948259160464c58e91d8b1b0cfadf61508",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/team-batch-review.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/team-batch-review.md",
+      "blob": "1b26b9e0eca3cb89dcd6b76da9e1b76faef9aa64",
+      "bytes": 5451,
+      "sha256": "2a8890dc45e11f99f24747fd7706f502172346c08c99a439be5f91220a8bd28e",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/team-readability-evidence/first-connection-large-390x844.png",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/team-readability-evidence/first-connection-large-390x844.png",
+      "blob": "b15f3fd40e3be2da35df416bf8b8c1fd590adaaa",
+      "bytes": 32540,
+      "sha256": "a969adccedc593fdaeb9892ade1f7b3b580e8782ee69698e744af58aec572c07",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/team-readability-evidence/first-connection-large-844x390.png",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/team-readability-evidence/first-connection-large-844x390.png",
+      "blob": "b7d8fb92c5ed36eb711869822d35950eddf4eb9e",
+      "bytes": 38433,
+      "sha256": "1207edc04f8404e948eb9e6589bc61ae504959f130071ccfda73f1d9eefa0adc",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/worktree-inventory.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/worktree-inventory.json",
+      "blob": "6e9895a5702b2658f7da5c510173b1d8ce485be7",
+      "bytes": 906266,
+      "sha256": "824bb5e2afc3a9d1d9e00c9adb15806eb826db0bbd7919788bbd8c6908de8873",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 780,
+      "sourceCommit": "5d942540e5720d739568d8580ae35d5551253481",
+      "originalPath": "docs/verification/local-release-review-2026-09-29/worktree-review.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/worktree-review.md",
+      "blob": "4bdec3ed6f6b39618253a7c309e6d3e8b17192b8",
+      "bytes": 9690,
+      "sha256": "3e57f407874134dd753732cfbf0ab4d60261edbc47f666e4e59a04197a55785b",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/README.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/README.md",
+      "blob": "08a43f2b7f1e0c5a8e395dbfdf77fd0b7516c7a0",
+      "bytes": 3808,
+      "sha256": "ff1f99dabde5e502bdb0d47503aaaa65dad019e1dad3dc76751a3542d665f376",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/branch-proposals/README.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/README.md",
+      "blob": "a5bd2d849e72a61da8c766280a7e72b425c9b9f3",
+      "bytes": 3584,
+      "sha256": "45d392d3396439987e8005131f7210e428409d34359a7c9681a10703afb5e547",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/branch-proposals/historical-branch-donors-2026-09-29.tar.gz",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/historical-branch-donors-2026-09-29.tar.gz",
+      "blob": "07eaba18d4806c9337299266df21040b35e9cee5",
+      "bytes": 47288,
+      "sha256": "c90106797fa9061cfeaaf630594fbb696c7ff5909600da0ed0f508594fee65a4",
+      "priorDisposition": "absent",
+      "archiveProof": "pr843-merged-closed-donors-reconciled-1400.json; completed original collector reused, not rerun"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/branch-proposals/historical-branch-donors-2026-09-29.tar.gz.sha256",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/historical-branch-donors-2026-09-29.tar.gz.sha256",
+      "blob": "17734be5085683804453c62f5f2f570577bdd5b0",
+      "bytes": 109,
+      "sha256": "cff7da27ca94701915bc7fd822d5c96a64759f4b5bb8083d84f760f61508d509",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/branch-proposals/manifest.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/manifest.json",
+      "blob": "ffd06283cba8c0a6aa3e4e65baf1a29d79a00aa0",
+      "bytes": 11093,
+      "sha256": "4b4a301283cd28da788dcb6bcb5152e5a6f34b13ad94345a56284f6a96646b32",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/branch-proposals/patches/chapter-residency-selected-files.patch",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/patches/chapter-residency-selected-files.patch",
+      "blob": "c632ab2db640b17bf3b0b00314759a19319d7fb7",
+      "bytes": 13442,
+      "sha256": "c8601feb23fdc410a6532dd1d74bf7f1545b95617a7915a8dddc6e9f31766d37",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/branch-proposals/patches/classic-race-tour-game-integration.patch",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/patches/classic-race-tour-game-integration.patch",
+      "blob": "e229461b7944afbf4ee2ee34c8c09915272cf0cd",
+      "bytes": 78569,
+      "sha256": "9725dc506a34d0d2f9db69c8b54e37f1b3611fce03ca0452021e9313b71f526b",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/branch-proposals/patches/classic-race-tour-selected-files.patch",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/patches/classic-race-tour-selected-files.patch",
+      "blob": "031fe78653c609f1b87a79933a09e3575f0177db",
+      "bytes": 37432,
+      "sha256": "b1799d3bd3fdf1e07102634987db05b62d4ac065f35427f60ada800dd3e490a9",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/branch-proposals/patches/optional-inspection-job-regression.patch",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/patches/optional-inspection-job-regression.patch",
+      "blob": "3f3f9a2d652bb7ff33a0c4ce5d09ce9b54f1e46a",
+      "bytes": 1313,
+      "sha256": "848dc732a1243ba7efa3a6a45ce25016150470d018dcbf623c755ccc8a353717",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/branch-proposals/validation.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/validation.json",
+      "blob": "c49d3ca646c9aafedc842a64063ac0533ab2c93e",
+      "bytes": 1332,
+      "sha256": "8686975beefbb43b0e2aa4e1b27499bf0ee9b233589bd4262ad09b6c7409a8e7",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/delivery-audit.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/delivery-audit.json",
+      "blob": "a59dde8ec131720008f6d1a41bd210fd51641e05",
+      "bytes": 4648,
+      "sha256": "187a57eab8eb394649fea5b1bd1776829ab15d1db0a636b000e3894d9c634fb0",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/packet-files.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/packet-files.json",
+      "blob": "37b4e38d55b9bf9a22bcb1e2d99a5683078c5114",
+      "bytes": 4791,
+      "sha256": "02f54a3c9ff9ad77835abdab36140fe72f36a9739333247b14f849be758de69d",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/README.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/README.md",
+      "blob": "65ab396f00ef4eff104301f8a3ac442df9fa3332",
+      "bytes": 4583,
+      "sha256": "6cf192195c9b700b3de2896cf28932ec13535e6bb44c2750def45b76469d2885",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/manifest.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/manifest.json",
+      "blob": "978caf93a689ea4682e689f38e8b85a44254f6f4",
+      "bytes": 5175,
+      "sha256": "db8aee85744f8702a89c37cf580310a3bd8e129a25aeace93bfc01e4c66a8800",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p04-reference-prototype-r1/candidate-files.tar.gz",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p04-reference-prototype-r1/candidate-files.tar.gz",
+      "blob": "9c67c5815314dc74e0f5a589fabc8f18363dcaba",
+      "bytes": 86582,
+      "sha256": "305b4027cae1fb8b04ecb1814b03438e574b02170c469341315257c002f3ac9b",
+      "priorDisposition": "absent",
+      "archiveProof": "pr843-merged-closed-donors-reconciled-1400.json; completed original collector reused, not rerun"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p04-reference-prototype-r1/manifest.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p04-reference-prototype-r1/manifest.json",
+      "blob": "f22223a1e14635707c5caa7fdde878140285757b",
+      "bytes": 11631,
+      "sha256": "f76d9dd56d9eb5bbd79375ee186a1de667d694fa7d00c871a4918df255fab8f5",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p04-reference-prototype-r1/new-source.patch",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p04-reference-prototype-r1/new-source.patch",
+      "blob": "e5e3c49b201f5df77f913c0edafa6e4a4eb0bb6b",
+      "bytes": 67953,
+      "sha256": "d1835634b7c421c8ef283e26aa57f282d14cc320d9182c0b7550849b3bb2c4a9",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p04-reference-prototype-r1/tracked.diff",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p04-reference-prototype-r1/tracked.diff",
+      "blob": "695cfc6fe451f45f37a85c425ce960277d2356ce",
+      "bytes": 57310,
+      "sha256": "bb019ca858b9d5fc3099648d36b2c1321c0925ff8b73e80a0faee207a2f4088c",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-cues-next/candidate-files.tar.gz",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-cues-next/candidate-files.tar.gz",
+      "blob": "9eade99df1df12be852ab7db302b14bb327ee4b7",
+      "bytes": 120696,
+      "sha256": "635be0fbce42827745c1db1e933b9e413e3481390c703112385d9206940e02a9",
+      "priorDisposition": "absent",
+      "archiveProof": "pr843-merged-closed-donors-reconciled-1400.json; completed original collector reused, not rerun"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-cues-next/manifest.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-cues-next/manifest.json",
+      "blob": "e1b2008accbbc3cc69d1d257b0a2e30829f9ab26",
+      "bytes": 6409,
+      "sha256": "f52a673d9a2ea6a29eabe06799fb387fa7ac5db727d2a559e4df12d3242b2c9f",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-cues-next/new-source.patch",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-cues-next/new-source.patch",
+      "blob": "4d7d227ed952eb5a781b9a31b3d86ffe463349c6",
+      "bytes": 8304,
+      "sha256": "0145b1162f00fbdc77e78730c00b08e2772d375bd1ca4d7ea35a1b5020fd2672",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-cues-next/tracked.diff",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-cues-next/tracked.diff",
+      "blob": "7c9bcb7dc5ee86276fd8d9138e51e57c7e4248b2",
+      "bytes": 39839,
+      "sha256": "1bee87671b9eb0d1ba2dd19cae3cbd7b64f10fb262e3e06e2d485251b1345cbb",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-v621/candidate-files.tar.gz",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-v621/candidate-files.tar.gz",
+      "blob": "9094d9939b6b3d2eb86deb4a92493e9fd7e5cab0",
+      "bytes": 166135,
+      "sha256": "2d342dea369f9022ebd2037b6f214799e1ac66423eff2b1b4cb3c5b7665c5a4f",
+      "priorDisposition": "absent",
+      "archiveProof": "pr843-merged-closed-donors-reconciled-1400.json; completed original collector reused, not rerun"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-v621/manifest.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-v621/manifest.json",
+      "blob": "4097e13850ea427ceeb3eda63e55449c14d326f7",
+      "bytes": 11358,
+      "sha256": "d3610c56a4bc640fedaefc1ee8b2b9615d3ce28db894a574b85e5492ef45ba1c",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-v621/new-source.patch",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-v621/new-source.patch",
+      "blob": "a52141174de24104c097f7515fc726ca82ca340c",
+      "bytes": 123209,
+      "sha256": "a5f5aa8c0255e93a490b38b34a9a15e13691b3e2ee78bb7584083bdfe08fd9a2",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-v621/tracked.diff",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/p05-team-large-v621/tracked.diff",
+      "blob": "f6831799bef06702d76d75250231c9420e184012",
+      "bytes": 92080,
+      "sha256": "d1484e27479e04d144508832f9df10a00ee111f58535d1c3cf32cbf0d3e2455e",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 802,
+      "sourceCommit": "cb775a9ad9588b993bc3725a03d12058bab1f809",
+      "originalPath": "docs/verification/historical-proposal-review-2026-09-29/studio-team/review.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/studio-team/review.json",
+      "blob": "b58e02c55a620fc3277cb7a570485285a55d2872",
+      "bytes": 3108,
+      "sha256": "eea4f9cc4ed9ca53f5fbf6527bfe5063df359b195ff4ac8d4b037ed0d2a8d533",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 804,
+      "sourceCommit": "bbe8bdc523e5b4a27984e080431a1502ee6598b8",
+      "originalPath": "docs/verification/local-push-audit-2026-09-29/README.md",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-push-audit-2026-09-29/README.md",
+      "blob": "73865696e17e3f8f5fe4f57833689675a46770dc",
+      "bytes": 10798,
+      "sha256": "582d4089d0a29c1c55fe9135294966dae35d28dcf2a067869d77d0c04e8c1a4a",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 804,
+      "sourceCommit": "bbe8bdc523e5b4a27984e080431a1502ee6598b8",
+      "originalPath": "docs/verification/local-push-audit-2026-09-29/open-pr-targets.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-push-audit-2026-09-29/open-pr-targets.json",
+      "blob": "22eb9cf76ec174dce022468576760e218f4ad89c",
+      "bytes": 7637,
+      "sha256": "c9dbb0c9d26fdccf8710808771b5cf374f13dc148e9ac4dc85c9cd83afff15b5",
+      "priorDisposition": "absent"
+    },
+    {
+      "sourcePR": 804,
+      "sourceCommit": "bbe8bdc523e5b4a27984e080431a1502ee6598b8",
+      "originalPath": "docs/verification/local-push-audit-2026-09-29/receipt.json",
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-push-audit-2026-09-29/receipt.json",
+      "blob": "4b6f5455ed233a26dabaf0cdae69e7a8e3573cb9",
+      "bytes": 6608,
+      "sha256": "cd00054ef760677f6e3ad7ce00ad1079c8d104bd49bb794bffe858024beca135",
+      "priorDisposition": "absent"
+    }
+  ]
+}

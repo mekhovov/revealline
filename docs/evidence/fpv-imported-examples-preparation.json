@@ -1,0 +1,890 @@
+{
+  "format": "FPVImportedExamplesPreparation.v1",
+  "sourceHead": "5931ef12678cc52ab332fbbfe5516ad93a60caa9",
+  "candidateHostSha256": "6d93d9c36fb8d0c576907d98618d7aa73637bb49bd8d72ec310508241b96045c",
+  "baselineHostSha256": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc",
+  "runtimeGrowthBytes": 474,
+  "checks": [
+    {
+      "name": "retained D4 original pack exact",
+      "passed": true
+    },
+    {
+      "name": "self-level original ordinary-control authoring proof",
+      "passed": true
+    },
+    {
+      "name": "self-level converted demonstration completes exact replay",
+      "passed": true
+    },
+    {
+      "name": "self-level controls and final identity retained",
+      "passed": true
+    },
+    {
+      "name": "acro original ordinary-control authoring proof",
+      "passed": true
+    },
+    {
+      "name": "acro converted demonstration completes exact replay",
+      "passed": true
+    },
+    {
+      "name": "acro controls and final identity retained",
+      "passed": true
+    },
+    {
+      "name": "bounded two-record transport has one part",
+      "passed": true
+    },
+    {
+      "name": "transport does not trust verified flags",
+      "passed": true
+    },
+    {
+      "name": "self-level baseline lookup excludes installed example",
+      "passed": true
+    },
+    {
+      "name": "self-level candidate lookup selects exact installed example",
+      "passed": true
+    },
+    {
+      "name": "acro baseline lookup excludes installed example",
+      "passed": true
+    },
+    {
+      "name": "acro candidate lookup selects exact installed example",
+      "passed": true
+    },
+    {
+      "name": "missing dependency unavailable",
+      "passed": true
+    },
+    {
+      "name": "missing dependency does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "invalid recording unavailable",
+      "passed": true
+    },
+    {
+      "name": "invalid recording does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "incomplete flight unavailable",
+      "passed": true
+    },
+    {
+      "name": "incomplete flight does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "wrong pack SHA unavailable",
+      "passed": true
+    },
+    {
+      "name": "wrong pack SHA does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "wrong course revision unavailable",
+      "passed": true
+    },
+    {
+      "name": "wrong course revision does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "wrong course ID unavailable",
+      "passed": true
+    },
+    {
+      "name": "wrong course ID does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "wrong mode unavailable",
+      "passed": true
+    },
+    {
+      "name": "wrong mode does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "non-demonstration session unavailable",
+      "passed": true
+    },
+    {
+      "name": "non-demonstration session does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "wrong response identity unavailable",
+      "passed": true
+    },
+    {
+      "name": "wrong response identity does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "altered response controls unavailable",
+      "passed": true
+    },
+    {
+      "name": "altered response controls does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "wrong runtime model unavailable",
+      "passed": true
+    },
+    {
+      "name": "wrong runtime model does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "wrong collision backend unavailable",
+      "passed": true
+    },
+    {
+      "name": "wrong collision backend does not hide later genuine proof",
+      "passed": true
+    },
+    {
+      "name": "shared course object exact first pack cache",
+      "passed": true
+    },
+    {
+      "name": "shared course object distinct pack cache",
+      "passed": true
+    },
+    {
+      "name": "shared course object original cache remains exact",
+      "passed": true
+    },
+    {
+      "name": "authoring draft cannot offer installed example",
+      "passed": true
+    },
+    {
+      "name": "built-in example retained",
+      "passed": true
+    },
+    {
+      "name": "baseline copied project borrows bundled example",
+      "passed": true
+    },
+    {
+      "name": "candidate copied project cannot borrow bundled example",
+      "passed": true
+    },
+    {
+      "name": "builtin shared course object first cached",
+      "passed": true
+    },
+    {
+      "name": "project cannot reuse builtin cache with same object and pack label",
+      "passed": true
+    }
+  ],
+  "replays": [
+    {
+      "mode": "self-level",
+      "originalBytes": 71108,
+      "originalSha256": "24fd7325b726fa7eeb296754fe54a98fc6b5d31688b8968a1cafa7abd510b007",
+      "frames": 4024,
+      "finalStateIdentity": "c6a52efd455aeefa",
+      "state": {
+        "ticks": 4024,
+        "status": "complete",
+        "position": {
+          "x": 23965,
+          "y": 2,
+          "z": 23968
+        },
+        "velocity": {
+          "x": 1,
+          "y": 0,
+          "z": 1
+        },
+        "orientation": [
+          2022,
+          999994,
+          2266,
+          -2127
+        ],
+        "angular": {
+          "roll": -24,
+          "pitch": 16,
+          "yaw": 48
+        },
+        "step": 10,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 1138,
+        "landingTilt": 0,
+        "lastInput": {
+          "roll": -14,
+          "pitch": 14,
+          "yaw": 3,
+          "throttle": 0,
+          "actions": 0
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 7467
+        },
+        "health": 100,
+        "grounded": true,
+        "support": {
+          "id": "$floor",
+          "y": 1,
+          "normal": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "cooldown": 0,
+        "contactCooldown": 0,
+        "rng": 1,
+        "nextProjectileId": 1,
+        "projectiles": [],
+        "actors": [],
+        "events": [
+          {
+            "type": "objective",
+            "index": 9
+          }
+        ],
+        "shots": 0,
+        "hits": 0,
+        "total": 10,
+        "target": null,
+        "attitude": {
+          "roll": -24,
+          "pitch": 27,
+          "yaw": 17975,
+          "up": {
+            "x": 4054,
+            "y": 999982,
+            "z": 4524
+          }
+        },
+        "maxHealth": 100
+      }
+    },
+    {
+      "mode": "acro",
+      "originalBytes": 61130,
+      "originalSha256": "9902a6867bdf63597320a36f4dfd3ae96f676e4e99c3c07c7558b5b468cf39af",
+      "frames": 3670,
+      "finalStateIdentity": "4a4560272f8dc41a",
+      "state": {
+        "ticks": 3670,
+        "status": "complete",
+        "position": {
+          "x": 24010,
+          "y": 2,
+          "z": 24009
+        },
+        "velocity": {
+          "x": -1,
+          "y": 0,
+          "z": -1
+        },
+        "orientation": [
+          891,
+          -999997,
+          784,
+          2228
+        ],
+        "angular": {
+          "roll": 0,
+          "pitch": 15,
+          "yaw": 48
+        },
+        "step": 11,
+        "hold": 0,
+        "contacts": 0,
+        "landingSpeed": 1136,
+        "landingTilt": 17,
+        "lastInput": {
+          "roll": 0,
+          "pitch": 1,
+          "yaw": 3,
+          "throttle": 0,
+          "actions": 0
+        },
+        "heightRange": {
+          "min": 0,
+          "max": 7478
+        },
+        "health": 100,
+        "grounded": true,
+        "support": {
+          "id": "$floor",
+          "y": 1,
+          "normal": {
+            "x": 0,
+            "y": 1000000,
+            "z": 0
+          }
+        },
+        "cooldown": 0,
+        "contactCooldown": 0,
+        "rng": 1,
+        "nextProjectileId": 1,
+        "projectiles": [],
+        "actors": [],
+        "events": [
+          {
+            "type": "objective",
+            "index": 10
+          }
+        ],
+        "shots": 0,
+        "hits": 0,
+        "total": 11,
+        "target": null,
+        "attitude": {
+          "roll": 11,
+          "pitch": -10,
+          "yaw": 17974,
+          "up": {
+            "x": -1786,
+            "y": 999996,
+            "z": -1564
+          }
+        },
+        "maxHealth": 100
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "original.rlpack",
+      "bytes": 17072,
+      "sha256": "311b04890037f6b5681dd1fd0067f72292a888bfd2e8cb5b605e8de707aa8711"
+    },
+    {
+      "path": "valid-examples.json",
+      "bytes": 145219,
+      "sha256": "d783b6c01ab7ffc058f869bf6a9a6ff1cf997b5a0878fdce9bc050949f5d2980"
+    },
+    {
+      "path": "revision-b.rlpack",
+      "bytes": 17086,
+      "sha256": "e88b30d6d4610be99c6e58734d75482de81d7c16d19b3ae6bdd8b5639e91cd44"
+    },
+    {
+      "path": "copied-builtin.rlpack",
+      "bytes": 3926,
+      "sha256": "6bd0147d711ee3ce859bcd62004458621e833814427a3c1121908e06b638e883"
+    },
+    {
+      "path": "unavailable-examples.json",
+      "bytes": 145214,
+      "sha256": "de6a959aa942bfc1ade1c43d9267b901775d45519cd7e97944d095f3f4b9947e"
+    }
+  ],
+  "builtinControl": {
+    "id": "woodland-08",
+    "title": "Woodland survey"
+  },
+  "course": {
+    "format": "FlightCourse.v2",
+    "id": "creator-industrial-split-level-route",
+    "revision": "r1",
+    "environment": "container-yard",
+    "world": {
+      "id": "creator-industrial-split-level",
+      "theme": "academy",
+      "style": "industrial",
+      "themeProfile": {
+        "format": "ThemeProfile.v1",
+        "id": "academy",
+        "revision": "r1",
+        "title": {
+          "en": "Flight Academy",
+          "uk": "Льотна академія"
+        },
+        "palette": {
+          "sky": 11916770,
+          "fog": 12965849,
+          "ground": 5400931,
+          "wall": 3625316,
+          "accent": 11135933,
+          "warm": 15054977
+        },
+        "textureFilter": "linear",
+        "drone": "racer",
+        "characters": "civilian",
+        "assets": {
+          "gate": "builtin:gate",
+          "marker": "builtin:beacon",
+          "enemy": "builtin:sentry",
+          "vehicle": "builtin:vehicle"
+        },
+        "audio": {
+          "ambience": "hangar",
+          "motor": "quad",
+          "gate": "chime"
+        },
+        "ui": {
+          "accent": "#a2dfcf",
+          "font": "system-ui",
+          "borderRadius": 12
+        }
+      }
+    },
+    "locales": {
+      "en": {
+        "brief": "Use the open side zone to change height. Self-level passes below then above the deck; Acro reverses that order. Finish on the ground pad. These are editable starter routes, not timed mastery tests.",
+        "lesson": "Gate openings are objective regions, not collision guarantees. Keep at least 0.5 m of extra nominal clearance around the 0.22 m drone radius. Height is measured at the drone lower point. Recheck every edited route in both modes.",
+        "title": "Industrial starter · Split level"
+      },
+      "uk": {
+        "brief": "Змінюйте висоту у відкритій бічній зоні. Самовирівнювання проходить під настилом, потім над ним; Acro змінює порядок. Завершіть посадкою на землі. Це редаговані шаблони маршрутів, а не іспити на швидкість.",
+        "lesson": "Отвори воріт — це області цілей, а не гарантія відсутності зіткнень. Залишайте принаймні 0,5 м додаткового запасу навколо радіуса дрона 0,22 м. Висота вимірюється за нижньою точкою дрона. Перевіряйте кожен змінений маршрут в обох режимах.",
+        "title": "Промисловий шаблон · Два рівні"
+      }
+    },
+    "spawn": {
+      "x": -24000,
+      "y": 0,
+      "z": 24000
+    },
+    "bounds": {
+      "max": {
+        "x": 38000,
+        "y": 16000,
+        "z": 38000
+      },
+      "min": {
+        "x": -38000,
+        "y": 0,
+        "z": -38000
+      }
+    },
+    "obstacles": [
+      {
+        "id": "west-stack",
+        "max": {
+          "x": -27000,
+          "y": 5000,
+          "z": 4000
+        },
+        "min": {
+          "x": -33000,
+          "y": 0,
+          "z": -4000
+        }
+      },
+      {
+        "id": "east-stack",
+        "max": {
+          "x": 33000,
+          "y": 4000,
+          "z": 4000
+        },
+        "min": {
+          "x": 27000,
+          "y": 0,
+          "z": -4000
+        }
+      },
+      {
+        "id": "north-store",
+        "max": {
+          "x": 8000,
+          "y": 4000,
+          "z": -31000
+        },
+        "min": {
+          "x": -8000,
+          "y": 0,
+          "z": -35000
+        }
+      },
+      {
+        "id": "practice-deck",
+        "max": {
+          "x": 7000,
+          "y": 5000,
+          "z": 10000
+        },
+        "min": {
+          "x": -7000,
+          "y": 4000,
+          "z": -10000
+        }
+      },
+      {
+        "id": "deck-west-support",
+        "max": {
+          "x": -6000,
+          "y": 4000,
+          "z": 1000
+        },
+        "min": {
+          "x": -7000,
+          "y": 0,
+          "z": -1000
+        }
+      },
+      {
+        "id": "deck-east-support",
+        "max": {
+          "x": 7000,
+          "y": 4000,
+          "z": 1000
+        },
+        "min": {
+          "x": 6000,
+          "y": 0,
+          "z": -1000
+        }
+      }
+    ],
+    "steps": {
+      "self-level": [
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": -22500,
+            "y": 3650,
+            "z": 25500
+          },
+          "maxSpeed": 2500,
+          "maxTilt": 4000,
+          "min": {
+            "x": -25500,
+            "y": 2350,
+            "z": 22500
+          },
+          "minTilt": 0,
+          "ticks": 30,
+          "type": "hold"
+        },
+        {
+          "at": 15000,
+          "axis": "z",
+          "direction": -1,
+          "maxSide": 3000,
+          "maxY": 3000,
+          "minSide": -3000,
+          "minY": 1000,
+          "type": "gate"
+        },
+        {
+          "at": 0,
+          "axis": "z",
+          "direction": -1,
+          "maxSide": 3000,
+          "maxY": 3000,
+          "minSide": -3000,
+          "minY": 1000,
+          "type": "gate"
+        },
+        {
+          "at": -15000,
+          "axis": "z",
+          "direction": -1,
+          "maxSide": 3000,
+          "maxY": 3000,
+          "minSide": -3000,
+          "minY": 1000,
+          "type": "gate"
+        },
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": 19500,
+            "y": 2650,
+            "z": -19500
+          },
+          "maxSpeed": 2500,
+          "maxTilt": 4000,
+          "min": {
+            "x": 16500,
+            "y": 1350,
+            "z": -22500
+          },
+          "minTilt": 0,
+          "ticks": 30,
+          "type": "hold"
+        },
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": 19500,
+            "y": 8150,
+            "z": -15500
+          },
+          "maxSpeed": 2500,
+          "maxTilt": 4000,
+          "min": {
+            "x": 16500,
+            "y": 6850,
+            "z": -18500
+          },
+          "minTilt": 0,
+          "ticks": 30,
+          "type": "hold"
+        },
+        {
+          "at": 0,
+          "axis": "z",
+          "direction": 1,
+          "maxSide": 3000,
+          "maxY": 8500,
+          "minSide": -3000,
+          "minY": 6500,
+          "type": "gate"
+        },
+        {
+          "at": 15000,
+          "axis": "z",
+          "direction": 1,
+          "maxSide": 3000,
+          "maxY": 8500,
+          "minSide": -3000,
+          "minY": 6500,
+          "type": "gate"
+        },
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": 22500,
+            "y": 8150,
+            "z": 24500
+          },
+          "maxSpeed": 2500,
+          "maxTilt": 4000,
+          "min": {
+            "x": 19500,
+            "y": 6850,
+            "z": 21500
+          },
+          "minTilt": 0,
+          "ticks": 30,
+          "type": "hold"
+        },
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": 25500,
+            "y": 500,
+            "z": 25500
+          },
+          "maxSpeed": 1300,
+          "maxTilt": 4000,
+          "min": {
+            "x": 22500,
+            "y": 0,
+            "z": 22500
+          },
+          "minTilt": 0,
+          "surface": "$floor",
+          "ticks": 30,
+          "type": "land"
+        }
+      ],
+      "acro": [
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": -22500,
+            "y": 3650,
+            "z": 25500
+          },
+          "maxSpeed": 2500,
+          "maxTilt": 4000,
+          "min": {
+            "x": -25500,
+            "y": 2350,
+            "z": 22500
+          },
+          "minTilt": 0,
+          "ticks": 30,
+          "type": "hold"
+        },
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": -16500,
+            "y": 8150,
+            "z": 20500
+          },
+          "maxSpeed": 2500,
+          "maxTilt": 4000,
+          "min": {
+            "x": -19500,
+            "y": 6850,
+            "z": 17500
+          },
+          "minTilt": 0,
+          "ticks": 30,
+          "type": "hold"
+        },
+        {
+          "at": 15000,
+          "axis": "z",
+          "direction": -1,
+          "maxSide": 2250,
+          "maxY": 8500,
+          "minSide": -2250,
+          "minY": 6500,
+          "type": "gate"
+        },
+        {
+          "at": -15000,
+          "axis": "z",
+          "direction": -1,
+          "maxSide": 2250,
+          "maxY": 8500,
+          "minSide": -2250,
+          "minY": 6500,
+          "type": "gate"
+        },
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": 19500,
+            "y": 8150,
+            "z": -19500
+          },
+          "maxSpeed": 2500,
+          "maxTilt": 4000,
+          "min": {
+            "x": 16500,
+            "y": 6850,
+            "z": -22500
+          },
+          "minTilt": 0,
+          "ticks": 30,
+          "type": "hold"
+        },
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": 19500,
+            "y": 2650,
+            "z": -19500
+          },
+          "maxSpeed": 2500,
+          "maxTilt": 4000,
+          "min": {
+            "x": 16500,
+            "y": 1350,
+            "z": -22500
+          },
+          "minTilt": 0,
+          "ticks": 30,
+          "type": "hold"
+        },
+        {
+          "at": -15000,
+          "axis": "z",
+          "direction": 1,
+          "maxSide": 2250,
+          "maxY": 3000,
+          "minSide": -2250,
+          "minY": 1000,
+          "type": "gate"
+        },
+        {
+          "at": 0,
+          "axis": "z",
+          "direction": 1,
+          "maxSide": 2250,
+          "maxY": 3000,
+          "minSide": -2250,
+          "minY": 1000,
+          "type": "gate"
+        },
+        {
+          "at": 15000,
+          "axis": "z",
+          "direction": 1,
+          "maxSide": 2250,
+          "maxY": 3000,
+          "minSide": -2250,
+          "minY": 1000,
+          "type": "gate"
+        },
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": 22500,
+            "y": 2650,
+            "z": 24500
+          },
+          "maxSpeed": 2500,
+          "maxTilt": 4000,
+          "min": {
+            "x": 19500,
+            "y": 1350,
+            "z": 21500
+          },
+          "minTilt": 0,
+          "ticks": 30,
+          "type": "hold"
+        },
+        {
+          "centred": false,
+          "heading": null,
+          "max": {
+            "x": 25500,
+            "y": 500,
+            "z": 25500
+          },
+          "maxSpeed": 1300,
+          "maxTilt": 4000,
+          "min": {
+            "x": 22500,
+            "y": 0,
+            "z": 22500
+          },
+          "minTilt": 0,
+          "surface": "$floor",
+          "ticks": 30,
+          "type": "land"
+        }
+      ]
+    },
+    "actors": [],
+    "rules": {
+      "seed": 1,
+      "maxTicks": 36000,
+      "droneRadius": 220,
+      "playerHealth": 100,
+      "collisionDamage": 0,
+      "playerDamage": 25,
+      "fireCooldown": 8,
+      "projectileSpeed": 20000,
+      "projectileTicks": 150
+    },
+    "conditions": {
+      "profile": "clear",
+      "revision": "r1"
+    }
+  },
+  "projectId": "creator-industrial-split-level",
+  "packIdentity": "fpv-pack:311b04890037f6b5681dd1fd0067f72292a888bfd2e8cb5b605e8de707aa8711",
+  "passed": true
+}

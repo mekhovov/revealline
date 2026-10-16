@@ -7,6 +7,12 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { playKeyboardRoute } from './helpers/keyboard-route.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { expectedRouteEvidence } from './helpers/route-evidence.mjs';
+import { chooseJourneyMission } from './helpers/library-selection.mjs';
+import { createWholeTimedCandidates } from '../content-design/whole-spatial-candidates.mjs';
+import { compileContentProject, resolveMission } from '../content-design/project.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { foundationCompatibleView } from '../ui/foundation-view.mjs';
 
 class Picture {
@@ -43,7 +49,26 @@ const selected = inputs.find(
     r.seed === 1 &&
     r.purpose === 'ordinary',
 );
-const row = { ...selected, checkpoint: pins.find((r) => r.key === key(selected)).checkpoint };
+const historicalRow = {
+  ...selected,
+  checkpoint: pins.find((r) => r.key === key(selected)).checkpoint,
+};
+const manifest = resolveMission(
+  compileContentProject(createWholeTimedCandidates({ artwork: true })),
+  'behind-the-patrol',
+);
+const original = createRun(manifest.level, { seed: 1, classId: 'scout' });
+for (const { direction, ticks } of historicalRow.segments)
+  for (let i = 0; i < ticks; i++) stepRun(original, { direction }, FIXED_DT);
+assert.equal(original.status, 'won');
+assert.equal(original.classic.livesLost, 0);
+assert.equal(original.classic.timedBonuses.schedules[0].collections, 1);
+assert.equal(authoritativeCheckpoint(original).hash, historicalRow.checkpoint);
+const row = JSON.parse(
+  await readFile(new URL('./fixtures/whole-timed-tuned-host-route.json', import.meta.url)),
+);
+row.evidence = expectedRouteEvidence(row.routeEvidence, 'behind-the-patrol');
+const approvedLevel = applyGameplayTuning(manifest.level, resolveGameplayTuning('standard'));
 const runningSolo = (p, id) =>
   settle(() => {
     p.frame(0);
@@ -54,15 +79,8 @@ const runningRace = (p, id) =>
     p.frame(0);
     return p.renders[0]?.levelId === id && !p.$('race-pause').disabled;
   });
-const choose = (p, button) => {
-  p.$(button).click();
-  const card = p
-    .$('journey-cards')
-    .children.find((n) => n.dataset.missionId.endsWith('/behind-the-patrol'));
-  assert(card);
-  card.click();
-  return card.dataset.missionId;
-};
+const choose = (p, button) =>
+  chooseJourneyMission(p, button, 'whole-spatial-v3', 'behind-the-patrol');
 async function waitForReceipt(backend, mode, id) {
   let persisted = false;
   await settle(() => {
@@ -84,10 +102,12 @@ test('actual timed Solo collection/clear records only v3 and Next preserves dire
     pictures: { Image: Picture },
     fetchResponse,
   });
-  const id = choose(p, 'shell-packs');
+  const id = await choose(p, 'shell-packs');
   await runningSolo(p, row.id);
   assert.equal(p.rendered.run.level.classic.timedBonuses.version, 'timed-bonuses.v2');
   assert.equal(p.$('theme-select').value, 'border-bloom-actors-v1');
+  assert.deepEqual(p.rendered.run.level, approvedLevel);
+  assert.deepEqual(p.rendered.backdrop.assetRevision, manifest.background);
   playKeyboardRoute(p, () => [p.rendered.run], [arrows], row);
   assert.equal(p.rendered.run.classic.timedBonuses.schedules[0].collections, 1);
   await waitForReceipt(backend, 'solo', id);
@@ -117,9 +137,15 @@ test('actual timed Versus taking path keeps independently owned bonuses and equa
     assetDatabase: disk.indexedDB,
     fetchResponse,
   });
-  const id = choose(p, 'race-journey-find');
+  const id = await choose(p, 'race-journey-find');
   await runningRace(p, row.id);
   assert.notEqual(p.renders[0].classic.timedBonuses, p.renders[1].classic.timedBonuses);
+  for (const run of p.renders) assert.deepEqual(run.level, approvedLevel);
+  assert(
+    p.drawOptions.every(
+      (options) => options.backdrop.assetRevision.sha256 === manifest.background.sha256,
+    ),
+  );
   playKeyboardRoute(p, () => p.renders, [wasd, arrows], row);
   assert(p.renders.every((r) => r.classic.timedBonuses.schedules[0].collections === 1));
   await waitForReceipt(backend, 'versus', id);
@@ -146,7 +172,7 @@ test('v3 saved visible window resumes exactly, pauses its countdown and later ex
   let checkpoint, bonus;
   await t.test('save an available window through the actual menu action', async (t) => {
     const p = await soloPage(t, options);
-    choose(p, 'shell-packs');
+    await choose(p, 'shell-packs');
     await runningSolo(p, row.id);
     const run = p.rendered.run;
     for (let i = 0; i < 300 && run.classic.timedBonuses.schedules[0].phase !== 'available'; i++)

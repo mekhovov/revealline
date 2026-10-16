@@ -1,0 +1,58 @@
+{
+  "format": "FPVAudioMixEvidence.v1",
+  "method": "Production modules exercised through their public APIs and rendered slider callbacks with an instrumented Web Audio boundary. Graph routing, parameter writes and lifecycle transitions are observed.",
+  "sources": {
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "5fb69c21905ee6661511b4251678aa847fc1fcae467ce9e56a960c897e68aaa3",
+    "optional-practice/civilian-fpv/world-audio.mjs": "0aead831e25798324e3ad51356401f36612b832b55946225d849654f04d26233",
+    "optional-practice/civilian-fpv/world-app.mjs": "614fed156e0d6e451c2ffeeb2e932de9f78fcfa71079aaa69a359fbdbc28a77e",
+    "optional-practice/civilian-fpv/app.mjs": "aea12a2bfdd91990e2ce63d22df8a92ec2ccb5bfaa0b31bbdcc3a9a108820d40"
+  },
+  "checks": {
+    "slidersDoNotCreateOrUnlockAudio": true,
+    "sharedPersistentMix": true,
+    "crossViewChangePreservesOtherChannels": true,
+    "enUkAccessibleSliders": true,
+    "separateMotorAmbienceFeedbackBuses": true,
+    "allSourcesRoutedThroughTheirBus": true,
+    "zeroFeedbackStopsAndPreventsVoices": true,
+    "mutePreservesMix": true,
+    "pauseAndFocusLossStaySilent": true,
+    "menuGainScalesByInterfaceLevel": true,
+    "deniedStorageRetainsSessionMix": true,
+    "allAudioNodesAndContextsDisposed": true
+  },
+  "limitations": [
+    "Instrumented graph verification is not an acoustic listening assessment or actual browser autoplay qualification.",
+    "Actual browser UI and cross-view persistence observations are recorded separately below. Physical hardware sound quality is unmeasured.",
+    "No new unit-test suite added; additional unit coverage remains deferred."
+  ],
+  "browserObservations": {
+    "featureHead": "34da5274f",
+    "observer": "parent agent using approved browser controls",
+    "sourceURL": "http://127.0.0.1:8791/optional-practice/fpv-worlds/index.html",
+    "checks": {
+      "oneSettingsMasterControl": true,
+      "enAndUkThreeAccessibleSliders": true,
+      "settingsMixerFitsScrollingPanel": true,
+      "persistedAfterReload": {
+        "interface": 99,
+        "motor": 0,
+        "ambience": 99
+      },
+      "worldInterfaceHomeZeroObservedInAcademy": true,
+      "academyInterfaceEndHundredObservedInWorldStudio": true,
+      "masterMutedThroughout": true,
+      "allVolumesRestoredToHundred": true,
+      "browserErrors": 0,
+      "browserWarnings": 0
+    },
+    "localScreenshot": {
+      "path": "/tmp/fpv-audio-controls-uk.jpg",
+      "retention": "Local verification artifact; not a bundled application asset",
+      "sha256": "bfb382fded413355140e64330c9b5a4549d6540aa80982e1d31cd4d7482436ea"
+    },
+    "limitations": [
+      "No audible perception, acoustic quality or physical hardware qualification is claimed."
+    ]
+  }
+}

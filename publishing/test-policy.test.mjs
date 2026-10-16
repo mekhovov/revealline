@@ -9,23 +9,40 @@ import { readTestPolicy, parseTestPolicy, policyDecision } from './test-policy.m
 
 const cli = fileURLToPath(new URL('./test-policy.mjs', import.meta.url));
 
-test('the explicit temporary policy skips only automated suites and never reports tests passed', async () => {
+test('the restored policy requires suites without manufacturing a passing verdict', async () => {
   const policy = await readTestPolicy();
-  assert.ok(['waived', 'required'].includes(policy.mode));
-  assert.equal(policy.authorization, 'explicit-user-request-20260922');
+  assert.equal(policy.mode, 'required');
+  assert.equal(policy.authorization, 'explicit-user-request-20261004');
   assert.equal(policy.scope, 'automated-test-suites');
-  assert.deepEqual(policyDecision({ ...policy, mode: 'waived' }), {
-    policyMode: 'waived',
-    mode: 'waived',
-    runTests: 'false',
-    qualification: 'tests-waived-by-user',
+  assert.deepEqual(policyDecision(policy), {
+    policyMode: 'required',
+    mode: 'required',
+    runTests: 'true',
+    qualification: 'tests-required',
     forced: false,
   });
+  assert.deepEqual(
+    policyDecision({ ...policy, mode: 'waived', authorization: 'explicit-user-request-20260922' }),
+    {
+      policyMode: 'waived',
+      mode: 'waived',
+      runTests: 'false',
+      qualification: 'tests-waived-by-user',
+      forced: false,
+    },
+  );
   assert.equal(Object.hasOwn(policyDecision(policy), 'passed'), false);
 });
 
 test('restored policy or explicit full-test override requires suites without claiming a passing verdict', async () => {
   const policy = await readTestPolicy();
+  assert.deepEqual(policyDecision({ ...policy, mode: 'required' }), {
+    policyMode: 'required',
+    mode: 'required',
+    runTests: 'true',
+    qualification: 'tests-required',
+    forced: false,
+  });
   for (const decision of [
     policyDecision({ ...policy, mode: 'required' }),
     policyDecision(policy, { forceTests: true }),
@@ -47,6 +64,7 @@ test('missing, malformed and broadened authorization fail closed', async () => {
     '{',
     { ...good, format: 'v2' },
     { ...good, mode: 'skip' },
+    { ...good, mode: 'waived' },
     { ...good, authorization: 'inferred' },
     { ...good, scope: 'all-release-checks' },
     { ...good, reason: '' },
@@ -61,7 +79,14 @@ test('CLI records visible skipped policy and force-tests changes only the effect
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'revealline-policy-'));
   t.after(() => fs.rm(root, { recursive: true, force: true }));
   const filename = path.join(root, 'policy.json');
-  await fs.writeFile(filename, JSON.stringify({ ...(await readTestPolicy()), mode: 'waived' }));
+  await fs.writeFile(
+    filename,
+    JSON.stringify({
+      ...(await readTestPolicy()),
+      mode: 'waived',
+      authorization: 'explicit-user-request-20260922',
+    }),
+  );
   for (const forced of ['false', 'true']) {
     const output = path.join(root, forced + '.output');
     const summary = path.join(root, forced + '.summary');
@@ -103,5 +128,27 @@ test('CLI missing policy or malformed override cannot emit a waiver output', asy
     assert.equal(result.status, 1);
     assert.doesNotMatch(result.stdout, /runTests|SKIPPED/);
     await assert.rejects(fs.stat(output), { code: 'ENOENT' });
+  }
+});
+
+test('MinIO acceptance and its receipt lifecycle honor the explicit suite policy', async () => {
+  const workflow = await fs.readFile(
+    new URL('../.github/workflows/community-minio-recovery.yml', import.meta.url),
+    'utf8',
+  );
+  const steps = workflow.split(/\n      - /);
+  const policy = steps.findIndex((step) => step.includes('id: test_policy'));
+  assert.ok(policy > 0);
+  assert.match(steps[policy], /run: node publishing\/test-policy\.mjs/);
+  for (const name of [
+    'Run isolated MinIO recovery acceptance',
+    'Collect redacted receipt',
+    'Upload redacted receipt',
+    'Show acceptance service logs on failure',
+    'Remove acceptance containers and volumes',
+  ]) {
+    const index = steps.findIndex((step) => step.startsWith(`name: ${name}\n`));
+    assert.ok(index > policy, name);
+    assert.match(steps[index], /if: .*steps\.test_policy\.outputs\.runTests == 'true'/, name);
   }
 });
