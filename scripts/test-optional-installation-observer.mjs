@@ -47,10 +47,10 @@ const observerFunction = (name) =>
     findObserverNode((node) => node.type === 'FunctionDeclaration' && node.id.name === name),
   );
 
-test('only the explicit owned-window lane opens a visible isolated Chrome context', () => {
+test('only the installed-app window diagnostic opens visible Chrome; ordinary/default lanes stay headless', () => {
   const launch = observerFunction('launchBrowser');
   assert.match(launch, /chromium\.launchPersistentContext\(profile,/);
-  assert.match(launch, /headless: !activeWindowEnabled/);
+  assert.match(launch, /headless: ordinaryWindowEnabled \|\| !activeWindowEnabled/);
   assert.match(launch, /channel: 'chrome'/);
   assert.match(historicalObserverSource, /!activeWindowEnabled \|\| activeSessionEnabled/);
 });

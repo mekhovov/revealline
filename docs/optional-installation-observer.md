@@ -79,6 +79,22 @@ timing regressions are not five-minute qualification.
 
 ## Separate historical active-session lane
 
+The fourth installed-window attempt also fails before update: isolated visible
+Chrome acknowledges minimization but its actual bounds remain normal throughout
+the same 1.5-second limit. Neither visible Chrome nor a different CDP routing
+path is a demonstrated repair. Original failed receipts remain failed.
+
+For a separate ordinary-browser window check, use
+`OPTIONAL_INSTALLATION_ACTIVE_WINDOW=ordinary-browser-minimize-98ad851`
+with the same historical, active-session and saved-world flags. It creates one
+new exact historical URL in the observer's isolated context, requires normal
+browser display mode and distinct native window identities, then applies the
+unchanged flight, real blur/pause, update, document identity and explicit-resume
+checks. This lane is headless and does not qualify installed-PWA continuity.
+Its exact owned target, sessions, original bounds and focus defaults must all be
+cleaned up. Late acquisition results retain ownership before deadline checks;
+an unresolved or failed cleanup cannot produce a passing receipt.
+
 Only the explicit `owned-window-minimize-98ad851` diagnostic uses an isolated
 visible Chrome context. Headless installed-app windows can acknowledge native
 minimization without changing state; the preserved third attempt records that
@@ -124,7 +140,38 @@ be positive, not a fall/reset to ground. A failed focus transfer retains its las
 bounded public snapshot and stops after 1.5 seconds inside the unchanged shared
 30-second deadline.
 
-## Separate all-three historical migration lane
+## Imported model and offline flight lane
+
+Use `OPTIONAL_INSTALLATION_IMPORTED_WORLD=roadworks-offline-flight` and
+`OPTIONAL_INSTALLATION_WORLD_SEED=worlds-template-copy`, without a previous bundle
+or historical/fault/session flags. The separately committed, hash-pinned CC0
+Roadworks `.rlpack` is imported through the real file chooser. This is World
+Studio content, not a fourth executable catalogue app. The observer records its
+own committed pack source separately from the admitted app's source.
+
+The baseline must contain both the UI-created project and the imported model's
+exact nonempty asset row. Full content-database fingerprints and the visible
+installed card are checked through offline reopening and browser-process restart.
+After restart, the stable launcher and installed window each open the imported
+challenge, explicitly arm, lift using the visible Detailed Height gauge, and
+explicitly pause. Actual screenshots accompany the card and both paused flights.
+These bounded sub-metre flights do not complete the course or qualify a
+machine-wide outage, OS reboot, physical input or human-learning review.
+All existing admission, cache/worker ownership, record retention and cleanup
+checks remain required.
+
+## Production directory observation with separate observer identity
+
+The explicit `practice-directory-production-personal-appearance.v2` protocol
+adds exactly `observerRevision` and `observerTree` to the v1 plan. The actual
+observer checkout must be clean and match those pins before and after the run.
+The original built shell's `shellRevision`/`shellTree`, manifest hash and every
+output member are independently checked before and after. Missing production
+files never fall back to source. Package envelope/source pins remain separate.
+This permits a maintained observer to test an earlier exact production build
+without pretending the build came from today's source. V1 remains unchanged.
+
+## All-three historical migration details
 
 Set `OPTIONAL_INSTALLATION_MIGRATION=all-three-98ad851`, the pinned historical
 admission and the same saved-world seed. Download, quota and active-session/window
