@@ -1,9 +1,13 @@
 import assert from 'node:assert/strict';
 
 // Public controls only. Never read IndexedDB, app globals, or private model state.
-export async function exportPublicFPVExercise(page, { packageId, locale, signal } = {}) {
+export async function exportPublicFPVExercise(
+  page,
+  { packageId, locale, signal, homeActivation = 'keyboard' } = {},
+) {
   assert(['civilian-fpv', 'fpv-worlds'].includes(packageId));
   assert(['en', 'uk'].includes(locale));
+  assert(['keyboard', 'pointer'].includes(homeActivation));
   const academy = packageId === 'civilian-fpv';
   const check = () => signal?.throwIfAborted();
   const activate = async (target) => {
@@ -15,9 +19,19 @@ export async function exportPublicFPVExercise(page, { packageId, locale, signal 
     check();
   };
   const click = (selector) => activate(page.locator(selector));
+  const home = async (target) => {
+    if (homeActivation === 'keyboard') return activate(target);
+    check();
+    await target.waitFor({ state: 'visible', timeout: 5000 });
+    assert(await target.isEnabled(), 'Native result Home control is disabled.');
+    check();
+    // One ordinary first click, never force/retry or invoke a DOM handler.
+    await target.click({ timeout: 5000 });
+    check();
+  };
   check();
   if (academy) {
-    await click('#academy-result-home');
+    await home(page.locator('#academy-result-home'));
     await click('#academy-shell-action-settings');
     await click('#academy-settings-tab-data');
     await click('#notebook-button');
@@ -40,6 +54,7 @@ export async function exportPublicFPVExercise(page, { packageId, locale, signal 
       if (value.attempts?.length)
         return {
           json,
+          homeActivation,
           source: 'Native Notebook export textarea',
           exportedAt: new Date().toISOString(),
         };
@@ -52,7 +67,7 @@ export async function exportPublicFPVExercise(page, { packageId, locale, signal 
   }
   // The result's verification message is not sufficient: independent replay
   // below still must establish complete, the exact course, practice and mode.
-  await activate(
+  await home(
     page
       .locator('.continuous-result-actions')
       .getByRole('button', { name: locale === 'uk' ? 'Додому' : 'Home', exact: true }),
@@ -80,6 +95,7 @@ export async function exportPublicFPVExercise(page, { packageId, locale, signal 
   }
   return {
     json: Buffer.concat(chunks).toString('utf8'),
+    homeActivation,
     source: 'Native Data backup download',
     downloadName: download.suggestedFilename(),
     exportedAt: new Date().toISOString(),

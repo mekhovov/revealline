@@ -1,5 +1,43 @@
 # Flight practice: completion plan and priority review
 
+## 16 October research and execution update
+
+The next batch is deliberately bounded: verify the prepared native keyboard
+completion/export/replay path; reproduce the result-action pointer failure;
+repair its shared presentation owner and regenerate the existing SIM shell
+projection; then qualify the changed package bytes. SIM flight mechanics,
+lessons and rendering remain outside this batch. Keep all failed receipts.
+
+Fresh primary-source guidance sharpens acceptance rather than adding features:
+
+- [W3C pointer cancellation](https://www.w3.org/WAI/WCAG22/Understanding/pointer-cancellation.html)
+  recommends native click/up-event activation. Do not move Home/Retry/Next under
+  a held pointer when cancelling auto-next. Cancel the countdown immediately,
+  but keep its occupied layout until the result retires. Test press/release,
+  release outside, keyboard focus, and a new result resetting the presentation.
+  This is our application of the guidance, not a claim of WCAG conformance.
+- [Playwright actionability](https://playwright.dev/docs/actionability) checks
+  stability before clicking; it does not establish that application handlers
+  leave a target stationary during the press. Capture target geometry around
+  down/up and require the first ordinary activation. Never force-click or silently
+  retry a broken first press. Keyboard export is independent evidence, not a
+  substitute for repairing the player-facing pointer route.
+- [PWA update guidance](https://web.dev/learn/pwa/update) supports retaining a
+  waiting worker while clients use the old version. C5 must use genuinely
+  different admitted payloads and preserve an active flight; changing only a
+  version path cannot close it.
+- [MDN storage/eviction guidance](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)
+  reinforces C4/C6: readiness is verified dependencies plus ownership, not an icon
+  or a quota estimate. Keep controlled write denial distinct from actual eviction
+  and preserve records when removing an app shell.
+
+Priority order: **P0 interaction and native exercise evidence**, then **P0
+distinct-release/offline recovery**, then **P1 measured performance and available
+accessibility checks**. Human learning, physical hardware and the 24 package-review
+decisions require actual participants/equipment/reviewers; automation cannot sign
+them. Hosting/capacity/public selection stay deferred by the owner. Therefore
+finishing this batch does not mean all Phase 1/public-release criteria are met.
+
 16 October continuation: [HUD repair and qualification](flight-practice-hud-qualification-2026-10-16.md)
 makes the existing guidance controls reachable in both FPV apps and verifies four
 EN/UK settings/reload/visible stationary-HUD journeys. Matching guides are updated.

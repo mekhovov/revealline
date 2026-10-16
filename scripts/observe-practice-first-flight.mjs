@@ -116,10 +116,17 @@ export const FPV_EXERCISE_PROBE_PROTOCOL = Object.freeze({
 });
 export const FPV_EXERCISE_CASES = Object.freeze(
   FIRST_FLIGHT_V2_CASES.filter((row) => row.package !== 'civilian-flight').map((row) =>
-    Object.freeze({ ...row, id: row.id + '-lift-and-land', exercise: 'flight-01' }),
+    Object.freeze({
+      ...row,
+      id: row.id + '-lift-and-land',
+      exercise: 'flight-01',
+      homeActivation: 'pointer',
+    }),
   ),
 );
-export const FPV_EXERCISE_PROBE_CASES = Object.freeze([FPV_EXERCISE_CASES[0]]);
+export const FPV_EXERCISE_PROBE_CASES = Object.freeze([
+  Object.freeze({ ...FPV_EXERCISE_CASES[0], homeActivation: 'keyboard' }),
+]);
 const fpvExerciseProtocol = (plan) =>
   [FPV_EXERCISE_PROTOCOL.id, FPV_EXERCISE_PROBE_PROTOCOL.id].includes(plan.protocol);
 export function firstFlightProtocol(plan) {
@@ -660,6 +667,7 @@ export async function completeFirstFlightFPVExercise(page, spec, result, output,
     packageId: spec.package,
     locale: spec.locale,
     signal,
+    homeActivation: spec.homeActivation,
   });
   assert(typeof json === 'string' && Buffer.byteLength(json) <= 2 * 1024 * 1024);
   const bytes = Buffer.from(json),

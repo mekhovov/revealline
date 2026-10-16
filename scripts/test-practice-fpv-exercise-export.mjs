@@ -119,6 +119,37 @@ test('cancellation while awaiting a native control must not send Enter', async (
   }
 });
 
+test('explicit pointer Home route makes one ordinary click; remaining export uses keyboard', async () => {
+  let clicks = 0;
+  const json = JSON.stringify({ format: 'FlightProofBackup.v1', attempts: [{}] });
+  const page = {
+    locator: (selector) => ({
+      ...control(async () => assert.notEqual(selector, '#academy-result-home')),
+      click: async (options) => {
+        assert.equal(selector, '#academy-result-home');
+        assert.deepEqual(options, { timeout: 5000 });
+        clicks++;
+      },
+    }),
+    getByRole: (role) =>
+      role === 'button' ? control(async () => {}) : { inputValue: async () => json },
+  };
+  const result = await exportPublicFPVExercise(page, {
+    packageId: 'civilian-fpv',
+    locale: 'en',
+    homeActivation: 'pointer',
+  });
+  assert.equal(clicks, 1);
+  assert.equal(result.homeActivation, 'pointer');
+  await assert.rejects(
+    exportPublicFPVExercise(page, {
+      packageId: 'civilian-fpv',
+      locale: 'en',
+      homeActivation: 'force',
+    }),
+  );
+});
+
 test('invalid specifications, pre-aborted requests and hidden/disabled controls cannot export', async () => {
   const controller = new AbortController();
   controller.abort();
