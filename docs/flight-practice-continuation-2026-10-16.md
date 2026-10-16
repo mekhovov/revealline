@@ -5,6 +5,57 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+Current expanded regression after delivery/C9 integration: **390/390 practice
+tests**, **357 observer tests passed with one explicit historical-fixture skip**.
+The fourteen C9 focused tests also pass after adding exact descriptor-copy and
+visible restored-opener assertions. These are automated tool regressions, not
+the pending native matrix or production journey.
+
+### Latest-main integration and the next independently bound checks
+
+The branch rebased cleanly onto main
+`bd0885811be4646cb1d092c91a7bddac96b8e9b6` (merged Neon recovery/presentation
+work). The prior head and original evidence commits are retained on
+`codex/practice-before-main-bd088-20261016`. No unmerged SIM files were copied.
+Post-rebase regression passes 389/389 practice tests and 335 observer tests plus
+one explicit historical-fixture skip, before the new observer helpers below.
+
+The [onboarding candidate](flight-practice-continuation-20261016/onboarding-candidate-verification.json)
+reproduces all three packages twice, verifies committed inputs and complete ZIP
+members, and passes admission with `publicEligible: false`. Its original source
+is `1b339bfe6596290b6db17ae0e268e4c8a843071a`, tree
+`08e5a779523e8e356cccc9c45b96340676c1c56d`, not the rewritten rebase commit.
+[Envelope](flight-practice-continuation-20261016/onboarding-candidate-envelope.json)
+SHA-256 is `f559fdd7a935f03f15481fe657fbee3eb4b52e3c0c4b48d0bd3c9f70bedab7eb`.
+An unchanged external copy is retained under
+`/Volumes/alex/CodexMigrationStaging/flight-practice-onboarding-20261016-candidate`.
+Compared with b8 distribution ZIPs, Gym and Academy change only generated worker
+and manifest bytes; Worlds additionally changes its descriptor and generated
+launcher app/worker. No simulator app/mechanics module differs. Their new source
+and worker identities still require fresh affected observations, not relabelled
+old receipts.
+
+The original-production observer now has an explicit
+`PRACTICE_DIRECTORY_DELIVERY=bounded-original-memory-v1` option, production-v2
+only. It retains at most 128 MiB of deterministic original manifest-pinned members
+during the existing complete before-verification, checks private copies on every
+delivery, and falls back only to hash-verified original files. All 3,493 originals
+are still reverified afterward. Browser/action/case deadlines are unchanged.
+Thirty focused delivery/directory tests pass; native full-journey execution is
+pending. The [independent diagnostic audit](flight-practice-continuation-20261016/production-home-independent-audit.json)
+supports only the earlier matched delivery comparison, not this unrun lane.
+
+The next C9 adapter covers six fixed EN/UK directory/launcher/guide-return routes
+with actual native 200% zoom, ordinary Tab navigation and explicitly emulated
+reduced-motion media. It checks source-bound onboarding copy, sampled focus
+geometry/outlines and status semantics; images remain visually unqualified and
+no speech/readability/hardware approval is inferred. Fourteen focused tests pass.
+Independent review corrected unsafe profile cleanup during a pending Chrome
+launch and bounded final source checks before any native attempt. The shared
+observer deadline also now rejects late responses after event-loop stalls; its
+new regression reproduces a 5 ms deadline accepting a 25 ms response before the
+fix. None of these test-only changes changes package bytes or startup budgets.
+
 ### Player wording correction: new candidate required
 
 World Studio's descriptor now points to its maintained Home actions: **Learn to
