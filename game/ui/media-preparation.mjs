@@ -47,6 +47,7 @@ export function createMediaPreparation({
       task.signal?.removeEventListener('abort', task.cancel);
       active[task.kind]++;
       if (task.kind === 'decode') reservedBytes += task.bytes;
+      let deferred = false;
       Promise.resolve()
         .then(() => {
           if (
@@ -57,9 +58,19 @@ export function createMediaPreparation({
             (phase === 'playing' && task.priority === 'background')
           )
             throw aborted();
+          // Phase can change after admission but before this microtask runs.
+          // Keep required fallback work pending until a safe phase instead of
+          // starting a scan during gameplay or rejecting its playback request.
+          if (task.kind === 'main' && phase === 'playing') {
+            deferred = true;
+            queue.push(task);
+            task.signal?.addEventListener('abort', task.cancel, { once: true });
+            return;
+          }
           return task.work();
         })
         .then((value) => {
+          if (deferred) return;
           if (closed || task.signal?.aborted || !task.eligible()) task.reject(aborted());
           else task.resolve(value);
         }, task.reject)

@@ -113,14 +113,31 @@ function inspectFrames(bytes) {
   };
 }
 /** Structural media check only; payload decodability is a separate browser probe. */
-export async function inspectMP3(source, { signal } = {}) {
+export async function inspectMP3(source, { signal, scheduleScan = (work) => work() } = {}) {
   throwIfSoundtrackAborted(signal);
   const blob = ownSoundtrackBlob(source);
-  const bytes = new Uint8Array(await blob.arrayBuffer());
+  // Materialization can outlive its safe phase. Schedule these stages separately
+  // so scanning and native hash initiation are admitted again after each await.
+  // No admission owns a promise which recursively waits for the same queue.
+  const bytes = new Uint8Array(
+    await scheduleScan(() => {
+      throwIfSoundtrackAborted(signal);
+      return blob.arrayBuffer();
+    }),
+  );
   throwIfSoundtrackAborted(signal);
-  const facts = inspectFrames(bytes);
+  const facts = await scheduleScan(() => {
+    throwIfSoundtrackAborted(signal);
+    return inspectFrames(bytes);
+  });
+  throwIfSoundtrackAborted(signal);
   required(globalThis.crypto?.subtle, 'MP3 validation requires SHA-256 support.');
-  const hash = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
+  const hash = new Uint8Array(
+    await scheduleScan(() => {
+      throwIfSoundtrackAborted(signal);
+      return crypto.subtle.digest('SHA-256', bytes);
+    }),
+  );
   throwIfSoundtrackAborted(signal);
   return Object.freeze({
     sha256: [...hash].map((n) => n.toString(16).padStart(2, '0')).join(''),
