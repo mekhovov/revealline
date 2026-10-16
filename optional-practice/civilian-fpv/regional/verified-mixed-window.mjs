@@ -18,6 +18,7 @@ import {
   adoptVerifiedFrame,
   readFramePose,
   prepareVerifiedFrame,
+  verifiedCollisionFrame,
 } from "./frame-transaction.mjs";
 
 const MiB = 1024 * 1024;
@@ -246,10 +247,29 @@ export function createVerifiedMixedWindow(
       if (supportPose?.requireClearRestore) await pair.scenery.prepareRestoreProof();
       current(token);
       pair.group.add(pair.terrain.group, pair.scenery.group);
+      const buildingReceipts = new Map(
+        buildings.provenance.chunks.map((chunk) => [chunk.chunkId, chunk]),
+      );
+      const nextProvenance = {
+        regionId: terrainManifest.id,
+        revision: terrainManifest.revision,
+        positionMm: pointCopy(point),
+        originMm: { ...plan.origin },
+        compiler: "FPV regional mixed owner v1",
+        chunks: terrain.provenance.chunks.map((chunk) => ({
+          chunkId: chunk.chunkId,
+          terrain: chunk,
+          scenery: buildingReceipts.get(chunk.chunkId),
+        })),
+      };
       if (transaction?.prepare)
-        await prepareVerifiedFrame(transaction, pair.group, () =>
-          current(token),
-        );
+        await prepareVerifiedFrame(transaction, pair.group, () => current(token), () => {
+          current(token);
+          return verifiedCollisionFrame(nextProvenance, [
+            ...pair.terrain.collisionFrame().colliders,
+            ...pair.scenery.collisionFrame().colliders,
+          ]);
+        });
       supportPose = readFramePose(transaction, supportPose, terrainPlan);
       current(token);
       if (supportPose) {
@@ -271,21 +291,6 @@ export function createVerifiedMixedWindow(
         const { positionMm, radiusMm } = supportPose;
         requireRestoreClearance(pair.scenery.restoreClearance({ ...positionMm, y: positionMm.y + radiusMm }, radiusMm));
       }
-      const buildingReceipts = new Map(
-        buildings.provenance.chunks.map((chunk) => [chunk.chunkId, chunk]),
-      );
-      const nextProvenance = {
-        regionId: terrainManifest.id,
-        revision: terrainManifest.revision,
-        positionMm: pointCopy(point),
-        originMm: { ...plan.origin },
-        compiler: "FPV regional mixed owner v1",
-        chunks: terrain.provenance.chunks.map((chunk) => ({
-          chunkId: chunk.chunkId,
-          terrain: chunk,
-          scenery: buildingReceipts.get(chunk.chunkId),
-        })),
-      };
       adoptVerifiedFrame(
         transaction,
         { group: pair.group, provenance: structuredClone(nextProvenance) },
@@ -317,6 +322,13 @@ export function createVerifiedMixedWindow(
   }
   return Object.freeze({
     snapshot,
+    collisionFrame() {
+      fail(queryReady(), 'Verified collision geometry is unavailable');
+      return verifiedCollisionFrame(provenance, [
+        ...committed.terrain.collisionFrame().colliders,
+        ...committed.scenery.collisionFrame().colliders,
+      ]);
+    },
     collisionSnapshot: () =>
       regionalCollisionCounts(
         committed?.terrain,

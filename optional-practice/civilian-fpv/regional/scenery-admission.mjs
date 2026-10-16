@@ -332,6 +332,23 @@ export async function prepareSceneryWindow(
     }),
     group,
     // Read actual Rapier sets only on explicit diagnostic demand, never after free().
+    collisionMeshes() {
+      live();
+      return sources.flatMap((source) => {
+        const cell = scenerySourceCell(source);
+        return compileScenerySource(source).surfaces.flatMap((surface, index) =>
+          surface.collision === 'visual-only' ? [] : [{
+            id: `scenery:${cell.chunkId}:${index}`,
+            vertices: Array.from(surface.positions),
+            indices: Array.from(surface.indices),
+            translation: {
+              x: (cell.x * cell.cellSizeMm - originMm.x) / 1000,
+              y: -originMm.y / 1000,
+              z: (cell.z * cell.cellSizeMm - originMm.z) / 1000,
+            },
+          }]);
+      });
+    },
     collisionSnapshot: () => ({
       worlds: disposed ? 0 : 1,
       colliders: disposed ? 0 : world.colliders.len(),
