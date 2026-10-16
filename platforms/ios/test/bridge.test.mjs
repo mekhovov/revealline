@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createBridge, MAX_EXPORT_BYTES } from '../bridge/bridge-entry.mjs';
+import { createBridge, MAX_EXPORT_BYTES, MAX_TEXT_EXPORT_BYTES } from '../bridge/bridge-entry.mjs';
 
 function fixture({
   share = async () => ({ activityType: 'com.apple.UIKit.activity.SaveToFiles' }),
@@ -197,4 +197,39 @@ test('lifecycle bridge forwards inactivity only and releases its listener once',
   assert.equal(inactive, 1);
   assert.equal(activeListeners.size, 0);
   assert.equal(calls.filter(([type]) => type === 'remove-listener').length, 1);
+});
+
+test('plain text shares exact inert CLI content as .txt and obeys UTF-8 and filename boundaries', async () => {
+  const { bridge, calls } = fixture();
+  const text = '# Україна\nset rates_type = ACTUAL\n<script>inert()</script>\n';
+  assert.equal((await bridge.exportText({ text, name: 'rates.txt' })).status, 'shared');
+  const written = calls.find(([type]) => type === 'write')[1];
+  assert.equal(written.data, text);
+  assert.match(written.path, /\.txt$/);
+  assert.equal(calls.at(-1)[1].path, written.path);
+  const before = calls.length;
+  for (const invalid of [
+    { text, name: '../rates.txt' },
+    { text, name: 'rates.js' },
+    { text, name: 'rates.json' },
+    { text: 'і'.repeat(MAX_TEXT_EXPORT_BYTES), name: 'rates.txt' },
+  ])
+    await assert.rejects(bridge.exportText(invalid));
+  assert.equal(calls.length, before);
+});
+
+test('JSON and text share the same native operation lock', async () => {
+  let finish;
+  const { bridge, calls } = fixture({
+    share: () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  });
+  const first = bridge.exportText({ text: 'set rates_type = ACTUAL', name: 'rates.txt' });
+  while (!calls.some(([type]) => type === 'share'))
+    await new Promise((resolve) => setImmediate(resolve));
+  await assert.rejects(bridge.exportJSON(value), /current share sheet/);
+  finish({ activityType: 'files' });
+  await first;
 });

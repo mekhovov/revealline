@@ -1681,3 +1681,182 @@ test('Academy mission library owns controller navigation and isolated pinned goa
   assert.equal(h.$('academy-shell-home-dialog').open, true);
   assert.equal(h.view.snapshot().status, 'disarmed');
 });
+
+async function academyTuningClick(h, label) {
+  const root = h.doc.querySelector('.fpv-tuning');
+  const button = root.querySelectorAll('button').find((node) => node.textContent === label);
+  assert.ok(button, `Missing tuning action: ${label}`);
+  button.click();
+  await new Promise((resolve) => setImmediate(resolve));
+}
+function academyTuningControl(h, label, tag = 'input', scope = h.doc.querySelector('.fpv-tuning')) {
+  const control = scope
+    .querySelectorAll('label')
+    .find((node) => node._text === label)
+    ?.querySelectorAll(tag)
+    .find((node) => tag !== 'input' || node.type !== 'range');
+  assert.ok(control, `Missing tuning control: ${label}`);
+  return control;
+}
+async function openAcademyTuning(h) {
+  const button = h.doc
+    .querySelectorAll('button')
+    .find((node) => Object.hasOwn(node.dataset, 'fpvTuning'));
+  assert.ok(button);
+  button.click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
+}
+
+test('Academy tuning saves new rates for reset while the active recording retains its frozen legacy configuration', async (t) => {
+  const data = new Map();
+  const h = await fixture(t, {
+    storage: {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    },
+  });
+  assert.equal(h.view.arm(), true);
+  h.tick(4);
+  h.view.pause();
+  const original = h.view.exportAttempt();
+  await openAcademyTuning(h);
+  const algorithm = academyTuningControl(h, 'Rate algorithm', 'select');
+  algorithm.value = 'actual';
+  algorithm.emit('change');
+  const roll = h.doc
+    .querySelector('.fpv-tuning')
+    .querySelectorAll('fieldset')
+    .find((node) => node.querySelector('legend')?.textContent === 'Roll');
+  const rate = academyTuningControl(h, 'Maximum rate (°/s)', 'input', roll);
+  rate.value = '950';
+  rate.emit('input');
+  await academyTuningClick(h, 'Save for next flight');
+  assert.deepEqual(h.view.exportAttempt(), original);
+  assert.equal(h.view.snapshot().status, 'paused');
+  await academyTuningClick(h, 'Close');
+  h.view.reset();
+  await h.view.settled();
+  const next = h.view.exportAttempt();
+  assert.equal(next.response.format, 'FlightResponseProfile.v2');
+  assert.equal(next.response.rates.axes.roll.rate, 95);
+  assert.equal(next.frames.length, 0);
+  assert.equal(original.response.format, 'FlightResponseProfile.v1');
+});
+
+test('Academy draft flight is unscored, cannot export a recording, and returns to its unchanged editor draft', async (t) => {
+  const data = new Map();
+  const h = await fixture(t, {
+    storage: {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    },
+  });
+  let downloads = 0;
+  h.win.URL.createObjectURL = () => {
+    downloads++;
+    return 'blob:unexpected-recording';
+  };
+  await openAcademyTuning(h);
+  const algorithm = academyTuningControl(h, 'Rate algorithm', 'select');
+  algorithm.value = 'actual';
+  algorithm.emit('change');
+  const camera = academyTuningControl(h, 'Vertical FOV (degrees)');
+  camera.value = '108';
+  camera.emit('input');
+  await academyTuningClick(h, 'Test draft · unscored');
+  await h.view.settled();
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, false);
+  assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+  assert.equal(h.view.arm(), true);
+  h.tick(6);
+  h.view.pause();
+  h.$('export-attempt').click();
+  assert.equal(downloads, 0);
+  assert.equal(h.deliveries.length, 0);
+  assert.equal(data.has('revealline.fpv.tuning.v1'), false);
+  h.doc.querySelector('.tuning-return').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
+  assert.equal(academyTuningControl(h, 'Rate algorithm', 'select').value, 'actual');
+  assert.equal(academyTuningControl(h, 'Vertical FOV (degrees)').value, '108');
+  await academyTuningClick(h, 'Revert draft');
+  assert.equal(academyTuningControl(h, 'Rate algorithm', 'select').value, 'legacy');
+});
+
+test('Academy tuning owns menu navigation and Back closes it before the underlying settings', async (t) => {
+  const h = await fixture(t, { home: true });
+  h.win.getComputedStyle = h.doc.defaultView.getComputedStyle;
+  h.$('academy-shell-action-settings').click();
+  const settings = h.$('academy-shell-settings-dialog');
+  assert.equal(settings.open, true);
+  await openAcademyTuning(h);
+  const tuning = h.doc.querySelector('.fpv-tuning');
+  h.doc.emit('keydown', { key: 'Escape', code: 'Escape', target: tuning.querySelector('h2') });
+  h.doc.emit('keyup', { key: 'Escape', code: 'Escape', target: h.doc.activeElement });
+  assert.equal(tuning.open, false);
+  assert.equal(settings.open, true);
+  await openAcademyTuning(h);
+  const pad = menuPad();
+  h.setPads([pad]);
+  h.tick(4);
+  pad.buttons[0] = { pressed: true, value: 1 };
+  h.tick(4);
+  pad.buttons[0] = { pressed: false, value: 0 };
+  h.tick(4);
+  assert.equal(tuning.contains(h.doc.activeElement), true);
+  h.tick(4); // The joined device establishes its neutral baseline before Back.
+  pad.buttons[1] = { pressed: true, value: 1 };
+  h.tick(4);
+  pad.buttons[1] = { pressed: false, value: 0 };
+  h.tick(4);
+  assert.equal(tuning.open, false);
+  assert.equal(settings.open, true);
+});
+
+test('Academy tuning keeps its hint through pointer blur and releases it after closing', async (t) => {
+  const data = new Map();
+  const h = await fixture(t, {
+    home: true,
+    storage: {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    },
+  });
+  h.$('academy-shell-action-settings').click();
+  await openAcademyTuning(h);
+  const tuning = h.doc.querySelector('.fpv-tuning');
+  const name = academyTuningControl(h, 'Profile name');
+  name.value = 'Pointer saved profile';
+  name.focus();
+  h.doc.emit('keydown', { key: 'Shift', code: 'ShiftLeft', target: name });
+  const hint = tuning.querySelector('.sim-menu-hint');
+  const instructions = hint.textContent;
+  assert.ok(instructions.length > 0);
+  const save = tuning
+    .querySelectorAll('button')
+    .find((node) => node.textContent === 'Save for next flight');
+  save.emit('pointerdown');
+  // Native focus changes can reach the window's blur listener during a pointer gesture.
+  h.win.emit('blur', { target: name, bubbles: false });
+  assert.equal(hint.textContent, instructions, 'pointer blur must not shrink the tuning dialog');
+  assert.equal(hint.hidden, false);
+  assert.equal(hint.parentElement, tuning);
+  save.emit('pointerup');
+  await academyTuningClick(h, 'Save for next flight');
+  assert.ok(
+    JSON.parse(data.get('revealline.fpv.tuning.v1')).profiles.some(
+      (profile) => profile.name === 'Pointer saved profile',
+    ),
+  );
+  h.win.emit('focus');
+  await academyTuningClick(h, 'Close');
+  h.doc.emit('keydown', { key: 'Shift', code: 'ShiftLeft', target: h.doc.activeElement });
+  assert.equal(tuning.open, false);
+  assert.equal(
+    tuning.contains(hint),
+    false,
+    'the closed tuning dialog does not retain hint ownership',
+  );
+  assert.equal(h.$('academy-shell-settings-dialog').contains(hint), true);
+});

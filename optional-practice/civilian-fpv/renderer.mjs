@@ -3488,6 +3488,10 @@ export function createFlightRenderer({
         uploadScene.fog = scene.fog;
         for (const light of [hemisphere, sunlight, fillLight, rimLight]) {
           const clone = light.clone();
+          // Cold preparation and quality changes can precede the first shadow
+          // render. A PCF sampler requires a real depth map; a null map falls
+          // back to a colour texture and rejects the upload draw in WebGL.
+          clone.castShadow = light.castShadow && Boolean(light.shadow?.map);
           if (light.target) {
             clone.target = light.target.clone();
             uploadScene.add(clone.target);
@@ -3505,7 +3509,7 @@ export function createFlightRenderer({
         before = performance.now();
         try {
           renderer.setRenderTarget(target);
-          compiled = renderer.compileAsync(batch, preparedCamera, scene);
+          compiled = renderer.compileAsync(batch, preparedCamera, uploadScene);
         } finally {
           restore(saved);
         }

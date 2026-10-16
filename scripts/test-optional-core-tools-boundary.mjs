@@ -27,3 +27,14 @@ test('the optional core extension cannot widen module or network admission', () 
   ])
     assert.throws(() => dependencies(code));
 });
+
+test('only the shared platform adapter may lazily load the native host bridge', () => {
+  const bridge = '../native/bridge.mjs';
+  for (const id of ['civilian-fpv', 'fpv-worlds'])
+    assert.deepEqual(dependencies(`import('${bridge}');`, 'game/platform.mjs', id), []);
+  assert.deepEqual(dependencies(`import '${bridge}';`, 'game/platform.mjs'), ['native/bridge.mjs']);
+  assert.deepEqual(dependencies(`import('${bridge}');`, 'game/other.mjs'), ['native/bridge.mjs']);
+  assert.deepEqual(dependencies("import('../native/other.mjs');", 'game/platform.mjs'), [
+    'native/other.mjs',
+  ]);
+});
