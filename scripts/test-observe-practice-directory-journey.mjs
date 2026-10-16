@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile, rm, mkdir, symlink } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
@@ -18,7 +19,12 @@ import {
   validatePersonalAppearanceWitness,
   observePersonalAppearance,
   assertPersonalAppearanceURL,
+  DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL,
+  verifyDirectoryDistribution,
+  readDirectoryDistributionFile,
+  directoryJourneyServer,
 } from './observe-practice-directory-journey.mjs';
+import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 
 test('popup click and late waiter failures stay owned without unhandled rejection', async () => {
   let rejectPopup;
@@ -335,4 +341,188 @@ test('failed source/admission still retains plan and authority and refuses evide
   } finally {
     await rm(work, { recursive: true, force: true });
   }
+});
+
+const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const productionPlan = (directory = '/absolute/distribution', manifestHash = '1'.repeat(64)) => ({
+  ...plan(),
+  protocol: DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.id,
+  format: 'revealline-practice-directory-production-personal-appearance-plan.v1',
+  distribution: directory,
+  distributionManifestSha256: manifestHash,
+});
+async function productionFixture(run) {
+  const directory = await mkdtemp(path.join(tmpdir(), 'directory-production-unit-'));
+  try {
+    const info = {
+      formatVersion: 1,
+      version: '0.151.1',
+      sourceRevision: plan().shellRevision,
+      entry: 'game/index.html',
+    };
+    const entries = new Map([
+      [
+        'game/index.html',
+        Buffer.from('<html>Original generated output, not source fallback</html>'),
+      ],
+      ['game/build-info.json', Buffer.from(JSON.stringify(info))],
+    ]);
+    for (const [name, bytes] of entries) {
+      await mkdir(path.dirname(path.join(directory, name)), { recursive: true });
+      await writeFile(path.join(directory, name), bytes, { flag: 'wx' });
+    }
+    const manifest = {
+      ...info,
+      totalBytes: [...entries.values()].reduce((n, b) => n + b.length, 0),
+      files: [...entries].map(([name, bytes]) => ({
+        path: name,
+        bytes: bytes.length,
+        sha256: sha(bytes),
+      })),
+    };
+    const saveManifest = async (value) => {
+      const bytes = Buffer.from(JSON.stringify(value));
+      await writeFile(path.join(directory, 'manifest.json'), bytes);
+      return productionPlan(directory, sha(bytes));
+    };
+    await run({ directory, entries, manifest, saveManifest, input: await saveManifest(manifest) });
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+}
+
+test('production protocol adds exactly the bounded distribution pin without changing prior plans', () => {
+  const input = productionPlan();
+  assert.deepEqual(validateDirectoryJourneyPlan(input), input);
+  assert.equal(directoryJourneyProtocol(input), DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL);
+  assert.equal(DIRECTORY_PRODUCTION_APPEARANCE_PROTOCOL.caseMs, 90000);
+  assert.deepEqual(input.cases, plan().cases);
+  for (const patch of [
+    { distribution: '.' },
+    { distribution: '/' + 'x'.repeat(4096) },
+    { distribution: '/tmp/\0bad' },
+    { distributionManifestSha256: '' },
+    { format: plan().format },
+    { sourceSubstitution: true },
+    { cases: input.cases.slice(1) },
+  ])
+    assert.throws(() => validateDirectoryJourneyPlan({ ...input, ...patch }));
+  assert.throws(() =>
+    validateDirectoryJourneyPlan({ ...plan(), distribution: input.distribution }),
+  );
+  assert.deepEqual(validateDirectoryJourneyPlan(plan()), plan());
+});
+
+test('production verifies every original hash, exact manifest pin and source binding', async () => {
+  await productionFixture(async ({ input, entries, directory }) => {
+    const verified = await verifyDirectoryDistribution(input);
+    assert.deepEqual([...verified.files.keys()], [...entries.keys()]);
+    assert.deepEqual(
+      await readDirectoryDistributionFile(verified, 'game/index.html'),
+      entries.get('game/index.html'),
+    );
+    assert.equal(
+      sha(await readDirectoryDistributionFile(verified, 'manifest.json')),
+      input.distributionManifestSha256,
+    );
+    await assert.rejects(
+      verifyDirectoryDistribution({ ...input, distributionManifestSha256: '0'.repeat(64) }),
+      /manifest pin/,
+    );
+    await assert.rejects(
+      verifyDirectoryDistribution({ ...input, shellRevision: '0'.repeat(40) }),
+      /source differs/,
+    );
+    await writeFile(
+      path.join(directory, 'game/index.html'),
+      Buffer.alloc(entries.get('game/index.html').length, 88),
+    );
+    await assert.rejects(verifyDirectoryDistribution(input), /hash mismatch/);
+    await assert.rejects(
+      readDirectoryDistributionFile(verified, 'game/index.html'),
+      /changed before serving/,
+    );
+    await rm(path.join(directory, 'game/index.html'));
+    await assert.rejects(verifyDirectoryDistribution(input), /ENOENT/);
+  });
+});
+
+test('production rejects manifest duplicates, traversal, size/count limits and inconsistent build-info', async () => {
+  await productionFixture(async ({ manifest, saveManifest, entries }) => {
+    const file = manifest.files[0];
+    for (const patch of [
+      { files: [...manifest.files, file] },
+      { totalBytes: manifest.totalBytes + 1 },
+      { files: [{ ...file, path: '../escape' }] },
+      { files: [{ ...file, path: '/absolute' }] },
+      { files: [{ ...file, path: 'game/.private' }] },
+      { files: [{ ...file, path: 'game\\index.html' }] },
+      { files: [{ ...file, path: 'manifest.json' }] },
+      { files: [{ ...file, bytes: 128 * 1024 ** 2 + 1 }] },
+      { files: Array(20001).fill(file) },
+      { totalBytes: 2 * 1024 ** 3 + 1 },
+      { formatVersion: 2 },
+      { entry: 'other.html' },
+      { extra: true },
+      { version: 'different' },
+    ])
+      await assert.rejects(
+        verifyDirectoryDistribution(await saveManifest({ ...manifest, ...patch })),
+      );
+    assert.equal(entries.size, 2);
+  });
+});
+
+test('production refuses symlinked members even when they point to identical admitted bytes', async () => {
+  await productionFixture(async ({ directory, input, entries }) => {
+    const original = path.join(directory, 'game/index.html');
+    await writeFile(path.join(directory, 'copy.html'), entries.get('game/index.html'));
+    await rm(original);
+    await symlink('../copy.html', original);
+    await assert.rejects(verifyDirectoryDistribution(input), /symlink/);
+  });
+});
+
+test('production server serves only verified entries plus explicit practice overlay under production CSP', async () => {
+  await productionFixture(async ({ input, entries, directory }) => {
+    const distribution = await verifyDirectoryDistribution(input);
+    // Deliberately present but not in manifest: never exposed by distribution fallback.
+    await writeFile(path.join(directory, 'unlisted.txt'), 'unlisted');
+    const report = { servedSources: [], requestFailures: [] };
+    const overlay = new Map([['practice/index.json', Buffer.from('{"fixture":true}')]]);
+    await assert.rejects(
+      directoryJourneyServer(
+        new Map([['game/index.html', Buffer.from('bad')]]),
+        new Map(),
+        report,
+        distribution,
+      ),
+      /Only the explicit practice/,
+    );
+    const served = await directoryJourneyServer(overlay, new Map(), report, distribution);
+    try {
+      const root = served.url + 'revealline/';
+      const response = await fetch(root + 'game/');
+      assert.equal(response.status, 200);
+      assert.equal(
+        response.headers.get('content-security-policy'),
+        PUBLIC_SECURITY_HEADERS['Content-Security-Policy'],
+      );
+      assert.deepEqual(Buffer.from(await response.arrayBuffer()), entries.get('game/index.html'));
+      assert.deepEqual(await (await fetch(root + 'practice/index.json')).json(), { fixture: true });
+      assert.equal((await fetch(root + 'unlisted.txt')).status, 404);
+      // Exists in the checkout but not in the verified fixture: no source fallback.
+      assert.equal((await fetch(root + 'game/app.mjs')).status, 404);
+      assert.equal((await fetch(root + 'game/', { method: 'POST' })).status, 405);
+      assert.deepEqual(report.servedSources, []);
+      assert.equal(report.servedDistribution[0].sha256, sha(entries.get('game/index.html')));
+      await writeFile(path.join(directory, 'game/index.html'), 'changed');
+      assert.equal((await fetch(root + 'game/')).status, 404);
+    } finally {
+      served.server.closeAllConnections();
+      await new Promise((resolve, reject) =>
+        served.server.close((error) => (error ? reject(error) : resolve())),
+      );
+    }
+  });
 });

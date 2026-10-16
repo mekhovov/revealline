@@ -108,7 +108,11 @@ export async function activateOfflineAction(page, { button, status, expected }) 
             !globalThis.document.querySelector(button)?.disabled &&
             !globalThis.document.querySelector('[data-optional-offline-progress]')
           );
-        if (/failed|timed out|cancelled|denied|quota|not available|not supported/i.test(text))
+        if (
+          /failed|timed out|stalled|exceeded five minutes|needs repair|cancelled|denied|quota|not available|not supported/i.test(
+            text,
+          )
+        )
           throw new Error(`Offline action failed: ${text}`);
         // A fault control can be ineffective. Treat a fresh successful terminal
         // status as an unexpected outcome, not a stalled transfer/deadline.

@@ -1219,6 +1219,19 @@ try {
               url: globalThis.location.href,
               access: globalThis.document.documentElement.dataset.accessState ?? null,
               status: globalThis.document.querySelector('#status')?.textContent ?? null,
+              offlineStatuses: Object.fromEntries(
+                ['#transfer-status', '#package-status', '#runtime-offline-status'].map(
+                  (selector) => [
+                    selector,
+                    globalThis.document.querySelector(selector)?.textContent?.slice(0, 1024) ??
+                      null,
+                  ],
+                ),
+              ),
+              offlineProgress:
+                globalThis.document
+                  .querySelector('[data-optional-offline-progress]')
+                  ?.textContent?.slice(0, 1024) ?? null,
               open: (() => {
                 const link = globalThis.document.querySelector('#open');
                 return link ? { hidden: link.hidden, href: link.href } : null;

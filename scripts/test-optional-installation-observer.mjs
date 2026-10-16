@@ -224,6 +224,14 @@ test('offline action requires fresh observable work, native Enter and a fresh te
     exercise({ changes: ['Preparing…', 'Storage quota denied'] }),
     /Offline action failed/,
   );
+  await assert.rejects(
+    exercise({ changes: ['Preparing…', 'Download stalled for 30 seconds. Retry online.'] }),
+    /Offline action failed/,
+  );
+  await exercise({
+    changes: ['Preparing…', 'Download stalled for 30 seconds. Retry online.'],
+    expected: /stalled/i,
+  });
   await exercise({
     changes: ['Preparing…', 'Verification failed'],
     expected: /verification failed/i,
