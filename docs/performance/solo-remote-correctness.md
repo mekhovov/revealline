@@ -81,6 +81,15 @@ scenario assertions, build flags and resource budgets remain unchanged.
 Sustained and offline follow-ups have separate plans and acceptance; neither
 is credited by these correctness checks.
 
+The version-three lane also retains a normal baseline artifact only after its
+build, full ZIP/member verification and source/CSP proof pass. It binds the
+exact producer, source and tree, command receipts and checksums, then performs
+a full readback before upload. Future comparisons must pin the actual artifact
+and independently verify it again; failed or missing proof cannot enable reuse.
+The 75-minute helper and all row deadlines stay fixed. The job allows separate
+setup and upload steps (139 minutes of declared step caps inside 145 minutes),
+including the additional baseline upload; this does not extend gameplay windows.
+
 ## Other CI evidence
 
 The optional-practice integration job in

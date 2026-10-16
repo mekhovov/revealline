@@ -6,7 +6,12 @@ on:
       - '.github/workflows/solo-remote-correctness-temporary.yml'
       - 'scripts/run-solo-remote-correctness.mjs'
       - 'scripts/solo-remote-archive.py'
+      - 'scripts/verify-solo-build.mjs'
+      - 'scripts/solo-build-worker-closure.mjs'
+      - 'scripts/test-solo-build-worker-closure.mjs'
       - 'scripts/test-solo-remote-correctness.mjs'
+      - 'scripts/solo-remote-baseline.mjs'
+      - 'scripts/test-solo-remote-baseline.mjs'
       - 'docs/performance/solo-remote-correctness-plan.json'
       - 'docs/performance/fixtures/solo-remote-correctness/**'
 
@@ -22,7 +27,7 @@ jobs:
   correctness:
     if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 145
     env:
       SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
       SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline
@@ -30,6 +35,7 @@ jobs:
       PYTHONDONTWRITEBYTECODE: 1
     steps:
       - name: Initialize paths after the runner is assigned
+        timeout-minutes: 1
         shell: bash
         run: |
           printf '%s\n' \
@@ -37,24 +43,28 @@ jobs:
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
             "OUTPUT=$RUNNER_TEMP/solo-linux-correctness" >> "$GITHUB_ENV"
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: tools
           persist-credentials: false
           fetch-depth: 0
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
         with:
           ref: b11745223861c3973ad4bf440cc536198b8e0371
           path: baseline
           persist-credentials: false
           fetch-depth: 1
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
         with:
           ref: 2ec605eb76e38f9c9a3e21b7fa82dd80c580c457
           path: candidate
           persist-credentials: false
           fetch-depth: 1
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 3
         with:
           node-version: '22.13.1'
           package-manager-cache: false
@@ -82,7 +92,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test scripts/test-solo-remote-correctness.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
       - name: Run the eight fixed serial correctness rows
         timeout-minutes: 79
         working-directory: tools
@@ -124,4 +134,31 @@ jobs:
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
+          retention-days: 14
+      - name: Admit the independently verified normal baseline upload
+        id: baseline-upload
+        if: ${{ always() }}
+        timeout-minutes: 2
+        working-directory: tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -f "$RUNNER_TEMP/solo-linux-correctness/work/baseline-build/normal-baseline-proof/ready.json" ]; then
+            printf '%s\n' 'Verified normal baseline is not ready; no package will be published.'
+            exit 0
+          fi
+          node scripts/solo-remote-baseline.mjs admit-upload "$RUNNER_TEMP/solo-linux-correctness/work/baseline-build"
+          printf '%s\n' 'ready=true' >> "$GITHUB_OUTPUT"
+      - name: Retain the verified normal baseline for prospective exact reuse
+        if: ${{ always() && steps.baseline-upload.outputs.ready == 'true' }}
+        timeout-minutes: 10
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-normal-baseline-b1174522-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-linux-correctness/work/baseline-build/distribution.zip
+            ${{ runner.temp }}/solo-linux-correctness/work/baseline-build/manifest.json
+            ${{ runner.temp }}/solo-linux-correctness/work/baseline-build/normal-baseline-proof/
+          if-no-files-found: error
+          compression-level: 0
           retention-days: 14
