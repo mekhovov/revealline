@@ -40,14 +40,19 @@ def privacy_hold(path):
     return None
 
 
-def rows(path):
+def rows(path, require_final_newline=False):
     with Path(path).open() as f:
-        for line in f:
+        for number, line in enumerate(f, 1):
+            if require_final_newline and not line.endswith('\n'):
+                raise ValueError('Final manifest row lacks its closing newline: %s:%d' % (path, number))
             try:
-                yield json.loads(line)
-            except json.JSONDecodeError:
-                # The writer may be appending its last row. Never consume it partially.
-                break
+                row = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise ValueError('Malformed manifest JSON row: %s:%d' % (path, number)) from exc
+            if not isinstance(row, dict) or row.get('kind') not in {
+                    'file', 'symlink', 'excluded', 'git-checkout', 'error', 'unstable'}:
+                raise ValueError('Unsupported manifest row kind: %s:%d' % (path, number))
+            yield row
 
 
 def load_clearances(path):
@@ -100,7 +105,8 @@ def pack_part(root, stage, receipts, number, objects):
     with archive.open('xb') as output:
         process = subprocess.Popen(['zstd', '-q', '-3', '-T1', '-c'], stdin=subprocess.PIPE, stdout=output)
         try:
-            with tarfile.open(fileobj=process.stdin, mode='w|', format=tarfile.USTAR_FORMAT) as tar:
+            with tarfile.open(fileobj=process.stdin, mode='w|', format=tarfile.USTAR_FORMAT,
+                              copybufsize=4 * 1024 * 1024) as tar:
                 tar.addfile(member('part-manifest.json', len(header_bytes)), io.BytesIO(header_bytes))
                 started = time.monotonic()
                 for x in objects:

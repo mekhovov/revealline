@@ -15,9 +15,10 @@ def cleared(row, clearances):
 def build(manifests, state, verified_receipts, library_manifests, catalogue, source_root,
           clearances=(), inventory_set_final=False):
     approved = {(x['path'], x['sha256']) for x in clearances}
-    files, symlinks, other, conflicts = {}, {}, [], []
+    files, symlinks, other, conflicts, inputs = {}, {}, [], [], []
     for manifest in manifests:
-        for row in rows(manifest):
+        before = Path(manifest).stat()
+        for row in rows(manifest, require_final_newline=inventory_set_final):
             if row.get('kind') in ('file', 'symlink'):
                 safe_relative(row['path'])
                 target = files if row['kind'] == 'file' else symlinks
@@ -26,6 +27,12 @@ def build(manifests, state, verified_receipts, library_manifests, catalogue, sou
                 target[row['path']] = row
             else:
                 other.append(row)
+        sha = digest(manifest)
+        after = Path(manifest).stat()
+        if inventory_set_final and (before.st_size, before.st_mtime_ns, before.st_ino, before.st_dev) != (
+                after.st_size, after.st_mtime_ns, after.st_ino, after.st_dev):
+            raise ValueError('Final manifest changed during index creation: ' + str(manifest))
+        inputs.append({'path': str(manifest), 'sha256': sha, 'bytes': after.st_size})
     held_sha = {r['sha256'] for r in files.values()
                 if (r.get('review') or privacy_hold(r['path'])) and not cleared(r, approved)}
     held = [r for r in files.values() if r['sha256'] in held_sha]
@@ -85,7 +92,7 @@ def build(manifests, state, verified_receipts, library_manifests, catalogue, sou
     result = {'format': 'FPVPreservationIndex.v1', 'repo': 'mekhovov/revealline',
               'sourceRoot': source_root, 'inventoryComplete': inventory_state.get('complete') is True,
               'inventorySetFinal': inventory_set_final,
-              'inventoryInputs': [{'path': str(p), 'sha256': digest(p)} for p in manifests],
+              'inventoryInputs': inputs,
               'parts': parts, 'directAssets': needed_direct, 'files': covered, 'symlinks': safe_links,
               'held': held + held_links, 'uncovered': uncovered, 'inventoryConflicts': conflicts,
               'inventoryErrorsOrUnstable': unresolved,
