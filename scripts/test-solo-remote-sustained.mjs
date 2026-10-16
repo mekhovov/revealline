@@ -126,6 +126,9 @@ test('phase release cannot jump over the required predecessor or hide prior job 
 });
 test('verified baseline reuse requires its actual separately pinned verifier', async () => {
   const p = plan();
+  p.adapterInputs = p.adapterInputs.filter(
+    (ref) => ref.path !== 'scripts/solo-remote-baseline.mjs',
+  );
   p.baseline.reusableArtifact = {};
   assert.throws(() => validateSustainedPlan(p));
   const bytes = await readFile(new URL('./solo-remote-baseline.mjs', import.meta.url));
