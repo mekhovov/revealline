@@ -1444,7 +1444,36 @@ createMissionLibrary,
 };
 })();
 modules['game/data-json.mjs']=(()=>{
-const t=simGlobalI18n['t'];
+// Standalone core/Worker validation must not load the UI translation engine.
+// These English defaults mirror locales/en/errors.json (checked by the tests).
+// A booted UI uses its live translator, including subsequent locale changes.
+const DATA_JSON_DEFAULT_MESSAGES=Object.freeze({
+fileByteBudget:'JSON file exceeds its byte budget.',
+invalid:'The file must contain valid JSON.',
+byteBudget:'JSON exceeds its byte budget.',
+structuralBudget:'JSON exceeds its structural budget.',
+finiteNumbers:'JSON numbers must be finite.',
+stringBudget:'JSON string exceeds its budget.',
+plainData:'Only plain JSON data is supported.',
+cyclesUnsupported:'JSON cycles are not supported.',
+arrayItemBudget:'JSON array exceeds its item budget.',
+symbolKeys:'JSON symbol keys are not supported.',
+forbiddenKey:'Forbidden JSON key: {{key}}.',
+ordinaryFields:'JSON accessors and hidden fields are not supported.',
+fieldNameBudget:'JSON field name exceeds its budget.',
+arrayCustomProperties:'JSON arrays cannot have custom properties.',
+sparseArrays:'Sparse JSON arrays are not supported.',
+encodedByteBudget:'Encoded JSON exceeds its byte budget.',
+objectRequired:'{{label}} must be an object.',
+unsupportedField:'{{path}} is not supported.',
+});
+
+function t(key,values={}){
+const translated=globalThis.RevealLineI18n?.t;
+if(translated)return translated(key,values);
+const template=DATA_JSON_DEFAULT_MESSAGES[key.slice(key.indexOf('.')+1)];
+return template.replace(/\{\{(\w+)\}\}/g,(_,name)=>String(values[name]??''));
+}
 
 /** Shared boundary for user-owned files. Does not invoke getters or toJSON. */
 const plainObject=(value)=>
@@ -1583,7 +1612,16 @@ hash=BigInt.asUintN(64,(hash^BigInt(byte))*0x100000001b3n);
 return hash.toString(16).padStart(16,'0');
 }
 
-return{plainObject,stableId,boundedJSON,exactKeys,required,canonicalJSON,dataIdentity};
+return{
+DATA_JSON_DEFAULT_MESSAGES,
+plainObject,
+stableId,
+boundedJSON,
+exactKeys,
+required,
+canonicalJSON,
+dataIdentity,
+};
 })();
 modules['game/edition-context.mjs']=(()=>{
 /** Distribution identity is independent of Journey's logical campaign progress. */

@@ -113,3 +113,65 @@ test('only the newest overlapping reset may create a replacement Worker', async 
     for (const worker of JoiningWorker.instances) worker.release?.();
   }
 });
+
+test('a new scene joins the preceding player Worker retirement before creating another thread', async () => {
+  JoiningWorker.instances = [];
+  const firstPlayer = await prepareBotPlayer(level, options, {
+    WorkerClass: JoiningWorker,
+    watchdogMs: 5000,
+  });
+  const first = JoiningWorker.instances[0];
+  const retirement = firstPlayer.dispose();
+  const opening = prepareBotPlayer(level, options, {
+    WorkerClass: JoiningWorker,
+    watchdogMs: 5000,
+  });
+  let second;
+  try {
+    await Promise.resolve();
+    assert.equal(
+      JoiningWorker.instances.length,
+      1,
+      'A disposed owner can still have a retiring real thread.',
+    );
+    assert.equal(
+      typeof retirement?.then,
+      'function',
+      'Expose an adapter termination acknowledgement.',
+    );
+    first.release();
+    await retirement;
+    second = await opening;
+    assert.equal(JoiningWorker.instances.length, 2);
+    assert.equal(second.state.tick, 0);
+  } finally {
+    first.release?.();
+    second ??= await opening.catch(() => null);
+    second?.dispose();
+    for (const worker of JoiningWorker.instances) worker.release?.();
+  }
+});
+
+test('cancelling a scene while it joins a retiring Worker cannot start another thread', async () => {
+  JoiningWorker.instances = [];
+  const player = await prepareBotPlayer(level, options, {
+    WorkerClass: JoiningWorker,
+    watchdogMs: 5000,
+  });
+  const first = JoiningWorker.instances[0],
+    controller = new AbortController();
+  player.dispose();
+  const opening = prepareBotPlayer(level, options, {
+    WorkerClass: JoiningWorker,
+    watchdogMs: 5000,
+    signal: controller.signal,
+  });
+  controller.abort();
+  first.release();
+  try {
+    await assert.rejects(opening, { name: 'AbortError' });
+    assert.equal(JoiningWorker.instances.length, 1);
+  } finally {
+    for (const worker of JoiningWorker.instances) worker.release?.();
+  }
+});

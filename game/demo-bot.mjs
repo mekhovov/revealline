@@ -611,6 +611,9 @@ export async function planImprovMacro(
       allowHazardLoss: true,
     });
     if (!trial) continue;
+    // A genuine finish needs no further search for cosmetic scoring gains.
+    // Keep its exact independently simulated terminal tick and public inputs.
+    if (trial.state.status === 'won') return trial;
     const score = trial.failure
       ? candidate.advantage + candidate.jitter * 4
       : (trial.state.coverage - original.coverage) * 60 +
@@ -618,6 +621,17 @@ export async function planImprovMacro(
         trial.ticks / 400 +
         candidate.jitter * 5;
     (trial.failure ? risky : safe).push({ ...trial, score });
+    // On the opening/recovery route, three useful alternatives including a
+    // bend already provide seeded variety. Keep the remaining allowance for
+    // difficult boards rather than always simulating sixteen similar routes.
+    // Overreach searches retain their full allowance and real hazard choices.
+    if (
+      (!allowRisk || preferSafe) &&
+      budget.candidates >= 8 &&
+      safe.filter((move) => move.state.coverage - original.coverage >= 0.04).length >= 3 &&
+      safe.some((move) => move.bends > 0)
+    )
+      break;
   }
   const choices =
     allowRisk && risky.length && (!safe.length || (!preferSafe && random() < 0.25)) ? risky : safe;

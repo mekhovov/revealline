@@ -365,15 +365,17 @@ export function attachDemoHost({
       nextPainter = null,
       nextActors = null,
       nextPresentation = null,
+      retirement,
       released = false;
     const release = () => {
-      if (released) return;
+      if (released) return retirement;
       released = true;
-      player.dispose?.();
+      retirement = player.dispose?.();
       nextPicture?.dispose();
       nextPainter?.dispose?.();
       nextActors?.release();
       nextPresentation?.release();
+      return retirement;
     };
     const check = () => {
       if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');

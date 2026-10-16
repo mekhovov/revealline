@@ -1,0 +1,80 @@
+TAP version 13
+# Subtest: mounted observer exports bounded incomplete checkpoints with hashes and recovers without starting or steering
+ok 1 - mounted observer exports bounded incomplete checkpoints with hashes and recovers without starting or steering
+  ---
+  duration_ms: 183.320583
+  ...
+# Subtest: finalization detects changed sources and stores the finalized report separately from its preliminary checkpoint
+ok 2 - finalization detects changed sources and stores the finalized report separately from its preliminary checkpoint
+  ---
+  duration_ms: 117.734667
+  ...
+# Subtest: cancelling source preparation aborts ownership without creating or replacing saved evidence
+ok 3 - cancelling source preparation aborts ownership without creating or replacing saved evidence
+  ---
+  duration_ms: 34.527459
+  ...
+# Subtest: quota failure is bounded and leaves current DOM/download observation available
+ok 4 - quota failure is bounded and leaves current DOM/download observation available
+  ---
+  duration_ms: 140.39125
+  ...
+# Subtest: a failed final checkpoint write stays visible in the exact finalized DOM report
+ok 5 - a failed final checkpoint write stays visible in the exact finalized DOM report
+  ---
+  duration_ms: 22.827125
+  ...
+# Subtest: disabled IndexedDB and a failed terminal inventory never prevent export or imply completion
+ok 6 - disabled IndexedDB and a failed terminal inventory never prevent export or imply completion
+  ---
+  duration_ms: 14.007833
+  ...
+# Subtest: store enforces serialized byte budget before opening and closes late opens after timeout
+ok 7 - store enforces serialized byte budget before opening and closes late opens after timeout
+  ---
+  duration_ms: 76.851542
+  ...
+# Subtest: observer storage reopens a closed connection, close notification true
+ok 8 - observer storage reopens a closed connection, close notification true
+  ---
+  duration_ms: 3.107666
+  ...
+# Subtest: observer storage reopens a closed connection, close notification false
+ok 9 - observer storage reopens a closed connection, close notification false
+  ---
+  duration_ms: 5.537792
+  ...
+# Subtest: repeated transaction-creation failure has one bounded reconnect and no failing write retries
+ok 10 - repeated transaction-creation failure has one bounded reconnect and no failing write retries
+  ---
+  duration_ms: 0.448667
+  ...
+# Subtest: child navigation finalizes invalid evidence immediately and retains only bounded control intent
+ok 11 - child navigation finalizes invalid evidence immediately and retains only bounded control intent
+  ---
+  duration_ms: 147.324375
+  ...
+# Subtest: leaving the demo ends its observation without blocking the game or certifying another session
+ok 12 - leaving the demo ends its observation without blocking the game or certifying another session
+  ---
+  duration_ms: 31.901542
+  ...
+# Subtest: disposal during preparation aborts the source request and detaches listeners without a late start
+ok 13 - disposal during preparation aborts the source request and detaches listeners without a late start
+  ---
+  duration_ms: 12.723625
+  ...
+# Subtest: a slow checkpoint cannot drop the queued final report, and pending clear cannot erase a newly started run
+ok 14 - a slow checkpoint cannot drop the queued final report, and pending clear cannot erase a newly started run
+  ---
+  duration_ms: 41.542958
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1350.956125

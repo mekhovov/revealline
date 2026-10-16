@@ -155,7 +155,7 @@ function trackPlayer(player) {
     disposed = true;
     players.disposed++;
     players.live--;
-    player.dispose?.();
+    return player.dispose?.();
   };
   return Object.defineProperties(
     {},

@@ -2,6 +2,8 @@
 
 # Demo follow-up — 15 October 2026
 
+Continued by the [16 October research and completion plan](demo-plan-status-2026-10-16.md). The results below remain historical evidence; the new continuation does not resume or replace the interrupted browser run.
+
 The current work is held in [draft PR 1356](https://github.com/mekhovov/revealline/pull/1356). The release hold and existing planning milestone remain. Physical iPhone acceptance and three unfamiliar viewers are explicitly **deferred by the user**. No merge, release version allocation or public publication is included.
 
 ## Implemented
