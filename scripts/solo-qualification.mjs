@@ -78,7 +78,7 @@ export function qualificationCacheMode(
   { workProbe = false, fixtureAccess = false, mirrored = false } = {},
 ) {
   if (scenario.cacheMode !== 'warm-http-reload') return 'fresh-context';
-  assert(workProbe, 'Warm reload requires explicit ready-phase calibration on both documents');
+  assert(workProbe, 'Warm reload requires the work probe and frozen pre-navigation cadence');
   assert(!fixtureAccess && !mirrored, 'Warm HTTP cache observations cannot use browser routing');
   return scenario.cacheMode;
 }
