@@ -230,7 +230,7 @@ Proceed in this order, verifying each checkpoint before advancing:
    tightening guards. If safe candidates are insufficient, report the gap for a
    human decision rather than removing shared gameplay or changing origins.
 
-## Shared evidence extraction — verification in progress
+## Shared evidence extraction — production verified
 
 The comparison foundation merged in #1529 as
 `0f0d4e152195901e59f211f3294203aff0b8e192`; publication `38825001991`
@@ -249,8 +249,42 @@ measurement remain subsequent work, not completed by this change.
 Local extraction, workflow-policy and focused-routing tests passed 73 cases,
 zero failures or skips. Scoped lint and whitespace checks passed. Independent
 read-only review confirmed both frozen-base bodies are byte-identical and found
-no concrete blocker; actual runner execution remains pending.
+no concrete blocker. PR #1536 merged as
+`9ce5d517b1cd9524284d313e23dce61e333f322f` after all applicable exact-head checks
+passed at `25cfa3408d2a5b8e163b1bab9ae59a4f3faa737d`; only test/build were
+policy-selected skips. Hosted focused verification passed all 211 tests.
 The external SMB volume does not support the hard-link fixture, so the unchanged
 tiny fixtures were rerun on the local filesystem without skipping that safeguard.
-No full local build, candidate measurement, production execution of the extracted
-scripts, content removal or merge authorization is claimed here.
+Production run `38832146563` passed build, deploy and public verification for the
+merge source. The actual archive remained 966,236,160 bytes with 3,424 files and
+963,262,271 raw bytes. Its SHA-256 was
+`d641e6a0fdeca8f64d7990b7ffce2ff62a56f145291c1339dfd097dbbc40ed6a`;
+artifact ID `12017618388` was independently bound to the same run and source.
+Receipt consistency and source identity were independently checked, then public
+`main-deployment.json`, `release.json`, `releases/index.html`, `game/index.html`
+and `optional-practice/civilian-fpv/regional-library.mjs` were hash-matched to the
+accepted inventory. This supplemental check is not a second download of the full
+archive or full gameplay qualification. No savings, content removal or candidate
+forecast occurred.
+
+## Rolling metadata extraction — verification in progress
+
+The next isolated branch starts from refreshed main
+`428329745c3078941338ae6157e2ae1a55c28462`. Extract only the existing Node metadata
+block to `scripts/write-main-pages-metadata.mjs`, adjusting one relative import.
+Do not change identity fields, JSON order/newlines, exclusive writes, partial-write
+failure behavior, the shared access-gate helper, source date binding or step order.
+The pre-extraction block is frozen by SHA-256
+`e859bca5b49c90d92ea23d0fdd2de06a0f0f7420dc1053b675ff5244d88cbf55`.
+
+Eleven new metadata cases plus focused-routing and workflow-policy coverage pass
+61 tests without failures or skips, using tiny fixtures on the external drive.
+They assert exact JSON and complete protected HTML bytes with fake gate metadata,
+all three output collisions, missing/incomplete gate configuration, existing or
+absent release directories, paths with spaces and unchanged workflow inputs/order.
+Scoped lint, new-test formatting and whitespace checks pass. Independent review
+confirmed literal-body parity, the frozen protected HTML digest, unchanged helper
+and workflow bindings/gates, and found no concrete blocker. Exact-head hosted CI
+and actual production execution remain required before advancing. No capacity
+guard, permission, application storage, runtime content or publication origin is
+changed by this extraction.
