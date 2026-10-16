@@ -167,7 +167,7 @@ expectedDefinitions.set('recorded-guide-capture-speech', expectedDefinitions.get
 for (const id of ['enabled-local-audio-and-reactions', 'explicit-resume-recovery-handlers'])
   expectedDefinitions.set(id, expectedDefinitions.get('signal-07'));
 expectedDefinitions.set(
-  'ten-next-current-opening',
+  'ten-next-current-opening-v3',
   definition(
     applyGameplayTuning(
       resolveMission(authored, routes.rows[10][0], { difficulty: 'standard' }).level,
@@ -219,7 +219,12 @@ const prepare = (id) => [
     acceptedLevelSelector: '#level-json',
   },
   { type: 'click', selector: '#preview-button', timeoutMs: 60000 },
-  { type: 'follow', selector: '#open-preview', timeoutMs: 120000 },
+  {
+    type: 'follow',
+    selector: '#open-preview',
+    preparationStatusSelector: '[data-presentation-status="auxiliary"]',
+    timeoutMs: 120000,
+  },
   { type: 'snapshot', group: 'prepared' },
 ];
 const launch = (id) => [...prepare(id), ...start];
@@ -721,12 +726,243 @@ await put(
     ],
   }),
 );
+// Each item is one real held key. Capture/recovery clears its intent in the
+// host, so the remaining hold is a safe wait; do not re-press on every tick.
+// The previous Courtyard cut collided after a 57-tick startup delay. This
+// edge-to-edge route keeps the unchanged mission/rules and earns the same win.
+const courtyardHeldRoute = [
+  ['down', 680],
+  ['right', 1000],
+  ['up', 240],
+  ['left', 1000],
+  ['down', 800],
+];
+const courtyardLevel = normalizedLevel(
+  applyGameplayTuning(
+    resolveMission(authored, 'courtyard-return', { difficulty: 'standard' }).level,
+    resolveGameplayTuning('standard'),
+  ),
+);
+assert.equal(dataIdentity(courtyardLevel), 'eb57020d33aacb15');
+const courtyardProofs = [];
+for (const [initialTicks, durationDelta, dispatchGap] of [
+  [0, 0, 0],
+  [57, 0, 0],
+  [120, -6, 8],
+  [120, 6, 8],
+]) {
+  const options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
+  const run = createRun(courtyardLevel, options);
+  const recorder = createRecorder(courtyardLevel, options);
+  let intent = null;
+  const tick = () => {
+    const before = run.status;
+    recordInput(recorder, { direction: intent });
+    stepRun(run, { direction: intent }, FIXED_DT);
+    if (
+      before === 'respawning' ||
+      run.status === 'respawning' ||
+      run.events.some((event) => event.type === 'capture.stopped')
+    )
+      intent = null;
+  };
+  for (let i = 0; i < initialTicks; i++) tick();
+  for (const [index, [direction, duration]] of courtyardHeldRoute.entries()) {
+    if (index) for (let i = 0; i < dispatchGap && run.status === 'running'; i++) tick();
+    intent = direction;
+    for (let i = 0; i < duration + durationDelta && run.status === 'running'; i++) tick();
+    if (run.status !== 'running') break;
+  }
+  for (let i = 0; i < 2400 && run.status === 'running'; i++) tick();
+  assert.equal(run.status, 'won');
+  assert.equal(run.lives, 3);
+  assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
+  courtyardProofs.push({
+    initialTicks,
+    durationDelta,
+    dispatchGap,
+    outcome: run.status,
+    lives: run.lives,
+    coverage: run.coverage,
+    ticks: run.tick,
+    publicReplayVerified: true,
+  });
+}
+await put('ten-next-courtyard.model.json', {
+  kind: 'model-correctness',
+  levelId: courtyardLevel.id,
+  levelIdentity: dataIdentity(courtyardLevel),
+  segments: courtyardHeldRoute,
+  options: { seed: 1, classId: 'scout', turnPolicy: 'immediate' },
+  proofs: courtyardProofs,
+  broaderSensitivityReceipt: {
+    path: '.cache/solo-followup/courtyard-boundary-tolerance-02.json',
+    sha256: '9e70b06b005c9815487748c61eb7fcf06707a5056f2da08d373352fd673fb5ff',
+    passingInitialTicks: [0, 201],
+    retainedFailingInitialTicks: [202, 240],
+    passingJitterVariants: 172,
+  },
+  scope:
+    'Model correctness only; initial delay and finite input jitter checks do not guarantee arbitrary stalls. Continuous steering persists across keyup; capture/recovery clear it. Native qualification still requires eleven actual wins and ten public Next activations. This receipt covers only the Courtyard route.',
+});
+// These routes preserve the accepted Standard definitions and real held-input
+// semantics. Longer edge travel and explicit re-presses avoid the earlier
+// incomplete cut or narrow enemy-phase wait; finite model checks are not native
+// qualification and do not justify arbitrary scheduling-delay tolerance.
+const laterHeldRoutes = [
+  {
+    id: 'second-landing',
+    levelIdentity: '8ade4f963169761c',
+    segments: [
+      [null, 530],
+      ['right', 820],
+      ['down', 250],
+      ['left', 1100],
+      ['left', 100],
+      ['right', 350],
+      ['down', 600],
+      ['down', 600],
+    ],
+    variants: [
+      [0, 0, 0],
+      [57, 0, 0],
+      [80, -2, 0],
+      [80, 2, 0],
+      [60, 0, 2],
+    ],
+    broaderSensitivityReceipt: {
+      path: '.cache/solo-followup/second-landing-tolerance-05.json',
+      sha256: '9d1f2e3db01951fbe6372000c3cc7875582722e0af5c88ac416596f1a1ebe23e',
+    },
+  },
+  {
+    id: 'long-way-home',
+    levelIdentity: 'f5e7c371b7e9dd2e',
+    segments: [
+      ['left', 300],
+      ['left', 100],
+      ['up', 400],
+      ['right', 450],
+      ['down', 600],
+      ['down', 570],
+      ['down', 600],
+      ['down', 100],
+      ['right', 600],
+      ['up', 240],
+      ['left', 1200],
+      ['left', 1200],
+      ['left', 1150],
+      ['up', 600],
+      ['up', 600],
+      ['right', 400],
+      ['down', 600],
+      ['down', 600],
+      ['down', 600],
+      ['right', 150],
+      ['up', 600],
+      ['up', 600],
+      ['up', 600],
+    ],
+    variants: [
+      [0, 0, 0],
+      [57, 0, 0],
+      [120, -2, 0],
+      [120, 2, 0],
+      [60, 0, 2],
+    ],
+  },
+  {
+    id: 'behind-the-patrol',
+    levelIdentity: '1ddc85424850e75d',
+    segments: [
+      [null, 800],
+      ['right', 461],
+      ['down', 520],
+    ],
+    variants: [
+      [0, 0, 0],
+      [57, 0, 0],
+      [120, -2, 0],
+      [120, 2, 0],
+      [60, 0, 2],
+    ],
+  },
+];
+for (const route of laterHeldRoutes) {
+  const level = normalizedLevel(
+    applyGameplayTuning(
+      resolveMission(authored, route.id, { difficulty: 'standard' }).level,
+      resolveGameplayTuning('standard'),
+    ),
+  );
+  assert.equal(dataIdentity(level), route.levelIdentity);
+  const proofs = [];
+  for (const [initialTicks, durationDelta, dispatchGap] of route.variants) {
+    const options = { seed: 1, classId: 'scout', turnPolicy: 'immediate' };
+    const run = createRun(level, options),
+      recorder = createRecorder(level, options);
+    let intent = null;
+    const tick = () => {
+      const before = run.status;
+      recordInput(recorder, { direction: intent });
+      stepRun(run, { direction: intent }, FIXED_DT);
+      if (
+        before === 'respawning' ||
+        run.status === 'respawning' ||
+        run.events.some((event) => event.type === 'capture.stopped')
+      )
+        intent = null;
+    };
+    for (let i = 0; i < initialTicks; i++) tick();
+    for (const [index, [direction, duration]] of route.segments.entries()) {
+      if (index) for (let i = 0; i < dispatchGap && run.status === 'running'; i++) tick();
+      if (direction !== null) intent = direction;
+      for (let i = 0; i < duration + durationDelta && run.status === 'running'; i++) tick();
+      if (run.status !== 'running') break;
+    }
+    for (let i = 0; i < 2400 && run.status === 'running'; i++) tick();
+    assert.equal(run.status, 'won');
+    assert.equal(run.classic.livesLost, 0);
+    assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
+    proofs.push({
+      initialTicks,
+      durationDelta,
+      dispatchGap,
+      outcome: run.status,
+      lives: run.lives,
+      livesLost: run.classic.livesLost,
+      coverage: run.coverage,
+      ticks: run.tick,
+      publicReplayVerified: true,
+    });
+  }
+  await put(`ten-next-${route.id}.model.json`, {
+    kind: 'model-correctness',
+    levelId: route.id,
+    levelIdentity: route.levelIdentity,
+    segments: route.segments,
+    options: { seed: 1, classId: 'scout', turnPolicy: 'immediate' },
+    proofs,
+    broaderSensitivityReceipt: route.broaderSensitivityReceipt ?? {
+      path: '.cache/solo-followup/final-three-tolerance-01.json',
+      sha256: 'b2dfd61d9e9857d1ab53f18cd0338bccc94fb1b16e244689cb42153a963738be',
+    },
+    scope:
+      'Finite fixed-step model checks only. All original failed recipes and probes remain retained. Native acceptance still requires eleven earned victories and ten ordinary Next activations.',
+  });
+}
+const heldRoutes = new Map([
+  ['courtyard-return', courtyardHeldRoute],
+  ...laterHeldRoutes.map((route) => [route.id, route.segments]),
+]);
 const nextActions = [
   { type: 'click', selector: '#shell-featured', timeoutMs: 60000 },
   { type: 'wait', phase: 'running', timeoutMs: 60000 },
 ];
 for (let index = 0; index <= 10; index++) {
-  nextActions.push(...play(routes.rows[index][4]), ...finish, {
+  const row = routes.rows[index];
+  const segments = heldRoutes.get(row[0]) ?? row[4];
+  nextActions.push(...play(segments), ...finish, {
     type: 'snapshot',
     group: 'next-result',
   });
@@ -740,13 +976,14 @@ await put(
   'ten-next.qualification.json',
   validateQualification({
     format: 'SoloQualificationV1',
-    id: 'ten-next-current-opening',
+    id: 'ten-next-current-opening-v3',
     kind: 'lifecycle',
     timeoutMs: 1200000,
     query: { journey: 'opening' },
     coverage: [
       'ten public Next transitions',
       'first eleven authored routes',
+      'Courtyard, Long Way Home, Behind the Patrol and Second Landing held-input routes v3; other mission inputs unchanged',
       'actual wins required; no progress seeding',
     ],
     actions: nextActions,
