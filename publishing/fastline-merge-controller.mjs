@@ -16,6 +16,203 @@ const STACK_MERGE_LABEL = "fastline-stack-merge";
 // skipped when that policy waives a full suite; a skip is never a test pass.
 const POLICY_SKIPPED_JOBS = new Set(["focused", "test", "build"]);
 
+// Reviewed, exact-source exceptions are trusted only because this module is
+// loaded from main. Never load approvals from a pull request or an artifact.
+const TRUSTED_POLICY_1553 = [
+  [
+    ".github/workflows/deploy-pages.yml",
+    "fe9b921b9456a8ffa7bb79c9ee104206ac7a7f82",
+  ],
+  [
+    "publishing/admission-binding.mjs",
+    "bbc451129f21407143e4d3034d819711e5539dd2",
+  ],
+  [
+    "publishing/admission-preflight.mjs",
+    "9750b8dc5aef171f9124563966f726c2cbe15237",
+  ],
+  ["publishing/focused-tests.mjs", "403941412c35b2a61c2f67f611aa11d0b6d57467"],
+  [
+    "publishing/focused-test-map.json",
+    "9d09a9d27d6d0ef7b68606b7d3d489968fc92530",
+  ],
+  ["publishing/test-policy.json", "e067e704a165e16e449761989e3e1b611dc35181"],
+  ["publishing/test-policy.mjs", "aa9f1efc79301cd227dbe7eb874dcba6b601003c"],
+];
+export const REVIEWED_POLICY_CHANGES = [
+  {
+    repository: "mekhovov/revealline",
+    number: 1553,
+    headSha: "717f2ba6fec280d8bbf9ff3ac495648b95c5e4f2",
+    baseSha: "facf1627e2bb039ee7e5a3b9d662ded4c4ef3368",
+    paths: [
+      "docs/pages-capacity-safe-plan-2026-10-15.md",
+      "publishing/focused-test-map.json",
+      "publishing/focused-tests.test.mjs",
+      "scripts/pages-candidate-stack.mjs",
+      "scripts/test-pages-candidate-stack.mjs",
+    ],
+    trustedPolicyBlobs: TRUSTED_POLICY_1553,
+    candidatePolicyBlobs: TRUSTED_POLICY_1553.map(([name, oid]) => [
+      name,
+      name === "publishing/focused-test-map.json"
+        ? "61a0b7a8f903a73a1ae5e5eeb26863b3b585f1f2"
+        : oid,
+    ]),
+  },
+];
+
+const exactSha = (value) =>
+  typeof value === "string" && /^[a-f0-9]{40}$/u.test(value);
+const equal = (left, right) => JSON.stringify(left) === JSON.stringify(right);
+const exactKeys = (value, keys) =>
+  value &&
+  typeof value === "object" &&
+  !Array.isArray(value) &&
+  equal(Object.keys(value).sort(), [...keys].sort());
+const policyBlobsValid = (entries) =>
+  Array.isArray(entries) &&
+  entries.length === POLICY_FILES.length &&
+  entries.every(
+    (entry, index) =>
+      Array.isArray(entry) &&
+      entry.length === 2 &&
+      entry[0] === POLICY_FILES[index] &&
+      exactSha(entry[1]),
+  );
+const pathsValid = (paths) =>
+  Array.isArray(paths) &&
+  paths.length > 0 &&
+  paths.every(
+    (name) =>
+      typeof name === "string" &&
+      /^[a-zA-Z0-9_.\/-]+$/u.test(name) &&
+      !name.startsWith("/") &&
+      !name.split("/").some((part) => !part || part === "." || part === ".."),
+  ) &&
+  equal(paths, [...new Set(paths)].sort());
+
+export function trustedMainMatches(checkoutSha, liveSha) {
+  return exactSha(checkoutSha) && checkoutSha === liveSha;
+}
+
+export function freshAdmissionMatches(check, pullRequest) {
+  return (
+    sameAdmission(check?.admissionReceipt, pullRequest, check?.policyDigest) &&
+    (!check.approvedPolicyContext ||
+      reviewedPolicyChangeMatches({
+        ...check.approvedPolicyContext,
+        pullRequest,
+      }))
+  );
+}
+
+export function mutationSnapshotMatches({
+  controllerMainSha,
+  liveMainSha,
+  previousDecision,
+  pullRequest,
+  requiredCheck,
+  freshChecks,
+  observedHeadSha,
+  dependencies,
+}) {
+  if (!trustedMainMatches(controllerMainSha, liveMainSha)) return false;
+  const latest = freshChecks.check_runs
+    .filter((check) => check.name === "release-ready")
+    .sort((left, right) => right.id - left.id)[0];
+  if (
+    !latest ||
+    latest.id !== requiredCheck?.id ||
+    !freshAdmissionMatches(requiredCheck, pullRequest)
+  )
+    return false;
+  const freshRequired = { ...latest, admissionMatches: true };
+  const freshDecision = decideMergeAction({
+    pullRequest,
+    observedHeadSha,
+    requiredCheck: freshRequired,
+    checkRuns: freshChecks.check_runs,
+    checkInventoryComplete:
+      freshChecks.total_count <= freshChecks.check_runs.length,
+    dependencies,
+  });
+  return (
+    ["update", "stack", "merge", "arm"].includes(previousDecision.action) &&
+    freshDecision.action === previousDecision.action
+  );
+}
+
+export function reviewedPolicyChangeMatches(
+  input,
+  approvals = REVIEWED_POLICY_CHANGES,
+) {
+  if (
+    !exactKeys(input, [
+      "repository",
+      "pullRequest",
+      "trustedPolicyBlobs",
+      "candidatePolicyBlobs",
+      "changedPaths",
+      "receiptPaths",
+    ]) ||
+    !Array.isArray(approvals) ||
+    approvals.length !== 1 ||
+    !policyBlobsValid(input.trustedPolicyBlobs) ||
+    !policyBlobsValid(input.candidatePolicyBlobs) ||
+    !pathsValid(input.changedPaths) ||
+    !pathsValid(input.receiptPaths)
+  )
+    return false;
+  const approval = approvals[0];
+  if (
+    !exactKeys(approval, [
+      "repository",
+      "number",
+      "headSha",
+      "baseSha",
+      "paths",
+      "trustedPolicyBlobs",
+      "candidatePolicyBlobs",
+    ]) ||
+    !Number.isSafeInteger(approval.number) ||
+    approval.number < 1 ||
+    !exactSha(approval.headSha) ||
+    !exactSha(approval.baseSha) ||
+    !pathsValid(approval.paths) ||
+    !policyBlobsValid(approval.trustedPolicyBlobs) ||
+    !policyBlobsValid(approval.candidatePolicyBlobs)
+  )
+    return false;
+  // This bounded first path supports only the reviewed test-map registration,
+  // never controller/workflow/executable-policy changes through an exception.
+  const differences = approval.trustedPolicyBlobs
+    .filter(
+      (entry, index) => !equal(entry, approval.candidatePolicyBlobs[index]),
+    )
+    .map(([name]) => name);
+  if (
+    !equal(differences, ["publishing/focused-test-map.json"]) ||
+    approval.paths.includes("publishing/fastline-merge-controller.mjs") ||
+    approval.paths.some((name) => name.startsWith(".github/"))
+  )
+    return false;
+  const pull = input.pullRequest;
+  return (
+    input.repository === approval.repository &&
+    pull?.number === approval.number &&
+    pull.head?.sha === approval.headSha &&
+    pull.base?.sha === approval.baseSha &&
+    pull.base?.ref === "main" &&
+    pull.head?.repo?.full_name === approval.repository &&
+    pull.base?.repo?.full_name === approval.repository &&
+    equal(input.trustedPolicyBlobs, approval.trustedPolicyBlobs) &&
+    equal(input.candidatePolicyBlobs, approval.candidatePolicyBlobs) &&
+    equal(input.changedPaths, approval.paths) &&
+    equal(input.receiptPaths, approval.paths)
+  );
+}
+
 export function exactHeadCheckBlocker(checkRuns = [], headSha) {
   const latest = new Map();
   for (const check of checkRuns) {
@@ -61,6 +258,9 @@ export function decideMergeAction({
       return "event has no exact head SHA";
     if (pullRequest.head?.sha !== observedHeadSha)
       return "head changed after inspection";
+    if (pullRequest.state !== "open") return "pull request is not open";
+    if (pullRequest.draft !== false)
+      return "pull request is draft or draft state is unknown";
     if (dependencies.some((dependency) => !dependency.merged_at))
       return "declared predecessor is not merged";
     if (
@@ -356,6 +556,22 @@ async function main() {
   );
   const workflowPull = event.workflow_run?.pull_requests?.[0];
   const [owner, repository] = process.env.GITHUB_REPOSITORY.split("/");
+  const controllerRoot = path.resolve(
+    path.dirname(fileURLToPath(import.meta.url)),
+    "..",
+  );
+  const controllerMainSha = execFileSync("git", ["rev-parse", "HEAD"], {
+    cwd: controllerRoot,
+    encoding: "utf8",
+    timeout: 10_000,
+  }).trim();
+  const initialMain = await github(
+    `/repos/${owner}/${repository}/git/ref/heads/main`,
+  );
+  if (!trustedMainMatches(controllerMainSha, initialMain.object?.sha))
+    throw new Error(
+      "Trusted controller checkout is not current main; no mutation permitted.",
+    );
   const observedHeadSha =
     event.pull_request?.head?.sha ||
     workflowPull?.head?.sha ||
@@ -434,13 +650,30 @@ async function main() {
   );
   if (["update", "stack", "merge", "arm"].includes(decision.action)) {
     const fresh = await github(`/repos/${owner}/${repository}/pulls/${number}`);
+    const freshChecks = await github(
+      `/repos/${owner}/${repository}/commits/${fresh.head.sha}/check-runs?per_page=100`,
+    );
+    const freshDependencies = [];
+    for (const dependency of [...new Set(dependencyNumbers(fresh.body))]) {
+      if (dependency !== number)
+        freshDependencies.push(
+          await github(`/repos/${owner}/${repository}/pulls/${dependency}`),
+        );
+    }
+    const liveMain = await github(
+      `/repos/${owner}/${repository}/git/ref/heads/main`,
+    );
     if (
-      fresh.head.sha !== observedHeadSha ||
-      !sameAdmission(
-        requiredCheck.admissionReceipt,
-        fresh,
-        requiredCheck.policyDigest,
-      )
+      !mutationSnapshotMatches({
+        controllerMainSha,
+        liveMainSha: liveMain.object?.sha,
+        previousDecision: decision,
+        pullRequest: fresh,
+        requiredCheck,
+        freshChecks,
+        observedHeadSha,
+        dependencies: freshDependencies,
+      })
     ) {
       if (fresh.auto_merge)
         await setAutoMerge(fresh, "disarm", observedHeadSha);
@@ -460,12 +693,7 @@ async function main() {
       },
     );
   } else if (decision.action === "stack") {
-    merged = await mergeStack(
-      owner,
-      repository,
-      pullRequest,
-      observedHeadSha,
-    );
+    merged = await mergeStack(owner, repository, pullRequest, observedHeadSha);
     if (!merged)
       throw new Error("GitHub did not accept the declared stack merge.");
   } else if (decision.action === "merge") {
@@ -488,7 +716,12 @@ async function main() {
       merged = true;
     } catch (error) {
       if (!isStackOnlyMergeError(error)) throw error;
-      merged = await mergeStack(owner, repository, pullRequest, observedHeadSha);
+      merged = await mergeStack(
+        owner,
+        repository,
+        pullRequest,
+        observedHeadSha,
+      );
       if (!merged)
         throw new Error("GitHub did not accept the exact-head stack merge.");
     }
@@ -502,13 +735,25 @@ async function main() {
   }
 }
 
-async function checkedAdmission(owner, repository, check, pullRequest) {
+export async function checkedAdmission(
+  owner,
+  repository,
+  check,
+  pullRequest,
+  {
+    root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."),
+    api = github,
+    graph = graphql,
+    download = fetch,
+    approvals = REVIEWED_POLICY_CHANGES,
+  } = {},
+) {
   const match = new URL(check.details_url).pathname.match(
     /\/actions\/runs\/(\d+)\//,
   );
   if (check.app?.slug !== "github-actions" || !match) return false;
   const prefix = `/repos/${owner}/${repository}`;
-  const run = await github(`${prefix}/actions/runs/${match[1]}`);
+  const run = await api(`${prefix}/actions/runs/${match[1]}`);
   if (
     run.event !== "pull_request" ||
     run.path !== ".github/workflows/deploy-pages.yml" ||
@@ -517,22 +762,25 @@ async function checkedAdmission(owner, repository, check, pullRequest) {
     return false;
   // The artifact is untrusted input. Compare the actual checked revision's
   // policy blobs with protected-main automation, not its self-reported digest.
-  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
   const query = `query($owner: String!, $repository: String!) {
     repository(owner: $owner, name: $repository) {
       ${POLICY_FILES.map((name, index) => `p${index}: object(expression: ${JSON.stringify(`${run.head_sha}:${name}`)}) { oid }`).join("\n")}
     }
   }`;
-  const policy = await graphql(query, { owner, repository });
+  const policy = await graph(query, { owner, repository });
+  const trustedPolicyBlobs = [];
+  const candidatePolicyBlobs = [];
   for (const [index, name] of POLICY_FILES.entries()) {
     const bytes = await fs.readFile(path.join(root, name));
     const oid = createHash("sha1")
       .update(`blob ${bytes.length}\0`)
       .update(bytes)
       .digest("hex");
-    if (policy.repository[`p${index}`]?.oid !== oid) return false;
+    trustedPolicyBlobs.push([name, oid]);
+    candidatePolicyBlobs.push([name, policy.repository[`p${index}`]?.oid]);
   }
-  const result = await github(
+  const ordinaryPolicyMatch = equal(trustedPolicyBlobs, candidatePolicyBlobs);
+  const result = await api(
     `${prefix}/actions/runs/${run.id}/artifacts?per_page=100`,
   );
   const artifacts = result.artifacts.filter(
@@ -544,7 +792,7 @@ async function checkedAdmission(owner, repository, check, pullRequest) {
     artifacts[0].size_in_bytes > 1_000_000
   )
     return false;
-  const response = await fetch(
+  const response = await download(
     `https://api.github.com${prefix}/actions/artifacts/${artifacts[0].id}/zip`,
     {
       headers: {
@@ -572,9 +820,36 @@ async function checkedAdmission(owner, repository, check, pullRequest) {
         timeout: 10_000,
       }),
     );
-    const policyDigest = await validationPolicyDigest(
-      path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."),
-    );
+    if (!ordinaryPolicyMatch) {
+      const changedPaths = await completeChangedPaths(
+        owner,
+        repository,
+        pullRequest,
+        api,
+      );
+      if (
+        !reviewedPolicyChangeMatches(
+          {
+            repository: `${owner}/${repository}`,
+            pullRequest,
+            trustedPolicyBlobs,
+            candidatePolicyBlobs,
+            changedPaths,
+            receiptPaths: receipt.paths,
+          },
+          approvals,
+        )
+      )
+        return false;
+      check.approvedPolicyContext = {
+        repository: `${owner}/${repository}`,
+        trustedPolicyBlobs,
+        candidatePolicyBlobs,
+        changedPaths,
+        receiptPaths: receipt.paths,
+      };
+    }
+    const policyDigest = await validationPolicyDigest(root);
     check.admissionReceipt = receipt;
     check.policyDigest = policyDigest;
     return sameAdmission(receipt, pullRequest, policyDigest);
@@ -582,6 +857,42 @@ async function checkedAdmission(owner, repository, check, pullRequest) {
     await fs.unlink(archive).catch(() => {});
     await fs.rmdir(directory);
   }
+}
+
+async function completeChangedPaths(
+  owner,
+  repository,
+  pullRequest,
+  api = github,
+) {
+  if (
+    !Number.isSafeInteger(pullRequest.changed_files) ||
+    pullRequest.changed_files < 1 ||
+    pullRequest.changed_files > 3000
+  )
+    throw new Error("Invalid or oversized changed-file inventory.");
+  const paths = new Set(),
+    filenames = new Set();
+  let count = 0;
+  for (let page = 1; page <= 30; page++) {
+    const rows = await api(
+      `/repos/${owner}/${repository}/pulls/${pullRequest.number}/files?per_page=100&page=${page}`,
+    );
+    if (!Array.isArray(rows)) throw new Error("Invalid changed-file response.");
+    count += rows.length;
+    for (const row of rows) {
+      if (filenames.has(row.filename))
+        throw new Error("Duplicate changed-file row.");
+      filenames.add(row.filename);
+      paths.add(row.filename);
+      if (row.previous_filename) paths.add(row.previous_filename);
+    }
+    if (rows.length < 100) break;
+  }
+  const result = [...paths].sort();
+  if (count !== pullRequest.changed_files || !pathsValid(result))
+    throw new Error("Incomplete or unsafe changed-path inventory.");
+  return result;
 }
 
 if (
