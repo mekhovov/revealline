@@ -51,11 +51,32 @@ async function setup(t, { difficulty = 'standard', storage = memoryStorage(), ..
   });
   return { p, storage, backend: createJourneyBackend(memory) };
 }
-const running = (p, levelId) =>
-  settle(() => {
-    p.frame(0);
-    return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
-  });
+async function running(p, levelId) {
+  let submittedFrames = 0;
+  try {
+    await settle(() => {
+      p.frame(0);
+      submittedFrames++;
+      return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
+    });
+  } catch (error) {
+    error.message += `\n${JSON.stringify({
+      expectedLevel: levelId,
+      actualLevel: p.rendered.run.levelId,
+      runStatus: p.rendered.run.status,
+      submittedFrames,
+      body: p.doc.body.dataset,
+      overlay: p.$('game-overlay').dataset,
+      preparation: p.$('flight-preparation-status').textContent,
+      preparationState: p.$('flight-preparation-status').dataset,
+      start: p.$('start-button').dataset,
+      next: p.$('next-button').dataset,
+      focus: p.doc.activeElement?.id,
+      errors: p.errors.map((value) => String(value?.stack ?? value)),
+    })}`;
+    throw error;
+  }
+}
 async function startPrepared(p, levelId) {
   await settle(() => {
     p.frame(0);

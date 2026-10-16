@@ -162,7 +162,7 @@ test('same-owner restore handler preserves ground captions and interruption warn
   page.$('pause-button').click();
   assert.equal(page.$('run-message').textContent, 'Flight paused. Press Resume to continue.');
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-  page.$('start-button').click();
+  await activateHostAction(page.$('start-button'));
   assert.equal(page.$('run-message').textContent, 'Flight resumed.');
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   page.frame(300);
@@ -344,6 +344,7 @@ for (const turnPolicy of ['immediate', 'grid-center'])
       // An actual foreground Resume must work immediately, using the saved turn.
       page.$('start-button').click();
       assert.equal(page.doc.body.dataset.flightState, 'running');
+      page.frame(0); // Explicit Resume establishes a fresh timestamp origin.
       ticks(page, 8);
       assert.equal(run.tick, savedTick + 8);
       assert.ok(run.player.x > savedX);
@@ -368,7 +369,9 @@ for (const background of ['hidden', 'unfocused'])
     else page.doc.focused = false;
     // No event is dispatched: the real frame guard must observe inactivity.
     page.frame(0);
-    assert.equal(page.rendered.paused, true);
+    // Hidden frames intentionally retain the previous pixels; inspect the
+    // live host state instead of the last foreground painter options.
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
     assert.equal(page.$('game-overlay').dataset.kind, 'pause');
     const stored = new Map(page.storage.map),
       writes = page.storage.writes.length;
@@ -385,6 +388,7 @@ for (const background of ['hidden', 'unfocused'])
     assert.equal(page.rendered.paused, true, 'Returning foreground never resumes');
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
     page.$('start-button').click();
+    page.frame(0); // Foreground Resume does not consume the inactive interval.
     ticks(page, 8);
     assert.equal(run.tick, savedTick + 8);
     assert.ok(run.player.x > savedX);

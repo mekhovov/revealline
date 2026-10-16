@@ -80,7 +80,11 @@ function fixture(hash, slot = 'terrain.wall') {
   const canvases = [],
     canvasFactory = () => {
       allocations++;
+      const listeners = new Map();
       const canvas = {
+        listeners,
+        addEventListener: (name, callback) => listeners.set(name, callback),
+        removeEventListener: (name) => listeners.delete(name),
         getContext: () => ({
           drawImage() {},
           getImageData: () => ({ data: pixelArtForSlot(slot).rgba }),
@@ -116,7 +120,14 @@ test('adapter caches prepared pixels, preserves exact geometry/source and owns o
   assert.equal(frame.asset, f.frame.asset);
   assert.equal(derived.image('terrain.wall'), frame);
   assert.equal(f.allocations(), 1);
+  assert.deepEqual(adapter.resourceSnapshot(), {
+    canvases: 1,
+    pixels: 256,
+    rgbaBytesEstimate: 1024,
+    lost: 0,
+  });
   adapter.clear();
+  assert.equal(adapter.resourceSnapshot().rgbaBytesEstimate, 0);
   assert.equal(f.canvases[0].width, 0);
   assert.equal(f.frame.image.width, 16);
 });
@@ -223,4 +234,65 @@ test('every current published builtin sprite is pinned without importing its man
       asset.id.endsWith('.field-kit')
     )
       assert.ok(INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(asset.file.sha256), slot);
+});
+
+test('lost adapted sprites preserve source art and regenerate on restoration without leaking owners', () => {
+  for (const slot of ['terrain.wall', 'enemy.border-patrol']) {
+    const f = fixture(undefined, slot),
+      lost = new Set();
+    const adapter = createArcadeAdapter({
+      canvasFactory: f.canvasFactory,
+      onContextLoss: ({ owner }) => lost.add(owner),
+      onContextRestored: ({ owner }) => {
+        lost.delete(owner);
+        if (!lost.size) adapter.clear();
+      },
+    });
+    const collection = getArcadeCollection('military-field'),
+      adapted = adapter.resolve(f.base, collection),
+      before = adapted.image(slot),
+      first = before.image;
+    first.listeners.get('contextlost')();
+    assert.equal(lost.size, 1);
+    assert.equal(adapted.image(slot), f.frame, 'Loss retains a functional original body');
+    first.listeners.get('contextrestored')();
+    assert.equal(lost.size, 0);
+    assert.equal(first.width, 0);
+    assert.equal(first.listeners.size, 0);
+    const restored = adapter.resolve(f.base, collection).image(slot);
+    assert.notEqual(restored.image, first);
+    assert.deepEqual(restored.geometry, before.geometry);
+    assert.equal(restored.asset, before.asset);
+    assert.equal(f.frame.image.width, 16, 'Shared source pixels remain owned by their release');
+    restored.image.listeners.get('contextlost')();
+    adapter.clear();
+    assert.equal(lost.size, 0, 'Retired lost owners cannot block a later scene');
+    assert.equal(restored.image.listeners.size, 0);
+    assert.equal(restored.image.width, 0);
+  }
+});
+
+test('BoardPainter forwards adapted context loss and invalidates derived pixels before reusing artwork', (t) => {
+  const f = fixture(),
+    original = globalThis.document,
+    losses = [];
+  globalThis.document = { createElement: () => f.canvasFactory() };
+  t.after(() => {
+    if (original === undefined) delete globalThis.document;
+    else globalThis.document = original;
+  });
+  const painter = new BoardPainter({}, { onContextLoss: (event) => losses.push(event) });
+  painter.arcadeCollection = INDUSTRIAL_ARCADE_COLLECTION;
+  painter.setPresentation(f.base);
+  const first = painter.artSnapshot.image('terrain.wall').image;
+  first.listeners.get('contextlost')();
+  assert.equal(losses.length, 1);
+  assert.equal(losses[0].source, 'arcade-sprite');
+  painter.invalidate();
+  assert.equal(first.width, 0);
+  assert.equal(first.listeners.size, 0);
+  const second = painter.artSnapshot.image('terrain.wall').image;
+  assert.notEqual(first, second);
+  painter.dispose();
+  assert.equal(second.width, 0);
 });

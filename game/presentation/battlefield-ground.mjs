@@ -143,6 +143,10 @@ export function createBattlefieldGroundSurface({
     if (wasLost) onContextRestored({ source: 'battlefield-ground', owner, retired: true });
   }
   return {
+    resourceSnapshot() {
+      const pixels = (canvas?.width ?? 0) * (canvas?.height ?? 0);
+      return { canvases: Number(pixels > 0), pixels, rgbaBytesEstimate: pixels * 4, lost };
+    },
     prepare(world, width, height, allowed = true) {
       if (!allowed || world === 'authored' || !valid(world)) {
         this.clear();

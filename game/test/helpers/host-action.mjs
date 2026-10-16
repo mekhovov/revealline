@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { settle } from './solo-dom.mjs';
 
 /** Click the real host control and join the preparation owned by that action.
  * No readiness state or gameplay event is synthesized by the fixture. */
@@ -20,5 +21,14 @@ export async function activateHostAction(button) {
     button.onclick = handler;
   }
   assert.equal(invoked, true, 'The browser boundary must accept the click.');
+  let completed = false;
+  Promise.resolve(pending).then(
+    () => (completed = true),
+    () => (completed = true),
+  );
+  // A real browser keeps submitting paused frames while the action prepares.
+  // settle also establishes the first active zero-time frame before a test
+  // advances its explicit simulation clock.
+  await settle(() => completed, 'The accepted host action must finish its preparation.');
   await pending;
 }

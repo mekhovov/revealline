@@ -143,6 +143,10 @@ export function createSignalNoiseAtlas({
     }
   }
   return Object.freeze({
+    resourceSnapshot() {
+      const pixels = (canvas?.width ?? 0) * (canvas?.height ?? 0);
+      return { canvases: Number(pixels > 0), pixels, rgbaBytesEstimate: pixels * 4, lost };
+    },
     prepare,
     clear,
     draw(ctx, width, height, frame, strength) {

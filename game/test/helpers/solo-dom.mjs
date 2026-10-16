@@ -220,6 +220,7 @@ export async function soloPage(
     pictures,
     waitForPictures = true,
     animationFrames = false,
+    automaticPreparationFrames = true,
     initialReadyTimeoutMs = 5000,
     browserSetup,
     readPads = () => [],
@@ -297,7 +298,9 @@ export async function soloPage(
     rendered,
     now = 1000,
     nextFrame = 0,
-    padReads = 0;
+    padReads = 0,
+    displayDraws = 0,
+    displayClears = 0;
   const globals = {
     document: doc,
     window: win,
@@ -389,6 +392,7 @@ export async function soloPage(
               canvas.width = width;
               canvas.height = height;
               return {
+                canvas,
                 context: rendering ? canvas.getContext('2d') : {},
                 width,
                 height,
@@ -425,7 +429,8 @@ export async function soloPage(
           scene.game = {
             canvas: doc.createElement('canvas'),
             events: new EventEmitter(),
-            renderer: {},
+            renderer: { type: 'canvas', config: { clearBeforeRender: true } },
+            scene: { scenes: [scene] },
           };
           scene.game.canvas.width = config.width;
           scene.game.canvas.height = config.height;
@@ -437,8 +442,10 @@ export async function soloPage(
             },
           };
           scene.cameras = { main: { visible: true, alpha: 1, setSize() {} } };
+          scene.cameras.cameras = [scene.cameras.main];
           $('game-canvas').append(scene.game.canvas);
           scene.create();
+          scene.sys.displayList = { list: [scene.boardImage] };
         }
       },
     },
@@ -589,7 +596,15 @@ export async function soloPage(
     'Bundled pack index must finish loading.',
   );
   function submitRender() {
-    // Model Phaser.Game.step's final event, separately from scene.update.
+    // Model Phaser.Game.step's clear/camera draw before the final event.
+    if (scene.game.renderer.config.clearBeforeRender) displayClears++;
+    if (
+      scene.sys.isVisible() &&
+      scene.cameras.main.visible &&
+      scene.cameras.main.alpha > 0 &&
+      scene.boardImage.willRender(scene.cameras.main)
+    )
+      displayDraws++;
     scene.game.events.emit('postrender', scene.game.renderer, now, 0);
   }
   function frame(
@@ -616,6 +631,15 @@ export async function soloPage(
   frame(0);
   waitingHosts.add(frame);
   t.after(() => waitingHosts.delete(frame));
+  if (automaticPreparationFrames) {
+    // Native rendering continues while a caller awaits a Start/Next promise.
+    // Only submit a pending prepared board: never advance the simulation clock
+    // or poll ordinary active gameplay on a background fixture timer.
+    const preparationFrames = setInterval(() => {
+      if (scene.preparedFrame && !doc.hidden) frame(0);
+    }, 16);
+    t.after(() => clearInterval(preparationFrames));
+  }
   function key(code, held = true) {
     $('game-canvas').emit(held ? 'keydown' : 'keyup', {
       code,
@@ -645,6 +669,14 @@ export async function soloPage(
     },
     get padReads() {
       return padReads;
+    },
+    get displayRender() {
+      return {
+        draws: displayDraws,
+        clears: displayClears,
+        clearBeforeRender: scene.game.renderer.config.clearBeforeRender,
+        cameraVisible: scene.cameras.main.visible,
+      };
     },
   };
 }

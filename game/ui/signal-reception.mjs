@@ -170,6 +170,7 @@ export function createSignalReception({
     return true;
   }
   return Object.freeze({
+    resourceSnapshot: noise.resourceSnapshot,
     prepare: noise.prepare,
     invalidate: clearCanvas,
     advance,

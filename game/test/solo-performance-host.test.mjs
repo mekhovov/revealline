@@ -12,11 +12,26 @@ const fetchResponse = async (path) =>
   String(path).includes('/content-design/assets/') ? new Response(await readFile(path)) : undefined;
 async function start(page) {
   page.$('start-button').click();
-  await settle(
-    () => page.doc.body.dataset.flightState === 'running',
-    'Prepared frame must precede play',
-    { timeoutMs: 20000 },
-  );
+  try {
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Prepared frame must precede play',
+      { timeoutMs: 20000 },
+    );
+  } catch (error) {
+    error.message += `\n${JSON.stringify({
+      level: page.rendered.run.levelId,
+      runStatus: page.rendered.run.status,
+      body: page.doc.body.dataset,
+      overlay: page.$('game-overlay').dataset,
+      preparation: page.$('flight-preparation-status').textContent,
+      preparationState: page.$('flight-preparation-status').dataset,
+      start: page.$('start-button').dataset,
+      focus: page.doc.activeElement?.id,
+      errors: page.errors.map((value) => String(value?.stack ?? value)),
+    })}`;
+    throw error;
+  }
   page.frame(0);
 }
 test('direct Start prepares a paused board without browsing other mission owners; repeated resume retains the run', async (t) => {
