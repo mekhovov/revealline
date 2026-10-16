@@ -17,6 +17,10 @@ import {
 } from './solo-qualification-export.mjs';
 import { createQualificationCpuProfile } from './solo-qualification-cpu-profile.mjs';
 import {
+  qualificationContextMode,
+  createPersistentQualificationOwner,
+} from './solo-qualification-browser-context.mjs';
+import {
   qualificationCadenceOption,
   prepareCadenceViewport,
   observeSettledCadence,
@@ -50,7 +54,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--work-probe] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile|--audio-proof|--cpu-profile] [--work-probe] [--cadence=blank30|settled120] [--baseline-runtime] [--viewport=400x850] [--dpr=3] [--mobile-context] [--context=ephemeral|persistent]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -59,6 +63,7 @@ const bytes = await readFile(resolve(scenarioPath)),
 const display = qualificationDisplayOptions(flags);
 const engine = option('browser', 'chromium'),
   cpu = Number(option('cpu', '1'));
+const contextMode = qualificationContextMode(flags, engine);
 const profileMode = qualificationProfileMode(flags, engine, scenario);
 const memoryProfile = profileMode === 'memory-profile',
   audioProof = profileMode === 'audio-proof',
@@ -145,6 +150,7 @@ const report = {
   mirrorManifest: mirrorManifest ?? null,
   environment: {
     engine,
+    contextMode,
     cpuThrottle: cpu,
     headless: !flags.includes('--headed'),
     architecture: arch(),
@@ -229,7 +235,7 @@ async function save() {
   await rename(temporary, target);
 }
 await save();
-let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder;
+let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder, persistentOwner;
 let activeAction = null;
 let partialReplay = false;
 let memorySnapshots = 0;
@@ -270,16 +276,26 @@ async function profileMemory() {
 }
 try {
   playwright = await import(pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href);
-  browser = await playwright[engine].launch({
-    ...(engine === 'chromium' ? { executablePath: process.env.CHROME_EXECUTABLE } : {}),
-    headless: !flags.includes('--headed'),
-  });
+  const contextOptions = { ...display, reducedMotion: 'no-preference', serviceWorkers: 'block' };
+  if (contextMode === 'persistent') {
+    persistentOwner = createPersistentQualificationOwner({
+      browserType: playwright.webkit,
+      launchOptions: { headless: !flags.includes('--headed') },
+      contextOptions,
+    });
+    report.environment.contextOwner = persistentOwner.report;
+    ({ browser, context } = await persistentOwner.launch());
+    report.limitations.push(
+      'Explicit fresh persistent WebKit profile per observation; not physical Safari or a privacy-setting equivalence claim. Compare only with the same declared context mode.',
+    );
+  } else {
+    browser = await playwright[engine].launch({
+      ...(engine === 'chromium' ? { executablePath: process.env.CHROME_EXECUTABLE } : {}),
+      headless: !flags.includes('--headed'),
+    });
+    context = await browser.newContext(contextOptions);
+  }
   report.environment.browserVersion = browser.version();
-  context = await browser.newContext({
-    ...display,
-    reducedMotion: 'no-preference',
-    serviceWorkers: 'block',
-  });
   report.limitations.push(
     'Service workers are explicitly blocked for controlled online qualification; offline/update lifecycle is separate.',
   );
@@ -1237,8 +1253,18 @@ try {
   report.completedAt = new Date().toISOString();
   report.environment.finalLoad = loadavg();
   await save();
-  await context?.close().catch(() => {});
-  await browser?.close().catch(() => {});
+  if (persistentOwner) {
+    const cleanup = await persistentOwner.close();
+    if (cleanup.status !== 'closed') {
+      report.scenarioStatus = 'fail';
+      report.contextCleanupFailure =
+        'Persistent browser/profile cleanup is unconfirmed; exact profile retained for the outer owner.';
+      process.exitCode = 1;
+    }
+  } else {
+    await context?.close().catch(() => {});
+    await browser?.close().catch(() => {});
+  }
   if (scenario.audioRequirements) {
     report.audioIdentity = evaluateAudioProof(
       report.finalState?.audioProof,
@@ -1323,6 +1349,7 @@ try {
         expectedDefinition: scenario.expectedReplayDefinition,
         mirror,
       });
+      report.replay.nativeVerification.contextMode = 'ephemeral-no-storage-replay-verification';
       report.replay.observation = report.replay.nativeVerification.observation ?? null;
       assert.equal(
         report.replay.nativeVerification.status,
