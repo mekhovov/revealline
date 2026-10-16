@@ -136,7 +136,10 @@ export function parseBetaflightConfiguration(
   const headers = new Set();
   for (const line of lines) {
     if (/^\s*#?\s*Betaflight\b/iu.test(line)) {
-      const match = line.match(/\b(?:4\.\d+\.\d+|20\d\d\.\d+\.\d+)\b/u);
+      // An explicit unsupported version is not a missing header. Keep attached
+      // prerelease/build suffixes too: a development build cannot borrow the
+      // defaults or compatibility claim of its corresponding verified release.
+      const match = line.match(/\b\d+\.\d+\.\d+[^\s()[\],;]*/u);
       if (match) headers.add(match[0]);
     }
   }

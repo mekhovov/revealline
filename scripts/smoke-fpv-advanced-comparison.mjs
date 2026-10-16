@@ -15,12 +15,19 @@ const fixture = `<!doctype html><html lang="en"><meta charset="utf-8"><title>Loc
 import { mountAdvancedPractice } from '/optional-practice/civilian-fpv/advanced-practice.mjs';
 import { createRateProfile } from '/optional-practice/civilian-fpv/rates.mjs';
 window.qualificationControls = {roll:0,pitch:0,yaw:0,throttle:0};
+window.qualificationSaves = [];
+window.qualificationHoldSave = false;
 window.qualificationMount = (rate = 67) => {
   window.qualificationPractice?.dispose();
   window.qualificationPractice = mountAdvancedPractice({container: document.querySelector('main'), window,
     profile: createRateProfile({axes:{roll:{rate}}}),
     workerURL: new URL('/optional-practice/fpv-worlds/advanced-worker.mjs', location.href),
-    getControls: () => window.qualificationControls });
+    getControls: () => window.qualificationControls,
+    onSaveConfiguration: (configuration) => {
+      window.qualificationSaves.push(structuredClone(configuration));
+      if (window.qualificationHoldSave)
+        return new Promise((resolve) => { window.qualificationFinishSave = resolve; });
+    } });
 };
 window.qualificationMount();
 </script></body></html>`;
@@ -93,6 +100,7 @@ export async function smokeAdvancedComparison({ playwrightModule, output } = {})
     await page.addInitScript(() => {
       const NativeWorker = window.Worker;
       window.qualificationWorkers = { created: 0, terminated: 0, live: 0 };
+      window.qualificationInitializations = [];
       window.qualificationVerified = [];
       window.qualificationHoldVerification = false;
       window.Worker = class extends NativeWorker {
@@ -110,6 +118,8 @@ export async function smokeAdvancedComparison({ playwrightModule, output } = {})
         }
         postMessage(message, ...args) {
           this.requests.set(message.id, message.type);
+          if (message.type === 'init')
+            window.qualificationInitializations.push(structuredClone(message.options));
           // Explicit fault injection holds transport, not simulation results.
           // All accepted and tampered comparisons use real worker verification.
           if (message.type === 'verify-recording' && window.qualificationHoldVerification) {
@@ -300,6 +310,59 @@ export async function smokeAdvancedComparison({ playwrightModule, output } = {})
       'Personal rotation rates split comparison class',
     );
     checks.personalRatesRemainComparable = true;
+    await page.getByText('Aircraft and controller tuning', { exact: true }).click();
+    const mass = page.getByLabel('Mass (kg)', { exact: true }),
+      saveAircraft = button('Save aircraft for next flight'),
+      initializationCount = await page.evaluate(() => window.qualificationInitializations.length);
+    await mass.fill('0.8');
+    await page.evaluate(() => {
+      window.qualificationHoldSave = true;
+    });
+    await saveAircraft.click();
+    check(await saveAircraft.isDisabled(), 'Pending aircraft save allowed duplicate activation');
+    await mass.fill('0.9');
+    await saveAircraft.evaluate((node) => node.click());
+    check(
+      (await page.evaluate(() => window.qualificationSaves.length)) === 1,
+      'Pending aircraft save accepted a duplicate request',
+    );
+    await page.evaluate(() => window.qualificationFinishSave());
+    await page.waitForFunction(
+      () =>
+        ![...document.querySelectorAll('button')].find(
+          (node) => node.textContent === 'Save aircraft for next flight',
+        ).disabled,
+    );
+    await page.getByRole('status').filter({ hasText: 'Draft changed. Restart practice' }).waitFor();
+    check((await mass.inputValue()) === '0.9', 'Completing a save discarded later aircraft edits');
+    checks.delayedAircraftSave = await page.evaluate(() => ({
+      savedMass: window.qualificationSaves[0].aircraft.mass,
+      activeMass: window.qualificationInitializations.at(-1).aircraft.mass,
+      initializationCount: window.qualificationInitializations.length,
+      saveRequests: window.qualificationSaves.length,
+      draftMass: Number(
+        [...document.querySelectorAll('label')]
+          .find((node) => node.textContent.startsWith('Mass (kg)'))
+          .querySelector('input').value,
+      ),
+    }));
+    check(
+      checks.delayedAircraftSave.savedMass === 0.8 &&
+        checks.delayedAircraftSave.activeMass === 0.65 &&
+        checks.delayedAircraftSave.initializationCount === initializationCount,
+      'Saving changed the active worker or lost the captured aircraft values',
+    );
+    await button('Revert aircraft draft').click();
+    check((await mass.inputValue()) === '0.8', 'Revert did not use the newly saved baseline');
+    await button('Restart practice').click();
+    await ready();
+    checks.delayedAircraftSave.restartedMass = await page.evaluate(
+      () => window.qualificationInitializations.at(-1).aircraft.mass,
+    );
+    check(
+      checks.delayedAircraftSave.restartedMass === 0.8,
+      'Explicit restart did not apply the reverted saved aircraft',
+    );
     await page.evaluate(() => window.qualificationPractice.dispose());
     checks.workers = await page.evaluate(() => window.qualificationWorkers);
     check(
@@ -326,7 +389,7 @@ export async function smokeAdvancedComparison({ playwrightModule, output } = {})
     engine: 'chromium',
     version,
     fixture:
-      'Production arena component, actual renderer and dedicated workers in isolated loopback harness; production access gates untouched. Cancellation deliberately holds only one verification request before transport. Touch/physical radio and native hardware are not qualified here.',
+      'Production arena component, actual renderer and dedicated workers in isolated loopback harness; production access gates untouched. Cancellation deliberately holds only one verification request before transport. The aircraft save race holds its callback promise; it does not qualify real browser-lock contention or storage. Touch/physical radio and native hardware are not qualified here.',
     checks,
     errors,
     failure,

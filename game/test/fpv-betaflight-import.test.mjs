@@ -82,6 +82,66 @@ test('headerless dump rates needs a version, unsupported tags and conflicting he
   );
 });
 
+test('explicit unsupported firmware headers never become missing headers or verified release tags', async () => {
+  const baseline = betaflightDefaultRateProfile('2026.6.2'),
+    original = structuredClone(baseline);
+  for (const version of [
+    '3.5.7',
+    '5.0.0',
+    '2030.12.1',
+    '4.5.2-RC1',
+    '2026.6.2-dev',
+    '2026.6.2-RC.1',
+    '2026.6.2+local.1',
+    '2026.6.2-dev+custom.1',
+  ]) {
+    const source = `# Betaflight / STM32F405 (S405) ${version} (abcdef) MSP API: 1.47\nset roll_srate = 83`;
+    for (const kind of ['complete', 'diff', 'patch']) {
+      const options = { kind, ...(kind === 'patch' ? { baseline } : {}) };
+      fails(() => parseBetaflightConfiguration(source, options), 'unsupported-version');
+      fails(
+        () => parseBetaflightConfiguration(source, { ...options, sourceVersion: '2026.6.2' }),
+        'version-conflict',
+      );
+      await assert.rejects(
+        previewBetaflightImport(source, options),
+        (error) => error instanceof BetaflightImportError && error.code === 'unsupported-version',
+      );
+      assert.deepEqual(
+        baseline,
+        original,
+        'Failed interpretation must preserve the patch baseline',
+      );
+    }
+  }
+  fails(
+    () =>
+      parseBetaflightConfiguration('# Betaflight 2026.6.2\n# Betaflight 2026.6.2-dev', {
+        kind: 'diff',
+      }),
+    'version-conflict',
+  );
+});
+
+test('exact release headers retain their source version and genuinely headerless patches remain supported', () => {
+  for (const version of BETAFLIGHT_IMPORT_VERSIONS) {
+    const result = parseBetaflightConfiguration(
+      `# Betaflight / STM32F405 (S405) ${version} (abcdef) MSP API: 1.47\nset roll_srate = 83`,
+      { kind: 'diff' },
+    );
+    assert.equal(result.sourceVersion, version);
+    assert.equal(result.sourceVersionOrigin, 'header');
+    assert.equal(result.profile.axes.roll.rate, 83);
+  }
+  const result = parseBetaflightConfiguration('dump rates\nset roll_srate = 83', {
+    kind: 'patch',
+    baseline: betaflightDefaultRateProfile('2026.6.2'),
+  });
+  assert.equal(result.sourceVersion, null);
+  assert.equal(result.sourceVersionOrigin, 'unspecified');
+  assert.equal(result.profile.axes.roll.rate, 83);
+});
+
 test('profiles and assignments are sequential; PID namespace cannot redirect rate settings', () => {
   const result = parse(`rateprofile 1
 set roll_rc_rate = 15

@@ -83,6 +83,10 @@ Paste CLI text or upload a text/JSON file in **Import / export**. Choose the ope
 
 The verified source releases are **4.5.2, 4.5.5, 2025.12.4, 2025.12.5 and 2026.6.2**. A version header is not required in the file, but complete configurations and sparse diffs need a source version selected when no header is present. Headerless `dump rates` files are normal. Choosing firmware defaults as a patch baseline also uses the file's verified version header when no version is selected. Conflicting headers and unverified versions are rejected instead of guessed.
 
+Development, release-candidate and custom build suffixes are part of the source
+version. For example, `2026.6.2-dev` does not count as verified `2026.6.2`. Selecting
+a supported release cannot override an explicit unsupported header in the file.
+
 Assignments and `defaults` commands are processed in order. PID profiles and rate profiles are separate namespaces. By default, the final selected rate profile is previewed; the source-profile control can select another supported profile explicitly. The current importer qualifies the upstream four-profile layout, indexes 0–3. Custom firmware builds with different counts or defaults need separate verification.
 
 Choose **Preview import** to review the resulting curves, changed fields, inferred defaults, firmware normalization and unapplied settings. Then choose **Save import as new profile** and assign that new profile explicitly. A malformed import does not partially modify a saved profile.
@@ -134,6 +138,10 @@ If another tab changes settings, export an unsaved draft before choosing **Refre
 ### Experimental Advanced practice
 
 The tuning editor can open **Advanced reference practice**, an unscored arena using a separate fixed-step controller and aircraft model. Choose a whoop, freestyle or racing reference template, adjust its SI-unit aircraft/controller values, and explicitly restart to test the draft. **Save aircraft for next flight** keeps the running attempt unchanged. These templates have not yet been matched to measured real aircraft, and their controller gains are not Betaflight PID numbers.
+
+While an aircraft save is pending, another Save is disabled. You can continue
+editing; those later edits remain marked as an unsaved draft when the earlier
+save finishes. **Revert aircraft draft** returns to the last successful save.
 
 Choose **Hover and land**, **Turn and stop** or **Throttle pulse** for timed,
 repeatable cues. Restart from the same launch point and follow them manually.

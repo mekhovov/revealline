@@ -376,6 +376,26 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               (await page.evaluate(() => window.qualificationStore.export())) === beforeImport,
               'Malformed import changed storage',
             );
+            for (const version of ['3.5.7', '2025.12.5-dev', '2025.12.5+local.1']) {
+              await transfer.fill(
+                `# Betaflight / STM32F405 (S405) ${version} (abcdef)\nset roll_srate = 83`,
+              );
+              await button('Preview import').click();
+              await page
+                .getByRole('status')
+                .filter({ hasText: 'conflicts with the file header' })
+                .waitFor();
+              await button('Save import as new profile').click();
+              await page
+                .getByRole('status')
+                .filter({ hasText: 'Preview the import first' })
+                .waitFor();
+              check(
+                (await page.evaluate(() => window.qualificationStore.export())) === beforeImport,
+                `Unsupported header ${version} changed the library`,
+              );
+            }
+            evidence.checks.unsupportedFirmwareHeadersRejectedAtomically = true;
             const importSource = 'set roll_rc_rate = 12\nset yaw_expo = 30\nset p_roll = 80';
             await transfer.fill(importSource);
             await button('Preview import').click();
