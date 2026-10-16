@@ -92,7 +92,6 @@ test('Team keeps its completed result when a stalled frame reaches the auto-next
     reads,
     'The stalled timer must not start destination loading.',
   );
-  assert.equal(flow.style.visibility, 'hidden', 'The cancelled countdown cannot silently rearm.');
-  assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
+  assert.equal(flow.hidden, true, 'The cancelled countdown cannot silently rearm.');
   assert.equal(f.$('coop-next').disabled, false, 'Manual Next remains available.');
 });

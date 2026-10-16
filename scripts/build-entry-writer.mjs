@@ -1,16 +1,10 @@
 import * as fs from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { execFile } from 'node:child_process';
-import { dirname, resolve } from 'node:path';
+import { resolve } from 'node:path';
 import { promisify } from 'node:util';
 
 const runFile = promisify(execFile);
-
-export function canCloneBuildEntry(source, destinationDirectory) {
-  return (
-    Number.isSafeInteger(source?.dev) && source.dev >= 0 && source.dev === destinationDirectory?.dev
-  );
-}
 
 /** Preserve exact prepared bytes while avoiding duplicate asset blocks on
  * copy-on-write filesystems. Clones are independent files, never hardlinks.
@@ -22,7 +16,6 @@ export async function writeBuildEntry(source, target, bytes) {
     if (
       stat.isFile() &&
       stat.size === expected.length &&
-      canCloneBuildEntry(stat, await fs.stat(dirname(target))) &&
       (await fs.readFile(source)).equals(expected)
     ) {
       // Node's forced-reflink copy returns ENOSYS on macOS. Its native cp uses
@@ -35,8 +28,8 @@ export async function writeBuildEntry(source, target, bytes) {
       if ((await fs.readFile(target)).equals(expected)) return;
     }
   } catch {
-    // Cross-volume copies cannot clone. Missing sources, unsupported reflinks
-    // and failures retain the original byte writer; its errors remain visible.
+    // Missing generated sources, unsupported reflinks and copy failures all
+    // retain the original byte writer. Its errors remain visible to the caller.
   }
   await fs.writeFile(target, expected);
 }

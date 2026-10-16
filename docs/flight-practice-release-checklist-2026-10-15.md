@@ -2,60 +2,6 @@
 
 ## Decision boundary and current baseline
 
-**16 October populated-world continuation:** [exact restart evidence](flight-practice-world-restart-2026-10-16.md)
-passes nine installation/recovery checkpoints plus five unchanged nonempty World
-project/card witnesses across offline launcher, standalone-window and persistent-
-browser restart. The initial reader-expression failure and passing correction are
-both retained. This does not measure offline flight or imported assets, and its
-same-payload path update remains separate from C5. A genuine older candidate now
-reproduces under historical policy; current admission correctly rejects its older
-contract, so a pinned diagnostic historical verifier/UI adapter is the next C5 step.
-
-**16 October result-action continuation:** one native Academy keyboard
-completion/export/exact-package replay now passes with clean shutdown on the
-guide-inclusive `80a32d6a9` candidate. The shared result-row repair preserves its
-occupied space when cancelling auto-next; 18 EN/UK component pointer/keyboard/
-release-outside cases pass. A new all-three candidate at `90d8443b2` reproduces
-twice and passes admission. Its first eight-case exercise attempt passes all four
-Academy cases (first-pointer Home, actual export and replay) but fails all four
-Worlds cases before any controller sample: the observer expected a touch-only
-percentage hidden during keyboard use. After the observer-only visible-stick
-geometry correction, all eight cases pass on identical package bytes with clean
-shutdown. [Exact evidence and limits](flight-practice-result-qualification-2026-10-16.md)
-retain both attempts; the failed matrix is not relabelled as complete.
-
-**Owner decision, 16 October:** defer real-hardware checks for now and continue
-other work. C9's physical controller/radio/touch cases are **deferred, not passed**;
-this does not waive the publisher's accessibility/review gates. Browser-based
-accessibility checks and actual human reviews remain separately tracked.
-
-**16 October HUD continuation:** [repair and exact evidence](flight-practice-hud-qualification-2026-10-16.md)
-records four genuine EN/UK Academy/Worlds Settings/Accessibility/reload/visible
-stationary-HUD passes on separately reproduced/admitted `6b420b1a2` packages.
-The first FPV exercise probe failed with 844 ground-only readings. Its observer
-correction has model-regression proof; a second probe genuinely completed the
-exercise in 13.353 seconds but failed pointer export and browser cleanup. That
-attempt has no backup/replay. Later keyboard and pointer results are recorded
-above, separately. Guides explain the reachable preferences. Browser work needs a safe
-disk margin; historical evidence, human/review gates and hosting
-deferral remain unchanged.
-
-**Recovery/test follow-up:** [repair and player-flow acceptance](flight-practice-repair-2026-10-15.md)
-retains the original 16-checkpoint cache/worker repair run and a separate
-18-checkpoint run preserving a nonempty, UI-authored World Studio template copy.
-It also records bounded status diagnostics, failed first-flight test attempts,
-351 latest practice regressions and a separate passing 21-checkpoint all-three
-controlled quota-denial/reset/retry/removal journey on the fresh candidate.
-These bounded results do not close human/device, distinct-release or hosting gates.
-
-**Latest continuation:** [pointer and preparation verification](flight-practice-pointer-2026-10-15.md)
-records the clean rebase onto `95703ee32`, fixes frozen at `bf31260eb`, 345 practice
-tests and 10 observer tests. C3's selected Academy controls now pass a 24-case
-EN/UK pointer/keyboard fresh/reload matrix. Preserve the failed baseline and
-corrected cleanup-timeout attempt alongside the successful unchanged retry.
-This is partial C3 acceptance, not closure of first-flight, physical input,
-whole-window focus recovery or the Gym/Worlds native-pointer matrix.
-
 **Later continuation:** [recovery fixes and fresh evidence](flight-practice-recovery-2026-10-15.md)
 rebase on `859d5cfc9`, freeze corrected packages at `89537fe0b`, and record 334
 passing tests plus a new nine-checkpoint all-three browser restart observation.
@@ -220,29 +166,6 @@ contains no claim of device/human/public acceptance.
 
 ### C2 — Directory → first flight → pause → retry, every app
 
-Progress: the `8cf5fe46d` candidate's ten EN/UK public-control
-motion/pause/retry cases cover Gym, Academy Self-level/Acro and Worlds Self-level/Acro.
-A later visibility audit found that the eight FPV cases used hidden legacy DOM
-telemetry: their native navigation and DOM-state checks pass, but player-visible
-FPV measurements remain unverified. Do not relabel these historical receipts as
-visible-HUD acceptance. The original files are preserved; maintained-HUD reruns
-are required.
-It also passes two native Gym lift-and-land exercises with observed ordered
-checkpoints, completion screenshots, actual UI exports and independent frozen
-package replay. See the [source-bound player-flow report](flight-practice-player-flow-2026-10-15.md).
-Earlier `50b7612e8` four-case EN evidence stays historical. This still does not
-cover the full main-game directory journey, representative FPV exercise
-completion, physical input or human-learning acceptance; retain those cases below.
-
-The later [full-source-shell report](flight-practice-directory-journey-2026-10-15.md)
-adds six passing EN/UK native main-game directory/card/guide/return cases. One
-Play reaches each unarmed app start screen, with correct metadata and no optional
-executable modules fetched while browsing. This closes the isolated-panel-only
-gap for the committed source shell, not the full production build: declared
-documentation inputs are still missing. Positive custom-appearance handoff and
-representative FPV exercise completion remain unobserved; default query absence
-is not a positive appearance test.
-
 1. In a clean authorized test context, open the complete staged game's Flight
    practice directory. Select EN, then UK. Check all three cards, supported input,
    requirements, sizes and guide destinations against their package descriptors.
@@ -284,14 +207,6 @@ own issue/evidence and SIM/UI ownership, not a hidden observer workaround.
 
 ### C4 — Three-app preparation, closed windows, process restart and full-network offline
 
-Progress: the `90d8443b2` candidate passes the existing nine-checkpoint
-installation/recovery journey with five additional exact nonempty World project,
-revision, metadata and card witnesses through offline browser/standalone restarts.
-See the 16 October report above for the failed first attempt, hash-pinned readonly
-instrumentation, status-diagnostic effect and same-payload Academy path fixture.
-Deliberate offline flight/pause, imported assets/content and machine-wide network
-loss remain unmeasured; do not mark all of C4 closed.
-
 1. Through public UI prepare all three apps. Record progress, terminal readiness,
    exact owning worker scopes and cached dependency verification. Export an FPV
    proof/profile and save one identifiable World test item; record other supported
@@ -318,12 +233,6 @@ does not qualify network-wide isolation.
 
 ### C5 — Distinct-package update, active-session protection and rollback
 
-Progress: the [genuine historical Academy observation](flight-practice-historical-upgrade-2026-10-16.md)
-passes old/current launcher and runtime upgrade, exact proof/profile preservation,
-failed-install preservation and offline rollback. Current publishing admission
-remains unchanged. No flight was kept active; Gym/Worlds were unchanged isolation
-witnesses, not historical migrations. These remaining subcases stay open.
-
 1. Select a real admitted previous candidate A and current candidate B with
    different versions, commits/trees and actual changed archive bytes. Record the
    exact diff and stable installation identity. Do not rename B to impersonate A.
@@ -345,32 +254,6 @@ Version-schema incompatibility is a result to record and resolve, not permission
 to omit fields from comparisons.
 
 ### C6 — Slow/stalled/cancelled/denied preparation
-
-Latest [integrated-main continuation](flight-practice-continuation-2026-10-16.md):
-all six real 30-second idle/native download-cancel cases pass on the unchanged
-admitted candidate, with 22 total checkpoints, six exact prepared-cache inventories
-and preserved proof/profile/World records after every fault and retry/removal.
-Earlier failed observer attempts remain retained. This closes the named short
-download subcases, not local-verification cancellation or the overall bound.
-Separate one-app five-minute observers and a historical Academy active-session
-observer are implemented and independently reviewed; their native results are
-still pending. Default and all-short journeys remain compatible.
-
-16 October correction: both package worker families now announce their return to
-Downloading before awaiting the next dependency. Previously a stalled next response
-could leave Verifying visible after local verification had ended. Two deterministic
-regressions fail before and pass after the fix; this is not a native interruption
-qualification. Network-only faults cannot pause actual local hashing/cache writes.
-Do not claim verification-phase cancellation from a stale label. Run real 30-second
-idle/native-download-cancel cases first; keep elapsed five-minute runs separate
-from the existing ten-minute aggregate observer bound.
-
-Progress: all-three controlled positive-headroom quota denial/reset/retry/removal
-passed a separate 21-checkpoint native Chrome observation on `50b7612e8`.
-The original failed zero control and 20-checkpoint hidden-removal test attempt
-remain retained. This supplies step 4's controlled preparation-denial evidence,
-not physical disk exhaustion, eviction, cancellation, inactivity or overall-limit
-acceptance. Other record types and real distinct-release migration stay open.
 
 1. In the isolated server, delay one known B dependency while leaving its original
    bytes unchanged. Keep A prepared. Record the request/response boundary and
@@ -395,13 +278,6 @@ successful explicit retry. Run per app. H3 proves only its historical Worlds
 sequence; H8 models a world-store transaction, not package-cache exhaustion.
 
 ### C7 — Missing assets/worker and scoped removal
-
-Progress: the fresh candidate passed the six exact cache/worker faults, repairs
-and each app's scoped removal in an 18-checkpoint run. One UI-created World
-project/revision/metadata record and its card identity remained unchanged. This
-does not cover Gym records, imported model assets, every world/progress type or
-populated-World browser-process restart. The [repair report](flight-practice-repair-2026-10-15.md)
-retains original hashes, screenshots, failures and those boundaries.
 
 1. In a backed-up disposable test profile, remove exactly one named dependency
    from one owned prepared cache using browser storage inspection. Record its

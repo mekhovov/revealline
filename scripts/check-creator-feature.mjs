@@ -17,8 +17,7 @@ if (options.has('--runtime-only') && options.has('--service-only'))
 if (options.has('--help')) {
   console.log(`Usage: npm run test:creator-feature -- [--runtime-only | --service-only]
 
-Runs the complete browser/runtime creator cohort with two test files at a time,
-followed by the community service suite.`);
+Runs the complete browser/runtime creator cohort followed by the community service suite.`);
   process.exit(0);
 }
 const exactRootTests = new Set([
@@ -73,11 +72,7 @@ if (files.length < 20)
 
 if (!options.has('--service-only')) {
   console.log(`Running ${files.length} browser/runtime creator acceptance files.`);
-  await run(
-    process.execPath,
-    ['--test', '--test-concurrency=2', ...files.map((name) => path.join(testRoot, name))],
-    root,
-  );
+  await run(process.execPath, ['--test', ...files.map((name) => path.join(testRoot, name))], root);
 }
 if (!options.has('--runtime-only')) {
   console.log('Running the self-hosted community service acceptance suite.');

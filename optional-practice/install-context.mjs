@@ -246,12 +246,6 @@ export async function prepareOptionalOffline({
   doc?.defaultView?.addEventListener?.('pagehide', cancel);
   if (signal?.aborted) abort.abort();
   const uk = doc?.documentElement?.lang === 'uk';
-  const incompleteVerification = () =>
-    new Error(
-      uk
-        ? 'Не вдалося завершити офлайн-перевірку. Повторіть спробу, не видаляючи збережену копію.'
-        : 'Offline verification could not finish. Retry without removing your saved copy.',
-    );
   let panel, progress, progressOwner;
   const previousFocus = doc?.activeElement;
   if (doc?.body && !onProgress) {
@@ -306,14 +300,8 @@ export async function prepareOptionalOffline({
       abort.signal,
       async () => {
         checkCancelled(abort.signal);
-        const initial = await inspectOptionalOffline(base, {
-          navigator,
-          signal: abort.signal,
-          detailed: true,
-        });
-        checkCancelled(abort.signal);
-        if (initial.status === 'unknown') throw incompleteVerification();
-        if (initial.status === 'ready') {
+        if (await inspectOptionalOffline(base, { navigator, signal: abort.signal })) {
+          checkCancelled(abort.signal);
           recordOptionalInstallation({ packageId, location, storage });
           return true;
         }
@@ -395,14 +383,9 @@ export async function prepareOptionalOffline({
           }
         });
         report({ phase: 'verifying', downloaded: 1, total: 1 });
-        const ready = await inspectOptionalOffline(base, {
-          navigator,
-          signal: abort.signal,
-          detailed: true,
-        });
+        const ready = await inspectOptionalOffline(base, { navigator, signal: abort.signal });
         checkCancelled(abort.signal);
-        if (ready.status === 'unknown') throw incompleteVerification();
-        if (ready.status !== 'ready')
+        if (!ready)
           throw new Error(
             'Needs repair: offline files are missing. Remove this version’s offline copy and download again.',
           );

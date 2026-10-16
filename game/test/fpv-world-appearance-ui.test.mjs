@@ -210,10 +210,7 @@ test('World random flight from the shared chooser follows displayed filters, pre
   }
   const expected = new Set(
     WORLD_CATALOGUE.filter(
-      (entry) =>
-        entry.theme === 'snake-hunt' &&
-        entry.activity === 'hunt' &&
-        entry.difficulty === 'beginner',
+      (entry) => entry.theme === 'snake-hunt' && entry.activity === 'hunt' && entry.difficulty === 'beginner',
     ).map((entry) => entry.id),
   );
   h.$('worlds-shell-action-missions').click();
@@ -774,31 +771,6 @@ test('World terminal preview offers Retry and prepares a fresh disarmed attempt'
   assert.match(h.$('flight-status').textContent, /Preview: completion does not earn rewards/);
 });
 
-test('World native HUD details retain instructions across blur and focus', async (t) => {
-  const h = fixture(t);
-  await h.app.ready;
-  await h.app.startFlight(WORLD_CATALOGUE.find((item) => !item.legacy));
-  h.$('world-viewport').querySelector('[data-hud-part="explain"]').click();
-  h.tick(2);
-  const dialog = h.$('sim-flight-hud-details'),
-    hint = dialog.querySelector('.sim-menu-hint');
-  assert.equal(dialog.open, true);
-  assert.ok(hint, 'the native dialog owns its navigation instructions');
-  const instructions = hint.textContent,
-    state = h.app.snapshot().state;
-  assert.ok(instructions.length > 0);
-  h.doc.focused = false;
-  h.win.emit('blur');
-  h.tick(2);
-  assert.equal(hint.textContent, instructions, 'blur must not resize the native dialog');
-  assert.equal(hint.hidden, false);
-  h.doc.focused = true;
-  h.win.emit('focus');
-  h.tick(2);
-  assert.equal(hint.textContent, instructions, 'refocus must not reflow the clicked control');
-  assert.deepEqual(h.app.snapshot().state, state, 'suspension and refocus cannot arm a flight');
-});
-
 test('World menu Back dismisses the visible surface without closing its paused native flight', async (t) => {
   const h = fixture(t);
   await h.app.ready;
@@ -1097,32 +1069,6 @@ test('World categories retain every authored preference and restore Home and Pau
   h.$('close-sim-settings').click();
   assert.equal(h.doc.activeElement, pauseSettings);
   assert.equal(h.app.snapshot().state.status, 'paused');
-});
-
-test('Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK', async (t) => {
-  for (const locale of ['en', 'uk']) {
-    const h = fixture(t, {
-      url: `https://example.test/optional-practice/fpv-worlds/index.html?lang=${locale}`,
-    });
-    await h.app.ready;
-    h.$('worlds-shell-action-settings').click();
-    h.$('worlds-settings-tab-accessibility').click();
-    const section = h.doc.querySelector('[data-sim-hud-preferences]');
-    assert.ok(section);
-    assert.equal(section.parentNode, h.$('worlds-settings-panel-accessibility'));
-    assert.equal(section.closest('[hidden],[inert]'), null);
-    assert.equal(h.doc.querySelectorAll('[data-sim-hud-preferences]').length, 1);
-    assert.equal(section.querySelectorAll('select').length, 3);
-    const mode = section.querySelector('[data-hud-preference="mode"]');
-    mode.value = 'detailed';
-    mode.emit('change');
-    assert.equal(h.doc.querySelector('[data-sim-hud="flight"]').dataset.hudMode, 'detailed');
-    assert.equal(h.$('sim-settings').open, true, 'Changing guidance must not leave Settings.');
-    assert.equal(
-      h.$('worlds-settings-tab-accessibility').textContent,
-      locale === 'uk' ? 'Доступність' : 'Accessibility',
-    );
-  }
 });
 
 test('World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener', async (t) => {

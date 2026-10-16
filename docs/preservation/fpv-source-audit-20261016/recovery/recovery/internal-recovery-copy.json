@@ -1,0 +1,29 @@
+{
+  "format": "fpv-internal-recovery-copy.v1",
+  "files": [
+    {
+      "source": "fpv-temp/fpv-active-handoff-20261015.md",
+      "internal": "recovery/pre-preservation-fpv-handoff.md",
+      "bytes": 119674,
+      "sha256": "80082b0dbc17e0d382bc0c03f1eb4830001520f724197f37a077d5c82b45c424"
+    },
+    {
+      "source": "fpv-worktrees/fpv-plan-review-20261016/docs/fpv-plan-review-20261016.md",
+      "internal": "recovery/plans/fpv-plan-review-20261016.md",
+      "bytes": 31929,
+      "sha256": "0146e6236b9c34940a8d53279ddc725512f7ba4006120f802342815d18c0b91c"
+    },
+    {
+      "source": "fpv-worktrees/fpv-plan-review-20261016/docs/fpv-large-worlds-delivery-plan.md",
+      "internal": "recovery/plans/fpv-large-worlds-delivery-plan.md",
+      "bytes": 109752,
+      "sha256": "3b42816bb9dc800c02142fa9d403187c581e51818ab5ec252aaf2427a48a5b73"
+    },
+    {
+      "source": "fpv-worktrees/fpv-plan-review-20261016/docs/fpv-continuous-delivery.md",
+      "internal": "recovery/plans/fpv-continuous-delivery.md",
+      "bytes": 365344,
+      "sha256": "6fb3401f7f9807e259831b36c7bd7f8e15e739f27a685eb03498a0d17d5d8eca"
+    }
+  ]
+}

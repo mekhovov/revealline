@@ -67,7 +67,6 @@
         "game/test/installed-team-presentation.test.mjs",
         "game/test/fpv-world-editor-appearance.test.mjs",
         "game/test/creator-player-navigation.test.mjs",
-        "game/test/creator-storage-retention.test.mjs",
         "game/test/overflight-project.test.mjs",
         "game/test/overflight-content.test.mjs",
         "game/test/overflight-reuse.test.mjs",

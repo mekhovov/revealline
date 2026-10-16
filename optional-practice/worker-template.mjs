@@ -205,7 +205,6 @@ await cache.put(url,new Response(bytes,{status:200,headers}));
 if(controller.signal.aborted)throw new Error('Optional download cancelled');
 activity();
 phase='downloading';
-announce();
 }
 phase='ready';
 announce();

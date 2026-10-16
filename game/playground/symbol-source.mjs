@@ -9,20 +9,7 @@ function canvas(width, height) {
   return element;
 }
 
-function waitForSource(work, signal) {
-  signal?.throwIfAborted();
-  if (!signal) return work;
-  return new Promise((resolve, reject) => {
-    const abort = () => reject(signal.reason);
-    signal.addEventListener('abort', abort, { once: true });
-    Promise.resolve(work)
-      .then(resolve, reject)
-      .finally(() => signal.removeEventListener('abort', abort));
-  });
-}
-
-export async function textSymbolMask(text, { signal } = {}) {
-  signal?.throwIfAborted();
+export async function textSymbolMask(text) {
   const lines = String(text).trim().split(/\r?\n/);
   if (
     !lines.length ||
@@ -30,8 +17,7 @@ export async function textSymbolMask(text, { signal } = {}) {
     lines.some((line) => !line.trim() || [...line].length > 16)
   )
     throw new Error('Enter one to three non-empty lines, with up to 16 characters per line.');
-  await waitForSource(document.fonts.ready, signal);
-  signal?.throwIfAborted();
+  await document.fonts.ready;
   const surface = canvas(SYMBOL_WIDTH * 8, SYMBOL_HEIGHT * 8),
     ctx = surface.getContext('2d');
   ctx.fillStyle = '#fff';
@@ -76,8 +62,7 @@ function rasterMask(source, threshold, invert) {
 }
 
 /** Local decoding only. Uploaded art is traced into cells, never executed or sent to a service. */
-export async function imageSymbolMask(file, { threshold = 150, invert = false, signal } = {}) {
-  signal?.throwIfAborted();
+export async function imageSymbolMask(file, { threshold = 150, invert = false } = {}) {
   if (
     !file ||
     !['image/png', 'image/jpeg', 'image/webp'].includes(file.type) ||
@@ -87,26 +72,18 @@ export async function imageSymbolMask(file, { threshold = 150, invert = false, s
   if (!Number.isFinite(threshold) || threshold < 1 || threshold > 254)
     throw new Error('Invalid image threshold.');
   const header = inspectImageDataUrl(
-    imageDataURL(new Uint8Array(await waitForSource(file.arrayBuffer(), signal)), file.type),
+    imageDataURL(new Uint8Array(await file.arrayBuffer()), file.type),
   );
-  signal?.throwIfAborted();
   if (!header.valid) throw new Error(header.errors.join(' '));
-  if (header.width * header.height > 16_000_000)
-    throw new Error('Use an image with at most 16 million pixels.');
-  const url = URL.createObjectURL(file),
-    image = new Image(),
-    abort = () => image.removeAttribute('src');
-  signal?.addEventListener('abort', abort, { once: true });
+  const url = URL.createObjectURL(file);
   try {
+    const image = new Image();
     image.src = url;
-    await waitForSource(image.decode(), signal);
-    signal?.throwIfAborted();
+    await image.decode();
     if (image.naturalWidth * image.naturalHeight > 16_000_000)
       throw new Error('Use an image with at most 16 million pixels.');
     return rasterMask(image, threshold, invert);
   } finally {
-    signal?.removeEventListener('abort', abort);
-    image.removeAttribute('src');
     URL.revokeObjectURL(url);
   }
 }

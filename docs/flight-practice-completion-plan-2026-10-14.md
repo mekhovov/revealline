@@ -1,156 +1,10 @@
 # Flight practice: completion plan and priority review
 
-## 16 October research and execution update
-
-Build-blocker diagnosis correction: the required Couch verification document and
-FPV baseline directory are committed, but this managed worktree's non-cone sparse
-patterns excluded `docs/verification`. Materializing those two exact committed
-paths makes build collection succeed. Earlier missing-file failures remain real;
-the earlier assertion that their producer inputs were unavailable was incorrect.
-No placeholder evidence or build-rule removal is needed. Full production build
-and distribution-browser validation remain separate next checks, not implied by
-successful collection or source-shell journeys.
-
-The [result-action continuation](flight-practice-result-qualification-2026-10-16.md)
-completes the native keyboard probe, reproduces and repairs moving result targets,
-and passes all eight EN/UK Academy/Worlds Self-level/Acro lift-and-land journeys
-with first-pointer Home, actual backup and exact-package independent replay.
-All three changed packages reproduce twice and pass admission. The original
-failed matrix and observer correction remain retained. This is not a complete
-Phase 1/public release or a human/hardware qualification.
-
-The [populated-world continuation](flight-practice-world-restart-2026-10-16.md)
-also passes five exact saved-project/card witnesses through offline browser and
-standalone-window restart, plus nine existing installation/recovery checkpoints.
-It is not offline-flight, imported-asset or distinct-release migration evidence.
-
-The [historical upgrade continuation](flight-practice-historical-upgrade-2026-10-16.md)
-passes nine native checkpoints with genuine older/current Academy payloads and
-original launchers, exact proof/profile retention, failed-install preservation
-and offline rollback. Its narrowly pinned historical diagnostic authority leaves
-current publishing strict. Active-flight protection and Gym/Worlds migrations
-are not covered.
-
-Current continuation: six personal-appearance source-shell journeys and all six
-native 30-second idle/download-cancel cases pass; the temporary fourth-app recipe
-also passes. See the [integrated-main report](flight-practice-continuation-2026-10-16.md)
-for original failures, exact sources, preserved records and remaining scope.
-Separate active-session and real five-minute observers are implemented but their
-native execution remains pending. The full build's second attempt was cancelled
-at a cross-volume file-cloning bottleneck, not accepted as a distribution pass.
-A narrow same-device writer guard preserves exact-byte checks and fallbacks.
-Next: retry the full production build/player journey and run those separate
-historical active-session/overall-timeout lanes. Real hardware is
-deferred at the owner's subsequent request; hosting remains deferred. SIM flight
-mechanics, lessons and rendering remain outside this workstream.
-
-Fresh primary-source guidance sharpens acceptance rather than adding features:
-
-- [W3C pointer cancellation](https://www.w3.org/WAI/WCAG22/Understanding/pointer-cancellation.html)
-  recommends native click/up-event activation. Do not move Home/Retry/Next under
-  a held pointer when cancelling auto-next. Cancel the countdown immediately,
-  but keep its occupied layout until the result retires. Test press/release,
-  release outside, keyboard focus, and a new result resetting the presentation.
-  This is our application of the guidance, not a claim of WCAG conformance.
-- [Playwright actionability](https://playwright.dev/docs/actionability) checks
-  stability before clicking; it does not establish that application handlers
-  leave a target stationary during the press. Capture target geometry around
-  down/up and require the first ordinary activation. Never force-click or silently
-  retry a broken first press. Keyboard export is independent evidence, not a
-  substitute for repairing the player-facing pointer route.
-- [PWA update guidance](https://web.dev/learn/pwa/update) supports retaining a
-  waiting worker while clients use the old version. C5 must use genuinely
-  different admitted payloads and preserve an active flight; changing only a
-  version path cannot close it.
-- [MDN storage/eviction guidance](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)
-  reinforces C4/C6: readiness is verified dependencies plus ownership, not an icon
-  or a quota estimate. Keep controlled write denial distinct from actual eviction
-  and preserve records when removing an app shell.
-
-Priority order: **P0 interaction and native exercise evidence**, then **P0
-distinct-release/offline recovery**, then **P1 measured performance and available
-accessibility checks**. Human learning, physical hardware and the 24 package-review
-decisions require actual participants/equipment/reviewers; automation cannot sign
-them. Hosting/capacity/public selection stay deferred by the owner. Therefore
-finishing this batch does not mean all Phase 1/public-release criteria are met.
-
-16 October continuation: [HUD repair and qualification](flight-practice-hud-qualification-2026-10-16.md)
-makes the existing guidance controls reachable in both FPV apps and verifies four
-EN/UK settings/reload/visible stationary-HUD journeys. Matching guides are updated.
-The first genuine FPV exercise probe failed at the unchanged deadline; its
-observer-only ground-clearance correction passes a reproduced model regression,
-then a corrected probe genuinely completed in 13.353 seconds but failed its
-pointer-based export and browser-cleanup timeout. The then-open keyboard export,
-backup/replay, clean shutdown and eight-case matrix were subsequently verified
-in the result-action continuation above; original failed attempts stay failed.
-Disk pressure briefly paused native work; future batches need a safe margin. No hosting
-or review gate is waived. Historical FPV DOM telemetry is not visible-HUD proof.
-
-Visibility audit correction: the historical ten-case first-flight matrix uses
-hidden legacy DOM telemetry for its eight FPV cases. Native launch/mode/pause/retry
-and DOM-state results remain evidence, but visible FPV instrument feedback is not
-qualified. The existing HUD guidance controls were also omitted from both apps'
-accessible Settings categories. Repair their placement, observe the maintained
-visible HUD, and repeat FPV exercise completion/export/replay without hidden
-measurements. Gym exercise evidence and six directory/start/guide journeys are
-unaffected. See the [corrected player-flow report](flight-practice-player-flow-2026-10-15.md).
-
 Updated 15 October 2026. This refines the approved three-app plan; it does not
 authorize a new publisher, relaxed reviews, a different host, or changes to SIM
 mechanics. Implementation and public release are separate completion states.
 
 ## Baseline and concurrent ownership
-
-### Latest main-game directory continuation
-
-The [full-source-shell journey report](flight-practice-directory-journey-2026-10-15.md)
-records six passing EN/UK native Settings → Help & Extras → Flight practice →
-app-start-screen and guide/return journeys, using unchanged admitted package
-bytes. All cards, real previews, actual download sizes, one-Play/no-auto-arm and
-locale behavior are checked in the full source shell. The initial wrong-route
-attempt stays preserved. Both 352 practice and 68 observer tests pass.
-
-This is not a complete production-build or public-host journey: missing declared
-documentation inputs still block full build collection. Positive custom-appearance
-handoff, FPV beginner-exercise completion and the other named acceptance gates
-remain open. Hosting stays deferred and no review approval is fabricated.
-
-### Latest localized player-flow continuation
-
-The [player-flow report](flight-practice-player-flow-2026-10-15.md) integrates
-main `d452bda9e` and freezes a new reproducible/admitted three-app candidate at
-`8cf5fe46d`. Ten EN/UK stable-launcher motion/pause/retry cases pass, including
-both FPV modes in Academy and Worlds. Two native Gym lift-and-land exercises
-also pass, including completion screenshots, ordinary UI transcript export and
-independent replay using the exact packaged dependencies. Initial observer-route
-failures and the projected-locale verifier mismatch remain retained, not erased.
-
-This advances C2, not all Phase 1 acceptance. The complete main-game directory
-journey and FPV beginner-exercise completion remain open, as do the other named
-physical/human/recovery/update/performance gates. Hosting stays deferred and
-`publicEligible` stays false. The report distinguishes the interrupted full
-regression attempt from later verification; do not treat partial output as a pass.
-
-### Latest repair/player-flow continuation
-
-The [repair report](flight-practice-repair-2026-10-15.md) records the clean rebase
-onto `e51ff517e`, a fresh reproducible/admitted three-app candidate at `50b7612e8`,
-four public-control EN movement/pause/retry cases, 18 repair checkpoints with
-a populated UI-authored World project retained, and 21 all-three controlled
-quota-denial/reset/retry/removal checkpoints. Failed earlier attempts and an
-ineffective zero-quota control stay preserved. Full exercises, broader locale/
-input coverage, distinct-release migration, hardware/human reviews and hosting
-remain open; a functional smoke test is not complete Phase 1 acceptance.
-
-### Latest pointer/verification continuation
-
-The [pointer continuation](flight-practice-pointer-2026-10-15.md) rebases onto
-`95703ee32`, preserves native-dialog instructions in all three apps, and prevents
-inconclusive preparation checks from advising removal. Frozen source `bf31260eb`
-passes the 24-case Academy EN/UK pointer/keyboard matrix on an unchanged retry;
-the original 11 pointer failures and first corrected run's cleanup timeout remain
-recorded separately. Full first-flight, other apps' native pointer matrix,
-distinct-release, physical/human and hosting gates remain open.
 
 ### Later 15 October recovery continuation
 
@@ -226,10 +80,10 @@ arbitrary destination or executable query parameter.
 
 | Area                | Implemented                                                                                                                                                         | Remaining proof or refinement                                                                              |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details; six full-source-shell journeys pass | Public selection, complete production build and positive custom-appearance handoff remain unqualified |
+| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details; component browser focus/layout checks passed | Public selection still empty; qualify full-shell behavior and real released bytes                          |
 | Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                                                                   | Repeat current public compatibility checks after deployment                                                |
 | Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation; component browser failure/cache/retry checks passed                                             | Full-shell and released-package offline checks remain                                                      |
-| Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal; all-three restart and nonempty World project evidence | Distinct-release migration, current cancellation/timing, imported assets/offline flight and wider browser checks remain; hardware deferred |
+| Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal; all-three observer                    | Authorized real-candidate installation/recovery observation and physical/browser matrix remain             |
 | Publishing          | Three-app reproducibility/admission, existing publisher/selector; repaired main workflow deployed and empty catalogue verified                                      | Full retained-site capacity and reviewed release selection remain                                          |
 | Guides              | Corrected EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe and parity tests                                                | Follow guides from scratch on the qualified real candidate and collect current screenshots/device evidence |
 | Fourth app          | Automated registration and six-checkpoint real-browser launch/start/pause/retry, installation/update/offline reopen/rollback/retirement                             | Complete for the unpublished fixture; does not qualify the three real apps and must never be published     |

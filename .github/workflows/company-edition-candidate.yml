@@ -59,10 +59,7 @@ jobs:
       - run: npm ci
       - name: Verify optional routes, replay, input and installation isolation
         if: steps.test_policy.outputs.runTests == 'true'
-        run: |
-          npm run practice:test
-          npm run practice:pointer:test
-          npm run practice:observer:test
+        run: npm run practice:test
       - name: Freeze twice and verify optional package artifacts
         run: node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate --base-path /revealline/ --packages civilian-flight,civilian-fpv,fpv-worlds
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6

@@ -1,0 +1,28 @@
+{
+  "format": "PrivateStashAppOnlySourcePreservation.v1",
+  "createdUTC": "2026-10-16T04:37:55.074104+00:00",
+  "originalStashCommit": "8dc2818d315526507119ef036da4c9aee3d510b9",
+  "excludedUntrackedParent": "042733a8cae3d5926dfbb7577c6dba44321e8ba2",
+  "excludedPrivateFiles": [
+    ".specstory/cli/config.toml",
+    "docs/codex-migration-guide.md"
+  ],
+  "appUntrackedFile": {
+    "path": "docs/team-duel-expansion-priority-review-2026-10-15.md",
+    "bytes": 24680,
+    "sha256": "c788051d9eda3069535b98c4f76890af38faa656181a82b0f6d470e918a46348",
+    "gitBlob": "231f26ec91631c0e426d4362e44a485f1ea6552f"
+  },
+  "trackedIndexState": {
+    "stashTree": "2783f5c4e94758847f32da47e133d87055077517",
+    "indexTree": "2783f5c4e94758847f32da47e133d87055077517",
+    "publicBaseCommit": "a89a34b52ad6be291347b68ebde7e9ebcf8b8e45",
+    "publicBaseTree": "2783f5c4e94758847f32da47e133d87055077517",
+    "trackedAndIndexSourceIdenticalToPublicBase": true,
+    "indexCommitToPreserveSeparately": "69c5a21d392461c630749a878f8b88c89ff49788"
+  },
+  "rawPrivateContentsReadOrUploaded": false,
+  "rawPrivateStashAncestryWillNotBePublished": true,
+  "publicationPending": false,
+  "sourcePreservationByThisCommit": true
+}

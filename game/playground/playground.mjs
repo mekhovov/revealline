@@ -158,13 +158,7 @@ let campaign,
   replayController = null;
 const beginImport = (message = t('tools:validatingAndDecodingTheSelectedContent')) => {
   if (pendingImport === null) previousPreviewHref = $('open-preview').getAttribute('href');
-  pendingTicket?.controller.abort();
-  const ticket = {
-    epoch: ++importEpoch,
-    editRevision,
-    before: JSON.stringify(current),
-    controller: new AbortController(),
-  };
+  const ticket = { epoch: ++importEpoch, editRevision, before: JSON.stringify(current) };
   pendingImport = ticket.epoch;
   pendingTicket = ticket;
   $('cancel-import').hidden = false;
@@ -208,7 +202,6 @@ const status = (message, error = false, busy = false) => {
 };
 const cancelImport = () => {
   if (!pendingTicket) return;
-  pendingTicket.controller.abort();
   finishImport(pendingTicket);
   importEpoch++;
   status(t('tools:preparationCancelledTheWorkingMapAndPreviousPreviewAreUnchanged'));
@@ -1278,8 +1271,8 @@ try {
     try {
       const mask =
         options.source === 'image'
-          ? await imageSymbolMask(file, { ...options, signal: ticket.controller.signal })
-          : await textSymbolMask(options.text, { signal: ticket.controller.signal });
+          ? await imageSymbolMask(file, options)
+          : await textSymbolMask(options.text);
       assertImportCurrent(ticket);
       if (
         JSON.stringify(options) !== JSON.stringify(symbolOptions()) ||

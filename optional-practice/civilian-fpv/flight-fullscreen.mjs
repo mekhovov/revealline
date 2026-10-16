@@ -7368,22 +7368,6 @@ if(action?.parentElement===parent)action.after(root);
 else parent.append(root);
 let language=locale;
 const render=(state)=>{
-if(state.phase==='cancelled'&& !root.hidden){
-// Pointer-down cancels the timer, not the player's pending click. Keep
-// this exact flex slot until the result retires so sibling targets cannot
-// move between press and release (including wrapped/centred action rows).
-if(root.contains(doc.activeElement)){
-const target=[...parent.querySelectorAll('button')].find(
-(button)=> !root.contains(button)&& !button.disabled&& !button.hidden,
-);
-target?.focus();
-}
-root.style.visibility='hidden';
-root.inert=true;
-return;
-}
-root.style.visibility='';
-root.inert=false;
 const copy=
 FLOW_COPY[
 (typeof language==='function'?language():language)==='uk'?'uk':'en'

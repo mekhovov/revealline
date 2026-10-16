@@ -214,12 +214,6 @@ export function attachLibraryPanel(api) {
   }
   const pictureDifficultyLabel = (picture) =>
     picture?.labelKey ? galleryDifficultyLabel(picture) : contentText(picture, 'label');
-  const savedDifficultyLabel = (session) => {
-    const entry = api.resolveSavedExecution?.(session);
-    return entry
-      ? createGalleryDifficultyResolver([entry]).label(session.campaignKey)
-      : contentText(difficulties(), 'label')(session.campaignKey);
-  };
   const pictureMeta = (picture) =>
     `${contentText(picture.theme, 'name')} · ${pictureDifficultyLabel(picture)} · ${collectionResultLabels(picture.item, api.get().library).detail}`;
   const storyButton = document.createElement('button');
@@ -541,7 +535,7 @@ export function attachLibraryPanel(api) {
       saved
         ? t('gameplay:savedFlight', {
             value1: contentText(saved.replay?.level, 'name') || t('interface:unknown'),
-            value2: savedDifficultyLabel(saved),
+            value2: contentText(difficulties(), 'label')(saved.campaignKey),
             value3:
               typeof saved.savedAt === 'string'
                 ? saved.savedAt.replace('T', ' ').slice(0, 19)
@@ -823,7 +817,7 @@ export function attachLibraryPanel(api) {
         t('gameplay:attemptPrepared', {
           value1: prepared.source === 'stored' ? t('interface:saved') : t('interface:current'),
           value2: contentText(session.replay.level, 'name'),
-          value3: savedDifficultyLabel(session),
+          value3: contentText(difficulties(), 'label')(session.campaignKey),
           value4: session.savedAt.replace('T', ' ').slice(0, 19),
           value5:
             prepared.context === 'replay-only'
@@ -1116,7 +1110,6 @@ export function attachLibraryPanel(api) {
           'xonix-session.v4',
           'xonix-session.v5',
           'xonix-session.v6',
-          'xonix-session.v7',
           CAPTURE_PRESENTATION_SESSION_FORMAT,
         ].includes(parsed.format)
       ) {

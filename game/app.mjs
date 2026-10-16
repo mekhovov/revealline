@@ -100,7 +100,6 @@ import {
 import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
 import {
   CLASSIC_RULES_ORIGINAL,
-  CLASSIC_RULES_CURRENT,
   projectClassicCurrentRulesEntry,
 } from './mission-library/classic-current-rules.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
@@ -1604,7 +1603,8 @@ try {
     try {
       const pins = validateFlightPresentationPinsForRun(flightPictures.pins(), {
         identityCatalog: flightPictures.identityCatalog,
-        ...pictureContextForRun(run, activeEntry),
+        campaignKey: campaignKey(campaign),
+        level: pictureLevelForRun(run, activeEntry),
         themeId: theme.id,
       });
       const pin = storyPinForTheme(pins, theme.id),
@@ -1695,15 +1695,6 @@ try {
     const level = levels.find((item) => item.id === nextRun.levelId);
     if (!level) throw new Error(t('interface:pictureMissionIsUnavailableInItsInstalledOriginal'));
     return level;
-  }
-  function pictureContextForRun(nextRun, entry) {
-    // Current rules and difficulty can change a flight's execution identity;
-    // retained pictures and stories still belong to the original authored map.
-    const pictureEntry = pictureExecutionForEntry(entry);
-    return {
-      campaignKey: pictureEntry.executionKey || campaignKey(pictureEntry.campaign),
-      level: pictureLevelForRun(nextRun, entry, pictureEntry),
-    };
   }
   function newFlightPictures({
     nextRun = run,
@@ -2419,7 +2410,7 @@ try {
     signal?.throwIfAborted();
     await candidateHost?.ensureExecution?.(session.campaignKey, { signal });
     signal?.throwIfAborted();
-    const entry = findCampaignEntry(session.campaignKey, session.pictureSource);
+    const entry = findCampaignEntry(session.campaignKey);
     if (!entry) throw new Error('This artwork needs its exact original mission source.');
     const level = entry.campaign.levels.find((item) => item.id === session.replay.level.id);
     if (!level) throw new Error('This artwork needs its exact original mission source.');
@@ -3668,7 +3659,6 @@ try {
           continuation: { direction: input.snapshotDirection() },
           presentationPins: flightPictures?.pins(),
           presentationLevel: campaign.levels.find((level) => level.id === run.levelId),
-          ...currentRulesSaveSource(),
           ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
           ...(flightActorLease ? { actorAppearancePin: flightActorLease.pin() } : {}),
           mediaIdentityCatalog: flightPictures?.identityCatalog,
@@ -3985,7 +3975,6 @@ try {
       continuation: { direction: input.snapshotDirection() },
       presentationPins: flightPictures?.pins(),
       presentationLevel: campaign.levels.find((level) => level.id === run.levelId),
-      ...currentRulesSaveSource(),
       ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
       ...(flightActorLease ? { actorAppearancePin: flightActorLease.pin() } : {}),
       mediaIdentityCatalog: flightPictures?.identityCatalog,
@@ -6666,7 +6655,7 @@ try {
     // Preview only the requested identity. Known compiled content must not
     // rebuild the authored catalog (or unrelated historical challenges).
     const key = !practice && typeof saved?.campaignKey === 'string' ? saved.campaignKey : null;
-    const known = knownExecutionEntry(key) ?? currentRulesSavedEntry(key, saved?.pictureSource);
+    const known = knownExecutionEntry(key);
     const metadata = key && !known ? candidateHost?.executionMetadata?.(key) : null;
     const entries = known ? [known] : key && !metadata ? executionEntries() : [];
     const keyedEntries = entries.map((entry) => ({
@@ -6727,8 +6716,6 @@ try {
       bodyId,
       runId,
       savedAt,
-      campaign,
-      ...currentRulesSaveSource(),
       continuation: { direction: input.snapshotDirection() },
       presentationPins: flightPictures?.pins(),
       ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
@@ -6792,41 +6779,9 @@ try {
       );
     return session;
   }
-  function currentRulesSaveSource() {
-    return activeEntry.classicRulesSourceCampaignKey
-      ? {
-          classicRulesPictureSource: {
-            campaign: activeEntry.classicRulesPresentationCampaign,
-            difficulty: activeEntry.difficulty,
-          },
-        }
-      : {};
-  }
-  function currentRulesSavedEntry(key, source) {
-    if (!source || typeof key !== 'string') return null;
-    try {
-      // Saved source data locates an installed original; only that installed
-      // entry supplies artwork, classes and the projected execution to adopt.
-      const originalKey = campaignKey(source.campaign);
-      const original = installedEntries.find(
-        (entry) => campaignKey(entry.campaign) === originalKey,
-      );
-      if (!original) return null;
-      const projected = projectClassicCurrentRulesEntry(original, CLASSIC_RULES_CURRENT);
-      const entry = createExecutionCatalog([projected]).select(
-        campaignKey(projected.campaign),
-        source.difficulty,
-      );
-      return entry?.executionKey === key ? entry : null;
-    } catch {
-      return null;
-    }
-  }
-  function findCampaignEntry(key, pictureSource) {
+  function findCampaignEntry(key) {
     let entry =
-      knownExecutionEntry(key) ??
-      currentRulesSavedEntry(key, pictureSource) ??
-      executionEntries().find((e) => campaignKey(e.campaign) === key);
+      knownExecutionEntry(key) ?? executionEntries().find((e) => campaignKey(e.campaign) === key);
     if (!entry) {
       const match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)\//.exec(key || '');
       if (match) {
@@ -6878,7 +6833,7 @@ try {
         signal: controller.signal,
       });
       controller.signal.throwIfAborted();
-      const entry = findCampaignEntry(candidate?.campaignKey, candidate?.pictureSource);
+      const entry = findCampaignEntry(candidate?.campaignKey);
       if (!entry)
         throw new Error(
           candidateHost
@@ -7022,7 +6977,6 @@ try {
         theme,
         libraryGeneration,
       };
-      void updatePlayedLevelLink();
       onAdopted?.(adopted);
       return adopted;
     } catch (error) {
@@ -7358,7 +7312,7 @@ try {
       pause(true);
       return snapshotAttempt();
     },
-    resolveCampaign: (key, pictureSource) => findCampaignEntry(key, pictureSource)?.campaign,
+    resolveCampaign: (key) => findCampaignEntry(key)?.campaign,
     resolveMediaIdentityCatalog: () => pictureIdentity(),
     resolveAttemptAppearance: resolveSavedAttemptAppearance,
     readStored: () => profileStorage().getItem(sessionKey),
@@ -7469,8 +7423,6 @@ try {
     requestLaunch: requestLibraryLaunch,
     pause: () => pause(true),
     saved: savedAttempt,
-    resolveSavedExecution: (session) =>
-      findCampaignEntry(session.campaignKey, session.pictureSource),
     attemptExportSource: () => attemptFiles.source(),
     prepareAttemptFile: (options) => {
       // Do not clear an actual pending pack/restore/backup operation to make an
@@ -9453,7 +9405,8 @@ try {
         kind === 'retry' && !candidateAttempt && !ticket.owner.legacy
           ? retryFlightPresentationPins(ticket.owner.pins(), {
               identityCatalog: pictureIdentity(),
-              ...pictureContextForRun(nextRun, entry),
+              campaignKey: campaignKey(entry.campaign),
+              level,
               themeId: nextTheme.id,
             })
           : undefined;
@@ -9704,7 +9657,8 @@ try {
               retainedPins && !flightPictures.legacy
                 ? retryFlightPresentationPins(retainedPins, {
                     identityCatalog: pictureIdentity(),
-                    ...pictureContextForRun(nextRun, activeEntry),
+                    campaignKey: campaignKey(campaign),
+                    level: campaign.levels[levelIndex],
                     themeId: theme.id,
                   })
                 : retainedPins || undefined,

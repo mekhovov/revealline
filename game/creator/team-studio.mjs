@@ -13,7 +13,6 @@ import { attachCreatorReviewReading } from './review-reading.mjs';
 import { focusCreatorInstalledPlay } from './player-menu-focus.mjs';
 import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
 import { prepareCreatorTeamPicture } from './team-picture.mjs';
-import { mountCreatorStorageRetention } from './storage-retention.mjs';
 import {
   CREATOR_TEAM_TEMPLATES,
   generateCreatorTeamCampaign,
@@ -41,7 +40,6 @@ export function mountTeamCreatorStudio({
   } = services;
   const $ = (id) => document.getElementById(id);
   const form = $('team-creator-form');
-  const retention = mountCreatorStorageRetention({ document, window });
   let controller = null;
   let gameplay = null;
   let reviewed = null;
@@ -564,7 +562,6 @@ export function mountTeamCreatorStudio({
   const destroy = () => {
     if (destroyed) return;
     destroyed = true;
-    retention.destroy();
     abort();
     releasePreviews();
     store.close?.();

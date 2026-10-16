@@ -31,8 +31,6 @@ Use **Pause** before changing setup and **Reset / Retry** for a fresh FPV attemp
 
 After focus loss or a disconnected device, return to the app and follow its resume prompt. A recovered session should not begin flying on its own.
 
-In either FPV app, use **Settings → Accessibility → Flight guidance**. Choose **Guidance → Detailed** for numeric objective readings; **Text size** and **HUD contrast** are separate choices. These settings survive reload. They do not start a flight, hold altitude or stabilize the aircraft.
-
 ## Offline versus home-screen installation
 
 1. Open **Details & guide → Download for offline use**, or the app’s existing Prepare offline action: **Settings → Content & Offline** in Gym and World Studio, or **Settings → Help & Extras → Flight guide → Workshop & offline** in Flight Studio.

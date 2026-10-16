@@ -1,0 +1,45 @@
+{
+  "conclusion": "success",
+  "createdAt": "2026-10-16T06:14:07Z",
+  "headSha": "dc3aa3a536b077db0b20747dc81f2a8d0fbaea1e",
+  "jobs": [
+    {
+      "completedAt": "2026-10-16T06:14:31Z",
+      "conclusion": "success",
+      "databaseId": 116840053758,
+      "name": "original-source-cold-restore",
+      "startedAt": "2026-10-16T06:14:09Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-16T06:14:10Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-16T06:14:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-16T06:14:30Z",
+          "conclusion": "success",
+          "name": "Verify original source checkpoint from GitHub only",
+          "number": 2,
+          "startedAt": "2026-10-16T06:14:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-16T06:14:30Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 3,
+          "startedAt": "2026-10-16T06:14:30Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38860055058/job/116840053758"
+    }
+  ],
+  "status": "completed",
+  "updatedAt": "2026-10-16T06:14:32Z",
+  "url": "https://github.com/mekhovov/revealline/actions/runs/38860055058"
+}

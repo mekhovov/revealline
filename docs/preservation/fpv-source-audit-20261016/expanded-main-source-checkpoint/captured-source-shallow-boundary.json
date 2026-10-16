@@ -1,0 +1,38 @@
+{
+  "format": "CapturedMainAppSourceShallowBoundary.v1",
+  "capturedUTC": "2026-10-16T07:02:50.829571+00:00",
+  "sourceStoreAlias": "external-primary-main-app",
+  "sourceShallowFileSHA256": "f642668e49452ad24c53d4a5a3f3bf03e6deb97d9202e5bfa0866135031aff9d",
+  "sourceShallowCommitSHAs": [
+    "0a1548fd29bd4f4fce741c2917d2c07d8bdbb63b",
+    "18855ea9a04f76eb792d4350679624763be2c198",
+    "3bc7a923da2b7d50a6a675a91d5560005ad0f20d",
+    "5cde6dbc97c3067b6023d2bf7fd97fe251805347",
+    "63fbe26be3ecde48a13e9c0ef8f3c7fff2fa8956",
+    "7da26a8e1faf6f01e17ad97df6b836b90174e3e1",
+    "88605768e2932156243f973fee23d52325d70b80",
+    "8e5ad71e9b791b7c16bae1cb308026ed3e18d5c2",
+    "91f3f76fe347fde44dd0ec6c854c272182423219",
+    "94548aa26d489ecd93ec23274208fb7a6dd733e7",
+    "a8098020b24d423714342202f8de013a46e28e90",
+    "b23a92bee98d8a090afea0dc7100ff02e34e3400",
+    "b49d7a72384e2372c5cab0d7d6a98df17b525ed2",
+    "d15d3864f3a8e0bb4f91d63fec61d228b4b980f9",
+    "d1ebca5a2c55687b142bbff2ae6134d71cd32809",
+    "d55b10d523e15d991cbedc6e283fab396120ee47",
+    "d97b7eb42017bb53f9cb279f2e8239ad3712db12",
+    "d9ac8ee1937fb473107278ad613d33314ab9dd0d",
+    "e058d93b4f2f415e5446190d7c61b3c6bdf4f465"
+  ],
+  "capturedBoundaryNeededForAdditionalPackage": [
+    "91f3f76fe347fde44dd0ec6c854c272182423219"
+  ],
+  "unmaterializedParentCommitSHAs": [
+    "81415edaf9efd6147f7d1bf41bb46cf5619dbdf8",
+    "54c7c38b0cfae74b6c520830095de3e794cb7f00"
+  ],
+  "parentsNotInCapturedLocalCommitInventories": true,
+  "parentsNotAccessibleThroughMainGitHubObjectLookupAtAudit": true,
+  "causalConclusion": null,
+  "qualification": "This records a pre-existing captured shallow clone boundary. Preserve the exact raw commit/tree and reproduce its shallow status in a fresh recovery repository; do not invent missing ancestors or claim full pre-boundary history. Original checkouts/stores are unchanged. A separate additive tracked-tree snapshot can retain this app state on ordinary GitHub refs without rewriting the original raw commit."
+}

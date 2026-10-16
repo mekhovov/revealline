@@ -1,0 +1,23 @@
+{
+  "createdUTC": "2026-10-16T07:41:14.622799+00:00",
+  "scope": "Exactly the13537 declared existing-public GitHub prerequisite commits and their complete recursively traversed trees, typed leaf identities only; all raw commit/tree hashes verified. No source blob body reads or original source stores.",
+  "publicPrerequisiteCommitCount": 13537,
+  "published815ManifestSHA256": "0ae8839cee1d03f3b4a1fdde9149e101facbd75cf448cb0243744bf2619c1062",
+  "publicCommitTreeBindingsSHA256": "85c760faab188676086cb16afd4b5d8eb6eddb7f331ffc3943586c708dfd35d7",
+  "publicTreeReadbackSHA256": "97ba37cb20db07e999bec9b80ccd1a1f5a1338fdb8b2e1fafea16f1e3432ec84",
+  "publicTreesRawSHA1Verified": 55647,
+  "publicTreeBodyBytesRead": 549991485,
+  "typedPublicBlobLeafIDs": 65071,
+  "setFile": "GitHub-13537-public-typed-blob-IDs-v2.txt",
+  "setSHA256": "28e1ae2e2ef89dd8cd86983c3bb70729180d00c4691ab3e138041920c95f2c7b",
+  "gitlinkTargets": [],
+  "remoteInvalidAndLazyFetchDisabled": true,
+  "noOriginalSourceStoresAlternatesOrFallback": true,
+  "knownPublicPinProofs": [
+    "3854ea0e74bc73c05df1531a3d0fcfc87c9b5298",
+    "be46a8344fdc61c65e09ad01a9965a2d8fab8c11",
+    "a3e9201d3b3075d1fe1a2336b1b0eaa974055db8"
+  ],
+  "pinQualification": "Declared public prerequisite IDs require the earlier accepted original public commit ancestry/pin receipts (including independent269refs) plus nine a3e existing-public source parents; a single umbrella alone was never claimed to retain all independent refs.",
+  "allVolumeComplete": false
+}

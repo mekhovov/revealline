@@ -1,7 +1,5 @@
 # Creator reliability and hosting decisions — 15 October 2026
 
-> Superseded for current execution by the [16 October portable-sharing review](delivery-plan-2026-10-16.md). The user has deferred public accounts/uploads. This record preserves its dated observations.
-
 The user authorized implementation of the recommended remaining work, chose **desktop browsers
 first**, and requested **GitHub Pages** hosting. This execution record supersedes the proposed order
 in the October 1 review and the old September hosting-first queue. It does not replace historical

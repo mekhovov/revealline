@@ -4,11 +4,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import {
-  composeCandidate,
-  verifyCandidateMetadata,
-  verifyCandidateBaseAncestry,
-} from './pages-candidate-measurement.mjs';
+import { composeCandidate, verifyCandidateMetadata } from './pages-candidate-measurement.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const fixtureRoot = process.env.RUNNER_TEMP || path.resolve(root, '..');
@@ -35,7 +31,6 @@ test('public shallow reconstruction produces deterministic clean synthetic sourc
   await fs.writeFile(path.join(source, 'base.txt'), 'base\n');
   git(source, 'add', '.');
   git(source, 'commit', '-m', 'base');
-  const commonBase = git(source, 'rev-parse', 'HEAD');
   git(source, 'switch', '-c', 'feature');
   await fs.writeFile(path.join(source, 'feature.txt'), 'candidate\n');
   git(source, 'add', '.');
@@ -67,21 +62,6 @@ test('public shallow reconstruction produces deterministic clean synthetic sourc
   assert.equal(
     git(destination, 'rev-list', '--parents', '-n', '1', first.commit),
     `${first.commit} ${mainSha} ${headSha}`,
-  );
-  assert.equal(verifyCandidateBaseAncestry(commonBase, mainSha, destination), true);
-  assert.equal(verifyCandidateBaseAncestry(mainSha, mainSha, destination), true);
-  assert.throws(() => verifyCandidateBaseAncestry(headSha, mainSha, destination), /git failed/);
-  assert.throws(
-    () => verifyCandidateBaseAncestry(first.commit, mainSha, destination),
-    /git failed/,
-  );
-  assert.throws(
-    () => verifyCandidateBaseAncestry('0'.repeat(40), mainSha, destination),
-    /git failed/,
-  );
-  assert.throws(
-    () => verifyCandidateBaseAncestry('--all', mainSha, destination),
-    /Invalid reported base/,
   );
 });
 

@@ -32,7 +32,6 @@ export async function retainFlightForFirstFlight({
   presentationLevel,
   visualThemePin,
   actorAppearancePin,
-  classicRulesPictureSource,
   attemptAppearance = null,
   mediaIdentityCatalog,
   storage,
@@ -84,7 +83,6 @@ export async function retainFlightForFirstFlight({
     attemptAppearance,
     run,
     recorder,
-    campaign,
     campaignKey,
     themeId,
     bodyId,
@@ -92,7 +90,6 @@ export async function retainFlightForFirstFlight({
     continuation,
     presentationPins,
     presentationLevel,
-    ...(classicRulesPictureSource !== undefined ? { classicRulesPictureSource } : {}),
     ...(visualThemePin !== undefined ? { visualThemePin } : {}),
     ...(actorAppearancePin !== undefined ? { actorAppearancePin } : {}),
   });

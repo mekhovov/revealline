@@ -52,41 +52,10 @@ test('same-repository open draft and non-draft snapshots are supported, not qual
   const frozen = validateCandidateSnapshot(pr(), input());
   assert.equal(frozen.state, 'OPEN');
   assert.equal(frozen.draft, true);
-  assert.equal(frozen.mainSha, mainSha);
-  assert.equal(frozen.baseSha, mainSha);
-  assert.equal(frozen.baseAncestorOfMain, true);
   const ready = pr();
   ready.state = 'OPEN';
   ready.draft = false;
   assert.equal(validateCandidateSnapshot(ready, input()).draft, false);
-});
-
-test('an older reported base requires exact identity plus explicit trusted ancestry proof', () => {
-  const snapshot = pr();
-  snapshot.base.sha = syntheticSha;
-  const options = { reportedBaseSha: syntheticSha, baseIsAncestorOfMain: true };
-  const frozen = validateCandidateSnapshot(snapshot, input(), options);
-  assert.equal(frozen.mainSha, mainSha);
-  assert.equal(frozen.baseSha, syntheticSha);
-  assert.equal(frozen.baseAncestorOfMain, true);
-  assert.throws(() => validateCandidateSnapshot(snapshot, input()));
-  assert.throws(() =>
-    validateCandidateSnapshot(snapshot, input(), { reportedBaseSha: syntheticSha }),
-  );
-  assert.throws(() =>
-    validateCandidateSnapshot(snapshot, input(), { ...options, baseIsAncestorOfMain: false }),
-  );
-  assert.throws(() =>
-    validateCandidateSnapshot(snapshot, input(), { ...options, reportedBaseSha: mainSha }),
-  );
-  for (const value of [true.toString(), 1, null, [], {}])
-    assert.throws(() =>
-      validateCandidateSnapshot(snapshot, input(), { ...options, baseIsAncestorOfMain: value }),
-    );
-  for (const value of [syntheticSha.toUpperCase(), syntheticSha + '\n', null, [syntheticSha]])
-    assert.throws(() =>
-      validateCandidateSnapshot(snapshot, input(), { ...options, reportedBaseSha: value }),
-    );
 });
 
 for (const [name, mutate] of [
@@ -304,55 +273,4 @@ test('freshness detects main/head/base/draft/state changes and never authorizes 
     assert.equal(result.mergeAuthorized, false);
   }
   assert.equal(assess(pr(), syntheticSha).stale, true);
-});
-
-test('older reported base and frozen main remain independently pinned during freshness checks', () => {
-  const snapshot = pr();
-  snapshot.base.sha = syntheticSha;
-  const frozen = validateCandidateSnapshot(snapshot, input(), {
-    reportedBaseSha: syntheticSha,
-    baseIsAncestorOfMain: true,
-  });
-  const assess = (current = snapshot, currentMainSha = mainSha) =>
-    assessCandidateFreshness(frozen, current, { expectedMainSha: mainSha, currentMainSha });
-  assert.equal(assess().currentQueueEligible, true);
-  const movedMain = assess(snapshot, headSha);
-  assert.equal(movedMain.currentQueueEligible, false);
-  assert.ok(movedMain.reasons.includes('main-changed'));
-  // A PR API refresh to the same main tip must not alias away its frozen old base.
-  for (const baseSha of [mainSha, headSha]) {
-    const changed = structuredClone(snapshot);
-    changed.base.sha = baseSha;
-    const result = assess(changed);
-    assert.equal(result.currentQueueEligible, false);
-    assert.equal(result.historicalDiagnosticOnly, true);
-  }
-  const reassignedMainAlias = { ...frozen, mainSha: syntheticSha };
-  assert.throws(() =>
-    assessCandidateFreshness(reassignedMainAlias, snapshot, {
-      expectedMainSha: mainSha,
-      currentMainSha: mainSha,
-    }),
-  );
-  for (const proof of [false, undefined, 'true', 1])
-    assert.throws(() =>
-      assessCandidateFreshness({ ...frozen, baseAncestorOfMain: proof }, snapshot, {
-        expectedMainSha: mainSha,
-        currentMainSha: mainSha,
-      }),
-    );
-  for (const change of [
-    { draft: false },
-    { state: 'closed' },
-    { head: { ...snapshot.head, sha: mainSha } },
-    { base: { ...snapshot.base, ref: 'parent' } },
-    { base: { ...snapshot.base, repo: { full_name: 'other/repo' } } },
-  ]) {
-    const result = assess({ ...snapshot, ...change });
-    assert.equal(result.currentQueueEligible, false);
-    assert.equal(result.stale, true);
-    assert.equal(result.mergeAuthorized, false);
-    assert.equal(result.qualificationPerformed, false);
-    assert.equal(result.productionDeploymentPerformed, false);
-  }
 });

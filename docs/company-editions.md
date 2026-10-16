@@ -107,11 +107,8 @@ views of that edition share them. Different audiences do not silently import one
 records. Explicit backup/import transfers the same logical edition across origins.
 Backups for other audiences are rejected; cross-audience migration is not implemented.
 
-Solo attempts use `xonix-session.v6`, with the core replay, exact content reference and
-pinned actor/picture presentation. Current-rules Classic projections use `xonix-session.v7`
-to retain their exact original picture owner separately from the projected gameplay identity.
-The original must already be installed; imported picture-source metadata is never installed
-as campaign authority. Existing v1–v6 saves retain their formats and validation. Optional learning records have separate persistence and
+Current Solo attempts use `xonix-session.v6`, with the core replay, exact content reference and
+pinned actor/picture presentation. Optional learning records have separate persistence and
 backup; they do not change the attempt format or arcade progression. Restoration verifies
 the replay and exact presentation before adopting the run. A missing older presentation
 fails visibly rather than substituting new art. Keep its matching frozen release available.

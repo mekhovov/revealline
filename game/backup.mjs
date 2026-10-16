@@ -24,9 +24,7 @@ import {
   STORY_SESSION_FORMAT,
   VISUAL_SESSION_FORMAT,
   ACTOR_SESSION_FORMAT,
-  CLASSIC_RULES_SESSION_FORMAT,
 } from './sessions.mjs';
-import { classicRulesSessionPictureContext } from './classic-rules-session.mjs';
 import { MAX_REPLAY_TICKS } from './replay.mjs';
 import { isMediaIdentityCatalog } from './media-library.mjs';
 import { validatePictureReceiptOwners } from './picture-receipts.mjs';
@@ -224,24 +222,11 @@ export async function prepareBackup(
     checkAbort(signal);
   }
   if (value.session !== null) {
-    const saved = nativeCaptureSession(value.session);
-    const key = saved.campaignKey;
+    const key = nativeCaptureSession(value.session).campaignKey;
     required(
       typeof key === 'string' && key.length > 0 && key.length <= 300,
       'Saved attempt campaign identity is invalid.',
     );
-    if (!known.has(key) && saved.format === CLASSIC_RULES_SESSION_FORMAT) {
-      // Reconstruct only from an original already admitted by this backup's
-      // trusted registry or validated packs. Saved picture metadata cannot
-      // install a missing campaign or grant execution ownership.
-      const original = known.get(campaignKey(saved.pictureSource.campaign));
-      required(original, 'The Current rules flight needs its matching original chapter.');
-      const context = classicRulesSessionPictureContext(
-        { campaign: original, difficulty: saved.pictureSource.difficulty },
-        { campaignKey: key, levelId: saved.replay.level.id },
-      );
-      known.set(key, context.executionCampaign);
-    }
     if (!known.has(key) && resolveCampaign) {
       const found = resolveCampaign(key);
       if (found !== null && found !== undefined) {
@@ -262,7 +247,6 @@ export async function prepareBackup(
       STORY_SESSION_FORMAT,
       VISUAL_SESSION_FORMAT,
       ACTOR_SESSION_FORMAT,
-      CLASSIC_RULES_SESSION_FORMAT,
     ].includes(nativeCaptureSession(value.session)?.format) &&
       nativeCaptureSession(value.session)?.presentationPins !== null) ||
     value.library.pictureReceipts?.length

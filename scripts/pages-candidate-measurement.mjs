@@ -112,14 +112,6 @@ export function composeCandidate(input, cwd, committedAt) {
   );
   return { tree, commit };
 }
-export function verifyCandidateBaseAncestry(reportedBaseSha, mainSha, cwd) {
-  assert.match(reportedBaseSha, /^[0-9a-f]{40}$/u, 'Invalid reported base SHA');
-  assert.match(mainSha, /^[0-9a-f]{40}$/u, 'Invalid frozen main SHA');
-  // Run only against fetched Git objects, before evidence or external overlays
-  // are frozen. A PR's reported base snapshot is not the live branch tip.
-  git(['merge-base', '--is-ancestor', reportedBaseSha, mainSha], cwd);
-  return true;
-}
 async function prepare() {
   assert.equal(process.env.GITHUB_REF, 'refs/heads/main');
   assert.equal(process.env.GITHUB_REPOSITORY, repository);
@@ -133,20 +125,10 @@ async function prepare() {
     process.env.GITHUB_SHA,
     'Dispatch must bind the current main controller',
   );
-  assert.equal(api('git/ref/heads/main').object?.sha, input.mainSha, 'Main moved before preflight');
-  const reported = api(`pulls/${input.prNumber}`);
-  const reportedBaseSha = reported.base?.sha;
-  assert.match(reportedBaseSha, /^[0-9a-f]{40}$/u, 'Invalid reported base SHA');
+  assert.equal(api('commits/main').sha, input.mainSha, 'Main moved before preflight');
+  const snapshot = validateCandidateSnapshot(api(`pulls/${input.prNumber}`), input);
   const sourceCommittedAt = git(['show', '-s', '--format=%cI', input.mainSha]);
   const synthetic = composeCandidate(input, controllerRoot, sourceCommittedAt);
-  const snapshot = validateCandidateSnapshot(reported, input, {
-    reportedBaseSha,
-    baseIsAncestorOfMain: verifyCandidateBaseAncestry(
-      reportedBaseSha,
-      input.mainSha,
-      controllerRoot,
-    ),
-  });
   const changed = command(
     'git',
     ['diff', '--no-renames', '--name-only', '-z', input.mainSha, synthetic.commit],
@@ -343,7 +325,7 @@ async function verify() {
         ? 'External identities changed or independent reads failed; no current capacity conclusion.'
         : 'External verification unavailable.';
   }
-  const currentMainSha = api('git/ref/heads/main').object?.sha;
+  const currentMainSha = api('commits/main').sha;
   const current = api(`pulls/${frozen.input.prNumber}`);
   const freshness = assessCandidateFreshness(frozen.snapshot, current, {
     expectedMainSha: frozen.input.mainSha,

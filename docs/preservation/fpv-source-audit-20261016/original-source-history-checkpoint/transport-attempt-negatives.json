@@ -1,0 +1,9 @@
+{
+  "format": "OriginalSourceColdRestoreTransportNegatives.v1",
+  "createdUTC": "2026-10-16T06:05:13.502570+00:00",
+  "cloudRun": 38858663655,
+  "cloudHead": "a181ca981fdf5e87daefe49f2f5d4ddc0150a25e",
+  "cloudFailure": "Read-only GitHub token could not read asset from draft backup release; source restore did not start.",
+  "localFirstReadback": "gh binary output guard rejected the pack byte stream before output; zero-byte attempt retained.",
+  "retry": "Documented binary-output flag writes only to a binary file. Narrow same-repository owned PR/branch job permission allows reading the draft asset; program performs only GitHub GETs, local Git operations and report output. No draft-release publication/settings changes."
+}
