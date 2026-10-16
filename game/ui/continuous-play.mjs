@@ -245,7 +245,7 @@ export function mountContinuousPlayControls({
 .continuous-play-controls[hidden] {display:none!important;}
 .continuous-play-controls p {margin:0;overflow-wrap:anywhere;}
 .continuous-play-controls .button {min-height:44px;padding:.35rem .65rem;font-size:inherit;}
-.continuous-result-actions {position:sticky;bottom:0;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;min-width:0;padding-block:.55rem;background:var(--fk-surface,#24292b);}
+.continuous-result-actions {position:sticky;bottom:0;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;min-width:0;padding-block:.55rem;background:var(--fk-panel,#24292b);}
 .continuous-result-actions[hidden] {display:none!important;}
 .continuous-result-actions > * {min-width:0;max-width:100%;}
 @media(max-width:600px),(max-height:500px) {.continuous-result-actions {scroll-margin-block:1rem;} .continuous-result-actions > .continuous-play-controls {flex:1 1 100%;} .continuous-result-actions > button {min-height:44px;flex:1 1 8rem;}}

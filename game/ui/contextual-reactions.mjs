@@ -280,7 +280,7 @@ export function attachContextualReactions({
   actorPortrait.style.cssText = portrait.style.cssText;
   actorPortrait.hidden = true;
   caption.style.cssText =
-    'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;min-width:0;';
+    'font-family:var(--fk-font-ui,system-ui,sans-serif);line-height:1.45;overflow-wrap:anywhere;min-width:0;';
   panel.append(portrait, actorPortrait, caption);
   container.append(panel);
   const releaseFeedbackLayout = attachHuntFeedbackLayout({ container, window: target });
@@ -386,8 +386,10 @@ export function attachContextualReactions({
       status.textContent = state.durable ? '' : tr('unavailable');
       status.hidden = state.durable;
     }
-    panel.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
-    panel.style.color = 'var(--text-color, #fff)';
+    panel.style.background = state.background
+      ? 'var(--fk-panel-raised, var(--panel-bg, #172126))'
+      : 'transparent';
+    panel.style.color = 'var(--fk-text, var(--text-color, #fff))';
     caption.style.fontSize = `${state.scale}rem`;
     if (current) {
       const localized =

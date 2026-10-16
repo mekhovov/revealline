@@ -1,0 +1,1460 @@
+[
+  {
+    "card": "snake-theme-card-legacy",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(126, 231, 255)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "legacy",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-industrial-workshop",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23363c40%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23363c40%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23363c40%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(230, 184, 92)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23e6b85c%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2317191b%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2317191b%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23363c40%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23363c40%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23363c40%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23363c40%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2350585d%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2350585d%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "industrial-workshop",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-military-field",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23343f2d%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23343f2d%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23343f2d%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(229, 202, 133)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23e5ca85%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2317191b%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2317191b%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23343f2d%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23343f2d%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23343f2d%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23343f2d%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2358664c%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2358664c%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "military-field",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-ember-foundry",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%233b312a%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23625045%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23625045%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%233b312a%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23625045%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23625045%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%233b312a%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23625045%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23625045%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(240, 162, 102)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%23f0a266%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2317191b%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2317191b%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%233b312a%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23625045%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23625045%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%233b312a%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23625045%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23625045%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%233b312a%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23625045%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23625045%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%233b312a%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23625045%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23625045%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23625045%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "ember-foundry",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-polar-relay",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%232e414c%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%232e414c%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%232e414c%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(145, 213, 227)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%2391d5e3%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%2317191b%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%2317191b%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%2317191b%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%232e414c%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%232e414c%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%232e414c%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "frame": "url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20shape-rendering%3D%22crispEdges%22%3E%3Cpath%20fill%3D%22%232e414c%22%20d%3D%22M0%200h48v48H0z%22%2F%3E%3Cpath%20d%3D%22M1%2046V1h45M3%2042V3h39%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.55%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M46%201v45H1M44%205v39H5%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.85%22%20fill%3D%22none%22%2F%3E%3Cpath%20d%3D%22M8%202h5m12%200h8M2%2017v8m43%207v7M13%2045h8m10%200h6%22%20stroke%3D%22%23536d7a%22%20opacity%3D%22.22%22%2F%3E%3Cpath%20d%3D%22M3%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%203h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%204h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M3%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M3%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M43%2043h3v3h-3z%22%20fill%3D%22%23536d7a%22%20opacity%3D%22.6%22%2F%3E%3Cpath%20d%3D%22M43%2044h3%22%20stroke%3D%22%2310130f%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E\")",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "polar-relay",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-vyshyvanka",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(211, 34, 42)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "vyshyvanka",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-dnipro-porcelain",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(0, 87, 183)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "dnipro-porcelain",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-tryzub",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(240, 192, 64)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "tryzub",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-windows-classic",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(0, 0, 128)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "windows-classic",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-dos",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 255, 85)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "dos",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-orchard-workshop",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(54, 82, 38)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "orchard-workshop",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-neon-ruins",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(103, 216, 202)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "neon-ruins",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-pocket-lcd",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(50, 76, 42)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "pocket-lcd",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-copper-observatory",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(224, 163, 115)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "copper-observatory",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-sakura-station",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(157, 48, 75)",
+        "color": "rgb(255, 255, 255)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "sakura-station",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-obsidian-reliquary",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(210, 177, 109)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "obsidian-reliquary",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-deep-space",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(153, 213, 237)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "deep-space",
+    "width": 390
+  },
+  {
+    "card": "snake-theme-card-moonlit-grove",
+    "active": "snake-menu-settings-tab-display",
+    "scrollWidth": 390,
+    "tabs": [
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Гра",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Керування",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Звук",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(192, 182, 226)",
+        "color": "rgb(23, 25, 27)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Екран і мова",
+        "selected": "true",
+        "width": 338
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Доступність",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Прогрес і колекція",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Вміст і офлайн",
+        "selected": "false",
+        "width": 338
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "frame": "none",
+        "height": 49.59375,
+        "label": "Довідка й додаткове",
+        "selected": "false",
+        "width": 338
+      }
+    ],
+    "theme": "moonlit-grove",
+    "width": 390
+  }
+]

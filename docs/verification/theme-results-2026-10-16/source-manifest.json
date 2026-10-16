@@ -1,0 +1,112 @@
+{
+  "format": "appearance-review-source.v1",
+  "baseRevision": "6ad58d3a44c83985fd6066af61decaa3a8169118",
+  "scope": "Working source for this committed receipt. SIM performance uses its separate immutable manifest in sim-browser-comparisons.json.gz. Historical captures are labeled in README.md.",
+  "files": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 545661,
+      "sha256": "0f77abb0401ae4201852f6932278a09b4071445f19e5f78d14d213fe85d870f2"
+    },
+    {
+      "path": "game/snake/classic-app.mjs",
+      "bytes": 103758,
+      "sha256": "b25c0192780a1e2090f235a25e23816a782197b45556b31cc9fb1145477bff2f"
+    },
+    {
+      "path": "game/test/classic-snake-result-fixture.test.mjs",
+      "bytes": 3480,
+      "sha256": "6550eb70188d11b6965d5dfe345d7e9d5a1a1b38fcb3a8a4e913a572c8749fd1"
+    },
+    {
+      "path": "game/test/manual/snake-result-fixture.mjs",
+      "bytes": 4890,
+      "sha256": "5f4856b48d1b41e7aefe4a24d70349e554dba6b7d51908dd53f20bdd45414910"
+    },
+    {
+      "path": "game/test/solo-continuous-library-next-host.test.mjs",
+      "bytes": 18062,
+      "sha256": "2d81cccb6eb2360c9c0da82a065763f5179adab85db6ee70f6287f1a278330a6"
+    },
+    {
+      "path": "game/ui/contextual-reactions.mjs",
+      "bytes": 25853,
+      "sha256": "7dcb854205a15408c7dca3aca2a96cfa249e32fbab9c54bb8a1ae763c822af77"
+    },
+    {
+      "path": "game/ui/continuous-play.mjs",
+      "bytes": 10873,
+      "sha256": "b6ed4330c6d56941d493af3dcea0a827b9127ee68d312e482c964e10b69017fb"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "bytes": 16556,
+      "sha256": "d585cd489acead3c556526cbc2f831c065243fb6913f6808c7a12f0e40443b09"
+    },
+    {
+      "path": "game/ui/hunt-feedback.css",
+      "bytes": 7953,
+      "sha256": "ccc78d334288e16438a44c0400a99197ae902674ec9709d3296dde9fc405dc4e"
+    },
+    {
+      "path": "game/ui/mode-settings-view.css",
+      "bytes": 6062,
+      "sha256": "57dbad245a5b441698da758cae17b7b149a8e9711439769e825688fd81131dc0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+      "bytes": 103249,
+      "sha256": "93fd6e26edb09b8a705b516c04910ecf86858735cd796cd36d04c44b16d0c854"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "bytes": 322742,
+      "sha256": "cfd32600eadbdddde60e47a248d4c1441a75793453310160bd030489fb5b5c8a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/style.css",
+      "bytes": 176058,
+      "sha256": "bb4a7c972dd39662a2c45247f9148fd82b57eb2efa824817d88009f1bf59275f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "bytes": 911931,
+      "sha256": "b7acbeee09fb814204e948a6cae959c6171b031936def9d5a15705238e6a73cf"
+    },
+    {
+      "path": "game/test/fixtures/appearance-materials.html",
+      "bytes": 3032,
+      "sha256": "7af39da12a117228d747e7c9115c7831a3c750052c0c1ea79c6d2475ed711882"
+    },
+    {
+      "path": "game/test/fixtures/appearance-materials.mjs",
+      "bytes": 33645,
+      "sha256": "2d6c4a6c367fbe1faa7840388d81310f64ff1a05580619327f7528b72dda8900"
+    },
+    {
+      "path": "game/test/fixtures/appearance-materials.css",
+      "bytes": 4481,
+      "sha256": "5098039d2db9573eab9f073aab323b496f72fbbcd08e3e634af4d0c9403f5fc7"
+    },
+    {
+      "path": "game/test/fixtures/sample-appearance-contrast.py",
+      "bytes": 10426,
+      "sha256": "e0f76199ba00132b0fdd2adef1b02ba262c1a067322ef7dfe697d417197e2a24"
+    },
+    {
+      "path": "game/presentation/industrial-workshop.css",
+      "bytes": 108483,
+      "sha256": "f7c8cb3f1e5b61160d3e706701c289d06498b5af6c16db7ebf036fb44901e977"
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "bytes": 66254,
+      "sha256": "52bde30a1bd0a69eb52fddf8b7e52e5f8e39c95aeee085a20a7fd8867c487031"
+    },
+    {
+      "path": "game/presentation/theme-bootstrap.mjs",
+      "bytes": 95226,
+      "sha256": "177d2470f59fb6774c9b058284a0acb76c54a17484f774e66bef79fb8c36ffdb"
+    }
+  ]
+}

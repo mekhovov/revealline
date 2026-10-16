@@ -1,5 +1,7 @@
 # Theme design system — approved priority progress, 15 October 2026
 
+The [16 October research and completion plan](theme-completion-plan-2026-10-16.md) adds explicit surface/state and production-art gates while retaining this queue.
+
 The user-approved order remains **R7 first**, then **R1 → R2 → R3 → R4 → R5 → R6 → R8**. R9 remains deferred. This register continues the appearance plan; it does not replace the separate whole-product delivery plan.
 
 The first family-polish increment merged in PR #1458. The continuation was rebased onto fetched `main` at `9e98c4fb3472e4b04104220a0e5d109abac24d59` before implementation. Current work is on `codex/ember-polar-materials-20261015`.
@@ -17,6 +19,8 @@ The next R7 increment separates Orchard’s planed timber panels from paper read
 The password gate is now cleared through the normal unlock flow. A first full-game review covers desktop theme selection, 390px Flight Deck with Ukrainian Plain/Large text, mission library/brief/launch/pause, and the in-game Theme Studio create/save/export/reload path. It found and fixed undersized native dropdowns through the shared material stylesheet. [Live journey evidence and exact limits](verification/theme-live-journeys-2026-10-15/README.md). This is a bounded acceptance slice, not approval of every screen or physical device.
 
 The 16 October continuation completes the first real-settings view for all 18 named families, with 11 additional Audio screen captures. Keyboard theme activation, category navigation, focus return, Moonlit decoration Off, Dnipro high contrast and Dnipro Ukrainian Plain/Large at 390px were reviewed. The focused keyboard/settings baseline is **45 tests passing**. No runtime defect was found in these views, so this increment adds evidence without changing the materials. [Keyboard and remaining-family evidence](verification/theme-keyboard-screens-2026-10-16/README.md). Safari access was not approved; its post-fix confirmation remains open.
+
+The next completion pass reviews actual Snake Solo/Team/Duel results, all 18 families on the shared result host, all 18 families in 390px Ukrainian native categories, and controlled startup failure/retry. It repairs result counter/caption/footer roles, category specificity and live-language result labels, with the same fixes projected into SIM. Actual Arcade completion, picture reward, Collection and representative recovery dialogs extend the review; Solo now honors automatic progression Off. Two compiled community contexts verify personal override and restoring the exact community theme. The immutable SIM browser matrix covers all **42 environment/preset combinations**, with worst paired p95 increase **4.3%** and stable repeat resource counts; actual-flight/device qualification remains open. Captured-pixel reading checks pass **2,214 component-state samples** across all 18 families with material, decoration Off and high contrast; whole-screen/device accessibility remains open. Explicit World/appearance checks pass **114 tests**; subsequent Snake/statistics/settings checks pass **145 tests** (overlapping suites are not summed). [Evidence, captures and remaining gates](verification/theme-results-2026-10-16/README.md).
 
 ## Remaining work in priority order
 

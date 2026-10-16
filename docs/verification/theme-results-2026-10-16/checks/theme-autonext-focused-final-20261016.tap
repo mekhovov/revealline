@@ -1,0 +1,50 @@
+TAP version 13
+# Subtest: Solo win advances from picture to results and the next mission automatically while Random stays available
+ok 1 - Solo win advances from picture to results and the next mission automatically while Random stays available # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.740417
+  ...
+# Subtest: Solo Skip advances a Custom mission without rewards and retains its mission cursor
+ok 2 - Solo Skip advances a Custom mission without rewards and retains its mission cursor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.059875
+  ...
+# Subtest: Solo Next crosses Custom campaign and pack boundaries without a summary or picker
+ok 3 - Solo Next crosses Custom campaign and pack boundaries without a summary or picker # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04875
+  ...
+# Subtest: Solo boundary metadata failure preserves the earned result and allows retry
+ok 4 - Solo boundary metadata failure preserves the earned result and allows retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.047125
+  ...
+# Subtest: Solo boundary metadata cancel preserves the earned result and allows retry
+ok 5 - Solo boundary metadata cancel preserves the earned result and allows retry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0505
+  ...
+# Subtest: Solo final Journey result retains the picture while Browse permits a deliberate exact Classic handoff
+ok 6 - Solo final Journey result retains the picture while Browse permits a deliberate exact Classic handoff # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036
+  ...
+# Subtest: Solo respects automatic progression disabled before victory
+ok 7 - Solo respects automatic progression disabled before victory
+  ---
+  duration_ms: 48873.215167
+  ...
+# Subtest: Solo respects automatic progression disabled during countdown
+ok 8 - Solo respects automatic progression disabled during countdown
+  ---
+  duration_ms: 43819.398625
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 6
+# todo 0
+# duration_ms 93208.587083
