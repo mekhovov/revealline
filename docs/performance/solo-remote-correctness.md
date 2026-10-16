@@ -45,24 +45,41 @@ any job because `runner.temp` was used in job-level environment declarations.
 The corrected workflow initializes those paths after runner assignment. That
 failed attempt remains separate from the eight-row execution above.
 
-## Prospective correction
+## Second attempt and source-contract correction
 
-The version-two plan retains the same eight scenarios, exact source identities,
-240-second browser deadlines, build flags, budgets and pass assertions. It adds:
+[Run 38975072391](https://github.com/mekhovov/revealline/actions/runs/38975072391)
+used tooling `41e925a6fbd7e1d3d68fbe092bf8cee368f7827a` with the same exact
+candidate and baseline sources. All four worker/paused-render checks passed in
+Chromium 151.0.7922.34 and WebKit 26.5. The earlier WebKit pause did not recur;
+its cause remains unattributed, and its failed report is retained.
 
-- A fresh, short, owned scratch directory, with byte-length and device/inode
-  checks, to fit Chromium's Unix socket limit.
-- A 1,200-second baseline build setup ceiling inside the unchanged 75-minute
-  helper and 120-minute job. Historical main-pages build time was 591 seconds,
-  but that different publication profile does not explain this normal build.
-- Setup-only, 15-second scalar output-file witnesses to locate build progress
-  without scanning its payload or profiling an observation.
-- A bounded public warning/visibility/focus snapshot only after worker inspection
-  has already ended unexpectedly paused. It cannot resume the game or turn that
-  failure into a pass.
+The normal baseline build completed in 384.863 seconds, with peak owned RSS
+5,311,541,248 bytes. Its ZIP/member verification passed. Source verification
+then failed four checks because it required the candidate's MP3 worker modules,
+which do not exist in original-main source `b1174522`. The four first-30-second
+rows did not run. All observed processes closed cleanly without forced cleanup.
+This is a failed cohort with four passing browser rows, not an eight-row pass.
 
-All original failures remain retained. Sustained and offline follow-ups have
-separate plans and acceptance; neither is credited by these correctness checks.
+Artifact `12078379364` is 262,730 bytes, SHA-256
+`11d96fa02196171f0bb167ed96790b750782c3b17b1d50360d47b2c178dfbfc1`.
+All 49 members were retained and read back; receipt SHA-256 is
+`f5f41a6c2e325b71cb1defe09b08f5548c15694fd4906d368af2835af889bb05`.
+Raw evidence remains under `.cache/solo-followup/remote-linux-correctness-38975072391/`.
+
+The next verifier binds worker requirements to the actual compared source:
+all four files are explicitly read and compared even when omitted from the
+package. Any source presence requires the complete package and both offline
+core inventories; a partial source contract fails. A historical source with
+none of the files permits none in the package or inventories. This preserves
+candidate closure checks without imposing a later capability on the baseline.
+Five focused negative/positive tests and five existing archive tests pass.
+The earlier failed proof is not rewritten or admitted for reuse.
+
+The short owned scratch paths, 1,200-second setup ceiling, bounded setup-only
+file witnesses and unexpected-pause snapshot remain. Browser deadlines,
+scenario assertions, build flags and resource budgets remain unchanged.
+Sustained and offline follow-ups have separate plans and acceptance; neither
+is credited by these correctness checks.
 
 ## Other CI evidence
 
@@ -73,3 +90,10 @@ and PR head `1467394b3c8555a65560b127a7b2dc0bf4335eb5`. Its groups report
 362/362, 10/10, and 168 passed plus one skipped out of 169. The skipped historical
 snapshot case has no pass credit. This is merge-integration evidence, distinct
 from the exact candidate package and the still-open whole-PR checks.
+
+The exact-head Company job in that same run completed all **1,363/1,363**
+Company tests, followed by complete groups of 16, 54, 51 and 157 tests, all
+passing. Source-release checks also passed (72 JavaScript and 64 Python tests).
+The subsequent packaging step was canceled, and package uploads were skipped.
+The job is **canceled**, not passed; complete test steps do not establish a
+successful package or whole-PR pass.
