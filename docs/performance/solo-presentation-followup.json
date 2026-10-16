@@ -1,0 +1,203 @@
+{
+  "format": "SoloPresentationFollowupEvidenceV1",
+  "runtimeCommit": "aef69ebe258e9097e9758d2846df7212e21c8f27",
+  "qualityCommit": "5076a0a83903661dc185478555be3ccb7cede085",
+  "qualification": "Modeled correctness only; native performance and physical thermal qualification remain separate.",
+  "audio": {
+    "format": "SoloHiddenAudioViewsCorrectnessV1",
+    "status": "focused-correctness-and-static-checks-passed",
+    "createdAt": "2026-10-16T19:20:27.009283+00:00",
+    "scope": "Node22 modeled host/DOM and real shared-player correctness; not native timing, thermal or offline qualification. Uncommitted tested source at HEAD 5076a0a83903661dc185478555be3ccb7cede085",
+    "changes": [
+      "Demo audio skips inactive/hidden before snapshot and unchanged displayed-field progress notifications; explicit action/manual/locale/open refresh stays forced.",
+      "Demo host publishes preparation admission before hidden DOM return, compares four displayed audio fields on subscription, and refreshes through an owned visibility listener.",
+      "Closed/hidden soundtrack and audition views defer progress writes. Only owned presentation status is cleared and recreated from current state on visible open.",
+      "Remove the earlier duplicate quickMusicControls.render from shared onChange; subsequent renderMusicPreview retains the authoritative update."
+    ],
+    "evidence": [
+      {
+        "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/audio-view-admission-proposal-01/red-audio-01/receipt.json",
+        "bytes": 6978,
+        "sha256": "6e672d8573552671a90fce0d6f6b64609dced983421bf71f090330aa2af47f5c"
+      },
+      {
+        "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/audio-view-admission-proposal-01/red-demo-widget-02/receipt.json",
+        "bytes": 3857,
+        "sha256": "b5af08c4000e0164d1ff3ba455900e442c1e5324f0895559ed63d9679fcdf88e"
+      },
+      {
+        "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/audio-view-admission-proposal-01/green-audio-01/receipt.json",
+        "bytes": 10177,
+        "sha256": "6abbe0946febfa106ddc078c96f1f33e9a967b8e86842020ade221002a0ed483"
+      },
+      {
+        "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/audio-view-admission-proposal-01/static-final-01/receipt.json",
+        "bytes": 3717,
+        "sha256": "c07313b997a6241044281cc51c4b161d5c397a0366b1e91c484d4b9604874525"
+      }
+    ],
+    "green": {
+      "tests": 210,
+      "pass": 210,
+      "fail": 0,
+      "sourceStable": true,
+      "completedAt": "2026-10-16T19:18:31.548870+00:00",
+      "files": [
+        {
+          "path": "game/test/demo-audio.test.mjs",
+          "footer": {
+            "tests": 15,
+            "suites": 0,
+            "pass": 15,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "tap": {
+            "path": ".cache/solo-followup/audio-view-admission-proposal-01/green-audio-01/demo-audio.test.tap",
+            "bytes": 3647,
+            "sha256": "6395cc2867d1ed8157212571be85c477e7bf25a50ca59ce0f53caf16887af00b"
+          }
+        },
+        {
+          "path": "game/test/demo-audio-host.test.mjs",
+          "footer": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 4,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "tap": {
+            "path": ".cache/solo-followup/audio-view-admission-proposal-01/green-audio-01/demo-audio-host.test.tap",
+            "bytes": 1228,
+            "sha256": "e88d9b3b5520528acc9c3fea71b678c186b965d7ff87ae58a25c2b375638046d"
+          }
+        },
+        {
+          "path": "game/test/soundtrack-panel.test.mjs",
+          "footer": {
+            "tests": 154,
+            "suites": 0,
+            "pass": 154,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "tap": {
+            "path": ".cache/solo-followup/audio-view-admission-proposal-01/green-audio-01/soundtrack-panel.test.tap",
+            "bytes": 37563,
+            "sha256": "ab7c7e106e11cdc09c3737815b3647a61f41e3176f0b3bc6a6de300406f25a25"
+          }
+        },
+        {
+          "path": "game/test/solo-demo-media-admission-host.test.mjs",
+          "footer": {
+            "tests": 7,
+            "suites": 0,
+            "pass": 7,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "tap": {
+            "path": ".cache/solo-followup/audio-view-admission-proposal-01/green-audio-01/solo-demo-media-admission-host.test.tap",
+            "bytes": 1823,
+            "sha256": "787ff50e23f14781846280e744bccf0cc6bf6934ca3be2a05ee00e0053e8236b"
+          }
+        },
+        {
+          "path": "game/test/soundtrack-host.test.mjs",
+          "footer": {
+            "tests": 30,
+            "suites": 0,
+            "pass": 30,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "tap": {
+            "path": ".cache/solo-followup/audio-view-admission-proposal-01/green-audio-01/soundtrack-host.test.tap",
+            "bytes": 7755,
+            "sha256": "6fec5ceb1f620666ebf3c5f214ab296bfceca60ed1203cb8afb6b96ac6d1e25c"
+          }
+        }
+      ]
+    },
+    "redClassification": {
+      "firstAttempt": "All three complete files retained. One new progress-widget case failed in observer traversal on a modeled text node; this setup failure is not runtime regression evidence.",
+      "correctedWidget": "Only observer traversal was corrected for missing child collections/non-element attributes. Full widget rerun on unchanged runtime reproduced three exact snapshot/DOM assertion failures.",
+      "actualHost": "Twenty actual media progress events performed 1400 unchanged visible Demo writes; ordinary Solo performed 760 closed Demo writes. Both are zero after the change.",
+      "panel": "Closed updates wrote 220 times; hidden updates 16; close retained busy presentation. All three assertions pass after change.",
+      "counts": "Eight intended red assertions across the three files after the observer-only correction. Existing cases and explicit rejected-control repair retained."
+    },
+    "peerReview": {
+      "agent": "review_loading_plan",
+      "scope": "Final Demo-host extension static review clear; prior widget/panel projection and ownership review clear.",
+      "claims": "No runtime/test alteration by reviewer."
+    },
+    "sources": [
+      {
+        "path": "game/app.mjs",
+        "bytes": 586196,
+        "sha256": "1ae6d9c0555bdec7fb26d8c65f919c88f7ebc5cedcb5a87cc7de4672cfc27dd5"
+      },
+      {
+        "path": "game/ui/demo-audio.mjs",
+        "bytes": 9602,
+        "sha256": "0f70da15264c77cf72e569acc38646a28bbea8b8da94ac91b7669f2bedd2b05d"
+      },
+      {
+        "path": "game/ui/demo-host.mjs",
+        "bytes": 39475,
+        "sha256": "545f082813df4511a065fafed978b5330d8125df34626463dd3f5e8c544f9182"
+      },
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "bytes": 150675,
+        "sha256": "d77fc9461fcb1ba7f5ea98f18216d71b4eebb644a596656c345e7d660661c69c"
+      },
+      {
+        "path": "game/test/demo-audio.test.mjs",
+        "bytes": 15570,
+        "sha256": "34dcae4d840c7be59fa3db74941d03886f5d1fb86861d94ea275408e590fb1a4"
+      },
+      {
+        "path": "game/test/demo-audio-host.test.mjs",
+        "bytes": 10843,
+        "sha256": "4eefcf347723fdd41805038aa9e9a4eae7bcdec156355f647c671e3b96ff1deb"
+      },
+      {
+        "path": "game/test/soundtrack-panel.test.mjs",
+        "bytes": 195653,
+        "sha256": "70255416f7b88693d177d2bb4f26e87d20386a8898ba0214782fa95b49b2b036"
+      },
+      {
+        "path": "game/test/helpers/audio-view-writes.mjs",
+        "bytes": 1747,
+        "sha256": "d40b8e3c08141b4e936dac34455ff1ea75dcc4544accbf2d9bc4f2748c23244f"
+      }
+    ],
+    "limits": [
+      "Active notifications still allocate bounded displayed-field projections and normalized links. Independent locale-bound nodes and unrelated quick controls remain; not all audio UI work is eliminated.",
+      "Visible seek/time, playback/playlist progress, operation errors, durable preferences and background spectator admission remain authoritative.",
+      "No browser, physical iPhone/Steam Deck, energy or temperature benefit measured. New artifact/native qualification remains pending."
+    ]
+  },
+  "quality": {
+    "policyTests": 17,
+    "submissionHostTests": 8,
+    "rendererTests": 6,
+    "greenPass": 31,
+    "cadenceHostPass": 4,
+    "redReceiptSHA256": "cecc01aff2d938e9e32932736ab8fa7e38eba3a9919127bb28cf3dbbcec1101c",
+    "greenReceiptSHA256": "853ab04314e677c7ccaa4c5e930485c6b56ff4a76d6f25fd9db4717b08c59f65",
+    "cadenceReceiptSHA256": "778268698783737a157c2b41a80f33a70945051bfcad4f194a487abda9318140"
+  }
+}
