@@ -59,6 +59,30 @@ The existing numeric development version remains `v0.151.1`, with no public
 release allocation, selection or hosting change. These new bytes require fresh
 native observations; none of the earlier receipts is relabelled.
 
+Fresh native checks on that exact new candidate now pass:
+
+- [Short recovery](flight-practice-continuation-20261016/feedback-short-passed.json):
+  22 checkpoints; all three genuine 30-second stalls and prompt native cancellations
+  display explicit reasons, retain all prepared caches/data, and pass pristine
+  retry/removal. Browser-process offline reopening and installed-window cleanup pass.
+- [Distinct historical migration](flight-practice-continuation-20261016/migration-passed.json):
+  10 checkpoints, seven ordered data witnesses, all three real old→new upgrades
+  and offline rollbacks. Both admitted launcher caches are hashed, the sole
+  active worker is revision-bound, all runtime dependencies and sibling ownership
+  remain exact, and proofs/profiles plus World projects/revisions/cards are retained.
+  No page errors or cleanup failures. Imported assets remain unpopulated.
+
+The [executed authority](flight-practice-continuation-20261016/native-ae9109-authority.tgz)
+is original `ae9109c84`, SHA-256
+`9e3c650f4d94a1c40f6a96c60473ffa611cfad369abdfed3a593d490920370d8`.
+The [third active-session attempt](flight-practice-continuation-20261016/active-third-failed.json)
+still fails before update: 27 native bounds samples remain normal throughout the
+1.5-second minimization bound, despite real positive lift/pause/resume. Cleanup
+succeeds; no active-session update pass is inferred. The explicit window lane
+will use isolated **visible** Chrome next, with actual transition and cleanup
+requirements unchanged. Other observer lanes remain headless. This is software
+window qualification, not an owner-deferred physical-controller/device test.
+
 ## Six selected-appearance player journeys pass
 
 The [original receipt](flight-practice-continuation-20261016/personal-appearance.json)
