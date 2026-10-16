@@ -18,6 +18,7 @@ import {
   soloBuildVerificationArguments,
   verifyExternalBuildArchive,
 } from './solo-build-archive.mjs';
+import { inspectSoloWorkerClosure, SOLO_MP3_WORKER_FILES } from './solo-build-worker-closure.mjs';
 
 // Read-only with respect to both source and artifact; only the report is written.
 // This checks an existing build, not publication admission or physical-device
@@ -175,6 +176,7 @@ try {
     );
   }
   const compare = new Set([
+    ...SOLO_MP3_WORKER_FILES,
     ...[...byPath.keys()].filter((name) => /\.(?:m?js|css)$/.test(name)),
     ...[...changed].filter(included),
   ]);
@@ -283,20 +285,15 @@ try {
       );
     }
   }
-  const requiredWorkerFiles = [
-    'game/ui/media-preparation.mjs',
-    'game/ui/mp3-inspector.mjs',
-    'game/mp3-inspection-worker.mjs',
-    'game/mp3-inspection.mjs',
-  ];
-  report.workerClosure = requiredWorkerFiles.map((name) => {
-    const inCore = core.files.some((row) => row.path === name);
-    const inInventory = inventory.files.some((row) => row.path === name && row.delivery === 'core');
-    check(byPath.has(name) && inCore && inInventory, 'MP3 worker closure is not offline core.', {
-      path: name,
-    });
-    return { path: name, inManifest: byPath.has(name), inCore, inInventory };
+  const workerClosure = inspectSoloWorkerClosure({
+    sourcePaths: sourceDigests,
+    manifestPaths: byPath,
+    coreFiles: core.files,
+    inventoryFiles: inventory.files,
   });
+  report.workerClosureContract = workerClosure.contract;
+  report.workerClosure = workerClosure.rows;
+  report.failures.push(...workerClosure.failures);
   const template = await readFile(
     resolve(sourceRoot, 'game/offline/service-worker.template.js'),
     'utf8',
