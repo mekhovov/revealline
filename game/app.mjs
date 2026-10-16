@@ -3084,8 +3084,7 @@ try {
         (event.target?.closest?.(
           '#game-canvas,[data-move],#boost-button,#action-button,#pickup-button',
         ) ||
-          (event.defaultPrevented &&
-            event.target?.closest?.('#touch-surface,.direction-controls')))
+          (event.defaultPrevented && event.target?.closest?.('#touch-surface,.direction-controls')))
       )
         observeInput(event.pointerType === 'touch' ? 'touch' : 'pointer', event.timeStamp);
     };
@@ -12563,7 +12562,6 @@ try {
         !this.lastPaint ||
         this.preparedFrame ||
         this.pendingSubmission ||
-        demoHost?.active ||
         rendererLost.size ||
         renderer?.type !== Phaser.CANVAS ||
         renderer.config?.clearBeforeRender !== true ||
@@ -12807,7 +12805,7 @@ try {
       try {
         update(dt);
         updateMs = performance.now() - workStart;
-        if (!foreground) this.retainUnchangedDisplay();
+        if (!foreground || demoHost?.active) this.retainUnchangedDisplay();
         if (demoHost?.active || !foreground || rendererLost.size) return;
         if (
           this.lastInterfaceRun !== run ||
@@ -14242,7 +14240,10 @@ try {
       return lease;
     },
     getContext: () => ({
-      entries: executionEntries(),
+      // Scene admission needs the catalogue; presentation/input sampling does not.
+      get entries() {
+        return executionEntries();
+      },
       library,
       preferences: library.preferences,
       themeId: theme.id,
