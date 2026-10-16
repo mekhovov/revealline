@@ -1,4 +1,4 @@
-name: Temporary Solo Resume and teardown diagnostics
+name: Temporary Solo Ukraine clock fixture
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -29,20 +29,8 @@ jobs:
       matrix:
         include:
           - label: candidate
-            case: solo-cadence-input-host
-            source: 8a670281368a58726fe75a7cf9a0c37c921d9849
-          - label: candidate
-            case: history-picture-host
-            source: f48f25092a027a1d745a5c96e6c9d62e36aa50de
-          - label: candidate
-            case: starting-setup-host
-            source: f48f25092a027a1d745a5c96e6c9d62e36aa50de
-          - label: baseline
-            case: device-controls-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: historical-candidate
-            case: device-controls-host
-            source: 845e2a1e1c72ee0d2900b2974589efbf7bb35273
+            case: ukraine-role-host
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}

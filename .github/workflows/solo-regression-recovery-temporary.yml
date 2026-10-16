@@ -27,10 +27,48 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        batch: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+        batch:
+          [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+          ]
     env:
       CI: '1'
-      SOLO_TARGET: 845e2a1e1c72ee0d2900b2974589efbf7bb35273
+      SOLO_TARGET: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
       SOLO_BATCH: ${{ matrix.batch }}
       SOLO_EVIDENCE: .cache/solo-regression-recovery
     steps:
@@ -49,7 +87,7 @@ jobs:
       - name: Check out the exact recovery target without persisted credentials
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: 845e2a1e1c72ee0d2900b2974589efbf7bb35273
+          ref: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
           path: source
           fetch-depth: 1
           persist-credentials: false
@@ -81,17 +119,18 @@ jobs:
           original = {e['path']: e for e in json.loads(prior_raw)['files']}
           files = manifest['files']; queued = {e['path'] for e in files}
           completed = set(manifest['prior']['completedFiles']); pending = set(manifest['prior']['pendingLiveOrQueuedFiles'])
-          assert len(files) == len(queued) == 70
+          assert len(files) == len(queued) == 179
           assert not (queued & completed or queued & pending or completed & pending)
           assert queued | completed | pending == set(original)
           assert len(original) == len(queued) + len(completed) + len(pending) == 715
-          assert manifest['batchSize'] == 5 and manifest['batchCount'] == 14 and manifest['maxParallel'] == 2
+          assert manifest['batchSize'] == 5 and manifest['batchCount'] == 36 and manifest['maxParallel'] == 2
           for entry in files:
               assert entry['originalTestSHA256'] == original[entry['path']]['sha256']
-              assert entry['originalBatch'] in [1, 5, 6, 7]
+              assert entry['originalBatch'] == list(original).index(entry['path']) % 36 + 1
+              assert entry['originalBatch'] != manifest['prior']['withheldLiveOriginalBatch']
               assert digest((root / entry['path']).read_bytes()) == entry['sha256']
           batch = int(os.environ['SOLO_BATCH']); assert 1 <= batch <= manifest['batchCount']
-          selected = files[(batch - 1) * 5:batch * 5]; assert len(selected) == 5
+          selected = files[(batch - 1) * 5:batch * 5]; assert 1 <= len(selected) <= 5
           receipt = {'format': 'SoloRecoverySelectionV1', 'sourceRevision': head, 'runtimeRevision': manifest['runtimeRevision'],
                      'workflowSourceRevision': workflow_head, 'workflowSHA256': digest(wp.read_bytes()),
                      'manifestSHA256': digest(raw), 'batch': batch, 'selected': selected,
