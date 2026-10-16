@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-16T10:10:34.712431+00:00",
+  "updatedAt": "2026-10-16T10:43:15.950144+00:00",
   "status": "Incomplete repository regression inventory. Historical local failure groups are classified; remote continuation includes unresolved failures. No full-suite success claim.",
   "scope": "Separate historical local inventory, mixed-source remote continuation/recovery, added tooling, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures, cancellations and unobserved work remain visible.",
   "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
@@ -2673,33 +2673,34 @@
     "No physical iPhone17Pro Safari or SteamDeckOLED qualification is implied."
   ],
   "remoteContinuation": {
-    "checkpointAt": "2026-10-16T09:10:45.334614+00:00",
-    "currentRuntimeContext": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+    "checkpointAt": "2026-10-16T10:43:15.950144+00:00",
+    "currentRuntimeContext": "f7b665906270f26c73f7e419a7258191532e3118",
     "originalInventoryFiles": 1948,
     "historicalLocalCompleteFiles": 1233,
-    "remoteUniqueCompleteFiles": 281,
-    "totalUniqueOriginalFilesObserved": 1514,
-    "originalFilesStillUnobserved": 434,
+    "remoteUniqueCompleteFiles": 488,
+    "totalUniqueOriginalFilesObserved": 1721,
+    "originalFilesStillUnobserved": 227,
     "overlap": [],
     "original715": {
       "runId": 38865274741,
       "url": "https://github.com/mekhovov/revealline/actions/runs/38865274741",
       "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
       "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "completedFiles": 250,
-      "passedFiles": 183,
-      "failedFiles": 67,
-      "retainedArtifacts": 80,
+      "completedFiles": 423,
+      "passedFiles": 301,
+      "failedFiles": 122,
+      "retainedArtifacts": 144,
       "proof": {
-        "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/retained-artifacts-0857.json",
-        "bytes": 280564,
-        "sha256": "a4a0d1316b50e5ed7271d83b9db4add93f182f283838d9f43dbed678d85bcbe4"
+        "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/retained-artifacts-1031.json",
+        "bytes": 498829,
+        "sha256": "29b319bd205d35a7b4a132a6a4af17c5b06df319c4b13ad31912499e6d9f4c3e"
       },
       "failureDetails": {
         "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/failed-groups-202610160857242445530000.json",
         "bytes": 260251,
         "sha256": "3093a14c4d7b6c27e21652cb9a46a3bd8796936825813a4f037e98fc83470c77"
-      }
+      },
+      "failureDetailsAsOf": "2026-10-16T08:57:24Z; historical detailed subset, later full outcome names are in the checkpoint proof."
     },
     "recovery70": {
       "runId": 38873117238,
@@ -2707,18 +2708,18 @@
       "workflowSourceRevision": "db28973bdce5d1d49bb46bdf8c73d5925d9438a9",
       "sourceRevision": "845e2a1e1c72ee0d2900b2974589efbf7bb35273",
       "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
-      "completedFiles": 31,
-      "passedFiles": 21,
-      "failedFiles": 10,
-      "incompleteFiles": 1,
-      "retainedArtifacts": 39,
+      "completedFiles": 65,
+      "passedFiles": 39,
+      "failedFiles": 26,
+      "incompleteFiles": 2,
+      "retainedArtifacts": 81,
       "proof": {
-        "path": ".cache/solo-followup/regression-audit/remote-recovery-38873117238/retained-recovery-0859.json",
-        "bytes": 87923,
-        "sha256": "925a72daa69647a2802bf76143938122ba845fc6b86c1b311e405540a4209100"
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38873117238/retained-recovery-1020.json",
+        "bytes": 196068,
+        "sha256": "9682ddd5f827f80549d716568064fa23cc9010eb15db8f7b90ce97576141fbd4"
       }
     },
-    "classificationStatus": "Incomplete. Twelve newly retained baseline files reproduce all 28 observed named candidate diagnostics; two further baseline passes required fixture investigation. Soundtrack canonical30/30 is qualified. Selection-bookmark and Team ownership canonical run38879310649 is complete at GitHub, but its artifacts/TAP are not yet retained or credited during the quiet timing window. Other remote failure groups remain unclassified.",
+    "classificationStatus": "Incomplete.23 supplementary baseline files are retained;21 reproduce all65 named candidate failure diagnostics (seven storage diagnostics differ only in random writer UUIDs, with raw evidence retained). Soundtrack, bookmark and role-corrected Team fixture results are retained. Other remote failure groups remain unclassified;46 exact baseline comparisons are queued separately.",
     "boundedIdentityPair": {
       "path": ".cache/solo-followup/regression-audit/remote-memory-38873458942/bounded-identity-classification-final.json",
       "bytes": 24352,
@@ -2759,15 +2760,27 @@
         "retainedFiles": 2,
         "expectedFiles": 2,
         "purpose": "Complete artifacts/source/TAP retained; classifications and exact outcomes are recorded in the adjacent proof sections. Failed files remain failures."
+      },
+      {
+        "runId": 38888826217,
+        "workflowSourceRevision": "96ecd57bb420a300d68e9358ceef8d8dcde1a746",
+        "expectedFiles": 47,
+        "retainedFiles": 0,
+        "purpose": "Corrected cadence605cbd6 complete file first, followed by46 exact-b117 baseline classifications; max2. Dispatch is not passing coverage.",
+        "dispatch": {
+          "path": ".cache/solo-followup/regression-audit/remote-cadence-baseline-38888826217/dispatch.json",
+          "bytes": 609,
+          "sha256": "1a43789f7f61651727cd55d4205c752465d2ab3bc07e9ed926cd1c35d8b2863f"
+        }
       }
     ],
     "scope": "Unique-file progress across explicitly recorded sources, not an aggregate one-revision suite pass or final device/release acceptance. Historical frozenRuntimeRevision/currentHeadContext fields above belong to the06:33 local snapshot. Later copies/diagnostics are not counted twice. Remote artifacts retained with size,digest,ZIP CRC,source,test andTAP checks; resource-aborted files remain unobserved.",
-    "classificationUpdatedAt": "2026-10-16T10:10:34.712431+00:00",
+    "classificationUpdatedAt": "2026-10-16T10:43:15.950144+00:00",
     "retainedClassifications": {
       "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "baselineFiles": 18,
-      "filesWithAllObservedCandidateDiagnosticsReproduced": 16,
-      "matchingNamedDiagnostics": 43,
+      "baselineFiles": 23,
+      "filesWithAllObservedCandidateDiagnosticsReproduced": 21,
+      "matchingNamedDiagnostics": 65,
       "proofs": [
         {
           "path": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json",
@@ -2783,6 +2796,11 @@
           "path": ".cache/solo-followup/regression-audit/remote-ownership-baseline-38877911109/classification-retained-1008.json",
           "bytes": 28183,
           "sha256": "3893b98b30ab7cd0f98bfc0b3c0535eb339ff09086fd90fd0c65e6af9cbead5c"
+        },
+        {
+          "path": ".cache/solo-followup/regression-audit/remote-combined-38885848296/baseline-classification-reviewed.json",
+          "bytes": 64479,
+          "sha256": "55d0e9c23eef40e5bd29b8bb364d972333cb8ad67fe2d0069148cf7eb8d5d7dc"
         }
       ],
       "groups": [
@@ -3271,6 +3289,151 @@
           "candidateOnlyNamedDiagnostics": 1,
           "baselineOnlyNamedDiagnostics": 0,
           "comparisonProof": ".cache/solo-followup/regression-audit/remote-ownership-baseline-38877911109/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/content-team-recovery-host.test.mjs",
+          "baselineCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 2,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 44118.028318
+          },
+          "candidateCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 2,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 33987.837683
+          },
+          "matchingNamedDiagnostics": 1,
+          "rawExactMatchingNamedDiagnostics": 1,
+          "writerUUIDNormalizedMatches": 0,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-combined-38885848296/baseline-classification-reviewed.json"
+        },
+        {
+          "file": "game/test/coop-terminal-player-hud.test.mjs",
+          "baselineCounts": {
+            "tests": 9,
+            "suites": 0,
+            "pass": 3,
+            "fail": 6,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 122244.404898
+          },
+          "candidateCounts": {
+            "tests": 9,
+            "suites": 0,
+            "pass": 3,
+            "fail": 6,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 87222.183043
+          },
+          "matchingNamedDiagnostics": 6,
+          "rawExactMatchingNamedDiagnostics": 6,
+          "writerUUIDNormalizedMatches": 0,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-combined-38885848296/baseline-classification-reviewed.json"
+        },
+        {
+          "file": "game/test/mission-library-solo-lifecycle-host.test.mjs",
+          "baselineCounts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 3,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 85864.790634
+          },
+          "candidateCounts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 3,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 157937.364906
+          },
+          "matchingNamedDiagnostics": 5,
+          "rawExactMatchingNamedDiagnostics": 5,
+          "writerUUIDNormalizedMatches": 0,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-combined-38885848296/baseline-classification-reviewed.json"
+        },
+        {
+          "file": "game/test/operation-focus-host.test.mjs",
+          "baselineCounts": {
+            "tests": 17,
+            "suites": 0,
+            "pass": 16,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 65694.149676
+          },
+          "candidateCounts": {
+            "tests": 17,
+            "suites": 0,
+            "pass": 16,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 66288.088762
+          },
+          "matchingNamedDiagnostics": 1,
+          "rawExactMatchingNamedDiagnostics": 1,
+          "writerUUIDNormalizedMatches": 0,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-combined-38885848296/baseline-classification-reviewed.json"
+        },
+        {
+          "file": "game/test/coop-startup-selection.test.mjs",
+          "baselineCounts": {
+            "tests": 15,
+            "suites": 0,
+            "pass": 4,
+            "fail": 11,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 18257.768954
+          },
+          "candidateCounts": {
+            "tests": 15,
+            "suites": 0,
+            "pass": 4,
+            "fail": 11,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 18331.319987
+          },
+          "matchingNamedDiagnostics": 9,
+          "rawExactMatchingNamedDiagnostics": 2,
+          "writerUUIDNormalizedMatches": 7,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-combined-38885848296/baseline-classification-reviewed.json"
         }
       ],
       "scope": "These18 supplementary complete baseline files classify43 named observed candidate diagnostics across16 files. They add no candidate inventory coverage and do not pass failed files. Soundtrack and selection-bookmark required separate faithful fixture repairs; both canonical full files now pass. Content-route-loader baseline has one additional failure; assertions not reached receive no credit.",
@@ -3290,7 +3453,15 @@
           "bytes": 28183,
           "sha256": "a10e54bf5f9774081df1503e99b970ba2190e8e57be0f72995598d4ff0b67030"
         }
-      ]
+      ],
+      "normalizationScope": {
+        "file": "game/test/coop-startup-selection.test.mjs",
+        "rawExactMatches": 2,
+        "additionalSemanticallyMatchingFailures": 7,
+        "normalization": "Only UUID-v4 string values inside the seven named unexpected enemy-stats writer-storage diagnostics; all raw fields and TAP hashes remain above. No storage key, ordering, expected/actual structure, test name or assertion changes.",
+        "sameAfterNormalization": true,
+        "scope": "All nine observed candidate failures reproduce original main; later assertions remain unreached. Random writer IDs are intentionally distinct executions."
+      }
     },
     "canonicalFixtureQualification": {
       "runId": 38877133338,
@@ -3371,28 +3542,151 @@
           "introducedAt": "bb74b1eefa20120304f22468c924aa2955a717b3",
           "sha256": "7bdd742e41dec745a30f27b2f884ade16847e01e84590f07eee7e83733f3f0f7",
           "declaredCases": 3,
-          "executionStatus": "Pending reviewed bounded remote complete-file observation; no execution credit from declaration."
+          "executionStatus": "Complete source-bound observations retained in completedCombinedRun; read each source-specific result, including intentional touch-red failure.",
+          "observations": [
+            {
+              "label": "candidate",
+              "file": "game/test/solo-dense-replay-persistence.test.mjs",
+              "sourceRevision": "bb74b1eefa20120304f22468c924aa2955a717b3",
+              "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+              "counts": {
+                "tests": 3,
+                "suites": 0,
+                "pass": 3,
+                "fail": 0,
+                "cancelled": 0,
+                "skipped": 0,
+                "todo": 0,
+                "duration_ms": 14289.755677
+              },
+              "complete": true,
+              "passed": true,
+              "testSHA256": "7bdd742e41dec745a30f27b2f884ade16847e01e84590f07eee7e83733f3f0f7",
+              "tapSHA256": "a2b64d9e78b80f27a8ac58532dae1b8d75164f70898bfc3bc4bbbc90f13affcf",
+              "timedOut": false,
+              "resourceExhausted": null,
+              "interrupted": false
+            }
+          ]
         },
         {
           "file": "game/test/solo-pending-verification-gameplay-host.test.mjs",
           "introducedAt": "bb74b1eefa20120304f22468c924aa2955a717b3",
           "sha256": "fd11a8826bd6e2d02de4fb89622667fb73d08ba6b647f128286838186b7b581b",
           "declaredCases": 2,
-          "executionStatus": "Pending reviewed bounded remote complete-file observation; no execution credit from declaration."
+          "executionStatus": "Complete source-bound observations retained in completedCombinedRun; read each source-specific result, including intentional touch-red failure.",
+          "observations": [
+            {
+              "label": "candidate",
+              "file": "game/test/solo-pending-verification-gameplay-host.test.mjs",
+              "sourceRevision": "bb74b1eefa20120304f22468c924aa2955a717b3",
+              "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+              "counts": {
+                "tests": 2,
+                "suites": 0,
+                "pass": 2,
+                "fail": 0,
+                "cancelled": 0,
+                "skipped": 0,
+                "todo": 0,
+                "duration_ms": 162827.029027
+              },
+              "complete": true,
+              "passed": true,
+              "testSHA256": "fd11a8826bd6e2d02de4fb89622667fb73d08ba6b647f128286838186b7b581b",
+              "tapSHA256": "91716173b4977984a5ca090807ed3515a7d653b71b80f8d22b2b329d87f7dcc0",
+              "timedOut": false,
+              "resourceExhausted": null,
+              "interrupted": false
+            }
+          ]
         },
         {
           "file": "game/test/solo-touch-latency-host.test.mjs",
           "introducedAt": "48f72933fa91c355f7d7ecbf3bc3a0f1cfd9023f",
           "sha256": "98411f1258919b4dce0070b0e6ac89a86e524973dcd1b475378ce168e97354b1",
           "declaredCases": 4,
-          "executionStatus": "Pending reviewed bounded remote complete-file observation; no execution credit from declaration."
+          "executionStatus": "Complete source-bound observations retained in completedCombinedRun; read each source-specific result, including intentional touch-red failure.",
+          "observations": [
+            {
+              "label": "touch-red",
+              "file": "game/test/solo-touch-latency-host.test.mjs",
+              "sourceRevision": "48f72933fa91c355f7d7ecbf3bc3a0f1cfd9023f",
+              "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+              "counts": {
+                "tests": 4,
+                "suites": 0,
+                "pass": 0,
+                "fail": 4,
+                "cancelled": 0,
+                "skipped": 0,
+                "todo": 0,
+                "duration_ms": 20812.74956
+              },
+              "complete": true,
+              "passed": false,
+              "testSHA256": "98411f1258919b4dce0070b0e6ac89a86e524973dcd1b475378ce168e97354b1",
+              "tapSHA256": "75f9cef24332a1c2a1a20cc57d668d160eebcf9e64f67eabdfdc3fc4a8c88dab",
+              "timedOut": false,
+              "resourceExhausted": null,
+              "interrupted": false
+            },
+            {
+              "label": "touch-green",
+              "file": "game/test/solo-touch-latency-host.test.mjs",
+              "sourceRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+              "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+              "counts": {
+                "tests": 4,
+                "suites": 0,
+                "pass": 4,
+                "fail": 0,
+                "cancelled": 0,
+                "skipped": 0,
+                "todo": 0,
+                "duration_ms": 22560.643378
+              },
+              "complete": true,
+              "passed": true,
+              "testSHA256": "98411f1258919b4dce0070b0e6ac89a86e524973dcd1b475378ce168e97354b1",
+              "tapSHA256": "ce3df6f1efa0e7ad9e155ba4395b415f3f52d42b4336d2fc97f9c0156fdd79ef",
+              "timedOut": false,
+              "resourceExhausted": null,
+              "interrupted": false
+            }
+          ]
         },
         {
           "file": "game/test/solo-cadence-input-host.test.mjs",
           "introducedAt": "02ee15b022e863baf9668b115f85b4020569a9f3",
           "sha256": "323b98f7cdb0388602dc878d72a8bd7be17717a6e97f24766570be19beb7e02e",
           "declaredCases": 2,
-          "executionStatus": "Pending approved bounded remote complete-file observation; syntax/format review is not execution credit."
+          "executionStatus": "Complete source-bound observations retained in completedCombinedRun. Cadence remains1/2 at original02ee; corrected605cbd6 full-file result pending.",
+          "observations": [
+            {
+              "label": "candidate",
+              "file": "game/test/solo-cadence-input-host.test.mjs",
+              "sourceRevision": "02ee15b022e863baf9668b115f85b4020569a9f3",
+              "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+              "counts": {
+                "tests": 2,
+                "suites": 0,
+                "pass": 1,
+                "fail": 1,
+                "cancelled": 0,
+                "skipped": 0,
+                "todo": 0,
+                "duration_ms": 213933.282458
+              },
+              "complete": true,
+              "passed": false,
+              "testSHA256": "323b98f7cdb0388602dc878d72a8bd7be17717a6e97f24766570be19beb7e02e",
+              "tapSHA256": "90548c4f5709b6c4199159685b83b5e2a729dabe4a74c87b43c906021732a003",
+              "timedOut": false,
+              "resourceExhausted": null,
+              "interrupted": false
+            }
+          ]
         }
       ],
       "additionalFiles": 4,
@@ -3449,7 +3743,283 @@
           "testSHA256": "25bf85e3c80c40471ee09b5f485a31fbde76f4489aecd87167ae045f3a065e4e"
         }
       ],
-      "interpretation": "Bookmark3/3 passes after a neutral initial frame preserves all12 input ticks. Team2/4 retains exact58!=42 failures from the prior fixture assuming all roles are pooled; corrected role-specific fixture is prepared and awaits its own complete-file remote result. Initial42, missing/hash rejection, adopted snapshot identity, partial cleanup and close-once remain asserted."
+      "interpretation": "Historical050d Team2/4 failure remains retained. Corrected a8af fixture now passes4/4 in completedCombinedRun, separating32 pooled actor leases from10 snapshot roles and preserving initial42, rejected loads, old snapshot identity, partial cleanup and exact close-once. Bookmark050d passes3/3 with exact12 input ticks and saved assertions."
+    },
+    "previousCheckpoint": {
+      "path": ".cache/solo-followup/regression-audit/ledger-before-1044.json",
+      "bytes": 130113,
+      "sha256": "3a0b6f5a447ee577259c32b3a858c6207eba8820fc02e1584437f4bf9133be0c"
+    },
+    "checkpointProof": {
+      "path": ".cache/solo-followup/regression-audit/remote-coverage-checkpoint-1044.json",
+      "bytes": 1100,
+      "sha256": "972cc066a8de4f6c3ae19ff7b6dd92f6fe52700b14b6d7531904f8b8c65af800"
+    },
+    "completedCombinedRun": {
+      "runId": 38885848296,
+      "workflowSourceRevision": "8e320051cb86eb5013efdc0a3c3c2a68584b9a1b",
+      "retainedArtifacts": 22,
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-combined-38885848296/verified-results-final.json",
+        "bytes": 75356,
+        "sha256": "59a1d518dddaee3b9484858c6508aa63992fac7bb9eeebe13ee131e33ebe6d43"
+      },
+      "files": [
+        {
+          "label": "touch-red",
+          "file": "game/test/solo-touch-latency-host.test.mjs",
+          "sourceRevision": "48f72933fa91c355f7d7ecbf3bc3a0f1cfd9023f",
+          "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+          "counts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 0,
+            "fail": 4,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 20812.74956
+          },
+          "complete": true,
+          "passed": false,
+          "testSHA256": "98411f1258919b4dce0070b0e6ac89a86e524973dcd1b475378ce168e97354b1",
+          "tapSHA256": "75f9cef24332a1c2a1a20cc57d668d160eebcf9e64f67eabdfdc3fc4a8c88dab",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "touch-green",
+          "file": "game/test/solo-touch-latency-host.test.mjs",
+          "sourceRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+          "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+          "counts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 4,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 22560.643378
+          },
+          "complete": true,
+          "passed": true,
+          "testSHA256": "98411f1258919b4dce0070b0e6ac89a86e524973dcd1b475378ce168e97354b1",
+          "tapSHA256": "ce3df6f1efa0e7ad9e155ba4395b415f3f52d42b4336d2fc97f9c0156fdd79ef",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "candidate",
+          "file": "game/test/solo-cadence-input-host.test.mjs",
+          "sourceRevision": "02ee15b022e863baf9668b115f85b4020569a9f3",
+          "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+          "counts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 1,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 213933.282458
+          },
+          "complete": true,
+          "passed": false,
+          "testSHA256": "323b98f7cdb0388602dc878d72a8bd7be17717a6e97f24766570be19beb7e02e",
+          "tapSHA256": "90548c4f5709b6c4199159685b83b5e2a729dabe4a74c87b43c906021732a003",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "candidate",
+          "file": "game/test/solo-dense-replay-persistence.test.mjs",
+          "sourceRevision": "bb74b1eefa20120304f22468c924aa2955a717b3",
+          "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+          "counts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 3,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 14289.755677
+          },
+          "complete": true,
+          "passed": true,
+          "testSHA256": "7bdd742e41dec745a30f27b2f884ade16847e01e84590f07eee7e83733f3f0f7",
+          "tapSHA256": "a2b64d9e78b80f27a8ac58532dae1b8d75164f70898bfc3bc4bbbc90f13affcf",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "candidate",
+          "file": "game/test/solo-pending-verification-gameplay-host.test.mjs",
+          "sourceRevision": "bb74b1eefa20120304f22468c924aa2955a717b3",
+          "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+          "counts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 2,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 162827.029027
+          },
+          "complete": true,
+          "passed": true,
+          "testSHA256": "fd11a8826bd6e2d02de4fb89622667fb73d08ba6b647f128286838186b7b581b",
+          "tapSHA256": "91716173b4977984a5ca090807ed3515a7d653b71b80f8d22b2b329d87f7dcc0",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "candidate",
+          "file": "game/test/presentation-team-runtime.test.mjs",
+          "sourceRevision": "a8af8fdc3a94d7f4c6ddb195531b8863c9dfb99c",
+          "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+          "counts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 4,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 2592.755372
+          },
+          "complete": true,
+          "passed": true,
+          "testSHA256": "d83a34c4778c141b6004d5d730c60c49f1f8dd91192b2f56ba59eefb94fc3029",
+          "tapSHA256": "f7b42abec8f1b3b66062c50263b0b16c2b722209e44e82d7faab3c9060a94467",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "baseline",
+          "file": "game/test/content-team-recovery-host.test.mjs",
+          "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "counts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 2,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 44118.028318
+          },
+          "complete": true,
+          "passed": false,
+          "testSHA256": "137aadb20a3337cbabcb63a775564c8a1d5af3458fa770345cfea223dbbe8e04",
+          "tapSHA256": "35738da23dc19d04ecb968d4b8282fa5fc63880203d976d853e73bca9471607c",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "baseline",
+          "file": "game/test/coop-terminal-player-hud.test.mjs",
+          "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "counts": {
+            "tests": 9,
+            "suites": 0,
+            "pass": 3,
+            "fail": 6,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 122244.404898
+          },
+          "complete": true,
+          "passed": false,
+          "testSHA256": "27d4b9a3c152ee84ea9fbfb3da879b81786817521941a1548f541b01c8f16b89",
+          "tapSHA256": "442170f5e4e478421dc5eccd35c8c7f9d14580fe4958f0670ee322ffa8032bcf",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "baseline",
+          "file": "game/test/mission-library-solo-lifecycle-host.test.mjs",
+          "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "counts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 3,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 85864.790634
+          },
+          "complete": true,
+          "passed": false,
+          "testSHA256": "77c0af1c52458545529f6d14f6502dc1d23bfad4d8c433e0bd76e5a4731f8c50",
+          "tapSHA256": "603a066daaacff8fab6c1ac1ab5a04e22c0340fc02f8658863e99825373558e1",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "baseline",
+          "file": "game/test/operation-focus-host.test.mjs",
+          "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "counts": {
+            "tests": 17,
+            "suites": 0,
+            "pass": 16,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 65694.149676
+          },
+          "complete": true,
+          "passed": false,
+          "testSHA256": "58c1a3e5ef63f6ec97bd737ec1eb95913af6e93cb0a0eae3c72d5941f9b0a3d1",
+          "tapSHA256": "faf0d117cf62867d142ee86678be316fc707506be3f14eab4cfca75b4d79a316",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        },
+        {
+          "label": "baseline",
+          "file": "game/test/coop-startup-selection.test.mjs",
+          "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "counts": {
+            "tests": 15,
+            "suites": 0,
+            "pass": 4,
+            "fail": 11,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 18257.768954
+          },
+          "complete": true,
+          "passed": false,
+          "testSHA256": "8833dd5cd609da8428e477eda4cd51d224e566f1a96615743bbe6187f973b3d6",
+          "tapSHA256": "76e08fcacc9bccf30a056c2c79d37121ca7eb4ae4f9ae33170f0cf9137b0edd1",
+          "timedOut": false,
+          "resourceExhausted": null,
+          "interrupted": false
+        }
+      ],
+      "scope": "Supplementary complete files; failed touch-red and original cadence remain failed. These sources precede the later Demo power work and are not relabeled as final-runtime or native-performance acceptance."
     }
   }
 }

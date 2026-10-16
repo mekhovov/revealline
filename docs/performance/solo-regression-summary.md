@@ -1,32 +1,35 @@
 # Solo regression evidence snapshot
 
-As of **2026-10-16 09:10 UTC**, **1,514 of the original 1,948 files** have complete
-observations at their recorded source revisions; **434 remain unobserved**. This
-combines the historical local 1,233-file snapshot with 281 disjoint remote files.
+As of **2026-10-16 10:43 UTC**, **1,721 of the original 1,948 files** have complete
+observations at their recorded source revisions; **227 remain unobserved**. This
+combines the historical local 1,233-file snapshot with 488 disjoint remote files.
 It is not a complete-suite pass or a single-revision result. Remote failures still
 include unresolved groups. The [machine-readable ledger](solo-regression-audit.json)
 binds each source, comparison and retained result to SHA-256 evidence.
 
 The original 715-file continuation at `90f4d1a0` / runtime `49c0b6c1` has retained
-250 complete files: 183 passed and 67 failed. Its separate 70-file recovery queue
-at `845e2a1e` / runtime `e0252ff8` has retained 31: 21 passed and 10 failed. One
-resource-aborted recovery file remains incomplete. The two retained sets have no
-overlap. All 119 referenced artifact archives passed digest, ZIP, source and test
-identity checks. These figures are a frozen checkpoint, not live run totals.
+423 complete files: 301 passed and 122 failed. Its separate 70-file recovery queue
+at `845e2a1e` / runtime `e0252ff8` has retained 65: 39 passed and 26 failed. Two
+resource-aborted recovery files remain incomplete in that attempt. The retained
+sets have no overlap. All 225 referenced artifact archives passed digest, ZIP,
+source and test identity checks. These figures are frozen checkpoints, not live
+run totals.
 
-Supplementary receipts retained after the quiet cohort classify18 complete baseline
-files. Sixteen reproduce all43 named candidate failure diagnostics; the route-loader baseline has one additional failure. The original
-soundtrack and selection-bookmark files pass on baseline and needed separate
-clock/paint fixture review. These comparisons do not increase the unique-file
-progress above or turn failed files into passes.
+Supplementary receipts classify 23 complete baseline files. Twenty-one reproduce
+all 65 named candidate failure diagnostics; seven storage-write diagnostics differ
+only in random writer UUIDs, with the exact raw differences retained. The
+route-loader baseline also has one additional failure. The original soundtrack
+and selection-bookmark files pass on baseline and required separate clock/paint
+fixture review. These comparisons do not increase the unique-file progress above
+or turn failed files into passes.
 
-| Later canonical fixture evidence                      | Retained result and limit                                                                                                                                                                                          |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Soundtrack host at `9768c2eb` / runtime `e0252ff8`    | 30/30 pass after an explicit neutral clock anchor and assertions against the retained hidden paint. Stream, pause/resume, checkpoint and durable-state checks remain intact.                                       |
-| Team default entry at the same source                 | 8/13 pass; all five failures match the paired baseline. Bounded identity formatting prevents cyclic DOM assertion output from exhausting memory.                                                                   |
-| Team picture recovery focus at the same source        | 17/18 pass; its one focus failure matches the paired baseline. The canonical full file now completes, rather than receiving credit from its prior resource-aborted attempt.                                        |
-| Selection bookmark at `050d8ea3` / runtime `e0252ff8` | 3/3 pass, preserving12 input ticks and exact saved checkpoint/selection assertions after a neutral clock anchor.                                                                                                   |
-| Team presentation ownership at the same source        | 2/4 pass. Both58!=42 failures came from the prior fixture treating all Team roles as pooled. The corrected fixture distinguishes32 actor leases from10 snapshot-owned roles and awaits its own full remote result. |
+| Later canonical fixture evidence                               | Retained result and limit                                                                                                                                                                                                                                                             |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Soundtrack host at `9768c2eb` / runtime `e0252ff8`             | 30/30 pass after an explicit neutral clock anchor and assertions against the retained hidden paint. Stream, pause/resume, checkpoint and durable-state checks remain intact.                                                                                                          |
+| Team default entry at the same source                          | 8/13 pass; all five failures match the paired baseline. Bounded identity formatting prevents cyclic DOM assertion output from exhausting memory.                                                                                                                                      |
+| Team picture recovery focus at the same source                 | 17/18 pass; its one focus failure matches the paired baseline. The canonical full file now completes, rather than receiving credit from its prior resource-aborted attempt.                                                                                                           |
+| Selection bookmark at `050d8ea3` / runtime `e0252ff8`          | 3/3 pass, preserving 12 input ticks and exact saved checkpoint/selection assertions after a neutral clock anchor.                                                                                                                                                                     |
+| Team presentation ownership at `a8af8fdc` / runtime `f7b66590` | 4/4 pass. The earlier `050d8ea3` 2/4 failure is retained. The corrected fixture distinguishes 32 pooled actor leases from 10 snapshot-owned roles, preserving the initial 42 resources, rejected-load ownership, accepted snapshots, partial cleanup and exact close-once assertions. |
 
 All supplementary comparison and canonical-file receipt hashes are in the ledger.
 Remaining remote failures are still unclassified where exact baseline or canonical
@@ -66,12 +69,21 @@ candidate-Solo file remains **16/18** on both revisions because two old assertio
 read nested capture-envelope fields from the outer object. The remaining
 assertions in those two cases have no coverage credit.
 
-Four further correctness files were later committed: dense replay/persistence,
-pending verification across public Next/Retry, touch latency diagnostics, and
-meaningful input across changing cadence. Their11 declared cases await the combined
-bounded remote observations; declarations are not passing coverage. They bring
-the file count to1,955 if there are no other additions;
-the original 1,948-file partition remains unchanged.
+Four further correctness files were later committed, outside the original
+inventory. Complete remote observations retain dense replay/persistence **3/3**,
+pending verification across public Next/Retry **2/2**, and touch latency **4/4**
+on their recorded corrected sources. The same touch test fails **0/4** on the
+preceding source, preserving the regression proof. These are Node correctness
+checks, not native timing or physical-device acceptance.
+
+The first meaningful-input cadence run is **1/2**: keyboard movement, all nine
+schedules and interruption recovery passed; gamepad setup attempted Start twice
+after automatic controller joining. Its unchanged correctness assertions are
+queued in a corrected complete-file run at `605cbd6d`, before 46 exact-baseline
+comparisons in run `38888826217`. The original failed run remains retained.
+These four files bring the repository count to 1,955 if there are no other
+additions; the original 1,948-file partition remains unchanged. Later Demo power
+changes require their own revision-specific checks.
 
 The added audio-fixture test was already present in the original launch inventory,
 although it was then uncommitted. It is not a fourth post-launch addition. The
@@ -124,9 +136,9 @@ python3 .cache/solo-followup/regression-audit/solo-complete-suite.py \
   --pause-lane host --pause-lane unit
 ```
 
-Keep both lanes paused until resource ownership is coordinated. The retained
-baseline tree must match the exact baseline source and hydration receipts before
-running comparisons. A missing input is a setup failure, not a baseline waiver.
+Keep both lanes paused until resource ownership is coordinated. The baseline source snapshot is now preserved externally; restore it into a new
+owned directory and verify its exact source and hydration receipts before running
+local comparisons. A missing input is a setup failure, not a baseline waiver.
 
 The pending continuation set is exactly the immutable 1,948-file list minus the
 1,233 unique completed file entries, including failed completed files. Its 715
