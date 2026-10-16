@@ -16,6 +16,8 @@ concurrency:
 
 jobs:
   final-index:
+    # Historical ad hoc scope; new scopes require explicit review and opt-in.
+    if: github.event.pull_request.head.sha == '0942916a74c5ed6821e31b7d4ee34a66e97b9456'
     runs-on: ubuntu-24.04
     outputs:
       ready: ${{ steps.index.outputs.ready }}
@@ -55,6 +57,7 @@ jobs:
   restore:
     needs: final-index
     if: >-
+      github.event.pull_request.head.sha == '0942916a74c5ed6821e31b7d4ee34a66e97b9456' &&
       needs.final-index.outputs.ready == 'true' &&
       github.event.pull_request.number == 1552 &&
       github.event.pull_request.head.repo.full_name == github.repository &&
