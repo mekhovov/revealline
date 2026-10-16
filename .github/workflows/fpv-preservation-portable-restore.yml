@@ -19,28 +19,38 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       ready: ${{ steps.index.outputs.ready }}
+      mode: ${{ steps.index.outputs.mode }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
           sparse-checkout: |
+            authoring/fpv-development-preservation
             docs/reports/fpv-development-preservation-20261016/final-index
       - id: index
         shell: bash
         run: |
           python3 - <<'PY'
-          import json, os
+          import json, os, sys
           from pathlib import Path
-          path = Path('docs/reports/fpv-development-preservation-20261016/final-index/preservation-index.json')
-          ready = False
-          if path.exists():
+          base = Path('docs/reports/fpv-development-preservation-20261016/final-index')
+          path = base / 'preservation-index.json'
+          rollup = base / 'preservation-rollup.json'
+          ready, mode = False, 'single'
+          if rollup.exists():
+              sys.path.insert(0, 'authoring/fpv-development-preservation')
+              from multi_restore_check import load_set
+              load_set(rollup)
+              ready, mode = True, 'multi'
+          elif path.exists():
               index = json.loads(path.read_text())
               if any(index.get(k) is not True for k in ['inventoryComplete', 'inventorySetFinal', 'coverageComplete']):
                   raise SystemExit('Final index is not root-confirmed and complete')
               ready = True
           with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
               out.write('ready=' + str(ready).lower() + '\n')
+              out.write('mode=' + mode + '\n')
           PY
   restore:
     needs: final-index
@@ -55,6 +65,7 @@ jobs:
     timeout-minutes: 120
     env:
       EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+      RESTORE_MODE: ${{ needs.final-index.outputs.mode }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -76,10 +87,19 @@ jobs:
         shell: bash
         run: |
           mkdir "$RUNNER_TEMP/portable-restore-receipts"
-          python3 authoring/fpv-development-preservation/portable_restore_check.py \
-            --index docs/reports/fpv-development-preservation-20261016/final-index/preservation-index.json \
-            --work "$RUNNER_TEMP/portable-restore" \
-            --receipt "$RUNNER_TEMP/portable-restore-receipts/full-portable-restore.json"
+          if [ "$RESTORE_MODE" = multi ]; then
+            python3 authoring/fpv-development-preservation/multi_restore_check.py \
+              --rollup docs/reports/fpv-development-preservation-20261016/final-index/preservation-rollup.json \
+              --work "$RUNNER_TEMP/portable-restore" \
+              --receipt "$RUNNER_TEMP/portable-restore-receipts/full-public-restore-set.json"
+          elif [ "$RESTORE_MODE" = single ]; then
+            python3 authoring/fpv-development-preservation/portable_restore_check.py \
+              --index docs/reports/fpv-development-preservation-20261016/final-index/preservation-index.json \
+              --work "$RUNNER_TEMP/portable-restore" \
+              --receipt "$RUNNER_TEMP/portable-restore-receipts/full-portable-restore.json"
+          else
+            exit 1
+          fi
       - name: Retain only small restoration receipts
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6

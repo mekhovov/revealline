@@ -11,7 +11,7 @@ from restore import restore
 from restore_paths import real_directory
 
 
-def verify(index, index_sha, work, receipt_path):
+def verify(index, index_sha, work, receipt_path, shared_cache=None):
     if (index.get('coverageComplete') is not True or index.get('inventorySetFinal') is not True
             or index.get('inventoryComplete') is not True or index.get('held') or index.get('uncovered')
             or index.get('inventoryConflicts') or index.get('inventoryErrorsOrUnstable')):
@@ -19,8 +19,9 @@ def verify(index, index_sha, work, receipt_path):
     checked = graph(index)
     work = real_directory(work)
     work.mkdir()
+    cache = real_directory(shared_cache) if shared_cache is not None else work / 'cache'
     # restore() measures fresh free space before creating cache/output or performing any GET.
-    result = restore(index, work / 'cache', work / 'logical-files', work / 'restore-details.json')
+    result = restore(index, cache, work / 'logical-files', work / 'restore-details.json')
     if (not result['complete'] or result['files'] != checked['logicalFilePaths']
             or result['logicalBytes'] != checked['logicalBytes']
             or result['githubDependencyFileCount'] != checked['dependencyFiles']
@@ -43,6 +44,7 @@ def verify(index, index_sha, work, receipt_path):
                'allLinksResolveToExactWithinRootTerminal': True, 'diskPreflight': result['diskPreflight'],
                'detailedRestoreReceiptSHA256': hashlib.sha256((work / 'restore-details.json').read_bytes()).hexdigest(),
                'inventoriedPayloadPortableRestoreComplete': True,
+               'sharedVerifiedCacheUsed': shared_cache is not None,
                'oneShotPayloadMaterializationPerformed': True,
                'gitSourceAndReproducibleDependenciesRequireSeparateClosure': True,
                'overallDisconnectSafetyClaimed': False, 'createdAtUnix': time.time()}

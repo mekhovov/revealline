@@ -47,6 +47,17 @@ python3 portable_restore_check.py --index /chosen/backup/preservation-index.json
 
 The scoped `FPV preservation portable restore` cloud workflow runs only after a root-confirmed complete final index is committed under the final-index receipt directory. Its standard runner uses the same pre-download space gate and GET-only draft-release access on this repository's exact preservation branch and PR #1552. It uploads only a small verification summary, without payloads or the old absolute external target.
 
+For the separately reviewed public payloads outside the original staging directory, `multi_restore_check.py` accepts a strict `FPVPublicPayloadRestoreSet.v1` rollup. It requires `rootConfirmedPublicInputSet: true` and exactly two named index bindings: `staging` to `preservation-index.json` with source root `/Volumes/alex/CodexMigrationStaging`, and `extra-volume-app` to `extra-volume-app-index.json` with source root `/Volumes/alex`. Each binding contains the exact index byte SHA-256. Both indexes must independently pass the final-input, coverage and full link-graph gates. The indexes and old receipts are not rewritten, and arbitrary source-path fields or parent traversal are not supported.
+
+The two trees restore into separate named directories under one fresh work root. A common cache reuses assets only after the existing strict full hash/member checks. A combined disk estimate counts the union of cached assets and extracted parts plus both logical trees, metadata and the reserve before any download. Each per-index restore also rechecks free space. The public rollup cannot qualify separate private-origin payloads or source Git recovery, and overall disconnect safety remains false. Its manifest must contain only the root-approved public split; private source/payload/hash rows must stay at their respective private origins. New within-volume links require selected terminal-file closure in that same index; the rollup does not bypass unresolved links by reaching into a sibling tree.
+
+```sh
+python3 multi_restore_check.py --rollup /chosen/backup/preservation-rollup.json \
+  --work /chosen/disk/fresh-public-restore-set --receipt /chosen/backup/full-public-restore-set.json
+```
+
+The cloud workflow selects this mode when the approved `preservation-rollup.json` exists beside both indexes. Without a rollup, a standalone staging restore remains a staging-only receipt.
+
 If a full restore does not fit, `bounded_restore.py` creates an exact deterministic path partition plan from the same index. Each fresh runner downloads only the parts or direct assets required by its assigned paths and applies the same byte, mode and timestamp checks. Its plan covers each logical path exactly once and checks the complete path/type/link graph; its collection refuses missing, duplicate or mismatched receipts. A separate empty-marker layout probe recreates and resolves every relative link under one chosen root, explicitly without claiming to have materialized payload bytes there. Partition receipts disclose that no one-shot payload materialization occurred and cannot establish overall disconnect safety. Choose a fresh path for each plan, work directory and receipt:
 
 ```sh
