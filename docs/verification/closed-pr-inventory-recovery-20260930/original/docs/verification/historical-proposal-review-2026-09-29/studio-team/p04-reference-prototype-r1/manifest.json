@@ -1,0 +1,345 @@
+{
+  "format": "revealline-historical-source-preservation.v1",
+  "cohort": "p04-reference-prototype-r1",
+  "purpose": "Historical exact-byte source evidence only; runtime adoption deferred.",
+  "donor_relative_worktree": ".cache/worktrees/p04-reference-prototype-r1",
+  "base_head": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+  "base_is_ancestor_of_pinned_main": true,
+  "capture_started_utc": "2026-09-29T15:12:38.165982+00:00",
+  "tracked_modified_files": 13,
+  "new_untracked_files": 7,
+  "excluded": [
+    "node_modules"
+  ],
+  "files": [
+    {
+      "path": "authoring/asset-studio/index.html",
+      "status": " M",
+      "preimage": {
+        "git_blob": "d3d973c9ee560ad485ba0a767c0530353f5c3291",
+        "git_mode": "100644",
+        "sha256": "3956c271df95bc48b6bcf3cc3e56aff917096499d3e422d2d74e8cb10ca37830",
+        "bytes": 32470
+      },
+      "postimage": {
+        "git_blob": "5921e33ac49f561ded69c6295344a9d007362e49",
+        "source_file_mode": "0644",
+        "sha256": "660f0a5791636cc39f9ed716c12c276029405626191152453ecd77b3e53769d7",
+        "bytes": 33517,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "authoring/asset-studio/studio.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "d990d0201691769d9f60c30fb65e3fa04b0b2a54",
+        "git_mode": "100644",
+        "sha256": "f6e778413535700dee515d4734fb5413034a7f0af7cee0371c9809856f439803",
+        "bytes": 44250
+      },
+      "postimage": {
+        "git_blob": "fdbd4992777a6cb87cba30deba3d8ab70b73f904",
+        "source_file_mode": "0644",
+        "sha256": "297d04d37569d9a3aa6290d3f4bbb44468218c08c80424a363da003005e60041",
+        "bytes": 45926,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "status": " M",
+      "preimage": {
+        "git_blob": "27aac7ef895aba98d781d419881917dffc687370",
+        "git_mode": "100644",
+        "sha256": "2a99d78247e0a5c8899c90dec13679ddccae074974c3ee69df16c5a9f2ed8a19",
+        "bytes": 23574
+      },
+      "postimage": {
+        "git_blob": "fea7e3d28bf0958f825a6cfeba2765b4d8ba08ce",
+        "source_file_mode": "0644",
+        "sha256": "6a93b5618087dd757093d123e75bdf50c1e30a102ccbf94e38701edaa1fea96b",
+        "bytes": 24633,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "authoring/skills/xonix-theme-designer/SKILL.md",
+      "status": " M",
+      "preimage": {
+        "git_blob": "67f071f388964f9e46df65885f54a72d0f8abed0",
+        "git_mode": "100644",
+        "sha256": "50f234d3e59d4c8ebf31c54d903597310315fffe70384659f7bab2acafdfffec",
+        "bytes": 13871
+      },
+      "postimage": {
+        "git_blob": "46ed304bad57700283f385f51f4f30478cfd09b1",
+        "source_file_mode": "0644",
+        "sha256": "8d2b32b9d4873e83997b3cf92cca512d12814be342d873313d4c4a207c2b2e32",
+        "bytes": 14873,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "docs/asset-studio.md",
+      "status": " M",
+      "preimage": {
+        "git_blob": "49bccd83c94cf4e1c76ff3cc06c26d6f94d045bc",
+        "git_mode": "100644",
+        "sha256": "e0fce884d04a1cef6424a587f997d472110edb0039b41ead1ea73382d9f8674e",
+        "bytes": 18215
+      },
+      "postimage": {
+        "git_blob": "1a5751bfb977816041bec70a2608e88280be29b0",
+        "source_file_mode": "0644",
+        "sha256": "652c45171c2b23165b12dcbc601c573d1569564dded42d2126fad924f468282b",
+        "bytes": 21408,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "docs/presentation-system.md",
+      "status": " M",
+      "preimage": {
+        "git_blob": "f5294a9c919cc81ac919cdfdacd859b807255fb7",
+        "git_mode": "100644",
+        "sha256": "e911a18843e2cac10548d4b9ecc77e448c07d61087a17cbd5f51f3fe671abc56",
+        "bytes": 16398
+      },
+      "postimage": {
+        "git_blob": "3e4be05bef77a5d06b776d58878c4463d0cce91f",
+        "source_file_mode": "0644",
+        "sha256": "bc51a090bf492cc20fe411fbfce7d2d144cfb4f3ed35fe1c6486a20ed6a58b66",
+        "bytes": 18318,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/presentation/bundle.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "efbc0d2676186b9a21101cbd4b96d89ef58d0b73",
+        "git_mode": "100644",
+        "sha256": "40f293fceb60c971d46f9069c91bc7594aa4065d23bfdbfc06a3b5db74cf3755",
+        "bytes": 8883
+      },
+      "postimage": {
+        "git_blob": "4758c9db09bb0cd6533c46d53d6bebac16942821",
+        "source_file_mode": "0644",
+        "sha256": "aaadc0e995b14d98b073260828da9da6a22c6172a4726ed5c87586c5b19d52bc",
+        "bytes": 9230,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/presentation/model.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "ebf144d3fabc19fdc78bfbf05cd3e700c31a69ea",
+        "git_mode": "100644",
+        "sha256": "921c85a5d4cbabf5384ebd0ad43f62dffc8ff7ff03f97abffcc69634a46c211d",
+        "bytes": 26831
+      },
+      "postimage": {
+        "git_blob": "54bb5e67402652e3c46b8d8c8f6adde8b96bfa92",
+        "source_file_mode": "0644",
+        "sha256": "d8adac1e4fc08c9fe3be5b6f3dda6c3ac8a74ce59ac29553c52b15cab75a35b5",
+        "bytes": 27453,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/presentation/published-studio.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "0e7fc9db76316013bb73d24cd3736a07dbd700e3",
+        "git_mode": "100644",
+        "sha256": "1818506f7057ae787b9f6ec1e9d0f337720e2b4cdc2a4359c2b4fd455fbafa65",
+        "bytes": 4259
+      },
+      "postimage": {
+        "git_blob": "56532c11afac92d5fff7047d4d271f8f43652b5e",
+        "source_file_mode": "0644",
+        "sha256": "19640112f54ace1f65f528d359a5fb7140e5374ffcb4a3adf9698b038d70261a",
+        "bytes": 4312,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/presentation/studio-store.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "9a870b3e60ce1144cf523cc34b22fdab0386ee96",
+        "git_mode": "100644",
+        "sha256": "bf7bd4a8e37b31402ab6415e2fc87332349e966fcb6e15c9d7b352ab879e7d38",
+        "bytes": 6637
+      },
+      "postimage": {
+        "git_blob": "9b364dd23def25992c58e18f1dba8ae5ad7b9448",
+        "source_file_mode": "0644",
+        "sha256": "d78eb2be88926c2606e2b19167d270ffe88a03f0c4b26540e3a5d21d0078b320",
+        "bytes": 8313,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/asset-studio-host-loading.test.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "fbf7c1b4092bc6d4b539c2d4d6bbcc73b6ec71d2",
+        "git_mode": "100644",
+        "sha256": "d9307468736f57148f44e990e0072b29b9e025de68fea69e783c03b3bb070842",
+        "bytes": 31678
+      },
+      "postimage": {
+        "git_blob": "a2c812d295ec36ce2c0a418935341f5a917db1be",
+        "source_file_mode": "0644",
+        "sha256": "d869c40d2290d398010e7336478c58bd240ede2f764eb461e3c710794b3bfaaa",
+        "bytes": 39845,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/published-studio.test.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "31331e2f91699dc9b65986ca6dde8b38fec25819",
+        "git_mode": "100644",
+        "sha256": "c691613caf2f6baa39ba9ca3417339dfa7d32dc2b95c21e27535843d6154f32e",
+        "bytes": 4131
+      },
+      "postimage": {
+        "git_blob": "7d9374c0b201ea6786f41e766775a83d33465c04",
+        "source_file_mode": "0644",
+        "sha256": "c6514f12b6f45c2bd00c5138feb631da7f413e18190c38dbf556613e201700a3",
+        "bytes": 5262,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "scripts/compile-presentation.mjs",
+      "status": " M",
+      "preimage": {
+        "git_blob": "fc45381aa5a04ba5b625f3e79b0bc1bb8597d527",
+        "git_mode": "100644",
+        "sha256": "3d98b9661230901000a322c2cd360cdb50c427ac63803585878e8c28ebc09e12",
+        "bytes": 12035
+      },
+      "postimage": {
+        "git_blob": "f1e910b09a9181844e3fad9068ba08d00f97fe3a",
+        "source_file_mode": "0644",
+        "sha256": "75f94457e93a3857956d8953fc01a4c907f8b98e2ec347de116f69ffba72bca3",
+        "bytes": 13111,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/presentation/reference-bundle.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "38472bbb35198dffd9a14528a2d7aceba23bf32e",
+        "source_file_mode": "0644",
+        "sha256": "216577d207e974e6b1881d77af47dc712ef6bb445df99210b3deff8bdbc9da1f",
+        "bytes": 4101,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/presentation/reference-model.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "83c6ed363d23436a15c26185175e153eb2958bb3",
+        "source_file_mode": "0644",
+        "sha256": "392fc8bb7deaa79a5449573771fac05316c2b6a1d3c4f4e55c5d84f931d784cc",
+        "bytes": 10214,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/presentation/reference-session.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "68e49650b4deded5135579bbf617621fa9e3fa2c",
+        "source_file_mode": "0644",
+        "sha256": "24f05c404153146c7d2ec46dc1cec6af74ed38167aed5cdcff7f8256e85706ff",
+        "bytes": 7964,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/presentation/reference-store.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "5120972a86b22e6ff2d4b347ef62f7f92d56be9f",
+        "source_file_mode": "0644",
+        "sha256": "86d49fcc661cf6987742a116d4ed9665850e7dfc043526ae7ed36fafac4946ed",
+        "bytes": 3380,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/presentation/studio-formats.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "8034a3d8eb7d295971ef69def1a302a981a09a80",
+        "source_file_mode": "0644",
+        "sha256": "64c15c9e59f11b027882efc96d8750e2c332a2dc1a106dd4e6012cf53b78d00c",
+        "bytes": 5992,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/presentation-references.test.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "7667b2347d71220ddc2be33a160b499f83e05de4",
+        "source_file_mode": "0644",
+        "sha256": "28710d0083090ef5517b9831bd41b2545cc442daca3d50707765c79db944dec3",
+        "bytes": 24494,
+        "encoding": "UTF-8"
+      }
+    },
+    {
+      "path": "game/test/presentation-studio-formats.test.mjs",
+      "status": "??",
+      "preimage": null,
+      "postimage": {
+        "git_blob": "d3c801dd9b9595afac731d3ae7d1dda1535a47f5",
+        "source_file_mode": "0644",
+        "sha256": "80823b20282b355d2e18444287967ae400997e98b29de51726b14ab59443098f",
+        "bytes": 8239,
+        "encoding": "UTF-8"
+      }
+    }
+  ],
+  "artifacts": {
+    "candidate-files.tar.gz": {
+      "bytes": 86582,
+      "sha256": "305b4027cae1fb8b04ecb1814b03438e574b02170c469341315257c002f3ac9b"
+    },
+    "tracked.diff": {
+      "bytes": 57310,
+      "sha256": "bb019ca858b9d5fc3099648d36b2c1321c0925ff8b73e80a0faee207a2f4088c"
+    },
+    "new-source.patch": {
+      "bytes": 67953,
+      "sha256": "d1835634b7c421c8ef283e26aa57f282d14cc320d9182c0b7550849b3bb2c4a9"
+    }
+  },
+  "checks": {
+    "source_only_regular_utf8_files": true,
+    "credential_path_conflict_scan_flags": [],
+    "tracked_diff_reconstructs_every_postimage": true,
+    "archive_contents_equal_captured_sources": true,
+    "source_reread_stable_during_capture": true,
+    "tests_run": false,
+    "prototype_code_executed": false,
+    "runtime_adopted": false
+  }
+}

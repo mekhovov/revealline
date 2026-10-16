@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 // Each independent large-campaign journey runs in its own Node test process.
 // The browser model imports a real top-level-await app module; Node retains
 // evaluated modules and test hooks until process exit, unlike a closed page.
@@ -222,7 +223,8 @@ for (const saveFailure of ['none', 'quota', 'readback'])
       if (!key.includes('packs') && key !== 'revealline.suspended.dev.v1')
         assert.equal(page.storage.map.get(key), value, `Unchanged ${key}`);
     assert.deepEqual(
-      JSON.parse(page.storage.getItem('revealline.suspended.dev.v1')).replay.checkpoint,
+      nativeSession(JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'))).replay
+        .checkpoint,
       before,
     );
     assert.match(page.$('mission-replace-status').textContent, /saved and verified/);

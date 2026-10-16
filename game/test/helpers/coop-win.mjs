@@ -67,8 +67,10 @@ export async function winTeam(t, { level = 'first-connection', ...options } = {}
 // Rehearse the same tuned Standard level as the host, using only Team's public
 // direction/Support controls. Historical untuned core routes intentionally stay
 // in coop-route-search; their Boost commands are not a Team input capability.
-function hostVictoryRoute(level) {
-  const authored = level === 'relay-yard' ? RELAY_YARD : FIRST_CONNECTION;
+export function hostVictoryRoute(
+  level,
+  authored = level === 'relay-yard' ? RELAY_YARD : FIRST_CONNECTION,
+) {
   const route = trial(
     applyGameplayTuning(authored, resolveGameplayTuning('standard')),
     'standard',

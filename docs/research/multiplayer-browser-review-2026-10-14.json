@@ -1,0 +1,666 @@
+{
+  "scope": "Local browser observations; not human, physical-device, audible or public-release qualification",
+  "team": [
+    {
+      "mission": "Custom level · Harbor Handoff · Horizon Harbors · 1/8 · Not completed",
+      "profile": "desktop English standard",
+      "state": "paused"
+    },
+    {
+      "mission": "Custom level · Harbor Homecoming · Horizon Harbors · 8/8 · Not completed",
+      "profile": "desktop English standard",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Garden Exchange · Signal Gardens · 1/8 · Not completed",
+      "profile": "desktop English standard",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Garden Reunion · Signal Gardens · 8/8 · Not completed",
+      "profile": "desktop English standard",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Switchyard Rendezvous · Neon Switchyards · 1/8 · Not completed",
+      "profile": "desktop English standard",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Night Junction · Neon Switchyards · 8/8 · Not completed",
+      "profile": "desktop English standard",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Dockside Wake · Rover Docks · 1/8 · Not completed",
+      "profile": "desktop English standard",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · All Hands Home · Rover Docks · 8/8 · Not completed",
+      "profile": "desktop English standard",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Glass Escort · Phaseworks Observatory · 1/8 · Not completed",
+      "profile": "390x844 English Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Observatory Accord · Phaseworks Observatory · 8/8 · Not completed",
+      "profile": "390x844 English Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · First Warning Shift · Livewire Foundry · 1/8 · Not completed",
+      "profile": "390x844 English Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Foundry Handshake · Livewire Foundry · 8/8 · Not completed",
+      "profile": "390x844 English Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Partner First Link · Relay Archive · 1/8 · Not completed",
+      "profile": "390x844 English Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Archive Home Route · Relay Archive · 8/8 · Not completed",
+      "profile": "390x844 English Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Tailwind Delivery · Crosswind Highlands · 1/8 · Not completed",
+      "profile": "390x844 English Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Custom level · Highland Reunion · Crosswind Highlands · 8/8 · Not completed",
+      "profile": "390x844 English Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Власний рівень · Вітання на заставі · Прикордонна варта · 1/8 · Не пройдено",
+      "profile": "720x480 Ukrainian Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Власний рівень · Угода вартової вежі · Прикордонна варта · 8/8 · Не пройдено",
+      "profile": "720x480 Ukrainian Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Власний рівень · Непорушна обіцянка · Розколоте узбережжя · 1/8 · Не пройдено",
+      "profile": "720x480 Ukrainian Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Власний рівень · Угода прибережного ремонту · Розколоте узбережжя · 8/8 · Не пройдено",
+      "profile": "720x480 Ukrainian Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Власний рівень · Перша нумерована варта · Цитадель вартового · 1/8 · Не пройдено",
+      "profile": "720x480 Ukrainian Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Власний рівень · Спільна корона цитаделі · Цитадель вартового · 8/8 · Не пройдено",
+      "profile": "720x480 Ukrainian Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Власний рівень · Обмін полярними мостами · Верхівка сяйва · 1/8 · Не пройдено",
+      "profile": "720x480 Ukrainian Large Plain reduced effects",
+      "state": "launched then paused"
+    },
+    {
+      "mission": "Власний рівень · Повернення експедиції · Верхівка сяйва · 8/8 · Не пройдено",
+      "profile": "720x480 Ukrainian Large Plain reduced effects",
+      "state": "launched then paused"
+    }
+  ],
+  "duel": [
+    {
+      "mission": "Власний рівень · Фотофініш горизонту · Гавані горизонту · 6/6 · Не пройдено",
+      "index": 5,
+      "profile": "desktop uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 309,
+            "id": "race-canvas-0",
+            "width": 618
+          },
+          {
+            "height": 309,
+            "id": "race-canvas-1",
+            "width": 618
+          }
+        ],
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    },
+    {
+      "mission": "Власний рівень · Гамбіт гавані · Гавані горизонту · 1/6 · Не пройдено",
+      "index": 0,
+      "profile": "720x480 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 173,
+            "id": "race-canvas-0",
+            "width": 346
+          },
+          {
+            "height": 173,
+            "id": "race-canvas-1",
+            "width": 346
+          }
+        ],
+        "height": 480,
+        "scrollWidth": 720,
+        "width": 720
+      }
+    },
+    {
+      "mission": "Власний рівень · Сигнальний короткий шлях · Сади сигналу · 1/6 · Не пройдено",
+      "index": 6,
+      "profile": "720x480 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 173,
+            "id": "race-canvas-0",
+            "width": 346
+          },
+          {
+            "height": 173,
+            "id": "race-canvas-1",
+            "width": 346
+          }
+        ],
+        "height": 480,
+        "scrollWidth": 720,
+        "width": 720
+      }
+    },
+    {
+      "mission": "Власний рівень · Фінал сигнального спринту · Сади сигналу · 6/6 · Не пройдено",
+      "index": 11,
+      "profile": "720x480 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 173,
+            "id": "race-canvas-0",
+            "width": 346
+          },
+          {
+            "height": 173,
+            "id": "race-canvas-1",
+            "width": 346
+          }
+        ],
+        "height": 480,
+        "scrollWidth": 720,
+        "width": 720
+      }
+    },
+    {
+      "mission": "Власний рівень · Неонова розвилка · Neon Switchyards · 1/6 · Не пройдено",
+      "index": 12,
+      "profile": "720x480 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 173,
+            "id": "race-canvas-0",
+            "width": 346
+          },
+          {
+            "height": 173,
+            "id": "race-canvas-1",
+            "width": 346
+          }
+        ],
+        "height": 480,
+        "scrollWidth": 720,
+        "width": 720
+      }
+    },
+    {
+      "mission": "Власний рівень · Фінал неонових перемикань · Neon Switchyards · 6/6 · Не пройдено",
+      "index": 17,
+      "profile": "720x480 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 173,
+            "id": "race-canvas-0",
+            "width": 346
+          },
+          {
+            "height": 173,
+            "id": "race-canvas-1",
+            "width": 346
+          }
+        ],
+        "height": 480,
+        "scrollWidth": 720,
+        "width": 720
+      }
+    },
+    {
+      "mission": "Власний рівень · Резерв блукача · Доки блукачів · 1/6 · Не пройдено",
+      "index": 18,
+      "profile": "720x480 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 173,
+            "id": "race-canvas-0",
+            "width": 346
+          },
+          {
+            "height": 173,
+            "id": "race-canvas-1",
+            "width": 346
+          }
+        ],
+        "height": 480,
+        "scrollWidth": 720,
+        "width": 720
+      }
+    },
+    {
+      "mission": "Власний рівень · Вирішальна гонка доків · Доки блукачів · 6/6 · Не пройдено",
+      "index": 23,
+      "profile": "720x480 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 173,
+            "id": "race-canvas-0",
+            "width": 346
+          },
+          {
+            "height": 173,
+            "id": "race-canvas-1",
+            "width": 346
+          }
+        ],
+        "height": 480,
+        "scrollWidth": 720,
+        "width": 720
+      }
+    },
+    {
+      "mission": "Власний рівень · Скляний запас · Фазова обсерваторія · 1/6 · Не пройдено",
+      "index": 24,
+      "profile": "390x844 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 186,
+            "id": "race-canvas-0",
+            "width": 372
+          },
+          {
+            "height": 186,
+            "id": "race-canvas-1",
+            "width": 372
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 390,
+        "width": 390
+      }
+    },
+    {
+      "mission": "Власний рівень · Призмовий фотофініш · Фазова обсерваторія · 6/6 · Не пройдено",
+      "index": 29,
+      "profile": "390x844 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 186,
+            "id": "race-canvas-0",
+            "width": 372
+          },
+          {
+            "height": 186,
+            "id": "race-canvas-1",
+            "width": 372
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 390,
+        "width": 390
+      }
+    },
+    {
+      "mission": "Власний рівень · Ставка під попередженням · Ливарня під напругою · 1/6 · Не пройдено",
+      "index": 30,
+      "profile": "390x844 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 186,
+            "id": "race-canvas-0",
+            "width": 372
+          },
+          {
+            "height": 186,
+            "id": "race-canvas-1",
+            "width": 372
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 390,
+        "width": 390
+      }
+    },
+    {
+      "mission": "Власний рівень · Фініш післясвітіння · Ливарня під напругою · 6/6 · Не пройдено",
+      "index": 35,
+      "profile": "390x844 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 186,
+            "id": "race-canvas-0",
+            "width": 372
+          },
+          {
+            "height": 186,
+            "id": "race-canvas-1",
+            "width": 372
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 390,
+        "width": 390
+      }
+    },
+    {
+      "mission": "Власний рівень · Перевага першого ключа · Релейний архів · 1/6 · Не пройдено",
+      "index": 36,
+      "profile": "390x844 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 186,
+            "id": "race-canvas-0",
+            "width": 372
+          },
+          {
+            "height": 186,
+            "id": "race-canvas-1",
+            "width": 372
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 390,
+        "width": 390
+      }
+    },
+    {
+      "mission": "Власний рівень · Вирішальна гонка архіву · Релейний архів · 6/6 · Не пройдено",
+      "index": 41,
+      "profile": "390x844 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 186,
+            "id": "race-canvas-0",
+            "width": 372
+          },
+          {
+            "height": 186,
+            "id": "race-canvas-1",
+            "width": 372
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 390,
+        "width": 390
+      }
+    },
+    {
+      "mission": "Власний рівень · Ставка за вітром · Височини поперечного вітру · 1/6 · Не пройдено",
+      "index": 42,
+      "profile": "390x844 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 186,
+            "id": "race-canvas-0",
+            "width": 372
+          },
+          {
+            "height": 186,
+            "id": "race-canvas-1",
+            "width": 372
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 390,
+        "width": 390
+      }
+    },
+    {
+      "mission": "Власний рівень · Фініш на височині · Височини поперечного вітру · 6/6 · Не пройдено",
+      "index": 47,
+      "profile": "390x844 uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 186,
+            "id": "race-canvas-0",
+            "width": 372
+          },
+          {
+            "height": 186,
+            "id": "race-canvas-1",
+            "width": 372
+          }
+        ],
+        "height": 844,
+        "scrollWidth": 390,
+        "width": 390
+      }
+    },
+    {
+      "mission": "Власний рівень · Береговий розрахунок · Прикордонна варта · 1/6 · Не пройдено",
+      "index": 48,
+      "profile": "desktop uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 309,
+            "id": "race-canvas-0",
+            "width": 618
+          },
+          {
+            "height": 309,
+            "id": "race-canvas-1",
+            "width": 618
+          }
+        ],
+        "height": 720,
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    },
+    {
+      "mission": "Власний рівень · Фініш лінії варти · Прикордонна варта · 6/6 · Не пройдено",
+      "index": 53,
+      "profile": "desktop uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 309,
+            "id": "race-canvas-0",
+            "width": 618
+          },
+          {
+            "height": 309,
+            "id": "race-canvas-1",
+            "width": 618
+          }
+        ],
+        "height": 720,
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    },
+    {
+      "mission": "Власний рівень · Кам’яний запас · Розколоте узбережжя · 1 · 1/2 · Не пройдено",
+      "index": 54,
+      "profile": "desktop uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 309,
+            "id": "race-canvas-0",
+            "width": 618
+          },
+          {
+            "height": 309,
+            "id": "race-canvas-1",
+            "width": 618
+          }
+        ],
+        "height": 720,
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    },
+    {
+      "mission": "Власний рівень · Непорушний фініш · Розколоте узбережжя · 3 · 3/3 · Не пройдено",
+      "index": 59,
+      "profile": "desktop uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 309,
+            "id": "race-canvas-0",
+            "width": 618
+          },
+          {
+            "height": 309,
+            "id": "race-canvas-1",
+            "width": 618
+          }
+        ],
+        "height": 720,
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    },
+    {
+      "mission": "Власний рівень · Вибір щита · Цитадель вартового · 1/6 · Не пройдено",
+      "index": 60,
+      "profile": "desktop uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 309,
+            "id": "race-canvas-0",
+            "width": 618
+          },
+          {
+            "height": 309,
+            "id": "race-canvas-1",
+            "width": 618
+          }
+        ],
+        "height": 720,
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    },
+    {
+      "mission": "Власний рівень · Коронний фотофініш · Цитадель вартового · 6/6 · Не пройдено",
+      "index": 65,
+      "profile": "desktop uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 309,
+            "id": "race-canvas-0",
+            "width": 618
+          },
+          {
+            "height": 309,
+            "id": "race-canvas-1",
+            "width": 618
+          }
+        ],
+        "height": 720,
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    },
+    {
+      "mission": "Власний рівень · Полярна вигода · Полярне сяйво · 1 · 1/1 · Не пройдено",
+      "index": 66,
+      "profile": "desktop uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 309,
+            "id": "race-canvas-0",
+            "width": 618
+          },
+          {
+            "height": 309,
+            "id": "race-canvas-1",
+            "width": 618
+          }
+        ],
+        "height": 720,
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    },
+    {
+      "mission": "Власний рівень · Вирішальна гонка експедиції · Полярне сяйво · 5 · 2/2 · Не пройдено",
+      "index": 71,
+      "profile": "desktop uk large/plain reduced",
+      "layout": {
+        "boards": [
+          {
+            "height": 309,
+            "id": "race-canvas-0",
+            "width": 618
+          },
+          {
+            "height": 309,
+            "id": "race-canvas-1",
+            "width": 618
+          }
+        ],
+        "height": 720,
+        "scrollWidth": 1280,
+        "width": 1280
+      }
+    }
+  ],
+  "post_review_fixes": [
+    "Field Details closes its temporary reader and returns to the opener while remaining paused",
+    "Duel compact HUD retains player number and coverage goal",
+    "Duel replacement heading uses localized mission title",
+    "Ukrainian Neon Switchyards chapter/download captions corrected"
+  ],
+  "supplemental": {
+    "teamCurrent": 116,
+    "duelCurrent": 318,
+    "huntLessonsPerMode": 6,
+    "excluded": ["Pursuit prototypes", "Snake Hunt pending dedicated qualification"]
+  }
+}

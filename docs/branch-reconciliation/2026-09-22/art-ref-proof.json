@@ -1,0 +1,2146 @@
+{
+  "schemaVersion": 1,
+  "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04",
+  "generatedAt": "2026-09-22T15:33:38.214Z",
+  "scope": "Read-only reconciliation of seven local refs; only this evidence JSON authored. No branches/worktrees/remote/release state changed.",
+  "method": {
+    "inputs": [
+      "inventory.json",
+      "coverage.json",
+      "patch-index.json"
+    ],
+    "currentTree": "git ls-tree -r -z MAIN, match each branch-delta new blob OID to every path in main, not only same path",
+    "historicalIdentity": "git rev-list --objects MAIN (complete captured in Node subprocess; match all tested OIDs before emitting filtered output)",
+    "patchEquivalence": "Existing complete stable patch index; b8774ec6 versus a376b3293 independently recomputed with git show --format= --binary | git patch-id --stable",
+    "sourceInspection": "Read exact Git README/provenance and skill diffs; searched main docs/source for source names; no runtime test rerun or byte transformation",
+    "limits": [
+      "Blob absence proves byte uniqueness, not absence of semantically equivalent rewritten behavior.",
+      "No visual review of original images performed in this subtask; README quality claims are historical source statements, not newly verified.",
+      "Owner task unknown and no owner handoff obtained here. No branch is authorized to graduate from draft by this record.",
+      "All seven worktrees were clean in initial inventory; ignored caches and uncommitted changes since capture are outside this proof.",
+      "No GitHub release or Pages delivery is established for these unmerged source changes."
+    ]
+  },
+  "refs": [
+    {
+      "name": "art/retro-role-presentations",
+      "tip": "fbd314d7190c81e2ff67981e9006c49993d35d43",
+      "changes": [
+        {
+          "path": "authoring/library/retro-role-presentations/README.md",
+          "status": "A",
+          "blob": "80ef18ebf11c61f0279d31062729b8fd2206c9db",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/inspection/east-auto-transition.jpg",
+          "status": "A",
+          "blob": "bc527384ee0d9418a11758f9e56dd0c30cb80c5b",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/inspection/east-pixelated-settled.jpg",
+          "status": "A",
+          "blob": "9875c36583dd9d85916c77f86e2cf83a4eb8363d",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/inspection/game-scale-receipt.json",
+          "status": "A",
+          "blob": "034f3d1093bc6f626295c613d9518dbcb5be4ac6",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/inspection/index.html",
+          "status": "A",
+          "blob": "eec6cf3cb9a23e59810ad0c799a48ced175470c2",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/inspection/inspect-alpha.py",
+          "status": "A",
+          "blob": "fc8e0d2da7a813e9511675171aaf2d609ceeefee",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/inspection/north-auto.jpg",
+          "status": "A",
+          "blob": "ca0edeaa27db00d2ed9473b74e28972e8a0f694d",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/originals/bomber.png",
+          "status": "A",
+          "blob": "f852dc4fd7b5856bb4a8a5021bec018b3c6d6b21",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/originals/carrier.png",
+          "status": "A",
+          "blob": "dec2b379deaaac9d74e8261293b1c4f056e34426",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/originals/fiber.png",
+          "status": "A",
+          "blob": "5c85c83ff5431caa6e8fd213d94548b3279ca53e",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/originals/impact.png",
+          "status": "A",
+          "blob": "99f45698a52bc54b395836c89c86eadaffac9279",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/originals/interceptor.png",
+          "status": "A",
+          "blob": "400099638c0fdfd3dbbcc6d94aa880577dd05168",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/originals/scout.png",
+          "status": "A",
+          "blob": "2304d6ba4f703e2e5d8f3871f8ab6b2e10c67cb5",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/originals/trapper.png",
+          "status": "A",
+          "blob": "a0941f6144adffb3cf1631395babfa13cb09ef30",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/prompts/bomber.txt",
+          "status": "A",
+          "blob": "346d9feb1815a15abc60dd965401aee5d5e603ce",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/prompts/carrier.txt",
+          "status": "A",
+          "blob": "2ff98b13ac85aa4e55492680aa36e44d79b9035f",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/prompts/fiber.txt",
+          "status": "A",
+          "blob": "e6053caa8fb623fd5d8d62bda23e10008b9e476e",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/prompts/impact.txt",
+          "status": "A",
+          "blob": "64ec6301d182285c04e77d3b0004a8a018bbaff6",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/prompts/interceptor.txt",
+          "status": "A",
+          "blob": "a815d48c1d112953b14f4a1cd7f548043be67459",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/prompts/scout.txt",
+          "status": "A",
+          "blob": "f7d9b723235ae852996fa3c1f760c6c49650e67a",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/prompts/trapper.txt",
+          "status": "A",
+          "blob": "7cd7c3612e6d560720e6923737f34f5d691f576a",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/alpha-inspection.json",
+          "status": "A",
+          "blob": "fedf7b1145fe6a0d434fe15452b28614d70b3526",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/bomber.json",
+          "status": "A",
+          "blob": "7c792f268482308de30aec11441ce37a346df1d3",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/carrier.json",
+          "status": "A",
+          "blob": "94feb88daab333ef32b9fb109486593ea7bf8809",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/fiber.json",
+          "status": "A",
+          "blob": "77b409cbd5b61294a2b9ad733019f596cb0023e3",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/full-image-inspection.json",
+          "status": "A",
+          "blob": "09bdf8d6db9317b8bc90a07e33a44594fbfb8362",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/impact.json",
+          "status": "A",
+          "blob": "bb2c5dae162004cddb6c05863e6363b5bf7da05c",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/interceptor.json",
+          "status": "A",
+          "blob": "e802fae9bd8a12ef9a8186094db9ad7c2f5016d0",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/preparation.json",
+          "status": "A",
+          "blob": "b7adaae4229b30240c16dd24b49fd63cf2ae2558",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/scout.json",
+          "status": "A",
+          "blob": "86050c5afc772a0b8e14e146a988aec07901c1df",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/tool-responses.json",
+          "status": "A",
+          "blob": "d66a148c3d87e47f82ae26322bac6a0f9f9ad862",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/retro-role-presentations/provenance/trapper.json",
+          "status": "A",
+          "blob": "51e27657cd30fda847eede033932a96f7678f8d2",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        }
+      ],
+      "finding": "unique-source-candidates-not-in-main",
+      "scope": "Seven static Retro player-body originals, prompts, PNG/alpha provenance and CSS-scale evidence; README explicitly excludes runtime, rigs, collision and releases.",
+      "next": "Coordinate owner and retain as a source-only draft intake; no runtime adoption without its separate gates.",
+      "provenance": [
+        "authoring/library/retro-role-presentations/README.md"
+      ],
+      "ownerTask": null,
+      "base": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+      "worktrees": [
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/retro-role-presentations",
+          "head": "fbd314d7190c81e2ff67981e9006c49993d35d43",
+          "branch": "refs/heads/art/retro-role-presentations",
+          "dirty": false,
+          "statusEntries": []
+        }
+      ],
+      "patches": [
+        {
+          "commit": "fbd314d7190c81e2ff67981e9006c49993d35d43",
+          "patchId": "b5bb2e43b89d9a25983dccbba4acdddc87f9ce77",
+          "equivalentMainCommits": []
+        }
+      ],
+      "counts": {
+        "changedPaths": 32,
+        "exactMainBlobs": 0,
+        "mainHistoryBlobs": 0,
+        "unresolvedPaths": 32
+      },
+      "unresolvedUniquePaths": [
+        "authoring/library/retro-role-presentations/README.md",
+        "authoring/library/retro-role-presentations/inspection/east-auto-transition.jpg",
+        "authoring/library/retro-role-presentations/inspection/east-pixelated-settled.jpg",
+        "authoring/library/retro-role-presentations/inspection/game-scale-receipt.json",
+        "authoring/library/retro-role-presentations/inspection/index.html",
+        "authoring/library/retro-role-presentations/inspection/inspect-alpha.py",
+        "authoring/library/retro-role-presentations/inspection/north-auto.jpg",
+        "authoring/library/retro-role-presentations/originals/bomber.png",
+        "authoring/library/retro-role-presentations/originals/carrier.png",
+        "authoring/library/retro-role-presentations/originals/fiber.png",
+        "authoring/library/retro-role-presentations/originals/impact.png",
+        "authoring/library/retro-role-presentations/originals/interceptor.png",
+        "authoring/library/retro-role-presentations/originals/scout.png",
+        "authoring/library/retro-role-presentations/originals/trapper.png",
+        "authoring/library/retro-role-presentations/prompts/bomber.txt",
+        "authoring/library/retro-role-presentations/prompts/carrier.txt",
+        "authoring/library/retro-role-presentations/prompts/fiber.txt",
+        "authoring/library/retro-role-presentations/prompts/impact.txt",
+        "authoring/library/retro-role-presentations/prompts/interceptor.txt",
+        "authoring/library/retro-role-presentations/prompts/scout.txt",
+        "authoring/library/retro-role-presentations/prompts/trapper.txt",
+        "authoring/library/retro-role-presentations/provenance/alpha-inspection.json",
+        "authoring/library/retro-role-presentations/provenance/bomber.json",
+        "authoring/library/retro-role-presentations/provenance/carrier.json",
+        "authoring/library/retro-role-presentations/provenance/fiber.json",
+        "authoring/library/retro-role-presentations/provenance/full-image-inspection.json",
+        "authoring/library/retro-role-presentations/provenance/impact.json",
+        "authoring/library/retro-role-presentations/provenance/interceptor.json",
+        "authoring/library/retro-role-presentations/provenance/preparation.json",
+        "authoring/library/retro-role-presentations/provenance/scout.json",
+        "authoring/library/retro-role-presentations/provenance/tool-responses.json",
+        "authoring/library/retro-role-presentations/provenance/trapper.json"
+      ]
+    },
+    {
+      "name": "art/spend-role-presentations",
+      "tip": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
+      "changes": [
+        {
+          "path": "authoring/library/spend-role-presentations/README.md",
+          "status": "A",
+          "blob": "b1f3f8ceace67910a0e8d1c00cb052891bc629d6",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/inspection/east-pixelated.jpg",
+          "status": "A",
+          "blob": "a0d9d8adfa790fea33537f6c54bea3dfb27a86b9",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/inspection/game-scale-receipt.json",
+          "status": "A",
+          "blob": "c66dad4e2c3faab8741dbf101e0dc592789ce1ef",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/inspection/index.html",
+          "status": "A",
+          "blob": "e47a31986fe475728fd411342e34d7533bb632d2",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/inspection/inspect-alpha.py",
+          "status": "A",
+          "blob": "cc34e8cc1c7c18f0cd339c418a1b6bf62e9dc36e",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/inspection/north-auto.jpg",
+          "status": "A",
+          "blob": "ebba6f901f1545376f10a81bcb09931cb6a18f6e",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/originals/bomber.png",
+          "status": "A",
+          "blob": "520004eb6bd8f5b33ab5d64b76be6fa5f3351c92",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/originals/carrier.png",
+          "status": "A",
+          "blob": "1d17be7cd74f93649da56f44bbee96ba521a0a03",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/originals/fiber.png",
+          "status": "A",
+          "blob": "9ef911a49ce6598fa19969e787ec9a5f307da372",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/originals/impact.png",
+          "status": "A",
+          "blob": "e6c6594112e901abb91554effc08788b4636fbec",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/originals/interceptor.png",
+          "status": "A",
+          "blob": "05f6cc0ee24bd26a9de3f54ced680f7a60e23f9f",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/originals/scout.png",
+          "status": "A",
+          "blob": "30df68edcd28cf3cafbcd267c10d495a0b808d15",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/originals/trapper.png",
+          "status": "A",
+          "blob": "72f180d1fd1be519b0f4bff8651708e7df629b5d",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/prompts/bomber.txt",
+          "status": "A",
+          "blob": "efc068eebb86884e6f9bdb174f53c57cba355c51",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/prompts/carrier.txt",
+          "status": "A",
+          "blob": "6fbe54ab2da7a9bb909457120ded2c97781211cb",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/prompts/fiber.txt",
+          "status": "A",
+          "blob": "cb95f67a6aab0ebb8a26a4a0f24631833036cb30",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/prompts/impact.txt",
+          "status": "A",
+          "blob": "e87f5b487ecb5e4f00bec29918f42b8e62ab1296",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/prompts/interceptor.txt",
+          "status": "A",
+          "blob": "928f95f483c1f46031d1aeb5edc3536464c82b2e",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/prompts/scout.txt",
+          "status": "A",
+          "blob": "b6bdb976727a867f43117c7d5add3e841292df35",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/prompts/trapper.txt",
+          "status": "A",
+          "blob": "f7b38f5efdb7e4f7dd2fd3141a7e34ac1432df52",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/alpha-inspection.json",
+          "status": "A",
+          "blob": "e3b7d9f53d3d1980dec51931a7637d7d51ba57c8",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/bomber.json",
+          "status": "A",
+          "blob": "ad436cf23a4e1b68ea37f0057a44c06335b36e09",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/carrier.json",
+          "status": "A",
+          "blob": "5721fb44d9c2adf3d0026aacbd6bfeef359fe92e",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/fiber.json",
+          "status": "A",
+          "blob": "7babfe9a343ecb894cb59fe5403455245ca62334",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/full-image-inspection.json",
+          "status": "A",
+          "blob": "ac6b880e4ee1d1433f4c7d06f2f43bf476042e18",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/impact.json",
+          "status": "A",
+          "blob": "e2b44ae5aa74a4656522eb20e25b0f15d0948c20",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/interceptor.json",
+          "status": "A",
+          "blob": "ceb891a07e25b94726ec4fc8310c59ebe8401545",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/official-reference.json",
+          "status": "A",
+          "blob": "1955ff997db13c475bc73d1c406e870cf80c51fa",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/preparation.json",
+          "status": "A",
+          "blob": "192130326fae651e90e8ed2b7257cc3e043988d1",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/reference-theme.json",
+          "status": "A",
+          "blob": "ca08583fc4eb0335afdec5631707e2d44b833c77",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/role-briefs.json",
+          "status": "A",
+          "blob": "8e6b589e33f27c8c4f76b99ae80aaface5bfda5e",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/scout.json",
+          "status": "A",
+          "blob": "7d620f7e984462bcb909c0cd5e6f8f64f10f1405",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/tool-responses.json",
+          "status": "A",
+          "blob": "cdce56f915100e17e573606cfc7018560b20e412",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/spend-role-presentations/provenance/trapper.json",
+          "status": "A",
+          "blob": "d3573ab945a0142e16410f67e752cdaf0bdbf0eb",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        }
+      ],
+      "finding": "unique-source-candidates-not-in-main",
+      "scope": "Seven original Spend Network helper bodies and full prompts/provenance; source-only palette interpretation, no official mascot likeness or runtime claim.",
+      "next": "Coordinate owner and retain as source-only draft intake; do not ship or claim animation acceptance.",
+      "provenance": [
+        "authoring/library/spend-role-presentations/README.md"
+      ],
+      "ownerTask": null,
+      "base": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+      "worktrees": [
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/spend-role-presentations",
+          "head": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
+          "branch": "refs/heads/art/spend-role-presentations",
+          "dirty": false,
+          "statusEntries": []
+        }
+      ],
+      "patches": [
+        {
+          "commit": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
+          "patchId": "8a6419a37b96e44b74c4bd0dbd44dad8a205147f",
+          "equivalentMainCommits": []
+        }
+      ],
+      "counts": {
+        "changedPaths": 34,
+        "exactMainBlobs": 0,
+        "mainHistoryBlobs": 0,
+        "unresolvedPaths": 34
+      },
+      "unresolvedUniquePaths": [
+        "authoring/library/spend-role-presentations/README.md",
+        "authoring/library/spend-role-presentations/inspection/east-pixelated.jpg",
+        "authoring/library/spend-role-presentations/inspection/game-scale-receipt.json",
+        "authoring/library/spend-role-presentations/inspection/index.html",
+        "authoring/library/spend-role-presentations/inspection/inspect-alpha.py",
+        "authoring/library/spend-role-presentations/inspection/north-auto.jpg",
+        "authoring/library/spend-role-presentations/originals/bomber.png",
+        "authoring/library/spend-role-presentations/originals/carrier.png",
+        "authoring/library/spend-role-presentations/originals/fiber.png",
+        "authoring/library/spend-role-presentations/originals/impact.png",
+        "authoring/library/spend-role-presentations/originals/interceptor.png",
+        "authoring/library/spend-role-presentations/originals/scout.png",
+        "authoring/library/spend-role-presentations/originals/trapper.png",
+        "authoring/library/spend-role-presentations/prompts/bomber.txt",
+        "authoring/library/spend-role-presentations/prompts/carrier.txt",
+        "authoring/library/spend-role-presentations/prompts/fiber.txt",
+        "authoring/library/spend-role-presentations/prompts/impact.txt",
+        "authoring/library/spend-role-presentations/prompts/interceptor.txt",
+        "authoring/library/spend-role-presentations/prompts/scout.txt",
+        "authoring/library/spend-role-presentations/prompts/trapper.txt",
+        "authoring/library/spend-role-presentations/provenance/alpha-inspection.json",
+        "authoring/library/spend-role-presentations/provenance/bomber.json",
+        "authoring/library/spend-role-presentations/provenance/carrier.json",
+        "authoring/library/spend-role-presentations/provenance/fiber.json",
+        "authoring/library/spend-role-presentations/provenance/full-image-inspection.json",
+        "authoring/library/spend-role-presentations/provenance/impact.json",
+        "authoring/library/spend-role-presentations/provenance/interceptor.json",
+        "authoring/library/spend-role-presentations/provenance/official-reference.json",
+        "authoring/library/spend-role-presentations/provenance/preparation.json",
+        "authoring/library/spend-role-presentations/provenance/reference-theme.json",
+        "authoring/library/spend-role-presentations/provenance/role-briefs.json",
+        "authoring/library/spend-role-presentations/provenance/scout.json",
+        "authoring/library/spend-role-presentations/provenance/tool-responses.json",
+        "authoring/library/spend-role-presentations/provenance/trapper.json"
+      ]
+    },
+    {
+      "name": "art/ukraine-enemy-presentations",
+      "tip": "53d553485b8d7dc0f912959892947819a19d9803",
+      "changes": [
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/README.md",
+          "status": "A",
+          "blob": "ffb7ce2d3cbd75985b12ee2c142f05e329864ff5",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/inspection/east-pixelated.jpg",
+          "status": "A",
+          "blob": "761990f7f0a7ba7eb51c6f44f7bb56bc37ada7c2",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/inspection/game-scale-receipt.json",
+          "status": "A",
+          "blob": "4f5de2a034cd23627986a9ae8bbb3c4fddb06e50",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/inspection/index.html",
+          "status": "A",
+          "blob": "105d3c29b5af2cfebe4ef5e46a39dee2a9af8954",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/inspection/inspect-alpha.py",
+          "status": "A",
+          "blob": "114af2732e40c0dee80ecb9985eb4bff9232f452",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/inspection/north-auto.jpg",
+          "status": "A",
+          "blob": "2286ac5d54ed5a2d01fa67085731df29a6160dac",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/originals/border-patrol.png",
+          "status": "A",
+          "blob": "daec3a14fbbb37a1646e3d014950d2d33b8a3774",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/originals/bouncer.png",
+          "status": "A",
+          "blob": "eac8e89b78ade4c9b53a4d4657d1866d491ddd0a",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/originals/claimed-rover.png",
+          "status": "A",
+          "blob": "ee17ca72aaf66f7f62758d7af4186cff6732e1a6",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/originals/contour-patrol.png",
+          "status": "A",
+          "blob": "061d71d751941ec3c37dafaac4e1ca048fd6b884",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/originals/eroder.png",
+          "status": "A",
+          "blob": "eb620b48ec3b125ce8187bd5cd1c308650771538",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/originals/lane-boss.png",
+          "status": "A",
+          "blob": "c875bca77725d4a49d35c528e30672b0e3c7ad2a",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/originals/relay-sentinel.png",
+          "status": "A",
+          "blob": "372a1338d0a187b8fb9a17bc4bf96587676b2556",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/prompts/border-patrol.txt",
+          "status": "A",
+          "blob": "b74c3e02bbd8b1bbe8ba025d24102c4a90ace88a",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/prompts/bouncer.txt",
+          "status": "A",
+          "blob": "1a98eaff233844e15e2a86b2a0a281431f620954",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/prompts/claimed-rover.txt",
+          "status": "A",
+          "blob": "3a3fc0c7b02c6ffcc88739fb158aa46da51534c2",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/prompts/contour-patrol.txt",
+          "status": "A",
+          "blob": "899042999824deed94bc70f9ce38e7e51bfa4108",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/prompts/eroder.txt",
+          "status": "A",
+          "blob": "361d39334c6c6dfa5b23699816fe228c49429ca4",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/prompts/lane-boss.txt",
+          "status": "A",
+          "blob": "3d5bbd868429b04199c452f8e1d8836c8d568055",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/prompts/relay-sentinel.txt",
+          "status": "A",
+          "blob": "df743f8fb7bb041aceabfe90de195abe8ad125eb",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/alpha-inspection.json",
+          "status": "A",
+          "blob": "7e2d50cd1bd68dd36e3b904afd2fc3188abf7e49",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/border-patrol.json",
+          "status": "A",
+          "blob": "a96b38451cafff843eae17a50ac9204fbb8aa0d7",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/bouncer.json",
+          "status": "A",
+          "blob": "95022d980866edebd2ae66ea5de4afc1b1cefece",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/claimed-rover.json",
+          "status": "A",
+          "blob": "f585c7fa7a8bc1e6676ad3664d975bbb3ae5871c",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/contour-patrol.json",
+          "status": "A",
+          "blob": "17e0be065bfd3e25f461e7d0dddcfded6d900562",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/eroder.json",
+          "status": "A",
+          "blob": "231788aeadc981d7e73df67a9453a8b7241f8f61",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/full-image-inspection.json",
+          "status": "A",
+          "blob": "5f16de133c0ad8b473ad74f0bccd16f807b62844",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/lane-boss.json",
+          "status": "A",
+          "blob": "21db5cba91345026721bf60bbe6f7881bb82dd89",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/preparation.json",
+          "status": "A",
+          "blob": "b8e1dc6a9a01c7d2ef18389fe5d1dad9a2b19c34",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/relay-sentinel.json",
+          "status": "A",
+          "blob": "7a3336b8817dde39c1dbdf38dfbe71d1ce53561c",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/role-briefs.json",
+          "status": "A",
+          "blob": "ef27bdfc34bfa0b4f12972a682f25ef77c9eaef4",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/roles.json",
+          "status": "A",
+          "blob": "e3ee0f2c251f51847c322a2644d987fc03e0cd24",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/roles.planned.json",
+          "status": "A",
+          "blob": "7bbae5f20c8220ae7c4c04004c2eebcfe26463b4",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/ukraine-enemy-presentations/provenance/tool-response-hints.json",
+          "status": "A",
+          "blob": "f17819728d393c20d12b431ba93c748c8ab3d828",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        }
+      ],
+      "finding": "unique-source-candidates-not-in-main",
+      "scope": "Seven Ukraine Atlas enemy originals with existing role IDs; source README explicitly holds cohort outside frozen v0.42 and requires runtime/memory/readability review.",
+      "next": "Coordinate owner and retain source-only draft intake, preserving all originals and qualifications.",
+      "provenance": [
+        "authoring/library/ukraine-enemy-presentations/README.md"
+      ],
+      "ownerTask": null,
+      "base": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+      "worktrees": [
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations",
+          "head": "53d553485b8d7dc0f912959892947819a19d9803",
+          "branch": "refs/heads/art/ukraine-enemy-presentations",
+          "dirty": false,
+          "statusEntries": []
+        }
+      ],
+      "patches": [
+        {
+          "commit": "53d553485b8d7dc0f912959892947819a19d9803",
+          "patchId": "d2f680ec379287906745da282bc588177a2f191f",
+          "equivalentMainCommits": []
+        }
+      ],
+      "counts": {
+        "changedPaths": 34,
+        "exactMainBlobs": 0,
+        "mainHistoryBlobs": 0,
+        "unresolvedPaths": 34
+      },
+      "unresolvedUniquePaths": [
+        "authoring/library/ukraine-enemy-presentations/README.md",
+        "authoring/library/ukraine-enemy-presentations/inspection/east-pixelated.jpg",
+        "authoring/library/ukraine-enemy-presentations/inspection/game-scale-receipt.json",
+        "authoring/library/ukraine-enemy-presentations/inspection/index.html",
+        "authoring/library/ukraine-enemy-presentations/inspection/inspect-alpha.py",
+        "authoring/library/ukraine-enemy-presentations/inspection/north-auto.jpg",
+        "authoring/library/ukraine-enemy-presentations/originals/border-patrol.png",
+        "authoring/library/ukraine-enemy-presentations/originals/bouncer.png",
+        "authoring/library/ukraine-enemy-presentations/originals/claimed-rover.png",
+        "authoring/library/ukraine-enemy-presentations/originals/contour-patrol.png",
+        "authoring/library/ukraine-enemy-presentations/originals/eroder.png",
+        "authoring/library/ukraine-enemy-presentations/originals/lane-boss.png",
+        "authoring/library/ukraine-enemy-presentations/originals/relay-sentinel.png",
+        "authoring/library/ukraine-enemy-presentations/prompts/border-patrol.txt",
+        "authoring/library/ukraine-enemy-presentations/prompts/bouncer.txt",
+        "authoring/library/ukraine-enemy-presentations/prompts/claimed-rover.txt",
+        "authoring/library/ukraine-enemy-presentations/prompts/contour-patrol.txt",
+        "authoring/library/ukraine-enemy-presentations/prompts/eroder.txt",
+        "authoring/library/ukraine-enemy-presentations/prompts/lane-boss.txt",
+        "authoring/library/ukraine-enemy-presentations/prompts/relay-sentinel.txt",
+        "authoring/library/ukraine-enemy-presentations/provenance/alpha-inspection.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/border-patrol.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/bouncer.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/claimed-rover.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/contour-patrol.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/eroder.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/full-image-inspection.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/lane-boss.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/preparation.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/relay-sentinel.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/role-briefs.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/roles.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/roles.planned.json",
+        "authoring/library/ukraine-enemy-presentations/provenance/tool-response-hints.json"
+      ]
+    },
+    {
+      "name": "feat/fpv-enemy-atlas-study",
+      "tip": "2ce8d1a67baa8fe5ed23ad93f7ed617c1416cde5",
+      "changes": [
+        {
+          "path": "authoring/library/fpv-enemy-atlas-study/PROMPTS.md",
+          "status": "A",
+          "blob": "6a30638abe771e0eaf069c14a020ae3fe3b19162",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/fpv-enemy-atlas-study/README.md",
+          "status": "A",
+          "blob": "36b08bde4fc5e9e816d52cf28341f6ff5cda11fc",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/fpv-enemy-atlas-study/RESEARCH.md",
+          "status": "A",
+          "blob": "66bb9f59e392226e5117e2675b931c707f91ec65",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/fpv-enemy-atlas-study/SOURCE-PLAN.md",
+          "status": "A",
+          "blob": "5dffbee5d7fe3844f687e4108e68f5776520f740",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/fpv-enemy-atlas-study/index.html",
+          "status": "A",
+          "blob": "d85b7b9b21eb6eb14bf9a33c5906083d2780070d",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/fpv-enemy-atlas-study/originals/seven-enemies-v1.png",
+          "status": "A",
+          "blob": "f984ade504d89abd80af01131e51b3fb379fa698",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/fpv-enemy-atlas-study/preview.mjs",
+          "status": "A",
+          "blob": "753416fdc8e0f0ab17384088387fc17fd89196c8",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/fpv-enemy-atlas-study/study.json",
+          "status": "A",
+          "blob": "dc6420184abf38c3cbff8ee2c72af8dd4cd0452c",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+          "status": "M",
+          "blob": "07ec3b95dc95ce83139c4fef60cebd908437fc15",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        }
+      ],
+      "finding": "unique-rejected-study-reference-owner-retention-required",
+      "scope": "README explicitly calls atlas a rejected compact-production candidate retained as detailed reference; it has no runtime acceptance. Also adds a 4-line source-study instruction block to Asset Creator skill.",
+      "next": "Ask owner to confirm intentional historical-study retention; otherwise draft intake labelled rejected/source-study, never auto-adopt its atlas as gameplay.",
+      "provenance": [
+        "authoring/library/fpv-enemy-atlas-study/README.md",
+        "authoring/library/fpv-enemy-atlas-study/SOURCE-PLAN.md",
+        "authoring/skills/xonix-asset-creator/SKILL.md"
+      ],
+      "skillDeltaPatchId": "16aae18ec62c08939d3fd205098e5872bcd4c6f1",
+      "ownerTask": null,
+      "base": "57bee98f23a6bf5882f19065f1d70473ece7a12e",
+      "worktrees": [
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/fpv-enemy-atlas-study",
+          "head": "2ce8d1a67baa8fe5ed23ad93f7ed617c1416cde5",
+          "branch": "refs/heads/feat/fpv-enemy-atlas-study",
+          "dirty": false,
+          "statusEntries": []
+        }
+      ],
+      "patches": [
+        {
+          "commit": "2ce8d1a67baa8fe5ed23ad93f7ed617c1416cde5",
+          "patchId": "f615ec4b3458a88632f19a2c21ef8e57ace29fce",
+          "equivalentMainCommits": []
+        }
+      ],
+      "counts": {
+        "changedPaths": 9,
+        "exactMainBlobs": 0,
+        "mainHistoryBlobs": 0,
+        "unresolvedPaths": 9
+      },
+      "unresolvedUniquePaths": [
+        "authoring/library/fpv-enemy-atlas-study/PROMPTS.md",
+        "authoring/library/fpv-enemy-atlas-study/README.md",
+        "authoring/library/fpv-enemy-atlas-study/RESEARCH.md",
+        "authoring/library/fpv-enemy-atlas-study/SOURCE-PLAN.md",
+        "authoring/library/fpv-enemy-atlas-study/index.html",
+        "authoring/library/fpv-enemy-atlas-study/originals/seven-enemies-v1.png",
+        "authoring/library/fpv-enemy-atlas-study/preview.mjs",
+        "authoring/library/fpv-enemy-atlas-study/study.json",
+        "authoring/skills/xonix-asset-creator/SKILL.md"
+      ]
+    },
+    {
+      "name": "feat/moving-edges",
+      "tip": "1dc861d6bf4cc4d49c5dcc2e419075d9afd7c19e",
+      "changes": [
+        {
+          "path": "authoring/library/moving-edges/AI-REQUEST.md",
+          "status": "A",
+          "blob": "482687cbba042da0e85b4d32d0f1a9c8198ebf59",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/README.md",
+          "status": "A",
+          "blob": "88701d55ce5acb5e23bc0ae9ad0cca4be662fa97",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/build.mjs",
+          "status": "A",
+          "blob": "93d1d46532e99f69a0c834f8358adb3862d631b4",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/controls.mjs",
+          "status": "A",
+          "blob": "1c8ed43105a55d4fd96dde5d4f0bbeb04273f020",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/layouts.json",
+          "status": "A",
+          "blob": "4f3def773ab900e91ad14826cdb8bb3251a86ea2",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/mechanic-cases.json",
+          "status": "A",
+          "blob": "246ba47b9c3e7455d8c8b6b4a8ab4e1bbd47e87e",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/mechanics-plan.json",
+          "status": "A",
+          "blob": "b03e4f49948fb36e905c79ec8902a7f4c40a17b9",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/mechanics-proof.json",
+          "status": "A",
+          "blob": "6d1c98e36dd99d4936d15e59fa11d4d7a4901173",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/mechanics.mjs",
+          "status": "A",
+          "blob": "e28cdcbd670894325da280b7c9b02f1b3058dcbd",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/routes.json",
+          "status": "A",
+          "blob": "b30ea65797a5f23a68995df226adaccce31365f7",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/test-mechanics.mjs",
+          "status": "A",
+          "blob": "3f0b412c18baef4fd8561c221c02e9cbd88d71fc",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/test-source.mjs",
+          "status": "A",
+          "blob": "5b07877bde0061c33900f2436371ce820ed847be",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/verify.mjs",
+          "status": "A",
+          "blob": "c5b54919cf17d5d1860ea53ccaac4aa087cb1fb5",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        }
+      ],
+      "finding": "exactly-contained-in-unmerged-successor-not-main",
+      "scope": "Three source geometry families; source README limits its route/mechanic certificates to Scout seed1 and excludes native/human quality, runtime catalog and release approval.",
+      "next": "Account once through feat/moving-edges-art intake; this is not delivered/main acceptance.",
+      "provenance": [
+        "authoring/library/moving-edges/README.md"
+      ],
+      "successor": {
+        "ref": "feat/moving-edges-art",
+        "tip": "15882073cd8329b0c117c4716694b588ac4c4d05",
+        "subtree": "authoring/library/moving-edges",
+        "treeOid": "3d47b6e07a8fde58a44223fdfbdee10a6b8f4c64",
+        "proof": "Both tips resolve this subtree to the same tree OID; git diff --name-status between tips scoped to subtree is empty. Original geometry commit is in successor ancestry."
+      },
+      "ownerTask": null,
+      "base": "3428aa1d2f345f78939df0355a853eac84f52ca2",
+      "worktrees": [
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/moving-edges",
+          "head": "1dc861d6bf4cc4d49c5dcc2e419075d9afd7c19e",
+          "branch": "refs/heads/feat/moving-edges",
+          "dirty": false,
+          "statusEntries": []
+        }
+      ],
+      "patches": [
+        {
+          "commit": "1dc861d6bf4cc4d49c5dcc2e419075d9afd7c19e",
+          "patchId": "c7640e9b850d87670ed94d854724d8fc24e2f4be",
+          "equivalentMainCommits": []
+        }
+      ],
+      "counts": {
+        "changedPaths": 13,
+        "exactMainBlobs": 0,
+        "mainHistoryBlobs": 0,
+        "unresolvedPaths": 13
+      },
+      "unresolvedUniquePaths": [
+        "authoring/library/moving-edges/AI-REQUEST.md",
+        "authoring/library/moving-edges/README.md",
+        "authoring/library/moving-edges/build.mjs",
+        "authoring/library/moving-edges/controls.mjs",
+        "authoring/library/moving-edges/layouts.json",
+        "authoring/library/moving-edges/mechanic-cases.json",
+        "authoring/library/moving-edges/mechanics-plan.json",
+        "authoring/library/moving-edges/mechanics-proof.json",
+        "authoring/library/moving-edges/mechanics.mjs",
+        "authoring/library/moving-edges/routes.json",
+        "authoring/library/moving-edges/test-mechanics.mjs",
+        "authoring/library/moving-edges/test-source.mjs",
+        "authoring/library/moving-edges/verify.mjs"
+      ]
+    },
+    {
+      "name": "feat/moving-edges-art",
+      "tip": "15882073cd8329b0c117c4716694b588ac4c4d05",
+      "changes": [
+        {
+          "path": "authoring/library/countercurrent/README.md",
+          "status": "A",
+          "blob": "b8dd718efcd2b00a85038d66651c84daaa924fa0",
+          "mainPaths": [
+            "authoring/library/countercurrent/README.md"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/README.md"
+        },
+        {
+          "path": "authoring/library/countercurrent/build.mjs",
+          "status": "A",
+          "blob": "dfde7e33a136abbf9cab25ca80feaa47dfca4271",
+          "mainPaths": [
+            "authoring/library/countercurrent/build.mjs"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/build.mjs"
+        },
+        {
+          "path": "authoring/library/countercurrent/controls.mjs",
+          "status": "A",
+          "blob": "eecd65f3cd049ae2789038c3bc9fcf64db46e1ac",
+          "mainPaths": [
+            "authoring/library/countercurrent/controls.mjs"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/controls.mjs"
+        },
+        {
+          "path": "authoring/library/countercurrent/layouts.json",
+          "status": "A",
+          "blob": "eb56c3248de1e5ed80cacaecd1f73432a12d46cf",
+          "mainPaths": [
+            "authoring/library/countercurrent/layouts.json"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/layouts.json"
+        },
+        {
+          "path": "authoring/library/countercurrent/mechanics.json",
+          "status": "A",
+          "blob": "8b0441aa2a3277c6a6a605261fad4755784906a0",
+          "mainPaths": [
+            "authoring/library/countercurrent/mechanics.json"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/mechanics.json"
+        },
+        {
+          "path": "authoring/library/countercurrent/mechanics.mjs",
+          "status": "A",
+          "blob": "581be2715fccb1278cc773012c46f13ce5b940c7",
+          "mainPaths": [
+            "authoring/library/countercurrent/mechanics.mjs"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/mechanics.mjs"
+        },
+        {
+          "path": "authoring/library/countercurrent/routes.json",
+          "status": "A",
+          "blob": "c98dd952a04f3b6d5cf5f11b8120a68df2951b93",
+          "mainPaths": [
+            "authoring/library/countercurrent/routes.json"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/routes.json"
+        },
+        {
+          "path": "authoring/library/countercurrent/test-proof.mjs",
+          "status": "A",
+          "blob": "6ad9ad7fc5087cba67793061099c1a32cb8f56f5",
+          "mainPaths": [
+            "authoring/library/countercurrent/test-proof.mjs"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/test-proof.mjs"
+        },
+        {
+          "path": "authoring/library/countercurrent/test-source.mjs",
+          "status": "A",
+          "blob": "ef2cde68c89e7377c3b686540f443aff6cd6f572",
+          "mainPaths": [
+            "authoring/library/countercurrent/test-source.mjs"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/test-source.mjs"
+        },
+        {
+          "path": "authoring/library/countercurrent/verify.mjs",
+          "status": "A",
+          "blob": "92b1aa2686c3cb7d59b96cce5ad48de1128f9f2e",
+          "mainPaths": [
+            "authoring/library/countercurrent/verify.mjs"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/countercurrent/verify.mjs"
+        },
+        {
+          "path": "authoring/library/moving-edges-art/README.md",
+          "status": "A",
+          "blob": "9f4b3433cca70f4f5ac08fed4e164048aa321fde",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/derivatives.json",
+          "status": "A",
+          "blob": "fb91e84385930476bef38309305c86c8b102bb56",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/generation-results.json",
+          "status": "A",
+          "blob": "e0ac643fbc644706fa181607ba9430e65d5bd724",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/index.html",
+          "status": "A",
+          "blob": "f3ff11ee96d1c07d228b2919352df1e601848f05",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/layout-briefs.json",
+          "status": "A",
+          "blob": "2a6efd37a6c197d394dadae89a20d59d6294b923",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/manifest.json",
+          "status": "A",
+          "blob": "b600c4a62a02be897c13f0c38e6e36b7e74748fb",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/breakwater-return-coupa.png",
+          "status": "A",
+          "blob": "44e664ba3c6e2d6ed5c3730e498678538c0bee4c",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/breakwater-return-fpv.png",
+          "status": "A",
+          "blob": "b8fd4bb970fe678ee8b7680683b7ab621800211f",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/breakwater-return-retro.png",
+          "status": "A",
+          "blob": "a0d74e144ca6f6340bed255aa9d54ad73e9e40aa",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/breakwater-return-ukraine.png",
+          "status": "A",
+          "blob": "3d6d17dcaef851152181ae38b5d8ffeaf073c13a",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/survey-wheel-coupa.png",
+          "status": "A",
+          "blob": "9a62b7c2f8399a4ebabc9002a729b4bd3f14d581",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/survey-wheel-fpv.png",
+          "status": "A",
+          "blob": "8b74f7e24e73fbd24c08e7c2bc27e7079e67fe56",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/survey-wheel-retro.png",
+          "status": "A",
+          "blob": "b0d4a1dba9159618c57c11c94cf858b931fcc9d2",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/survey-wheel-ukraine.png",
+          "status": "A",
+          "blob": "ff5f74f3c4149128b89b21808e5344b16affc6a9",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/terrace-stitch-coupa.png",
+          "status": "A",
+          "blob": "2283db32171cd3a969d3b5bb4d9679a22ae2e7c3",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/terrace-stitch-fpv.png",
+          "status": "A",
+          "blob": "f62fd9e2dad335d9f4e9ad184bf0cb62e75c9ace",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/terrace-stitch-retro.png",
+          "status": "A",
+          "blob": "410be0b81941aa056f38db4820c886fea094c6cb",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/originals/terrace-stitch-ukraine.png",
+          "status": "A",
+          "blob": "5d1fb225e6afea8b65c521df4fcd8918ef69133f",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/prompts.json",
+          "status": "A",
+          "blob": "ca61105e8b6b48b10b47b915b89d020fb8d64830",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/provenance.json",
+          "status": "A",
+          "blob": "100574fb8067237ed0c3de1370545f2cc10ac6b8",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/render-previews.mjs",
+          "status": "A",
+          "blob": "8c6f132e9e78fe4bdb77dac4cf2810e761367ab8",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/breakwater-return-coupa.jpg",
+          "status": "A",
+          "blob": "d6c4f432b46fc055728cc1d6e16ba0aa34aa6ed1",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/breakwater-return-fpv.jpg",
+          "status": "A",
+          "blob": "012a7eec76a75000ff340bb881eff121be90fba3",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/breakwater-return-retro.jpg",
+          "status": "A",
+          "blob": "c0532bbd6f3e1bf63c37136ad727d7afa8d98995",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/breakwater-return-ukraine.jpg",
+          "status": "A",
+          "blob": "77d9e4532dc8d471e7c007e93f3e1055a77adcbc",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/survey-wheel-coupa.jpg",
+          "status": "A",
+          "blob": "98b880292d8eeb26498f4bb5cba874395ca291e1",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/survey-wheel-fpv.jpg",
+          "status": "A",
+          "blob": "125c2658f54c6554adf814d32ebfdf5d19159b11",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/survey-wheel-retro.jpg",
+          "status": "A",
+          "blob": "9560ea953d273df648061a010fd58271b7a83d80",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/survey-wheel-ukraine.jpg",
+          "status": "A",
+          "blob": "a519ab358bdb7267bc98cb74c964799579eb7afc",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/terrace-stitch-coupa.jpg",
+          "status": "A",
+          "blob": "3858b818a1a58c0d6f59584551f3c6e9adf4a871",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/terrace-stitch-fpv.jpg",
+          "status": "A",
+          "blob": "b8bb446953321a114d7939ca919169c938c8547d",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/terrace-stitch-retro.jpg",
+          "status": "A",
+          "blob": "4848a978d924adf0c8f0442f2eceb7adc2a860af",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/thumbnails/terrace-stitch-ukraine.jpg",
+          "status": "A",
+          "blob": "46d5b358007796e91017e949d127e0c2a80c4b1b",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/verification.json",
+          "status": "A",
+          "blob": "46aaf64ace04930625209237949290a0899ba651",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-art/verify.mjs",
+          "status": "A",
+          "blob": "ccd43105119755afc8ef323f2848e7904014060f",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/README.md",
+          "status": "A",
+          "blob": "62b2758f395d2b2db3a7f16ebf5aabb7ea6a8d91",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/build.mjs",
+          "status": "A",
+          "blob": "bb27a8604e3fba8abe1e6df66c2802c65d587534",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/descriptors/coupa.json",
+          "status": "A",
+          "blob": "d4ea3239f46f5af7ef5ab87cc5b208863f8dcced",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/descriptors/fpv.json",
+          "status": "A",
+          "blob": "803febe54fdf78e8dc9a49a7c93b159824440d60",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/descriptors/retro.json",
+          "status": "A",
+          "blob": "999a0f7c61483d3ecf343c094ce0461fb5486ff6",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/descriptors/ukraine.json",
+          "status": "A",
+          "blob": "36de0fefdd1dc4bcca74815177f70265ec2033aa",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/editions.json",
+          "status": "A",
+          "blob": "6ff2b1435791cfa748a274051edc86eeb15021c3",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/routes.json",
+          "status": "A",
+          "blob": "1bf61a76061600570102b88088b6b606680c7afe",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/test-chapters.mjs",
+          "status": "A",
+          "blob": "a8575916dfad187619c95421b2bfc8ed9dd55e34",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges-chapters/verify.mjs",
+          "status": "A",
+          "blob": "52608066d2a15c8f9f2024f0b6548c4bc3a344f3",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/AI-REQUEST.md",
+          "status": "A",
+          "blob": "482687cbba042da0e85b4d32d0f1a9c8198ebf59",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/README.md",
+          "status": "A",
+          "blob": "88701d55ce5acb5e23bc0ae9ad0cca4be662fa97",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/build.mjs",
+          "status": "A",
+          "blob": "93d1d46532e99f69a0c834f8358adb3862d631b4",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/controls.mjs",
+          "status": "A",
+          "blob": "1c8ed43105a55d4fd96dde5d4f0bbeb04273f020",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/layouts.json",
+          "status": "A",
+          "blob": "4f3def773ab900e91ad14826cdb8bb3251a86ea2",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/mechanic-cases.json",
+          "status": "A",
+          "blob": "246ba47b9c3e7455d8c8b6b4a8ab4e1bbd47e87e",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/mechanics-plan.json",
+          "status": "A",
+          "blob": "b03e4f49948fb36e905c79ec8902a7f4c40a17b9",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/mechanics-proof.json",
+          "status": "A",
+          "blob": "6d1c98e36dd99d4936d15e59fa11d4d7a4901173",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/mechanics.mjs",
+          "status": "A",
+          "blob": "e28cdcbd670894325da280b7c9b02f1b3058dcbd",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/routes.json",
+          "status": "A",
+          "blob": "b30ea65797a5f23a68995df226adaccce31365f7",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/test-mechanics.mjs",
+          "status": "A",
+          "blob": "3f0b412c18baef4fd8561c221c02e9cbd88d71fc",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/test-source.mjs",
+          "status": "A",
+          "blob": "5b07877bde0061c33900f2436371ce820ed847be",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/library/moving-edges/verify.mjs",
+          "status": "A",
+          "blob": "c5b54919cf17d5d1860ea53ccaac4aa087cb1fb5",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        }
+      ],
+      "finding": "unique-unadopted-chapter-source-with-inherited-merged-countercurrent",
+      "scope": "Twelve original stills and four source chapter owners, paired with exact Moving Edges geometry. README explicitly excludes runtime catalog, native play, production assessment and public qualification.",
+      "next": "Coordinate source-owner intake; carry geometry/art/compiler as one source scope. Do not replay the 10 inherited Countercurrent files already on main.",
+      "provenance": [
+        "authoring/library/moving-edges-chapters/README.md",
+        "authoring/library/moving-edges-art/README.md",
+        "docs/production-plan.md:39 at main",
+        "docs/implementation-roadmap.md:24 at main"
+      ],
+      "inheritedMainCommit": "3428aa1d2f345f78939df0355a853eac84f52ca2",
+      "ownerTask": null,
+      "base": "bd2b0533e8a6384e20b10b98b780cf815b3388c9",
+      "worktrees": [
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/moving-edges-art",
+          "head": "15882073cd8329b0c117c4716694b588ac4c4d05",
+          "branch": "refs/heads/feat/moving-edges-art",
+          "dirty": false,
+          "statusEntries": []
+        }
+      ],
+      "patches": [
+        {
+          "commit": "15882073cd8329b0c117c4716694b588ac4c4d05",
+          "patchId": "43985962aca92f6b23c3ebd4c66ebab7310cf5ab",
+          "equivalentMainCommits": []
+        },
+        {
+          "commit": "bed5349c8ff244371e8698d973e58a848c2e6f83",
+          "patchId": null,
+          "equivalentMainCommits": []
+        },
+        {
+          "commit": "601963d14aca2bec573991d1d2cac2a20c1b4602",
+          "patchId": "379b4ec39213c35a3a7094817b38226b37cf5271",
+          "equivalentMainCommits": []
+        },
+        {
+          "commit": "1dc861d6bf4cc4d49c5dcc2e419075d9afd7c19e",
+          "patchId": "c7640e9b850d87670ed94d854724d8fc24e2f4be",
+          "equivalentMainCommits": []
+        }
+      ],
+      "counts": {
+        "changedPaths": 68,
+        "exactMainBlobs": 10,
+        "mainHistoryBlobs": 10,
+        "unresolvedPaths": 58
+      },
+      "unresolvedUniquePaths": [
+        "authoring/library/moving-edges-art/README.md",
+        "authoring/library/moving-edges-art/derivatives.json",
+        "authoring/library/moving-edges-art/generation-results.json",
+        "authoring/library/moving-edges-art/index.html",
+        "authoring/library/moving-edges-art/layout-briefs.json",
+        "authoring/library/moving-edges-art/manifest.json",
+        "authoring/library/moving-edges-art/originals/breakwater-return-coupa.png",
+        "authoring/library/moving-edges-art/originals/breakwater-return-fpv.png",
+        "authoring/library/moving-edges-art/originals/breakwater-return-retro.png",
+        "authoring/library/moving-edges-art/originals/breakwater-return-ukraine.png",
+        "authoring/library/moving-edges-art/originals/survey-wheel-coupa.png",
+        "authoring/library/moving-edges-art/originals/survey-wheel-fpv.png",
+        "authoring/library/moving-edges-art/originals/survey-wheel-retro.png",
+        "authoring/library/moving-edges-art/originals/survey-wheel-ukraine.png",
+        "authoring/library/moving-edges-art/originals/terrace-stitch-coupa.png",
+        "authoring/library/moving-edges-art/originals/terrace-stitch-fpv.png",
+        "authoring/library/moving-edges-art/originals/terrace-stitch-retro.png",
+        "authoring/library/moving-edges-art/originals/terrace-stitch-ukraine.png",
+        "authoring/library/moving-edges-art/prompts.json",
+        "authoring/library/moving-edges-art/provenance.json",
+        "authoring/library/moving-edges-art/render-previews.mjs",
+        "authoring/library/moving-edges-art/thumbnails/breakwater-return-coupa.jpg",
+        "authoring/library/moving-edges-art/thumbnails/breakwater-return-fpv.jpg",
+        "authoring/library/moving-edges-art/thumbnails/breakwater-return-retro.jpg",
+        "authoring/library/moving-edges-art/thumbnails/breakwater-return-ukraine.jpg",
+        "authoring/library/moving-edges-art/thumbnails/survey-wheel-coupa.jpg",
+        "authoring/library/moving-edges-art/thumbnails/survey-wheel-fpv.jpg",
+        "authoring/library/moving-edges-art/thumbnails/survey-wheel-retro.jpg",
+        "authoring/library/moving-edges-art/thumbnails/survey-wheel-ukraine.jpg",
+        "authoring/library/moving-edges-art/thumbnails/terrace-stitch-coupa.jpg",
+        "authoring/library/moving-edges-art/thumbnails/terrace-stitch-fpv.jpg",
+        "authoring/library/moving-edges-art/thumbnails/terrace-stitch-retro.jpg",
+        "authoring/library/moving-edges-art/thumbnails/terrace-stitch-ukraine.jpg",
+        "authoring/library/moving-edges-art/verification.json",
+        "authoring/library/moving-edges-art/verify.mjs",
+        "authoring/library/moving-edges-chapters/README.md",
+        "authoring/library/moving-edges-chapters/build.mjs",
+        "authoring/library/moving-edges-chapters/descriptors/coupa.json",
+        "authoring/library/moving-edges-chapters/descriptors/fpv.json",
+        "authoring/library/moving-edges-chapters/descriptors/retro.json",
+        "authoring/library/moving-edges-chapters/descriptors/ukraine.json",
+        "authoring/library/moving-edges-chapters/editions.json",
+        "authoring/library/moving-edges-chapters/routes.json",
+        "authoring/library/moving-edges-chapters/test-chapters.mjs",
+        "authoring/library/moving-edges-chapters/verify.mjs",
+        "authoring/library/moving-edges/AI-REQUEST.md",
+        "authoring/library/moving-edges/README.md",
+        "authoring/library/moving-edges/build.mjs",
+        "authoring/library/moving-edges/controls.mjs",
+        "authoring/library/moving-edges/layouts.json",
+        "authoring/library/moving-edges/mechanic-cases.json",
+        "authoring/library/moving-edges/mechanics-plan.json",
+        "authoring/library/moving-edges/mechanics-proof.json",
+        "authoring/library/moving-edges/mechanics.mjs",
+        "authoring/library/moving-edges/routes.json",
+        "authoring/library/moving-edges/test-mechanics.mjs",
+        "authoring/library/moving-edges/test-source.mjs",
+        "authoring/library/moving-edges/verify.mjs"
+      ]
+    },
+    {
+      "name": "feat/sprite-derivative-tool",
+      "tip": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",
+      "changes": [
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/README.md",
+          "status": "A",
+          "blob": "b81cf5a94a06aa1b6873b7dd7f3d5a3e976c503d",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/README.md"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/README.md"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/bindings.json",
+          "status": "A",
+          "blob": "6c80684ee8aa2ecf6018789a43d9962b0a8d28ac",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/bindings.json"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/bindings.json"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png",
+          "status": "A",
+          "blob": "987410cba0d56874a461f5bace2206c8c0d02169",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/atlas-carved-chest-v1-1e68e385ea2166b999e7b9041eabaf90d7b5b552a0034cdce576ddc123cbd91b.png",
+          "status": "A",
+          "blob": "6a6f0c69fac0183fafde34f153557f7b22e632c5",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/atlas-carved-chest-v1-1e68e385ea2166b999e7b9041eabaf90d7b5b552a0034cdce576ddc123cbd91b.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/atlas-carved-chest-v1-1e68e385ea2166b999e7b9041eabaf90d7b5b552a0034cdce576ddc123cbd91b.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/atlas-falcon-crest-v3-f3ce0fa984bb43f3a3fa69734c60df3dfa6c8a148f0b1d32778407b92c93a648.png",
+          "status": "A",
+          "blob": "3464ec29e81feb9debf492bf74847fd903ab71fc",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/atlas-falcon-crest-v3-f3ce0fa984bb43f3a3fa69734c60df3dfa6c8a148f0b1d32778407b92c93a648.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/atlas-falcon-crest-v3-f3ce0fa984bb43f3a3fa69734c60df3dfa6c8a148f0b1d32778407b92c93a648.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/atlas-pottery-courier-v1-86089f57441d33c4153d8da5246f5e5c3822c9304d8e7b9a761ae17e5a217ea2.png",
+          "status": "A",
+          "blob": "b2fcc011972408affe92b85780dae74c8f56ed73",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/atlas-pottery-courier-v1-86089f57441d33c4153d8da5246f5e5c3822c9304d8e7b9a761ae17e5a217ea2.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/atlas-pottery-courier-v1-86089f57441d33c4153d8da5246f5e5c3822c9304d8e7b9a761ae17e5a217ea2.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/atlas-swallow-v3-e01a6c53d78acf164d04878b73f06de18cfed676b894bd7353a708fd1005aaf7.png",
+          "status": "A",
+          "blob": "27a6e6518f9878a9f5283de2d1393ad6d3fd58f6",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/atlas-swallow-v3-e01a6c53d78acf164d04878b73f06de18cfed676b894bd7353a708fd1005aaf7.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/atlas-swallow-v3-e01a6c53d78acf164d04878b73f06de18cfed676b894bd7353a708fd1005aaf7.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/atlas-weaver-shuttle-v3-39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa.png",
+          "status": "A",
+          "blob": "9b71af2dde08a354abb523573c4455445455a308",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/atlas-weaver-shuttle-v3-39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/atlas-weaver-shuttle-v3-39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/atlas-woven-basket-v1-3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac.png",
+          "status": "A",
+          "blob": "91cbd45359b0f21607c7cdad099e4faeb63ca339",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/atlas-woven-basket-v1-3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/atlas-woven-basket-v1-3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-border-patrol-v1-537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1.png",
+          "status": "A",
+          "blob": "f39e18f8e8c2dfb8b490a5db122730737c9bfec3",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-border-patrol-v1-537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-border-patrol-v1-537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-claimed-rover-v1-ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106.png",
+          "status": "A",
+          "blob": "a4aef3b6c53110b4e4127d242f3f96fbbda0aa48",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-claimed-rover-v1-ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-claimed-rover-v1-ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-contour-patrol-v1-9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f.png",
+          "status": "A",
+          "blob": "d1564275d3f0952a793a6e33c53ccf7f6b737c65",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-contour-patrol-v1-9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-contour-patrol-v1-9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-eroder-v1-29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720.png",
+          "status": "A",
+          "blob": "5ba153522a959f27ff7bdad72a54d32b7dc5cb09",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-eroder-v1-29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-eroder-v1-29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-hunter-v1-e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914.png",
+          "status": "A",
+          "blob": "f2e72f49a285fa6c56fbe60b13875439ad1542ce",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-hunter-v1-e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-hunter-v1-e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-lane-boss-v1-e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd.png",
+          "status": "A",
+          "blob": "3bc1d573cd1c8140ba1a752539398dbf332c6554",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-lane-boss-v1-e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-lane-boss-v1-e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-relay-sentinel-v1-9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db.png",
+          "status": "A",
+          "blob": "db025c7cedb811edeb848c8b346ad9f8bda5e05f",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-relay-sentinel-v1-9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db.png"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-relay-sentinel-v1-9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db.png"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/export/manifest.json",
+          "status": "A",
+          "blob": "545e88bde20df90f9c3fcb680ca79316fcdec84f",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/export/manifest.json"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/export/manifest.json"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/input.json",
+          "status": "A",
+          "blob": "4b43137e7326eba017744b462b113ac6a8d5b7fc",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/input.json"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/input.json"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/inspection/index.html",
+          "status": "A",
+          "blob": "fd4ff2e81d626495db036ed82634ad717f4b3981",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/inspection/index.html"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/inspection/index.html"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/inspection/inspect.py",
+          "status": "A",
+          "blob": "5605b25a9583fa38d73435ffc69e1484177c429f",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/inspection/inspect.py"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/inspection/inspect.py"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/inspection/png-inspection.json",
+          "status": "A",
+          "blob": "eefff7745e167d15971c6b5f0499752b9e97b704",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/inspection/png-inspection.json"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/inspection/png-inspection.json"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/inspection/review.mjs",
+          "status": "A",
+          "blob": "78cea84221edcd4afa0d3cd02b6dafcc2e3c9ea2",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/inspection/review.mjs"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/inspection/review.mjs"
+        },
+        {
+          "path": "authoring/library/runtime-sprite-candidates-v1/provenance.json",
+          "status": "A",
+          "blob": "d8f02f451319372f677a027c59c32111e8b77792",
+          "mainPaths": [
+            "authoring/library/runtime-sprite-candidates-v1/provenance.json"
+          ],
+          "reachableInMainHistory": true,
+          "mainHistoryFirstListedPath": "authoring/library/runtime-sprite-candidates-v1/provenance.json"
+        },
+        {
+          "path": "authoring/skills/xonix-character-collection/SKILL.md",
+          "status": "M",
+          "blob": "9bb5852a70a0baf85bd7734b6aebfbefd6228c09",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/sprites/README.md",
+          "status": "A",
+          "blob": "c03ba8048d632f191203411bcf275180e0fbfb9f",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/sprites/cli.mjs",
+          "status": "A",
+          "blob": "c6cfcbfd7ee97c6ea9d3e3b73cd9bf7bb4d092da",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "authoring/sprites/derivative.mjs",
+          "status": "A",
+          "blob": "bd4adaf1459cb9e3f1367cd66fa10e910c5b68d2",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        },
+        {
+          "path": "game/test/sprite-derivative.test.mjs",
+          "status": "A",
+          "blob": "fdc73eea51b888aa238580e9a36083b6ec1dcf0c",
+          "mainPaths": [],
+          "reachableInMainHistory": false
+        }
+      ],
+      "finding": "candidate-cohort-merged-tool-unique",
+      "scope": "23 derivative candidate files already byte-exact in main; five earlier tool/docs/test paths remain unmatched. Main candidate README and provenance reference compiler386a8517 and an absent authoring/sprites/README.md, so the tool dependency is not accounted by the candidate cherry-pick.",
+      "next": "Draft intake only the earlier 386a8517 tool change rebased by additive current-main integration, preserving newer skill content. Do not replay candidate cohort or claim runtime adoption.",
+      "provenance": [
+        "authoring/sprites/README.md at branch",
+        "authoring/library/runtime-sprite-candidates-v1/README.md at main",
+        "authoring/library/runtime-sprite-candidates-v1/provenance.json at main"
+      ],
+      "partialSuccessor": {
+        "commit": "a376b3293c594e928967a98a62eab5c7502a95c8",
+        "original": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",
+        "patchId": "8599dcc67e66506d7739f2f2c2a8dbe1ea9d778b",
+        "coveredPaths": 23
+      },
+      "ownerTask": null,
+      "base": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+      "worktrees": [
+        {
+          "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/sprite-derivative-tool",
+          "head": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",
+          "branch": "refs/heads/feat/sprite-derivative-tool",
+          "dirty": false,
+          "statusEntries": []
+        }
+      ],
+      "patches": [
+        {
+          "commit": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",
+          "patchId": "8599dcc67e66506d7739f2f2c2a8dbe1ea9d778b",
+          "equivalentMainCommits": [
+            "a376b3293c594e928967a98a62eab5c7502a95c8"
+          ]
+        },
+        {
+          "commit": "386a851716363693c2bdeda903cd4160d58b1c50",
+          "patchId": "2e772c29066453963f4c52f5db995c7f174f0062",
+          "equivalentMainCommits": []
+        }
+      ],
+      "counts": {
+        "changedPaths": 28,
+        "exactMainBlobs": 23,
+        "mainHistoryBlobs": 23,
+        "unresolvedPaths": 5
+      },
+      "unresolvedUniquePaths": [
+        "authoring/skills/xonix-character-collection/SKILL.md",
+        "authoring/sprites/README.md",
+        "authoring/sprites/cli.mjs",
+        "authoring/sprites/derivative.mjs",
+        "game/test/sprite-derivative.test.mjs"
+      ]
+    }
+  ]
+}

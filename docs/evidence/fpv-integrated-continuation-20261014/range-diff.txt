@@ -1,0 +1,9 @@
+ 1:  a672c8d8a =  1:  58b3318f3 feat(fpv): simplify home and installed world launch
+ 2:  da589e976 =  2:  281d4e80b fix(fpv): retain Library action focus through downloads
+ 3:  f1112ab80 =  3:  732a2d460 Add shared stick and camera comfort controls
+ 4:  9e941730b =  4:  a61f74ebb Preserve pending camera choices during comparison refresh
+ 5:  a482cf422 =  5:  778b4e11f feat(fpv): learn and save a radio camera switch
+ 6:  81f9bf1fd =  6:  df36b4daa feat(fpv): group replay and targeted practice in paused flight
+ 7:  0e2d47957 =  7:  23bd82ebc fix(fpv): distinguish verified sections from full-route practice
+ 8:  63cda2f18 =  8:  d7c04cd4f fix(fpv): preserve Library locale refresh and record UX verification
+ 9:  5b0cd8332 =  9:  6acc57d2b docs(fpv): record qualified parallel UX packages

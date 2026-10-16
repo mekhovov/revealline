@@ -1,5 +1,14 @@
 # Temporary fast-release mode
 
+## Current hosting policy — 2026-09-27
+
+Future releases use only `mekhovov/revealline`. Do not create, allocate, append, deploy or admit a `revealline-archive-XX` repository as a release step. Historical archive deployment and per-PR publication are not prerequisites.
+
+Publish the exact qualified current game on the main Pages site and keep original immutable ZIPs, manifests, checksums and source evidence in the main repository's GitHub Releases. Unarchived historical editions become explicitly download-only, not broken Play links. Existing accepted archive links, repositories, tags, assets, saved data and evidence remain unchanged; their frozen registry is compatibility history, not a recurring remote-admission gate. Do not delete or republish them.
+
+Keep current-source qualification, reviewed selector, protected-main checks, frozen independent inspection, bounded extraction, full artifact/public-byte verification, latest-release validation and scoped player acceptance. Preserve explicit test waivers as SKIPPED. The main Pages budget remains 950,000,000 bytes; exceeding it requires a new reviewed decision, not another repository or a raised limit. See [main-repository publishing policy](main-repository-publishing.md).
+
+
 Fast-release mode is active by explicit owner direction from **24 September 2026**. It remains the
 repository default until the owner explicitly asks to restore the full pipeline. Deferred checks
 have not passed and must never be described as passing.
@@ -28,12 +37,14 @@ several-hundred-megabyte distribution in fast mode. Superseded runs for the same
 the workflow concurrency group. Pages previews use a partial sparse checkout of
 the controller, workflow contracts, test policy, and two archive helpers while retaining all tags
 and on-demand Git objects needed to verify frozen source identities. Production publications remain
-serialized with one concurrency group and `cancel-in-progress: false`. GitHub Actions currently
-accepts only `group` and `cancel-in-progress` in a concurrency block; the unsupported `queue: max`
-key causes a startup failure before any job runs. The sole publisher therefore dispatches only one
-successor while another release is active. Pull-request
+serialized with one concurrency group, `cancel-in-progress: false`, and `queue: max`, so a newer
+pending release cannot replace an older pending release. The sole publisher still dispatches only
+one internal successor for a given immutable version. Pull-request
 previews keep per-PR cancellation. Authority checks use bounded GraphQL batches; only fields
 unavailable or missing from GraphQL fall back to serial conditional REST with finite retry/backoff.
+Conditional REST ETags and their previously authenticated response bodies are restored from a
+bounded Actions cache and refreshed only after a successful authority pass; cache reuse never
+replaces comparison with the committed admission pins.
 Preview runs remotely revalidate only new or changed admission pins, while production checks all
 admitted archives.
 
@@ -52,7 +63,8 @@ title or a release milestone. Exact-head automation additionally requires the
 successful `release-ready` run the controller rereads the pull request without checking out its
 code. A conflict-free behind branch is updated using its expected head SHA, then checked again. A
 clean exact head is armed for merge-commit auto-merge. A changed head, milestone, hold label,
-unmerged `Depends on #…` predecessor, or changes-requested review disarms an existing request.
+unmerged `Depends on #…` predecessor, changes-requested review, or failed/cancelled rerun of the
+required gate disarms an existing request.
 
 Ordinary pull requests always use protected exact-head auto-merge. A real GitHub pull-request stack
 uses the asynchronous merge API only when its reviewed top pull request also has the
@@ -114,12 +126,21 @@ need to be re-enabled.
 
 ## What still blocks GitHub Pages
 
-Fast pull-request previews validate the selector, highest stable release match, admitted archives,
+Fast pull-request previews validate the selector, highest stable release match, frozen legacy compatibility pins,
 metadata, and bounded extraction rules without assembling the complete Pages artifact. Exact
 artifact assembly and the independent reread of every prepared byte are deferred to the main
 publication, where they remain mandatory together with the final latest-release recheck and the
-main-only `github-pages` deployment environment. These checks prevent publishing the wrong or
-corrupt frozen release and are not waived.
+main-only `github-pages` deployment environment. After deployment, the production workflow
+downloads its own immutable assembly receipt and streams every public path with bounded
+concurrency, checking the receipt's exact byte count and SHA-256 for every file. The resulting
+public-byte receipt is retained as a separate immutable Actions artifact. These checks prevent
+publishing the wrong, stale, or corrupt frozen release and are not waived.
+
+The current-release extractor records the sorted byte/hash inventory it produced while streaming
+the immutable distribution ZIP. Assembly reuses that receipt instead of hashing the extracted tree
+twice, enumerates the tree to reject missing or extra paths, and hashes each source again while
+copying it. Final output inventory and the separate post-assembly reread remain independent
+blocking checks.
 
 The release event only routes an eligible tag to the sole publisher. It does not rebuild historical
 source or rerun the full test suite. Source-qualification consumer changes, workflow, policy, skill,
@@ -158,14 +179,33 @@ tags or published assets.
 
 ## Serialized publisher rollout
 
-`fastline-release.yml` is the queued publisher entry point. Its `shadow` mode validates the exact
-version, merged release-root PR, source commit/tree and published predecessor without writes. Its
-initial guarded `publish` canary calls merged-source qualification as a reusable workflow, uploads
-the frozen package once under a version-and-source name, passes the immutable artifact ID and digest
-to an independent content inspection, and stops before any tag or release write. Evidence assembly,
-tag/draft creation, guarded nine-asset publication, archive admission, Pages and public journeys are
-added only after this canary is shadow-run successfully. Existing manual entry points remain the
-guarded emergency path during the two-release rollout and the sole publisher must not run both paths
-for the same version. The legacy write-capable original upload is isolated in
-`upload-release-originals.yml`; the reusable qualifier contains no `contents: write` job, so a
-read-only shadow caller cannot inherit publication authority during workflow validation.
+`fastline-release.yml` is the sole normal publisher entry point. Its `shadow` mode validates the
+exact version, merged release-root PR, source commit/tree and published predecessor without writes.
+`publish` calls merged-source qualification as a reusable workflow, uploads the frozen package once
+under a version-and-source name, and passes the immutable artifact ID and digest to an independent
+hosted inspection. That proof run then dispatches one internal `resume` run after its inspection
+artifact has closed. Resume locates only a successful completed proof run for the same immutable
+version and source, assembles the seven evidence assets from the completed run authorities, and
+reconciles the annotated tag, draft, nine server digests and publication exactly once.
+
+The independent inspector may read its own parent fastline run while that exact run is still
+`in_progress`, because the inspector itself prevents the parent from becoming `completed`. This
+exception is fail-closed: the run ID must equal `GITHUB_RUN_ID`, the workflow and source must match,
+admission/qualification/freeze must already be successful, waived tests must actually be skipped,
+no job may have failed, and exactly one inspection job must be active. Completed historical runs
+remain subject to the stricter completed-run authority rules.
+
+Existing matching objects are reused; absent draft objects are created; mismatched tags, releases,
+assets, lightweight tags, incomplete published releases and digestless assets stop. Published assets
+are never overwritten. The write permission exists only on the final publication job. The reusable
+qualifier and the shadow path remain read-only. A release event hands the accepted publication to
+the main-repository-only selector/Pages route; selector review, production assembly,
+deployment, public-byte audit and player journeys remain blocking and are not claimed by release
+publication alone.
+
+The `fastline-publisher` concurrency group uses `queue: max`; queued versions are not discarded when
+another request arrives. The durable source-of-truth queue nevertheless remains the active milestone
+plus terminal release-root PR, not a collection of speculative workflow dispatches. The internal
+resume is bound to the completed immutable proof run for its exact version and source. Existing
+manual entry points remain the guarded emergency path during the two-release rollout and must not
+run for the same version as fastline.

@@ -2,24 +2,26 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountToolDisplay } from '../ui/tool-display.mjs';
-import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { createDisplayPreferences, DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 
 // The real preference/display owners run here. Browser history form restoration
 // and task scheduling are explicit model inputs, not a native BFCache claim.
-function fixture(t) {
+function fixture(t, { shared = false } = {}) {
   const doc = new Document(),
     host = new Events(),
     control = doc.createElement('select'),
+    face = doc.createElement('select'),
     notice = doc.createElement('p'),
     frame = doc.createElement('iframe'),
     media = Object.assign(new Events(), { matches: false }),
     timers = new Map(),
     writes = [];
   control.setAttribute('data-tool-text-size', '');
+  face.setAttribute('data-tool-text-face', '');
   notice.id = 'host-display-notice';
   frame.setAttribute('src', '/game/?practice=1&controller-session=original');
-  doc.body.append(control, notice, frame);
+  doc.body.append(control, face, notice, frame);
   doc.activeElement = frame;
   let raw = JSON.stringify({ textFace: 'plain', textSize: 'standard', reducedEffects: true }),
     failedSave = false,
@@ -44,17 +46,28 @@ function fixture(t) {
     return id;
   };
   host.clearTimeout = (id) => timers.delete(id);
-  const owner = mountToolDisplay({ document: doc, window: host, getStorage: () => storage });
+  const preferences = shared
+    ? createDisplayPreferences({ window: host, getStorage: () => storage })
+    : undefined;
+  const owner = mountToolDisplay({
+    document: doc,
+    window: host,
+    getStorage: () => storage,
+    preferences,
+  });
   t.after(() => owner.dispose());
+  t.after(() => preferences?.dispose());
   return {
     doc,
     host,
     control,
+    face,
     notice,
     frame,
     timers,
     writes,
     owner,
+    preferences,
     set failedSave(value) {
       failedSave = value;
     },
@@ -78,6 +91,50 @@ function fixture(t) {
   };
 }
 
+test('explicit font changes share reading preferences without altering size or the hosted game', (t) => {
+  const f = fixture(t);
+  assert.equal(f.face.value, 'plain');
+  f.face.value = 'pixel';
+  f.face.emit('change', { currentTarget: f.face });
+  assert.equal(f.doc.body.dataset.textFace, 'pixel');
+  assert.equal(f.writes.length, 1);
+  assert.deepEqual(JSON.parse(f.writes[0]), {
+    textFace: 'pixel',
+    textSize: 'standard',
+    reducedEffects: true,
+  });
+  f.assertChildUnchanged();
+  f.owner.dispose();
+  f.face.value = 'plain';
+  f.face.emit('change', { currentTarget: f.face });
+  assert.equal(f.writes.length, 1);
+  assert.equal(f.doc.body.dataset.textFace, 'pixel');
+});
+
+test('room reading controls share the native preference owner without overwriting newer motion intent', (t) => {
+  const f = fixture(t, { shared: true });
+  f.preferences.set({ reducedEffects: false });
+  f.face.value = 'pixel';
+  f.face.emit('change', { currentTarget: f.face });
+  f.choose('large');
+  assert.deepEqual(JSON.parse(f.writes.at(-1)), {
+    textFace: 'pixel',
+    textSize: 'large',
+    reducedEffects: false,
+  });
+  assert.equal(f.preferences.snapshot().textSize, 'large');
+  assert.equal(f.doc.body.dataset.effects, 'full');
+  f.owner.dispose();
+  f.preferences.set({ reducedEffects: true });
+  assert.equal(
+    f.preferences.snapshot().effectiveReducedEffects,
+    true,
+    'The native owner survives view disposal',
+  );
+  assert.equal(f.doc.body.dataset.effects, 'full', 'Disposed views stop listening');
+  f.assertChildUnchanged();
+});
+
 for (const persisted of [false, true]) {
   test(`history-restored selector follows current owner after pageshow (persisted=${persisted})`, (t) => {
     const f = fixture(t);
@@ -88,8 +145,10 @@ for (const persisted of [false, true]) {
     assert.equal(f.control.value, 'standard');
     // Traversal can restore its form state after pageshow dispatch, too.
     f.control.value = 'large';
+    f.face.value = 'pixel';
     f.flush();
     assert.equal(f.control.value, 'standard');
+    assert.equal(f.face.value, 'plain');
     assert.equal(f.doc.body.dataset.textFace, 'plain');
     assert.equal(f.doc.body.dataset.textSize, 'standard');
     assert.equal(f.doc.body.dataset.effects, 'reduced');
@@ -106,6 +165,7 @@ test('persisted return first refreshes shared authority, then corrects late stal
   f.control.value = 'standard';
   f.flush();
   assert.equal(f.control.value, 'large');
+  assert.equal(f.face.value, 'pixel');
   assert.equal(f.doc.body.dataset.textFace, 'pixel');
   assert.equal(f.doc.body.dataset.textSize, 'large');
   assert.equal(f.doc.body.dataset.effects, 'full');

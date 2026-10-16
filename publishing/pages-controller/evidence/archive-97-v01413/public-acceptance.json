@@ -1,0 +1,80 @@
+{
+  "acceptedAt": "2026-09-26T17:38:23.557Z",
+  "archiveId": "archive-97",
+  "browserEvidence": "browser-admission.json",
+  "deployment": {
+    "environmentUrl": "https://mekhovov.github.io/revealline-archive-97/",
+    "id": 6681784433,
+    "sha": "e5de2a5e1710003c1ffa49769af71e64fcd17019",
+    "state": "success",
+    "statusId": 18881674244
+  },
+  "initialDeploymentFailure": {
+    "conclusion": "failure",
+    "headSha": "e99265ff16012a3fec18e58d7e03399512f4f835",
+    "runId": 36257663326,
+    "buildJobId": 108447408822,
+    "buildConclusion": "success",
+    "deployJobId": 108447545985,
+    "deployConclusion": "failure",
+    "reason": "GitHub Pages returned 404 before Pages was enabled for the new archive repository.",
+    "url": "https://github.com/mekhovov/revealline-archive-97/actions/runs/36257663326"
+  },
+  "inventory": {
+    "bytes": 612079732,
+    "expectedInventorySha256": "79a9b779d9161d41f91895487d8d33281976a0498b81c6fe09c142dc7fa7eed9",
+    "files": 1316
+  },
+  "publicAudit": {
+    "bodyHashesMatch": true,
+    "bytes": 612079732,
+    "errors": 0,
+    "files": 1316,
+    "headFinalUrlsExact": true
+  },
+  "pullRequest": {
+    "head": "98fd8b9a768451acd7b4cdea354da14f394cdeaf",
+    "mergeCommit": "e5de2a5e1710003c1ffa49769af71e64fcd17019",
+    "merged": true,
+    "number": 1,
+    "url": "https://github.com/mekhovov/revealline-archive-97/pull/1"
+  },
+  "receiptArtifact": {
+    "digest": "sha256:d8f134f07ceffb23709a268305f99f200770a8103f11149a354081c9c4238087",
+    "expired": false,
+    "id": 10911516487,
+    "name": "archive97-verification-receipts",
+    "size": 69361
+  },
+  "releaseMutation": {
+    "v0.141.3": false,
+    "v0.141.4": false
+  },
+  "repository": "mekhovov/revealline-archive-97",
+  "selectorMutation": false,
+  "source": {
+    "commit": "e5de2a5e1710003c1ffa49769af71e64fcd17019",
+    "tree": "bccc7b9e640cfe217d1c037f3adf302bf4030181"
+  },
+  "status": "PASS",
+  "testPolicy": "The committed temporary policy waives automated long game source suites for this release; archive corruption, extractor, configuration, capacity, inventory, release identity, deployment, streamed public byte/hash, exact final-URL, and bounded browser checks passed. No waived suite is claimed as passed.",
+  "version": "v0.141.3",
+  "workflow": {
+    "conclusion": "success",
+    "headSha": "e5de2a5e1710003c1ffa49769af71e64fcd17019",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 108448471526,
+        "name": "build"
+      },
+      {
+        "conclusion": "success",
+        "id": 108448576936,
+        "name": "deploy"
+      }
+    ],
+    "runId": 36258049926,
+    "url": "https://github.com/mekhovov/revealline-archive-97/actions/runs/36258049926"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "format": "FPVProjectCourseLocalChecks.v1",
+  "source": "23ad656c96f1f89f415e246423bdc5de1377077d",
+  "existingChecks": {
+    "passed": 13,
+    "failed": 0,
+    "initialAttempt": "Content check could not resolve fake-indexeddb; rerun with existing sibling NODE_PATH passed. No install or test assertions changed."
+  },
+  "lint": "Scoped host/actor lint passed",
+  "generator": "25 modules,24 recordings,838737 bytes verified byte-identical",
+  "validation": {
+    "command": "npm --logs-max=0 run validate",
+    "exit_code": 0,
+    "localization": {
+      "locales": [
+        "en",
+        "uk"
+      ],
+      "messages": 12928,
+      "references": 8991
+    },
+    "completion": "{\n  \"version\": \"0.142.4\",\n  \"files\": 2806,\n  \"literalReferencesValid\": true,\n  \"navigationWarnings\": [\n    \"game/downloads.html \u2192 ../app/update.html\",\n    \"game/downloads.html \u2192 ../app/\",\n    \"game/index.html \u2192 ../app/update.html\",\n    \"game/index.html \u2192 ../diagnostics/\",\n    \"site/about.html \u2192 ../releases/\",\n    \"site/about.html \u2192 ../privacy.html\",\n    \"site/about.html \u2192 ../credits.html\"\n  ],\n  \"contentSnapshots\": [\n    {\n      \"file\": \"game/content-design/whole-spatial-data.mjs\",\n      \"bytes\": 528831,\n      \"sha256\": \"e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3\"\n    }\n  ],\n  \"campaign\": \"first-signal\",\n  \"levels\": 12,\n  \"themes\": 4,\n  \"classes\": 7,\n  \"packs\": 14,\n  \"packLevels\": 89,\n  \"packGoals\": 6,\n  \"coopPacks\": 1,\n  \"coopLevels\": 2\n}\n{\"source\":{\"id\":\"field-kit\",\"revision\":104},\"bytes\":4729041,\"sha256\":\"c905cab9ce4519379d57bdecf3ef02146b44d5a2ad82430a3939b2d2fc00f617\",\"formatting\":\"bounded-canonical\"}\n{\"status\":\"verified-byte-identical\",\"modules\":25,\"recordings\":24,\"bytes\":838737}\n{\"status\":\"verified-byte-identical\",\"modules\":7,\"externalModules\":1,\"bytes\":44115,\"target\":\"optional-practice/civilian-fpv/sim-presentation.mjs\"}\n{\"status\":\"verified-byte-identical\",\"sourceSha256\":\"751be3729b5a702525d629844eb59661673e9bc2a27b5589df7047ea9badab1d\",\"bytes\":16955,\"packageSlotsAdded\":0}\n{\"status\":\"verified-byte-identical\",\"assets\":{\"ui\":{\"source\":\"game/ui/fonts/field-kit/exo2-ui-400-600.woff2\",\"bytes\":76652,\"sha256\":\"fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef\",\"license\":\"OFL-1.1\"},\"pixel\":{\"source\":\"game/ui/fonts/departure-mono/DepartureMono-Regular.woff2\",\"bytes\":22496,\"sha256\":\"5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb\",\"license\":\"OFL-1.1\"},\"mono\":{\"source\":\"game/ui/fonts/field-kit/ibm-plex-mono-500.woff2\",\"bytes\":40080,\"sha256\":\"0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8\",\"license\":\"OFL-1.1\"},\"display\":{\"source\":\"game/ui/fonts/field-kit/handjet-display-600.woff2\",\"bytes\":38120,\"sha256\":\"4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145\",\"license\":\"OFL-1.1\"},\"focus\":{\"source\":\"game/audio/effects/focus.wav\",\"bytes\":2924,\"sha256\":\"0eb2a24d7e17e79c6d2b4dc4c1be57ba0622d2e3e8e177999c12eb18c54d3256\",\"license\":\"CC0-1.0\"},\"confirm\":{\"source\":\"game/audio/effects/confirm.wav\",\"bytes\":5864,\"sha256\":\"52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1\",\"license\":\"CC0-1.0\"},\"cancel\":{\"source\":\"game/audio/effects/cancel.wav\",\"bytes\":3948,\"sha256\":\"d59b933dbe794b9d36f962c8505513f3a85a30a6c2c3e2ed1d6895769d0a2616\",\"license\":\"CC0-1.0\"}}}\n"
+  },
+  "admission": {
+    "chunk_id": "5db4f3",
+    "wall_time_seconds": 7.75e-06,
+    "exit_code": 0,
+    "original_token_count": 121,
+    "output": "{\n  \"output\": \"/Users/oleksandr.mekhovov/.codex/worktrees/fpv-garage-surfaces/go_test/dist/fpv-course-picker-candidate-23ad656c9\",\n  \"version\": \"v0.142.4\",\n  \"sourceRevision\": \"23ad656c96f1f89f415e246423bdc5de1377077d\",\n  \"sourceTree\": \"7fa1902a5d84a6668aedda66c8319ab193e71c11\",\n  \"packageIds\": [\n    \"civilian-flight\",\n    \"civilian-fpv\",\n    \"fpv-worlds\"\n  ],\n  \"reproducibleBuilds\": 2,\n  \"committedInputsVerified\": true,\n  \"zipMembersVerified\": true,\n  \"publicEligible\": false\n}\n"
+  },
+  "limits": [
+    "Actual source browser197 accepted; final admitted extended browser pending. No physical device, FPS, offline or edited-route completion claim."
+  ]
+}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Menu scene performance fixture</title>
+    <link rel="stylesheet" href="../../../game/ui/menu-scenes.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #080e18;
+        color: white;
+        font: 16px system-ui;
+      }
+      #scene {
+        position: fixed;
+        inset: 0;
+      }
+      #controls {
+        position: fixed;
+        z-index: 3;
+        left: 16px;
+        top: 16px;
+        max-width: 520px;
+        background: #080e18e8;
+        padding: 12px;
+      }
+      #result {
+        max-height: 48vh;
+        overflow: auto;
+        white-space: pre-wrap;
+        font: 12px monospace;
+      }
+      button {
+        padding: 12px;
+        font: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="scene" aria-label="Decorative scene under measurement"></main>
+    <section id="controls">
+      <strong>Scene-only measurement fixture</strong>
+      <p>
+        Three six-second samples; keep this tab focused. Browser emulation is not physical-device
+        testing.
+      </p>
+      <button id="measure">Measure scenes</button>
+      <output id="status">Ready</output>
+      <pre id="result"></pre>
+    </section>
+    <script type="module" src="./measure.mjs"></script>
+  </body>
+</html>

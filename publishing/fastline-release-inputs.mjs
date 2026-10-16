@@ -18,8 +18,8 @@ export function validateFastlineInputs(value) {
     throw new Error("predecessor_tag must be an exact stable vX.Y.Z value");
   if (value.predecessorTag === value.version)
     throw new Error("predecessor_tag must differ from version");
-  if (!["shadow", "publish"].includes(value.mode))
-    throw new Error("mode must be shadow or publish");
+  if (!["shadow", "publish", "resume"].includes(value.mode))
+    throw new Error("mode must be shadow, publish, or resume");
   return {
     version: value.version,
     numericVersion: value.version.slice(1),
@@ -53,7 +53,9 @@ export function fastlineStages(mode) {
     "pages",
     "public-verification",
   ];
-  return mode === "shadow" ? stages.map((stage) => `shadow:${stage}`) : stages;
+  if (mode === "shadow") return stages.map((stage) => `shadow:${stage}`);
+  if (mode === "resume") return stages.slice(3);
+  return stages;
 }
 
 async function main() {

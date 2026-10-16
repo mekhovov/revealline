@@ -1,0 +1,138 @@
+x-community-production-build: &community-production-build
+  context: ../..
+  dockerfile: services/community/Dockerfile
+  args:
+    COMMUNITY_RELEASE_VERSION: ${COMMUNITY_RELEASE_VERSION:?set exact deployed release version}
+    COMMUNITY_SOURCE_REVISION: ${COMMUNITY_SOURCE_REVISION:?set exact deployed source revision}
+
+x-community-production-environment: &community-production-environment
+  COMMUNITY_DATABASE_URL: ${COMMUNITY_DATABASE_URL:?set COMMUNITY_DATABASE_URL}
+  COMMUNITY_BLOB_STORAGE: disk
+  COMMUNITY_BLOB_ROOT: /data/blobs
+  COMMUNITY_TUS_ROOT: /data/tus
+  COMMUNITY_TUS_EXPIRATION_SECONDS: ${COMMUNITY_TUS_EXPIRATION_SECONDS:-86400}
+  COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS: ${COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS:-300}
+  COMMUNITY_TUS_CLEANUP_BATCH_SIZE: ${COMMUNITY_TUS_CLEANUP_BATCH_SIZE:-32}
+  COMMUNITY_TUS_CLEANUP_LEASE_SECONDS: ${COMMUNITY_TUS_CLEANUP_LEASE_SECONDS:-120}
+  COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS: ${COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS:-30}
+  COMMUNITY_TUS_LOCK_POOL_SIZE: ${COMMUNITY_TUS_LOCK_POOL_SIZE:-20}
+  COMMUNITY_MAX_PACKAGE_BYTES: ${COMMUNITY_MAX_PACKAGE_BYTES:-268435456}
+  COMMUNITY_VALIDATOR_VERSION: ${COMMUNITY_VALIDATOR_VERSION:-creator-bundle-v1}
+  COMMUNITY_RELEASE_VERSION: ${COMMUNITY_RELEASE_VERSION:?set exact deployed release version}
+  COMMUNITY_SOURCE_REVISION: ${COMMUNITY_SOURCE_REVISION:?set exact deployed source revision}
+  COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW: ${COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW:-30}
+  COMMUNITY_AUTH_WINDOW_SECONDS: ${COMMUNITY_AUTH_WINDOW_SECONDS:-300}
+  COMMUNITY_REPORTS_PER_WINDOW: ${COMMUNITY_REPORTS_PER_WINDOW:-6}
+  COMMUNITY_REPORT_WINDOW_SECONDS: ${COMMUNITY_REPORT_WINDOW_SECONDS:-3600}
+  COMMUNITY_SUBMISSIONS_PER_WINDOW: ${COMMUNITY_SUBMISSIONS_PER_WINDOW:-12}
+  COMMUNITY_SUBMISSION_WINDOW_SECONDS: ${COMMUNITY_SUBMISSION_WINDOW_SECONDS:-3600}
+  COMMUNITY_UPLOAD_BYTES_PER_WINDOW: ${COMMUNITY_UPLOAD_BYTES_PER_WINDOW:-2147483648}
+  COMMUNITY_UPLOAD_WINDOW_SECONDS: ${COMMUNITY_UPLOAD_WINDOW_SECONDS:-86400}
+  COMMUNITY_TRUST_PROXY_HOPS: ${COMMUNITY_TRUST_PROXY_HOPS:?set exact trusted proxy hop count}
+  COMMUNITY_ALLOW_DEV_AUTH: 'false'
+  COMMUNITY_DEV_TOKENS: '{}'
+  BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?set BETTER_AUTH_SECRET}
+  BETTER_AUTH_URL: ${BETTER_AUTH_URL:?set BETTER_AUTH_URL}
+  BETTER_AUTH_TRUSTED_ORIGINS: ${BETTER_AUTH_TRUSTED_ORIGINS:-}
+  COMMUNITY_EMAIL_VERIFICATION_EXPIRES_SECONDS: ${COMMUNITY_EMAIL_VERIFICATION_EXPIRES_SECONDS:-3600}
+  COMMUNITY_PASSWORD_RESET_EXPIRES_SECONDS: ${COMMUNITY_PASSWORD_RESET_EXPIRES_SECONDS:-1800}
+  COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL: ${COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL:?set COMMUNITY_ACCOUNT_MAIL_WEBHOOK_URL}
+  COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN: ${COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN:?set COMMUNITY_ACCOUNT_MAIL_WEBHOOK_TOKEN}
+  COMMUNITY_ACCOUNT_MAIL_TIMEOUT_MS: ${COMMUNITY_ACCOUNT_MAIL_TIMEOUT_MS:-5000}
+  COMMUNITY_ADMIN_SUBJECTS: ${COMMUNITY_ADMIN_SUBJECTS:?set COMMUNITY_ADMIN_SUBJECTS}
+
+services:
+  postgres:
+    environment:
+      POSTGRES_DB: revealline
+      POSTGRES_USER: revealline
+      POSTGRES_PASSWORD: ${COMMUNITY_POSTGRES_PASSWORD:?set COMMUNITY_POSTGRES_PASSWORD}
+    networks:
+      - community-backend
+
+  migrate:
+    environment:
+      PGPASSWORD: ${COMMUNITY_POSTGRES_PASSWORD:?set COMMUNITY_POSTGRES_PASSWORD}
+    networks:
+      - community-backend
+
+  auth-migrate:
+    build: *community-production-build
+    command: ['npm', 'run', 'auth:migrate']
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment: *community-production-environment
+    networks:
+      - community-backend
+    restart: 'no'
+
+  preflight:
+    build: *community-production-build
+    command: ['npm', 'run', 'deployment:preflight']
+    depends_on:
+      auth-migrate:
+        condition: service_completed_successfully
+    environment: *community-production-environment
+    volumes:
+      - community-blobs:/data/blobs
+      - community-tus:/data/tus
+    networks:
+      - community-backend
+    restart: 'no'
+
+  api:
+    build: *community-production-build
+    depends_on:
+      preflight:
+        condition: service_completed_successfully
+    environment: *community-production-environment
+    networks:
+      - community-backend
+      - community-edge
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:8787/ready').then((response)=>{if(!response.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 10s
+
+  worker:
+    build: *community-production-build
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    init: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=128m,mode=0700,uid=1000,gid=1000
+    pids_limit: 64
+    mem_limit: 1g
+    cpus: 1.0
+    depends_on:
+      preflight:
+        condition: service_completed_successfully
+    environment:
+      COMMUNITY_DATABASE_URL: ${COMMUNITY_DATABASE_URL:?set COMMUNITY_DATABASE_URL}
+      COMMUNITY_BLOB_STORAGE: disk
+      COMMUNITY_BLOB_ROOT: /data/blobs
+      COMMUNITY_MAX_PACKAGE_BYTES: ${COMMUNITY_MAX_PACKAGE_BYTES:-268435456}
+      COMMUNITY_VALIDATOR_VERSION: ${COMMUNITY_VALIDATOR_VERSION:-creator-bundle-v1}
+      COMMUNITY_WORKER_POLL_MS: ${COMMUNITY_WORKER_POLL_MS:-1000}
+    volumes:
+      - community-blobs:/data/blobs:ro
+    networks:
+      - community-backend
+    restart: unless-stopped
+
+networks:
+  community-backend:
+    internal: true
+  community-edge:

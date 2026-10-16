@@ -1,0 +1,43 @@
+{
+  "format": "FPVPublicEntryEvidence.v1",
+  "revision": "3bc7a923da2b7d50a6a675a91d5560005ad0f20d",
+  "operator": "Parent coordinator actual native browser",
+  "flow": [
+    "Public reload",
+    "Start",
+    "Briefing Start",
+    "Ready",
+    "Deliberate Arm",
+    "Flight active",
+    "Pause at 51.8s",
+    "Continue available"
+  ],
+  "scope": "Deployment/build identity plus normal entry. Includes coating and language ancestors; does not qualify public coating import, FPS, later HUD, or Creator correction.",
+  "files": [
+    {
+      "path": "deployment.json",
+      "bytes": 308,
+      "sha256": "a6065412d95c3f1f0efa103f8a1ca5666d5a6f2de75517fab5e85137dadab7ea"
+    },
+    {
+      "path": "build.json",
+      "bytes": 143,
+      "sha256": "c79b2d1244a5de5fa40fed4fcae2e35e2df96690836760f343a11f9d1d4fee99"
+    },
+    {
+      "path": "active.png",
+      "bytes": 86147,
+      "sha256": "f194a7a2a83590bae8da178f1bdb752cf72b63451593df3276b48eed22c4d192"
+    },
+    {
+      "path": "paused.txt",
+      "bytes": 1798,
+      "sha256": "832ab0d71afb7b9411ff67013585cbdbb3e2c08e4dd42e688bb98a739d6fce74"
+    },
+    {
+      "path": "paused.png",
+      "bytes": 58385,
+      "sha256": "df1eb53e3bbc49b67f970a651a516cec8780af52726b113b364c8056c81c261f"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "status": "prototype failure retained, corrected candidate pending",
+  "source": "6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd",
+  "cssSha256": "d6b2684053c0cdc85a4c3bef039a5df04c6318bdbdcec4401b147f0225e315a4",
+  "preferences": "Large/Plain, Always controls, Large D-pad, Left",
+  "matrix": [
+    {
+      "viewport": [
+        521,
+        300
+      ],
+      "arena": [
+        285,
+        142.5
+      ],
+      "hud": [
+        285,
+        130.1875
+      ],
+      "control": [
+        192,
+        192
+      ],
+      "gap": 12,
+      "documentWidth": 521,
+      "finding": "TIME counter clipped at right; document width alone missed it"
+    },
+    {
+      "viewport": [
+        568,
+        320
+      ],
+      "arena": [
+        332,
+        166
+      ],
+      "hud": [
+        332,
+        130.1875
+      ],
+      "control": [
+        192,
+        192
+      ],
+      "gap": 12,
+      "documentWidth": 568
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "arena": [
+        477.59375,
+        238.796875
+      ],
+      "hud": [
+        608,
+        130.1875
+      ],
+      "control": [
+        192,
+        192
+      ],
+      "documentWidth": 844
+    }
+  ],
+  "nextCorrection": "Remove redundant decorative counter icons and use intrinsic widths for lives/time; retain explicit labels and selected text size",
+  "consoleWarningsErrors": [],
+  "cleanup": "tab125 closed, viewport reset, server18814 stopped"
+}

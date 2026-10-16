@@ -1,0 +1,243 @@
+TAP version 13
+# Subtest: company startup presentation block supplies the admitted candidate and waits for its resources
+ok 1 - company startup presentation block supplies the admitted candidate and waits for its resources
+  ---
+  duration_ms: 84.39375
+  ...
+# Subtest: actual custom campaign adoption latches interface and exact arcade dependency
+ok 2 - actual custom campaign adoption latches interface and exact arcade dependency
+  ---
+  duration_ms: 1393.600917
+  ...
+# Subtest: actual custom campaign adoption latches interface and exact arcade dependency while preserving the personal choice
+ok 3 - actual custom campaign adoption latches interface and exact arcade dependency while preserving the personal choice
+  ---
+  duration_ms: 878.268167
+  ...
+# Subtest: a cancelled custom campaign load preserves the active run, interface and SIM pin
+ok 4 - a cancelled custom campaign load preserves the active run, interface and SIM pin
+  ---
+  duration_ms: 766.536959
+  ...
+# Mission preparation failed. Error: Review fixture custom theme font decode failed.
+#     at TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/curated-community-theme-host.test.mjs:230:19)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: a failed custom campaign load preserves the active run, interface and SIM pin
+ok 5 - a failed custom campaign load preserves the active run, interface and SIM pin
+  ---
+  duration_ms: 758.380625
+  ...
+# Subtest: one edited candidate is reusable in two unrelated source drafts and exact offline publications
+ok 6 - one edited candidate is reusable in two unrelated source drafts and exact offline publications
+  ---
+  duration_ms: 228.506042
+  ...
+# Subtest: candidate admission excludes unrelated records, protects immutable identity and rejects missing or executable dependencies
+ok 7 - candidate admission excludes unrelated records, protects immutable identity and rejects missing or executable dependencies
+  ---
+  duration_ms: 270.12475
+  ...
+# Subtest: normal shared host resolves the admitted custom identity and preserves personal override and exact installed artwork
+ok 8 - normal shared host resolves the admitted custom identity and preserves personal override and exact installed artwork
+  ---
+  duration_ms: 24.335833
+  ...
+# Subtest: compact export preserves edited candidate scope and unsupported selected source assets are rejected before assignment
+ok 9 - compact export preserves edited candidate scope and unsupported selected source assets are rejected before assignment
+  ---
+  duration_ms: 362.873667
+  ...
+# Subtest: custom SIM handoff carries only validated cosmetic context and follows independent personal and world overrides
+ok 10 - custom SIM handoff carries only validated cosmetic context and follows independent personal and world overrides
+  ---
+  duration_ms: 19.040041
+  ...
+# Subtest: compiled first paint uses exact custom palette without preference writes and rejects arbitrary style injection
+ok 11 - compiled first paint uses exact custom palette without preference writes and rejects arbitrary style injection
+  ---
+  duration_ms: 11.9225
+  ...
+# Subtest: retained custom presentation keeps exact curated bytes and late admission advances affected owner revisions
+ok 12 - retained custom presentation keeps exact curated bytes and late admission advances affected owner revisions
+  ---
+  duration_ms: 273.985208
+  ...
+# Subtest: unavailable or expired custom SIM context uses authored world with retained intent while explicit world choice wins
+ok 13 - unavailable or expired custom SIM context uses authored world with retained intent while explicit world choice wins
+  ---
+  duration_ms: 17.0505
+  ...
+# Subtest: unfinished low-contrast candidate stays previewable but cannot be registered or published
+ok 14 - unfinished low-contrast candidate stays previewable but cannot be registered or published
+  ---
+  duration_ms: 172.55675
+  ...
+# Subtest: noopener optional launch transfers one bounded context to a separate tab without sharing session storage or preferences
+ok 15 - noopener optional launch transfers one bounded context to a separate tab without sharing session storage or preferences
+  ---
+  duration_ms: 438.008041
+  ...
+# Subtest: only atomic accepted custom context reaches auxiliary pages and expires with its first-paint seed
+ok 16 - only atomic accepted custom context reaches auxiliary pages and expires with its first-paint seed
+  ---
+  duration_ms: 199.511209
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context without saving a preference
+ok 17 - actual edition campaign adoption updates appearance and SIM context without saving a preference
+  ---
+  duration_ms: 1466.582333
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+ok 18 - actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+  ---
+  duration_ms: 867.065375
+  ...
+# Subtest: a cancelled campaign theme preload retains the active flight and SIM context
+ok 19 - a cancelled campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 784.68775
+  ...
+# Mission preparation failed. Error: Fixture font decode failed.
+#     at TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/edition-appearance-host.test.mjs:163:19)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: a failed campaign theme preload retains the active flight and SIM context
+ok 20 - a failed campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 887.598875
+  ...
+# Subtest: SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+ok 21 - SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+  ---
+  duration_ms: 2.151917
+  ...
+# Subtest: first successful arm freezes accepted appearance until a new attempt, even after disarming
+ok 22 - first successful arm freezes accepted appearance until a new attempt, even after disarming
+  ---
+  duration_ms: 0.313083
+  ...
+# Subtest: recording metadata is bounded, portable and independent of Academy proof/reward identity
+ok 23 - recording metadata is bounded, portable and independent of Academy proof/reward identity
+  ---
+  duration_ms: 84.757334
+  ...
+# Subtest: replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+ok 24 - replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+  ---
+  duration_ms: 88.11625
+  ...
+# Subtest: World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+ok 25 - World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+  ---
+  duration_ms: 130.205833
+  ...
+# Subtest: World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+ok 26 - World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+  ---
+  duration_ms: 8.843
+  ...
+# Subtest: World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+ok 27 - World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+  ---
+  duration_ms: 939.306292
+  ...
+# Subtest: World archive preserves the versioned profile fallback inside its unchanged course/proof record
+ok 28 - World archive preserves the versioned profile fallback inside its unchanged course/proof record
+  ---
+  duration_ms: 18.881917
+  ...
+# Subtest: SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+ok 29 - SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+  ---
+  duration_ms: 1.898333
+  ...
+# Subtest: SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+ok 30 - SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+  ---
+  duration_ms: 28.933916
+  ...
+# Subtest: injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+ok 31 - injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+  ---
+  duration_ms: 7.730334
+  ...
+# Subtest: all production family collection pins round-trip through World and Academy presentation metadata
+ok 32 - all production family collection pins round-trip through World and Academy presentation metadata
+  ---
+  duration_ms: 15.00325
+  ...
+# Subtest: complete apply from another tab updates SIM intent while preserving the armed appearance
+ok 33 - complete apply from another tab updates SIM intent while preserving the armed appearance
+  ---
+  duration_ms: 12.600125
+  ...
+# Subtest: optional installations preserve previous versions and isolate stable roots without touching Journey
+ok 34 - optional installations preserve previous versions and isolate stable roots without touching Journey
+  ---
+  duration_ms: 3.161834
+  ...
+# Subtest: optional launch references reject foreign origins, roots, entries and versions
+ok 35 - optional launch references reject foreign origins, roots, entries and versions
+  ---
+  duration_ms: 0.469
+  ...
+# Subtest: an installation pointer is recorded only after a verified worker activates
+ok 36 - an installation pointer is recorded only after a verified worker activates
+  ---
+  duration_ms: 1.514667
+  ...
+# Subtest: stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+ok 37 - stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+  ---
+  duration_ms: 24.618708
+  ...
+# Subtest: stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+ok 38 - stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+  ---
+  duration_ms: 3.093708
+  ...
+# Subtest: first-paint seed is generated from the exact admitted registry and shared migration parser
+ok 39 - first-paint seed is generated from the exact admitted registry and shared migration parser
+  ---
+  duration_ms: 206.256625
+  ...
+# Subtest: every admitted appearance paints exact paired tokens and frames before module execution
+ok 40 - every admitted appearance paints exact paired tokens and frames before module execution
+  ---
+  duration_ms: 97.421584
+  ...
+# Subtest: retained and current context pins paint their exact installed revision before runtime
+ok 41 - retained and current context pins paint their exact installed revision before runtime
+  ---
+  duration_ms: 31.489625
+  ...
+# Subtest: read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+ok 42 - read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+  ---
+  duration_ms: 6.478125
+  ...
+# Subtest: first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+ok 43 - first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+  ---
+  duration_ms: 4.5925
+  ...
+# Subtest: every production game, authoring and site entry seeds appearance before other scripts and styles
+ok 44 - every production game, authoring and site entry seeds appearance before other scripts and styles
+  ---
+  duration_ms: 210.902584
+  ...
+# Subtest: profile-owned players seed appearance without acquiring an auxiliary host lease
+ok 45 - profile-owned players seed appearance without acquiring an auxiliary host lease
+  ---
+  duration_ms: 4.353375
+  ...
+1..45
+# tests 45
+# suites 0
+# pass 45
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15516.150667

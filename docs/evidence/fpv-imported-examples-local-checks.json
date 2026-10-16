@@ -1,0 +1,40 @@
+{
+  "format": "FPVImportedExamplesLocalChecks.v1",
+  "qualifiedSource": "79a721dd19343726fed30f618a2d7c8cd164d691",
+  "runtimeSha256": "6d93d9c36fb8d0c576907d98618d7aa73637bb49bd8d72ec310508241b96045c",
+  "commands": [
+    {
+      "command": "npm --logs-max=0 run validate",
+      "exit": 0,
+      "details": "12928 EN/UK messages,8991 references;2806 files; generated runtime/presentation identities pass; existing navigation warnings retained",
+      "session": 72518
+    },
+    {
+      "command": "node --test game/test/fpv-world-runtime.test.mjs game/test/fpv-notebook.test.mjs game/test/fpv-world-content.test.mjs game/test/fpv-appearance.test.mjs game/test/fpv-world-appearance-ui.test.mjs",
+      "environment": "NODE_PATH points to existing pinned authoring dependencies; no dependency installation",
+      "exit": 1,
+      "passed": 56,
+      "failed": 1,
+      "failure": "World pre-arm appearance refresh keeps focus on the control the player is using; test309; inherited baseline failure already independently reproduced in fpv-world-disposal-local-checks.json",
+      "unhandledRejections": 0,
+      "session": 15189
+    },
+    {
+      "command": "eslint world-app.mjs and both manual preparers --max-warnings0; git diff --check",
+      "exit": 0
+    },
+    {
+      "command": "node scripts/bundle-optional-practice.mjs --out dist/fpv-imported-examples-candidate-79a721dd1 --packages civilian-flight,civilian-fpv,fpv-worlds",
+      "exit": 0,
+      "session": 52441,
+      "reproducibleBuilds": 2,
+      "committedInputsVerified": true,
+      "zipMembersVerified": true
+    }
+  ],
+  "limits": [
+    "No new unit coverage. Do not summarize the scoped suite as all-pass.",
+    "Historical source fixture cc1ffbbad remains exact; later commits change fixture/docs or merge data-only main.",
+    "This admission precedes the separately qualified capacity merge; it does not claim a combined current-main run."
+  ]
+}

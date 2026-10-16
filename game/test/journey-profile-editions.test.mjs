@@ -45,6 +45,27 @@ test('review and historical profiles isolate cursors, clears and skips bidirecti
   assert.deepEqual(new Set(disk.allPuts.map(([, key]) => key)), new Set(['journey', profileKey]));
 });
 
+test('company-edition profiles retain best stars without leaking them between editions', async () => {
+  const disk = managedIndexedDB();
+  const missionId = 'company/acme/campaign/shared-level';
+  const complete = (suffix, stars) => ({
+    type: 'complete',
+    mode: 'solo',
+    missionId,
+    runId: `run-${suffix}`,
+    gameplayId: `gameplay-${suffix}`,
+    difficulty: 'standard',
+    stars,
+  });
+  const first = createJourneyBackend({ ...disk, profileKey: 'journey-company-acme-v1' });
+  const second = createJourneyBackend({ ...disk, profileKey: 'journey-company-contoso-v1' });
+  await first.commit([complete('acme-silver', 2)]);
+  await second.commit([complete('contoso-gold', 3)]);
+  await first.commit([complete('acme-bronze', 1)]);
+  assert.equal((await first.readState()).stars.best.solo[missionId], 2);
+  assert.equal((await second.readState()).stars.best.solo[missionId], 3);
+});
+
 test('review storage failure preserves session progress and retry/export without writing legacy records', async () => {
   const disk = managedIndexedDB();
   const backend = createJourneyBackend({ ...disk, profileKey });

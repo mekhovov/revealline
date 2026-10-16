@@ -1,0 +1,803 @@
+{
+  "format": "FPVContinuousLessonBrowserEvidence.v1",
+  "passed": true,
+  "createdAt": "2026-10-02T01:32:19.150Z",
+  "checks": [
+    {
+      "name": "beginner-01 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2
+      ],
+      "loops": 1,
+      "frames": 360
+    },
+    {
+      "name": "beginner-01 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 148,
+      "completedTick": 360,
+      "freeflightTick": 363
+    },
+    {
+      "name": "beginner-02 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2
+      ],
+      "loops": 1,
+      "frames": 564
+    },
+    {
+      "name": "beginner-02 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 278,
+      "completedTick": 564,
+      "freeflightTick": 567
+    },
+    {
+      "name": "beginner-03 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2
+      ],
+      "loops": 1,
+      "frames": 561
+    },
+    {
+      "name": "beginner-03 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 299,
+      "completedTick": 561,
+      "freeflightTick": 564
+    },
+    {
+      "name": "beginner-04 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "loops": 1,
+      "frames": 696
+    },
+    {
+      "name": "beginner-04 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 434,
+      "completedTick": 696,
+      "freeflightTick": 699
+    },
+    {
+      "name": "beginner-05 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 654
+    },
+    {
+      "name": "beginner-05 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 393,
+      "completedTick": 654,
+      "freeflightTick": 657
+    },
+    {
+      "name": "beginner-06 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 828
+    },
+    {
+      "name": "beginner-06 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 566,
+      "completedTick": 828,
+      "freeflightTick": 831
+    },
+    {
+      "name": "beginner-07 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "loops": 1,
+      "frames": 948
+    },
+    {
+      "name": "beginner-07 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 686,
+      "completedTick": 948,
+      "freeflightTick": 951
+    },
+    {
+      "name": "beginner-08 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 830
+    },
+    {
+      "name": "beginner-08 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 579,
+      "completedTick": 830,
+      "freeflightTick": 833
+    },
+    {
+      "name": "beginner-09 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "loops": 1,
+      "frames": 899
+    },
+    {
+      "name": "beginner-09 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 638,
+      "completedTick": 899,
+      "freeflightTick": 902
+    },
+    {
+      "name": "beginner-10 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 732
+    },
+    {
+      "name": "beginner-10 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 470,
+      "completedTick": 732,
+      "freeflightTick": 735
+    },
+    {
+      "name": "beginner-11 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "loops": 1,
+      "frames": 945
+    },
+    {
+      "name": "beginner-11 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 684,
+      "completedTick": 945,
+      "freeflightTick": 948
+    },
+    {
+      "name": "beginner-12 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "loops": 1,
+      "frames": 1032
+    },
+    {
+      "name": "beginner-12 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 782,
+      "completedTick": 1032,
+      "freeflightTick": 1035
+    },
+    {
+      "name": "beginner-13 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 654
+    },
+    {
+      "name": "beginner-13 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 326,
+      "completedTick": 654,
+      "freeflightTick": 657
+    },
+    {
+      "name": "beginner-14 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 757
+    },
+    {
+      "name": "beginner-14 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 483,
+      "completedTick": 757,
+      "freeflightTick": 760
+    },
+    {
+      "name": "beginner-15 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2
+      ],
+      "loops": 1,
+      "frames": 360
+    },
+    {
+      "name": "beginner-15 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 148,
+      "completedTick": 360,
+      "freeflightTick": 363
+    },
+    {
+      "name": "beginner-16 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 712
+    },
+    {
+      "name": "beginner-16 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 459,
+      "completedTick": 712,
+      "freeflightTick": 715
+    },
+    {
+      "name": "beginner-17 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 608
+    },
+    {
+      "name": "beginner-17 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 314,
+      "completedTick": 608,
+      "freeflightTick": 611
+    },
+    {
+      "name": "beginner-18 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 961
+    },
+    {
+      "name": "beginner-18 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 688,
+      "completedTick": 961,
+      "freeflightTick": 964
+    },
+    {
+      "name": "beginner-19 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "loops": 1,
+      "frames": 973
+    },
+    {
+      "name": "beginner-19 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 699,
+      "completedTick": 973,
+      "freeflightTick": 976
+    },
+    {
+      "name": "beginner-20 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "loops": 1,
+      "frames": 908
+    },
+    {
+      "name": "beginner-20 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 645,
+      "completedTick": 908,
+      "freeflightTick": 911
+    },
+    {
+      "name": "beginner-21 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "loops": 1,
+      "frames": 959
+    },
+    {
+      "name": "beginner-21 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 686,
+      "completedTick": 959,
+      "freeflightTick": 962
+    },
+    {
+      "name": "beginner-22 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "loops": 1,
+      "frames": 1763
+    },
+    {
+      "name": "beginner-22 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 1479,
+      "completedTick": 1763,
+      "freeflightTick": 1766
+    },
+    {
+      "name": "beginner-23 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "loops": 1,
+      "frames": 1057
+    },
+    {
+      "name": "beginner-23 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 784,
+      "completedTick": 1057,
+      "freeflightTick": 1060
+    },
+    {
+      "name": "beginner-24 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "loops": 1,
+      "frames": 1031
+    },
+    {
+      "name": "beginner-24 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 769,
+      "completedTick": 1031,
+      "freeflightTick": 1034
+    },
+    {
+      "name": "beginner-25 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "loops": 1,
+      "frames": 676
+    },
+    {
+      "name": "beginner-25 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 400,
+      "completedTick": 676,
+      "freeflightTick": 679
+    },
+    {
+      "name": "beginner-26 continuous loop and all objective descriptions",
+      "passed": true,
+      "steps": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "loops": 1,
+      "frames": 1407
+    },
+    {
+      "name": "beginner-26 exact seek, seamless takeover and manual completion",
+      "passed": true,
+      "takeoverTick": 1145,
+      "completedTick": 1407,
+      "freeflightTick": 1410
+    },
+    {
+      "name": "Disconnect and focus loss pause without catch-up",
+      "passed": true,
+      "tick": 1415
+    },
+    {
+      "name": "Explicit axis explorer and Watch lesson remain separate",
+      "passed": true
+    },
+    {
+      "name": "Legacy host fallback and disposal",
+      "passed": true
+    }
+  ],
+  "costs": [
+    {
+      "id": "beginner-01",
+      "operation": "open",
+      "milliseconds": 12.400000002235174
+    },
+    {
+      "id": "beginner-01",
+      "operation": "seek-last-step",
+      "milliseconds": 5.099999997764826
+    },
+    {
+      "id": "beginner-02",
+      "operation": "open",
+      "milliseconds": 10.300000000745058
+    },
+    {
+      "id": "beginner-02",
+      "operation": "seek-last-step",
+      "milliseconds": 7.299999997019768
+    },
+    {
+      "id": "beginner-03",
+      "operation": "open",
+      "milliseconds": 9.399999998509884
+    },
+    {
+      "id": "beginner-03",
+      "operation": "seek-last-step",
+      "milliseconds": 7.100000001490116
+    },
+    {
+      "id": "beginner-04",
+      "operation": "open",
+      "milliseconds": 12.300000000745058
+    },
+    {
+      "id": "beginner-04",
+      "operation": "seek-last-step",
+      "milliseconds": 10.399999998509884
+    },
+    {
+      "id": "beginner-05",
+      "operation": "open",
+      "milliseconds": 11.900000002235174
+    },
+    {
+      "id": "beginner-05",
+      "operation": "seek-last-step",
+      "milliseconds": 8.800000000745058
+    },
+    {
+      "id": "beginner-06",
+      "operation": "open",
+      "milliseconds": 14.300000000745058
+    },
+    {
+      "id": "beginner-06",
+      "operation": "seek-last-step",
+      "milliseconds": 11.800000000745058
+    },
+    {
+      "id": "beginner-07",
+      "operation": "open",
+      "milliseconds": 16.100000001490116
+    },
+    {
+      "id": "beginner-07",
+      "operation": "seek-last-step",
+      "milliseconds": 13.799999997019768
+    },
+    {
+      "id": "beginner-08",
+      "operation": "open",
+      "milliseconds": 14.5
+    },
+    {
+      "id": "beginner-08",
+      "operation": "seek-last-step",
+      "milliseconds": 12.599999997764826
+    },
+    {
+      "id": "beginner-09",
+      "operation": "open",
+      "milliseconds": 16.099999997764826
+    },
+    {
+      "id": "beginner-09",
+      "operation": "seek-last-step",
+      "milliseconds": 12.299999997019768
+    },
+    {
+      "id": "beginner-10",
+      "operation": "open",
+      "milliseconds": 12.699999999254942
+    },
+    {
+      "id": "beginner-10",
+      "operation": "seek-last-step",
+      "milliseconds": 9.800000000745058
+    },
+    {
+      "id": "beginner-11",
+      "operation": "open",
+      "milliseconds": 14.800000000745058
+    },
+    {
+      "id": "beginner-11",
+      "operation": "seek-last-step",
+      "milliseconds": 12
+    },
+    {
+      "id": "beginner-12",
+      "operation": "open",
+      "milliseconds": 16.400000002235174
+    },
+    {
+      "id": "beginner-12",
+      "operation": "seek-last-step",
+      "milliseconds": 14
+    },
+    {
+      "id": "beginner-13",
+      "operation": "open",
+      "milliseconds": 11.199999999254942
+    },
+    {
+      "id": "beginner-13",
+      "operation": "seek-last-step",
+      "milliseconds": 7.400000002235174
+    },
+    {
+      "id": "beginner-14",
+      "operation": "open",
+      "milliseconds": 12.5
+    },
+    {
+      "id": "beginner-14",
+      "operation": "seek-last-step",
+      "milliseconds": 9.399999998509884
+    },
+    {
+      "id": "beginner-15",
+      "operation": "open",
+      "milliseconds": 6.800000000745058
+    },
+    {
+      "id": "beginner-15",
+      "operation": "seek-last-step",
+      "milliseconds": 4.699999999254942
+    },
+    {
+      "id": "beginner-16",
+      "operation": "open",
+      "milliseconds": 11.800000000745058
+    },
+    {
+      "id": "beginner-16",
+      "operation": "seek-last-step",
+      "milliseconds": 9.400000002235174
+    },
+    {
+      "id": "beginner-17",
+      "operation": "open",
+      "milliseconds": 10.400000002235174
+    },
+    {
+      "id": "beginner-17",
+      "operation": "seek-last-step",
+      "milliseconds": 7
+    },
+    {
+      "id": "beginner-18",
+      "operation": "open",
+      "milliseconds": 15.700000002980232
+    },
+    {
+      "id": "beginner-18",
+      "operation": "seek-last-step",
+      "milliseconds": 13.100000001490116
+    },
+    {
+      "id": "beginner-19",
+      "operation": "open",
+      "milliseconds": 15.899999998509884
+    },
+    {
+      "id": "beginner-19",
+      "operation": "seek-last-step",
+      "milliseconds": 13.300000000745058
+    },
+    {
+      "id": "beginner-20",
+      "operation": "open",
+      "milliseconds": 14.399999998509884
+    },
+    {
+      "id": "beginner-20",
+      "operation": "seek-last-step",
+      "milliseconds": 11.799999997019768
+    },
+    {
+      "id": "beginner-21",
+      "operation": "open",
+      "milliseconds": 16.800000000745058
+    },
+    {
+      "id": "beginner-21",
+      "operation": "seek-last-step",
+      "milliseconds": 13.899999998509884
+    },
+    {
+      "id": "beginner-22",
+      "operation": "open",
+      "milliseconds": 29.600000001490116
+    },
+    {
+      "id": "beginner-22",
+      "operation": "seek-last-step",
+      "milliseconds": 27.099999997764826
+    },
+    {
+      "id": "beginner-23",
+      "operation": "open",
+      "milliseconds": 17.699999999254942
+    },
+    {
+      "id": "beginner-23",
+      "operation": "seek-last-step",
+      "milliseconds": 14.900000002235174
+    },
+    {
+      "id": "beginner-24",
+      "operation": "open",
+      "milliseconds": 15.899999998509884
+    },
+    {
+      "id": "beginner-24",
+      "operation": "seek-last-step",
+      "milliseconds": 13.099999997764826
+    },
+    {
+      "id": "beginner-25",
+      "operation": "open",
+      "milliseconds": 11.699999999254942
+    },
+    {
+      "id": "beginner-25",
+      "operation": "seek-last-step",
+      "milliseconds": 8.900000002235174
+    },
+    {
+      "id": "beginner-26",
+      "operation": "open",
+      "milliseconds": 22.399999998509884
+    },
+    {
+      "id": "beginner-26",
+      "operation": "seek-last-step",
+      "milliseconds": 19.100000001490116
+    }
+  ],
+  "maxOpenMs": 29.600000001490116,
+  "maxSeekMs": 27.099999997764826,
+  "inputs": {
+    "beginner-coach.mjs": "56be269dc015ddc3a46adf0098fa72f046dabf6b35051a6c79cbe465e644e3ba",
+    "world-model.mjs": "b680ec30aea04ed66cb8eedfbb5bc35cda83cf08ebc7ae371dc5f43c702158e8",
+    "world-demonstrations.mjs": "95c8ae7fe967775510163ba81eaa7689554f2faa1c0874d9d952ebb0ae6ece3f",
+    "sim-presentation.mjs": "b9a1682788576599c9cc3ca4fabea232154361d563832031f57f189b98fbe22b"
+  },
+  "scope": "Real browser DOM/production coach/World v2. Controlled clock and radio samples. No physical radio, player or hardware-performance acceptance."
+}

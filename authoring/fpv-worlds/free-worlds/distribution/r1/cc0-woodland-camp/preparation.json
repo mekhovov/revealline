@@ -1,0 +1,173 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-woodland-camp",
+  "title": [
+    "Woodland Camp",
+    "Лісовий табір"
+  ],
+  "kit": "mini-forest",
+  "sourceURL": "https://kenney.nl/assets/mini-forest",
+  "downloadURL": "https://kenney.nl/media/pages/assets/mini-forest/44a89aed7f-1784024079/kenney_mini-forest_1.0.zip",
+  "archiveSha256": "8691614018075a66458e35915b8c358c2e6178648aedadafcdf313b924aa6581",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 169180,
+  "modelSha256": "41ebf44eed0be96c5cdedfda7e4d4ddf523086d2373f1bff13a08cdbd38d2b9a",
+  "packBytes": 310434,
+  "packSha256": "a7b0f6d52411131f6e03d25f5db1ef25209be2875422e0aad8fd0f155735b93c",
+  "collisionSurfaces": 11,
+  "collisionTriangles": 3273,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/tree-high.glb",
+      "sha256": "c86332ac085c2a7f0f926ea9f51907bbd9354561f5717cf95dc2cfcaaff873b1",
+      "placement": {
+        "model": "tree-high",
+        "x": -19,
+        "z": 20,
+        "size": 9,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9.70434897287595
+    },
+    {
+      "model": "Models/GLB format/tree-high.glb",
+      "sha256": "c86332ac085c2a7f0f926ea9f51907bbd9354561f5717cf95dc2cfcaaff873b1",
+      "placement": {
+        "model": "tree-high",
+        "x": 19,
+        "z": 20,
+        "size": 9,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 9.70434897287595
+    },
+    {
+      "model": "Models/GLB format/tree.glb",
+      "sha256": "0075d5059c1ea855fecc1dba3c6262c3a01924c50b971ddde2eb8b0b5a62851a",
+      "placement": {
+        "model": "tree",
+        "x": -19,
+        "z": 0,
+        "size": 9,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9.70434897287595
+    },
+    {
+      "model": "Models/GLB format/tree.glb",
+      "sha256": "0075d5059c1ea855fecc1dba3c6262c3a01924c50b971ddde2eb8b0b5a62851a",
+      "placement": {
+        "model": "tree",
+        "x": 19,
+        "z": 0,
+        "size": 9,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 9.70434897287595
+    },
+    {
+      "model": "Models/GLB format/tree-high.glb",
+      "sha256": "c86332ac085c2a7f0f926ea9f51907bbd9354561f5717cf95dc2cfcaaff873b1",
+      "placement": {
+        "model": "tree-high",
+        "x": -19,
+        "z": -20,
+        "size": 9,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9.70434897287595
+    },
+    {
+      "model": "Models/GLB format/tree-high.glb",
+      "sha256": "c86332ac085c2a7f0f926ea9f51907bbd9354561f5717cf95dc2cfcaaff873b1",
+      "placement": {
+        "model": "tree-high",
+        "x": 19,
+        "z": -20,
+        "size": 9,
+        "yaw": 180,
+        "y": 0
+      },
+      "scale": 9.70434897287595
+    },
+    {
+      "model": "Models/GLB format/building-structure.glb",
+      "sha256": "d991f7b82d66791a37e18c218a3127b15fc4ebe799c104b9e3bdcda878a8873f",
+      "placement": {
+        "model": "building-structure",
+        "x": -31,
+        "z": -30,
+        "size": 9,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9
+    },
+    {
+      "model": "Models/GLB format/building-roof.glb",
+      "sha256": "1cd53687108ae5a21ec8392e9b1c588e912262f0ae63a569c494d627c3c05009",
+      "placement": {
+        "model": "building-roof",
+        "x": -31,
+        "z": -30,
+        "size": 10,
+        "yaw": 0,
+        "y": 9
+      },
+      "scale": 7.457645501782353
+    },
+    {
+      "model": "Models/GLB format/tent.glb",
+      "sha256": "a3f6e7a1597ccbf57f5345e6647844e21f632e03c5faae9a45af7140c7371262",
+      "placement": {
+        "model": "tent",
+        "x": 28,
+        "z": -30,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 6.339522257758324
+    },
+    {
+      "model": "Models/GLB format/rocks-high.glb",
+      "sha256": "226728a03989a1ce52ea64b55e3d9e2ff89004f7eaca9f74c2fafda7c84bbe49",
+      "placement": {
+        "model": "rocks-high",
+        "x": 29,
+        "z": 30,
+        "size": 9,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9
+    },
+    {
+      "model": "Models/GLB format/target.glb",
+      "sha256": "b336de802798e481291486a7a7de587aa2a229fffb4fc5f3d226e9873d96c3b6",
+      "placement": {
+        "model": "target",
+        "x": -12,
+        "z": 30,
+        "size": 3,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 5.4545453363213685
+    }
+  ]
+}

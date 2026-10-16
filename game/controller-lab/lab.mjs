@@ -3,6 +3,9 @@ import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { attachControllerPracticeExit } from '../ui/controller-practice-exit.mjs';
+import { mountControlLab } from '../ui/control-lab.mjs';
+import { mountOptionalPracticePanel } from '../ui/optional-practice-panel.mjs';
+import { FOUR_CONTROLS_FIXTURE } from '../learning/control-lab-fixture.mjs';
 import {
   CONTROLLER_PREVIEW_FORMAT,
   parseControllerPreviewStatus,
@@ -12,6 +15,12 @@ import { prepareScenario } from '../imports.mjs';
 import { preparePack, resolvePackCampaign } from '../packs.mjs';
 import { FIRST_FLIGHT_LESSONS, createLessonScenario } from '../first-flight.mjs';
 import { firstFlightPreviewURL } from '../ui/first-flight-preview.mjs';
+import { loadEditionToolProvider } from '../ui/edition-tool-provider.mjs';
+import {
+  editionPracticeChoices,
+  createEditionPracticeScenario,
+  editionPracticePreviewURL,
+} from '../ui/edition-controller-practice.mjs';
 
 const $ = (id) => document.getElementById(id),
   frame = $('game-frame'),
@@ -30,7 +39,8 @@ let connected = false,
   loadEpoch = 0,
   revision = 0,
   pendingStick = null,
-  disposed = false;
+  disposed = false,
+  editionProvider = null;
 const presenter = createOperationStatus($('load-status'));
 const practiceExit = attachControllerPracticeExit({
   frame,
@@ -39,6 +49,22 @@ const practiceExit = attachControllerPracticeExit({
   isReady: () => loaded && !disposed,
   getTarget: (backward) => $(backward ? 'focus-game' : 'mission'),
   releaseInputs: releaseAll,
+});
+const conceptsButton = $('control-concepts-open');
+const concepts = conceptsButton
+  ? mountControlLab({
+      document,
+      window,
+      fixture: FOUR_CONTROLS_FIXTURE,
+      beforeOpen: disconnect,
+    })
+  : null;
+if (conceptsButton) conceptsButton.onclick = () => concepts.open(conceptsButton);
+const optionalPractice = mountOptionalPracticePanel({
+  document,
+  container: $('control-practice-packages'),
+  pause: disconnect,
+  href: window.location.href,
 });
 const status = (message, error = false, busy = false) => {
   const lease = presenter.begin({ message });
@@ -225,6 +251,7 @@ function selectedMission() {
 }
 function refreshClasses() {
   const choice = selectedMission();
+  if ($('practice-difficulty')) $('practice-difficulty').disabled = !!choice?.courseId;
   $('craft').disabled = !!choice?.courseId;
   if (choice?.courseId) {
     $('craft').replaceChildren();
@@ -268,25 +295,45 @@ async function loadPractice() {
           turnPolicy: $('steering').value,
           theme: choice.theme,
         })
-      : entryScenario(choice.entry, choice.levelId, {
-          classId: $('craft').value,
-          turnPolicy: $('steering').value,
-          seed: 1,
-        });
+      : editionProvider
+        ? createEditionPracticeScenario(editionProvider, {
+            missionId: choice.missionId,
+            classId: $('craft').value,
+            turnPolicy: $('steering').value,
+            difficulty: $('practice-difficulty').value,
+          })
+        : entryScenario(choice.entry, choice.levelId, {
+            classId: $('craft').value,
+            turnPolicy: $('steering').value,
+            seed: 1,
+          });
     const { scenario, warnings } = await prepareScenario(candidate);
     if (ticket !== loadEpoch || disposed) return;
     const nextSession = crypto.randomUUID().replaceAll('-', '');
     // The same explicit practice handoff used by Playground. Persist only the
     // fully validated candidate; never write to profile, packs or reward stores.
-    if (!choice.courseId)
+    if (!choice.courseId && !editionProvider)
       sessionStorage.setItem('revealline.playground.current', JSON.stringify(scenario));
-    const destination = choice.courseId
+    let destination = choice.courseId
       ? firstFlightPreviewURL({
           lessonId: choice.courseId,
           turnPolicy: scenario.settings.turnPolicy,
           controllerSession: nextSession,
         })
-      : `../?practice=1&controller-preview=1&controller-session=${nextSession}&revision=${++revision}`;
+      : editionProvider
+        ? editionPracticePreviewURL(editionProvider, {
+            missionId: choice.missionId,
+            classId: scenario.settings.classId,
+            turnPolicy: scenario.settings.turnPolicy,
+            difficulty: $('practice-difficulty').value,
+            controllerSession: nextSession,
+            revision: ++revision,
+          })
+        : `../?practice=1&controller-preview=1&controller-session=${nextSession}&revision=${++revision}`;
+    if (editionProvider && choice.courseId) {
+      const course = new URL(destination, window.location.href);
+      destination = editionProvider.href(Object.fromEntries(course.searchParams));
+    }
     disconnect();
     loaded = false;
     session = nextSession;
@@ -363,12 +410,15 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('pagehide', (event) => {
   disconnect();
+  optionalPractice.close?.({ restoreFocus: false });
   loadEpoch++;
   // A history-cache return reuses this page and its iframe. Preserve the
   // listeners, but never resume a held virtual button on return.
   if (event.persisted) return;
   disposed = true;
   practiceExit.destroy();
+  concepts?.dispose();
+  optionalPractice.dispose();
   clearInterval(heartbeat);
   observer.disconnect();
   window.removeEventListener('message', receiveStatus);
@@ -390,44 +440,60 @@ async function json(path) {
 try {
   if (origin === 'null')
     throw new Error(t('interface:serveThisPageOverLocalhostOrHttpsFileUrlsCannot'));
-  const [campaign, themes, classRecipes] = await Promise.all([
-    json('../content/campaign.json'),
-    json('../content/themes.json'),
-    json('../content/classes.json'),
-  ]);
-  const entry = { campaign, themes: themes.themes, classRecipes };
-  for (const level of campaign.levels)
-    missions.push({
-      entry,
-      levelId: level.id,
-      label: `${contentText(campaign, 'title')} / ${contentText(level, 'name')}`,
-    });
+  editionProvider = await loadEditionToolProvider({
+    locationRef: window.location,
+    documentRef: document,
+  });
   const packNotes = [];
-  for (const [name, path] of [
-    [t('interface:fieldcraft'), '../content/packs/fieldcraft.json'],
-    [t('interface:sentinelRelay'), '../content/packs/sentinel-relay.json'],
-    [t('interface:readingPractice'), './reading-practice.json'],
-  ]) {
-    try {
-      status(`Loading and validating ${name} practice…`, false, true);
-      const { pack } = await preparePack(await json(path));
-      for (const campaign of pack.campaigns) {
-        const entry = resolvePackCampaign(pack, campaign.id);
-        for (const level of entry.campaign.levels)
-          missions.push({
-            entry,
-            levelId: level.id,
-            label: `${contentText(pack, 'name')} / ${contentText(level, 'name')}`,
-          });
+  let courseTheme;
+  if (editionProvider) {
+    missions.push(...editionPracticeChoices(editionProvider));
+    courseTheme = editionProvider.theme;
+    $('practice-difficulty-field').hidden = false;
+    for (const link of document.querySelectorAll('[data-workshop-tool="playground"]'))
+      link.hidden = true;
+    const home = document.querySelector('[data-workshop-return="game"]');
+    if (home) localizedText(home, () => editionProvider.selection.edition.name);
+  } else {
+    const [campaign, themes, classRecipes] = await Promise.all([
+      json('../content/campaign.json'),
+      json('../content/themes.json'),
+      json('../content/classes.json'),
+    ]);
+    const entry = { campaign, themes: themes.themes, classRecipes };
+    for (const level of campaign.levels)
+      missions.push({
+        entry,
+        levelId: level.id,
+        label: `${contentText(campaign, 'title')} / ${contentText(level, 'name')}`,
+      });
+    courseTheme = themes.themes.find((theme) => theme.id === 'fpv');
+    for (const [name, path] of [
+      [t('interface:fieldcraft'), '../content/packs/fieldcraft.json'],
+      [t('interface:sentinelRelay'), '../content/packs/sentinel-relay.json'],
+      [t('interface:readingPractice'), './reading-practice.json'],
+    ]) {
+      try {
+        status(`Loading and validating ${name} practice…`, false, true);
+        const { pack } = await preparePack(await json(path));
+        for (const campaign of pack.campaigns) {
+          const entry = resolvePackCampaign(pack, campaign.id);
+          for (const level of entry.campaign.levels)
+            missions.push({
+              entry,
+              levelId: level.id,
+              label: `${contentText(pack, 'name')} / ${contentText(level, 'name')}`,
+            });
+        }
+      } catch (error) {
+        packNotes.push(t('gameplay:unavailable', { value1: name, value2: error.message }));
       }
-    } catch (error) {
-      packNotes.push(t('gameplay:unavailable', { value1: name, value2: error.message }));
     }
   }
   for (const lesson of FIRST_FLIGHT_LESSONS)
     missions.push({
       courseId: lesson.id,
-      theme: themes.themes.find((theme) => theme.id === 'fpv'),
+      theme: courseTheme,
       get label() {
         return t('gameplay:firstFlight2', { value1: contentText(lesson, 'title') });
       },

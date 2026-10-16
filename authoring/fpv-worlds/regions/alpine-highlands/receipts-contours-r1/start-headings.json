@@ -1,0 +1,123 @@
+{
+  "passed": true,
+  "descriptorSHA256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec",
+  "manifestSHA256": "c1218b914e01346414dd160e2535fdd115a057a18b511a29577526675b6a90b0",
+  "cases": [
+    {
+      "spawnId": "glacial-valley",
+      "mode": "self-level",
+      "heading": 9000,
+      "route": "Open glacial slalom",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "132dc71e47d02f7bbe5c2e7ee394905ef61d76ee6f53b8a2973466faf70a49b5"
+    },
+    {
+      "spawnId": "glacial-valley",
+      "mode": "acro",
+      "heading": 9000,
+      "route": "Open glacial slalom",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "132dc71e47d02f7bbe5c2e7ee394905ef61d76ee6f53b8a2973466faf70a49b5"
+    },
+    {
+      "spawnId": "switchback-pass",
+      "mode": "self-level",
+      "heading": 9000,
+      "route": "Open terrace approach",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "cc0064c6e0ab3931040fa84bf5db4516045da470a318f582d01133fd888966f4"
+    },
+    {
+      "spawnId": "switchback-pass",
+      "mode": "acro",
+      "heading": 9000,
+      "route": "Open terrace approach",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "cc0064c6e0ab3931040fa84bf5db4516045da470a318f582d01133fd888966f4"
+    },
+    {
+      "spawnId": "snow-saddle",
+      "mode": "self-level",
+      "heading": 18000,
+      "route": "Pinnacle gap",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "cad5bdd372080295679aa7f603aeea6cd0efe6d8c5830db8188e54af0fdf8bc8"
+    },
+    {
+      "spawnId": "snow-saddle",
+      "mode": "acro",
+      "heading": 18000,
+      "route": "Pinnacle gap",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "cad5bdd372080295679aa7f603aeea6cd0efe6d8c5830db8188e54af0fdf8bc8"
+    },
+    {
+      "spawnId": "summit-station",
+      "mode": "self-level",
+      "heading": 9000,
+      "route": "Open station concourse",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "d7aab579ad39e269959bf4412eb4074357fc34f3d5c3efcb68b900227e7a471f"
+    },
+    {
+      "spawnId": "summit-station",
+      "mode": "acro",
+      "heading": 9000,
+      "route": "Open station concourse",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "d7aab579ad39e269959bf4412eb4074357fc34f3d5c3efcb68b900227e7a471f"
+    },
+    {
+      "spawnId": "viaduct-gorge",
+      "mode": "self-level",
+      "heading": 18000,
+      "route": "Viaduct centre bay",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "2a405d5c68bcf5717479c9295ced94c8c26982665cc5ceecc956142e508bced3"
+    },
+    {
+      "spawnId": "viaduct-gorge",
+      "mode": "acro",
+      "heading": 18000,
+      "route": "Viaduct centre bay",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "2a405d5c68bcf5717479c9295ced94c8c26982665cc5ceecc956142e508bced3"
+    },
+    {
+      "spawnId": "reservoir-dam",
+      "mode": "self-level",
+      "heading": 18000,
+      "route": "Dam spillway",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "33caf420812df07a6cbd7178d5aceee85bd6e4c46da0455a47dc95b73a3d2f2d"
+    },
+    {
+      "spawnId": "reservoir-dam",
+      "mode": "acro",
+      "heading": 18000,
+      "route": "Dam spillway",
+      "forwardClearanceM": 40,
+      "corridorWidthM": 4,
+      "geometrySHA256": "33caf420812df07a6cbd7178d5aceee85bd6e4c46da0455a47dc95b73a3d2f2d"
+    }
+  ],
+  "savedHeadingsPreserved": 6,
+  "sourceBytesChanged": false,
+  "noAutomaticArming": true,
+  "disposalZero": true,
+  "limitations": [
+    "Node verified collision and orientation; native composition/camera review remains required",
+    "No authored spawn, terrain, collision, physics or saved-location mutation"
+  ]
+}

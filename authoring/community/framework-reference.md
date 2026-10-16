@@ -8,7 +8,9 @@ Baseline inspected: `1deaae1a9a30c6146ecbb36c83cf43c9346a57c0` (source version 0
 
 `legacy scenario → expansionFromScenario → preparePack → installed pack library → Custom mission source → ordinary Solo host`
 
-The first path does not yet install modern projects in the second path. Phase 1 supplies a project-backed Custom source and portable media resolver instead of hiding modern data inside a legacy schema.
+At the inspected baseline, the first path did not install modern projects in the second path. The
+current creator implementation supplies a project-backed Custom source and portable media resolver
+instead of hiding modern data inside a legacy schema.
 
 | Component                                             | Authority and reuse point                                                                                            |
 | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -29,18 +31,18 @@ The first path does not yet install modern projects in the second path. Phase 1 
 
 ## Formats and limits
 
-| Format                                     | Purpose                                        | Important boundary                                                          |
-| ------------------------------------------ | ---------------------------------------------- | --------------------------------------------------------------------------- |
-| `ContentProjectV1`                         | Editable map/mission/campaign/pack registry    | JSON source, not a portable media installation                              |
-| `MapDesignV1`–`V3`, `MissionDesignV1`–`V4` | Versioned authored geometry and rules          | Use the generation supporting the chosen mechanics                          |
-| `CampaignDesignV1`, `PackDesignV1`         | Ordered source references                      | References must resolve in the project                                      |
-| `AssetRevisionV1`                          | Candidate reveal PNG pin                       | Required exact path, SHA-256, byte count and dimensions                     |
-| `xonix-pack.v1`–`v9`                       | Existing runtime expansions                    | Corresponding core/level generation, strict keys; no arbitrary added fields |
-| `.rltheme`                                 | Presentation records and bytes                 | Not mission progression or campaign installation                            |
-| `.rlmedia`, `.rlstory`, `.rlsound`         | Managed media domain transfers                 | Not a selected campaign dependency closure                                  |
-| `.rlpack` / `revealline-content-bundle.v1` | Planned scoped modern gameplay + runtime media | Phase 1 implementation; not accepted by today's importer                    |
+| Format                                     | Purpose                                     | Important boundary                                                          |
+| ------------------------------------------ | ------------------------------------------- | --------------------------------------------------------------------------- |
+| `ContentProjectV1`                         | Editable map/mission/campaign/pack registry | JSON source, not a portable media installation                              |
+| `MapDesignV1`–`V3`, `MissionDesignV1`–`V4` | Versioned authored geometry and rules       | Use the generation supporting the chosen mechanics                          |
+| `CampaignDesignV1`, `PackDesignV1`         | Ordered source references                   | References must resolve in the project                                      |
+| `AssetRevisionV1`                          | Candidate static PNG/JPEG/WebP reveal pin   | Required exact path, SHA-256, byte count and dimensions                     |
+| `xonix-pack.v1`–`v9`                       | Existing runtime expansions                 | Corresponding core/level generation, strict keys; no arbitrary added fields |
+| `.rltheme`                                 | Presentation records and bytes              | Not mission progression or campaign installation                            |
+| `.rlmedia`, `.rlstory`, `.rlsound`         | Managed media domain transfers              | Not a selected campaign dependency closure                                  |
+| `.rlpack` / `revealline-content-bundle.v1` | Scoped modern gameplay + runtime media      | Implemented by the creator importer with exact dependency and hash checks   |
 
-At this baseline, project JSON is capped at 4 MiB: 512 maps, 384 missions, 64 campaigns, 64 packs and 512 assets. Each project PNG is at most 4 MiB, 8,192 pixels on a side and 16 million pixels total. Its logical path is a versioned `content-design/assets/...png` path. A portable resolver must satisfy the same checks.
+Project JSON is capped at 4 MiB: 512 maps, 384 missions, 64 campaigns, 64 packs and 512 assets. Each static PNG/JPEG/WebP background is at most 4 MiB, 8,192 pixels on a side and 16 million pixels total. Its logical path is versioned beneath `content-design/assets/` or `editions/assets/` and ends in `.png`, `.jpg`, `.jpeg` or `.webp`. Exact hash, byte length, header MIME, dimensions and complete decoding remain required. A portable resolver must satisfy the same checks; existing PNG record identities are unchanged.
 
 Legacy packs are capped at 24 MiB each, 48 MiB installed total, 12 installed packs, 128 levels and 8 campaigns per pack. Managed media has a separate 256 MiB committed-plus-staged budget, 64 MiB individual source limit and four concurrent reservations. These budgets are independent; neither browser quota estimates nor sequential writes prove an atomic installation across them. Preserve budgets and use staging/recovery before publishing an installed index.
 

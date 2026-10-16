@@ -1,0 +1,519 @@
+TAP version 13
+# Subtest: Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving
+ok 1 - Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving
+  ---
+  duration_ms: 756.976041
+  ...
+# Subtest: Settings stays above a retained paused Team attempt and reopens its selected category
+ok 2 - Settings stays above a retained paused Team attempt and reopens its selected category
+  ---
+  duration_ms: 6006.021292
+  ...
+# Subtest: compact Team native cancellation returns to categories before the host closes Settings
+ok 3 - compact Team native cancellation returns to categories before the host closes Settings
+  ---
+  duration_ms: 2108.986667
+  ...
+# Subtest: Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena
+ok 4 - Settings tab keys stay in the categories and Tab cannot reach inactive content or the arena
+  ---
+  duration_ms: 294.947375
+  ...
+# Subtest: a controller selects Team Settings and paused quick sound without resuming
+ok 5 - a controller selects Team Settings and paused quick sound without resuming
+  ---
+  duration_ms: 5164.767709
+  ...
+# Subtest: closing Settings does not cancel a pending Team picture and late readiness does not steal focus
+ok 6 - closing Settings does not cancel a pending Team picture and late readiness does not steal focus
+  ---
+  duration_ms: 222.105125
+  ...
+# Subtest: Settings Back leaves a pending Team import under its existing operation owner
+ok 7 - Settings Back leaves a pending Team import under its existing operation owner
+  ---
+  duration_ms: 218.665541
+  ...
+# Subtest: a blur Settings close cannot focus or resume in the background
+ok 8 - a blur Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 1224.470458
+  ...
+# Subtest: a hidden Settings close cannot focus or resume in the background
+ok 9 - a hidden Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 1545.893125
+  ...
+# Subtest: a pagehide Settings close cannot focus or resume in the background
+ok 10 - a pagehide Settings close cannot focus or resume in the background
+  ---
+  duration_ms: 1468.679708
+  ...
+# Subtest: queued old close and newer focus cannot replace the current Settings visit
+ok 11 - queued old close and newer focus cannot replace the current Settings visit
+  ---
+  duration_ms: 214.906625
+  ...
+# Subtest: paused keyboard quick Sound and Settings mute share one owner without resuming
+ok 12 - paused keyboard quick Sound and Settings mute share one owner without resuming
+  ---
+  duration_ms: 4630.2695
+  ...
+# Subtest: terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures
+ok 13 - terminal disposal retires Settings controls without reopening, refocusing, saving or retaining pictures
+  ---
+  duration_ms: 663.584333
+  ...
+# Subtest: a newer focus choice during native Settings opening wins over the default category focus
+ok 14 - a newer focus choice during native Settings opening wins over the default category focus
+  ---
+  duration_ms: 359.970542
+  ...
+# Subtest: a reopen during return visibility checking retires the old Settings close
+ok 15 - a reopen during return visibility checking retires the old Settings close
+  ---
+  duration_ms: 222.832459
+  ...
+# Subtest: a background during return visibility checking retires the old Settings close
+ok 16 - a background during return visibility checking retires the old Settings close
+  ---
+  duration_ms: 224.85825
+  ...
+# Subtest: Legacy Versus keyboard reaches Find missions and terminal Next outside the main panel
+ok 17 - Legacy Versus keyboard reaches Find missions and terminal Next outside the main panel
+  ---
+  duration_ms: 19143.135
+  ...
+# Subtest: Team keyboard reaches visible masthead from paused without entering flight controls
+ok 18 - Team keyboard reaches visible masthead from paused without entering flight controls
+  ---
+  duration_ms: 792.177708
+  ...
+# Subtest: Team keyboard reaches visible masthead from won without entering flight controls
+ok 19 - Team keyboard reaches visible masthead from won without entering flight controls
+  ---
+  duration_ms: 33824.97525
+  ...
+# {"boundary":"rehearsed keyboard host; finite DOM/inert Canvas, no native or human-win claim","level":"first-connection","coreReferenceCommands":2081,"hostCommandTicks":2081}
+# Subtest: Team keyboard reaches visible masthead from lost without entering flight controls
+ok 20 - Team keyboard reaches visible masthead from lost without entering flight controls
+  ---
+  duration_ms: 1813.243791
+  ...
+# Subtest: Legacy Versus controller reaches Find missions and terminal Next outside the main panel
+ok 21 - Legacy Versus controller reaches Find missions and terminal Next outside the main panel
+  ---
+  duration_ms: 10844.162708
+  ...
+# Subtest: Team controller reaches visible masthead from paused without entering flight controls
+ok 22 - Team controller reaches visible masthead from paused without entering flight controls
+  ---
+  duration_ms: 680.697083
+  ...
+# Subtest: Team controller reaches visible masthead from won without entering flight controls
+ok 23 - Team controller reaches visible masthead from won without entering flight controls
+  ---
+  duration_ms: 19614.182833
+  ...
+# {"boundary":"rehearsed keyboard host; finite DOM/inert Canvas, no native or human-win claim","level":"first-connection","coreReferenceCommands":2081,"hostCommandTicks":2081}
+# Subtest: Team controller reaches visible masthead from lost without entering flight controls
+ok 24 - Team controller reaches visible masthead from lost without entering flight controls
+  ---
+  duration_ms: 2276.96
+  ...
+# Subtest: ordinary running frames retain the Pause label node between pointer edges
+ok 25 - ordinary running frames retain the Pause label node between pointer edges
+  ---
+  duration_ms: 3997.473084
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's other-focus
+ok 26 - Couch return reveal cannot outlive a focus callback's other-focus
+  ---
+  duration_ms: 4808.157042
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's new-screen
+ok 27 - Couch return reveal cannot outlive a focus callback's new-screen
+  ---
+  duration_ms: 3335.672666
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's background
+ok 28 - Couch return reveal cannot outlive a focus callback's background
+  ---
+  duration_ms: 3604.435334
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's hidden
+ok 29 - Couch return reveal cannot outlive a focus callback's hidden
+  ---
+  duration_ms: 4144.978459
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's destroyed
+ok 30 - Couch return reveal cannot outlive a focus callback's destroyed
+  ---
+  duration_ms: 3809.743333
+  ...
+# Subtest: Couch return reveal cannot outlive a focus callback's detached
+ok 31 - Couch return reveal cannot outlive a focus callback's detached
+  ---
+  duration_ms: 2788.637583
+  ...
+# Subtest: Couch main Back reveals the same already-focused action without activating it
+ok 32 - Couch main Back reveals the same already-focused action without activating it
+  ---
+  duration_ms: 3382.641625
+  ...
+# Subtest: lobby, setup and children use reachable native controls and Back restores the actual opener
+ok 33 - lobby, setup and children use reachable native controls and Back restores the actual opener
+  ---
+  duration_ms: 10546.875167
+  ...
+# Subtest: Versus Extras keeps secondary destinations reachable by keyboard and controller
+ok 34 - Versus Extras keeps secondary destinations reachable by keyboard and controller
+  ---
+  duration_ms: 6529.896583
+  ...
+# Subtest: Versus More exposes native touch targets without changing Start focus
+ok 35 - Versus More exposes native touch targets without changing Start focus
+  ---
+  duration_ms: 5911.756209
+  ...
+# Subtest: Versus More departures retain the paused match until a separate decision
+ok 36 - Versus More departures retain the paused match until a separate decision
+  ---
+  duration_ms: 5362.03575
+  ...
+# Subtest: an embedded Couch route stays loading until its actual setup is prepared
+ok 37 - an embedded Couch route stays loading until its actual setup is prepared
+  ---
+  duration_ms: 1953.043833
+  ...
+# Subtest: pause children and cancelled new match preserve two different continuations; reset is explicit
+ok 38 - pause children and cancelled new match preserve two different continuations; reset is explicit
+  ---
+  duration_ms: 7611.724125
+  ...
+# Subtest: per-seat Auto expands on touch and defers collapse until pause without changing movement
+ok 39 - per-seat Auto expands on touch and defers collapse until pause without changing movement
+  ---
+  duration_ms: 1982.443834
+  ...
+# Subtest: Always supports independent pointer players; Off wins over coarse and later touch
+ok 40 - Always supports independent pointer players; Off wins over coarse and later touch
+  ---
+  duration_ms: 2014.61075
+  ...
+# Subtest: authored Arcade removes equipment controls and hints; Tactical reflects the equipped recipe
+ok 41 - authored Arcade removes equipment controls and hints; Tactical reflects the equipped recipe
+  ---
+  duration_ms: 1803.892417
+  ...
+# Subtest: controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary
+ok 42 - controller setup/help and repeated keyboard Confirm cannot leak through the flight boundary
+  ---
+  duration_ms: 4749.772667
+  ...
+# Subtest: markup keeps touch crosses outside both arenas and uses separate screen roots
+ok 43 - markup keeps touch crosses outside both arenas and uses separate screen roots
+  ---
+  duration_ms: 0.994375
+  ...
+# Subtest: controller can read and scroll Help without starting; Back exits reading then the child
+ok 44 - controller can read and scroll Help without starting; Back exits reading then the child
+  ---
+  duration_ms: 3445.618042
+  ...
+# Subtest: a real finished draw exposes both frozen boards, Results returns without a new round
+ok 45 - a real finished draw exposes both frozen boards, Results returns without a new round
+  ---
+  duration_ms: 5795.945167
+  ...
+# Subtest: an old held controller cannot reclaim a seat from accepted touch across pause and resume
+ok 46 - an old held controller cannot reclaim a seat from accepted touch across pause and resume
+  ---
+  duration_ms: 2300.603084
+  ...
+# Subtest: blocked pad input and held keyboard repeats never replace newer touch modality
+ok 47 - blocked pad input and held keyboard repeats never replace newer touch modality
+  ---
+  duration_ms: 1953.159084
+  ...
+# Subtest: accepted-input observer is optional and observer failures cannot reject or replay commands
+ok 48 - accepted-input observer is optional and observer failures cannot reject or replay commands
+  ---
+  duration_ms: 2.030333
+  ...
+# Subtest: Couch timed clock retains accessible meaning in its compact display
+ok 49 - Couch timed clock retains accessible meaning in its compact display
+  ---
+  duration_ms: 1775.834417
+  ...
+# Subtest: immediate: shared display edits preserve the actual paused Solo cut and replay
+ok 50 - immediate: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 5756.720041
+  ...
+# Subtest: grid-center: shared display edits preserve the actual paused Solo cut and replay
+ok 51 - grid-center: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 6221.353792
+  ...
+# Subtest: Solo to Team to Versus and back restores one display record without Couch profile writes
+    # Subtest: Solo explicitly opts into the shared record
+    ok 1 - Solo explicitly opts into the shared record
+      ---
+      duration_ms: 2136.276
+      ...
+# Team picture preparation failed. TypeError: fetch failed
+#     at node:internal/deps/undici/undici:13510:13
+#     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+#     at async bytesAt (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/presentation/host.mjs:286:22)
+#     at async Object.load (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/presentation/host.mjs:512:23)
+#     at async prepareActorAppearanceLease (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/presentation/actor-appearance-lease.mjs:198:20)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/couch/relay-rescue.mjs?display-host=1:2061:24)
+#     at async file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/couch/relay-rescue.mjs?display-host=1:2220:25 {
+#   [cause]: AggregateError [ECONNREFUSED]:
+#       at internalConnectMultiple (node:net:1122:18)
+#       at afterConnectMultiple (node:net:1689:7) {
+#     code: 'ECONNREFUSED',
+#     [errors]: [ [Error], [Error] ]
+#   }
+# }
+    # Subtest: Team adopts and edits from its real paused Options
+    not ok 2 - Team adopts and edits from its real paused Options
+      ---
+      duration_ms: 5170.182542
+      location: '/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:218:11'
+      failureType: 'testCodeFailure'
+      error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        waitFor (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/helpers/wait-for.mjs:15:12)
+        async waitFor (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/helpers/coop-presentation-fixture.mjs:42:5)
+        async teamPage (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:123:3)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:220:14)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:218:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: Versus adopts, exposes controls to keyboard and changes only display state
+    not ok 3 - Versus adopts, exposes controls to keyboard and changes only display state
+      ---
+      duration_ms: 3939.356625
+      location: '/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:243:11'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+
+        + 'plain'
+        - 'pixel'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'pixel'
+      actual: 'plain'
+      operator: 'strictEqual'
+      stack: |-
+        reflects (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:50:10)
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:249:7)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:243:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: fresh Solo prefers the shared record over its older profile
+    not ok 4 - fresh Solo prefers the shared record over its older profile
+      ---
+      duration_ms: 2077.394334
+      location: '/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:287:11'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+
+        + 'reduced'
+        - 'full'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'full'
+      actual: 'reduced'
+      operator: 'strictEqual'
+      stack: |-
+        reflects (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:52:10)
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:290:5)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:287:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    1..4
+not ok 52 - Solo to Team to Versus and back restores one display record without Couch profile writes
+  ---
+  duration_ms: 13329.795375
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:202:1'
+  failureType: 'subtestsFailed'
+  error: '3 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Team picture preparation failed. TypeError: fetch failed
+#     at node:internal/deps/undici/undici:13510:13
+#     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+#     at async bytesAt (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/presentation/host.mjs:286:22)
+#     at async Object.load (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/presentation/host.mjs:512:23)
+#     at async prepareActorAppearanceLease (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/presentation/actor-appearance-lease.mjs:198:20)
+#     at async Object.select (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/couch/relay-rescue.mjs?display-host=2:2061:24)
+#     at async file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/couch/relay-rescue.mjs?display-host=2:2220:25 {
+#   [cause]: AggregateError [ECONNREFUSED]:
+#       at internalConnectMultiple (node:net:1122:18)
+#       at afterConnectMultiple (node:net:1689:7) {
+#     code: 'ECONNREFUSED',
+#     [errors]: [ [Error], [Error] ]
+#   }
+# }
+# Subtest: Team system reduction preserves a raw false choice and a denied shared save stays session-only
+not ok 53 - Team system reduction preserves a raw false choice and a denied shared save stays session-only
+  ---
+  duration_ms: 5119.476042
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:297:1'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/helpers/coop-presentation-fixture.mjs:42:5)
+    async teamPage (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:123:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/native-menus-fpv-line/go_test/game/test/display-preferences-host.test.mjs:302:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Versus controller selects the real display control without replacing or starting the duel
+ok 54 - Versus controller selects the real display control without replacing or starting the duel
+  ---
+  duration_ms: 5116.777833
+  ...
+# Subtest: actual Solo title waits for committed Missions and keeps the real chooser focus
+ok 55 - actual Solo title waits for committed Missions and keeps the real chooser focus
+  ---
+  duration_ms: 13474.956709
+  ...
+# Subtest: actual Versus ready setup retunes while Settings, Start and Pause do not
+ok 56 - actual Versus ready setup retunes while Settings, Start and Pause do not
+  ---
+  duration_ms: 4250.676916
+  ...
+# Subtest: Solo pageshow synchronously repairs stale form values even when saved preferences are unchanged
+ok 57 - Solo pageshow synchronously repairs stale form values even when saved preferences are unchanged
+  ---
+  duration_ms: 3145.798875
+  ...
+# Subtest: Solo the deferred pageshow task repairs form values restored after the event without writes
+ok 58 - Solo the deferred pageshow task repairs form values restored after the event without writes
+  ---
+  duration_ms: 2507.498834
+  ...
+# Subtest: Solo a newer explicit setting before deferred restoration keeps its current authority
+ok 59 - Solo a newer explicit setting before deferred restoration keeps its current authority
+  ---
+  duration_ms: 3654.189833
+  ...
+# Subtest: Solo terminal pagehide prevents a queued restoration or late pageshow from repainting
+ok 60 - Solo terminal pagehide prevents a queued restoration or late pageshow from repainting
+  ---
+  duration_ms: 2261.405625
+  ...
+# Subtest: Versus pageshow synchronously repairs stale form values even when saved preferences are unchanged
+ok 61 - Versus pageshow synchronously repairs stale form values even when saved preferences are unchanged
+  ---
+  duration_ms: 4616.653625
+  ...
+# Subtest: Versus the deferred pageshow task repairs form values restored after the event without writes
+ok 62 - Versus the deferred pageshow task repairs form values restored after the event without writes
+  ---
+  duration_ms: 4486.170917
+  ...
+# Subtest: Versus a newer explicit setting before deferred restoration keeps its current authority
+ok 63 - Versus a newer explicit setting before deferred restoration keeps its current authority
+  ---
+  duration_ms: 3967.543208
+  ...
+# Subtest: Versus terminal pagehide prevents a queued restoration or late pageshow from repainting
+ok 64 - Versus terminal pagehide prevents a queued restoration or late pageshow from repainting
+  ---
+  duration_ms: 3004.190542
+  ...
+# Subtest: Team pageshow synchronously repairs stale form values even when saved preferences are unchanged
+ok 65 - Team pageshow synchronously repairs stale form values even when saved preferences are unchanged
+  ---
+  duration_ms: 797.855834
+  ...
+# Subtest: Team the deferred pageshow task repairs form values restored after the event without writes
+ok 66 - Team the deferred pageshow task repairs form values restored after the event without writes
+  ---
+  duration_ms: 775.965958
+  ...
+# Subtest: Team a newer explicit setting before deferred restoration keeps its current authority
+ok 67 - Team a newer explicit setting before deferred restoration keeps its current authority
+  ---
+  duration_ms: 761.297667
+  ...
+# Subtest: Team terminal pagehide prevents a queued restoration or late pageshow from repainting
+ok 68 - Team terminal pagehide prevents a queued restoration or late pageshow from repainting
+  ---
+  duration_ms: 828.031417
+  ...
+# Subtest: Home quick sound toggles the existing master in place and remains synchronized with Audio settings
+ok 69 - Home quick sound toggles the existing master in place and remains synchronized with Audio settings
+  ---
+  duration_ms: 3160.294166
+  ...
+# Subtest: Solo Settings opens Display by default, returns to its Home opener and retains the chosen category on reopening
+ok 70 - Solo Settings opens Display by default, returns to its Home opener and retains the chosen category on reopening
+  ---
+  duration_ms: 2257.041875
+  ...
+# Subtest: category arrows, Home and End cross the real document adapter exactly once without a game command
+ok 71 - category arrows, Home and End cross the real document adapter exactly once without a game command
+  ---
+  duration_ms: 3723.597416
+  ...
+# Subtest: changing categories cancels real key capture without saving a binding or closing Settings
+ok 72 - changing categories cancels real key capture without saving a binding or closing Settings
+  ---
+  duration_ms: 2179.351042
+  ...
+# Subtest: Versus Settings uses native categories, consumes tab keys once and returns to its opener
+ok 73 - Versus Settings uses native categories, consumes tab keys once and returns to its opener
+  ---
+  duration_ms: 4146.515291
+  ...
+# Subtest: paused Versus keeps both runs and requires explicit Resume after appearance changes
+ok 74 - paused Versus keeps both runs and requires explicit Resume after appearance changes
+  ---
+  duration_ms: 5189.764208
+  ...
+# Subtest: Versus quick sound shares the Settings master without starting or replacing a match
+ok 75 - Versus quick sound shares the Settings master without starting or replacing a match
+  ---
+  duration_ms: 3848.626
+  ...
+# Subtest: modeled controller selects Settings categories and Back preserves its Ready match
+ok 76 - modeled controller selects Settings categories and Back preserves its Ready match
+  ---
+  duration_ms: 4324.32275
+  ...
+1..76
+# tests 80
+# suites 0
+# pass 75
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 94024.663208

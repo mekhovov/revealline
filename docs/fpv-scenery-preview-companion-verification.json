@@ -1,0 +1,12 @@
+{
+  "alias": "Canal overview \u00b7 terrain + scenery \u00b7 9 verified cells \u00b7 153 rendered meshes \u00b7 1449992 geometry bytes \u00b7 no flight admission",
+  "canonicalWithInvalidAlias": "Canal overview \u00b7 terrain + scenery \u00b7 9 verified cells \u00b7 153 rendered meshes \u00b7 1449992 geometry bytes \u00b7 no flight admission",
+  "sceneryOnly": "Canal overview \u00b7 scenery only \u00b7 9 verified cells \u00b7 144 rendered meshes \u00b7 993584 geometry bytes \u00b7 no flight admission",
+  "invalidCanonicalWithValidAlias": "Preparation stopped: Manifest HTTP 404",
+  "checks": {
+    "aliasMatchesCanonical": true,
+    "explicitSceneryOnly": true,
+    "failsClosed": true
+  },
+  "scope": "Fresh authoring harness with modified preview module and unchanged current-main depth helper; frozen accepted Canal data; no packaged-player or art claim"
+}

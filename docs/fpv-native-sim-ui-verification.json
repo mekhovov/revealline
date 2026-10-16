@@ -1,0 +1,431 @@
+{
+  "format": "FPVNativeUIPresentationVerification.v1",
+  "date": "2026-10-01",
+  "status": "development-functional-verification-passed",
+  "releaseQualified": false,
+  "unitTests": "new-coverage-deferred-to-final-phase",
+  "browser": "Installed Chrome with controlled browser input fixtures; desktop IAB visual review",
+  "sourceFileSha256": {
+    "game/build-config.json": "ee2bc39d67cdff3d4b3b3c2af7f56474180b3cb8f11f733b7c2b7485be34a305",
+    "optional-practice/civilian-fpv/README.md": "fc290752809cdf39f98a141b350ab4a57835a7f7a2bbdcc06199a9a116c76fa9",
+    "optional-practice/civilian-fpv/app.mjs": "1cc30d04797cd929623d438813c68c9df227530e82e58d0ff690acf6f38703a6",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "8cc240620966e4f992f0838de4e249ba5334af9884b2d9d2c0d1d9e9672ba857",
+    "optional-practice/civilian-fpv/index.html": "b5f1e6b3df756d9e9ff590e89f9ee108635b9902b55f374b6af79290ccbd9e5c",
+    "optional-practice/civilian-fpv/renderer.mjs": "116130bef11c4466ea07abb616c343dee2fa120e1fd0dc92010389eb973cc029",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "65b31b3e0ee9fb7eed739494405ddfa9a740a7e77e17e26aa467fc86ce5e1b3f",
+    "optional-practice/civilian-fpv/style.css": "7bc13b22df414c885579db2551125fa0688594a955b83352d5c5b6766059cc39",
+    "optional-practice/civilian-fpv/world-app.mjs": "32a2913a32575d785be5d67eaac5a160397b4f58f60351bec3e53ca5dee941d3",
+    "optional-practice/civilian-fpv/world-editor.mjs": "67d743ce9ddf2b967e5e3f81198f022b1f554715b82cb41cc5b5e6b2474d8a8d",
+    "optional-practice/civilian-fpv/world-renderer.mjs": "bce6f22a52f612b454f9d9df501b0e3226cac62be3cc2bf4c9af1075e69c8623",
+    "optional-practice/civilian-fpv/world-style.css": "342f1856b6aa5e0ef122091aa7c4f2592261a60ea697231315b44f07b00d5a1f",
+    "optional-practice/fpv-worlds/README.md": "4ffa0ea14d09b2c48abe516a1d8b3d49683fbd6f729335380d5121f93e6ec0c4",
+    "optional-practice/fpv-worlds/index.html": "2782b1edc53f7c4afa0557721bf4eb2b5f54b3e28f26e8c7e2a60370bf91f7ba",
+    "publishing/optional-package-policy.mjs": "461d70f723ea4d3755db582976b7fd8007619067a0514ac68d14cc1183f46cf7",
+    "scripts/refresh-fpv-presentation-assets.mjs": "c30c94c7219b91ae258f0627ea38fad2123a9a4b682731058663a5b9cb0e5136",
+    "publishing/optional-package-admission.mjs": "7732d8382b68431744b51f63570877e61784ea686aff49b43ea7b390957023e3"
+  },
+  "worldStudio": {
+    "format": "FPVNativeUIFunctionalVerification.v1",
+    "status": "passed",
+    "suiteCount": 5,
+    "scenarioGroups": 44,
+    "browser": "Headless installed Chrome via Playwright",
+    "unitCoverage": "deferred; no tracked unit tests added",
+    "limitations": [
+      "TX15/Gamepad commands were controlled browser input fixtures, not a new hands-on hardware calibration.",
+      "Result action checks use a valid 25-tick authoring-preview survival fixture; no completion rewards were claimed.",
+      "This is development verification, not release qualification."
+    ],
+    "build": {
+      "format": "FPVPlaytestBuild.v1",
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "files": 86,
+      "bytes": 11946874,
+      "zipSha256": "ec4d82da6e89a3573f04112170660beaac9fa88ab848021a72a461e13fe53528",
+      "qualification": "development-playtest",
+      "unitTests": "deferred-to-final-phase",
+      "releaseQualified": false
+    },
+    "suites": [
+      {
+        "status": "passed",
+        "cases": [
+          "lobby-selected-world",
+          "global-settings-persistence-no-launch",
+          "lobby-radio-save-no-launch",
+          "world-selection-search-filter",
+          "playlist-add-reorder-export-import",
+          "radio-flight-lift",
+          "immersive-nested-setup-escape-paused",
+          "playlist-next-settings-closed-flight",
+          "creator-clone-transform-undo-redo-preview",
+          "demo-completion-fly-this"
+        ],
+        "pageErrors": []
+      },
+      {
+        "status": "passed",
+        "cases": [
+          "enLobby",
+          "enplaylists",
+          "encreator",
+          "enpacks",
+          "enSettings",
+          "enRadio",
+          "enFlight",
+          "enFullscreen",
+          "ukLobby",
+          "ukplaylists",
+          "ukcreator",
+          "ukpacks",
+          "ukSettings",
+          "ukRadio",
+          "ukFlight",
+          "ukFullscreen"
+        ],
+        "pageErrors": []
+      },
+      {
+        "status": "passed",
+        "cases": ["results", "retry", "next", "replay", "lobby"],
+        "pageErrors": []
+      },
+      {
+        "status": "passed",
+        "cases": ["import", "canvas", "gizmo", "editor", "preview"],
+        "pageErrors": []
+      },
+      {
+        "status": "passed",
+        "cases": [
+          "offlinePresentation",
+          "sharedCues",
+          "radioLift",
+          "offlineImported",
+          "afterImportedClose",
+          "afterFlyClick",
+          "afterFlySettled",
+          "returnWorkshop"
+        ],
+        "pageErrors": []
+      }
+    ],
+    "visualCaptureNote": "Clean final candidate screenshots await loaded fonts/artwork and settled top-of-page content. Workshop remains available after imported preview. Deep Workshop→Fly navigation explicitly verified scrollY=0 after the final navigation fix.",
+    "finalBuildRetest": {
+      "receipt": "/tmp/fpv-native-ui-offline-verify.json",
+      "status": "passed",
+      "deepWorkshopScrollBefore": 950,
+      "flyScrollAfter": 0,
+      "errors": [],
+      "cleanScreenshotsReceipt": "/tmp/fpv-native-ui-final-capture.json"
+    }
+  },
+  "academy": {
+    "flows": {
+      "scenarios": [
+        {
+          "name": "Options, expanded sticks, menu audio and actual keyboard lift",
+          "height": "Height 1.6 m"
+        },
+        {
+          "name": "Flight options pause and nested Escape/fullscreen precedence",
+          "passed": true
+        },
+        {
+          "name": "Grouped guide, workshop/offline controls, drill selection and demonstration",
+          "passed": true
+        },
+        {
+          "name": "EN/UK navigation and persisted display/menu audio",
+          "passed": true
+        }
+      ],
+      "errors": []
+    },
+    "controlledRadio": {
+      "input": "Synthetic known TX15 Gamepad API fixture",
+      "actualLift": "Height 7.0 m",
+      "paused": "Height 8.1 m",
+      "quickSave": true,
+      "fullscreenSetupAndEscape": true,
+      "errors": []
+    },
+    "immersiveRadio": {
+      "fixture": "Synthetic TX15",
+      "held": "Height 0.0 m",
+      "active": "Height 1.5 m",
+      "controlsPreventAutoArm": true,
+      "explicitArmClosesControls": true,
+      "highThrottleRejected": true,
+      "errors": []
+    },
+    "responsive": {
+      "cases": 13,
+      "sizes": ["1280x900", "390x844", "844x390"],
+      "locales": ["en", "uk"],
+      "horizontalOverflow": false,
+      "pageErrors": []
+    }
+  },
+  "sharedPresentation": {
+    "baseline": {
+      "contexts": 0,
+      "fontFaces": 2,
+      "fontsReady": true,
+      "icon": "play"
+    },
+    "audible": {
+      "contexts": 1,
+      "started": 1,
+      "suspends": 0,
+      "resumes": 1
+    },
+    "paused": {
+      "contexts": 1,
+      "started": 1,
+      "suspends": 1,
+      "resumes": 1
+    },
+    "resumed": {
+      "contexts": 1,
+      "started": 2,
+      "suspends": 1,
+      "resumes": 2
+    },
+    "muted": {
+      "contexts": 1,
+      "started": 2,
+      "suspends": 2,
+      "resumes": 2
+    },
+    "fontOwnership": {
+      "afterFirst": 2,
+      "afterLast": 0
+    },
+    "disposed": {
+      "contexts": 1,
+      "started": 2,
+      "suspends": 2,
+      "resumes": 2
+    },
+    "errors": [],
+    "passed": true
+  },
+  "packageClosures": [
+    {
+      "packageId": "civilian-fpv",
+      "status": "runtime-and-source-closures-pass",
+      "runtimeFiles": 62,
+      "runtimeBytes": 3781828,
+      "sourceFiles": 64,
+      "sourceBytes": 3798596,
+      "limits": {
+        "files": 64,
+        "bytes": 8388608
+      },
+      "sourceBinding": "synthetic-local-structural-check-not-a-release"
+    },
+    {
+      "packageId": "fpv-worlds",
+      "status": "runtime-and-source-closures-pass",
+      "runtimeFiles": 93,
+      "runtimeBytes": 12081345,
+      "sourceFiles": 95,
+      "sourceBytes": 12102828,
+      "limits": {
+        "files": 96,
+        "bytes": 16777216
+      },
+      "sourceBinding": "synthetic-local-structural-check-not-a-release"
+    }
+  ],
+  "stadiumIntegration": {
+    "build": {
+      "format": "FPVPlaytestBuild.v1",
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "files": 87,
+      "bytes": 13457237,
+      "zipSha256": "db55de1a0b299f2d9174107322e575e73733febb727a2756a938982b5ce12041",
+      "qualification": "development-playtest",
+      "unitTests": "deferred-to-final-phase",
+      "releaseQualified": false
+    },
+    "demonstrations": [
+      {
+        "file": "optional-practice/civilian-fpv/demonstrations.mjs",
+        "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+        "bytes": 221646,
+        "entries": {
+          "FLIGHT_DEMONSTRATIONS": 24
+        },
+        "byteIdenticalTo": "codex/fpv-stadium-demonstrations"
+      },
+      {
+        "file": "optional-practice/civilian-fpv/world-demonstrations.mjs",
+        "sha256": "276c4cf8dff34bdcfd558de22c6935d85ed2a0ec48f66e71ea1a5ded50e242b7",
+        "bytes": 2709917,
+        "entries": {
+          "WORLD_DEMONSTRATIONS": 64
+        },
+        "byteIdenticalTo": "codex/fpv-stadium-demonstrations"
+      }
+    ],
+    "parsedModules": 66,
+    "sourceCandidate": {
+      "runtimeFiles": 94,
+      "sourceFiles": 96,
+      "sourceBytes": 13613307,
+      "limits": {
+        "files": 96,
+        "bytes": 16777216
+      },
+      "binding": "synthetic-local-structural-check-not-a-release"
+    },
+    "browser": {
+      "catalogue": {
+        "count": 60,
+        "worlds": [
+          {
+            "id": "gym",
+            "text": "Training hangar\n4 flights · 0 ✓"
+          },
+          {
+            "id": "field",
+            "text": "Open meadow\n8 flights · 0 ✓"
+          },
+          {
+            "id": "woodland",
+            "text": "Woodland park\n8 flights · 0 ✓"
+          },
+          {
+            "id": "courtyard",
+            "text": "Ukrainian courtyard\n8 flights · 0 ✓"
+          },
+          {
+            "id": "warehouse",
+            "text": "Pixel warehouse\n8 flights · 0 ✓"
+          },
+          {
+            "id": "stadium",
+            "text": "Circuit stadium\n8 flights · 0 ✓"
+          },
+          {
+            "id": "container-yard",
+            "text": "Container yard\n8 flights · 0 ✓"
+          },
+          {
+            "id": "garage",
+            "text": "Parking garage\n8 flights · 0 ✓"
+          }
+        ],
+        "brand": "FLIGHT SIMULATOR",
+        "fonts": true
+      },
+      "settings": {
+        "open": true,
+        "controls": true,
+        "nestedLabels": 0
+      },
+      "radio": {
+        "open": true,
+        "setup": true
+      },
+      "stadium": {
+        "id": "stadium",
+        "text": "Circuit stadium\n8 flights · 0 ✓"
+      },
+      "demos": 8,
+      "demo": {
+        "status": "active",
+        "ticks": 6,
+        "replay": {
+          "kind": "demonstration",
+          "mode": "self-level",
+          "rate": 1,
+          "frames": 1331,
+          "finished": false
+        },
+        "sectorText": "Sector timing · no split yet\nPlayback · timing only\nSplit —\nTotal —",
+        "canvas": [1218, 583]
+      },
+      "fullscreen": {
+        "active": true,
+        "status": "paused"
+      },
+      "workshop": {
+        "visible": true,
+        "webgl": true
+      },
+      "errors": [],
+      "failed": [],
+      "passed": true
+    }
+  },
+  "verificationCommands": [
+    "node scripts/refresh-fpv-presentation-assets.mjs --check",
+    "node scripts/build-fpv-worlds-playtest.mjs --out dist/fpv-native-ui-playtest",
+    "Changed-file Prettier, ESLint and git diff --check",
+    "buildOptionalPractice and createOptionalPackageCandidate for both package IDs; synthetic binding for structural checks only"
+  ],
+  "limitations": [
+    "No new hands-on physical-radio calibration acceptance is claimed.",
+    "Result actions used a short authoring-preview fixture; no production medal calibration claim.",
+    "Desktop and mobile-sized Chrome views do not establish Safari, physical mobile-device or hardware performance qualification.",
+    "Public deployment remains unverified and depends on protected checks plus the separately tracked site-size repair.",
+    "Earlier structural probes used synthetic bindings. Final frozen candidate admission uses exact committed inputs at the recorded revision; this does not confer public release eligibility."
+  ],
+  "frozenCandidateAdmission": {
+    "candidate": "/tmp/fpv-native-ui-final-candidate-20261001",
+    "version": "v0.142.4",
+    "sourceRevision": "8d34dc14064369e3913346a6da2d4e6a7a678d49",
+    "sourceTree": "3ba0d6e0f3c042f9069b590a4a3f3f17afda995a",
+    "envelopeSha256": "eb129906b9b03fdd3623c3b7019e8d20dd7daad45418561a7278bf866cd83d21",
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "zipMembersVerified": true,
+    "admission": "passed",
+    "publicEligible": false,
+    "cleanCommittedCheckout": true,
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "c4fe68fc319f3b66bb5fea82186cdb0088c4af495b8a4c4ab67451e75e11547f",
+        "runtimeFiles": 29,
+        "runtimeBytes": 404021,
+        "sourceFiles": 31,
+        "sourceBytes": 415525,
+        "limits": {
+          "files": 64,
+          "bytes": 8388608
+        },
+        "withinLimits": true
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "b6f550c39568955173b0e64d04e6c5155cc9a61413f52dfe5c3dfe21266f119c",
+        "runtimeFiles": 62,
+        "runtimeBytes": 3781828,
+        "sourceFiles": 64,
+        "sourceBytes": 3798596,
+        "limits": {
+          "files": 64,
+          "bytes": 8388608
+        },
+        "withinLimits": true
+      },
+      {
+        "id": "fpv-worlds",
+        "revision": "a00c22eda34bc67b0c72df61841723f8bfb4855cbc999cc4b844a8a23890f34b",
+        "runtimeFiles": 93,
+        "runtimeBytes": 12081345,
+        "sourceFiles": 95,
+        "sourceBytes": 12102828,
+        "limits": {
+          "files": 96,
+          "bytes": 16777216
+        },
+        "withinLimits": true
+      }
+    ]
+  }
+}

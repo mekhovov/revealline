@@ -1,0 +1,13 @@
+{
+  "format": "FPVD1ProductionEvidenceArchive.v1",
+  "candidate": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "file": "fpv-d1-production-source-browser.json.gz",
+  "encoding": "gzip",
+  "gzipMtime": 0,
+  "compressedBytes": 98644,
+  "compressedSha256": "3d3d1c32b75ee97c683b1561d39afe33cd39888b95183d17566be521873395fd",
+  "rawBytes": 3492950,
+  "rawSha256": "abb38414fb27d4211cd22fc614af01e3fe3db6e8de8fa1b3d8a7c06ed26347e2",
+  "losslessRoundTripVerified": true,
+  "description": "Complete original source-browser JSON receipt. No sample, control, timing, material or resource record was removed. Decode with gzip; verify raw size and SHA before interpreting."
+}

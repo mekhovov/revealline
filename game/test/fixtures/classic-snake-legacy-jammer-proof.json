@@ -1,0 +1,131 @@
+{
+  "version": "classic-snake-replay.v4",
+  "ruleset": "classic-snake-core.v4",
+  "level": {
+    "version": "classic-snake-level.v4",
+    "id": "classic-field-signal-check",
+    "revision": "1",
+    "name": "Signal Check",
+    "width": 24,
+    "height": 18,
+    "walls": [
+      {
+        "x": 10,
+        "y": 5
+      },
+      {
+        "x": 11,
+        "y": 5
+      },
+      {
+        "x": 12,
+        "y": 5
+      },
+      {
+        "x": 10,
+        "y": 6
+      },
+      {
+        "x": 11,
+        "y": 6
+      },
+      {
+        "x": 12,
+        "y": 6
+      },
+      {
+        "x": 10,
+        "y": 7
+      },
+      {
+        "x": 11,
+        "y": 7
+      },
+      {
+        "x": 12,
+        "y": 7
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 2,
+        "direction": "right"
+      },
+      {
+        "x": 18,
+        "y": 15,
+        "direction": "left"
+      }
+    ],
+    "goal": 4,
+    "stepMs": 280,
+    "speedupEvery": 0,
+    "minStepMs": 280,
+    "wrap": false,
+    "targetMovement": "still",
+    "fleeEvery": 3,
+    "objective": "mission",
+    "targets": {
+      "maxActive": 1,
+      "required": [
+        {
+          "kind": "jammer",
+          "every": 3,
+          "at": {
+            "x": 20,
+            "y": 8
+          }
+        },
+        {
+          "kind": "jammer",
+          "every": 3,
+          "at": {
+            "x": 3,
+            "y": 10
+          }
+        }
+      ],
+      "bonus": null
+    },
+    "shutters": [],
+    "pickups": []
+  },
+  "levelIdentity": "77053967cffef50c",
+  "mode": "solo",
+  "seed": 17,
+  "steps": 78,
+  "turns": [
+    {
+      "tick": 15,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 23,
+      "playerId": 0,
+      "direction": "left"
+    },
+    {
+      "tick": 40,
+      "playerId": 0,
+      "direction": "up"
+    },
+    {
+      "tick": 42,
+      "playerId": 0,
+      "direction": "right"
+    },
+    {
+      "tick": 59,
+      "playerId": 0,
+      "direction": "down"
+    },
+    {
+      "tick": 61,
+      "playerId": 0,
+      "direction": "left"
+    }
+  ],
+  "checkpoint": "57378318d205b71b"
+}
