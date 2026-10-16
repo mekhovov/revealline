@@ -1,0 +1,557 @@
+{
+  "format": "CoordinatorWorkingPayloadReconciliation.v1",
+  "secondaryRoots": [
+    "/Volumes/alex/CodexMigrationStaging/fpv-canyon-expanse-source-20261015",
+    "/Volumes/alex/CodexMigrationStaging/fpv-coaster-regional-composition-20261015",
+    "/Volumes/alex/CodexMigrationStaging/fpv-continuous-offline-retry-20261015",
+    "/Volumes/alex/CodexMigrationStaging/fpv-continuous-package-review-20261014",
+    "/Volumes/alex/CodexMigrationStaging/fpv-delivery-checkpoint-20261014",
+    "/Volumes/alex/CodexMigrationStaging/fpv-desert-library-20261015",
+    "/Volumes/alex/CodexMigrationStaging/fpv-graphics-feedback-final-20261015",
+    "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/intake",
+    "/Volumes/alex/CodexMigrationStaging/fpv-offline-error-20261014/repo",
+    "/Volumes/alex/CodexMigrationStaging/fpv-railway-expanse-delivery-20261015",
+    "/Volumes/alex/CodexMigrationStaging/fpv-regional-cancel-feedback-20261014",
+    "/Volumes/alex/CodexMigrationStaging/fpv-regional-foundation-20261014",
+    "/Volumes/alex/CodexMigrationStaging/fpv-regional-independent-20261015",
+    "/Volumes/alex/CodexMigrationStaging/fpv-regional-shared-collision-20261014",
+    "/Volumes/alex/CodexMigrationStaging/fpv-urban-independent-20261014",
+    "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014",
+    "/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/actions",
+    "/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/actions-repo",
+    "/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/entry",
+    "/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/entry-repo",
+    "/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/hud",
+    "/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/hud-repo",
+    "/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/practice",
+    "/Volumes/alex/CodexMigrationStaging/fpv-ux-20261014/practice-repo",
+    "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-library-lifecycle-audit-20261016",
+    "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-list-metadata-20261016",
+    "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-listing-native-evidence-20261016",
+    "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-plan-review-20261016",
+    "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-regional-family-library-source-20261016",
+    "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-reservoir-pilot-quality-20261016",
+    "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-retained-capacity-20261016"
+  ],
+  "rootCount": 31,
+  "kindCounts": {
+    "excluded": 65,
+    "file": 37514,
+    "symlink": 20
+  },
+  "files": 37514,
+  "symlinks": [
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-independent-20261014/canyon-regional-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-study-recovered-r1",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-independent-20261014/canyon-regional-study",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-study-recovered-r1",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-independent-20261014/urban-regional-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-regional-r1",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-independent-20261014/urban-regional-study",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-regional-r1",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-hall-final",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-hall-r3",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/urban-hall-final",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-hall-r3",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-texture-window",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-texture-window",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/railway-texture-window",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-texture-window",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-landmarks-final",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r5",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/canyon-landmarks-final",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r5",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-indexed-review",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-indexed-review",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/railway-indexed-review",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-indexed-review",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-relief-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r1",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/canyon-relief-study",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r1",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-pilot-final",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-pilot-r3",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/railway-pilot-final",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-pilot-r3",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-relief-reviewed",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r2",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/canyon-relief-reviewed",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r2",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-comparison",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-comparison",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/railway-comparison",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-comparison",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-landmarks-reviewed",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r7",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/canyon-landmarks-reviewed",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r7",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-loading-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-loading-r1",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/urban-loading-study",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-loading-r1",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-relief-rounded",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r6",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/canyon-relief-rounded",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r6",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-structure-final",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r2",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/railway-structure-final",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r2",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-pilot-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-pilot-r2",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/railway-pilot-study",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-pilot-r2",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-landmarks-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r1",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/canyon-landmarks-study",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r1",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-structure-readable",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r4",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/railway-structure-readable",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r4",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-hall-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-hall-r1",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/urban-hall-study",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-hall-r1",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-parking-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-parking-r1",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/urban-parking-study",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-parking-r1",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-regional-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-regional-r2",
+      "absolutePath": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/urban-regional-study",
+      "resolvedTarget": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-regional-r2",
+      "pointsAtAlex": true,
+      "sourceManifest": "app-supplement-workingtrees.jsonl"
+    }
+  ],
+  "exclusions": [
+    {
+      "kind": "excluded",
+      "path": "fpv-canyon-expanse-source-20261015/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-canyon-expanse-source-20261015/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-coaster-regional-composition-20261015/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-coaster-regional-composition-20261015/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-continuous-offline-retry-20261015/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-continuous-package-review-20261014/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-continuous-package-review-20261014/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-continuous-package-review-20261014/authoring/fpv-worlds/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-continuous-package-review-20261014/authoring/fpv-worlds/regions/tropical-coast/intake-v1/intake-tools/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-delivery-checkpoint-20261014/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-desert-library-20261015/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-desert-library-20261015/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-graphics-feedback-final-20261015/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-offline-error-20261014/repo/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-railway-expanse-delivery-20261015/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-regional-cancel-feedback-20261014/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-regional-cancel-feedback-20261014/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-regional-foundation-20261014/.DS_Store",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-regional-foundation-20261014/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-regional-foundation-20261014/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-regional-independent-20261015/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-regional-independent-20261015/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-regional-shared-collision-20261014/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-regional-shared-collision-20261014/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-urban-independent-20261014/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-urban-independent-20261014/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-urban-independent-20261014/authoring/fpv-worlds/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-urban-mixed-preparation-20261014/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-urban-mixed-preparation-20261014/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-urban-mixed-preparation-20261014/authoring/fpv-worlds/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-library-lifecycle-audit-20261016/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-library-lifecycle-audit-20261016/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-library-lifecycle-audit-20261016/authoring/fpv-worlds/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-list-metadata-20261016/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-list-metadata-20261016/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-list-metadata-20261016/authoring/fpv-worlds/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-listing-native-evidence-20261016/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-listing-native-evidence-20261016/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-plan-review-20261016/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-regional-family-library-source-20261016/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-regional-family-library-source-20261016/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-reservoir-pilot-quality-20261016/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-reservoir-pilot-quality-20261016/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-reservoir-pilot-quality-20261016/authoring/fpv-worlds/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-retained-capacity-20261016/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-retained-capacity-20261016/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-worktrees/fpv-retained-capacity-20261016/authoring/fpv-worlds/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-large-worlds-20261014/intake/.DS_Store",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-large-worlds-20261014/intake/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-large-worlds-20261014/intake/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-large-worlds-20261014/intake/authoring/fpv-worlds/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-large-worlds-20261014/intake/game/.DS_Store",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/actions/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/actions/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/actions-repo/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/actions-repo/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/entry/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/entry-repo/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/entry-repo/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/hud/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/hud/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/hud-repo/node_modules",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/hud-repo/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/practice/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    },
+    {
+      "kind": "excluded",
+      "path": "fpv-ux-20261014/practice-repo/.git",
+      "reason": "dependency/Git/private-profile/cache; source refs and lockfiles separately preserved"
+    }
+  ],
+  "sourceManifests": [
+    "app-supplement-workingtrees.jsonl",
+    "app-supplement-workingtrees-delta.jsonl"
+  ],
+  "sourceErrorReviewGate": "Coordinator reports0errors/reviewflags for completed manifests; content backup/upload coverage is separate."
+}
