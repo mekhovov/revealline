@@ -9,6 +9,7 @@ import { validateOptionalPackageAdmission } from '../publishing/optional-package
 import { startServer } from './game-cli.mjs';
 import { installOptionalStatusDiagnostics } from './optional-installation-diagnostics.mjs';
 import { withOptionalQuotaDeny } from './optional-installation-quota-probe.mjs';
+import { practiceWorkerCacheInventory } from './practice-worker-cache-inventory.mjs';
 import {
   selectInstallationDownloadFaults,
   readPreparedCacheFingerprints,
@@ -187,12 +188,14 @@ assert(
 );
 const downloadAuthority = downloadFaultsEnabled
   ? await Promise.all(
-      ['optional-installation-download-check.mjs', 'practice-download-fault.mjs'].map(
-        async (name) => ({
-          path: name,
-          sha256: sha(await readFile(new URL(name, import.meta.url))),
-        }),
-      ),
+      [
+        'optional-installation-download-check.mjs',
+        'practice-download-fault.mjs',
+        'practice-worker-cache-inventory.mjs',
+      ].map(async (name) => ({
+        path: name,
+        sha256: sha(await readFile(new URL(name, import.meta.url))),
+      })),
     )
   : [];
 const downloadFaults = { mode: 'all-short', cases: [], retries: [], publicEligible: false };
@@ -830,28 +833,38 @@ try {
       await context.setOffline(false);
       if (downloadFaultsEnabled) {
         const baseline = await inspect('download-fault-baseline');
-        const cacheInventories = packageIds.map((id) => {
+        const cacheInventories = packageIds.flatMap((id) => {
           const selected = id === fpv ? priorVersion : version,
-            files = id === fpv ? priorEntries : entries.get(id),
-            manifest = JSON.parse(files.get('optional-package.json')),
-            scope = '/' + site(id, selected) + `optional-practice/${id}/`,
-            name = baseline.caches.find((name) => name.includes(`:${scope}:`));
-          assert(
-            name?.endsWith(':' + manifest.revision),
-            'Require the original admitted prepared cache.',
-          );
-          return {
-            name,
-            files: manifest.files
-              .filter((file) => file.path !== `optional-practice/${id}/worker.js`)
-              .map((file) => ({
-                url: url(site(id, selected) + file.path),
-                bytes: file.bytes,
-                sha256: file.sha256,
-              })),
-          };
+            files = id === fpv ? priorEntries : entries.get(id);
+          return [
+            {
+              scope: '/' + site(id, selected) + `optional-practice/${id}/`,
+              worker: `optional-practice/${id}/worker.js`,
+              required: true,
+            },
+            {
+              scope: '/' + relativeRoot(id) + 'app/',
+              worker: 'launcher/worker.js',
+              required: false,
+            },
+          ].flatMap(({ scope, worker, required }) => {
+            const name = baseline.caches.find((name) => name.includes(`:${scope}:`));
+            assert(!required || name, 'Require the admitted prepared runtime cache.');
+            if (!name) return [];
+            return [
+              practiceWorkerCacheInventory({
+                workerBytes: files.get(worker),
+                baseURL: new URL(scope, served.url).href,
+                cacheName: name,
+              }),
+            ];
+          });
         });
-        assert.equal(cacheInventories.length, baseline.caches.length);
+        assert.deepEqual(
+          cacheInventories.map((item) => item.name).sort(),
+          baseline.caches,
+          'Every prepared runtime/launcher cache must match an original admitted worker inventory.',
+        );
         downloadFaults.preparedCaches = await readPreparedCacheFingerprints(page, cacheInventories);
         async function retainedDownloadRecords() {
           await open(fpv, priorVersion);
