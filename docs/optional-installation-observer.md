@@ -57,6 +57,33 @@ Network delay cannot deterministically pause local hashing/cache writes; a
 Verifying label alone is insufficient evidence. The fixed real trickle transport
 is used by the separately bounded lane below, never by a shortened-clock substitute.
 
+## Final verification response cancellation
+
+Use `OPTIONAL_INSTALLATION_VERIFICATION_CANCEL=all` with the existing saved-world
+seed, separately from imported-world, download, quota, migration or active-session
+lanes. This English-only protocol delays one original ready reply while the page
+is genuinely awaiting final verification. The worker hashes actual admitted
+cached bytes normally; no fetch, cache, crypto, application deadline or reply
+result is replaced. This is controlled message-delivery latency, not cancellation
+during a per-file digest or a natural slow-device observation.
+
+The owned one-shot relay requires the exact worker scope/revision, visible
+`Verifying · 100%`, one ordinary trusted Cancel click and prompt explicit
+cancellation feedback. Independent absolute monotonic checks enforce a 30-second
+request-match limit and less than ten seconds to cancel/forward, even if a timer
+callback is delayed. Actual screenshots and original ready fields are retained.
+The unchanged reply is forwarded during cleanup, but delivery to the app's
+already-closed reply port is explicitly unverified.
+
+At this late stage a complete, activated but unrecorded cache may remain. The
+observer hashes that exact copy and all original/sibling dependencies, rejects
+unexpected scopes, requires unchanged pointers and proof/profile/World records,
+then retries and removes through normal UI. It never labels this complete copy
+as incomplete staging or deletes it behind the app's back. All three cases and
+all three retry/removal witnesses must pass. Native results are distinct from
+unit fixtures; Ukrainian native cancellation and hash-in-progress interruption
+remain separate acceptance items.
+
 ## Separate real five-minute lane
 
 Use exactly one of `overall-civilian-flight`, `overall-civilian-fpv` or
