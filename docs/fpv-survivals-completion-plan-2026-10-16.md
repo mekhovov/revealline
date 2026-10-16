@@ -64,3 +64,5 @@ Native panel screenshots and desktop/narrow wrapping checks are complete; native
 before/after full summaries match exactly. Publication and pushed-head reconciliation
 are recorded in the linked evidence report rather than assumed from this checklist.
 No additional exhaustive matrix, new mode or unavailable-device gate is introduced.
+
+Source and completed local evidence are pushed in [PR1549](https://github.com/mekhovov/revealline/pull/1549), stacked on PR1534. All locally executable gates above are complete within their recorded scope; native visual/audio/gameplay acceptance and provisional medal calibration remain for review, with external trials skipped. PR checks/merge remain separate delivery states.
