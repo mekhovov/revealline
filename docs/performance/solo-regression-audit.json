@@ -1,0 +1,2675 @@
+{
+  "schemaVersion": 2,
+  "updatedAt": "2026-10-16T06:33:32.218828+00:00",
+  "status": "Incomplete repository regression inventory; all currently observed failure groups classified. No full-suite success claim.",
+  "scope": "Separate original inventory, added tooling files, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures and cancellations remain visible.",
+  "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
+  "frozenRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+  "currentHeadContext": "4f9db963b0966f98a707f130363247a222c9e861",
+  "node": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+  "completeInventory": {
+    "actualLaunch": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/inventory.json",
+      "bytes": 95594,
+      "sha256": "ec7b5ffcb9c40cb5252193747ffce005327606cf31f58856d78b71c009e8205a",
+      "startedAt": "2026-10-16T04:13:08.779285+00:00",
+      "sourceHead": "eba566122ad569ad9bc47a6583b786b79a42baf6",
+      "sourceStatus": "M docs/performance/solo-performance-followup-plan.md\n M scripts/prepare-solo-qualification.mjs\n?? docs/performance/solo-regression-audit.json\n?? scripts/prepare-solo-audio-fixtures.mjs\n?? scripts/test-prepare-solo-audio-fixtures.mjs",
+      "files": 1948,
+      "laneCounts": {
+        "host": 756,
+        "unit": 1192
+      }
+    },
+    "status": "Globally paused with no active tests; continuation has not launched.",
+    "lastProgressSnapshot": {
+      "at": "2026-10-16T06:31:41.776980+00:00",
+      "totalFiles": 1948,
+      "completedFiles": 1233,
+      "active": {},
+      "remaining": {
+        "host": 710,
+        "unit": 5
+      },
+      "failedFiles": 74,
+      "pausedBeforeNextFile": {
+        "host": true,
+        "unit": true
+      }
+    },
+    "rawOriginalCounts": {
+      "tests": 14013,
+      "suites": 0,
+      "pass": 13587,
+      "fail": 394,
+      "cancelled": 32,
+      "skipped": 0,
+      "todo": 0
+    },
+    "completedFiles": 1233,
+    "originalFiles": 1948,
+    "remainingFiles": 715,
+    "currentRepositoryFiles": 1951,
+    "laterAddedFiles": 3,
+    "failureGroups": {
+      "total": 74,
+      "exactBaselineReproductions": 73,
+      "candidateOnlyFixtureGapRepaired": 1,
+      "unclassified": 0
+    },
+    "results": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/results.jsonl",
+      "bytes": 1268137,
+      "sha256": "835b2843b2862031dfad25deea0d7194f03c9b66214783eb985c0777b493eccb"
+    },
+    "failureAudit": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/failure-audit.json",
+      "bytes": 181798,
+      "sha256": "e54d0a522e1881ccfd5784b24f84e6472a875591b52beb954be4e9a4f39debf7"
+    },
+    "postInventoryRetests": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/post-inventory-retests.jsonl",
+      "bytes": 27575,
+      "sha256": "a36da384f726382f793108cb1d9de6c449b398814c9c742a42f79b9904692d12"
+    },
+    "supplementaryInventory": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/inventory-additions-v3.json",
+      "bytes": 986,
+      "sha256": "56b3d3097a7c30c7c4eed3643b0e1e753cf11dd2e87dbdcd4f44911b5a1fadf6"
+    },
+    "supplementaryResults": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/supplementary-results.jsonl",
+      "bytes": 999,
+      "sha256": "843f7521169d5e0215114d91421720423d2890fc67c0e2feb6af75b0536b73fd"
+    },
+    "runtimeBoundaryReruns": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/runtime-boundary-reruns-final49c.json",
+      "bytes": 5765,
+      "sha256": "a0d95d4dd0f2c7b99584f91077ae2168ee1990bfd1b480e9c07dd87f1f6aa71a"
+    },
+    "offlineBoundary": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/runtime-boundary-offline-cancellation.json",
+      "bytes": 8637,
+      "sha256": "94b80e82ac7addca0061eadc923b9ac1d4f7f258aca7c214ef5cc87a00b921fc"
+    },
+    "remainingAuthority": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/remaining-715-authority.json",
+      "bytes": 137457,
+      "sha256": "546f78d2cc7d3c2a2848d7f676dc7a076a07703ac3e98154e9700f40f7e01f8f"
+    },
+    "changedCompletedTestSources": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/completed-test-source-identity-audit.json",
+      "bytes": 15286,
+      "sha256": "5ffeb4edded3fe96a36f71e124b1b93becd9656296e5ceee111fe656b74d4afa"
+    }
+  },
+  "supplementaryTooling": {
+    "archiveTest": {
+      "file": "scripts/test-solo-build-archive.mjs",
+      "passingCases": 5,
+      "evidence": {
+        "path": ".cache/solo-followup/regression-audit/full-inventory/supplementary-results.jsonl",
+        "bytes": 999,
+        "sha256": "843f7521169d5e0215114d91421720423d2890fc67c0e2feb6af75b0536b73fd"
+      }
+    },
+    "cpuProfileTest": {
+      "file": "scripts/test-solo-qualification-cpu-profile.mjs",
+      "passingCases": 3,
+      "evidence": {
+        "path": ".cache/solo-followup/regression-audit/full-inventory/supplementary-qualification-v8-final-owner-proof.json",
+        "bytes": 1373,
+        "sha256": "02bb1491f8fe263b428353bf8d8fc8e4b171272b07c003646cf9ff84a4be86cf"
+      },
+      "combinedTwoFileCases": 37
+    },
+    "startupEvidenceTest": {
+      "file": "scripts/test-solo-startup-evidence.mjs",
+      "passingCases": 4,
+      "evidence": {
+        "path": ".cache/solo-followup/regression-audit/full-inventory/supplementary-startup-evidence-owner-proof.json",
+        "bytes": 774,
+        "sha256": "20b337705d7c9990838e9970c07bfb04899d0bfac8168494f2edfe385eca91b8"
+      }
+    },
+    "alreadyInOriginalInventory": [
+      "scripts/test-prepare-solo-audio-fixtures.mjs",
+      "scripts/test-solo-qualification.mjs"
+    ],
+    "accounting": "Three later files are outside the original1948 list. Combined qualification counts are separate and never added twice."
+  },
+  "quietWindows": {
+    "actualLastInventoryTestExit": "2026-10-16T06:09:42.887615+00:00",
+    "laterManualConfirmation": "2026-10-16T06:12:40.093793+00:00",
+    "actualExitProof": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/quiet-window-actual-last-exit.json",
+      "bytes": 2183,
+      "sha256": "16bdaf1aebde2bb059de28336815149a24b1c596d23a663219b2f07cc1b7a608"
+    },
+    "lastAuthorizedComparisonExit": "2026-10-16T06:24:49.335452+00:00",
+    "comparisonExitProof": {
+      "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-candidate-solo.json",
+      "bytes": 3317,
+      "sha256": "8898b1d1d0318e7a3c476dd83ea00f44852bed871aa2ca809ea873ec5c97884a"
+    },
+    "scope": "Owned test-process boundaries only; unrelated operating-system and user load are not assessed."
+  },
+  "reproduction": {
+    "methods": "docs/performance/solo-regression-summary.md",
+    "originalRunner": {
+      "path": ".cache/solo-followup/regression-audit/solo-complete-suite.py",
+      "bytes": 7138,
+      "sha256": "ac3559e01eefd30c6635f74ac57a40c63a19742e486a563684f78bf71be9de29"
+    },
+    "comparisonTool": {
+      "path": ".cache/solo-followup/regression-audit/compare-baseline-files.py",
+      "bytes": 4939,
+      "sha256": "c285036d39e71e47ce9b0855a20fb58f1987e547853081fd06dec9f36f756536"
+    },
+    "auditTool": {
+      "path": ".cache/solo-followup/regression-audit/audit-inventory.py",
+      "bytes": 2815,
+      "sha256": "320ec1c933e193f198d9c529716ddec2d5d6e29bd0fb7581bf12e31802633d91"
+    },
+    "archiveReceipt": {
+      "path": ".cache/solo-followup/regression-audit/reproduction-tools-v4.json",
+      "bytes": 2462,
+      "sha256": "1119eca6ff3e5a9622b747bc9fd1f2dac4de01f92e96ea3c01bc4daa359aae45"
+    },
+    "archive": {
+      "path": ".cache/solo-followup/regression-audit/reproduction-tools-v4.tar.gz",
+      "bytes": 22628,
+      "sha256": "7704c17e6687efa975a2b04359c86796e0351860fdca3b45c8c9958ea24ee17f"
+    },
+    "archiveLimit": "v4 predates the continuation helper and latest receipts. Raw logs remain at the referenced ignored paths; no bulk archive was made during timing.",
+    "continuation": {
+      "script": {
+        "path": ".cache/solo-followup/regression-audit/solo-complete-suite-resume.py",
+        "bytes": 8439,
+        "sha256": "a123f3803b00c93852b0f9070b9822de181ab7bf274427314cc22699b27a14c1"
+      },
+      "controlScript": {
+        "path": ".cache/solo-followup/regression-audit/test-host-continuation-controls.py",
+        "bytes": 5933,
+        "sha256": "c0df64dd161dd5b2a90df88e9c1a5a6256054c07f6c9ad80393bcfbdbbc880ba"
+      },
+      "controlsLog": {
+        "path": ".cache/solo-followup/regression-audit/host-continuation-controls.log",
+        "bytes": 732,
+        "sha256": "0fc350b1d8b05392b41b18954c366829dc0206f405eeaf1a51c8305bc1070cf4"
+      },
+      "validatedControlCases": 11,
+      "status": "Prepared and control-validated, never launched. Local inventory and continuation remain paused while the exact715-file remote continuation is prepared and reviewed.",
+      "rules": [
+        "Preserve exact inventory, prior result hashes, and every raw log.",
+        "Verify and stop only the idle owned original runner after active files settle.",
+        "Require global PAUSE; reject unfinished units, duplicates, and unaccounted pending logs.",
+        "At most two distinct host-file processes; build/copy/CLI fixtures exclusive.",
+        "Global and host PAUSE stop new admissions without interrupting active files.",
+        "No filters, deadline changes, skipped files, or duplicate reruns."
+      ]
+    }
+  },
+  "historicalEvidence": {
+    "stoppedFullSuite": {
+      "path": ".cache/solo-evidence/full-test-stopped-c26ccbd73d5f.log",
+      "bytes": 1585036,
+      "sha256": "c26ccbd73d5fc7ab226d58aabd231139d5f0b983e6294e9416629007fc0957c5"
+    },
+    "stoppedCounts": {
+      "failedTopLevelRows": 234,
+      "failedFiles": 55,
+      "filesMissingFromPriorGroupInventory": 25
+    },
+    "expandedLedger": {
+      "path": ".cache/solo-followup/regression-audit/expanded-regression-audit-1233.json",
+      "bytes": 284202,
+      "sha256": "845fa73c5a744c6ff1a24c8e406b583ac17a639fd57d94599abef7a2921efdae"
+    },
+    "baselineRestoration": {
+      "baseline": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "restoredFrom": "/Volumes/alex/solo-performance-b1174522/baseline-source-b1174522.tar.gz",
+      "directory": ".cache/regression-baseline/solo-baseline",
+      "verifiedFiles": 5448,
+      "differentTrackedFiles": [],
+      "removedExtraFiles": [
+        "game/mp3-inspection-worker.mjs",
+        "game/ui/scene-clock.mjs",
+        "game/ui/visual-quality-policy.mjs",
+        "game/ui/performance-session.mjs",
+        "game/ui/media-preparation.mjs",
+        "game/ui/mp3-inspector.mjs",
+        "game/mission-library/accepted-played-mission.mjs"
+      ],
+      "additionalExactInputCount": 725,
+      "additionalInputProvenance": "See expandedLedger and baselineBuildHydration receipts; detailed input checksums retained outside this concise snapshot."
+    },
+    "baselineBuildHydration": {
+      "path": ".cache/solo-followup/baseline-build-hydration.json",
+      "bytes": 4921566,
+      "sha256": "124ef23633d94571ca49c2e3a985ce20b65472f84e76da16c6d7a65104d3cd0f"
+    },
+    "formatCheck": {
+      "log": ".cache/solo-followup/regression-audit/format-check-complete-node22.log",
+      "classification": ".cache/solo-followup/regression-audit/format-check-complete-node22.json",
+      "exitCode": 1,
+      "unchangedBaselineWarnings": 10,
+      "newHarnessWarning": "Fixed by owner in49a228443; scoped ESLint/Prettier clean and19/19 pure harness tests pass. Original full format failure retained; ten remaining warnings are exact b117 bytes.",
+      "changedBranchFiles": {
+        "count": 112,
+        "exitCode": 0,
+        "files": ".cache/solo-followup/regression-audit/branch-format-files.json",
+        "log": ".cache/solo-followup/regression-audit/branch-format-check-node22.log"
+      }
+    }
+  },
+  "groups": [
+    {
+      "file": "game/test/acceptance-inspector.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "Studio owns the inspector and synchronizes it when the applied board selection changes"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 6,
+          "suites": 0,
+          "pass": 5,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1307.090667
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0009-acceptance-inspector.test.mjs.tap",
+          "bytes": 2570,
+          "sha256": "9efcc64cb0d17e27a7906f568fc5472da8b87d6d943439b5e0705b7c6896d06e"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-first-four.json",
+          "bytes": 10748,
+          "sha256": "e4e43039e95ac6f7f26809a303b62ba2e25597f01b986d718da84263b93d7d92"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "3d9cc6baeb5c8e350edbd5581082801af2874cc4"
+    },
+    {
+      "file": "game/test/access-gate.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 4,
+          "suites": 0,
+          "pass": 3,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 2988.964167
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0012-access-gate.test.mjs.tap",
+          "bytes": 1762,
+          "sha256": "0425c1ebab1bc345dc9b50ea05c26e3ff589203e25306b0fd3b052a26ce3c35b"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-second-six.json",
+          "bytes": 17213,
+          "sha256": "9b062cf79a4f59bc271bc72109a40d8567ebc118a47bc584a746d00b655f5eac"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/actor-appearance-solo-host.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "new campaign choice is pinned without loading an actor lease or changing simulation",
+            "a same-ID modified Custom pack retains authored actors through selector with unavailable authority"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 16,
+          "suites": 0,
+          "pass": 2,
+          "fail": 14,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 86061.013666
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0016-actor-appearance-solo-host.test.mjs.tap",
+          "bytes": 15062,
+          "sha256": "399aca00976d28e047ee94c312ee19770e24fe9bb88b448ad212d04a2a1a524a"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-host-pending.json",
+          "bytes": 11569,
+          "sha256": "301e3519e1ca0bf458c5b337260fed9b4f9062d484f3e1419f6edd6745df85c6"
+        },
+        "failingNamedRows": 14,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "c001515e727e5fe70e477bf243e01ec5ead8d1f8",
+      "fixtureRepairResult": {
+        "path": ".cache/solo-followup/regression-audit/actor-appearance-fixture-repaired-final49c.json",
+        "bytes": 4132,
+        "sha256": "40c22aed605288a0334bd5b6ed53926e01f77948d1154cdd57913631ca9985fb"
+      },
+      "repairedTestSha256": "82f8b556b2a9ce97dfa77de4e108a8382fd3a9e46dfbd550081e4f39c3cc17e8"
+    },
+    {
+      "file": "game/test/actor-team-next-host.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "earned Legacy Team Next starts Relay Yard with fpv actors and the accepted difficulty"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 2,
+          "suites": 0,
+          "pass": 1,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 31084.494084
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0027-actor-team-next-host.test.mjs.tap",
+          "bytes": 1853,
+          "sha256": "095178ef8ad775d8a666fde6b2280fe15704cddd29945b0bdf24ba028c2281d8"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/asset-studio-picture-context.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "registered local picture owners retain exact level, theme and fit without image downloads"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 5,
+          "suites": 0,
+          "pass": 4,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 602.84125
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0071-asset-studio-picture-context.test.mjs.tap",
+          "bytes": 2089,
+          "sha256": "a462ed456bf4f0c0d591c1de2d228a5a11eb723db6a44a58ada44b9bbea98748"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-first-four.json",
+          "bytes": 10748,
+          "sha256": "e4e43039e95ac6f7f26809a303b62ba2e25597f01b986d718da84263b93d7d92"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "3d9cc6baeb5c8e350edbd5581082801af2874cc4"
+    },
+    {
+      "file": "game/test/authored-mode-bootstrap.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "duel-expedition-v1: native boot escape matches ready destinations before any host modules load"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 55,
+          "suites": 0,
+          "pass": 54,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 246.08625
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0088-authored-mode-bootstrap.test.mjs.tap",
+          "bytes": 15044,
+          "sha256": "211e64274030959c1676f8ced73c4833f1999947172f35a581338547420e95d0"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-first-four.json",
+          "bytes": 10748,
+          "sha256": "e4e43039e95ac6f7f26809a303b62ba2e25597f01b986d718da84263b93d7d92"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/authored-mode-entry-host.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "opening: ready Solo opens the corresponding Versus library without save/hint conversion"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 16,
+          "suites": 0,
+          "pass": 12,
+          "fail": 4,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 37492.090125
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0089-authored-mode-entry-host.test.mjs.tap",
+          "bytes": 6387,
+          "sha256": "5bda86bf7eae0a9ce7517906a0ecad342279f2ee368bf9a5b245eb8fd35d7809"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-ninth-three.json",
+          "bytes": 17833,
+          "sha256": "4a5f855ab58bf7c5703c50c5137d07b6d1fb831af33ea9c9955c3a396719d88b"
+        },
+        "failingNamedRows": 4,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/authoring-host-display.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "Production adopts saved text and the effective system cap before its held register read, without writes",
+            "Viewport adopts saved host preferences without loading a game or altering a pending selection"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 14,
+          "suites": 0,
+          "pass": 0,
+          "fail": 14,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 211.715
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0091-authoring-host-display.test.mjs.tap",
+          "bytes": 19464,
+          "sha256": "cb2352d0ee1146a25a6342d116046d3cfc56b00863274880ccb12db666e4f3ff"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-ninth-three.json",
+          "bytes": 17833,
+          "sha256": "4a5f855ab58bf7c5703c50c5137d07b6d1fb831af33ea9c9955c3a396719d88b"
+        },
+        "failingNamedRows": 14,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/backup-content-feedback-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "blur during the actual held backup lock does not announce a pack cancellation or autoplay"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "game/test/backup.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "a full archive preserves all member formats, original image bytes and prepared-pack capability",
+            "a suspended pack campaign resolves only from included prepared content"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 12,
+          "suites": 0,
+          "pass": 1,
+          "fail": 6,
+          "cancelled": 5,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1241.280209
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0099-backup.test.mjs.tap",
+          "bytes": 11856,
+          "sha256": "3d6e3aded9379bdd221fe6b62693ada2fc6c1664c365200fa7f62ff467561837"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-first-four.json",
+          "bytes": 10748,
+          "sha256": "e4e43039e95ac6f7f26809a303b62ba2e25597f01b986d718da84263b93d7d92"
+        },
+        "failingNamedRows": 11,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "d28ae2851eb37d90a80ed1c6c2230dd3bcbfdb25"
+    },
+    {
+      "file": "game/test/boot-build.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 3,
+          "suites": 0,
+          "pass": 2,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 14446.333875
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0105-boot-build.test.mjs.tap",
+          "bytes": 2010,
+          "sha256": "9321df1bd920d8d141f6a89423caf0423284e0f1a18ba4865643d04960532b24"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-late-four.json",
+          "bytes": 37472,
+          "sha256": "1ecd58fdb3d8cab42370cc940c7eef8eb04f1294576ec3623ff1edbe09c5abf4"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/candidate-solo-host.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 18,
+          "suites": 0,
+          "pass": 16,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 403387.64425
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0134-candidate-solo-host.test.mjs.tap",
+          "bytes": 8323,
+          "sha256": "3f032a412f633c1a3c5466e133b36a97997f349e5740e59643a3866cf9bc8dc6"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-candidate-solo.json",
+          "bytes": 3317,
+          "sha256": "8898b1d1d0318e7a3c476dd83ea00f44852bed871aa2ca809ea873ec5c97884a"
+        },
+        "failingNamedRows": 2,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/candidate-versus-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/capture-attempt-appearance-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/chapter-download-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/classic-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/collection-context-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/collection-records-return-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/combat-board-adapter.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/combat-pressure-authoring.test.mjs",
+      "followUpStatus": "prior exact-baseline reproduction; stale rejection wording fixture repaired; Node22 full file passes in focused group",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/community-native-families.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/community-ownership-concurrency.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/company-selector-identity-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/content-combat.test.mjs",
+      "followUpStatus": "exact-baseline failure reproduced, scoped test fixture repaired, Node22 focused file group passes",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/content-launch.test.mjs",
+      "followUpStatus": "exact-baseline failure reproduced, scoped test fixture repaired, Node22 focused file group passes",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/content-route-loader.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "all supported routes are covered by pinned edition snapshots",
+            "duel-expedition-v1: async and synchronous routes retain exact historical content and fresh ownership"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "game/test/content-studio-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/content-team-recovery-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/content.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "class appearance maps survive pack preparation and scenario resolution as presentation only"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 23,
+          "suites": 0,
+          "pass": 22,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 869.935834
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0360-content.test.mjs.tap",
+          "bytes": 6704,
+          "sha256": "3948bbeb0651dd426ff0a600d1fdeaca791180c940be8df6a9e0d3f3fa7cede6"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-second-six.json",
+          "bytes": 17213,
+          "sha256": "9b062cf79a4f59bc271bc72109a40d8567ebc118a47bc584a746d00b655f5eac"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "91dfa06045a82b6f4a59e4cdb866f4ef3e791661"
+    },
+    {
+      "file": "game/test/continuous-host.test.mjs",
+      "followUpStatus": "historical process deliberately terminated; later nineteen-case lifecycle/submission run passed; current complete inventory still pending",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/controller-lab.test.mjs",
+      "followUpStatus": "exact-baseline failure reproduced, scoped test fixture repaired, Node22 focused file group passes",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/controller-practice-pause-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "repeated forced Pause keeps the chosen menu action after Settings closes"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "game/test/controller-preference-library.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "complete backup migrates omitted controller preferences without changing content or suspended flight"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 11,
+          "suites": 0,
+          "pass": 7,
+          "fail": 4,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1168.76825
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0380-controller-preference-library.test.mjs.tap",
+          "bytes": 6774,
+          "sha256": "52ca3991da17419b93ca7a989541d91a74dd4ec4cfd92b984ecc684a8a679757"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-second-six.json",
+          "bytes": 17213,
+          "sha256": "9b062cf79a4f59bc271bc72109a40d8567ebc118a47bc584a746d00b655f5eac"
+        },
+        "failingNamedRows": 4,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "91dfa06045a82b6f4a59e4cdb866f4ef3e791661"
+    },
+    {
+      "file": "game/test/controller-preview.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 19,
+          "suites": 0,
+          "pass": 18,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 600.520875
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0381-controller-preview.test.mjs.tap",
+          "bytes": 5580,
+          "sha256": "76a4289c9e0758303e60e48180ab7425d09b9a030775ea040dfbf5cc22979b5b"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-second-six.json",
+          "bytes": 17213,
+          "sha256": "9b062cf79a4f59bc271bc72109a40d8567ebc118a47bc584a746d00b655f5eac"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "91dfa06045a82b6f4a59e4cdb866f4ef3e791661"
+    },
+    {
+      "file": "game/test/coop-actor-layout.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "Standard Team commands retain the accepted main baseline with current pilot contacts"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 29,
+          "suites": 0,
+          "pass": 28,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1306.976041
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0391-coop-actor-layout.test.mjs.tap",
+          "bytes": 8063,
+          "sha256": "6d6f5d9d3b8727d9ffb42b2e3aec34fd0a892519474647b891efe338ad153462"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-second-six.json",
+          "bytes": 17213,
+          "sha256": "9b062cf79a4f59bc271bc72109a40d8567ebc118a47bc584a746d00b655f5eac"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/coop-bonus-slow-cue.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "legacy boards preserve accepted wide-board painting and readable compact identity without slow cues"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 8,
+          "suites": 0,
+          "pass": 7,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1458.66175
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0396-coop-bonus-slow-cue.test.mjs.tap",
+          "bytes": 3208,
+          "sha256": "38934a8c481eb0df0b18f2c884cd409342d49295be06513fd9fc55fe221bb3e1"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-second-six.json",
+          "bytes": 17213,
+          "sha256": "9b062cf79a4f59bc271bc72109a40d8567ebc118a47bc584a746d00b655f5eac"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/coop-custom-artwork-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/coop-departure-locale.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/coop-entry-memory.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "a fresh first visit shows and starts the exact First Connection without creating a bookmark"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "game/test/coop-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "the same Team mode choices belong to the lobby and active pause panel, never the live arena"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "game/test/coop-import-artwork-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/coop-import-next.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/coop-lobby-preview.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/coop-next-reentry.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 6,
+          "suites": 0,
+          "pass": 5,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 159408.211333
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0435-coop-next-reentry.test.mjs.tap",
+          "bytes": 3741,
+          "sha256": "57ee59ddb390e18818ba77a16999f28aebb1c1db91ef3f8f06d66481b1ff1426"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-host-pending.json",
+          "bytes": 11569,
+          "sha256": "301e3519e1ca0bf458c5b337260fed9b4f9062d484f3e1419f6edd6745df85c6"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/coop-picture-host.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/coop-picture-recovery-focus.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/coop-shared-settings.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "Settings stays above a retained paused Team attempt and reopens its selected category"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "game/test/coop-startup-selection.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/coop-terminal-player-hud.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/coop-terrain-trail.test.mjs",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "a complete snapshot without a wall keeps flat backing and a missing reader fails closed"
+          ]
+        }
+      ],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 30,
+          "suites": 0,
+          "pass": 29,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1930.076708
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0462-coop-terrain-trail.test.mjs.tap",
+          "bytes": 8586,
+          "sha256": "af036ff94774cc708ced2f534432c725c22a7259756de27a28f45a2dc1c9e794"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-third-two.json",
+          "bytes": 17020,
+          "sha256": "5b45133d1cce1e6da90421dd491551dd948e38dd48a91a75f929bf1870f5002d"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/coop-trail-impact-guidance.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/core-roster-viability.test.mjs",
+      "followUpStatus": "exact-baseline failure reproduced, scoped test fixture repaired, Node22 focused file group passes",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/couch-brand-title.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": [
+        {
+          "baselineRepresentatives": [
+            "real Versus ready renders and locale changes keep one wordmark; pause owns its localized status",
+            "Versus busy/ready transitions replace only retired brand owners and destroy releases the latest image"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "game/test/couch-built-in-picture-parity.test.mjs",
+      "followUpStatus": "pending current full-file run and exact-baseline comparison where prior evidence does not establish the failing assertion",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/couch-catalogue-host.test.mjs",
+      "followUpStatus": "Fixture-only corrections committed; complete20case rerun19passed with one old setup navigation failure, then all3changed public-navigation/focus cases passed. Complete final file queued in full inventory; no aggregate clean-file result inferred yet.",
+      "priorDeclaredEvidence": []
+    },
+    {
+      "file": "game/test/couch-static-pictures.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 32,
+          "suites": 0,
+          "pass": 6,
+          "fail": 9,
+          "cancelled": 17,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 3268.091875
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0513-couch-static-pictures.test.mjs.tap",
+          "bytes": 19026,
+          "sha256": "43e0991ca4b451866595052fcf1d78271016583eb3e328dfe722550b497c6fc2"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-third-two.json",
+          "bytes": 17020,
+          "sha256": "5b45133d1cce1e6da90421dd491551dd948e38dd48a91a75f929bf1870f5002d"
+        },
+        "failingNamedRows": 26,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "d81c4c98e3fceefc963541816e6b91d502de23c1"
+    },
+    {
+      "file": "game/test/demo-transition-picture.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 3,
+          "suites": 0,
+          "pass": 1,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 610.686791
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0607-demo-transition-picture.test.mjs.tap",
+          "bytes": 118709,
+          "sha256": "3b2d08fdd3748527f3435bb5afd56b419e84bfbad7d99d9266c99580ffddad15"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-fourth-six.json",
+          "bytes": 109386,
+          "sha256": "8045d348f3f485421a4ca7ccf5ae490198f6026121ceef46ba8d18e1a593157e"
+        },
+        "failingNamedRows": 2,
+        "kind": "candidate-fixture-repaired"
+      },
+      "fixtureRepairCommit": "247a9eaca79d188f7be48811e4584e170aa75490"
+    },
+    {
+      "file": "game/test/direct-tools-loading.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 3,
+          "suites": 0,
+          "pass": 2,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 318.796917
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0620-direct-tools-loading.test.mjs.tap",
+          "bytes": 2240,
+          "sha256": "7d250a292b71b6b0ec19fedcad3ab79aab20e52f508e1be45f826687e2fabbf9"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-fourth-six.json",
+          "bytes": 109386,
+          "sha256": "8045d348f3f485421a4ca7ccf5ae490198f6026121ceef46ba8d18e1a593157e"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "8f17b761011ce82cb831b183e7bd263567fae1cc"
+    },
+    {
+      "file": "game/test/discovery-suspend-recovery.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 12,
+          "suites": 0,
+          "pass": 10,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 395.996667
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0632-discovery-suspend-recovery.test.mjs.tap",
+          "bytes": 3690,
+          "sha256": "2fd731f2ae35a143380e2b902826e48b4e270fa8ae4a0aac1eb02356ce8a9760"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-fourth-six.json",
+          "bytes": 109386,
+          "sha256": "8045d348f3f485421a4ca7ccf5ae490198f6026121ceef46ba8d18e1a593157e"
+        },
+        "failingNamedRows": 2,
+        "kind": "baseline-exact-diagnostic"
+      },
+      "fixtureRepairCommit": "8f17b761011ce82cb831b183e7bd263567fae1cc"
+    },
+    {
+      "file": "game/test/effect-loudness.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 1,
+          "suites": 0,
+          "pass": 0,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 42.101667
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0671-effect-loudness.test.mjs.tap",
+          "bytes": 4775,
+          "sha256": "3b314be0e7502c477f44c1978ef0ffddfbafcf4383315b7f0ea8742a1dc8ad0d"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-fourth-six.json",
+          "bytes": 109386,
+          "sha256": "8045d348f3f485421a4ca7ccf5ae490198f6026121ceef46ba8d18e1a593157e"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/encounter-authoring.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 1,
+          "suites": 0,
+          "pass": 0,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 252.649875
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0674-encounter-authoring.test.mjs.tap",
+          "bytes": 1387,
+          "sha256": "9b86d96a9c5e97c1a5e9af62ee662970313b12ffd4e6ca65bbd0195f2acfae2a"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-module-startup-audit.json",
+          "bytes": 5548,
+          "sha256": "43baa220efcd086cb8e9a2e946bac76d61bc784ab1bc4436e8ec4c06e6cfbaee"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/encounter-packs-backup.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 1,
+          "suites": 0,
+          "pass": 0,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 412.571791
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0684-encounter-packs-backup.test.mjs.tap",
+          "bytes": 1448,
+          "sha256": "6c3eb3f5e28a5670cef88a76383dcccec989ef929ea20c6641e514f4e9f509c2"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-module-startup-hydrated.json",
+          "bytes": 2625,
+          "sha256": "091f3fe5978ffdef7d6a947d0c7be690dde0cc940d147094fe210fc523404af8"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/first-flight.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 14,
+          "suites": 0,
+          "pass": 13,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 2675.395
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0741-first-flight.test.mjs.tap",
+          "bytes": 4439,
+          "sha256": "188783ffff440d6fba9ab9e40956ca3e1fdfe9157ea0a5989a5ae737e8e3f962"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-first-flight.json",
+          "bytes": 2490,
+          "sha256": "fe27cd651c171480b716e9c21220ce7881ab4283d178f3add4d05207bf4d18af"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/gallery-reduced-effects.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 10,
+          "suites": 0,
+          "pass": 9,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 384.6315
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0837-gallery-reduced-effects.test.mjs.tap",
+          "bytes": 2970,
+          "sha256": "cfc3e2d3370ec5c133fce83d71c31c8020f782b28a7dcf51bfb18962e9c76da1"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-fifth-three.json",
+          "bytes": 9274,
+          "sha256": "659411f7b3ae7b7675aa18e4ecfb4c5cb1fe5e3af85e6e7c6de5a954ecf8ec47"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/hunt-actor-catalog.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 12,
+          "suites": 0,
+          "pass": 11,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 352.363375
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0865-hunt-actor-catalog.test.mjs.tap",
+          "bytes": 18549,
+          "sha256": "79aaa588107da19db2c12313ca6e31ab2561c25f5eabd847075c132eb8e284f8"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-fifth-three.json",
+          "bytes": 9274,
+          "sha256": "659411f7b3ae7b7675aa18e4ecfb4c5cb1fe5e3af85e6e7c6de5a954ecf8ec47"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/journey-authority.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 3,
+          "suites": 0,
+          "pass": 2,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 2398.464875
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0896-journey-authority.test.mjs.tap",
+          "bytes": 1423,
+          "sha256": "002861117f930e84f77f590b993cc4297e9f49df118bcf49fff74727ff019bcb"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-fifth-three.json",
+          "bytes": 9274,
+          "sha256": "659411f7b3ae7b7675aa18e4ecfb4c5cb1fe5e3af85e6e7c6de5a954ecf8ec47"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/mastery-library.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 10,
+          "suites": 0,
+          "pass": 7,
+          "fail": 3,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 5382.128042
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/0986-mastery-library.test.mjs.tap",
+          "bytes": 5965,
+          "sha256": "cdfc34fc08a23037515c18d7f48a79fc3e74b3bd277789d2572c35a910fd3042"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-sixth-eight.json",
+          "bytes": 30128,
+          "sha256": "75547ab27d1fba973cd4847eaebe24c1c2b26674c74911ef9d9cccbf1cb2d2af"
+        },
+        "failingNamedRows": 3,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/military-field-art.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 4,
+          "suites": 0,
+          "pass": 3,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 413.775083
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1017-military-field-art.test.mjs.tap",
+          "bytes": 1974,
+          "sha256": "f77d2a25a6c869cb353e72101e9ca17466112a2f8ea48d876dbd4f06cefed270"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-sixth-eight.json",
+          "bytes": 30128,
+          "sha256": "75547ab27d1fba973cd4847eaebe24c1c2b26674c74911ef9d9cccbf1cb2d2af"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/mission-brief.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 10,
+          "suites": 0,
+          "pass": 9,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 558.783333
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1019-mission-brief.test.mjs.tap",
+          "bytes": 3646,
+          "sha256": "ffcc8ebc8e8c73fae5cf8884f174028cbae379873b7fa98b9cbd4f5e69c02275"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-sixth-eight.json",
+          "bytes": 30128,
+          "sha256": "75547ab27d1fba973cd4847eaebe24c1c2b26674c74911ef9d9cccbf1cb2d2af"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/mission-library-installed-inventory.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 12,
+          "suites": 0,
+          "pass": 10,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 6089.018458
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1032-mission-library-installed-inventory.test.mjs.tap",
+          "bytes": 5523,
+          "sha256": "62fff8dc62fa2ad608ac4fce9d062e8c6b5490520df357d2ea75ca4245db4c38"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-sixth-eight.json",
+          "bytes": 30128,
+          "sha256": "75547ab27d1fba973cd4847eaebe24c1c2b26674c74911ef9d9cccbf1cb2d2af"
+        },
+        "failingNamedRows": 2,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/mission-library-installed-library.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 13,
+          "suites": 0,
+          "pass": 2,
+          "fail": 11,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1495.860083
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1033-mission-library-installed-library.test.mjs.tap",
+          "bytes": 16815,
+          "sha256": "56883e00a80ac493b2af41640b77ed80a943af27da89e28b7a60ec293cd552e6"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-sixth-eight.json",
+          "bytes": 30128,
+          "sha256": "75547ab27d1fba973cd4847eaebe24c1c2b26674c74911ef9d9cccbf1cb2d2af"
+        },
+        "failingNamedRows": 11,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/mission-library-installed-target.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 1,
+          "suites": 0,
+          "pass": 0,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 412.003917
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1034-mission-library-installed-target.test.mjs.tap",
+          "bytes": 1429,
+          "sha256": "7088df040cf7aa9525c697d0486f41214820af1eb79aa99752ad09d1e8fafbb4"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-sixth-eight.json",
+          "bytes": 30128,
+          "sha256": "75547ab27d1fba973cd4847eaebe24c1c2b26674c74911ef9d9cccbf1cb2d2af"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/mission-library-materialize-pack.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 4,
+          "suites": 0,
+          "pass": 1,
+          "fail": 3,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1062.391875
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1036-mission-library-materialize-pack.test.mjs.tap",
+          "bytes": 5723,
+          "sha256": "56e47ab8735078cede2be47958b2ab9e492346b4994744d4030cf212e7df8dd7"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-sixth-eight.json",
+          "bytes": 30128,
+          "sha256": "75547ab27d1fba973cd4847eaebe24c1c2b26674c74911ef9d9cccbf1cb2d2af"
+        },
+        "failingNamedRows": 3,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/mission-library-metadata-custom-source.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 6,
+          "suites": 0,
+          "pass": 5,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1117.222208
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1037-mission-library-metadata-custom-source.test.mjs.tap",
+          "bytes": 2558,
+          "sha256": "809215bc1cba9fbe66c5191c6e23b58052551ca887af8ec6467e0f915dc626de"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-sixth-eight.json",
+          "bytes": 30128,
+          "sha256": "75547ab27d1fba973cd4847eaebe24c1c2b26674c74911ef9d9cccbf1cb2d2af"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/mission-library-remote-installed.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 9,
+          "suites": 0,
+          "pass": 3,
+          "fail": 6,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 43767.748334
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1042-mission-library-remote-installed.test.mjs.tap",
+          "bytes": 9559,
+          "sha256": "0c82145c8680cb1efc166b4b1c51eb133ef51aac4232d3c48b819943eed677c1"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-seventh-two.json",
+          "bytes": 7699,
+          "sha256": "858016498953cca1ba5ac428726900f6a6ade413af4d9bb72be2d73c38c950aa"
+        },
+        "failingNamedRows": 6,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/mission-library-remote-team.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 1,
+          "suites": 0,
+          "pass": 0,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 5193.767625
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1044-mission-library-remote-team.test.mjs.tap",
+          "bytes": 1138,
+          "sha256": "3d3732d0f3a92651bfd69408dd3cdda3f16df235e033f09a1f1a65ffba7de182"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-seventh-two.json",
+          "bytes": 7699,
+          "sha256": "858016498953cca1ba5ac428726900f6a6ade413af4d9bb72be2d73c38c950aa"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/official-chapters.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 2,
+          "suites": 0,
+          "pass": 1,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 361.312541
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1123-official-chapters.test.mjs.tap",
+          "bytes": 1231,
+          "sha256": "96a8db64013ee0ed364b9f8aa87eb7d00f37382c0664e684ac997b1bd29f632f"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/pack-library-metadata.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 9,
+          "suites": 0,
+          "pass": 7,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1928.412708
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1262-pack-library-metadata.test.mjs.tap",
+          "bytes": 3484,
+          "sha256": "435e81a1f7a258c83c426cecc7c59143dc58a30586ae0d46d049a1239ee8b88f"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 2,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/pack-mastery.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 21,
+          "suites": 0,
+          "pass": 19,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 967.99275
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1264-pack-mastery.test.mjs.tap",
+          "bytes": 6420,
+          "sha256": "22273c0632043110a724d1580879e129914e1f108279daaf87c6ba36e608a046"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 2,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/packs.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 10,
+          "suites": 0,
+          "pass": 3,
+          "fail": 3,
+          "cancelled": 4,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1118.957667
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1265-packs.test.mjs.tap",
+          "bytes": 5452,
+          "sha256": "4b4578a447798002cfd2afa41ec94aee7d42daf50517c2c2de79a59f22410143"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 7,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/platform.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 7,
+          "suites": 0,
+          "pass": 6,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 323.2815
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1286-platform.test.mjs.tap",
+          "bytes": 2501,
+          "sha256": "d67ed630f03fac7176887f38459a799fa295331d6380ac6d386e9d9b69653dab"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/playable-benchmark-pressure.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 9,
+          "suites": 0,
+          "pass": 8,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 2487.01525
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1290-playable-benchmark-pressure.test.mjs.tap",
+          "bytes": 4529,
+          "sha256": "40e45df71c67e1d82dfe30ddaf32e21d4405bbe57252312dafd71017549231be"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/playable-benchmark-running-enemies.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 3,
+          "suites": 0,
+          "pass": 2,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 5637.19325
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1291-playable-benchmark-running-enemies.test.mjs.tap",
+          "bytes": 416704,
+          "sha256": "9d7ec38205696d32ad002d2881615e191509c4bc050fd30180696f3c191d51f0"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/playground-model.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 9,
+          "suites": 0,
+          "pass": 2,
+          "fail": 1,
+          "cancelled": 6,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 548.222458
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1300-playground-model.test.mjs.tap",
+          "bytes": 5442,
+          "sha256": "7645bd364b5c9f784ef99870a54516f6e0a4e93c105bce56ec1f8d130ef022ad"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 7,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/practice-playground-display.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 24,
+          "suites": 0,
+          "pass": 18,
+          "fail": 6,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 9029.014208
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1308-practice-playground-display.test.mjs.tap",
+          "bytes": 10216,
+          "sha256": "4083b03eb6598ea6cbc86e3c69f2399202da94345299380cb8076e43aa2203d9"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 6,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/presentation-studio.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 18,
+          "suites": 0,
+          "pass": 17,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 9030.586125
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1343-presentation-studio.test.mjs.tap",
+          "bytes": 5303,
+          "sha256": "fcd645ba1a3a63640247272fbfab4b9bb164547157f1e7ddad0652e880ed0c12"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/profile-recovery-display.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 5,
+          "suites": 0,
+          "pass": 4,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 8373.662625
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1367-profile-recovery-display.test.mjs.tap",
+          "bytes": 2104,
+          "sha256": "9847af087656e01aed2ad525ccc5adb74c795c008c3ede4a88a601866f2097cc"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-eighth-twelve.json",
+          "bytes": 43164,
+          "sha256": "b03ed78307a7e6defcebfc4e58b017136640ff4c2843fff91504b31784ce9692"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/rewards.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 9,
+          "suites": 0,
+          "pass": 7,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 441.774209
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1441-rewards.test.mjs.tap",
+          "bytes": 3849,
+          "sha256": "1fce9a8d60ff4e3279c0791b10d8b2e23a1b8d90f2c3d4d8f84cd037a2c79290"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-ninth-three.json",
+          "bytes": 17833,
+          "sha256": "4a5f855ab58bf7c5703c50c5137d07b6d1fb831af33ea9c9955c3a396719d88b"
+        },
+        "failingNamedRows": 2,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/soundtrack-preparation-policy.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 8,
+          "suites": 0,
+          "pass": 3,
+          "fail": 5,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 2345.075542
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1565-soundtrack-preparation-policy.test.mjs.tap",
+          "bytes": 5430,
+          "sha256": "f957d5d004ce7368e8845ecf042e8591cd3279b033e38838148c60705309ae36"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 5,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/soundtrack-v3-compatibility.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 5,
+          "suites": 0,
+          "pass": 4,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 283.682417
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1575-soundtrack-v3-compatibility.test.mjs.tap",
+          "bytes": 2182,
+          "sha256": "b213f269d42e40d6d6e6caf01fcd77e528dd9bef4c16420e091a3994c321788b"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/screen-steering-hand.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 8,
+          "suites": 0,
+          "pass": 7,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 783.485084
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1471-screen-steering-hand.test.mjs.tap",
+          "bytes": 3137,
+          "sha256": "f94914ecf680c4583543cf11a2d9ca247c40fe1f8e934d25a427b7827952b855"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/studio-candidate-library.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 17,
+          "suites": 0,
+          "pass": 15,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 412.0015
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1613-studio-candidate-library.test.mjs.tap",
+          "bytes": 15792,
+          "sha256": "7e58190f79cfa2fddd6cea8de828c564dde1302c7b1e8f843d05db9f62a82bda"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 2,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/studio-inspection-locale.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 4,
+          "suites": 0,
+          "pass": 3,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1185.251708
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1621-studio-inspection-locale.test.mjs.tap",
+          "bytes": 1821,
+          "sha256": "925fbe66e181c67195b6b6ebe1a3c7d28259a9b87199399482ccf9ba0b563e59"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/studio-preview-readiness.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 16,
+          "suites": 0,
+          "pass": 10,
+          "fail": 6,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 394.139042
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1625-studio-preview-readiness.test.mjs.tap",
+          "bytes": 9680,
+          "sha256": "4ba1b105cab7b2135d61928149219c2c5cf5bc31c205342cae111c159405836a"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 6,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/studio-structure-copy.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 6,
+          "suites": 0,
+          "pass": 5,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 407.670208
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1633-studio-structure-copy.test.mjs.tap",
+          "bytes": 2303,
+          "sha256": "e0e1978ce304c4cfbbb49d66dfcd29ff779950c143f5ee869cef1d6d3f6b5f49"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/support-input.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 8,
+          "suites": 0,
+          "pass": 7,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 421.109458
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1637-support-input.test.mjs.tap",
+          "bytes": 8754,
+          "sha256": "0ce892780d12870f012a0736672d3a44d06435cafa6b1f4aa8dfc877dc015a3d"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-art.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 4,
+          "suites": 0,
+          "pass": 2,
+          "fail": 2,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 7567.144083
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1643-team-art.test.mjs.tap",
+          "bytes": 22968,
+          "sha256": "654fcf49d21b1ec9af77a85cf7dfc9d80c2f89feee6f6dd7cb25ba46efa4dee1"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-team-art-hydrated.json",
+          "bytes": 24824,
+          "sha256": "bec5173f90a747ee55d76bf4166f9b99533db64fdb1223ee32d29c0e993f1819"
+        },
+        "failingNamedRows": 2,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-continuous-library-next.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 9,
+          "suites": 0,
+          "pass": 4,
+          "fail": 5,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 927.992625
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1652-team-continuous-library-next.test.mjs.tap",
+          "bytes": 6893,
+          "sha256": "38c8b0aab635d3fa6ccbcb5e4d6d772f1c3ffde7875737c53f5289fff2c634ba"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 5,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-foundation-routes.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 21,
+          "suites": 0,
+          "pass": 3,
+          "fail": 18,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1408.653709
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1670-team-foundation-routes.test.mjs.tap",
+          "bytes": 26153,
+          "sha256": "a52ee345db4b6b7c3538931d0ce1555351a914ac6978f959af4831d62b92a007"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 18,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-material-delays.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 4,
+          "suites": 0,
+          "pass": 1,
+          "fail": 3,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 484.969958
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1694-team-material-delays.test.mjs.tap",
+          "bytes": 4638,
+          "sha256": "f34712acb1f5d7ec7d6804a99fec7768ea9fe2a796d5c31fc8b162a880c2ec80"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 3,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-material-routes.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 19,
+          "suites": 0,
+          "pass": 10,
+          "fail": 9,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 5368.522625
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1695-team-material-routes.test.mjs.tap",
+          "bytes": 14978,
+          "sha256": "23c21b71f815d0af81c58f3528b9bc359ff2d2b86f2ead947126f97548b270d6"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 9,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-relocation-routes.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 7,
+          "suites": 0,
+          "pass": 1,
+          "fail": 6,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1133.696709
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1715-team-relocation-routes.test.mjs.tap",
+          "bytes": 31085,
+          "sha256": "7698fad8ba52eaf19700b311507c52d682e67acf39e173fa481be05ccd3bba85"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 6,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-reserve-routes.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 13,
+          "suites": 0,
+          "pass": 1,
+          "fail": 12,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 1149.880875
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1716-team-reserve-routes.test.mjs.tap",
+          "bytes": 61776,
+          "sha256": "8d8c00440f43bef65831ea59f8073ede60b930742ea42d5c069011187f9ef831"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 12,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-roamer-delays.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 5,
+          "suites": 0,
+          "pass": 1,
+          "fail": 4,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 514.679
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1721-team-roamer-delays.test.mjs.tap",
+          "bytes": 6012,
+          "sha256": "8f9affb3a123a2c82ae58abfde16f6131c47ff87187d1b5728855344e4dd4785"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 4,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-roamer-routes.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 24,
+          "suites": 0,
+          "pass": 12,
+          "fail": 12,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 6906.905208
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1722-team-roamer-routes.test.mjs.tap",
+          "bytes": 19722,
+          "sha256": "b9e1edac35a466041b7a8a254ccc3f683023d08faf555bd342ccfc289dcda720"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 12,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-timed-candidates.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 143,
+          "suites": 0,
+          "pass": 35,
+          "fail": 108,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 4710.18825
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1730-team-timed-candidates.test.mjs.tap",
+          "bytes": 227415,
+          "sha256": "ee52d5b5b907eba5728da22a30d888d4be34a353a080ecaff16cbe867c0d36c8"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 108,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/team-timed-qualification.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 70,
+          "suites": 0,
+          "pass": 6,
+          "fail": 64,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 2767.180333
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1736-team-timed-qualification.test.mjs.tap",
+          "bytes": 136876,
+          "sha256": "627ce749fc060ac08525445bc951be4c651257d53f35aca7ce322601e152255d"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 64,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/text-size-library.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 8,
+          "suites": 0,
+          "pass": 7,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 514.604833
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1744-text-size-library.test.mjs.tap",
+          "bytes": 3154,
+          "sha256": "5b161a052854a98270a24b8d3e9b1a8620617b80a15ee83239ce22cf0fb47ad0"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-tenth-twenty.json",
+          "bytes": 338846,
+          "sha256": "738d92e68b9fdb692ff7b0d17d0e764b46fdaafc1f461cd1b848b46b6aa2e5fa"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/ukrainian-ornament-atlas-library.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 3,
+          "suites": 0,
+          "pass": 2,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 4508.0965
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1773-ukrainian-ornament-atlas-library.test.mjs.tap",
+          "bytes": 1631,
+          "sha256": "9ee804e0e08b429e9312610d24da7c36492cfeaf551330abd3c548fb717f3cad"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-late-four.json",
+          "bytes": 37472,
+          "sha256": "1ecd58fdb3d8cab42370cc940c7eef8eb04f1294576ec3623ff1edbe09c5abf4"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/ukrainian-ornament-library.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 3,
+          "suites": 0,
+          "pass": 2,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 2824.586375
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1778-ukrainian-ornament-library.test.mjs.tap",
+          "bytes": 1564,
+          "sha256": "ed1cb1d53bf8b101fe9deda8016539831ad1c898e0b8d13c79392abd67d7b4c3"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-late-four.json",
+          "bytes": 37472,
+          "sha256": "1ecd58fdb3d8cab42370cc940c7eef8eb04f1294576ec3623ff1edbe09c5abf4"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    },
+    {
+      "file": "game/test/whole-journey-candidates.test.mjs",
+      "priorDeclaredEvidence": [],
+      "originalInventoryFailure": {
+        "counts": {
+          "tests": 7,
+          "suites": 0,
+          "pass": 6,
+          "fail": 1,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "duration_ms": 12112.077333
+        },
+        "log": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/1804-whole-journey-candidates.test.mjs.tap",
+          "bytes": 189861,
+          "sha256": "24d58fbd64c0f81a1a5560aabccb7e8e9f4cddf8f6eb0aaf469bc8726b169211"
+        },
+        "comparisonProof": {
+          "path": ".cache/solo-followup/regression-audit/full-inventory/classified-failures-late-four.json",
+          "bytes": 37472,
+          "sha256": "1ecd58fdb3d8cab42370cc940c7eef8eb04f1294576ec3623ff1edbe09c5abf4"
+        },
+        "failingNamedRows": 1,
+        "kind": "baseline-exact-diagnostic"
+      }
+    }
+  ],
+  "limits": [
+    "715 original files remain unexecuted by this inventory.",
+    "Original files span recorded HEADs. Runtime-boundary and fixture retests are separate, not a claim that all1233 ran on one final revision.",
+    "Baseline reproduction covers named diagnostics and executed cases only; cancelled, unregistered, or later unreachable assertions receive no coverage credit.",
+    "Unrelated Team golden, registry, access-page, and decoder fixture failures remain visible. Production validation and deadlines were not weakened.",
+    "The repaired actor-appearance Solo file remains15/16, with its selector timeout retained and paired. Candidate-solo remains16/18 on both revisions because nested-envelope assertions stop two cases early.",
+    "No physical iPhone17Pro Safari or SteamDeckOLED qualification is implied."
+  ]
+}
