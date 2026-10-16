@@ -10,6 +10,10 @@ Read [the evidence README](README.md), `batch-state.json` and any `browser-hando
 
 Run the existing `run-owner-batch.py` once with the frozen commit. The driver refuses existing batch/report files and executes base, Journey, DroneAid and Coupa sequentially, retaining original production deadlines, full terminal playback and independent replay verification. Nonzero owner outcomes are retained, never retried until green. Do not run a second availability audit or concurrent task-owned CPU-heavy check. Read the state, all reports/logs, exact source/content comparisons and final cleanup; derive map coverage from verified source intersections under both selections. Preserve every previous negative result. Focused route checks do not waive deadlines.
 
+## Known base outcome — qualification blocker
+
+Base verifies 45/46 cases, with usable playback on all 15 maps under both selections. Orchard Crossing live seed 3 / immediate fails admission with a generic incomplete-performance error. Its underlying cause is not established by the report. Preserve the failure and finish the rest of the one-use batch. Do not retry, waive or call live qualification passed. The separate browser observation can still provide rendering/session evidence, but cannot waive this source failure or establish release readiness.
+
 ## One new browser observation after the entire batch finishes
 
 Only after all four owners finish, verify a free task-owned port (preferred 8834), then start `node scripts/game-cli.mjs serve --port 8834` in this checkout. Record actual exec session, listener PID, URL, browser and tab IDs here and in `browser-handoff-state.json`. Use only supported `cua_repl` browser APIs. Create a new owned in-app-browser tab at `http://127.0.0.1:8834/game/test/browser/demo-watch.html`; no replacement/resumption of the old run. If the local game gate needs unlocking, use only the credential supplied privately by the human earlier in this chat; do not write it to artifacts, PR or automation. If unavailable, request that necessary action and stop rather than bypassing the gate.
