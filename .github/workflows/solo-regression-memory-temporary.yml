@@ -1,4 +1,4 @@
-name: Temporary Solo guarded remaining files and classifications
+name: Temporary Solo selected resource diagnostics
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -28,105 +28,18 @@ jobs:
       max-parallel: 2
       matrix:
         include:
-          - label: candidate
-            case: still-workshop-build
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
-          - label: candidate
-            case: settings-assists-host
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
-          - label: candidate
-            case: text-size-host
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
-          - label: candidate
-            case: team-pressure-opening-routes
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
-          - label: candidate
-            case: versus-continuous-next-host
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
-          - label: candidate
-            case: native-cli
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
-          - label: candidate
-            case: fpv-content
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
-          - label: candidate
-            case: practice-capacity
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
-          - label: candidate
-            case: whole-spatial-snapshot
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
           - label: baseline
-            case: controller-practice-pause-host
+            case: field-kit-retained-runtime
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: candidate
-            case: controller-practice-pause-host
+            case: field-kit-retained-runtime
             source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
           - label: baseline
-            case: coop-shared-settings
+            case: couch-installed-chapters
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: candidate
-            case: coop-shared-settings
+            case: couch-installed-chapters
             source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: coop-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: coop-host
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: couch-encounter-help
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: couch-encounter-help
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: couch-gameplay-pressure-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: couch-gameplay-pressure-host
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
-          - label: baseline
-            case: content-studio-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: coop-entry-memory
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: coop-import-next
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: couch-encounter
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: display-preferences-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: enemy-guide-edition-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: enemy-guide-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: external-chapter-app
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: flight-pictures-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: flight-preparation-status-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: fracture-spatial-candidates
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: gentle-routes
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: hud-numeric-values
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: hud-status-cues
-            source: b11745223861c3973ad4bf440cc536198b8e0371
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
@@ -186,15 +99,18 @@ jobs:
           selected_path = entry['file']
           selected_bytes = original
           observer = None
-          if entry['mode'] == 'selected-object-identity':
-              declaration = entry['selectedIdentityOverlay']
+          if entry['mode'] in ['selected-object-identity', 'selected-deep-bytes']:
+              byte_mode = entry['mode'] == 'selected-deep-bytes'
+              declaration = entry['selectedBytesOverlay' if byte_mode else 'selectedIdentityOverlay']
               lines = original.decode().splitlines(keepends=True)
               replacements = declaration['selectedCallReplacements']
               assert len({row['line'] for row in replacements}) == len(replacements)
               for row in replacements:
                   offset = row['line'] - 1
                   assert offset >= 0 and lines[offset] == row['before']
-                  assert row['after'] == row['before'].replace('assert.equal(', 'boundedIdentity(', 1)
+                  original_callee = 'assert.deepEqual(' if byte_mode else 'assert.equal('
+                  replacement_callee = 'boundedBytesEqual(' if byte_mode else 'boundedIdentity('
+                  assert row['after'] == row['before'].replace(original_callee, replacement_callee, 1)
                   lines[offset] = row['after']
               selected_text = ''.join(lines)
               insertion = declaration['helperInsertion']
@@ -259,7 +175,7 @@ jobs:
                      'batch': 1, 'selected': [{'path': selected_path, 'sha256': digest(selected_bytes)}],
                      'originalTest': {'path': entry['file'], 'sha256': entry['testSHA256']},
                      'diagnosticMode': entry['mode'], 'case': entry['case'], 'activeHandleObserver': observer,
-                     'diagnosticOverlay': manifest['diagnosticOverlay'],
+                     'diagnosticOverlay': entry.get('selectedBytesOverlay', entry.get('selectedIdentityOverlay')),
                      'nodeVersion': 'v22.22.2', 'CI': '1', 'platform': 'ubuntu-latest',
                      'runId': os.environ['GITHUB_RUN_ID'], 'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'],
                      'dependencyHashes': {name: digest((root / name).read_bytes()) for name in [
