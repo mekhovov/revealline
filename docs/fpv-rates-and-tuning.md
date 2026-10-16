@@ -1,0 +1,114 @@
+# FPV rates, throttle and drone setups
+
+The SIM's **Rates & throttle** editor keeps pilot preferences separate from radio calibration, drone camera settings and aircraft response. Profiles are stored on this device. They do not imply an account, cloud synchronization or multiple local pilot accounts.
+
+Existing settings migrate to **Legacy feel**. Existing attempts and recordings retain their original response. New profiles start with **Actual** rates; creating a profile does not assign it automatically.
+
+## Start with a profile
+
+1. Open **Rates & throttle** in the SIM.
+2. Choose **New Actual profile**, or duplicate a profile to experiment independently.
+3. Give it a recognizable name. Choose **Make player default** to use it for drones that inherit your default, or select it under **Rates used by this drone** for one saved drone setup.
+4. Adjust the three axes and throttle, then use **Test draft · unscored**.
+5. Choose **Return to tuning**, compare the saved and draft curves, and save or revert.
+
+**Save for next flight** persists the changes without restarting the active attempt or changing its profile assignment. **Apply & restart** explicitly assigns the selected profile to the current drone, saves and starts a new attempt. A recorded attempt retains the settings with which it started.
+
+A named profile can be shared by several drone setups. The editor lists its users before you change it. Duplicate the profile first if only one drone should change. Deleting a profile requires a replacement; its explicit users and the player default are reassigned together.
+
+## Rates and throttle
+
+Each profile uses one rate algorithm for all three axes, with separate roll, pitch and yaw values:
+
+| Algorithm  | Main controls                                           |
+| ---------- | ------------------------------------------------------- |
+| Actual     | Center sensitivity, maximum rate, expo                  |
+| Betaflight | RC rate, super rate, expo                               |
+| Quick      | RC rate, maximum rate, expo and the RC expo mode switch |
+| KISS       | RC rate, rate and expo                                  |
+| Raceflight | Rate, Acro+ and expo                                    |
+
+The editor displays each algorithm's own units. Changing algorithms retains the values entered for each algorithm during the current edit instead of interpreting the old numbers as another model. Optional linked roll/pitch editing leaves yaw independent.
+
+Each axis also has a commanded-rate limit. The new rate profiles support limits up to 1,998 degrees per second; Legacy feel retains its original range. The curve shows the requested rotation. The aircraft's response, self-level assistance and available motor authority determine the achieved rotation.
+
+Throttle has midpoint, expo and Off/Scale/Clip limiting. The **Betaflight 2025.12 / 2026.6** throttle model also exposes a hover point. The older **Betaflight 4.5** curve and the newer curve are different models, so changing versions can change flight feel even when their numeric controls look alike.
+
+The graphs overlay a solid draft curve and a dashed saved curve. Axis toggles and center, half-stick and full-stick readouts make comparisons easier. The optional rotation animation uses the same rate evaluator. Diagnostics distinguish raw input, calibrated input, requested rotation and achieved rotation. Browser sample age and observed timestamp cadence are shown only when measurements are available; they are not a claim about radio polling speed or simulation frequency.
+
+Radio endpoint calibration and device dead zones remain in the radio setup. Betaflight import does not import receiver calibration, RC smoothing or extra deadband stages. Self-level maximum tilt and the existing airframe's response time remain separate from portable rates.
+
+## Drone setups and camera
+
+A saved drone setup has its own name, stable identity, rate-profile assignment and camera settings. It is independent of a visual skin. Duplicate a drone setup when you want another saved combination.
+
+Choose **Player default** to inherit the current default, or assign a complete named profile. Assignments do not merge selected fields from different profiles.
+
+Camera tilt is measured in degrees. **Vertical FOV** is the vertical field of view in degrees, not horizontal or diagonal FOV. Camera settings are saved with the drone and excluded from portable rate files. Existing camera values are preserved during migration.
+
+The resolved flight configuration carries a fingerprint of its response settings and any saved Advanced aircraft/controller tuning. Names, profile/setup IDs, aircraft labels and camera settings do not affect that fingerprint. The simulation's recording identity also includes its backend, timing, world and rules; the configuration fingerprint alone does not establish replay compatibility or comparison eligibility.
+
+## Import from Betaflight
+
+Paste CLI text or upload a text/JSON file in **Import / export**. Choose the operation deliberately:
+
+| Operation              | Treatment of omitted values                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| Complete configuration | Reconstructs the selected rate profile using the verified firmware schema and its defaults. |
+| Sparse diff            | Reconstructs against verified defaults for the exact source release.                        |
+| Snippet / preset patch | Applies only supplied fields to the selected baseline and preserves everything else.        |
+
+The verified source releases are **4.5.2, 4.5.5, 2025.12.4, 2025.12.5 and 2026.6.2**. A version header is not required in the file, but complete configurations and sparse diffs need a source version selected when no header is present. Headerless `dump rates` files are normal. Conflicting headers and unverified versions are rejected instead of guessed.
+
+Assignments and `defaults` commands are processed in order. PID profiles and rate profiles are separate namespaces. By default, the final selected rate profile is previewed; the source-profile control can select another supported profile explicitly. The current importer qualifies the upstream four-profile layout, indexes 0–3. Custom firmware builds with different counts or defaults need separate verification.
+
+Choose **Preview import** to review the resulting curves, changed fields, inferred defaults, firmware normalization and unapplied settings. Then choose **Save import as new profile** and assign that new profile explicitly. A malformed import does not partially modify a saved profile.
+
+This is **rate/throttle compatibility**, not a copy of the whole aircraft. PID, feedforward tuning, filters, TPA, RC smoothing, motor-output limits and hardware settings are reported as unapplied. CLI commands are parsed as text and are never executed. Unsupported settings do not become active automatically after an update.
+
+The importer rejects a throttle patch when its source curve model differs from the selected baseline. Choose a baseline using the matching firmware model, or import only rotation-rate settings. Group-specific `defaults group_id` resets require resolved CLI text; they are not inferred.
+
+## Local preset bundles
+
+Upload a local preset folder and choose its entry file. **Resolve preset and review options** shows the dependencies, descriptions, warnings and available choices. After changing choices, resolve again before previewing the patch against its baseline.
+
+Includes may be relative to the including file or rooted at the bundle's `presets/` directory. Includes are processed in order, and repeated includes remain meaningful. Missing files, cycles, paths outside the bundle and unsupported nesting reject the resolution. The resolver never fetches dependencies from a network location.
+
+The entry preset exposes its options and defaults. Options in an included preset need matching entry-preset options, following Betaflight's dummy-option convention; otherwise they remain inactive and are reported. Exclusive groups allow at most one selected option. Descriptions, warnings and links remain inert text.
+
+There is no online preset catalog or native importer for other firmware in this release.
+
+## Export, history and recovery
+
+**Export SIM rates** produces a portable rate/throttle file. **Export rate-only CLI** targets a selected verified Betaflight release and includes the supported throttle settings when their model matches. An incompatible throttle target is rejected. Exports omit receiver calibration, camera settings and aircraft tuning.
+
+Each profile retains up to 24 prior revisions. **Restore revision to draft** lets you inspect an older version before saving it. **Revert draft** discards the current experiment and reloads the saved settings.
+
+**Backup complete library** includes named profiles, history, drone setups, camera settings and saved Advanced aircraft/controller tuning. **Download file** requests a JSON download for profiles/backups or a plain text download for CLI settings. In the iOS wrapper it opens the native share sheet; cancellation leaves the displayed text available. The app reports a requested download or confirmed sharing without claiming that the destination saved the file. **Restore library backup** validates the entire backup before replacing the library. A corrupt saved library is preserved until you explicitly restore a valid backup.
+
+The library supports up to 32 profiles and 32 drone setups, with a 512 KiB storage/backup budget. The editor's uploads also use a 512 KiB budget; preset folders allow up to 128 files. Storage failures are displayed and do not silently discard the last saved state. Keep an exported backup when storage is unavailable or full.
+
+If another tab changes settings, export an unsaved draft before choosing **Refresh library**. Revision checks reject stale saves; browsers supporting Web Locks also serialize cross-tab writes.
+
+## Current scope
+
+### Experimental Advanced practice
+
+The tuning editor can open **Advanced reference practice**, an unscored arena using a separate fixed-step controller and aircraft model. Choose a whoop, freestyle or racing reference template, adjust its SI-unit aircraft/controller values, and explicitly restart to test the draft. **Save aircraft for next flight** keeps the running attempt unchanged. These templates have not yet been matched to measured real aircraft, and their controller gains are not Betaflight PID numbers.
+
+The Advanced controller includes a separate feedforward low-pass cutoff. New tunes default to 30 Hz to make stick transitions consistent across physics frequencies; zero explicitly disables it. Older experimental v1 tunes retain their unsmoothed choice when migrated. The revised experimental v2 backend rejects v1 Advanced recordings rather than replaying them with changed physics. Legacy Academy/World recordings remain supported.
+
+In Regional flight, the pause menu offers **Try Advanced here**. It starts an Acro practice flight above the selected starting point using the same streamed and verified terrain. The physics worker handles ground and roof landings, takeoff and wall collisions using the verified collision meshes. Missing terrain and region boundaries still reject the whole mission interval and pause flight. **Use Legacy** restarts with the existing Regional model. Advanced Regional flights remain unscored, and contact behavior has not yet been matched to measured real aircraft.
+
+Regional recordings include the collision geometry and ordered terrain changes needed to replay their flight. Recovery files also retain the current controller, motors, battery and terrain state. Importing recovery checks the region and starting point before adopting it. Older experimental Regional recovery files cannot resume the new contact backend; the reference arena and historical Legacy flights keep their existing identities.
+
+Advanced recording and aircraft exports use the platform's file/share support. Backgrounding, app inactivity or graphics loss pauses practice; returning never resumes automatically. Physical-device qualification and verified/default Advanced rollout remain gated.
+
+The rates and import features work independently of the later aircraft-physics rollout. Matching a rate curve does not establish matching real-world flight dynamics. Legacy airframe response remains a separate setting, and historical lessons and recordings retain their original behavior. Advanced physics qualification, measured aircraft templates, hardware-specific response matching and real-pilot comparison sessions are separate acceptance work.
+
+### Compatibility references
+
+- [Betaflight control-rate definitions, 4.5.2](https://github.com/betaflight/betaflight/blob/4.5.2/src/main/fc/controlrate_profile.c)
+- [Betaflight control-rate definitions, 2026.6.2](https://github.com/betaflight/betaflight/blob/2026.6.2/src/main/fc/controlrate_profile.c)
+- [Betaflight preset specification](https://github.com/betaflight/firmware-presets#preset-specifications)
+- [Betaflight tuning interface](https://betaflight.com/docs/wiki/app/pid-tuning-tab)
