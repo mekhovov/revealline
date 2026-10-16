@@ -1,73 +1,21 @@
 {
-  "format": "SoloResumeAndHandleDiagnosticManifestV1",
-  "purpose": "Run three reviewed canonical fixture corrections and a paired unchanged device-controls teardown diagnostic; preserve every prior failure, cancellation and source identity. This is not a full inventory rerun.",
+  "format": "SoloUkraineClockFixtureManifestV1",
+  "purpose": "Complete the reviewed canonical Ukraine appearance fixture after its one public-readiness neutral-frame correction; preserve prior candidate and exact-baseline failures.",
   "entries": [
     {
       "label": "candidate",
-      "case": "solo-cadence-input-host",
+      "case": "ukraine-role-host",
       "mode": "original",
-      "sourceRevision": "8a670281368a58726fe75a7cf9a0c37c921d9849",
-      "runtimeRevision": "14ac29e27df9d78283a1d93b5a16a23121212371",
-      "file": "game/test/solo-cadence-input-host.test.mjs",
-      "testSHA256": "7be9b59c6c2cf5662fec9ac02b18e67e525f27ac44d532fdc82c44d974b8ebe4",
-      "bytes": 14081,
-      "purpose": "Complete four-case canonical file: nine keyboard and gamepad schedules plus independent fresh-host interruption cases. Preserve each 240-second internal deadline, all movement/input/replay assertions, and prior incomplete two-case evidence.",
+      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+      "file": "game/test/ukraine-role-host.test.mjs",
+      "testSHA256": "334a58f3b3e5209850a9d132c4dfec9de96fa845f21ed74efe9c3bda8608380a",
+      "bytes": 9842,
       "resourceBoundary": {
         "maximumOwnedGroupRSSBytes": 4294967296,
         "maximumWallSeconds": 600
-      }
-    },
-    {
-      "label": "candidate",
-      "case": "history-picture-host",
-      "mode": "original",
-      "sourceRevision": "f48f25092a027a1d745a5c96e6c9d62e36aa50de",
-      "runtimeRevision": "14ac29e27df9d78283a1d93b5a16a23121212371",
-      "file": "game/test/history-picture-host.test.mjs",
-      "testSHA256": "ddeefaee8da04247e0d597088705f56c76875e818511c6617764c2e5c1820f78",
-      "bytes": 17312,
-      "purpose": "Complete canonical file after awaiting public restored Resume readiness and an explicit neutral frame anchor. Pin, checkpoint, no-write and resource-ownership assertions remain unchanged; original baseline dimension failure remains retained.",
-      "resourceBoundary": {
-        "maximumOwnedGroupRSSBytes": 4294967296,
-        "maximumWallSeconds": 600
-      }
-    },
-    {
-      "label": "candidate",
-      "case": "starting-setup-host",
-      "mode": "original",
-      "sourceRevision": "f48f25092a027a1d745a5c96e6c9d62e36aa50de",
-      "runtimeRevision": "14ac29e27df9d78283a1d93b5a16a23121212371",
-      "file": "game/test/starting-setup-host.test.mjs",
-      "testSHA256": "a8489379a8041a5f5e287a312266ffef99bf22b29146ce1df9bdda57ea199b0a",
-      "bytes": 22038,
-      "purpose": "Complete canonical file with one neutral Resume frame anchor before the unchanged positive callbacks and exact tick/checkpoint/queued-direction assertions. Exact original-main full file passed26/26; old candidate had three clock-anchor fixture failures.",
-      "resourceBoundary": {
-        "maximumOwnedGroupRSSBytes": 4294967296,
-        "maximumWallSeconds": 600
-      }
-    },
-    {
-      "label": "baseline",
-      "case": "device-controls-host",
-      "mode": "active-handle-observer",
-      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/device-controls-host.test.mjs",
-      "testSHA256": "76c4e220c1c49c15ad7fd819a0b8d7c92817880a526986ab344a4725b4285b92",
-      "bytes": 32300,
-      "purpose": "Diagnostic only on unchanged original-main canonical bytes: bounded async-resource/handle observation after15 cases. No production handle is closed or unrefed, no deadline/assertion change, no timing acceptance."
-    },
-    {
-      "label": "historical-candidate",
-      "case": "device-controls-host",
-      "mode": "active-handle-observer",
-      "sourceRevision": "845e2a1e1c72ee0d2900b2974589efbf7bb35273",
-      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
-      "file": "game/test/device-controls-host.test.mjs",
-      "testSHA256": "76c4e220c1c49c15ad7fd819a0b8d7c92817880a526986ab344a4725b4285b92",
-      "bytes": 32300,
-      "purpose": "Same bounded observer on unchanged historical e025 canonical bytes. Previous run reported all15 case bodies ok but no process exit/TAP footer before145-minute outer guard; it remains incomplete, not a pass."
+      },
+      "purpose": "One p.frame(0) follows actual running readiness before ArrowDown; all12positivecallbacks, appearance, checkpoint, saved envelope, no-write and reload assertions remain exact."
     }
   ],
   "nodeVersion": "v22.22.2",
@@ -89,22 +37,16 @@
     "--test-reporter=tap",
     "selectedTestPath"
   ],
-  "diagnosticOverlay": "Canonical test bytes are unchanged by the runner. Only active-handle-observer entries import the exact diagnostic helper retained below. It never closes/unrefs game resources; observer-only timers are unrefed. Dropped resource initializations mean incomplete attribution, and missing/collected weak references or hasRef:null mean unknown ownership.",
-  "activeHandleObserver": {
-    "path": ".cache/solo-memory-diagnostic/observe-handles.mjs",
-    "sha256": "c8b50e8ef63236655305a5d9e3be6cdedf1f78dde14d0fa01583ece09b9dfd7d",
-    "source": "// Diagnostic preload only: no test, production, assertion, timer or handle mutation.\nimport { createHook } from 'node:async_hooks';\nimport { getActiveResourcesInfo } from 'node:process';\nimport { writeFileSync, realpathSync, readFileSync } from 'node:fs';\nimport { resolve } from 'node:path';\nimport { createHash } from 'node:crypto';\nimport { after, afterEach } from 'node:test';\n\nconst target = process.env.SOLO_HANDLE_TEST;\nconst destination = process.env.SOLO_HANDLE_REPORT;\nconst child = process.env.NODE_TEST_CONTEXT === 'child-v8' && target && process.argv.some((arg) => {\n  try { return realpathSync(arg) === realpathSync(target); } catch { return false; }\n});\nif (child) {\n  if (!destination || !resolve(destination).includes('/.cache/'))\n    throw new Error('Use an explicit ignored-cache report destination.');\n  const source = realpathSync(target);\n  const initialSHA256 = createHash('sha256').update(readFileSync(source)).digest('hex');\n  const tracked = new Map();\n  const interesting = /^(Timeout|Immediate|MESSAGEPORT|MessagePort|TCPWRAP|TCPSERVERWRAP|PIPEWRAP|PROCESSWRAP|WORKER|DNSCHANNEL|UDPWRAP|SIGNALWRAP|FSEVENTWRAP|HTTPCLIENTREQUEST|GETADDRINFOREQWRAP|FSREQCALLBACK|FSREQPROMISE)$/;\n  let dropped = 0;\n  let recursive = false;\n  const snapshots = [];\n  const hook = createHook({\n    init(id, type, triggerId, resource) {\n      if (recursive || !interesting.test(type)) return;\n      if (tracked.size >= 4096) { dropped++; return; }\n      recursive = true;\n      try {\n        tracked.set(id, {\n          id, type, triggerId, resource: new WeakRef(resource),\n          stack: String(new Error('Resource creation').stack).split('\\n').slice(1, 10),\n        });\n      } finally { recursive = false; }\n    },\n    destroy(id) { tracked.delete(id); },\n  });\n  function describe(resource) {\n    let hasRef = null;\n    try { if (typeof resource?.hasRef === 'function') hasRef = !!resource.hasRef(); } catch {}\n    return {\n      constructor: resource?.constructor?.name ?? null,\n      hasRef,\n      timerMilliseconds: typeof resource?._idleTimeout === 'number' ? resource._idleTimeout : null,\n      callbackName: typeof resource?._onTimeout === 'function' ? resource._onTimeout.name : null,\n      destroyed: typeof resource?._destroyed === 'boolean' ? resource._destroyed : null,\n    };\n  }\n  function snapshot(reason) {\n    if (snapshots.length >= 8) return;\n    recursive = true;\n    try {\n      const rows = [...tracked.values()].slice(0, 4096).map(({ resource, ...row }) => ({\n        ...row, ...describe(resource.deref()),\n      }));\n      snapshots.push({ at: new Date().toISOString(), reason,\n        activeResourceTypes: getActiveResourcesInfo(),\n        // Private API is diagnostic-only and records bounded scalar metadata.\n        activeHandles: (process._getActiveHandles?.() ?? []).slice(0, 128).map(describe),\n        tracked: rows, droppedResourceInitializations: dropped,\n      });\n      writeFileSync(destination, JSON.stringify({\n        format: 'SoloOwnedTestHandleDiagnosticV1', source, initialSHA256,\n        finalSHA256: createHash('sha256').update(readFileSync(source)).digest('hex'),\n        node: process.version, pid: process.pid, snapshots,\n        scope: 'Diagnostic instrumentation only. No handle is closed/unrefed and no canonical deadline/assertion is changed. This is not a passing full-file receipt or timing evidence.',\n      }, null, 2) + '\\n');\n    } finally { recursive = false; }\n  }\n  hook.enable();\n  let completedCases = 0;\n  afterEach(() => {\n    if (++completedCases !== 15) return;\n    snapshot('after-fifteenth-case-hook');\n    const timer = setTimeout(() => snapshot('three-seconds-after-fifteenth-case'), 3000);\n    timer.unref();\n  });\n  after(() => {\n    snapshot('root-after-all-test-hooks');\n    // This observer cannot keep an otherwise finished process alive.\n    const timer = setTimeout(() => snapshot('three-seconds-after-root-after'), 3000);\n    timer.unref();\n  });\n  process.on('beforeExit', () => snapshot('beforeExit'));\n  process.on('exit', () => snapshot('exit'));\n}\n",
-    "scope": "Diagnostic-only observer; no canonical assertion, internal deadline, production handle or runtime mutation. No full-file coverage unless canonical process exits normally with complete corroborated TAP.",
-    "runnerChildAuthority": "https://github.com/nodejs/node/blob/v22.22.2/lib/internal/test_runner/runner.js#L347"
-  },
-  "scope": "Source-bound regression observations only. Complete failed files remain failed; time/resource/interruption outcomes remain incomplete. Handle instrumentation is diagnostic, not performance or device evidence.",
+  "diagnosticOverlay": "None. Exact canonical test bytes at the pinned revision, no observer or runtime injection.",
+  "scope": "Supplementary fixture correctness only, separate from179 missing inventory files. Complete failures remain failures, no full-suite pass or device claim.",
   "priorEvidence": {
-    "cadenceRun": 38888826217,
-    "cadenceSource": "605cbd6d36a87ab592ae16cdfede890a1b035ac6",
-    "cadenceOutcome": "1pass/0fail/1cancel; all nine gamepad schedules reached, independent interruption stage unobserved before the unchanged240-second internal case deadline.",
-    "deviceControlsRun": 38873117238,
-    "deviceControlsSource": "845e2a1e1c72ee0d2900b2974589efbf7bb35273",
-    "deviceControlsOutcome": "15case bodies ok; no complete TAP footer/process exit before145minutes; no aggregate pass."
+    "baselineRunId": 38888826217,
+    "candidateRunId": 38865274741,
+    "baselineSourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+    "baselineOutcome": "8pass/1unrelatedCouchfailure. Old candidate additionally saves11ticks then expects12 and its dependent reload cannot reach12.",
+    "rawComparisonPath": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-cadence-baseline-38888826217/classification-1145.json",
+    "rawComparisonSHA256": "84a14fcfc8c5053094cc9b903ddac4a726dfb84829955aee63a7e47aec2e4929"
   },
   "independentOngoingBaselineRun": {
     "runId": 38888826217,
