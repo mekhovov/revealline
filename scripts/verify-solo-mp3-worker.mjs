@@ -143,6 +143,23 @@ try {
     clearTimeout(timer);
     return { settled, ...snapshot() };
   }, Array.from(fixture));
+  if (report.active.flightAfter !== 'running') {
+    // Observe only after the failed active-play window. This neither resumes the
+    // game nor changes the running assertion; it distinguishes a public warning
+    // from a hidden/focus transition without adding work to every frame.
+    report.unexpectedPause = await page.evaluate(() => {
+      const message = document.getElementById('run-message');
+      return {
+        phase: 'after-inspection; diagnostic only',
+        flightState: document.body.dataset.flightState,
+        visibilityState: document.visibilityState,
+        hidden: document.hidden,
+        hasFocus: document.hasFocus(),
+        message: message?.textContent?.slice(0, 1000) ?? null,
+        cue: message?.dataset.cue?.slice(0, 80) ?? null,
+      };
+    });
+  }
   report.mode = report.active.settled ? 'worker' : 'unavailable-or-timed-out';
   if (!report.active.settled) {
     // The real unavailable-worker path must park its main-thread scan during
