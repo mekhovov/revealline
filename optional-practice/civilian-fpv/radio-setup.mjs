@@ -207,6 +207,7 @@ export function mountRadioSetup({
   onProfile = () => {},
   onResponse = () => {},
   onDone = () => {},
+  onOpenRates = null,
 }) {
   const doc = container.ownerDocument,
     copy = COPY[locale] ?? COPY.en;
@@ -1102,12 +1103,14 @@ export function mountRadioSetup({
     groups: {
       manual: [sign, channels, travelButton, centreButton, verifyButton, saveButton],
       switches: [switchIntro, ...switchFields],
-      response: [
-        ...Object.values(responseNodes).map((node) => node.parentNode),
-        curve,
-        resetResponse,
-        applyResponse,
-      ],
+      response: onOpenRates
+        ? [button(locale === 'uk' ? 'Рейти й газ' : 'Rates & throttle', onOpenRates)]
+        : [
+            ...Object.values(responseNodes).map((node) => node.parentNode),
+            curve,
+            resetResponse,
+            applyResponse,
+          ],
       transfer: [
         libraryLabel,
         sharing,
@@ -1128,6 +1131,12 @@ export function mountRadioSetup({
   intro.remove();
   switchHeading.remove();
   responseHeading.remove();
+  if (onOpenRates) {
+    for (const node of Object.values(responseNodes)) node.parentNode.remove();
+    curve.remove();
+    resetResponse.remove();
+    applyResponse.remove();
+  }
   frame = win.requestAnimationFrame(paint);
   return {
     store,
