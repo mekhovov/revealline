@@ -638,7 +638,7 @@ export async function observePracticeDirectoryJourney({
     resourceAcquisitions: [],
     limitations: [
       'Full unchanged committed main-game source shell, not a minimal panel host and not a completed production distribution build.',
-      'Missing documentation producer inputs still block full build collection. No build, hosting or release-review guard is weakened.',
+      'This protocol does not build a production distribution. Sparse-checkout exclusions must be distinguished from genuinely missing committed build inputs; no build, hosting or release-review guard is weakened.',
       'Locally admitted practice package bytes with an explicit unpublished catalogue/current.json fixture; not a reviewed selector or public release.',
       'Six EN/UK one-Play start-screen and guide/navigation journeys only; no arming, exercise, installation, human learning or physical accessibility qualification.',
       plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id

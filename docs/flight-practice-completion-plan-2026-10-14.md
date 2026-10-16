@@ -2,6 +2,15 @@
 
 ## 16 October research and execution update
 
+Build-blocker diagnosis correction: the required Couch verification document and
+FPV baseline directory are committed, but this managed worktree's non-cone sparse
+patterns excluded `docs/verification`. Materializing those two exact committed
+paths makes build collection succeed. Earlier missing-file failures remain real;
+the earlier assertion that their producer inputs were unavailable was incorrect.
+No placeholder evidence or build-rule removal is needed. Full production build
+and distribution-browser validation remain separate next checks, not implied by
+successful collection or source-shell journeys.
+
 The [result-action continuation](flight-practice-result-qualification-2026-10-16.md)
 completes the native keyboard probe, reproduces and repairs moving result targets,
 and passes all eight EN/UK Academy/Worlds Self-level/Acro lift-and-land journeys
