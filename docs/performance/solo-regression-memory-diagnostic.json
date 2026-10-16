@@ -1,26 +1,151 @@
 {
-  "format": "SoloBoundedCanonicalFixturesManifestV7",
-  "purpose": "Full canonical verification of shared-image lease lifetime/cleanup and explicit neutral scene-clock anchoring, after retained exact-original-main proofs. Keep every rejection, identity, replay and checkpoint assertion.",
+  "format": "SoloCombinedScopedRegressionManifestV1",
+  "purpose": "Five exact-baseline classifications, corrected Team role ownership, dedicated dense/overlap/cadence correctness, and exact same-byte touch diagnostic red/green pair. No full inventory rerun.",
   "entries": [
+    {
+      "label": "touch-red",
+      "case": "solo-touch-latency-host",
+      "mode": "original",
+      "sourceRevision": "48f72933fa91c355f7d7ecbf3bc3a0f1cfd9023f",
+      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+      "file": "game/test/solo-touch-latency-host.test.mjs",
+      "testSHA256": "98411f1258919b4dce0070b0e6ac89a86e524973dcd1b475378ce168e97354b1",
+      "bytes": 4927,
+      "purpose": "Expected diagnostic failure on unchanged older pointer instrumentation; preserve actual failure verdict, never convert to a pass.",
+      "resourceBoundary": {
+        "maximumOwnedGroupRSSBytes": 4294967296,
+        "maximumWallSeconds": 600
+      }
+    },
+    {
+      "label": "touch-green",
+      "case": "solo-touch-latency-host",
+      "mode": "original",
+      "sourceRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "file": "game/test/solo-touch-latency-host.test.mjs",
+      "testSHA256": "98411f1258919b4dce0070b0e6ac89a86e524973dcd1b475378ce168e97354b1",
+      "bytes": 4927,
+      "purpose": "Same four-case complete host file with minimal pointer-target admission correction. Injected events are correctness fixtures, not native latency evidence.",
+      "resourceBoundary": {
+        "maximumOwnedGroupRSSBytes": 4294967296,
+        "maximumWallSeconds": 600
+      }
+    },
+    {
+      "label": "candidate",
+      "case": "solo-cadence-input-host",
+      "mode": "original",
+      "sourceRevision": "02ee15b022e863baf9668b115f85b4020569a9f3",
+      "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "file": "game/test/solo-cadence-input-host.test.mjs",
+      "testSHA256": "323b98f7cdb0388602dc878d72a8bd7be17717a6e97f24766570be19beb7e02e",
+      "bytes": 12620,
+      "purpose": "Two meaningful input/cadence host cases with strict replay and interruption/Resume correctness; no native timing claim.",
+      "resourceBoundary": {
+        "maximumOwnedGroupRSSBytes": 4294967296,
+        "maximumWallSeconds": 600
+      }
+    },
+    {
+      "label": "candidate",
+      "case": "solo-dense-replay-persistence",
+      "mode": "original",
+      "sourceRevision": "bb74b1eefa20120304f22468c924aa2955a717b3",
+      "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "file": "game/test/solo-dense-replay-persistence.test.mjs",
+      "testSHA256": "7bdd742e41dec745a30f27b2f884ade16847e01e84590f07eee7e83733f3f0f7",
+      "bytes": 11085,
+      "purpose": "Three dense valid replay/save correctness/stress cases; progress chunk counts are tick bounds, not native wall-task timing.",
+      "resourceBoundary": {
+        "maximumOwnedGroupRSSBytes": 4294967296,
+        "maximumWallSeconds": 600
+      }
+    },
+    {
+      "label": "candidate",
+      "case": "solo-pending-verification-gameplay-host",
+      "mode": "original",
+      "sourceRevision": "bb74b1eefa20120304f22468c924aa2955a717b3",
+      "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "file": "game/test/solo-pending-verification-gameplay-host.test.mjs",
+      "testSHA256": "fd11a8826bd6e2d02de4fb89622667fb73d08ba6b647f128286838186b7b581b",
+      "bytes": 12004,
+      "purpose": "Two real pending verifier ownership cases across public Next/Retry; correctness only, not native timing.",
+      "resourceBoundary": {
+        "maximumOwnedGroupRSSBytes": 4294967296,
+        "maximumWallSeconds": 600
+      }
+    },
     {
       "label": "candidate",
       "case": "presentation-team-runtime",
       "mode": "original",
-      "sourceRevision": "050d8ea3248edb4176e7b59fbc855a7dcf821ffb",
-      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+      "sourceRevision": "a8af8fdc3a94d7f4c6ddb195531b8863c9dfb99c",
+      "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
       "file": "game/test/presentation-team-runtime.test.mjs",
-      "testSHA256": "1ad8b3c4252384e77cd0d349a534108363aa4cf7d81deb6b668d5a170d012d5e",
-      "bytes": 9047
+      "testSHA256": "d83a34c4778c141b6004d5d730c60c49f1f8dd91192b2f56ba59eefb94fc3029",
+      "bytes": 9762,
+      "purpose": "Canonical role-specific actor leases versus snapshot-owned images, after retained failed050d fixture proof.",
+      "resourceBoundary": {
+        "maximumOwnedGroupRSSBytes": 4294967296,
+        "maximumWallSeconds": 600
+      }
     },
     {
-      "label": "candidate",
-      "case": "selection-bookmark-host",
+      "label": "baseline",
+      "case": "content-team-recovery-host",
       "mode": "original",
-      "sourceRevision": "050d8ea3248edb4176e7b59fbc855a7dcf821ffb",
-      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
-      "file": "game/test/selection-bookmark-host.test.mjs",
-      "testSHA256": "25bf85e3c80c40471ee09b5f485a31fbde76f4489aecd87167ae045f3a065e4e",
-      "bytes": 5377
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/content-team-recovery-host.test.mjs",
+      "testSHA256": "137aadb20a3337cbabcb63a775564c8a1d5af3458fa770345cfea223dbbe8e04",
+      "bytes": 5064,
+      "purpose": "Exact original-main full-file baseline classification; failed assertions remain failures."
+    },
+    {
+      "label": "baseline",
+      "case": "coop-terminal-player-hud",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/coop-terminal-player-hud.test.mjs",
+      "testSHA256": "27d4b9a3c152ee84ea9fbfb3da879b81786817521941a1548f541b01c8f16b89",
+      "bytes": 16891,
+      "purpose": "Exact original-main full-file baseline classification; failed assertions remain failures."
+    },
+    {
+      "label": "baseline",
+      "case": "mission-library-solo-lifecycle-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/mission-library-solo-lifecycle-host.test.mjs",
+      "testSHA256": "77c0af1c52458545529f6d14f6502dc1d23bfad4d8c433e0bd76e5a4731f8c50",
+      "bytes": 5611,
+      "purpose": "Exact original-main full-file baseline classification; failed assertions remain failures."
+    },
+    {
+      "label": "baseline",
+      "case": "operation-focus-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/operation-focus-host.test.mjs",
+      "testSHA256": "58c1a3e5ef63f6ec97bd737ec1eb95913af6e93cb0a0eae3c72d5941f9b0a3d1",
+      "bytes": 10618,
+      "purpose": "Exact original-main full-file baseline classification; failed assertions remain failures."
+    },
+    {
+      "label": "baseline",
+      "case": "coop-startup-selection",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/coop-startup-selection.test.mjs",
+      "testSHA256": "8833dd5cd609da8428e477eda4cd51d224e566f1a96615743bbe6187f973b3d6",
+      "bytes": 11806,
+      "purpose": "Exact original-main full-file baseline classification; failed assertions remain failures."
     }
   ],
   "nodeVersion": "v22.22.2",
@@ -28,22 +153,90 @@
   "resourceBoundary": {
     "minimumAvailableBytes": 536870912,
     "maximumOwnedGroupRSSBytes": 12884901888,
-    "terminate": "Only the child-owned process group: SIGTERM;5-second cleanup allowance thenSIGKILL",
-    "result": "Explicit resource-exhausted incomplete; no passing verdict or assertion/deadline reduction",
-    "admission": "Check available memory before starting a child; insufficient capacity is incomplete.",
-    "postExit": "Inspect and clean only owned process-group descendants even when the parent exits normally; retain before/after PID/state/RSS receipts. Do not admit a later file if live descendants survive cleanup."
+    "maximumWallSeconds": 8700,
+    "terminate": "Only child-owned process group: SIGTERM,5-second cleanup allowance, thenSIGKILL. Clean surviving owned descendants after normal parent exit too.",
+    "result": "Resource exhaustion, interruption or outer deadline remains incomplete evidence; no assertion or internal test deadline changes.",
+    "admission": "Check memory before child launch; do not launch another file if owned live descendants survive cleanup."
   },
-  "priorEvidence": {
-    "runId": 38865274741,
-    "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-    "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-    "failureAuthoritySHA256": "3093a14c4d7b6c27e21652cb9a46a3bd8796936825813a4f037e98fc83470c77",
-    "scope": "Retained complete candidate failures only; baseline results are separate scoped comparisons, not passing waivers."
-  },
-  "scope": "Two complete canonical files at050d/e025 only. Source/workflow identities separate; failed or partial files never pass. This supplements prior historical source observations, not a complete-suite or device acceptance.",
-  "sameTestBytesByCase": {
-    "presentation-team-runtime": false,
-    "selection-bookmark-host": false
+  "maxParallel": 2,
+  "comparisons": [
+    {
+      "file": "game/test/content-team-recovery-host.test.mjs",
+      "baselineSourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "baselineTestSHA256": "137aadb20a3337cbabcb63a775564c8a1d5af3458fa770345cfea223dbbe8e04",
+      "candidateTestSHA256": "137aadb20a3337cbabcb63a775564c8a1d5af3458fa770345cfea223dbbe8e04",
+      "sameTestBytes": true
+    },
+    {
+      "file": "game/test/coop-terminal-player-hud.test.mjs",
+      "baselineSourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "baselineTestSHA256": "27d4b9a3c152ee84ea9fbfb3da879b81786817521941a1548f541b01c8f16b89",
+      "candidateTestSHA256": "27d4b9a3c152ee84ea9fbfb3da879b81786817521941a1548f541b01c8f16b89",
+      "sameTestBytes": true
+    },
+    {
+      "file": "game/test/mission-library-solo-lifecycle-host.test.mjs",
+      "baselineSourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "baselineTestSHA256": "77c0af1c52458545529f6d14f6502dc1d23bfad4d8c433e0bd76e5a4731f8c50",
+      "candidateTestSHA256": "77c0af1c52458545529f6d14f6502dc1d23bfad4d8c433e0bd76e5a4731f8c50",
+      "sameTestBytes": true
+    },
+    {
+      "file": "game/test/operation-focus-host.test.mjs",
+      "baselineSourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "baselineTestSHA256": "58c1a3e5ef63f6ec97bd737ec1eb95913af6e93cb0a0eae3c72d5941f9b0a3d1",
+      "candidateTestSHA256": "58c1a3e5ef63f6ec97bd737ec1eb95913af6e93cb0a0eae3c72d5941f9b0a3d1",
+      "sameTestBytes": true
+    },
+    {
+      "file": "game/test/coop-startup-selection.test.mjs",
+      "baselineSourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "baselineTestSHA256": "8833dd5cd609da8428e477eda4cd51d224e566f1a96615743bbe6187f973b3d6",
+      "candidateTestSHA256": "8833dd5cd609da8428e477eda4cd51d224e566f1a96615743bbe6187f973b3d6",
+      "sameTestBytes": true
+    }
+  ],
+  "runtimeSourceChecks": [
+    {
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "nonTestGameChanges": []
+    },
+    {
+      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+      "sourceRevision": "48f72933fa91c355f7d7ecbf3bc3a0f1cfd9023f",
+      "nonTestGameChanges": []
+    },
+    {
+      "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "sourceRevision": "02ee15b022e863baf9668b115f85b4020569a9f3",
+      "nonTestGameChanges": []
+    },
+    {
+      "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "sourceRevision": "a8af8fdc3a94d7f4c6ddb195531b8863c9dfb99c",
+      "nonTestGameChanges": []
+    },
+    {
+      "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "sourceRevision": "bb74b1eefa20120304f22468c924aa2955a717b3",
+      "nonTestGameChanges": []
+    },
+    {
+      "runtimeRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "sourceRevision": "f7b665906270f26c73f7e419a7258191532e3118",
+      "nonTestGameChanges": []
+    }
+  ],
+  "priorFailedTeamProof": {
+    "path": ".cache/solo-followup/regression-audit/remote-canonical-38879310649/verified-results-latest.json",
+    "sha256": "99ba1d1a09f8b78850157c616e37a4d360da7c48c97a9bc310db5719078e290b",
+    "bytes": 13705
   },
   "commandTemplate": [
     "node",
@@ -52,51 +245,6 @@
     "--test-reporter=tap",
     "selectedTestPath"
   ],
-  "diagnosticOverlay": "None. Every selected test is the exact committed baseline file; no assertion, timeout, fixture, policy, golden or runtime changes.",
-  "comparisons": [
-    {
-      "case": "presentation-team-runtime",
-      "file": "game/test/presentation-team-runtime.test.mjs",
-      "baselineTestSHA256": "18cbe09bc8c4a4008123ea2a9b708a6fb1c934ffe57c57bee37c4c07a131d7a6",
-      "candidateTestSHA256": "18cbe09bc8c4a4008123ea2a9b708a6fb1c934ffe57c57bee37c4c07a131d7a6",
-      "sameTestBytes": true,
-      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "candidateArtifactId": 12035142646,
-      "candidateArtifactSHA256": "sha256:56d15abf4aee40af0a3a7958f9ed47dde5f4c1a9ce1dc0271f0b25cf5a903390",
-      "candidateTAPSHA256": "79126b0368a1db77ae32108f94de090b0faf148fad8289ccd2f1097f27754531",
-      "candidateFailureNames": [
-        "a missing Team image cannot replace or dispose the accepted snapshot"
-      ]
-    },
-    {
-      "case": "selection-bookmark-host",
-      "file": "game/test/selection-bookmark-host.test.mjs",
-      "baselineTestSHA256": "f42a1037355fc4f47cb56fb37e4a89ad9729ae3952e8b994c4f2b2ac1e35f103",
-      "candidateTestSHA256": "f42a1037355fc4f47cb56fb37e4a89ad9729ae3952e8b994c4f2b2ac1e35f103",
-      "sameTestBytes": true,
-      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "candidateArtifactId": 12035142646,
-      "candidateArtifactSHA256": "sha256:56d15abf4aee40af0a3a7958f9ed47dde5f4c1a9ce1dc0271f0b25cf5a903390",
-      "candidateTAPSHA256": "c5a662e943fc15da26be4f07f49476ec38f3120a75b75c2dfff9ac06a9236974",
-      "candidateFailureNames": [
-        "save one flight, then deliberately choose a different installed chapter",
-        "reload opens the selected chapter without automatically loading or flying",
-        "retained chapter selector persists its choice while the other saved flight stays explicit and exact"
-      ]
-    }
-  ],
-  "canonicalProofs": {
-    "fixtureCommit": "050d8ea3248edb4176e7b59fbc855a7dcf821ffb",
-    "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
-    "baselineRunId": 38877911109,
-    "baselineWorkflowRevision": "9bf8d29ab0e9785ae3bf19af4f0f5a0ed3630696",
-    "baselineVerifiedReportSHA256": "eba89f91633364b04cf47b907018a966bcf4a2152a6ba80ea683b03d6ae71326",
-    "baselineOutcomes": {
-      "presentation-team-runtime": "4tests3pass1same early-close expectation failure; following case masked by missing cleanup.",
-      "selection-bookmark-host": "3/3pass with existing12tick expectation."
-    },
-    "scope": "No production module, golden, authority validation or deadline changes. Canonical outcomes pending."
-  }
+  "diagnosticOverlay": "None. Every file is exact committed target bytes. Per-entry outer resource bounds can stop a run only as incomplete; no test assertion, timeout, policy, golden or runtime edit is performed by the workflow.",
+  "scope": "Eleven supplementary full-file observations at separately declared source revisions. Red diagnostic failure stays a failed job. Failed, partial or unretained files receive no passing credit. This is correctness/regression evidence, not browser performance or physical-device acceptance."
 }
