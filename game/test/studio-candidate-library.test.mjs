@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { Document } from './helpers/couch-dom.mjs';
 import { mountCouch } from './helpers/mount-html.mjs';
 import { createCandidateLibrary } from '../studio/candidate-library.mjs';
+import { getLocale, setLocale, t } from '../i18n/index.mjs';
 
 const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
 const controls = [
@@ -13,6 +14,10 @@ const controls = [
   'combat-study',
   'cultural-workshop',
   'pursuit-intercept',
+  'living-pilots',
+  'living-chapters',
+  'living-team-pilots',
+  'living-team-chapters',
   'whole-spatial',
   'whole-field',
   'whole-timed',
@@ -53,10 +58,142 @@ function setup() {
   return { document, $, api, entries, visible, search };
 }
 
+for (const initialLocale of ['en', 'uk'])
+  test(`candidate search includes both catalog languages from ${initialLocale} startup and preserves its controls`, () => {
+    const previous = getLocale();
+    try {
+      setLocale(initialLocale, { persist: false });
+      const { document, $, visible, search, entries } = setup();
+      for (const [query, id] of [
+        ['внутрішнього приймача', 'sentinel-spatial'],
+        ['inner receiver', 'sentinel-spatial'],
+        ['Культурні з’єднання Горизонту', 'whole-variety'],
+        ['whole-spatial-v11', 'whole-variety'],
+      ]) {
+        search(query);
+        assert.equal(visible().length, 1, query);
+        assert(visible()[0].querySelector('#' + id), query);
+      }
+      const accepted = visible()[0];
+      const options = [...$('whole-variety-edition').options];
+      $('whole-variety-edition').value = 'horizon-cultural-joins-1';
+      $('source').value = '{"unapplied":"Україна"}';
+      $('project-id').value = 'custom-project';
+      $('checkpoint').value = '7';
+      $('apply').disabled = true;
+      $('candidate-search').focus();
+      $('candidate-search').selectionStart = 1;
+      $('candidate-search').selectionEnd = 3;
+      $('candidate-library').scrollTop = 47;
+      for (const locale of ['uk', 'en', 'uk', 'en']) {
+        setLocale(locale, { persist: false });
+        assert.equal(visible()[0], accepted);
+        assert.equal(visible().length, 1);
+        assert.deepEqual(
+          [...$('candidate-library').querySelectorAll('[data-library-entry]')],
+          entries,
+        );
+        assert.equal(
+          $('candidate-count').textContent,
+          locale === 'uk'
+            ? `Показано 1 запис із ${entries.length}. Деякі записи мають спільні елементи вибору версії.`
+            : `1 of ${entries.length} entries shown. Some entries share edition controls.`,
+        );
+        assert.equal($('candidate-search').value, 'whole-spatial-v11');
+        assert.equal($('source').value, '{"unapplied":"Україна"}');
+        assert.equal($('project-id').value, 'custom-project');
+        assert.equal($('checkpoint').value, '7');
+        assert.equal($('apply').disabled, true);
+        assert.equal(document.activeElement, $('candidate-search'));
+        assert.equal($('candidate-search').selectionStart, 1);
+        assert.equal($('candidate-search').selectionEnd, 3);
+        assert.equal($('candidate-library').scrollTop, 47);
+        assert.equal($('whole-variety-edition').value, 'horizon-cultural-joins-1');
+        assert.deepEqual([...$('whole-variety-edition').options], options);
+      }
+    } finally {
+      setLocale(previous, { persist: false });
+    }
+  });
+
+test('Living Routes pilot and chapter controls are discoverable without replacing source edits', () => {
+  const { $, search, visible } = setup();
+  $('source').value = '{"unapplied":"keep me"}';
+  $('apply').disabled = true;
+  search('crossing post');
+  assert.deepEqual(visible(), [
+    $('whole-variety').closest('[data-library-entry]'),
+    $('living-pilots').closest('[data-library-entry]'),
+  ]);
+  const pilot = $('living-pilots').closest('[data-library-entry]');
+  assert(pilot.querySelector('#living-chapters'));
+  search('pincer yard');
+  assert.equal(visible().length, 1);
+  assert(visible()[0].querySelector('#living-team-pilots'));
+  assert(visible()[0].querySelector('#living-team-chapters'));
+  assert.equal($('source').value, '{"unapplied":"keep me"}');
+  assert.equal($('apply').disabled, true);
+});
+
+test('translated inspection feedback retains authored names and cannot revive a cleared inspection', () => {
+  const previous = getLocale();
+  const { $, api } = setup();
+  try {
+    api.reportInspection(() =>
+      t('tools:studio.library.inspected', { name: '<my draft>', count: 2 }),
+    );
+    setLocale('uk', { persist: false });
+    assert.equal(
+      $('candidate-inspection-status').textContent,
+      '<my draft>: перевірено 2 місії. Застосовану чернетку не змінено. Переглянь джерело перед застосуванням.',
+    );
+    assert.ok(
+      [...$('candidate-inspection-status').children].every((node) => node.nodeType === 3),
+      'The authored name remains inert text without inserted elements.',
+    );
+    setLocale('en', { persist: false });
+    assert.match($('candidate-inspection-status').textContent, /^<my draft>: 2 missions inspected/);
+    api.clearInspection();
+    setLocale('uk', { persist: false });
+    assert.equal($('candidate-inspection-status').textContent, '');
+    assert.equal($('candidate-inspection').hidden, true);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('Ukrainian candidate and inspection counters use the correct plural forms', () => {
+  const previous = getLocale();
+  try {
+    setLocale('uk', { persist: false });
+    for (const [count, display, entry, mission] of [
+      [0, '0', 'записів', 'місій'],
+      [1, '1', 'запис', 'місію'],
+      [2, '2', 'записи', 'місії'],
+      [5, '5', 'записів', 'місій'],
+      [11, '11', 'записів', 'місій'],
+      [21, '21', 'запис', 'місію'],
+      [22, '22', 'записи', 'місії'],
+      [1.5, '1,5', 'запису', 'місії'],
+    ]) {
+      assert.equal(
+        t('tools:studio.library.matches', { count, total: 31 }),
+        `Показано ${display} ${entry} із 31. Деякі записи мають спільні елементи вибору версії.`,
+      );
+      assert.equal(
+        t('tools:studio.library.inspected', { count, name: 'Тест' }),
+        `Тест: перевірено ${display} ${mission}. Застосовану чернетку не змінено. Переглянь джерело перед застосуванням.`,
+      );
+    }
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
 test('closed library preserves every static Inspect action, paired edition controls and workbench actions', () => {
   const { document, $, entries } = setup();
   assert.equal($('candidate-library').open, false);
-  assert.equal(entries.length, 31);
+  assert.equal(entries.length, 33);
   const actual = [...$('candidate-library').querySelectorAll('button')]
     .map((button) => button.id)
     .filter((id) => id !== 'candidate-reset');
@@ -88,9 +225,11 @@ test('closed library preserves every static Inspect action, paired edition contr
 test('Sorting successor search preserves the paired Rover edition selector and Inspect action', () => {
   const { search, visible, $ } = setup();
   search('rover sorting');
-  assert.equal(visible().length, 1);
-  assert.equal(visible()[0], $('rover').closest('[data-library-entry]'));
-  assert(visible()[0].querySelector('#rover-edition'));
+  assert.equal(visible().length, 2);
+  const sorting = $('rover').closest('[data-library-entry]');
+  assert(visible().includes(sorting));
+  assert(sorting.querySelector('#rover-edition'));
+  assert(visible().includes($('whole-variety-edition').closest('[data-library-entry]')));
 });
 
 test('inner receiver search keeps the original edition and explicit Inspect in the same entry', () => {
@@ -129,14 +268,30 @@ test('Team pressure search keeps edition choice, original Inspect and bundled pl
 
 test('all review routes keep explicit external-tab safety and distinct accessible labels', () => {
   const { $ } = setup();
+  assert.equal($('spatial-review-links').hidden, true);
+  for (const id of ['spatial-review-solo', 'spatial-review-versus'])
+    assert.equal($(id).getAttribute('href'), null, 'dynamic routes wait for explicit selection');
   const links = [...$('candidate-library').querySelectorAll('a')].filter(
-    (link) => link.getAttribute('target') === '_blank',
+    (link) => link.getAttribute('target') === '_blank' && link.getAttribute('href'),
   );
   const journeys = [
     'whole-ornament-v2',
     'whole-ornament-v1',
     'whole-spatial-v11',
     'whole-spatial-v12',
+    'whole-spatial-v13',
+    'whole-spatial-v14',
+    'whole-spatial-v15',
+    'whole-spatial-v16',
+    'whole-spatial-v17',
+    'whole-spatial-v18',
+    'whole-spatial-v19',
+    'whole-spatial-v20',
+    'whole-spatial-v21',
+    'whole-spatial-v22',
+    'whole-spatial-v23',
+    'whole-spatial-v24',
+    'whole-spatial-v25',
     'whole-spatial-v10',
     'whole-spatial-v9',
     'whole-spatial-v8',
@@ -160,6 +315,9 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     '../couch/relay-rescue.html?journey=team-pressure-originals-1',
     '../couch/relay-rescue.html?journey=team-spatial-originals-1',
     '../couch/relay-rescue.html?journey=team-trail-impact-originals-1',
+    '../couch/relay-rescue.html?journey=team-complete-specialist-originals-1',
+    '../couch/relay-rescue.html?journey=team-cultural-specialist-originals-1',
+    '../couch/relay-rescue.html?journey=team-cultural-specialist-originals-2',
     '../couch/relay-rescue.html?journey=team-specialist-originals-1',
   );
   assert.deepEqual(links.map((link) => link.getAttribute('href')).toSorted(), expected.toSorted());
@@ -173,19 +331,25 @@ test('all review routes keep explicit external-tab safety and distinct accessibl
     if (edition && href.includes('relay-rescue')) {
       assert.equal(
         link.getAttribute('aria-label'),
-        edition === 'team-specialist-originals-1'
-          ? 'Play bundled Team specialist test (does not include draft edits) · team-specialist-originals-1 (new tab)'
-          : edition === 'team-trail-impact-originals-1'
-            ? 'Play bundled Team travelling-impact test (does not include draft edits) · team-trail-impact-originals-1 (new tab)'
-            : edition === 'team-spatial-originals-1'
-              ? 'Play bundled Team changing-return test (does not include draft edits) · team-spatial-originals-1 (new tab)'
-              : edition === 'team-pressure-originals-1'
-                ? 'Play bundled Team pressure test (does not include draft edits) · team-pressure-originals-1 (new tab)'
-                : edition === 'team-depot-spatial-1'
-                  ? 'Play bundled depot-lane test (does not include draft edits) · team-depot-spatial-1 (new tab)'
-                  : edition === 'team-window-spatial-1'
-                    ? 'Play bundled outer-pocket test (does not include draft edits) · team-window-spatial-1 (new tab)'
-                    : 'Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)',
+        edition === 'team-cultural-specialist-originals-2'
+          ? 'Play current Team Journey with Ukrainian spatial specialists II · team-cultural-specialist-originals-2 (new tab)'
+          : edition === 'team-cultural-specialist-originals-1'
+            ? 'Play previous Team Journey with Ukrainian spatial specialists · team-cultural-specialist-originals-1 (new tab)'
+            : edition === 'team-complete-specialist-originals-1'
+              ? 'Play previous Team Journey with complementary specialists · team-complete-specialist-originals-1 (new tab)'
+              : edition === 'team-specialist-originals-1'
+                ? 'Play bundled Team specialist test (does not include draft edits) · team-specialist-originals-1 (new tab)'
+                : edition === 'team-trail-impact-originals-1'
+                  ? 'Play bundled Team travelling-impact test (does not include draft edits) · team-trail-impact-originals-1 (new tab)'
+                  : edition === 'team-spatial-originals-1'
+                    ? 'Play bundled Team changing-return test (does not include draft edits) · team-spatial-originals-1 (new tab)'
+                    : edition === 'team-pressure-originals-1'
+                      ? 'Play bundled Team pressure test (does not include draft edits) · team-pressure-originals-1 (new tab)'
+                      : edition === 'team-depot-spatial-1'
+                        ? 'Play bundled depot-lane test (does not include draft edits) · team-depot-spatial-1 (new tab)'
+                        : edition === 'team-window-spatial-1'
+                          ? 'Play bundled outer-pocket test (does not include draft edits) · team-window-spatial-1 (new tab)'
+                          : 'Play bundled Shared windows test (does not include draft edits) · team-timed-originals (new tab)',
       );
     } else if (edition) {
       const mode = href.includes('/couch/') ? 'Versus' : 'Solo';
@@ -209,11 +373,11 @@ function documentFromHelpLabel(markup) {
 test('each category retains its authored cohort and resetting never reorders entries', () => {
   const { $, entries, visible } = setup();
   for (const [category, count] of [
-    ['all', 31],
+    ['all', 33],
     ['journey', 6],
     ['chapters', 12],
-    ['mechanics', 8],
-    ['team', 4],
+    ['mechanics', 9],
+    ['team', 5],
     ['players', 1],
   ]) {
     $('candidate-category').value = category;
@@ -258,7 +422,7 @@ test('category and search intersect, empty groups disappear, reset restores orde
   assert.deepEqual(visible(), entries);
   assert.equal(document.activeElement, $('candidate-search'));
   assert.equal($('candidate-empty').hidden, true);
-  assert.match($('candidate-count').textContent, /^31 of 31 entries/);
+  assert.match($('candidate-count').textContent, /^33 of 33 entries/);
 });
 
 test('browsing never edits source, Apply, project/checkpoint, global status, or candidate handlers', () => {

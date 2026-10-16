@@ -1,0 +1,160 @@
+TAP version 13
+# Subtest: Team setup and paused Help describe only authored roles: empty
+ok 1 - Team setup and paused Help describe only authored roles: empty
+  ---
+  duration_ms: 596.921958
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter
+ok 2 - Team setup and paused Help describe only authored roles: hunter
+  ---
+  duration_ms: 431.781083
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: drifter
+ok 3 - Team setup and paused Help describe only authored roles: drifter
+  ---
+  duration_ms: 426.206167
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: relay
+ok 4 - Team setup and paused Help describe only authored roles: relay
+  ---
+  duration_ms: 418.569709
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter, drifter
+ok 5 - Team setup and paused Help describe only authored roles: hunter, drifter
+  ---
+  duration_ms: 438.355375
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter, relay
+ok 6 - Team setup and paused Help describe only authored roles: hunter, relay
+  ---
+  duration_ms: 437.863834
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: drifter, relay
+ok 7 - Team setup and paused Help describe only authored roles: drifter, relay
+  ---
+  duration_ms: 428.976833
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter, drifter, relay
+ok 8 - Team setup and paused Help describe only authored roles: hunter, drifter, relay
+  ---
+  duration_ms: 401.524458
+  type: 'test'
+  ...
+# Subtest: en: impact advice uses the admitted edition and preserves Legacy/relay-only/empty guidance
+ok 9 - en: impact advice uses the admitted edition and preserves Legacy/relay-only/empty guidance
+  ---
+  duration_ms: 12.037584
+  type: 'test'
+  ...
+# Subtest: en/hybrid: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 10 - en/hybrid: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 593.932958
+  type: 'test'
+  ...
+# Subtest: en/specialist: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 11 - en/specialist: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 442.247792
+  type: 'test'
+  ...
+# Subtest: uk: impact advice uses the admitted edition and preserves Legacy/relay-only/empty guidance
+ok 12 - uk: impact advice uses the admitted edition and preserves Legacy/relay-only/empty guidance
+  ---
+  duration_ms: 10.549792
+  type: 'test'
+  ...
+# Subtest: uk/hybrid: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 13 - uk/hybrid: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 434.607458
+  type: 'test'
+  ...
+# Subtest: uk/specialist: imported Team Help retains exact impact and seat advice through pause/read/Back
+ok 14 - uk/specialist: imported Team Help retains exact impact and seat advice through pause/read/Back
+  ---
+  duration_ms: 426.120916
+  type: 'test'
+  ...
+# Subtest: v2 travelling impacts require the explicit Team impact edition
+ok 15 - v2 travelling impacts require the explicit Team impact edition
+  ---
+  duration_ms: 6.45225
+  type: 'test'
+  ...
+# Subtest: one enemy source seeds two fronts once for a stable player and cut identity
+ok 16 - one enemy source seeds two fronts once for a stable player and cut identity
+  ---
+  duration_ms: 4.920667
+  type: 'test'
+  ...
+# Subtest: front ownership survives partner changes, trims secured cells and never transfers to a later cut
+ok 17 - front ownership survives partner changes, trims secured cells and never transfers to a later cut
+  ---
+  duration_ms: 2.001833
+  type: 'test'
+  ...
+# Subtest: one partner closing removes only that owned cut while the other player fronts continue
+ok 18 - one partner closing removes only that owned cut while the other player fronts continue
+  ---
+  duration_ms: 5.388959
+  type: 'test'
+  ...
+# Subtest: a joint closure cancels both participating owned cuts without transferring either identity
+ok 19 - a joint closure cancels both participating owned cuts without transferring either identity
+  ---
+  duration_ms: 3.79875
+  type: 'test'
+  ...
+# Subtest: partner-fill prefix trimming clears secured fronts and rebases a surviving departure front
+ok 20 - partner-fill prefix trimming clears secured fronts and rebases a surviving departure front
+  ---
+  duration_ms: 1.947583
+  type: 'test'
+  ...
+# Subtest: downing clears only the failed owned cut and a later cut receives a fresh identity
+ok 21 - downing clears only the failed owned cut and a later cut receives a fresh identity
+  ---
+  duration_ms: 3.033042
+  type: 'test'
+  ...
+# Subtest: pause and disconnect-style input release preserve stable front ownership
+ok 22 - pause and disconnect-style input release preserve stable front ownership
+  ---
+  duration_ms: 1.816875
+  type: 'test'
+  ...
+# Subtest: live enemy contact launches fronts without an immediate loss and fixed impact speed ignores enemy slow
+ok 23 - live enemy contact launches fronts without an immediate loss and fixed impact speed ignores enemy slow
+  ---
+  duration_ms: 5.082333
+  type: 'test'
+  ...
+# Subtest: a valid closure wins an exact craft-front arrival tie and clears only that owned cut
+ok 24 - a valid closure wins an exact craft-front arrival tie and clears only that owned cut
+  ---
+  duration_ms: 4.404
+  type: 'test'
+  ...
+# Subtest: freeze blocks new enemy seeds while already-launched fronts continue at policy speed
+ok 25 - freeze blocks new enemy seeds while already-launched fronts continue at policy speed
+  ---
+  duration_ms: 3.006542
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3884.666542

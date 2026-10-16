@@ -1,0 +1,1042 @@
+{
+  "format": "FPVAuthoringDesign.v1",
+  "id": "lunar-basin-study",
+  "revision": "design-r1",
+  "status": "design-only-no-generated-world",
+  "title": {
+    "en": "Lunar Basin — flight study",
+    "uk": "Місячна улоговина — тренувальна зона"
+  },
+  "surveyedReality": false,
+  "physics": "Existing terrestrial FPV flight physics; fictional Moon-themed training environment. No vacuum, low-gravity or lunar aerodynamics simulation.",
+  "coordinates": "Integer millimetres. All landmark/route XZ values are design targets; terrain-resolved Y and clearances are unverified.",
+  "grid": {
+    "originMm": [
+      0,
+      0
+    ],
+    "width": 6,
+    "depth": 6,
+    "cellSizeMm": 128000,
+    "samples": 33,
+    "spanMm": [
+      768000,
+      768000
+    ],
+    "sampleSpacingMm": 4000
+  },
+  "expansion": {
+    "targetSpanMm": [
+      8192000,
+      8192000
+    ],
+    "status": "roadmap-target-not-generated",
+    "rule": "Only expand after this pilot-height composition and delivery pass; never stretch or tile the pilot to imply new content."
+  },
+  "spawnContract": {
+    "count": 6,
+    "altitudeAGLMm": 3000,
+    "minimumGroundDiscRadiusMm": 6000,
+    "minimumObstacleClearRadiusMm": 12000,
+    "disarmed": true,
+    "terrainResolved": false
+  },
+  "geometry": {
+    "terrain": "One canonical GLB and exact heightfield collision per cell.",
+    "scenery": "Explicit sparse companion; every grid cell declared, only real solids need payloads.",
+    "overhangs": "Separate original meshes with matching canonical triangles; never encode a tunnel in a heightfield.",
+    "clipping": "Exact cell-boundary clipping, shared edge vertices, no invisible box proxies for open routes."
+  },
+  "budget": {
+    "deliveryHardBytes": 67108864,
+    "pilotDeliveryTargetBytes": 12582912,
+    "retainedAndStagedHardBytes": 8388608,
+    "eachWindowTargetBytes": 2621440,
+    "maximumTerrainCellsPerWindow": 9,
+    "textureTargetBytes": 524288,
+    "proposedTextureImages": 0,
+    "status": "targets-only-not-measured"
+  },
+  "appearance": {
+    "style": "Proposed opt-in lunar-regolith, not implemented or wired to a pin.",
+    "surfaceFamilies": [
+      "dark mare regolith",
+      "brighter highland regolith",
+      "broken slab faces",
+      "restrained matte research structures"
+    ],
+    "terrainDisplacement": false,
+    "daylight": "Readable low side-light with usable shadow fill; no near-black passages.",
+    "tiers": "Same openings, collision and landmark silhouettes at every tier; only bounded surface detail changes.",
+    "forbiddenShortcuts": [
+      "Recolouring Desert dunes as Moon craters",
+      "Repeating identical ring props",
+      "Hiding passage gaps with opaque darkness",
+      "Introducing shader-only holes or solid-looking noncolliding rocks"
+    ]
+  },
+  "provenance": {
+    "original": [
+      "All proposed relief, layouts, rock and research geometry. No imported lunar surface or simulator scene."
+    ],
+    "existingOptional": [
+      "Only separately pinned, individually licensed assets if original meshes prove insufficient; none required by this design."
+    ],
+    "references": [
+      {
+        "url": "https://science.nasa.gov/moon/facts/",
+        "purpose": "Broad distinction between brighter highlands, darker maria and regolith; design inspiration only."
+      },
+      {
+        "url": "https://science.nasa.gov/moon/composition/",
+        "purpose": "Rilles and surface composition; no image/data copied."
+      },
+      {
+        "url": "https://science.nasa.gov/moon/lunar-craters/",
+        "purpose": "Crater rims, floors and basin variety; original scaled fictional forms, not a surveyed reconstruction."
+      },
+      {
+        "url": "https://www.lpi.usra.edu/lunar/rilles/",
+        "purpose": "Sinuous channel morphology as an authoring reference; no imagery or atlas data imported."
+      }
+    ]
+  },
+  "districts": [
+    {
+      "id": "mare-apron",
+      "title": {
+        "en": "Mare apron",
+        "uk": "Майданчик моря"
+      },
+      "boundsXZMm": [
+        0,
+        0,
+        256000,
+        384000
+      ],
+      "startXZMm": [
+        64000,
+        80000
+      ],
+      "relief": "Dark broad basalt plain; shallow asymmetric impact bowls and a low wrinkle ridge. No dunes, vegetation or water.",
+      "silhouette": "Low horizontal shelter and three unequal landing berms, not repeated gates.",
+      "landmarks": [
+        {
+          "id": "survey-shelter",
+          "title": "Survey shelter",
+          "centerXZMm": [
+            104000,
+            144000
+          ],
+          "footprintMm": [
+            32000,
+            24000
+          ],
+          "heightMm": 10000,
+          "kind": "original-solid-mesh",
+          "closeRangeDetail": "Offset roof panels on a 14 m clear through-lane; visible slab edge and buttresses outside the opening."
+        },
+        {
+          "id": "landing-berms",
+          "title": "Landing berms",
+          "centerXZMm": [
+            184000,
+            256000
+          ],
+          "footprintMm": [
+            68000,
+            52000
+          ],
+          "heightMm": 7000,
+          "kind": "terrain-plus-original-rock",
+          "closeRangeDetail": "Three unequal arcs separated by a 24 m entry; recessed safe apron rather than decorative landing numbers."
+        }
+      ],
+      "routes": [
+        {
+          "id": "apron-eight",
+          "title": "Apron figure eight",
+          "difficulty": "beginner",
+          "waypointsXZMm": [
+            [
+              64000,
+              80000
+            ],
+            [
+              88000,
+              112000
+            ],
+            [
+              104000,
+              144000
+            ],
+            [
+              128000,
+              176000
+            ],
+            [
+              184000,
+              208000
+            ],
+            [
+              216000,
+              256000
+            ],
+            [
+              184000,
+              288000
+            ],
+            [
+              144000,
+              256000
+            ],
+            [
+              112000,
+              208000
+            ]
+          ],
+          "targetAGLMm": 5000,
+          "minimumClearDiameterMm": 14000,
+          "landmarkIds": [
+            "survey-shelter",
+            "landing-berms"
+          ],
+          "practice": "Low-speed height consistency and linked turns.",
+          "verification": "planned-not-flight-verified"
+        },
+        {
+          "id": "shelter-return",
+          "title": "Shelter through and return",
+          "difficulty": "intermediate",
+          "waypointsXZMm": [
+            [
+              72000,
+              144000
+            ],
+            [
+              104000,
+              144000
+            ],
+            [
+              140000,
+              144000
+            ],
+            [
+              160000,
+              176000
+            ],
+            [
+              128000,
+              208000
+            ],
+            [
+              104000,
+              176000
+            ],
+            [
+              104000,
+              144000
+            ],
+            [
+              104000,
+              112000
+            ]
+          ],
+          "targetAGLMm": 4000,
+          "minimumClearDiameterMm": 10000,
+          "landmarkIds": [
+            "survey-shelter"
+          ],
+          "practice": "Line up an open roofed passage, exit into free space, return from another direction.",
+          "verification": "planned-not-flight-verified"
+        }
+      ]
+    },
+    {
+      "id": "ejecta-fan",
+      "title": {
+        "en": "Ejecta fan",
+        "uk": "Поле викидів"
+      },
+      "boundsXZMm": [
+        256000,
+        0,
+        512000,
+        384000
+      ],
+      "startXZMm": [
+        292000,
+        80000
+      ],
+      "relief": "A shallow crater at the north edge with broad radial ejecta lobes; angular blocks collect in two asymmetric groups.",
+      "silhouette": "Short clustered blocks against a single low crescent rim; no forest of identical spires.",
+      "landmarks": [
+        {
+          "id": "split-block",
+          "title": "Split block",
+          "centerXZMm": [
+            352000,
+            144000
+          ],
+          "footprintMm": [
+            34000,
+            28000
+          ],
+          "heightMm": 14000,
+          "kind": "original-solid-mesh",
+          "closeRangeDetail": "Two different polyhedral masses create a measured 8 m opening; broad facets and small ledges are actual solids."
+        },
+        {
+          "id": "ejecta-crescent",
+          "title": "Ejecta crescent",
+          "centerXZMm": [
+            440000,
+            268000
+          ],
+          "footprintMm": [
+            96000,
+            80000
+          ],
+          "heightMm": 18000,
+          "kind": "terrain-plus-original-rock",
+          "closeRangeDetail": "Broken crescent rim with one wide saddle and a low outer slalom; no floating or repeated rocks."
+        }
+      ],
+      "routes": [
+        {
+          "id": "ejecta-weave",
+          "title": "Ejecta weave",
+          "difficulty": "intermediate",
+          "waypointsXZMm": [
+            [
+              292000,
+              80000
+            ],
+            [
+              320000,
+              112000
+            ],
+            [
+              352000,
+              144000
+            ],
+            [
+              392000,
+              184000
+            ],
+            [
+              416000,
+              220000
+            ],
+            [
+              440000,
+              268000
+            ],
+            [
+              472000,
+              308000
+            ]
+          ],
+          "targetAGLMm": 6000,
+          "minimumClearDiameterMm": 8000,
+          "landmarkIds": [
+            "split-block",
+            "ejecta-crescent"
+          ],
+          "practice": "Small yaw/roll corrections between unequal, readable solid blocks.",
+          "verification": "planned-not-flight-verified"
+        },
+        {
+          "id": "crescent-orbit",
+          "title": "Crescent orbit",
+          "difficulty": "beginner",
+          "waypointsXZMm": [
+            [
+              384000,
+              268000
+            ],
+            [
+              400000,
+              224000
+            ],
+            [
+              440000,
+              216000
+            ],
+            [
+              480000,
+              256000
+            ],
+            [
+              472000,
+              300000
+            ],
+            [
+              432000,
+              312000
+            ],
+            [
+              392000,
+              300000
+            ],
+            [
+              384000,
+              268000
+            ]
+          ],
+          "targetAGLMm": 12000,
+          "minimumClearDiameterMm": 16000,
+          "landmarkIds": [
+            "ejecta-crescent"
+          ],
+          "practice": "Sustained orbit with an obvious saddle for entry and exit.",
+          "verification": "planned-not-flight-verified"
+        }
+      ]
+    },
+    {
+      "id": "sinuous-rille",
+      "title": {
+        "en": "Sinuous rille",
+        "uk": "Звивиста борозна"
+      },
+      "boundsXZMm": [
+        512000,
+        0,
+        768000,
+        384000
+      ],
+      "startXZMm": [
+        552000,
+        64000
+      ],
+      "relief": "An open S-shaped depression with 24–40 m bed width, 8–18 m relief and two broad ramps to the surrounding plain. No unsupported heightfield cave.",
+      "silhouette": "Long channel with alternating near and far banks, then a short original maintenance crossing.",
+      "landmarks": [
+        {
+          "id": "rille-elbow",
+          "title": "Rille elbow",
+          "centerXZMm": [
+            608000,
+            160000
+          ],
+          "footprintMm": [
+            80000,
+            88000
+          ],
+          "heightMm": 18000,
+          "kind": "terrain",
+          "closeRangeDetail": "The inside bank is a shallow shelf; the outside bank is steeper. Broad continuous curves instead of sawtooth ridges."
+        },
+        {
+          "id": "survey-crossing",
+          "title": "Survey crossing",
+          "centerXZMm": [
+            680000,
+            280000
+          ],
+          "footprintMm": [
+            40000,
+            20000
+          ],
+          "heightMm": 14000,
+          "kind": "original-solid-mesh",
+          "closeRangeDetail": "A narrow service bridge spans an 18 m by 10 m clear underpass; end supports are outside the flight lane."
+        }
+      ],
+      "routes": [
+        {
+          "id": "rille-follow",
+          "title": "Follow the rille",
+          "difficulty": "beginner",
+          "waypointsXZMm": [
+            [
+              552000,
+              64000
+            ],
+            [
+              568000,
+              104000
+            ],
+            [
+              608000,
+              160000
+            ],
+            [
+              648000,
+              200000
+            ],
+            [
+              664000,
+              240000
+            ],
+            [
+              680000,
+              280000
+            ],
+            [
+              696000,
+              328000
+            ]
+          ],
+          "targetAGLMm": 7000,
+          "minimumClearDiameterMm": 18000,
+          "landmarkIds": [
+            "rille-elbow",
+            "survey-crossing"
+          ],
+          "practice": "Bank following and anticipatory turns while keeping the exit in sight.",
+          "verification": "planned-not-flight-verified"
+        },
+        {
+          "id": "rille-over-under",
+          "title": "Crossing over and under",
+          "difficulty": "advanced",
+          "waypointsXZMm": [
+            [
+              632000,
+              280000
+            ],
+            [
+              656000,
+              280000
+            ],
+            [
+              680000,
+              280000
+            ],
+            [
+              712000,
+              280000
+            ],
+            [
+              728000,
+              312000
+            ],
+            [
+              704000,
+              336000
+            ],
+            [
+              664000,
+              328000
+            ],
+            [
+              640000,
+              304000
+            ]
+          ],
+          "targetAGLMm": 6000,
+          "minimumClearDiameterMm": 10000,
+          "landmarkIds": [
+            "survey-crossing"
+          ],
+          "practice": "Thread an open underpass and turn out before climbing over it; vertical return segment added only after exact terrain generation.",
+          "verification": "planned-not-flight-verified"
+        }
+      ]
+    },
+    {
+      "id": "terraced-crater",
+      "title": {
+        "en": "Terraced crater",
+        "uk": "Терасований кратер"
+      },
+      "boundsXZMm": [
+        0,
+        384000,
+        256000,
+        768000
+      ],
+      "startXZMm": [
+        64000,
+        424000
+      ],
+      "relief": "A 150 m wide asymmetric bowl, two broad interior terraces, a low saddle and a 35 m rim-to-floor difference. Footprints remain measurable at 4 m samples.",
+      "silhouette": "Broken concentric rim with one central mound, not a perfect repeated ring.",
+      "landmarks": [
+        {
+          "id": "broken-rim",
+          "title": "Broken rim",
+          "centerXZMm": [
+            128000,
+            544000
+          ],
+          "footprintMm": [
+            176000,
+            168000
+          ],
+          "heightMm": 38000,
+          "kind": "terrain",
+          "closeRangeDetail": "Two broad saddles and unequal benches remain visible at pilot height; no material stripe used as fake geometry."
+        },
+        {
+          "id": "central-mound",
+          "title": "Central mound",
+          "centerXZMm": [
+            136000,
+            564000
+          ],
+          "footprintMm": [
+            32000,
+            40000
+          ],
+          "heightMm": 14000,
+          "kind": "terrain-plus-original-rock",
+          "closeRangeDetail": "One tilted grounded mass marks the floor turn; safe recovery space extends around it."
+        }
+      ],
+      "routes": [
+        {
+          "id": "rim-saddle",
+          "title": "Rim saddle traverse",
+          "difficulty": "intermediate",
+          "waypointsXZMm": [
+            [
+              64000,
+              424000
+            ],
+            [
+              88000,
+              464000
+            ],
+            [
+              128000,
+              488000
+            ],
+            [
+              168000,
+              512000
+            ],
+            [
+              192000,
+              552000
+            ],
+            [
+              176000,
+              608000
+            ],
+            [
+              128000,
+              632000
+            ]
+          ],
+          "targetAGLMm": 8000,
+          "minimumClearDiameterMm": 16000,
+          "landmarkIds": [
+            "broken-rim"
+          ],
+          "practice": "Follow the rim then deliberately choose an open saddle rather than blind vertical diving.",
+          "verification": "planned-not-flight-verified"
+        },
+        {
+          "id": "crater-dive",
+          "title": "Crater floor return",
+          "difficulty": "advanced",
+          "waypointsXZMm": [
+            [
+              96000,
+              464000
+            ],
+            [
+              112000,
+              504000
+            ],
+            [
+              120000,
+              544000
+            ],
+            [
+              136000,
+              584000
+            ],
+            [
+              168000,
+              592000
+            ],
+            [
+              192000,
+              568000
+            ],
+            [
+              184000,
+              520000
+            ]
+          ],
+          "targetAGLMm": 10000,
+          "minimumClearDiameterMm": 12000,
+          "landmarkIds": [
+            "broken-rim",
+            "central-mound"
+          ],
+          "practice": "Descending turn and controlled floor recovery; terrain-resolved altitude profile is a required implementation gate.",
+          "verification": "planned-not-flight-verified"
+        }
+      ]
+    },
+    {
+      "id": "fractured-highland",
+      "title": {
+        "en": "Fractured highland",
+        "uk": "Розколоте нагір’я"
+      },
+      "boundsXZMm": [
+        256000,
+        384000,
+        512000,
+        768000
+      ],
+      "startXZMm": [
+        292000,
+        424000
+      ],
+      "relief": "Brighter elevated ground with two oblique fracture channels and stepped broad shelves. The navigable fractures are open-topped.",
+      "silhouette": "Staggered low slabs and one wide split, with relief gradually returning to the connecting saddle.",
+      "landmarks": [
+        {
+          "id": "tilted-slab",
+          "title": "Tilted slab",
+          "centerXZMm": [
+            352000,
+            520000
+          ],
+          "footprintMm": [
+            48000,
+            28000
+          ],
+          "heightMm": 22000,
+          "kind": "original-solid-mesh",
+          "closeRangeDetail": "A grounded broken slab with a sloping outer face; an 8 m side slot stays clear of supports."
+        },
+        {
+          "id": "fracture-fork",
+          "title": "Fracture fork",
+          "centerXZMm": [
+            440000,
+            640000
+          ],
+          "footprintMm": [
+            104000,
+            84000
+          ],
+          "heightMm": 28000,
+          "kind": "terrain-plus-original-rock",
+          "closeRangeDetail": "A branching channel offers a 20 m forgiving line and 8 m precise line which visibly rejoin."
+        }
+      ],
+      "routes": [
+        {
+          "id": "highland-shelf",
+          "title": "Highland shelf",
+          "difficulty": "beginner",
+          "waypointsXZMm": [
+            [
+              292000,
+              424000
+            ],
+            [
+              312000,
+              472000
+            ],
+            [
+              328000,
+              520000
+            ],
+            [
+              352000,
+              560000
+            ],
+            [
+              392000,
+              592000
+            ],
+            [
+              432000,
+              608000
+            ],
+            [
+              472000,
+              640000
+            ]
+          ],
+          "targetAGLMm": 12000,
+          "minimumClearDiameterMm": 20000,
+          "landmarkIds": [
+            "tilted-slab",
+            "fracture-fork"
+          ],
+          "practice": "Read a gradual horizon change and choose the wider recovery line.",
+          "verification": "planned-not-flight-verified"
+        },
+        {
+          "id": "fracture-slots",
+          "title": "Fracture slots",
+          "difficulty": "advanced",
+          "waypointsXZMm": [
+            [
+              320000,
+              496000
+            ],
+            [
+              352000,
+              520000
+            ],
+            [
+              376000,
+              552000
+            ],
+            [
+              400000,
+              584000
+            ],
+            [
+              424000,
+              616000
+            ],
+            [
+              440000,
+              640000
+            ],
+            [
+              472000,
+              664000
+            ]
+          ],
+          "targetAGLMm": 6000,
+          "minimumClearDiameterMm": 8000,
+          "landmarkIds": [
+            "tilted-slab",
+            "fracture-fork"
+          ],
+          "practice": "Precise lateral placement through two different gaps with clear escape above.",
+          "verification": "planned-not-flight-verified"
+        }
+      ]
+    },
+    {
+      "id": "observatory-ridge",
+      "title": {
+        "en": "Observatory ridge",
+        "uk": "Хребет обсерваторії"
+      },
+      "boundsXZMm": [
+        512000,
+        384000,
+        768000,
+        768000
+      ],
+      "startXZMm": [
+        552000,
+        424000
+      ],
+      "relief": "Low ridge over a smooth approach valley, an engineered research court and open rear terrace. Fictional structures use visible ground supports.",
+      "silhouette": "A shallow tilted dish and horizontal service gallery contrast with the natural districts.",
+      "landmarks": [
+        {
+          "id": "survey-dish",
+          "title": "Survey dish",
+          "centerXZMm": [
+            608000,
+            520000
+          ],
+          "footprintMm": [
+            40000,
+            40000
+          ],
+          "heightMm": 24000,
+          "kind": "original-solid-mesh",
+          "closeRangeDetail": "Original shallow segmented dish on an asymmetric tripod; 12 m clearance between two legs, continuous dish collision."
+        },
+        {
+          "id": "service-gallery",
+          "title": "Service gallery",
+          "centerXZMm": [
+            680000,
+            648000
+          ],
+          "footprintMm": [
+            64000,
+            28000
+          ],
+          "heightMm": 14000,
+          "kind": "original-solid-mesh",
+          "closeRangeDetail": "Two differently sized open bays and a rear exit with a 12 m clear lane; frame members contrast without glowing panels."
+        }
+      ],
+      "routes": [
+        {
+          "id": "observatory-circuit",
+          "title": "Observatory circuit",
+          "difficulty": "intermediate",
+          "waypointsXZMm": [
+            [
+              552000,
+              424000
+            ],
+            [
+              568000,
+              472000
+            ],
+            [
+              608000,
+              488000
+            ],
+            [
+              640000,
+              520000
+            ],
+            [
+              640000,
+              576000
+            ],
+            [
+              680000,
+              616000
+            ],
+            [
+              712000,
+              648000
+            ],
+            [
+              704000,
+              704000
+            ],
+            [
+              640000,
+              704000
+            ]
+          ],
+          "targetAGLMm": 10000,
+          "minimumClearDiameterMm": 12000,
+          "landmarkIds": [
+            "survey-dish",
+            "service-gallery"
+          ],
+          "practice": "Connect a leg opening and open bay while judging approach height.",
+          "verification": "planned-not-flight-verified"
+        },
+        {
+          "id": "gallery-return",
+          "title": "Gallery return",
+          "difficulty": "intermediate",
+          "waypointsXZMm": [
+            [
+              632000,
+              648000
+            ],
+            [
+              656000,
+              648000
+            ],
+            [
+              680000,
+              648000
+            ],
+            [
+              720000,
+              648000
+            ],
+            [
+              736000,
+              680000
+            ],
+            [
+              704000,
+              712000
+            ],
+            [
+              656000,
+              704000
+            ],
+            [
+              632000,
+              672000
+            ]
+          ],
+          "targetAGLMm": 7000,
+          "minimumClearDiameterMm": 12000,
+          "landmarkIds": [
+            "service-gallery"
+          ],
+          "practice": "Through-flight, outside turn and visible rear re-entry.",
+          "verification": "planned-not-flight-verified"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "link-mare-apron-ejecta-fan",
+      "fromDistrict": "mare-apron",
+      "toDistrict": "ejecta-fan",
+      "minimumClearDiameterMm": 24000,
+      "altitude": "Terrain-resolved 12–24 m AGL; no teleport or invisible wall.",
+      "status": "planned"
+    },
+    {
+      "id": "link-ejecta-fan-sinuous-rille",
+      "fromDistrict": "ejecta-fan",
+      "toDistrict": "sinuous-rille",
+      "minimumClearDiameterMm": 24000,
+      "altitude": "Terrain-resolved 12–24 m AGL; no teleport or invisible wall.",
+      "status": "planned"
+    },
+    {
+      "id": "link-mare-apron-terraced-crater",
+      "fromDistrict": "mare-apron",
+      "toDistrict": "terraced-crater",
+      "minimumClearDiameterMm": 24000,
+      "altitude": "Terrain-resolved 12–24 m AGL; no teleport or invisible wall.",
+      "status": "planned"
+    },
+    {
+      "id": "link-ejecta-fan-fractured-highland",
+      "fromDistrict": "ejecta-fan",
+      "toDistrict": "fractured-highland",
+      "minimumClearDiameterMm": 24000,
+      "altitude": "Terrain-resolved 12–24 m AGL; no teleport or invisible wall.",
+      "status": "planned"
+    },
+    {
+      "id": "link-sinuous-rille-observatory-ridge",
+      "fromDistrict": "sinuous-rille",
+      "toDistrict": "observatory-ridge",
+      "minimumClearDiameterMm": 24000,
+      "altitude": "Terrain-resolved 12–24 m AGL; no teleport or invisible wall.",
+      "status": "planned"
+    },
+    {
+      "id": "link-terraced-crater-fractured-highland",
+      "fromDistrict": "terraced-crater",
+      "toDistrict": "fractured-highland",
+      "minimumClearDiameterMm": 24000,
+      "altitude": "Terrain-resolved 12–24 m AGL; no teleport or invisible wall.",
+      "status": "planned"
+    },
+    {
+      "id": "link-fractured-highland-observatory-ridge",
+      "fromDistrict": "fractured-highland",
+      "toDistrict": "observatory-ridge",
+      "minimumClearDiameterMm": 24000,
+      "altitude": "Terrain-resolved 12–24 m AGL; no teleport or invisible wall.",
+      "status": "planned"
+    }
+  ],
+  "gates": [
+    "Design coordinates and budget reservation audit",
+    "Deterministic canonical source compilation and exact seam verification",
+    "All 12 routes sampled at centre/edges with 250 mm sphere, all six spawn support/clearance checks",
+    "All 12 routes commanded through the actual host in Self-level and Acro; solid contacts, origin crossings and disposal",
+    "Native FPV/Chase/Overview and pilot-height art review in all quality tiers",
+    "Immutable licensed delivery and current exact package closure",
+    "Separately pinned normal Library download/Fly/reload/revision/cancellation/offline qualification"
+  ],
+  "excluded": [
+    "Changed gravity or drone physics",
+    "Mining/combat/collectable mechanics",
+    "Finished visual-art claim",
+    "Default Library row",
+    "Generated or playable 8 km world",
+    "Hours-of-play claim before sustained route review"
+  ]
+}

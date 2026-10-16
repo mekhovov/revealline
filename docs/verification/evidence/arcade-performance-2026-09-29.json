@@ -1,0 +1,1022 @@
+{
+  "format": "revealline-arcade-desktop-comparison.v1",
+  "qualified": false,
+  "observedAt": "2026-09-29",
+  "scope": "FPV Learning, Meet the Aircraft, The Frame 01 only. Same device/browser/viewport and accepted gameplay; all actual wins used normal trusted keyboard controls. No player progress or runtime state injected.",
+  "variants": {
+    "baseline": {
+      "sourceRevision": "1106ec0ac1aacbdc097a122f2188a9d592ac2e3e",
+      "sourceTree": "f7f75f5b69e25b0ae25adce30b1239bc485d8c90",
+      "distributionSha256": "8b429b9db3aebae9ce42f3898456a81b7017c800f6572db2486356eaf1bc8844",
+      "distributionBytes": 32481453,
+      "editionRevision": 8,
+      "editionId": "fpv-learning",
+      "manifest": {
+        "bytes": 92779,
+        "path": "manifest-fpv-learning.json",
+        "sha256": "35276db2c3b0732f021a7f077d0a4ce4a7bba0c03b5507e041008292b12169d3"
+      },
+      "reproducibleBuilds": 2,
+      "runtimeFilesVerified": 680,
+      "runtimeExtractedBytes": 32382715,
+      "publicEligible": false
+    },
+    "candidate": {
+      "sourceRevision": "9105025316c21bfe749ea8617dbb2220fd2b5530",
+      "sourceTree": "e11dd115342ceda5a30a81ea4cf49e15ae805198",
+      "distributionSha256": "46f218a17c0aac6b775a2aeb6dca2154d8048b33d13e8d016188f29463b0a86a",
+      "distributionBytes": 33281297,
+      "editionRevision": 9,
+      "editionId": "fpv-learning",
+      "manifest": {
+        "bytes": 93740,
+        "path": "manifest-fpv-learning.json",
+        "sha256": "d52384c68a44b2be7d109229a18509cf4aa7e48d7ead3b49b7d01da7125d9803"
+      },
+      "reproducibleBuilds": 2,
+      "runtimeFilesVerified": 687,
+      "runtimeExtractedBytes": 33181525,
+      "publicEligible": false
+    }
+  },
+  "baselineLineage": {
+    "actualArtifact": "1106ec0ac1aacbdc097a122f2188a9d592ac2e3e",
+    "proposedHistoricalCheckpoint": "0bd0708f2b9ed7798da07c8e4d626b46777deec3",
+    "note": "No accessible exact 0bd CI run was found. Git 1106→0bd differs in nine documentation/publication metadata files only; this receipt labels the actual 1106 artifact and does not relabel it 0bd."
+  },
+  "scenario": {
+    "gameplayId": "7feffc97157784af",
+    "missionRuntimeSha256": "5072b82ec85ee944d05b4d3f7fe2deff90f459abd8dc732239756c7d4a5dd1fd",
+    "mapSha256": "0b5174f5e64a8f148727ec06e5ae232d5e8f20aba1e6ee7f8e3eed99284f438b",
+    "imageSha256": "8b79d705bb064333eefece3c6acdd0f9f0a4a9079cab8ab2939401ae47689fe8",
+    "matching": "All 76 manifested core/presentation/actor paths, mission runtime fields, map, image and first-win requirements are byte-identical. Gameplay binding is from admitted compiled sidecars.",
+    "authoredChange": "Frame discovery revision 6→7 adds a learning-journey knowledge payload; other UI/authored content changes are the intended comparison workload."
+  },
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+    "platform": "MacIntel",
+    "hardwareConcurrency": 14,
+    "width": 1280,
+    "height": 633,
+    "dpr": 1,
+    "headlessReported": true
+  },
+  "device": {
+    "model": "Mac16,7",
+    "cpu": "Apple M4 Pro",
+    "memoryBytes": 51539607552,
+    "macOS": "26.7"
+  },
+  "protocol": {
+    "unprofiledOrder": ["baseline-a-3", "candidate-a", "candidate-b", "baseline-b"],
+    "durationSeconds": 20,
+    "settings": "English, Standard, Immediate, Scout, FPV community courier, full effects, master mute, Neon, hybrid HUD, grid off, reactions on, 1280×633 DPR1.",
+    "active": "Fresh profile; ordinary title action starts Frame. Passive20-second stationary active-play sample, then normal Pause→Restart confirmation.",
+    "route": "ArrowDown for 1,800 ms, ArrowDown for 3,200 ms, ArrowRight for 1,400 ms, ArrowUp for 6,000 ms. Actual public HUD and command durations recorded; driver wait times are not human pacing or exact replay ticks. All final cases won 64.3%.",
+    "result": "Passive observer armed before final cut, records20 seconds after actual result becomes visible. rAF intervals include observer overhead and do not isolate renderer execution time.",
+    "traces": "Two additional fresh first wins, separately timeline-profiled; their short observer records are excluded from p95 comparisons.",
+    "quietWindow": "Parent full tests, default inspection and unrelated test cohort finished before accepted windows. No heavy build, full test suite or other browser workload ran during the timed window. Root performed brief same-version observer preflight CLI validation (about 0.4 seconds of shell time) and changed-file lint/format checks (about 0.3–0.6 seconds), plus light documentation work. These activities are disclosed; valid samples were retained unchanged.",
+    "noTimingSelection": "All valid paired samples and the earlier unpaired baseline active sample are retained, including slow frames and page-wide long tasks."
+  },
+  "samples": [
+    {
+      "case": "baseline-a-3",
+      "scenario": "active-play",
+      "outcome": "observed",
+      "paired": true,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": true,
+      "effects": "full",
+      "mission": "01 · The Frame",
+      "frameIntervals": {
+        "frames": 1200,
+        "p50Ms": 16.7,
+        "p95Ms": 16.7,
+        "maxMs": 16.8,
+        "over33ms": 0
+      },
+      "pageLongTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 0,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "baseline-a-3/active-sample.json",
+        "bytes": 1832,
+        "sha256": "b0e2ad98a86e897cc8be580123e8de1f7effa4056cea4285e40224c4e4492e04"
+      }
+    },
+    {
+      "case": "baseline-a-3",
+      "scenario": "result-reveal",
+      "outcome": "observed",
+      "paired": true,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": false,
+      "effects": "full",
+      "mission": "01 · The Frame",
+      "frameIntervals": {
+        "frames": 1198,
+        "p50Ms": 16.7,
+        "p95Ms": 16.7,
+        "maxMs": 33.4,
+        "over33ms": 2
+      },
+      "pageLongTasks": {
+        "supported": true,
+        "count": 1,
+        "over50Ms": 1,
+        "maxMs": 82,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 1,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "baseline-a-3/result-sample.json",
+        "bytes": 1838,
+        "sha256": "b9e2b84ae6092f0c27ad10dc941c405d0f7413d721ee905eb56295f4d90453e9"
+      }
+    },
+    {
+      "case": "candidate-a",
+      "scenario": "active-play",
+      "outcome": "observed",
+      "paired": true,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": true,
+      "effects": "full",
+      "mission": "01 · The Frame",
+      "frameIntervals": {
+        "frames": 1200,
+        "p50Ms": 16.7,
+        "p95Ms": 16.7,
+        "maxMs": 16.8,
+        "over33ms": 0
+      },
+      "pageLongTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 0,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "candidate-a/active-sample.json",
+        "bytes": 1822,
+        "sha256": "24be062791943616883322957f535f5359b5b7da95ac645c2253dbf0f4b943f3"
+      }
+    },
+    {
+      "case": "candidate-a",
+      "scenario": "result-reveal",
+      "outcome": "observed",
+      "paired": true,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": false,
+      "effects": "full",
+      "mission": "01 · The Frame",
+      "frameIntervals": {
+        "frames": 1199,
+        "p50Ms": 16.7,
+        "p95Ms": 16.7,
+        "maxMs": 33.3,
+        "over33ms": 0
+      },
+      "pageLongTasks": {
+        "supported": true,
+        "count": 1,
+        "over50Ms": 1,
+        "maxMs": 83,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 1,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "candidate-a/result-sample.json",
+        "bytes": 1836,
+        "sha256": "a9d70d90b5ebe51c718110cee51dbe2b2ca456476282270f09faf160cf4524c2"
+      }
+    },
+    {
+      "case": "candidate-b",
+      "scenario": "active-play",
+      "outcome": "observed",
+      "paired": true,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": true,
+      "effects": "full",
+      "mission": "01 · The Frame",
+      "frameIntervals": {
+        "frames": 1200,
+        "p50Ms": 16.7,
+        "p95Ms": 16.7,
+        "maxMs": 16.8,
+        "over33ms": 0
+      },
+      "pageLongTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 0,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "candidate-b/active-sample.json",
+        "bytes": 1835,
+        "sha256": "37f742353c7f70d5a8c9a7519ac0f3c5776252ed7b6c0c7493faa59d8e1daa48"
+      }
+    },
+    {
+      "case": "candidate-b",
+      "scenario": "result-reveal",
+      "outcome": "observed",
+      "paired": true,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": false,
+      "effects": "full",
+      "mission": "01 · The Frame",
+      "frameIntervals": {
+        "frames": 1197,
+        "p50Ms": 16.7,
+        "p95Ms": 16.8,
+        "maxMs": 50,
+        "over33ms": 2
+      },
+      "pageLongTasks": {
+        "supported": true,
+        "count": 1,
+        "over50Ms": 1,
+        "maxMs": 82,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 1,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "candidate-b/result-sample.json",
+        "bytes": 1811,
+        "sha256": "d27de8c7ed8bfe9230bf96534d77c7d17cd3bc2403f9623f8774fc67b44122bd"
+      }
+    },
+    {
+      "case": "baseline-b",
+      "scenario": "active-play",
+      "outcome": "observed",
+      "paired": true,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": true,
+      "effects": "full",
+      "mission": "01 · The Frame",
+      "frameIntervals": {
+        "frames": 1200,
+        "p50Ms": 16.7,
+        "p95Ms": 16.7,
+        "maxMs": 16.8,
+        "over33ms": 0
+      },
+      "pageLongTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 0,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "baseline-b/active-sample.json",
+        "bytes": 1833,
+        "sha256": "5e2b10acdb976faa16782f60133ebaf9585b86d4d89e41c2ec1efb7fbc8a6237"
+      }
+    },
+    {
+      "case": "baseline-b",
+      "scenario": "result-reveal",
+      "outcome": "observed",
+      "paired": true,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": false,
+      "effects": "full",
+      "mission": "01 · The Frame",
+      "frameIntervals": {
+        "frames": 1199,
+        "p50Ms": 16.7,
+        "p95Ms": 16.8,
+        "maxMs": 33.3,
+        "over33ms": 0
+      },
+      "pageLongTasks": {
+        "supported": true,
+        "count": 1,
+        "over50Ms": 1,
+        "maxMs": 88,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 1,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "baseline-b/result-sample.json",
+        "bytes": 1836,
+        "sha256": "7865e8983a5dbec298f8a9fc9e06fdecd3bdafde2a5332ab11cd08397934ada7"
+      }
+    },
+    {
+      "case": "baseline-a-2",
+      "scenario": "active-play",
+      "outcome": "observed",
+      "paired": false,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": true,
+      "effects": "full",
+      "mission": "01 · The Frame",
+      "frameIntervals": {
+        "frames": 1200,
+        "p50Ms": 16.7,
+        "p95Ms": 16.8,
+        "maxMs": 16.8,
+        "over33ms": 0
+      },
+      "pageLongTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 0,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "baseline-a-2/active-sample.json",
+        "bytes": 1833,
+        "sha256": "769a25a74c37c20a3aad9e26614f592deff2fc5d03db34031b8a566b8bed20c4"
+      }
+    },
+    {
+      "case": "baseline-a-2",
+      "scenario": "result-reveal",
+      "outcome": "discarded: target surface did not appear within 30 seconds",
+      "paired": false,
+      "durationMs": 20000,
+      "surfaceVisibleWhenArmed": false,
+      "effects": null,
+      "mission": null,
+      "frameIntervals": {},
+      "pageLongTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "scope": "page-wide from arming through completion; not attributed to reward rendering"
+      },
+      "inputEvents": {
+        "trusted": 1,
+        "synthetic": 0
+      },
+      "raw": {
+        "path": "baseline-a-2/result-sample.json",
+        "bytes": 1709,
+        "sha256": "8ac73c97de9e15dbc366ada25330df85074e09dca4f113268466ebc3f1168ecc"
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "pair": "A",
+      "scenario": "active",
+      "comparable": true,
+      "reasons": [],
+      "results": [
+        {
+          "scenario": "active-play",
+          "baselineP95Ms": 16.700000000000728,
+          "candidateP95Ms": 16.700000000000728,
+          "changePercent": 0,
+          "withinFivePercentEngineeringTarget": true
+        }
+      ],
+      "raw": {
+        "path": "comparison-A-active.json",
+        "bytes": 901,
+        "sha256": "212a14a5e477d898cb7e180de27d0d3de51e87bf28a1f80f369d3b9a5470c129"
+      }
+    },
+    {
+      "pair": "A",
+      "scenario": "result",
+      "comparable": true,
+      "reasons": [],
+      "results": [
+        {
+          "scenario": "result-reveal",
+          "baselineP95Ms": 16.700000000004366,
+          "candidateP95Ms": 16.700000000004366,
+          "changePercent": 0,
+          "withinFivePercentEngineeringTarget": true
+        }
+      ],
+      "raw": {
+        "path": "comparison-A-result.json",
+        "bytes": 903,
+        "sha256": "bdb5a8af9cd6d24ebceb43bd28471ab8d11f69d3dc0e6ca3299f635792ade6cd"
+      }
+    },
+    {
+      "pair": "B",
+      "scenario": "active",
+      "comparable": true,
+      "reasons": [],
+      "results": [
+        {
+          "scenario": "active-play",
+          "baselineP95Ms": 16.700000000000728,
+          "candidateP95Ms": 16.700000000000728,
+          "changePercent": 0,
+          "withinFivePercentEngineeringTarget": true
+        }
+      ],
+      "raw": {
+        "path": "comparison-B-active.json",
+        "bytes": 901,
+        "sha256": "212a14a5e477d898cb7e180de27d0d3de51e87bf28a1f80f369d3b9a5470c129"
+      }
+    },
+    {
+      "pair": "B",
+      "scenario": "result",
+      "comparable": true,
+      "reasons": [],
+      "results": [
+        {
+          "scenario": "result-reveal",
+          "baselineP95Ms": 16.799999999995634,
+          "candidateP95Ms": 16.799999999995634,
+          "changePercent": 0,
+          "withinFivePercentEngineeringTarget": true
+        }
+      ],
+      "raw": {
+        "path": "comparison-B-result.json",
+        "bytes": 903,
+        "sha256": "6eff7ff1c0583cfc6a04219444c5a1750db523374df5abd2510dbee2e214c80f"
+      }
+    }
+  ],
+  "p95Conclusion": "All four exact-metadata comparisons report 0% p95 change and meet the <=5% engineering target for these Frame 01 samples only; this is not all-mission/device/release qualification.",
+  "firstWinTraces": [
+    {
+      "variant": "baseline",
+      "sourceRevision": "1106ec0ac1aacbdc097a122f2188a9d592ac2e3e",
+      "renderer": {
+        "pid": 26529,
+        "tid": 10997388
+      },
+      "capture": "Separate fresh profile; timeline categories only, no CPU sampling. Ordinary restart and documented keyboard route; no synthetic progression.",
+      "window": "Named mark immediately before final ArrowUp through 2,000 ms after actual won overlay; an additional analysis extends through the separate 3-second result observation.",
+      "visibleAfterStartMs": 3910.7,
+      "resultToEndMs": 2001.6,
+      "trustedKeydowns": 1,
+      "syntheticInputs": 0,
+      "maxInclusiveTaskMs": 70.131,
+      "over50MsTasks": [
+        {
+          "durationMs": 70.131,
+          "fullyInsideWindow": true,
+          "directRewardCallbacks": [],
+          "largestDirectCallbacks": [
+            {
+              "path": "game/vendor/phaser-4.2.1.min.js",
+              "functionName": "e",
+              "reportedLineNumber": 1,
+              "inclusiveDurationMs": 66.84
+            },
+            {
+              "path": "docs/verification/discovery-observer.mjs",
+              "functionName": "tick",
+              "reportedLineNumber": 291,
+              "inclusiveDurationMs": 0.571
+            },
+            {
+              "path": "game/ui/edition-play-layout.mjs",
+              "functionName": "measure",
+              "reportedLineNumber": 65,
+              "inclusiveDurationMs": 0.129
+            },
+            {
+              "path": "game/ui/menu-appearance.mjs",
+              "functionName": "",
+              "reportedLineNumber": 125,
+              "inclusiveDurationMs": 0.095
+            },
+            {
+              "path": "game/ui/controller-reading.mjs",
+              "functionName": "refresh",
+              "reportedLineNumber": 69,
+              "inclusiveDurationMs": 0.078
+            },
+            {
+              "path": "",
+              "functionName": "",
+              "reportedLineNumber": 1,
+              "inclusiveDurationMs": 0.076
+            },
+            {
+              "path": "game/ui/mission-picker.mjs",
+              "functionName": "",
+              "reportedLineNumber": 219,
+              "inclusiveDurationMs": 0.047
+            },
+            {
+              "path": "game/ui/mission-gallery.mjs",
+              "functionName": "sync",
+              "reportedLineNumber": 30,
+              "inclusiveDurationMs": 0.042
+            }
+          ]
+        }
+      ],
+      "directRewardCallbackTasks": [
+        {
+          "ts": 169645140828,
+          "durationMs": 43.784,
+          "fullyInsideWindow": true,
+          "overlapsWindow": true,
+          "classification": "application-or-browser-task",
+          "rewardCallbacks": [
+            {
+              "ts": 169645140867,
+              "durationMs": 43.708,
+              "functionName": "request.onsuccess",
+              "path": "game/rewards/store.mjs",
+              "reportedLineNumber": 141
+            }
+          ],
+          "cpuSamples": 0,
+          "rewardStackSamples": 0,
+          "rewardSampledStacks": [],
+          "distinctRewardSampledStacks": 0
+        },
+        {
+          "ts": 169645191182,
+          "durationMs": 2.389,
+          "fullyInsideWindow": true,
+          "overlapsWindow": true,
+          "classification": "application-or-browser-task",
+          "rewardCallbacks": [
+            {
+              "ts": 169645191197,
+              "durationMs": 0.006,
+              "functionName": "tx.oncomplete",
+              "path": "game/rewards/store.mjs",
+              "reportedLineNumber": 163
+            }
+          ],
+          "cpuSamples": 0,
+          "rewardStackSamples": 0,
+          "rewardSampledStacks": [],
+          "distinctRewardSampledStacks": 0
+        },
+        {
+          "ts": 169645891845,
+          "durationMs": 2.611,
+          "fullyInsideWindow": true,
+          "overlapsWindow": true,
+          "classification": "application-or-browser-task",
+          "rewardCallbacks": [
+            {
+              "ts": 169645892052,
+              "durationMs": 0.051,
+              "functionName": "stopReveal",
+              "path": "game/ui/edition-rewards.mjs",
+              "reportedLineNumber": 907
+            }
+          ],
+          "cpuSamples": 0,
+          "rewardStackSamples": 0,
+          "rewardSampledStacks": [],
+          "distinctRewardSampledStacks": 0
+        }
+      ],
+      "rewardAttribution": "Unresolved: the long Phaser animation callbacks may include synchronous reward work. Absence of a direct reward callback or CPU stack in this timeline-only capture does not prove no reward cost.",
+      "raw": {
+        "path": "baseline-trace/first-win-trace.json",
+        "bytes": 15421782,
+        "sha256": "ffa5e98ae431189a8b2fe01c2ac2a1d48d7aa2f00d90ff1c315f3199863c3f02"
+      },
+      "analysis": {
+        "path": "baseline-trace/first-2s-analysis.json",
+        "bytes": 5498,
+        "sha256": "42e0df6d03a570f1445b11d8a9cf69e6c3cd5c7ab653f35518ca856ed9fc9dc2"
+      },
+      "extendedAnalysis": {
+        "path": "baseline-trace/through-sample-analysis.json",
+        "bytes": 5505,
+        "sha256": "29ed1197c38af0844f7636c4bd48b822ee33a83987a7eb6c7342413f2c1e42b8"
+      },
+      "metadataCaveat": "The generic case binding retains the overall 20-second experiment description. Actual trace-only cases skipped the active sample and recorded only a 3-second result observer; they are excluded from all p95 comparisons. The named marker records and analysis options define their actual scope."
+    },
+    {
+      "variant": "candidate",
+      "sourceRevision": "9105025316c21bfe749ea8617dbb2220fd2b5530",
+      "renderer": {
+        "pid": 27875,
+        "tid": 11005112
+      },
+      "capture": "Separate fresh profile; timeline categories only, no CPU sampling. Ordinary restart and documented keyboard route; no synthetic progression.",
+      "window": "Named mark immediately before final ArrowUp through 2,000 ms after actual won overlay; an additional analysis extends through the separate 3-second result observation.",
+      "visibleAfterStartMs": 3906.7,
+      "resultToEndMs": 2000.9,
+      "trustedKeydowns": 1,
+      "syntheticInputs": 0,
+      "maxInclusiveTaskMs": 71.348,
+      "over50MsTasks": [
+        {
+          "durationMs": 71.348,
+          "fullyInsideWindow": true,
+          "directRewardCallbacks": [],
+          "largestDirectCallbacks": [
+            {
+              "path": "game/vendor/phaser-4.2.1.min.js",
+              "functionName": "e",
+              "reportedLineNumber": 1,
+              "inclusiveDurationMs": 68.306
+            },
+            {
+              "path": "docs/verification/discovery-observer.mjs",
+              "functionName": "tick",
+              "reportedLineNumber": 291,
+              "inclusiveDurationMs": 0.658
+            },
+            {
+              "path": "game/ui/edition-play-layout.mjs",
+              "functionName": "measure",
+              "reportedLineNumber": 65,
+              "inclusiveDurationMs": 0.071
+            },
+            {
+              "path": "game/ui/menu-appearance.mjs",
+              "functionName": "",
+              "reportedLineNumber": 125,
+              "inclusiveDurationMs": 0.07
+            },
+            {
+              "path": "",
+              "functionName": "",
+              "reportedLineNumber": 1,
+              "inclusiveDurationMs": 0.051
+            },
+            {
+              "path": "game/ui/mission-picker.mjs",
+              "functionName": "",
+              "reportedLineNumber": 219,
+              "inclusiveDurationMs": 0.038
+            },
+            {
+              "path": "game/ui/controller-reading.mjs",
+              "functionName": "refresh",
+              "reportedLineNumber": 69,
+              "inclusiveDurationMs": 0.033
+            },
+            {
+              "path": "game/ui/mission-gallery.mjs",
+              "functionName": "sync",
+              "reportedLineNumber": 30,
+              "inclusiveDurationMs": 0.027
+            }
+          ]
+        }
+      ],
+      "directRewardCallbackTasks": [
+        {
+          "ts": 169719062352,
+          "durationMs": 2.668,
+          "fullyInsideWindow": true,
+          "overlapsWindow": true,
+          "classification": "application-or-browser-task",
+          "rewardCallbacks": [
+            {
+              "ts": 169719062545,
+              "durationMs": 0.05,
+              "functionName": "stopReveal",
+              "path": "game/ui/edition-rewards.mjs",
+              "reportedLineNumber": 907
+            }
+          ],
+          "cpuSamples": 0,
+          "rewardStackSamples": 0,
+          "rewardSampledStacks": [],
+          "distinctRewardSampledStacks": 0
+        }
+      ],
+      "rewardAttribution": "Unresolved: the long Phaser animation callbacks may include synchronous reward work. Absence of a direct reward callback or CPU stack in this timeline-only capture does not prove no reward cost.",
+      "raw": {
+        "path": "candidate-trace/first-win-trace.json",
+        "bytes": 15510599,
+        "sha256": "9c6fd89cfa00c725d0f2f7495a6a0a3926e615fc05415bfa85801d5bf2487907"
+      },
+      "analysis": {
+        "path": "candidate-trace/first-2s-analysis.json",
+        "bytes": 4311,
+        "sha256": "887519a4e20a0933a8d0edc1ec45e84aa4403010bdb9f28ce3d7d438dceaedfe"
+      },
+      "extendedAnalysis": {
+        "path": "candidate-trace/through-sample-analysis.json",
+        "bytes": 4318,
+        "sha256": "a8fa749da3c5e712be857d3d8968bd3e461ab4cb303263440d3632eb174af460"
+      },
+      "metadataCaveat": "The generic case binding retains the overall 20-second experiment description. Actual trace-only cases skipped the active sample and recorded only a 3-second result observer; they are excluded from all p95 comparisons. The named marker records and analysis options define their actual scope."
+    }
+  ],
+  "rewardRenderingTaskLimit": {
+    "verified": false,
+    "reason": "Both captures contain a >50ms inclusive Phaser callback task. Timeline-only data cannot isolate nested reward work; unprofiled result reports also retain one 82–88ms page-wide long task each. No reward-specific 50ms pass is claimed."
+  },
+  "lifecycle": {
+    "baseline": {
+      "counts": {
+        "result": 20,
+        "rewardViewer": 20,
+        "collection": 0
+      },
+      "lifecycle": {
+        "qualified": false,
+        "resultViewerPairsObserved": 20,
+        "twentyResultViewerPairsObserved": true,
+        "closedCheckpoints": 20,
+        "connectedMetrics": {
+          "connectedNodes": {
+            "first": 2755,
+            "last": 2755,
+            "min": 2755,
+            "max": 2755,
+            "delta": 0
+          },
+          "connectedImages": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          },
+          "connectedAudio": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          },
+          "connectedVideo": {
+            "first": 0,
+            "last": 0,
+            "min": 0,
+            "max": 0,
+            "delta": 0
+          },
+          "connectedBlobMedia": {
+            "first": 0,
+            "last": 0,
+            "min": 0,
+            "max": 0,
+            "delta": 0
+          },
+          "uniqueConnectedBlobURLs": {
+            "first": 0,
+            "last": 0,
+            "min": 0,
+            "max": 0,
+            "delta": 0
+          },
+          "rewardDialogs": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          },
+          "rewardShelves": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          },
+          "rewardResults": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          }
+        },
+        "retainedResourceStabilityVerified": false,
+        "rewardRenderingTaskLimitVerified": false,
+        "note": "Only observed viewer/result exits and connected closed-view counts. Detached owners, outstanding URLs, decoders and isolated reward tasks remain unmeasured."
+      }
+    },
+    "candidate": {
+      "counts": {
+        "result": 20,
+        "rewardViewer": 20,
+        "collection": 0
+      },
+      "lifecycle": {
+        "qualified": false,
+        "resultViewerPairsObserved": 20,
+        "twentyResultViewerPairsObserved": true,
+        "closedCheckpoints": 20,
+        "connectedMetrics": {
+          "connectedNodes": {
+            "first": 4297,
+            "last": 4297,
+            "min": 4297,
+            "max": 4297,
+            "delta": 0
+          },
+          "connectedImages": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          },
+          "connectedAudio": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          },
+          "connectedVideo": {
+            "first": 0,
+            "last": 0,
+            "min": 0,
+            "max": 0,
+            "delta": 0
+          },
+          "connectedBlobMedia": {
+            "first": 0,
+            "last": 0,
+            "min": 0,
+            "max": 0,
+            "delta": 0
+          },
+          "uniqueConnectedBlobURLs": {
+            "first": 0,
+            "last": 0,
+            "min": 0,
+            "max": 0,
+            "delta": 0
+          },
+          "rewardDialogs": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          },
+          "rewardShelves": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          },
+          "rewardResults": {
+            "first": 1,
+            "last": 1,
+            "min": 1,
+            "max": 1,
+            "delta": 0
+          }
+        },
+        "retainedResourceStabilityVerified": false,
+        "rewardRenderingTaskLimitVerified": false,
+        "note": "Only observed viewer/result exits and connected closed-view counts. Detached owners, outstanding URLs, decoders and isolated reward tasks remain unmeasured."
+      }
+    }
+  },
+  "lifecycleConclusion": "Each artifact completed 20 actual earned result/viewer pairs. Closed connected counts stay constant within each build; current has 1,542 more connected nodes than baseline. This cross-version size difference is not evidence of a cycle leak or proof of retained-owner/decoder stability. No edition navigation or same-document edition switch was measured.",
+  "preflightFailures": [
+    {
+      "case": "baseline-a",
+      "reason": "Redundant Start click raced the title action that had already started play. No timing sample was collected. Exact original harness and screenshot retained.",
+      "raw": {
+        "path": "baseline-a/failure.json",
+        "bytes": 3253,
+        "sha256": "5ed2213fb462a195b4fce6f5740bc542aa88df478b9eb0029e9fa6c4cde45c88"
+      }
+    },
+    {
+      "case": "baseline-a-2",
+      "reason": "One long Down command stopped at the central safe island. Result target never appeared; valid active sample remains unpaired. Corrected sequence follows the earlier successful two-Down public route. No performance-based retry selection.",
+      "raw": {
+        "path": "baseline-a-2/failure.json",
+        "bytes": 12991,
+        "sha256": "94a7f0aaf5055f9e0fe6f38c1616be8420df945e17346b09e9e4dbf2f813b369"
+      }
+    }
+  ],
+  "evidence": {
+    "ignoredRoot": ".cache/phase7-910502531/arcade-performance",
+    "inventory": {
+      "path": "evidence-inventory.json",
+      "bytes": 27586,
+      "sha256": "492088deef7e3cde6f9e6bb44f190bae0062c9bdc3557f0a3076762d590ff550"
+    },
+    "files": 169,
+    "logicalBytes": 43038124,
+    "instrumentation": {
+      "sourceRevision": "308745195375d4dd5f659558e4b379ea161d5691",
+      "qualified": false,
+      "files": [
+        {
+          "path": "docs/verification/discovery-observer.mjs",
+          "bytes": 17910,
+          "sha256": "76a5738cf196a21e7e74e6309f4296c2b7db7765552374e9d7d98c882f52f72b"
+        },
+        {
+          "path": "docs/verification/discovery-comparison.mjs",
+          "bytes": 11187,
+          "sha256": "da05f47e91c5aaa296afdd59e3ddf99b83b121b8e1de09ff94931019e6b36e6c"
+        },
+        {
+          "path": "docs/verification/company-review-model.mjs",
+          "bytes": 7785,
+          "sha256": "da49ed47c99ef99ce94584f729f1410a0969322e3e42cd1793507537969acfbe"
+        },
+        {
+          "path": "scripts/observe-discovery-cycles.mjs",
+          "bytes": 11051,
+          "sha256": "b297771b78108204025765ca2e433911fbdaf9e15155f16ea187b628408f9bf3"
+        },
+        {
+          "path": "scripts/analyze-discovery-trace.mjs",
+          "bytes": 23802,
+          "sha256": "9100e1ffd5e29b1229c40364d506adf88a6d2a04f3e1eb05fc2d99d504f504a7"
+        }
+      ]
+    },
+    "activeHarness": {
+      "path": "observe-case.mjs",
+      "bytes": 10006,
+      "sha256": "0a33c1a170e6a27586a6e5e7a604bc0dc6592d6b4cc71d336aca58f7978d54a0"
+    },
+    "historicalHarnesses": [
+      {
+        "path": "observe-case-v1.mjs",
+        "bytes": 10173,
+        "sha256": "15c2204f6cb0c4ccb52a4dff8beb4fe562963c2c1778fe8d40db349abd13bef4"
+      },
+      {
+        "path": "observe-case-v2.mjs",
+        "bytes": 9969,
+        "sha256": "db50cca89a1cd5f98e34420e917e4cfddaf3b2da9919012532e87fb6378b5d1b"
+      }
+    ],
+    "allTaskBrowsersClosed": true,
+    "taskServerClosed": true
+  },
+  "remaining": [
+    "Exclusive reward-rendering task attribution and the 50ms reward limit remain unresolved.",
+    "Connected counts do not establish detached JavaScript/DOM ownership, outstanding object URL or decoder retention.",
+    "No human/device, installed-PWA, all-campaign, sustained tail-latency or publication qualification is claimed."
+  ],
+  "reproducibility": {
+    "status": "Reusable committed measurement authorities plus an exact retained local driver; not a portable turnkey benchmark.",
+    "artifactAcquisition": "Use the exact retained distributions and manifest hashes listed above, or rebuild each source revision in a clean checkout with the selected-edition authority. Never relabel a newer artifact as the baseline.",
+    "selectedBuildCommand": "node scripts/bundle-editions.mjs --editions fpv-learning --out <new-output-directory> --base-path /revealline/",
+    "serverMethod": "Serve the two admitted extracted sites under separate path prefixes on one loopback origin with identical immutable-cache headers and MIME types. Serve the identically pinned observer dependency closure under /docs/verification/. Do not rewrite player HTML or runtime modules.",
+    "browserMethod": "Use installed Chrome via a separately available Playwright validation dependency, fresh isolated context per case,1280×633 DPR1 and the same observed locale/settings. Follow the public title/Pause/Restart/arrow sequence above. Attach observeDiscovery from docs/verification/discovery-observer.mjs; arm active-play after start and result-reveal before final cut. Save the untouched exportReport JSON.",
+    "comparisonCommand": "node scripts/compare-discovery-observations.mjs <baseline-report.json> <candidate-report.json> baseline-current",
+    "cyclesCommand": "node scripts/observe-discovery-cycles.mjs <owned-agent-browser-session> <binding.json> <new-output.json> results",
+    "cyclesAlternative": "The same committed runDiscoveryCycles function accepts a public-command invoke adapter; this run used an external Playwright adapter for ordinary click, scroll and passive evaluate operations.",
+    "traceMethod": "Start a separate timeline-only Chrome trace with toplevel,devtools.timeline,disabled-by-default-devtools.timeline,blink.user_timing categories. Mark discovery-first-win:start immediately before the final trusted ArrowUp, discovery-first-win:visible on actual won/campaign-complete overlay, and discovery-first-win:end2,000ms later. Preserve trace and normal-input marker records. Explicitly select the renderer thread containing these marks.",
+    "analysisCommand": "node scripts/analyze-discovery-trace.mjs --trace <trace.json> --options <source-bound-options.json> --out <new-analysis.json>",
+    "remainingHarnessGap": "The local automatic title/restart/keyboard/trace driver has task-specific filesystem paths and depends on an external Playwright installation. Its complete source and hashes are retained in ignored evidence, but it is not committed or advertised as portable automation. Another machine must provide an equivalent public-UI adapter and acquire exact artifact/raw bytes; hashes alone cannot reproduce the run.",
+    "evidenceAvailability": "The compact summary is publication-safe. Exact local driver, raw reports, screenshots and traces remain in the ignored evidence directory listed above; they are not embedded in this repository receipt."
+  }
+}

@@ -10,16 +10,224 @@ import { journeyLibrarySource } from './journey-source.mjs';
 import { combineJourneyLibrarySources } from './cross-mode-journey.mjs';
 import { authoredJourneyMissionTags, journeyMissionDetails } from './journey-presentation.mjs';
 import { UKRAINIAN_ORNAMENT_ATLAS_IDS } from '../content-design/ukrainian-ornament-atlas-registry.mjs';
+import { t } from '../i18n/index.mjs';
 
 const SPATIAL_V9_MISSIONS = Object.freeze(['stepping-stones', 'return-pocket', 'neutral-ground']);
 const HORIZON_V10_MISSIONS = Object.freeze(['island-outpost', 'long-way-home', 'horizon-remix']);
 const BORDER_V11_MISSIONS = Object.freeze(['second-landing', 'long-rail', 'new-frontier']);
+const BORDER_SIGNAL_V12_MISSIONS = Object.freeze(['border-remix', 'dry-spine', 'wide-approach']);
+const EARLY_CULTURAL_V13_MISSIONS = Object.freeze([
+  'nearby-shore',
+  'two-bays',
+  'behind-the-patrol',
+]);
+const SIGNAL_CULTURAL_V14_MISSIONS = Object.freeze([
+  'soft-crossing',
+  'cool-the-crossing',
+  'signal-remix',
+]);
+const NEON_CULTURAL_V15_MISSIONS = Object.freeze(['folded-corner', 'inside-out', 'side-door-bays']);
+const NEON_CULTURAL_V16_MISSIONS = Object.freeze([
+  'dogleg-return',
+  'staggered-circuit',
+  'neon-remix',
+]);
+const ROVER_CULTURAL_V17_MISSIONS = Object.freeze([
+  'wake-the-yard',
+  'between-the-rows',
+  'rover-remix',
+]);
+const FRACTURE_CULTURAL_V18_MISSIONS = Object.freeze([
+  'first-fracture',
+  'two-districts',
+  'fracture-remix',
+]);
+const PHASEWORKS_CULTURAL_V19_MISSIONS = Object.freeze([
+  'return-in-reserve',
+  'two-ways-home',
+  'dogleg-transfer',
+]);
+const LIVEWIRE_CULTURAL_V20_MISSIONS = Object.freeze([
+  'read-the-lock',
+  'switchyard',
+  'split-junction',
+]);
+const RELAY_CULTURAL_V21_MISSIONS = Object.freeze([
+  'first-link',
+  'second-approach',
+  'three-compounds',
+]);
+const CROSSWIND_CULTURAL_V22_MISSIONS = Object.freeze([
+  'read-the-arrows',
+  'windbreak-weave',
+  'long-wave',
+]);
+const SENTINEL_CULTURAL_V23_MISSIONS = Object.freeze([
+  'first-relay',
+  'relay-perimeter',
+  'crown-audience',
+]);
+const APEX_CULTURAL_V24_MISSIONS = Object.freeze([
+  'crossing-complete',
+  'returning-light',
+  'home-signal',
+]);
 const ORNAMENT_V1_MISSIONS = Object.freeze([
   'cross-stitch-crossings',
   'rushnyk-bands',
   'pysanka-sections',
 ]);
 const EDITION_HISTORY = Object.freeze({
+  'whole-spatial-v25': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v24', missionIds: APEX_CULTURAL_V24_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v23', missionIds: SENTINEL_CULTURAL_V23_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v22', missionIds: CROSSWIND_CULTURAL_V22_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v21', missionIds: RELAY_CULTURAL_V21_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v20', missionIds: LIVEWIRE_CULTURAL_V20_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v19', missionIds: PHASEWORKS_CULTURAL_V19_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v18', missionIds: FRACTURE_CULTURAL_V18_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v17', missionIds: ROVER_CULTURAL_V17_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v24': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v23', missionIds: SENTINEL_CULTURAL_V23_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v22', missionIds: CROSSWIND_CULTURAL_V22_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v21', missionIds: RELAY_CULTURAL_V21_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v20', missionIds: LIVEWIRE_CULTURAL_V20_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v19', missionIds: PHASEWORKS_CULTURAL_V19_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v18', missionIds: FRACTURE_CULTURAL_V18_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v17', missionIds: ROVER_CULTURAL_V17_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v23': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v22', missionIds: CROSSWIND_CULTURAL_V22_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v21', missionIds: RELAY_CULTURAL_V21_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v20', missionIds: LIVEWIRE_CULTURAL_V20_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v19', missionIds: PHASEWORKS_CULTURAL_V19_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v18', missionIds: FRACTURE_CULTURAL_V18_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v17', missionIds: ROVER_CULTURAL_V17_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v22': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v21', missionIds: RELAY_CULTURAL_V21_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v20', missionIds: LIVEWIRE_CULTURAL_V20_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v19', missionIds: PHASEWORKS_CULTURAL_V19_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v18', missionIds: FRACTURE_CULTURAL_V18_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v17', missionIds: ROVER_CULTURAL_V17_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v21': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v20', missionIds: LIVEWIRE_CULTURAL_V20_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v19', missionIds: PHASEWORKS_CULTURAL_V19_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v18', missionIds: FRACTURE_CULTURAL_V18_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v17', missionIds: ROVER_CULTURAL_V17_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v20': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v19', missionIds: PHASEWORKS_CULTURAL_V19_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v18', missionIds: FRACTURE_CULTURAL_V18_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v17', missionIds: ROVER_CULTURAL_V17_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v19': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v18', missionIds: FRACTURE_CULTURAL_V18_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v17', missionIds: ROVER_CULTURAL_V17_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v18': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v17', missionIds: ROVER_CULTURAL_V17_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v17': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v16', missionIds: NEON_CULTURAL_V16_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v16': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v15', missionIds: NEON_CULTURAL_V15_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v15': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v14', missionIds: SIGNAL_CULTURAL_V14_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
+  'whole-spatial-v14': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v13', missionIds: EARLY_CULTURAL_V13_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
   'whole-spatial-v10': Object.freeze([
     Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
   ]),
@@ -32,6 +240,12 @@ const EDITION_HISTORY = Object.freeze({
     Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
     Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
   ]),
+  'whole-spatial-v13': Object.freeze([
+    Object.freeze({ routeId: 'whole-spatial-v12', missionIds: BORDER_SIGNAL_V12_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v11', missionIds: BORDER_V11_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v10', missionIds: HORIZON_V10_MISSIONS }),
+    Object.freeze({ routeId: 'whole-spatial-v9', missionIds: SPATIAL_V9_MISSIONS }),
+  ]),
   'whole-ornament-v1': Object.freeze([
     Object.freeze({ routeId: 'whole-spatial-v11', missionIds: ORNAMENT_V1_MISSIONS }),
   ]),
@@ -40,6 +254,38 @@ const EDITION_HISTORY = Object.freeze({
     Object.freeze({ routeId: 'whole-spatial-v11', missionIds: ORNAMENT_V1_MISSIONS }),
   ]),
 });
+
+// Each successor retains only the missions it changes from its immediate
+// predecessor. Inheriting the existing list keeps older distinct versions
+// selectable without adding every unchanged mission from every edition.
+const CANDIDATE_EDITION_HISTORY = { ...EDITION_HISTORY };
+for (const [version, missionIds] of [
+  [26, ['spiral-stores', 'nested-relays', 'watchpost-exchange']],
+  [27, ['survey-markers', 'compass-array', 'outer-loop']],
+  [28, ['bank-the-crossing', 'five-anchors', 'final-broadcast']],
+  [29, ['folded-corner', 'inside-out', 'four-quarters']],
+  [30, ['split-berths', 'stepped-return']],
+  [31, ['second-landing', 'long-rail', 'new-frontier']],
+  [32, ['turn-the-corner', 'return-pocket']],
+  [33, ['two-ways-home', 'read-the-lock', 'returning-light']],
+  [34, ['garden-refuges', 'broken-yard', 'island-reserve']],
+  [35, ['phase-remix', 'livewire-remix']],
+  [36, ['side-door-bays', 'staggered-reserve', 'crossbar-depot']],
+  [37, ['pressure-ladder', 'cooling-loop', 'relay-remix']],
+  [38, ['cooling-loop']],
+]) {
+  const predecessor = `whole-spatial-v${version - 1}`;
+  CANDIDATE_EDITION_HISTORY[`whole-spatial-v${version}`] = Object.freeze([
+    Object.freeze({ routeId: predecessor, missionIds: Object.freeze(missionIds) }),
+    ...CANDIDATE_EDITION_HISTORY[predecessor],
+  ]);
+}
+Object.freeze(CANDIDATE_EDITION_HISTORY);
+
+/** Shared registration for the prior cards the current route actually exposes. */
+export function spatialNextPriorEditions(activeRouteId) {
+  return CANDIDATE_EDITION_HISTORY[activeRouteId] || Object.freeze([]);
+}
 
 /** Bound the display projection before compilation. compileContentProject
  * resolves every mission/preset/mode it receives, so filtering only after an
@@ -116,8 +362,8 @@ export async function createSpatialNextEditionSources({
   launch,
   profile,
 } = {}) {
-  const history = EDITION_HISTORY[activeRouteId];
-  if (!history) return Object.freeze({ sources: Object.freeze([]), dispose() {} });
+  const history = spatialNextPriorEditions(activeRouteId);
+  if (!history.length) return Object.freeze({ sources: Object.freeze([]), dispose() {} });
   required(typeof launch === 'function', 'Spatial editions need an exact mission handoff.');
   required(typeof difficulty === 'function', 'Spatial editions need the selected preset.');
   required(
@@ -133,7 +379,7 @@ export async function createSpatialNextEditionSources({
   let disposed = false;
   const sources = [];
   for (const [historyIndex, edition] of history.entries()) {
-    const route = await loadAuthoredJourneyRoute(edition.routeId);
+    const route = await loadAuthoredJourneyRoute(edition.routeId, { fullSource: true });
     const themes = journeyActorThemeCandidates(originals, {
       includeOriginals: route.preserveOriginalThemes === true,
     });
@@ -192,8 +438,11 @@ export async function createSpatialNextEditionSources({
           );
         }
       const source = journeyLibrarySource({
+        lifecycle: 'archive',
         editionId: route.id,
         edition: `Previous Journey · v${route.id.split('v').at(-1)}`,
+        editionLabel: () =>
+          t('interface:missionLibrary.previousJourney', { version: route.id.split('v').at(-1) }),
         catalog: { missions },
         profile: historyIndex === 0 ? profile : undefined,
         details: (mission) => journeyMissionDetails(manifestFor(mission)),
@@ -213,7 +462,7 @@ export async function createSpatialNextEditionSources({
             disposed
               ? {
                   state: 'unavailable',
-                  reason: 'This mission library is closed. Reopen missions.',
+                  reason: t('interface:missionLibrary.closedReopen'),
                 }
               : { state: 'ready' },
         },

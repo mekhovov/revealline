@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FPV environment before / after verification</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font: 15px system-ui;
+        background: #091524;
+        color: #dce9ef;
+      }
+      body {
+        margin: 20px;
+        max-width: 1360px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      p {
+        max-width: 100ch;
+        line-height: 1.5;
+      }
+      button,
+      select {
+        font: inherit;
+        padding: 8px 12px;
+        min-height: 44px;
+        border: 1px solid #617e95;
+        border-radius: 7px;
+        background: #162b40;
+        color: inherit;
+      }
+      button:disabled {
+        opacity: 0.45;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin: 12px 0;
+      }
+      .scenes {
+        display: flex;
+        gap: 12px;
+        overflow: auto;
+      }
+      figure {
+        margin: 0;
+        flex: none;
+      }
+      figcaption {
+        padding: 8px;
+        font-weight: bold;
+      }
+      .viewport {
+        width: 640px;
+        height: 360px;
+        background: #102030;
+        border: 1px solid #385064;
+      }
+      .viewport canvas {
+        display: block;
+        width: 640px;
+        height: 360px;
+      }
+      label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-right: 10px;
+      }
+      #status {
+        color: #bcdfaa;
+        min-height: 2.5em;
+      }
+      pre {
+        font: 11px/1.4 monospace;
+        background: #101f32;
+        padding: 12px;
+        max-height: 550px;
+        overflow: auto;
+        white-space: pre-wrap;
+      }
+      small {
+        color: #acc0ca;
+      }
+    </style>
+    <script type="module" src="./fpv-environment-browser-harness.mjs"></script>
+  </head>
+  <body>
+    <h1>FPV environment · before / after</h1>
+    <p>
+      Actual source renderers, identical fixed-step physics snapshots, six real GLB environments,
+      all five actor types, all eight worlds, three quality presets and three camera modes. Three
+      repeated rounds check resource stability. No progress is written.
+    </p>
+    <p>
+      <small
+        >Draw submission timing and browser frame cadence are diagnostic harness measurements. They
+        do not measure GPU execution time, sustained hardware fps, physical radio latency, VRAM or
+        player acceptance.</small
+      >
+    </p>
+    <p>
+      <small
+        >Preparation: run <code>node scripts/prepare-fpv-environment-verification.mjs</code> from
+        the repository; see <code>docs/evidence/fpv-environment-browser-readme.md</code>. Keep the
+        tab visible and reload after source edits.</small
+      >
+    </p>
+    <p id="baseline"></p>
+    <div class="actions">
+      <button id="run">Run comparison</button
+      ><button id="download" disabled>Download receipt</button
+      ><button id="reload">Reload source</button>
+    </div>
+    <details>
+      <summary>Inspect matching before / after views</summary>
+      <div class="actions">
+        <label>World<select id="world"></select></label
+        ><label
+          >Quality<select id="quality">
+            <option value="low">Performance</option>
+            <option value="balanced" selected>Balanced</option>
+            <option value="high">Quality</option>
+          </select></label
+        ><label
+          >Camera<select id="view">
+            <option value="overview">Overview</option>
+            <option value="fpv">FPV</option>
+            <option value="chase">Chase</option>
+          </select></label
+        ><label
+          >Drone<select id="drone">
+            <option>racer</option>
+            <option>pixel</option>
+            <option>utility</option>
+          </select></label
+        ><label><input type="checkbox" id="fallback" />Procedural fallback only</label
+        ><button id="preview">Render selected</button>
+      </div>
+    </details>
+    <p id="status" role="status">Loading fixture…</p>
+    <div class="scenes">
+      <figure>
+        <figcaption>Before · frozen parent</figcaption>
+        <div id="before" class="viewport"></div>
+      </figure>
+      <figure>
+        <figcaption>After · current source</figcaption>
+        <div id="after" class="viewport"></div>
+      </figure>
+    </div>
+    <details open>
+      <summary>Source-bound verification receipt</summary>
+      <pre id="receipt">No checks run.</pre>
+    </details>
+  </body>
+</html>

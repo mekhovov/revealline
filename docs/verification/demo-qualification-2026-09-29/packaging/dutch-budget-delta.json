@@ -1,0 +1,764 @@
+{
+  "comparison": "Historical v0.142.1 artifact to current v0.142.3 development candidate; not all changes originate in Demo",
+  "oldTotal": 65745219,
+  "newTotal": 67318557,
+  "delta": 1573338,
+  "changes": [
+    {
+      "path": "app/app.mjs",
+      "old": 1549,
+      "new": 1531,
+      "delta": -18,
+      "kind": "changed"
+    },
+    {
+      "path": "app/current.json",
+      "old": 100,
+      "new": 100,
+      "delta": 0,
+      "kind": "changed"
+    },
+    {
+      "path": "app/edition-context.mjs",
+      "old": 4980,
+      "new": 5772,
+      "delta": 792,
+      "kind": "changed"
+    },
+    {
+      "path": "app/i18n/catalogs.mjs",
+      "old": 17444,
+      "new": 17438,
+      "delta": -6,
+      "kind": "changed"
+    },
+    {
+      "path": "app/index.html",
+      "old": 1328,
+      "new": 1318,
+      "delta": -10,
+      "kind": "changed"
+    },
+    {
+      "path": "app/manifest.webmanifest",
+      "old": 440,
+      "new": 404,
+      "delta": -36,
+      "kind": "changed"
+    },
+    {
+      "path": "app/navigation.css",
+      "old": 503,
+      "new": 738,
+      "delta": 235,
+      "kind": "changed"
+    },
+    {
+      "path": "app/service-worker.js",
+      "old": 7549,
+      "new": 7549,
+      "delta": 0,
+      "kind": "changed"
+    },
+    {
+      "path": "app/ui/controller-confirm-guard.mjs",
+      "old": 11043,
+      "new": 11732,
+      "delta": 689,
+      "kind": "changed"
+    },
+    {
+      "path": "app/ui/controller-confirm-lifecycle.mjs",
+      "old": 4386,
+      "new": 9001,
+      "delta": 4615,
+      "kind": "changed"
+    },
+    {
+      "path": "app/ui/controller-navigation.mjs",
+      "old": 41988,
+      "new": 42449,
+      "delta": 461,
+      "kind": "changed"
+    },
+    {
+      "path": "app/ui/controller-router.mjs",
+      "old": 18921,
+      "new": 22624,
+      "delta": 3703,
+      "kind": "changed"
+    },
+    {
+      "path": "app/ui/launcher-navigation.mjs",
+      "old": 3527,
+      "new": 3841,
+      "delta": 314,
+      "kind": "changed"
+    },
+    {
+      "path": "edition-catalog.json",
+      "old": 22221,
+      "new": 23778,
+      "delta": 1557,
+      "kind": "changed"
+    },
+    {
+      "path": "game/app.mjs",
+      "old": 470782,
+      "new": 476387,
+      "delta": 5605,
+      "kind": "changed"
+    },
+    {
+      "path": "game/backup-set.mjs",
+      "old": 10658,
+      "new": 10656,
+      "delta": -2,
+      "kind": "changed"
+    },
+    {
+      "path": "game/build-config.json",
+      "old": 50,
+      "new": 50,
+      "delta": 0,
+      "kind": "changed"
+    },
+    {
+      "path": "game/build-info.json",
+      "old": 174,
+      "new": 174,
+      "delta": 0,
+      "kind": "changed"
+    },
+    {
+      "path": "game/company-entry.mjs",
+      "old": 893,
+      "new": 1070,
+      "delta": 177,
+      "kind": "changed"
+    },
+    {
+      "path": "game/company.html",
+      "old": 2415,
+      "new": 2544,
+      "delta": 129,
+      "kind": "changed"
+    },
+    {
+      "path": "game/content-design/mode-href.mjs",
+      "old": 2674,
+      "new": 2818,
+      "delta": 144,
+      "kind": "changed"
+    },
+    {
+      "path": "game/content-design/solo-route-host.mjs",
+      "old": 6753,
+      "new": 6837,
+      "delta": 84,
+      "kind": "changed"
+    },
+    {
+      "path": "game/controller-lab/index.html",
+      "old": 21815,
+      "new": 22003,
+      "delta": 188,
+      "kind": "changed"
+    },
+    {
+      "path": "game/demo-bot-player.mjs",
+      "old": 12636,
+      "new": 13337,
+      "delta": 701,
+      "kind": "changed"
+    },
+    {
+      "path": "game/demo-bot-worker.mjs",
+      "old": 0,
+      "new": 530,
+      "delta": 530,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/catalog.json",
+      "old": 0,
+      "new": 4079,
+      "delta": 4079,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+      "old": 0,
+      "new": 12340,
+      "delta": 12340,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/crosswind-openings.replay.json",
+      "old": 0,
+      "new": 12332,
+      "delta": 12332,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+      "old": 0,
+      "new": 10801,
+      "delta": 10801,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/first-signal-left.replay.json",
+      "old": 0,
+      "new": 10793,
+      "delta": 10793,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+      "old": 0,
+      "new": 10803,
+      "delta": 10803,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/first-signal-right.replay.json",
+      "old": 0,
+      "new": 10795,
+      "delta": 10795,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+      "old": 0,
+      "new": 12273,
+      "delta": 12273,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/night-patrol-loop.replay.json",
+      "old": 0,
+      "new": 12265,
+      "delta": 12265,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+      "old": 0,
+      "new": 12246,
+      "delta": 12246,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/relay-orchard-loop.replay.json",
+      "old": 0,
+      "new": 12238,
+      "delta": 12238,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+      "old": 0,
+      "new": 12246,
+      "delta": 12246,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/relay-orchard-stairs.replay.json",
+      "old": 0,
+      "new": 12238,
+      "delta": 12238,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-data/variant-provenance.json",
+      "old": 0,
+      "new": 2210,
+      "delta": 2210,
+      "kind": "new"
+    },
+    {
+      "path": "game/demo-director.mjs",
+      "old": 7199,
+      "new": 7203,
+      "delta": 4,
+      "kind": "changed"
+    },
+    {
+      "path": "game/demo-experience.mjs",
+      "old": 4756,
+      "new": 4928,
+      "delta": 172,
+      "kind": "changed"
+    },
+    {
+      "path": "game/edition-context.mjs",
+      "old": 4980,
+      "new": 5772,
+      "delta": 792,
+      "kind": "changed"
+    },
+    {
+      "path": "game/editions/departure-destination.mjs",
+      "old": 1298,
+      "new": 1373,
+      "delta": 75,
+      "kind": "changed"
+    },
+    {
+      "path": "game/editions/model.mjs",
+      "old": 17410,
+      "new": 17487,
+      "delta": 77,
+      "kind": "changed"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "old": 813627,
+      "new": 817063,
+      "delta": 3436,
+      "kind": "changed"
+    },
+    {
+      "path": "game/index.html",
+      "old": 129874,
+      "new": 130845,
+      "delta": 971,
+      "kind": "changed"
+    },
+    {
+      "path": "game/installed-app.mjs",
+      "old": 16845,
+      "new": 17316,
+      "delta": 471,
+      "kind": "changed"
+    },
+    {
+      "path": "game/mission-library/classic-source.mjs",
+      "old": 6341,
+      "new": 6676,
+      "delta": 335,
+      "kind": "changed"
+    },
+    {
+      "path": "game/mission-library/spatial-next-editions.mjs",
+      "old": 24697,
+      "new": 26032,
+      "delta": 1335,
+      "kind": "changed"
+    },
+    {
+      "path": "game/playground/model.mjs",
+      "old": 23099,
+      "new": 23098,
+      "delta": -1,
+      "kind": "changed"
+    },
+    {
+      "path": "game/replay-theater/app.mjs",
+      "old": 25752,
+      "new": 25942,
+      "delta": 190,
+      "kind": "changed"
+    },
+    {
+      "path": "game/replay-theater/index.html",
+      "old": 14375,
+      "new": 14507,
+      "delta": 132,
+      "kind": "changed"
+    },
+    {
+      "path": "game/replay-theater/navigation.mjs",
+      "old": 6081,
+      "new": 6775,
+      "delta": 694,
+      "kind": "changed"
+    },
+    {
+      "path": "game/runtime-content-provider.mjs",
+      "old": 8387,
+      "new": 8731,
+      "delta": 344,
+      "kind": "changed"
+    },
+    {
+      "path": "game/soundtrack-style-taxonomy.mjs",
+      "old": 0,
+      "new": 2160,
+      "delta": 2160,
+      "kind": "new"
+    },
+    {
+      "path": "game/soundtrack.mjs",
+      "old": 39434,
+      "new": 39449,
+      "delta": 15,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/icon-192.png",
+      "old": 0,
+      "new": 33508,
+      "delta": 33508,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/install-icons.json",
+      "old": 0,
+      "new": 1691,
+      "delta": 1691,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/provenance.json",
+      "old": 0,
+      "new": 3489,
+      "delta": 3489,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/art/identity/fpv-line/wordmark.png",
+      "old": 0,
+      "new": 485216,
+      "delta": 485216,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+      "old": 0,
+      "new": 147343,
+      "delta": 147343,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/droneaid-main-background.png",
+      "old": 0,
+      "new": 880307,
+      "delta": 880307,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/droneaid-nl-community.webp",
+      "old": 408122,
+      "new": 0,
+      "delta": -408122,
+      "kind": "removed"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/droneaid-wordmark-light.svg",
+      "old": 0,
+      "new": 119252,
+      "delta": 119252,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/art/menu-scenes/provenance.json",
+      "old": 9350,
+      "new": 9374,
+      "delta": 24,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/brand-identity.css",
+      "old": 0,
+      "new": 1521,
+      "delta": 1521,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/brand-identity.mjs",
+      "old": 0,
+      "new": 2585,
+      "delta": 2585,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/controller-confirm-guard.mjs",
+      "old": 11043,
+      "new": 11732,
+      "delta": 689,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/controller-confirm-lifecycle.mjs",
+      "old": 4386,
+      "new": 9001,
+      "delta": 4615,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/controller-confirm-trace.mjs",
+      "old": 2700,
+      "new": 9800,
+      "delta": 7100,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/controller-field-editor.css",
+      "old": 0,
+      "new": 1986,
+      "delta": 1986,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/controller-navigation.mjs",
+      "old": 41988,
+      "new": 42449,
+      "delta": 461,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/controller-router.mjs",
+      "old": 18921,
+      "new": 22624,
+      "delta": 3703,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/demo-audio.mjs",
+      "old": 0,
+      "new": 8677,
+      "delta": 8677,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/demo-clock.mjs",
+      "old": 0,
+      "new": 5747,
+      "delta": 5747,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "old": 20803,
+      "new": 24312,
+      "delta": 3509,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/demo-input.mjs",
+      "old": 13188,
+      "new": 15224,
+      "delta": 2036,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/demo.css",
+      "old": 3869,
+      "new": 5609,
+      "delta": 1740,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/device-controls.css",
+      "old": 23204,
+      "new": 23511,
+      "delta": 307,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/edition-navigation.mjs",
+      "old": 2894,
+      "new": 2992,
+      "delta": 98,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/edition-solo.mjs",
+      "old": 13010,
+      "new": 16161,
+      "delta": 3151,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/edition-theme-label.mjs",
+      "old": 0,
+      "new": 974,
+      "delta": 974,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/field-kit-fonts.css",
+      "old": 840,
+      "new": 878,
+      "delta": 38,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/fullscreen.mjs",
+      "old": 3520,
+      "new": 7392,
+      "delta": 3872,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "old": 30497,
+      "new": 30819,
+      "delta": 322,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/input.mjs",
+      "old": 18681,
+      "new": 18885,
+      "delta": 204,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/install-offline-panel.css",
+      "old": 0,
+      "new": 799,
+      "delta": 799,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "old": 77637,
+      "new": 77713,
+      "delta": 76,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/menu-retune.css",
+      "old": 0,
+      "new": 1292,
+      "delta": 1292,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/menu-retune.mjs",
+      "old": 0,
+      "new": 6296,
+      "delta": 6296,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/menu-scene-catalog.mjs",
+      "old": 4304,
+      "new": 8968,
+      "delta": 4664,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/menu-scene-motion.mjs",
+      "old": 0,
+      "new": 15497,
+      "delta": 15497,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/menu-scenes.css",
+      "old": 6288,
+      "new": 4225,
+      "delta": -2063,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/menu-scenes.mjs",
+      "old": 7642,
+      "new": 11285,
+      "delta": 3643,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/menu-signal-loss.mjs",
+      "old": 0,
+      "new": 6465,
+      "delta": 6465,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/mission-library-chooser.mjs",
+      "old": 42706,
+      "new": 43218,
+      "delta": 512,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/native-menu.css",
+      "old": 21897,
+      "new": 26508,
+      "delta": 4611,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/native-menus.mjs",
+      "old": 13263,
+      "new": 16291,
+      "delta": 3028,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/playfield-context-menu.mjs",
+      "old": 0,
+      "new": 1797,
+      "delta": 1797,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/pwa-install.mjs",
+      "old": 2765,
+      "new": 2763,
+      "delta": -2,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/quick-music-controls.mjs",
+      "old": 9103,
+      "new": 10934,
+      "delta": 1831,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "old": 39547,
+      "new": 40789,
+      "delta": 1242,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/session-originals-export.mjs",
+      "old": 3513,
+      "new": 3511,
+      "delta": -2,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/signal-reception.mjs",
+      "old": 0,
+      "new": 9548,
+      "delta": 9548,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "old": 0,
+      "new": 9840,
+      "delta": 9840,
+      "kind": "new"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "old": 122823,
+      "new": 130649,
+      "delta": 7826,
+      "kind": "changed"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "old": 48743,
+      "new": 49262,
+      "delta": 519,
+      "kind": "changed"
+    },
+    {
+      "path": "runtime-dependencies.json",
+      "old": 9586,
+      "new": 10749,
+      "delta": 1163,
+      "kind": "changed"
+    }
+  ]
+}

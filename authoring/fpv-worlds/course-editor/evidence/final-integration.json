@@ -1,0 +1,10 @@
+{
+  "format": "FPVProjectCourseIntegration.v1",
+  "qualifiedSource": "23ad656c96f1f89f415e246423bdc5de1377077d",
+  "integratedHead": "2120e7d575fedf38962872646be06412700e8861",
+  "main": "1973eff9918f107b036c6456ac5c7187a2378e1e",
+  "inputCount": 95,
+  "allQualifiedInputsExact": true,
+  "originalInputBytes": 16771714,
+  "note": "Only later documentation changes integrated. No new runtime/admission/browser claim."
+}

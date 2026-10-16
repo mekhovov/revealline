@@ -1,0 +1,514 @@
+{
+  "passed": true,
+  "canonicalGLBs": 18,
+  "solid": 28,
+  "visualOnly": 42,
+  "results": [
+    {
+      "quality": "performance",
+      "id": "covered-pier-open-bay",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "performance",
+      "id": "covered-pier-below-deck",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "performance",
+      "id": "covered-pier-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "covered-pier-deck",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "open-pier-deck",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "palm-solid-trunk",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "palm-visual-leaf-canopy",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "performance",
+      "id": "hut-solid-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "cargo-solid-box",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "performance",
+      "id": "sea-visual-only",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "covered-pier-open-bay",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "covered-pier-below-deck",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "covered-pier-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "covered-pier-deck",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "open-pier-deck",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "palm-solid-trunk",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "palm-visual-leaf-canopy",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "balanced",
+      "id": "hut-solid-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "cargo-solid-box",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "balanced",
+      "id": "sea-visual-only",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "covered-pier-open-bay",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "covered-pier-below-deck",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "covered-pier-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "covered-pier-deck",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "open-pier-deck",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "palm-solid-trunk",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "palm-visual-leaf-canopy",
+      "status": "terrain-clear"
+    },
+    {
+      "quality": "quality",
+      "id": "hut-solid-roof",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "cargo-solid-box",
+      "status": "terrain-hit"
+    },
+    {
+      "quality": "quality",
+      "id": "sea-visual-only",
+      "status": "terrain-clear"
+    }
+  ],
+  "windows": [
+    {
+      "quality": "performance",
+      "x": 64,
+      "z": 64,
+      "geometryBytes": 390448,
+      "textureBytes": 1682084,
+      "resourceBytes": 2072532,
+      "collision": {
+        "worlds": 2,
+        "colliders": 15,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 192,
+      "z": 64,
+      "geometryBytes": 643224,
+      "textureBytes": 2140832,
+      "resourceBytes": 2784056,
+      "collision": {
+        "worlds": 2,
+        "colliders": 23,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 320,
+      "z": 64,
+      "geometryBytes": 427264,
+      "textureBytes": 1376252,
+      "resourceBytes": 1803516,
+      "collision": {
+        "worlds": 2,
+        "colliders": 16,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 320,
+      "z": 192,
+      "geometryBytes": 656416,
+      "textureBytes": 2293748,
+      "resourceBytes": 2950164,
+      "collision": {
+        "worlds": 2,
+        "colliders": 29,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 320,
+      "z": 320,
+      "geometryBytes": 440496,
+      "textureBytes": 1987908,
+      "resourceBytes": 2428404,
+      "collision": {
+        "worlds": 2,
+        "colliders": 22,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 192,
+      "z": 320,
+      "geometryBytes": 651936,
+      "textureBytes": 2140824,
+      "resourceBytes": 2792760,
+      "collision": {
+        "worlds": 2,
+        "colliders": 26,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 64,
+      "z": 320,
+      "geometryBytes": 403824,
+      "textureBytes": 1834992,
+      "resourceBytes": 2238816,
+      "collision": {
+        "worlds": 2,
+        "colliders": 19,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 64,
+      "z": 192,
+      "geometryBytes": 574096,
+      "textureBytes": 2140832,
+      "resourceBytes": 2714928,
+      "collision": {
+        "worlds": 2,
+        "colliders": 26,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "performance",
+      "x": 192,
+      "z": 192,
+      "geometryBytes": 955344,
+      "textureBytes": 2599580,
+      "resourceBytes": 3554924,
+      "collision": {
+        "worlds": 2,
+        "colliders": 37,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 64,
+      "z": 64,
+      "geometryBytes": 390448,
+      "textureBytes": 1682084,
+      "resourceBytes": 2072532,
+      "collision": {
+        "worlds": 2,
+        "colliders": 15,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 192,
+      "z": 64,
+      "geometryBytes": 643224,
+      "textureBytes": 2140832,
+      "resourceBytes": 2784056,
+      "collision": {
+        "worlds": 2,
+        "colliders": 23,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 320,
+      "z": 64,
+      "geometryBytes": 427264,
+      "textureBytes": 1376252,
+      "resourceBytes": 1803516,
+      "collision": {
+        "worlds": 2,
+        "colliders": 16,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 320,
+      "z": 192,
+      "geometryBytes": 656416,
+      "textureBytes": 2293748,
+      "resourceBytes": 2950164,
+      "collision": {
+        "worlds": 2,
+        "colliders": 29,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 320,
+      "z": 320,
+      "geometryBytes": 440496,
+      "textureBytes": 1987908,
+      "resourceBytes": 2428404,
+      "collision": {
+        "worlds": 2,
+        "colliders": 22,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 192,
+      "z": 320,
+      "geometryBytes": 651936,
+      "textureBytes": 2140824,
+      "resourceBytes": 2792760,
+      "collision": {
+        "worlds": 2,
+        "colliders": 26,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 64,
+      "z": 320,
+      "geometryBytes": 403824,
+      "textureBytes": 1834992,
+      "resourceBytes": 2238816,
+      "collision": {
+        "worlds": 2,
+        "colliders": 19,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 64,
+      "z": 192,
+      "geometryBytes": 574096,
+      "textureBytes": 2140832,
+      "resourceBytes": 2714928,
+      "collision": {
+        "worlds": 2,
+        "colliders": 26,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "balanced",
+      "x": 192,
+      "z": 192,
+      "geometryBytes": 955344,
+      "textureBytes": 2599580,
+      "resourceBytes": 3554924,
+      "collision": {
+        "worlds": 2,
+        "colliders": 37,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 64,
+      "z": 64,
+      "geometryBytes": 390448,
+      "textureBytes": 1682084,
+      "resourceBytes": 2072532,
+      "collision": {
+        "worlds": 2,
+        "colliders": 15,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 192,
+      "z": 64,
+      "geometryBytes": 643224,
+      "textureBytes": 2140832,
+      "resourceBytes": 2784056,
+      "collision": {
+        "worlds": 2,
+        "colliders": 23,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 320,
+      "z": 64,
+      "geometryBytes": 427264,
+      "textureBytes": 1376252,
+      "resourceBytes": 1803516,
+      "collision": {
+        "worlds": 2,
+        "colliders": 16,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 320,
+      "z": 192,
+      "geometryBytes": 656416,
+      "textureBytes": 2293748,
+      "resourceBytes": 2950164,
+      "collision": {
+        "worlds": 2,
+        "colliders": 29,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 320,
+      "z": 320,
+      "geometryBytes": 440496,
+      "textureBytes": 1987908,
+      "resourceBytes": 2428404,
+      "collision": {
+        "worlds": 2,
+        "colliders": 22,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 192,
+      "z": 320,
+      "geometryBytes": 651936,
+      "textureBytes": 2140824,
+      "resourceBytes": 2792760,
+      "collision": {
+        "worlds": 2,
+        "colliders": 26,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 64,
+      "z": 320,
+      "geometryBytes": 403824,
+      "textureBytes": 1834992,
+      "resourceBytes": 2238816,
+      "collision": {
+        "worlds": 2,
+        "colliders": 19,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 64,
+      "z": 192,
+      "geometryBytes": 574096,
+      "textureBytes": 2140832,
+      "resourceBytes": 2714928,
+      "collision": {
+        "worlds": 2,
+        "colliders": 26,
+        "rigidBodies": 0
+      }
+    },
+    {
+      "quality": "quality",
+      "x": 192,
+      "z": 192,
+      "geometryBytes": 955344,
+      "textureBytes": 2599580,
+      "resourceBytes": 3554924,
+      "collision": {
+        "worlds": 2,
+        "colliders": 37,
+        "rigidBodies": 0
+      }
+    }
+  ],
+  "sourceUnchanged": true,
+  "disposed": true,
+  "claim": "Real source/collision and replacement ownership at three material tiers; no native GPU, full world gameplay or default Library admission claim."
+}

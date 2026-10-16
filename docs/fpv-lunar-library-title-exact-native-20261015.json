@@ -1,0 +1,56 @@
+{
+  "sourceRevision": "65e92d124b4232bf9d1450ac8cac47c82961cf21",
+  "run": 38762064405,
+  "artifact": 11986297057,
+  "packageRevision": "f6059993b6f0af386d4541856a0acb15737bc8af748420114395e623fc78e6cd",
+  "origin": "http://127.0.0.1:9171",
+  "scope": "Root serial native normal-player corrected-title follow-up; exact byte-identical finished runtime. Earlier broader camera/mode/layout observations remain bound to66b318e7/9170.",
+  "observations": {
+    "normalDownloadMiB": 1.9,
+    "englishTitleBeforeAndAfter": "Lunar Basin \u2014 flight study",
+    "ukrainianTitle": "\u041c\u0456\u0441\u044f\u0447\u043d\u0430 \u0443\u043b\u043e\u0433\u043e\u0432\u0438\u043d\u0430 \u2014 \u0442\u0440\u0435\u043d\u0443\u0432\u0430\u043b\u044c\u043d\u0430 \u0437\u043e\u043d\u0430",
+    "sixUkrainianStarts": true,
+    "sharedSettingsLanguageReturn": true,
+    "reloadRetainsDownloadRevision": "composition-r2",
+    "reloadRetainsLocale": "uk",
+    "cachedFlyReadyDisarmed": true,
+    "readyHeightM": 25.9,
+    "readyView": "FPV",
+    "automaticArm": false
+  },
+  "earlierNativePackage": {
+    "sourceRevision": "66b318e7c9b7d6ef05dd2c7f4869de1d41a5101f",
+    "origin": "http://127.0.0.1:9170",
+    "scope": "Normal install, all six disarmed starts, FPV/Chase/Overview, Acro, explicit arm/pause, phone layouts. Known offered-title mismatch corrected separately. Frozen prior package and negative preserved."
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-library-title-uk-pause-native-20261015.txt",
+      "bytes": 4915,
+      "sha256": "66ad4e90b15e4aee169ac81f576e89cbe9eb2508daecb85990314f60d8667cdf"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-library-title-cached-native-20261015.txt",
+      "bytes": 1080,
+      "sha256": "e31558b380c5ebf88114aaa0a73439414e8a6333004f41fe0d59469946c0bc03"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-library-title-uk-native-20261015.png",
+      "bytes": 58312,
+      "sha256": "7ad0b6704f2840b0af6a71e43e571131c27179ecba709c4b198de420736902b6"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-library-title-cached-native-20261015.png",
+      "bytes": 31038,
+      "sha256": "5b0faf8a1a81d478470fe12981ab8ac9272196b61f318a3502f98b5b32eed677"
+    }
+  ],
+  "notClaimed": [
+    "final representative art",
+    "physical device/controller acceptance",
+    "network-wide offline",
+    "browser restart",
+    "two-hour endurance",
+    "public launch"
+  ]
+}

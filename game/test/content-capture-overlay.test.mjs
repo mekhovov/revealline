@@ -6,6 +6,8 @@ import { prepareContentPreview } from '../content-design/preview.mjs';
 import { captureOverlay } from '../content-design/capture-overlay.mjs';
 import { paintContentMap } from '../content-design/map-view.mjs';
 import { createRoverCandidates } from '../content-design/rover-candidates.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+import { readFile } from 'node:fs/promises';
 
 test('Studio overlay projects exact occupied regions, hypothetical trail and affected objectives without changing the candidate', () => {
   const source = createOpeningCandidates();
@@ -159,5 +161,79 @@ test('Studio gives reclaimed roamers a tracked-square marker without a field-ret
       ['rect', x - radius, y - radius, radius * 0.3, radius * 2],
       ['rect', x + radius * 0.7, y - radius, radius * 0.3, radius * 2],
     ],
+  );
+});
+
+test('capture labels translate while cell ownership, canonical snapshots and canvas geometry stay identical', () => {
+  const previous = getLocale();
+  const source = createOpeningCandidates();
+  const preview = prepareContentPreview(source, 'first-return', {
+    trailCells: Array.from({ length: 34 }, (_, y) => (y + 1) * 72 + 24),
+  });
+  // Optional features expose the same inspected identifiers; labels never rename them.
+  preview.capture.affectedGateIds = ['gate-one'];
+  preview.capture.reservedGateCells = [40, 41];
+  preview.capture.affectedCombatIds = ['optional-actor'];
+  preview.markers.actors[0].inactive = true;
+  const original = structuredClone(preview);
+  const sourceBytes = JSON.stringify(source);
+  const calls = [];
+  const ctx = new Proxy(
+    {},
+    {
+      get:
+        (_target, method) =>
+        (...args) =>
+          calls.push([method, ...args]),
+    },
+  );
+  try {
+    setLocale('en', { persist: false });
+    const english = captureOverlay(preview);
+    paintContentMap(ctx, preview);
+    const geometry = calls.filter(([method]) => method !== 'fillText');
+    assert(calls.some(([method, text]) => method === 'fillText' && text === 'OFF'));
+    for (const locale of ['uk', 'en', 'uk']) {
+      calls.length = 0;
+      setLocale(locale, { persist: false });
+      const view = captureOverlay(preview);
+      assert.deepEqual(view.cells, english.cells);
+      assert.deepEqual(view.actors, english.actors);
+      assert.deepEqual(view.objectives, english.objectives);
+      assert.equal(paintContentMap(ctx, preview), view.summary);
+      assert.deepEqual(
+        calls.filter(([method]) => method !== 'fillText'),
+        geometry,
+      );
+      if (locale === 'uk') {
+        assert.match(view.summary, /^Зафіксований стан/);
+        assert.match(view.summary, /Брами, які відкриються: gate-one\. 2 зарезервовані клітини/);
+        assert.match(view.summary, /Необов’язкові об’єкти, які буде вилучено: optional-actor/);
+        assert.match(view.summary, /рух ворогів може змінити результат/);
+        assert.doesNotMatch(view.summary, /Frozen|Snapshot|none|Would/);
+        assert(calls.some(([method, text]) => method === 'fillText' && text === 'ВИМК.'));
+      } else assert.equal(view.summary, english.summary);
+      assert.deepEqual(preview, original);
+      assert.equal(JSON.stringify(source), sourceBytes);
+    }
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('the Studio locale hook repaints the accepted map without inspecting or rendering the draft', async () => {
+  const host = await readFile(new URL('../studio/studio.mjs', import.meta.url), 'utf8');
+  const callback = host.slice(host.indexOf('const stopMapLocale'), host.indexOf('function draw'));
+  assert.match(callback, /if \(paintedPreview\) draw\(paintedPreview\)/);
+  assert.doesNotMatch(callback, /inspectBoard|render\(|session|prepareContentPreview|queueSave/);
+  assert.match(host, /if \(!mission\) \{\s*paintedPreview = null;/);
+  const disposal = host.slice(host.indexOf("window.addEventListener('pagehide'"));
+  assert.match(
+    disposal,
+    /if \(!event\.persisted\) \{[^}]*stopMapLocale\(\);[^}]*paintedPreview = null;/,
+  );
+  assert.match(
+    disposal,
+    /if \(!event\.persisted\) \{[^}]*stopGameplayTuning\(\);[^}]*gameplayTuning\.dispose\(\);/,
   );
 });

@@ -1,0 +1,177 @@
+{
+  "at": "2026-09-28T01:08:36Z",
+  "status": "PUBLIC_BROWSER_ENTRY_CATALOGUE_AND_CANCEL_CHECKS_COMPLETE_PLAYER_ACCEPTANCE_PENDING",
+  "version": "v0.141.7",
+  "publisherMain": "6fe52474b5b395a5c416bd388555d488db33f287",
+  "gameSource": "efbb3882b4edd447c8e9f60ed60c536a956d78f3",
+  "releaseId": 397867239,
+  "deploymentEvidence": "v1417-pages-live-0056.json",
+  "references": {
+    "complete": true,
+    "readThisTurn": [
+      "docs/cross-mode-execution.md (3569a18905ddc5228dd5823eb7299ef0eac4c7cf,232817 bytes)",
+      "authoring/prompts/cross-mode-delivery.md (d75a57c841abb70b1352c13ab74457fac1462725,73497 bytes)",
+      "docs/presentation-loading.md (1cdad25ec2dc64ae805537710b1882e18f78fca1,18433 bytes)",
+      "docs/default-journey-release.md (7b4c49295e5ecdd293c6e95417e0c49c52dc1933,9930 bytes)",
+      "docs/plan-status-2026-09-23.md (0bdb1ed624f285dd8fa164ddd9d4971717626049,61076 bytes)"
+    ],
+    "historicalPlansNotNewAuthority": true
+  },
+  "originalManifest": {
+    "file": "v1417-efbb-small-package-v2-0013/manifest.json",
+    "bytes": 321057,
+    "sha256": "76c13bd3027b0e0e3ee443c35a338914c03f7ae1b98fbdf487cfdf8a6206ee5f",
+    "allRowsParsed": 1751,
+    "totalBytes": 739546095,
+    "positivePaths": [
+      {
+        "path": "authoring/enemy-catalog/index.html",
+        "bytes": 3731,
+        "sha256": "b49c4fd3096c95f54f7dfc998841eb77f720acf772d8d652ab7b914a112793ed"
+      },
+      {
+        "path": "authoring/enemy-catalog/workshop.mjs",
+        "bytes": 8108,
+        "sha256": "2d28e6d1a5ef2168d70fdf1f0f9bbfa05f9b26105884e42d6476dc2c6b3f25fa"
+      },
+      {
+        "path": "game/company.html",
+        "bytes": 28355,
+        "sha256": "c71cb000468c2da8db3c49e45ac2a9d55dbc09febbd5e4192fe6ab8354fbeb5a"
+      },
+      {
+        "path": "game/couch/index.html",
+        "bytes": 69449,
+        "sha256": "af0a100c21409a6f4fefff193025fd8575396671bcb1ed6ffe2e3bdd024a2dd1"
+      },
+      {
+        "path": "game/couch/relay-rescue.html",
+        "bytes": 78990,
+        "sha256": "b5a3eaee4088622f716c9724a6d0ff6791faf8c3c3f19698009dca0039468059"
+      },
+      {
+        "path": "game/downloads.html",
+        "bytes": 34654,
+        "sha256": "51f040e60e693c7079e38e2926e22c9864498e3ac15e70098ada2493e61bff13"
+      },
+      {
+        "path": "game/index.html",
+        "bytes": 149445,
+        "sha256": "a7dc6bc8c1b58ca48dc748aa9c6a832f6baa16f90cbea1365ece042c90eea3c2"
+      }
+    ]
+  },
+  "browser": {
+    "surface": "Codex in-app browser",
+    "browserId": "2",
+    "tabId": "4",
+    "newAgentTab": true,
+    "freshBrowserProfile": false,
+    "visualScreenshotPixels": [1422, 800],
+    "actualPhysicalDevice": false,
+    "tests": [
+      {
+        "journey": "Queryless public root",
+        "result": "Reached versioned /releases/v0.141.7/site/game/ and Solo title, NEW JOURNEY / 91 MISSIONS, sound already off; visible More menu version v0.141.7."
+      },
+      {
+        "journey": "Solo Start / offline panel",
+        "result": "Start opened Solo Horizon package selection up to 63.5 MiB. Verification details runtime not-ready/prepareFirst/verified0, gameplay remaining23424857, no corrupt rows, launcher missing. Back returned to preparation-cancelled mission overlay with explicit Start mission; Home returned to title. No package download invoked."
+      },
+      {
+        "journey": "Versus ordinary title link",
+        "result": "Opened Versus Horizon package selection up to69.0MiB, not gameplay. Back returned focus to the Versus link. No download."
+      },
+      {
+        "journey": "Team ordinary title link",
+        "result": "Opened Team Foundation specialists package selection up to71.4MiB, not gameplay. Back returned focus to the Team link. No download."
+      },
+      {
+        "journey": "Mission library",
+        "result": "Actual UI Collection=Journey, Editions=Current, Campaign=All: Solo91, Versus91, Team12. Rendered card button counts independently91/91/12. Restored original Collection=All/Mode=Solo/Current/All campaigns and returned to title; no campaign selected or personal custom content opened."
+      },
+      {
+        "journey": "Enemy Workshop",
+        "url": "https://mekhovov.github.io/revealline/releases/v0.141.7/site/authoring/enemy-catalog/index.html",
+        "result": "Loading artwork/fonts resolved to dialog with actual tracked-tank preview, all seven role options and four presentation options. Read role details moved focus to the readable details. Did not apply/import/export authoring choices or start practice."
+      },
+      {
+        "journey": "Company startup",
+        "url": "https://mekhovov.github.io/revealline/releases/v0.141.7/site/game/company.html",
+        "result": "Redirected to index.html?company=1. Visible boot-time package dialog requested Coupa Village, up to103.9MiB. Back produced Flight on hold / Offline package selection closed / Reload game, not invisible waiting. UI states progress unchanged; no independent storage comparison claimed. No download."
+      },
+      {
+        "journey": "Release history",
+        "url": "https://mekhovov.github.io/revealline/releases/",
+        "result": "Current v0.141.7/efbb Play and original ZIP links; v0.141.6/d3b Download only; preserved existing archive99/98/97 Play links for v1415/1414/1413. No archives downloaded or old games launched."
+      }
+    ],
+    "captures": "AX/DOM and two inline tool screenshots observed; no saved screenshot file/hash claimed.",
+    "temporaryTabsClosed": ["5", "6", "7"],
+    "retainedTab": "4 via markHandoff"
+  },
+  "permission": {
+    "status": "AWAITING_OPTIONAL_USER_DOWNLOAD_CHOICE",
+    "requested": "May the test browser download Solo Starter up to63.5MiB to finish player/offline checks, without soundtrack bundle or source archive?",
+    "response": "Not received as of checkpoint",
+    "scope": "Only Solo63.5MiB was asked; later observed Versus69.0, Team71.4 and company103.9MiB are separate displayed selections, not cumulative measured transfers or approved downloads.",
+    "notProductFailure": true
+  },
+  "limitations": [
+    "No gameplay movement or completion",
+    "No full offline preparation or actual disconnected reload",
+    "No current worker ready/build identity assertion from this browser",
+    "No physical controller/touch/device/audio/listening/200%zoom or comprehensive phase approval",
+    "Shared browser storage already existed; no fresh-profile claim",
+    "PR716 remains deferred"
+  ],
+  "harnessFindings": [
+    {
+      "finding": "Generic Missions role locator matched two elements",
+      "effect": "Strict locator refusal before click; used already-observed #shell-play successfully",
+      "productDefect": false
+    }
+  ],
+  "queue": {
+    "observedBy": "2026-09-28T01:08:36Z",
+    "open": 1,
+    "draft": 0,
+    "stacked": 0,
+    "conflicting": 1,
+    "unknown": 0,
+    "deltaSince0056": {
+      "open": 0,
+      "draft": 0,
+      "stacked": 0,
+      "conflicting": 1,
+      "unknown": -1
+    },
+    "onlyPR": 716,
+    "head": "4679ab73399e61dde454053ad6baf4ab09419cea",
+    "mergeable": "CONFLICTING",
+    "mergeStateStatus": "DIRTY",
+    "codeReview": "DEFERRED"
+  },
+  "remote": {
+    "mainUnchanged": true,
+    "latestId": 397867239,
+    "latestVersion": "v0.141.7",
+    "nineAssetIdsSizesDigestsUnchanged": true,
+    "immutableFlag": false,
+    "newMerges": 0,
+    "totalDirectMerges": 5
+  },
+  "safety": {
+    "sourceWorktreeIndexUnchanged": true,
+    "noSourceRefRunReleaseWrites": true,
+    "noPackageOrArchiveDownloadsRequested": true,
+    "noCleanup": true,
+    "ownersFrozen": true,
+    "shardingUnapproved": true
+  },
+  "audioRetentionEvidence": {
+    "file": "audio-source-retention-audit-704a.json",
+    "sha256": "224cd93c3a7ef5e10708e83ae77b2e5958a52cd279ed198d12aeb60afdb6c3ce"
+  },
+  "next": "Resolve download choice before downloads; then actual bounded gameplay/offline/affected company and tool journeys. Do not resume PR716 or claim full player acceptance yet. No repeat merge/freeze/upload/publish/deploy."
+}

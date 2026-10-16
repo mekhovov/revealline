@@ -107,6 +107,29 @@ test('details, lazy cards and progress remain independent for each qualified mod
     }
 });
 
+test('combined Journey forwards live presentation through its exact source binding', () => {
+  const solo = fixture('solo'),
+    versus = fixture('versus');
+  let language = 'en';
+  solo.source.presentation = (mission) => {
+    assert(solo.catalog.missions.includes(mission));
+    return {
+      name: language === 'uk' ? 'Спільна місія' : mission.name,
+      edition: language === 'uk' ? 'Нова подорож' : 'New Journey',
+    };
+  };
+  const library = createMissionLibrary([combineJourneyLibrarySources([solo, versus])]);
+  const row = library.missions[0];
+  const original = JSON.stringify(row);
+  language = 'uk';
+  assert.equal(library.presentation(row).edition, 'Нова подорож');
+  assert.equal(library.search('спільна місія', { mode: 'versus' })[0], row);
+  assert.equal(library.launch(row, { mode: 'versus' }).original, versus.catalog.missions[0]);
+  language = 'en';
+  assert.equal(library.presentation(row).edition, 'New Journey');
+  assert.equal(JSON.stringify(row), original);
+});
+
 test('availability and preparation are delegated to the selected mode without preparing its sibling', async () => {
   const solo = fixture('solo'),
     versus = fixture('versus');

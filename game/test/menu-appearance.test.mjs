@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { parse } from 'parse5';
 import { createMenuAppearance } from '../ui/menu-appearance.mjs';
 import {
   FPV_FIELD_KIT_MENU_STYLE,
@@ -219,9 +220,37 @@ test('the static menu stylesheet does not animate decorations or style canvas, H
 test('Solo, Versus and Team expose the same two UI skin names independently of actors', async () => {
   for (const path of ['../index.html', '../couch/index.html', '../couch/relay-rescue.html']) {
     const html = await readFile(new URL(path, import.meta.url), 'utf8');
-    assert.match(html, />UI skin<select id="(?:race-|coop-)?menu-palette">/);
-    assert.match(html, /<option value="auto">Neon Arcade<\/option>/);
-    assert.match(html, /<option value="ukrainian">FPV Field Kit<\/option>/);
+    const nodes = [];
+    const visit = (node) => {
+      nodes.push(node);
+      node.childNodes?.forEach(visit);
+    };
+    visit(parse(html));
+    const attribute = (node, name) => node.attrs?.find((item) => item.name === name)?.value;
+    const text = (node) =>
+      node.nodeName === '#text' ? node.value : (node.childNodes || []).map(text).join('');
+    const select = nodes.find(
+      (node) =>
+        node.tagName === 'select' && /^(?:race-|coop-)?menu-palette$/.test(attribute(node, 'id')),
+    );
+    assert.ok(select, 'Each host retains its native skin selector');
+    assert.equal(select.parentNode.tagName, 'label');
+    const caption = select.parentNode.childNodes.find(
+      (node) => attribute(node, 'data-i18n') === 'interface:uiSkin',
+    );
+    assert.equal(text(caption).trim(), 'UI skin');
+    const options = select.childNodes.filter((node) => node.tagName === 'option');
+    assert.deepEqual(
+      options.map((node) => [
+        attribute(node, 'value'),
+        text(node).trim(),
+        attribute(node, 'data-i18n'),
+      ]),
+      [
+        ['auto', 'Neon Arcade', 'interface:neonArcade'],
+        ['ukrainian', 'FPV Field Kit', 'interface:fpvFieldKit'],
+      ],
+    );
   }
 });
 

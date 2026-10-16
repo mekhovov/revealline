@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Snake result acceptance fixture</title>
+    <style>
+      body {
+        background: #101b23;
+        color: #eee9d9;
+        font: 18px system-ui;
+        max-width: 48rem;
+        margin: 2rem auto;
+        padding: 1rem;
+      }
+      label {
+        display: block;
+        margin: 1rem 0;
+      }
+      button,
+      select,
+      a {
+        font: inherit;
+        padding: 0.6rem;
+        background: #34464e;
+        color: inherit;
+        border: 1px solid #9caeb0;
+      }
+      a {
+        display: inline-block;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body id="snake-result-fixture">
+    <h1>Real Snake result verification</h1>
+    <p>
+      Use a fresh localhost port reserved for this fixture. It prepares a verified saved attempt one
+      move before completion. The real host performs Continue, victory, countdown and menu actions.
+      This page refuses to overwrite a pre-existing Snake save unless this origin was already
+      reserved by the fixture.
+    </p>
+    <form id="prepare">
+      <label
+        >Players
+        <select id="mode">
+          <option value="solo">Solo</option>
+          <option value="team">Team</option>
+          <option value="versus">Versus</option>
+        </select></label
+      ><label
+        >Language
+        <select id="locale">
+          <option value="en">English</option>
+          <option value="uk">Українська</option>
+        </select></label
+      ><button>Prepare accepted near-clear attempt</button>
+    </form>
+    <p id="status" role="status">
+      Set the viewport before opening the game. Continue finishes through normal simulation.
+    </p>
+    <a id="launch" hidden>Open real Snake game</a>
+    <script type="module" src="./snake-result-fixture.mjs"></script>
+  </body>
+</html>

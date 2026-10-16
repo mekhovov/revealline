@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "districts": [
+    {
+      "start": "mare-apron",
+      "geometryBytes": 229812,
+      "windows": 4,
+      "collisionAndGeometryIdentical": true
+    },
+    {
+      "start": "ejecta-fan",
+      "geometryBytes": 323088,
+      "windows": 4,
+      "collisionAndGeometryIdentical": true
+    },
+    {
+      "start": "sinuous-rille",
+      "geometryBytes": 311580,
+      "windows": 4,
+      "collisionAndGeometryIdentical": true
+    },
+    {
+      "start": "terraced-crater",
+      "geometryBytes": 318468,
+      "windows": 4,
+      "collisionAndGeometryIdentical": true
+    },
+    {
+      "start": "fractured-highland",
+      "geometryBytes": 493116,
+      "windows": 4,
+      "collisionAndGeometryIdentical": true
+    },
+    {
+      "start": "observatory-ridge",
+      "geometryBytes": 548808,
+      "windows": 4,
+      "collisionAndGeometryIdentical": true
+    }
+  ],
+  "sourceFilesVerified": 114,
+  "texturesAdded": 0,
+  "newRuntimeModules": 0,
+  "geometryChanged": false,
+  "nativeGPUAccepted": false,
+  "playerAdmission": false
+}

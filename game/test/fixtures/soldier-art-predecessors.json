@@ -1,0 +1,21 @@
+{
+  "sourceRevision": "41441fc60a7321bf40a174ba76f2d92291b14aab",
+  "scope": "Native renderer raster output for all36identities at16/32px, walk/notice/recovery. Generated from the exact historical source before successor edits.",
+  "rows": [
+    {
+      "revision": "released",
+      "specimens": 216,
+      "rgbaSha256": "b29a2083f51a615830d1a0a77fd85ad6743f9c2fda90c45386b8165a8fb31024"
+    },
+    {
+      "revision": "industrial-pilot-v1",
+      "specimens": 216,
+      "rgbaSha256": "487c04ca6677d57e8f14f261d24eedc1240b34dfff6935454e3d0eab14436c37"
+    },
+    {
+      "revision": "industrial-overhead-v2",
+      "specimens": 216,
+      "rgbaSha256": "6997c5df688cd99be4285d1ae2a220e37def265caf4b70a51b0b80eae4193ffb"
+    }
+  ]
+}

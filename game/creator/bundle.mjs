@@ -1,7 +1,7 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mjs';
 import { validateTheme } from '../content.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
-import { loadPreviewArtwork } from '../content-design/assets.mjs';
+import { assetRevisionMime, loadPreviewArtwork } from '../content-design/assets.mjs';
 import { freezeDesign } from '../content-design/catalogs.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { openVideoPosterSource, VIDEO_POSTER_LIMITS } from '../video-poster.mjs';
@@ -272,7 +272,7 @@ function requiredAssetFacts(content) {
   const wanted = new Map(
     content.project.assets.map((asset) => [
       asset.sha256,
-      { sha256: asset.sha256, bytes: asset.bytes, mime: 'image/png', kind: 'poster' },
+      { sha256: asset.sha256, bytes: asset.bytes, mime: assetRevisionMime(asset), kind: 'poster' },
     ]),
   );
   for (const [sha256, facts] of creatorStoryAssetFacts(content.media)) {
@@ -341,7 +341,7 @@ export async function prepareCreatorBundle(
     required(
       facts.sha256 === asset.sha256 &&
         facts.bytes === asset.bytes &&
-        facts.mime === 'image/png' &&
+        facts.mime === assetRevisionMime(asset) &&
         facts.width === asset.width &&
         facts.height === asset.height,
       'Reveal picture bytes differ from the project pin. Prepare and review the picture again.',
@@ -377,7 +377,7 @@ export async function prepareCreatorBundle(
       const facts = requiredFacts.get(sha256);
       return content.media
         ? { sha256, bytes: blob.size, mime: facts.mime, kind: facts.kind }
-        : { sha256, bytes: blob.size, mime: 'image/png' };
+        : { sha256, bytes: blob.size, mime: facts.mime };
     }),
   });
   const encoded = new TextEncoder().encode(canonicalJSON(document));
@@ -465,7 +465,7 @@ export async function inspectCreatorManifest(source) {
                 mime: asset.mime,
                 kind: asset.kind,
               }
-            : { sha256: asset.sha256, bytes: asset.bytes, mime: 'image/png' },
+            : { sha256: asset.sha256, bytes: asset.bytes, mime: asset.mime },
         ),
       ),
     'Manifest inventory differs from its required pictures and victory videos.',
@@ -566,7 +566,8 @@ export async function importCreatorBundle(
         offset + row.bytes <= blob.size &&
         (video
           ? ['video/mp4', 'video/webm'].includes(row.mime)
-          : row.mime === 'image/png' && (!manifest.content.media || row.kind === 'poster')),
+          : ['image/png', 'image/jpeg', 'image/webp'].includes(row.mime) &&
+            (!manifest.content.media || row.kind === 'poster')),
       'Invalid or truncated content asset.',
     );
     assets.push({ sha256: row.sha256, blob: blob.slice(offset, offset + row.bytes, row.mime) });
@@ -586,7 +587,7 @@ export async function importCreatorBundle(
   return prepared;
 }
 
-/** Preserve the existing logical PNG path and private verified-artwork brand.
+/** Preserve the exact logical raster path and private verified-artwork brand.
  * A path can only resolve to a dependency in this exact prepared edition. */
 export function creatorArtworkLoader(prepared) {
   required(preparations.has(prepared), 'Prepare the content pack before resolving artwork.');
@@ -603,7 +604,7 @@ export function creatorArtworkLoader(prepared) {
         );
         const bytes = prepared.assets.find((item) => item.sha256 === pin.sha256);
         required(bytes, 'This edition’s picture bytes are missing. Reinstall its exact pack.');
-        return new Response(bytes.blob, { headers: { 'Content-Type': 'image/png' } });
+        return new Response(bytes.blob, { headers: { 'Content-Type': assetRevisionMime(pin) } });
       },
     });
 }

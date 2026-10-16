@@ -1,0 +1,25 @@
+{
+  "sourceRevision": "4dab801d9ce03b42227e99388b066c378c81ca02",
+  "layout": "chalk-quarry-haul-switchbacks",
+  "seed": 17031991,
+  "operation": "Single Drone",
+  "quality": "normal",
+  "clip": "quarry-active-fan-4dab.webm",
+  "sha256": "8a1f9394795fca23f5b18e2236161682fb9f200c6e6c4ab48e41e470b95ad31c",
+  "clipScope": "Native20secondbattlefield-only capture from approx152gameplayseconds; activeautomaticpilot,Fan/Slowfield/SideBurst,masteraudioenabled; includesSFX/voices, excludesexternalmusic/HUD/cards. Capturedaftercompletedtimingtrial, notpartofperformanceevidence.",
+  "manualContinuation": {
+    "takeControlAtApproxSeconds": 181,
+    "startingHull": 80,
+    "startingAirframes": 3,
+    "startingCleared": 874,
+    "input": "No steering,boostorFocusafterTakeControl",
+    "outcome": "lost",
+    "endingSeconds": 200,
+    "endingCleared": 1049,
+    "endingDamage": 300,
+    "damageCause": "contact",
+    "upgradesEarned": 8,
+    "personalRecordsSaved": false,
+    "evidence": "NativeHUD/resultsobservedthroughCUA; nofollow-upvideowassavedbecauserunendedbeforetherecordingaction."
+  }
+}

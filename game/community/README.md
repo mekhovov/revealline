@@ -1,4 +1,21 @@
-# Community store browser boundary
+# Community directory and creator store
+
+`../communities/index.html` is the static company directory linked from the repository guide and public
+website. It opens the main game and all public communities through portable friendly entry URLs.
+`index.html` preserves older directory bookmarks by forwarding to `../communities/`. It
+does not load catalog, account, publishing or upload clients, so it works on GitHub Pages
+without a server. Its English links still work when JavaScript is unavailable; the local
+i18n bootstrap adds English/Ukrainian selection.
+
+`store.html` preserves the separate creator marketplace previously served at `index.html`.
+Serve it only as a service-enabled entry, with this Node service and `/api/auth` behind a
+same-origin HTTPS proxy. GitHub Pages alone cannot operate that marketplace. The company
+directory does not link to the creator marketplace or instantiate its storage adapters.
+
+Company games do not link back to the directory or offer other companies in their campaign
+selector. Read [the routing and isolation contract](../../docs/company-communities.md).
+
+## Creator store browser boundary
 
 This directory implements the Phase 5 browser client on top of the creator-layouts.v3 content
 history. Browsing, installing, and local creation remain account-free. Publishing and owner
@@ -20,15 +37,29 @@ Before **Remove recovery download** becomes valid, the library verifies both the
 and a byte-identical package reconstructed from the installed edition. Removal is rejected if that
 review is stale or installed runtime changed. The operation deletes only the Cache Storage copy;
 it does not mutate the creator manifest/media authority, the saved-attempt key or the progress
-profile. Physical installed-media offloading is not implemented because the current managed-media
-format intentionally forbids removing historical references.
+profile.
+
+**Offload installed media** is available only while that byte-exact recovery package is retained.
+The library revalidates the package, reconstructs the installed edition and compares it with the
+published identity before preparing the removal. The commit keeps the immutable manifest and an
+offloaded marker, detaches only runtime asset references that no other active edition needs, and
+lets the managed store delete a physical blob only when no media domain still references its hash.
+Saved attempts, completion records and earned-picture ownership remain under their existing exact
+edition keys. **Reinstall exact edition** consumes the retained package locally, removes the marker
+and restores the same runtime identity without a network request. A changed package, stale media
+generation or concurrent tab causes the operation to stop before detaching bytes. Browser Web
+Locks serialize package/install mutations for one community edition, while an `offloading` state
+journal makes an interrupted cross-store commit recoverable from the retained package and the
+authoritative managed-media marker.
 
 The client exposes explicit adapters for:
 
 - cursor pagination and bounded `q` search;
 - bounded PNG/JPEG catalog previews loaded only after the player asks;
 - report submission;
+- administrator-only report pagination, resolution and exact-edition unlisting;
 - immutable download/install and server-declared update metadata;
+- reference-aware exact-edition offload and offline reinstall;
 - owner-only publication status and unlisting; and
 - direct upload for development services and bounded tus 1.0 resumable upload for production.
 
@@ -51,3 +82,10 @@ An embedding host can still override this same-origin behavior by exposing
 Remote titles and descriptions are rendered through `textContent`. Preview responses must be PNG
 or JPEG under 4 MiB. Reports accept a bounded reason and optional text. Public catalog reads and
 reports do not need the publishing account adapter.
+
+`moderation.html` is the same-origin administrator console. It reuses the account session, while
+the service remains the authority for the `admin` role. The queue never receives reporter identity,
+renders all remote fields with `textContent`, and fetches reported artwork only after an explicit
+**Load preview** action. **Unlist and resolve** removes the immutable edition from discovery before
+recording the report resolution. If the second request fails, the page states that the edition is
+already unlisted and leaves the report open for a safe retry. Installed copies remain playable.

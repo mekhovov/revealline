@@ -1,0 +1,34 @@
+{
+  "format": "FPVWoodlandTreeFormsMergeQualification.v1",
+  "date": "2026-10-03T16:33:24.209Z",
+  "base": "ce6af3e65fba251d82f41d0178f8f631a7fc969e",
+  "previousHead": "a0f5b5f4b61bc169e8daae712aa07b87aee2ec98",
+  "reviewedCombinedSource": "51e3b6d66863032b42843327a943bc50f976ddee",
+  "worldVisualsByteIdenticalToCombined": true,
+  "unchanged": {
+    "optional-practice/civilian-fpv/world-assets.mjs": true,
+    "authoring/fpv-worlds/scenery-runtime.template.mjs": true
+  },
+  "exactPackageModules": {
+    "world-visuals.mjs": "e5886b9ec79946daac57beb3b1c0d9b021877570aa2707bfa4666092fc99b2ac",
+    "world-assets.mjs": "13a5711d9002e0eefb91c9899d02f7ded9b11d0fc6755c8957f9d5dbcb61cac7",
+    "renderer.mjs": "f2cb9c494d886a44e92da1fccd012d8ece60446d02e13dd1c733c99e6558227f",
+    "world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549"
+  },
+  "existingChecks": {
+    "passed": 30,
+    "total": 30
+  },
+  "restoration": "The #999 main merge removed #992 foliage code. This merge retains the prior branch foliage/form ownership and imports the field recipe; the resolved visual module matches reviewed combined source exactly.",
+  "scope": "Source and package identity; prior geometry/GPU/browser evidence is not relabeled as a fresh browser run.",
+  "package": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 94,
+    "bytes": 15389187,
+    "zipSha256": "e52d101fe4f5fdee660231cc8865c53b5ca88d259dea455b83c70d602aa8bca6",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  }
+}

@@ -9,6 +9,11 @@ export const EXECUTION_CATALOG_LIMITS = Object.freeze({
   entryNodes: 400000,
 });
 
+// Read-only provenance for derived presentation caches. This cannot register an
+// external array or grant execution ownership to a copied wrapper.
+const ownedEntryArrays = new WeakSet();
+export const isOwnedExecutionEntries = (entries) => ownedEntryArrays.has(entries);
+
 const freeze = (value) => {
   if (value && typeof value === 'object') {
     for (const child of Object.values(value)) freeze(child);
@@ -96,8 +101,10 @@ export function createExecutionCatalog(authoredEntries) {
       byBase.get(entry.baseCampaignKey).set(entry.difficulty, entry);
     }
   }
+  Object.freeze(entries);
+  ownedEntryArrays.add(entries);
   return Object.freeze({
-    entries: Object.freeze(entries),
+    entries,
     find(executionKey) {
       return typeof executionKey === 'string' ? (byKey.get(executionKey) ?? null) : null;
     },

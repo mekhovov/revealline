@@ -1,0 +1,149 @@
+{
+  "format": "fpv-motion-teaching-browser-verification.v1",
+  "createdAt": "2026-10-01T22:58:14.925Z",
+  "url": "http://127.0.0.1:8789/dist/fpv-motion-verification/index.html",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "scope": "Actual shared SVG geometry with controlled commands/positions. Illustrative motor mix, no RPM or physical-radio/performance claim.",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Positive pitch motor response",
+      "passed": true,
+      "power": [0.28, 0.28, 0.72, 0.72]
+    },
+    {
+      "name": "Positive roll motor response",
+      "passed": true,
+      "power": [0.72, 0.28, 0.72, 0.28]
+    },
+    {
+      "name": "Positive yaw motor response",
+      "passed": true,
+      "power": [0.28, 0.72, 0.72, 0.28]
+    },
+    {
+      "name": "Negative pitch motor response",
+      "passed": true,
+      "power": [0.72, 0.72, 0.28, 0.28]
+    },
+    {
+      "name": "Negative roll motor response",
+      "passed": true,
+      "power": [0.28, 0.72, 0.28, 0.72]
+    },
+    {
+      "name": "Negative yaw motor response",
+      "passed": true,
+      "power": [0.72, 0.28, 0.28, 0.72]
+    },
+    {
+      "name": "Props-in diagonals alternate clockwise/counterclockwise",
+      "passed": true
+    },
+    {
+      "name": "Combined controls produce four independent normalized outputs",
+      "passed": true,
+      "powers": [0.654, 0.21399999999999997, 0.6980000000000001, 0.434]
+    },
+    {
+      "name": "Throttle increases all four outputs equally with centred rotation",
+      "passed": true
+    },
+    {
+      "name": "Zero throttle and unavailable input produce zero output",
+      "passed": true
+    },
+    {
+      "name": "Independent propeller phase follows each output and rotation sign",
+      "passed": true,
+      "deltas": [
+        0.20546015954477248, -0.06723008278682154, -0.21928316722056818, 0.1363451211657969
+      ]
+    },
+    {
+      "name": "Changing commands at one tick never jumps blade phase",
+      "passed": true
+    },
+    {
+      "name": "Paused repeated frames retain exact propeller and ground state",
+      "passed": true
+    },
+    {
+      "name": "Reduced motion freezes decorative phase while preserving output feedback",
+      "passed": true
+    },
+    {
+      "name": "Backward seek resets and large forward seek never catches up animation",
+      "passed": true
+    },
+    {
+      "name": "Repeated recorded tick/command sequence produces identical phases",
+      "passed": true
+    },
+    {
+      "name": "Actual right translation moves world grid opposite",
+      "passed": true,
+      "before": [110, 150],
+      "after": [101, 150],
+      "offset": {
+        "x": 0.25,
+        "z": 0
+      }
+    },
+    {
+      "name": "Actual left translation moves world grid opposite",
+      "passed": true,
+      "before": [110, 150],
+      "after": [119, 150],
+      "offset": {
+        "x": -0.25,
+        "z": 0
+      }
+    },
+    {
+      "name": "Actual forward translation moves world grid opposite",
+      "passed": true,
+      "before": [110, 150],
+      "after": [110, 153.7728928131632],
+      "offset": {
+        "x": 0,
+        "z": -0.25
+      }
+    },
+    {
+      "name": "Actual backward translation moves world grid opposite",
+      "passed": true,
+      "before": [110, 150],
+      "after": [110, 146.55774149594816],
+      "offset": {
+        "x": 0,
+        "z": 0.25
+      }
+    },
+    {
+      "name": "Velocity alone never drifts the world grid",
+      "passed": true
+    },
+    {
+      "name": "Actual rise and descent change height, separation and shadow coherently",
+      "passed": true
+    },
+    {
+      "name": "Rear-follow yaw rotates world reference while preserving full inversion",
+      "passed": true
+    },
+    {
+      "name": "Compact HUD retains fixed reference and suppresses lab labels",
+      "passed": true
+    },
+    {
+      "name": "Disposal removes owned geometry",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "abe4b0b40860acb503f39c4ea44fe99d224d56001d14ab5365ed25657d1679bc",
+    "optional-practice/civilian-fpv/style.css": "eb388f40541cf1fb0ffc48f01e31cc77d3031ffbd46eee422d2bf841a9209fce",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+  }
+}

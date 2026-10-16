@@ -1,0 +1,60 @@
+{
+  "format": "revealline-menu-scene-prompts.v1",
+  "created": "2026-09-29",
+  "generator": "OpenAI built-in image_gen",
+  "rights": "Original project artwork generated for the user; no third-party stock assets. Existing project FPV artwork supplied only as style/composition reference.",
+  "images": [
+    {
+      "id": "fpv-versus",
+      "file": "fpv-versus-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: FPV / LINE game landing background for VERSUS mode, a new original composition.\nInput image role: the supplied FPV Solo hangar painting is a reference for pixel-art rendering, dusk navy/amber/cyan palette, believable miniature FPV quadcopters and the quiet workshop atmosphere. Do not copy or overwrite the Solo composition.\nCreate a landscape 3:2 pixel-art illustration of this welcoming orchard-side hangar at sunrise. Two compact racing FPV quadcopters sit on two separate low launch stands in the right portion of the frame, facing inward toward each other in a clear friendly rivalry. One has a small amber indicator; the other a small cyan indicator. Their four-motor shapes, camera housings and opposing orientations must read clearly. No combat, weapons or humans.\nComposition: reserve the left 50% as very dark, low-detail hangar wall for the menu. Keep BOTH complete drones and stands in a vertically staggered arrangement inside the rightmost central corridor, approximately x64\u201391%, y48\u201382%, so a narrow portrait crop of the right third still contains both opposing actors. Do not spread the drones across the whole frame. In the upper right, an open door reveals warm sky with distinct horizontal painted cloud wisps and a few orchard leaves, providing scenery to animate later. A small cyan workshop lamp can sit just above the drones.\nStyle: crisp authored pixel clusters and stepped silhouettes, rich but restrained pixel-art shading, consistent with the reference. No vector flat shapes, no smooth photorealism, no blurred airbrush.\nConstraints: no lettering, logo, labels, numbers, UI, buttons, borders or watermark. Opaque full artwork, full frame. This must look like a finished native-game title background with a visually distinct two-rival-drone composition.",
+      "references": ["game/ui/art/menu-scenes/fpv.webp"],
+      "referenceRole": "Pixel-art identity and composition reference; source raster preserved unchanged.",
+      "referenceSha256": {
+        "game/ui/art/menu-scenes/fpv.webp": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+      },
+      "sourceSha256": "f83aeadae7832b0f50fd78465bd4f71e3e9750f6f5792191a9524f39ffcdaa95"
+    },
+    {
+      "id": "fpv-team",
+      "file": "fpv-team-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: FPV / LINE game landing background for TEAM mode, a new original composition.\nInput image role: the supplied Solo hangar is a reference for crisp pixel-art clusters, navy/amber/cyan palette, miniature FPV quadcopter detail and orchard-side workshop atmosphere. Preserve that identity without copying its single-drone composition.\nCreate a landscape 3:2 pixel-art illustration of the same welcoming hangar at sunrise. Two compact FPV quadcopters are arranged as a coordinated pair on ONE shared wooden preparation platform, both facing the same direction toward the open orchard doorway. A small central service dock with two tidy cables visibly connects the pair, communicating a linked team preparing together. Their matching amber straps and cyan readiness lights form a coherent pair. The two cameras, four motors per drone, propellers and shared dock must remain readable. No weapons, humans or combat.\nComposition: leftmost 48% is very dark quiet low-detail hangar wall for menu text. Put the shared platform and two complete drones in the lower right, staggered front/back rather than widely separated, with warm negative space between their silhouettes. Upper right: dawn sky with clearly painted horizontal clouds, leafy orchard branches around the door, warm sunlight along the workbench. Include one small cyan hanging work light in the dark doorway.\nStyle/medium: finished native-game background with precise stepped pixel silhouettes, rich deliberate pixel clusters and controlled contrast matching the reference, no photorealistic smoothness or airbrushed blur.\nConstraints: no letters, logos, names, words, symbols, UI, controls, borders or watermark. Opaque full-frame artwork. The picture must visibly communicate coordinated linked partners, distinct from a lone drone and from opposing rivals.",
+      "references": ["game/ui/art/menu-scenes/fpv.webp"],
+      "referenceRole": "Pixel-art identity and composition reference; source raster preserved unchanged.",
+      "referenceSha256": {
+        "game/ui/art/menu-scenes/fpv.webp": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45"
+      },
+      "sourceSha256": "12e0441e48e25ab418cf49fae754146d5e8f8f2251d3097c728f4434e699e1f5"
+    },
+    {
+      "id": "fpv-versus-portrait",
+      "file": "fpv-versus-portrait-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: portrait FPV / LINE VERSUS landing background, new portrait composition.\nInput images: image1 is the approved Versus landscape design to preserve its two rival drone identities and separate opposing launch stands; image2 is the approved Solo portrait for tall framing, quiet upper hangar and pixel-art identity.\nCreate a tall portrait 9:16 original pixel-art composition. Upper55%: quiet very dark navy hangar ceiling and wall with almost no detail, giving the game's vertical menu clear space. Right edge opens to a narrow golden sunrise orchard view, painted cloud wisps and leafy tree edges visible at midheight.\nLower45%: TWO complete FPV quadcopters on SEPARATE low launch stands, facing inward toward one another as friendly rivals. Amber-strapped drone slightly higher and to the left; cyan-strapped drone lower and to the right. Stagger vertically so both actors and all propellers fit inside the central70% of the image width, with breathing room at both edges. Do not merely crop the landscape. Their opposing orientations must read distinctly; preserve plausible four-motor FPV designs and camera housings. No humans or combat.\nStyle: crisp deliberate pixel clusters, navy shadows, warm amber wood and cyan worklamp. Match reference paintings. Tiny cyan hanging lamp on the left around midheight and sky/foliage within the doorway are later-animation regions.\nNo text, letters, symbols, logos, UI, controls, frames or watermark. Opaque full-frame artwork.",
+      "references": [
+        "authoring/library/menu-scenes/fpv-versus-v1.png",
+        "game/ui/art/menu-scenes/fpv-portrait.webp"
+      ],
+      "referenceRole": "Pixel-art identity and composition reference; source raster preserved unchanged.",
+      "referenceSha256": {
+        "authoring/library/menu-scenes/fpv-versus-v1.png": "f83aeadae7832b0f50fd78465bd4f71e3e9750f6f5792191a9524f39ffcdaa95",
+        "game/ui/art/menu-scenes/fpv-portrait.webp": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24"
+      },
+      "sourceSha256": "7065a6b6392bbb308aeca8a64a4e5782abc08b919fb120097ab02873497badfe"
+    },
+    {
+      "id": "fpv-team-portrait",
+      "file": "fpv-team-portrait-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: portrait FPV / LINE TEAM landing background, new portrait composition.\nInput images: image1 is the approved Team landscape to preserve its coordinated two-drone identity and single connected service dock; image2 is the approved Solo portrait for the tall composition, dark upper hangar and pixel-art identity.\nCreate a tall portrait 9:16 original pixel-art illustration. Upper55% is quiet very dark navy hangar wall and ceiling with little contrast for menu text. A narrow doorway on the right reveals warm sunrise cloud wisps and orchard foliage around midheight; a small cyan work light is visible on the left.\nLower45%: TWO complete FPV quadcopters on ONE shared wooden workbench, coordinated in the same forward orientation, staggered front/back within the central70% of image width. Both have matching amber straps and cyan readiness lights, facing toward the same path rather than each other. A single small service dock sits clearly between/below them with one tidy cable to each drone, making their partnership visible. Keep each four-motor silhouette, propellers and camera housing separate and readable. Both complete drones must fit on a narrow portrait phone screen. This is a redesigned tall composition, not a landscape crop.\nMatch crisp deliberate stepped pixel clusters and palette of the references; warm amber wood, deep navy interior and restrained cyan. No smooth photographic rendering, no blur.\nNo letters, words, symbols, logos, UI, controls, frames or watermark. Opaque full-frame artwork, no people or weapons.",
+      "references": [
+        "authoring/library/menu-scenes/fpv-team-v1.png",
+        "game/ui/art/menu-scenes/fpv-portrait.webp"
+      ],
+      "referenceRole": "Pixel-art identity and composition reference; source raster preserved unchanged.",
+      "referenceSha256": {
+        "authoring/library/menu-scenes/fpv-team-v1.png": "12e0441e48e25ab418cf49fae754146d5e8f8f2251d3097c728f4434e699e1f5",
+        "game/ui/art/menu-scenes/fpv-portrait.webp": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24"
+      },
+      "sourceSha256": "ad1188957c019213e696c16ef964cfae67062e36e3302bb31e085b68e6b6d715"
+    }
+  ]
+}

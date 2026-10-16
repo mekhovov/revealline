@@ -1,3 +1,4 @@
+import { resolvePresentation as resolveInterface } from '../presentation/theme-system.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -17,6 +18,7 @@ import { drawClassicTerrain, drawClassicPickups } from '../ui/classic-view.mjs';
 import { createEnemyPresentations } from '../enemy-presentations.mjs';
 import { createEnemyBodyAssets, createEnemyImagePool } from '../ui/enemy-body-assets.mjs';
 import { canvasTextFonts } from '../text-face.mjs';
+import { getLocale, setLocale, t } from '../i18n/index.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url)));
 const presets = read('../../authoring/motion-lab/presets.json');
@@ -167,15 +169,22 @@ test('phone and microtile presentations choose compact art; explicit player and 
 test('compiled enemy bodies skip legacy image loads while explicit skins retain the original body path', () => {
   const { painter, run, sprites } = fixture(),
     original = image('legacy-selected-body'),
-    requested = [];
+    requested = [],
+    metadata = [];
   painter.enemyBodies = {
-    update: (frames) => requested.push([...frames].map((frame) => frame.type)),
+    update: (frames, _uploaded, { image: needsImage = () => true } = {}) => {
+      // Compiled bodies still request motion metadata. Only bitmap acquisition
+      // is filtered by the loader's current image predicate.
+      metadata.push([...frames].map((frame) => frame.type));
+      requested.push([...frames].filter(needsImage).map((frame) => frame.type));
+    },
     current: () => ({ image: original, record: { motion: [] } }),
   };
   run.enemies = [{ id: 'guard', type: 'bouncer', x: 10, y: 10, vx: 1, vy: 1, radius: 0.2 }];
   const before = authoritativeCheckpoint(run),
     published = surface();
   painter.draw(published.ctx, run, 0, { paused: true, reduced: true });
+  assert.deepEqual(metadata.at(-1), ['bouncer']);
   assert.deepEqual(requested.at(-1), []);
   assert.equal(draws(published.calls, sprites['enemy.bouncer'].image).length, 1);
   assert.equal(draws(published.calls, original).length, 0);
@@ -310,6 +319,37 @@ test('campaign and historical actor paths remain identical; unprepared explicit 
       /actor/i,
     );
     assert.equal(canvas.calls.length, 0);
+  }
+});
+
+test('actor preparation errors translate without advancing or painting the flight', () => {
+  const originalLocale = getLocale();
+  const { painter, run } = fixture(themes.find((theme) => theme.id === 'ukraine'));
+  const before = authoritativeCheckpoint(run);
+  try {
+    for (const locale of ['uk', 'en']) {
+      setLocale(locale);
+      for (const [actorAppearance, key] of [
+        [
+          { style: 'fpv', snapshot: null },
+          'interface:actorAppearanceRequiresASupportedStyleAndPreparedFpvAssets',
+        ],
+        [
+          { style: 'fpv', snapshot: { image: () => null } },
+          'interface:actorAppearanceIsMissingThePreparedPlayerRole',
+        ],
+      ]) {
+        const canvas = surface();
+        assert.throws(() => painter.draw(canvas.ctx, run, 0, { actorAppearance }), {
+          name: 'TypeError',
+          message: t(key),
+        });
+        assert.deepEqual(authoritativeCheckpoint(run), before);
+        assert.equal(canvas.calls.length, 0);
+      }
+    }
+  } finally {
+    setLocale(originalLocale);
   }
 });
 
@@ -621,4 +661,26 @@ test('cosmetic look status starts before image completion and an obsolete look c
   await superseded;
   assert.equal(statuses.length, proceduralCount, 'obsolete pixels cannot revive their status');
   assert.equal(painter.image, null);
+});
+
+test('interface font switching keeps the authored sprite and presentation lease', () => {
+  const { painter, run, sprites } = fixture(),
+    canvas = surface();
+  run.player.queuedDirection = 'right';
+  const source = painter.presentation,
+    before = authoritativeCheckpoint(run);
+  const interfaceTheme = resolveInterface({ familyId: 'industrial-workshop' });
+  painter.setInterfaceProvider(() => interfaceTheme);
+  painter.draw(canvas.ctx, run);
+  assert.equal(painter.presentation, source);
+  assert.equal(painter.artSnapshot, source);
+  assert.ok(
+    canvas.calls.some((call) => call.op === 'fillText' && /Field Kit (UI|Mono)/.test(call.font)),
+  );
+  assert.ok(
+    draws(canvas.calls, sprites['player.scout.compact'].image).length > 0 ||
+      draws(canvas.calls, sprites['player.scout.detailed'].image).length > 0,
+  );
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+  painter.dispose();
 });

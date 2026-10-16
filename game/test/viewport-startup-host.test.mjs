@@ -490,7 +490,7 @@ test('independent display and real startup launcher preserve preferences, focus 
   assert.equal(h.frameSourceWrites(), 0);
   assert.equal(frame.hidden, true);
   h.$('load-target').focus();
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   assert.equal(frame.src, '../../game/couch/');
   assert.equal(h.frameSourceWrites(), 1);
   h.$('target').value = 'solo';
@@ -583,7 +583,7 @@ test('all five real Viewport presets preserve loaded and pending game ownership 
   };
   for (const loaded of [false, true]) {
     if (loaded) {
-      h.$('target-form').emit('submit');
+      h.$('load-target').click();
       assert.equal(frame.src, '../../game/couch/');
       assert.equal(h.frameSourceWrites(), 1);
       h.$('target').value = 'solo';
@@ -617,11 +617,11 @@ test('all five real Viewport presets preserve loaded and pending game ownership 
     }
   }
   // Only the deliberate Load action may replace the preserved Couch child.
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   assert.equal(frame.src, '../../game/');
   assert.equal(h.frameSourceWrites(), 2);
   assert.ok(h.$('game-frame') === frame);
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   assert.equal(
     h.frameSourceWrites(),
     2,
@@ -657,7 +657,7 @@ test('ready Viewport retains explicit target replacement and exact iframe resizi
   await h.complete();
   const frame = h.$('game-frame');
   h.$('load-target').focus();
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   assert.equal(frame.src, '../../game/couch/');
   assert.ok(h.doc.activeElement === h.$('target'));
   h.$('target').value = 'solo';
@@ -670,7 +670,7 @@ test('ready Viewport retains explicit target replacement and exact iframe resizi
   assert.equal(frame.height, '844');
   assert.ok(h.$('game-frame') === frame);
   assert.equal(frame.src, '../../game/couch/');
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   assert.equal(frame.src, '../../game/');
   assert.ok(h.$('game-frame') === frame);
 });

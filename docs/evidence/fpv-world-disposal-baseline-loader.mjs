@@ -1,0 +1,2 @@
+import {execFileSync} from "node:child_process";
+export async function load(url,context,next){if(url==="file:///Users/oleksandr.mekhovov/.codex/worktrees/fpv-garage-surfaces/go_test/optional-practice/civilian-fpv/world-app.mjs")return {format:"module",source:execFileSync("git",["show","72d6661b117e1cf1d76ac5de44381685c63d19b9:optional-practice/civilian-fpv/world-app.mjs"],{cwd:"/Users/oleksandr.mekhovov/.codex/worktrees/fpv-garage-surfaces/go_test",encoding:"utf8",maxBuffer:1024*1024}),shortCircuit:true};return next(url,context)}

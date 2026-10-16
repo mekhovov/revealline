@@ -3,9 +3,11 @@ import { LIBRARY_MODES, LIBRARY_TAGS, libraryMissionId } from './library.mjs';
 
 const METHODS = [
   'describe',
+  'presentation',
   'availability',
   'prepare',
   'progress',
+  'progressState',
   'completion',
   'card',
   'details',
@@ -30,6 +32,9 @@ function describe(source, entry, mode) {
       'campaignTitle',
       'name',
       'levelIndex',
+      'canonicalLevelKey',
+      'globalLevelNumber',
+      'campaignLevelCount',
       'modes',
       'tags',
       'rules',
@@ -72,6 +77,9 @@ function describe(source, entry, mode) {
     campaignTitle: info.campaignTitle,
     name: info.name,
     levelIndex: info.levelIndex,
+    canonicalLevelKey: info.canonicalLevelKey,
+    globalLevelNumber: info.globalLevelNumber,
+    campaignLevelCount: info.campaignLevelCount,
     tags: Object.freeze([...tags]),
     rules: info.rules ?? '',
     hook: info.hook ?? '',
@@ -125,6 +133,7 @@ export function combineJourneyLibrarySources(qualifiedSources) {
       editionId: source.editionId,
       edition: source.edition,
       collection: 'Journey',
+      lifecycle: source.lifecycle ?? 'current',
     };
     if (identity)
       required(
@@ -194,8 +203,13 @@ export function combineJourneyLibrarySources(qualifiedSources) {
     ...identity,
     entries,
     describe: (entry) => owned(entry).description,
+    // Common display metadata was checked for equality across modes above.
+    // Keep its locale projection delegated to an exact original entry too.
+    presentation: (entry) => delegate(entry, owned(entry).description.modes[0], 'presentation'),
     availability: (entry, mode) => delegate(entry, mode, 'availability'),
     progress: (entry, mode) => delegate(entry, mode, 'progress') ?? '',
+    progressState: (entry, mode) =>
+      delegate(entry, mode, 'progressState') ?? { state: 'new', bestStars: null },
     completion: (entry, mode) => delegate(entry, mode, 'completion') ?? null,
     card: (entry, mode) => delegate(entry, mode, 'card') ?? null,
     details: (entry, mode) => delegate(entry, mode, 'details') ?? null,

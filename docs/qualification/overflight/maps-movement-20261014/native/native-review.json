@@ -1,0 +1,108 @@
+{
+  "recorded": "2026-10-14",
+  "baseCommit": "58e223b7d",
+  "scope": "Native UI review; these captures are not performance trials. The quarry clip was captured before later source-queue and review-pilot fixes; the six-world painter sheet includes subsequent roof polish.",
+  "browser": "Codex in-app browser",
+  "logicalCanvas": [
+    960,
+    540
+  ],
+  "quarryClip": {
+    "layout": "chalk-quarry-haul-switchbacks",
+    "seed": 17031991,
+    "reviewBuild": "fan-shield",
+    "operation": "Single Drone",
+    "startTimeApproxSeconds": 92,
+    "audio": "Native SFX/game mix enabled; external soundtrack/HUD/upgrade cards excluded by capture feature",
+    "automated": true,
+    "performanceInvalidated": true
+  },
+  "manualTakeover": {
+    "timeApproxSeconds": 193,
+    "label": "Manual control \u00b7 assisted run, no personal records",
+    "outcome": "Lost at 213s after no further steering; 1028 cleared; no personal record saved"
+  },
+  "creatorRoundTrip": {
+    "title": "Review \u00b7 Glasshouse Routes",
+    "layout": "orchard-strongpoint-glasshouse-ruins",
+    "compiledIdentity": "12c9251df37ee67e",
+    "installedIdentity": "784aaf99b3089951",
+    "steps": [
+      "author",
+      "validate",
+      "native iframe preview",
+      "export",
+      "reset authoring selection",
+      "import exact export",
+      "validate same identity",
+      "install",
+      "native briefing"
+    ]
+  },
+  "evidence": {
+    "quarry-combat.png": {
+      "bytes": 194268,
+      "sha256": "60fa62f59dfe6fb6b10c7f7ab404eed577141eec87643adcb8741a6ac98b9e04"
+    },
+    "quarry-combat-audio.mp3": {
+      "bytes": 320684,
+      "sha256": "73b28c0cc35996d23f0e243c78eeb393080c0bb53e500163bfaa01239181f1bd"
+    },
+    "six-world-crops.png": {
+      "bytes": 186736,
+      "sha256": "d5134f7c97d15901e3d19a2758a1451946bc25f8aa0ea0899bd8b77de4945046"
+    },
+    "quarry-fan-audio.webm": {
+      "bytes": 4277994,
+      "sha256": "22481f9ef1f3c0ce5213e859d7879ab28ba7493cf7c7afa8ff30398c21cb6552"
+    },
+    "eighteen-layouts.png": {
+      "bytes": 965474,
+      "sha256": "2bd71b6ce0926173211dfa6057abb9f3b4c71b4391388f85df85bbc329627901"
+    },
+    "creator-glasshouse-package.json": {
+      "bytes": 13778,
+      "sha256": "95d240803506401538f7363ff97d8d957c9bfd540ebc48277b96283f9577cece"
+    },
+    "depot-riy-echo.png": {
+      "bytes": 213821,
+      "sha256": "807a721d6bce1330e88729523caee42b4d148fa8af3ead5e67b8d15d8bddd662"
+    },
+    "depot-riy-echo.webm": {
+      "bytes": 4893160,
+      "sha256": "eac9ebc30ee2998de69c125ebb105824c0f5301655152b31236d69399124a5f3"
+    },
+    "river-port-systems.png": {
+      "bytes": 220529,
+      "sha256": "e22118d40b458939127e62ef2dc65a0124761288b0b1c76b2233017ddce77ea0"
+    },
+    "river-port-systems.webm": {
+      "bytes": 4162567,
+      "sha256": "3b04b2be593fc04d0076d2ef897f65522a2fbcd1d4f48e5c2e6a29e3deb5f7eb"
+    }
+  },
+  "frozenRuntimeCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "depotEchoClip": {
+    "layout": "freight-depot-loading-loop",
+    "operation": "Riy",
+    "reviewBuild": "echo",
+    "seed": 17031991,
+    "automated": true,
+    "startTimeApproxSeconds": 100,
+    "durationSeconds": 20,
+    "audio": "SFX track present; user mute/music settings may have changed during review. Audible mix quality remains unqualified.",
+    "performanceInvalidated": true
+  },
+  "riverSystemsClip": {
+    "layout": "river-port-floodgate-yard",
+    "operation": "Single Drone",
+    "reviewBuild": "systems",
+    "seed": 17031991,
+    "automated": true,
+    "startTimeApproxSeconds": 132,
+    "durationSeconds": 20,
+    "audio": "Audio track present; master muted. Not audible-mix evidence.",
+    "performanceInvalidated": true,
+    "laterOutcome": "Lost at350seconds after10upgrades;3191cleared;300contactdamage. Automated review, no records."
+  }
+}

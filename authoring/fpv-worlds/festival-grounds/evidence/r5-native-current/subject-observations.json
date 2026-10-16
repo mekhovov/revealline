@@ -1,0 +1,85 @@
+{
+  "format": "FPVFestivalNativeSubjectEvidence.v1",
+  "source": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+  "fixture": "/private/tmp/fpv-festival-r5-native-0b54-v1",
+  "origin": "http://127.0.0.1:58606",
+  "runtimeOverlays": 0,
+  "clock": "Unmodified native browser clock; public1x Watch",
+  "settings": {
+    "appearance": "Authored",
+    "quality": "Balanced",
+    "camera": "FPV"
+  },
+  "observations": [
+    {
+      "subject": "cart",
+      "screenshotFlightSeconds": 17.5,
+      "screenshotTrackingSeconds": 1.5,
+      "followingDOMFlightSeconds": 17.6,
+      "followingDOMTrackingSeconds": 1.6,
+      "requiredTrackingSeconds": 6,
+      "acceptance": "Root actual-renderer review accepted grounded visible cart and bounded style/readability."
+    },
+    {
+      "subject": "guide",
+      "screenshotFlightSeconds": 14.9,
+      "screenshotTrackingSeconds": 1.3,
+      "followingDOMFlightSeconds": 15.2,
+      "followingDOMTrackingSeconds": 1.5,
+      "requiredTrackingSeconds": 4,
+      "acceptance": "Root actual-renderer review accepted grounded walker gait and bounded style/readability."
+    },
+    {
+      "subject": "guide",
+      "terminalDOMFlightSeconds": 41.3,
+      "visibleStatus": "Demonstration complete",
+      "scope": "Native-clock visible completion; no additional exact terminal-state proof assertion."
+    }
+  ],
+  "historicalCaptureCorrection": {
+    "file": "cart-return-phase.png",
+    "originalName": "fpv-festival-r5-58606-cart-tracking.png",
+    "flightSeconds": 31.5,
+    "actualPhase": "Return after tracking",
+    "notTrackingEvidence": true
+  },
+  "files": {
+    "cart-actual-tracking.png": {
+      "source": "/tmp/fpv-festival-r5-58606-cart-actual-tracking.png",
+      "bytes": 131338,
+      "sha256": "a99a36dd92b95fd2f57eb2dfc9e80e0762f348a73696270379e5545713e483ab"
+    },
+    "cart-actual-tracking.txt": {
+      "source": "/tmp/fpv-festival-r5-58606-cart-actual-tracking.txt",
+      "bytes": 676,
+      "sha256": "6b3e6a6113befad5444c932c2e09f806781ab03ea476ebe8c6353f5a4cdb8d21"
+    },
+    "cart-return-phase.png": {
+      "source": "/tmp/fpv-festival-r5-58606-cart-tracking.png",
+      "bytes": 87842,
+      "sha256": "747d6eb29fd7d5fcc6f37425999f5726e09c25f6fa17c7df55e566fb7b287441"
+    },
+    "guide-actual-tracking.png": {
+      "source": "/tmp/fpv-festival-r5-58606-guide-actual-tracking.png",
+      "bytes": 77069,
+      "sha256": "8cd506c4d7c7658ee56b6607ceafba449b8728788566900055a16dc560545d0a"
+    },
+    "guide-actual-tracking.txt": {
+      "source": "/tmp/fpv-festival-r5-58606-guide-actual-tracking.txt",
+      "bytes": 671,
+      "sha256": "91509f05f02e92c8f40edef60bd7a7b0c76449ae942e44b11519dc1f0af2e6e3"
+    },
+    "guide-complete.txt": {
+      "source": "/tmp/fpv-festival-r5-58606-guide-end.txt",
+      "bytes": 618,
+      "sha256": "94162dfa14c37a2a78817281c44af29a82affff4f0f90c6539482ebc899e6262"
+    },
+    "offline-prepared-online-reload.txt": {
+      "source": "/tmp/fpv-festival-r5-58606-offline-prepared.txt",
+      "bytes": 2760,
+      "sha256": "d35eaef1677ab789fbe480768db6738dc3abbb495b834006120e296ac088dc05"
+    }
+  },
+  "offlineStatus": "Passed bounded stopped-origin reload/retention and deliberate native arm/resume/pause; separate offline-journey.json retains unexpected pause and scope.",
+  "limits": "No photoreal, hardware, FPS or native-clock all-sixteen playback/endurance claim."
+}

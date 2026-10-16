@@ -1,0 +1,26 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-enemy-workshop-return",
+  "branch": "codex/p03-enemy-workshop-return",
+  "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "status": [
+    " M authoring/enemy-catalog/index.html",
+    " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    " M docs/enemy-catalog.md",
+    "?? game/test/enemy-workshop-host.test.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "c6a8db573c5480c755d2e54c854d09db046f662588552381c6dd419f4c5f3dbd",
+      "bytes": 7854
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "9afa6a82014d759e9fa55f0d4112e51330a5bfdfcbd715bc5b39d1990953de36",
+      "bytes": 3934
+    },
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

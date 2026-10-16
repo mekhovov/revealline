@@ -70,10 +70,10 @@ test(
       p.$('race-coop').querySelector('.game-mode-description').textContent,
       '12 Team missions',
     );
-    assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=whole-spatial-v12');
+    assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=whole-spatial-v25');
     assert.equal(
       p.$('race-coop').getAttribute('href'),
-      'relay-rescue.html?return=versus&journey-return=whole-spatial-v12',
+      'relay-rescue.html?return=versus&journey-return=whole-spatial-v25',
     );
     assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=legacy');
     assert.equal(p.$('race-library-switch').textContent, 'All missions');
@@ -98,11 +98,32 @@ test(
     assert.equal(p.$('race-leave-panel').hidden, true);
     assert.equal(p.$('journey-mode').value, 'versus');
     assert.equal(p.$('journey-collection').value, '');
-    assert.equal(p.$('journey-cards').children.length, 288);
+    assert.equal(p.$('journey-lifecycle').value, 'current');
+    assert.equal(p.$('journey-cards').children.length, 186);
+    p.$('journey-lifecycle').value = 'archive';
+    p.$('journey-lifecycle').emit('change');
+    const archived = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
+    assert.equal(archived.length, 141);
+    assert.equal(archived.filter((id) => JSON.parse(id)[1] === 'whole-spatial-v10').length, 3);
+    assert.equal(archived.filter((id) => JSON.parse(id)[1] === 'whole-spatial-v9').length, 3);
+    p.$('journey-lifecycle').value = '';
+    p.$('journey-lifecycle').emit('change');
+    assert.equal(p.$('journey-cards').children.length, 327);
+    assert.ok(
+      archived.every((id) =>
+        [...p.$('journey-cards').children].some((card) => card.dataset.missionId === id),
+      ),
+    );
     const identities = [...p.$('journey-cards').children].map((card) =>
       JSON.parse(card.dataset.missionId),
     );
-    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v12').length, 91);
+    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v25').length, 91);
+    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v19').length, 3);
+    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v18').length, 3);
+    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v17').length, 3);
+    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v16').length, 3);
+    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v12').length, 3);
+    assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v13').length, 3);
     assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v11').length, 3);
     assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v10').length, 3);
     assert.equal(identities.filter((identity) => identity[1] === 'whole-spatial-v9').length, 3);
@@ -116,12 +137,14 @@ test(
       true,
     );
     assert.equal(p.state(), 'paused');
+    // Let the finite controller Confirm echo window expire before a separate pointer click.
+    p.frames(151);
     // Mode departure still uses the retained guarded link. Browsing does not.
     p.$('race-solo-return').click();
     assert.equal(p.$('race-leave-panel').hidden, false);
     p.$('race-leave').setAttribute('href', 'https://untrusted.invalid/');
     assert.equal(p.$('race-leave').emit('click').defaultPrevented, false);
-    assert.equal(p.$('race-leave').getAttribute('href'), '../?journey=whole-spatial-v12');
+    assert.equal(p.$('race-leave').getAttribute('href'), '../?journey=whole-spatial-v25');
     assert.deepEqual(p.checkpoint(), checkpoint);
   },
 );
@@ -139,7 +162,7 @@ test(
       'relay-rescue.html?journey=legacy&return=versus',
     );
     assert.equal(p.$('race-library-switch').textContent, 'All missions');
-    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v12');
+    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v25');
     await openMissions(p, () =>
       assert.equal(p.$('race-library-switch').emit('click').defaultPrevented, true),
     );
@@ -154,6 +177,8 @@ test(
     p.frame(0);
     const checkpoint = p.checkpoint();
     await openMissions(p, () => p.$('race-library-switch').click());
+    p.$('journey-lifecycle').value = 'current';
+    p.$('journey-lifecycle').emit('change');
     const target = [...p.$('journey-cards').children].find((card) =>
       JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
     );
@@ -185,7 +210,7 @@ for (const query of [
     assert.equal(p.doc.body.classList.contains('candidate-journey'), false);
     assert.equal(p.$('race-level').children.length, 15);
     assert.equal(p.$('race-library-switch').textContent, 'All missions');
-    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v12');
+    assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v25');
     assert.equal(p.$('race-journey-note').hidden, true);
   });
 

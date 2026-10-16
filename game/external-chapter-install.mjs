@@ -1,3 +1,4 @@
+import { localOfficialChapter } from './official-chapter-source.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required } from './data-json.mjs';
 import {
   emptyPackLibrary,
@@ -162,7 +163,8 @@ export function createExternalChapterInstaller({
       ) && !bases.some((e) => e.campaign.id === incoming.id),
       'Existing edition replacement or embedded-pack migration is not implemented.',
     );
-    const next = installPack(current, item.pack);
+    const official = await localOfficialChapter(item.pack.id, { decodeImage });
+    const next = installPack(current, official || item.pack);
     const catalog = createExecutionCatalog([
       ...bases,
       ...next.packs.flatMap((p) => p.campaigns.map((c) => resolvePackCampaign(p, c.id))),
@@ -180,7 +182,7 @@ export function createExternalChapterInstaller({
       ...current,
       chapters: [...current.chapters, item.descriptor],
     });
-    const packs = JSON.parse(packLibrary).packs;
+    const packs = (await importPackLibrary(packLibrary, { decodeImage })).packs;
     for (const d of next.chapters) {
       const p = packs.find((p) => p.id === d.id);
       required(
@@ -197,8 +199,8 @@ export function createExternalChapterInstaller({
     required(
       new TextEncoder().encode(packLibrary).length +
         new TextEncoder().encode(JSON.stringify(next)).length <=
-        PACK_LIMITS.libraryBytes,
-      'Installed packs plus external descriptor index exceed the unchanged 48 MiB budget.',
+        PACK_LIMITS.libraryBytes + 1024 * 1024,
+      'Imported packs and the separate official descriptor index exceed their storage budgets.',
     );
     return next;
   }

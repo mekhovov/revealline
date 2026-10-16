@@ -1,0 +1,299 @@
+{
+  "format": "LosslessSoundtrackMetadataCompaction.v1",
+  "generatedAt": "2026-10-02T17:01:18.225Z",
+  "baselineHead": "2f009d3357fc966b879c81a316909b9fa3e4d31e",
+  "workingTreeEvidence": true,
+  "passed": true,
+  "sourceFiles": {
+    "scripts/soundtrack-distribution.mjs": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2",
+    "game/content/soundtrack-catalogue.mjs": "e6eef8e91bd53e7608585625c34677a9fda40a6083e8dcbf58e3ed995801407e",
+    "scripts/compile-edition.mjs": "9b4274abdc5019258a46be175fda51ccaf5e8554661c0ea9a09dbf6b7652c76d",
+    "scripts/edition-runtime.mjs": "14df37d6bbfd8a3c173c80f92334506f2d4503f678e7157661a63efa63899609",
+    "scripts/edition-offline.mjs": "1b2126ad8c5cff4290dfa8d05f355ec5ed859d25471f2cd32d321b279126936e",
+    "game/editions/catalog.json": "2f7d5b08ef2826f161002943407f10dc09e7b126ae84bf12e92f5a924f205ecd"
+  },
+  "metadata": {
+    "beforeBytes": 148255,
+    "afterBytes": 114695,
+    "savedBytes": 33560,
+    "beforeSha256": "5fa28b6718f0b1963a4b45ca7cb476b077d617a4e891297516538d9e91c3bcb6",
+    "afterSha256": "e6eef8e91bd53e7608585625c34677a9fda40a6083e8dcbf58e3ed995801407e"
+  },
+  "checks": [
+    {
+      "name": "All four exported values and string data are exactly unchanged",
+      "passed": true
+    },
+    {
+      "name": "Export declaration order remains unchanged",
+      "passed": true,
+      "order": [
+        "SOUNDTRACK_CATALOGUE",
+        "SOUNDTRACK_ARCHIVES",
+        "SOUNDTRACK_COLLECTIONS",
+        "SOUNDTRACK_BUNDLED_ASSETS"
+      ]
+    },
+    {
+      "name": "Ordered JSON serialization remains unchanged: SOUNDTRACK_ARCHIVES",
+      "passed": true
+    },
+    {
+      "name": "Ordered JSON serialization remains unchanged: SOUNDTRACK_BUNDLED_ASSETS",
+      "passed": true
+    },
+    {
+      "name": "Ordered JSON serialization remains unchanged: SOUNDTRACK_CATALOGUE",
+      "passed": true
+    },
+    {
+      "name": "Ordered JSON serialization remains unchanged: SOUNDTRACK_COLLECTIONS",
+      "passed": true
+    },
+    {
+      "name": "Generated module is Prettier-stable",
+      "passed": true
+    },
+    {
+      "name": "Maintained generator reproduces candidate bytes 1",
+      "passed": true
+    },
+    {
+      "name": "Maintained generator reproduces candidate bytes 2",
+      "passed": true
+    },
+    {
+      "name": "Existing published metadata and media-pin validation succeeds",
+      "passed": true,
+      "deliveryFiles": 0,
+      "configurationProperty": "soundtrackAlbums",
+      "configurationFormat": "revealline-soundtrack-distribution.v2"
+    },
+    {
+      "name": "All eighteen production editions retain the existing file and byte guards",
+      "passed": true
+    },
+    {
+      "name": "Candidate source remains unchanged: scripts/soundtrack-distribution.mjs",
+      "passed": true
+    },
+    {
+      "name": "Candidate source remains unchanged: game/content/soundtrack-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Candidate source remains unchanged: scripts/compile-edition.mjs",
+      "passed": true
+    },
+    {
+      "name": "Candidate source remains unchanged: scripts/edition-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "Candidate source remains unchanged: scripts/edition-offline.mjs",
+      "passed": true
+    },
+    {
+      "name": "Candidate source remains unchanged: game/editions/catalog.json",
+      "passed": true
+    }
+  ],
+  "editions": [
+    {
+      "id": "coupa-adventure",
+      "passed": true,
+      "files": 749,
+      "bytes": 28327578,
+      "headroomBytes": 38781286
+    },
+    {
+      "id": "coupa-all",
+      "passed": true,
+      "files": 784,
+      "bytes": 62561878,
+      "headroomBytes": 4546986
+    },
+    {
+      "id": "coupa-culture",
+      "passed": true,
+      "files": 748,
+      "bytes": 26708452,
+      "headroomBytes": 40400412
+    },
+    {
+      "id": "coupa-developers",
+      "passed": true,
+      "files": 749,
+      "bytes": 30107762,
+      "headroomBytes": 37001102
+    },
+    {
+      "id": "coupa-foundations",
+      "passed": true,
+      "files": 751,
+      "bytes": 29193224,
+      "headroomBytes": 37915640
+    },
+    {
+      "id": "coupa-operations",
+      "passed": true,
+      "files": 749,
+      "bytes": 28282431,
+      "headroomBytes": 38826433
+    },
+    {
+      "id": "droneaid-community",
+      "passed": true,
+      "files": 742,
+      "bytes": 27483946,
+      "headroomBytes": 39624918
+    },
+    {
+      "id": "droneaid-nl-careful-handoff",
+      "passed": true,
+      "files": 752,
+      "bytes": 29707653,
+      "headroomBytes": 37401211
+    },
+    {
+      "id": "droneaid-nl-community",
+      "passed": true,
+      "files": 820,
+      "bytes": 67093802,
+      "headroomBytes": 15062
+    },
+    {
+      "id": "droneaid-nl-makers-together",
+      "passed": true,
+      "files": 752,
+      "bytes": 29583085,
+      "headroomBytes": 37525779
+    },
+    {
+      "id": "droneaid-nl-parts-in-motion",
+      "passed": true,
+      "files": 754,
+      "bytes": 30101247,
+      "headroomBytes": 37007617
+    },
+    {
+      "id": "droneaid-nl-shared-horizon",
+      "passed": true,
+      "files": 752,
+      "bytes": 29894071,
+      "headroomBytes": 37214793
+    },
+    {
+      "id": "droneaid-nl-signals-of-support",
+      "passed": true,
+      "files": 752,
+      "bytes": 29694466,
+      "headroomBytes": 37414398
+    },
+    {
+      "id": "droneaid-nl-workshop-lights",
+      "passed": true,
+      "files": 752,
+      "bytes": 28392551,
+      "headroomBytes": 38716313
+    },
+    {
+      "id": "fpv-learning",
+      "passed": true,
+      "files": 834,
+      "bytes": 36207835,
+      "headroomBytes": 30901029
+    },
+    {
+      "id": "social-drone-ua",
+      "passed": true,
+      "files": 766,
+      "bytes": 28413145,
+      "headroomBytes": 38695719
+    },
+    {
+      "id": "ukraine-culture",
+      "passed": true,
+      "files": 809,
+      "bytes": 45095116,
+      "headroomBytes": 22013748
+    },
+    {
+      "id": "victory-drones",
+      "passed": true,
+      "files": 758,
+      "bytes": 24688228,
+      "headroomBytes": 42420636
+    }
+  ],
+  "limits": {
+    "files": 2000,
+    "bytes": 67108864
+  },
+  "scope": "Exact existing generator and metadata validation; all18 production editions compiled in memory with ordinary code/media/admission-source validation and original capacity guards. No ZIPs, frozen artifact admission, deployment, listening or new unit coverage claim.",
+  "baselineCapacity": {
+    "edition": "droneaid-nl-community",
+    "files": 820,
+    "bytes": 67127362,
+    "excessBytes": 18498
+  },
+  "existingRegressionChecks": {
+    "command": "node --test scripts/test-soundtrack-distribution.mjs scripts/test-build-soundtrack-archive.mjs",
+    "baselineHead": "2f009d3357fc966b879c81a316909b9fa3e4d31e",
+    "baseline": {
+      "passed": 12,
+      "failed": 17
+    },
+    "candidate": {
+      "passed": 12,
+      "failed": 17
+    },
+    "identicalFailureNames": true,
+    "failures": [
+      "zero approved recordings creates no output directory or placeholder archive",
+      "approved exact MP3 is staged once with pinned runtime inventory, reproducible catalogue candidate and credits",
+      "identical approved recording bytes are deduplicated while both track credits remain pinned",
+      "archive restaging reads approved source delivery after hosted admission removes the local runtime payload",
+      "an allowed recording alias cannot stage audio narrowed by another trusted same-hash entry",
+      "refuses unreviewed before copying any MP3",
+      "refuses restricted before copying any MP3",
+      "refuses changed bytes before copying any MP3",
+      "refuses wrong MP3 metadata before copying any MP3",
+      "admission refuses non-project archive https://other.github.io/revealline-soundtracks-1/",
+      "admission refuses non-project archive https://mekhovov.github.io/other-1/",
+      "admission refuses non-project archive https://mekhovov.github.io/revealline-soundtracks-1/?q=x",
+      "admission refuses non-project archive http://mekhovov.github.io/revealline-soundtracks-1/",
+      "low free-space preflight creates no output",
+      "a failed write removes only its own new staging directory",
+      "CLI help and empty-publication staging are read-only and never invoke publication",
+      "real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies"
+    ],
+    "diagnosis": "12 archive cases have incomplete fixture copies missing game/i18n/index.mjs;4 archive cases expect stale canonical-host error wording;1 archived CLI fixture omits scripts/offline-core-closure.mjs. The same17 fail on unchanged main. None is reported as passed.",
+    "logs": [
+      {
+        "path": "/tmp/compact-soundtrack-existing-checks-20261002.txt",
+        "sha256": "1e52821599b943eaf9e6bbf20857e2f6bbb4234c6a740a9585f3dae94805f607"
+      },
+      {
+        "path": "/tmp/compact-soundtrack-baseline-checks-20261002.txt",
+        "sha256": "eb1ddfc7fc1f2bd78eaca6d9842e498efc3242640599680b6268bb8ae335eb48"
+      }
+    ]
+  },
+  "sourceValidation": {
+    "syntax": true,
+    "eslint": true,
+    "prettier": true,
+    "commands": [
+      "node --check scripts/soundtrack-distribution.mjs",
+      "node --check game/content/soundtrack-catalogue.mjs",
+      "node node_modules/eslint/bin/eslint.js scripts/soundtrack-distribution.mjs game/content/soundtrack-catalogue.mjs",
+      "node node_modules/prettier/bin/prettier.cjs --check scripts/soundtrack-distribution.mjs game/content/soundtrack-catalogue.mjs"
+    ]
+  },
+  "baselineIsolation": {
+    "files": ["scripts/soundtrack-distribution.mjs", "game/content/soundtrack-catalogue.mjs"],
+    "candidateRestored": true,
+    "recovery": "/tmp/compact-soundtrack-recovery-20261002-8f9b55"
+  }
+}

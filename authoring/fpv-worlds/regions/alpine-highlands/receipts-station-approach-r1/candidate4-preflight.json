@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "scope": "Corrected generator preflight only; full candidate4 source, collision, route, tier and native gates remain open.",
+  "correctedModuleSHA256": "3c443d6e742cad88f80603739b4f8ee8605710daf7b56c288eef6b415c92d035",
+  "cases": [
+    {
+      "cell": "alpine-12-12",
+      "pieces": 37,
+      "glbBytes": 84600,
+      "glbSHA256": "12b583ab7e9c2d751ce0715860b932149b7b67b625e68f1cc923da4a73ef84a7",
+      "rawJSONAndGlbExact": true,
+      "validatorErrors": 0,
+      "validatorWarnings": 0
+    },
+    {
+      "cell": "alpine-13-12",
+      "pieces": 21,
+      "glbBytes": 289844,
+      "glbSHA256": "dbc5c3c50dcc3217b0e4467971298ecbcf6eed21506df63a70cfd12f11c0c73b",
+      "rawJSONAndGlbExact": true,
+      "validatorErrors": 0,
+      "validatorWarnings": 0
+    }
+  ],
+  "supportSamples": 90,
+  "upperAttachments": 8,
+  "nativeAccepted": false,
+  "playerReady": false
+}

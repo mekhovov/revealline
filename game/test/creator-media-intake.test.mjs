@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import { prepareMobileCreatorVideo } from '../creator/video-mobile.mjs';
 import {
   normalizeCreatorMediaStem,
   prepareCreatorMediaIntake,
@@ -13,6 +15,21 @@ const hash = (blob) =>
 const image = (name, text = name) => ({ name, kind: 'image', blob: new Blob([text]) });
 const video = (name, text = name) => ({ name, kind: 'video', blob: new Blob([text]) });
 const capturedBlob = (label) => new Blob([`poster:${label}`], { type: 'image/png' });
+
+test('actual MP4 bytes pass mobile conversion through the anonymous-blob intake boundary', async () => {
+  const bytes = await readFile(
+    new URL('./fixtures/video/owned-avc-aac-fixture.mp4', import.meta.url),
+  );
+  const f = factories();
+  const prepared = await prepareCreatorMediaIntake(
+    [{ name: 'recording.mp4', kind: 'video', blob: new Blob([bytes], { type: 'video/mp4' }) }],
+    { ...f, prepareVideo: prepareMobileCreatorVideo },
+  );
+  assert.deepEqual(prepared.items[0].errors, []);
+  assert.equal(prepared.dependencies.stories.length, 1);
+  assert.equal(f.state().captured, 3);
+  assert.equal(f.state().disposed, 1);
+});
 
 function factories({ failVideo, pause, observedOffset = 0 } = {}) {
   let active = 0,
@@ -127,6 +144,10 @@ test('normalized stems suggest one exact image/video pair while hashes remain au
   assert.equal(story.poster.origin.kind, 'supplied-image');
   assert.equal(story.poster.origin.sourceImageSha256, picture.assetSha256);
   assert.equal(story.video.sha256, movie.assetSha256);
+  const retainedOriginal = prepared.assets.find(
+    (asset) => asset.sha256 === picture.assetSha256 && asset.role === 'source-image-original',
+  );
+  assert.equal(await retainedOriginal.blob.text(), 'picture');
   assert.deepEqual(f.state(), { active: 0, peak: 1, inspected: 1, disposed: 1, captured: 0 });
 });
 
@@ -322,4 +343,43 @@ test('renaming inputs changes suggestions but never byte-backed asset identities
   assert.equal(a.dependencies.stories[0].video.sha256, b.dependencies.stories[0].video.sha256);
   assert.equal(a.dependencies.stories[0].poster.sha256, b.dependencies.stories[0].poster.sha256);
   assert.notEqual(a.items[0].normalizedStem, b.items[0].normalizedStem);
+});
+
+test('intake separates stable selected-video identity from changing converted bytes', async () => {
+  const source = video('clip.mp4', 'same selected video'),
+    sourceHash = await hash(source.blob);
+  const outputHashes = [];
+  for (const conversion of ['first metadata', 'second metadata']) {
+    const f = factories(),
+      seen = [];
+    const prepared = await prepareCreatorMediaIntake([source], {
+      ...f,
+      prepareVideo: async () => new Blob([conversion]),
+      pairingFor: (identity) => {
+        seen.push(identity);
+        return null;
+      },
+      posterTimeFor: (identity) => {
+        seen.push(identity);
+        return 3.25;
+      },
+      playbackRangeFor: (identity) => {
+        seen.push(identity);
+        return { startSeconds: 1.5, endSeconds: 7.75 };
+      },
+    });
+    const item = prepared.items[0];
+    assert.deepEqual(item.errors, []);
+    assert.equal(item.sourceSha256, sourceHash);
+    assert.equal(item.assetSha256, await hash(new Blob([conversion])));
+    assert.notEqual(item.assetSha256, sourceHash);
+    assert.equal(seen.length, 3);
+    for (const identity of seen) {
+      assert.equal(identity.sourceSha256, sourceHash);
+      assert.equal(identity.assetSha256, item.assetSha256);
+    }
+    assert.equal(prepared.dependencies.stories[0].video.sha256, item.assetSha256);
+    outputHashes.push(item.assetSha256);
+  }
+  assert.notEqual(outputHashes[0], outputHashes[1]);
 });

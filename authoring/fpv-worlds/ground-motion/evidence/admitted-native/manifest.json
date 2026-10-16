@@ -1,0 +1,35 @@
+{
+  "sourceRevision": "ca28461faa9a5245f55532bb27fbb5d69f557e16",
+  "runtimeIdenticalTo": "9b5c3d65e2877847126c87f263fbc7e9aca357fb",
+  "fixtureSHA256": "5b678a15a6385293d4a5e978e9779f62b9d5cf86e11f44777a2d42af95e0902b",
+  "passed": 292,
+  "hosts": 4,
+  "runtimeOverlays": 0,
+  "errors": 0,
+  "warnings": 0,
+  "dropped": 0,
+  "note": "Dropped field is lazy: absent is zero; all explicit counts and zero-drop assertions pass. Candidate offline remains a separate qualification.",
+  "artifacts": [
+    {
+      "path": "fpv-ground-motion-native-admitted-8981-passed.json.gz",
+      "rawBytes": 176809,
+      "rawSHA256": "d725e7896dbf6d382af61e30c3adbf0601b2e935698b26583348c7c311d4306c",
+      "storedBytes": 21332,
+      "storedSHA256": "69581095e23b76b14ac6bfd49e675f3e461ca92c7ebaf2c54670b296288ce03d"
+    },
+    {
+      "path": "fpv-ground-motion-native-admitted-8981-passed.png",
+      "rawBytes": 10977,
+      "rawSHA256": "826d104a7825272df16957fab7497c23ebe7322b60c88e2e460c56ab9cd6f7a8",
+      "storedBytes": 10977,
+      "storedSHA256": "826d104a7825272df16957fab7497c23ebe7322b60c88e2e460c56ab9cd6f7a8"
+    },
+    {
+      "path": "fpv-ground-motion-native-admitted-8981-console.json.gz",
+      "rawBytes": 2,
+      "rawSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "storedBytes": 22,
+      "storedSHA256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { boundedJSON } from '../data-json.mjs';
+import { boundedJSON, exactKeys } from '../data-json.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const bytes = (value) => Buffer.byteLength(JSON.stringify(value));
 
@@ -25,6 +26,61 @@ test('many short array values use their serialized bytes without charging index 
   assert.equal(maxBytes, 4097);
   assert.deepEqual(boundedJSON(value, { maxBytes }), value);
   assert.throws(() => boundedJSON(value, { maxBytes: maxBytes - 1 }), /byte budget/);
+});
+
+test('repeated scalar byte accounting remains exact across cache saturation and Unicode escapes', () => {
+  const text = 'Повторення 😀 " \\ \n \ud800',
+    value = [
+      ...Array.from({ length: 1100 }, (_, index) => ({ [`field-${index}`]: `text-${index}` })),
+      ...Array.from({ length: 40 }, () => ({ text, [text]: text, long: text.repeat(40) })),
+    ];
+  const maxBytes = bytes(value);
+  assert.deepEqual(boundedJSON(value, { maxBytes }), value);
+  assert.deepEqual(boundedJSON(JSON.stringify(value), { maxBytes }), value);
+  assert.throws(() => boundedJSON(value, { maxBytes: maxBytes - 1 }), /byte budget/);
+  assert.throws(() => boundedJSON(value, { maxString: text.length - 1 }), /string exceeds/);
+});
+
+test('repeated text never gives mutable or caller-frozen objects validation authority', () => {
+  const value = { text: 'repeated', rows: [{ text: 'repeated' }, { text: 'repeated' }] },
+    accepted = boundedJSON(value);
+  value.rows[1].text = 'mutated 😀';
+  assert.equal(accepted.rows[1].text, 'repeated');
+  assert.equal(boundedJSON(value).rows[1].text, 'mutated 😀');
+  let invoked = 0;
+  Object.defineProperty(value.rows[1], 'text', {
+    enumerable: true,
+    get() {
+      invoked++;
+      return 'repeated';
+    },
+  });
+  Object.freeze(value.rows[1]);
+  assert.throws(() => boundedJSON(value), /accessors and hidden fields/);
+  assert.equal(invoked, 0);
+  value.rows[1] = { text: 'repeated', extra: value };
+  assert.throws(() => boundedJSON(value), /cycles/);
+});
+
+test('repeated field names do not require per-field UTF-8 encoding', (context) => {
+  const NativeEncoder = globalThis.TextEncoder;
+  let encodings = 0;
+  globalThis.TextEncoder = class extends NativeEncoder {
+    encode(value) {
+      encodings++;
+      return super.encode(value);
+    }
+  };
+  context.after(() => {
+    globalThis.TextEncoder = NativeEncoder;
+  });
+  const value = Array.from({ length: 1000 }, () => ({
+    title: 'A repeated title 😀',
+    locale: 'uk',
+    ready: true,
+  }));
+  assert.deepEqual(boundedJSON(value, { maxBytes: bytes(value) }), value);
+  assert(encodings < 50, 'Repeated short scalar encodings should not grow with record count.');
 });
 
 test('the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over', () => {
@@ -91,4 +147,28 @@ test('exact byte accounting retains structural and shape protections', () => {
   assert.throws(() => boundedJSON([1, 2], { maxArray: 1 }), /item budget/);
   assert.throws(() => boundedJSON({ nested: {} }, { maxDepth: 0 }), /structural budget/);
   assert.throws(() => boundedJSON([1, 2], { maxNodes: 2 }), /structural budget/);
+});
+
+test('shared JSON boundary reports owned validation errors in the active locale', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('uk', { persist: false });
+
+  assert.throws(() => boundedJSON('{'), /Файл має містити дійсний JSON/);
+  assert.throws(() => boundedJSON(NaN), /Числа в JSON мають бути скінченними/);
+  assert.throws(() => boundedJSON(new Date()), /лише звичайні дані JSON/);
+  const cycle = {};
+  cycle.self = cycle;
+  assert.throws(() => boundedJSON(cycle), /Циклічні посилання/);
+  const forbidden = Object.defineProperty({}, '__proto__', { value: {}, enumerable: true });
+  assert.throws(() => boundedJSON(forbidden), /Заборонений ключ JSON: __proto__/);
+  assert.throws(() => exactKeys(null, [], 'profile'), /profile має бути об’єктом/);
+  assert.throws(
+    () => exactKeys({ revision: 1 }, [], 'profile'),
+    /profile\.revision не підтримується/,
+  );
+
+  setLocale('en', { persist: false });
+  assert.throws(() => boundedJSON('{'), /The file must contain valid JSON/);
+  assert.throws(() => exactKeys(null, [], 'profile'), /profile must be an object/);
 });

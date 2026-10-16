@@ -1,25 +1,93 @@
+import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
+import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
+import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
+import { loadBaseArtwork } from '../base-artwork.mjs';
+import { createEnemyStatsHost } from '../enemy-stats.mjs';
+import { mountEnemyStats } from '../ui/enemy-stats.mjs';
+import { arcadeEnemyDefeats } from '../ui/enemy-stats-events.mjs';
+import {
+  createContinuousPlayController,
+  mountContinuousPlayControls,
+} from '../ui/continuous-play.mjs';
+import { mountContinuousCelebration } from '../ui/continuous-celebration.mjs';
+import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
+import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
+import {
+  mountGlobalSettingsTools,
+  globalSettingsToolsRoot,
+  globalSettingsToolFrameFocused,
+  closeGlobalSettingsTool,
+  guardGlobalSettingsToolBlur,
+} from '../ui/global-settings-tools.mjs';
+import { createLocalMatchRecorder, localMatchProvenance } from '../multiplayer-recording.mjs';
+import { recordingVerificationHref } from '../ui/recording-verification.mjs';
+import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
+import { missionBriefing } from '../mission-brief.mjs';
+import { createEncounterVariantPreferences } from '../hunt/preferences.mjs';
+import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
+import { prepareRunningEnemyLevel } from '../hunt/running-enemies.mjs';
+import { mountRunningEnemyControls } from '../ui/running-enemy-controls.mjs';
+import { attachEncounterVariantControls } from '../ui/encounter-variant-controls.mjs';
+import { attachHuntStatus } from '../ui/hunt-status.mjs';
+import { createHuntRecords } from '../hunt/records.mjs';
+import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
+import { soloReactionDanger } from '../ui/reaction-danger.mjs';
+import { COUCH_RESTORE_KEY } from './controller-restore.mjs';
+import { createControllerSession } from './controller-session.mjs';
+import { mountControllerSetup } from './controller-setup.mjs';
+import { boardPlacement } from '../ui/feedback-cues.mjs';
+import {
+  gameplayTuningDescription,
+  gameplayStatusLabel,
+  gameplayStatsLabel,
+  gameplayDifficultyLabel,
+  journeyPresetDescription,
+} from '../ui/gameplay-copy.mjs';
+import { contentText } from '../i18n/content.mjs';
+import {
+  t,
+  getLocale,
+  localizedText,
+  localizedAttribute,
+  localizedOption,
+  localizedMessage,
+  render,
+} from '../i18n/index.mjs';
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { createMissionStartCue } from './start-cue.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
 import { attachJourneyModePictures } from '../ui/journey-mode-pictures.mjs';
 import { createBoardFootprints } from './board-footprint.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
+import { isOfficialPack } from '../packs.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
 import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { createCandidateCouchPictures } from './candidate-pictures.mjs';
-import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
-import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
+import { acquireCandidatePicture, isCandidatePictureFor } from '../content-design/picture.mjs';
+import { creatorArtworkLoader } from '../creator/bundle.mjs';
+import { createCreatorStore } from '../creator/installed.mjs';
+import { creatorProfileKey } from '../creator/runtime.mjs';
+import { installedCreatorLibrarySources } from '../mission-library/creator-source.mjs';
+import { createEncounterVersusHost as createCandidateVersusHost } from '../content-design/encounter-host.mjs';
+import {
+  journeyActorThemeCandidates,
+  createJourneyActorTheme,
+  journeyActorThemeMaterial,
+} from '../presentation/journey-actor-materials.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
+import { attachOfflineModeNavigation } from '../ui/offline-tool-navigation.mjs';
+import { offlineAvailability } from '../offline.mjs';
 import { DEFAULT_JOURNEY_ROUTES, resolveJourneyRequest } from '../content-design/default-entry.mjs';
 import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
 import { createJourneyPreferences } from '../journey/preferences.mjs';
 import {
   createGameplayTuningController,
   applyGameplayTuning,
-  gameplayTuningDescription,
+  resolveGameplayTuning,
 } from '../gameplay-tuning.mjs';
 import { mountGameplayTuning } from '../ui/gameplay-tuning.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from '../content-design/catalogs.mjs';
@@ -33,6 +101,10 @@ import { libraryMissionId } from '../mission-library/library.mjs';
 import { librarySuccessor, retainedLibraryMission } from '../mission-library/continuous-next.mjs';
 import { trackMissionLibraryOpening } from '../mission-library/opening-intent.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
+import {
+  duelExpeditionLibrarySources,
+  retainedJourneyFromExpeditions,
+} from '../mission-library/multiplayer-expeditions.mjs';
 import { combineJourneyLibrarySources } from '../mission-library/cross-mode-journey.mjs';
 import {
   journeyMissionDetails,
@@ -42,6 +114,7 @@ import {
   createMissionLibrarySessionState,
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryIntent,
   readMissionLibraryReturn,
 } from '../mission-library/handoff.mjs';
 import { createCouchChapterInstaller } from './couch-chapter-install.mjs';
@@ -50,6 +123,7 @@ import { createRun } from '../core/index.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { boundedJSON, dataIdentity, exactKeys } from '../data-json.mjs';
 import { downloadJSON } from '../content.mjs';
+import { attachTerminalRecordingExport } from '../ui/terminal-recording-export.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import {
@@ -67,6 +141,7 @@ import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { playgroundTabBoundary } from '../ui/playground-tab-boundary.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
+import { attachEncounterHelp } from '../ui/encounter-help.mjs';
 import { readingInputPrompt } from '../ui/reading-input-prompt.mjs';
 import { nextInputModality } from '../input-presentation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
@@ -74,6 +149,7 @@ import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createActorStylePreferences } from '../actor-style-preferences.mjs';
 import { prepareActorAppearanceLease } from '../presentation/actor-appearance-lease.mjs';
@@ -82,11 +158,25 @@ import { prepareCampaignVisualThemeContext } from '../presentation/visual-theme-
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { verifyIndexedInstalledPack } from '../mission-library/pack-identity.mjs';
 import { prepareMissionLibraryIndex } from '../mission-library/classic-source.mjs';
-import { projectClassicCurrentRulesLevel } from '../mission-library/classic-current-rules.mjs';
+import {
+  CLASSIC_RULES_ORIGINAL,
+  classicRulesCampaignIdentity,
+  projectClassicCurrentRulesLevel,
+} from '../mission-library/classic-current-rules.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from '../ui/settings-panels.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
+import {
+  attachInstallOfflinePanel,
+  guardInstallOfflineBlur,
+  installOfflineOwnsElement,
+} from '../ui/install-offline-panel.mjs';
+import {
+  createOfflineDownloadAccess,
+  isOfflinePackageRequired,
+} from '../offline-download-access.mjs';
+import { ensureVersusEntryPackage } from './versus-package-readiness.mjs';
 import { attachCouchMusicHost } from './couch-music-host.mjs';
 import { soloCompatibleMusicContext } from './couch-music-context.mjs';
 import { campaignKey } from '../library.mjs';
@@ -94,8 +184,8 @@ import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { foundationReturnCaption } from '../ui/foundation-feedback.mjs';
-import { isCandidatePictureFor } from '../content-design/picture.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
+import { resultContinuationLabel } from '../ui/result-continuation.mjs';
 const $ = (id) => document.getElementById(id);
 $('race-release-explorer').href = releaseExplorerHref(
   globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/',
@@ -111,6 +201,7 @@ const initialFocusChoice = (event) => {
 const initialFocusLost = () => {
   initialFocusPending = false;
 };
+const initialWindowBlur = guardInstallOfflineBlur(initialFocusLost);
 const initialVisibility = () => {
   if (document.hidden) initialFocusLost();
 };
@@ -120,12 +211,16 @@ const audioPreferences = createAudioPreferences({
   window,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    $('race-audio-status').textContent = message;
+    localizedText($('race-audio-status'), () => message);
   },
 });
 const renderMasterPreferences = ({ muted, volume }) => {
-  $('race-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
-  $('race-quick-sound').textContent = muted ? 'Sound: off' : 'Sound: on';
+  localizedText($('race-audio'), () =>
+    muted ? t('common:audio.unmute') : t('interface:muteSound'),
+  );
+  localizedText($('race-quick-sound'), () =>
+    muted ? t('interface:soundOff') : t('interface:soundOn'),
+  );
   $('race-quick-sound').setAttribute('aria-pressed', String(!muted));
   $('race-master-volume').value = volume;
 };
@@ -143,8 +238,8 @@ const displayPreferences = createDisplayPreferences({
   window,
   matchMedia,
   getStorage: () => localStorage,
-  onWarning: (message) => {
-    $('race-display-status').textContent = message;
+  onWarning: (message, key) => {
+    localizedText($('race-display-status'), () => (key ? t(key) : message));
   },
 });
 const renderDisplayPreferences = (state) => {
@@ -154,12 +249,32 @@ const renderDisplayPreferences = (state) => {
   $('race-text-face').value = state.textFace;
   $('race-text-size').value = state.textSize;
   $('race-reduced').checked = state.reducedEffects;
-  $('race-system-reduction').textContent =
+  localizedText($('race-system-reduction'), () =>
     state.effectiveReducedEffects && !state.reducedEffects
-      ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
-      : '';
+      ? t('interface:systemReducedMotionIsActiveYourSavedReducedEffectsChoice')
+      : '',
+  );
 };
 const stopDisplayView = displayPreferences.subscribe(renderDisplayPreferences);
+const encounterDisplay = attachEncounterDisplayControls({
+  document,
+  window,
+  getStorage: () => localStorage,
+  prefix: 'race-',
+});
+const encounterChoices = createEncounterVariantPreferences({
+  window,
+  getStorage: () => localStorage,
+});
+const runningEnemyPreferences = createRunningEnemyPreferences({
+  window,
+  getStorage: () => localStorage,
+});
+const runningEnemyControls = [];
+let encounterVariantControls = null,
+  contextualReactions = null,
+  huntStatuses = [],
+  huntRecords = null;
 const displayRestoration = attachPreferenceRestoration({
   window,
   getSnapshot: () => displayPreferences.snapshot(),
@@ -175,7 +290,7 @@ const actorPreferences = createActorStylePreferences({
   window,
   getStorage: () => localStorage,
   onWarning: (message) => {
-    $('race-actor-style-status').textContent = message;
+    localizedText($('race-actor-style-status'), () => message);
   },
 });
 const stopActorView = actorPreferences.subscribe(({ actorStyle }) => {
@@ -193,7 +308,7 @@ globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
 const bootStatus = createOperationStatus($('boot-status'));
 const bootDisplay = bootStatus.begin({
-  message: 'Preparing both boards…',
+  message: t('interface:preparingBothBoards'),
   stage: 'reading',
 });
 let bootFailed = false;
@@ -224,7 +339,7 @@ const presentationPage = mountPresentationPage({
         state: status.status === 'error' ? 'error' : 'ready',
         message:
           status.status === 'error'
-            ? 'Release artwork is unavailable; the current look is kept.'
+            ? t('interface:releaseArtworkIsUnavailableTheCurrentLookIsKept')
             : '',
       });
       presentationOperation = null;
@@ -236,6 +351,7 @@ presentationPage.ready.then((snapshot) => menuStyle.setPresentation(snapshot)).c
 let featured,
   installed,
   staticPictures,
+  creatorStore,
   publishedAudio,
   publishedPlayer,
   pageSound,
@@ -244,6 +360,9 @@ let featured,
   candidateJourney,
   journeyPreferences,
   journeyPictures;
+const creatorProfiles = new Map(),
+  creatorVersusEditions = new Map(),
+  creatorVersusOwners = new WeakMap();
 // Read-only fallback for remote Journey cards when this host runs Classic rules.
 const browsingJourneyPreferences = createJourneyPreferences({ window });
 const gameplayTuning = createGameplayTuningController({ eventTarget: window });
@@ -257,6 +376,12 @@ const releaseArtwork = (event) => {
   audioRestoration.dispose();
   displayRestoration.dispose();
   displayPreferences.dispose();
+  encounterDisplay.dispose();
+  encounterChoices.dispose();
+  encounterVariantControls?.dispose();
+  contextualReactions?.dispose();
+  huntStatuses.forEach((status) => status.dispose());
+  huntRecords?.dispose();
   menuStyle.dispose();
   audioPreferences.dispose();
   artworkLifetime.abort();
@@ -270,6 +395,8 @@ const releaseArtwork = (event) => {
   featured?.dispose();
   installed?.dispose();
   staticPictures?.dispose();
+  for (const owner of creatorVersusEditions.values()) owner.pictures?.dispose();
+  creatorStore?.close();
   journeyPreferences?.dispose();
   journeyPictures?.dispose();
   browsingJourneyPreferences.dispose();
@@ -281,13 +408,13 @@ const releaseArtwork = (event) => {
 window.addEventListener('pagehide', releaseArtwork);
 const json = async (url) => {
   const r = await fetch(url, { signal: artworkLifetime.signal });
-  if (!r.ok) throw new Error(`Could not load ${url}`);
+  if (!r.ok) throw new Error(t('gameplay:couldNotLoad', { value1: url }));
   return r.json();
 };
 try {
   document.addEventListener('focusin', initialFocusChoice, true);
   document.addEventListener('visibilitychange', initialVisibility);
-  window.addEventListener('blur', initialFocusLost);
+  window.addEventListener('blur', initialWindowBlur);
   window.addEventListener('pagehide', initialFocusLost);
   const [campaign, registry, themes, presets] = await Promise.all([
     json('../content/campaign.json'),
@@ -300,8 +427,10 @@ try {
     campaign: { ...campaign, classRecipes: registry },
     classRecipes: registry,
     themes: themes.themes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...(await loadBaseArtwork(
+      { ...campaign, classRecipes: registry },
+      { signal: artworkLifetime.signal },
+    )),
     music: [],
     sourcePackId: null,
   };
@@ -309,14 +438,17 @@ try {
     resolveJourneyRequest(new URL(location.href).searchParams, {
       mode: 'versus',
     }),
+    { fullSource: true },
   );
   const authoredJourney = !!authoredRoute;
-  const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams);
+  const libraryHandoff = readMissionLibraryHandoff(new URL(location.href).searchParams),
+    libraryIntent = readMissionLibraryIntent(new URL(location.href).searchParams);
   let incomingContinuation = null;
   if (libraryHandoff) {
     const values = new URL(location.href).searchParams.getAll('versus-next');
     if (values.length) {
-      if (values.length !== 1) throw new TypeError('Duplicate Versus continuation settings.');
+      if (values.length !== 1)
+        throw new TypeError(t('interface:duplicateVersusContinuationSettings'));
       const value = boundedJSON(values[0], {
         maxBytes: 4096,
         maxNodes: 24,
@@ -325,7 +457,7 @@ try {
       exactKeys(
         value,
         ['mission', 'format', 'turnPolicy', 'seconds', 'difficulty', 'tap', 'slots'],
-        'Versus continuation',
+        t('interface:versusContinuation'),
       );
       if (
         value?.mission === libraryHandoff &&
@@ -337,12 +469,16 @@ try {
         Array.isArray(value.slots) &&
         value.slots.length === 2 &&
         value.slots.every(
-          (slot) => slot === null || (Number.isInteger(slot) && slot >= 0 && slot <= 255),
+          (slot) =>
+            slot === null ||
+            (Number.isInteger(slot) &&
+              slot >= 0 &&
+              (slot <= 255 || (slot >= 1024 && slot <= 3071))),
         ) &&
         (value.slots[0] === null || value.slots[0] !== value.slots[1])
       )
         incomingContinuation = value;
-      else throw new TypeError('Versus continuation settings do not match this exact mission.');
+      else throw new TypeError(t('interface:versusContinuationSettingsDoNotMatchThisExactMission'));
     }
   }
   if (incomingContinuation) {
@@ -356,6 +492,7 @@ try {
     mode: 'versus',
   });
   let journeyProfile = null,
+    displayedProgressProfile = null,
     journeyChooser = null,
     journeySkipArmed = null,
     missionLibrary = null,
@@ -381,47 +518,65 @@ try {
     onOpen() {
       if (shell.scope() !== 'main') return;
       const target = $('race-journey-save').hidden ? $('race-start') : $('race-journey-save-retry');
-      if (!target.disabled && !target.hidden) target.focus();
+      if (!target.disabled && !target.hidden) {
+        if ($('race-journey-save').hidden) target.focus();
+        else shell.openSettings('data', target);
+      }
     },
   });
+  let journeyThemeSources;
+  const originalThemeLabels = new WeakMap();
+  const chapterLabel = (entry) =>
+    entry.mission
+      ? contentText(entry.mission, 'campaignTitle')
+      : contentText(entry.pictureEntry?.campaign, 'title') || entry.chapter;
+  const themeLabel = (theme) => {
+    if (authoredRoute?.id !== DEFAULT_JOURNEY_ROUTES.versus) return contentText(theme, 'name');
+    if (!originalThemeLabels.has(theme)) {
+      const material = journeyActorThemeMaterial(theme.id);
+      const original = journeyThemeSources?.find((source) => source.id === material?.sourceThemeId);
+      originalThemeLabels.set(
+        theme,
+        original && dataIdentity(createJourneyActorTheme(original)) === dataIdentity(theme)
+          ? original
+          : theme,
+      );
+    }
+    return contentText(originalThemeLabels.get(theme), 'name');
+  };
   if (authoredJourney) {
+    journeyThemeSources = (await json('../content-design/themes.json')).themes;
     document.body.classList.add('candidate-journey');
     candidateJourney = createCandidateVersusHost(authoredRoute.source, {
+      getEncounterVariant: () => encounterChoices.snapshot().variant,
       themes: authoredJourneyUsesActorMaterials(authoredRoute.id)
-        ? journeyActorThemeCandidates((await json('../content-design/themes.json')).themes, {
+        ? journeyActorThemeCandidates(journeyThemeSources, {
             includeOriginals: authoredRoute.preserveOriginalThemes === true,
           })
-        : (await json('../content-design/themes.json')).themes,
+        : journeyThemeSources,
       corePackIds: authoredRoute.corePackIds,
       optionalCampaignIds: authoredRoute.optionalCampaignIds,
     });
     journeyPreferences = createJourneyPreferences({ window });
     if (incomingContinuation) journeyPreferences.choose(incomingContinuation.difficulty);
     $('race-journey-note').hidden = false;
-    $('race-journey-note').textContent =
+    localizedText($('race-journey-note'), () =>
       authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? `New Journey · ${candidateJourney.catalog.missions.length} missions`
-        : `${authoredRoute.label.toUpperCase()} / UNVALIDATED VERSUS TEST BUILD. Web previews need a connection for original pictures; core offline preparation does not save them.`;
+        ? t('interface:couch.journeyNotice', { count: candidateJourney.catalog.missions.length })
+        : t('interface:couch.journeyTestNotice', { route: authoredRoute.label.toUpperCase() }),
+    );
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
       ...Object.keys(
         journeyDifficultyCatalog(authoredRoute.source.difficultyCatalogId).presets,
-      ).map((id) => new Option(id[0].toUpperCase() + id.slice(1), id)),
+      ).map((id) => localizedOption(() => gameplayDifficultyLabel(id), id)),
     );
     $('race-journey-difficulty').value = journeyPreferences.snapshot().difficulty;
     journeyProfile = createJourneyProfileStore({
       profileKey: authoredRoute.profileKey,
-      onStatus({ ready, durable, error }) {
-        const unsaved = journeySaveCue.update({ ready, durable, error });
-        const notice = $('race-journey-save');
-        notice.hidden = !unsaved && !notice.contains(document.activeElement);
-        $('race-journey-save-message').textContent = error
-          ? `Journey race progress is session-only. Retry saving or export before closing. ${error}`
-          : ready && durable
-            ? 'Journey race progress saved locally. You can continue playing.'
-            : '';
-      },
+      onStatus: (status) => presentProgressStatus(journeyProfile, status),
     });
+    displayedProgressProfile = journeyProfile;
     await journeyProfile.load();
     journeyPictures = attachJourneyModePictures({
       document,
@@ -453,18 +608,19 @@ try {
   if (!candidateJourney)
     try {
       bootDisplay.update({
-        message: 'Loading the featured chapter…',
+        message: t('interface:loadingTheFeaturedChapter'),
         stage: 'downloading',
       });
       featuredSource = await json('../content/packs/fpv-arcade-r5.json');
     } catch (error) {
       if (artworkLifetime.signal.aborted || error.name === 'AbortError') throw error;
-      featuredStatus =
-        'Featured Pressure Lines download unavailable. Base maps and checked installed maps remain available.';
+      featuredStatus = t(
+        'interface:featuredPressureLinesDownloadUnavailableBaseMapsAndCheckedInstalled',
+      );
     }
   if (featuredSource !== undefined) {
     bootDisplay.update({
-      message: 'Checking featured maps and original pictures…',
+      message: t('interface:checkingFeaturedMapsAndOriginalPictures'),
       stage: 'verifying',
     });
     featured = await prepareCouchChapter(featuredSource, {
@@ -509,11 +665,123 @@ try {
         entries: [baseEntry, ...(featured ? [featured.resolved] : [])],
         presentationPage,
       });
+  async function creatorProfile(editionId) {
+    if (!creatorProfiles.has(editionId)) {
+      let profile;
+      profile = createJourneyProfileStore({
+        profileKey: creatorProfileKey(editionId),
+        onStatus: (status) => presentProgressStatus(profile, status),
+      });
+      creatorProfiles.set(editionId, profile);
+      await profile.load();
+    }
+    return creatorProfiles.get(editionId);
+  }
+  function activeProgressProfile() {
+    return displayedProgressProfile;
+  }
+  function showProgressProfileFor(entry) {
+    const owner = creatorVersusOwners.get(entry),
+      profile = owner
+        ? creatorProfiles.get(owner.prepared.editionId)
+        : candidateJourney?.owns(entry)
+          ? journeyProfile
+          : null;
+    displayedProgressProfile = profile;
+    if (profile) presentProgressStatus(profile, profile.status());
+    else {
+      journeySaveCue.update({ ready: true, durable: true, error: null });
+      $('race-journey-save').hidden = true;
+      localizedText($('race-journey-save-message'), '');
+    }
+  }
+  function presentProgressStatus(profile, { ready, durable, error }) {
+    if (!profile || profile !== activeProgressProfile()) return;
+    const unsaved = journeySaveCue.update({ ready, durable, error }),
+      notice = $('race-journey-save');
+    notice.hidden = !unsaved && !notice.contains(document.activeElement);
+    localizedText($('race-journey-save-message'), () =>
+      error
+        ? t('interface:couch.sessionProgress', { error })
+        : ready && durable
+          ? t('interface:journeyRaceProgressSavedLocallyYouCanContinuePlaying')
+          : '',
+    );
+  }
+  function creatorVersusOwner(prepared) {
+    let owner = creatorVersusEditions.get(prepared.editionId);
+    if (owner) {
+      let restored = false;
+      for (const row of owner.rows)
+        if (!maps.includes(row)) {
+          maps.push(row);
+          restored = true;
+        }
+      if (restored) showMaps();
+      return owner;
+    }
+    const content = prepared.manifest.content,
+      host = createCandidateVersusHost(content.project, {
+        themes: content.themes,
+        corePackIds: [content.packId],
+      }),
+      provenance = new Map(
+        (Array.isArray(content.provenance) ? content.provenance : [content.provenance]).map(
+          (row) => [row.missionId, row],
+        ),
+      ),
+      rows = host.rows.map((row) =>
+        Object.freeze({
+          ...row,
+          key: `creator/${prepared.editionId}/${row.key}`,
+          creatorEditionId: prepared.editionId,
+          creatorRuntimeSeed: provenance.get(row.mission.levelId)?.runtimeSeed,
+        }),
+      ),
+      owned = new Set(rows),
+      pictures = createCandidateCouchPictures({
+        owns: (row) => owned.has(row),
+        acquire: (asset, options) =>
+          acquireCandidatePicture(asset, {
+            ...options,
+            loadArtwork: creatorArtworkLoader(prepared),
+          }),
+      });
+    owner = Object.freeze({ prepared, host, rows, pictures });
+    creatorVersusEditions.set(prepared.editionId, owner);
+    for (const row of rows) creatorVersusOwners.set(row, owner);
+    maps.push(...rows);
+    showMaps();
+    return owner;
+  }
+  const pictureOwner = (entry) =>
+    shippedMaps.includes(entry)
+      ? staticPictures
+      : (creatorVersusOwners.get(entry)?.pictures ?? installed);
+  const qualifiedVersusEntry = (entry) =>
+    Boolean(candidateJourney?.owns(entry) || creatorVersusOwners.has(entry));
+  function creatorVersusContinuation(entry) {
+    const owner = creatorVersusOwners.get(entry),
+      mission = owner?.host.next(entry.mission.id);
+    if (!mission) return null;
+    return {
+      owner,
+      mission,
+      entry: owner.rows.find(
+        (candidate) => candidate.mission === mission && candidate.difficulty === entry.difficulty,
+      ),
+    };
+  }
+  const cancelAllPictures = () => {
+    staticPictures.cancel();
+    for (const owner of creatorVersusEditions.values()) owner.pictures.cancel();
+  };
   let installedStatus = candidateJourney
       ? authoredRoute.id === DEFAULT_JOURNEY_ROUTES.versus
-        ? 'Open All missions for Journey, earlier missions and installed chapters.'
-        : `${authoredRoute.label} test route; Legacy chapters stay in the ordinary race.`
-      : 'Installed chapters have not been checked.',
+        ? localizedMessage('interface:openAllMissionsForJourneyEarlierMissionsAndInstalledChapters')
+        : localizedMessage('interface:couch.testRoute', { route: authoredRoute.label })
+      : localizedMessage('interface:installedChaptersHaveNotBeenChecked'),
+    installedRefreshPending = false,
     contentChannel = null;
   try {
     const channel = document.querySelector('meta[name="revealline-offline"]')
@@ -527,7 +795,7 @@ try {
         presentationPage,
       });
       bootDisplay.update({
-        message: 'Checking installed chapters and pictures…',
+        message: t('interface:checkingInstalledChaptersAndPictures'),
         stage: 'verifying',
       });
       const rows = await installed.refresh({
@@ -536,36 +804,64 @@ try {
       });
       maps.push(...rows);
       installedStatus = rows.length
-        ? `${rows.length} installed maps available. Choose a map to check its original.`
-        : 'Open All missions to download compatible chapters, then choose Play.';
+        ? localizedMessage('interface:couch.installedMaps', { count: rows.length })
+        : localizedMessage('interface:openAllMissionsToDownloadCompatibleChaptersThenChoosePlay');
     }
   } catch (error) {
-    installedStatus = `Installed chapters unavailable: ${error.message}`;
+    installedStatus = localizedMessage('gameplay:installedChaptersUnavailable', {
+      value1: error.message,
+    });
   }
   if (artworkLifetime.signal.aborted)
-    throw new DOMException('Couch artwork loading cancelled.', 'AbortError');
-  const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? 'Tactical' : 'Arcade');
+    throw new DOMException(t('interface:couchArtworkLoadingCancelled'), 'AbortError');
+  const mode = (level) =>
+    arcadeActionCapabilities(level).manualAbility ? t('interface:tactical') : t('interface:arcade');
   function showMaps() {
+    if (candidateJourney) {
+      candidateJourney.ensureVariant?.(encounterChoices.snapshot().variant);
+      const known = new Set(maps.map((row) => row.key));
+      maps.push(...candidateJourney.rows.filter((row) => !known.has(row.key)));
+    }
     $('race-level').replaceChildren(
       ...maps
-        .filter(
-          (row) => !candidateJourney || row.difficulty === journeyPreferences.snapshot().difficulty,
+        .filter((row) =>
+          candidateJourney
+            ? row.difficulty === journeyPreferences.snapshot().difficulty &&
+              row === candidateJourney.row(row.mission, row.difficulty)
+            : !creatorVersusOwners.has(row) ||
+              row.difficulty === browsingJourneyPreferences.snapshot().difficulty,
         )
-        .map((m) => new Option(`${m.chapter} · ${m.level.name} · ${mode(m.level)}`, m.key)),
+        .map((m) =>
+          localizedOption(
+            () => `${chapterLabel(m)} · ${contentText(m.level, 'name')} · ${mode(m.level)}`,
+            m.key,
+          ),
+        ),
     );
   }
   showMaps();
   const journeyCursor = candidateJourney?.catalog.find(journeyProfile?.snapshot().cursors.versus);
+  const cursorEntry =
+    journeyCursor && candidateJourney.row(journeyCursor, journeyPreferences.snapshot().difficulty);
+  const cursorReceiptId = cursorEntry
+    ? (candidateJourney.progressMission?.(cursorEntry)?.id ?? journeyCursor.id)
+    : journeyCursor?.id;
   const initialJourneyMission =
-    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, journeyCursor.id)
+    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, cursorReceiptId)
       ? (candidateJourney.next(journeyCursor.id) ?? journeyCursor)
       : (journeyCursor ?? candidateJourney?.catalog.missions[0]);
   $('race-level').value = candidateJourney
     ? candidateJourney.row(initialJourneyMission, journeyPreferences.snapshot().difficulty).key
     : maps[0].key;
-  for (const t of themes.themes) $('race-theme').append(new Option(t.name, t.id));
-  for (const c of registry) $('race-class').append(new Option(c.label, c.id));
+  for (const item of themes.themes)
+    $('race-theme').append(localizedOption(() => themeLabel(item), item.id));
+  for (const c of registry)
+    $('race-class').append(localizedOption(() => contentText(c, 'label'), c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
+  for (const painter of painters) {
+    painter.setArcadeProvider(() => menuStyle.themeHost.effectivePreferences());
+    painter.setInterfaceProvider(() => menuStyle.themeHost.snapshot());
+  }
   const foundationCaptions = new WeakMap();
   for (const painter of painters) presentationPage.bindPainter(painter);
   const sound = (pageSound = new Soundscape({
@@ -573,6 +869,32 @@ try {
     audioMaster,
   }));
   sound.configure({ master: 1 });
+  sound.setActorPresentation(() => ({
+    collectionId: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences())?.id,
+  }));
+  sound.setDestructionPreferences?.(() => encounterDisplay.snapshot());
+  contextualReactions = attachContextualReactions({
+    sound,
+    container: $('hunt-feedback'),
+    resultContainer: $('race-journey-reactions'),
+    settingsContainer: $('race-settings-panel-audio'),
+    getReduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+    acquireGain: ({ factor }) => music?.player?.acquireGain({ factor }) ?? (() => {}),
+  });
+  huntRecords = createHuntRecords();
+  huntStatuses = [0, 1].flatMap((i) => [
+    attachHuntStatus({
+      container: $(`racer-stats-${i}`).parentElement,
+      mode: 'versus',
+      records: huntRecords,
+    }),
+    attachHuntStatus({
+      container: $(`race-result-${i}`).parentElement,
+      mode: 'versus',
+      records: huntRecords,
+      record: false,
+    }),
+  ]);
   music = attachCouchMusicHost({
     document,
     root: $('race-settings-panel-audio'),
@@ -607,6 +929,8 @@ try {
   });
   publishedAudio.setPlayer(publishedPlayer);
   let neutralResumeTick = false;
+  let startCue = null,
+    pendingStartCue = null;
   const freeBodies = characterPresentations.availableBodies(
     unlockedBodies(emptyProgress(campaign), campaign),
   );
@@ -627,12 +951,24 @@ try {
   );
   boardFootprints = createBoardFootprints([0, 1].map((i) => $(`race-canvas-${i}`)));
   let boardLayoutKey = null;
+  const localRecordings = new WeakMap();
+  const recordingExport = attachTerminalRecordingExport({
+    document,
+    container: $('race-recording-copy'),
+    status: $('race-recording-status'),
+    getOwner: () => match,
+    isTerminal: (owner) => owner?.status === 'finished',
+  });
+  const recordingBuild = document.documentElement.dataset.buildVersion;
+  const buildVersion =
+    recordingBuild && recordingBuild !== '__REVEALLINE_VERSION__' ? recordingBuild : 'dev';
   let match,
     theme,
     backdrop = null,
     contentReady = true,
     contentBusy = false,
     contentError = null,
+    contentDownloadRequired = false,
     contentController = null,
     contentScope = null,
     accumulator = 0,
@@ -650,26 +986,160 @@ try {
     currentLibrarySelection = null,
     preparedFocusMatch = null,
     startIntentEpoch = 0,
+    pendingReadyStart = null,
     framePads = [],
     frameReadError = null,
-    padDescriptors = new Map(),
     slots = [null, null],
     assignmentsChanged = false,
     pendingPadLoss = false,
     menuOwner = null,
     menuHint = '',
     menuGate = '',
-    menuStatus =
-      'Release controls, then press a face button or Menu to choose the menu controller.',
+    menuStatus = t('interface:releaseControlsThenPressAFaceButtonOrMenuTo'),
     menuScope = null,
     inactive = false,
     disposed = false,
     frameId = null,
     stopNative = () => {};
+  const statsSessionId = crypto.randomUUID();
+  const enemyStatistics = createEnemyStatsHost({ gameType: 'versus' });
+  void enemyStatistics.stats.read();
+  const enemyStatsViews = [];
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('race-message').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'versus',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'panel',
+    }),
+  );
+  enemyStatsViews.push(
+    mountEnemyStats({
+      container: $('race-clock').parentElement,
+      stats: enemyStatistics.stats,
+      gameType: 'versus',
+      getAttempt: enemyStatistics.getAttempt,
+      locale: () => document.documentElement.lang,
+      variant: 'hud',
+    }),
+  );
+  const continuousPlay = createContinuousPlayController({
+    isCurrent: (identity) => identity === match && !disposed && match?.status === 'finished',
+    isActive: () => !document.hidden && document.hasFocus(),
+    onNext: () => $('race-start').click(),
+    onRetry: () => $('race-start').click(),
+  });
+  const flowControls = mountContinuousPlayControls({
+    parent: $('race-start').parentElement,
+    primaryAction: $('race-start'),
+    controller: continuousPlay,
+    locale: () => document.documentElement.lang,
+  });
+  const flowCelebration = mountContinuousCelebration({
+    controller: continuousPlay,
+    reduced: () => displayPreferences.snapshot().effectiveReducedEffects,
+  });
+  const cancelContinuousPlay = () => continuousPlay.cancel('interaction');
+  document.addEventListener('pointerdown', cancelContinuousPlay, true);
+  document.addEventListener('keydown', cancelContinuousPlay, true);
+  window.addEventListener('blur', cancelContinuousPlay);
+  window.addEventListener('gamepaddisconnected', cancelContinuousPlay);
+  function hideStartCue() {
+    startCue = null;
+    $('race-start-cue').hidden = true;
+    delete $('race-start-cue').dataset.kind;
+    delete $('race-start-cue').dataset.phase;
+    $('race-start-cue-label').textContent = '';
+  }
+  function beginStartCue(kind) {
+    startCue = { owner: match, generation, cue: createMissionStartCue(kind), released: false };
+    pendingStartCue = null;
+    $('race-start-cue').hidden = false;
+    $('race-start-cue').dataset.kind = kind;
+    $('race-start-cue-label').textContent = kind === 'retry' ? t('interface:ready2') : '3';
+    clear({ resetDirection: true });
+  }
+  function advanceStartCue(now) {
+    if (!startCue) return { active: false, blocksPlay: false, released: false };
+    if (
+      startCue.owner !== match ||
+      startCue.generation !== generation ||
+      match.status !== 'running'
+    ) {
+      hideStartCue();
+      return { active: false, blocksPlay: false, released: false };
+    }
+    const state = startCue.cue.sample(now);
+    if (state.active) {
+      $('race-start-cue-label').textContent =
+        state.label === 'READY'
+          ? t('interface:ready2')
+          : state.label === 'GO'
+            ? t('interface:startCueGo')
+            : state.label;
+      $('race-start-cue').dataset.phase = String(state.phase);
+    }
+    let released = false;
+    if (!state.blocksPlay && !startCue.released) {
+      startCue.released = true;
+      released = true;
+      // Menu Confirm, touch and movement held through the cue are not gameplay input.
+      clear({ resetDirection: true });
+      neutralResumeTick = true;
+    }
+    if (!state.active) hideStartCue();
+    return { ...state, released };
+  }
+  function activateAcceptedMatch({ owner, ownerGeneration, cue = null, owns }) {
+    const current = () =>
+      !disposed &&
+      match === owner &&
+      generation === ownerGeneration &&
+      ['ready', 'paused'].includes(match.status) &&
+      owns();
+    if (!current()) return false;
+    clear({ resetDirection: cue !== null });
+    if (!current()) return false;
+    if (match.status === 'ready') {
+      if (roundRecipe.attemptAppearance === undefined)
+        roundRecipe.attemptAppearance = acceptAttemptAppearance(
+          roundRecipe.environmentCandidate ?? null,
+          {
+            artRevision: runtimeActorArtRevision(),
+            collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
+          },
+        );
+      painters.forEach((p) => p.setAttemptAppearance(roundRecipe.attemptAppearance));
+    }
+    resumeDuel(match, { preserveContinuation: true });
+    if (cue) beginStartCue(cue);
+    else {
+      pendingStartCue = null;
+      neutralResumeTick = true;
+    }
+    showProgressProfileFor(roundRecipe.entry);
+    // Race effects are independent of the music transport and its readiness.
+    contextualReactions?.resume();
+    void sound.enable().then(() => contextualReactions?.prepare());
+    if (music) void music.start();
+    localizedText($('race-message'), () => t('interface:makeYourLineCountFirstClearWins'));
+    updateMenu();
+    input.focus();
+    return match === owner && generation === ownerGeneration && match.status === 'running';
+  }
   const preparationStatus = createOperationStatus($('race-preparation'), {
     isCurrent: () => !disposed,
   });
-  const journeyReactions = attachJourneyReactions({ prefix: 'race-' });
+  const resultReactions = attachJourneyReactions({ prefix: 'race-' });
+  const journeyReactions = {
+    ...resultReactions,
+    present(context) {
+      resultReactions.present(context);
+      contextualReactions?.result(context);
+    },
+  };
   let preparationDisplay = null;
   let actorJourneyIdentity = null,
     actorMissionIndex = null;
@@ -681,23 +1151,46 @@ try {
         throw error;
       }));
   function showActorNotice(recipe) {
-    $('race-actor-style-status').textContent =
-      actorPreferences.getWarning() ||
-      recipe.actorNotice ||
-      'Applies to a new race or Next mission. Resume and Rematch keep their accepted actors. Custom chapters keep authored actors.';
+    localizedText(
+      $('race-actor-style-status'),
+      () =>
+        actorPreferences.getWarning() ||
+        recipe.actorNotice ||
+        t('interface:appliesToANewRaceOrNextMissionResumeAnd'),
+    );
   }
   const actorExecutionOwners = new WeakMap();
   async function prepareActors(recipe, { signal, onStatus, reader = installed } = {}) {
     const row = recipe.entry;
     recipe.actorNotice = '';
+    recipe.environmentCandidate =
+      !creatorVersusOwners.has(row) && candidateJourney?.owns(row)
+        ? await prepareIndustrialEnvironmentSource({
+            engine: 'capture',
+            mode: 'versus',
+            source: row.level,
+            origin: {
+              kind: 'builtin',
+              catalogueId: authoredRoute.source.id,
+              catalogueRevision: authoredRoute.source.revision,
+              sourceForm: `compiled-native-v1:${authoredRoute.source.policyId}:${row.difficulty}`,
+            },
+            signal,
+          })
+        : null;
+    signal?.throwIfAborted();
+    // Creator editions retain their compiled authored actors. Their immutable
+    // .rlpack owns no release actor-presentation authority.
+    if (creatorVersusOwners.has(row)) return null;
     let content, scope;
     if (candidateJourney?.owns(row)) {
       actorJourneyIdentity ??= createJourneyVisualThemeIdentityAdapter(authoredRoute.source, {
         mode: 'versus',
       });
-      content = await (
-        await actorJourneyIdentity
-      ).prepareHostSelection(
+      const prepareIdentity = candidateJourney.prepareVisualIdentity
+        ? candidateJourney.prepareVisualIdentity
+        : (await actorJourneyIdentity).prepareHostSelection;
+      content = await prepareIdentity(
         {
           host: candidateJourney,
           selection: row,
@@ -737,8 +1230,7 @@ try {
           // Missing optional authority never grants FPV ownership. A fresh
           // unknown pack remains playable through its validated authored path.
           // Accepted FPV pins and later actor asset/hash failures stay strict.
-          recipe.actorNotice =
-            'FPV eligibility could not be checked for this chapter. Its authored actors are kept; try a fresh race when the mission index is available.';
+          recipe.actorNotice = t('interface:fpvEligibilityCouldNotBeCheckedForThisChapterIts');
           return null;
         }
         const original = index.missions.find(
@@ -803,7 +1295,7 @@ try {
     readingInputPrompt({
       modality: readingModality,
       scrollable,
-      controls: { confirm: 'South', back: 'East' },
+      controls: { confirm: t('common:controls.south'), back: t('common:controls.east') },
     });
   function setReadingModality(modality) {
     if (readingModality === modality) return;
@@ -817,6 +1309,7 @@ try {
     if (resetDirection) input.clear();
     else input.clearPhysical();
     accumulator = 0;
+    controllerSession.clear();
     menuRouter?.clear();
     navigation?.clear();
     if (match?.status === 'running') menuScope = 'flight';
@@ -830,15 +1323,19 @@ try {
       shifting = false,
       pendingTarget = null;
     const observe = (event) => {
-      if (!shifting && ![origin, document.body, document.documentElement].includes(event.target))
+      if (installOfflineOwnsElement(event.target)) return;
+      if (
+        !shifting &&
+        ![origin, pendingTarget, document.body, document.documentElement].includes(event.target)
+      )
         moved = true;
     };
     const hidden = () => {
       if (!foreground()) moved = true;
     };
-    const blurred = () => {
+    const blurred = guardInstallOfflineBlur(() => {
       moved = true;
-    };
+    });
     const owns = (current) =>
       current &&
       !disposed &&
@@ -897,9 +1394,11 @@ try {
         contentBusy = false;
         preparationDisplay?.finish({ state: 'cancelled', message: '' });
         preparationDisplay = null;
-        $('race-message').textContent = selected
-          ? 'Mission selection cancelled. Your current race and picture are kept.'
-          : 'Next mission cancelled. Results are kept. Choose Next mission to retry.';
+        localizedText($('race-message'), () =>
+          selected
+            ? t('interface:missionSelectionCancelledYourCurrentRaceAndPictureAreKept')
+            : t('interface:nextMissionCancelledResultsAreKeptChooseNextMissionTo'),
+        );
         updateMenu();
         return;
       }
@@ -917,15 +1416,23 @@ try {
       installed?.clear();
       backdrop = null;
     }
-    staticPictures.cancel();
+    cancelAllPictures();
     contentBusy = false;
     contentReady = retainedResult;
+    contentDownloadRequired = false;
     contentError = retainedResult
-      ? `${continuationAction()} picture loading cancelled. Results are kept. Choose ${continuationAction()} when you are ready.`
-      : 'Picture loading cancelled. Retry when you are ready.';
-    if (installedStatus === 'Checking installed chapters…')
-      installedStatus = 'Installed chapter check cancelled. Refresh when ready.';
-    $('race-message').textContent = contentError;
+      ? () =>
+          t('interface:couch.continuationPictureLoadingCancelled', {
+            action: continuationAction(),
+          })
+      : localizedMessage('interface:pictureLoadingCancelledRetryWhenYouAreReady');
+    if (installedRefreshPending) {
+      installedRefreshPending = false;
+      installedStatus = localizedMessage(
+        'interface:installedChapterCheckCancelledRefreshWhenReady',
+      );
+    }
+    localizedText($('race-message'), () => contentError);
     updateMenu();
   }
   $('race-picture-cancel').onclick = () => {
@@ -943,7 +1450,7 @@ try {
   };
   function setupRecipe() {
     const entry = maps.find((m) => m.key === $('race-level').value);
-    const classId = candidateJourney
+    const classId = qualifiedVersusEntry(entry)
       ? 'scout'
       : entry.classes.some((c) => c.id === $('race-class').value)
         ? $('race-class').value
@@ -957,12 +1464,14 @@ try {
       entry,
       classId,
       theme: entry.themes.find((t) => t.id === themeId) || entry.themes[0],
-      seed: candidateJourney ? 1 : 2026,
+      seed: entry.creatorRuntimeSeed ?? (candidateJourney ? 1 : 2026),
       turnPolicy: $('race-turn').value,
-      seconds: candidateJourney ? 0 : Number($('race-time').value),
+      seconds: qualifiedVersusEntry(entry) ? 0 : Number($('race-time').value),
       format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
       actorStyle: preference.actorStyle,
       actorPreferenceRevision: preference.revision,
+      runningEnemies: runningEnemyPreferences.snapshot().enabled,
+      runningEnemyStyle: runningEnemyPreferences.snapshot().style,
     };
   }
   function prepare() {
@@ -986,23 +1495,24 @@ try {
     preparationDisplay = null;
     contentController?.abort();
     installed?.clear();
-    staticPictures.cancel();
+    cancelAllPictures();
     contentController = new AbortController();
     contentScope = shell?.scope() || 'main';
     contentError = null;
+    contentDownloadRequired = false;
     contentBusy = false;
     contentReady = false;
     clear({ resetDirection: true });
     const entry = maps.find((m) => m.key === $('race-level').value);
-    const classId = candidateJourney
+    const classId = qualifiedVersusEntry(entry)
       ? 'scout'
       : entry.classes.some((c) => c.id === $('race-class').value)
         ? $('race-class').value
         : entry.classes[0].id;
     $('race-class').replaceChildren(
       ...entry.classes
-        .filter((c) => !candidateJourney || c.id === 'scout')
-        .map((c) => new Option(c.label, c.id)),
+        .filter((c) => !qualifiedVersusEntry(entry) || c.id === 'scout')
+        .map((c) => localizedOption(() => contentText(c, 'label'), c.id)),
     );
     $('race-class').value = classId;
     const themeId =
@@ -1012,18 +1522,23 @@ try {
     selectedMapKey = entry.key;
     backdrop = entry.backdrop || null;
     theme = entry.themes.find((t) => t.id === themeId) || entry.themes[0];
-    $('race-theme').replaceChildren(...entry.themes.map((t) => new Option(t.name, t.id)));
+    $('race-theme').replaceChildren(
+      ...entry.themes.map((t) => localizedOption(() => themeLabel(t), t.id)),
+    );
     $('race-theme').value = theme.id;
     roundRecipe = {
       entry,
       theme,
       classId,
-      seed: candidateJourney ? 1 : 2026,
+      seed: entry.creatorRuntimeSeed ?? (candidateJourney ? 1 : 2026),
       turnPolicy: $('race-turn').value,
-      seconds: candidateJourney ? 0 : Number($('race-time').value),
+      seconds: qualifiedVersusEntry(entry) ? 0 : Number($('race-time').value),
       format: $('race-format').value === 'first-to-two' ? 'first-to-two' : 'single',
       actorStyle: configured.actorStyle,
       actorPreferenceRevision: configured.actorPreferenceRevision,
+      runningEnemies: configured.runningEnemies,
+      runningEnemyStyle: configured.runningEnemyStyle ?? runningEnemyPreferences.snapshot().style,
+      pursuitGeneration: configured.pursuitGeneration ?? 'pursuit-goals.v2',
     };
     $('race-format').value = roundRecipe.format;
     match = createRound(roundRecipe);
@@ -1036,21 +1551,38 @@ try {
       });
     paintRound(roundRecipe);
     finished = false;
-    $('race-start').textContent =
-      roundRecipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
+    localizedText($('race-start'), () =>
+      roundRecipe.format === 'single' ? t('interface:startRace') : t('interface:startRound'),
+    );
     return loadPreparedPicture(entry);
   }
   function createRound(recipe) {
-    recipe.tuning ??= gameplayTuning.snapshot(
-      recipe.entry.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
-    );
+    const creatorOwned = creatorVersusOwners.has(recipe.entry);
+    recipe.tuning ??= creatorOwned
+      ? resolveGameplayTuning(
+          recipe.entry.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+        )
+      : gameplayTuning.snapshot(
+          recipe.entry.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+        );
     const rulesLevel = projectClassicCurrentRulesLevel(
       recipe.entry.level,
       recipe.rulesEdition,
       recipe.entry.musicCampaignKey,
     );
-    recipe.runtimeLevel = applyGameplayTuning(rulesLevel, recipe.tuning);
-    return createDuel(
+    // Qualified creator evidence is bound to the exact compiled installed
+    // level. Global tuning would create a different, unverified simulation.
+    const tunedLevel = creatorOwned ? rulesLevel : applyGameplayTuning(rulesLevel, recipe.tuning);
+    recipe.runningEnemies ??= runningEnemyPreferences.snapshot().enabled;
+    recipe.runningEnemyStyle ??= runningEnemyPreferences.snapshot().style;
+    recipe.runtimeLevel = recipe.runningEnemies
+      ? prepareRunningEnemyLevel(tunedLevel, {
+          classes: recipe.entry.classes,
+          style: recipe.runningEnemyStyle,
+          generation: recipe.pursuitGeneration ?? 'pursuit-goals.v2',
+        })
+      : tunedLevel;
+    const next = createDuel(
       recipe.runtimeLevel,
       {
         seed: recipe.seed,
@@ -1060,9 +1592,28 @@ try {
       },
       {
         seconds: recipe.seconds,
-        protocol: candidateJourney?.owns(recipe.entry) ? UNTIMED_DUEL_PROTOCOL : DUEL_PROTOCOL,
+        protocol: qualifiedVersusEntry(recipe.entry) ? UNTIMED_DUEL_PROTOCOL : DUEL_PROTOCOL,
       },
     );
+    localRecordings.set(
+      next,
+      createLocalMatchRecorder({
+        build: buildVersion,
+        mode: 'versus',
+        level: recipe.runtimeLevel,
+        options: {
+          seed: recipe.seed,
+          turnPolicy: recipe.turnPolicy,
+          classId: recipe.classId,
+          ...(recipe.entry.classes ? { classRecipes: recipe.entry.classes } : {}),
+        },
+        duel: { seconds: recipe.seconds, protocol: next.protocol },
+        provenance: localMatchProvenance(recipe.entry.level, {
+          ...(recipe.entry.creatorEditionId ? { editionId: recipe.entry.creatorEditionId } : {}),
+        }),
+      }),
+    );
+    return next;
   }
   function paintRound(recipe) {
     showActorNotice(recipe);
@@ -1094,28 +1645,41 @@ try {
       else {
         music.contextPending(theme.id);
         music.report(
-          new Error(
-            'Mission music assignment is unavailable until this content identity is resolved.',
-          ),
+          new Error(t('interface:missionMusicAssignmentIsUnavailableUntilThisContentIdentityIs')),
         );
       }
     }
     painters.forEach((p) => {
       p.setLook(theme, bodyFor(theme, classId), entry.visualOverrides);
       p.setLevel?.(level, { seed: recipe.seed });
+      if (recipe.attemptAppearance !== undefined) p.setAttemptAppearance(recipe.attemptAppearance);
       p.skipCelebration?.();
     });
   }
-  function loadPreparedPicture(entry) {
+  async function ensureVersusPackage(entry, options, reader = installed) {
+    return ensureVersusEntryPackage(entry, {
+      options,
+      packageConsent: offlineAvailability().packageConsent,
+      creatorOwnerFor: (row) => creatorVersusOwners.get(row),
+      candidateJourney,
+      authoredRouteId: authoredRoute?.id,
+      shippedMaps,
+      downloads: gameplayDownloads,
+      reader,
+      isOfficialPack,
+    });
+  }
+  function loadPreparedPicture(entry, { prompt = false, preserveDownloadOnCancel = false } = {}) {
     contentReady = false;
     contentBusy = true;
     contentError = null;
+    contentDownloadRequired = false;
     const staticEntry = shippedMaps.includes(entry),
-      owner = staticEntry ? staticPictures : installed,
+      owner = pictureOwner(entry),
       message = staticEntry
-        ? 'Checking this map and preparing the same picture for both boards…'
-        : 'Checking this chapter and loading its original picture…';
-    $('race-message').textContent = message;
+        ? t('interface:checkingThisMapAndPreparingTheSamePictureForBoth')
+        : t('interface:checkingThisChapterAndLoadingItsOriginalPicture');
+    localizedText($('race-message'), () => message);
     updateMenu();
     const selectedRun = match,
       ticket = generation,
@@ -1132,6 +1696,8 @@ try {
       let nextActors = null,
         adoptedActors = false;
       try {
+        await ensureVersusPackage(entry, { signal: controller.signal, prompt });
+        if (!current()) return false;
         const image = await owner.select(entry, {
           themeId: theme.id,
           raceId: ticket,
@@ -1151,20 +1717,26 @@ try {
         contentReady = true;
         retireActors();
         showActorNotice(roundRecipe);
-        $('race-message').textContent = [
-          staticEntry ? featuredStatus : '',
-          image?.notice,
-          'Ready. First clear wins.',
-        ]
-          .filter(Boolean)
-          .join(' ');
+        localizedText($('race-message'), () =>
+          [staticEntry ? featuredStatus : '', image?.notice, t('interface:couch.readyFirstClear')]
+            .filter(Boolean)
+            .join(' '),
+        );
         display.finish({ message: '' });
         return true;
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
-        contentError = `This ${staticEntry ? 'map picture or actor appearance' : 'chapter'} could not load: ${error.message}`;
-        $('race-message').textContent = contentError;
+        contentDownloadRequired =
+          isOfflinePackageRequired(error) ||
+          (preserveDownloadOnCancel && error?.name === 'AbortError');
+        contentError = localizedMessage(
+          staticEntry
+            ? 'interface:couch.mapPictureOrActorAppearanceCouldNotLoad'
+            : 'interface:couch.chapterCouldNotLoad',
+          { error: error.message },
+        );
+        localizedText($('race-message'), () => contentError);
         display.finish({ state: 'error', message: '' });
         return false;
       } finally {
@@ -1182,13 +1754,16 @@ try {
       nextAttempt?.recipe.entry.mission !== undefined &&
       nextAttempt.recipe.entry.mission !== roundRecipe.entry.mission
     )
-      return 'Next mission';
-    return roundRecipe.format === 'single' || won.some((n) => n >= 2) ? 'Rematch' : 'Next round';
+      return t('interface:nextMission2');
+    if (creatorVersusContinuation(roundRecipe.entry)) return t('interface:nextMission2');
+    return roundRecipe.format === 'single' || won.some((n) => n >= 2)
+      ? t('interface:rematch')
+      : t('interface:nextRound2');
   }
   async function prepareNext(
     destination = null,
     focusOrigin = $('race-start'),
-    { configured = null, fresh = false, rulesEdition } = {},
+    { configured = null, fresh = false, rulesEdition, ownsStart = null } = {},
   ) {
     const target = destination ?? roundRecipe.entry;
     const sameMission =
@@ -1207,22 +1782,48 @@ try {
             entry: target,
             theme:
               target.themes.find((item) => item.id === target.defaultThemeId) || target.themes[0],
-            classId: candidateJourney
+            classId: qualifiedVersusEntry(target)
               ? 'scout'
               : target.classes.some((item) => item.id === roundRecipe.classId)
                 ? roundRecipe.classId
                 : target.classes[0].id,
-            seed: candidateJourney ? 1 : roundRecipe.seed,
+            seed: target.creatorRuntimeSeed ?? (candidateJourney ? 1 : roundRecipe.seed),
+            seconds: qualifiedVersusEntry(target) ? 0 : roundRecipe.seconds,
           });
     const recipe = {
       ...baseRecipe,
       ...(rulesEdition === undefined ? {} : { rulesEdition }),
+      attemptAppearance: fresh ? undefined : roundRecipe.attemptAppearance,
+      environmentCandidate: fresh ? null : roundRecipe.environmentCandidate,
       actorStyle: fresh ? preference.actorStyle : roundRecipe.actorStyle,
       actorPreferenceRevision: fresh ? preference.revision : roundRecipe.actorPreferenceRevision,
       actorPresentation: fresh ? null : (actorLease?.pin().presentation ?? null),
-      tuning: gameplayTuning.snapshot(
-        target.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
-      ),
+      runningEnemies:
+        sameMission && !fresh
+          ? roundRecipe.runningEnemies
+          : runningEnemyPreferences.snapshot().enabled,
+      runningEnemyStyle:
+        sameMission && !fresh
+          ? roundRecipe.runningEnemyStyle
+          : runningEnemyPreferences.snapshot().style,
+      pursuitGeneration:
+        sameMission && !fresh
+          ? (roundRecipe.pursuitGeneration ??
+            roundRecipe.runtimeLevel?.pursuit?.version ??
+            'pursuit-goals.v1')
+          : 'pursuit-goals.v2',
+      tuning:
+        sameMission &&
+        !fresh &&
+        (roundRecipe.runtimeLevel?.classic?.hunt || roundRecipe.runtimeLevel?.runningEnemies)
+          ? roundRecipe.tuning
+          : creatorVersusOwners.has(target)
+            ? resolveGameplayTuning(
+                target.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+              )
+            : gameplayTuning.snapshot(
+                target.difficulty ?? browsingJourneyPreferences.snapshot().difficulty,
+              ),
     };
     if (
       !nextAttempt ||
@@ -1254,8 +1855,7 @@ try {
     const restoreFocus = actionFocus(focusOrigin),
       attempt = nextAttempt,
       { entry } = attempt.recipe,
-      isStatic = shippedMaps.includes(entry),
-      owner = isStatic ? staticPictures : installed;
+      owner = pictureOwner(entry);
     contentController?.abort();
     const controller = new AbortController();
     contentController = controller;
@@ -1265,6 +1865,7 @@ try {
     let adopted = false;
     const current = () =>
       !disposed &&
+      (!ownsStart || (ownsStart() && restoreFocus.current(true))) &&
       !controller.signal.aborted &&
       contentController === controller &&
       nextAttempt === attempt &&
@@ -1275,7 +1876,11 @@ try {
       match === attempt.previous &&
       generation === attempt.previousGeneration;
     const display = preparationStatus.begin({
-      message: `Preparing ${continuationAction().toLowerCase()}: ${attempt.recipe.entry.level.name}. Your current race is kept until its picture and actors are ready…`,
+      message: () =>
+        t('interface:couch.preparingContinuation', {
+          action: continuationAction().toLowerCase(),
+          mission: contentText(attempt.recipe.entry.level, 'name'),
+        }),
       stage: 'verifying',
       isCurrent: () =>
         current() ||
@@ -1295,6 +1900,12 @@ try {
       ownsNextActors = false,
       prepared = null;
     try {
+      await ensureVersusPackage(entry, {
+        signal: controller.signal,
+        prompt: !configured,
+        retain: !configured,
+      });
+      if (!current()) return null;
       lease = await owner.stage(entry, {
         themeId: attempt.recipe.theme.id,
         raceId: attempt.raceId,
@@ -1352,13 +1963,13 @@ try {
       // Only the adopted, still-owned continuation may replace these controls.
       // A failed/cancelled picture keeps the previous map and theme choices.
       $('race-theme').replaceChildren(
-        ...entry.themes.map((item) => new Option(item.name, item.id)),
+        ...entry.themes.map((item) => localizedOption(() => themeLabel(item), item.id)),
       );
       $('race-theme').value = attempt.recipe.theme.id;
       $('race-class').replaceChildren(
         ...entry.classes
-          .filter((item) => !candidateJourney || item.id === 'scout')
-          .map((item) => new Option(item.label, item.id)),
+          .filter((item) => !qualifiedVersusEntry(entry) || item.id === 'scout')
+          .map((item) => localizedOption(() => contentText(item, 'label'), item.id)),
       );
       $('race-class').value = attempt.recipe.classId;
       paintRound(attempt.recipe);
@@ -1368,14 +1979,14 @@ try {
           mode: 'versus',
           missionId: attempt.recipe.entry.mission.id,
         });
-      $('race-start').textContent =
-        roundRecipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
-      $('race-message').textContent = [
-        lease.picture?.notice,
-        'Both boards use the prepared next picture. Start when you are ready.',
-      ]
-        .filter(Boolean)
-        .join(' ');
+      localizedText($('race-start'), () =>
+        roundRecipe.format === 'single' ? t('interface:startRace') : t('interface:startRound'),
+      );
+      localizedText($('race-message'), () =>
+        [lease.picture?.notice, t('interface:bothBoardsUseThePreparedNextPictureStartWhenYou')]
+          .filter(Boolean)
+          .join(' '),
+      );
       contentReady = true;
       display.finish({ message: '' });
       prepared = {
@@ -1387,10 +1998,17 @@ try {
       return prepared;
     } catch (error) {
       if (current()) {
-        contentError = `The ${continuationAction().toLowerCase()} picture or actors could not be prepared. Both boards are kept. Choose ${continuationAction()} to retry.`;
-        $('race-message').textContent = contentError;
+        contentDownloadRequired = false;
+        contentError = () => {
+          const retryAction = continuationAction();
+          return t('interface:couch.continuationPictureOrActorsCouldNotBePrepared', {
+            actionLower: retryAction.toLocaleLowerCase(),
+            retryAction,
+          });
+        };
+        localizedText($('race-message'), () => contentError);
         display.finish({ state: 'error', message: '' });
-        console.warn('Next picture preparation failed.', error);
+        console.warn(t('interface:nextPicturePreparationFailed'), error);
       }
       return null;
     } finally {
@@ -1406,9 +2024,9 @@ try {
         ) {
           preparationStatus.clear();
           preparationDisplay = null;
-          contentError =
-            'Actor choice changed. Both previous boards are kept. Choose Start or Next to use the new choice.';
-          $('race-message').textContent = contentError;
+          contentDownloadRequired = false;
+          contentError = t('interface:actorChoiceChangedBothPreviousBoardsAreKeptChooseStart');
+          localizedText($('race-message'), () => contentError);
         }
         contentBusy = false;
         updateMenu();
@@ -1420,21 +2038,45 @@ try {
     }
   }
   function pause() {
+    contextualReactions?.suspend();
     // Suspend and controller-loss paths also pass here. Picture preparation
     // may finish, but an interrupted gesture no longer authorizes a start.
     startIntentEpoch++;
+    if (startCue) {
+      pendingStartCue = {
+        kind: startCue.cue.kind,
+        owner: startCue.owner,
+        generation: startCue.generation,
+      };
+      hideStartCue();
+    }
     sound.pause();
     if (!match || match.status === 'finished') return;
     pauseDuel(match, { preserveContinuation: true });
     clear();
     if (match.status === 'paused') {
-      $('race-start').textContent =
-        roundRecipe.format === 'single' ? 'Resume race →' : 'Resume round →';
-      $('race-message').textContent = 'Both players are paused. Resume when everyone is ready.';
+      localizedText($('race-start'), () =>
+        roundRecipe.format === 'single' ? t('interface:resumeRace') : t('interface:resumeRound'),
+      );
+      localizedText($('race-message'), () =>
+        t('interface:bothPlayersArePausedResumeWhenEveryoneIsReady'),
+      );
     }
     updateMenu();
   }
-  async function startRace(destination = null, { rulesEdition, focusOrigin = null } = {}) {
+  async function startRace(
+    destination = null,
+    { rulesEdition, focusOrigin = null, libraryStart = null, briefingOnly = false } = {},
+  ) {
+    // A confirmed library selection may originate from Settings. Its captured
+    // scope remains authoritative through preparation; ordinary Start/Retry
+    // still belong to main, and the running-state update leaves Settings only
+    // after the exact prepared match has been accepted.
+    const startScope = shell.scope(),
+      libraryAdmission =
+        destination &&
+        libraryStart?.isCurrent() === true &&
+        libraryStart.attempt?.scope === startScope;
     if (
       disposed ||
       contentBusy ||
@@ -1442,7 +2084,8 @@ try {
       document.hidden ||
       !document.hasFocus() ||
       match.status === 'running' ||
-      shell.scope() !== 'main'
+      (libraryStart && !libraryAdmission) ||
+      (startScope !== 'main' && !(startScope === 'options' && libraryAdmission))
     )
       return;
     // A ready preview is not a resumed attempt. A preference changed after its
@@ -1450,7 +2093,9 @@ try {
     if (
       match.status === 'ready' &&
       !destination &&
-      (roundRecipe.actorStyle !== actorPreferences.snapshot().actorStyle ||
+      (roundRecipe.runningEnemies !== runningEnemyPreferences.snapshot().enabled ||
+        roundRecipe.runningEnemyStyle !== runningEnemyPreferences.snapshot().style ||
+        roundRecipe.actorStyle !== actorPreferences.snapshot().actorStyle ||
         dataIdentity(roundRecipe.tuning) !==
           dataIdentity(
             gameplayTuning.snapshot(
@@ -1459,7 +2104,25 @@ try {
           ))
     )
       destination = roundRecipe.entry;
-    const intent = ++startIntentEpoch,
+    const acceptedEntry = roundRecipe?.entry,
+      acceptedStatus = match.status,
+      pendingCue =
+        !destination &&
+        pendingStartCue?.owner === match &&
+        pendingStartCue.generation === generation
+          ? pendingStartCue.kind
+          : null,
+      requestedRetry =
+        focusOrigin === $('race-retry') ||
+        (acceptedStatus === 'finished' && destination && destination.key === acceptedEntry?.key),
+      requestedCue =
+        pendingCue ||
+        (requestedRetry
+          ? 'retry'
+          : acceptedStatus === 'ready' || acceptedStatus === 'finished' || destination
+            ? 'mission'
+            : null),
+      intent = ++startIntentEpoch,
       ownsStartIntent = () =>
         !disposed && intent === startIntentEpoch && !document.hidden && document.hasFocus();
     let nextConfirmed = false,
@@ -1481,7 +2144,7 @@ try {
         generation !== previousGeneration ||
         contentController !== previousController ||
         contentBusy ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       )
         return;
     }
@@ -1491,7 +2154,11 @@ try {
       // origin until the new attempt makes Start available again.
       const start =
           focusOrigin ||
-          (destination && !contentReady ? $('race-library-switch') : $('race-start')),
+          (libraryAdmission
+            ? $(startScope === 'options' ? 'race-library-switch' : 'race-chapters')
+            : destination && !contentReady
+              ? $('race-library-switch')
+              : $('race-start')),
         previousRun = match,
         previousGeneration = generation,
         previousController = contentController;
@@ -1507,10 +2174,13 @@ try {
         generation !== previousGeneration ||
         contentController !== previousController ||
         contentBusy ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       )
         return;
-      const prepared = await prepareNext(destination, start, { rulesEdition });
+      const prepared = await prepareNext(destination, start, {
+        rulesEdition,
+        ownsStart: libraryAdmission ? ownsStartIntent : null,
+      });
       // Preparation may finish after blur, but only this uninterrupted foreground
       // action may start it. Installed pictures pass the same confirmation boundary.
       if (
@@ -1520,7 +2190,7 @@ try {
         match !== prepared.match ||
         contentController !== prepared.controller ||
         prepared.controller.signal.aborted ||
-        shell.scope() !== 'main'
+        shell.scope() !== startScope
       ) {
         prepared?.releaseFocus();
         return;
@@ -1543,9 +2213,9 @@ try {
           match === selectedRun &&
           ticket === generation &&
           match.status === 'ready' &&
-          shell.scope() === 'main';
+          shell.scope() === startScope;
       const display = preparationStatus.begin({
-        message: 'Confirming the prepared picture before starting…',
+        message: t('interface:confirmingThePreparedPictureBeforeStarting'),
         stage: 'verifying',
         isCurrent: () =>
           !disposed &&
@@ -1555,16 +2225,19 @@ try {
           ticket === generation,
       });
       preparationDisplay = display;
+      const pendingStart = { owns: ownsReadyStart };
+      pendingReadyStart = pendingStart;
       updateMenu();
       try {
-        const confirmation = (shippedMaps.includes(entry) ? staticPictures : installed).confirm(
-          entry,
-          {
-            raceId: ticket,
-            signal: controller.signal,
-            onStatus: (status) => display.update(status),
-          },
-        );
+        if (offlineAvailability().packageConsent) {
+          await ensureVersusPackage(entry, { signal: controller.signal, retain: true });
+          if (!ownsReadyStart()) return;
+        }
+        const confirmation = pictureOwner(entry).confirm(entry, {
+          raceId: ticket,
+          signal: controller.signal,
+          onStatus: (status) => display.update(status),
+        });
         if (confirmation?.then) {
           // Start owns this preparation through launch. Keep focus with that
           // deliberate action so a held or repeated Confirm cannot become Cancel.
@@ -1586,14 +2259,20 @@ try {
           !controller.signal.aborted
         ) {
           contentReady = false;
+          contentDownloadRequired = isOfflinePackageRequired(error);
           contentError = shippedMaps.includes(entry)
-            ? `The prepared picture could not be confirmed. Retry or choose a new setup: ${error.message}`
-            : `Refresh installed chapters in Race setup before starting: ${error.message}`;
-          $('race-message').textContent = contentError;
+            ? localizedMessage('interface:couch.preparedPictureCouldNotBeConfirmed', {
+                error: error.message,
+              })
+            : localizedMessage('gameplay:refreshInstalledChaptersInRaceSetupBeforeStarting', {
+                value1: error.message,
+              });
+          localizedText($('race-message'), () => contentError);
           display.finish({ state: 'error', message: '' });
         }
         return;
       } finally {
+        if (pendingReadyStart === pendingStart) pendingReadyStart = null;
         if (
           !disposed &&
           match === selectedRun &&
@@ -1618,32 +2297,74 @@ try {
       }
     }
     try {
-      if (!contentReady || disposed) return;
-      clear();
-      if (!ownsStartIntent() || (nextFocus && !nextFocus.ownsAction())) return;
-      resumeDuel(match, { preserveContinuation: true });
-      neutralResumeTick = true;
-      // Race effects are independent of the music transport and its readiness.
-      void sound.enable();
-      if (music) void music.start();
-      $('race-message').textContent = 'Make your line count. First clear wins.';
-      updateMenu();
-      input.focus();
+      if (!contentReady || disposed) return false;
+      if (briefingOnly) {
+        if (!ownsStartIntent() || (nextFocus && !nextFocus.ownsAction())) return false;
+        nextFocus?.releaseFocus();
+        return showPreparedBriefing(match, generation);
+      }
+      return activateAcceptedMatch({
+        owner: match,
+        ownerGeneration: generation,
+        cue: requestedCue,
+        owns: () => ownsStartIntent() && (!nextFocus || nextFocus.ownsAction()),
+      });
     } finally {
       nextFocus?.releaseFocus();
     }
   }
 
-  $('race-start').onclick = () =>
-    !libraryContinuation &&
-    startRace(
+  function showPreparedBriefing(owner, ownerGeneration) {
+    if (
+      disposed ||
+      match !== owner ||
+      generation !== ownerGeneration ||
+      match.status !== 'ready' ||
+      !contentReady ||
+      document.hidden ||
+      !document.hasFocus()
+    )
+      return false;
+    // The card owns preparation only. Retire its gesture before the native
+    // briefing can receive a fresh Start, including from a held controller.
+    startIntentEpoch++;
+    clear({ resetDirection: true });
+    contentScope = 'main';
+    updateMenu();
+    const recipe = roundRecipe;
+    shell.briefing(owner, {
+      title: () => contentText(recipe.entry.level, 'name'),
+      description: () =>
+        [
+          missionBriefing(recipe.runtimeLevel ?? recipe.entry.level).goal,
+          t('interface:bothBoardsUseThePreparedNextPictureStartWhenYou'),
+          t('interface:wASDMove'),
+          t('interface:arrowKeysMove'),
+        ].join(' · '),
+    });
+    return match === owner && generation === ownerGeneration && match.status === 'ready';
+  }
+
+  $('race-start').onclick = () => {
+    continuousPlay.cancel('action');
+    if (libraryContinuation) return;
+    if (match.status === 'finished' && creatorVersusContinuation(roundRecipe.entry))
+      return continueMission($('race-start'));
+    return startRace(
       candidateJourney && match.status === 'finished'
-        ? candidateJourney.row(roundRecipe.entry.mission, journeyPreferences.snapshot().difficulty)
+        ? candidateJourney.row(
+            roundRecipe.entry.mission,
+            journeyPreferences.snapshot().difficulty,
+            { selection: roundRecipe.entry },
+          )
         : null,
     );
+  };
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
-    const restoreFocus = actionFocus($('race-chapter-retry'));
+    const retry = $('race-chapter-retry'),
+      downloadAndPlay = contentDownloadRequired,
+      restoreFocus = actionFocus(retry);
     preparationStatus.clear();
     contentController?.abort();
     contentController = new AbortController();
@@ -1652,13 +2373,30 @@ try {
     // Retry the same untouched attempt and picture choice; only setup changes
     // establish a new race identity and may resolve a new assignment.
     const controller = contentController,
-      ready = loadPreparedPicture(entry);
+      ready = loadPreparedPicture(entry, {
+        prompt: true,
+        preserveDownloadOnCancel: downloadAndPlay,
+      });
     restoreFocus.pending(
       $('race-picture-cancel'),
       controller === contentController && !controller.signal.aborted,
     );
     try {
-      return await ready;
+      const prepared = await ready,
+        current =
+          prepared &&
+          controller === contentController &&
+          !controller.signal.aborted &&
+          match.status === 'ready';
+      if (downloadAndPlay && current && restoreFocus.current(true)) {
+        const start = $('race-start');
+        restoreFocus.pending(start, true);
+        if (document.activeElement === start) {
+          restoreFocus.close();
+          return startRace(null, { focusOrigin: start });
+        }
+      }
+      return prepared;
     } finally {
       restoreFocus(
         contentReady ? $('race-start') : $('race-chapter-retry'),
@@ -1679,7 +2417,8 @@ try {
     contentReady = false;
     contentScope = shell.scope();
     if (!shippedMaps.includes(oldEntry)) backdrop = null;
-    installedStatus = 'Checking installed chapters…';
+    installedRefreshPending = true;
+    installedStatus = localizedMessage('interface:checkingInstalledChapters');
     const display = preparationStatus.begin({
       message: installedStatus,
       stage: 'verifying',
@@ -1698,19 +2437,25 @@ try {
       if (!maps.some((row) => row.key === oldKey)) maps.push(oldEntry);
       showMaps();
       $('race-level').value = oldKey;
+      installedRefreshPending = false;
       installedStatus = rows.length
-        ? `${rows.length} installed maps available.`
-        : 'Open All missions to download compatible chapters, then choose Play.';
+        ? localizedMessage('interface:couch.installedMapCount', { count: rows.length })
+        : localizedMessage('interface:openAllMissionsToDownloadCompatibleChaptersThenChoosePlay');
       const ready = prepare();
       focusController = contentController;
       await ready;
     } catch (error) {
       if (disposed || controller.signal.aborted || controller !== contentController) return;
-      contentError = `Installed chapters unavailable: ${error.message}`;
+      installedRefreshPending = false;
+      contentDownloadRequired = false;
+      contentError = localizedMessage('gameplay:installedChaptersUnavailable', {
+        value1: error.message,
+      });
       installedStatus = contentError;
-      $('race-message').textContent = contentError;
+      localizedText($('race-message'), () => contentError);
       display.finish({ state: 'error', message: '' });
     } finally {
+      if (controller === contentController) installedRefreshPending = false;
       if (!disposed && controller === contentController && !controller.signal.aborted) {
         contentBusy = false;
         updateMenu();
@@ -1732,7 +2477,9 @@ try {
     })
     .catch((error) => {
       if (!disposed)
-        $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
+        localizedText($('race-message'), () =>
+          t('gameplay:appLifecycleAdapterUnavailable', { value1: error.message }),
+        );
     });
   for (const id of ['race-level', 'race-class', 'race-turn', 'race-time', 'race-format'])
     $(id).onchange = () => {
@@ -1750,16 +2497,100 @@ try {
     const tuning = gameplayTuning.snapshot(difficulty);
     const preset =
       candidateJourney && journeyPreset(difficulty, authoredRoute.source.difficultyCatalogId);
-    const rules = preset
-      ? ['gameplay-pressure.v2', 'gameplay-pressure.v3', 'gameplay-pressure.v4'].includes(
-          tuning.version,
-        )
-        ? `${preset.lives} mission lives; ${preset.failingDeadline ? 'deadlines only on authored timed missions' : 'no failing countdown'}.`
-        : preset.description
-      : 'Authored lives and objectives stay unchanged.';
-    $('race-journey-difficulty-note').textContent =
-      `Next fresh race: ${difficulty}. ${gameplayTuningDescription(tuning)} ${rules} Both current boards keep their rules.`;
+    localizedText($('race-journey-difficulty-note'), () =>
+      t('gameplay:tuning.raceNote', {
+        difficulty: gameplayDifficultyLabel(difficulty),
+        description: gameplayTuningDescription(tuning),
+        rules: preset
+          ? journeyPresetDescription(preset, tuning.version)
+          : t('interface:authoredLivesAndObjectivesStayUnchanged'),
+      }),
+    );
   }
+  if (candidateJourney)
+    encounterVariantControls = attachEncounterVariantControls({
+      container: $('race-optional-setup'),
+      preferences: encounterChoices,
+      records: huntRecords,
+      getAvailable: () =>
+        candidateJourney.availableVariants?.(
+          roundRecipe?.entry.mission ?? initialJourneyMission,
+        ) ?? ['authored'],
+      onChange: async () => {
+        startIntentEpoch++;
+        cancelContent();
+        nextAttempt?.lease?.cancel();
+        nextAttempt = null;
+        const mission = roundRecipe?.entry.mission ?? initialJourneyMission;
+        showMaps();
+        const selected = candidateJourney.row(mission, journeyPreferences.snapshot().difficulty);
+        if (selected) $('race-level').value = selected.key;
+        if (match.status === 'ready' || match.status === 'finished') {
+          won = [0, 0];
+          await prepare();
+        }
+        updateMenu();
+      },
+    });
+  for (const container of new Set([
+    $('race-enemy-remains')?.closest('section') ?? $('race-settings-panel-display'),
+    $('race-optional-setup'),
+  ])) {
+    if (!container) continue;
+    runningEnemyControls.push(
+      mountRunningEnemyControls({
+        container,
+        document,
+        window,
+        preferences: runningEnemyPreferences,
+        getAcceptedStyle: () =>
+          match?.status === 'running' || match?.status === 'paused'
+            ? roundRecipe.runtimeLevel?.pursuit
+              ? 'varied'
+              : 'original'
+            : null,
+        getAcceptedActors: () => pursuitRoster(roundRecipe?.runtimeLevel),
+        getCurrentEnabled: () =>
+          match?.runs?.[0]
+            ? !!(match.runs[0].level.runningEnemies || match.runs[0].level.classic?.hunt)
+            : null,
+        getAcceptedEnabled: () =>
+          match?.status === 'running' || match?.status === 'paused'
+            ? roundRecipe.runtimeLevel?.classic?.hunt
+              ? runningEnemyPreferences.snapshot().enabled
+              : !!roundRecipe.runningEnemies
+            : null,
+        onRestart: () => {
+          pause();
+          const configured = {
+            ...roundRecipe,
+            runningEnemies: runningEnemyPreferences.snapshot().enabled,
+            runningEnemyStyle: runningEnemyPreferences.snapshot().style,
+          };
+          void prepareNext(roundRecipe.entry, document.activeElement, { configured, fresh: true })
+            .then(() => updateMenu())
+            .catch((error) => localizedText($('race-message'), () => error.message));
+        },
+      }),
+    );
+  }
+  let runningEnemyChoice = JSON.stringify(runningEnemyPreferences.snapshot());
+  runningEnemyPreferences.subscribe(({ enabled, style, durable }) => {
+    if (JSON.stringify({ enabled, style, durable }) === runningEnemyChoice) return;
+    runningEnemyChoice = JSON.stringify({ enabled, style, durable });
+    startIntentEpoch++;
+    cancelContent();
+    nextAttempt?.lease?.cancel();
+    nextAttempt = null;
+    if (match?.status === 'ready') {
+      void Promise.resolve()
+        .then(() => prepare())
+        .catch((error) => {
+          localizedText($('race-message'), () => error.message);
+        });
+    }
+    updateMenu();
+  });
   if (candidateJourney) {
     let preferenceRevision = journeyPreferences.snapshot().revision,
       preferenceExportSequence = 0;
@@ -1776,7 +2607,7 @@ try {
       gameplayTuningPanel?.refresh();
       preferenceExportSequence++;
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
-      $('race-journey-preferences-message').textContent = snapshot.error;
+      localizedText($('race-journey-preferences-message'), () => snapshot.error);
       journeyChooser?.refresh();
       showMaps();
       $('race-level').value = candidateJourney.row(
@@ -1798,12 +2629,15 @@ try {
           'revealline-journey-difficulty.json',
         );
         if (ticket === preferenceExportSequence && !$('race-journey-preferences-recovery').hidden)
-          $('race-journey-preferences-message').textContent =
-            `${journeyPreferences.snapshot().error} ${result.message}`;
+          localizedText(
+            $('race-journey-preferences-message'),
+            () => `${journeyPreferences.snapshot().error} ${result.message}`,
+          );
       } catch (error) {
         if (ticket === preferenceExportSequence && !$('race-journey-preferences-recovery').hidden)
-          $('race-journey-preferences-message').textContent =
-            `Export failed: ${error.message}. Your session difficulty choice is still here.`;
+          localizedText($('race-journey-preferences-message'), () =>
+            t('interface:couch.preferenceExportError', { error: error.message }),
+          );
       }
     };
     $('race-journey-difficulty').onchange = () => {
@@ -1837,42 +2671,55 @@ try {
       if (journeySkipArmed !== match) {
         pause();
         journeySkipArmed = match;
-        $('race-journey-skip').textContent = 'Confirm skip';
-        $('race-message').textContent =
-          `Skip to ${next.name}? No clear is awarded. Confirm skip to continue.`;
+        localizedText($('race-journey-skip'), () => t('interface:confirmSkip'));
+        localizedText($('race-message'), () =>
+          t('interface:couch.skipConfirm', { mission: contentText(next, 'name') }),
+        );
         return;
       }
       journeySkipArmed = null;
       void chooseMission(next, roundRecipe.entry.mission);
     };
-    $('race-journey-save-retry').onclick = () => void journeyProfile.flush();
-    $('race-journey-save-export').onclick = async () => {
-      try {
-        await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
-      } catch (error) {
-        $('race-journey-save-message').textContent =
-          `Export failed: ${error.message}. Your session progress is still here.`;
-      }
-    };
   }
+  $('race-journey-save-retry').onclick = () => void activeProgressProfile()?.flush();
+  $('race-journey-save-export').onclick = async () => {
+    const profile = activeProgressProfile();
+    if (!profile) return;
+    try {
+      await downloadJSON(JSON.parse(profile.export()), profile.backupFilename);
+    } catch (error) {
+      localizedText($('race-journey-save-message'), () =>
+        t('interface:couch.progressExportError', { error: error.message }),
+      );
+    }
+  };
   $('race-journey-next').onclick = () => continueMission();
+  $('race-journey-random').onclick = () =>
+    openMissionLibrary($('race-journey-random'), { random: true });
   $('race-journey-find').onclick = () => openMissionLibrary($('race-journey-find'));
   if (!candidateJourney) {
     $('race-journey-difficulty-field').hidden = false;
     $('race-journey-difficulty').replaceChildren(
-      ...['gentle', 'standard', 'expert'].map(
-        (id) => new Option(id[0].toUpperCase() + id.slice(1), id),
+      ...['gentle', 'standard', 'expert'].map((id) =>
+        localizedOption(() => gameplayDifficultyLabel(id), id),
       ),
     );
     browsingJourneyPreferences.subscribe((snapshot) => {
-      $('race-journey-difficulty').value = snapshot.difficulty;
+      const creatorEntry = creatorVersusOwners.has(roundRecipe?.entry) ? roundRecipe.entry : null;
+      $('race-journey-difficulty').value = creatorEntry?.difficulty ?? snapshot.difficulty;
       refreshGameplayTuningNote();
       $('race-journey-preferences-recovery').hidden = snapshot.durable;
-      $('race-journey-preferences-message').textContent = snapshot.error;
+      localizedText($('race-journey-preferences-message'), () => snapshot.error);
       gameplayTuningPanel?.refresh();
     });
-    $('race-journey-difficulty').onchange = () =>
+    $('race-journey-difficulty').onchange = () => {
+      const creatorEntry = creatorVersusOwners.has(roundRecipe?.entry) ? roundRecipe.entry : null;
+      if (creatorEntry) {
+        $('race-journey-difficulty').value = creatorEntry.difficulty;
+        return;
+      }
       browsingJourneyPreferences.choose($('race-journey-difficulty').value);
+    };
     $('race-journey-preferences-retry').onclick = () => browsingJourneyPreferences.retry();
     $('race-journey-preferences-export').onclick = () =>
       downloadJSON(
@@ -1890,7 +2737,21 @@ try {
     controls: $('race-touch-0').closest('.race-fields'),
     clear: () => input?.clearPhysical(),
   });
+  const controllerSession = createControllerSession({
+    restoreKey: COUCH_RESTORE_KEY,
+    initialSlots: incomingContinuation?.slots,
+    onLoss: () => {
+      pendingPadLoss = true;
+      pause();
+      clear();
+    },
+  });
+  const controllerSetup = mountControllerSetup({
+    root: $('race-settings-panel-controls'),
+    session: controllerSession,
+  });
   const input = attachCouchInput({
+    controllerSession,
     initialSlots: incomingContinuation?.slots ?? [null, null],
     getTouchSettings: () => couchTouch.snapshot(),
     continuousSteering: () => true,
@@ -1900,13 +2761,31 @@ try {
     onPause: pause,
     onAcceptedInput: (player, source) => shell?.observe(player, source),
     onStop: (player) => {
-      if (match) releaseInputs(match.runs[player]);
+      if (match) {
+        localRecordings.get(match)?.release([player]);
+        releaseInputs(match.runs[player]);
+      }
     },
     onPads: (count, nextSlots) => {
       assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
       slots = [...nextSlots];
-      const message = `${count} standard controller${count === 1 ? '' : 's'} assigned · ${slots.map((slot, i) => `Player ${i + 1}: ${slot === null ? 'keyboard/touch' : `pad slot ${slot}`}`).join(' · ')}. Keyboard and touch remain available. Esc / P pauses both boards.`;
-      if ($('race-pad-status').textContent !== message) $('race-pad-status').textContent = message;
+      const message = () =>
+        t('interface:multiplayerControllers.assigned', {
+          count,
+          players: slots
+            .map((slot, i) =>
+              t('gameplay:player', {
+                value1: i + 1,
+                value2:
+                  slot === null
+                    ? t('interface:keyboardTouch')
+                    : t('gameplay:padSlot', { value1: slot }),
+              }),
+            )
+            .join(' · '),
+        });
+      if ($('race-pad-status').textContent !== message())
+        localizedText($('race-pad-status'), message);
     },
   });
   let soloReturnStorage;
@@ -1915,7 +2794,17 @@ try {
   } catch {
     /* The fixed Solo title route remains available. */
   }
+  const encounterHelp = attachEncounterHelp({
+    root: $('race-encounter-help'),
+    getLevels: () => match?.runs?.map((run) => run.level) ?? [],
+  });
+  let globalSettingsVisit = 0;
   shell = createCouchShell({
+    controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
+    getSceneContext: () => ({
+      themeId: theme?.id ?? 'fpv',
+      active: match?.status !== 'running',
+    }),
     authoredRoute: authoredRoute?.id ?? 'legacy',
     coarse: matchMedia('(pointer: coarse)').matches,
     getDepartureState: () => ({ match, generation }),
@@ -1938,10 +2827,12 @@ try {
     getTeamJourneyRoute: () =>
       librarySourceReturn?.mode === 'team' ? librarySourceReturn.journey : null,
     onTransition: ({ to, back = false } = {}) => {
+      globalSettingsVisit++;
       ++libraryOpenEpoch;
       cancelLibraryDecision();
       clear();
       if (back || to !== contentScope) cancelContent();
+      if (to === 'help') encounterHelp.refresh();
     },
     onNewMatch: () => {
       if (match?.status === 'running' || disposed) return;
@@ -1992,7 +2883,7 @@ try {
       isCurrent: () => !retired && catalogueAttemptCurrent(attempt),
     };
   }
-  async function continueMission() {
+  async function continueMission(origin = $('race-journey-next')) {
     if (
       disposed ||
       contentBusy ||
@@ -2003,14 +2894,34 @@ try {
       shell.scope() !== 'main'
     )
       return;
-    const authoredNext = candidateJourney?.next(roundRecipe.entry.mission.id);
+    const authoredNext = candidateJourney?.owns(roundRecipe.entry)
+      ? candidateJourney.next(roundRecipe.entry.mission.id)
+      : null;
     if (authoredNext) {
       await startRace(candidateJourney.row(authoredNext, journeyPreferences.snapshot().difficulty));
       return;
     }
-    const origin = $('race-journey-next');
-    if (candidateJourney) return openMissionLibrary(origin);
     origin.focus({ preventScroll: true });
+    const creatorNext = creatorVersusContinuation(roundRecipe.entry);
+    if (creatorNext) {
+      if (!creatorNext.entry) throw new Error('The exact next creator mission is unavailable.');
+      await startRace(creatorNext.entry, { focusOrigin: origin });
+      if (roundRecipe.entry === creatorNext.entry)
+        currentLibrarySelection = {
+          match,
+          id: libraryMissionId({
+            owner: `creator:${creatorNext.owner.prepared.editionId}`,
+            edition: creatorNext.owner.prepared.editionId,
+            campaign: creatorNext.mission.campaignId,
+            mission: creatorNext.mission.levelId,
+            revision: creatorNext.owner.prepared.manifest.content.project.missions.find(
+              (mission) => mission.id === creatorNext.mission.levelId,
+            ).revision,
+          }),
+        };
+      return;
+    }
+    if (candidateJourney) return openMissionLibrary(origin);
     const restore = actionFocus(origin),
       context = libraryContext(),
       operation = { controller: new AbortController(), previous: match },
@@ -2022,7 +2933,7 @@ try {
     libraryContinuation = operation;
     contentBusy = true;
     const display = preparationStatus.begin({
-      message: 'Preparing next mission. Your result and picture are kept…',
+      message: t('interface:preparingNextMissionYourResultAndPictureAreKept'),
       stage: 'reading',
       isCurrent: current,
     });
@@ -2033,6 +2944,7 @@ try {
       const { library } = await getMissionLibrary();
       if (!current()) return;
       const entry = roundRecipe.entry;
+      const rulesEdition = roundRecipe.rulesEdition ?? CLASSIC_RULES_ORIGINAL;
       const row =
         currentLibrarySelection?.match === match
           ? library.find(currentLibrarySelection.id)
@@ -2046,20 +2958,26 @@ try {
             : retainedLibraryMission(library, {
                 mode: 'versus',
                 levelId: entry.level.id,
-                campaignKey: entry.musicCampaignKey,
+                campaignKey: classicRulesCampaignIdentity({
+                  campaignKey: entry.musicCampaignKey,
+                  rulesEdition,
+                }),
                 sourcePackId: entry.sourcePackId ?? entry.pictureEntry?.sourcePackId ?? null,
+                rulesEdition,
               });
-      if (!row) throw new Error('The exact current mission edition is unavailable.');
+      if (!row) throw new Error(t('interface:theExactCurrentMissionEditionIsUnavailable'));
       let next = librarySuccessor(library, row, 'versus');
       if (!next) {
         libraryCompleteMatch = match;
-        $('race-message').textContent =
-          'Versus library complete. Rematch or choose All missions whenever you like.';
+        localizedText($('race-message'), () =>
+          t('interface:versusLibraryCompleteRematchOrChooseAllMissionsWheneverYou'),
+        );
         return;
       }
       const targetId = next.id;
       display.update({
-        message: `Preparing next mission: ${next.name}. Results are kept…`,
+        message: () =>
+          t('interface:couch.preparingNextMission', { mission: contentText(next, 'name') }),
         stage: 'verifying',
       });
       const prepared = await library.prepare(next, {
@@ -2070,7 +2988,7 @@ try {
       // Installation may rebuild rows. Re-resolve only this exact qualified edition.
       next = library.find(targetId);
       if (!next || library.availability(next, 'versus').state !== 'ready')
-        throw new Error('The exact next mission is not ready.');
+        throw new Error(t('interface:theExactNextMissionIsNotReady'));
       contentBusy = false;
       display.finish({ message: '' });
       updateMenu();
@@ -2082,11 +3000,12 @@ try {
         continuousNext: true,
       });
       if (started === false && context.isCurrent() && !operation.controller.signal.aborted)
-        throw new Error('The next mission could not start.');
+        throw new Error(t('interface:theNextMissionCouldNotStart'));
     } catch (error) {
       if (context.isCurrent() && !operation.controller.signal.aborted)
-        $('race-message').textContent =
-          `Next mission could not open: ${error.message} Results are kept. Choose Next mission to retry.`;
+        localizedText($('race-message'), () =>
+          t('interface:couch.nextMissionError', { error: error.message }),
+        );
     } finally {
       display.finish({ message: '' });
       if (preparationDisplay === display) preparationDisplay = null;
@@ -2118,17 +3037,18 @@ try {
     const heading = document.createElement('h2');
     heading.id = 'race-library-replace-title';
     dialog.setAttribute('aria-labelledby', heading.id);
-    heading.textContent = title;
+    localizedText(heading, () =>
+      t('interface:couch.openLibrary', { library: typeof title === 'function' ? title() : title }),
+    );
     const copy = document.createElement('p');
-    copy.textContent =
-      'Stay keeps both paused boards and this series. Replace & play discards this attempt and opens the exact selected mission.';
+    localizedText(copy, () => t('interface:stayKeepsBothPausedBoardsAndThisSeriesReplacePlay'));
     const stay = document.createElement('button'),
       replace = document.createElement('button');
     stay.id = 'race-library-stay';
-    stay.textContent = 'Stay';
+    localizedText(stay, () => t('interface:stay'));
     stay.type = 'button';
     replace.id = 'race-library-play';
-    replace.textContent = 'Replace & play';
+    localizedText(replace, () => t('interface:replacePlay'));
     replace.type = 'button';
     dialog.append(heading, copy, stay, replace);
     document.body.append(dialog);
@@ -2158,7 +3078,7 @@ try {
     if (!context.isCurrent()) return false;
     const row = missionLibrary.library.find(context.libraryMissionId);
     if (!row || !row.modes.includes(context.mode))
-      throw new Error('The selected mission changed. Refresh the library.');
+      throw new Error(t('interface:theSelectedMissionChangedRefreshTheLibrary'));
     let href = missionLibraryHref({
       baseURL: location.href,
       currentMode: 'versus',
@@ -2183,11 +3103,17 @@ try {
       );
       href = destination.href;
     }
-    if (!(await confirmLibraryReplacement(context, `Open ${row.name}?`))) return false;
+    if (!(await confirmLibraryReplacement(context, () => contentText(row, 'name')))) return false;
     if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
     if (confirmInventory && !(await confirmInventory())) return false;
     if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
-    location.href = href;
+    if (offlineAvailability().packageConsent)
+      await gameplayDownloads.ensureDestination(href, {
+        signal: context.signal,
+        runtimeOnly: row.collection === 'Custom',
+      });
+    if (!context.isCurrent() || missionLibrary.library.find(row.id) !== row) return false;
+    location.href = nativeArtReviewURL(href, location.href);
     return true;
   }
   async function launchLibrarySelection(pack, selection, context) {
@@ -2203,11 +3129,17 @@ try {
           row.level.id === selection.levelId &&
           String(row.level.revision) === String(selection.levelRevision),
       );
-      if (!entry) throw new Error('This exact Base mission is unavailable.');
-      if (!(await confirmLibraryReplacement(context, `Play ${entry.level.name}?`))) return false;
+      if (!entry) throw new Error(t('interface:thisExactBaseMissionIsUnavailable'));
+      if (!(await confirmLibraryReplacement(context, () => contentText(entry.level, 'name'))))
+        return false;
       if (!context.isCurrent()) return false;
-      await startRace(entry, { rulesEdition: selection.rulesEdition });
-      const started = roundRecipe.entry === entry && match.status === 'running';
+      const accepted = await startRace(entry, {
+        rulesEdition: selection.rulesEdition,
+        libraryStart: context.continuousNext ? null : context,
+        briefingOnly: false,
+      });
+      const started =
+        accepted === true && roundRecipe.entry === entry && match.status === 'running';
       if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
       return started;
     }
@@ -2234,16 +3166,17 @@ try {
         attempt: context.attempt,
         isCurrent: current,
         onStatus: (status) => {
-          if (context.isCurrent()) $('race-message').textContent = status.message;
+          if (context.isCurrent()) localizedText($('race-message'), () => status.message);
         },
       });
       if (!current()) return false;
       // The explicit decision temporarily owns focus; afterwards confirmation
       // receives a new lease so a later toolbar action cannot start this race.
       focus.dispose();
-      const title =
-        missionLibrary.library.find(context.libraryMissionId)?.name || 'selected mission';
-      if (!(await confirmLibraryReplacement(context, `Play ${title}?`))) return false;
+      const title = () =>
+        contentText(missionLibrary.library.find(context.libraryMissionId), 'name') ||
+        t('interface:mission');
+      if (!(await confirmLibraryReplacement(context, title))) return false;
       focus = captureFocus();
       await staged.confirm();
       if (!current()) return false;
@@ -2278,7 +3211,7 @@ try {
     const onStatus = (status) => {
       if (current()) {
         context.preparationFeedback?.update(status);
-        $('race-message').textContent = status.message;
+        localizedText($('race-message'), () => status.message);
       }
     };
     let owner = null,
@@ -2305,7 +3238,7 @@ try {
             String(level.revision) === String(selection.levelRevision),
         );
         if (!level || campaignKey(baseEntry.campaign) !== selection.campaignKey)
-          throw new Error('This exact Base mission is unavailable.');
+          throw new Error(t('interface:thisExactBaseMissionIsUnavailable'));
         const theme =
           baseEntry.themes.find(
             (item) => item.id === (level.themeId || baseEntry.campaign.themeId),
@@ -2368,9 +3301,12 @@ try {
       libraryContinuation === operation &&
       !operation.controller.signal.aborted &&
       context.isCurrent();
-    const name = missionLibrary.library.find(context.libraryMissionId)?.name || 'selected mission';
+    const selected = missionLibrary.library.find(context.libraryMissionId);
     const display = preparationStatus.begin({
-      message: `Preparing ${name}. Your current race and picture are kept…`,
+      message: () =>
+        t('interface:couch.preparingSelectedMission', {
+          mission: selected ? contentText(selected, 'name') : t('interface:selectedMission'),
+        }),
       stage: 'verifying',
       isCurrent: current,
     });
@@ -2467,10 +3403,37 @@ try {
   }
   function refreshLibraryWarning() {
     const notice = $('race-library-inventory-status');
-    if (notice) notice.textContent = libraryInventory?.state().reason || libraryInventoryNotice;
+    if (notice)
+      localizedText(notice, () => libraryInventory?.state().reason || libraryInventoryNotice);
   }
   function missionInstaller() {
     return (libraryInstaller ??= libraryInstallerFactory());
+  }
+  async function launchInstalledCreatorVersus(prepared, mission, context) {
+    if (!context.isCurrent() || context.mode !== 'versus') return false;
+    const owner = creatorVersusOwner(prepared),
+      exactMission = owner.host.catalog.missions.find(
+        (candidate) =>
+          candidate.id === mission.id &&
+          candidate.campaignId === mission.campaignId &&
+          candidate.levelId === mission.levelId,
+      ),
+      entry = owner.rows.find(
+        (candidate) =>
+          candidate.mission === exactMission &&
+          candidate.difficulty === browsingJourneyPreferences.snapshot().difficulty,
+      );
+    if (!entry) throw new Error('This exact creator mission is unavailable in Versus.');
+    if (!(await confirmLibraryReplacement(context, () => contentText(mission, 'name'))))
+      return false;
+    if (!context.isCurrent()) return false;
+    const accepted = await startRace(entry, {
+      libraryStart: context.continuousNext ? null : context,
+      briefingOnly: false,
+    });
+    const started = accepted === true && roundRecipe.entry === entry && match.status === 'running';
+    if (started) currentLibrarySelection = { match, id: context.libraryMissionId };
+    return started;
   }
   async function getMissionLibrary() {
     if (missionLibrary) return missionLibrary;
@@ -2478,7 +3441,8 @@ try {
     missionLibraryLoading = (async () => {
       const index = await readActorMissionIndex();
       const route =
-        authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.versus));
+        authoredRoute ||
+        (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.versus, { fullSource: true }));
       const originalThemes = (await json('../content-design/themes.json')).themes;
       const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
         ? journeyActorThemeCandidates(originalThemes, {
@@ -2493,11 +3457,13 @@ try {
           optionalCampaignIds: route.optionalCampaignIds,
         });
       const { createCandidateSoloHost } = await import('../content-design/solo-host.mjs');
-      librarySoloPreview = createCandidateSoloHost(route.source, {
-        themes: libraryThemes,
-        corePackIds: route.corePackIds,
-        optionalCampaignIds: route.optionalCampaignIds,
-      });
+      librarySoloPreview = route.source.missions.some((mission) => mission.modes.includes('solo'))
+        ? createCandidateSoloHost(route.source, {
+            themes: libraryThemes,
+            corePackIds: route.corePackIds,
+            optionalCampaignIds: route.optionalCampaignIds,
+          })
+        : null;
       const profile = journeyProfile || createJourneyProfileStore({ profileKey: route.profileKey });
       if (!journeyProfile) await profile.load();
       const { createRemoteTeamLibrarySources } = await import('../mission-library/remote-team.mjs');
@@ -2544,7 +3510,7 @@ try {
       if (disposed || artworkLifetime.signal.aborted) {
         libraryInventory.close();
         spatialEditionOwner.dispose();
-        throw new DOMException('Mission library closed.', 'AbortError');
+        throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
       }
       await refreshLibraryInventory();
       const result = await createMetadataInstalledMissionLibrary({
@@ -2581,11 +3547,17 @@ try {
                     mission,
                     journeyPreferences.snapshot().difficulty,
                   );
-                  if (!(await confirmLibraryReplacement(context, `Play ${mission.name}?`)))
+                  if (
+                    !(await confirmLibraryReplacement(context, () => contentText(mission, 'name')))
+                  )
                     return false;
                   if (!context.isCurrent()) return false;
-                  await startRace(entry);
-                  const started = roundRecipe.entry === entry && match.status === 'running';
+                  const accepted = await startRace(entry, {
+                    libraryStart: context.continuousNext ? null : context,
+                    briefingOnly: false,
+                  });
+                  const started =
+                    accepted === true && roundRecipe.entry === entry && match.status === 'running';
                   if (started)
                     currentLibrarySelection = {
                       match,
@@ -2595,39 +3567,59 @@ try {
                 },
               }),
             },
-            {
-              mode: 'solo',
-              source: journeyLibrarySource({
-                editionId: route.id,
-                edition: route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
-                catalog: librarySoloPreview.catalog,
-                profile,
-                details: (mission) =>
-                  journeyMissionDetails(
-                    librarySoloPreview
-                      .select(
-                        mission,
-                        (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
-                      )
-                      ?.manifests.find((item) => item.missionId === mission.levelId),
-                  ),
-                tags: (mission) =>
-                  authoredJourneyMissionTags(
-                    mission,
-                    librarySoloPreview
-                      .select(mission, 'standard')
-                      ?.manifests.find((item) => item.missionId === mission.levelId),
-                  ),
-                card: (mission) =>
-                  librarySoloPreview.card(
-                    mission,
-                    (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
-                  ),
-                launch: (_mission, context) => departLibraryMission(context),
-              }),
-            },
+            ...(librarySoloPreview
+              ? [
+                  {
+                    mode: 'solo',
+                    source: journeyLibrarySource({
+                      editionId: route.id,
+                      edition:
+                        route.id === DEFAULT_JOURNEY_ROUTES.versus ? 'New Journey' : route.label,
+                      catalog: librarySoloPreview.catalog,
+                      profile,
+                      details: (mission) =>
+                        journeyMissionDetails(
+                          librarySoloPreview
+                            .select(
+                              mission,
+                              (journeyPreferences || browsingJourneyPreferences).snapshot()
+                                .difficulty,
+                            )
+                            ?.manifests.find((item) => item.missionId === mission.levelId),
+                        ),
+                      tags: (mission) =>
+                        authoredJourneyMissionTags(
+                          mission,
+                          librarySoloPreview
+                            .select(mission, 'standard')
+                            ?.manifests.find((item) => item.missionId === mission.levelId),
+                        ),
+                      card: (mission) =>
+                        librarySoloPreview.card(
+                          mission,
+                          (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+                        ),
+                      launch: (_mission, context) => departLibraryMission(context),
+                    }),
+                  },
+                ]
+              : []),
           ]),
           ...spatialEditionOwner.sources,
+          ...(await retainedJourneyFromExpeditions({
+            themes: originalThemes,
+            activeRouteId: route.id,
+            difficulty: () =>
+              (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+            launch: departLibraryMission,
+          })),
+          ...duelExpeditionLibrarySources({
+            themes: originalThemes,
+            activeRouteId: route.id,
+            difficulty: () =>
+              (journeyPreferences || browsingJourneyPreferences).snapshot().difficulty,
+            launch: departLibraryMission,
+          }),
           ...teamSources,
         ],
         compatibility: ({ entry, level }) => {
@@ -2651,7 +3643,7 @@ try {
         describe: ({ level }) => {
           const actual = normalizedLevel(level);
           return {
-            rules: `${Math.round(actual.goal.coverage * 100)}% coverage · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
+            rules: `${actual.classic?.hunt ? missionBriefing(actual).goal : `${Math.round(actual.goal.coverage * 100)}% coverage`} · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
           };
         },
         availabilityClassic: (row, pack) => {
@@ -2668,8 +3660,9 @@ try {
               : {
                   state: 'unavailable',
                   retry: true,
-                  reason:
-                    'Installed originals need checking. Retry verifies them without downloading.',
+                  reason: t(
+                    'interface:installedOriginalsNeedCheckingRetryVerifiesThemWithoutDownloading',
+                  ),
                 };
           }
           return pack
@@ -2684,6 +3677,7 @@ try {
             ? { state: 'ready' }
             : { state: 'unavailable', reason: libraryInventory.state().reason },
         prepareClassic: async (row, { signal }) => {
+          await gameplayDownloads.ensureClassic(row.packId, { signal });
           if (!libraryInventory.state().ready) throw new Error(libraryInventory.state().reason);
           const epoch = libraryOpenEpoch;
           let installed;
@@ -2696,14 +3690,15 @@ try {
               signal,
             });
           else {
-            if (row.source !== 'optional') throw new Error('This chapter has no trusted download.');
+            if (row.source !== 'optional')
+              throw new Error(t('interface:thisChapterHasNoTrustedDownload'));
             const catalog = await loadOptionalCatalog({
               signal,
               baseURL: new URL('../../', location.href),
             });
             const summary = catalog.packs.find((item) => item.id === row.packId);
             if (!summary)
-              throw new Error('This exact chapter is unavailable in the published catalogue.');
+              throw new Error(t('interface:thisExactChapterIsUnavailableInThePublishedCatalogue'));
             installed = await missionInstaller().install(summary, { signal });
           }
           // A durable commit remains real after cancellation. Read-only refresh
@@ -2736,10 +3731,26 @@ try {
         launchCustom: (binding, context) =>
           launchPreparedLibrarySelection(binding.pack, binding.selection, context),
       });
+      try {
+        creatorStore ??= createCreatorStore();
+        const sources = await installedCreatorLibrarySources({
+          store: creatorStore,
+          profileForEdition: creatorProfile,
+          launchVersus: launchInstalledCreatorVersus,
+        });
+        for (const source of sources) result.library.register(source);
+      } catch (error) {
+        libraryInventoryNotice = [
+          libraryInventoryNotice,
+          `Creator campaigns could not be read: ${error.message}`,
+        ]
+          .filter(Boolean)
+          .join(' ');
+      }
       if (disposed || artworkLifetime.signal.aborted) {
         result.library.dispose();
         spatialEditionOwner.dispose();
-        throw new DOMException('Mission library closed.', 'AbortError');
+        throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
       }
       const state = createMissionLibrarySessionState({ mode: 'versus' });
       journeyChooser = attachJourneyChooser({
@@ -2749,6 +3760,7 @@ try {
         getCurrentId: () => {
           if (currentLibrarySelection?.match === match) return currentLibrarySelection.id;
           const entry = roundRecipe.entry;
+          const rulesEdition = roundRecipe.rulesEdition ?? CLASSIC_RULES_ORIGINAL;
           if (candidateJourney?.owns(entry))
             return result.library.missions.find(
               (item) =>
@@ -2761,8 +3773,12 @@ try {
             return retainedLibraryMission(result.library, {
               mode: 'versus',
               levelId: entry.level.id,
-              campaignKey: entry.musicCampaignKey,
+              campaignKey: classicRulesCampaignIdentity({
+                campaignKey: entry.musicCampaignKey,
+                rulesEdition,
+              }),
               sourcePackId: entry.sourcePackId ?? entry.pictureEntry?.sourcePackId ?? null,
+              rulesEdition,
             })?.id;
           } catch {
             // An unavailable retained edition cannot block browsing other missions.
@@ -2812,19 +3828,19 @@ try {
       missionLibraryLoading = null;
     }
   }
-  async function openMissionLibrary(opener) {
+  async function openMissionLibrary(opener, { random = false } = {}) {
     if (disposed || contentBusy || document.hidden || !document.hasFocus()) return;
     const visit = ++libraryOpenEpoch;
     pause();
     const context = libraryContext();
     const previousMessage = $('race-message').textContent;
-    const preparingMessage = 'Preparing missions… Your current race is kept.';
-    $('race-message').textContent = preparingMessage;
+    const preparingMessage = t('interface:preparingMissionsYourCurrentRaceIsKept');
+    localizedText($('race-message'), () => preparingMessage);
     const opening = trackMissionLibraryOpening({
       onRetire: () => {
         if (visit === libraryOpenEpoch) ++libraryOpenEpoch;
         if ($('race-message').textContent === preparingMessage)
-          $('race-message').textContent = previousMessage;
+          localizedText($('race-message'), () => previousMessage);
       },
     });
     try {
@@ -2841,13 +3857,16 @@ try {
       opening.dispose();
       if (visit !== libraryOpenEpoch || !openingCurrent || !context.isCurrent()) return;
       journeyChooser.open(opener, { returnLabel: 'Back to race' });
+      if (random) journeyChooser.playRandom({ resetFilters: true });
     } catch (error) {
       if (visit === libraryOpenEpoch && context.isCurrent())
-        $('race-message').textContent = `Mission library unavailable: ${error.message}`;
+        localizedText($('race-message'), () =>
+          t('interface:couch.libraryError', { error: error.message }),
+        );
     } finally {
       opening.dispose();
       if ($('race-message').textContent === preparingMessage)
-        $('race-message').textContent = previousMessage;
+        localizedText($('race-message'), () => previousMessage);
     }
   }
   async function refreshLibraryInventory({ signal = artworkLifetime.signal } = {}) {
@@ -2884,7 +3903,7 @@ try {
         actorPreferences.snapshot().revision !== actorPreference.revision
       )
         throw new DOMException(
-          'Chapter preparation cancelled; the current race is kept.',
+          t('interface:chapterPreparationCancelledTheCurrentRaceIsKept'),
           'AbortError',
         );
     };
@@ -2911,7 +3930,7 @@ try {
               row.level.id === selection.levelId &&
               String(row.level.revision) === String(selection.levelRevision))),
       );
-      if (!entry) throw new Error('This chapter has no compatible Versus missions.');
+      if (!entry) throw new Error(t('interface:thisChapterHasNoCompatibleVersusMissions'));
       const classId = entry.classes.some((item) => item.id === attempt.recipe.classId)
         ? attempt.recipe.classId
         : entry.classes[0].id;
@@ -2949,6 +3968,8 @@ try {
       return {
         async confirm() {
           check();
+          await ensureVersusPackage(entry, { signal, retain: true }, candidateReader);
+          check();
           await lease.confirm({ onStatus });
           check();
         },
@@ -2978,6 +3999,7 @@ try {
           contentReady = true;
           contentBusy = false;
           contentError = null;
+          contentDownloadRequired = false;
           contentScope = 'main';
           maps.splice(0, maps.length, ...shippedMaps, ...rows);
           adopted = true;
@@ -3005,38 +4027,39 @@ try {
             showMaps();
             $('race-level').value = entry.key;
             $('race-class').replaceChildren(
-              ...entry.classes.map((item) => new Option(item.label, item.id)),
+              ...entry.classes.map((item) =>
+                localizedOption(() => contentText(item, 'label'), item.id),
+              ),
             );
             $('race-class').value = classId;
             $('race-theme').replaceChildren(
-              ...entry.themes.map((item) => new Option(item.name, item.id)),
+              ...entry.themes.map((item) => localizedOption(() => themeLabel(item), item.id)),
             );
             $('race-theme').value = nextTheme.id;
             paintRound(recipe);
-            $('race-start').textContent =
-              recipe.format === 'single' ? 'Start race ↗' : 'Start round ↗';
-            $('race-message').textContent =
-              entry.chapter +
-              ': ' +
-              entry.level.name +
-              '. The same picture is prepared for both boards.';
-            installedStatus = rows.length + ' installed maps available.';
+            localizedText($('race-start'), () =>
+              recipe.format === 'single' ? t('interface:startRace') : t('interface:startRound'),
+            );
+            localizedText($('race-message'), () =>
+              t('interface:couch.sharedPictureReady', {
+                chapter: chapterLabel(entry),
+                mission: contentText(entry.level, 'name'),
+              }),
+            );
+            installedStatus = localizedMessage('interface:couch.installedMapCount', {
+              count: rows.length,
+            });
             updateMenu();
           }
           return {
             current: accepted,
             start() {
-              if (!accepted() || $('journey-chooser')?.open) return false;
-              clear({ resetDirection: true });
-              if (!accepted()) return false;
-              resumeDuel(nextMatch, { preserveContinuation: true });
-              neutralResumeTick = true;
-              void sound.enable();
-              if (music) void music.start();
-              $('race-message').textContent = 'Make your line count. First clear wins.';
-              updateMenu();
-              input.focus();
-              return match === nextMatch && match.status === 'running';
+              return activateAcceptedMatch({
+                owner: nextMatch,
+                ownerGeneration: raceId,
+                cue: 'mission',
+                owns: () => accepted() && !$('journey-chooser')?.open,
+              });
             },
           };
         },
@@ -3052,7 +4075,62 @@ try {
     return openMissionLibrary($('race-chapters'));
   };
 
+  const installOfflinePanel = $('race-offline')
+    ? attachInstallOfflinePanel({
+        document,
+        window,
+        downloadsURL: new URL('../downloads.html', import.meta.url),
+        onOpen: () => {
+          if (match.status === 'running') pause();
+        },
+        canActivate: () => match.status === 'ready' && !contentBusy,
+        onStatus: (message) => {
+          if ($('race-offline-status')) $('race-offline-status').textContent = message;
+        },
+      })
+    : null;
+  const gameplayDownloads = createOfflineDownloadAccess({
+    requestPackage: (request) => installOfflinePanel.requestPackage(request),
+  });
+  const detachModeDownloads = attachOfflineModeNavigation({
+    document,
+    window,
+    access: gameplayDownloads,
+    onError: (error) => {
+      $('race-message').textContent = error.message;
+    },
+  });
+  window.addEventListener('pagehide', (event) => {
+    if (!event.persisted) detachModeDownloads();
+  });
+  if ($('race-offline')) $('race-offline').onclick = () => installOfflinePanel.open();
+
+  const globalTools = mountGlobalSettingsTools({
+    document,
+    window,
+    prefix: 'race-global',
+    settingsRoot: $('race-options-panel'),
+    panels: Object.fromEntries(
+      ['controls', 'data', 'content', 'extras'].map((name) => [
+        name,
+        $(`race-settings-panel-${name}`),
+      ]),
+    ),
+    existing: {
+      offlineTools: [$('race-offline'), $('race-offline-status')].filter(Boolean),
+      about: $('race-more-about'),
+    },
+    getSettingsOpen: () => !disposed && shell.scope() === 'options',
+    getOwner: () => ({ attempt: catalogueAttempt(), visit: globalSettingsVisit }),
+    isOwnerCurrent: (owner) =>
+      owner?.visit === globalSettingsVisit && catalogueAttemptCurrent(owner.attempt),
+    onOpen: clear,
+    offlinePanel: installOfflinePanel,
+  });
+  shell.refreshGlobalSettings?.({ controls: globalTools.controls });
+
   function couchScope() {
+    if (globalSettingsToolsRoot(document)) return `couch:${globalSettingsToolsRoot(document).id}`;
     if (music?.root()) return 'couch-music-library';
     const modal = [...document.querySelectorAll('dialog[open]')].at(-1);
     if (modal) return `couch:${modal.id}`;
@@ -3066,53 +4144,34 @@ try {
   }
   function readAssignedMenuPads() {
     // Keep sparse browser positions. The router also receives the physical index.
-    return readCachedPads().map((pad) => (slots.includes(pad?.index) ? pad : null));
+    if (frameReadError) throw frameReadError;
+    return controllerSession.frame().menuPads;
   }
   function capturePads() {
     framePads = [];
     frameReadError = null;
     try {
-      if (typeof navigator.getGamepads !== 'function') throw new Error('Gamepad API unavailable');
+      if (typeof navigator.getGamepads !== 'function')
+        throw new Error(t('interface:gamepadApiUnavailable'));
       const pads = navigator.getGamepads();
       const count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
       framePads = Array.from({ length: count }, (_, i) => pads[i] || null);
     } catch (error) {
-      frameReadError = error || new Error('Controller read failed');
+      frameReadError = error || new Error(t('interface:controllerReadFailed'));
     }
-    const next = new Map();
-    for (const pad of framePads) {
-      if (!pad?.connected || pad.mapping !== 'standard') continue;
-      next.set(
-        pad.index,
-        JSON.stringify([
-          typeof pad.id === 'string' ? pad.id.slice(0, 512) : '',
-          pad.mapping,
-          pad.buttons?.length ?? 0,
-          pad.axes?.length ?? 0,
-        ]),
-      );
-    }
-    for (const index of slots) {
-      if (
-        index === null ||
-        !padDescriptors.has(index) ||
-        next.get(index) === padDescriptors.get(index)
-      )
-        continue;
-      // Couch flight allocation is index-based. A changed descriptor is a new
-      // device even if a disconnect event was missed between animation frames.
-      menuRouter.disconnect(index);
-      pendingPadLoss = true;
-      pause();
-      clear();
-    }
-    padDescriptors = next;
+    const sample = controllerSession.sample(framePads, {
+      active: match?.status === 'running',
+      error: frameReadError,
+    });
+    framePads = sample.pads;
+    controllerSetup.refresh();
   }
+
   function focusPrimaryAction() {
     if (!match || match.status === 'running' || disposed) return;
     shell.focus();
     navigation.engage();
-    menuHint = 'Choose the primary action with South when everyone is ready.';
+    menuHint = t('interface:chooseThePrimaryActionWithSouthWhenEveryoneIsReady');
     updateMenu();
   }
   function refreshBoardLayout() {
@@ -3127,6 +4186,7 @@ try {
         ? []
         : [0, 1].flatMap((i) => [
             $(`racer-stats-${i}`).textContent,
+            $(`racer-stats-${i}`).parentElement.querySelector('.hunt-status')?.textContent,
             $(`racer-state-${i}`).textContent,
             $(`racer-input-${i}`).textContent,
             $(`racer-capture-${i}`).hidden,
@@ -3148,7 +4208,12 @@ try {
     }
   }
   function updateMenu() {
-    if (!match || disposed) return;
+    if (bootFailed || !match || disposed) return;
+    $('race-start').parentElement.classList.toggle(
+      'continuous-result-actions',
+      match.status === 'finished',
+    );
+    runningEnemyControls.forEach((control) => control.refresh());
     const completedBoards = match.runs.filter((run) => run.status === 'won').length;
     journeyReactions.present({
       owned: !!candidateJourney?.owns(roundRecipe?.entry),
@@ -3160,35 +4225,75 @@ try {
             : 'won'
           : null,
       missionId: roundRecipe?.entry?.mission?.id,
+      feedback: candidateJourney?.owns(roundRecipe?.entry)
+        ? roundRecipe.entry.campaignFeedback
+        : null,
     });
     const running = match.status === 'running';
     $('race-journey-controls').hidden = !!shell && shell.scope() !== 'main' && !running;
     $('race-journey-next').hidden = match.status !== 'finished' || libraryCompleteMatch === match;
     $('race-journey-next').disabled = contentBusy || !!libraryContinuation;
-    $('race-journey-next').textContent =
-      candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
-        ? 'Browse missions'
-        : 'Next mission';
+    $('race-journey-random').disabled = contentBusy || !!libraryContinuation;
+    localizedText($('race-journey-next'), () => {
+      if (!candidateJourney?.owns(roundRecipe.entry)) return t('interface:nextMission2');
+      const current = roundRecipe.entry.mission,
+        next = candidateJourney.next(current.id);
+      return resultContinuationLabel(t, {
+        browse: !next,
+        mission: next ? contentText(next, 'name') : '',
+        campaign: next ? contentText(next, 'campaignTitle') : '',
+        crossesCampaign:
+          !!next && (next.packId !== current.packId || next.campaignId !== current.campaignId),
+      });
+    });
     $('race-journey-skip').hidden = !candidateJourney || match.status === 'finished';
     $('race-journey-find').disabled = contentBusy || !!libraryContinuation;
     if (candidateJourney) {
       $('race-journey-skip').hidden = match.status === 'finished';
       $('race-journey-skip').disabled = contentBusy;
-      $('race-journey-skip').textContent =
-        journeySkipArmed === match ? 'Confirm skip' : 'Skip mission';
+      localizedText($('race-journey-skip'), () =>
+        journeySkipArmed === match
+          ? t('interface:confirmSkip')
+          : t(
+              match.status === 'paused'
+                ? 'interface:nativeMenu.pauseSkip'
+                : 'interface:skipMission',
+            ),
+      );
       $('race-journey-find').disabled = contentBusy;
     }
     $('race-message').hidden = contentBusy;
     $('race-installed-status').hidden = contentBusy;
-    $('race-start').disabled = running || contentBusy || !contentReady;
+    // The exact ready-confirmation action keeps its focused Start available
+    // while awaiting the picture. Native disabling would make controller
+    // navigation move focus away and revoke this same action. Its existing
+    // contentBusy guard rejects repeats; deliberate navigation still retires it.
+    const ownedReadyStart = contentBusy && pendingReadyStart?.owns();
+    $('race-start').disabled = running || !contentReady || (contentBusy && !ownedReadyStart);
+    if (ownedReadyStart) {
+      $('race-start').setAttribute('aria-busy', 'true');
+      $('race-start').setAttribute('aria-disabled', 'true');
+    } else {
+      $('race-start').removeAttribute('aria-busy');
+      $('race-start').removeAttribute('aria-disabled');
+    }
+    $('race-journey-difficulty').disabled =
+      contentBusy || Boolean(creatorVersusOwners.has(roundRecipe.entry));
     $('race-chapters').disabled = running || contentBusy;
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
+    localizedText($('race-chapter-retry'), () =>
+      contentDownloadRequired ? t('interface:downloadPlay') : t('interface:retryPicture2'),
+    );
     $('race-picture-cancel').hidden = !contentBusy && !libraryContinuation;
     $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
-    $('race-installed-status').textContent = [featuredStatus, installedStatus]
-      .filter(Boolean)
-      .join(' ');
+    localizedText($('race-installed-status'), () =>
+      [featuredStatus, installedStatus].filter(Boolean).map(render).join(' '),
+    );
+    $('race-export-recording').hidden = match.status !== 'finished';
+    $('race-recording-status').hidden = match.status !== 'finished';
+    $('race-recording-help').hidden = match.status !== 'finished';
+    recordingExport.refresh();
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
@@ -3203,26 +4308,75 @@ try {
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
-      summary: `${roundRecipe.tuning.adminOverride ? 'ADMIN PLAYTEST · ' : ''}${roundRecipe.format === 'first-to-two' ? 'First to two' : 'One race'} · ${entry.level.name}`,
+      summary: () =>
+        `${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
     });
-    $('race-time-field').hidden = !!candidateJourney;
+    $('race-time-field').hidden = qualifiedVersusEntry(roundRecipe.entry);
     // Reconcile deliberate layout transitions immediately, including browsers
     // without ResizeObserver. Ordinary frames only compare cheap state values.
     refreshBoardLayout();
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
     const text = running
       ? shell.controllerHint()
-      : `${owner >= 0 ? `Player ${owner + 1} controller has the menu. South selects; East cancels; Menu goes back.` : menuStatus}${menuGate ? ` ${menuGate}` : ''}${menuHint ? ` ${menuHint}` : ''} Keyboard and touch remain available.`;
-    if ($('race-menu-status').textContent !== text) $('race-menu-status').textContent = text;
+      : t('gameplay:keyboardAndTouchRemainAvailable', {
+          value1:
+            owner >= 0
+              ? t('gameplay:playerControllerHasTheMenuSouthSelectsEastCancelsMenu', {
+                  value1: owner + 1,
+                })
+              : menuStatus,
+          value2: menuGate ? ` ${menuGate}` : '',
+          value3: menuHint ? ` ${menuHint}` : '',
+        });
+    if ($('race-menu-status').textContent !== text)
+      localizedText($('race-menu-status'), () => text);
   }
-  menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
+  localizedText($('race-export-recording'), () => t('interface:recording.exportRound'));
+  // Locale bindings can outlive a retired page. Keep verification in the build
+  // that owns this recording instead of consulting a later document's location.
+  const recordingPageHref =
+    globalThis.location?.href ?? document.baseURI ?? 'http://localhost/game/couch/';
+  localizedAttribute($('race-verify-recording'), 'href', () =>
+    recordingVerificationHref(recordingPageHref, getLocale()),
+  );
+  $('race-export-recording').onclick = async () => {
+    const owner = match;
+    if (owner?.status !== 'finished') return;
+    try {
+      const recorder = localRecordings.get(owner);
+      if (!recorder) throw new Error('Recording is unavailable for this round.');
+      await recordingExport.request(
+        owner,
+        recorder,
+        `revealline-versus-${owner.runs[0].levelId}.json`,
+      );
+    } catch (error) {
+      if (!disposed && match === owner)
+        localizedText($('race-recording-status'), () => error.message);
+    }
+  };
+  menuRouter = createControllerRouter({
+    readPads: readAssignedMenuPads,
+    autoJoin: true,
+    eventTarget: null,
+  });
   const controllerConfirmGuard = attachControllerConfirmGuard({
-    confirmPressed: () => menuRouter.menuConfirmPressed(),
+    confirmPressed: () => menuRouter.menuConfirmPressed() || controllerSession.frame().confirmHeld,
   });
   const menuIds = new Set([
+    'race-offline',
+    'install-offline-close',
+    'install-offline-install',
+    'install-offline-downloads',
     'race-coop',
     'race-start',
     'race-retry',
+    'race-export-recording',
+    'race-verify-recording',
+    'race-recording-copy-toggle',
+    'race-recording-copy-json',
+    'race-recording-copy-copy',
+    'race-recording-copy-select',
     'race-optional-setup-toggle',
     'race-chapters',
     'race-journey-next',
@@ -3241,6 +4395,8 @@ try {
     'race-focus',
     'race-options',
     'race-quick-sound',
+    'race-pause-next-song',
+    'versus-landing-fullscreen',
     'race-settings-tab-controls',
     'race-settings-tab-audio',
     'race-settings-tab-display',
@@ -3269,10 +4425,17 @@ try {
     'race-touch-1',
     'race-tap',
     'race-reduced',
+    'race-enemy-remains',
+    'race-enemy-remains-retry',
     'race-journey-reactions-enabled',
     'race-journey-reactions-retry',
     'race-text-face',
     'race-text-size',
+    'race-theme-customize',
+    'race-theme-ornaments',
+    'race-theme-arcadeArt',
+    'race-theme-highContrast',
+    'race-theme-opaqueHud',
     'race-menu-palette',
     'race-menu-ornaments',
     'race-audio',
@@ -3296,66 +4459,87 @@ try {
     onTabBoundary: () => playgroundTabBoundary({ window, suspend }),
     getScope: couchScope,
     getRoot: () =>
-      music?.root() ||
-      [...document.querySelectorAll('dialog[open]')].at(-1) ||
-      // Find/Next sit beside the main panel for Legacy and installed missions
-      // too. The existing allowlist excludes all live-board controls.
-      (shell.scope() === 'main' ? $('couch-app') : shell.root()),
+      globalSettingsToolFrameFocused(document) || installOfflinePanel?.frameFocused()
+        ? null
+        : globalSettingsToolsRoot(document) ||
+          music?.root() ||
+          [...document.querySelectorAll('dialog[open]')].at(-1) ||
+          // Find/Next sit beside the main panel for Legacy and installed missions
+          // too. The existing allowlist excludes all live-board controls.
+          (shell.scope() === 'main' ? $('couch-app') : shell.root()),
     getDefaultFocus: () =>
-      libraryDecision
-        ? $('race-library-stay')
-        : music?.root()
-          ? music.primary()
-          : journeyPictures?.root()
-            ? journeyPictures.primary()
-            : $('journey-backup')?.open
-              ? $('journey-backup-export')
-              : $('journey-chooser')?.open
-                ? journeyChooser?.primary() || $('journey-search')
-                : shell.primary(),
+      globalSettingsToolsRoot(document)
+        ? globalSettingsToolsRoot(document).querySelector('button:not([disabled])')
+        : installOfflinePanel?.isOpen()
+          ? $('install-offline-downloads')
+          : libraryDecision
+            ? $('race-library-stay')
+            : music?.root()
+              ? music.primary()
+              : journeyPictures?.root()
+                ? journeyPictures.primary()
+                : $('journey-backup')?.open
+                  ? $('journey-backup-export')
+                  : $('journey-chooser')?.open
+                    ? journeyChooser?.primary() || $('journey-search')
+                    : shell.primary(),
     keyboard: true,
     nativeReadingScroll: true,
     ownsKeyboardEvent: (event) =>
       !music?.root() && settingsTabOwnsKey(event, $('race-options-panel')),
     accept: (element) =>
+      !!globalSettingsToolsRoot(document)?.contains(element) ||
+      !!element.closest('[data-menu-scope]') ||
       music?.contains(element) ||
       (element.tagName === 'A' &&
         !!element.closest('#race-music-now-playing, #race-music-menu-now-playing')) ||
+      element.hasAttribute('data-language-select') ||
       menuIds.has(element.id) ||
+      (element.matches('button[data-theme-preview]') &&
+        !!element.closest('[data-theme-controls]')) ||
       !!element.closest(
-        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures]',
+        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers',
       ),
     getControlLabels: () => ({
-      directions: 'D-pad / left stick',
-      confirm: 'South',
-      back: 'East',
+      directions: t('interface:dPadLeftStick'),
+      confirm: t('common:controls.south'),
+      back: t('common:controls.east'),
     }),
     getReadingPrompt: readingPrompt,
     onNativeInput: (event) => setReadingModality(nextInputModality(readingModality, event)),
+    activateControl: (element) => controllerConfirmGuard.activate(element),
     onBack: () =>
-      libraryDecision
-        ? libraryDecision.finish(false)
-        : music?.root()
-          ? music.back()
-          : journeyPictures?.root()
-            ? journeyPictures.close()
-            : $('journey-backup')?.open
-              ? $('journey-backup-back').click()
-              : $('journey-chooser')?.open
-                ? journeyChooser.close()
-                : shell.back(),
+      closeGlobalSettingsTool(document)
+        ? undefined
+        : installOfflinePanel?.isOpen()
+          ? installOfflinePanel.close()
+          : libraryDecision
+            ? libraryDecision.finish(false)
+            : music?.root()
+              ? music.back()
+              : journeyPictures?.root()
+                ? journeyPictures.close()
+                : $('journey-backup')?.open
+                  ? $('journey-backup-back').click()
+                  : $('journey-chooser')?.open
+                    ? journeyChooser.close()
+                    : shell.back(),
     onMenu: () =>
-      libraryDecision
-        ? libraryDecision.finish(false)
-        : music?.root()
-          ? music.back()
-          : journeyPictures?.root()
-            ? journeyPictures.close()
-            : $('journey-backup')?.open
-              ? $('journey-backup-back').click()
-              : $('journey-chooser')?.open
-                ? journeyChooser.close()
-                : shell.back(),
+      closeGlobalSettingsTool(document)
+        ? undefined
+        : installOfflinePanel?.isOpen()
+          ? installOfflinePanel.close()
+          : libraryDecision
+            ? libraryDecision.finish(false)
+            : music?.root()
+              ? music.back()
+              : journeyPictures?.root()
+                ? journeyPictures.close()
+                : $('journey-backup')?.open
+                  ? $('journey-backup-back').click()
+                  : $('journey-chooser')?.open
+                    ? journeyChooser.close()
+                    : shell.back(),
     onHint: (message, context) => {
       if (
         context?.kind === 'reading' &&
@@ -3363,7 +4547,7 @@ try {
       ) {
         menuHint = '';
         const hint = $(`${context.regionId}-hint`);
-        if (hint.textContent !== message) hint.textContent = message;
+        if (hint.textContent !== message) localizedText(hint, () => message);
       } else menuHint = message;
       updateMenu();
     },
@@ -3375,17 +4559,27 @@ try {
     getReadingPrompt: readingPrompt,
     revealOnResize: true,
     surfaceDefinitions: [
-      ['race-help-reading', 'race-help-read', 'Couch controls', 'race-help-unit'],
-      ['race-data-reading', 'race-data-read', 'Versus game data', 'race-data-unit'],
+      [
+        'race-help-reading',
+        'race-help-read',
+        localizedMessage('interface:couchControls'),
+        'race-help-unit',
+      ],
+      [
+        'race-data-reading',
+        'race-data-read',
+        localizedMessage('interface:versusGameData'),
+        'race-data-unit',
+      ],
     ],
   });
   $('race-menu-release').onclick = () => {
     if (match.status === 'running' || !menuOwner) return;
+    controllerSession.menu(null);
     menuRouter.invalidate();
     menuOwner = null;
     clear();
-    menuStatus =
-      'Menu controller released. Release controls, then press a face button or Menu to join.';
+    menuStatus = t('interface:menuControllerReleasedReleaseControlsThenPressAFaceButton');
     updateMenu();
     shell.focus();
   };
@@ -3395,16 +4589,22 @@ try {
     // Clear before sampling so that this frame cannot claim a new menu owner.
     if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
     const result = menuRouter.sample({ scope, timeMs: now });
+    if (
+      result.disconnected ||
+      (result.confirmSnapshot?.eligible && result.confirmSnapshot.held) ||
+      Object.values(result.ui).some(Boolean)
+    )
+      continuousPlay.cancel('controller');
     // Joining consumes the controller edge as assignment, but Steam may still
     // mirror that same physical press as a delayed native Enter/click.
-    controllerConfirmGuard.observe(result.confirmHeld || result.status.code === 'joined');
+    controllerConfirmGuard.observe(result.confirmHeld || controllerSession.frame().confirmHeld);
     if (result.status.code === 'joined' || Object.values(result.ui).some(Boolean))
       setReadingModality('controller');
     const released = !menuOwner && result.disconnected;
     menuOwner = result.assigned;
     menuGate =
       menuOwner && ['joined', 'waiting-neutral'].includes(result.status.code)
-        ? 'Release controller buttons and the movement stick to continue.'
+        ? t('interface:releaseControllerButtonsAndTheMovementStickToContinue')
         : '';
     if (result.disconnected) {
       shell.cancelDeparture();
@@ -3414,14 +4614,17 @@ try {
       return;
     }
     menuStatus = frameReadError
-      ? 'Controller access is unavailable.'
-      : !framePads.some((pad) => pad?.connected && pad.mapping === 'standard') &&
-          framePads.some((pad) => pad?.connected)
-        ? 'This controller has no standard mapping.'
+      ? t('interface:controllerAccessIsUnavailable')
+      : controllerSession.state().devices.some((device) => !device.profile)
+        ? t('interface:multiplayerControllers.needsSetup')
         : result.status.message;
     if (assignmentsChanged || pendingPadLoss) {
       shell.cancelDeparture();
       clear();
+      updateMenu();
+      return;
+    }
+    if (globalTools.handleFrameCommand(result.ui)) {
       updateMenu();
       return;
     }
@@ -3439,6 +4642,7 @@ try {
     updateMenu();
   }
   function suspend() {
+    contextualReactions?.suspend();
     if (libraryContinuation) cancelContent();
     ++libraryOpenEpoch;
     libraryIncomingController?.abort();
@@ -3475,8 +4679,23 @@ try {
   const pagehide = (event) => {
     suspend();
     if (event.persisted) return;
+    continuousPlay.dispose();
+    flowControls.dispose();
+    flowCelebration.dispose();
+    enemyStatsViews.forEach((view) => view.dispose());
+    void enemyStatistics.stats.flush().finally(() => enemyStatistics.close());
+    document.removeEventListener('pointerdown', cancelContinuousPlay, true);
+    document.removeEventListener('keydown', cancelContinuousPlay, true);
+    window.removeEventListener('blur', cancelContinuousPlay);
+    window.removeEventListener('gamepaddisconnected', cancelContinuousPlay);
+    shell.destroy();
+    installOfflinePanel?.dispose();
+    void globalTools.dispose();
+    runningEnemyControls.forEach((control) => control.dispose());
+    runningEnemyPreferences.dispose();
     contentController?.abort();
     disposed = true;
+    recordingExport.dispose();
     actorLease?.release();
     actorLease = null;
     actorAppearance = null;
@@ -3490,29 +4709,32 @@ try {
     preparationStatus.dispose();
     couchTouch.destroy();
     journeyReactions.dispose();
+    controllerSetup.dispose();
+    controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();
     menuRouter.destroy();
     reading.destroy();
+    encounterHelp.dispose();
     navigation.destroy();
-    shell.destroy();
     stopNative();
     cancelAnimationFrame(frameId);
-    window.removeEventListener('blur', suspend);
+    window.removeEventListener('blur', windowBlur);
     window.removeEventListener('gamepaddisconnected', disconnected);
     window.removeEventListener('pagehide', pagehide);
     document.removeEventListener('visibilitychange', hidden);
     document.removeEventListener('pointerdown', nativeMenuInput, true);
     document.removeEventListener('keydown', nativeMenuInput, true);
   };
-  window.addEventListener('blur', suspend);
+  const windowBlur = guardGlobalSettingsToolBlur(guardInstallOfflineBlur(suspend));
+  window.addEventListener('blur', windowBlur);
   window.addEventListener('gamepaddisconnected', disconnected);
   window.addEventListener('pagehide', pagehide);
   document.addEventListener('visibilitychange', hidden);
   document.addEventListener('pointerdown', nativeMenuInput, true);
   document.addEventListener('keydown', nativeMenuInput, true);
   function frame(now) {
-    if (disposed) return;
+    if (bootFailed || disposed) return;
     const available = !document.hidden && document.hasFocus();
     if (!available && !inactive) suspend();
     if (available && inactive) {
@@ -3520,7 +4742,8 @@ try {
       last = 0;
       if (music) void music.resume();
     }
-    const dt = last ? Math.max(0, (now - last) / 1000) : 0;
+    const cueState = advanceStartCue(now);
+    const dt = cueState.released ? 0 : last ? Math.max(0, (now - last) / 1000) : 0;
     last = now;
     const wasRunning = match.status === 'running';
     if (available) {
@@ -3528,9 +4751,15 @@ try {
       capturePads();
       input.poll();
       if (!wasRunning) sampleMenu(now);
+      if (wasRunning || match.status === 'running')
+        controllerConfirmGuard.observe(
+          menuRouter.menuConfirmPressed(controllerSession.frame().menuPads) ||
+            controllerSession.frame().confirmHeld,
+        );
       pendingPadLoss = false;
     }
-    if (available && wasRunning && match.status === 'running') {
+    continuousPlay.advance(dt * 1000);
+    if (available && wasRunning && match.status === 'running' && !cueState.blocksPlay) {
       if (dt > 0.25) pause();
       else {
         accumulator += dt;
@@ -3549,7 +4778,17 @@ try {
                 ? { ...command, boost: false, action: false, pickup: false }
                 : command,
           );
+          localRecordings.get(match)?.append(commands);
           stepDuel(match, commands);
+          match.runs.forEach((run, i) =>
+            sound.feedback(true, theme, run, {
+              board: i,
+              mode: 'versus',
+              command: commands[i],
+              actorStyle: actorAppearance?.style,
+              placement: boardPlacement(contexts[i].canvas),
+            }),
+          );
           neutralResumeTick = false;
           for (let i = 0; i < 2; i++)
             if (
@@ -3561,11 +4800,47 @@ try {
           accumulator -= FIXED_DT;
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
+              enemyStatistics.begin(`${statsSessionId}:${generation}`, {
+                provenance: roundRecipe.tuning.adminOverride ? 'preview' : 'live',
+              });
+              const enemyDefeats = arcadeEnemyDefeats(match.runs[i]);
+              if (enemyDefeats.length)
+                void enemyStatistics.observe({
+                  board: String(i),
+                  sequence: match.runs[i].tick,
+                  defeats: enemyDefeats,
+                });
               painters[i].effectsFor(match.runs[i].events, match.runs[i]);
-              for (const event of match.runs[i].events) sound.event(event);
+              contextualReactions?.events(match.runs[i].events, {
+                attemptId: String(generation),
+                actorFamilyFor: (id) =>
+                  pursuitRoster(match.runs[i].level).find((actor) => actor.id === id)?.family,
+                actorFamilies: pursuitRoster(match.runs[i].level).map((actor) => actor.family),
+                mode: 'versus',
+                board: i,
+                encounter: !!match.runs[i].level.classic?.hunt,
+                danger:
+                  soloReactionDanger(match.runs[i]) ||
+                  match.runs.some(
+                    (board) =>
+                      ['running', 'respawning'].includes(board.status) && soloReactionDanger(board),
+                  ),
+              });
+              sound.events(match.runs[i].events, match.runs[i], theme, {
+                board: i,
+                mode: 'versus',
+                actorStyle: actorAppearance?.style,
+                placement: boardPlacement(contexts[i].canvas),
+              });
               const run = match.runs[i],
                 caption = foundationReturnCaption(run);
-              if (caption) foundationCaptions.set(run, caption);
+              if (caption)
+                foundationCaptions.set(
+                  run,
+                  localizedMessage(
+                    'interface:foundationReachedCloseFutureCutsHerePermanentReclaimedGroundAdds',
+                  ),
+                );
               else if (run.player.speed > 0 || run.status !== 'running')
                 foundationCaptions.delete(run);
             }
@@ -3573,7 +4848,43 @@ try {
       }
     }
     if (match.status === 'finished' && !finished) {
+      const victory = match.winner !== null || match.runs.some((run) => run.status === 'won');
+      sound.events(
+        [
+          {
+            type: 'run.completed',
+            tick: Math.max(...match.runs.map((run) => run.tick)),
+            status: victory ? 'won' : 'lost',
+          },
+        ],
+        match,
+        theme,
+        {
+          board: 'duel-result',
+          resultContext: candidateJourney?.owns(roundRecipe?.entry)
+            ? {
+                owned: true,
+                mode: 'versus',
+                outcome: victory
+                  ? match.runs.filter((r) => r.status === 'won').length === 2
+                    ? 'draw'
+                    : 'won'
+                  : 'lost',
+                missionId: roundRecipe.entry.mission.id,
+                feedback: roundRecipe.entry.campaignFeedback,
+              }
+            : null,
+        },
+      );
       finished = true;
+      enemyStatistics.finish();
+      continuousPlay.begin({
+        identity: match,
+        outcome: victory ? 'won' : 'lost',
+        canAdvance: false,
+        canRetry: false,
+        replayMs: 0,
+      });
       clear();
       if (match.winner !== null) won[match.winner]++;
       let journeyRewardFailure = null;
@@ -3582,6 +4893,8 @@ try {
         !roundRecipe.tuning.adminOverride &&
         match.runs.some((run) => run.status === 'won')
       ) {
+        const progressMission =
+          candidateJourney.progressMission?.(roundRecipe.entry) ?? roundRecipe.entry.mission;
         const runId = `${journeySessionId}:${generation}`,
           gameplayId = dataIdentity({
             ruleset: match.ruleset,
@@ -3593,7 +4906,7 @@ try {
           completion = {
             type: 'complete',
             mode: 'versus',
-            missionId: roundRecipe.entry.mission.id,
+            missionId: progressMission.id,
             runId,
             difficulty: roundRecipe.entry.difficulty,
             gameplayId,
@@ -3602,7 +4915,7 @@ try {
                   picture: {
                     mode: 'versus',
                     editionId: authoredRoute.id,
-                    missionId: roundRecipe.entry.mission.id,
+                    missionId: progressMission.id,
                     campaignKey: roundRecipe.entry.musicCampaignKey,
                     levelId: roundRecipe.entry.level.id,
                     levelRevision: String(roundRecipe.entry.level.revision),
@@ -3626,22 +4939,121 @@ try {
           } catch {
             /* Existing stored progress stays intact. */
           }
-          journeyRewardFailure = `Race complete. Its original could not be retained: ${error.message}`;
+          journeyRewardFailure = localizedMessage('interface:journeyPictures.versusRetainFailed', {
+            error: error.message,
+          });
         }
       }
-      const name =
-        match.winner === 0 ? 'Sunflower' : match.winner === 1 ? 'Skyline' : 'Both players';
+      const creatorOwner = creatorVersusOwners.get(roundRecipe.entry);
+      if (
+        creatorOwner &&
+        !roundRecipe.tuning.adminOverride &&
+        match.runs.some((run) => run.status === 'won')
+      ) {
+        const profile = creatorProfiles.get(creatorOwner.prepared.editionId),
+          manifest = creatorOwner.host.manifest(
+            roundRecipe.entry.mission,
+            roundRecipe.entry.difficulty,
+          ),
+          runId = crypto.randomUUID(),
+          gameplayId = `${creatorOwner.prepared.editionId}:${manifest.simulationIdentity}`,
+          acceptedPicture = isCandidatePictureFor(roundRecipe.entry.asset, backdrop)
+            ? backdrop
+            : null,
+          missionId = roundRecipe.entry.mission.levelId,
+          completion = {
+            type: 'complete',
+            mode: 'versus',
+            missionId,
+            runId,
+            difficulty: roundRecipe.entry.difficulty,
+            gameplayId,
+            ...(acceptedPicture
+              ? {
+                  picture: {
+                    mode: 'versus',
+                    editionId: creatorOwner.prepared.editionId,
+                    missionId,
+                    campaignKey: roundRecipe.entry.musicCampaignKey,
+                    levelId: roundRecipe.entry.level.id,
+                    levelRevision: String(roundRecipe.entry.level.revision),
+                    runId,
+                    gameplayId,
+                    difficulty: roundRecipe.entry.difficulty,
+                    name: roundRecipe.entry.mission.name,
+                    campaignTitle: roundRecipe.entry.mission.campaignTitle,
+                    themeId: roundRecipe.theme.id,
+                    asset: acceptedPicture.assetRevision,
+                  },
+                }
+              : {}),
+          };
+        const settlement = profile.recordWithReceiptFallback(completion);
+        journeyChooser?.refresh();
+        void settlement
+          .then((result) => {
+            journeyChooser?.refresh();
+            if (result.durable && !result.fallback) return;
+            if (activeProgressProfile() !== profile) return;
+            const warning = localizedMessage('interface:journeyPictures.versusRetainFailed', {
+              error: result.error || t('errors:journey.saveFailed'),
+            });
+            journeyRewardFailure = warning;
+            if (!$('race-message').textContent.includes(warning))
+              localizedText($('race-message'), `${$('race-message').textContent} ${warning}`);
+          })
+          .catch((error) => {
+            if (activeProgressProfile() !== profile) return;
+            const warning = localizedMessage('interface:journeyPictures.versusRetainFailed', {
+              error: error.message,
+            });
+            journeyRewardFailure = warning;
+            if (!$('race-message').textContent.includes(warning))
+              localizedText($('race-message'), `${$('race-message').textContent} ${warning}`);
+          });
+      }
+      const name = () =>
+        match.winner === 0
+          ? t('interface:sunflower2')
+          : match.winner === 1
+            ? t('interface:skyline2')
+            : t('interface:bothPlayers');
       const series = roundRecipe.format === 'first-to-two';
-      $('race-message').textContent =
-        `${match.winner === null ? 'Draw' : `${name} wins the ${series ? 'round' : 'race'}`}. ${match.reason}.${series && won.some((n) => n >= 2) ? ` ${name} wins the match!` : ''}`;
-      $('race-message').textContent +=
-        candidateJourney && !candidateJourney.next(roundRecipe.entry.mission.id)
-          ? series && !won.some((n) => n >= 2)
-            ? ' Continue with Next round, or Browse missions.'
-            : ` ${candidateJourney.isCore(roundRecipe.entry.mission.id) ? 'End of the main Journey.' : 'End of this optional sequence.'} Browse missions or Rematch whenever you like.`
-          : ' Choose Next mission to continue, or keep playing this mission.';
-      if (journeyRewardFailure) $('race-message').textContent += ` ${journeyRewardFailure}`;
-      $('race-start').textContent = `${continuationAction()}: ${roundRecipe.entry.level.name}`;
+      const reason = () =>
+        ({
+          'First clear': t('interface:couch.firstClearReason'),
+          'Time — coverage, then lives, then score': t('interface:couch.timeReason'),
+          'Both flights ended': t('interface:couch.bothEndedReason'),
+        })[match.reason] || match.reason;
+      localizedText($('race-message'), () => {
+        const winner =
+          match.winner === null
+            ? t('interface:draw')
+            : series
+              ? t('interface:couch.roundWinner', { name: name() })
+              : t('interface:couch.raceWinner', { name: name() });
+        const matchResult =
+          series && won.some((n) => n >= 2)
+            ? ` ${t('interface:couch.matchWinner', { name: name() })}`
+            : '';
+        const next =
+          candidateJourney?.owns(roundRecipe.entry) &&
+          !candidateJourney.next(roundRecipe.entry.mission.id)
+            ? series && !won.some((n) => n >= 2)
+              ? t('interface:continueWithNextRoundOrBrowseMissions')
+              : candidateJourney.isCore(roundRecipe.entry.mission.id)
+                ? t('interface:couch.mainJourneyEnd')
+                : t('interface:couch.optionalJourneyEnd')
+            : t('interface:chooseNextMissionToContinueOrKeepPlayingThisMission');
+        return `${winner}. ${reason()}.${matchResult} ${next}${journeyRewardFailure ? ` ${journeyRewardFailure}` : ''}`;
+      });
+      localizedText($('race-start'), () => {
+        const creatorNext = creatorVersusContinuation(roundRecipe.entry);
+        return `${continuationAction()}: ${contentText(
+          creatorNext?.mission ?? roundRecipe.entry.level,
+          'name',
+        )}`;
+      });
       painters.forEach((p, i) => {
         if (match.runs[i].status === 'won')
           p.startCelebration?.({
@@ -3651,51 +5063,61 @@ try {
           });
       });
     }
-    $('series-score').textContent = `${won[0]} : ${won[1]}`;
+    localizedText($('series-score'), () => `${won[0]} : ${won[1]}`);
     const left =
       match.limitTicks === null
         ? null
         : Math.max(0, Math.ceil((match.limitTicks - match.tick) / 120));
-    $('race-clock').textContent =
+    localizedText($('race-clock'), () =>
       left === null
-        ? 'No countdown'
-        : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+        ? t('interface:noCountdown')
+        : `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`,
+    );
     $('race-clock').dataset.compact = left === null ? '∞' : $('race-clock').textContent;
     for (let i = 0; i < 2; i++) {
       const run = match.runs[i];
       const returnCaption = foundationCaptions.get(run) || '',
         returnRegion = $(`racer-capture-${i}`);
-      if (returnRegion.textContent !== returnCaption) returnRegion.textContent = returnCaption;
+      localizedText(returnRegion, returnCaption);
       returnRegion.hidden = !returnCaption || match.status === 'finished';
-      $(`racer-stats-${i}`).textContent =
-        `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`;
-      $(`racer-state-${i}`).textContent = match.status === 'running' ? run.status : match.status;
+      huntStatuses[i * 2]?.render(run);
+      huntStatuses[i * 2 + 1]?.render(run);
+      localizedText(
+        $(`racer-stats-${i}`),
+        () => `${i + 1}: ${gameplayStatsLabel(run, { showTarget: true })}`,
+      );
+      localizedText($(`racer-state-${i}`), () =>
+        gameplayStatusLabel(match.status === 'running' ? run.status : match.status),
+      );
       const cue = encounterView(run),
         group = $(`racer-encounter-${i}`),
         title = $(`racer-encounter-title-${i}`),
         instruction = $(`racer-encounter-instruction-${i}`);
       group.hidden = !cue;
       if (cue) {
-        const context =
-          match.status === 'paused'
-            ? 'PAUSED · '
+        localizedText(title, () => {
+          const title = encounterView(run)?.title || '';
+          return match.status === 'paused'
+            ? `${t('interface:paused2')} ${title}`
             : match.status === 'ready'
-              ? 'READY · '
+              ? `${t('interface:ready')} ${title}`
               : match.status === 'finished'
-                ? `${roundRecipe.format === 'single' ? 'RACE' : 'ROUND'} ENDED · `
-                : '';
-        const heading = `${context}${cue.title}`;
-        const copy =
+                ? roundRecipe.format === 'single'
+                  ? t('interface:couch.raceEndedCue', { title })
+                  : t('interface:couch.roundEndedCue', { title })
+                : title;
+        });
+        localizedText(instruction, () =>
           match.status === 'finished' && !['won', 'lost'].includes(run.status)
-            ? `Frozen at ${roundRecipe.format === 'single' ? 'race' : 'round'} end. Live line ${cue.cutCells} / ${cue.min} new cells.`
-            : cue.instruction;
-        // The run owns this clock. Keep paused/finished cues and avoid rewriting unchanged text.
-        if (title.textContent !== heading) title.textContent = heading;
-        if (instruction.textContent !== copy) instruction.textContent = copy;
+            ? roundRecipe.format === 'single'
+              ? t('interface:couch.frozenRaceCut', { cells: cue.cutCells, minimum: cue.min })
+              : t('interface:couch.frozenRoundCut', { cells: cue.cutCells, minimum: cue.min })
+            : encounterView(run)?.instruction || '',
+        );
         group.dataset.phase = cue.phase;
       } else {
-        title.textContent = '';
-        instruction.textContent = '';
+        localizedText(title, () => '');
+        localizedText(instruction, () => '');
         delete group.dataset.phase;
       }
     }
@@ -3706,6 +5128,9 @@ try {
       const run = match.runs[i];
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
         displayCSSWidth: boardFootprints.width(i),
+        showCombatScrap: encounterDisplay.snapshot().showRemains,
+        brutal: encounterDisplay.snapshot().brutal,
+        blood: encounterDisplay.snapshot().blood,
         textFace: displayPreferences.snapshot().textFace,
         paused: match.status !== 'running',
         reduced: displayPreferences.snapshot().effectiveReducedEffects,
@@ -3715,6 +5140,14 @@ try {
         actorAppearance,
       });
     }
+    match.runs.forEach((run, i) =>
+      sound.feedback(match.status === 'running', theme, run, {
+        board: i,
+        mode: 'versus',
+        actorStyle: actorAppearance?.style,
+        placement: boardPlacement(contexts[i].canvas),
+      }),
+    );
     (music || sound).update(
       match.status === 'running',
       theme,
@@ -3752,15 +5185,12 @@ try {
       if (epoch === libraryOpenEpoch && opening.current() && context.isCurrent()) {
         const row = owner.library.find(libraryHandoff);
         if (!row || !row.modes.includes('versus'))
-          throw new Error(
-            'This exact mission edition is unavailable in Versus. No different mission was started.',
-          );
+          throw new Error(t('interface:thisExactMissionEditionIsUnavailableInVersusNoDifferent'));
         if ((row.collection === 'Journey') !== !!candidateJourney)
-          throw new Error(
-            'This mission belongs to a different gameplay host. Choose it from All missions.',
-          );
+          throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostChooseIt'));
         const paired = libraryExternalSelections.get(row.id);
         if (
+          libraryIntent !== 'select' &&
           paired &&
           libraryInventory.state().ready &&
           libraryInventory.getInventory().packs.some((pack) => pack.id === paired.packId)
@@ -3772,13 +5202,18 @@ try {
             signal: incomingController.signal,
           });
           if (epoch !== libraryOpenEpoch || !opening.current() || !context.isCurrent())
-            throw new DOMException('Requested mission cancelled.', 'AbortError');
+            throw new DOMException(t('interface:requestedMissionCancelled'), 'AbortError');
         }
         // The metadata request relinquishes input before the exact launch or
         // chooser adopts focus. Later staged work owns its own cancellation.
         opening.dispose();
-        if (owner.library.availability(row, 'versus').state !== 'ready') {
-          journeyChooser.open($('race-library-switch'));
+        if (
+          libraryIntent === 'select' ||
+          owner.library.availability(row, 'versus').state !== 'ready'
+        ) {
+          // A mode choice reveals this exact row. Only its explicit Play action
+          // may prepare/adopt a replacement or start either simulation.
+          journeyChooser.open($('race-chapters'));
           journeyChooser.reveal(row.id);
         } else {
           const started = await owner.library.launch(row, {
@@ -3786,14 +5221,16 @@ try {
             ...context,
           });
           if (started === false && epoch === libraryOpenEpoch && context.isCurrent()) {
-            journeyChooser.open($('race-library-switch'));
+            journeyChooser.open($('race-chapters'));
             journeyChooser.reveal(row.id);
           }
         }
       }
     } catch (error) {
       if (epoch === libraryOpenEpoch && context.isCurrent())
-        $('race-message').textContent = `Requested mission could not open: ${error.message}`;
+        localizedText($('race-message'), () =>
+          t('interface:couch.requestedMissionError', { error: error.message }),
+        );
     } finally {
       opening.dispose();
       if (libraryIncomingController === incomingController) libraryIncomingController = null;
@@ -3825,18 +5262,29 @@ try {
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootFailed = true;
-  bootDisplay.finish({
-    state: 'error',
-    message: `The race could not load: ${error.message}`,
-  });
+  const message = localizedMessage('gameplay:theRaceCouldNotLoad', { value1: error.message });
+  // Ready clears the original status lease before picture/focus handoff ends.
+  // A later failure needs fresh feedback in the still-visible recovery shell.
+  bootStatus.begin({ message }).finish({ state: 'error', message });
+  const recovery = $('boot-return');
+  recovery.hidden = false;
   releaseArtwork({ persisted: false });
   $('race-start').disabled = true;
-  $('race-message').textContent = `The race could not load: ${error.message}`;
+  localizedText($('race-message'), () =>
+    t('gameplay:theRaceCouldNotLoad', { value1: error.message }),
+  );
+  if (
+    bootFinished &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    (unclaimedFocus(document.activeElement) || $('couch-app').contains(document.activeElement))
+  )
+    recovery.focus({ preventScroll: true });
 } finally {
   initialFocusPending = false;
   document.removeEventListener('focusin', initialFocusChoice, true);
   document.removeEventListener('visibilitychange', initialVisibility);
-  window.removeEventListener('blur', initialFocusLost);
+  window.removeEventListener('blur', initialWindowBlur);
   window.removeEventListener('pagehide', initialFocusLost);
   finishBoot();
 }

@@ -1,0 +1,42 @@
+{
+  "format": "FPVCreatorInstallEvidence.v1",
+  "runtimeRevision": "fc32543821bcea9bba27a4f435902ccaa0934d9d",
+  "sourceTree": "f688ae98986c29d0e3dfb5757798e08b88293103",
+  "passed": true,
+  "checks": 294,
+  "runtimeOverlays": 0,
+  "admittedInputs": 95,
+  "admittedMembers": 102,
+  "fixtureSHA256": "980c912e228a42958c55677776e1882f1452ed4d3239ca0750336fe2e96e6e4e",
+  "files": [
+    {
+      "path": "fpv-creator-install-8961-passed.json.gz",
+      "bytes": 109472,
+      "sha256": "99c409f544b505b84b99467314495b9f04fb8e7279fd685febf6305f5900b187",
+      "originalBytes": 1888634,
+      "originalSHA256": "d4a804411bb2faee65a68ae3660313def73038db38dd2c310b9ee146962fd499"
+    },
+    {
+      "path": "fpv-creator-install-8961-summary.json.gz",
+      "bytes": 743,
+      "sha256": "14a2827b0078a90d07a27af3a84b2503f349ff064a5785ac9063f7105d7b5586",
+      "originalBytes": 3143,
+      "originalSHA256": "98d499e104dfd3687df66987026e8ac12482fcb3e25e4ce179387aca862adecc"
+    },
+    {
+      "path": "fpv-creator-install-8961-passed.png",
+      "bytes": 58599,
+      "sha256": "05a4d57d2f7cf3583c095bf5d620deb180f0d72fc50a26d3871384419111dd12",
+      "originalBytes": 58599,
+      "originalSHA256": "05a4d57d2f7cf3583c095bf5d620deb180f0d72fc50a26d3871384419111dd12"
+    },
+    {
+      "path": "fixture.json.gz",
+      "bytes": 8297,
+      "sha256": "600ffb37968387d482210d61ede71de49b79a88322c3f9d8768660a432edae5e",
+      "originalBytes": 45758,
+      "originalSHA256": "980c912e228a42958c55677776e1882f1452ed4d3239ca0750336fe2e96e6e4e"
+    }
+  ],
+  "restore": "gzip -dc FILE.json.gz restores exact original bytes"
+}
