@@ -875,6 +875,127 @@ for (const [family, install] of [
     assert(!f.stores.has(f.name));
     assert(!f.progress.includes('ready'));
   });
+  // Hold completion of a real WebCrypto digest, not browser hashing execution.
+  // This deterministic worker fixture does not qualify native hash-in-progress UI.
+  for (const outcome of ['valid', 'rejected']) {
+    test(`${family} cancellation during unresolved digest ${outcome} completion preserves retained caches`, async () => {
+      const f = workerFixture(install, family, { dependencies: 2 }),
+        gate = deferred(),
+        previousName = f.name.replace(/revision$/, 'previous'),
+        unrelatedName = 'unrelated.application.cache';
+      const previous = new Map([
+          [
+            f.base + 'image.png',
+            new Response('previous working asset', { headers: { 'x-owner': 'previous' } }),
+          ],
+        ]),
+        unrelated = new Map([
+          [
+            'https://example.test/unrelated/record',
+            new Response('unrelated retained data', { status: 201 }),
+          ],
+        ]);
+      f.stores.set(previousName, previous);
+      f.stores.set(unrelatedName, unrelated);
+      const snapshot = async () =>
+        Promise.all(
+          [...f.stores.entries()]
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(async ([name, entries]) => [
+              name,
+              await Promise.all(
+                [...entries.entries()]
+                  .sort(([a], [b]) => a.localeCompare(b))
+                  .map(async ([url, response]) => [
+                    url,
+                    response.status,
+                    [...response.headers.entries()],
+                    createHash('sha256')
+                      .update(Buffer.from(await response.clone().arrayBuffer()))
+                      .digest('hex'),
+                  ]),
+              ),
+            ]),
+        );
+      const before = await snapshot();
+      let digestCalls = 0,
+        completionHeld = false,
+        completionReleased = false,
+        settled = false;
+      f.scope.crypto = {
+        subtle: {
+          digest: async (algorithm, bytes) => {
+            const call = ++digestCalls;
+            const result = await webcrypto.subtle.digest(algorithm, bytes);
+            if (call === 2) {
+              assert.equal(algorithm, 'SHA-256');
+              assert.equal(f.progress.at(-1), 'verifying');
+              completionHeld = true;
+              await gate.promise;
+              completionReleased = true;
+              if (outcome === 'rejected') throw new Error('Injected digest completion rejection');
+            }
+            return result;
+          },
+        },
+      };
+      const pending = f.start();
+      pending.then(
+        () => {
+          settled = true;
+        },
+        () => {
+          settled = true;
+        },
+      );
+      const rejection = assert.rejects(
+        pending,
+        outcome === 'valid'
+          ? /Optional download cancelled/
+          : /Injected digest completion rejection/,
+      );
+      try {
+        await waitFor(() => completionHeld);
+        assert.equal(digestCalls, 2);
+        assert.equal(completionReleased, false);
+        assert.equal(settled, false);
+        assert.equal(f.progress.at(-1), 'verifying');
+        assert.equal(f.writes(), 1, 'The first dependency was staged before cancellation');
+        assert.equal(f.stores.get(f.name).size, 1);
+        f.message({ type: 'practice-cancel' });
+        await new Promise((resolve) => setImmediate(resolve));
+        assert.equal(settled, false, 'Cancellation cannot settle an unresolved digest completion');
+        assert.equal(completionReleased, false);
+        assert.equal(f.writes(), 1);
+        assert(!f.progress.includes('ready'));
+      } finally {
+        gate.resolve();
+        await rejection;
+      }
+      assert.equal(completionReleased, true);
+      assert.equal(settled, true);
+      assert.equal(digestCalls, 2);
+      assert.equal(f.fetches(), 2);
+      assert.equal(
+        f.writes(),
+        1,
+        'Neither delayed success nor rejection writes after cancellation',
+      );
+      assert.equal(f.progress.at(-1), 'failed');
+      assert(!f.progress.includes('ready'));
+      assert(!f.stores.has(f.name), 'The incomplete new version is removed');
+      assert.equal(f.stores.get(previousName), previous);
+      assert.equal(f.stores.get(unrelatedName), unrelated);
+      assert.deepEqual(
+        await snapshot(),
+        before,
+        'Exact retained cache names, entries, metadata and bytes survive',
+      );
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(f.writes(), 1);
+      assert.deepEqual(await snapshot(), before, 'No late completion recreates staging data');
+    });
+  }
   test(`${family} old controlling worker does not recreate an offloaded cache on a later asset read`, async () => {
     const f = workerFixture(install, family);
     await f.start();

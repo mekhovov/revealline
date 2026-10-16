@@ -22,6 +22,24 @@ async function localizedGuides(locale) {
   return [markdown, ...html].map(plain);
 }
 
+test('repository and shipped guides distinguish origin eviction from scoped removal and require external backups', async () => {
+  for (const locale of ['en', 'uk'])
+    for (const guide of await localizedGuides(locale)) {
+      for (const text of locale === 'en'
+        ? [
+            'Browser eviction can remove records and imported worlds, not only cached files',
+            'Keep exported backups outside browser storage',
+            'restore your exported backups',
+          ]
+        : [
+            'Витіснення браузером може видалити записи та імпортовані світи, а не лише кешовані файли',
+            'Зберігайте експортовані резервні копії поза сховищем браузера',
+            'імпортуйте свої резервні копії',
+          ])
+        assert(guide.includes(text), `Missing ${locale} origin eviction recovery warning: ${text}`);
+    }
+});
+
 test('repository and shipped guides name the current rendered radio setup control in both locales', async () => {
   const academy = await source('optional-practice/civilian-fpv/app.mjs');
   const world = await source('optional-practice/civilian-fpv/world-app.mjs');
