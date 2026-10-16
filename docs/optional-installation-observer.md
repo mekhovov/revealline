@@ -228,7 +228,7 @@ and independent receipt review are required; unit fixtures do not close C4.
 scripts/observe-practice-directory-native-a11y.mjs PLAN_JSON
 ABSOLUTE_EXISTING_PLAYWRIGHT_MODULE FRESH_OUTPUT_DIRECTORY` requires an exact
 `revealline-practice-directory-native-a11y-plan.v1` plan. Declare protocol
-`practice-directory-native-zoom-a11y.v2`, absolute `repository` and `bundle`,
+`practice-directory-native-zoom-a11y.v3`, absolute `repository` and `bundle`,
 clean source-shell `shellRevision`/`shellTree`, original candidate
 `sourceRevision`/`sourceTree`, `envelopeSha256`, Academy `packageRevision`, and
 exactly the six EN/UK-by-package `cases` exported by the adapter. No arbitrary
@@ -254,6 +254,15 @@ tolerance use and the old v1 integer-plus-0.5-CSS-pixel decision. V1 failures st
 failed; they cannot be relabelled as v2 passes. This is a versioned approximate
 border-box geometry check, not literal zero clipping or proof that the full
 painted focus outline is visible. Missing metrics fail without an integer fallback.
+
+V3 retains every raw request failure, then classifies only the exact source-preview
+pairs `/revealline/game/build-info.json` / `Not a committed regular file.` (when
+absent in the committed tree) and `/favicon.ico` / `Outside local fixture root.`,
+at most twelve each. Both require source-shell mode and non-production scope.
+Every other request failure blocks success; classification repeats after all
+pending operations settle. No generated release identity is fabricated. This
+does not qualify profile recovery, which requires a built release. Original v2
+aggregate failures remain failed even when their individual player cases pass.
 
 Source/overlay/helper identities are checked before and after. Pending native or
 server operations, failed reset/cleanup or unresolved Chrome launch prevent safe

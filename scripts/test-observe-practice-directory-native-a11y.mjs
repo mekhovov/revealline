@@ -10,6 +10,7 @@ import {
   nativeA11yScope,
   assertNativeFocusWitness,
   nativeFocusGeometry,
+  classifyNativeSourceRequests,
   keyboardReach,
   readNativeFocusWitness,
   trackNativeServerRequests,
@@ -65,6 +66,7 @@ test('strict six-case plan rejects arbitrary selectors, missing locales and prod
     (p) => p.cases.reverse(),
     (p) => (p.protocol = 'production'),
     (p) => (p.protocol = 'practice-directory-native-zoom-a11y.v1'),
+    (p) => (p.protocol = 'practice-directory-native-zoom-a11y.v2'),
     (p) => (p.distribution = '/tmp/dist'),
     (p) => (p.script = 'anything'),
     (p) => (p.repository = 'relative'),
@@ -74,6 +76,37 @@ test('strict six-case plan rejects arbitrary selectors, missing locales and prod
     mutate(p);
     assert.throws(() => validateNativeA11yPlan(p));
   }
+});
+test('only exact bounded source-only absent-build and browser-icon probes are expected', () => {
+  const build = {
+    path: '/revealline/game/build-info.json',
+    message: 'Not a committed regular file.',
+  };
+  const icon = { path: '/favicon.ico', message: 'Outside local fixture root.' };
+  const context = { sourceShellOnly: true, productionQualification: false, buildInfoAbsent: true };
+  const rows = [build, icon];
+  const decision = classifyNativeSourceRequests(rows, context);
+  assert.equal(decision.expected.length, 2);
+  assert.deepEqual(decision.unexpected, []);
+  assert.deepEqual(rows, [build, icon], 'Raw failures must remain unchanged.');
+  for (const bad of [
+    { ...build, path: '/revealline/practice/civilian-flight/build-info.json' },
+    { ...build, path: '/revealline/game/build-info.json?ignore=1' },
+    { ...build, path: '/revealline/game/build-info.json/' },
+    { ...build, path: '/revealline/game/app.mjs' },
+    { ...build, message: 'Hash mismatch' },
+    { ...icon, path: '/revealline/favicon.ico' },
+    { ...icon, message: 'Directory server stopped.' },
+  ])
+    assert.equal(classifyNativeSourceRequests([bad], context).unexpected.length, 1);
+  for (const altered of [
+    { ...context, sourceShellOnly: false },
+    { ...context, productionQualification: true },
+    { ...context, buildInfoAbsent: false },
+  ])
+    assert.equal(classifyNativeSourceRequests([build], altered).unexpected.length, 1);
+  assert.equal(classifyNativeSourceRequests(Array(13).fill(build), context).unexpected.length, 1);
+  assert.equal(classifyNativeSourceRequests(Array(13).fill(icon), context).unexpected.length, 1);
 });
 test('fixed matrix covers EN/UK and all three packages once', () => {
   assert.equal(A11Y_CASES.length, 6);
