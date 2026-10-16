@@ -353,3 +353,41 @@ operations, in a small local temporary directory; no full local build/download
 was run. Independent review reproduced the 18-file trusted renderer closure and
 33 contract/overlay tests, and found no remaining concrete integration blocker.
 Actual hosted diagnostic execution remains pending and is not claimed here.
+
+## Reported PR base versus current main — correction under verification
+
+PR #1542 merged as `2169552a0571b9d62bce116054f1e21aabd10fa1` after every
+applicable exact-head check passed at `e0910ed913c3882505ee5d792543e400be557ee7`;
+only test/build were policy-selected skips. Hosted focused verification passed
+291 tests with no failures/skips. MERGED, main reachability and preserved branch
+were verified. Production `38843253681` passed build, deploy and verification.
+Independent receipt consistency, artifact `12022447052` run/source provenance and
+five representative live inventory hashes passed. Its accepted archive remains
+966,236,160 bytes, raw 963,262,721 bytes, 3,424 files, SHA-256
+`1a188c8affbd93830309493556e832329d0c1380b6ea619c7dcc911582628d07`.
+No capacity savings or completed candidate measurement follows from this.
+
+Before dispatch, read-only REST and GraphQL inspection of draft #1541 revealed
+that its reported PR base snapshot remained
+`741948b14a09a816e49054c443511186bb99eb41` while the actual main branch ref was
+`2169552a0571b9d62bce116054f1e21aabd10fa1`. GitHub compare independently showed
+the reported base is an ancestor of main (ahead two, behind zero). The existing
+validator reproduced an overly strict stale-base rejection. Rebinding someone
+else's PR or manufacturing a fresh PR would avoid, not fix, this queue limitation.
+
+The narrow correction freezes current main and reported PR base independently.
+Current main must still equal the workflow/controller SHA and the explicit
+`refs/heads/main` lookup. A reported older base is accepted only after a real
+fetched-Git ancestry proof; malformed, missing, unrelated or newer bases fail.
+Synthetic composition still uses frozen current main plus exact head, never the
+older base. Final freshness separately pins reported base, actual main, head,
+draft, state, repository and target; movement remains historical/ineligible.
+No permission, guard, origin, application or qualification boundary changes.
+
+The initial validator rejection was reproduced against the actual PR snapshot.
+The corrected path accepted that exact snapshot only with a real local Git
+ancestry proof. All 120 scoped tests pass with zero failures/skips, including
+real older/equal/diverged/newer/missing/malformed base fixtures and unchanged
+source composition. Scoped lint and formatting pass. Independent review found
+no concrete blocker. Exact-head CI and actual runner acceptance remain required;
+#1541 remains draft with its native-art and other qualification holds intact.
