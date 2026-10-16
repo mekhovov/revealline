@@ -7,6 +7,7 @@ import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { arch, release, loadavg } from 'node:os';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
+import { installAudioProof, evaluateAudioProof } from './solo-qualification-audio.mjs';
 import {
   validateQualification,
   resourceStability,
@@ -26,7 +27,7 @@ import {
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile] [--work-probe] [--baseline-runtime]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile] [--work-probe] [--baseline-runtime] [--audio-proof]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -34,7 +35,12 @@ const bytes = await readFile(resolve(scenarioPath)),
   scenario = validateQualification(JSON.parse(bytes));
 const engine = option('browser', 'chromium'),
   cpu = Number(option('cpu', '1'));
-const memoryProfile = flags.includes('--memory-profile');
+const memoryProfile = flags.includes('--memory-profile'),
+  audioProof = flags.includes('--audio-proof');
+assert(
+  !(memoryProfile && audioProof),
+  'Audio identity profiling retains media elements; run memory profiling separately',
+);
 const baselineRuntime = flags.includes('--baseline-runtime'),
   workProbe = flags.includes('--work-probe');
 assert(
@@ -84,10 +90,11 @@ url.searchParams.set('performance', '1');
 const report = {
   format: 'SoloQualificationReportV1',
   scenario: scenario.id,
-  kind: memoryProfile ? 'memory-profile' : scenario.kind,
+  kind: memoryProfile ? 'memory-profile' : audioProof ? 'audio-proof' : scenario.kind,
   scenarioKind: scenario.kind,
   baselineRuntime,
   workProbe,
+  audioProof,
   sourceRevision: option('source-revision', null),
   scenarioSHA256: createHash('sha256').update(bytes).digest('hex'),
   requestedCoverage: scenario.coverage,
@@ -127,6 +134,11 @@ const report = {
     ...(baselineRuntime
       ? [
           'Baseline application diagnostics may be absent. Missing internal latency, safety and owned-resource counters remain unobserved, not zero or passing. Generated build-info source revision is verified before actions.',
+        ]
+      : []),
+    ...(audioProof
+      ? [
+          'Encoded-byte hashing and media-event retention are enabled for exact recording identity. This whole run is excluded from timing and memory qualification. Native APIs do not establish physical audible output.',
         ]
       : []),
     ...(memoryProfile
@@ -261,6 +273,7 @@ try {
         );
       await route.fulfill({ response, body });
     });
+  if (audioProof) await page.addInitScript(installAudioProof);
   await page.addInitScript(
     ({ bounds, workProbe }) => {
       const phases = ['boot', 'briefing', 'running', 'paused', 'result', 'picture', 'other'];
@@ -584,6 +597,7 @@ try {
         record = {
           path,
           type: action.type,
+          label: action.label ?? null,
           startedAt: new Date().toISOString(),
           status: 'running',
         };
@@ -673,6 +687,50 @@ try {
           } finally {
             await page.keyboard.up(action.key);
           }
+        } else if (action.type === 'result') {
+          const end = Date.now() + timeout;
+          let observed = false;
+          while (Date.now() < end) {
+            const overlay = page.locator('#game-overlay');
+            if (await overlay.isVisible()) {
+              const kind = await overlay.getAttribute('data-kind');
+              if (['won', 'lost'].includes(kind)) {
+                record.outcome = kind;
+                assert.equal(kind, action.outcome, 'Unexpected public result');
+                observed = true;
+                break;
+              }
+            }
+            for (const selector of ['#skip-celebration', '#show-result']) {
+              const control = page.locator(selector);
+              if (await control.isVisible())
+                await control.click({ timeout: Math.max(1, end - Date.now()) });
+            }
+            await page.waitForTimeout(Math.min(100, Math.max(1, end - Date.now())));
+          }
+          assert(observed, 'Expected public result did not become visible before deadline');
+        } else if (action.type === 'audio-ready') {
+          assert.notEqual(
+            await page.locator('body').getAttribute('data-flight-state'),
+            'running',
+            'Audio preparation wait requires a paused boundary',
+          );
+          if (audioProof) {
+            await page.waitForFunction(
+              (hashes) => {
+                if (document.body.dataset.flightState === 'running')
+                  throw new Error('Audio proof readiness wait entered active play');
+                return window.soloAudioProof.recordingsReady(hashes);
+              },
+              action.recordedHashes,
+              { timeout },
+            );
+            record.readiness = 'exact-encoded-recordings-decoded';
+          } else {
+            assert(action.fallbackMs <= deadline - Date.now());
+            await page.waitForTimeout(action.fallbackMs);
+            record.readiness = 'fixed-preparation-wait-identity-unobserved';
+          }
         } else if (action.type === 'wait') {
           if (action.phase) {
             await page.waitForFunction(
@@ -686,7 +744,19 @@ try {
               );
           } else {
             assert(action.ms <= deadline - Date.now());
-            await page.waitForTimeout(action.ms);
+            const windowIndex =
+              audioProof && action.label
+                ? await page.evaluate(
+                    (label) => window.soloAudioProof.beginWindow(label),
+                    action.label,
+                  )
+                : null;
+            try {
+              await page.waitForTimeout(action.ms);
+            } finally {
+              if (windowIndex !== null)
+                await page.evaluate((index) => window.soloAudioProof.endWindow(index), windowIndex);
+            }
           }
         } else if (action.type === 'expect') {
           await locator.waitFor({ state: 'visible', timeout });
@@ -744,6 +814,7 @@ try {
               application: window.RevealLineSoloPerformance?.export() ?? null,
               presentation: window.soloQualificationProbe.presentation(),
               probe: window.soloQualificationProbe.export(),
+              audioProof: window.soloAudioProof?.export() ?? null,
               hud: Object.fromEntries(
                 ['coverage', 'lives', 'time', 'score', 'run-message'].map((id) => [
                   id,
@@ -862,6 +933,7 @@ try {
         state: document.body?.dataset.flightState,
         boot: document.documentElement.dataset.bootState,
         probe: window.soloQualificationProbe?.export(),
+        audioProof: window.soloAudioProof?.export() ?? null,
       }));
       const probe = report.finalState.probe;
       if (probe)
@@ -884,7 +956,20 @@ try {
   await save();
   await context?.close().catch(() => {});
   await browser?.close().catch(() => {});
-  if (memoryProfile) {
+  if (scenario.audioRequirements) {
+    report.audioIdentity = evaluateAudioProof(
+      report.finalState?.audioProof,
+      scenario.audioRequirements,
+    );
+    if (audioProof && report.audioIdentity.status !== 'pass') {
+      report.scenarioStatus = 'fail';
+      report.audioIdentityFailure =
+        'Required recording playback identity or transition was not observed; all partial evidence retained.';
+      process.exitCode = 1;
+    }
+  }
+  if (audioProof) report.performanceGateStatus = 'excluded-audio-identity-profiling';
+  else if (memoryProfile) {
     report.performanceGateStatus = 'excluded-memory-profiling';
     report.memory = memoryProfileSummary(report.snapshots);
   } else if (scenario.kind !== 'recovery') {
