@@ -226,3 +226,47 @@ test('heterogeneous callbacks without missed deadlines and the admitted interval
     'Constant admitted 250 ms delivery remains a single mode.',
   );
 });
+
+test('explicit continuous foreground title stalls require two windows and retain reduction dwell', () => {
+  const policy = createVisualQualityPolicy();
+  policy.observe(0, 16, 1, true);
+  policy.observe(600, 600, 1, true);
+  policy.observe(1200, 600, 1, true);
+  assert.equal(policy.snapshot().tier, 'full');
+  policy.observe(1800, 600, 1, true);
+  policy.observe(2400, 600, 1, true);
+  assert.equal(policy.snapshot().tier, 'reduced');
+  for (let now = 3000; now <= 12000; now += 600) policy.observe(now, 600, 1, true);
+  assert.equal(policy.snapshot().tier, 'reduced');
+  policy.observe(12600, 600, 1, true);
+  assert.equal(
+    policy.snapshot().tier,
+    'reduced',
+    'Dwell eligibility is applied at a complete window.',
+  );
+  policy.observe(13200, 600, 1, true);
+  assert.equal(policy.snapshot().tier, 'minimal');
+});
+
+test('title stall admission does not alter ordinary interruption, cheap30Hz or safe recovery contracts', () => {
+  const ordinary = createVisualQualityPolicy();
+  for (let now = 0; now < 20000; now += 600) ordinary.observe(now, 600, 1);
+  assert.equal(ordinary.snapshot().tier, 'full');
+  const title = createVisualQualityPolicy();
+  for (let now = 0; now < 20000; now += 1000 / 30) title.observe(now, 1000 / 30, 1, true);
+  assert.equal(title.snapshot().tier, 'full');
+  title.safeTransition(20000);
+  for (let now = 20000; now <= 22400; now += 600) title.observe(now, 600, 1, true);
+  assert.equal(title.snapshot().tier, 'reduced');
+  for (let now = 23000; now < 36500; now += 1000 / 60) title.observe(now, 1000 / 60, 1, true);
+  assert.equal(title.snapshot().tier, 'reduced', 'Headroom cannot restore during the title visit.');
+  assert.equal(title.safeTransition(36500).tier, 'full');
+});
+
+test('foreground title stalls cannot combine across an explicit ownership boundary', () => {
+  const policy = createVisualQualityPolicy();
+  for (let now = 0; now <= 1200; now += 600) policy.observe(now, 600, 1, true);
+  policy.safeTransition(1300);
+  for (let now = 1400; now <= 2600; now += 600) policy.observe(now, 600, 1, true);
+  assert.equal(policy.snapshot().tier, 'full');
+});

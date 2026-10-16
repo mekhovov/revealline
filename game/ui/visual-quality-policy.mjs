@@ -16,6 +16,7 @@ export function createVisualQualityPolicy() {
     missed = 0,
     work = 0,
     expensive = 0,
+    titleStalled = false,
     overloadWindows = 0,
     headroomWindows = 0,
     lastChange = -Infinity;
@@ -23,6 +24,7 @@ export function createVisualQualityPolicy() {
   const resetWindow = (nowMs) => {
     windowStart = nowMs;
     count = missed = work = expensive = 0;
+    titleStalled = false;
     intervalBuckets.fill(0);
   };
   return {
@@ -37,7 +39,7 @@ export function createVisualQualityPolicy() {
       resetWindow(null);
       overloadWindows = headroomWindows = 0;
     },
-    observe(nowMs, frameMs, workMs) {
+    observe(nowMs, frameMs, workMs, continuousTitle = false) {
       if (
         !Number.isFinite(nowMs) ||
         !Number.isFinite(frameMs) ||
@@ -48,17 +50,20 @@ export function createVisualQualityPolicy() {
         return snapshot();
       if (windowStart === null || nowMs < windowStart) resetWindow(nowMs);
       // A lifecycle interruption does not contribute a fictitious second of load.
-      if (frameMs > 250) {
+      if (frameMs > 250 && continuousTitle !== true) {
         resetWindow(nowMs);
         overloadWindows = headroomWindows = 0;
         return snapshot();
       }
       count++;
+      // Only a continuously foreground title owner may admit long delivery
+      // stalls. Gameplay and Demo retain their interruption reset above.
+      if (frameMs > 250) titleStalled = true;
       work += workMs;
       if (frameMs > baselineMs * 1.5) missed++;
       if (workMs > baselineMs * 0.6) expensive++;
-      // B >= 4 ms and admitted intervals <= 250 ms fit within these 128 bins.
-      intervalBuckets[Math.floor((2 * frameMs) / baselineMs)]++;
+      // Long title stalls use the final bin; the histogram remains bounded.
+      intervalBuckets[Math.min(127, Math.floor((2 * frameMs) / baselineMs))]++;
       if (nowMs - windowStart < 1000) return snapshot();
       const average = work / count;
       // Cadence alone cannot distinguish OS power throttling from overload.
@@ -80,6 +85,7 @@ export function createVisualQualityPolicy() {
         }
       }
       const overloaded =
+        titleStalled ||
         average > baselineMs * 0.6 ||
         (missed / count > 0.1 && expensive / count > 0.2) ||
         irregular;
