@@ -232,6 +232,8 @@
         "^scripts/pages-(?:capacity|archive)-evidence\\.py$",
         "^scripts/(pages-recovery\\.py|test-pages-recovery\\.mjs)$",
         "^scripts/(?:test-)?pages-capacity-report\\.mjs$",
+        "^scripts/(?:write-main-pages-metadata|test-main-pages-metadata)\\.mjs$",
+        "^scripts/(?:test-)?pages-candidate-[a-z-]+\\.(?:mjs|py)$",
         "^\\.github/workflows/"
       ],
       "commands": [
@@ -250,6 +252,11 @@
             "scripts/test-pages-archive-evidence.mjs",
             "scripts/test-pages-recovery.mjs",
             "scripts/test-pages-capacity-report.mjs",
+            "scripts/test-main-pages-metadata.mjs",
+            "scripts/test-pages-candidate-contract.mjs",
+            "scripts/test-pages-candidate-overlay.mjs",
+            "scripts/test-pages-candidate-archive.mjs",
+            "scripts/test-pages-candidate-measurement.mjs",
             "publishing/test-policy.test.mjs"
           ]
         }
