@@ -87,6 +87,21 @@ only expected pinned responses through CacheStorage.match with bounded streaming
 There is no caches.open call, cache recreation on an eviction race or content
 write. Separate malformed/scope/revision/duplicate/tamper regressions pass.
 
+The [second original attempt](flight-practice-continuation-20261016/download-second-failed.json)
+validates all six cache inventories. Gym's native idle case terminates after
+30,002.7 ms; one ordinary Cancel terminates its held request after 66.2 ms, with
+47.5 ms observed click-to-settlement latency. Both preserve records, original
+caches/workers and pointers; pristine retry and removal restore the baseline.
+Academy's held request also aborts after about 30,004.7 ms, but the observer waits
+315 seconds for terminal copy it does not recognize. That attempt remains failed
+with nine completed checkpoints and successful cleanup, **not an all-three pass**.
+The [second authority archive](flight-practice-continuation-20261016/download-second-authority.tgz)
+retains its original code. The shared client has a documented “Download stalled
+for 30 seconds” outcome absent from the observer's terminal patterns. Regressions
+now recognize that known outcome and fail promptly on unexpected stalls; improved
+failure diagnostics read bounded offline status/progress text, never form values.
+The next unchanged-package native run must confirm the complete journey.
+
 ## Maintainer recipe and tests
 
 The [new native sample receipt](flight-practice-continuation-20261016/sample-recipe.json)
