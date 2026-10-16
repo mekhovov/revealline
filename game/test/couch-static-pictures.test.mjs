@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { createCouchStaticPictures } from '../couch/couch-static-pictures.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
+import { resolveBaseArtwork } from '../base-artwork.mjs';
 import { createMediaIdentityCatalog } from '../media-library.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
@@ -14,16 +15,18 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { pngBytes, provenance, libraryRecord, deferred } from './helpers/media-fixtures.mjs';
 
 const json = async (name) => JSON.parse(await fs.readFile(new URL(name, import.meta.url), 'utf8'));
-const [campaign, classes, themes, runtime] = await Promise.all([
+const [campaign, classes, themes, runtime, baseArtwork] = await Promise.all([
   json('../content/campaign.json'),
   json('../content/classes.json'),
   json('../content/themes.json'),
   json('../presentation/compiled/runtime.json'),
+  json('../content/base-artwork.json'),
 ]);
 const baseEntry = {
   campaign: { ...campaign, classRecipes: classes },
   classRecipes: classes,
   themes: themes.themes,
+  ...resolveBaseArtwork(baseArtwork, { ...campaign, classRecipes: classes }),
 };
 const catalog = createExecutionCatalog([baseEntry]),
   entry = catalog.entries.find((entry) => entry.difficulty === 'standard'),
@@ -47,7 +50,10 @@ const original = await fs.readFile(
 const rowFor = (level = firstLevel) => ({
   level,
   pictureEntry: baseEntry,
-  authoredBackground: null,
+  authoredBackground:
+    baseEntry.levelVisuals.find((row) => row.levelId === level.id)?.visualOverrides.background ??
+    baseEntry.visualOverrides.background ??
+    null,
   defaultThemeId: 'fpv',
 });
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
