@@ -1,0 +1,10 @@
+{
+  "originalName": "ci-at-browser-finalization.log",
+  "originalBytes": 1594,
+  "originalSHA256": "a04dc611fd81326f44fcbe44f4f2e5b0c2a33487cab426f1a32eafc91c79b1fa",
+  "archiveName": "ci-at-browser-finalization.log.gz",
+  "archiveBytes": 356,
+  "archiveSHA256": "2c94746897275d689894a722d8245edde4c4dbf96204e9bac568aaf69c4e5d64",
+  "losslessRoundTripVerified": true,
+  "reason": "Producer tabs/end-of-line whitespace retained exactly without changing captured CI evidence."
+}
