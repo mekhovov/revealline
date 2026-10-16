@@ -1,0 +1,259 @@
+{
+  "passed": true,
+  "descriptor": {
+    "url": "https://lunar.invalid/delivery.json",
+    "bytes": 18790,
+    "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a"
+  },
+  "files": 116,
+  "verifiedResponses": 117,
+  "totalBytes": 1963042,
+  "totalWithDescriptor": 1981832,
+  "originalSourceUnchanged": true,
+  "sourceRevision": "03e5b140b5a5eb2b5bbd4b73762364f6f297b6cc",
+  "starts": [
+    {
+      "mode": "self-level",
+      "id": "mare-apron",
+      "preparedResources": 229812,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "ejecta-fan",
+      "preparedResources": 323088,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "sinuous-rille",
+      "preparedResources": 311580,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "terraced-crater",
+      "preparedResources": 318468,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "fractured-highland",
+      "preparedResources": 493116,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "observatory-ridge",
+      "preparedResources": 561576,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "mare-apron",
+      "preparedResources": 229812,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "ejecta-fan",
+      "preparedResources": 323088,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "sinuous-rille",
+      "preparedResources": 311580,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "terraced-crater",
+      "preparedResources": 318468,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "fractured-highland",
+      "preparedResources": 493116,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "observatory-ridge",
+      "preparedResources": 561576,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    }
+  ],
+  "tierStarts": [
+    {
+      "id": "mare-apron",
+      "tier": "performance",
+      "heading": 14799,
+      "resourceBytes": 229812
+    },
+    {
+      "id": "mare-apron",
+      "tier": "balanced",
+      "heading": 14799,
+      "resourceBytes": 229812
+    },
+    {
+      "id": "mare-apron",
+      "tier": "quality",
+      "heading": 14799,
+      "resourceBytes": 229812
+    },
+    {
+      "id": "ejecta-fan",
+      "tier": "performance",
+      "heading": 13685,
+      "resourceBytes": 323088
+    },
+    {
+      "id": "ejecta-fan",
+      "tier": "balanced",
+      "heading": 13685,
+      "resourceBytes": 323088
+    },
+    {
+      "id": "ejecta-fan",
+      "tier": "quality",
+      "heading": 13685,
+      "resourceBytes": 323088
+    },
+    {
+      "id": "sinuous-rille",
+      "tier": "performance",
+      "heading": 14974,
+      "resourceBytes": 311580
+    },
+    {
+      "id": "sinuous-rille",
+      "tier": "balanced",
+      "heading": 14974,
+      "resourceBytes": 311580
+    },
+    {
+      "id": "sinuous-rille",
+      "tier": "quality",
+      "heading": 14974,
+      "resourceBytes": 311580
+    },
+    {
+      "id": "terraced-crater",
+      "tier": "performance",
+      "heading": 15193,
+      "resourceBytes": 318468
+    },
+    {
+      "id": "terraced-crater",
+      "tier": "balanced",
+      "heading": 15193,
+      "resourceBytes": 318468
+    },
+    {
+      "id": "terraced-crater",
+      "tier": "quality",
+      "heading": 15193,
+      "resourceBytes": 318468
+    },
+    {
+      "id": "fractured-highland",
+      "tier": "performance",
+      "heading": 14799,
+      "resourceBytes": 493116
+    },
+    {
+      "id": "fractured-highland",
+      "tier": "balanced",
+      "heading": 14799,
+      "resourceBytes": 493116
+    },
+    {
+      "id": "fractured-highland",
+      "tier": "quality",
+      "heading": 14799,
+      "resourceBytes": 493116
+    },
+    {
+      "id": "observatory-ridge",
+      "tier": "performance",
+      "heading": 14974,
+      "resourceBytes": 561576
+    },
+    {
+      "id": "observatory-ridge",
+      "tier": "balanced",
+      "heading": 14974,
+      "resourceBytes": 561576
+    },
+    {
+      "id": "observatory-ridge",
+      "tier": "quality",
+      "heading": 14974,
+      "resourceBytes": 561576
+    }
+  ],
+  "savedHeadingsPreserved": true,
+  "unknownPinsClearHints": true,
+  "liveCollision": {
+    "worlds": 2,
+    "colliders": 36,
+    "rigidBodies": 0
+  },
+  "disposedCollision": {
+    "worlds": 0,
+    "colliders": 0,
+    "rigidBodies": 0
+  },
+  "allResourcesDisposed": true,
+  "nativeStorageVerified": false,
+  "playerAdmission": false,
+  "scope": "Exact immutable pin, both appearance layers at all three tiers, six landmark-facing starts, saved heading preservation and real production flights. Native Library, exact new package, offline and sustained device flight remain separate gates.",
+  "verificationComposition": {
+    "base": "908269f57ba2f63925083e50e5b1867fd556c71e",
+    "runtimeCandidate": "2a9dde65c9ee396c3106558fc1b7246af3973076",
+    "changedModules": [
+      "regional-library.mjs"
+    ],
+    "exactNewPackageQualified": false,
+    "preservedExistingLibraryRows": 18
+  }
+}

@@ -10,7 +10,7 @@ export function mountInterfacePreferences({
 } = {}) {
   const control = (id) => {
     const element = doc.getElementById(id);
-    if (!element) throw new Error(`Studio Interface control is unavailable: ${id}`);
+    if (!element) throw new Error(t('tools:studio.interface.controlUnavailable', { control: id }));
     return element;
   };
   const font = control('studio-interface-font'),

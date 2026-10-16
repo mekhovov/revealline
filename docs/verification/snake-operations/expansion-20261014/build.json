@@ -1,0 +1,12 @@
+{
+  "buildResult": {
+    "out": "/private/tmp/snake-expansion-release-20261013",
+    "version": "snake-expansion-review",
+    "files": 3259,
+    "sha256": "b15231b15cf06085e64df4fdf2a1f21bd3a648b72c4299b89e7dfc48e41f4fd5",
+    "sourceRevision": null
+  },
+  "manifestSha256": "84a8789986745fe5295557da5a2d4ed0d9aa9e5fcd59d3dcd2334cc4262a95fa",
+  "distribution": "b15231b15cf06085e64df4fdf2a1f21bd3a648b72c4299b89e7dfc48e41f4fd5  distribution.zip\n",
+  "note": "Release B distribution built successfully. The source was a working tree during visual development; this is not an exact committed-head release artifact. Disposable output removed after preserving this receipt."
+}

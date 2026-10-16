@@ -1,0 +1,82 @@
+{
+  "format": "FPVAlpineStationNativeReview.v1",
+  "sourceHead": "939df428257597e6af41fa62c24af5987ffb991c",
+  "origin": "http://127.0.0.1:9168",
+  "reviewer": "coordinator native CUA observation",
+  "views": [
+    "summit-opaque-wall-detail",
+    "summit-concourse-pilot-height",
+    "summit-roof-seams"
+  ],
+  "accepted": true,
+  "scope": "Bounded station material-source increment only",
+  "before": {
+    "residentCells": 9,
+    "sceneryMeshes": 25,
+    "geometryBytes": 765812
+  },
+  "after": {
+    "residentCells": 9,
+    "sceneryMeshes": 34,
+    "geometryBytes": 767476
+  },
+  "observations": [
+    "Original timber cladding, dark framed opaque backed panels and roof seams improve the previous plain surfaces.",
+    "Openings remain visibly clear; no false fly-through glazing.",
+    "Both frozen source revisions release to no live scenery or collision."
+  ],
+  "runtimeViewerClosureFiles": 54,
+  "runtimeViewerClosureSHA256Match": true,
+  "screenshots": [
+    {
+      "view": "wall",
+      "source": "before",
+      "file": "alpine-station-before-wall-native-20261015.png",
+      "bytes": 73653,
+      "sha256": "b8b6c8ccd1e8273e1897c6c87730a30a0ff1dc82c450b1c29c69849201009f8b"
+    },
+    {
+      "view": "wall",
+      "source": "after",
+      "file": "alpine-station-after-wall-native-20261015.png",
+      "bytes": 103050,
+      "sha256": "f5b12a20f59154b6008a44601e8a9a9d0606d54b9f95985615d6bd08411189f5"
+    },
+    {
+      "view": "concourse",
+      "source": "before",
+      "file": "alpine-station-before-concourse-native-20261015.png",
+      "bytes": 80898,
+      "sha256": "ad86ec524cad7d3b94bd185a98012a29b60e49863ed0a642a5aa9226f2e14e60"
+    },
+    {
+      "view": "concourse",
+      "source": "after",
+      "file": "alpine-station-after-concourse-native-20261015.png",
+      "bytes": 104995,
+      "sha256": "17d550c9b8264db83988a414c8d13d1a40e99877fd2972f6ff83c9d77ae53a0a"
+    },
+    {
+      "view": "roof",
+      "source": "before",
+      "file": "alpine-station-before-roof-native-20261015.png",
+      "bytes": 71713,
+      "sha256": "2b44cb9601357c14bbdfeda38603967a21d1e6e7f7c638970969f660b9e9facc"
+    },
+    {
+      "view": "roof",
+      "source": "after",
+      "file": "alpine-station-after-roof-native-20261015.png",
+      "bytes": 86811,
+      "sha256": "b1b977d64e8b623dbecfd37d48d2f8bc32898781b532729aaeb86528b1ce9783"
+    }
+  ],
+  "notEstablished": [
+    "Full-region representative art completion",
+    "New immutable delivery and Library admission",
+    "Native full quality-tier comparison",
+    "Real offline or browser restart",
+    "Physical devices or controller performance",
+    "Public launch"
+  ]
+}

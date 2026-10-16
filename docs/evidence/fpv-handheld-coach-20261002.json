@@ -1,0 +1,87 @@
+{
+  "format": "FPVControllerCoachEvidence.v1",
+  "createdAt": "2026-10-02T03:52:51.825Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Neutral standard controller cannot seize the example",
+      "passed": true,
+      "ticks": 15
+    },
+    {
+      "name": "Disconnecting an unused gamepad leaves the example running",
+      "passed": true
+    },
+    {
+      "name": "Meaningful controller intent takes over immediately with inherited throttle",
+      "passed": true,
+      "inheritedThrottle": 0.549
+    },
+    {
+      "name": "Throttle samples only real fixed ticks; display reads do not integrate",
+      "passed": true,
+      "before": 0.549,
+      "after": 0.5533181818181818,
+      "held": 0.5533181818181818
+    },
+    {
+      "name": "Manual controller practice is indefinite and never progresses the host",
+      "passed": true,
+      "ticks": 3128
+    },
+    {
+      "name": "Start pauses; paused preview stops polling and cannot arm hidden flight",
+      "passed": true,
+      "pausedReads": 3190
+    },
+    {
+      "name": "Resume requires centred release, then starts with zero pause-throttle",
+      "passed": true
+    },
+    {
+      "name": "Y restarts practice paused; B and disconnect are safe",
+      "passed": true
+    },
+    {
+      "name": "Controller has Mode2 labels even after Mode1 radio preference",
+      "passed": true,
+      "labels": [
+        [
+          "throttle",
+          "yaw"
+        ],
+        [
+          "pitch",
+          "roll"
+        ]
+      ]
+    },
+    {
+      "name": "Unused controller disconnect cannot interrupt keyboard practice",
+      "passed": true
+    },
+    {
+      "name": "Verified calibrated radio slot is excluded from standard-controller ownership",
+      "passed": true
+    },
+    {
+      "name": "Both locales explain centred-stick throttle and paused menu ownership",
+      "passed": true,
+      "locales": [
+        "en",
+        "uk"
+      ]
+    },
+    {
+      "name": "Dispose clears controller ownership and callbacks",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "input.mjs": "d23195a04aad25ba9a45e62d5b69e0aeb9650c24724c1e1e0132cec2f828f277",
+    "beginner-coach.mjs": "5c078ab1bb114ef7a63d9435c2c33f3adf40896bf5ef03333958ba9f845b3a5c",
+    "world-model.mjs": "692f95aa2eef7f9fd8be04e20799e928b5c4fb917daae8128306e9fe66b07cc2",
+    "world-catalogue.mjs": "1eb0940fdf2edd1d6dd6412e0781f77d65fe14459cfefc1408c3d94a3357ec24"
+  },
+  "scope": "Actual production coach DOM and fixed-step world physics with controlled requestAnimationFrame clock and standard browser Gamepad samples. No physical controller/radio, hardware performance or new unit coverage claim."
+}

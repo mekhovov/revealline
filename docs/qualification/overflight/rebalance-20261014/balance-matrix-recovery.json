@@ -1,0 +1,420 @@
+{
+  "format": "OverflightBalanceRecoveryManifestV1",
+  "sourceCommit": "14649912ba3f94d335b5bbc94ce6ce92d522a1a8",
+  "receipt": {
+    "path": "balance-matrix.json.gz",
+    "sha256": "118195b6c1a7a19646c67adcd2d2f724a983d8dcc6d55756b22ba882b8de51c3",
+    "bytes": 69740,
+    "completedAt": "2026-10-14T00:59:06.297Z",
+    "coverage": {
+      "configurations": 48,
+      "configurationResults": 48,
+      "routeResults": 232,
+      "earlyFailures": 2
+    }
+  },
+  "runtimeSource": [
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "97720dc4bf8d13dd5801dd4b61d89591786a05d79d367a4b5b3037b9a8f02913"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+    },
+    {
+      "path": "game/overflight/tactics.mjs",
+      "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+    },
+    {
+      "path": "game/overflight/combat-profile.mjs",
+      "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+    },
+    {
+      "path": "game/overflight/riy-core.mjs",
+      "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+    },
+    {
+      "path": "game/overflight/riy-project.mjs",
+      "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+    },
+    {
+      "path": "game/overflight/riy-upgrades.mjs",
+      "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+    },
+    {
+      "path": "game/overflight/riy-mode.mjs",
+      "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+    },
+    {
+      "path": "game/overflight/flight-profile.mjs",
+      "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    }
+  ],
+  "harness": {
+    "path": "verify-balance.mjs",
+    "sha256": "a1666d078ce3fa95cd3aa1147266308cacbb1baceed61d2f0d7282160c879d3f"
+  },
+  "historicalHarness": {
+    "path": "verify-balance-named-regressions.executed.mjs",
+    "sha256": "1db24328570699e062362977a2de3e11215a1f4f9ba702f5d2e1cc4c6a88004b"
+  },
+  "environment": {
+    "rulesVersion": 3,
+    "focus": true,
+    "matrix": true,
+    "mode": null,
+    "build": null,
+    "stop": null
+  },
+  "lastRecoveryCommand": "BALANCE_MATRIX=1 BALANCE_RESUME=1 BALANCE_RULES=3 BALANCE_FOCUS=1 BALANCE_MEMORY_RECEIPT=1 BALANCE_OUTPUT=balance-matrix.json.gz node --max-old-space-size=256 docs/qualification/overflight/rebalance-20261014/verify-balance.mjs",
+  "nodeVersion": "v20.19.5",
+  "recovery": {
+    "initialPreservedResults": 121,
+    "completeConfigurationsBeforeMemoryTransport": 42,
+    "finalConfigurationsViaMemoryTransport": 6,
+    "finalOutcomesViaMemoryTransport": 30,
+    "reason": "Repeated ENOSPC while running; original receipt remained valid. Atomic durable saves and exact-runtime validation allowed continuation without replacing completed records. Final completed gzip was transmitted through a tool pipe, checksum-verified, saved after space became available, and checksum-verified again.",
+    "runtimeChangesDuringRecovery": false,
+    "logSummaryReconstruction": false,
+    "prefixVerifiedBy": "analyze-balance.mjs checks deep equality of all original 121 result objects.",
+    "resumptions": [
+      {
+        "at": "2026-10-14T00:40:57.209Z",
+        "prefixSha256": "a98150f2017264f5f673e7545a73228f2f8e369a96d98622a325d71f73efab0e",
+        "prefixResults": 121,
+        "previousSource": [
+          {
+            "path": "game/overflight/core.mjs",
+            "sha256": "97720dc4bf8d13dd5801dd4b61d89591786a05d79d367a4b5b3037b9a8f02913"
+          },
+          {
+            "path": "game/overflight/project.mjs",
+            "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+          },
+          {
+            "path": "game/overflight/tactics.mjs",
+            "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+          },
+          {
+            "path": "game/overflight/combat-profile.mjs",
+            "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+          },
+          {
+            "path": "game/overflight/upgrades.mjs",
+            "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+          },
+          {
+            "path": "game/overflight/riy-core.mjs",
+            "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+          },
+          {
+            "path": "game/overflight/riy-project.mjs",
+            "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+          },
+          {
+            "path": "game/overflight/riy-upgrades.mjs",
+            "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+          },
+          {
+            "path": "game/overflight/review-pilot.mjs",
+            "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+          }
+        ],
+        "addedHelpers": [
+          {
+            "path": "game/overflight/riy-mode.mjs",
+            "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+          },
+          {
+            "path": "game/overflight/flight-profile.mjs",
+            "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+          },
+          {
+            "path": "game/overflight/grid.mjs",
+            "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+          }
+        ],
+        "historicalHarness": "1db24328570699e062362977a2de3e11215a1f4f9ba702f5d2e1cc4c6a88004b",
+        "currentHarness": "fe55d2b08c4f54098cb549ac283d009a7f32aa04f3c81c1824002aeeaa2e7947"
+      },
+      {
+        "at": "2026-10-14T00:43:59.632Z",
+        "prefixSha256": "a02849ee809e3cfef9da1d3f4c18fb742a300cdc166460bea0af8540525dccec",
+        "prefixResults": 126,
+        "previousSource": [
+          {
+            "path": "game/overflight/core.mjs",
+            "sha256": "97720dc4bf8d13dd5801dd4b61d89591786a05d79d367a4b5b3037b9a8f02913"
+          },
+          {
+            "path": "game/overflight/project.mjs",
+            "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+          },
+          {
+            "path": "game/overflight/tactics.mjs",
+            "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+          },
+          {
+            "path": "game/overflight/combat-profile.mjs",
+            "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+          },
+          {
+            "path": "game/overflight/upgrades.mjs",
+            "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+          },
+          {
+            "path": "game/overflight/riy-core.mjs",
+            "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+          },
+          {
+            "path": "game/overflight/riy-project.mjs",
+            "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+          },
+          {
+            "path": "game/overflight/riy-upgrades.mjs",
+            "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+          },
+          {
+            "path": "game/overflight/review-pilot.mjs",
+            "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+          },
+          {
+            "path": "game/overflight/riy-mode.mjs",
+            "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+          },
+          {
+            "path": "game/overflight/flight-profile.mjs",
+            "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+          },
+          {
+            "path": "game/overflight/grid.mjs",
+            "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+          }
+        ],
+        "addedHelpers": [],
+        "historicalHarness": null,
+        "currentHarness": "fe55d2b08c4f54098cb549ac283d009a7f32aa04f3c81c1824002aeeaa2e7947"
+      },
+      {
+        "at": "2026-10-14T00:50:14.949Z",
+        "prefixSha256": "a7f3a9c32ce82817731f4fc5f8e909d7c35e6c4c9dadeda8dc1e92be83290897",
+        "prefixResults": 192,
+        "previousSource": [
+          {
+            "path": "game/overflight/core.mjs",
+            "sha256": "97720dc4bf8d13dd5801dd4b61d89591786a05d79d367a4b5b3037b9a8f02913"
+          },
+          {
+            "path": "game/overflight/project.mjs",
+            "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+          },
+          {
+            "path": "game/overflight/tactics.mjs",
+            "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+          },
+          {
+            "path": "game/overflight/combat-profile.mjs",
+            "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+          },
+          {
+            "path": "game/overflight/upgrades.mjs",
+            "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+          },
+          {
+            "path": "game/overflight/riy-core.mjs",
+            "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+          },
+          {
+            "path": "game/overflight/riy-project.mjs",
+            "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+          },
+          {
+            "path": "game/overflight/riy-upgrades.mjs",
+            "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+          },
+          {
+            "path": "game/overflight/review-pilot.mjs",
+            "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+          },
+          {
+            "path": "game/overflight/riy-mode.mjs",
+            "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+          },
+          {
+            "path": "game/overflight/flight-profile.mjs",
+            "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+          },
+          {
+            "path": "game/overflight/grid.mjs",
+            "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+          }
+        ],
+        "addedHelpers": [],
+        "historicalHarness": null,
+        "currentHarness": "fe55d2b08c4f54098cb549ac283d009a7f32aa04f3c81c1824002aeeaa2e7947"
+      },
+      {
+        "at": "2026-10-14T00:53:09.860Z",
+        "prefixSha256": "980e53d4c35b0af53c09ca1ff927829aa2cc605bc23c315477a0c01a8c911a15",
+        "prefixResults": 197,
+        "previousSource": [
+          {
+            "path": "game/overflight/core.mjs",
+            "sha256": "97720dc4bf8d13dd5801dd4b61d89591786a05d79d367a4b5b3037b9a8f02913"
+          },
+          {
+            "path": "game/overflight/project.mjs",
+            "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+          },
+          {
+            "path": "game/overflight/tactics.mjs",
+            "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+          },
+          {
+            "path": "game/overflight/combat-profile.mjs",
+            "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+          },
+          {
+            "path": "game/overflight/upgrades.mjs",
+            "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+          },
+          {
+            "path": "game/overflight/riy-core.mjs",
+            "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+          },
+          {
+            "path": "game/overflight/riy-project.mjs",
+            "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+          },
+          {
+            "path": "game/overflight/riy-upgrades.mjs",
+            "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+          },
+          {
+            "path": "game/overflight/review-pilot.mjs",
+            "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+          },
+          {
+            "path": "game/overflight/riy-mode.mjs",
+            "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+          },
+          {
+            "path": "game/overflight/flight-profile.mjs",
+            "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+          },
+          {
+            "path": "game/overflight/grid.mjs",
+            "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+          }
+        ],
+        "addedHelpers": [],
+        "historicalHarness": null,
+        "currentHarness": "297f0321d91ac63a042b9819bcaddfbe363c0ae09cae72650485d33621055d16"
+      },
+      {
+        "at": "2026-10-14T00:58:11.510Z",
+        "prefixSha256": "117c7b736a08eb5537f4948190258bad98d7bbc6d5801581268f36bed56227ff",
+        "prefixResults": 202,
+        "previousSource": [
+          {
+            "path": "game/overflight/core.mjs",
+            "sha256": "97720dc4bf8d13dd5801dd4b61d89591786a05d79d367a4b5b3037b9a8f02913"
+          },
+          {
+            "path": "game/overflight/project.mjs",
+            "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+          },
+          {
+            "path": "game/overflight/tactics.mjs",
+            "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+          },
+          {
+            "path": "game/overflight/combat-profile.mjs",
+            "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+          },
+          {
+            "path": "game/overflight/upgrades.mjs",
+            "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+          },
+          {
+            "path": "game/overflight/riy-core.mjs",
+            "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+          },
+          {
+            "path": "game/overflight/riy-project.mjs",
+            "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+          },
+          {
+            "path": "game/overflight/riy-upgrades.mjs",
+            "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+          },
+          {
+            "path": "game/overflight/review-pilot.mjs",
+            "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+          },
+          {
+            "path": "game/overflight/riy-mode.mjs",
+            "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+          },
+          {
+            "path": "game/overflight/flight-profile.mjs",
+            "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+          },
+          {
+            "path": "game/overflight/grid.mjs",
+            "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+          }
+        ],
+        "addedHelpers": [],
+        "historicalHarness": null,
+        "currentHarness": "a1666d078ce3fa95cd3aa1147266308cacbb1baceed61d2f0d7282160c879d3f"
+      }
+    ]
+  },
+  "preservedFiles": [
+    {
+      "path": "balance-matrix-interrupted-prefix.json.gz",
+      "bytes": 54725,
+      "sha256": "a98150f2017264f5f673e7545a73228f2f8e369a96d98622a325d71f73efab0e"
+    },
+    {
+      "path": "balance-matrix-interruption.log.gz",
+      "bytes": 3643,
+      "sha256": "c09ed057b9a462859a5b716927dc3c46e1ea9e27dfa41afa89b3020cc31f9901"
+    },
+    {
+      "path": "balance-matrix-resume-first-interruption.log.gz",
+      "bytes": 947,
+      "sha256": "c2f78f2b98bc608b7a5ee793d1162795ce07cb690b9f0eac7cab569a7adb4d2e"
+    },
+    {
+      "path": "balance-matrix-resume-second-interruption.log.gz",
+      "bytes": 2784,
+      "sha256": "c20ce771d5286df893b8ccd09792a9ce7586198e9af495a1a4a5f5a3e7f7b661"
+    },
+    {
+      "path": "balance-matrix-resume-third-interruption.log.gz",
+      "bytes": 3145,
+      "sha256": "c9e87182aec90d06c084fef1fc801642d506d5f1b3fa4cfa4d5b77ee6690916f"
+    }
+  ],
+  "limitations": [
+    "Seeds are tied to encounter sets; checkpoints and airframes are assigned by configuration index rather than crossed independently.",
+    "Only 46 of 48 active prefixes reached their assigned checkpoints; two early failures have no passive comparison.",
+    "Riy echo and echo-shield labels use the same card-selection policy, with different airframe coverage.",
+    "Direct deterministic simulation measures mechanics and earned progression, not human enjoyment, graphics performance or UI pause timing."
+  ]
+}

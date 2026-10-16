@@ -1,0 +1,8 @@
+{
+  "originalPath": "back-host-red.tap",
+  "archivePath": "back-host-red.tap.gz",
+  "bytes": 5033,
+  "sha256": "94d88bb1bfc29679c739c283d65339fe449e17326c64253a40af32ececf2c889",
+  "archiveSha256": "93d20d3e7e633d2facf4e39d4e5bd1b2c29df08b1773c3707ba74e9acf0f9622",
+  "note": "Preserve failed TAP output exactly, including significant diagnostic whitespace."
+}

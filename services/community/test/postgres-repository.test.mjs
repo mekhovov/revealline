@@ -77,3 +77,46 @@ test('concurrent PostgreSQL report duplicates return one creation and one reused
   assert.equal(second.reused, true);
   assert.deepEqual(second.report, first.report);
 });
+
+test('idempotent PostgreSQL admission uses a text-safe advisory lock identity', async () => {
+  const subjectHash = 'a'.repeat(64);
+  const idempotencyHash = 'b'.repeat(64);
+  let released = false;
+  const pool = {
+    async connect() {
+      return {
+        async query(sql, parameters = []) {
+          if (sql === 'BEGIN' || sql === 'COMMIT' || sql === 'ROLLBACK') return { rows: [] };
+          if (sql === 'SELECT clock_timestamp() AS now') return { rows: [{ now: createdAt }] };
+          if (sql.includes('pg_advisory_xact_lock')) {
+            assert.equal(
+              parameters[0],
+              JSON.stringify(['uploadBytes', subjectHash, idempotencyHash]),
+            );
+            assert.doesNotMatch(parameters[0], /\0/u);
+            return { rows: [] };
+          }
+          if (sql.includes('SELECT w.used_count')) return { rows: [] };
+          if (sql.includes('INSERT INTO community_admission_windows'))
+            return { rows: [{ used_count: 12 }] };
+          return { rows: [] };
+        },
+        release() {
+          released = true;
+        },
+      };
+    },
+  };
+  const repository = new PostgresCommunityRepository({ pool });
+  const result = await repository.consumeAdmission({
+    action: 'uploadBytes',
+    subjectHash,
+    idempotencyHash,
+    cost: 12,
+    limit: 20,
+    windowMs: 60_000,
+  });
+  assert.equal(result.allowed, true);
+  assert.equal(result.remaining, 8);
+  assert.equal(released, true);
+});

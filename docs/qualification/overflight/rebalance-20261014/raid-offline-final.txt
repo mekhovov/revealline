@@ -1,0 +1,35 @@
+- main:
+  - button "Menu"
+  - generic: "Survive: Raid"
+  - button "Resume"
+  - region "Overflight battlefield":
+    - generic: Hull 80 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 00:09
+    - generic: Level 1
+    - generic: 6 Cleared
+    - paragraph: Sector 1 · Break the patrols · Targets 0/7
+    - generic: Chain 0 · ×1
+    - generic: Score 1,600
+    - generic: Boost Ready
+    - generic: Rush 6/20
+    - progressbar "Rush"
+    - status
+    - status: Paused · use Resume
+  - text: ⌃
+  - dialog "Pause":
+    - heading "Pause" [level=1]
+    - button "Resume" [active]
+    - heading "Missions" [level=3]
+    - button "Restart"
+    - button "Choose"
+    - heading "Sound" [level=3]
+    - 'button "Sound: off"'
+    - heading "Settings" [level=3]
+    - button "Settings"
+    - button "Enter fullscreen": Full screen
+    - button "Home"
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- text: + + + + + + + + +

@@ -1,0 +1,133 @@
+{
+  "sourceRevision": "b0625e6fb4aa384759790d8e3e9ff415bec1035f",
+  "run": 38782378566,
+  "artifact": 11998555590,
+  "packageRevision": "e1ab4a5ea79a315b7aa5706e771c60a67d31119f76653415f8fd1785d8516860",
+  "origin": 9183,
+  "receiptUTC": "2026-10-15T18:49:09.361824+00:00",
+  "scope": "Bounded exact integrated native player acceptance. All twenty old catalogue rows plus new Lunar r3 remain offered (independent package proof); this CUA observation uses the actual b062 release entry and normal UI only.",
+  "observations": {
+    "r3NormalDownloadMiB": 2,
+    "r2NormalDownloadMiB": 1.9,
+    "bothRetainedAfterReload": true,
+    "enUkEditionTitlesAndSixStartLabels": true,
+    "initialR3": {
+      "status": "Ready to arm",
+      "disarmed": true,
+      "heightM": 25.9,
+      "view": "FPV"
+    },
+    "cameraControls": [
+      "FPV",
+      "Chase",
+      "Overview"
+    ],
+    "acroChange": "new paused/disarmed preparation",
+    "alternateStart": "6 Survey dish; 30.8 m, Ready to arm before explicit arm",
+    "explicitArmThenPause": true,
+    "r3CachedReload": {
+      "actualState": "Paused",
+      "armResumeAvailable": true,
+      "readyClaim": false
+    },
+    "r2CachedFly": {
+      "actualStatusUk": "Без заліку · Готово до польоту",
+      "heightM": 25.9,
+      "armResumeAvailable": true,
+      "disarmed": true
+    },
+    "responsive": [
+      {
+        "viewport": [
+          390,
+          844
+        ],
+        "view": "Overview",
+        "locale": "uk",
+        "horizontalOverflow": false,
+        "menuTargetPx": [
+          80.14,
+          44
+        ],
+        "armTargetPx": [
+          166,
+          63.19
+        ]
+      },
+      {
+        "viewport": [
+          844,
+          390
+        ],
+        "view": "FPV",
+        "locale": "uk",
+        "horizontalOverflow": false,
+        "menuTargetPx": [
+          88.14,
+          44
+        ],
+        "armTargetPx": [
+          223.31,
+          44
+        ]
+      }
+    ],
+    "viewportReset": true,
+    "tabsClosed": true
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-b062-combined-arm-pause-native-20261015.txt",
+      "bytes": 3166,
+      "sha256": "a1c678009e1800b62b9068b339c924303c29a3d584cc76958f8f4cda1dba9382"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-b062-combined-fpv-native-20261015.png",
+      "bytes": 30838,
+      "sha256": "8d7625f801734433b5d44a8081ff0436668a2bf0f3712ccba9d3180f3cd4926d"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-b062-combined-landscape-native-20261015.png",
+      "bytes": 18123,
+      "sha256": "c63a491f6d489244b575ee00fd9da5832578049b1c654a0c43c9f0b70e4fa9a2"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-b062-combined-portrait-native-20261015.png",
+      "bytes": 18045,
+      "sha256": "2d854eb1b6983838c437e4780c15fa1fac8fa19a1ef059dc14ec486c7db232e1"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-b062-combined-r2-cached-native-20261015.txt",
+      "bytes": 1080,
+      "sha256": "e31558b380c5ebf88114aaa0a73439414e8a6333004f41fe0d59469946c0bc03"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-b062-combined-ready-native-20261015.txt",
+      "bytes": 740,
+      "sha256": "b9d2584e204977fbc0c7fae6ad2c6f96dd6f0cde6c77a767a88ebcb11944b5f4"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-b062-combined-retained-native-20261015.txt",
+      "bytes": 17638,
+      "sha256": "2b5f7b986f76e3f39f91528df1d62b2c8f7823e17e7ac79d5af87245642fa1c6"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-b062-combined-uk-paused-native-20261015.txt",
+      "bytes": 4915,
+      "sha256": "49235cb2d847baae29429dd8bfaf37129a470b9482e63e619bbeec452533d7b2"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/lunar-b062-combined-uk-reload-native-20261015.txt",
+      "bytes": 28552,
+      "sha256": "8c220a61c96094e185bb3e7d7de5357d81dbe8d1dfce7b96d38a98b3c7d22cb5"
+    }
+  ],
+  "nativeCandidateBoundaryAccepted": true,
+  "remaining": [
+    "normal protected PR checks/merge",
+    "all six physical starts and physical radio/controller/device qualification where not otherwise established",
+    "network-wide offline/application restart",
+    "broader representative art and elapsed two-hour reliability",
+    "actual public launch"
+  ]
+}

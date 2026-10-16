@@ -4,7 +4,7 @@ import { compileContentProject } from './project.mjs';
 const REVISION = 'rover-spatial-pair-1';
 const rect = (x, y, w, h) => ({ x, y, w, h });
 
-const revisions = Object.freeze({
+export const JOURNEY_ROVER_SPATIAL_PAIR_REVISIONS = Object.freeze({
   'split-berths': {
     actors: [
       {
@@ -174,7 +174,7 @@ export function createJourneyRoverSpatialPairCandidates({ artwork = false } = {}
     : 'whole-rover-spatial-pair-greybox-review';
   project.revision = REVISION;
   project.name = 'Whole Journey · Rover FPV and Ukrainian lattice spatial successors';
-  for (const [missionId, revision] of Object.entries(revisions)) {
+  for (const [missionId, revision] of Object.entries(JOURNEY_ROVER_SPATIAL_PAIR_REVISIONS)) {
     const mission = project.missions.find((item) => item.id === missionId);
     const oldMap = project.maps.find(
       (item) => item.id === mission.map.id && item.revision === mission.map.revision,

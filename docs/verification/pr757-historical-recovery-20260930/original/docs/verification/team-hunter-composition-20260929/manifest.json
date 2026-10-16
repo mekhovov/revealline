@@ -1,0 +1,63 @@
+{
+  "parent": "b5d8bddd2eb6b49b66bc2b4847dfc289e196eea5",
+  "adoptedSource": "b25b29edf4a9ec8628b9d52333d8c683155ae0ec",
+  "productionReview": "deferred-not-passed",
+  "tests": {
+    "pass": 54,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "files": [
+    {
+      "path": "game/gameplay-tuning.mjs",
+      "bytes": 19944,
+      "sha256": "d4dfd7559d70c675b682c420a7bc80fd5c3bb0ff78b4e71f330bd3de7c96b788"
+    },
+    {
+      "path": "game/test/team-import-hunter-tuning.test.mjs",
+      "bytes": 6640,
+      "sha256": "8be902c729d28406e1b84d5f8b3da6247a4c85554c34735497be25a29eeb5b22"
+    },
+    {
+      "path": "game/test/team-hunter-tuning-compatibility.test.mjs",
+      "bytes": 10280,
+      "sha256": "63bf09a218e9a0d5b85e729f1ad30a5d7f5dd2de5d74094f96e96004f652beba"
+    },
+    {
+      "path": "game/test/coop-trail-impact-guidance.test.mjs",
+      "bytes": 7808,
+      "sha256": "b4c1f28c587d687af39b71374fef69bccdf11f1b747b4aed9cf9eb9ef4c1f910"
+    },
+    {
+      "path": "game/test/coop-briefing-host.test.mjs",
+      "bytes": 2261,
+      "sha256": "5659ac2f3a7b6ba2d1960bd654fcdc91a088f4cbb5b0666f90fd1040ea0c890e"
+    },
+    {
+      "path": "game/test/team-line-impact.test.mjs",
+      "bytes": 12976,
+      "sha256": "05f397a501caca7fdb8b147271fbce217a904d9801c85d77f88c8d5a18f11ee0"
+    },
+    {
+      "path": "docs/verification/team-import-hunter-tuning-2026-09-29.md",
+      "bytes": 7214,
+      "sha256": "835565885ef1877a4afe097cca88e9b260caaaff603cff065cfa00b912de7b6e"
+    },
+    {
+      "path": "authoring/prompts/team-responsive-layout.md",
+      "bytes": 3453,
+      "sha256": "318f85e46fc070a3e4fc67a246a89469323c0e458c603e6901c5e02da0ddff1f"
+    },
+    {
+      "path": "docs/verification/team-hunter-composition-20260929/README.md",
+      "bytes": 2845,
+      "sha256": "1570e6c0040fa337ddf2e4be9c296454b4553ddaddc96b50f31b2f952731919a"
+    },
+    {
+      "path": "docs/verification/team-hunter-composition-20260929/focused.tap",
+      "bytes": 12466,
+      "sha256": "fd575ce6331d7d8775f99f39903d0e69cf4b492fc87f85b2ab8e3da774a20e1e"
+    }
+  ]
+}

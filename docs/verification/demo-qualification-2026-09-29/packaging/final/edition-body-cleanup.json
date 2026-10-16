@@ -1,0 +1,18 @@
+{
+  "reason": "Free disk for exact web desktop/iOS staging; only our generated edition bodies removed",
+  "at": "2026-09-29T02:33:28.273752+00:00",
+  "removed": [
+    {
+      "path": "/private/tmp/revealline-demo-editions-qualification-20260929-3vaq5o0d/editions",
+      "files": 4620,
+      "fileBytes": 237535531,
+      "retainedInventoryPairs": 7
+    },
+    {
+      "path": "/private/tmp/revealline-demo-editions-qualification-20260929-3vaq5o0d/editions-lossless",
+      "files": 9300,
+      "fileBytes": 485858823,
+      "retainedInventoryPairs": 14
+    }
+  ]
+}

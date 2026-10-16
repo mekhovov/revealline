@@ -1,0 +1,536 @@
+{
+  "scope": "Automatic stop and bounded export smoke during parallel CPU work, before source freeze; not acceptance.",
+  "format": "OverflightMeasurementsV1",
+  "capturedAt": "2026-10-05T11:33:34.175Z",
+  "fixture": "reference",
+  "benchmarkTrial": "1",
+  "review": null,
+  "clipCaptureUsed": false,
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "devicePixelRatio": 2
+  },
+  "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "appearance": {
+    "projectIdentity": "8ab8476ceeb653ae",
+    "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+    "presentation": {
+      "id": "field-kit",
+      "revision": 104
+    },
+    "themeIdentity": "9670af00f1ea5378",
+    "familyId": "industrial-workshop",
+    "familyRevision": "r3",
+    "interfaceId": "industrial-workshop",
+    "interfaceRevision": "r3",
+    "arcade": {
+      "id": "industrial-workshop",
+      "revision": "r2"
+    },
+    "actorArtRevision": "industrial-roster-v3",
+    "equipment": {
+      "id": "overflight-field-kit",
+      "revision": 1
+    },
+    "materialStyle": "steel",
+    "materialVariant": "steel",
+    "playerSlot": "player.scout.detailed",
+    "cast": "authored"
+  },
+  "projectIdentity": "8ab8476ceeb653ae",
+  "seed": 17031991,
+  "summary": {
+    "format": "OverflightRunSummaryV1",
+    "projectId": "overflight-front",
+    "projectIdentity": "8ab8476ceeb653ae",
+    "seed": 17031991,
+    "phase": "playing",
+    "outcome": "technical-fixture",
+    "reason": null,
+    "fixture": "reference",
+    "fixtureWorkload": {
+      "pulseChargePolicy": "controlled-full-charge-release",
+      "alive": 1500,
+      "visible": 700,
+      "heavies": 4,
+      "specialists": 8,
+      "supportSources": 6,
+      "aimedAttackSources": 2,
+      "ordinaryFamilyBehaviors": true,
+      "frozenPositions": false,
+      "partitionWrapping": true,
+      "recycledEnemyHull": true,
+      "repositionAfterDefeat": true,
+      "maximumActorLifetimeSeconds": 24,
+      "distributionColumns": 10,
+      "distributionRows": 6,
+      "recycledActors": 37803,
+      "gameplayResult": false,
+      "occupiedScreenBuckets": 57,
+      "maximumScreenBucketPopulation": 55
+    },
+    "time": 150,
+    "tick": 9000,
+    "airframes": 3,
+    "airframesRemaining": 3,
+    "stats": {
+      "kills": 0,
+      "spawned": 1500,
+      "enemiesAlive": 1500,
+      "enemiesVisible": 700,
+      "peakAlive": 1500,
+      "peakVisible": 700,
+      "heaviesAlive": 4,
+      "specialistsAlive": 8,
+      "priorityAttacks": 1,
+      "damageDealt": 1870185.9999999986,
+      "damageTaken": 0,
+      "xpEarned": 480,
+      "xpCollected": 0,
+      "xpOnGround": 480,
+      "pickupsAlive": 480,
+      "pickupMerges": 0,
+      "boostsUsed": 0,
+      "airframesLost": 0,
+      "upgradesChosen": 0,
+      "rerollsUsed": 0,
+      "droppedVisualEffects": 0,
+      "collisionCandidates": 1102316,
+      "hits": 59948,
+      "retired": 0,
+      "spawnDeferred": 0,
+      "fixtureDefeats": 31118,
+      "projectileDeferrals": 0
+    },
+    "build": {
+      "primary": {
+        "rank": 4,
+        "branch": "wide",
+        "evolved": true
+      },
+      "combat": [
+        {
+          "id": "proximity-pulse",
+          "rank": 3
+        },
+        {
+          "id": "slow-field",
+          "rank": 3
+        }
+      ],
+      "support": {
+        "id": "scanner",
+        "rank": 3
+      },
+      "reinforcement": 0,
+      "repair": 0
+    },
+    "upgrades": [],
+    "goals": {
+      "eliteSpawned": false,
+      "eliteDefeated": false,
+      "finalSpawned": false,
+      "finalDefeated": false,
+      "finalId": null
+    },
+    "appearance": {
+      "projectIdentity": "8ab8476ceeb653ae",
+      "manifestSha256": "b1123620aa68398dd8131aafa23f29bd686224bb9e50bf86ceeeef94752a1ef3",
+      "presentation": {
+        "id": "field-kit",
+        "revision": 104
+      },
+      "themeIdentity": "9670af00f1ea5378",
+      "familyId": "industrial-workshop",
+      "familyRevision": "r3",
+      "interfaceId": "industrial-workshop",
+      "interfaceRevision": "r3",
+      "arcade": {
+        "id": "industrial-workshop",
+        "revision": "r2"
+      },
+      "actorArtRevision": "industrial-roster-v3",
+      "equipment": {
+        "id": "overflight-field-kit",
+        "revision": 1
+      },
+      "materialStyle": "steel",
+      "materialVariant": "steel",
+      "playerSlot": "player.scout.detailed",
+      "cast": "authored"
+    },
+    "review": null
+  },
+  "renderer": {
+    "renderer": "Phaser 4.2.1 WebGL",
+    "logicalWidth": 960,
+    "logicalHeight": 540,
+    "backingWidth": 960,
+    "backingHeight": 540,
+    "atlas": {
+      "width": 1020,
+      "height": 1292,
+      "textures": 2,
+      "baseRGBABytes": 5533504,
+      "retainedCanvasBytes": 5533504,
+      "soldierFrames": 216,
+      "machineryFrames": 36,
+      "heroFrames": 4,
+      "equipmentFrames": 13,
+      "frameCount": 276
+    },
+    "heroArtwork": {
+      "assetId": "player.scout.detailed.field-kit",
+      "rotorCount": 4,
+      "visibleDiameter": 32,
+      "bakedFrameSize": 48,
+      "paintedWidth": 41.47608169635396,
+      "paintedHeight": 41.47608169635396
+    },
+    "counts": {
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 3,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 185,
+      "quads": 1400
+    },
+    "allocatedSprites": 1837,
+    "fixture": "reference",
+    "reducedEffects": false,
+    "preparationMs": 24.80000001192093,
+    "contextLosses": 0,
+    "contextRestores": 0,
+    "contextRecoveryTests": 0,
+    "lost": false,
+    "failed": false,
+    "valid": true,
+    "invalidReasons": [],
+    "cadenceMs": {
+      "samples": 17974,
+      "p50": 8.300000011920929,
+      "p95": 10.200000047683716,
+      "p99": 11.100000023841858,
+      "worst": 54.5
+    },
+    "submissionMs": {
+      "samples": 17975,
+      "p50": 0.5999999642372131,
+      "p95": 0.800000011920929,
+      "p99": 0.9000000357627869,
+      "worst": 4.199999988079071
+    },
+    "cadenceHz": 119.82411041898725,
+    "measuredIntervals": 17974,
+    "measuredSeconds": 150.00319999998808,
+    "retainedIntervals": 17974,
+    "sampleCapacity": 120000,
+    "submissionTotalMs": 10585.000005245209,
+    "over33Ms": 3,
+    "over50Ms": 1,
+    "over100Ms": 0,
+    "exclusions": {},
+    "highWater": {
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 436,
+      "pickups": 480
+    },
+    "protocol": {
+      "arrangement": "One fresh trial with its own warm-up. Three separately restarted trials are required for qualification.",
+      "warmupSeconds": 30,
+      "measurementSeconds": 120,
+      "repetitions": 1,
+      "windows": [
+        {
+          "index": 1,
+          "complete": true,
+          "measuredSeconds": 119.99769999998809,
+          "cadenceMs": {
+            "samples": 14378,
+            "p50": 8.300000011920929,
+            "p95": 10.199999988079071,
+            "p99": 11.100000023841858,
+            "worst": 54.5
+          },
+          "cadenceHz": 119.81896319680651,
+          "slowFraction": 0.00013910140492418973,
+          "passes": true
+        }
+      ],
+      "acceptance": true,
+      "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+    }
+  },
+  "resourceSamples": [
+    {
+      "time": 0,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 0,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 144,
+      "quads": 1354,
+      "allocatedSprites": 1353,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 69609902,
+      "heapTotalBytes": 120886678,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 15,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 169,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 172,
+      "quads": 1553,
+      "allocatedSprites": 1785,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 106555525,
+      "heapTotalBytes": 158970117,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 30,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 203,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 185,
+      "quads": 1598,
+      "allocatedSprites": 1826,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 45143149,
+      "heapTotalBytes": 54034545,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 45,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 178,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 172,
+      "quads": 1560,
+      "allocatedSprites": 1826,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 45832698,
+      "heapTotalBytes": 54053226,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 60,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 13,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 145,
+      "quads": 1369,
+      "allocatedSprites": 1826,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 47463337,
+      "heapTotalBytes": 60916501,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 75,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 4,
+      "behaviorCues": 173,
+      "quads": 1389,
+      "allocatedSprites": 1826,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 45774728,
+      "heapTotalBytes": 62426596,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 90,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 167,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 185,
+      "quads": 1562,
+      "allocatedSprites": 1826,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 46476290,
+      "heapTotalBytes": 62464230,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 105,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 2,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 171,
+      "quads": 1383,
+      "allocatedSprites": 1826,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 45960036,
+      "heapTotalBytes": 62846040,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 120,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 107,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 144,
+      "quads": 1461,
+      "allocatedSprites": 1826,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 48501557,
+      "heapTotalBytes": 62851249,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 135,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 236,
+      "pickups": 480,
+      "warnings": 0,
+      "behaviorCues": 172,
+      "quads": 1618,
+      "allocatedSprites": 1826,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 45842126,
+      "heapTotalBytes": 63118554,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    },
+    {
+      "time": 150,
+      "alive": 1500,
+      "visible": 700,
+      "rendered": 700,
+      "effects": 3,
+      "pickups": 480,
+      "warnings": 2,
+      "behaviorCues": 185,
+      "quads": 1400,
+      "allocatedSprites": 1837,
+      "atlasBytes": 5533504,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "heapUsedBytes": 44885713,
+      "heapTotalBytes": 73574233,
+      "canvasCount": 1,
+      "pools": {
+        "enemies": 2500,
+        "pickups": 2048,
+        "effects": 512
+      }
+    }
+  ],
+  "trialValid": true,
+  "rawOverflow": 0,
+  "invalidReasons": [],
+  "simulationSamples": 8994,
+  "clock": {
+    "steps": 9000,
+    "droppedSeconds": 0,
+    "accumulator": 0.002699999988082142
+  },
+  "longFrames": 1,
+  "frameSamples": 17974,
+  "rawPages": 15
+}

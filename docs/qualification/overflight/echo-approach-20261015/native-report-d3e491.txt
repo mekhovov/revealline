@@ -1,0 +1,87 @@
+- main:
+  - button "Menu"
+  - generic: FPV Survivals
+  - button "Pause" [disabled]
+  - region "FPV Survivals battlefield":
+    - progressbar "Salvage toward next upgrade"
+    - generic: Hull 0 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 0
+    - generic: Sortie
+    - strong: 05:12
+    - status: Final target · follow the diamond marker
+    - generic: Level 10
+    - generic: 1,707 Cleared
+    - generic "Fly through dropped salvage to earn the next upgrade.": 165 salvage to upgrade
+    - complementary:
+      - strong: Riy · Drone Squad
+      - generic: Sweeper · rear cover / Breaker · forward strikes
+      - generic: Focus ready in 0.4s
+      - button "F · Focus target" [disabled]
+    - paragraph: Automated review · Echo build
+    - button "Take control"
+    - generic "Diagnostics"
+    - 'status "Open cache: fly out, then choose one reward. +25 hull, +1 reroll and boost ready, or stored Overdrive: your next fresh boost starts 6 seconds of 25% faster attacks. Overdrive cannot stack or refresh."': Cache open · choose one reward
+    - generic: Echo Cascade 4
+    - generic: Recovery shield 2
+    - generic: Slowing trail 3
+    - generic: Breaker burst 3
+    - generic: Boost 2.4s
+    - generic: FPV Survivals · Survival · Riy · Drone Squad
+  - text: ⌃ ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+  - dialog "Results":
+    - heading "Results" [level=1]
+    - paragraph: FPV Survivals · Survival · Riy · Drone Squad
+    - generic: ✦
+    - paragraph: Signal lost
+    - heading "Sortie ended" [level=2]
+    - paragraph: Every pass made a difference. Take what you learned into the next sortie.
+    - paragraph: Automated review · Echo build
+    - term: Cleared
+    - definition: 1,707
+    - term: Time
+    - definition: 05:12
+    - term: Salvage
+    - definition: 1,735
+    - term: Upgrades earned
+    - definition: "9"
+    - term: Hull damage
+    - definition: "300"
+    - term: Focus commands
+    - definition: "39"
+    - term: Escort attacks
+    - definition: "425"
+    - generic: ✓ Elite defeated
+    - generic: ✓ Weapon evolved
+    - heading "Your build" [level=3]
+    - strong: Echo Cascade
+    - generic: Level 4
+    - strong: Recovery shield
+    - generic: Level 2
+    - strong: Slowing trail
+    - generic: Level 3
+    - strong: Breaker burst
+    - generic: Level 3
+    - heading "World mastery" [level=3]
+    - list:
+      - listitem: ○ Complete this sortie
+      - listitem: ○ Complete without losing an airframe
+      - listitem: ○ Complete after three Focus engagements reach attack range · 3/3
+    - paragraph: Review run · achievements are not saved
+    - paragraph: "Damage sources: Contact 300"
+    - region "Final tank":
+      - heading "Final tank" [level=4]
+      - paragraph: "Armor remaining: 78%"
+      - progressbar "Final tank · Armor remaining"
+      - paragraph: "Hull remaining: 100%"
+      - progressbar "Final tank · Hull remaining"
+    - generic "Progression"
+    - paragraph: Contact 300
+    - paragraph: Automated review
+    - generic: Engineer — No airframes remain. The sortie is over.
+    - button "Retry same seed"
+    - button "New sortie"
+    - paragraph: Try another combination on the same battlefield.
+    - button "Back" [active]
+    - button "Retry"
+- text: + + + + + + + + +

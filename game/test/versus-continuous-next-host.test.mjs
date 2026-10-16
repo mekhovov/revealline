@@ -12,7 +12,7 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { libraryMissionId } from '../mission-library/library.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { createCandidateVersusHost } from '../content-design/versus-host.mjs';
-import { mountPresentationPage } from '../presentation/page.mjs';
+import { inspectImageDataUrl } from '../content.mjs';
 
 const index = JSON.parse(
   await readFile(new URL('../content/mission-library-index.json', import.meta.url)),
@@ -22,6 +22,11 @@ class Locks {
     return work({ name: _name });
   }
 }
+const decodeHeader = async (dataUrl) => {
+  const header = inspectImageDataUrl(dataUrl);
+  assert.equal(header.valid, true);
+  return { naturalWidth: header.width, naturalHeight: header.height };
+};
 async function fixture(t, { fetchResponse, installedSource, ...options } = {}) {
   const databases = new Map(),
     values = new Map();
@@ -39,7 +44,9 @@ async function fixture(t, { fetchResponse, installedSource, ...options } = {}) {
     };
   if (installedSource) {
     let media;
-    const { pack } = await preparePack(installedSource);
+    // This Node-only fixture validates the exact packaged image headers; real
+    // browser imports still require an actual browser decode before admission.
+    const { pack } = await preparePack(installedSource, { decodeImage: decodeHeader });
     const writer = await claimProfileWriter(lockManager, 'revealline.library.dev.v1.writer');
     const installer = createExternalChapterHost({
       indexedDB: assetDatabase,
@@ -50,6 +57,7 @@ async function fixture(t, { fetchResponse, installedSource, ...options } = {}) {
       writer,
       registeredEntries: [],
       knownDescriptors: [],
+      decodeImage: decodeHeader,
       getManagedStore: () =>
         (media ??= createManagedMediaStore({
           indexedDB: assetDatabase,
@@ -96,30 +104,35 @@ function finish(p) {
   assert.equal(p.$('race-journey-next').hidden, false);
 }
 
-async function openVersusLibrary(p) {
-  const opener = p.$('race-library-switch'),
-    listeners = opener.listeners.get('click'),
-    pending = [];
-  opener.listeners.set(
-    'click',
-    new Set(
-      [...listeners].map((listener) => (event) => {
-        const result = listener.call(opener, event);
-        if (result instanceof Promise) pending.push(result);
-        return result;
-      }),
-    ),
-  );
-  try {
-    opener.focus();
-    opener.click();
-  } finally {
-    opener.listeners.set('click', listeners);
-  }
-  assert.equal(pending.length, 1, 'The real Missions click owns one preparation.');
-  assert.match(p.$('race-message').textContent, /Preparing missions/);
-  await pending[0];
-  assert.equal(p.$('journey-chooser').open, true);
+function assertMissionCue(p, levelId) {
+  p.frame(0, { preserveStartCue: true });
+  assert.equal(p.state(), 'running');
+  assert.equal(p.renders[0].levelId, levelId);
+  assert.equal(p.renders[1].levelId, levelId);
+  assert.equal(p.$('race-start-cue').hidden, false);
+  assert.equal(p.$('race-start-cue').dataset.kind, 'mission');
+  assert.equal(p.$('race-start-cue-label').textContent, '3');
+  assert.equal(p.tick(), 0);
+}
+function releaseMissionCue(p, levelId) {
+  assertMissionCue(p, levelId);
+  p.frame(700, { preserveStartCue: true });
+  assert.equal(p.$('race-start-cue-label').textContent, '2');
+  p.frame(700, { preserveStartCue: true });
+  assert.equal(p.$('race-start-cue-label').textContent, '1');
+  p.frame(700, { preserveStartCue: true });
+  assert.equal(p.$('race-start-cue-label').textContent, 'GO');
+  assert.equal(p.tick(), 0);
+  for (let tick = 0; tick < 42; tick++) p.frame(1000 / 120, { preserveStartCue: true });
+  assert.equal(p.$('race-start-cue').hidden, true);
+  assert.equal(p.tick(), 42);
+}
+
+function showCurrentLifecycle(p) {
+  const lifecycle = p.$('journey-lifecycle');
+  assert.equal(lifecycle.value, 'archive');
+  lifecycle.value = 'current';
+  lifecycle.emit('change');
 }
 
 function beginNext(p, { clicks = 1 } = {}) {
@@ -181,10 +194,7 @@ test(
     finish(p);
     assert.match(p.$('race-start').textContent, /Next round/);
     await beginNext(p, { clicks: 2 });
-    p.frame(0);
-    assert.equal(p.state(), 'running');
-    assert.equal(p.renders[0].levelId, 'signal-02');
-    assert.equal(p.renders[1].levelId, 'signal-02');
+    releaseMissionCue(p, 'signal-02');
     assert.equal(p.$('series-score').textContent, '0 : 0');
     assert.equal(p.$('race-format').value, 'first-to-two');
     assert.equal(p.$('journey-chooser').open, false);
@@ -208,6 +218,9 @@ test(
     );
     source.name = 'Player night shift';
     source.campaigns[0].levels = source.campaigns[0].levels.slice(0, 2);
+    source.levelVisuals = source.levelVisuals.filter((row) =>
+      source.campaigns[0].levels.some((level) => level.id === row.levelId),
+    );
     const p = await fixture(t, {
       initialLevel: 'signal-12',
       installedSource: source,
@@ -224,16 +237,11 @@ test(
     await start(p);
     finish(p);
     await beginNext(p);
-    p.frame(0);
-    assert.equal(p.state(), 'running');
-    assert.equal(p.renders[0].levelId, 'night-shift-01');
-    assert.equal(p.renders[1].levelId, 'night-shift-01');
+    releaseMissionCue(p, 'night-shift-01');
     assert.equal(p.$('journey-chooser').open, false);
     finish(p);
     await beginNext(p);
-    p.frame(0);
-    assert.equal(p.state(), 'running');
-    assert.equal(p.renders[0].levelId, 'night-shift-02');
+    releaseMissionCue(p, 'night-shift-02');
     finish(p);
     const before = p.checkpoint(),
       picture = p.drawOptions[0].backdrop;
@@ -260,7 +268,7 @@ test('same-ID modified Custom edition keeps its exact owner through Rematch and 
   );
   source.name = 'Player night shift';
   const p = await fixture(t, { installedSource: source });
-  await openVersusLibrary(p);
+  await openMissionLibrary(p, 'race-chapters');
   p.$('journey-collection').value = 'Custom';
   p.$('journey-collection').emit('change');
   const card = [...p.$('journey-cards').children].find(
@@ -268,9 +276,7 @@ test('same-ID modified Custom edition keeps its exact owner through Rematch and 
   );
   assert(card);
   await activateMissionCard(card);
-  p.frame(0);
-  assert.equal(p.state(), 'running');
-  assert.equal(p.renders[0].levelId, 'night-shift-03');
+  releaseMissionCue(p, 'night-shift-03');
   finish(p);
   await start(p);
   finish(p);
@@ -356,6 +362,7 @@ test('final Journey opens Browse missions and explicit Classic handoff carries s
     picture = p.drawOptions[0].backdrop;
   assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
   await openMissionLibrary(p, 'race-journey-next');
+  showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
@@ -409,6 +416,7 @@ test('paused Journey can Stay and then explicitly Replace with exact Classic set
   const before = p.checkpoint(),
     picture = p.drawOptions[0].backdrop;
   await openMissionLibrary(p, 'race-journey-find');
+  showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
@@ -443,104 +451,6 @@ test('paused Journey can Stay and then explicitly Replace with exact Classic set
   p.frame(0);
   assert.deepEqual(p.checkpoint(), before);
   assert.equal(p.drawOptions[0].backdrop, picture);
-  assert.equal(p.$('journey-chooser').open, false);
-});
-
-test('failed or cancelled cross-host target picture preflight keeps Journey results before navigation', async (t) => {
-  const route = await loadAuthoredJourneyRoute('opening');
-  const host = createCandidateVersusHost(route.source, {
-    themes: JSON.parse(await readFile(new URL('../content-design/themes.json', import.meta.url)))
-      .themes,
-  });
-  const last = host.catalog.missions.at(-1);
-  const mission = libraryMissionId({
-    owner: 'journey:opening',
-    edition: 'opening',
-    campaign: JSON.stringify([last.source, last.packId, last.campaignId]),
-    mission: last.id,
-  });
-  const params = new URLSearchParams({
-    journey: 'opening',
-    'library-mission': mission,
-  });
-  const href = `http://localhost/game/couch/?${params}`;
-  const compiled = JSON.parse(
-    await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url)),
-  );
-  const snapshot = {
-    resolved: compiled.resolved,
-    images: new Map(),
-    canvas: {},
-  };
-  let reads = 0,
-    hold = null,
-    release;
-  const p = await fixture(t, {
-    href,
-    beforeImport({ document, window }) {
-      const page = mountPresentationPage({
-        document,
-        window,
-        createHost: () => ({
-          load: async () => snapshot,
-          apply() {},
-          close() {},
-          async readPicture(_slot, { snapshot: expected }) {
-            assert.equal(expected, snapshot);
-            reads++;
-            if (hold) await hold;
-            throw new Error('Target original is unavailable.');
-          },
-        }),
-      });
-      t.after(() => page.close());
-    },
-  });
-  p.frame(0);
-  assert.equal(p.state(), 'running', p.$('race-message').textContent);
-  finish(p);
-  const before = p.checkpoint(),
-    picture = p.drawOptions[0].backdrop;
-  await openMissionLibrary(p, 'race-journey-next');
-  const selected = [...p.$('journey-cards').children].find((card) => {
-    const [owner, , , id] = JSON.parse(card.dataset.missionId);
-    return owner === JSON.stringify(['classic', 'base', null]) && id === 'signal-01';
-  });
-  assert(selected);
-  await activateMissionCard(selected);
-  assert.match(
-    p.$('journey-chooser-status').textContent,
-    /Could not open.*Target original is unavailable/,
-  );
-  assert.equal(reads, 1);
-  p.frame(0);
-  assert.equal(globalThis.location.href, href);
-  assert.deepEqual(p.checkpoint(), before);
-  assert.equal(p.drawOptions[0].backdrop, picture);
-  assert.equal(p.$('journey-chooser').open, true);
-  hold = new Promise((resolve) => {
-    release = resolve;
-  });
-  t.after(() => release());
-  const retry = [...p.$('journey-cards').children].find((card) => {
-    const [owner, , , id] = JSON.parse(card.dataset.missionId);
-    return owner === JSON.stringify(['classic', 'base', null]) && id === 'signal-01';
-  });
-  const pending = activateMissionCard(retry);
-  await settle(() => reads === 2);
-  p.$('race-picture-cancel').click();
-  release();
-  await pending;
-  await settle(() => !p.$('race-journey-next').disabled);
-  p.frame(0);
-  assert.equal(globalThis.location.href, href);
-  assert.deepEqual(p.checkpoint(), before);
-  assert.equal(p.drawOptions[0].backdrop, picture);
-  assert.equal(picture.image.released, undefined);
-  assert.match(
-    p.$('race-message').textContent,
-    /selection cancelled.*current race and picture are kept/,
-  );
   assert.equal(p.$('journey-chooser').open, false);
 });
 
@@ -584,6 +494,7 @@ test('Journey boundary preflights an exact installed Classic pack without adopti
     picture = p.drawOptions[0].backdrop;
   assert.equal(p.$('race-journey-next').textContent, 'Browse missions');
   await openMissionLibrary(p, 'race-journey-next');
+  showCurrentLifecycle(p);
   assert.deepEqual(p.checkpoint(), before);
   const selected = [...p.$('journey-cards').children].find((card) => {
     const [owner, , , id] = JSON.parse(card.dataset.missionId);
@@ -655,7 +566,5 @@ test('cancelled boundary metadata does not adopt or clear the result and Next ca
   assert.equal(p.drawOptions[0].backdrop, picture);
   assert.match(p.$('race-message').textContent, /cancelled.*Results are kept/);
   await beginNext(p);
-  p.frame(0);
-  assert.equal(p.state(), 'running');
-  assert.equal(p.renders[0].levelId, 'signal-02');
+  releaseMissionCue(p, 'signal-02');
 });

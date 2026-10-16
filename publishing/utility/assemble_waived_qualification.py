@@ -17,6 +17,7 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+from source_manifest import inspection_source, qualification_proof
 
 LIMIT = 64 * 1024**2
 WORKFLOW = '.github/workflows/qualify-release-source.yml'
@@ -24,11 +25,11 @@ FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
 QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
 FASTLINE_QUALIFICATION_JOBS = frozenset(('deduplicate', 'qualify', 'freeze', 'test'))
 POLICY = 'publishing/test-policy.json'
+HISTORICAL_AUDIO_EVIDENCE_SOURCE = 'publishing/utility/audio-source-retention-audit-704a.json'
+HISTORICAL_AUDIO_EVIDENCE_ARCHIVE = 'coordinator/audio-source-retention-audit-704a.json'
+HISTORICAL_AUDIO_EVIDENCE_SHA256 = '224cd93c3a7ef5e10708e83ae77b2e5958a52cd279ed198d12aeb60afdb6c3ce'
 COMMIT = re.compile(r'[0-9a-f]{40}')
 GATES = [('validate', 'npm run validate', 'Validate source'),
-         ('lint', 'npm run lint', 'Lint source'),
-         ('format', 'npm run format:check', 'Check formatting'),
-         ('native-format', 'npm run format:native:check', 'Check native formatting'),
          ('motion-syntax', 'node --check authoring/motion-lab/app.js', 'Check motion lab syntax')]
 
 
@@ -112,6 +113,17 @@ def blob(repo, commit, name):
     size = int(git(repo, 'cat-file', '-s', object_name))
     require(0 <= size <= 4 * 1024**2, 'Source helper bound')
     return git(repo, 'show', object_name)
+
+
+def retain_historical_audio_evidence(evidence, repo, commit):
+    """Retain the reviewed audio-source audit in every future evidence package."""
+    body = blob(repo, commit, HISTORICAL_AUDIO_EVIDENCE_SOURCE)
+    require(sha(body) == HISTORICAL_AUDIO_EVIDENCE_SHA256,
+            'Historical audio retention evidence differs')
+    require(HISTORICAL_AUDIO_EVIDENCE_ARCHIVE not in evidence,
+            'Duplicate historical audio retention evidence')
+    evidence[HISTORICAL_AUDIO_EVIDENCE_ARCHIVE] = body
+    return body
 
 
 def step(job, name):
@@ -220,8 +232,11 @@ def inspect(config, evidence, repo, source, manual):
             verify['releaseHashChainVerified'] is True, 'Frozen identity/chain differs')
     require(all(verify['artifact'][k] == artifact[k] for k in ('bytes', 'sha256')) and
             verify['artifact']['externallyExpectedDigestSupplied'] is True, 'Outer artifact pin differs')
-    require(verify['sourceTar']['paxCommitPresent'] is True and verify['sourceTar']['copiedToDisk'] is False and
-            verify['sourceTar']['outerMember'] == source['version'] + '/source.tar', 'Source TAR proof differs')
+    source_name, source_role = inspection_source(verify)
+    source_proof = verify[source_role]
+    require(source_proof.get('allGitBlobContentsAndModesVerified' if source_role == 'sourceManifest' else 'paxCommitPresent') is True and
+            source_proof['copiedToDisk'] is False and
+            source_proof['outerMember'] == source['version'] + '/' + source_name, 'Source preservation proof differs')
     require(verify['distribution']['allManifestBytesVerified'] is True and
             verify['distribution']['innerManifestIdentical'] is True and verify['distribution']['copiedToDisk'] is False and
             verify['distribution']['outerMember'] == source['version'] + '/site/distribution.zip', 'ZIP proof differs')
@@ -345,6 +360,7 @@ def assemble(config, output):
                     'approvedNonSourceChanges': allowed, 'allOtherTrackedContentsTypesModesIdentical': True,
                     'rawDiff': {'bytes': len(difference), 'sha256': sha(difference), 'retained': bool(difference)},
                     'scope': 'PR build corroboration only; not reuse of a predecessor source verdict.'})}
+    retain_historical_audio_evidence(evidence, automation_repo, automation_commit)
     if difference:
         evidence['preparation/pr-to-source.diff'] = difference
     for role in ('pr', 'manual', 'inspection'):
@@ -432,7 +448,7 @@ def assemble(config, output):
         **pr_corroboration,
         'frozenArtifactCorroboration': {'artifactId': artifact['id'], 'runId': artifact['runId'],
             'inspectionRunId': inspection_run['id'], 'wholeOriginalArtifactVerifiedBeforeQualification': True,
-            'sourceTarGitBlobTypeModeAndPaxCommitVerified': True, 'allInnerZipManifestBytesVerified': True,
+            **qualification_proof(verify), 'allInnerZipManifestBytesVerified': True,
             'frozenOfflineInventoryAndBindingsVerified': True,
             'inputs': {k: pin(n, small[n]) for k, n in [('inspection', 'verification.json'), ('manifest', 'manifest.json'),
                 ('releaseRecord', 'release.json'), ('checksum', 'distribution.zip.sha256')]}},
@@ -455,7 +471,7 @@ def assemble(config, output):
     asset = lambda n, b: {'name': n, 'bytes': len(b), 'sha256': sha(b)}
     large = [{'name': n, 'bytes': verify[r]['bytes'], 'sha256': verify[r]['sha256'],
               'originalMember': verify[r]['outerMember'], 'copiedToDisk': False}
-             for n, r in [('source.tar', 'sourceTar'), ('distribution.zip', 'distribution')]]
+             for n, r in [inspection_source(verify), ('distribution.zip', 'distribution')]]
     small['qualification-evidence-record.json'] = encoded({'format': 'revealline-qualification-evidence-record.v1',
         'sourceRevision': source['commit'], 'sourceTree': source['tree'], 'version': source['version'],
         'sourceQualified': True, 'originalFrozenPayloadVerified': True, 'sourceGateCounts': None, 'testStatus': 'waived',

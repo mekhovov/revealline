@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FPV Survivals — battlefield review</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font:
+        16px/1.55 system-ui,
+        sans-serif;
+      background: #101815;
+      color: #e7ebdc;
+    }
+    body {
+      max-width: 1180px;
+      margin: auto;
+      padding: 28px 20px 60px;
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 44px);
+      line-height: 1.15;
+      margin: 10px 0 16px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 23px;
+    }
+    p {
+      max-width: 80ch;
+      margin: 10px 0 18px;
+    }
+    a {
+      color: #edc77c;
+      text-underline-offset: 4px;
+    }
+    .eyebrow {
+      color: #bbcab7;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    .note {
+      border-left: 3px solid #d4a759;
+      padding: 10px 16px;
+      background: #20271d;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 24px;
+      margin: 24px 0;
+    }
+    section {
+      margin: 36px 0;
+      padding-top: 24px;
+      border-top: 1px solid #3b493c;
+    }
+    video,
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #080e0c;
+      image-rendering: pixelated;
+    }
+    figure {
+      margin: 20px 0;
+      background: #1b261e;
+    }
+    figcaption {
+      padding: 14px 18px;
+      color: #c2ccbd;
+    }
+    code {
+      font-size: 0.9em;
+    }
+    .clips {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+      gap: 24px;
+    }
+    .clips figure {
+      margin: 0;
+    }
+    .clips h3 {
+      color: #f1ddaf;
+      margin: 0 0 8px;
+    }
+    li {
+      margin: 8px 0;
+    }
+    small {
+      color: #b4c0af;
+    }
+  </style>
+  <body>
+    <header>
+      <div class="eyebrow">Native gameplay · 14 October 2026</div>
+      <h1>Six worlds. Eighteen routes.<br />One FPV Survivals family.</h1>
+      <p>
+        Review the battlefield shapes, different attack patterns and enemy approaches. Single Drone,
+        Riy, Single Raid, Time Attack and Contract Marathon share the same map library.
+      </p>
+      <p class="note">
+        Maps and movement merged through
+        <a href="https://github.com/mekhovov/revealline/pull/1215">PR 1215</a>; shared integration,
+        fixes and qualification merged through
+        <a href="https://github.com/mekhovov/revealline/pull/1226">PR 1226</a>. The final local qualification follow-up is
+        <a href="https://github.com/mekhovov/revealline/pull/1248">PR 1248</a>. Local reference and
+        three timing trials each for Single Drone, Riy and a controlled Raid workload pass. Three new
+        late Riy trials also pass through tank arrival; broader coverage and gameplay review remain open. Active clips use an automated review pilot;
+        no-input follow-ups are labeled separately. They establish visible behavior, not
+        ordinary-player difficulty.
+      </p>
+      <p class="note">
+        <strong>Video source boundary:</strong> these videos and the earlier opening-workload
+        timing trials precede <code>07ed46625</code>, which changes later built-in upgrade thresholds and
+        V4 result saving. They show the recorded artwork and behavior, not qualification of the new
+        progression. The separately linked late Riy timings use the corrected source
+        <code>08f5e6e0e</code>. Each capture retains its own source revision.
+      </p>
+      <nav aria-label="Review materials">
+        <a href="../../../fpv-survivals-review-2026-10-15.md">15 October priorities for review</a>
+        <a href="CONTINUATION-FIXES.md">Latest guidance, cards and cover fixes</a>
+        <a href="art-review/native-worlds.html">Explore all maps and play links</a>
+        <a href="../../../fpv-survivals-maps-movement-status.md">Completed and remaining work</a>
+        <a href="NATIVE-PERFORMANCE.md">Performance evidence</a>
+        <a href="NATIVE-FULL-CONTENT.md">Gameplay and Raid workload timing</a>
+        <a href="NATIVE-LATE-CONTENT.md">Three late Riy timing passes</a>
+        <a href="PROGRESSION-PARITY.md">Current progression and route findings</a>
+        <a href="EXPANDED-MATRIX-RESULTS.md">Active and repetitive-input results</a>
+        <a href="PILOT-BIAS.md">Build-route and progression findings</a>
+      </nav>
+    </header>
+    <section>
+      <h2>Clearer choices and final-target guidance</h2>
+      <p>Native screenshots from runtime <code>60b0c25ab</code>. Upgrade comparisons reuse the selected drone and enemy art; the HUD identifies collected salvage and the final objective. <a href="CONTINUATION-FIXES.md">Corrections and verification limits</a>.</p>
+      <div class="clips">
+        <figure><img src="native/upgrade-native-sprites-60b0.jpg" alt="Native upgrade cards with current and upgraded weapon patterns" /><figcaption>Manual earned level-two draft. Selecting Wide Fan resumes the same run.</figcaption></figure>
+        <figure><img src="native/final-target-guidance-60b0.jpg" alt="Riy battlefield with a diamond portrait directing the player toward the final target" /><figcaption>Riy at 05:49. The objective is visible in the HUD and through its diamond marker. This is a UI check, not a benchmark or completion claim.</figcaption></figure>
+      </div>
+    </section>
+    <section>
+      <h2>Distinct layouts, shared visual language</h2>
+      <p>
+        Open courts, connected loops and wide cover routes change approach angles. Scenery uses the
+        runtime painter and shared materials. The overview is a map-art reference; the moving clips
+        below show combat.
+      </p>
+      <figure>
+        <a href="native/eighteen-layouts.png"
+          ><img
+            src="native/eighteen-layouts.png"
+            alt="Overview of eighteen battlefield layouts across fields, depot, ruins, port, quarry and orchard"
+        /></a>
+        <figcaption>
+          Native map painter output. Open the map browser for each layout’s tactical description and
+          all five operation links.
+        </figcaption>
+      </figure>
+    </section>
+    <section>
+      <h2>Normal and reduced effects during one run</h2>
+      <p>
+        Haul Switchbacks, seed 17031991, Single Drone Fan, source <code>3a1e1f7d9</code> before
+        the progression fix. These muted 20-second segments come from one continuous earned run
+        with the automated pilot. Reduced effects was selected through shared Settings while
+        paused; normal effects was restored afterward.
+      </p>
+      <div class="clips">
+        <figure>
+          <video controls preload="none" poster="native/quarry-fan-mid-normal.png"
+            src="native/quarry-fan-mid-normal.webm"></video>
+          <figcaption>
+            <h3>Normal · starts at 2:39</h3>
+            Fan rank 4, Slow Field rank 3 and Side Burst rank 1.
+          </figcaption>
+        </figure>
+        <figure>
+          <video controls preload="none" poster="native/quarry-fan-mid-reduced.png"
+            src="native/quarry-fan-mid-reduced.webm"></video>
+          <figcaption>
+            <h3>Reduced · starts at 3:24</h3>
+            Fan rank 4, Slow Field rank 3 and Side Burst rank 2.
+          </figcaption>
+        </figure>
+      </div>
+      <p class="note">
+        The enemy state, positions and Side Burst rank differ. This shows the available effects
+        treatments in native combat; it is not an identical-state visual or performance comparison.
+        <a href="native/quarry-effects-comparison.json">Settings and recording hashes</a>.
+      </p>
+    </section>
+    <section>
+      <h2>Dense combat effects and voices</h2>
+      <p>
+        The same pre-fix Quarry Fan run, around 4:14 on <code>3a1e1f7d9</code>, with Fan rank 4,
+        Slow Field rank 3 and Side Burst rank 3. Master sound is enabled and normal effects restored.
+      </p>
+      <figure>
+        <video controls preload="none" poster="native/quarry-fan-dense-audio.png"
+          src="native/quarry-fan-dense-audio.webm"></video>
+        <figcaption>
+          <a href="native/quarry-fan-dense-audio.mp3">Listen to the effects/voices sample</a> ·
+          <a href="native/quarry-fan-dense-audio.json">Capture settings and audio measurement</a>.
+        </figcaption>
+      </figure>
+      <p class="note">
+        The recording is non-silent: measured mean −47.5 dB and peak −29.2 dB. It excludes external
+        soundtrack, HUD and upgrade cards. A Now playing label does not prove recorded music.
+        Warning audibility, reaction repetition and the complete music/effects mix still need
+        listening review; these volume measurements do not establish sound quality.
+      </p>
+    </section>
+    <section>
+      <h2>Late-combat comparison on one map</h2>
+      <p>
+        Haul Switchbacks, Single Drone, seed 17031991, Standard, three airframes and Scout on source
+        <code>3a1e1f7d9</code>. All three runs earn their upgrades using the same automated tight-route
+        pilot, without injected checkpoints. Their flight paths and recording start times differ;
+        these are not synchronized encounters or timing trials. Normal effects, muted audio,
+        battlefield-only capture.
+      </p>
+      <div class="clips">
+        <figure>
+          <video
+            controls
+            preload="none"
+            poster="native/quarry-fan-final.png"
+            src="native/quarry-fan-final.webm"
+          ></video>
+          <figcaption>
+            <h3>Fan · final approach</h3>
+            Starts around 5:19 and reaches victory around 5:23, with 2,919 enemies destroyed.
+            <strong>Only about four seconds show active combat;</strong> the rest of this
+            20-second capture is the settled battlefield after victory.
+          </figcaption>
+        </figure>
+        <figure>
+          <video
+            controls
+            preload="none"
+            poster="native/quarry-echo-late.png"
+            src="native/quarry-echo-late.webm"
+          ></video>
+          <figcaption>
+            <h3>Echo · rear-trail approach</h3>
+            Starts around 5:09 and records 20 seconds. The run was later observed lost at 5:39,
+            with 2,707 destroyed. That loss occurred about 30 seconds after the start and is
+            <strong>outside this clip</strong>.
+          </figcaption>
+        </figure>
+        <figure>
+          <video
+            controls
+            preload="none"
+            poster="native/quarry-systems-late.png"
+            src="native/quarry-systems-late.webm"
+          ></video>
+          <figcaption>
+            <h3>Systems · sustained clearing</h3>
+            Starts around 4:50 and records 20 seconds. A later HUD observation at 5:38 showed the
+            run still playing, with 3,203 destroyed. No final outcome is established by this clip.
+          </figcaption>
+        </figure>
+      </div>
+      <p class="note">
+        Compare coverage, route changes and hostile warning visibility. Later outcomes come from
+        native HUD observations and are not necessarily final video frames. These samples do not
+        establish build rankings, ordinary-player difficulty or the sound mix.
+        <a href="native/quarry-build-comparison.json">Settings, start times and recording hashes</a>.
+      </p>
+    </section>
+    <section>
+      <h2>Quarry Fan with effects audio</h2>
+      <p>
+        Haul Switchbacks, Single Drone, seed 17031991, normal effects. This 20-second capture starts
+        around 2:32 on source <code>4dab801d9</code>, with earned Fan, Slow Field and Side Burst.
+        The automatic pilot is active. Effects and voices are audible; external soundtrack, HUD and
+        cards are excluded by the recorder.
+      </p>
+      <figure>
+        <video
+          controls
+          preload="none"
+          poster="native/quarry-active-fan-4dab.png"
+          src="native/quarry-active-fan-4dab.webm"
+        ></video>
+        <figcaption>
+          Captured after the timing trial, separately from performance measurement.
+          <a href="native/quarry-active-fan-4dab.mp3">Effects/voices audio</a> ·
+          <a href="native/quarry-active-fan-4dab.png">Native image</a> ·
+          <a href="native/active-unattended-review.json">Source and follow-up receipt</a>.
+        </figcaption>
+      </figure>
+      <p class="note">
+        <strong>No-input follow-up:</strong> after Take Control at about 3:01, the reviewer gave no
+        steering, boost or Focus. The run lost at 3:20, after contact consumed its remaining three
+        airframes. Cleared enemies rose from 874 to 1,049. This was observed in the native
+        HUD/results; <strong>no follow-up video was saved</strong>. It is not a side-by-side
+        recording or proof about every build.
+      </p>
+    </section>
+    <section>
+      <h2>Recorded no-input follow-up: Riy Echo</h2>
+      <p>
+        Loading Loop, seed 17031991, source <code>0b1aa412d</code>. After the third timing trial,
+        the reviewer pressed Take Control around 2:19 and gave no steering, boost or Focus. The run
+        started this follow-up with <strong>20 hull and three airframes</strong>; all were lost by
+        2:30, with cleared enemies increasing from 445 to 464.
+      </p>
+      <figure>
+        <video
+          controls
+          preload="none"
+          poster="native/depot-riy-echo-unattended.png"
+          src="native/depot-riy-echo-unattended.webm"
+        ></video>
+        <figcaption>
+          Separate 20-second recording, including replacement airframes. Battlefield only; HUD and
+          cards are excluded and master audio was muted.
+          <a href="native/depot-riy-echo-unattended.json">Settings and observed outcome</a>.
+        </figcaption>
+      </figure>
+      <p class="note">
+        This is a low-hull follow-up, not a full-health mature-build comparison or proof that every
+        stationary build loses. The outcome was observed through the native HUD/results.
+      </p>
+    </section>
+    <section>
+      <h2>Earlier build samples</h2>
+      <p>
+        Look for the route each build encourages: broad passes, returning through a rear trail, or
+        controlling nearby crowds while attacking the flanks. Recordings intentionally exclude the
+        menu and HUD; review controls remain visible in the playable versions.
+      </p>
+      <div class="clips">
+        <figure>
+          <video
+            controls
+            preload="none"
+            poster="native/quarry-combat.png"
+            src="native/quarry-fan-audio.webm"
+          ></video>
+          <figcaption>
+            <h3>Fan · Haul Switchbacks</h3>
+            Broad sweeping coverage around quarry bends. Earlier capture at source
+            <code>58e223b7d</code>; subsequent movement and recovery fixes are not represented here.
+            Native effects audio is included; external music is excluded.
+          </figcaption>
+        </figure>
+        <figure>
+          <video
+            controls
+            preload="none"
+            poster="native/depot-riy-echo.png"
+            src="native/depot-riy-echo.webm"
+          ></video>
+          <figcaption>
+            <h3>Riy Echo · Loading Loop</h3>
+            Rear impacts and escort coverage reward a return approach. Source
+            <code>3bb1b0dc6</code>, seed 17031991, around 100 seconds into the run. Audio settings
+            changed during review; this is not a qualified sound-mix sample.
+          </figcaption>
+        </figure>
+        <figure>
+          <video
+            controls
+            preload="none"
+            poster="native/river-port-systems.png"
+            src="native/river-port-systems.webm"
+          ></video>
+          <figcaption>
+            <h3>Systems · Floodgate Yard</h3>
+            Pulse control and side attacks against changing fronts. Source <code>3bb1b0dc6</code>,
+            seed 17031991, around 132 seconds. Master audio was muted. This automated run later lost
+            at 5:50 after earning ten choices.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+    <section>
+      <h2>What to judge next</h2>
+      <ul>
+        <li>
+          Can you distinguish solid cover from low scenery and find another route under pressure?
+        </li>
+        <li>
+          Do enemy approach changes make you reconsider your heading while successful clearing still
+          buys space?
+        </li>
+        <li>
+          Do Fan, Echo and priority attacks lead to different decisions rather than the same orbit?
+        </li>
+        <li>Can you read hostile warnings through a complete upgraded build?</li>
+      </ul>
+      <p>
+        The expanded matrix records 44 repetitive-input defeats, four unavailable checkpoints, two
+        active-pilot wins and ten losses. A later six-run route/Focus comparison adds one Riy Echo
+        completion; its other five runs lose. Early upgrades remain fast, but measured late Echo
+        gaps of 101–115 seconds need review. A wall-held 39.75-second clearing interval also remains
+        a pacing question despite eventual defeat.
+      </p>
+      <p>
+        Two separate Systems follow-ups change only the one-airframe challenge to the default three
+        airframes and both complete: Survivor at 6:02 and Riy at 5:27. Their first-life timelines
+        match the previous losses exactly. See
+        <a href="SYSTEMS-AIRFRAMES.md">the controlled comparison</a>; this does not turn the
+        challenge losses into passes.
+      </p>
+      <p>
+        Three trials each pass for native Single Drone at p95 <strong>9.5–10.2 ms</strong>, Riy at
+        <strong>9.5–10.5 ms</strong> and the controlled Raid workload at
+        <strong>9.6–10.3 ms</strong>. Survivor and Riy cover opening-to-elite play with earned
+        upgrades and include draft rendering; Raid uses a sustained 403-actor engineering fixture
+        with 200 visible actors, not an ordinary sortie. The third Survivor trial retains a
+        123.4 ms foreground stall. The original failed reference trials and failed soak p95 remain
+        preserved. See <a href="NATIVE-FULL-CONTENT.md">the timing report and its limits</a> and
+        <a href="native-full-content-summary.json">exact source, viewport and timing windows</a>.
+      </p>
+      <p>
+        After the progression correction, three separately restarted Riy Fan trials on Receiver
+        Gardens pass at p95 <strong>10.8 / 12.1 / 10.2 ms</strong> on <code>08f5e6e0e</code>.
+        They measure earned gameplay from about 3:30 to 5:28, including a surge and final-tank
+        arrival. Eight periodic samples per trial show 139–973 alive and 93–348 center-visible
+        enemies, with one canvas and stable base atlas storage. These are sampled ranges, not
+        sustained peaks or a full boss victory. See <a href="NATIVE-LATE-CONTENT.md">the late timing
+        report</a>. One reduced-effects comparison also passes at p95 <strong>10.3 ms</strong>
+        and p99 <strong>11.3 ms</strong>, with no interval above 33.3 ms. At the same 328.2-second
+        tick its full gameplay summary matches normal trial 2 except appearance. Sampled
+        populations match; effects peak at 32 versus 60 and sprite allocation at 1,740 versus
+        1,843. This is one comparison, not three reduced-effects trials. Normal settings were
+        restored. The quiet reference soak also passes on <code>08f5e6e0e</code>: 15 measured minutes,
+        <strong>118.8989 FPS</strong>, p95 <strong>9.7 ms</strong>, p99 <strong>10.6 ms</strong>,
+        worst 154.6 ms and 0.2373632% of intervals above 33.3 ms. All 62 samples retain one canvas
+        and fixed atlas storage; there is no dropped time, context loss or raw overflow. Stalls,
+        including those during disk-pressure cleanup, remain included. The
+        <a href="SOAK.md">soak report</a> preserves the original failed attempt too.
+      </p>
+      <p>
+        The <a href="PROGRESSION-PARITY.md">current progression comparison</a> records 47
+        unattended defeats and one unavailable checkpoint, with two active wins and ten losses.
+        Its separate fixed-route Survivor Echo now wins, while Riy Echo loses and retains a
+        91.2-second final-choice collection gap. The earlier outcomes above remain historical.
+      </p>
+      <p>
+        Latest main is merged at <code>7819c81a0</code> without changing Overflight runtime;
+        the recorded measurements retain <code>08f5e6e0e</code>. All <strong>90 focused integration
+        tests</strong> pass with zero skipped. The planned local checks are complete within
+        their recorded scope; <a href="https://github.com/mekhovov/revealline/pull/1248">PR 1248</a> contains the follow-up. Review judgments include late reward collection, Riy Echo approaches,
+        challenge readability, visual appeal and real soundtrack/warning balance. The recorded
+        scenarios do not certify every build or boss victory. External-device and five-player
+        trials remain skipped at the user’s direction.
+      </p>
+      <small
+        >Capture settings and SHA-256 hashes:
+        <a href="native/native-review.json">earlier media provenance</a> and
+        <a href="native/active-unattended-review.json">latest Quarry capture</a>, plus
+        <a href="native/depot-riy-echo-unattended.json">Riy no-input follow-up</a>. No gameplay,
+        enjoyment or performance claim is inferred solely from this gallery.</small
+      >
+    </section>
+  </body>
+</html>

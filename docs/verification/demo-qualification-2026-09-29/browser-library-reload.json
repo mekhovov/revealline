@@ -1,0 +1,488 @@
+{
+  "format": "revealline-demo-library-browser-qualification.v1",
+  "kind": "persisted-reopen",
+  "startedAt": "2026-09-29T02:09:56.207Z",
+  "browser": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "brands": [
+      {
+        "brand": "Chromium",
+        "version": "154"
+      },
+      {
+        "brand": "Google Chrome",
+        "version": "154"
+      },
+      {
+        "brand": "Not A(Brand",
+        "version": "99"
+      }
+    ],
+    "platform": "macOS",
+    "vendor": "Google Inc.",
+    "navigationType": "reload"
+  },
+  "url": "http://127.0.0.1:8820/game/test/browser/demo-library.html?db=revealline-demo-qualification-f2ebd220aab24af5a937539dca0a5c35&expected=888a41fd3bc3e549303243084059a1d362ed37b3476e1740c0bb305ea4353d16&clip=first-signal-left",
+  "database": "revealline-demo-qualification-f2ebd220aab24af5a937539dca0a5c35",
+  "boundary": "Production library + native IndexedDB; not ordinary win/Keep UI integration",
+  "concurrency": "Two native connections in this page, not separate browser tabs/processes",
+  "ordinaryStorage": "No ordinary game database or localStorage API is opened by the harness",
+  "checks": [
+    {
+      "label": "Verify retained bytes and strict replay after navigation/reload",
+      "pass": true,
+      "durationMs": 32.10000002384186,
+      "details": {
+        "documentSha256": "888a41fd3bc3e549303243084059a1d362ed37b3476e1740c0bb305ea4353d16",
+        "checkpoint": "3a51be5a501dc282",
+        "navigationType": "reload",
+        "witnessedPageReload": true
+      }
+    }
+  ],
+  "pass": true,
+  "finishedAt": "2026-09-29T02:09:56.239Z",
+  "durationMs": 32.20000001788139,
+  "sources": [
+    {
+      "url": "http://127.0.0.1:8820/game/campaign-contexts.mjs",
+      "bytes": 4403,
+      "sha256": "3243fc2fc9d0db9fb6cf913609a86105d87bf80270a24fde10ec3b46d5eb92b8"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/campaign-difficulty.mjs",
+      "bytes": 7336,
+      "sha256": "7890880e30df503b69fef0e44e8d58bfa919243aa535ed33c6a1afaa83367b97"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/content-design/catalogs.mjs",
+      "bytes": 21769,
+      "sha256": "424f9d947ccd0fb86233a97d106bfedde88769159bad84a07c83bea16bfffe59"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/content-design/map.mjs",
+      "bytes": 9808,
+      "sha256": "10cb9be9e55a872d24539a74f64cca66c45c90a6d1472c2bfd2c3b0bd5a8580a"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/content.mjs",
+      "bytes": 25640,
+      "sha256": "25f41f98e4331f71e257d908fad78231c5ff1cb7b363bb5686c536699eb96c15"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/content/campaign.json",
+      "bytes": 18487,
+      "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/content/classes.json",
+      "bytes": 2227,
+      "sha256": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/controller-bindings.mjs",
+      "bytes": 13850,
+      "sha256": "f19263812412e31edac04110dc305364506596ab932dfe5f976057d16a8293b1"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/controller-boost.mjs",
+      "bytes": 398,
+      "sha256": "c71973fcdf65d6809cea584054f01f445ce0fa1523c32a79986fec7f00c8d012"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/coop/bonus-opportunity.mjs",
+      "bytes": 925,
+      "sha256": "d3d6b967b6f0593e305eb6c53547fb8687f72238a5bbb1df3a955efa4a9777e6"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/coop/core.mjs",
+      "bytes": 47429,
+      "sha256": "d5abe476c8f44b15bdf86c9e05a2f85ad9e2be016ebf7e5540b73d200ea8d545"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/coop/foundations.mjs",
+      "bytes": 3693,
+      "sha256": "09545836fe820e7247ef4d47404912db2a2bf6d810dce089ae7cf1116fd120b2"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/coop/geometry.mjs",
+      "bytes": 8738,
+      "sha256": "0b0351a795c882af0ccf2f88716b13135bf632b80d1e8ef83c35c3891411331a"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/coop/roamers.mjs",
+      "bytes": 2581,
+      "sha256": "2af9c1541e3081773c9eab34e1a418f76c77ba8cf2249a793fc84739d0214cee"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/coop/terrain.mjs",
+      "bytes": 1872,
+      "sha256": "d43bc5987813ce79e61fcbfc97e52cba484d399bd5a564519b1f92aacb778b38"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/coop/threats.mjs",
+      "bytes": 16406,
+      "sha256": "44c24f8a73162fed5eec40053ad4add41b5160908be17af62771c9fe83c7c457"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/coop/timed-bonuses.mjs",
+      "bytes": 6560,
+      "sha256": "93685cfa70a123e87f4e1ba7af71bccf99168a86f587efb1b69e971060173510"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/abilities.mjs",
+      "bytes": 3855,
+      "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/arcade-actions.mjs",
+      "bytes": 848,
+      "sha256": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/bonus-opportunity.mjs",
+      "bytes": 1787,
+      "sha256": "df7a08d3d965a445153881a3423c09b1cbfca5c91231d05570c59e7ef18baa90"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/capture-regions.mjs",
+      "bytes": 5263,
+      "sha256": "df8222bb5f8731514d4511e82dd5f18bdab72cc8be89a427a1e4f268ed447bbf"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/capture.mjs",
+      "bytes": 7337,
+      "sha256": "c5b4b3ca005edf585f3c748be85d149d475227da5ba6f2a36f9750504ce8e30e"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/classic-contour.mjs",
+      "bytes": 7465,
+      "sha256": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/classic-definition.mjs",
+      "bytes": 8825,
+      "sha256": "1cafe32c2173da1cdc1b7b88cf58e62967846918836566c0311d2fd4ed40eaac"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/classic-motion.mjs",
+      "bytes": 12889,
+      "sha256": "23ded4bc7e90cddb838ea08d320b6ac8a6df3755cf12dc362ea10e5d7bcc8c2b"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/classic-state.mjs",
+      "bytes": 2639,
+      "sha256": "32e030fc6850a8445b229adbd240d76eea68dcc0c1b7a3436fc3bc0c06e872f6"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/classic-step.mjs",
+      "bytes": 18451,
+      "sha256": "487d174a6935e2868c755f544d8115fa41ace775144cd859dc7830665af1b586"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/classic-topology.mjs",
+      "bytes": 6458,
+      "sha256": "e72c4c6e3d75be33d0c2995c7ced65a21c81eba34874e18737b05e8c011284b3"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/combat-definition.mjs",
+      "bytes": 5188,
+      "sha256": "0d964d2c43264aca7684d58c4f785c341c29ae669e1d9f89f7aa83ece284067b"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/combat-motion.mjs",
+      "bytes": 4573,
+      "sha256": "fe27eace4a8f7abe14a9c5a0c59733eeab96ba4c1dd0fcac8c23f6094e7cd09c"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/combat-patrols.mjs",
+      "bytes": 8955,
+      "sha256": "9c8492c07b41fdc0f3cb2825113c6463d7e5569b777de3883887f304b32bc2e6"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/contacts.mjs",
+      "bytes": 5263,
+      "sha256": "d8c8294bf7141471a125dc325ab1202e2a705ca62ad7632d89129907c8072df4"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/directional-fields.mjs",
+      "bytes": 3576,
+      "sha256": "b93cf46cd2a845ffa4792410d8d42852afca701dd07ee04a9969fecd417b5f17"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/encounter.mjs",
+      "bytes": 10043,
+      "sha256": "5543956a0dc81a613c33e1244a6f02621d1c089ec6cade4e34ff1fcc569d279b"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/enemy-pressure.mjs",
+      "bytes": 11725,
+      "sha256": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/field-course.mjs",
+      "bytes": 3605,
+      "sha256": "fbd86842f281334088a35e1793c65ba4d323fe64209f81546e47a06f87af0e0d"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/foundations.mjs",
+      "bytes": 3490,
+      "sha256": "e962d95eda0781da901565cd3b597eb856451899f4201b543ad412744f566e72"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/geometry.mjs",
+      "bytes": 4005,
+      "sha256": "d7252d751c56f77cebffcdd5c3adc5b5db9c0f4f489a821591bb356f05c0af55"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/index.mjs",
+      "bytes": 18516,
+      "sha256": "ffe699abcbda8715cfa866027f3bc2722e3bd91e2bf444ec150b7587d2490a22"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/level.mjs",
+      "bytes": 16091,
+      "sha256": "493afdc329cfefade53a0299e5b8da07b9edcdecd56c646862635b26fc0d13b5"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/line-impact.mjs",
+      "bytes": 9142,
+      "sha256": "e3a11756a9fb7272ad660dbf9a2c175095f89e26f889e3f3edb25865b2b7c5a0"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/movement.mjs",
+      "bytes": 11398,
+      "sha256": "216e03da20b388c8278be19a9829a8ef642fea30291125b645c5373e5902c261"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/registry.mjs",
+      "bytes": 6661,
+      "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/relay-gates.mjs",
+      "bytes": 2369,
+      "sha256": "6ebaf6d4fbe5b2b53336d048a2e10a876c5f8f796c70b4474927185d55ee9117"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/systems.mjs",
+      "bytes": 4621,
+      "sha256": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/timed-bonuses.mjs",
+      "bytes": 8967,
+      "sha256": "8a9330bce36416d3f9a3ac74c2876f90756f28995c9bbd38be4a9bc94d0ce0ea"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/core/versions.mjs",
+      "bytes": 4672,
+      "sha256": "a2f232db7ad148b798dca9b9b6d32e0f3d863d1c429595b429f94493fc73573b"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/data-json.mjs",
+      "bytes": 5108,
+      "sha256": "c238667bfb7315a93a76fb798b53b06a684c9438750faeffc0f8b032b272483a"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/demo-catalog.mjs",
+      "bytes": 8573,
+      "sha256": "3f6966ecb1c2c4222634b5ecac4227cdc9781a75cd89ba296190d552e502248b"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/demo-data/catalog.json",
+      "bytes": 4079,
+      "sha256": "ccbc57dab22d661252f1a8de3e107651733b43ba83ba66afc24059da75f94132"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/demo-library.mjs",
+      "bytes": 10298,
+      "sha256": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/flight-media-pins.mjs",
+      "bytes": 5415,
+      "sha256": "e7fcc1e020ac3991d6947bc79487e54c13d6176356a177a45274a8ba6d64f241"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/gameplay-tuning-v1.mjs",
+      "bytes": 16446,
+      "sha256": "6213bc6c3a67370ea00dea600f2951736fb5aed108cdc4037703f9254503e91b"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/gameplay-tuning-v2.mjs",
+      "bytes": 18630,
+      "sha256": "3bfecf33324e2f5c83aca5f86ef183dd7147108be356cd9aa31cb1f1e1a24c5c"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/gameplay-tuning-v3.mjs",
+      "bytes": 19274,
+      "sha256": "82dfa8e48511485ee76a670dee689970e7af7b69e73861f0b950b9449fa4f9af"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/gameplay-tuning.mjs",
+      "bytes": 19652,
+      "sha256": "2172441efdd5c8e75c67c4a5de861db25c9a4788ae2afeed37d4b219cb1a6b01"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/i18n/bootstrap.mjs",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/i18n/catalogs.mjs",
+      "bytes": 1006819,
+      "sha256": "50054200ac6e54eb2a4e5ad6c73c99b06c4dfd56a95b9190304126022ce9aab4"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/input-presentation.mjs",
+      "bytes": 1982,
+      "sha256": "09ea2071ddb568ab51369380385b5aa2d2ce2b06a04a1ef21567eda127e38fce"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/key-bindings.mjs",
+      "bytes": 13649,
+      "sha256": "9f0ccc8a21fb88618f93ca12742bf908e027ab4f05ae69f98fff05a92bef30a2"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/library.mjs",
+      "bytes": 35823,
+      "sha256": "d4f9b64d34f2e89a8ccef20ff08245758eb62161c0dc8c45959a1b9441917012"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/mastery-catalog.mjs",
+      "bytes": 14371,
+      "sha256": "f5ab0cc8d15f575624ad80852f77eac38c86062a06a9ba8a910f711fa8509dee"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/mastery-equipment.mjs",
+      "bytes": 29233,
+      "sha256": "5d45dfb343754c728277ea83a6a32ff46547adf747da65eee5ec0aa30bd09d1a"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/mastery-records.mjs",
+      "bytes": 10009,
+      "sha256": "71edb762a8097fec95428444bbcb269ecfb7a02abc7ea5af7b537639cf3b330f"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/mastery.mjs",
+      "bytes": 16941,
+      "sha256": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/media-library.mjs",
+      "bytes": 12188,
+      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/media-presentation.mjs",
+      "bytes": 1688,
+      "sha256": "6e34dd758d1fbb85c7d6f27c651ee6ea20fc7cba013b40770b0ad24e921733fb"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/media-still.mjs",
+      "bytes": 5220,
+      "sha256": "36cd1574adcc3f0b05582c1eefb56d42ce96ccc53e09ad93d9d79b9b62f548e1"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/media-storage-record.mjs",
+      "bytes": 17058,
+      "sha256": "8ac345221034ec28e9968942d86dfdd4cb33415f0e7319a62e9466e072a0b93a"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/official-downloads.mjs",
+      "bytes": 17757,
+      "sha256": "fae1a94813c7e2173280f7b0100298c8de267d64b31600dde09e6d347a638d43"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/picture-receipts.mjs",
+      "bytes": 4055,
+      "sha256": "f777e136a1c29077af75b3b4ec053bbf854a9954b4116e13b086c510a78be004"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/platform.mjs",
+      "bytes": 2524,
+      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/presentation-pins.mjs",
+      "bytes": 7014,
+      "sha256": "fd6b3b0bfc3cf1860ffe808d8644e7b490a936955d5d90f7c59dc7b9b76ad959"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/progress.mjs",
+      "bytes": 14628,
+      "sha256": "4dd5c9c895c9e7861e09652f8253866364e93cda53e257bcf66306cb9dd570cd"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/replay.mjs",
+      "bytes": 24761,
+      "sha256": "617a433da2987de6ed4a4e5c8276bf190718ff9b542b91b822f693460d2dbabf"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/story-bindings.mjs",
+      "bytes": 3657,
+      "sha256": "555415656c7052d16b1afe8a742d11baef48c0163a749bc79b2b3821d342425a"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/story-receipts.mjs",
+      "bytes": 2208,
+      "sha256": "8463ccf09a48cb55c7d46627a03178960e231313dcbd29bb93c5a83b4d5b1492"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/story-storage-record.mjs",
+      "bytes": 12312,
+      "sha256": "9fdd834cf7c39e5d84a33236b8f4fcb961242d3d6be54d4945aae9242d63e938"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/test/browser/demo-library.mjs",
+      "bytes": 20286,
+      "sha256": "5e809ee642ad46352768ecc9b282119ebc0328726827805788e5fce83bc9a23f"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/text-face.mjs",
+      "bytes": 1039,
+      "sha256": "7ed407be46a77f5969bf7f988d9c0599c148ae7ef1c9ce194543e8c63ee71e59"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/text-size.mjs",
+      "bytes": 251,
+      "sha256": "a2517c4ae10a8283865594c5d04bdcc385733b6813c024ed1c635e05755c717a"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/touch-controls.mjs",
+      "bytes": 1651,
+      "sha256": "247811a921e69ff3488faa3138e36db42f5bacddccd03e2d52b0f21169809cc6"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/ui/actor-recipes.mjs",
+      "bytes": 2651,
+      "sha256": "5545974b78c29e9c8b0b8cc1d8d2c04704d0918be32eaa206e4d982a13543b53"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/ui/fpv-body-recipes.mjs",
+      "bytes": 5571,
+      "sha256": "7f006da3957810fa81fe9532dda8c70a5c9552da12334f815c99b9e963508852"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/ui/music.mjs",
+      "bytes": 7205,
+      "sha256": "cb52db174666ea9bc4448a71c56bc53cf593db58183f665705fa4727f93fef50"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/victory-story.mjs",
+      "bytes": 6313,
+      "sha256": "e2be40f02c58017a28ab40eceb26c79d9368bb1439a853e1d08bd99ec4904074"
+    },
+    {
+      "url": "http://127.0.0.1:8820/game/video-poster.mjs",
+      "bytes": 17994,
+      "sha256": "d58ba537a8b1baadf0f7b9e2719ffc69a47f6e0029bb8bd7da958f6c31603228"
+    }
+  ]
+}

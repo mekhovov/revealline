@@ -1,0 +1,373 @@
+[
+  {
+    "id": "beach-grass",
+    "selectedNode": "BeachGrassOne200",
+    "sourceUnit": {
+      "name": "inch",
+      "meter": "0.0254"
+    },
+    "sourceUpAxis": "Z_UP",
+    "sources": [
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/groundCover/BeachGrass_01/BeachGrass01.DAE",
+        "bytes": 13315,
+        "sha256": "9a2bfcf74db6e10a27120882dffae3112723ab8da8b70b61124a69083e717f9f"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/groundCover/BeachGrass_01/3td_BeachGrass_01.png",
+        "bytes": 140599,
+        "sha256": "c2d8f75e2a9f9ff6c3614f20aef93d8a1853b6f290308a3db046b1d551466809"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/groundCover/BeachGrass_01/materials.cs",
+        "bytes": 370,
+        "sha256": "999384c298496910ed4ecafdd01649776b93f70063c72e0bd8c1bc2b1d5af60b"
+      }
+    ],
+    "imagePathRewrites": [
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/Tropical/3td_BeachGrass_01.png",
+        "to": "3td_BeachGrass_01.png"
+      }
+    ],
+    "materialSource": "materials.cs"
+  },
+  {
+    "id": "young-bamboo",
+    "selectedNode": "BambooTwo200",
+    "sourceUnit": {
+      "name": "inch",
+      "meter": "0.0254"
+    },
+    "sourceUpAxis": "Z_UP",
+    "sources": [
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/Plants/Bamboo02/Bamboo_02.dae",
+        "bytes": 177641,
+        "sha256": "451ccb658fc49c58cf819e6f796565fb8eac89d401fc73745b8470f4baf01305"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/Plants/Bamboo02/3TD_BambooBark02.jpg",
+        "bytes": 279401,
+        "sha256": "3ba386d684affd3ad9fb541af19d8b3fb9c832b1398046fc97815b9f0f3df483"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/Plants/Bamboo02/3TD_YoungBamboo_01.png",
+        "bytes": 178946,
+        "sha256": "91d47d4a5883800f89899de39ae7df6ad1dcd0dd8e8e48772eb9f91e535f65e7"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/Plants/Bamboo02/materials.cs",
+        "bytes": 787,
+        "sha256": "1f2595d1d098a7a085770260523b3cf2eafb69dfe0b0b7c2b5def5fdc49272d4"
+      }
+    ],
+    "imagePathRewrites": [
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/Tropical/3TD_BambooBark02.jpg",
+        "to": "3TD_BambooBark02.jpg"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/Tropical/3TD_YoungBamboo_01.png",
+        "to": "3TD_YoungBamboo_01.png"
+      }
+    ],
+    "materialSource": "materials.cs"
+  },
+  {
+    "id": "crate",
+    "selectedNode": "CrateOne200",
+    "sourceUnit": {
+      "name": "meter",
+      "meter": "1"
+    },
+    "sourceUpAxis": "Z_UP",
+    "sources": [
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/crate_01/Crate_01.dae",
+        "bytes": 123725,
+        "sha256": "71d9df1f015604ea12cd32dd4e09dcf2adb672c19bd273e8f7a4f287977c4203"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/crate_01/3td_JettyWood02.jpg",
+        "bytes": 372280,
+        "sha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/crate_01/3td_Rope_01.jpg",
+        "bytes": 167673,
+        "sha256": "b30c259ef85c55552795af4a4580b85842ee0649951d5e0d4a7455083e7788d6"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/crate_01/3td_SteelStrap01.jpg",
+        "bytes": 309860,
+        "sha256": "2907231248a9af860fb30bc811ec69888a23456337d2d9cd2838cc67ed5a0540"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/crate_01/materials.cs",
+        "bytes": 967,
+        "sha256": "52d63161a7ad64431a2ae503318441bcccb53cb8c0a5967b63e72da5a287a229"
+      }
+    ],
+    "imagePathRewrites": [
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_JettyWood02.jpg",
+        "to": "3td_JettyWood02.jpg"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_Rope_01.jpg",
+        "to": "3td_Rope_01.jpg"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_SteelStrap01.jpg",
+        "to": "3td_SteelStrap01.jpg"
+      }
+    ],
+    "materialSource": "materials.cs"
+  },
+  {
+    "id": "covered-jetty",
+    "selectedNode": "jettyOne256",
+    "sourceUnit": {
+      "name": "inch",
+      "meter": "0.0254"
+    },
+    "sourceUpAxis": "Z_UP",
+    "sources": [
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/Jetty01/Tropical_Jetty01.DAE",
+        "bytes": 352826,
+        "sha256": "c8772d1c4631d1ad6a44264239634d1a647851292cb92508315cf524e72cd338"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/Jetty01/3td_JettyWood01.jpg",
+        "bytes": 242794,
+        "sha256": "0f6affe984bcf6ca50b286a0ea2dbfcfa33b4728ca9c119d863eee4ea8e68268"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/Jetty01/3td_JettyWood02.jpg",
+        "bytes": 372280,
+        "sha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/Jetty01/3td_TinRoof01.jpg",
+        "bytes": 288194,
+        "sha256": "094c51bf8dddb0ab12246d8106c68f85c52dac575a921d1adebaa49b142e2428"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/Jetty01/materials.cs",
+        "bytes": 1049,
+        "sha256": "15758785a6882a9f46f7f512d16e47a50e0965f3f131d8a0eb2c5ead3f8262b6"
+      }
+    ],
+    "imagePathRewrites": [
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_JettyWood01.jpg",
+        "to": "3td_JettyWood01.jpg"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_JettyWood02.jpg",
+        "to": "3td_JettyWood02.jpg"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_TinRoof01.jpg",
+        "to": "3td_TinRoof01.jpg"
+      }
+    ],
+    "materialSource": "materials.cs"
+  },
+  {
+    "id": "open-jetty",
+    "selectedNode": "jettyTwo256",
+    "sourceUnit": {
+      "name": "inch",
+      "meter": "0.0254"
+    },
+    "sourceUpAxis": "Z_UP",
+    "sources": [
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/Jetty02/Tropical_Jetty02.DAE",
+        "bytes": 274361,
+        "sha256": "3ad037a52effbff7b8bb6a13a0a49d76fc83ebfa9612569af7c09e443753ea55"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/Jetty02/3td_JettyWood01.jpg",
+        "bytes": 242794,
+        "sha256": "0f6affe984bcf6ca50b286a0ea2dbfcfa33b4728ca9c119d863eee4ea8e68268"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/Jetty02/3td_JettyWood02.jpg",
+        "bytes": 372280,
+        "sha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88"
+      }
+    ],
+    "imagePathRewrites": [
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_JettyWood01.jpg",
+        "to": "3td_JettyWood01.jpg"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_JettyWood02.jpg",
+        "to": "3td_JettyWood02.jpg"
+      }
+    ],
+    "materialSource": null
+  },
+  {
+    "id": "jungle-hut",
+    "selectedNode": "jungleHutTwo256",
+    "sourceUnit": {
+      "name": "meter",
+      "meter": "1"
+    },
+    "sourceUpAxis": "Z_UP",
+    "sources": [
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/JungleHut02/JungleHut02.dae",
+        "bytes": 563621,
+        "sha256": "ee14533124e3036144b64ad3ec055d3f00421c736b0117c1dbdbb1d6940efe87"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/JungleHut02/3TD_WoodPlank_T_01.png",
+        "bytes": 527804,
+        "sha256": "b468762f33b846eef33cfdb35618712f9b8a284568ffdb7a1182c81014c61a09"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/JungleHut02/3td_WoodPlank_02.jpg",
+        "bytes": 248817,
+        "sha256": "acb775330a6fd245f14d31408d0ecb7881f3dd04e074ecdb83be85800f9706ff"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/JungleHut02/3td_OldCanvas_01.png",
+        "bytes": 413489,
+        "sha256": "1c6681aaaf30c100829a1815f320ff051c0da81494c42c4006655c5bc890967e"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/JungleHut02/3td_ThatchRoof_01.png",
+        "bytes": 830949,
+        "sha256": "32342553e5ca9e00b5034537e36c441e2d53745e2a87c985890ec6c041df2b74"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/props/JungleHut02/materials.cs",
+        "bytes": 1748,
+        "sha256": "7a5822562fec5b042c91339393fe720441b5ad7893228cc78be4f84a12fa8072"
+      }
+    ],
+    "imagePathRewrites": [
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/AfricaSavannah/Props/3TD_WoodPlank_T_01.png",
+        "to": "3TD_WoodPlank_T_01.png"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/AfricaSavannah/Props/3td_WoodPlank_02.jpg",
+        "to": "3td_WoodPlank_02.jpg"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_OldCanvas_01.png",
+        "to": "3td_OldCanvas_01.png"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/JungleBuildings/3td_ThatchRoof_01.png",
+        "to": "3td_ThatchRoof_01.png"
+      }
+    ],
+    "materialSource": "materials.cs"
+  },
+  {
+    "id": "beach-rock",
+    "selectedNode": "beachRockOne200",
+    "sourceUnit": {
+      "name": "inch",
+      "meter": "0.0254"
+    },
+    "sourceUpAxis": "Z_UP",
+    "sources": [
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/rocks/BeachRock01/BeachRock_01.dae",
+        "bytes": 324120,
+        "sha256": "bed84b46f7d28086cbddc0a043d04d8cfd5dcc07e6a27a0f5cdf4d0cbd41fa45"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/rocks/BeachRock01/3td_Granite_02_1024.jpg",
+        "bytes": 1214674,
+        "sha256": "dcf714a10d4cea4c30f30078b9df4d01ed5efc937ed3c5becc0774871b0b8f3b"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/rocks/BeachRock01/materials.cs",
+        "bytes": 330,
+        "sha256": "49eaba6414cbc033504cad43ba4018b9976e3f71f9da8f42f688eec45fd5e52e"
+      }
+    ],
+    "imagePathRewrites": [
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/Stone/3td_Granite_02_1024.jpg",
+        "to": "3td_Granite_02_1024.jpg"
+      }
+    ],
+    "materialSource": "materials.cs"
+  },
+  {
+    "id": "palm",
+    "selectedNode": "PalmThree256",
+    "sourceUnit": {
+      "name": "inch",
+      "meter": "0.0254"
+    },
+    "sourceUpAxis": "Z_UP",
+    "sources": [
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/trees/Palms/Palm03.dae",
+        "bytes": 379233,
+        "sha256": "d4f534d20228cae11edf79f617caaa23984715b883d7e28a46e0d9f9a50f01e3"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/trees/Palms/3td_Palm05_Old.png",
+        "bytes": 153586,
+        "sha256": "56ec6ee782af4f5de8b677a733f81ce5adc104b0cba021c2234b2350039868b5"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/trees/Palms/3td_litePalmBark_01.jpg",
+        "bytes": 442883,
+        "sha256": "a52bb5fbcab637ae8ffceff39ace5961ec8c0f1a3129320ce990be14db6e2198"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/trees/Palms/Palm05.png",
+        "bytes": 103836,
+        "sha256": "7ba06af8d751632a01d42d4a13415e9c314887e07db41a3d3a74994c3803d013"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/trees/Palms/DriPalm02.png",
+        "bytes": 127604,
+        "sha256": "e276ba5f5fea0c8f7806bc157155327c8be3cbd6120598d632d476b223b02f7a"
+      },
+      {
+        "path": "Tropical_Environment_Pack_v2.0_Ready/Tropical Rain Forest_Source v2.0/game/art/shapes/trees/Palms/materials.cs",
+        "bytes": 7424,
+        "sha256": "256ff509a7a99a027199621fe14533ae3d4e4dd22f30605738d2ebff6bf88843"
+      }
+    ],
+    "imagePathRewrites": [
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/Tropical/3td_Palm05_Old.png",
+        "to": "3td_Palm05_Old.png"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/Tropical/3td_litePalmBark_01.jpg",
+        "to": "3td_litePalmBark_01.jpg"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/Tropical/Palm05.png",
+        "to": "Palm05.png"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/images/DriPalm02.png",
+        "to": "DriPalm02.png"
+      },
+      {
+        "from": "file:///C:/Users/RonMain/Documents/3dsmax/sceneassets/images/Palm05.png",
+        "to": "Palm05.png"
+      }
+    ],
+    "materialSource": "materials.cs"
+  }
+]

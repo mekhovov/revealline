@@ -40,6 +40,7 @@ export function createCommunityAccountClient({
   baseURL,
   fetchImpl = globalThis.fetch,
   origin = globalThis.location?.origin ?? 'https://local',
+  accountPageURL = globalThis.location?.href ?? `${origin}/`,
 } = {}) {
   required(typeof fetchImpl === 'function', 'Account network adapter is required.');
   const base = new URL(baseURL ?? '/', `${origin}/`);
@@ -47,6 +48,21 @@ export function createCommunityAccountClient({
     base.origin === new URL(origin).origin,
     'Creator accounts require the same-origin service.',
   );
+  const accountPage = new URL(accountPageURL, `${origin}/`);
+  required(
+    accountPage.origin === base.origin &&
+      !accountPage.username &&
+      !accountPage.password &&
+      accountPage.href.length <= 2_048,
+    'Account recovery requires a bounded same-origin page URL.',
+  );
+  accountPage.hash = '';
+  accountPage.search = '';
+  const callbackURL = (action) => {
+    const url = new URL(accountPage);
+    url.searchParams.set('account', action);
+    return url.href;
+  };
   const request = async (path, init = {}) =>
     readJSON(
       await fetchImpl(new URL(path, base), {
@@ -79,7 +95,12 @@ export function createCommunityAccountClient({
       );
       await request('api/auth/sign-up/email', {
         method: 'POST',
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), password }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          password,
+          callbackURL: callbackURL('verified'),
+        }),
       });
       return session();
     },
@@ -98,6 +119,37 @@ export function createCommunityAccountClient({
     async signOut() {
       await request('api/auth/sign-out', { method: 'POST', body: '{}' });
       return null;
+    },
+    async requestEmailVerification({ email }) {
+      required(typeof email === 'string' && email.length <= 320, 'Email is invalid.');
+      await request('api/auth/send-verification-email', {
+        method: 'POST',
+        body: JSON.stringify({ email: email.trim(), callbackURL: callbackURL('verified') }),
+      });
+    },
+    async requestPasswordReset({ email }) {
+      required(typeof email === 'string' && email.length <= 320, 'Email is invalid.');
+      await request('api/auth/request-password-reset', {
+        method: 'POST',
+        body: JSON.stringify({ email: email.trim(), redirectTo: callbackURL('reset') }),
+      });
+    },
+    async resetPassword({ token, newPassword }) {
+      required(
+        typeof token === 'string' &&
+          token.length >= 1 &&
+          token.length <= 4_096 &&
+          !/[\u0000-\u001f\u007f]/u.test(token),
+        'Password reset token is invalid.',
+      );
+      required(
+        typeof newPassword === 'string' && newPassword.length >= 8 && newPassword.length <= 128,
+        'Password must be 8–128 characters.',
+      );
+      await request('api/auth/reset-password', {
+        method: 'POST',
+        body: JSON.stringify({ token, newPassword }),
+      });
     },
   });
 }

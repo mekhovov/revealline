@@ -87,6 +87,14 @@ async function harness(
     unavailable = denied,
     frameSourceWrites = 0;
   win.location = { href: `${origin}authoring/${route}/` };
+  // Production now mounts the same single input owner as its browser entry.
+  // These display tests do not advance gamepad frames; input has its own suite.
+  win.requestAnimationFrame = () => 1;
+  win.cancelAnimationFrame = () => {};
+  win.MutationObserver = class {
+    observe() {}
+    disconnect() {}
+  };
   win.matchMedia = function (query) {
     assert.equal(this, win);
     assert.equal(query, '(prefers-reduced-motion: reduce)');
@@ -154,6 +162,12 @@ async function harness(
   const createElement = doc.createElement.bind(doc);
   doc.createElement = (tag) => {
     const node = createElement(tag);
+    node.before = (other) => {
+      other.remove();
+      const siblings = node.parentNode.children;
+      siblings.splice(siblings.indexOf(node), 0, other);
+      other.parentNode = node.parentNode;
+    };
     if (tag === 'img') {
       const gate = deferred();
       node.naturalWidth = picture.width;
@@ -408,6 +422,33 @@ test('Production cached lifecycle keeps its display owner but preserves existing
   assert.deepEqual(h.writes, []);
 });
 
+for (const boundary of ['blur', 'hidden'])
+  test(`Production ${boundary} cancels a pending original decode without replacing newer focus`, async (t) => {
+    const h = await harness(t, 'production');
+    await productionReady(h);
+    const { detail, search } = openPicture(h);
+    button(detail, 'Preview original').click();
+    await until(() => h.decoded.length === 1, 'decode pending');
+    const request = h.requests.at(-1),
+      image = h.decoded[0].node;
+    search.focus();
+    if (boundary === 'blur') {
+      h.doc.focused = false;
+      h.win.emit('blur');
+    } else {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+    }
+    assert.equal(request.signal.aborted, true);
+    h.decoded[0].gate.resolve();
+    await settle();
+    assert.equal(image.isConnected, false);
+    assert.equal(h.released.length, 1);
+    assert.equal(h.doc.activeElement, search);
+    assert.match(detail.textContent, /Preview cleared/);
+    assert.deepEqual(h.writes, []);
+  });
+
 test('Viewport adopts saved host preferences without loading a game or altering a pending selection', async (t) => {
   const h = await harness(t, 'viewport-lab', {
     stored: encode({ textFace: 'plain', textSize: 'large' }),
@@ -431,7 +472,7 @@ test('Viewport adopts saved host preferences without loading a game or altering 
 
 test('Viewport reading changes keep the loaded frame, pending replacement, dimensions and input focus intact', async (t) => {
   const h = await harness(t, 'viewport-lab');
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   h.$('preset').value = '390x844';
   h.$('preset').emit('change');
   h.$('target').value = 'solo';
@@ -451,7 +492,7 @@ test('Viewport reading changes keep the loaded frame, pending replacement, dimen
   assert.deepEqual(viewportState(h), before);
   assert.ok(h.$('game-frame') === frame && h.doc.activeElement === h.$('preset'));
   h.$('load-target').focus();
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   assert.equal(frame.src, '../../game/');
   assert.equal(h.frameSourceWrites(), 2, 'Only explicit Load replaces the target.');
   assert.ok(h.doc.activeElement === h.$('target'), 'Existing Load focus handoff still works.');
@@ -464,7 +505,7 @@ test('Viewport reading changes keep the loaded frame, pending replacement, dimen
 
 test('Viewport persisted return adopts missed shared/system changes without frame reload and terminal exit retires ownership', async (t) => {
   const h = await harness(t, 'viewport-lab');
-  h.$('target-form').emit('submit');
+  h.$('load-target').click();
   h.$('preset').value = '844x390';
   h.$('preset').emit('change');
   const before = viewportState(h),
@@ -507,7 +548,7 @@ for (const route of ['production', 'viewport-lab']) {
       } else {
         h.$('target').value = 'solo';
         h.$('target').emit('change');
-        h.$('target-form').emit('submit');
+        h.$('load-target').click();
         assert.equal(h.$('game-frame').src, '../../game/');
         assert.equal(h.frameSourceWrites(), 1);
       }

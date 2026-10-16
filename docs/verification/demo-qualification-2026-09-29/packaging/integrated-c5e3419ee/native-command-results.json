@@ -1,0 +1,86 @@
+[
+  {
+    "platform": "desktop",
+    "phase": "stage",
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "scripts/native-cli.mjs",
+      "stage",
+      "--platform",
+      "desktop",
+      "--site",
+      "/private/tmp/revealline-demo-qualification-web-final-20260929",
+      "--out",
+      "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/desktop"
+    ],
+    "exitCode": 0,
+    "seconds": 3.713336957996944
+  },
+  {
+    "platform": "desktop",
+    "phase": "verify",
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "scripts/native-cli.mjs",
+      "verify",
+      "--site",
+      "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/desktop"
+    ],
+    "exitCode": 0,
+    "seconds": 1.101994291995652
+  },
+  {
+    "platform": "desktop",
+    "phase": "audit",
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/audit-integrated-desktop.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 0.7882136660045944
+  },
+  {
+    "platform": "ios",
+    "phase": "stage",
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "scripts/native-cli.mjs",
+      "stage",
+      "--platform",
+      "ios",
+      "--site",
+      "/private/tmp/revealline-demo-qualification-web-final-20260929",
+      "--out",
+      "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/ios",
+      "--bridge",
+      "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/official-ios-bridge.mjs",
+      "--diagnostics",
+      "platforms/ios/diagnostics"
+    ],
+    "exitCode": 0,
+    "seconds": 3.2365990419930313
+  },
+  {
+    "platform": "ios",
+    "phase": "verify",
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "scripts/native-cli.mjs",
+      "verify",
+      "--site",
+      "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/ios"
+    ],
+    "exitCode": 0,
+    "seconds": 1.0651574580115266
+  },
+  {
+    "platform": "ios",
+    "phase": "audit",
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/audit-integrated-native.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 0.27407762498478405
+  }
+]

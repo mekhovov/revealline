@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { createCreatorMediaReviewController } from '../creator/media-review.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
@@ -26,6 +27,9 @@ function nodes(document) {
     status: make('p', 'media-status'),
     apply: make('button', 'media-apply'),
     cancel: make('button', 'media-cancel'),
+    capacity: make('p', 'media-capacity'),
+    removeExcluded: make('button', 'media-remove-excluded'),
+    split: make('button', 'media-split'),
     intake: make('input', 'media-intake'),
     drop: make('div', 'media-drop'),
   };
@@ -158,4 +162,170 @@ test('unsupported intake fails before media inspection', () => {
     () => controller.setFiles([file('movie.avi', 'video/x-msvideo')]),
     /not a supported PNG, JPEG, WebP, MP4 or WebM/,
   );
+});
+
+test('mixed review preserves explicit order and lets a failed included item be excluded', async () => {
+  const document = new Document(),
+    controls = nodes(document),
+    calls = [];
+  const controller = createCreatorMediaReviewController({
+    document,
+    nodes: controls,
+    prepareIntake: async (sources, options) => {
+      calls.push({
+        names: sources.map((source) => source.name),
+        preserveOrder: options.preserveOrder,
+      });
+      return {
+        format: 'revealline-creator-media-intake.v1',
+        items: sources.map((source, index) => ({
+          index,
+          name: source.name,
+          kind: source.kind,
+          assetSha256: String(index + 1).repeat(64),
+          pairing: null,
+          video: null,
+          errors: source.name.startsWith('bad')
+            ? [{ code: 'video-inspection-failed', message: 'Codec failed.' }]
+            : [],
+        })),
+        dependencies: { format: 'revealline-creator-media-dependencies.v1', stories: [] },
+        assets: [],
+      };
+    },
+  });
+  controller.setFiles([
+    file('clip10.mp4', 'video/mp4'),
+    file('bad2.mp4', 'video/mp4'),
+    file('clip1.png', 'image/png'),
+  ]);
+  assert.deepEqual(
+    controller.snapshot().sources.map((source) => source.name),
+    ['bad2.mp4', 'clip1.png', 'clip10.mp4'],
+  );
+  const last = controller.snapshot().sources[2];
+  controls.list.children[2].querySelector('input[type="checkbox"]').focus();
+  controller.move(last.id, -2);
+  assert.equal(document.activeElement.dataset.itemId, last.id);
+  assert.equal(document.activeElement.dataset.mediaAction, 'include');
+  await controller.prepare();
+  assert.deepEqual(calls[0], {
+    names: ['clip10.mp4', 'bad2.mp4', 'clip1.png'],
+    preserveOrder: true,
+  });
+  assert.match(controls.status.textContent, /need attention/);
+  const failed = controller.snapshot().sources.find((source) => source.name === 'bad2.mp4');
+  controller.setIncluded(failed.id, false);
+  assert.equal(controls.removeExcluded.hidden, false);
+  await controller.prepare();
+  assert.deepEqual(calls[1].names, ['clip10.mp4', 'clip1.png']);
+  assert.equal(controller.snapshot().ready, true);
+  assert.equal(controls.list.querySelectorAll('.creator-media-card').length, 3);
+});
+
+test('media capacity overflow requires an explicit split or removal', () => {
+  const document = new Document(),
+    controls = nodes(document);
+  let split = null;
+  const controller = createCreatorMediaReviewController({
+    document,
+    nodes: controls,
+    prepareIntake: async () => assert.fail('capacity review must work before inspection'),
+    capacityFor: (sources) => ({
+      estimatedBytes: sources.length * 200,
+      stagingBytes: sources.length * 400,
+      limitBytes: 256,
+      maxPayloadBytes: 5,
+      fits: sources.length < 2,
+    }),
+    onSplit: (chunks) => (split = chunks),
+  });
+  controller.setFiles([file('1.mp4', 'video/mp4'), file('2.mp4', 'video/mp4')]);
+  assert.equal(controls.split.hidden, false);
+  assert.match(controls.capacity.textContent, /Split it into smaller packs/);
+  controls.split.onclick();
+  assert.deepEqual(
+    split.map((chunk) => chunk.length),
+    [1, 1],
+  );
+  const excluded = controller.snapshot().sources[1];
+  controller.setIncluded(excluded.id, false);
+  assert.equal(controller.snapshot().capacity.fits, true);
+  controls.removeExcluded.onclick();
+  assert.equal(controller.snapshot().sources.length, 1);
+});
+
+test('creator page exposes media decisions and renders every generated mission review', async () => {
+  const [html, script] = await Promise.all([
+    readFile(new URL('../creator/index.html', import.meta.url), 'utf8'),
+    readFile(new URL('../creator/studio.mjs', import.meta.url), 'utf8'),
+  ]);
+  for (const id of [
+    'media-list',
+    'media-capacity',
+    'media-remove-excluded',
+    'media-split',
+    'media-split-results',
+    'mission-review-list',
+  ])
+    assert.match(html, new RegExp(`id="${id}"`));
+  assert.match(script, /for \(const \[index, provenance\] of provenances\.entries\(\)\)/);
+  assert.match(script, /missionVictoryStory/);
+  assert.match(script, /creator-mission-validation/);
+});
+
+test('poster, pairing and playback choices survive converted-video identity changes and cancellation', async () => {
+  const document = new Document(),
+    controls = nodes(document),
+    calls = [];
+  let cancelled = false;
+  const sourceSha256 = '9'.repeat(64);
+  const controller = createCreatorMediaReviewController({
+    document,
+    nodes: controls,
+    createObjectURL: () => 'blob:poster',
+    revokeObjectURL: () => {},
+    prepareIntake: async (_sources, options) => {
+      const assetSha256 = String(calls.length + 1).repeat(64);
+      const identity = { sourceSha256, assetSha256, video: { durationSeconds: 10 } };
+      const choice = {
+        pairing: options.pairingFor(identity),
+        time: options.posterTimeFor(identity),
+        range: options.playbackRangeFor(identity),
+      };
+      calls.push(choice);
+      if (cancelled) throw new DOMException('Cancelled', 'AbortError');
+      const prepared = result({ resolved: true, selectedTime: choice.time, range: choice.range });
+      Object.assign(prepared.items[1], { sourceSha256, assetSha256 });
+      return prepared;
+    },
+  });
+  controller.setFiles([file('clip.mp4', 'video/mp4'), file('clip.png', 'image/png')]);
+  await controller.prepare();
+  const pair = controls.list.querySelector('select');
+  pair.value = imageHash;
+  pair.emit('change');
+  let inputs = controls.list.querySelectorAll('input[type="number"]');
+  inputs[0].value = '3.25';
+  inputs[0].emit('change');
+  inputs = controls.list.querySelectorAll('input[type="number"]');
+  inputs[1].value = '1.5';
+  inputs[2].value = '7.75';
+  inputs[2].emit('change');
+  cancelled = true;
+  await assert.rejects(controller.prepare(), { name: 'AbortError' });
+  assert.equal(controller.snapshot().ready, false);
+  cancelled = false;
+  await controller.prepare();
+  assert.equal(calls[2].pairing, imageHash);
+  assert.equal(calls[2].time, 3.25);
+  assert.deepEqual(calls[2].range, {
+    startSeconds: 1.5,
+    endSeconds: 7.75,
+    retainsCompleteOriginal: true,
+  });
+  assert.equal(controller.snapshot().ready, true);
+  assert.equal(controls.list.querySelectorAll('input[type="number"]')[0].value, '3.25');
+  assert.equal(controls.list.querySelector('select').value, imageHash);
+  controller.destroy();
 });

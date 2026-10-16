@@ -1,0 +1,718 @@
+{
+  "date": "2026-10-02T04:35:31.192Z",
+  "browser": "154.0.8037.93",
+  "applied": {
+    "stats": {
+      "candidate": {
+        "source": {
+          "id": "candidate-calibration-check",
+          "revision": 1
+        },
+        "familyId": "candidate-dd2349c334e3295f",
+        "interfaceId": "candidate-dd2349c334e3295f",
+        "identity": "07f901077200698e",
+        "sim": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1"
+        }
+      },
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 68,
+          "textures": 22
+        },
+        "renderer": {
+          "calls": 173,
+          "triangles": 12704,
+          "geometries": 105,
+          "textures": 25,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    "accent": "#d77fb0",
+    "panel": "#302136",
+    "sectionBackground": "rgb(48, 33, 54)",
+    "buttonBackground": "rgb(215, 127, 176)",
+    "status": "Studio candidate candidate-calibration-check@1: workspace interface tokens applied. SIM uses the pinned industrial-workshop@r1 engine collection, including its original material and effect roles. The collection controls below allow isolated comparison.",
+    "after": "{\"calibration-sentinel\":\"unchanged\"}",
+    "remainingPreviewKeys": []
+  },
+  "effects": {
+    "initial": {
+      "playerPulse": 9233635,
+      "hostilePulse": 16232561,
+      "ghost": 9824751,
+      "ghostEmissive": 2390144,
+      "trail": 9824751,
+      "goalOutline": 9169660,
+      "goalActive": 15266215,
+      "goalComplete": 9808542,
+      "goalInactive": 8366516,
+      "goalGlow": 11069917,
+      "goalGlowInactive": 9030085,
+      "goalEmissive": 8577493,
+      "goalBadge": 10872788,
+      "directionArrow": 15264432
+    },
+    "pending": {
+      "playerPulse": 9233635,
+      "hostilePulse": 16232561,
+      "ghost": 9824751,
+      "ghostEmissive": 2390144,
+      "trail": 9824751,
+      "goalOutline": 9169660,
+      "goalActive": 15266215,
+      "goalComplete": 9808542,
+      "goalInactive": 8366516,
+      "goalGlow": 11069917,
+      "goalGlowInactive": 9030085,
+      "goalEmissive": 8577493,
+      "goalBadge": 10872788,
+      "directionArrow": 15264432
+    },
+    "snapshots": [
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      },
+      {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 105,
+          "materials": 50,
+          "textures": 16
+        },
+        "renderer": {
+          "calls": 152,
+          "triangles": 4060,
+          "geometries": 105,
+          "textures": 19,
+          "programs": 9,
+          "contextLost": false
+        }
+      }
+    ],
+    "ghost": {
+      "samples": 2,
+      "visible": true,
+      "trail": true,
+      "pose": {
+        "tick": 1,
+        "finished": false,
+        "position": {
+          "x": 1100,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ]
+      }
+    }
+  },
+  "consumed": {
+    "status": "Studio candidate unavailable: Candidate preview unavailable; reopen it from Asset Studio. Open a new SIM preview from Asset Studio. Showing the calibration default.",
+    "stats": {
+      "candidate": null,
+      "flight": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "utility",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop"
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 77,
+          "materials": 42,
+          "textures": 15
+        },
+        "renderer": {
+          "calls": 127,
+          "triangles": 5666,
+          "geometries": 77,
+          "textures": 18,
+          "programs": 8,
+          "contextLost": false
+        }
+      },
+      "specimen": {
+        "geometries": 43,
+        "textures": 13,
+        "programs": 4
+      }
+    },
+    "accent": ""
+  },
+  "errors": []
+}

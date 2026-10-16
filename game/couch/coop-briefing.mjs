@@ -1,6 +1,9 @@
+import { snakeBrief, snakeText } from '../snake/copy.mjs';
+import { huntText } from '../hunt/copy.mjs';
 import { t } from '../i18n/index.mjs';
 import { coopGroundContext, coopGroundLabel } from './coop-ground.mjs';
 import { teamBonusHelp } from './coop-bonus-view.mjs';
+import { hasTeamLineImpacts } from '../coop/foundations.mjs';
 
 /** Presentation advice for an already validated arena. Never changes its recipe. */
 export function coopArenaGuidance(level, { jointCuts = true } = {}) {
@@ -10,8 +13,14 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
   const drifters = level.enemies.some((enemy) => enemy.type === 'drifter');
   const roamers = level.enemies.some((enemy) => enemy.type === 'claimed-rover');
   const relays = Boolean(level.strongholds?.length);
-  const requiredCores = level.goal.cores?.length ?? 0;
+  const trailImpacts = hasTeamLineImpacts(level) && level.enemies.length > 0;
+  const requiredCores = level.hunt?.mode === 'hunt' ? 0 : (level.goal.cores?.length ?? 0);
+  const patrols = level.combatPatrols?.enabled ? level.combatPatrols.actors : [];
+  const humanoids = Boolean(level.hunt);
+  const guards = patrols.some((actor) => actor.role === 'sentry');
   const threats = [];
+  if (level.snake) threats.push(snakeBrief(level, { team: true }));
+  if (humanoids) threats.push(huntText('hint'));
   if (level.timedBonuses) threats.push(teamBonusHelp());
   const slow = level.terrain?.some((area) => area.kind === 'slow'),
     lethal = level.terrain?.some((area) => area.kind === 'lethal');
@@ -24,14 +33,28 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
     threats.push(t('interface:driftersPatrolContinuouslyAndCanHitYourCraftOrUnfinished'));
   if (roamers) threats.push(t('interface:trackedRoamersDoNotRetainFieldReclaimTheirFullFootprint'));
   if (relays) threats.push(t('interface:relayCoresWarnBeforeSendingASparkAlongAnUnfinished'));
+  if (trailImpacts)
+    threats.push(t('interface:team.trailImpactContact'), t('interface:team.trailImpactDirections'));
+  const supportRoles = level.supportRoles ?? ['hybrid', 'hybrid'];
   const specialist = level.supportRoles?.length === 2;
+  const intercept = relays || trailImpacts || guards;
+  const canSlow = hunters || drifters || roamers || patrols.length > 0;
+  const interceptorSeat = supportRoles.indexOf('interceptor') + 1;
+  const disruptorSeat = supportRoles.indexOf('disruptor') + 1;
   const pulse = specialist
-    ? '' +
-      t('interface:interceptorSupportRemovesNearbyTravellingImpactsDisruptorSupportSlowsNearby') +
-      ' '
-    : hunters || drifters || roamers
-      ? t(relays ? 'gameplay:team.supportSlowAndIntercept' : 'gameplay:team.supportSlow') + ' '
-      : relays
+    ? intercept && canSlow
+      ? t('interface:team.specialistSupportSlowAndIntercept', {
+          interceptor: interceptorSeat,
+          disruptor: disruptorSeat,
+        }) + ' '
+      : intercept
+        ? t('interface:team.specialistSupportIntercept', { player: interceptorSeat }) + ' '
+        : canSlow
+          ? t('interface:team.specialistSupportSlow', { player: disruptorSeat }) + ' '
+          : ''
+    : canSlow
+      ? t(intercept ? 'gameplay:team.supportSlowAndIntercept' : 'gameplay:team.supportSlow') + ' '
+      : intercept
         ? '' + t('interface:tapSupportNearATravellingSparkToInterceptIt') + ' '
         : '';
   const rescue = t('gameplay:team.rescueAdvice', { context });
@@ -40,12 +63,20 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
     : t('gameplay:team.separateCuts', { context });
   return {
     groundName,
+    groundContext: context,
     threatTitle: threats.length
       ? t('interface:watchTheThreats')
       : t('interface:practiceYourRoutes'),
     threatText: threats.length ? threats.join(' ') : t('gameplay:team.noThreats', { context }),
     supportText: pulse + rescue,
-    supportBySeat: (level.supportRoles ?? ['hybrid', 'hybrid']).map((role) =>
+    supportCapabilities: Object.freeze({
+      intercept,
+      slow: canSlow,
+      specialist,
+      interceptorSeat: specialist ? interceptorSeat : null,
+      disruptorSeat: specialist ? disruptorSeat : null,
+    }),
+    supportBySeat: supportRoles.map((role) =>
       role === 'interceptor'
         ? t('interface:interceptorRemovesNearbyTravellingImpacts')
         : role === 'disruptor'
@@ -58,19 +89,36 @@ export function coopArenaGuidance(level, { jointCuts = true } = {}) {
       : t('interface:relayDefenses'),
     strongholdText:
       t('gameplay:team.strongholdAdvice') +
-      (requiredCores ? '' : ' ' + t('interface:yourGoalIsTheCoverageTarget') + ''),
-    briefingTitle:
-      requiredCores > 1
-        ? t('interface:secureTheRequiredCores')
+      (level.hunt?.mode === 'hunt'
+        ? ' ' + huntText('huntGoal')
         : requiredCores
-          ? t('interface:takeTheStrongholdTogether')
-          : t('interface:makeYourCommonGround'),
-    levelNote: requiredCores
-      ? t('interface:planRoutesToTheAnchorsThenClaimTheExposedCores')
-      : context === 'reclaimed'
-        ? t('interface:createReturnRoutesTogetherUseReclaimedGroundToLaunchYour')
-        : t('interface:createSafeRoutesTogetherUseTheRevealedGroundToLaunch'),
-    startMessage: `${specialist ? '' + t('interface:specialistsShareTheBoardInterceptorCoversExposedLinesDisruptorOpens') + ' ' : ''}${
+          ? ''
+          : ' ' + t('interface:yourGoalIsTheCoverageTarget')),
+    briefingTitle: level.snake
+      ? snakeText('title')
+      : humanoids
+        ? huntText(level.hunt.mode)
+        : requiredCores > 1
+          ? t('interface:secureTheRequiredCores')
+          : requiredCores
+            ? t('interface:takeTheStrongholdTogether')
+            : t('interface:makeYourCommonGround'),
+    levelNote: level.snake
+      ? snakeBrief(level, { team: true })
+      : humanoids
+        ? huntText(
+            level.hunt.mode === 'hunt'
+              ? 'huntGoal'
+              : level.hunt.mode === 'capture-quota'
+                ? 'quotaGoal'
+                : 'bonusGoal',
+          )
+        : requiredCores
+          ? t('interface:planRoutesToTheAnchorsThenClaimTheExposedCores')
+          : context === 'reclaimed'
+            ? t('interface:createReturnRoutesTogetherUseReclaimedGroundToLaunchYour')
+            : t('interface:createSafeRoutesTogetherUseTheRevealedGroundToLaunch'),
+    startMessage: `${level.snake ? snakeBrief(level, { team: true }) + ' ' : ''}${specialist ? '' + t('interface:specialistsShareTheBoardInterceptorCoversExposedLinesDisruptorOpens') + ' ' : ''}${
       roamers
         ? t('gameplay:team.startRoamer', { route })
         : hunters

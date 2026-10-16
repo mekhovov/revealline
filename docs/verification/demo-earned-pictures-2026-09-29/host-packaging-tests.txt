@@ -1,0 +1,180 @@
+TAP version 13
+# Subtest: the actual game has a static dark guard before resources and a single caught module entry
+ok 1 - the actual game has a static dark guard before resources and a single caught module entry
+  ---
+  duration_ms: 2.70775
+  ...
+# Subtest: native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+ok 2 - native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+  ---
+  duration_ms: 3.596708
+  ...
+# Subtest: build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+ok 3 - build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+  ---
+  duration_ms: 3295.531708
+  ...
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 4 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 9956.858209
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 5 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 14482.204625
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 6 - actual idle home entry resets on activity and does not write game data
+  ---
+  duration_ms: 11524.736708
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 7 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+  ---
+  duration_ms: 11591.350792
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 8 - leaving a Journey demo restores exactly one truthful title action without saving
+  ---
+  duration_ms: 3072.671584
+  ...
+# Subtest: fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+ok 9 - fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+  ---
+  duration_ms: 2196.2885
+  ...
+# Subtest: takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+ok 10 - takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+  ---
+  duration_ms: 5233.003125
+  ...
+# Subtest: controller gameplay action takes over while preserving one hardware read per frame
+ok 11 - controller gameplay action takes over while preserving one hardware read per frame
+  ---
+  duration_ms: 1682.398292
+  ...
+# Subtest: a single remaining source prepares a new painter on repetition without reusing disposed media
+ok 12 - a single remaining source prepares a new painter on repetition without reusing disposed media
+  ---
+  duration_ms: 1651.920291
+  ...
+# Subtest: unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+ok 13 - unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+  ---
+  duration_ms: 24011.539875
+  ...
+# Subtest: fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+ok 14 - fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+  ---
+  duration_ms: 7872.364125
+  ...
+# Subtest: a replay fork completing after blur cannot arm hidden practice or replace its current owner
+ok 15 - a replay fork completing after blur cannot arm hidden practice or replace its current owner
+  ---
+  duration_ms: 2611.586667
+  ...
+# Subtest: locked Fresh handoff cancelled by blur remains paused until another explicit choice
+ok 16 - locked Fresh handoff cancelled by blur remains paused until another explicit choice
+  ---
+  duration_ms: 1507.705792
+  ...
+# Subtest: locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+ok 17 - locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+  ---
+  duration_ms: 1499.636042
+  ...
+# Subtest: a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+ok 18 - a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+  ---
+  duration_ms: 7306.301
+  ...
+# Subtest: accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+ok 19 - accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+  ---
+  duration_ms: 7512.627291
+  ...
+# Subtest: demo control hints show the saved keyboard bindings in the actual app
+ok 20 - demo control hints show the saved keyboard bindings in the actual app
+  ---
+  duration_ms: 1491.196209
+  ...
+# Subtest: a pending scene picture releases its painter on deadline before the decoder settles
+ok 21 - a pending scene picture releases its painter on deadline before the decoder settles
+  ---
+  duration_ms: 1583.243541
+  ...
+# Subtest: a pending scene picture releases its painter on Back before the decoder settles
+ok 22 - a pending scene picture releases its painter on Back before the decoder settles
+  ---
+  duration_ms: 1305.240542
+  ...
+# Subtest: scene transition modifies only the already concealed picture and releases its bounded cache
+ok 23 - scene transition modifies only the already concealed picture and releases its bounded cache
+  ---
+  duration_ms: 28.038041
+  ...
+# Subtest: reduced effects and invalid transition inputs skip transition work, and failed filtering cannot expose raw art
+ok 24 - reduced effects and invalid transition inputs skip transition work, and failed filtering cannot expose raw art
+  ---
+  duration_ms: 14.569625
+  ...
+# Subtest: edition recording inventory follows validated catalogue additions and runtime variants
+ok 25 - edition recording inventory follows validated catalogue additions and runtime variants
+  ---
+  duration_ms: 4.464416
+  ...
+# Subtest: standalone and public offline menus retain every dynamically attached panel stylesheet
+ok 26 - standalone and public offline menus retain every dynamically attached panel stylesheet
+  ---
+  duration_ms: 273.360958
+  ...
+# Subtest: actual demo and landing closure retains clock, audio, Worker, frozen replays, artwork motion, receiver loss and signal atlas offline
+ok 27 - actual demo and landing closure retains clock, audio, Worker, frozen replays, artwork motion, receiver loss and signal atlas offline
+  ---
+  duration_ms: 905.197792
+  ...
+# Subtest: standalone menu projection preserves selected profile data and fallback without unrelated images
+ok 28 - standalone menu projection preserves selected profile data and fallback without unrelated images
+  ---
+  duration_ms: 15.03375
+  ...
+# Subtest: DroneAid aggregate uses only its lossless derivative while retaining original source files
+ok 29 - DroneAid aggregate uses only its lossless derivative while retaining original source files
+  ---
+  duration_ms: 4.820708
+  ...
+# Subtest: shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+ok 30 - shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+  ---
+  duration_ms: 3.105208
+  ...
+# Subtest: common host import projection closes over committed adapters without visiting historical registries
+ok 31 - common host import projection closes over committed adapters without visiting historical registries
+  ---
+  duration_ms: 8.831083
+  ...
+# Subtest: dynamic boot entry is explicit and unknown host JSON requests fail closed
+ok 32 - dynamic boot entry is explicit and unknown host JSON requests fail closed
+  ---
+  duration_ms: 0.540917
+  ...
+# Subtest: declared canonical navigation and data requests must exist in the artifact
+ok 33 - declared canonical navigation and data requests must exist in the artifact
+  ---
+  duration_ms: 0.316334
+  ...
+# Subtest: shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+ok 34 - shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+  ---
+  duration_ms: 17.101666
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 123907.011667

@@ -13,6 +13,9 @@ import {
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { canvasPresentation, imagePresentation } from '../presentation/runtime.mjs';
+import { combatLevel } from './helpers/combat-fixture.mjs';
+import { CLASSES } from '../core/registry.mjs';
+import { setLocale, getLocale } from '../i18n/index.mjs';
 
 const themes = JSON.parse(readFileSync(new URL('../content/themes.json', import.meta.url))).themes;
 const impact = JSON.parse(
@@ -248,6 +251,10 @@ test('the FPV guide uses the release sprite geometry and retains other-theme and
     asset = structuredClone(source),
     image = { type: 'compiled-field-hunter' };
   asset.geometry.pivot = { x: 0.25, y: 0.75 };
+  // A known 3/4-frame occupied span fits the Guide's 56px visible body.
+  // This fixture's complete rotor sweep remains inside that span; transparent
+  // padding is not part of the requested visible diameter.
+  asset.geometry.occupiedBounds = { x: 0.125, y: 0.125, width: 0.75, height: 0.75 };
   asset.geometry.rotorAnchors = [{ x: 0.75, y: 0.25, radius: 0.08, blades: 4 }];
   const sprite = { image, geometry: imagePresentation(asset) };
   let available = true;
@@ -263,8 +270,23 @@ test('the FPV guide uses the release sprite geometry and retains other-theme and
   h.guide.update(0.1);
   const drawing = art.calls.find(([method]) => method === 'drawImage');
   assert.equal(drawing[1], image);
-  assert.deepEqual(drawing.slice(2), [-14, -42, 56, 56]);
-  assert.ok(art.calls.some(([method, x, y]) => method === 'translate' && x === 28 && y === -28));
+  const frameSize = 56 / 0.75;
+  for (const [index, expected] of [
+    -frameSize * 0.25,
+    -frameSize * 0.75,
+    frameSize,
+    frameSize,
+  ].entries())
+    assert.ok(Math.abs(drawing[index + 2] - expected) < 1e-9);
+  assert.ok(Math.abs(drawing[4] * asset.geometry.occupiedBounds.width - 56) < 1e-9);
+  assert.ok(
+    art.calls.some(
+      ([method, x, y]) =>
+        method === 'translate' &&
+        Math.abs(x - frameSize * 0.5) < 1e-9 &&
+        Math.abs(y + frameSize * 0.5) < 1e-9,
+    ),
+  );
   assert.ok(
     art.calls.some(([method, x, y, r]) => method === 'arc' && x === 0 && y === 0 && r === 4),
   );
@@ -863,4 +885,138 @@ test('compiled Guide motion uses the runtime snapshot scale while impact and oth
     guides[0].paint(0.1),
     'A non-FPV preview keeps its original timing',
   );
+});
+
+test('hosts without a compatible loaded mission retain old lessons and explain unavailable encounter practice', (t) => {
+  const h = setup(t);
+  for (const topic of ['optional-scout', 'optional-sentry', 'trail-pursuit', 'head-intercept']) {
+    h.guide.open({ topic });
+    assert.equal(h.$('play').disabled, true);
+    assert.equal(h.$('theme').disabled, true);
+    assert.equal(h.$('preview').hidden, true);
+    assert.match(h.$('instructions').textContent, /loaded Solo mission.*role enabled/);
+    assert.doesNotMatch(h.$('summary').textContent, /encounterGuide\./);
+  }
+  h.guide.open({ topic: 'bouncer' });
+  assert.equal(h.$('play').disabled, false);
+  assert.equal(h.$('theme').disabled, false);
+  assert.equal(h.$('preview').hidden, false);
+  assert.equal(h.host.sessionStorage.getItem(handoff), 'prior preview bytes');
+});
+
+test('encounter lessons snapshot exact setup before async pause and restore the owned handoff', async (t) => {
+  const entered = deferredArtwork(),
+    gate = deferredArtwork(),
+    level = combatLevel(),
+    theme = structuredClone(themes.find((item) => item.id === 'retro')),
+    options = { seed: 91, classId: 'carrier', classRecipes: structuredClone(CLASSES) },
+    before = structuredClone({ level, theme, options }),
+    h = setup(t, {
+      getLevel: () => level,
+      getRunOptions: () => options,
+      getMissionTheme: () => theme,
+      onPractice: () => {
+        entered.resolve();
+        return gate.promise;
+      },
+    });
+  h.guide.open({ topic: 'optional-sentry' });
+  assert.equal(h.$('play').disabled, false);
+  assert.match(h.$('risk').textContent, /recovering sentry.*live shot/);
+  const operation = h.$('play').onclick();
+  await entered.promise;
+  level.name = 'Later caller edit';
+  options.seed = 999;
+  options.classRecipes[0].label = 'Later caller class';
+  theme.name = 'Later caller theme';
+  gate.resolve();
+  assert.equal(await operation, true);
+  const transferred = JSON.parse(h.host.sessionStorage.getItem(handoff));
+  assert.deepEqual(transferred.level, before.level);
+  assert.deepEqual(transferred.theme, before.theme);
+  assert.deepEqual(transferred.classRecipes, before.options.classRecipes);
+  assert.deepEqual(transferred.settings, {
+    seed: 91,
+    classId: 'carrier',
+    turnPolicy: 'grid-center',
+  });
+  assert.equal(transferred.masteryDefinition, null);
+  assert.equal(h.guide.practiceActive, true);
+  h.$('return').click();
+  assert.equal(h.host.sessionStorage.getItem(handoff), 'prior preview bytes');
+  assert.equal(h.$('topic').value, 'optional-sentry');
+  assert.equal(h.doc.activeElement, h.$('play'));
+});
+
+for (const finish of ['replace', 'cancel', 'dispose'])
+  test(`pending encounter practice cannot survive ${finish} or overwrite retained bytes`, async (t) => {
+    const entered = deferredArtwork(),
+      gate = deferredArtwork();
+    let level = combatLevel(),
+      returns = 0;
+    const h = setup(t, {
+      getLevel: () => level,
+      onPractice: () => {
+        entered.resolve();
+        return gate.promise;
+      },
+      onReturn: () => returns++,
+    });
+    h.guide.open({ topic: 'optional-sentry' });
+    const operation = h.$('play').onclick();
+    await entered.promise;
+    if (finish === 'replace') level = combatLevel('scout');
+    else if (finish === 'cancel') h.guide.close();
+    else h.guide.dispose();
+    gate.resolve();
+    assert.equal(await operation, false);
+    assert.equal(h.guide.practiceActive, false);
+    assert.equal(h.guide.frame.src, 'about:blank');
+    assert.equal(h.host.sessionStorage.getItem(handoff), 'prior preview bytes');
+    assert.deepEqual(h.host.sessionStorage.writes, []);
+    assert.equal(returns, 1);
+    if (finish === 'replace') assert.equal(h.$('play').disabled, true);
+  });
+
+test('edition encounter URLs use the existing return bridge without touching the Playground handoff', async (t) => {
+  const level = combatLevel(),
+    h = setup(t, {
+      getLevel: () => level,
+      resolveEncounterPracticeURL: ({ scenario, returnURL }) => {
+        assert.deepEqual(scenario.level, level);
+        const url = new URL(returnURL);
+        url.searchParams.set('edition', 'selected-audience');
+        url.searchParams.set('edition-mission', level.id);
+        return url.href;
+      },
+    });
+  h.guide.open({ topic: 'optional-sentry' });
+  assert.equal(await h.$('play').onclick(), true);
+  const url = new URL(h.guide.frame.src);
+  assert.equal(url.searchParams.get('practice-return'), 'enemy-guide');
+  assert.match(url.searchParams.get('enemy-workshop-session'), /^[a-f0-9]{32}$/);
+  assert.equal(url.searchParams.get('edition'), 'selected-audience');
+  assert.deepEqual(h.host.sessionStorage.writes, []);
+  h.$('return').click();
+  assert.deepEqual(h.host.sessionStorage.writes, []);
+  assert.equal(h.host.sessionStorage.getItem(handoff), 'prior preview bytes');
+});
+
+test('encounter lesson copy follows EN/UK locale without changing topic or lesson setup', (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const level = combatLevel(),
+    before = structuredClone(level),
+    h = setup(t, { getLevel: () => level });
+  h.guide.open({ topic: 'optional-sentry' });
+  assert.match(h.$('heading').textContent, /Optional sentry/);
+  assert.match(h.$('risk').textContent, /recovering sentry/);
+  setLocale('uk', { persist: false });
+  assert.match(h.$('heading').textContent, /Додатковий вартовий/);
+  assert.match(h.$('risk').textContent, /Ризик:.*відновлення вартового/);
+  assert.doesNotMatch(h.$('instructions').textContent, /encounterGuide\./);
+  assert.equal(h.$('topic').value, 'optional-sentry');
+  assert.deepEqual(level, before);
+  assert.deepEqual(h.host.sessionStorage.writes, []);
 });

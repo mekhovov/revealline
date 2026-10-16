@@ -4,14 +4,20 @@ COPY services/community/package.json services/community/package-lock.json ./
 RUN npm ci --omit=dev
 
 FROM node:22-alpine
-ENV NODE_ENV=production
+ARG COMMUNITY_RELEASE_VERSION
+ARG COMMUNITY_SOURCE_REVISION
+ENV NODE_ENV=production \
+  COMMUNITY_IMAGE_RELEASE_VERSION=${COMMUNITY_RELEASE_VERSION} \
+  COMMUNITY_IMAGE_SOURCE_REVISION=${COMMUNITY_SOURCE_REVISION}
 WORKDIR /srv/community
 RUN apk add --no-cache ffmpeg postgresql17-client
 COPY --from=dependencies /srv/community/node_modules ./node_modules
 COPY services/community/package.json ./
 COPY services/community/src ./src
 COPY services/community/migrations ./migrations
-COPY game /srv/game
+COPY package.json /package.json
+COPY game /game
+COPY optional-practice/civilian-fpv /optional-practice/civilian-fpv
 RUN mkdir -p /data/blobs /data/tus /data/recovery \
   && chown -R node:node /data/blobs /data/tus /data/recovery /srv/community
 USER node

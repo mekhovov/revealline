@@ -2,6 +2,7 @@ import copy
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -12,6 +13,7 @@ import zipfile
 
 import release_artifact as utility
 import inspect_qualified_artifact as inspector
+import source_manifest
 
 
 def encoded(value):
@@ -127,6 +129,26 @@ class BindingTests(unittest.TestCase):
             utility.artifact_authority(API([current, fastline_run, fastline_jobs]), value),
             current,
         )
+        active_fastline_run = {**fastline_run, 'status': 'in_progress', 'conclusion': None}
+        active_jobs = copy.deepcopy(fastline_jobs)
+        active_jobs['jobs'].extend([
+            {'name': 'admission', 'head_sha': 'a' * 40, 'status': 'completed', 'conclusion': 'success'},
+            {'name': 'inspect-artifact', 'head_sha': 'a' * 40, 'status': 'in_progress', 'conclusion': None},
+        ])
+        with patch.dict(os.environ, {'GITHUB_RUN_ID': '18'}):
+            self.assertEqual(
+                utility.artifact_authority(API([current, active_fastline_run, active_jobs]), value),
+                current,
+            )
+        for mutate in [
+            lambda rows: rows[1].update(id=19),
+            lambda rows: rows[2]['jobs'][-1].update(status='completed', conclusion='success'),
+            lambda rows: rows[2]['jobs'][0].update(conclusion='failure'),
+        ]:
+            rows = copy.deepcopy([current, active_fastline_run, active_jobs])
+            mutate(rows)
+            with patch.dict(os.environ, {'GITHUB_RUN_ID': '18'}), self.assertRaises(ValueError):
+                utility.artifact_authority(API(rows), value)
         failed_fastline_run = {**fastline_run, 'conclusion': 'failure'}
         recoverable_jobs = copy.deepcopy(fastline_jobs)
         recoverable_jobs['jobs'].extend([
@@ -166,34 +188,6 @@ class BindingTests(unittest.TestCase):
             with self.assertRaises(ValueError): utility.artifact_authority(API(rows), value)
         broken = copy.deepcopy(jobs); broken['jobs'][-1]['conclusion'] = 'skipped'
         with self.assertRaises(ValueError): utility.artifact_authority(API([artifact, run, broken]), value)
-
-    def test_artifact_authority_allows_only_the_current_in_progress_fastline_run(self):
-        value = binding()
-        artifact = {'id': 17, 'name': 'qualified-release-v1.2.3-' + 'a' * 40, 'expired': False,
-                    'size_in_bytes': 100, 'digest': 'sha256:' + 'c' * 64,
-                    'workflow_run': {'id': 18, 'head_sha': 'a' * 40}}
-        run = {'id': 18, 'event': 'workflow_dispatch', 'path': utility.FASTLINE_WORKFLOW,
-               'head_sha': 'a' * 40, 'status': 'in_progress', 'conclusion': None}
-        jobs = {'jobs': [
-            {'name': 'qualify / ' + name, 'head_sha': 'a' * 40,
-             'status': 'completed', 'conclusion': 'success'}
-            for name in ['qualify', 'test (1)', 'test (2)', 'test (3)', 'test (4)', 'freeze']
-        ]}
-
-        class API:
-            def __init__(self, rows): self.rows = iter(rows)
-            def get(self, _path): return next(self.rows)
-
-        with patch.dict(utility.os.environ, {'GITHUB_RUN_ID': '18'}):
-            self.assertEqual(utility.artifact_authority(API([artifact, run, jobs]), value), artifact)
-        for run_id, candidate in [
-                ('19', run),
-                ('18', {**run, 'path': utility.WORKFLOW}),
-                ('18', {**run, 'status': 'queued'}),
-                ('18', {**run, 'conclusion': 'failure'})]:
-            with self.subTest(run_id=run_id, candidate=candidate), \
-                    patch.dict(utility.os.environ, {'GITHUB_RUN_ID': run_id}), self.assertRaises(ValueError):
-                utility.artifact_authority(API([artifact, candidate, jobs]), value)
 
     def test_disk_refusal_happens_before_subprocess_or_output(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(utility.shutil, 'disk_usage') as disk, \
@@ -265,6 +259,12 @@ class OriginalFixtureTests(unittest.TestCase):
         self.assertFalse(inspector.distribution_within_limit(-1))
 
     def test_real_git_tar_zip_offline_roundtrip_and_source_hash_rejection(self):
+        self.source_contract_roundtrip(False)
+
+    def test_real_git_manifest_zip_offline_roundtrip_and_source_hash_rejection(self):
+        self.source_contract_roundtrip(True)
+
+    def source_contract_roundtrip(self, manifest_source):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary); repo = root / 'repo'; repo.mkdir()
             def git(*args):
@@ -281,7 +281,10 @@ class OriginalFixtureTests(unittest.TestCase):
             files = {'game/index.html': index, 'game/build-info.json': encoded({'formatVersion': 1,
                      'version': version, 'sourceRevision': commit, 'entry': 'game/index.html'})}
             def rows(contents): return [{'path': n, 'bytes': len(b), 'sha256': utility.sha(b)} for n, b in contents.items()]
-            offline = {**marker, 'files': rows(files)}
+            optional = {'game/optional.html': b'<html><body>Final optional HTML</body></html>'}
+            offline = {**marker, 'files': rows(files),
+                       'downloadFiles': [{**row, 'kind': 'gameplay'} for row in rows(optional)]}
+            files.update(optional)
             files['offline-cache.json'] = encoded(offline)
             files['service-worker.js'] = worker.read_bytes().replace(b'__XONIX_OFFLINE_CONFIG__', encoded(offline))
             manifest = encoded({'formatVersion': 1, 'version': version, 'sourceRevision': commit,
@@ -295,9 +298,19 @@ class OriginalFixtureTests(unittest.TestCase):
                        'sourceArchiveSha256': utility.sha(tar), 'distributionSha256': utility.sha(inner.getvalue()),
                        'manifestSha256': utility.sha(manifest), 'play': version + '/site/game/',
                        'download': version + '/site/distribution.zip'})
+            source_name, source_body = 'source.tar', tar
+            if manifest_source:
+                source_name = 'source-manifest.json'
+                source_body = source_manifest.encoded(source_manifest.source_manifest(repo, commit))
+                record = json.loads(release)
+                del record['sourceArchiveSha256']
+                record.update(formatVersion=2, sourceTree=tree,
+                              sourceUrl=f'https://github.com/mekhovov/revealline/archive/{commit}.tar.gz',
+                              sourceManifestSha256=utility.sha(source_body))
+                release = encoded(record)
             base = root / 'out'; base.mkdir(); original = base / 'qualified-artifact-original.zip'
             with zipfile.ZipFile(original, 'w') as archive:
-                for name, body in {'release.json': release, 'source.tar': tar, 'site/manifest.json': manifest,
+                for name, body in {'release.json': release, source_name: source_body, 'site/manifest.json': manifest,
                        'site/distribution.zip': inner.getvalue(),
                        'distribution.zip.sha256': (utility.sha(inner.getvalue()) + '  distribution.zip\n').encode()}.items():
                     archive.writestr(version + '/' + name, body)
@@ -322,7 +335,10 @@ class OriginalFixtureTests(unittest.TestCase):
                     '--download-sha256', utility.pin(download)['sha256'], '--manifest-sha256', utility.sha(manifest)]
             result = subprocess.run(command, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            self.assertEqual(json.loads((base / 'frozen-offline-review/review.json').read_text())['offline']['files'], 2)
+            offline_review = json.loads((base / 'frozen-offline-review/review.json').read_text())['offline']
+            self.assertEqual(offline_review['files'], 2)
+            self.assertEqual(offline_review['downloadFiles'], 1)
+            self.assertTrue(offline_review['allDownloadRowsMatchFrozenManifest'])
             # Wrong immutable source and wrong original SHA must not produce a passing output.
             for option, value in [('--expected-commit', 'f' * 40), ('--artifact-sha256', 'f' * 64)]:
                 bad = [sys.executable, str(inspector), str(original), '--repo', str(repo), '--expected-commit', commit,
@@ -367,6 +383,8 @@ class WorkflowTests(unittest.TestCase):
         self.assertNotIn('upload-originals', text)
         for command in utility.COMMANDS:
             self.assertIn('run: ' + command, regular)
+        for retired in ['npm run lint', 'npm run format:check', 'npm run format:native:check']:
+            self.assertNotIn('run: ' + retired, regular)
         self.assertIn('node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4', regular)
         self.assertIn('needs: [qualify, test]', regular)
         self.assertIn("inputs.operation == 'qualify' && inputs.freeze_snapshot", regular)
@@ -430,14 +448,16 @@ class UploadBoundaryTests(unittest.TestCase):
 class ResumeUploadTests(unittest.TestCase):
     """Exercise real draft/tag validators and both perform engines with finite in-memory I/O."""
     def run_case(self, existing=(), *, mutate=None, late_mutate=None, failed_member=None,
-                 tag_commit=None, expect_failure=False, late_read=2, expected_started=frozenset()):
+                 tag_commit=None, expect_failure=False, late_read=2, expected_started=frozenset(), manifest=False):
         value = binding('upload-originals')
-        bodies = {name: name.encode() for name in utility.NAMES}
+        source_name = 'source-manifest.json' if manifest else 'source.tar'
+        names = utility.SMALL_NAMES | {source_name, 'distribution.zip'}
+        bodies = {name: name.encode() for name in names}
         value['release']['assets'] = [dict(name=name, bytes=len(body), sha256=utility.sha(body))
                                      for name, body in sorted(bodies.items())]
         descriptors = {row['name']: row for row in value['release']['assets']}
         def asset(name):
-            row = descriptors[name]; asset_id = sorted(utility.NAMES).index(name) + 1
+            row = descriptors[name]; asset_id = sorted(names).index(name) + 1
             return {'id': asset_id, 'name': name, 'state': 'uploaded', 'size': row['bytes'],
                     'digest': 'sha256:' + row['sha256'],
                     'url': f'https://api.github.com/repos/example/project/releases/assets/{asset_id}'}
@@ -472,10 +492,11 @@ class ResumeUploadTests(unittest.TestCase):
             def __init__(self, args, name):
                 events.append('prepare ' + name)
                 if failed_member == name: raise ValueError('Held original preflight failed')
-                prefix = 'source' if name == 'source.tar' else 'member'
+                prefix = 'source' if name == source_name else 'member'
                 self_test.assertEqual(getattr(args, prefix + '_sha256'), descriptors[name]['sha256'])
                 self_test.assertEqual(getattr(args, prefix + '_bytes'), descriptors[name]['bytes'])
                 self.name, self.commit = name, args.source_commit
+                self.asset_name = name
                 self.size, self.sha256 = descriptors[name]['bytes'], descriptors[name]['sha256']
             def unchanged(self): events.append('unchanged ' + self.name)
             def open(self): return io.BytesIO(bodies[self.name])
@@ -492,13 +513,15 @@ class ResumeUploadTests(unittest.TestCase):
             with patch.object(utility, 'receive', side_effect=receive), \
                  patch.object(utility, 'small_assets_check', return_value={'fixture': True}) as checked, \
                  patch.object(utility.upload_source, 'PinnedSource', side_effect=lambda args: Held(args, 'source.tar')), \
+                 patch.object(utility, 'PinnedManifest', side_effect=lambda args: Held(args, 'source-manifest.json')), \
                  patch.object(utility.upload_distribution, 'PinnedDistribution', side_effect=lambda args: Held(args, 'distribution.zip')):
+                inspection = {'sourceManifest': {}} if manifest else {}
                 if expect_failure:
                     with self.assertRaises((ValueError, utility.upload_source.Refusal,
                                             utility.upload_source.Ambiguous, utility.upload_distribution.Ambiguous)):
-                        utility.upload_originals(value, out, {}, API())
+                        utility.upload_originals(value, out, inspection, API())
                 else:
-                    utility.upload_originals(value, out, {}, API())
+                    utility.upload_originals(value, out, inspection, API())
                     self.assertEqual(set(checked.call_args.args[1]), utility.SMALL_NAMES)
             receipts = {p.name: json.loads(p.read_text()) for p in (out / 'evidence').glob('*.json')}
             started = {p.name for p in (out / 'evidence').glob('*.upload-started.json')}
@@ -510,8 +533,8 @@ class ResumeUploadTests(unittest.TestCase):
         else:
             self.assertEqual(set(downloads), utility.SMALL_NAMES)
             self.assertEqual(len(downloads), 7)
-            self.assertEqual(posts, [name for name in ['source.tar', 'distribution.zip'] if name not in existing])
-            for name in ['source.tar', 'distribution.zip']:
+            self.assertEqual(posts, [name for name in [source_name, 'distribution.zip'] if name not in existing])
+            for name in [source_name, 'distribution.zip']:
                 result = receipts[name + '.upload-result.json']
                 retained = name in existing
                 self.assertEqual(result['status'], 'EXISTING_VERIFIED' if retained else 'UPLOADED_VERIFIED')
@@ -525,10 +548,15 @@ class ResumeUploadTests(unittest.TestCase):
                 self.assertIn('close ' + name, events)
                 for posted in posts:
                     self.assertLess(events.index('prepare ' + name), events.index('POST ' + posted))
-            self.assertEqual({a['name'] for a in receipts['all-nine-assets.json']['assets']}, utility.NAMES)
+            self.assertEqual({a['name'] for a in receipts['all-nine-assets.json']['assets']}, names)
         return events
 
     def test_seven_small_assets_upload_both_originals_once(self): self.run_case()
+    def test_manifest_contract_resumes_every_original_upload_boundary(self):
+        for existing in [(), ('source-manifest.json',), ('distribution.zip',),
+                         ('source-manifest.json', 'distribution.zip')]:
+            with self.subTest(existing=existing):
+                self.run_case(existing, manifest=True)
     def test_complete_source_uploads_only_missing_distribution(self): self.run_case(('source.tar',))
     def test_complete_distribution_uploads_only_missing_source(self): self.run_case(('distribution.zip',))
     def test_both_complete_are_verified_without_any_post(self): self.run_case(('source.tar', 'distribution.zip'))

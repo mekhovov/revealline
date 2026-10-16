@@ -1,27 +1,49 @@
 import { Pool } from 'pg';
+import { createWebhookAccountMailDelivery } from './account-mail.mjs';
 import { createAdmissionController } from './admission.mjs';
 import { buildCommunityApp } from './app.mjs';
 import { createTokenAuthenticator } from './auth.mjs';
 import { createSessionAuthenticator } from './auth.mjs';
 import { createCommunityBetterAuth, mountCommunityBetterAuth } from './better-auth-runtime.mjs';
-import { DiskBlobStore } from './blob-store.mjs';
+import { createBlobStore } from './blob-store-factory.mjs';
 import { readConfig } from './config.mjs';
+import {
+  createCachedDeploymentReadiness,
+  runDeploymentPreflight,
+} from './deployment-preflight.mjs';
 import { PostgresCommunityRepository } from './postgres-repository.mjs';
 import { createCommunityTusServer } from './tus-server.mjs';
+import { PostgresTusLocker, PostgresTusUploadRegistry } from './tus-coordination.mjs';
+import { createTusDatastore } from './tus-store-factory.mjs';
 import { TusUploadTransportBoundary } from './upload-transport.mjs';
 
 const config = readConfig();
 if (!config.databaseUrl) throw new Error('COMMUNITY_DATABASE_URL is required.');
 
 const pool = new Pool({ connectionString: config.databaseUrl, max: 10 });
+const tusLockPool = new Pool({
+  connectionString: config.databaseUrl,
+  max: config.tusLockPoolSize,
+  connectionTimeoutMillis: config.tusLockTimeoutMs,
+  application_name: 'revealline-community-tus-locks',
+});
 const repository = new PostgresCommunityRepository({ pool });
 const admission = createAdmissionController({
   repository,
   policies: config.admissionPolicies,
 });
-const blobStore = new DiskBlobStore({ root: config.blobRoot });
+const blobStore = await createBlobStore(config.blobStorage);
+const tusDatastore = await createTusDatastore({
+  storage: config.blobStorage,
+  directory: config.tusRoot,
+  expirationMs: config.tusExpirationMs,
+});
 const betterAuth = config.betterAuth
-  ? createCommunityBetterAuth({ database: pool, ...config.betterAuth })
+  ? createCommunityBetterAuth({
+      database: pool,
+      ...config.betterAuth,
+      mailDelivery: createWebhookAccountMailDelivery(config.betterAuth.mail),
+    })
   : null;
 const authenticator = betterAuth
   ? createSessionAuthenticator({
@@ -29,14 +51,32 @@ const authenticator = betterAuth
       getRoles: (session) => (config.adminSubjects.has(session.user.id) ? ['admin'] : []),
     })
   : createTokenAuthenticator(config.developmentTokens);
+const readinessCheck = createCachedDeploymentReadiness(() =>
+  runDeploymentPreflight({
+    pool,
+    blobStorage: config.blobStorage,
+    tusRoot: config.tusRoot,
+  }),
+);
 const tus = createCommunityTusServer({
   directory: config.tusRoot,
+  datastore: tusDatastore,
   endpoint: '/v1/uploads',
   authenticator,
   repository,
   blobStore,
   maxPackageBytes: config.maxPackageBytes,
   admission,
+  locker: new PostgresTusLocker({
+    pool: tusLockPool,
+    acquireTimeoutMs: config.tusLockTimeoutMs,
+  }),
+  uploadRegistry: new PostgresTusUploadRegistry({ pool }),
+  expirationMs: config.tusExpirationMs,
+  cleanupIntervalMs: config.tusCleanupIntervalMs,
+  cleanupBatchSize: config.tusCleanupBatchSize,
+  cleanupLeaseMs: config.tusCleanupLeaseMs,
+  onBackgroundError: (error) => console.error('Tus coordination background error.', error),
 });
 const app = buildCommunityApp({
   repository,
@@ -48,12 +88,15 @@ const app = buildCommunityApp({
   tus,
   admission,
   trustProxy: config.trustProxyHops ?? false,
+  readinessCheck,
+  releaseIdentity: config.releaseIdentity,
   logger: true,
 });
 if (betterAuth) mountCommunityBetterAuth(app, betterAuth);
 
 const close = async () => {
   await app.close();
+  await tusLockPool.end();
   await pool.end();
 };
 process.once('SIGINT', close);

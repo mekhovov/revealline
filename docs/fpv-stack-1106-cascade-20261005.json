@@ -1,0 +1,17 @@
+{
+  "oldHeads": {
+    "codex/fpv-learning-clarity": "037b6ac6303d064f9dba31fce8e5078a6c1bc72b",
+    "codex/fpv-endless-exploration": "29646092ff152d4807e44522ff6f1e67ba7b79d9",
+    "codex/fpv-graphical-flight-hud": "ff67b43f75a6dfc362cb37a4c67d65a53cb08f80"
+  },
+  "newBase": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "time": "2026-10-05T11:48:50.293521+00:00",
+  "newHeads": {
+    "codex/fpv-learning-clarity": "55493cb94783d279142823cff94843d682cabc54",
+    "codex/fpv-endless-exploration": "0e3cc79c89f604068542539391b0ab38dc6735c9",
+    "codex/fpv-graphical-flight-hud": "614adef75a6e1cc28ea1d04acf26fa69b507c551"
+  },
+  "patchesPreserved": "All six commits equal in git range-diff",
+  "push": "Atomic, all three explicit expected-remote-head leases succeeded",
+  "membershipVerified": [1104, 1105, 1110]
+}

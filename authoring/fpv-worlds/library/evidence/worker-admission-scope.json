@@ -1,0 +1,86 @@
+{
+  "format": "FPVWorldLibraryAdmissionScope.v1",
+  "sourceRevision": "01fc6ad206f6ea7e6dd78921f799e2ed1a773915",
+  "baseline": "b452a0cac273ed290ac7ee14609dde4f87984df3",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "inputCount": 41,
+      "inputBytes": 1902195,
+      "worldsReserve": null,
+      "changes": []
+    },
+    {
+      "id": "civilian-fpv",
+      "inputCount": 62,
+      "inputBytes": 5622815,
+      "worldsReserve": null,
+      "changes": [
+        {
+          "path": "optional-practice/worker-template.mjs",
+          "previous": {
+            "bytes": 4812,
+            "path": "optional-practice/worker-template.mjs",
+            "sha256": "59b0b73b90ff5970e1cfba997f1d42bc8d3164e6b4e6115524d46cf6eee26f55"
+          },
+          "current": {
+            "bytes": 6494,
+            "path": "optional-practice/worker-template.mjs",
+            "sha256": "452ad600c9dd98d6250ec1923dd1a31114a70647b9110977c167d46aefd72b21"
+          },
+          "growth": 1682
+        }
+      ]
+    },
+    {
+      "id": "fpv-worlds",
+      "inputCount": 95,
+      "inputBytes": 16776298,
+      "worldsReserve": 918,
+      "changes": [
+        {
+          "path": "optional-practice/civilian-fpv/world-app.mjs",
+          "previous": {
+            "bytes": 260687,
+            "path": "optional-practice/civilian-fpv/world-app.mjs",
+            "sha256": "4d5ace26dab0ab93c223c420fcafea6313a8855bc22bf7ea95d6d7b2bb5d3a51"
+          },
+          "current": {
+            "bytes": 261397,
+            "path": "optional-practice/civilian-fpv/world-app.mjs",
+            "sha256": "a483553e6e4871c437c76ce894dd78c1b425489a04d58013c149098ec61d736f"
+          },
+          "growth": 710
+        },
+        {
+          "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "previous": {
+            "bytes": 838737,
+            "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+            "sha256": "acd0370be6b081173647d9c23827a55921fa3fa2f793863f1e3045d84dd56e7a"
+          },
+          "current": {
+            "bytes": 845617,
+            "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+            "sha256": "f2fcd0914abc35d871753921bd0a4d267d0a773913aef6a72fb0e3d91615bc6a"
+          },
+          "growth": 6880
+        },
+        {
+          "path": "optional-practice/worker-template.mjs",
+          "previous": {
+            "bytes": 4812,
+            "path": "optional-practice/worker-template.mjs",
+            "sha256": "59b0b73b90ff5970e1cfba997f1d42bc8d3164e6b4e6115524d46cf6eee26f55"
+          },
+          "current": {
+            "bytes": 6494,
+            "path": "optional-practice/worker-template.mjs",
+            "sha256": "452ad600c9dd98d6250ec1923dd1a31114a70647b9110977c167d46aefd72b21"
+          },
+          "growth": 1682
+        }
+      ]
+    }
+  ]
+}

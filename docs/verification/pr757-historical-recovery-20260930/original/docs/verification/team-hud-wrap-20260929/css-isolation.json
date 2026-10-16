@@ -1,0 +1,33 @@
+{
+  "schema": "revealline.team-hud-css-isolation.v1",
+  "recordedAt": "2026-09-29T02:46:30.950Z",
+  "sourcePath": "game/ui/handheld-play.css",
+  "before": {
+    "ref": "HEAD",
+    "commit": "0a9be382d03bf7288fc20942f9938ce96563264f",
+    "sha256": "d0f702e642ad842b9dc4d61b27b66dc4a141f037610baa89f87c48a72a4f0054",
+    "bytes": 59473
+  },
+  "current": {
+    "state": "working-tree",
+    "sha256": "24bf4adf19801869a43865d3ca8990a3509049ba63c5f92119b9af39a7b53018",
+    "bytes": 58927
+  },
+  "method": {
+    "parser": "prettier.__debug.parse",
+    "prettierVersion": "3.6.2",
+    "options": {
+      "parser": "css"
+    },
+    "ruleSelection": "Split css-rule selectors at top-level commas respecting parentheses and brackets; exclude each selector containing #coop-overlay.",
+    "comparison": "Compare ordered normalized selector, declaration body and enclosing at-rule context tuples. Only whitespace is normalized; all declaration text, selector order and media ancestry remain part of comparison.",
+    "limitations": "Static CSS isolation only; not a browser layout, cascade or physical-device qualification. Team selectors are deliberately outside this comparison."
+  },
+  "comparison": {
+    "beforeSelectors": 169,
+    "currentSelectors": 169,
+    "beforeSequenceSha256": "248e057b668900e8802aa1f3d9029fe64db8bd1e1551aceea85178eaa55a5047",
+    "currentSequenceSha256": "248e057b668900e8802aa1f3d9029fe64db8bd1e1551aceea85178eaa55a5047",
+    "identical": true
+  }
+}

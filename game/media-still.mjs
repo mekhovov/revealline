@@ -25,8 +25,10 @@ function imageHeader(bytes) {
       ? 'image/png'
       : bytes[0] === 0xff && bytes[1] === 0xd8
         ? 'image/jpeg'
-        : null;
-  required(mime, 'Only static PNG/JPEG bytes are supported.');
+        : bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46
+          ? 'image/webp'
+          : null;
+  required(mime, 'Only static PNG/JPEG/WebP bytes are supported.');
   let binary = '';
   for (let offset = 0; offset < bytes.length; offset += 16384)
     binary += String.fromCharCode(...bytes.subarray(offset, offset + 16384));

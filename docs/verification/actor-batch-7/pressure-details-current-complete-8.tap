@@ -1,0 +1,50 @@
+TAP version 13
+# Subtest: return-in-reserve: current global-v1 impact missions retain their existing pressure details
+ok 1 - return-in-reserve: current global-v1 impact missions retain their existing pressure details
+  ---
+  duration_ms: 52.863875
+  ...
+# Subtest: return-in-reserve: charge recovery still exposes already travelling impact fronts
+ok 2 - return-in-reserve: charge recovery still exposes already travelling impact fronts
+  ---
+  duration_ms: 22.820792
+  ...
+# Subtest: return-in-reserve: valid explicit v2 carrier-plus-pressure import describes both abilities
+ok 3 - return-in-reserve: valid explicit v2 carrier-plus-pressure import describes both abilities
+  ---
+  duration_ms: 27.489292
+  ...
+# Subtest: crossed-bands: current global-v1 impact missions retain their existing pressure details
+ok 4 - crossed-bands: current global-v1 impact missions retain their existing pressure details
+  ---
+  duration_ms: 42.557416
+  ...
+# Subtest: crossed-bands: charge recovery still exposes already travelling impact fronts
+ok 5 - crossed-bands: charge recovery still exposes already travelling impact fronts
+  ---
+  duration_ms: 21.69475
+  ...
+# Subtest: crossed-bands: valid explicit v2 carrier-plus-pressure import describes both abilities
+ok 6 - crossed-bands: valid explicit v2 carrier-plus-pressure import describes both abilities
+  ---
+  duration_ms: 30.561583
+  ...
+# Subtest: carrier without pressure and pressure without carrier preserve their existing output
+ok 7 - carrier without pressure and pressure without carrier preserve their existing output
+  ---
+  duration_ms: 0.561625
+  ...
+# Subtest: combined roles and carrier ability use the existing English and Ukrainian translations
+ok 8 - combined roles and carrier ability use the existing English and Ukrainian translations
+  ---
+  duration_ms: 0.805625
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1886.874334

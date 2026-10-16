@@ -1,0 +1,830 @@
+{
+  "version": "humanoid-voice-generation.v1",
+  "limits": {
+    "clipBytes": 2097152,
+    "localeBundleBytes": 33554432,
+    "durationSeconds": 15,
+    "linesPerFamily": 2
+  },
+  "jobs": [
+    {
+      "lineId": "humanoid-actors.v1/lookout/notice",
+      "locale": "en",
+      "speaker": "lookout",
+      "event": "notice",
+      "transcript": "Something on the horizon.",
+      "filename": "actor-lookout-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Observant and curious; a brief intake of surprise when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Samantha",
+        "rate": 150
+      },
+      "status": "generation-pending",
+      "scriptSha256": "8516111eb9b5b5135ca1ad6cd42409a05abe92b1248230889507985ed9ffed9c"
+    },
+    {
+      "lineId": "humanoid-actors.v1/lookout/notice",
+      "locale": "uk",
+      "speaker": "lookout",
+      "event": "notice",
+      "transcript": "Щось на обрії.",
+      "filename": "actor-lookout-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Observant and curious; a brief intake of surprise when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 150
+      },
+      "status": "generation-pending",
+      "scriptSha256": "f0867dcf7cde755c0b83e2e15a5b2c5b21593eac6456bdcd6b0b00034ea3a129"
+    },
+    {
+      "lineId": "humanoid-actors.v1/lookout/caught",
+      "locale": "en",
+      "speaker": "lookout",
+      "event": "caught",
+      "transcript": "A little too close!",
+      "filename": "actor-lookout-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Observant and curious; a brief intake of surprise when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Samantha",
+        "rate": 150
+      },
+      "status": "generation-pending",
+      "scriptSha256": "9f76411eb2b591bda51d10d45f0ec56f76d2766a4a6191c9bb6fa26bf412ef81"
+    },
+    {
+      "lineId": "humanoid-actors.v1/lookout/caught",
+      "locale": "uk",
+      "speaker": "lookout",
+      "event": "caught",
+      "transcript": "Трохи заблизько!",
+      "filename": "actor-lookout-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Observant and curious; a brief intake of surprise when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 150
+      },
+      "status": "generation-pending",
+      "scriptSha256": "c58a5d0ae259286356cb0b3ee6152860cd64ef00fbc47165730c1f8f43ba548a"
+    },
+    {
+      "lineId": "humanoid-actors.v1/patroller/notice",
+      "locale": "en",
+      "speaker": "patroller",
+      "event": "notice",
+      "transcript": "One more round.",
+      "filename": "actor-patroller-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Unhurried and matter-of-fact; surprised without shouting.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 155
+      },
+      "status": "generation-pending",
+      "scriptSha256": "0cb459e78e47acb63ae91507ad9747632ffb3a8953604332b06def44b07b6e63"
+    },
+    {
+      "lineId": "humanoid-actors.v1/patroller/notice",
+      "locale": "uk",
+      "speaker": "patroller",
+      "event": "notice",
+      "transcript": "Ще одне коло.",
+      "filename": "actor-patroller-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Unhurried and matter-of-fact; surprised without shouting.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 155
+      },
+      "status": "generation-pending",
+      "scriptSha256": "2f9f72062293ff6aca148f60af20e31dc7fad2e7ed24e35ccfae0eb60f33e4eb"
+    },
+    {
+      "lineId": "humanoid-actors.v1/patroller/caught",
+      "locale": "en",
+      "speaker": "patroller",
+      "event": "caught",
+      "transcript": "Off the beaten path!",
+      "filename": "actor-patroller-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Unhurried and matter-of-fact; surprised without shouting.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 155
+      },
+      "status": "generation-pending",
+      "scriptSha256": "cb3a52d2479073b5a0a95a834e811db04bfb345f778678de20dd41f0603a3c4b"
+    },
+    {
+      "lineId": "humanoid-actors.v1/patroller/caught",
+      "locale": "uk",
+      "speaker": "patroller",
+      "event": "caught",
+      "transcript": "Зійшли зі звичного шляху!",
+      "filename": "actor-patroller-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Unhurried and matter-of-fact; surprised without shouting.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 155
+      },
+      "status": "generation-pending",
+      "scriptSha256": "8167dbf390f83e0b1b6883a780fcb21978f626a4026582e141ded63bb9af17e6"
+    },
+    {
+      "lineId": "humanoid-actors.v1/runner/notice",
+      "locale": "en",
+      "speaker": "runner",
+      "event": "notice",
+      "transcript": "Room for one more turn.",
+      "filename": "actor-runner-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Alert, quick and playful. Leave the words easy to understand.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Karen",
+        "rate": 175
+      },
+      "status": "generation-pending",
+      "scriptSha256": "57c8a5bfd31f64b431eeba70b08e0eb671497379b6bf5b0b17457599145a0c70"
+    },
+    {
+      "lineId": "humanoid-actors.v1/runner/notice",
+      "locale": "uk",
+      "speaker": "runner",
+      "event": "notice",
+      "transcript": "Є місце ще для одного повороту.",
+      "filename": "actor-runner-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Alert, quick and playful. Leave the words easy to understand.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 175
+      },
+      "status": "generation-pending",
+      "scriptSha256": "eedd7c5724a359039375c441e378db832cc039d3d84de25a238f2edb040ef802"
+    },
+    {
+      "lineId": "humanoid-actors.v1/runner/caught",
+      "locale": "en",
+      "speaker": "runner",
+      "event": "caught",
+      "transcript": "You found the shortcut!",
+      "filename": "actor-runner-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Alert, quick and playful. Leave the words easy to understand.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Karen",
+        "rate": 175
+      },
+      "status": "generation-pending",
+      "scriptSha256": "a798a2dcd22ea8d78ec872968deb85cbe4eaf6fb8f7a4b29d20c34aa8de23ee1"
+    },
+    {
+      "lineId": "humanoid-actors.v1/runner/caught",
+      "locale": "uk",
+      "speaker": "runner",
+      "event": "caught",
+      "transcript": "Ви знайшли коротший шлях!",
+      "filename": "actor-runner-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Alert, quick and playful. Leave the words easy to understand.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 175
+      },
+      "status": "generation-pending",
+      "scriptSha256": "3f3e6306911b6217a6545b9c240f349ca5478478b251d3e5a48b88399c15fc70"
+    },
+    {
+      "lineId": "humanoid-actors.v1/sprinter/notice",
+      "locale": "en",
+      "speaker": "sprinter",
+      "event": "notice",
+      "transcript": "Deep breath. Ready.",
+      "filename": "actor-sprinter-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "A measured breath, then determined energy; lightly breathless when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 180
+      },
+      "status": "generation-pending",
+      "scriptSha256": "88f641e3fa3c247aa5b5c04ac4650d2923e631e8e790865330276cede631c9e0"
+    },
+    {
+      "lineId": "humanoid-actors.v1/sprinter/notice",
+      "locale": "uk",
+      "speaker": "sprinter",
+      "event": "notice",
+      "transcript": "Глибокий вдих. Готово.",
+      "filename": "actor-sprinter-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "A measured breath, then determined energy; lightly breathless when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 180
+      },
+      "status": "generation-pending",
+      "scriptSha256": "d3aa009d711feac382fbf13fd57e9f5be540371422d96cb87eb836266ac23ee6"
+    },
+    {
+      "lineId": "humanoid-actors.v1/sprinter/caught",
+      "locale": "en",
+      "speaker": "sprinter",
+      "event": "caught",
+      "transcript": "Out of breath!",
+      "filename": "actor-sprinter-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "A measured breath, then determined energy; lightly breathless when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 180
+      },
+      "status": "generation-pending",
+      "scriptSha256": "0d9a32f2f8961f6f4f1868adff451d8aea75b37b39ce8a858eab74ff16f8c356"
+    },
+    {
+      "lineId": "humanoid-actors.v1/sprinter/caught",
+      "locale": "uk",
+      "speaker": "sprinter",
+      "event": "caught",
+      "transcript": "Забракло подиху!",
+      "filename": "actor-sprinter-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "A measured breath, then determined energy; lightly breathless when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 180
+      },
+      "status": "generation-pending",
+      "scriptSha256": "5c483308c103391cda407a2db1d88cdf5a672469fba655a9f965feea127f74dd"
+    },
+    {
+      "lineId": "humanoid-actors.v1/courier/notice",
+      "locale": "en",
+      "speaker": "courier",
+      "event": "notice",
+      "transcript": "A parcel with a destination.",
+      "filename": "actor-courier-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Busy and cheerful, with gentle disappointment at the interrupted delivery.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Samantha",
+        "rate": 170
+      },
+      "status": "generation-pending",
+      "scriptSha256": "2c25d7d4315da0d57b2b142a4690a1344b5a631b7a63b6f6503496ff1c17ec09"
+    },
+    {
+      "lineId": "humanoid-actors.v1/courier/notice",
+      "locale": "uk",
+      "speaker": "courier",
+      "event": "notice",
+      "transcript": "Пакунок має свою адресу.",
+      "filename": "actor-courier-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Busy and cheerful, with gentle disappointment at the interrupted delivery.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 170
+      },
+      "status": "generation-pending",
+      "scriptSha256": "f9a5c224e500697e50d100aa74f760bee6f653939fcb5f5892f74e00824ec435"
+    },
+    {
+      "lineId": "humanoid-actors.v1/courier/caught",
+      "locale": "en",
+      "speaker": "courier",
+      "event": "caught",
+      "transcript": "Delivery interrupted!",
+      "filename": "actor-courier-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Busy and cheerful, with gentle disappointment at the interrupted delivery.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Samantha",
+        "rate": 170
+      },
+      "status": "generation-pending",
+      "scriptSha256": "f1778a26b7de936af841afe07389b528b22e05993006a755e29a7dab9d085aea"
+    },
+    {
+      "lineId": "humanoid-actors.v1/courier/caught",
+      "locale": "uk",
+      "speaker": "courier",
+      "event": "caught",
+      "transcript": "Доставку перервано!",
+      "filename": "actor-courier-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Busy and cheerful, with gentle disappointment at the interrupted delivery.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 170
+      },
+      "status": "generation-pending",
+      "scriptSha256": "f4099f1f5896a7a34c9dca7897fd981eb51e80dde8bd7289849da06321174807"
+    },
+    {
+      "lineId": "humanoid-actors.v1/guard/notice",
+      "locale": "en",
+      "speaker": "guard",
+      "event": "notice",
+      "transcript": "Keeping an eye on the crossing.",
+      "filename": "actor-guard-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Watchful and concise. Do not imitate a real person or military recording.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Fred",
+        "rate": 150
+      },
+      "status": "generation-pending",
+      "scriptSha256": "62f1395d9c3a62ecf78e17797d7aa3e51f43fe504af9d00dd1dc2272a1d1e561"
+    },
+    {
+      "lineId": "humanoid-actors.v1/guard/notice",
+      "locale": "uk",
+      "speaker": "guard",
+      "event": "notice",
+      "transcript": "Стежу за переходом.",
+      "filename": "actor-guard-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Watchful and concise. Do not imitate a real person or military recording.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 150
+      },
+      "status": "generation-pending",
+      "scriptSha256": "b21f86e78fbafccf696eb2f03ce33b443264d98f2088a8692366ca41b12bd9c5"
+    },
+    {
+      "lineId": "humanoid-actors.v1/guard/caught",
+      "locale": "en",
+      "speaker": "guard",
+      "event": "caught",
+      "transcript": "A gap in the watch!",
+      "filename": "actor-guard-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Watchful and concise. Do not imitate a real person or military recording.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Fred",
+        "rate": 150
+      },
+      "status": "generation-pending",
+      "scriptSha256": "203a59e19653f450c66cd2161ec1a42e589d991b69a27e1daed91d2f658db37f"
+    },
+    {
+      "lineId": "humanoid-actors.v1/guard/caught",
+      "locale": "uk",
+      "speaker": "guard",
+      "event": "caught",
+      "transcript": "Прогалина у варті!",
+      "filename": "actor-guard-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Watchful and concise. Do not imitate a real person or military recording.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 150
+      },
+      "status": "generation-pending",
+      "scriptSha256": "7744d9436dfab15d8f442cc148e33ae3bd954e5b7ad05c332e8d8e2aa92fb8d3"
+    },
+    {
+      "lineId": "humanoid-actors.v1/refuge-seeker/notice",
+      "locale": "en",
+      "speaker": "refuge-seeker",
+      "event": "notice",
+      "transcript": "That corner looks promising.",
+      "filename": "actor-refuge-seeker-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Cautiously hopeful, then rueful when the shortcut fails.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Samantha",
+        "rate": 155
+      },
+      "status": "generation-pending",
+      "scriptSha256": "02b4428870f4b5bc1f6fec38452aed1a7fc24ce5c2e4cf3401730ec7d2f1f73f"
+    },
+    {
+      "lineId": "humanoid-actors.v1/refuge-seeker/notice",
+      "locale": "uk",
+      "speaker": "refuge-seeker",
+      "event": "notice",
+      "transcript": "Той кут виглядає вдало.",
+      "filename": "actor-refuge-seeker-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Cautiously hopeful, then rueful when the shortcut fails.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 155
+      },
+      "status": "generation-pending",
+      "scriptSha256": "fd5b0abeb775fb9f651cc5acfaab4332fb1421ec37b804ea39e673f7d60023a6"
+    },
+    {
+      "lineId": "humanoid-actors.v1/refuge-seeker/caught",
+      "locale": "en",
+      "speaker": "refuge-seeker",
+      "event": "caught",
+      "transcript": "The long way was shorter!",
+      "filename": "actor-refuge-seeker-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Cautiously hopeful, then rueful when the shortcut fails.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Samantha",
+        "rate": 155
+      },
+      "status": "generation-pending",
+      "scriptSha256": "e169a8b8a8a1d21e40811855a7fefaa32bacb61b826aff23c1392869ae74faf4"
+    },
+    {
+      "lineId": "humanoid-actors.v1/refuge-seeker/caught",
+      "locale": "uk",
+      "speaker": "refuge-seeker",
+      "event": "caught",
+      "transcript": "Довгий шлях виявився коротшим!",
+      "filename": "actor-refuge-seeker-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Cautiously hopeful, then rueful when the shortcut fails.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 155
+      },
+      "status": "generation-pending",
+      "scriptSha256": "8a25fe83d78bff3660bab5045a9b8fd571a1271dc1c8e502d8bb4507ca5f9f76"
+    },
+    {
+      "lineId": "humanoid-actors.v1/switchback/notice",
+      "locale": "en",
+      "speaker": "switchback",
+      "event": "notice",
+      "transcript": "A different way around.",
+      "filename": "actor-switchback-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Resourceful and mischievous, impressed by a better interception.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Karen",
+        "rate": 165
+      },
+      "status": "generation-pending",
+      "scriptSha256": "317c6530040ad21f5d6c15d0cdda47c02afbdd05806ae47a991676bdb1744f79"
+    },
+    {
+      "lineId": "humanoid-actors.v1/switchback/notice",
+      "locale": "uk",
+      "speaker": "switchback",
+      "event": "notice",
+      "transcript": "Є інший обхід.",
+      "filename": "actor-switchback-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Resourceful and mischievous, impressed by a better interception.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 165
+      },
+      "status": "generation-pending",
+      "scriptSha256": "9229f2c23afc86a52b1267b2d1bb6b9f6b977fc732fdff2523a4778f1c08e9a7"
+    },
+    {
+      "lineId": "humanoid-actors.v1/switchback/caught",
+      "locale": "en",
+      "speaker": "switchback",
+      "event": "caught",
+      "transcript": "A turn ahead of me!",
+      "filename": "actor-switchback-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Resourceful and mischievous, impressed by a better interception.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Karen",
+        "rate": 165
+      },
+      "status": "generation-pending",
+      "scriptSha256": "1cfd314a95967578c6e7b4835b8d5dbf61fb5aeb9ea27209d97292419c2c20e3"
+    },
+    {
+      "lineId": "humanoid-actors.v1/switchback/caught",
+      "locale": "uk",
+      "speaker": "switchback",
+      "event": "caught",
+      "transcript": "Ви на поворот попереду!",
+      "filename": "actor-switchback-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Resourceful and mischievous, impressed by a better interception.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 165
+      },
+      "status": "generation-pending",
+      "scriptSha256": "1f1f04065d4c38a4fb46cc2af2a9737ad53b41ba82c52c5f84df440598939890"
+    },
+    {
+      "lineId": "humanoid-actors.v1/rendezvous-pair/notice",
+      "locale": "en",
+      "speaker": "rendezvous-pair",
+      "event": "notice",
+      "transcript": "Meet you at the crossing.",
+      "filename": "actor-rendezvous-pair-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Friendly anticipation and a warm greeting, then mild surprise.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 160
+      },
+      "status": "generation-pending",
+      "scriptSha256": "a35f5fb7b9c114ee288ffa900bb99f74eb70a29419aabc171d2bd3551bcf5af7"
+    },
+    {
+      "lineId": "humanoid-actors.v1/rendezvous-pair/notice",
+      "locale": "uk",
+      "speaker": "rendezvous-pair",
+      "event": "notice",
+      "transcript": "Зустрінемось на перетині.",
+      "filename": "actor-rendezvous-pair-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Friendly anticipation and a warm greeting, then mild surprise.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 160
+      },
+      "status": "generation-pending",
+      "scriptSha256": "b06b820367b51f5ef499c24ead82601dc6675607d2a63bdba1afc13e56e7eb2b"
+    },
+    {
+      "lineId": "humanoid-actors.v1/rendezvous-pair/caught",
+      "locale": "en",
+      "speaker": "rendezvous-pair",
+      "event": "caught",
+      "transcript": "A change of meeting place!",
+      "filename": "actor-rendezvous-pair-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Friendly anticipation and a warm greeting, then mild surprise.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 160
+      },
+      "status": "generation-pending",
+      "scriptSha256": "ea7a48628a11c543ad5fd99e3a53dacaede2467ab4c8f43546e5619d2b5a5822"
+    },
+    {
+      "lineId": "humanoid-actors.v1/rendezvous-pair/caught",
+      "locale": "uk",
+      "speaker": "rendezvous-pair",
+      "event": "caught",
+      "transcript": "Місце зустрічі змінилося!",
+      "filename": "actor-rendezvous-pair-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Friendly anticipation and a warm greeting, then mild surprise.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 160
+      },
+      "status": "generation-pending",
+      "scriptSha256": "806b437ac5df8940ed8bf64d61e52282a32383aac5c127d1f2fa8dcda7b4da2c"
+    },
+    {
+      "lineId": "humanoid-actors.v1/shield-bearer/notice",
+      "locale": "en",
+      "speaker": "shield-bearer",
+      "event": "notice",
+      "transcript": "Facing the next crossing.",
+      "filename": "actor-shield-bearer-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Steady confidence, then acknowledgement of a clever flank.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Fred",
+        "rate": 145
+      },
+      "status": "generation-pending",
+      "scriptSha256": "d92f9461dee5a68bc5ac346cf923569d1f0211bf88ea8a1acbfdd5ea1c3ff007"
+    },
+    {
+      "lineId": "humanoid-actors.v1/shield-bearer/notice",
+      "locale": "uk",
+      "speaker": "shield-bearer",
+      "event": "notice",
+      "transcript": "Повертаюся до наступного переходу.",
+      "filename": "actor-shield-bearer-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Steady confidence, then acknowledgement of a clever flank.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 145
+      },
+      "status": "generation-pending",
+      "scriptSha256": "12330f3fe7a6012c9a0d7b13ee79d53a8b52b91c5c50d3a8351df208fb0a2ba1"
+    },
+    {
+      "lineId": "humanoid-actors.v1/shield-bearer/caught",
+      "locale": "en",
+      "speaker": "shield-bearer",
+      "event": "caught",
+      "transcript": "Caught from another angle!",
+      "filename": "actor-shield-bearer-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Steady confidence, then acknowledgement of a clever flank.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Fred",
+        "rate": 145
+      },
+      "status": "generation-pending",
+      "scriptSha256": "c4b5d456403f3a8e32114770efc813f273b27a3f47ef82febfd1e6ae4814da2d"
+    },
+    {
+      "lineId": "humanoid-actors.v1/shield-bearer/caught",
+      "locale": "uk",
+      "speaker": "shield-bearer",
+      "event": "caught",
+      "transcript": "Перехоплено з іншого боку!",
+      "filename": "actor-shield-bearer-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Steady confidence, then acknowledgement of a clever flank.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 145
+      },
+      "status": "generation-pending",
+      "scriptSha256": "b41ae1c37ae0afc91b8138c43dd5db9b4b91ee6cce4c91a0fff5cb01b9723732"
+    },
+    {
+      "lineId": "humanoid-actors.v1/brace-trooper/notice",
+      "locale": "en",
+      "speaker": "brace-trooper",
+      "event": "notice",
+      "transcript": "Brace. Breathe. Go.",
+      "filename": "actor-brace-trooper-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Three deliberate beats before action; impressed recognition when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 145
+      },
+      "status": "generation-pending",
+      "scriptSha256": "dff90331e8908eaf10203c6e0d4442baf693f3734a6a227d65d72dcfae5ea0d6"
+    },
+    {
+      "lineId": "humanoid-actors.v1/brace-trooper/notice",
+      "locale": "uk",
+      "speaker": "brace-trooper",
+      "event": "notice",
+      "transcript": "Зібратися. Вдихнути. Рушати.",
+      "filename": "actor-brace-trooper-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Three deliberate beats before action; impressed recognition when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 145
+      },
+      "status": "generation-pending",
+      "scriptSha256": "fe8886e8a504ff9a6ebbf72e04b1bac37f4428bc7330dad875b9b774b46e3fe6"
+    },
+    {
+      "lineId": "humanoid-actors.v1/brace-trooper/caught",
+      "locale": "en",
+      "speaker": "brace-trooper",
+      "event": "caught",
+      "transcript": "You read the rhythm!",
+      "filename": "actor-brace-trooper-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Three deliberate beats before action; impressed recognition when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Daniel",
+        "rate": 145
+      },
+      "status": "generation-pending",
+      "scriptSha256": "91c17b17af745765abd140ccd14c9080eadf1cd485c8e0e39164900470d81226"
+    },
+    {
+      "lineId": "humanoid-actors.v1/brace-trooper/caught",
+      "locale": "uk",
+      "speaker": "brace-trooper",
+      "event": "caught",
+      "transcript": "Ви вловили ритм!",
+      "filename": "actor-brace-trooper-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Three deliberate beats before action; impressed recognition when caught.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 145
+      },
+      "status": "generation-pending",
+      "scriptSha256": "d71c4205db66d3753d795c1393617a869113d906458fae4e561038af7404c969"
+    },
+    {
+      "lineId": "humanoid-actors.v1/relay-warden/notice",
+      "locale": "en",
+      "speaker": "relay-warden",
+      "event": "notice",
+      "transcript": "Listening for the next signal.",
+      "filename": "actor-relay-warden-notice-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Calm, resonant and restrained, never a long dramatic monologue.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Fred",
+        "rate": 140
+      },
+      "status": "generation-pending",
+      "scriptSha256": "795379a52c292fd7829dbdb9bae750970a7b4c740c81429669f536b59352089e"
+    },
+    {
+      "lineId": "humanoid-actors.v1/relay-warden/notice",
+      "locale": "uk",
+      "speaker": "relay-warden",
+      "event": "notice",
+      "transcript": "Чекаю наступного сигналу.",
+      "filename": "actor-relay-warden-notice-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Calm, resonant and restrained, never a long dramatic monologue.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 140
+      },
+      "status": "generation-pending",
+      "scriptSha256": "7832010a5f43b59d77892caf923c04ed0191779aefcbcddc610bafe0f8d95ee4"
+    },
+    {
+      "lineId": "humanoid-actors.v1/relay-warden/caught",
+      "locale": "en",
+      "speaker": "relay-warden",
+      "event": "caught",
+      "transcript": "The signal has changed hands.",
+      "filename": "actor-relay-warden-caught-en.m4a",
+      "localePack": "humanoid-reactions-en-v1",
+      "direction": "Calm, resonant and restrained, never a long dramatic monologue.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Fred",
+        "rate": 140
+      },
+      "status": "generation-pending",
+      "scriptSha256": "d1a2f9222e917b04d1724e2334bbfc11ba386171cedbd17da3428b9e1a678809"
+    },
+    {
+      "lineId": "humanoid-actors.v1/relay-warden/caught",
+      "locale": "uk",
+      "speaker": "relay-warden",
+      "event": "caught",
+      "transcript": "Сигнал перейшов до інших рук.",
+      "filename": "actor-relay-warden-caught-uk.m4a",
+      "localePack": "humanoid-reactions-uk-v1",
+      "direction": "Calm, resonant and restrained, never a long dramatic monologue.",
+      "profile": {
+        "provider": "macos-say",
+        "voice": "Lesya",
+        "rate": 140
+      },
+      "status": "generation-pending",
+      "scriptSha256": "d351f40868f4af1a8cc1efcb8b914c54c1acc122d3001da858efdf67acb516b4"
+    }
+  ],
+  "runtimeGeneration": false,
+  "replacementFormat": "ReactionVoiceBundleV1",
+  "qualification": "Generation inputs only; recordings and listening review are pending."
+}

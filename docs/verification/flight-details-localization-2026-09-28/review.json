@@ -1,0 +1,60 @@
+{
+  "sourceBase": "c5885a15561a88331c5566c5312392c4e5d8daf5",
+  "scope": "Paused Flight Details language refresh; source-only candidate",
+  "tests": {
+    "command": "node --test game/test/flight-details-localization.test.mjs game/test/flight-role-guidance.test.mjs game/test/encounter-copy.test.mjs game/test/encounter-view.test.mjs game/test/flight-information-details-host.test.mjs",
+    "passed": 69,
+    "failed": 0,
+    "skipped": 0
+  },
+  "baseline": {
+    "passed": 1,
+    "failed": 4,
+    "filteredOut": 14,
+    "replacedRuntimeFiles": [
+      "game/app.mjs",
+      "game/ui/flight-information-details.mjs",
+      "game/ui/encounter-view.mjs"
+    ],
+    "otherFiles": "candidate tests, catalog and dependencies retained"
+  },
+  "catalog": {
+    "completeSourceRoundTrip": true,
+    "newFlatKeys": 43,
+    "ukrainianPlaceholderParity": true,
+    "builder": "actual catalogBundle function from scripts/localization.mjs evaluated with pinned vendor lz-string1.5.0; no npm install"
+  },
+  "checks": {
+    "scopedESLint": "pass",
+    "scopedPrettier": "pass",
+    "diffWhitespace": "pass",
+    "independentReview": "no remaining blocker after captured input labels and impact-carrier summary corrections"
+  },
+  "notRun": [
+    "full repository suite (existing waiver)",
+    "production reproduction/readiness",
+    "ordinary build",
+    "browser visual checks",
+    "physical controller/touch",
+    "audible listening",
+    "deployed gameplay",
+    "offline acceptance"
+  ],
+  "files": {
+    "game/app.mjs": "a8cc45646254b4f46967f2250947201e10b03365ee0c4a3021e895c6d935319f",
+    "game/ui/flight-information-details.mjs": "49b9cb533f2ece7c43bdde7fa255223a0fe6a7ba6ffe4db7bab81a6e71ac02eb",
+    "game/ui/encounter-view.mjs": "00d5fd872936173c1b2dae98f73af3c42106e82afe92c1b81182f9231dd168f6",
+    "game/ui/encounter-copy.mjs": "f4db673c31ddd5e1413d7726e93e3b51e2a0b6b4fe5f4b0decde48914f4410a4",
+    "game/locales/en/interface.json": "01f80061555f281fa877282cd0f655c804748f3b2dfb12198f4b359c8c0c448a",
+    "game/locales/uk/interface.json": "8ec616d06625e0eafe3593ce3c9b6b22bd1f7ea3fae795b58ec31a583da9d641",
+    "game/i18n/catalogs.mjs": "169b1cc4fa810ff823cf108b790c1825d93bf0aacf5614611856e2be02112a05",
+    "game/test/encounter-copy.test.mjs": "44f45680469b3004c1b96495a322ee404372689a143b31e336fea4a24653d562",
+    "game/test/flight-details-localization.test.mjs": "524edb35c5fb7a1ac766db592120204102a0e9b6239812cd87cbcb048693f801",
+    "game/test/flight-information-details-host.test.mjs": "0de0e7eed6edf4b56600e677e0a0e71d230b11c4adf9dc94f3faea9fb07ae389"
+  },
+  "rawLogSha256": {
+    "baseline.tap": "5ae7a5e449f12d71b21dfffe48d14ac8272e341e9cb9291ba2fec071e39a8963",
+    "focused.tap": "23a4b94689570bc5caeb80635c23be37823c31a48c58386d09d20a94544666ff"
+  },
+  "logFormatting": "Trailing whitespace stripped from retained TAP display; original output SHA-256 recorded."
+}

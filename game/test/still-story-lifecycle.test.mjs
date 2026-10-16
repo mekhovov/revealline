@@ -323,3 +323,25 @@ test('existing controller editor changes a segment slider only on Confirm and Ba
   nav.handle({ back: true });
   assert.equal(h.panel.dialog.open, false);
 });
+
+test('captured video poster uses the exact raster handoff without exporting or saving its clip', async (t) => {
+  const h = await setup(t);
+  h.$('credit').value = 'Owned video fixture';
+  h.$('source').value = 'Diagnostic poster';
+  h.$('description').value = 'Captured original';
+  await h.inspect();
+  h.s('frame-time').value = '2';
+  assert.equal(await h.s('capture').onclick(), true);
+  const before = await h.store.read(),
+    story = await h.storyStore.readMetadata();
+  const prepare = h.doc.querySelector('[data-asset-export-action="prepare"]');
+  assert.equal(await prepare.onclick(), true);
+  const link = h.doc.querySelector('[data-reward-asset-export]').querySelector('a');
+  const blob = h.native.urls.get(link.href);
+  assert.equal(blob.type, 'image/png');
+  assert.deepEqual(Buffer.from(await blob.arrayBuffer()), pngBytes());
+  assert.equal((await h.store.read()).generation, before.generation);
+  assert.equal((await h.storyStore.readMetadata()).generation, story.generation);
+  h.panel.close();
+  assert.equal(h.native.urls.has(link.href), false);
+});

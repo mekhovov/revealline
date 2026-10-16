@@ -1,0 +1,25 @@
+{
+  "format": "FPVGateCoachingPublicationIntegration.v1",
+  "integrationCommit": "401e0eac401478c7ca75d9da806fa984d850b674",
+  "publishedMain": "5931ef12678cc52ab332fbbfe5516ad93a60caa9",
+  "qualifiedCandidate": "f6c7f7b141ef7171c3ead0e27b7ea4f195fae0a2",
+  "inputInventory": "fpv-gate-coaching-disposal-integration.json",
+  "inventorySHA256": "ede9af8cac84058c44f20817e37b4a38af0145d45adb9341b7b596504ce80a59",
+  "checkedInputs": 95,
+  "originalInputBytes": 16777021,
+  "sourceBudgetBytes": 16777216,
+  "headroomBytes": 195,
+  "changedMergeFiles": [],
+  "checks": [
+    {
+      "name": "All 95 qualified original input sizes and SHA-256 values are exact",
+      "passed": true
+    },
+    {
+      "name": "Normal main integration changes no tracked files",
+      "passed": true
+    }
+  ],
+  "hostSHA256": "add2a0321fdd37663027c922a6279241db6ea97ed6b3f38ee9b33719d3a33aa7",
+  "scope": "History-only merge of already-qualified disposal and School changes; no rebuild or browser rerun. Source-capacity #1047 not included."
+}

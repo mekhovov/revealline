@@ -1,0 +1,22 @@
+{
+  "file": "game/test/coop-custom-artwork-host.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-custom-artwork-host.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": null,
+  "timedOut": true,
+  "seconds": 130.01,
+  "failures": [
+    {
+      "test": "a reset during completed local import UI keeps ownership over the older success tail",
+      "location": "game/test/coop-custom-artwork-host.test.mjs:556:3",
+      "detail": "\n  ---\n  duration_ms: 290.056875\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-custom-artwork-host.test.mjs:556:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    older completion must not steal the newer focus intent\n    + actual - expected\n    \n    + 'coop-start'\n    - 'coop-level'\n            ^\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'coop-level'\n  actual: 'coop-start'\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-custom-artwork-host.test.mjs:609:14)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": []
+}

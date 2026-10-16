@@ -1,0 +1,29 @@
+TAP version 13
+# Subtest: Solo save/Continue during an actual freeze retains prepared actor hold through exact expiry
+    # Subtest: collect the authored pickup with real steering and suspend the active effect
+    ok 1 - collect the authored pickup with real steering and suspend the active effect
+      ---
+      duration_ms: 7271.113875
+      type: 'test'
+      ...
+    # Subtest: fresh-page Continue holds its prepared pose, then resumes only at authoritative expiry
+    ok 2 - fresh-page Continue holds its prepared pose, then resumes only at authoritative expiry
+      ---
+      duration_ms: 12849.14225
+      type: 'test'
+      ...
+    1..2
+ok 1 - Solo save/Continue during an actual freeze retains prepared actor hold through exact expiry
+  ---
+  duration_ms: 20121.565916
+  type: 'test'
+  ...
+1..1
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20576.448417

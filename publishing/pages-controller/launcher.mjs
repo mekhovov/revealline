@@ -1,5 +1,70 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+
+const FILE_LIMIT = 128 * 1024;
+const OPTIONAL_CLOSURE = [
+  // Gate-enabled launchers must carry their own gate; historical launchers
+  // without these references remain publishable unchanged.
+  ['access-gate.mjs', 'index.html', './access-gate.mjs'],
+  ['access-gate.css', 'index.html', './access-gate.css'],
+  // A current seed requires its frozen CSS/font closure; older launchers do not.
+  ...[
+    'presentation/theme-bootstrap.mjs',
+    'presentation/industrial-workshop.css',
+    'ui/field-kit-fonts.css',
+    'ui/brand-identity.css',
+    'ui/art/identity/fpv-line/icon-192.png',
+    'ui/fonts/departure-mono/DepartureMono-Regular.woff2',
+    'ui/fonts/departure-mono/LICENSE',
+    'ui/fonts/field-kit/exo2-ui-400-600.woff2',
+    'ui/fonts/field-kit/handjet-display-600.woff2',
+    'ui/fonts/field-kit/ibm-plex-mono-500.woff2',
+    'ui/fonts/field-kit/Exo2-OFL.txt',
+    'ui/fonts/field-kit/Handjet-OFL.txt',
+    'ui/fonts/field-kit/IBMPlexMono-OFL.txt',
+  ].map((file) => [file, 'index.html', 'presentation/theme-bootstrap.mjs']),
+  ['navigation.css', 'index.html', 'navigation.css'],
+  ['edition-context.mjs', 'installed-app.mjs', './edition-context.mjs'],
+  ['profile-writer.mjs', 'installed-app.mjs', './profile-writer.mjs'],
+  ['i18n/index.mjs', 'app.mjs', './i18n/index.mjs'],
+  ['i18n/bootstrap.mjs', 'i18n/index.mjs', './bootstrap.mjs'],
+  ['i18n/catalogs.mjs', 'i18n/index.mjs', './catalogs.mjs'],
+  ['i18n/style.css', 'index.html', 'i18n/style.css'],
+  ['vendor/i18next-26.4.2.min.js', 'i18n/index.mjs', '../vendor/i18next-26.4.2.min.js'],
+  ['ui/launcher-navigation.mjs', 'app.mjs', './ui/launcher-navigation.mjs'],
+  ['ui/controller-navigation.mjs', 'ui/launcher-navigation.mjs', './controller-navigation.mjs'],
+  [
+    'ui/controller-confirm-guard.mjs',
+    'ui/launcher-navigation.mjs',
+    './controller-confirm-guard.mjs',
+  ],
+  [
+    'ui/controller-confirm-lifecycle.mjs',
+    'ui/launcher-navigation.mjs',
+    './controller-confirm-lifecycle.mjs',
+  ],
+  ['ui/controller-router.mjs', 'ui/launcher-navigation.mjs', './controller-router.mjs'],
+  ['couch/controller-profiles.mjs', 'ui/controller-router.mjs', '../couch/controller-profiles.mjs'],
+  ['ui/menu-navigation-groups.mjs', 'ui/controller-navigation.mjs', './menu-navigation-groups.mjs'],
+  [
+    'ui/controller-field-editor.mjs',
+    'ui/controller-navigation.mjs',
+    './controller-field-editor.mjs',
+  ],
+  [
+    'ui/controller-field-editor.css',
+    'ui/controller-field-editor.mjs',
+    './controller-field-editor.css',
+  ],
+  ['ui/settings-panels.mjs', 'ui/controller-navigation.mjs', './settings-panels.mjs'],
+  ['ui/controller-text-draft.mjs', 'ui/controller-field-editor.mjs', './controller-text-draft.mjs'],
+  ['controller-bindings.mjs', 'ui/controller-router.mjs', '../controller-bindings.mjs'],
+  ['controller-boost.mjs', 'ui/controller-router.mjs', '../controller-boost.mjs'],
+  ['i18n/content.mjs', 'ui/controller-navigation.mjs', '../i18n/content.mjs'],
+  ['data-json.mjs', 'i18n/content.mjs', '../data-json.mjs'],
+  ['i18n/content-registry.mjs', 'i18n/content.mjs', './content-registry.mjs'],
+];
+
 /** Copy the frozen, small launcher only. Never duplicate a gameplay or soundtrack body. */
 export async function publishOfflineLauncher(source, output, version) {
   const files = [
@@ -19,15 +84,78 @@ export async function publishOfflineLauncher(source, output, version) {
     if (error.code === 'ENOENT') return false;
     throw error;
   }
+  const text = new Map();
+  for (const file of ['index.html', 'app.mjs', 'installed-app.mjs'])
+    text.set(file, await fs.readFile(path.join(source, 'app', file), 'utf8'));
+  for (const [file, owner, reference] of OPTIONAL_CLOSURE) {
+    const required = text.get(owner)?.includes(reference) === true;
+    try {
+      const bytes = await fs.readFile(path.join(source, 'app', file));
+      if (required) {
+        files.push(file);
+        if (file.endsWith('.mjs')) text.set(file, bytes.toString());
+      }
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      if (required) throw new Error('Frozen launcher is missing an imported dependency: ' + file);
+    }
+  }
   await fs.mkdir(path.join(output, 'app'), { recursive: true });
   for (const file of files) {
     const bytes = await fs.readFile(path.join(source, 'app', file));
-    if (bytes.length > 128 * 1024) throw new Error('Frozen launcher exceeded its file budget.');
-    await fs.writeFile(path.join(output, 'app', file), bytes);
+    if (bytes.length > FILE_LIMIT)
+      throw new Error('Frozen launcher exceeded its file budget: ' + file);
+    const target = path.join(output, 'app', file);
+    await fs.mkdir(path.dirname(target), { recursive: true });
+    await fs.writeFile(target, bytes);
+  }
+  // Historical launchers did not include an update surface. New ones share the
+  // exact frozen download document while staying under the narrow app worker.
+  let update;
+  try {
+    update = await fs.readFile(path.join(source, 'app/update.html'), 'utf8');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  if (update !== undefined) {
+    // A historical missing updater is allowed. Once supplied, its bridge is
+    // required: do not publish a new update control whose destination is absent.
+    const marker = /(<meta name="revealline-update" content=')([^']+)(' \/>)/;
+    if (!marker.test(update) || /<base\b/i.test(update) || Buffer.byteLength(update) > FILE_LIMIT)
+      throw new Error('Frozen updater has an invalid candidate marker or file budget.');
+    const publishedUpdate = update
+      .replace(/\b(href|src)=(["'])\.\.\/game\//g, `$1=$2../releases/${version}/site/game/`)
+      .replace(marker, (_match, before, value, after) => {
+        const context = JSON.parse(value);
+        if (context.format !== 'revealline-app-update.v1' || context.scope !== '../')
+          throw new Error('Frozen updater candidate differs from its own edition.');
+        return (
+          before + JSON.stringify({ ...context, scope: `../releases/${version}/site/` }) + after
+        );
+      });
+    await fs.writeFile(path.join(output, 'app/update.html'), publishedUpdate);
+    for (const file of ['app/update.mjs', 'game-update.html', 'game-update.mjs']) {
+      const bytes = await fs.readFile(path.join(source, file));
+      if (bytes.length > FILE_LIMIT)
+        throw new Error('Frozen update dependency exceeded its file budget: ' + file);
+      await fs.writeFile(path.join(output, file), bytes);
+    }
+  }
+  let sourceRevision;
+  try {
+    sourceRevision = JSON.parse(
+      await fs.readFile(path.join(source, 'app/current.json'), 'utf8'),
+    ).sourceRevision;
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
   }
   await fs.writeFile(
     path.join(output, 'app/current.json'),
-    JSON.stringify({ version, scope: `../releases/${version}/site/` }),
+    JSON.stringify({
+      version,
+      scope: '../releases/' + version + '/site/',
+      ...(sourceRevision ? { sourceRevision } : {}),
+    }),
   );
   return true;
 }
