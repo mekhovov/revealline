@@ -389,6 +389,37 @@ async function downloadCandidate(plan, work, evidence, signal, reuse = null) {
   return path;
 }
 
+// Default first-eight reuse is admitted before importing the reusable-baseline
+// module. Extension modes retain their existing adapter input admission.
+export async function admitDefaultBaselineReuse(plan, repositoryPath, evidence) {
+  if (!plan.baseline.reusableArtifact) return false;
+  assert.equal(plan.format, 'SoloHostedCorrectnessPlan.v1');
+  assert(
+    !plan.baseline.publishVerifiedNormal && !plan.baseline.publisher,
+    'A reused baseline cannot retain fresh-publication authority',
+  );
+  assert.deepEqual(
+    plan.adapterInputs?.map((ref) => ref.path),
+    ['scripts/solo-remote-baseline.mjs'],
+    'Exactly one baseline helper identity is required',
+  );
+  const ref = plan.adapterInputs[0];
+  assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes <= MiB);
+  assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+  const path = resolve(repositoryPath, ref.path);
+  assert.equal(await realpath(path), path, 'Baseline helper alias');
+  const info = await lstat(path);
+  assert(info.isFile() && !info.isSymbolicLink() && info.size === ref.bytes);
+  const bytes = await readFile(path);
+  assert.deepEqual(
+    { bytes: bytes.length, sha256: hash(bytes) },
+    { bytes: ref.bytes, sha256: ref.sha256 },
+    'Changed baseline helper',
+  );
+  await writeFile(join(evidence, 'solo-remote-baseline.mjs'), bytes, { flag: 'wx' });
+  return true;
+}
+
 async function main() {
   assert.equal(process.platform, 'linux', 'This declared cohort is Linux only');
   assert.equal(process.env.GITHUB_ACTIONS, 'true', 'Run only in the declared hosted job');
@@ -408,6 +439,7 @@ async function main() {
         ? 'sustained'
         : null;
   let adapter = null,
+    defaultBaselineReuse = false,
     modeState = null,
     setupActive = extension === 'sustained';
   if (extension) {
@@ -557,6 +589,8 @@ async function main() {
           { flag: 'wx' },
         );
     }
+    if (!extension)
+      defaultBaselineReuse = await admitDefaultBaselineReuse(plan, repository, evidence);
     const fixture = extension ? null : resolve(repository, plan.fixture.path);
     if (fixture) {
       assert.deepEqual(await digest(fixture), {
@@ -707,7 +741,7 @@ async function main() {
     const ensureBaseline = async () => {
       if (admitted.artifacts.baseline) return;
       report.baselineSetupStatus = 'running';
-      if (extension && plan.baseline.reusableArtifact) {
+      if ((extension && plan.baseline.reusableArtifact) || defaultBaselineReuse) {
         assert(
           !plan.baseline.publishVerifiedNormal,
           'Cannot republish a reused baseline as freshly built',

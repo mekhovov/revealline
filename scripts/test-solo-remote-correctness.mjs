@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, realpath, rm, writeFile, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import {
+  admitDefaultBaselineReuse,
+  digest,
   functionalResult,
   isOwnedProcess,
   ownedCommand,
@@ -221,3 +223,60 @@ test(
     assert.deepEqual(result.survivors, []);
   },
 );
+
+test('default first-eight reuse admits exactly the pinned helper before shared reuse dispatch', async (t) => {
+  const dir = await realpath(await temporary(t));
+  await mkdir(join(dir, 'scripts'));
+  await mkdir(join(dir, 'evidence'));
+  const helper = join(dir, 'scripts/solo-remote-baseline.mjs');
+  await writeFile(helper, 'throw new Error("admission must not execute this module");\n');
+  const plan = {
+    format: 'SoloHostedCorrectnessPlan.v1',
+    baseline: { reusableArtifact: { producer: 'later validated by original reuse branch' } },
+    adapterInputs: [{ path: 'scripts/solo-remote-baseline.mjs', ...(await digest(helper)) }],
+  };
+  assert.equal(await admitDefaultBaselineReuse(plan, dir, join(dir, 'evidence')), true);
+  assert.deepEqual(
+    await readFile(join(dir, 'evidence/solo-remote-baseline.mjs')),
+    await readFile(helper),
+  );
+  await assert.rejects(admitDefaultBaselineReuse(plan, dir, join(dir, 'evidence')), {
+    code: 'EEXIST',
+  });
+});
+
+test('fresh first-eight plans do not import or require reuse authority', async () => {
+  assert.equal(await admitDefaultBaselineReuse({ baseline: {} }, '/missing', '/missing'), false);
+});
+
+test('default reuse rejects missing/changed helper, publication conflict, aliases and extra inputs', async (t) => {
+  const dir = await realpath(await temporary(t));
+  await mkdir(join(dir, 'scripts'));
+  await mkdir(join(dir, 'evidence'));
+  const helper = join(dir, 'scripts/solo-remote-baseline.mjs');
+  await writeFile(helper, 'exact helper bytes\n');
+  const plan = {
+    format: 'SoloHostedCorrectnessPlan.v1',
+    baseline: { reusableArtifact: {} },
+    adapterInputs: [{ path: 'scripts/solo-remote-baseline.mjs', ...(await digest(helper)) }],
+  };
+  for (const mutate of [
+    (p) => delete p.adapterInputs,
+    (p) => p.adapterInputs.push(p.adapterInputs[0]),
+    (p) => (p.adapterInputs[0].sha256 = '0'.repeat(64)),
+    (p) => p.adapterInputs[0].bytes++,
+    (p) => (p.adapterInputs[0].path = 'scripts/other.mjs'),
+    (p) => (p.baseline.publishVerifiedNormal = true),
+    (p) => (p.baseline.publisher = {}),
+    (p) => (p.format = 'SoloHostedOfflinePairPlan.v1'),
+  ]) {
+    const input = structuredClone(plan);
+    mutate(input);
+    await assert.rejects(admitDefaultBaselineReuse(input, dir, join(dir, 'evidence')));
+  }
+  await rm(helper);
+  await assert.rejects(admitDefaultBaselineReuse(plan, dir, join(dir, 'evidence')));
+  await writeFile(join(dir, 'actual.mjs'), 'exact helper bytes\n');
+  await symlink(join(dir, 'actual.mjs'), helper);
+  await assert.rejects(admitDefaultBaselineReuse(plan, dir, join(dir, 'evidence')), /alias/);
+});
