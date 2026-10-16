@@ -10,29 +10,8 @@ import subprocess
 import time
 from pack import digest, safe_relative
 from verify_upload import restore_part, validate_header
-
-
-def real_directory(path):
-    # Reject symlinks in any existing ancestor, including a caller-selected cache root.
-    absolute = path.absolute()
-    for parent in [*absolute.parents, absolute]:
-        if parent.is_symlink():
-            raise ValueError('Directory path includes a symlink')
-    return absolute
-
-
-def mkdir_safe(root, relative):
-    current = root
-    for name in safe_relative(relative).parts:
-        current /= name
-        if current.is_symlink():
-            raise ValueError('Refusing a symlink as a restore parent')
-        if current.exists():
-            if not current.is_dir():
-                raise ValueError('Restore parent is not a directory')
-        else:
-            current.mkdir()
-    return current
+from restore_paths import mkdir_safe, real_directory
+from github_dependencies import restore_dependencies, validate_dependency
 
 
 def obtain_asset(repo, asset, cache):
@@ -75,6 +54,11 @@ def link_target(path, target, source_root):
 def restore(index, cache, target, receipt_path, defer_external=False):
     if index.get('format') != 'FPVPreservationIndex.v1':
         raise ValueError('Unsupported preservation index')
+    link_rows = {r['path']: r for r in index.get('symlinks', [])}
+    for dep in index.get('githubLinkDependencies', []):
+        validate_dependency(dep)
+        if dep['linkPath'] not in link_rows or link_rows[dep['linkPath']]['target'] != dep['originalTargetExact']:
+            raise ValueError('Reviewed mapping does not match the exact captured link')
     cache, target = real_directory(cache), real_directory(target)
     target.mkdir()  # Existing destinations are never merged, cleared or overwritten.
     cache.mkdir(parents=True, exist_ok=True)
@@ -129,10 +113,13 @@ def restore(index, cache, target, receipt_path, defer_external=False):
         logical_bytes += n
         if len(restored_files) % 1000 == 0:
             print(json.dumps({'event': 'restore-progress', 'files': len(restored_files), 'bytes': logical_bytes}), flush=True)
+    mappings, dependency_files = restore_dependencies(index.get('githubLinkDependencies', []), cache, target)
     external, links = [], []
     for row in index.get('symlinks', []):
         relative = safe_relative(row['path'])
         mapped, reason = link_target(row['path'], row['target'], index['sourceRoot'])
+        if reason and row['path'] in mappings:
+            mapped, reason = mappings[row['path']]['targetWithinRoot'], None
         if reason:
             external.append({'path': row['path'], 'target': row['target'], 'reason': reason})
             continue
@@ -155,6 +142,10 @@ def restore(index, cache, target, receipt_path, defer_external=False):
                'logicalBytes': logical_bytes, 'allFileHashesMatch': True,
                'symlinksRecreated': links, 'externalDependenciesNotCreated': external,
                'unresolvedInternalLinks': unresolved_links,
+               'githubDependencyFiles': dependency_files, 'reviewedExternalLinkMappings': list(mappings.values()),
+               'githubDependencyFileCount': len(dependency_files),
+               'githubDependencyBytes': sum(r['bytes'] for r in dependency_files),
+               'allGitHubDependencyFileHashesMatch': True,
                'complete': index.get('coverageComplete') is True and not external
                            and not index.get('held') and not index.get('uncovered')
                            and not index.get('inventoryConflicts') and not index.get('inventoryErrorsOrUnstable')
@@ -169,7 +160,8 @@ def restore(index, cache, target, receipt_path, defer_external=False):
         json.dump(receipt, f, indent=2)
         f.write('\n')
     print(json.dumps({k: v for k, v in receipt.items() if k not in ['symlinksRecreated', 'externalDependenciesNotCreated',
-                                                                 'gitCheckoutsRequireSeparateSourceRestore']}), flush=True)
+                          'gitCheckoutsRequireSeparateSourceRestore', 'githubDependencyFiles',
+                          'reviewedExternalLinkMappings']}), flush=True)
     if external and not defer_external:
         raise ValueError('External dependencies were reported and not recreated; supply a reviewed mapping or restore them separately')
     return receipt
