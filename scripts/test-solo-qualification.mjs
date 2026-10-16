@@ -5,6 +5,7 @@ import { webcrypto } from 'node:crypto';
 import { inspectReplayMechanics } from './solo-qualification-replay-core.mjs';
 import {
   installQualificationUploadWitness,
+  beginQualificationUploadWitness,
   readPublicQualificationReplay,
   qualificationControlReady,
 } from './solo-qualification-export.mjs';
@@ -143,6 +144,34 @@ test('upload witnesses retain bounded native events without replacing handlers o
   assert.equal(owner.dispose().length, 8);
   assert.equal(control.onchange, originalHandler);
   assert.equal(control.files, originalFiles);
+});
+
+test('upload witness executes as a Playwright string expression instead of returning a function', async () => {
+  const events = new Map();
+  const control = {
+    files: [{}],
+    onchange() {},
+    addEventListener: (name, handler) => events.set(name, handler),
+    removeEventListener: (name) => events.delete(name),
+  };
+  const context = {
+    window: {},
+    document: {
+      querySelector: (selector) => {
+        assert.equal(selector, '#input-with-"quote');
+        return control;
+      },
+    },
+    performance: { now: () => 12 },
+  };
+  await beginQualificationUploadWitness(
+    { evaluate: async (expression) => vm.runInNewContext(expression, context) },
+    '#input-with-"quote',
+  );
+  assert.equal(events.size, 2);
+  events.get('change')({ type: 'change', isTrusted: true });
+  assert.equal(context.window.soloQualificationUploadWitness.dispose()[0].type, 'change');
+  assert.equal(events.size, 0);
 });
 
 test('rAF intervals begin at the second callback and preserve later lifecycle gaps', () => {

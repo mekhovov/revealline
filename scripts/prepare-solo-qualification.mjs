@@ -86,11 +86,19 @@ for (const id of ['first-return', 'long-rail']) {
   assert.equal(manifest.simulationIdentity, row[1]);
   workloads.push({
     id: row[0],
+    qualificationId: 'first-fracture-capture-erosion-v2',
     level: manifest.level,
-    segments: row[3],
+    // One ordinary held cut, then enough native time for the earned erosion.
+    // The prior model victory route depended on fragile short corrective inputs.
+    segments: [
+      ['down', 192],
+      [null, 1800],
+    ],
+    preserveHeldInput: true,
     themeId: manifest.presentation.themeId,
-    expected: 'won',
-    basis: 'fracture-clear-routes.json',
+    expected: 'running',
+    basis:
+      'Unchanged First Fracture definition from fracture-clear-routes.json; version2 capture-and-erosion workload ends before victory. Prior failed native victory attempts remain preserved.',
     coverage: ['captures', 'earned-erosion'],
   });
 }
@@ -130,7 +138,10 @@ const definition = (level, turnPolicy = 'immediate') => ({
   options: { classId: 'scout', turnPolicy },
 });
 const expectedDefinitions = new Map(
-  workloads.map((workload) => [workload.id, definition(workload.level, workload.turnPolicy)]),
+  workloads.map((workload) => [
+    workload.qualificationId ?? workload.id,
+    definition(workload.level, workload.turnPolicy),
+  ]),
 );
 for (const id of [
   'original-art-opening-capture',
@@ -248,7 +259,11 @@ for (const workload of workloads) {
       if (jammerPictureStrength(run) > 0) features.jammerTicks++;
       features.maximumTrailCells = Math.max(features.maximumTrailCells, run.trail.length);
       features.maximumClaimedCells = Math.max(features.maximumClaimedCells, run.claimedCount);
-      if (run.events.some((event) => event.type === 'capture.stopped')) flushNative();
+      if (
+        !workload.preserveHeldInput &&
+        run.events.some((event) => event.type === 'capture.stopped')
+      )
+        flushNative();
     }
   flushNative();
   workload.nativeSegments = nativeSegments;
@@ -258,6 +273,32 @@ for (const workload of workloads) {
   if (workload.coverage.includes('earned-erosion')) assert(features.eroded > 0);
   if (workload.coverage.includes('combat-projectiles')) assert(features.projectileTicks > 0);
   if (workload.coverage.includes('jammer-picture')) assert(features.jammerTicks > 0);
+  const timingVariants = [];
+  if (workload.preserveHeldInput)
+    for (const heldTicks of [168, 180, 192, 204, 216]) {
+      const variant = createRun(workload.level, options);
+      let closures = 0,
+        eroded = 0;
+      for (const [direction, ticks] of [
+        ['down', heldTicks],
+        [null, 1800],
+      ])
+        for (let tick = 0; tick < ticks; tick++) {
+          stepRun(variant, { direction }, FIXED_DT);
+          closures += variant.events.filter((event) => event.type === 'cut.closed').length;
+          eroded += variant.events.filter((event) => event.type === 'cells.eroded').length;
+        }
+      assert.equal(variant.status, 'running');
+      assert.equal(variant.lives, 3);
+      assert(closures >= 1 && eroded >= 1);
+      timingVariants.push({
+        heldTicks,
+        status: variant.status,
+        lives: variant.lives,
+        closures,
+        eroded,
+      });
+    }
   const scenario = {
     format: scenarioFormatForLevel(workload.level.version),
     masteryDefinition: null,
@@ -279,6 +320,7 @@ for (const workload of workloads) {
     basis: workload.basis,
     fixedDt: FIXED_DT,
     nativeSegments,
+    timingVariants,
     features,
     events,
     expectedStatus: workload.expected,
@@ -293,7 +335,7 @@ for (const workload of workloads) {
     `${workload.id}.qualification.json`,
     validateQualification({
       format: 'SoloQualificationV1',
-      id: workload.id,
+      id: workload.qualificationId ?? workload.id,
       kind: 'performance',
       timeoutMs: 240000,
       entryPath: 'playground/',
