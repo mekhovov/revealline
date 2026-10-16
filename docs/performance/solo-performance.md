@@ -2,7 +2,7 @@
 
 Base: `b11745223861c3973ad4bf440cc536198b8e0371` (`origin/main`, freshly fetched before implementation). This immutable hash identifies the baseline even if another checkout subsequently updates the shared remote-tracking ref.
 Implementation branch: `codex/solo-performance`, in a separate checkout. The existing FPV branch and its unfinished edits were not rebased or edited. The implementation checkout is `/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test`.
-Current runtime revision: `49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b`. Historical artifact and timing sections below refer to `1c505dcd038ed908c9f0ede696143d4f6d59251e` unless explicitly stated. Subsequent test, tooling and documentation commits do not change the runtime.
+Current runtime revision: `e0252ff8f6b7f5ac84721fd5994c74e8469fb271`. Historical artifact and timing sections below refer to `1c505dcd038ed908c9f0ede696143d4f6d59251e` unless explicitly stated. Later runtime corrections and their separate qualification are recorded in the follow-up plan; historical results retain their original source identities.
 
 The branch implements the timing, preparation, rendering and recovery changes from phases 0–4. Measurement limits and incomplete qualification are listed below; this report does not label the candidate release-qualified.
 
@@ -129,7 +129,7 @@ Run `scripts/observe-solo-performance.mjs` against separately served baseline an
 
 The optional `--fixture-access` flag is restricted to localhost and changes only the access verifier in the test response to a known fixture credential; it then submits the real access form. Production source and content-security policy are unchanged. Reports disclose this fixture.
 
-The access fixture uses response interception, which disables Playwright's HTTP cache; the ordinary source server also sends `no-store`. Consequently `--warm` describes a second navigation in the same profile, not a qualified warm HTTP-cache run. A real installed/warm-cache qualification must use the production build without interception and a normal authorized profile.
+The historical captures above used response interception for the access fixture, which disables Playwright's HTTP cache; their ordinary source server also sent `no-store`. In those captures, `--warm` describes a second navigation in the same profile, not a qualified warm HTTP-cache run. Later qualification uses a separately disclosed server-side access fixture and production payloads served with revalidation, without browser routing; those cache observations retain their own reports and source identities. They do not retroactively qualify the historical warm captures or establish installed/offline-cache behavior.
 
 CPU throttle factors are desktop stress settings. Record an independently measured calibration before describing a run as device-calibrated. They do not simulate a mobile GPU, memory pressure or thermal behavior. Run timing captures separately from screenshots, CPU profiles, heap snapshots, builds and test suites. Default audio settings, exact browser/version, viewport, source identity, inputs and preparation/active times belong in every result.
 
