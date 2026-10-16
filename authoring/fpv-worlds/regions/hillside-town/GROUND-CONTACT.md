@@ -1,0 +1,9 @@
+# Source-bound ground contact cue
+
+The Performance doorway review showed an unchanged house that can read as floating under flat lighting. Exact source checks establish that it is grounded: all eighteen house wall/floor meshes touch their authored terrace planes. This increment changes only the existing opt-in Hillside ground material to provide a restrained static base-contact band.
+
+The two repeating footprint templates are derived from the pinned town-r2 wall/floor mesh bounds, not hand-positioned in the shared renderer. `verify-ground-contact.mjs` verifies every source JSON hash and all eighteen matching footprints, including the 5.25 × 5.125 m half-extents and Y=0/12/24 m terrace planes. A changed or unsupported source layout fails this contract. Source geometry, manifests, authored routes and collision are untouched.
+
+A narrow 0.8 m smooth band darkens at most 22%, only near the exact horizontal ground plane. It remains in all three tiers, including Performance where shadow maps are disabled. This is a static material cue, not a projected shadow or physical support. Two small vector uniforms reuse the existing material lifetime; no texture, geometry, runtime module, manifest capability, budget or Library pin is added. Accepted plain-town Library presentation remains unchanged. Reduced motion is unaffected because the cue is static.
+
+The exact-source footprint contract passes, as do sixteen existing source-window comparisons, twenty-eight support/collision probes and forty live tier transitions across eight profiles. Geometry and collision remain identical, no textures are added, and owned resources dispose to zero. Native shader/appearance comparison is pending and gates readiness. Final town art quality, broader atmosphere and physical-device performance are not claimed.

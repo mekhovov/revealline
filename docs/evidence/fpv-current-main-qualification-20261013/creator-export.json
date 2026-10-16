@@ -1,0 +1,42 @@
+{
+  "format": "fpv-public-creator-export.v1",
+  "date": "2026-10-13",
+  "sourcePack": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+  "export": {
+    "bytes": 1380049,
+    "sha256": "34c70f90fd5a0cd2f47683e4bf83a320e9d2da693e5175407061150783757eaf"
+  },
+  "checked": {
+    "courseCount": 8,
+    "unchangedCourses": 7,
+    "unchangedSelfLevel": true,
+    "expectedAcroEditMillimetres": 100,
+    "spawnBindings": true,
+    "routeBindings": true,
+    "sourceManifest": true,
+    "assetCount": 1,
+    "assetBytesUnchanged": true
+  },
+  "changes": [
+    {
+      "path": "/courses/1/steps/acro/0/max/x",
+      "from": -8800,
+      "to": -8700
+    },
+    {
+      "path": "/courses/1/steps/acro/0/min/x",
+      "from": -11200,
+      "to": -11100
+    },
+    {
+      "path": "/definitions/layouts/1/objectives/7/criterion/max/x",
+      "from": -8800,
+      "to": -8700
+    },
+    {
+      "path": "/definitions/layouts/1/objectives/7/criterion/min/x",
+      "from": -11200,
+      "to": -11100
+    }
+  ]
+}

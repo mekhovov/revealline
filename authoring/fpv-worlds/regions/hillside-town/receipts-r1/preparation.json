@@ -1,0 +1,343 @@
+{
+  "format": "FPVHillsideTownPreparation.v1",
+  "actualSizeM": [
+    384,
+    384
+  ],
+  "futureDesignTargetM": null,
+  "terrainCells": 9,
+  "sceneryCells": 9,
+  "sourceBytes": 8107907,
+  "terrainManifestSHA256": "8f5015ec55dcf6836fdd12b2c3ddcd8cf1bc912b0637f1c969d0f6a7c87cab45",
+  "sceneryManifestSHA256": "fd4e19599ab8b87f71cbbffdf58b350d1b638ace6c7de74dd613526409e72571",
+  "licensedPlacements": 144,
+  "originalArchitecturePieces": 111,
+  "geometryBytes": 749520,
+  "textureBytes": 2446676,
+  "resourceBytes": 3196196,
+  "retainedAndCandidateBytes": 7305208,
+  "routes": [
+    {
+      "id": "lower-main-street",
+      "halfWidth": 4,
+      "points": [
+        [
+          20,
+          4,
+          64
+        ],
+        [
+          192,
+          4,
+          64
+        ],
+        [
+          360,
+          4,
+          64
+        ]
+      ]
+    },
+    {
+      "id": "graded-ascent",
+      "halfWidth": 4,
+      "points": [
+        [
+          128,
+          5,
+          96
+        ],
+        [
+          128,
+          5,
+          112
+        ],
+        [
+          128,
+          17,
+          144
+        ],
+        [
+          128,
+          17,
+          240
+        ],
+        [
+          128,
+          29,
+          272
+        ],
+        [
+          128,
+          29,
+          348
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-turn",
+      "halfWidth": 4,
+      "points": [
+        [
+          160,
+          16,
+          192
+        ],
+        [
+          192,
+          16,
+          192
+        ],
+        [
+          192,
+          16,
+          228
+        ],
+        [
+          222,
+          16,
+          228
+        ]
+      ]
+    },
+    {
+      "id": "upper-switchback",
+      "halfWidth": 4,
+      "points": [
+        [
+          256,
+          29,
+          280
+        ],
+        [
+          256,
+          29,
+          320
+        ],
+        [
+          328,
+          29,
+          320
+        ],
+        [
+          328,
+          29,
+          350
+        ],
+        [
+          280,
+          29,
+          350
+        ]
+      ]
+    },
+    {
+      "id": "house-open-pass",
+      "halfWidth": 1.2,
+      "points": [
+        [
+          35,
+          3,
+          48
+        ],
+        [
+          61,
+          3,
+          48
+        ]
+      ]
+    },
+    {
+      "id": "pad-approach",
+      "halfWidth": 2,
+      "points": [
+        [
+          320,
+          33,
+          268
+        ],
+        [
+          320,
+          33,
+          288
+        ]
+      ]
+    },
+    {
+      "id": "under-pad",
+      "halfWidth": 2,
+      "points": [
+        [
+          320,
+          27,
+          268
+        ],
+        [
+          320,
+          27,
+          308
+        ]
+      ]
+    }
+  ],
+  "verificationProbes": [
+    {
+      "id": "house-open-door",
+      "from": [
+        35,
+        3,
+        48
+      ],
+      "to": [
+        61,
+        3,
+        48
+      ],
+      "clear": true
+    },
+    {
+      "id": "house-solid-side",
+      "from": [
+        48,
+        3,
+        40
+      ],
+      "to": [
+        48,
+        3,
+        56
+      ],
+      "clear": false
+    },
+    {
+      "id": "house-solid-roof",
+      "from": [
+        48,
+        10,
+        48
+      ],
+      "to": [
+        48,
+        2,
+        48
+      ],
+      "clear": false
+    },
+    {
+      "id": "courtyard-clear",
+      "from": [
+        176,
+        16,
+        218
+      ],
+      "to": [
+        208,
+        16,
+        228
+      ],
+      "clear": true
+    },
+    {
+      "id": "pad-solid",
+      "from": [
+        320,
+        36,
+        288
+      ],
+      "to": [
+        320,
+        26,
+        288
+      ],
+      "clear": false
+    },
+    {
+      "id": "under-pad-clear",
+      "from": [
+        320,
+        27,
+        268
+      ],
+      "to": [
+        320,
+        27,
+        308
+      ],
+      "clear": true
+    },
+    {
+      "id": "graded-road-clear",
+      "from": [
+        128,
+        5,
+        112
+      ],
+      "to": [
+        128,
+        17,
+        144
+      ],
+      "clear": true
+    }
+  ],
+  "contactProbes": [
+    {
+      "id": "house-roof",
+      "from": [
+        48,
+        10,
+        48
+      ],
+      "falling": true,
+      "minY": 6
+    },
+    {
+      "id": "elevated-pad",
+      "from": [
+        320,
+        35,
+        288
+      ],
+      "falling": true,
+      "minY": 30
+    }
+  ],
+  "spawns": [
+    {
+      "id": "lower-square",
+      "position": {
+        "x": 128000,
+        "y": 3000,
+        "z": 64000
+      }
+    },
+    {
+      "id": "middle-courtyard",
+      "position": {
+        "x": 192000,
+        "y": 15000,
+        "z": 228000
+      }
+    },
+    {
+      "id": "upper-terrace",
+      "position": {
+        "x": 256000,
+        "y": 27000,
+        "z": 320000
+      }
+    },
+    {
+      "id": "elevated-pad",
+      "position": {
+        "x": 320000,
+        "y": 31500,
+        "z": 288000
+      }
+    }
+  ],
+  "sourceReceiptSHA256": "fe34bc7c5f3968c2cab25bf6e6aab9c14c0a0a59d751b90b741017d090e16822",
+  "licenseSHA256": "60a07f9108f5a3fc5f9429fd1faa5b168c05cc085354f78ed48180ef32ec6209",
+  "playerReady": false,
+  "movingSubjects": false
+}

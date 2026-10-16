@@ -1,0 +1,17 @@
+{
+  "route": "http://127.0.0.1:8799/appearance-review-20261002/game/?journey=whole-spatial-v25",
+  "theme": "industrial-workshop",
+  "language": "uk",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "plain": true,
+  "large": true,
+  "highContrast": true,
+  "ornaments": "off",
+  "method": "computed foreground against composed solid ancestors; screen reviewed separately",
+  "below7": [],
+  "count": 36,
+  "minimum": 15.46
+}

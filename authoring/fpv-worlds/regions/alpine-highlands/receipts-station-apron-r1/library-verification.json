@@ -1,0 +1,309 @@
+{
+  "passed": true,
+  "pin": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json",
+    "bytes": 115316,
+    "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa"
+  },
+  "bytes": 22699845,
+  "actualHTTPSResponses": 723,
+  "downloadMs": 55208.018125,
+  "cases": [
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "f3ed267c8a96b47d9758862602645578687317b380ba47472dbfc08daa1dc25b"
+    },
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "c4933ab3587146ab017b45e1fd548ffb27349007084a59d68ac4e806611e534a"
+    },
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "biasedOverlayMeshes": 9,
+      "geometrySHA256": "23879ca7f43493f6c631afa372cd9e0db69efd9b208ac65b6a8480ae63243f0f"
+    },
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "biasedOverlayMeshes": 13,
+      "geometrySHA256": "15e1fa869c3db84b3a1bfe5d09a0f1ff42ec95e72d2f459730e63801d9a0ec82"
+    },
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "biasedOverlayMeshes": 2,
+      "geometrySHA256": "2a6fed9a975b083676c5180eb4af807761e866d1a4a3f09566518703af612078"
+    },
+    {
+      "quality": "low",
+      "mode": "self-level",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "biasedOverlayMeshes": 0,
+      "geometrySHA256": "d120c7864dee16983d27bacadf48cf71f79c202a40b50d49922aec15cd60ed0e"
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "f3ed267c8a96b47d9758862602645578687317b380ba47472dbfc08daa1dc25b"
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "c4933ab3587146ab017b45e1fd548ffb27349007084a59d68ac4e806611e534a"
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "biasedOverlayMeshes": 9,
+      "geometrySHA256": "23879ca7f43493f6c631afa372cd9e0db69efd9b208ac65b6a8480ae63243f0f"
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "biasedOverlayMeshes": 13,
+      "geometrySHA256": "15e1fa869c3db84b3a1bfe5d09a0f1ff42ec95e72d2f459730e63801d9a0ec82"
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "biasedOverlayMeshes": 2,
+      "geometrySHA256": "2a6fed9a975b083676c5180eb4af807761e866d1a4a3f09566518703af612078"
+    },
+    {
+      "quality": "low",
+      "mode": "acro",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "biasedOverlayMeshes": 0,
+      "geometrySHA256": "d120c7864dee16983d27bacadf48cf71f79c202a40b50d49922aec15cd60ed0e"
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "f3ed267c8a96b47d9758862602645578687317b380ba47472dbfc08daa1dc25b"
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "c4933ab3587146ab017b45e1fd548ffb27349007084a59d68ac4e806611e534a"
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "biasedOverlayMeshes": 9,
+      "geometrySHA256": "23879ca7f43493f6c631afa372cd9e0db69efd9b208ac65b6a8480ae63243f0f"
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "biasedOverlayMeshes": 13,
+      "geometrySHA256": "15e1fa869c3db84b3a1bfe5d09a0f1ff42ec95e72d2f459730e63801d9a0ec82"
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "biasedOverlayMeshes": 2,
+      "geometrySHA256": "2a6fed9a975b083676c5180eb4af807761e866d1a4a3f09566518703af612078"
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "biasedOverlayMeshes": 0,
+      "geometrySHA256": "d120c7864dee16983d27bacadf48cf71f79c202a40b50d49922aec15cd60ed0e"
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "f3ed267c8a96b47d9758862602645578687317b380ba47472dbfc08daa1dc25b"
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "c4933ab3587146ab017b45e1fd548ffb27349007084a59d68ac4e806611e534a"
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "biasedOverlayMeshes": 9,
+      "geometrySHA256": "23879ca7f43493f6c631afa372cd9e0db69efd9b208ac65b6a8480ae63243f0f"
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "biasedOverlayMeshes": 13,
+      "geometrySHA256": "15e1fa869c3db84b3a1bfe5d09a0f1ff42ec95e72d2f459730e63801d9a0ec82"
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "biasedOverlayMeshes": 2,
+      "geometrySHA256": "2a6fed9a975b083676c5180eb4af807761e866d1a4a3f09566518703af612078"
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "biasedOverlayMeshes": 0,
+      "geometrySHA256": "d120c7864dee16983d27bacadf48cf71f79c202a40b50d49922aec15cd60ed0e"
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "f3ed267c8a96b47d9758862602645578687317b380ba47472dbfc08daa1dc25b"
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "c4933ab3587146ab017b45e1fd548ffb27349007084a59d68ac4e806611e534a"
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "biasedOverlayMeshes": 9,
+      "geometrySHA256": "23879ca7f43493f6c631afa372cd9e0db69efd9b208ac65b6a8480ae63243f0f"
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "biasedOverlayMeshes": 13,
+      "geometrySHA256": "15e1fa869c3db84b3a1bfe5d09a0f1ff42ec95e72d2f459730e63801d9a0ec82"
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "biasedOverlayMeshes": 2,
+      "geometrySHA256": "2a6fed9a975b083676c5180eb4af807761e866d1a4a3f09566518703af612078"
+    },
+    {
+      "quality": "high",
+      "mode": "self-level",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "biasedOverlayMeshes": 0,
+      "geometrySHA256": "d120c7864dee16983d27bacadf48cf71f79c202a40b50d49922aec15cd60ed0e"
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "f3ed267c8a96b47d9758862602645578687317b380ba47472dbfc08daa1dc25b"
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "biasedOverlayMeshes": 3,
+      "geometrySHA256": "c4933ab3587146ab017b45e1fd548ffb27349007084a59d68ac4e806611e534a"
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "biasedOverlayMeshes": 9,
+      "geometrySHA256": "23879ca7f43493f6c631afa372cd9e0db69efd9b208ac65b6a8480ae63243f0f"
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "biasedOverlayMeshes": 13,
+      "geometrySHA256": "15e1fa869c3db84b3a1bfe5d09a0f1ff42ec95e72d2f459730e63801d9a0ec82"
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "biasedOverlayMeshes": 2,
+      "geometrySHA256": "2a6fed9a975b083676c5180eb4af807761e866d1a4a3f09566518703af612078"
+    },
+    {
+      "quality": "high",
+      "mode": "acro",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "biasedOverlayMeshes": 0,
+      "geometrySHA256": "d120c7864dee16983d27bacadf48cf71f79c202a40b50d49922aec15cd60ed0e"
+    }
+  ],
+  "disposalZero": true,
+  "limitsChanged": false,
+  "existingLibraryRowsPreserved": true,
+  "limitations": [
+    "No native renderer, device, IndexedDB installation or offline admission claim",
+    "Three material tiers preserve geometry; no GPU performance claim",
+    "Alpine station surfaces have bounded native source review; full-region representative art and normal Library player acceptance remain separate"
+  ]
+}

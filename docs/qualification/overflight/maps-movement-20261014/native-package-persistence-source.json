@@ -1,0 +1,90 @@
+{
+  "schema": "OverflightPackagePersistenceSourceAuditV1",
+  "previousCommit": "3bb1b0dc66ae77baf59d0e89ab9edf257a244d10",
+  "candidateCommit": "4dab801d9ce03b42227e99388b066c378c81ca02",
+  "observedHead": "7a09b21a24db609f8c6f4b9357f7bdea6b56b784",
+  "readOnlySourceAudit": true,
+  "browserStorageInspected": false,
+  "files": [
+    {
+      "path": "game/profile-database.mjs",
+      "previousSHA256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "candidateSHA256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "workingTreeSHA256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": true
+    },
+    {
+      "path": "game/profile-storage.mjs",
+      "previousSHA256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "candidateSHA256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "workingTreeSHA256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": true
+    },
+    {
+      "path": "game/community/native-project-library.mjs",
+      "previousSHA256": "c454eb37c5be2139f48b1d6d7a59f59b1910ec769838dbbab74d95109a335dc3",
+      "candidateSHA256": "c454eb37c5be2139f48b1d6d7a59f59b1910ec769838dbbab74d95109a335dc3",
+      "workingTreeSHA256": "c454eb37c5be2139f48b1d6d7a59f59b1910ec769838dbbab74d95109a335dc3",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": true
+    },
+    {
+      "path": "game/overflight/community.mjs",
+      "previousSHA256": "feb70c8fb50b64cd26eff23ee5b19eb120960c3cf4e79b7379bb39f5c44e625a",
+      "candidateSHA256": "feb70c8fb50b64cd26eff23ee5b19eb120960c3cf4e79b7379bb39f5c44e625a",
+      "workingTreeSHA256": "feb70c8fb50b64cd26eff23ee5b19eb120960c3cf4e79b7379bb39f5c44e625a",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": true
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "previousSHA256": "efb7f8e02de907766ba210b6ecb48fdd5470755c5fa8514c9a35e1a4c7e5c6cd",
+      "candidateSHA256": "efb7f8e02de907766ba210b6ecb48fdd5470755c5fa8514c9a35e1a4c7e5c6cd",
+      "workingTreeSHA256": "efb7f8e02de907766ba210b6ecb48fdd5470755c5fa8514c9a35e1a4c7e5c6cd",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": true
+    },
+    {
+      "path": "game/studio/overflight.mjs",
+      "previousSHA256": "875df74476d5647c38881e61a3750b99b4d212f7bfc0eebe5c9bb2f5cb1ded5b",
+      "candidateSHA256": "875df74476d5647c38881e61a3750b99b4d212f7bfc0eebe5c9bb2f5cb1ded5b",
+      "workingTreeSHA256": "875df74476d5647c38881e61a3750b99b4d212f7bfc0eebe5c9bb2f5cb1ded5b",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": true
+    },
+    {
+      "path": "game/installed-app.mjs",
+      "previousSHA256": "f34762e34ef088640fc521347632029d826b076c9a3cbb855acab3aa75d4793c",
+      "candidateSHA256": "f34762e34ef088640fc521347632029d826b076c9a3cbb855acab3aa75d4793c",
+      "workingTreeSHA256": "f34762e34ef088640fc521347632029d826b076c9a3cbb855acab3aa75d4793c",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": true
+    },
+    {
+      "path": "game/downloads.mjs",
+      "previousSHA256": "39b09a5d8d6246896953a42394f14abcf0123e651f35326b2c75c03b47c10135",
+      "candidateSHA256": "39b09a5d8d6246896953a42394f14abcf0123e651f35326b2c75c03b47c10135",
+      "workingTreeSHA256": "39b09a5d8d6246896953a42394f14abcf0123e651f35326b2c75c03b47c10135",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": true
+    },
+    {
+      "path": "game/offline/service-worker.template.js",
+      "previousSHA256": "f4eef36f40a74fb30fc4597ce3591d1a1d09903bba8a7b7e0dadf005ab1e3056",
+      "candidateSHA256": "f4eef36f40a74fb30fc4597ce3591d1a1d09903bba8a7b7e0dadf005ab1e3056",
+      "workingTreeSHA256": "f4eef36f40a74fb30fc4597ce3591d1a1d09903bba8a7b7e0dadf005ab1e3056",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": true
+    },
+    {
+      "path": "game/offline/app-worker.template.js",
+      "previousSHA256": "48af9f356d520278a5e1433bfd16cce2cfcea9b48ff2e3308ebfed3d2952e37d",
+      "candidateSHA256": "48af9f356d520278a5e1433bfd16cce2cfcea9b48ff2e3308ebfed3d2952e37d",
+      "workingTreeSHA256": "28eddc328f3a23c87efba94659321ebff997e9ef970891ccbb923d2e00f8a90d",
+      "unchangedAcrossUpdate": true,
+      "workingTreeMatchesCandidate": false
+    }
+  ]
+}

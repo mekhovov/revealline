@@ -1,0 +1,262 @@
+TAP version 13
+# Subtest: automatic first preparation cancels to the visible native summary, retaining late disposal
+ok 1 - automatic first preparation cancels to the visible native summary, retaining late disposal
+  ---
+  duration_ms: 16.553625
+  type: 'test'
+  ...
+# Subtest: mission and Load cancellation each return to their own visible opener
+ok 2 - mission and Load cancellation each return to their own visible opener
+  ---
+  duration_ms: 14.93075
+  type: 'test'
+  ...
+# Subtest: appearance cancellation returns to Actors without changing the retained run or override
+ok 3 - appearance cancellation returns to Actors without changing the retained run or override
+  ---
+  duration_ms: 11.608958
+  type: 'test'
+  ...
+# Subtest: collapsed or unavailable setup falls back to summary or enabled Start without reopening details
+ok 4 - collapsed or unavailable setup falls back to summary or enabled Start without reopening details
+  ---
+  duration_ms: 11.667083
+  type: 'test'
+  ...
+# Subtest: cancellation preserves unrelated focus and old completion cannot retire a newer opener
+ok 5 - cancellation preserves unrelated focus and old completion cannot retire a newer opener
+  ---
+  duration_ms: 12.116208
+  type: 'test'
+  ...
+# Subtest: host measures only opted-in uninterrupted play and retains both painter costs
+ok 6 - host measures only opted-in uninterrupted play and retains both painter costs
+  ---
+  duration_ms: 11.070917
+  type: 'test'
+  ...
+# Subtest: changing comparison conditions and viewport resets samples without mixing configurations
+ok 7 - changing comparison conditions and viewport resets samples without mixing configurations
+  ---
+  duration_ms: 11.346666
+  type: 'test'
+  ...
+# Subtest: a controller pause during the actual input poll cannot append a paused timing sample
+ok 8 - a controller pause during the actual input poll cannot append a paused timing sample
+  ---
+  duration_ms: 9.471125
+  type: 'test'
+  ...
+# Subtest: Retry cue and background return begin new measurement segments without sampling waits
+ok 9 - Retry cue and background return begin new measurement segments without sampling waits
+  ---
+  duration_ms: 13.634
+  type: 'test'
+  ...
+# Subtest: contact study pauses and clears input, resets measurements and only changes the second painter
+ok 10 - contact study pauses and clears input, resets measurements and only changes the second painter
+  ---
+  duration_ms: 12.285833
+  type: 'test'
+  ...
+# Subtest: actual event handler replaces stale loss feedback without stealing focus or repeating status
+ok 11 - actual event handler replaces stale loss feedback without stealing focus or repeating status
+  ---
+  duration_ms: 11.219541
+  type: 'test'
+  ...
+# Subtest: new or reset measurements distinguish no samples from zero CPU cost
+ok 12 - new or reset measurements distinguish no samples from zero CPU cost
+  ---
+  duration_ms: 0.795208
+  type: 'test'
+  ...
+# Subtest: nearest-rank percentiles keep actual pacing and the two draw costs independent
+ok 13 - nearest-rank percentiles keep actual pacing and the two draw costs independent
+  ---
+  duration_ms: 0.62475
+  type: 'test'
+  ...
+# Subtest: rolling frame window evicts old outliers and missing view samples together
+ok 14 - rolling frame window evicts old outliers and missing view samples together
+  ---
+  duration_ms: 0.19975
+  type: 'test'
+  ...
+# Subtest: excluded gaps add no artificial normal frame, draw duration or window eviction
+ok 15 - excluded gaps add no artificial normal frame, draw duration or window eviction
+  ---
+  duration_ms: 0.084916
+  type: 'test'
+  ...
+# Subtest: invalid records are rejected atomically without dropping prior observations
+ok 16 - invalid records are rejected atomically without dropping prior observations
+  ---
+  duration_ms: 0.095834
+  type: 'test'
+  ...
+# Subtest: window capacity is finite and bounded
+ok 17 - window capacity is finite and bounded
+  ---
+  duration_ms: 0.585125
+  type: 'test'
+  ...
+# Subtest: active candidate provenance accounts only the two actually owned Scout images
+ok 18 - active candidate provenance accounts only the two actually owned Scout images
+  ---
+  duration_ms: 4.739
+  type: 'test'
+  ...
+# Subtest: approved/shared memory stays unknown even when no candidate override is loaded
+ok 19 - approved/shared memory stays unknown even when no candidate override is loaded
+  ---
+  duration_ms: 0.096417
+  type: 'test'
+  ...
+# Subtest: unknown, duplicate and unsafe candidate entries do not become invented bytes
+ok 20 - unknown, duplicate and unsafe candidate entries do not become invented bytes
+  ---
+  duration_ms: 0.316959
+  type: 'test'
+  ...
+# Subtest: bounded cohort resolves exact current default Solo source identities and original pins
+ok 21 - bounded cohort resolves exact current default Solo source identities and original pins
+  ---
+  duration_ms: 12.070625
+  type: 'test'
+  ...
+# Subtest: real introductory capture wins and Retry exactly repeats setup and result without changing source
+ok 22 - real introductory capture wins and Retry exactly repeats setup and result without changing source
+  ---
+  duration_ms: 27.863458
+  type: 'test'
+  ...
+# Subtest: real self-contact failure consumes lives and reaches loss before a fresh deterministic Retry
+ok 23 - real self-contact failure consumes lives and reaches loss before a fresh deterministic Retry
+  ---
+  duration_ms: 8.222041
+  type: 'test'
+  ...
+# Subtest: native pursuit and interception warnings, impacts and captures come from their actual source missions
+ok 24 - native pursuit and interception warnings, impacts and captures come from their actual source missions
+  ---
+  duration_ms: 51.815584
+  type: 'test'
+  ...
+# Subtest: pause and render-frame partitioning do not advance or retime the real fixed-step simulation
+ok 25 - pause and render-frame partitioning do not advance or retime the real fixed-step simulation
+  ---
+  duration_ms: 9.37
+  type: 'test'
+  ...
+# Subtest: selection retains the old run through loading/failure and disposes superseded or departed work
+ok 26 - selection retains the old run through loading/failure and disposes superseded or departed work
+  ---
+  duration_ms: 0.393709
+  type: 'test'
+  ...
+# Subtest: explicit cancellation keeps the prior scene and rejects even an abort-ignoring loader
+ok 27 - explicit cancellation keeps the prior scene and rejects even an abort-ignoring loader
+  ---
+  duration_ms: 0.207667
+  type: 'test'
+  ...
+# Subtest: the existing picture boundary verifies and decodes the exact original before ownership
+ok 28 - the existing picture boundary verifies and decodes the exact original before ownership
+  ---
+  duration_ms: 154.448458
+  type: 'test'
+  ...
+# Subtest: adoption failure rolls back and releases only the failed replacement
+ok 29 - adoption failure rolls back and releases only the failed replacement
+  ---
+  duration_ms: 0.254625
+  type: 'test'
+  ...
+# Subtest: 600 ms ready cue never advances simulation and starts exactly one owned retry
+ok 30 - 600 ms ready cue never advances simulation and starts exactly one owned retry
+  ---
+  duration_ms: 2.915417
+  type: 'test'
+  ...
+# Subtest: Retry requires a fresh matching press/release after terminal focus moves
+ok 31 - Retry requires a fresh matching press/release after terminal focus moves
+  ---
+  duration_ms: 0.383125
+  type: 'test'
+  ...
+# Subtest: terminal focus wait respects intervening navigation and final departure
+ok 32 - terminal focus wait respects intervening navigation and final departure
+  ---
+  duration_ms: 0.129917
+  type: 'test'
+  ...
+# Subtest: native D-pad and chosen swipe mode steer the actual run, with fresh-key gating after Retry
+ok 33 - native D-pad and chosen swipe mode steer the actual run, with fresh-key gating after Retry
+  ---
+  duration_ms: 7.43375
+  type: 'test'
+  ...
+# Subtest: scene owns the exact approved actor lease, resets visual phase on Retry, and releases resources
+ok 34 - scene owns the exact approved actor lease, resets visual phase on Retry, and releases resources
+  ---
+  duration_ms: 1763.601417
+  type: 'test'
+  ...
+# Subtest: native Scout loader verifies both treatments and exposes only source provenance with delegated actors
+ok 35 - native Scout loader verifies both treatments and exposes only source provenance with delegated actors
+  ---
+  duration_ms: 2.674083
+  type: 'test'
+  ...
+# Subtest: explicit v4 Scout cohort remains separate from unchanged v3 images and delegated approval
+ok 36 - explicit v4 Scout cohort remains separate from unchanged v3 images and delegated approval
+  ---
+  duration_ms: 4.819583
+  type: 'test'
+  ...
+# Subtest: explicit v5 optical bodies retain the shared rig and separate unchanged v4 provenance
+ok 37 - explicit v5 optical bodies retain the shared rig and separate unchanged v4 provenance
+  ---
+  duration_ms: 4.556166
+  type: 'test'
+  ...
+# Subtest: known cohort table rejects aliases, cross-cohort manifests and extra or redirected entries before file reads
+ok 38 - known cohort table rejects aliases, cross-cohort manifests and extra or redirected entries before file reads
+  ---
+  duration_ms: 11.437625
+  type: 'test'
+  ...
+# Subtest: candidate byte, source, native geometry and decode mismatches fail without admitting images
+ok 39 - candidate byte, source, native geometry and decode mismatches fail without admitting images
+  ---
+  duration_ms: 22.373708
+  type: 'test'
+  ...
+# Subtest: candidate cancellation rejects promptly and closes a decoder that returns late
+ok 40 - candidate cancellation rejects promptly and closes a decoder that returns late
+  ---
+  duration_ms: 5.636834
+  type: 'test'
+  ...
+# Subtest: comparison replacement pauses without changing the real run and releases failed, stale or retired candidates
+ok 41 - comparison replacement pauses without changing the real run and releases failed, stale or retired candidates
+  ---
+  duration_ms: 5.997208
+  type: 'test'
+  ...
+# Subtest: the shipped Scout option has exact dependencies and adds no mode core files
+ok 42 - the shipped Scout option has exact dependencies and adds no mode core files
+  ---
+  duration_ms: 2837.762084
+  type: 'test'
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6477.314958

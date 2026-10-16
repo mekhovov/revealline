@@ -1,0 +1,385 @@
+{
+  "format": "humanoid-hunt-company-compiler-inspection.v1",
+  "inspectedAt": "2026-10-02T22:03:22.739Z",
+  "sourceRevision": "eb086eafbd629b80075a619bbf552a93134262ec",
+  "sourceTree": "2bb9b5a2958ec585d8a532c83f72cfbd43280739",
+  "version": "v0.142.4",
+  "basePath": "/revealline/",
+  "qualification": "one in-memory compile per selected company edition; exact committed source-input verification; structural packaging only",
+  "limitations": [
+    "No automated test suites run under publishing/test-policy.json waiver",
+    "No reproducible second build or ZIP assembly performed",
+    "No browser/human play qualification performed by this inspection",
+    "No deployment or publication performed"
+  ],
+  "sourceChecks": {
+    "trackedCleanBefore": true,
+    "trackedCleanAfter": true,
+    "headUnchanged": true,
+    "treeUnchanged": true,
+    "compilerInputsVerifiedAgainstCommittedTree": true
+  },
+  "engineFiles": 782,
+  "engineBytes": 45224545,
+  "reactionMedia": [
+    {
+      "path": "game/audio/reactions/engineer-0-en.m4a",
+      "bytes": 26177,
+      "sha256": "284c41fcc8bccb3203001f63287e6d2246c3a2154e381cf3bfacccea5dec89df"
+    },
+    {
+      "path": "game/audio/reactions/engineer-0-uk.m4a",
+      "bytes": 25980,
+      "sha256": "b9374b0497e3021ae5b572da741935aa0e3995792f1ea0f53801c341a69c7412"
+    },
+    {
+      "path": "game/audio/reactions/engineer-capture-0-en.m4a",
+      "bytes": 17202,
+      "sha256": "737156beb735cb2202749e3ebc411bc14478caa17563275d334a26ff93e44cf9"
+    },
+    {
+      "path": "game/audio/reactions/engineer-capture-0-uk.m4a",
+      "bytes": 20518,
+      "sha256": "f31b61207464ac2a173e486bafd955a307c8e0a9a79716b8bc781d2497998722"
+    },
+    {
+      "path": "game/audio/reactions/guide-0-en.m4a",
+      "bytes": 23110,
+      "sha256": "58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210"
+    },
+    {
+      "path": "game/audio/reactions/guide-0-uk.m4a",
+      "bytes": 24070,
+      "sha256": "999c06841d4ffc209732cc3dd5cd2e497430e65947da98472b7dd939d5140d9b"
+    },
+    {
+      "path": "game/audio/reactions/guide-capture-0-en.m4a",
+      "bytes": 16018,
+      "sha256": "8cec12f5da013e765a6b056384ff520a9ec82244060e962f4f515fbb4e32419c"
+    },
+    {
+      "path": "game/audio/reactions/guide-capture-0-uk.m4a",
+      "bytes": 20518,
+      "sha256": "433631c972d042e82030f5e4559d0d11cf88b889b2fa468f03fa8f9208c91aa6"
+    },
+    {
+      "path": "game/audio/reactions/rival-0-en.m4a",
+      "bytes": 25231,
+      "sha256": "9a7a6f62be6e4a60c496ba88d5d6440ccda263587f24c2f652bac9e8a151516f"
+    },
+    {
+      "path": "game/audio/reactions/rival-0-uk.m4a",
+      "bytes": 28181,
+      "sha256": "d4fa7345de6753794d5e1709fa31983d254eb19549ab2aa5325078bbfa7ad5e9"
+    },
+    {
+      "path": "game/audio/reactions/rival-capture-0-en.m4a",
+      "bytes": 15493,
+      "sha256": "76d45144f3249a70d2f2faca1e9b378b1dddaec8414a9430b9c831de57c872f8"
+    },
+    {
+      "path": "game/audio/reactions/rival-capture-0-uk.m4a",
+      "bytes": 20518,
+      "sha256": "4c8ea615be61b2ea24acf801e9a1d87ed34fe5f610955e346793eddaada1d3ca"
+    },
+    {
+      "path": "game/audio/reactions/sentinel-0-en.m4a",
+      "bytes": 17879,
+      "sha256": "b40bbeb6fadbef7bd8a3d5399b008ccf7d2e309b946ceb0514c63ef1ad2344b6"
+    },
+    {
+      "path": "game/audio/reactions/sentinel-0-uk.m4a",
+      "bytes": 21677,
+      "sha256": "d96d5d5a671d09276a0fe1193512911f12ff32625a99016aac449f3b44afae95"
+    },
+    {
+      "path": "game/audio/reactions/sentinel-capture-0-en.m4a",
+      "bytes": 18562,
+      "sha256": "08336f37ef077c8cb0d1f436396577b074f8c4b4d52892b77b1ece0d0f13c14a"
+    },
+    {
+      "path": "game/audio/reactions/sentinel-capture-0-uk.m4a",
+      "bytes": 22286,
+      "sha256": "7532c7185bd851f7fdf9fde71a0b1b49b160ab416d82dab9968f7d64ad469634"
+    },
+    {
+      "path": "game/ui/art/reactions/engineer-idle.svg",
+      "bytes": 831,
+      "sha256": "b92944e5723d96979c78494af29d84f6a653e0683f214910251e7be9ad7cbec2"
+    },
+    {
+      "path": "game/ui/art/reactions/engineer-react.svg",
+      "bytes": 898,
+      "sha256": "be3f93ad2744a76fb42f0c3397408def57f55eff3b1ed4d71870cefe8f31c993"
+    },
+    {
+      "path": "game/ui/art/reactions/guide-idle.svg",
+      "bytes": 725,
+      "sha256": "c20bead6de6c61157f810a0cfcbece41fd7a794a76ec0645ecd291af65c27e21"
+    },
+    {
+      "path": "game/ui/art/reactions/guide-react.svg",
+      "bytes": 792,
+      "sha256": "6aa2d546b4f67ce585697229a7953ca19af94f5cf7a439b2fa598e90fa271bbb"
+    },
+    {
+      "path": "game/ui/art/reactions/rival-idle.svg",
+      "bytes": 782,
+      "sha256": "69529e4557cfc87b53899cb2fcfb442c956c1579ef4dcab3987b434bf19bd02d"
+    },
+    {
+      "path": "game/ui/art/reactions/rival-react.svg",
+      "bytes": 849,
+      "sha256": "b3b923301b39e329b72993f60d0ef2e4d27d7943321a718c313465c07bfc5e28"
+    },
+    {
+      "path": "game/ui/art/reactions/sentinel-idle.svg",
+      "bytes": 834,
+      "sha256": "5296a8c8cb7f78db301243a3b4e14c99be2f37b4ff4b35e72022831553e553ca"
+    },
+    {
+      "path": "game/ui/art/reactions/sentinel-react.svg",
+      "bytes": 901,
+      "sha256": "34900da2d7a4782f0ee0d0da4eb483dc29724f757bdc73bac50e135422405e6d"
+    }
+  ],
+  "editionCount": 18,
+  "passed": 18,
+  "failed": 0,
+  "editions": [
+    {
+      "editionId": "coupa-adventure",
+      "status": "passed",
+      "outputFiles": 806,
+      "outputBytes": 28264484,
+      "headroomBytes": 38844380,
+      "offlineCoreFiles": 777,
+      "offlineCoreBytes": 27670548,
+      "editionBuildSha256": "a50bc0117f981e7ae529b62cc119ffce98c16b1e70abed62141de6b5203d12c4",
+      "editionCatalogSha256": "821c2483d9a3c461b41f2c356a5b049980492dadd6ce6268c8cdd7db025b3f9a",
+      "offlineInventorySha256": "a70ae67901f656ffa4cbd81abd7cd833aefd6a21fbd9c12524a63b51cdc75680",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "coupa-all",
+      "status": "passed",
+      "outputFiles": 841,
+      "outputBytes": 62498782,
+      "headroomBytes": 4610082,
+      "offlineCoreFiles": 812,
+      "offlineCoreBytes": 61888241,
+      "editionBuildSha256": "f513377d05f3057f758c811ef1db0174c3f4bdc0e29d08ff1d6bac880ab43fa2",
+      "editionCatalogSha256": "d262baa3999cfc46a667c77a4c11cdd8653f168a8478f185255f7e49696b83d8",
+      "offlineInventorySha256": "9b57c3566b273c6d218b00c5aabb5dfc0dca29f699af1d9501c7c7da39af04fb",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "coupa-culture",
+      "status": "passed",
+      "outputFiles": 805,
+      "outputBytes": 26645358,
+      "headroomBytes": 40463506,
+      "offlineCoreFiles": 776,
+      "offlineCoreBytes": 26051980,
+      "editionBuildSha256": "f679e7667965ace6c616b9b422db9e222cb6c02411f68504a117652769c36517",
+      "editionCatalogSha256": "87d6e499b6e10eb6629128b3619ad75c94d006e1da6242a8bf2156786677b011",
+      "offlineInventorySha256": "379eb4f9c8869049003d7eebeefd05f2715d72719a48d51d88222aee6f14020b",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "coupa-developers",
+      "status": "passed",
+      "outputFiles": 806,
+      "outputBytes": 30044668,
+      "headroomBytes": 37064196,
+      "offlineCoreFiles": 777,
+      "offlineCoreBytes": 29450747,
+      "editionBuildSha256": "cf48efa1baf415af488e69d98f1b2c1bf56e0d201d9a662135b002d65f64cfbe",
+      "editionCatalogSha256": "1ab56d5bd9656baa9ffbd26fa89df1f9f0cc2208bc36791b9e9914a5ff6f200a",
+      "offlineInventorySha256": "702ca2af3b4db68248769f178ff453fcf9d923abd1a82473f9cca0cc10dcd099",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "coupa-foundations",
+      "status": "passed",
+      "outputFiles": 808,
+      "outputBytes": 29130130,
+      "headroomBytes": 37978734,
+      "offlineCoreFiles": 779,
+      "offlineCoreBytes": 28535243,
+      "editionBuildSha256": "1f3e0c78936526d528c027dd77e4ddbfb25d5c4e0c4813d17b49fd8f600e4a9a",
+      "editionCatalogSha256": "bc28a50864173cc60b0c20c6034ad9cb0ad0171ab328de24e080854ea7dcd2a0",
+      "offlineInventorySha256": "27512cc6ae1948f56ef6bbe213f6e1678af5757aac1e8c26edd97f4fdfa5232e",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "coupa-operations",
+      "status": "passed",
+      "outputFiles": 806,
+      "outputBytes": 28219337,
+      "headroomBytes": 38889527,
+      "offlineCoreFiles": 777,
+      "offlineCoreBytes": 27625368,
+      "editionBuildSha256": "19cf3e27454cc93336a15fa554912b6aecfb99a91634238dc71b40846cda44fc",
+      "editionCatalogSha256": "a177933e37cef94060c50a3c8a6aef40813cb53dbb79a2014bbf7fac6cbea974",
+      "offlineInventorySha256": "e40f0e24ecabfdbe21304c4475207d9f9d59a7ef3c15dfb44e0d69a25d1153f1",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "droneaid-community",
+      "status": "passed",
+      "outputFiles": 799,
+      "outputBytes": 27420855,
+      "headroomBytes": 39688009,
+      "offlineCoreFiles": 770,
+      "offlineCoreBytes": 26830234,
+      "editionBuildSha256": "11f5b6702fc16df05c03083e4ce50bfcbd03b24290a469714d381857cbd6ad82",
+      "editionCatalogSha256": "1fb981a9ef70e2cc800f9aaeacdf6341ba623924086c9dfe4302c6e0c60ec4bd",
+      "offlineInventorySha256": "cfaa4ac5a53b29ef5fbc94435f2be247d6d8794e8946cd0e7c0b7afb8221af0a",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "droneaid-nl-careful-handoff",
+      "status": "passed",
+      "outputFiles": 809,
+      "outputBytes": 29644558,
+      "headroomBytes": 37464306,
+      "offlineCoreFiles": 780,
+      "offlineCoreBytes": 29047709,
+      "editionBuildSha256": "990a70a901019d29b83c34b2310509534ae34bac1527f438a0f423a148e367a8",
+      "editionCatalogSha256": "1e91dd2ce1ddc73ae34809c2e686c2e63ba0b6410581b8c11c9612a104e92294",
+      "offlineInventorySha256": "aa28028a57b593c1d49d672c72d362efcd2fcddf4104d01eda8dc4d080a89f7b",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "droneaid-nl-community",
+      "status": "passed",
+      "outputFiles": 877,
+      "outputBytes": 67030706,
+      "headroomBytes": 78158,
+      "offlineCoreFiles": 847,
+      "offlineCoreBytes": 65903605,
+      "editionBuildSha256": "d81ec1259aaf50051adb91252f4cc583c11a9be5d23b32acb3f4e57de164c527",
+      "editionCatalogSha256": "28ff66b1b57a90224d0fba5f8b8f73f1a35a468fbaec7f449b0a8aa3f5e3abab",
+      "offlineInventorySha256": "6327399d9b2fd43da79b67edd595989c6b1551bc822df954fc492b08d7cbc975",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "droneaid-nl-makers-together",
+      "status": "passed",
+      "outputFiles": 809,
+      "outputBytes": 29519990,
+      "headroomBytes": 37588874,
+      "offlineCoreFiles": 780,
+      "offlineCoreBytes": 28923159,
+      "editionBuildSha256": "50eb9124e79019b685b8f8c860cf62ab722bf207dabc806c738c3cf455359524",
+      "editionCatalogSha256": "78fb051543a650284ea7d76348bff5999c3ee053b66bb5a12b4720169b1e8bbd",
+      "offlineInventorySha256": "921edfbc923b25860aeda3368f0e3f4bb9e9b3c61a765f72852d10f546822626",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "droneaid-nl-parts-in-motion",
+      "status": "passed",
+      "outputFiles": 811,
+      "outputBytes": 30038152,
+      "headroomBytes": 37070712,
+      "offlineCoreFiles": 782,
+      "offlineCoreBytes": 29440277,
+      "editionBuildSha256": "52ce8ecd82ab42cd9e3e978e89579623044f7aafd4aa0ba36cfc8f4731346c45",
+      "editionCatalogSha256": "84cbfcf357f8913a5a95c539b055742b146471f564f1a3bbd593cdeb76407ee6",
+      "offlineInventorySha256": "03d5e92c8826c08d3e3811b2d3a341905ec03b4d6971a5e1bcf0d118c1a8bf86",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "droneaid-nl-shared-horizon",
+      "status": "passed",
+      "outputFiles": 809,
+      "outputBytes": 29830976,
+      "headroomBytes": 37277888,
+      "offlineCoreFiles": 780,
+      "offlineCoreBytes": 29234196,
+      "editionBuildSha256": "4c18c125a01f887b0f4f515013eb7f551dcab069cdf06e12d966ed57f7ed5c8e",
+      "editionCatalogSha256": "16447afbd0c4492f744ea9479aeafa676fe9508bf20e94975e25ae4436b9273f",
+      "offlineInventorySha256": "4db2c5202b43cc7cb174f4bead347b611486f741fb54f4beffefd002d9e04999",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "droneaid-nl-signals-of-support",
+      "status": "passed",
+      "outputFiles": 809,
+      "outputBytes": 29631371,
+      "headroomBytes": 37477493,
+      "offlineCoreFiles": 780,
+      "offlineCoreBytes": 29034315,
+      "editionBuildSha256": "7958b7013d22506f30df012890d742a54927cb3dfb60336496096f9e6f255cb3",
+      "editionCatalogSha256": "0f2cee335f53843f1e54a4467c30e45a60a79d46a998af9f18fac774ef37cf2c",
+      "offlineInventorySha256": "7561e56b5b52e488a38ad85537642c89c5ecc6e299e744a2612ec3a3598f7f53",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "droneaid-nl-workshop-lights",
+      "status": "passed",
+      "outputFiles": 809,
+      "outputBytes": 28329456,
+      "headroomBytes": 38779408,
+      "offlineCoreFiles": 780,
+      "offlineCoreBytes": 27732664,
+      "editionBuildSha256": "bb1f07287ac36f1a952b637455ace322dfea8411f98a5de4ef5a0cc6bd86b750",
+      "editionCatalogSha256": "ab0c469e11576666c62b89bbbf41681e9b2c1aec104f1a3c751094990d0f7c3a",
+      "offlineInventorySha256": "e96c1b4b9bb8f718a231e73517dc89a3db8341b456ad2f59f97fcb5efdece22c",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "fpv-learning",
+      "status": "passed",
+      "outputFiles": 891,
+      "outputBytes": 36144739,
+      "headroomBytes": 30964125,
+      "offlineCoreFiles": 862,
+      "offlineCoreBytes": 35508728,
+      "editionBuildSha256": "cab167384a9d25a1083abeedf62d520ad5ab1eaa1d8faf5f2068fffd4aa7bd4a",
+      "editionCatalogSha256": "28b1c1b43ef854015a9cede5c2e6d8889b90bc1847a55dda0fec4ab236304549",
+      "offlineInventorySha256": "05237d84db23886fab0a1bd5009a06aba128f2e48353b2f2cd848bf9215dc516",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "social-drone-ua",
+      "status": "passed",
+      "outputFiles": 823,
+      "outputBytes": 28350050,
+      "headroomBytes": 38758814,
+      "offlineCoreFiles": 794,
+      "offlineCoreBytes": 27746253,
+      "editionBuildSha256": "6a5e0135e9ccbeb37cb7524f54ab48c4f8d34f0ef321417fcc9ac52469a2000c",
+      "editionCatalogSha256": "52116733bcaf8b2f7c3f1a7bc7878ca91c0fe28f3ab296afd400a2d85d4fe48c",
+      "offlineInventorySha256": "7119ad6a6c1caf34ca7af00c80917fa6e26104b975595a7c16eb8d77e09227c0",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "ukraine-culture",
+      "status": "passed",
+      "outputFiles": 866,
+      "outputBytes": 45032023,
+      "headroomBytes": 22076841,
+      "offlineCoreFiles": 837,
+      "offlineCoreBytes": 44407340,
+      "editionBuildSha256": "f1c3b07981e16cadd3f1e67db6ddebb1915a1f1bdb2e29ae2e8e22bc90ee1d5e",
+      "editionCatalogSha256": "29e274105fdf8ba2b9c189cb19cdd733dd5e10b3a408e1432067d3e6522936ee",
+      "offlineInventorySha256": "d4d705b9caeb42279fe92eaba869d4142f213c17ac0f7173a3fd248fb433a184",
+      "reactionMediaCount": 24
+    },
+    {
+      "editionId": "victory-drones",
+      "status": "passed",
+      "outputFiles": 815,
+      "outputBytes": 24625133,
+      "headroomBytes": 42483731,
+      "offlineCoreFiles": 786,
+      "offlineCoreBytes": 24025161,
+      "editionBuildSha256": "cfede2834489dcfce0926e17065e0fa178177a2d52e413c774e681ceca45e03d",
+      "editionCatalogSha256": "bdc002a2c4efb5abbdaf17a25a58f87cd17024d58482c574c4a5ecaae3a8e77b",
+      "offlineInventorySha256": "7e3f40fc2b9f4ed19e3e5906149e26d019ff6bbde2ed5e6df429aaeb71403e24",
+      "reactionMediaCount": 24
+    }
+  ]
+}

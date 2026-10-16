@@ -1,0 +1,64 @@
+{
+  "format": "FPVWorldLibraryBrowserEvidence.v1",
+  "candidate": "a6e5ffbfe291c486172ff47d7c331371b9a73efc",
+  "passed": 208,
+  "failed": 0,
+  "archives": [
+    {
+      "file": "worker-source-r1.json.gz",
+      "rawBytes": 104134,
+      "rawSHA256": "f01d57a3191c0b46e0b273425b05cc644f884031db83154a447a65a56af26530",
+      "gzipBytes": 11147,
+      "gzipSHA256": "c1534c4fd23c56eace26fc6e2db6be73824a975573268028446245a4ed01ebd2"
+    },
+    {
+      "file": "worker-source-r1-fixture.json.gz",
+      "rawBytes": 20650,
+      "rawSHA256": "3b73b8ec56bb45f29ff13c5e390b92be21371ec3c1d65f74b61aa0339cc0f13c",
+      "gzipBytes": 6739,
+      "gzipSHA256": "4d32912a38b7793d59fba4dab5c3b917e39b8503d018d9195ae1b37418fb64a2"
+    },
+    {
+      "file": "worker-source-r1-harness.mjs.gz",
+      "rawBytes": 20962,
+      "rawSHA256": "36b688ee946b46f2811ba821e22bcb6676ef4c8a3949808cb6084c28e24d57ba",
+      "gzipBytes": 6560,
+      "gzipSHA256": "c29d778b1bad7991bb81704ebe94d69cdc83aa9efef8653cf1886a1eb15240c9"
+    },
+    {
+      "file": "worker-source-r1-host.html.gz",
+      "rawBytes": 38542,
+      "rawSHA256": "e42cbf72db8b7f46d4ab42569285f2585c4346b5d82db9589ba369ca6afa39da",
+      "gzipBytes": 9814,
+      "gzipSHA256": "bc07982c1adb190350b46ee2786596378054a4f974471cc5058caa8545cb89f9"
+    },
+    {
+      "file": "worker-source-r1-index.html.gz",
+      "rawBytes": 1419,
+      "rawSHA256": "bd1d2c3e235be469bc3800ef9d1b3a609ed57a408db724c86caaa1059a806912",
+      "gzipBytes": 759,
+      "gzipSHA256": "5bcfb2943edbc62db6ea0c11951cfce541ecdd0ca232d8f83fde4cc95cdf1346"
+    },
+    {
+      "file": "worker-source-r1-diagnostic.js.gz",
+      "rawBytes": 4072,
+      "rawSHA256": "bafdd420a16511fab35d6e2bcf532172048137209576a0628089a5128020428d",
+      "gzipBytes": 1425,
+      "gzipSHA256": "989786ff3854837fffb3aac622324bec41f69e03485720d1c7abc97fb5447e7d"
+    }
+  ],
+  "screenshot": {
+    "bytes": 56444,
+    "sha256": "049510a1dd7e24fcfd036e0182e819664c7e151d9113100890da6a47777941f0"
+  },
+  "nativeWorkers": 45,
+  "workerRequests": 37,
+  "actualHTTPSPackResponses": 3,
+  "pageRequests": [],
+  "limits": [
+    "Actual native host/IndexedDB/Worker and unchanged production clock. Only named worker-fetch fault responses, observation wrappers and isolated storage names are injected.",
+    "Successful pack download uses the actual immutable first-party HTTPS URL. The production catalogue remains empty.",
+    "Timeout callback is explicitly injected, not a claim of two-minute wall-clock endurance. No offline, finished-world, flight-completion or FPS claim."
+  ],
+  "admission": "Pending for this dedicated-worker continuation; earlier page-thread admission refusal remains historical evidence."
+}

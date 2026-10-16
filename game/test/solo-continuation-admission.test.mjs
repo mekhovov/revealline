@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { librarySuccessor } from '../mission-library/continuous-next.mjs';
+import { t } from '../i18n/index.mjs';
 
 // Production boundary function, controlled async owner-admission boundary.
 // Full host navigation is covered separately; no simulated gameplay-clear claim.
@@ -74,6 +75,7 @@ for (const action of ['cancel', 'failure', 'ready'])
       }),
     ]);
     const ctx = {
+      t,
       $,
       document,
       window: { addEventListener() {}, removeEventListener() {} },
@@ -88,12 +90,20 @@ for (const action of ['cancel', 'failure', 'ready'])
       scenario: null,
       courseSession: null,
       dialogOpen: () => false,
+      guardInstallOfflineBlur: (callback) => callback,
       journeyEnabled: true,
       journeyMission: () => ({ id: 'finished' }),
       authoredRoute: { id: 'edition' },
       librarySuccessor,
+      currentSoloLibraryMission: (host) => host.library.forMode('solo')[0],
       getUnifiedMissionLibrary: async () => ({ library, refreshInstalled: async () => {} }),
       libraryActivationContext: () => ({ isCurrent: () => true }),
+      preparationButtonBusy(button, busy) {
+        // The production helper deliberately keeps the opener focusable while
+        // exposing its asynchronous state through ARIA instead of disabled.
+        button.disabled = false;
+        button.busy = busy;
+      },
       beginPreparation(_text, onCancel) {
         cancel = onCancel;
         return {
@@ -105,8 +115,14 @@ for (const action of ['cancel', 'failure', 'ready'])
       },
     };
     const next = runInNewContext(`${code}\nnextLibraryMission`, ctx);
-    const pending = next();
-    while (!entered) await Promise.resolve();
+    let completed = false;
+    const pending = next().finally(() => {
+      completed = true;
+    });
+    // Controlled promises admit within a few microtasks. Early return/failure must
+    // report a failed assertion instead of spinning forever and starving timers.
+    for (let turn = 0; !entered && !completed && turn < 100; turn++) await Promise.resolve();
+    assert.equal(entered, true, 'The launch must reach the asynchronous admission boundary.');
     assert(ctx.libraryNextOperation, 'Cancel remains owned during adapter verification.');
     assert.equal(ctx.run, run);
     if (action === 'cancel') cancel({ restoreFocus: true });

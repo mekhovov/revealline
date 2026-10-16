@@ -1,0 +1,25 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/team-picture-v01322/go_test",
+  "branch": "codex/pages-v01322-selector",
+  "head": "4da146a92e9af1a27078664d374cefb7e961f1b9",
+  "status": [
+    " M publishing/pages-controller/catalog.json",
+    "?? publishing/pages-controller/evidence/current-v01322/",
+    "?? publishing/pages-controller/metadata/v0.132.2/"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "5500633792ac8fffe7fd4a68cf5337269134fcaae14fe8e754b08d438f90b0f2",
+      "bytes": 993
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "53f42c000a5a4902d5c8582f05400fe0a25365b67ffa22d3e54cadd4ddcb6ffa",
+      "bytes": 74533
+    },
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

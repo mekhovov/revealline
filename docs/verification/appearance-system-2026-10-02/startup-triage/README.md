@@ -1,0 +1,18 @@
+# Startup and source-HTML failure classification
+
+Baseline: `f4545d68a9be0ada4b7a8ad1327c9c02e25214a1`. Tests were run from isolated `git archive HEAD` snapshots under `/tmp`; the working tree was never reset. The Pause snapshot includes all HEAD game sources/assets and motion dependencies. The HTML/packaging snapshot additionally includes HEAD scripts, platform and site sources.
+
+| Failure group | Finding | Resolution |
+| --- | --- | --- |
+| Boot inline guard ordering | Appearance seed/link had been inserted before the existing static dark/conceal guard. Slow network could delay that guard. | Moved existing inline safety styles before the seed in game/index.html and site/index.html. Seed remains before other external resources. Browser held seed request indefinitely and observed exact dark canvas before body/runtime. |
+| Boot synchronous state/input/style assertions (8) and company boot-input assertions (2) | All ten reproduced at HEAD: startup already awaits the access gate, while VM tests asserted before its microtask. Inline guard regex also predated the access-gate exception. | Await mount in harness; retain fail-closed, controller ownership and exact access-gate selector assertions. |
+| Public launcher async script identity | HEAD site/launch.mjs read document.currentScript after awaiting access; a real browser clears it when classic execution yields. | Capture own script URL synchronously. Added pending-access regression that clears currentScript, verifies no early navigation, then checks exact path/query/hash. Actual browser /site/?lang=en#settings reaches /game/?lang=en#settings without page errors. |
+| boot-build packaging fixture | HEAD already omitted access-gate module and launcher navigation closure; new appearance closure extended the required list. Guard/no-early-CSS assertions predated access-gate. | Copy canonical launcher appearance/navigation closure and bounded runtime locale dependencies. Preserve reproducibility, exact offline hashes and desktop/iOS packaging checks. |
+| Community directory whitelist | Reproduced at HEAD because its existing local directory navigation module was excluded. New appearance seed/host also need admission. | Admit exactly localization, appearance and directory navigation scripts. Keep assertions excluding account/catalog/backend bootstrap. |
+| Seven community entry routes | Tests assumed the first script was the navigation module; the new synchronous theme seed correctly precedes it. | Check navigation module by its source and type; explicitly assert theme seed is first. Same-origin host loading, exact URL and fallback checks retained. |
+| Company lifecycle extracted callback | Added painter/theme host teardown was missing from AST-extracted test context. | Add teardown spies; assert preserved BFCache behavior and both disposals on final pagehide. |
+| Repeated forced Pause chooses Skip mission instead of Choose mission | Exact failure reproduced in isolated HEAD source. Existing test hard-codes two Tab steps despite Skip mission being present. | Left unchanged; unrelated to appearance, CSS, seed or module ordering. |
+
+Final focused run: **60/60 passed**, including seven files (boot, boot-build, company-boot-input, company-player-lifecycle, community-entry, community-directory, theme-bootstrap). ESLint passed for all changed JS. Browser regression output and HEAD failure logs are adjacent. Full repository suite status is tracked separately; this report does not claim those unrelated failures are resolved.
+
+Production changes in this triage: game/index.html, site/index.html, site/launch.mjs. No shared CSS or generated theme-seed bytes changed.

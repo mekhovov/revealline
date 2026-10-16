@@ -1,0 +1,412 @@
+{
+  "format": "fpv-line-edition-package-comparison.v1",
+  "scope": "Sequential in-memory compile against frozen working-tree inputs. No archives, build directories, materialization, native stage, installed offline run or publication.",
+  "node": "v22.22.2",
+  "versionMetadata": "0.142.3",
+  "passed": true,
+  "priorReport": "/private/tmp/edition-package-matrix-committed-20260929.json",
+  "priorInputInventorySha256": "892dc56f87beef9a736289af9a5f2a290dd0d4f93278da16b8fdf7854ff304af",
+  "currentReport": "/private/tmp/edition-package-matrix-enemy-retro-coupa-20260929.json",
+  "currentReportSha256": "059be698a27509b890c946331c551f5e59917fe8243aa17f6d865e44cca0623a",
+  "captureReport": "/private/tmp/edition-package-matrix-enemy-retro-coupa-20260929-capture.json",
+  "sourceCapture": {
+    "kind": "working-tree",
+    "startedAt": "2026-09-29T03:11:26.078Z",
+    "finishedAt": "2026-09-29T03:11:58.961Z",
+    "sourceRevisionAtStart": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+    "sourceRevisionAtFinish": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+    "headUnchanged": true,
+    "unchanged": true,
+    "inputFiles": 835,
+    "inputInventorySha256": "bab38a91b5b90631d561fa1248b680dd26218188c5f112d10288e50b3a7622cf",
+    "changes": []
+  },
+  "summary": {
+    "editions": 14,
+    "passed": 14,
+    "engineFiles": 574,
+    "capturedInputFiles": 835,
+    "inputPathsChanged": 14,
+    "newInputPaths": 8,
+    "removedInputPaths": 0,
+    "existingInputPathsChanged": 6,
+    "summedSequentialOutputFiles": 8494,
+    "summedSequentialOutputBytes": 469524072,
+    "largestEdition": "droneaid-nl-community",
+    "largestEditionFiles": 668,
+    "largestEditionBytes": 66781145,
+    "minimumByteHeadroom": 327719,
+    "multiplayerSceneFiles": 0,
+    "manualFixtureFiles": 0
+  },
+  "limits": {
+    "files": 2000,
+    "bytes": 67108864
+  },
+  "changedInputs": [
+    {
+      "path": "game/editions/runtime-assets.json",
+      "before": {
+        "path": "game/editions/runtime-assets.json",
+        "bytes": 17345,
+        "sha256": "203ffa1af291a5c4cab9ea3e58c1247a488f894400d86d5e8ed9cdf0c9bb2c69"
+      },
+      "after": {
+        "path": "game/editions/runtime-assets.json",
+        "bytes": 19959,
+        "sha256": "aa6fb012603f2b054864b5998750757bbd8bfb710eaa83142d1e24c347df2bc0"
+      }
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "before": {
+        "path": "game/i18n/catalogs.mjs",
+        "bytes": 1002123,
+        "sha256": "4d4002b8e9f3ac3e421d8d0252089c24aeaf75dae0fabcc67012b12394ad1f84"
+      },
+      "after": {
+        "path": "game/i18n/catalogs.mjs",
+        "bytes": 1002215,
+        "sha256": "238cc7cf25ace927be568a73d356b3da1830c86bf77c47e140fbed6dfb557670"
+      }
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "before": {
+        "path": "game/locales/en/interface.json",
+        "bytes": 446598,
+        "sha256": "4c3fc88964cc502f0b3042f43e72ecf8ded427807fa084020f4a1f0df363e3c3"
+      },
+      "after": {
+        "path": "game/locales/en/interface.json",
+        "bytes": 446766,
+        "sha256": "d15073579907cdf4d34cb5ad9314a9dc102f2be42081e6ae1e13ab514d0f75df"
+      }
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "before": {
+        "path": "game/locales/uk/interface.json",
+        "bytes": 728630,
+        "sha256": "c07087270f305adca943de534fe5461ad25eef8577446390a9f4a3e207d1d0da"
+      },
+      "after": {
+        "path": "game/locales/uk/interface.json",
+        "bytes": 728894,
+        "sha256": "f1be167df64e2cfdc268f822b27fdb273a89688036c355e8ccb47c7a59f310b4"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/coupa-team-portrait.webp",
+      "before": null,
+      "after": {
+        "path": "game/ui/art/menu-scenes/coupa-team-portrait.webp",
+        "bytes": 1744888,
+        "sha256": "41c42fefb39048fd1dadd790ef14225275ca99333c8b6383e8fc09f9763d0de7"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/coupa-team.webp",
+      "before": null,
+      "after": {
+        "path": "game/ui/art/menu-scenes/coupa-team.webp",
+        "bytes": 1580074,
+        "sha256": "be7f79098d17957e598e7fd4a96004f2656a7459a08980b0bcd8ac757c30f136"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+      "before": null,
+      "after": {
+        "path": "game/ui/art/menu-scenes/coupa-versus-portrait.webp",
+        "bytes": 1669344,
+        "sha256": "5e5aa3c392527b45757f4175639919544be598ad4140959f8c7297297e0af8e6"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/coupa-versus.webp",
+      "before": null,
+      "after": {
+        "path": "game/ui/art/menu-scenes/coupa-versus.webp",
+        "bytes": 1620118,
+        "sha256": "7c10b3469f5bbabd6a704abb0900f9c9afd1d8755b830f2f0229c3370cf051dd"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/provenance.json",
+      "before": {
+        "path": "game/ui/art/menu-scenes/provenance.json",
+        "bytes": 15059,
+        "sha256": "897f9145c25735cd3fb300fb05360b7d0aa6dc6c30cf9d8ea37a9d208a0c8e35"
+      },
+      "after": {
+        "path": "game/ui/art/menu-scenes/provenance.json",
+        "bytes": 21119,
+        "sha256": "baaee31dedd103ee88a84776531469202b17cee5f0c735a056ea165c76028df3"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/retro-team-portrait.webp",
+      "before": null,
+      "after": {
+        "path": "game/ui/art/menu-scenes/retro-team-portrait.webp",
+        "bytes": 545932,
+        "sha256": "3a235ff27b250595b6e95100bf7306d8962a4592ef6b02cc0ec690f4839de3a3"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/retro-team.webp",
+      "before": null,
+      "after": {
+        "path": "game/ui/art/menu-scenes/retro-team.webp",
+        "bytes": 1937786,
+        "sha256": "0760ab82df934667efd69c14b778f4e6da862475db76ecf8fb8eacc6983e334b"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/retro-versus-portrait.webp",
+      "before": null,
+      "after": {
+        "path": "game/ui/art/menu-scenes/retro-versus-portrait.webp",
+        "bytes": 580790,
+        "sha256": "a536925b458dfb1b0015328945e224eddf321ac877aa868fa9133d45617ccd8f"
+      }
+    },
+    {
+      "path": "game/ui/art/menu-scenes/retro-versus.webp",
+      "before": null,
+      "after": {
+        "path": "game/ui/art/menu-scenes/retro-versus.webp",
+        "bytes": 1929216,
+        "sha256": "587c3ca3efe91d906b1a5fa56993d125d0c533c11d7cfd15699bc12e59a37a20"
+      }
+    },
+    {
+      "path": "game/ui/menu-scene-catalog.mjs",
+      "before": {
+        "path": "game/ui/menu-scene-catalog.mjs",
+        "bytes": 13659,
+        "sha256": "7546b40ce0cdec1b84f6861446c5bd2315bd45c0d92741c5511969f75c364734"
+      },
+      "after": {
+        "path": "game/ui/menu-scene-catalog.mjs",
+        "bytes": 16535,
+        "sha256": "f9d72a2795a8ece95b9c126b49afce1884f82713745e622f875b80b12bd2fec7"
+      }
+    }
+  ],
+  "changedCompilerInputs": [],
+  "implementationAndSourceInputsUnchangedDuringRun": true,
+  "editions": [
+    {
+      "edition": "coupa-all",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "14c4ce6bdfb3245cc6c098d7f72d088c877f24b98018258625a0d0af0db10b22",
+      "engineFiles": 574,
+      "outputFiles": 630,
+      "outputBytes": 61646702,
+      "outputInventorySha256": "226be95416b982441fc7b1b1e5050b54cb75ff310faa72aa7188220a8c23ff39",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 5462162,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "coupa-adventure",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "27980420523916219fbf09ace97ff2b5a6e80beae3a5c2b3f6f6dfc7dbd9738c",
+      "engineFiles": 574,
+      "outputFiles": 597,
+      "outputBytes": 27742506,
+      "outputInventorySha256": "6bd67e0bf890ca63904e50de33a20366b75b551fdff1e942fa3c35a41b923e1e",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 39366358,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "coupa-culture",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "de1b586034fdb2da2f3b88ea8ea2a03d0f943a739e9f394f923ab744c52cb720",
+      "engineFiles": 574,
+      "outputFiles": 598,
+      "outputBytes": 26193148,
+      "outputInventorySha256": "c46e96970a380d959a7e397c915c1d8182a10b6a33926bc6dd8d21c522471869",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 40915716,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "coupa-foundations",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "706c99233ad1209cd37896d28a916043739343913772cd79a7785c4329bee084",
+      "engineFiles": 574,
+      "outputFiles": 599,
+      "outputBytes": 28621293,
+      "outputInventorySha256": "f678029f2e76ca246b5a0107d0b2a2fc9933424c2d4c8c9a9a8bc73e1433a036",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 38487571,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "coupa-operations",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "85279e511f54c56258fcc74a7194b41bce4020555c408d0d8b1bfd0896a6ef7d",
+      "engineFiles": 574,
+      "outputFiles": 599,
+      "outputBytes": 27767123,
+      "outputInventorySha256": "144ee11cac46862eb0c525f69ffbdde685bebcdabff9b54cb4585ec00a9ed215",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 39341741,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "coupa-developers",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "6519c2b17ccbcd2a81dd23e3931d3f085749b6692d93d7b7df3fd4dbe4f95522",
+      "engineFiles": 574,
+      "outputFiles": 599,
+      "outputBytes": 29592451,
+      "outputInventorySha256": "c004f31ac4b8490960f48e9165f2d00e31155cb893c7e206c6337760fb1d2dc3",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 37516413,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "droneaid-community",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "24c950d8e89ddd23142e559d2064813a325278de178dbe89c2d46fe4c059ccf0",
+      "engineFiles": 574,
+      "outputFiles": 592,
+      "outputBytes": 26968653,
+      "outputInventorySha256": "5e6e036cc9ce172ce2b7f03b69a7104bcabf0af41b4f77d46e58a3b59c126d6a",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 40140211,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "droneaid-nl-community",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "46d5017b0df6bc9facd2bbf9705a2ed248a21f0ee0891034f15c4e2049943cb6",
+      "engineFiles": 574,
+      "outputFiles": 668,
+      "outputBytes": 66781145,
+      "outputInventorySha256": "a131b712db81602500792fc5bd1137599f6cc6256df6f6d350156fd63b7d826d",
+      "requiredMenuFiles": 10,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 327719,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "droneaid-nl-workshop-lights",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "00b69ba3c66332e16d7602a83ee9fcc7c0de58ca4d918f079e14b8aab11ac69c",
+      "engineFiles": 574,
+      "outputFiles": 600,
+      "outputBytes": 27807091,
+      "outputInventorySha256": "079f3b781ab88404b2912d63a18313244446b1769d5d7a395ac21efeb8034b13",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 39301773,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "droneaid-nl-parts-in-motion",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "70d4005275b32e9831516c75af339498c792bc9dc59f52434eff6b78a6b60d74",
+      "engineFiles": 574,
+      "outputFiles": 604,
+      "outputBytes": 29585935,
+      "outputInventorySha256": "94a953c27a822bec31fdf18fa1437912328a4b1a37c1a47d32a1f628ba73b536",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 37522929,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "droneaid-nl-makers-together",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "88ddaeb4c50bde6ab3297076e0ed9d5bec27a131af7f909f0b29c7935cd04448",
+      "engineFiles": 574,
+      "outputFiles": 602,
+      "outputBytes": 29067773,
+      "outputInventorySha256": "f5dc5304f39d17a10568256a06f6a7a50cc0285b39fd3b62fcb101a6a9a34219",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 38041091,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "droneaid-nl-careful-handoff",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "b1d9817a4b135b3f601f573d13ed1c2367a92e500e6ed504cfa998cf0ee3172d",
+      "engineFiles": 574,
+      "outputFiles": 602,
+      "outputBytes": 29192341,
+      "outputInventorySha256": "71fe429cf12ae468ae7925d374a735979245208a7456f729a90fe5b304383852",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 37916523,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "droneaid-nl-signals-of-support",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "2e8bf196231e5528e145e9aba65c4ed5c9b9a248672eb8f0a82c4932b1bd82d4",
+      "engineFiles": 574,
+      "outputFiles": 602,
+      "outputBytes": 29179151,
+      "outputInventorySha256": "871b749107cb97facb982480cb9904c5abe9b9db190b8c17e8e6e9dd3bbe3d51",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 37929713,
+      "byteDeltaFromPrior": 6140
+    },
+    {
+      "edition": "droneaid-nl-shared-horizon",
+      "passed": true,
+      "sourceRevision": "c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e",
+      "inputInventorySha256": "915b3eb0a6365ca86c32e51919ef036fd78a83946e15699702a21ff6d085a8f4",
+      "engineFiles": 574,
+      "outputFiles": 602,
+      "outputBytes": 29378760,
+      "outputInventorySha256": "76b0ef2687e68540d8c7d8f8b2db35627ed0a89ed92d65e341dc8551eb3237ca",
+      "requiredMenuFiles": 9,
+      "multiplayerSceneFiles": 0,
+      "manualFixtureFiles": 0,
+      "byteHeadroom": 37730104,
+      "byteDeltaFromPrior": 6140
+    }
+  ]
+}

@@ -3,15 +3,21 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { normalizedLevel } from '../core/level.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { waitForChapterSelection } from './helpers/chapter-install-wait.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { attachMissionPicker } from '../ui/mission-picker.mjs';
 
 const load = async (name) =>
   JSON.parse(await readFile(new URL(`../content/packs/${name}.json`, import.meta.url), 'utf8'));
 const original = await load('fpv-arcade');
 const featured = await load('fpv-arcade-r5');
+// Fresh Legacy attempts use the approved default pressure recipe. Compare the
+// entire effective level, rather than an obsolete untuned authored snapshot.
+const preparedLevel = (level) =>
+  normalizedLevel(applyGameplayTuning(level, resolveGameplayTuning()));
 
 function chapterFetch(t, intercept) {
   const actual = globalThis.fetch;
@@ -23,8 +29,27 @@ function chapterFetch(t, intercept) {
   });
 }
 
-// Optional downloads belong to an explicit Missions choice. Title Start now
-// prepares the named current mission; it does not install a different chapter.
+// These are retained chapter-selector host/service tests. The current player
+// catalogue is covered by mission-library-solo-host/controller-host tests.
+// Mount only the native Legacy dialog boundary; keep the real shell pause/Home,
+// selector callbacks, download, replacement, artwork and storage authorities.
+const chapterParents = new WeakMap();
+function openRetainedChapters(page) {
+  chapterParents.set(page, page.$('shell-home').open);
+  page.$('shell-menu').click();
+  page.$('shell-home').close();
+  page.$('shell-missions').showModal();
+  // The finite DOM does not deliver MutationObserver notifications. Flush the
+  // mounted production picker after the previous host transaction settled.
+  attachMissionPicker({ document: page.doc }).sync();
+}
+function closeRetainedChapters(page) {
+  page.$('shell-briefing').click();
+  if (chapterParents.get(page)) page.$('shell-menu').click();
+}
+
+// Exercise the actual retained card's selector dispatch, never a replacement
+// implementation of the download/replacement transaction.
 function chooseChapter(page, id) {
   const button = page.doc.querySelector(`[data-pack="${id}"]`);
   assert.ok(button);
@@ -98,7 +123,7 @@ function originalImageBoundary(t) {
   });
 }
 
-test('uncached optional chapter failure preserves the real cut; explicit retry installs it and later offline selection uses stored content', async (t) => {
+test('retained chapter selector: download failure preserves the real cut; retry installs exact content and later offline selection uses storage', async (t) => {
   originalImageBoundary(t);
   const page = await soloPage(t);
   let available = false,
@@ -119,7 +144,7 @@ test('uncached optional chapter failure preserves the real cut; explicit retry i
     checkpoint = authoritativeCheckpoint(run),
     selected = page.$('pack-select').value;
   assert.equal(run.player.cutting, true);
-  page.$('shell-packs').click();
+  openRetainedChapters(page);
   page.frame(0);
   assert.equal(page.rendered.paused, true);
   const pausedStorage = new Map(page.storage.map);
@@ -157,7 +182,7 @@ test('uncached optional chapter failure preserves the real cut; explicit retry i
   await confirmReplacement(page);
   await selectedChapter(t, page, original.id);
   assert.equal(page.$('pack-select').value, original.id);
-  assert.deepEqual(page.rendered.run.level, normalizedLevel(original.campaigns[0].levels[0]));
+  assert.deepEqual(page.rendered.run.level, preparedLevel(original.campaigns[0].levels[0]));
   assert.equal(page.rendered.run.tick, 0);
   assert.equal(requests, 2);
   page.$('shell-prepare').click();
@@ -174,12 +199,12 @@ test('uncached optional chapter failure preserves the real cut; explicit retry i
   );
   page.frame(0);
   assert.equal(page.$('pack-select').value, original.id);
-  assert.deepEqual(page.rendered.run.level, normalizedLevel(original.campaigns[0].levels[0]));
+  assert.deepEqual(page.rendered.run.level, preparedLevel(original.campaigns[0].levels[0]));
   assert.equal(requests, 2, 'Already-installed chapter selection does not require another fetch');
   assert.deepEqual(page.errors, []);
 });
 
-test('explicit chapter download failure stays visible on return to Title and Missions can deliberately retry', async (t) => {
+test('retained chapter selector: download failure survives Home and a deliberate selector retry prepares exact content', async (t) => {
   originalImageBoundary(t);
   const page = await soloPage(t, { titleScreen: true });
   let available = false,
@@ -194,7 +219,7 @@ test('explicit chapter download failure stays visible on return to Title and Mis
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run),
     stored = new Map(page.storage.map);
-  page.$('shell-play').click();
+  openRetainedChapters(page);
   const first = chooseChapter(page, featured.id);
   await first.pending;
   page.frame(0);
@@ -202,7 +227,7 @@ test('explicit chapter download failure stays visible on return to Title and Mis
   assert.equal(page.rendered.run, run);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.deepEqual(page.storage.map, stored);
-  page.$('shell-missions-back').click();
+  closeRetainedChapters(page);
   assert.equal(page.$('shell-home').open, true);
   const status = page.$('shell-featured-status');
   assert.ok(page.$('shell-home').contains(status));
@@ -211,17 +236,17 @@ test('explicit chapter download failure stays visible on return to Title and Mis
   assert.match(status.textContent, /Pressure Lines/);
   assert.match(status.textContent, /choose this chapter again/);
   available = true;
-  page.$('shell-play').click();
+  openRetainedChapters(page);
   chooseChapter(page, featured.id);
   await selectedChapter(t, page, featured.id);
   assert.equal(requests, 2);
   assert.equal(page.$('shell-home').open, false);
-  assert.deepEqual(page.rendered.run.level, normalizedLevel(featured.campaigns[0].levels[0]));
+  assert.deepEqual(page.rendered.run.level, preparedLevel(featured.campaigns[0].levels[0]));
   assert.equal(page.rendered.run.tick, 0, 'Installing a chapter prepares it without starting');
   assert.deepEqual(page.errors, []);
 });
 
-test('a late failed chapter request cannot replace the status or run from a newer confirmed restart', async (t) => {
+test('retained chapter selector: late failure cannot replace the status or run from a newer confirmed restart', async (t) => {
   const page = await soloPage(t);
   let rejectRequest;
   chapterFetch(t, (url, request) =>
@@ -234,14 +259,14 @@ test('a late failed chapter request cannot replace the status or run from a newe
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
   const originalRun = page.rendered.run;
-  page.$('shell-packs').click();
+  openRetainedChapters(page);
   chooseChapter(page, original.id);
   await confirmReplacement(page);
   await settle(() => typeof rejectRequest === 'function');
   assert.equal(page.$('pack-select').disabled, true);
   page.$('mission-replace-stay').click();
   assert.equal(page.$('pack-select').disabled, false);
-  page.$('shell-missions-back').click();
+  closeRetainedChapters(page);
   page.$('overlay-restart').click();
   assert.equal(page.$('restart-dialog').open, true);
   assert.equal(page.rendered.run, originalRun);
@@ -269,7 +294,7 @@ test('a late failed chapter request cannot replace the status or run from a newe
   assert.deepEqual(page.errors, []);
 });
 
-test('a successful delayed chapter choice leaves a newer Settings visit in place', async (t) => {
+test('retained chapter selector: successful delayed choice leaves a newer Settings visit in place', async (t) => {
   originalImageBoundary(t);
   const page = await soloPage(t, { titleScreen: true });
   let release;
@@ -280,7 +305,7 @@ test('a successful delayed chapter choice leaves a newer Settings visit in place
         })
       : request(),
   );
-  page.$('shell-play').click();
+  openRetainedChapters(page);
   const { button, pending } = chooseChapter(page, featured.id),
     label = button.querySelector('.mission-picker-card-label'),
     originalLabel = label.textContent;
@@ -288,7 +313,7 @@ test('a successful delayed chapter choice leaves a newer Settings visit in place
   assert.equal(page.$('pack-select').disabled, true);
   assert.equal(page.$('content-select-status').dataset.state, 'busy');
   assert.equal(button.querySelector('.mission-picker-card-label'), label);
-  page.$('shell-missions-back').click();
+  closeRetainedChapters(page);
   page.$('shell-options').click();
   assert.equal(page.$('settings-dialog').open, true);
   const settingsFocus = page.doc.activeElement;
@@ -306,12 +331,12 @@ test('a successful delayed chapter choice leaves a newer Settings visit in place
     'error',
     page.$('shell-featured-status').textContent,
   );
-  assert.deepEqual(page.rendered.run.level, normalizedLevel(featured.campaigns[0].levels[0]));
+  assert.deepEqual(page.rendered.run.level, preparedLevel(featured.campaigns[0].levels[0]));
   assert.equal(page.rendered.run.tick, 0);
   assert.deepEqual(page.errors, []);
 });
 
-test('blur announces a deferred Missions download cancellation and its late response cannot adopt or persist the chapter', async (t) => {
+test('retained chapter selector: blur announces download cancellation and its late response cannot adopt or persist content', async (t) => {
   const database = managedIndexedDB();
   const page = await soloPage(t, { titleScreen: true, assetIndexedDB: database.indexedDB });
   let releaseRequest;
@@ -329,10 +354,10 @@ test('blur announces a deferred Missions download cancellation and its late resp
     writes = page.storage.writes.length,
     installed = database.contents(),
     puts = database.allPuts.length;
-  page.$('shell-play').click();
+  openRetainedChapters(page);
   const { pending } = chooseChapter(page, featured.id);
   await settle(() => typeof releaseRequest === 'function');
-  page.$('shell-missions-back').click();
+  closeRetainedChapters(page);
   let message;
   try {
     assert.equal(typeof releaseRequest, 'function', 'The actual selected chapter fetch is pending');

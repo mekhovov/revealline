@@ -1,0 +1,23 @@
+{
+  "source": "40ef6750cd876f6d06a71c559905c655dec9cfca",
+  "checksPassed": 324,
+  "overallPassed": false,
+  "error": "Timeout: native completed practice and Watch",
+  "finding": "Native Settings paused active tick1 but retained stale canResume=false/Start; immediate primary opened briefing. Language phase guard itself retained current paused/disarmed phase. Next RAF later restored Continue.",
+  "files": [
+    {
+      "path": "fpv-language-phase-8948-failed.json.gz",
+      "bytes": 182128,
+      "sha256": "c9eb568585e7c064b549af411be8235f4139ec1eb301fcad83933d2af560f77c",
+      "storedBytes": 14771,
+      "storedSha256": "98b40f01e63e35c55a1e67da5ec8186f8f8a18b398bd78a4618006c36677d52e"
+    },
+    {
+      "path": "fpv-language-phase-8948-failed.png",
+      "bytes": 24998,
+      "sha256": "856df77ac48197f33f456db788e466eabc53e22f630c9e781ebf0bc432b5cf03",
+      "storedBytes": 24998,
+      "storedSha256": "856df77ac48197f33f456db788e466eabc53e22f630c9e781ebf0bc432b5cf03"
+    }
+  ]
+}

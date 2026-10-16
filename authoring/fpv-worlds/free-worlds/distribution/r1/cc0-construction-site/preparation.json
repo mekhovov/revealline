@@ -1,0 +1,35 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-construction-site",
+  "title": [
+    "House Construction Site",
+    "Будівельний майданчик"
+  ],
+  "kit": "construction",
+  "sourceURL": "https://opengameart.org/content/3d-house-construction-site-lowpoly-cc0",
+  "downloadURL": "https://opengameart.org/sites/default/files/lowpoly-house-construction-site-by-majadroid_2.zip",
+  "archiveSha256": "bd7a45ea71fd15b2a77479ada84abd6f981248c9e5f884988d7091876dc0d83a",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 1600632,
+  "modelSha256": "3cb34e6b1925816a00d84b0936726740db8721c1ab44dcbadf8761ef09062919",
+  "packBytes": 2368301,
+  "packSha256": "8d6f217d626c570815722fc23d04cd5297093ab0ff6a1f6886897a5d96ffe062",
+  "collisionSurfaces": 119,
+  "collisionTriangles": 14676,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "construction/construction.glb",
+      "sha256": "0d444bd872835882532889c6ba684ed9966e5505c625da7d60790af365ef6f22",
+      "conversion": "Blender 4.5.14 built-in glTF, visible static geometry; see source/export-construction.py"
+    }
+  ]
+}

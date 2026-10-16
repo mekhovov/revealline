@@ -6,6 +6,8 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { assessTeamTimedRoute } from './helpers/team-timed-route.mjs';
 import { page } from './helpers/coop-host.mjs';
+import { teamEditionRoute, playTeamEditionRoute } from './helpers/team-edition-host-route.mjs';
+import { replayTeamCommands } from './helpers/coop-win.mjs';
 
 const read = async (name) =>
   JSON.parse(await readFile(new URL(`./fixtures/${name}.json`, import.meta.url)));
@@ -14,10 +16,6 @@ const qualification = await read('team-timed-qualification');
 const original = await read('team-timed-routes');
 const source = createTeamTimedCandidates();
 const project = compileContentProject(source);
-const keys = [
-  { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-  { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-];
 const summary = (r) => ({
   status: r.status,
   tick: r.tick,
@@ -113,7 +111,7 @@ for (const row of evidence.rows) {
     assert.equal(result.collected.length, 0);
   });
 
-  async function verifyKeyboard(t, adjusted = true) {
+  async function verifyKeyboard(t, complete = true) {
     const f = await page(t, { nativeFocus: true, nativeVisibility: true });
     const pack = createTeamTestPack(source, row.missionId, row.difficulty);
     await f.selectFile(JSON.stringify(pack));
@@ -125,84 +123,84 @@ for (const row of evidence.rows) {
     assert.equal(f.$('coop-difficulty').value, row.difficulty);
     f.$('coop-start').focus();
     f.tap('Enter');
-    const expected = row.checks.find((c) => !c.options.swapped && c.options.jointCuts).result;
-    const observed = adjusted ? row.keyboard : row.unadjustedKeyboardProbe;
-    const log = structuredClone(route.log);
-    if (adjusted)
-      for (const change of row.keyboard.adjustments) {
-        assert.equal(log[change.segment].ticks, change.fromTicks);
-        log[change.segment].ticks = change.toTicks;
-      }
+    const reference = teamEditionRoute(source, row.missionId, row.difficulty);
+    const historical = row.checks.find((c) => !c.options.swapped && c.options.jointCuts).result;
+    const pickup = reference.pickups[0];
+    assert.deepEqual(
+      [pickup.kind, pickup.players, pickup.partnerCutting],
+      [historical.collected[0].kind, historical.collected[0].players, true],
+    );
     const effect = {
       'enemy-slow': /^Enemies slow \d+s$/,
       'enemy-freeze': /^Enemies frozen \d+s$/,
       'player-speed': /^Pilot 2 speed \d+s$/,
-    }[expected.collected[0].kind];
-    // First RAF establishes the timestamp; 30 subsequent fixed steps are the
-    // explicitly recorded quarter-second idle start. No runtime state override.
-    f.tick(31);
+    }[pickup.kind];
+    // The live strip can show an upcoming pickup alongside an active effect.
+    const hasEffect = (text) => text.split(' · ').some((part) => effect.test(part));
     const seen = new Set();
-    let frames = 0;
     let firstEffectTick = null;
-    let previous = [null, null];
-    for (const segment of log) {
-      // A repeated segment value is a held intent, not a fresh gesture after
-      // capture. Production clears that seat and requires deliberate rearming.
-      for (const [seat, direction] of [segment.a, segment.b].entries())
-        if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-      previous = [segment.a, segment.b];
-      for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-        seen.add(f.$('coop-bonus-live').textContent);
-        if (firstEffectTick === null && effect.test(f.$('coop-bonus-live').textContent)) {
-          firstEffectTick = frames + 30;
-          const collector = expected.collected[0].players[0];
-          const pickup = {
-            'enemy-slow': 'enemies slow',
-            'enemy-freeze': 'enemies frozen',
-            'player-speed': 'pilot speed',
-          }[expected.collected[0].kind];
-          assert(
-            f
-              .$('coop-message')
-              .textContent.startsWith(
-                `${['Sunflower', 'Skyline'][collector]} collected ${pickup}.`,
-              ),
-            f.$('coop-message').textContent,
-          );
-          assert.equal(f.$(`coop-state-${1 - collector}`).textContent, 'Line exposed');
-        }
-        assert.equal(
-          f.$('coop-reserves').textContent,
-          `${expected.initialReserves} reserve${expected.initialReserves === 1 ? '' : 's'}`,
+    const inspectFrame = (tick) => {
+      seen.add(f.$('coop-bonus-live').textContent);
+      if (firstEffectTick === null && hasEffect(f.$('coop-bonus-live').textContent)) {
+        firstEffectTick = tick;
+        const collector = pickup.players[0];
+        const label = {
+          'enemy-slow': 'enemies slow',
+          'enemy-freeze': 'enemies frozen',
+          'player-speed': 'pilot speed',
+        }[pickup.kind];
+        assert(
+          f
+            .$('coop-message')
+            .textContent.startsWith(`${['Sunflower', 'Skyline'][collector]} collected ${label}.`),
+          f.$('coop-message').textContent,
         );
+        assert.equal(f.$(`coop-state-${1 - collector}`).textContent, 'Line exposed');
       }
-      if (!f.$('coop-overlay').hidden) break;
+      assert.equal(
+        f.$('coop-reserves').textContent,
+        `${historical.initialReserves} reserve${historical.initialReserves === 1 ? '' : 's'}`,
+      );
+    };
+    if (complete) playTeamEditionRoute(f, source, row.missionId, row.difficulty, inspectFrame);
+    else {
+      // A recorded command stream exhausted before its final bank must not win.
+      // Preserve the historical adjustment above; qualify this current boundary
+      // with the current route instead of replaying obsolete movement timing.
+      let tick = 1;
+      const played = replayTeamCommands(f, reference.commands.slice(1, -1), () =>
+        inspectFrame(++tick),
+      );
+      assert.equal(played + 1, reference.run.tick - 1);
+      assert.equal(f.$('coop-overlay').hidden, true);
+      assert.notEqual(
+        f.$('coop-coverage').textContent,
+        `${(reference.run.coverage * 100).toFixed(1)}%`,
+      );
+      assert(firstEffectTick !== null);
+      assert.deepEqual(reference.commands.at(-1), reference.commands.at(-2));
+      f.tick();
+      inspectFrame(reference.run.tick);
+      assert.equal(f.$('coop-overlay').hidden, false);
+      assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
+      assert.equal(
+        f.$('coop-coverage').textContent,
+        `${(reference.run.coverage * 100).toFixed(1)}%`,
+      );
     }
     assert.equal(f.$('coop-menu').hidden, true);
-    assert.equal(f.$('coop-overlay').hidden, observed.status === 'running');
-    if (observed.status === 'won')
-      assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    // These are observed UI projections, not equality with the direct-core
-    // replay checksum. Capture-release batching and effect activation differ.
-    assert.equal(f.$('coop-coverage').textContent, observed.coverageText);
-    assert.equal(frames + 30, observed.tick);
-    assert.equal(firstEffectTick, observed.firstEffectTick);
+    assert.equal(firstEffectTick, pickup.activationTick, [...seen].join('; '));
     assert(seen.has('Pickup incoming'));
     assert(seen.has('1 timed pickup available'));
-    assert(
-      [...seen].some((text) => effect.test(text)),
-      [...seen].join('; '),
-    );
+    assert([...seen].some(hasEffect), [...seen].join('; '));
     assert.deepEqual(f.visits, []);
     t.diagnostic(
-      'Production keyboard/input/import/host modules; finite DOM/Canvas. Not native timing, controllers, two-human play, or public deployment.',
+      'Production keyboard/input/import/host modules with current tuned public routes; historical authored proofs above retained. Finite DOM/Canvas, not native timing, controllers, two-human play or public deployment.',
     );
   }
   test(`${label} actual imported Team host collects and clears by keyboard at its unchanged live seed`, (t) =>
     verifyKeyboard(t));
   if (row.unadjustedKeyboardProbe)
-    test(`${label} preserves keyboard exhaustion before the explicit return-frame adjustment`, (t) =>
+    test(`${label} preserves keyboard exhaustion before the final return frame`, (t) =>
       verifyKeyboard(t, false));
 }

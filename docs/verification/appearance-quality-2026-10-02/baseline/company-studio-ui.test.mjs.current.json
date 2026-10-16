@@ -1,0 +1,29 @@
+{
+  "file": "game/test/company-studio-ui.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/company-studio-ui.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 0.36,
+  "failures": [
+    {
+      "test": "leaving preview cancels verification and a late completion cannot mount an offscreen game",
+      "location": "game/test/company-studio-ui.test.mjs:268:1",
+      "detail": "\n  ---\n  duration_ms: 1.68275\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/company-studio-ui.test.mjs:268:1'\n  failureType: 'testCodeFailure'\n  error: 'Missing expected rejection.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  stack: |-\n    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/company-studio-ui.test.mjs:291:3)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async startSubtest (node:internal/test_runner/harness:259:3)"
+    }
+  ],
+  "summary": [
+    "# tests 9",
+    "# pass 8",
+    "# fail 1",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 339.745125"
+  ]
+}

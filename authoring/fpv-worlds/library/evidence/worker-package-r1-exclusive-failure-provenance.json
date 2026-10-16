@@ -1,0 +1,23 @@
+{
+  "format": "FPVWorldLibraryFailureEvidence.v1",
+  "sourceRevision": "01fc6ad206f6ea7e6dd78921f799e2ed1a773915",
+  "sameImmutableFixture": true,
+  "file": "worker-package-r1-exclusive-failure.json.gz",
+  "rawBytes": 38514,
+  "rawSHA256": "5d7879332154b576343d3960a9f76d66f1802af044e32f31c98bc364a4d8ab0a",
+  "gzipBytes": 8105,
+  "gzipSHA256": "21fa2c4c00525ac328048940c2b8b290a6dbd1c8778c609954f593ec9d519d44",
+  "screenshot": {
+    "file": "worker-package-r1-exclusive-failure.png",
+    "bytes": 84355,
+    "sha256": "e4a0f8d426ab529e0544450ecbf528bb235cc5bc51855e8fbb7dcf21189b2413"
+  },
+  "passedChecks": 119,
+  "error": {
+    "message": "Timeout: ordinary selected course ready",
+    "stack": "Error: Timeout: ordinary selected course ready\n    at until (http://127.0.0.1:8932/fixture/browser-harness.mjs:46:50)\n    at async execute (http://127.0.0.1:8932/fixture/browser-harness.mjs:267:3)"
+  },
+  "errors": [],
+  "coordinatorObservation": "Repeat started2026-10-04T16:31:17Z with exclusive browser focus and no other browser interaction before reading result after16:32Z. This repeats the timeout; no cause is established.",
+  "next": "New bounded fixture retains exact runtime/Ready assertion and adds focus,visibility,status stacks,native RAF entry timing; no guard relaxation or automatic resume."
+}

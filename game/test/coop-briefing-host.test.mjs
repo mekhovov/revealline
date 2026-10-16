@@ -44,6 +44,10 @@ for (const roles of [
     f.tick(30);
     f.$('coop-pause').click();
     const clock = f.$('coop-clock').textContent;
+    f.$('coop-settings-open').click();
+    f.$('coop-settings-tab-extras').click();
+    assert.equal(f.$('coop-options').open, true);
+    assert.equal(f.$('coop-settings-panel-extras').hidden, false);
     f.disclose('coop-help');
     f.$('coop-help-read').click();
     assert.equal(f.doc.activeElement.id, 'coop-help-reading');
@@ -53,8 +57,8 @@ for (const roles of [
     f.press('Escape');
     assert.equal(f.doc.activeElement.id, 'coop-help-read');
     f.press('Escape');
-    assert.equal(f.doc.activeElement.id, 'coop-help-toggle');
-    assert.equal(f.$('coop-help').open, false);
+    assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+    assert.equal(f.$('coop-options').open, false, 'Closing Settings returns to its pause opener.');
     assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
     assert.equal(f.$('coop-clock').textContent, clock);
   });

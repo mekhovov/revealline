@@ -2,8 +2,26 @@
 // downloads must retain the static launch screen and ordinary working links.
 (() => {
   const host = globalThis;
+  const fallback = {
+    'errors:stillPreparingYourArcadeYouCanWaitReloadOrUse':
+      'Still preparing your arcade. You can wait, reload, or use Play online. No flight has started.',
+    'errors:openYourArcade': 'Open your arcade.',
+    'errors:theGameRendererDidNotLoad': 'The game renderer did not load.',
+    'errors:theGameDidNotConfirmStartupOpenTheCurrentOnline':
+      'The game did not confirm startup. Open the current online edition.',
+    'errors:aGameStylesheetDidNotLoad': 'A game stylesheet did not load.',
+    'errors:thisIsADownloadedFileChoosePlayOnlineOrStart':
+      'This is a downloaded file. Choose Play online, or start a local server to play this copy.',
+    'errors:theGameRendererIsUnavailable': 'The game renderer is unavailable.',
+    'errors:theGameCouldNotStartReloadToTryAgainOr':
+      'The game could not start. Reload to try again, or open the online game. Your saved progress has not been changed by this launch screen.',
+    'errors:flightOnHold': 'Flight on hold.',
+  };
+  fallback['errors:loadingGameStyles'] = 'Loading game styles…';
+  fallback['errors:loadingFlightSystems'] = 'Loading flight systems…';
+  const t = (key) => host.RevealLineI18n?.t(key) || fallback[key];
   const doc = host.document;
-  if (!doc || host.RevealLineBoot) return;
+  if (!doc || host.RevealLineBoot || host.RevealLineSnakeRedirect) return;
   const appURL = new URL('./app.mjs', doc.currentScript.src).href;
   let state = 'loading';
   let failure = null;
@@ -12,10 +30,26 @@
   let frame = null;
   let padNeutral = false;
   let padCommand = null;
+  let inputOwners = 0;
+  let startupUpdates;
+  function suspendInput() {
+    inputOwners++;
+    padNeutral = false;
+    padCommand = null;
+    let released = false;
+    return () => {
+      if (released) return;
+      released = true;
+      inputOwners--;
+      padNeutral = false;
+      padCommand = null;
+    };
+  }
   const styleCleanups = new Set();
   const $ = (id) => doc.getElementById(id);
 
   function stop() {
+    startupUpdates?.dispose();
     host.clearTimeout(slowTimer);
     host.cancelAnimationFrame(frame);
     host.removeEventListener('error', resourceError, true);
@@ -31,11 +65,12 @@
     doc.querySelectorAll('[data-boot-inert]').forEach((element) => {
       element.inert = true;
     });
-    $('boot-title').textContent = state === 'file' ? 'Open your arcade.' : 'Flight on hold.';
+    $('boot-title').textContent =
+      state === 'file' ? t('errors:openYourArcade') : t('errors:flightOnHold');
     $('boot-status').textContent =
       state === 'file'
-        ? 'This is a downloaded file. Choose Play online, or start a local server to play this copy.'
-        : 'The game could not start. Reload to try again, or open the online game. Your saved progress has not been changed by this launch screen.';
+        ? t('errors:thisIsADownloadedFileChoosePlayOnlineOrStart')
+        : t('errors:theGameCouldNotStartReloadToTryAgainOr');
     $('boot-retry').hidden = state === 'file';
     $('boot-local').open = state === 'file';
     const detail = $('boot-detail');
@@ -45,6 +80,13 @@
     // Errors must not focus a control inside the still-inert game.
     (state === 'file' ? $('boot-online') : $('boot-retry')).focus({ preventScroll: true });
   }
+  host.RevealLineI18n?.onLocaleChange(() => {
+    if (state === 'file' || state === 'failed') {
+      const focus = doc.activeElement;
+      renderFailure();
+      focus?.focus({ preventScroll: true });
+    }
+  });
   function fail(error) {
     if (state === 'ready' || state === 'file' || state === 'failed') return false;
     failure = error;
@@ -68,13 +110,14 @@
   function resourceError(event) {
     if (state !== 'loading') return;
     const target = event.target;
-    if (target?.id === 'boot-phaser') fail(new Error('The game renderer did not load.'));
+    if (target?.id === 'boot-phaser') fail(new Error(t('errors:theGameRendererDidNotLoad')));
     else if (target?.tagName === 'LINK' && target.rel === 'stylesheet')
-      fail(new Error('A game stylesheet did not load.'));
+      fail(new Error(t('errors:aGameStylesheetDidNotLoad')));
   }
   function progress(message) {
     if (state !== 'loading' || !mounted) return false;
-    $('boot-status').textContent = message;
+    if (host.RevealLineI18n) host.RevealLineI18n.localizedText($('boot-status'), message);
+    else $('boot-status').textContent = typeof message === 'function' ? message() : message;
     return true;
   }
   function prepareStyles() {
@@ -123,7 +166,7 @@
     controls[(index + direction + controls.length) % controls.length].focus();
   }
   function keydown(event) {
-    if (state === 'ready' || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (inputOwners || state === 'ready' || event.altKey || event.ctrlKey || event.metaKey) return;
     // Native keyboard/pointer interaction wins until a held pad returns neutral.
     padNeutral = false;
     if (['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft'].includes(event.key)) {
@@ -134,7 +177,7 @@
   function pollPad() {
     if (state === 'ready') return;
     frame = host.requestAnimationFrame(pollPad);
-    if (doc.hidden || !doc.hasFocus()) {
+    if (inputOwners || doc.hidden || !doc.hasFocus()) {
       padNeutral = false;
       padCommand = null;
       return;
@@ -168,7 +211,10 @@
       else controls[0]?.focus();
     } else moveFocus(command === 'down' ? 1 : -1);
   }
-  function mount() {
+  async function mount() {
+    if (mounted) return;
+    await host.RevealLineAccess?.ready;
+    await host.RevealLineAccess?.scriptsReady;
     if (mounted) return;
     mounted = true;
     doc.addEventListener('keydown', keydown);
@@ -181,35 +227,61 @@
       renderFailure();
       return;
     }
+    // Optional recovery action must not delay styles, rendering or offline play.
+    if (
+      $('boot-updates') &&
+      /^https?:$/.test(host.location.protocol) &&
+      (host.navigator?.standalone ||
+        host.matchMedia?.('(display-mode: standalone)').matches ||
+        host.matchMedia?.('(display-mode: fullscreen)').matches)
+    ) {
+      // Keep a plain recovery link usable even if the optional module fails.
+      const source = new URL(appURL);
+      const release = source.pathname.indexOf('/releases/');
+      const root =
+        release >= 0
+          ? source.pathname.slice(0, release + 1)
+          : source.pathname.replace(/game\/.*$/, '');
+      const community = root.includes('/editions/');
+      const update = new URL(`${root}app/${community ? '?manage' : 'update.html'}`, source.origin);
+      if (!community) update.searchParams.set('return', host.location.href);
+      $('boot-update-action').href = update.href;
+      $('boot-updates').hidden = false;
+      void import('./boot-updates.mjs')
+        .then(({ attachBootUpdates }) => {
+          if (state !== 'ready')
+            startupUpdates = attachBootUpdates({ document: doc, window: host });
+        })
+        .catch(() => {});
+    }
     if (state === 'failed') {
       renderFailure();
       return;
     }
     if (!host.Phaser) {
-      fail(new Error('The game renderer is unavailable.'));
+      fail(new Error(t('errors:theGameRendererIsUnavailable')));
       return;
     }
     slowTimer = host.setTimeout(() => {
       if (state === 'loading')
-        $('boot-status').textContent =
-          'Still preparing your arcade. You can wait, reload, or use Play online. No flight has started.';
+        progress(() => t('errors:stillPreparingYourArcadeYouCanWaitReloadOrUse'));
     }, 15000);
-    progress('Loading game styles…');
+    progress(() => t('errors:loadingGameStyles'));
     prepareStyles()
       .then(() => {
         if (state !== 'loading') return;
-        progress('Loading flight systems…');
+        progress(() => t('errors:loadingFlightSystems'));
         return import(appURL);
       })
       .then(() => {
         if (state === 'loading')
-          fail(new Error('The game did not confirm startup. Open the current online edition.'));
+          fail(new Error(t('errors:theGameDidNotConfirmStartupOpenTheCurrentOnline')));
       })
       .catch(fail);
   }
-  host.RevealLineBoot = Object.freeze({ ready, fail, progress });
+  host.RevealLineBoot = Object.freeze({ ready, fail, progress, suspendInput });
   host.addEventListener('error', resourceError, true);
-  if (doc.readyState !== 'complete')
+  if (doc.readyState !== 'complete' && !host.RevealLineAccess?.scriptsReady)
     doc.addEventListener('DOMContentLoaded', mount, { once: true });
   else mount();
 })();

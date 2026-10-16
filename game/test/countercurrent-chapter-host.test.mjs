@@ -1,4 +1,9 @@
+import {
+  playCurrentExternalRoute,
+  proveHistoricalExternalRoute,
+} from './helpers/external-current-host-route.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
+import { beginBackupReplacement } from './helpers/backup-review-readiness.mjs';
 // Actual app/core/store source. DOM, IndexedDB and image dimensions are finite
 // modeled boundaries; original compiler bytes/hashes are real, not native browser proof.
 import test from 'node:test';
@@ -210,6 +215,8 @@ async function page(t, f = {}, release = false) {
 const id = (e, kind) => `optional-worlds-source-${e.descriptor.id}-${kind}`;
 const primary = (p, e) => p.$(id(e, 'download')) ?? p.$(id(e, 'choose'));
 async function open(p) {
+  // Mount the retained More Worlds component for its import/ownership contract.
+  // Ordinary player entry now uses unified Missions; this is not public-entry evidence.
   p.$('shell-menu').click();
   p.$('shell-play').click();
   p.$('shell-mode-choice').open = true;
@@ -310,8 +317,8 @@ function ticks(p, n) {
 }
 
 const profile = 'revealline.library.release-0.39.0.v1';
-// Reuse the existing shorter legal route for integration. The full independent
-// north/south/difficulty/policy geometry proof remains unchanged and separate.
+// Retain the authored route as a separate historical proof. Fresh player-host
+// traces below use the current approved tuning without rewriting that evidence.
 const routeFor = (levelId) =>
   proof.routes.find(
     (r) =>
@@ -321,43 +328,6 @@ const routeFor = (levelId) =>
       r.route === 'south' &&
       r.classId === 'scout',
   );
-function playPrefix(p, route, maximum = Infinity) {
-  assert.ok(route, 'the accepted Scout trace exists');
-  let consumed = 0;
-  const captures = [];
-  for (const step of route.segments) {
-    if (consumed >= maximum) break;
-    assert.equal(step.input.action, false);
-    assert.equal(step.input.pickup, false);
-    assert.equal(step.input.switchClass, null);
-    if (step.input.direction) direction(p, step.input.direction);
-    const count = Math.min(step.ticks, maximum - consumed);
-    const neutralPosition = !step.input.direction
-      ? { x: p.rendered.run.player.x, y: p.rendered.run.player.y }
-      : null;
-    for (let i = 0; i < count; i++) {
-      p.frame();
-      const run = p.rendered.run;
-      for (const event of run.events)
-        if (event.type === 'cells.claimed')
-          captures.push({ tick: run.tick, count: event.indices.length });
-      if (run.events.some((event) => event.type === 'capture.stopped')) {
-        assert.equal(run.player.speed, 0);
-        assert.equal(run.player.queuedDirection, null);
-        assert.equal(run.player.cutting, false);
-      }
-    }
-    if (neutralPosition)
-      assert.deepEqual(
-        { x: p.rendered.run.player.x, y: p.rendered.run.player.y },
-        neutralPosition,
-        'neutral input after a cut does not resume steering',
-      );
-    consumed += count;
-  }
-  p.frame(0);
-  return captures;
-}
 
 test('four Countercurrent owners download with explicit Stay, then Play without a second Start; exact earned and saved data recover', async (t) => {
   const f = {};
@@ -416,16 +386,8 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
         assert.equal(p.rendered.backdrop.pin.identity.baseCampaignKey, e.descriptor.campaignKey);
         assert.equal(p.rendered.backdrop.pin.sha256, selectedOriginal(e.descriptor, 0).sha256);
         const route = routeFor(e.descriptor.originals[0].levelId);
-        const captures = playPrefix(p, route);
-        assert.deepEqual(
-          captures,
-          route.metrics.captures.map(({ tick, count }) => ({ tick, count })),
-        );
-        assert.equal(p.rendered.run.tick, route.expected.tick);
-        assert.equal(p.rendered.run.classic.livesLost, route.expected.livesLost);
-        assert.equal(p.rendered.run.status, 'won');
-        assert.equal(p.rendered.run.score, route.expected.score);
-        assert.equal(p.rendered.run.lives, route.expected.lives);
+        proveHistoricalExternalRoute(e, route);
+        playCurrentExternalRoute(p, e);
         const earned = loadLibrary(f.storage, profile).library.pictureReceipts;
         assert.deepEqual(earned.slice(0, prior.length), prior);
         prior = structuredClone(earned);
@@ -465,9 +427,8 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
       );
       assert.equal(p.rendered.backdrop.pin.sha256, selectedOriginal(selected.descriptor, 1).sha256);
       const route = routeFor(selected.descriptor.originals[1].levelId);
-      const boundary = route.saved.find((s) => s.trailCells > 0 && s.tick < route.expected.tick);
-      assert.ok(boundary);
-      playPrefix(p, route, boundary.tick);
+      proveHistoricalExternalRoute(selected, route, 1);
+      playCurrentExternalRoute(p, selected, 1);
       p.$('pause-button').click();
       p.frame(0);
       assert(p.rendered.run.trail.length > 0);
@@ -498,9 +459,12 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
         assets = p.fixture.assets.contents(),
         writes = p.fixture.assets.allPuts.length;
       p.$('save-json').value = JSON.stringify(backup);
-      const missingOriginalImport = p.$('import-save').onclick();
+      const missingReplacement = beginBackupReplacement(p, () => clickOperation(p, 'import-save'), {
+        timeoutMs: INVENTORY_TIMEOUT_MS,
+      });
+      await missingReplacement.ready;
       await acceptGameDataReplacement(p);
-      await missingOriginalImport;
+      await missingReplacement.operation;
       assert.match(p.$('save-status').textContent, /original|presentation|missing/i);
       assert.doesNotMatch(p.$('save-status').textContent, /Game data restored/);
       assert.deepEqual(p.storage.map, local);
@@ -519,9 +483,12 @@ test('four Countercurrent owners download with explicit Stay, then Play without 
       p.$('optional-worlds-dialog').close();
       p.$('library-button').click();
       p.$('save-json').value = JSON.stringify(backup);
-      const pendingImport = p.$('import-save').onclick();
+      const pendingReplacement = beginBackupReplacement(p, () => clickOperation(p, 'import-save'), {
+        timeoutMs: INVENTORY_TIMEOUT_MS,
+      });
+      await pendingReplacement.ready;
       await acceptGameDataReplacement(p);
-      await pendingImport;
+      await pendingReplacement.operation;
       assert.match(p.$('save-status').textContent, /Game data restored/);
       assert.match(
         p.$('save-status').textContent,

@@ -1,0 +1,352 @@
+- link "Skip to flight selection":
+  - /url: "#explore"
+- button "Menu"
+- generic: FPV SIM · Worlds
+- button "Pause" [disabled]
+- status: Preparing flight…
+- dialog "FPV / LINE":
+  - heading "FPV / LINE" [level=1]:
+    - img "FPV / LINE"
+  - paragraph: FPV SIM · Worlds
+  - navigation "Choose game mode":
+    - navigation:
+      - link "Solo":
+        - /url: http://127.0.0.1:8966/player/game/?lang=en
+      - link "Versus":
+        - /url: http://127.0.0.1:8966/player/game/couch/?lang=en
+      - link "Team":
+        - /url: http://127.0.0.1:8966/player/game/couch/relay-rescue.html?lang=en
+      - button "FPV SIM"
+      - link "Snake":
+        - /url: http://127.0.0.1:8966/player/game/snake/play.html?lang=en
+  - paragraph: Shoreline check-in
+  - navigation "Main menu":
+    - button "Continue"
+    - button "Select Mission"
+    - button "Settings"
+    - button "Full screen"
+    - 'button "Sound: off"'
+- dialog "Select Mission":
+  - heading "Select Mission" [level=1]
+  - navigation "Simulator":
+    - button "Fly"
+    - button "Learn to fly"
+    - button "My playlists"
+    - button "Workshop"
+    - button "Library"
+  - main:
+    - paragraph: BUILD YOUR LINE
+    - heading "From an idea to a flight." [active] [level=1]
+    - paragraph: Start with a challenge, change its route, then test your own version. Import a GLB world to go further.
+    - generic: Authored theme
+    - combobox "Authored theme":
+      - option "Flight Academy"
+      - option "Ukrainian Horizons" [selected]
+      - option "Pixel Circuit"
+      - option "Field Operations"
+    - generic: Snap
+    - combobox "Snap":
+      - option "0.25 m" [selected]
+      - option "1 m"
+      - option "Free"
+    - button "Reset view"
+    - generic: Select a route marker, drag its arrows; drag empty space to orbit, scroll to zoom.
+    - generic "3D challenge editor"
+    - status: "Preview appearance: Flight Deck."
+    - heading "Challenge editor" [level=2]
+    - generic: Starting challenge
+    - combobox "Starting challenge":
+      - option "First three" [selected]
+      - option "Clockwise catch"
+      - option "Wide figure eight"
+      - option "Choose your loop"
+      - option "Spiral inward"
+      - option "Double circuit"
+      - option "Three aisles"
+      - option "Alternating doors"
+      - option "Outside the pillars"
+      - option "Long switchback"
+      - option "Diagonal threading"
+      - option "Exit the coil"
+      - option "Low, high, low"
+      - option "Ascending arc"
+      - option "Roof islands"
+      - option "Over your echo"
+      - option "Descending staircase"
+      - option "Stacked figure eight"
+      - option "Meet the walkers"
+      - option "Crossing patrols"
+      - option "Chase the corners"
+      - option "Moving slalom"
+      - option "One-way collection"
+      - option "The long hunt"
+      - option "Loop intercept"
+      - option "Two return lanes"
+      - option "Corner approach"
+      - option "Crossing patrols"
+      - option "Island bypass"
+      - option "Staggered interception"
+      - option "Warehouse return"
+      - option "Courtyard approaches"
+      - option "Platform perimeter"
+      - option "Boundary cutback"
+      - option "Cross-route choice"
+      - option "Airfield circuit"
+      - option "Low Pass Depot"
+      - option "Split Yard Return"
+      - option "Crossing Arrivals"
+      - option "Shelter Arc"
+      - option "Freight Slalom"
+      - option "Forked Depot"
+      - option "Low Roof Window"
+      - option "Roofline Exchange"
+      - option "Return Slot"
+      - option "Staggered Roofs"
+      - option "Window Chain"
+      - option "Three-yard Finale"
+      - option "Lighthouse approach"
+      - option "Under the harbour bridge"
+      - option "Coastal courier"
+      - option "Harbour observer"
+      - option "Three pier landings"
+      - option "Read the rock bowl"
+      - option "Conveyor crossings"
+      - option "Haul-rover escort"
+      - option "Quarry pulse arena"
+      - option "Spire and ledge"
+      - option "Campus skylines"
+      - option "Over and under"
+      - option "Rooftop courier trail"
+      - option "Roof-to-roof landings"
+      - option "Skybridge traffic"
+      - option "Meet the orchard guide"
+      - option "Between the rows"
+      - option "Watch the harvest cart"
+      - option "A walk through the orchard"
+      - option "Barn beacon and garden pad"
+      - option "Read the solar lanes"
+      - option "Panel-edge precision"
+      - option "Rover inspection"
+      - option "Service-lane timing"
+      - option "Solar pulse trial"
+      - option "Signals and platforms"
+      - option "Gantry express"
+      - option "Inspection run"
+      - option "Depot crossing windows"
+      - option "Depot drone duel"
+      - option "Lift and land"
+      - option "Hold a volume"
+      - option "Forward and brake"
+      - option "Sideways and brake"
+      - option "Turn and travel"
+      - option "Fly a square"
+      - option "Tilt, centre and drift"
+      - option "Approach a gate"
+      - option "Linked turns"
+      - option "Slalom"
+      - option "Figure eight"
+      - option "Final circuit"
+      - option "Clearing check-in"
+      - option "Three clearings"
+      - option "Trail beacons"
+      - option "Quiet hover"
+      - option "Canopy windows"
+      - option "Crossing trail"
+      - option "Low branch line"
+      - option "Woodland survey"
+      - option "Courtyard welcome"
+      - option "Garden markers"
+      - option "Roofline survey"
+      - option "Well-side landing"
+      - option "Window alignment"
+      - option "Delivery crossing"
+      - option "Laneway traffic"
+      - option "Courtyard collection"
+      - option "Loading bay"
+      - option "Central aisle"
+      - option "Pallet switchback"
+      - option "Beam circuit"
+      - option "High-low sprint"
+      - option "Shelf clearance"
+      - option "Moving freight"
+      - option "Warehouse circuit"
+      - option "Starting grid"
+      - option "Wide oval"
+      - option "Neon chicane"
+      - option "Altitude ladder"
+      - option "Double hairpin"
+      - option "Podium approach"
+      - option "Crossing lights"
+      - option "Stadium final"
+      - option "Yard check-in"
+      - option "Container survey"
+      - option "Crossing crane"
+      - option "Target lane"
+      - option "Patrol interruption"
+      - option "Drone interception"
+      - option "Convoy challenge"
+      - option "Yard extraction"
+      - option "Parking approach"
+      - option "Upper deck survey"
+      - option "Barrier timing"
+      - option "Sentry aisle"
+      - option "Ground patrol"
+      - option "Garage intercept"
+      - option "Vehicle watch"
+      - option "Garage extraction"
+      - option "Meet your drone"
+      - option "Up, down, under control"
+      - option "Find your hover"
+      - 'option "Turn the nose: yaw"'
+      - option "Forward with pitch"
+      - option "Slide with roll"
+      - option "Brake, do not chase"
+      - option "Keep height while moving"
+      - option "Your first corner"
+      - option "See through the goggles"
+      - option "Three friendly gates"
+      - option "Your first solo route"
+      - 'option "Acro: the tilt stays"'
+      - 'option "Acro: your first line"'
+      - option "Your first Acro takeoff"
+      - option "Thrust, climb and descent"
+      - option "Level, then find your hover"
+      - option "Roll and lateral braking"
+      - 'option "Yaw: heading is not travel"'
+      - option "Keep height while tilted"
+      - option "Coordinated left and right turns"
+      - option "A gentle figure eight"
+      - option "Read the FPV horizon"
+      - option "Three gates, one smooth line"
+      - option "Recover and land precisely"
+      - option "Your first solo Acro route"
+      - option "Braking marks"
+      - option "Altitude staircase"
+      - option "Compass cross"
+      - option "Backward return"
+      - option "S-turn handover"
+      - option "Wide corner, tight exit"
+      - option "Three landing approaches"
+      - option "Landmark rally"
+      - option "Slalom rhythm"
+      - option "High–low ribbon"
+      - option "Platform approach"
+      - option "Corridor turnaround"
+      - option "Over, around, under"
+      - option "Read the landmarks"
+      - option "Between floors"
+      - option "Precision pilot route"
+      - option "Roll and recover"
+      - option "Forward and backward flip"
+      - option "Yaw through 360 degrees"
+      - option "Recognize inverted, recover"
+      - option "Split-S return"
+      - option "Immelmann climb-out"
+      - option "Dive, judge, pull out"
+      - option "First power loop"
+      - option "Barrel path"
+      - option "Orbit the landmark"
+      - option "Climbing corkscrew"
+      - option "Inverted turn and exit"
+      - option "Loop into a roll"
+      - option "Split-S into an orbit"
+      - option "Race line with trick zones"
+      - option "Master flight"
+      - option "Shoreline check-in"
+      - option "Western dam crest"
+      - option "Intake controls"
+      - option "Dry spillway descent"
+      - option "Exterior service passage"
+      - option "Rock terrace climb"
+      - option "Shoreline circuit"
+      - option "Maintenance roof landing"
+    - button "Create a copy"
+    - button "Undo" [disabled]
+    - button "Redo" [disabled]
+    - generic: Project challenge
+    - combobox "Project challenge":
+      - option "Shoreline check-in · mountain-reservoir-01"
+      - option "Western dam crest · mountain-reservoir-02" [selected]
+      - option "Intake controls · mountain-reservoir-03"
+      - option "Dry spillway descent · mountain-reservoir-04"
+      - option "Exterior service passage · mountain-reservoir-05"
+      - option "Rock terrace climb · mountain-reservoir-06"
+      - option "Shoreline circuit · mountain-reservoir-07"
+      - option "Maintenance roof landing · mountain-reservoir-08"
+    - button "Reset unapplied fields"
+    - generic: Challenge title
+    - textbox "Challenge title": Western dam crest
+    - generic: Route mode
+    - combobox "Route mode":
+      - option "Both matching modes" [disabled]
+      - option "Self-level"
+      - option "Acro" [selected]
+    - generic: Route & objectives
+    - listbox "Route & objectives":
+      - option "1. Hold position" [selected]
+      - option "2. Hold position"
+      - option "3. Hold position"
+      - option "4. Cross gate"
+      - option "5. Cross gate"
+      - option "6. Hold position"
+      - option "7. Land"
+    - paragraph: "Route edits: Acro only. Shared source anchors stay unchanged."
+    - text: X · m
+    - spinbutton "X · m": "-9.9"
+    - text: Y · m
+    - spinbutton "Y · m": "5"
+    - text: Z · m
+    - spinbutton "Z · m": "15"
+    - button "Apply position"
+    - button "Duplicate"
+    - button "Remove"
+    - button "Move objective up": ↑
+    - button "Move objective down": ↓
+    - heading "Actors & encounters" [level=3]
+    - generic: Selected actor
+    - combobox "Selected actor" [disabled]:
+      - option "No actors yet" [selected]
+    - generic: New actor type
+    - combobox "New actor type":
+      - option "Drone" [selected]
+      - option "Ground patrol"
+      - option "Ground sentry"
+      - option "Patrol vehicle"
+      - option "Moving hazard"
+    - button "Add actor"
+    - button "Remove actor" [disabled]
+    - paragraph: "Maximum: 12 actors and 8 hazards."
+    - heading "Follow & observe" [level=4]
+    - generic: Tracking objective
+    - combobox "Tracking objective":
+      - option "New tracking objective" [selected]
+    - paragraph: Choose a non-hazard subject first.
+    - status
+    - generic "Advanced"
+    - button "Test flight"
+    - button "Export challenge"
+    - heading "Import a world" [level=2]
+    - paragraph: Choose a GLB, or a glTF and all its local textures/buffers. Blender and Crocotile export these formats.
+    - generic: Choose scene files
+    - generic: Choose scene folder
+    - button "Start a new world"
+    - generic: Asset author
+    - textbox "Asset author"
+    - generic: Source URL / original work
+    - textbox "Source URL / original work"
+    - generic: License
+    - combobox "License":
+      - option "CC0" [selected]
+      - option "CC BY 4.0"
+      - option "Original work"
+    - generic: Installed project loaded. Export or install to keep subsequent changes.
+    - button "Preview world"
+    - button "Export editable project"
+    - button "Export world pack"
+    - button "Install pack"
+    - paragraph: Keep source IDs when re-exporting. Existing objective overrides are preserved and conflicts are reported.
+    - status: Applied edits are kept. Switching challenge starts a new Undo history.
+  - button "Back"
+  - button "Review mission"
+  - button "Expert options"
+  - paragraph: "Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back."

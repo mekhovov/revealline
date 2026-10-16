@@ -1,0 +1,124 @@
+{
+  "format": "fpv-environment-light-final-guard-scope.v1",
+  "sourceRevision": "adcf64da7db6421c740fde0b5224324fc2fb5fe0",
+  "parentMain": "47d2019dced85d80671b2d780da662f50ea11c20",
+  "preMergeRuntimeRevision": "ec0273520f3768ebfe6af477837a448a7dc77210",
+  "actualHostQualifiedSource": "4f364314378400b22792074d7d0bb6aa292eb044",
+  "rendererSha256": "6cc1d84c708267c8962ee70a56f9efd83912f19b92f62391b46f653c2600a35b",
+  "enumeratedChanges": [
+    "Published Quarry world-metre projection",
+    "Published Quarry concrete role",
+    "Reject new import while lost",
+    "Reject pending import while lost",
+    "Fresh import tolerates cleared course",
+    "Capture editor generation and reject new creation while lost",
+    "Reject stale pending editor creation",
+    "Cleared editor pick is inert",
+    "Cleared editor snap is inert",
+    "Blank editor zoom is inert"
+  ],
+  "checks": [
+    {
+      "name": "Published Quarry world-metre projection occurs once",
+      "pass": true
+    },
+    {
+      "name": "Published Quarry concrete role occurs once",
+      "pass": true
+    },
+    {
+      "name": "Main integration adds only the published Quarry renderer statements",
+      "pass": true
+    },
+    {
+      "name": "Reject new import while lost occurs once",
+      "pass": true
+    },
+    {
+      "name": "Reject pending import while lost occurs once",
+      "pass": true
+    },
+    {
+      "name": "Fresh import tolerates cleared course occurs once",
+      "pass": true
+    },
+    {
+      "name": "Capture editor generation and reject new creation while lost occurs once",
+      "pass": true
+    },
+    {
+      "name": "Reject stale pending editor creation occurs once",
+      "pass": true
+    },
+    {
+      "name": "Cleared editor pick is inert occurs once",
+      "pass": true
+    },
+    {
+      "name": "Cleared editor snap is inert occurs once",
+      "pass": true
+    },
+    {
+      "name": "Blank editor zoom is inert occurs once",
+      "pass": true
+    },
+    {
+      "name": "After enumerated editor/import guards and published Quarry lines, entire renderer is byte-identical to actual-host-qualified 4f",
+      "pass": true
+    },
+    {
+      "name": "Whole normalized module AST equals actual-host-qualified 4f",
+      "pass": true
+    },
+    {
+      "name": "Of all 95 admitted inputs only renderer differs from published main",
+      "pass": true
+    },
+    {
+      "name": "Current source budget remains below 16 MiB",
+      "pass": true
+    },
+    {
+      "name": "Saved manual qualification binds exact renderer and main",
+      "pass": true
+    },
+    {
+      "name": "Existing selected checks pass all 30",
+      "pass": true
+    }
+  ],
+  "qualification": {
+    "manualChecks": 59,
+    "existingChecks": 30,
+    "changedFileLint": "passed",
+    "changedFileFormatting": "passed",
+    "diffWhitespace": "passed"
+  },
+  "inventory": {
+    "inputCount": 95,
+    "totalBytes": 16758039,
+    "headroomBytes": 19177,
+    "onlyDiffersFromMain": ["optional-practice/civilian-fpv/renderer.mjs"],
+    "changedFrom4f": [
+      {
+        "path": "optional-practice/civilian-fpv/renderer.mjs",
+        "beforeBytes": 104878,
+        "bytes": 105749,
+        "sha256": "6cc1d84c708267c8962ee70a56f9efd83912f19b92f62391b46f653c2600a35b"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-visuals.mjs",
+        "beforeBytes": 147219,
+        "bytes": 154862,
+        "sha256": "053f74a1d42db8373994350010f347ff0d306dfebd05cbdd9bf7df838b73d9e0"
+      }
+    ],
+    "allCurrentInputRowsSha256": "60214a7475542bb72548b7ccfe33ace5a6bd1d3fbab749cb46bfccadeffaf7bc"
+  },
+  "pending": [
+    "Final clean-current-source all-three-package admission with two identical builds and ZIP verification",
+    "Actual admitted editor loss/restoration/control smoke",
+    "Current-head publication approval"
+  ],
+  "limits": "Static source bridge and functional checks; no new browser run at this source. Historical 72-view acc9/8a2 parity and actual 4f host receipt retain their original identities. Original failed receipts remain preserved."
+}

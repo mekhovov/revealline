@@ -3,6 +3,41 @@
   "schemaVersion": 2,
   "reviewDate": "2026-09-20",
   "status": "implementation-review-in-progress; original proposals retained, final dispositions pending",
+  "ukrainianOrnamentAtlas": {
+    "reviewDate": "2026-09-24",
+    "plan": "docs/ukrainian-ornament-atlas.md",
+    "edition": "whole-ornament-v2",
+    "status": "Nine-map copy-on-write source candidate; no default promotion or public/human acceptance claim",
+    "missions": [
+      "four-motor-landings",
+      "circuit-lanes",
+      "twin-lens-chambers",
+      "toolbench-weave",
+      "dnipro-crossings",
+      "two-districts",
+      "two-ways-home",
+      "second-approach",
+      "windbreak-weave"
+    ],
+    "disposition": "Original ornament-inspired geometry, preserving previous editions and all unrelated v1 maps. Fourteen attributed source entries are documented in the atlas. No new final disposition for the 48 numbered Reloaded references is claimed.",
+    "comparison": "Use asymmetric star shoulders, staggered cutwork mouths, unequal paired-panel approaches, branching pockets and broken rim routes as real walls. Keep foundations, objectives, relay connectors, arrows, enemy domains and shared gp4 movement unchanged.",
+    "limits": "Original abstract layouts, not copied coordinates, charts or artwork. The pre-v11 nine-clear claim is superseded. Exact-source replay now records five no-loss clears, six life losses and six incomplete samples; fresh route search, complete two-route/preset/control and human-balance qualification remain open. Earlier observations and hashes remain unchanged."
+  },
+  "ukrainianOrnamentStudy": {
+    "reviewDate": "2026-09-24",
+    "plan": "docs/ukrainian-ornament-study.md",
+    "edition": "whole-ornament-v1",
+    "status": "Optional three-map implementation candidate; technical, public, human and cultural qualification recorded separately",
+    "missions": ["cross-stitch-crossings", "rushnyk-bands", "pysanka-sections"],
+    "disposition": "Original successor geometry; previous v11 editions remain selectable. No new final disposition is claimed for any of the 48 numbered Reloaded references.",
+    "comparison": "Break repeated horizontal diamond crossings, remove reclaimed strips through wall-band gaps, and distinguish side-entry from shoulder-enclosure decisions. Preserve actual wall blocking, enemy-seeded capture and gp4 straight-between-impact movement.",
+    "culturalSources": [
+      "https://honchar.org.ua/collections/detail/1769",
+      "https://museum.kh.ua/academic/publications.html?n=929",
+      "https://ich.unesco.org/en/decisions/19.COM/7.B.14"
+    ],
+    "limits": "Original abstractions, not traced charts or reused museum imagery. Pysanka is egg decoration, not embroidery. No invented universal symbol meanings, copied reference coordinates, or enjoyment claims. Earlier observations and hashes remain unchanged."
+  },
   "implementationTracking": {
     "command": "node scripts/audit-journey-adaptations.mjs --edition whole-spatial-v5",
     "historicalDefaultCommand": "node scripts/audit-journey-adaptations.mjs",
@@ -138,33 +173,20 @@
         "geometryIntent": "Empty rectangular interior; one magenta orb with tapered particle trail; small yellow marker at bottom centre; thin blue border.",
         "routeDecision": "Choose a shorter reliable enclosure or a larger exposed cut; identify the field enemy that retains each region.",
         "originalAdaptation": "Re-author the spatial motif as Horizon School geometry and original reveal composition. Teach: leave the perimeter, close a short cut and see the picture emerge.",
-        "threatDomains": [
-          "field drifter"
-        ],
+        "threatDomains": ["field drifter"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the first lift layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            1,
-            2
-          ],
+          "bandRange": [1, 2],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -185,13 +207,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -238,33 +254,20 @@
         "geometryIntent": "Full-height cyan centre stripe; two magenta orbs on each side; cyan star on top edge.",
         "routeDecision": "Choose a shorter reliable enclosure or a larger exposed cut; identify the field enemy that retains each region.",
         "originalAdaptation": "Re-author the spatial motif as Horizon School geometry and original reveal composition. Explore: choose which half to reduce first and use a reliable intermediate return boundary.",
-        "threatDomains": [
-          "field drifter"
-        ],
+        "threatDomains": ["field drifter"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the two fields layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            1,
-            2
-          ],
+          "bandRange": [1, 2],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -285,13 +288,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -338,33 +335,20 @@
         "geometryIntent": "Central cross-shaped revealed island containing yellow marker; four small revealed corner islands; twelve cyan stars distributed on island outlines and outer border.",
         "routeDecision": "Choose a shorter reliable enclosure or a larger exposed cut; identify the field enemy that retains each region.",
         "originalAdaptation": "Re-author the spatial motif as Horizon School geometry and original reveal composition. Teach: shorten exposure by connecting to existing safe ground.",
-        "threatDomains": [
-          "field drifter"
-        ],
+        "threatDomains": ["field drifter"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the relay islands layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            1,
-            2
-          ],
+          "bandRange": [1, 2],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -385,13 +369,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -438,35 +416,20 @@
         "geometryIntent": "Two long revealed horizontal rectangles separated by a centre gap; two large magenta diamonds; cyan stars on top and left boundary.",
         "routeDecision": "Choose a patrol opening, optionally detouring for a contact bonus before the next closure.",
         "originalAdaptation": "Re-author the spatial motif as Border Bloom geometry and original reveal composition. Teach: recognise warning, committed movement and recovery; choose the central or outer approach accordingly.",
-        "threatDomains": [
-          "field drifter",
-          "outer-perimeter patrol"
-        ],
+        "threatDomains": ["field drifter", "outer-perimeter patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "outer-perimeter patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "outer-perimeter patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the shelter gap layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            2,
-            3
-          ],
+          "bandRange": [2, 3],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -487,13 +450,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -540,35 +497,20 @@
         "geometryIntent": "Large central blue-symbol rectangle; cyan broken outer strips and inner rectangular bars; four magenta orbs; two outer cyan stars.",
         "routeDecision": "Enclose an awkward hazard before crossing it, or use the longer clear approach.",
         "originalAdaptation": "Re-author the spatial motif as Signal Gardens geometry and original reveal composition. Teach: distinguish blocking walls from safe return ground before committing a cut; only pre-existing safe ground closes it.",
-        "threatDomains": [
-          "field drifter",
-          "outer-perimeter patrol"
-        ],
+        "threatDomains": ["field drifter", "outer-perimeter patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "outer-perimeter patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "outer-perimeter patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the equipment court layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            3,
-            4
-          ],
+          "bandRange": [3, 4],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -589,13 +531,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -642,35 +578,20 @@
         "geometryIntent": "Four corner square enclosures and one wider central enclosure; cyan perimeters with darker breaks; one magenta orb in each; four outer cyan stars.",
         "routeDecision": "Shape a new frontier so its patrol travels away from the next intended departure.",
         "originalAdaptation": "Re-author the spatial motif as Neon Contours geometry and original reveal composition. Combine: select the next enclosure based on exposure and accessible return points.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the five bays layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            4,
-            5
-          ],
+          "bandRange": [4, 5],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -691,13 +612,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -744,35 +659,20 @@
         "geometryIntent": "Red crossed tiles spell ‘DON’T TOUCH’; two magenta ringed actors; numerous cyan stars on a slightly notched outer boundary.",
         "routeDecision": "Enclose an awkward hazard before crossing it, or use the longer clear approach.",
         "originalAdaptation": "Re-author the spatial motif as Signal Gardens geometry and original reveal composition. Teach: distinguish lethal terrain from a blocking wall and route around it using a clear bypass.",
-        "threatDomains": [
-          "field drifter",
-          "outer-perimeter patrol"
-        ],
+        "threatDomains": ["field drifter", "outer-perimeter patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "outer-perimeter patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "outer-perimeter patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the marked ground layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            3,
-            4
-          ],
+          "bandRange": [3, 4],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -793,13 +693,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -846,35 +740,20 @@
         "geometryIntent": "Symmetrical vertical red and blue-symbol columns; two interrupted cyan columns; central stepped revealed ring containing a diamond; four yellow round actors and two cyan boundary stars.",
         "routeDecision": "Keep an exit corridor on reclaimed ground while opening a useful second approach.",
         "originalAdaptation": "Re-author the spatial motif as Rover Yard geometry and original reveal composition. Combine: cross alternating lanes using safe return segments rather than one long exposed cut.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the between the rows layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            5,
-            6
-          ],
+          "bandRange": [5, 6],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -895,13 +774,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -948,35 +821,20 @@
         "geometryIntent": "Red horizontal and vertical bars form a symmetric corridor layout; broken cyan perimeter; two large yellow rings and two cyan boundary stars.",
         "routeDecision": "Shape a new frontier so its patrol travels away from the next intended departure.",
         "originalAdaptation": "Re-author the spatial motif as Neon Contours geometry and original reveal composition. Explore: trade a shorter interior crossing against a longer, more forgiving route.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the headland turns layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            4,
-            5
-          ],
+          "bandRange": [4, 5],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -997,13 +855,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1050,35 +902,20 @@
         "geometryIntent": "Alternating blue-symbol and red-crossed inner perimeter; five red crosses in the open centre; three small yellow actors; two boundary stars.",
         "routeDecision": "Keep an exit corridor on reclaimed ground while opening a useful second approach.",
         "originalAdaptation": "Re-author the spatial motif as Rover Yard geometry and original reveal composition. Combine: divide the open centre while retaining a safe way around the islands.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the five beacons layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            5,
-            6
-          ],
+          "bandRange": [5, 6],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -1099,13 +936,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1152,35 +983,20 @@
         "geometryIntent": "Paired full-height blue-symbol columns near each side; offset cyan vertical strips; stepped central revealed ring with patterned interior and a diamond; four pink orbs and two stars.",
         "routeDecision": "Shape a new frontier so its patrol travels away from the next intended departure.",
         "originalAdaptation": "Re-author the spatial motif as Neon Contours geometry and original reveal composition. Combine: reposition before cutting so the intended return boundary is reachable.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the offset approach layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            4,
-            5
-          ],
+          "bandRange": [4, 5],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -1201,13 +1017,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1254,35 +1064,20 @@
         "geometryIntent": "Blue-symbol inner perimeter; alternating red and blue vertical structures and red corner brackets; central cyan-framed revealed enclosure with a diamond; four ringed actors and outer stars.",
         "routeDecision": "Choose the shield-relay order before isolating the staged boss; expose and release are explained transitions.",
         "originalAdaptation": "Re-author the spatial motif as Sentinel Crown geometry and original reveal composition. Mastery: apply short cuts, terrain reading and repositioning without new rules.",
-        "threatDomains": [
-          "relay sentinel",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["relay sentinel", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "relay sentinel",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["relay sentinel", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the first relay layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            11,
-            12
-          ],
+          "bandRange": [11, 12],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -1303,13 +1098,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1356,35 +1145,20 @@
         "geometryIntent": "Broken cyan perimeter; offset blue-symbol bars and red pillars; tall central red block bordered by revealed picture fragments; central diamond, two pink orbs and boundary stars.",
         "routeDecision": "Enclose an awkward hazard before crossing it, or use the longer clear approach.",
         "originalAdaptation": "Re-author the spatial motif as Signal Gardens geometry and original reveal composition. Explore: recognize that a visually symmetric map can favour different approach sequences.",
-        "threatDomains": [
-          "field drifter",
-          "outer-perimeter patrol"
-        ],
+        "threatDomains": ["field drifter", "outer-perimeter patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "outer-perimeter patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "outer-perimeter patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the offset signals layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            3,
-            4
-          ],
+          "bandRange": [3, 4],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -1405,13 +1179,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1458,35 +1226,20 @@
         "geometryIntent": "Cyan horizontal and vertical stripes form four quadrants; diamonds in upper-left and lower-right; pairs of small yellow orbs in the other quadrants; four outer stars.",
         "routeDecision": "Shape a new frontier so its patrol travels away from the next intended departure.",
         "originalAdaptation": "Re-author the spatial motif as Neon Contours geometry and original reveal composition. Combine: choose quadrant order by threat role, then use the crossroads to reposition.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the four-way exchange layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            4,
-            5
-          ],
+          "bandRange": [4, 5],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -1507,13 +1260,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1560,35 +1307,20 @@
         "geometryIntent": "Six small red heart shapes flank a much larger split cyan and revealed heart containing a red heart; eight pink orbs and two boundary stars.",
         "routeDecision": "Keep an exit corridor on reclaimed ground while opening a useful second approach.",
         "originalAdaptation": "Re-author the spatial motif as Rover Yard geometry and original reveal composition. Explore: use curved and stepped island silhouettes to plan a cut across otherwise open space.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the community lifeline layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            5,
-            6
-          ],
+          "bandRange": [5, 6],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -1609,13 +1341,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1662,35 +1388,20 @@
         "geometryIntent": "Four rough quadrants divided by stepped cyan branches; many scattered red L, bar and block shapes; six magenta orbs; cyan stars near top boundary.",
         "routeDecision": "Keep an exit corridor on reclaimed ground while opening a useful second approach.",
         "originalAdaptation": "Re-author the spatial motif as Rover Yard geometry and original reveal composition. Combine: plan through irregular obstacles and choose a different sector when the current approach is crowded.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the broken yard layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            5,
-            6
-          ],
+          "bandRange": [5, 6],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -1711,13 +1422,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1764,35 +1469,20 @@
         "geometryIntent": "Repeated red arrow and cross forms point in varied directions; short cyan dashes form intersecting horizontal and vertical lines; four yellow actors and four boundary stars.",
         "routeDecision": "Compare a marked directional speed lane with a slower but shorter precision route.",
         "originalAdaptation": "Re-author the spatial motif as Crosswind Array geometry and original reveal composition. Teach: evaluate the next landing segment before crossing between interrupted boundaries.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the survey markers layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            10,
-            11
-          ],
+          "bandRange": [10, 11],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -1813,13 +1503,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1866,35 +1550,20 @@
         "geometryIntent": "Three large symmetric rounded-rectangle cyan labyrinth forms with nested U-shaped bars and centre connections; several yellow round actors; cyan stars along top edge.",
         "routeDecision": "Capture a relay to establish a permanent connector, then choose the next chamber from that new approach.",
         "originalAdaptation": "Re-author the spatial motif as Relay Labyrinth geometry and original reveal composition. Explore: find a useful shortcut through a compound instead of following its entire perimeter.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the three compounds layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            9,
-            10
-          ],
+          "bandRange": [9, 10],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -1915,13 +1584,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -1968,35 +1631,20 @@
         "geometryIntent": "Three rows of repeated compartments, each with a red cross; cyan dividing bars contain staggered gaps; ringed yellow actors cluster in opposing corners; boundary stars.",
         "routeDecision": "Bank a strategically useful connection and protect its return route from erosion.",
         "originalAdaptation": "Re-author the spatial motif as Fractured Grid geometry and original reveal composition. Combine: select the next row and isolate a manageable section before crossing farther.",
-        "threatDomains": [
-          "eroder",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["eroder", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "eroder",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["eroder", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the orchard blocks layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            6,
-            7
-          ],
+          "bandRange": [6, 7],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2017,13 +1665,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2070,35 +1712,20 @@
         "geometryIntent": "Dense symmetric red nested corners and isolated dots; cyan stepped divider descends from upper-left-of-centre, crosses the middle and continues lower-right; six pink round actors and four stars.",
         "routeDecision": "Shape a new frontier so its patrol travels away from the next intended departure.",
         "originalAdaptation": "Re-author the spatial motif as Neon Contours geometry and original reveal composition. Explore: exploit a dogleg safe route to approach either district from more than one side.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the dogleg corridor layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            4,
-            5
-          ],
+          "bandRange": [4, 5],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2119,13 +1746,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2172,35 +1793,20 @@
         "geometryIntent": "Two large nested red angular spirals separated by a central spine; four pink round actors; stars on the left and right boundary.",
         "routeDecision": "Capture a relay to establish a permanent connector, then choose the next chamber from that new approach.",
         "originalAdaptation": "Re-author the spatial motif as Relay Labyrinth geometry and original reveal composition. Mastery: recognize when to leave a winding route and create a shorter safe partition.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the spiral stores layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            9,
-            10
-          ],
+          "bandRange": [9, 10],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2221,13 +1827,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2274,35 +1874,20 @@
         "geometryIntent": "Dense mirrored combination of red blocks, cyan short bars, cyan crosses and vertical strips; six small yellow actors; three visible boundary stars.",
         "routeDecision": "Capture a disabling objective before entering its guarded lane, or exploit the telegraphed recovery window.",
         "originalAdaptation": "Re-author the spatial motif as Livewire Foundry geometry and original reveal composition. Combine: separate safe segments, blocked machinery and moving threats during one route decision.",
-        "threatDomains": [
-          "lane attacker",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["lane attacker", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "lane attacker",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["lane attacker", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the switchyard layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            8,
-            9
-          ],
+          "bandRange": [8, 9],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2323,13 +1908,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2376,35 +1955,20 @@
         "geometryIntent": "Repeated red pinwheel and arrow-cross shapes and hollow square motifs across the field; four pink orbs and two boundary stars.",
         "routeDecision": "Compare a marked directional speed lane with a slower but shorter precision route.",
         "originalAdaptation": "Re-author the spatial motif as Crosswind Array geometry and original reveal composition. Explore: adapt cut direction to obstacle spacing instead of repeating the same straight partition.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the windbreak weave layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            10,
-            11
-          ],
+          "bandRange": [10, 11],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2425,13 +1989,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2487,10 +2045,7 @@
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
           "combined": [
             "established field threat",
             "established frontier threat",
@@ -2500,15 +2055,9 @@
         },
         "memorableMoment": "Transform the crossing complete layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            12,
-            12
-          ],
+          "bandRange": [12, 12],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2529,13 +2078,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2582,35 +2125,20 @@
         "geometryIntent": "Three cyan-framed boxes crossed by a continuous blue-marked band; each box contains four red-marked quadrants. Pink diamond and gold ring actors are visible.",
         "routeDecision": "Enclose an awkward hazard before crossing it, or use the longer clear approach.",
         "originalAdaptation": "Re-author the spatial motif as Signal Gardens geometry and original reveal composition. Teach: compare a short clear cut with a longer slow-terrain crossing, then return to the separately marked safe road.",
-        "threatDomains": [
-          "field drifter",
-          "outer-perimeter patrol"
-        ],
+        "threatDomains": ["field drifter", "outer-perimeter patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "outer-perimeter patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "outer-perimeter patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the three relay bays layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            3,
-            4
-          ],
+          "bandRange": [3, 4],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2631,13 +2159,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2684,35 +2206,20 @@
         "geometryIntent": "A cyan horizontal spine and three cyan vertical dividers form eight chambers. Each chamber contains a narrow blue/red patterned strip; corner openings connect lanes.",
         "routeDecision": "Keep an exit corridor on reclaimed ground while opening a useful second approach.",
         "originalAdaptation": "Re-author the spatial motif as Rover Yard geometry and original reveal composition. Explore: use a captured horizontal spine to choose the next chamber.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the sorting yard layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            5,
-            6
-          ],
+          "bandRange": [5, 6],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2733,13 +2240,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2786,35 +2287,20 @@
         "geometryIntent": "Blue-edged red vertical strips cross a horizontal red/blue strip; a square opening interrupts the center. Pink circular and cyan spiked actors are visible.",
         "routeDecision": "Choose a closure route short enough to outrun a visible trail impact, keeping a second destination available.",
         "originalAdaptation": "Re-author the spatial motif as Phaseworks geometry and original reveal composition. Combine: plan the route back to safety before crossing a long slow section.",
-        "threatDomains": [
-          "trail-impact threat",
-          "field drifter"
-        ],
+        "threatDomains": ["trail-impact threat", "field drifter"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "trail-impact threat",
-            "field drifter"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["trail-impact threat", "field drifter"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the dead band layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            7,
-            8
-          ],
+          "bandRange": [7, 8],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2835,13 +2321,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2888,35 +2368,20 @@
         "geometryIntent": "A large symmetric blue/red hourglass motif is flanked by smaller diamonds and a red diagonal outer diamond. Several pink circular and cyan boundary actors appear.",
         "routeDecision": "Compare a marked directional speed lane with a slower but shorter precision route.",
         "originalAdaptation": "Re-author the spatial motif as Crosswind Array geometry and original reveal composition. Explore: choose between outer clear loops and a shorter central crossing.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the compass array layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            10,
-            11
-          ],
+          "bandRange": [10, 11],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -2937,13 +2402,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -2990,35 +2449,20 @@
         "geometryIntent": "Four blue/red corner blocks flank a symmetric central motif; cyan horizontal bars divide the outer halves but stop before the center. Gold circular actors and cyan edge stars are visible.",
         "routeDecision": "Capture a disabling objective before entering its guarded lane, or exploit the telegraphed recovery window.",
         "originalAdaptation": "Re-author the spatial motif as Livewire Foundry geometry and original reveal composition. Combine: combine compartment capture with a route that avoids the patterned center.",
-        "threatDomains": [
-          "lane attacker",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["lane attacker", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "lane attacker",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["lane attacker", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the split junction layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            8,
-            9
-          ],
+          "bandRange": [8, 9],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3039,13 +2483,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -3092,35 +2530,20 @@
         "geometryIntent": "Four tall lanes divided by cyan strips; side lanes have red angular segments and the two center lanes contain large blue/red patterns. Gaps connect lanes at different heights.",
         "routeDecision": "Shape a new frontier so its patrol travels away from the next intended departure.",
         "originalAdaptation": "Re-author the spatial motif as Neon Contours geometry and original reveal composition. Explore: replan between upper and lower connections as the safe contour changes.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the folded circuit layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            4,
-            5
-          ],
+          "bandRange": [4, 5],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3141,13 +2564,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -3194,35 +2611,20 @@
         "geometryIntent": "Repeated red horizontal strips flank a broad blue-marked central band; cyan vertical tile segments interrupt the middle. Many gold ring actors are visible.",
         "routeDecision": "Choose a closure route short enough to outrun a visible trail impact, keeping a second destination available.",
         "originalAdaptation": "Re-author the spatial motif as Phaseworks geometry and original reveal composition. Combine: chain short captures rather than attempting a single long exposed run.",
-        "threatDomains": [
-          "trail-impact threat",
-          "field drifter"
-        ],
+        "threatDomains": ["trail-impact threat", "field drifter"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "trail-impact threat",
-            "field drifter"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["trail-impact threat", "field drifter"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the pressure ladder layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            7,
-            8
-          ],
+          "bandRange": [7, 8],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3243,13 +2645,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -3296,35 +2692,20 @@
         "geometryIntent": "Separated square blue/red motifs are arranged around a central square, with red open motifs above and below. Wide black gaps separate these groups; gold circles and cyan boundary stars appear.",
         "routeDecision": "Bank a strategically useful connection and protect its return route from erosion.",
         "originalAdaptation": "Re-author the spatial motif as Fractured Grid geometry and original reveal composition. Explore: select a safe island order and keep an alternate exit.",
-        "threatDomains": [
-          "eroder",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["eroder", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "eroder",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["eroder", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the antenna islands layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            6,
-            7
-          ],
+          "bandRange": [6, 7],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3345,13 +2726,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -3398,35 +2773,20 @@
         "geometryIntent": "Five cyan plus-shaped islands occupy a dense blue/red center, with scattered red clusters in the open side areas. Gold rings crowd the center and cyan stars sit on the boundary.",
         "routeDecision": "Bank a strategically useful connection and protect its return route from erosion.",
         "originalAdaptation": "Re-author the spatial motif as Fractured Grid geometry and original reveal composition. Combine: use safe platform corners to shorten successive cuts while leaving room to reposition; blocked foundations never close a cut.",
-        "threatDomains": [
-          "eroder",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["eroder", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "eroder",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["eroder", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the five masts layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            6,
-            7
-          ],
+          "bandRange": [6, 7],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3447,13 +2807,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -3500,35 +2854,20 @@
         "geometryIntent": "A broad blue/red patterned mass is broken by winding black channels and stepped openings; pink ring actors and cyan edge stars appear.",
         "routeDecision": "Choose a closure route short enough to outrun a visible trail impact, keeping a second destination available.",
         "originalAdaptation": "Re-author the spatial motif as Phaseworks geometry and original reveal composition. Explore: switch channels when the current approach is pressured instead of repeating an unsafe route.",
-        "threatDomains": [
-          "trail-impact threat",
-          "field drifter"
-        ],
+        "threatDomains": ["trail-impact threat", "field drifter"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "trail-impact threat",
-            "field drifter"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["trail-impact threat", "field drifter"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the signal channels layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            7,
-            8
-          ],
+          "bandRange": [7, 8],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3549,13 +2888,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -3602,35 +2935,20 @@
         "geometryIntent": "Nested red rectangular bands, bordered by blue symbols, contain repeated black rectangular openings. Pink round and diamond actors occupy different parts; cyan stars sit on the lower edge.",
         "routeDecision": "Capture a relay to establish a permanent connector, then choose the next chamber from that new approach.",
         "originalAdaptation": "Re-author the spatial motif as Relay Labyrinth geometry and original reveal composition. Combine: combine contour access, threat observation and cut timing across several rings.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the nested relays layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            9,
-            10
-          ],
+          "bandRange": [9, 10],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3651,13 +2969,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -3713,10 +3025,7 @@
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
           "combined": [
             "established field threat",
             "established frontier threat",
@@ -3726,15 +3035,9 @@
         },
         "memorableMoment": "Transform the final broadcast layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            12,
-            12
-          ],
+          "bandRange": [12, 12],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3755,13 +3058,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -3808,35 +3105,20 @@
         "geometryIntent": "A full cyan center divider splits mirrored red/blue stepped patterns; cyan boundary segments occupy the lower-left and upper-right edges. Yellow round actors and cyan boundary stars appear.",
         "routeDecision": "Bank a strategically useful connection and protect its return route from erosion.",
         "originalAdaptation": "Re-author the spatial motif as Fractured Grid geometry and original reveal composition. Explore: re-establish short-cut discipline when arriving at the final campaign.",
-        "threatDomains": [
-          "eroder",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["eroder", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "eroder",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["eroder", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the divided station layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            6,
-            7
-          ],
+          "bandRange": [6, 7],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3857,13 +3139,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -3910,35 +3186,20 @@
         "geometryIntent": "A large blue-marked rectangle contains red bands and three interrupted ring-shaped revealed islands. Cyan stars cluster around the islands, with yellow round actors nearby.",
         "routeDecision": "Shape a new frontier so its patrol travels away from the next intended departure.",
         "originalAdaptation": "Re-author the spatial motif as Neon Contours geometry and original reveal composition. Combine: move between safe islands while checking boundary and field threats separately.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the three receiver rings layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            4,
-            5
-          ],
+          "bandRange": [4, 5],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -3959,13 +3220,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4012,35 +3267,20 @@
         "geometryIntent": "Two mirrored mask-like blue/red figures are divided by a full cyan center stripe. One large pink diamond appears in each half and two cyan stars at the top.",
         "routeDecision": "Choose the shield-relay order before isolating the staged boss; expose and release are explained transitions.",
         "originalAdaptation": "Re-author the spatial motif as Sentinel Crown geometry and original reveal composition. Explore: adapt a successful route from one half instead of copying it blindly into the other.",
-        "threatDomains": [
-          "relay sentinel",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["relay sentinel", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "relay sentinel",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["relay sentinel", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the twin receivers layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            11,
-            12
-          ],
+          "bandRange": [11, 12],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4061,13 +3301,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4114,35 +3348,20 @@
         "geometryIntent": "Four blue/red patterned quarters surround a small central patterned opening; cyan horizontal and vertical bars separate their approaches. Several pink round actors are visible.",
         "routeDecision": "Capture a disabling objective before entering its guarded lane, or exploit the telegraphed recovery window.",
         "originalAdaptation": "Re-author the spatial motif as Livewire Foundry geometry and original reveal composition. Combine: choose when a central crossing is worth more exposure than an outer loop.",
-        "threatDomains": [
-          "lane attacker",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["lane attacker", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "lane attacker",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["lane attacker", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the crossbar depot layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            8,
-            9
-          ],
+          "bandRange": [8, 9],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4163,13 +3382,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4216,35 +3429,20 @@
         "geometryIntent": "Two stepped cyan enclosure boundaries create an S-like division. Repeated red corner shapes fill the chambers; blue bands occupy the top-right and bottom-left pockets.",
         "routeDecision": "Choose a closure route short enough to outrun a visible trail impact, keeping a second destination available.",
         "originalAdaptation": "Re-author the spatial motif as Phaseworks geometry and original reveal composition. Explore: read where a safe boundary changes height before committing across a depot.",
-        "threatDomains": [
-          "trail-impact threat",
-          "field drifter"
-        ],
+        "threatDomains": ["trail-impact threat", "field drifter"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "trail-impact threat",
-            "field drifter"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["trail-impact threat", "field drifter"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the dogleg transfer layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            7,
-            8
-          ],
+          "bandRange": [7, 8],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4265,13 +3463,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4318,35 +3510,20 @@
         "geometryIntent": "Red angular segments surround a broken cyan horizontal divider and short top/bottom center posts. No blue-symbol field is visible; pink circular actors occupy the open channels.",
         "routeDecision": "Keep an exit corridor on reclaimed ground while opening a useful second approach.",
         "originalAdaptation": "Re-author the spatial motif as Rover Yard geometry and original reveal composition. Explore: apply learned path planning with fewer visual categories and more open choices.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the clear frequency layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            5,
-            6
-          ],
+          "bandRange": [5, 6],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4367,13 +3544,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4420,35 +3591,20 @@
         "geometryIntent": "A blue/red patterned perimeter surrounds three clearer middle lanes split by cyan posts. Short red bars occupy portions of those lanes; a pink diamond and smaller pink actors appear.",
         "routeDecision": "Compare a marked directional speed lane with a slower but shorter precision route.",
         "originalAdaptation": "Re-author the spatial motif as Crosswind Array geometry and original reveal composition. Combine: compare perimeter repositioning with a shorter central capture.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the outer loop layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            10,
-            11
-          ],
+          "bandRange": [10, 11],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4469,13 +3625,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4522,35 +3672,20 @@
         "geometryIntent": "Eleven separated rounded blue/red clusters form staggered rows; small red arrow-like marks line the outer gaps. Pink round actors and cyan edge stars are visible.",
         "routeDecision": "Bank a strategically useful connection and protect its return route from erosion.",
         "originalAdaptation": "Re-author the spatial motif as Fractured Grid geometry and original reveal composition. Explore: choose a new partition direction when a planned gap becomes crowded.",
-        "threatDomains": [
-          "eroder",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["eroder", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "eroder",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["eroder", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the orchard constellation layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            6,
-            7
-          ],
+          "bandRange": [6, 7],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4571,13 +3706,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4624,35 +3753,20 @@
         "geometryIntent": "Cyan horizontal and vertical dividers form eight compartments, each holding a symmetric blue/red motif. Pink round actors appear in some cells.",
         "routeDecision": "Capture a relay to establish a permanent connector, then choose the next chamber from that new approach.",
         "originalAdaptation": "Re-author the spatial motif as Relay Labyrinth geometry and original reveal composition. Combine: choose a useful next compartment from current safety instead of following a fixed sweep.",
-        "threatDomains": [
-          "field drifter",
-          "reclaimed-ground rover"
-        ],
+        "threatDomains": ["field drifter", "reclaimed-ground rover"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "reclaimed-ground rover"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "reclaimed-ground rover"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the eight watchposts layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            9,
-            10
-          ],
+          "bandRange": [9, 10],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4673,13 +3787,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4726,35 +3834,20 @@
         "geometryIntent": "Blue vertical strips alternate with red hourglass-like outlines and open diamond-shaped spaces. Pink rings, one diamond and cyan edge stars are visible.",
         "routeDecision": "Compare a marked directional speed lane with a slower but shorter precision route.",
         "originalAdaptation": "Re-author the spatial motif as Crosswind Array geometry and original reveal composition. Combine: match crossing length to an observed threat opening and keep a recovery route.",
-        "threatDomains": [
-          "field drifter",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["field drifter", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "field drifter",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["field drifter", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the long wave layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            10,
-            11
-          ],
+          "bandRange": [10, 11],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4775,13 +3868,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4828,35 +3915,20 @@
         "geometryIntent": "A blue/red rectangular outer frame encloses two open vertical corridors and a patterned central rectangle. Numerous small pink actors and a lower pink diamond appear.",
         "routeDecision": "Choose the shield-relay order before isolating the staged boss; expose and release are explained transitions.",
         "originalAdaptation": "Re-author the spatial motif as Sentinel Crown geometry and original reveal composition. Combine: combine boundary awareness, staged capture and optional equipment while preserving a known safe return.",
-        "threatDomains": [
-          "relay sentinel",
-          "moving-frontier patrol"
-        ],
+        "threatDomains": ["relay sentinel", "moving-frontier patrol"],
         "counterplay": "Readable warnings, reachable return ground, and a demonstrated alternate route. Threat count and speed use the shared policy, not screenshot guesses.",
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
-          "combined": [
-            "relay sentinel",
-            "moving-frontier patrol"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
+          "combined": ["relay sentinel", "moving-frontier patrol"],
           "assignment": "Assign to a 3–5 mission arc after greybox verification. At most one mandatory new rule in its arc."
         },
         "memorableMoment": "Transform the relay perimeter layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            11,
-            12
-          ],
+          "bandRange": [11, 12],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4877,13 +3949,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -4939,10 +4005,7 @@
         "captureConsequences": "Trail secures; four-connected field components without retaining enemies fill. Foundations and opened relay connectors never count toward earned coverage.",
         "mechanicArc": {
           "introduced": [],
-          "practiced": [
-            "enemy-retained capture",
-            "route exposure"
-          ],
+          "practiced": ["enemy-retained capture", "route exposure"],
           "combined": [
             "established field threat",
             "established frontier threat",
@@ -4952,15 +4015,9 @@
         },
         "memorableMoment": "Transform the home signal layout with an enclosure that creates a visibly shorter return route.",
         "optionalMastery": "Provisional: complete without losing a life; replace with a route-specific objective after the distinctive interaction is verified.",
-        "expectedDurationSeconds": [
-          45,
-          150
-        ],
+        "expectedDurationSeconds": [45, 150],
         "difficulty": {
-          "bandRange": [
-            12,
-            12
-          ],
+          "bandRange": [12, 12],
           "facets": null,
           "status": "unrated until greybox; no claimed measured curve"
         },
@@ -4981,13 +4038,7 @@
           "gate": "May merge or reject after route-choice, cleanup and playtest checks; no filler quota."
         }
       },
-      "acceptance": [
-        "map-authoring",
-        "map-art",
-        "map-play",
-        "map-encounters",
-        "map-release"
-      ],
+      "acceptance": ["map-authoring", "map-art", "map-play", "map-encounters", "map-release"],
       "implementation": {
         "runtimeIdentity": null,
         "artworkBinding": null,
@@ -5032,11 +4083,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5045,10 +4092,7 @@
       },
       "historicalProposal": {
         "surface": "Title",
-        "phases": [
-          "P03",
-          "P05"
-        ],
+        "phases": ["P03", "P05"],
         "adaptation": "Original FPV hangar title with Start/Continue destination, clear mode choices and shared focus marker.",
         "intentionalDeviation": "Keep readable UI type and quick Sound; do not import the illustration, logo or scanlines over text."
       }
@@ -5079,11 +4123,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5092,11 +4132,7 @@
       },
       "historicalProposal": {
         "surface": "Title",
-        "phases": [
-          "P03",
-          "P05",
-          "P04"
-        ],
+        "phases": ["P03", "P05", "P04"],
         "adaptation": "Keep layout stable when a presentation collection changes the original background.",
         "intentionalDeviation": "Themes change presentation without changing navigation, input meanings or saved-flight ownership."
       }
@@ -5127,11 +4163,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5140,10 +4172,7 @@
       },
       "historicalProposal": {
         "surface": "Revealed mission gallery",
-        "phases": [
-          "P06",
-          "P07"
-        ],
+        "phases": ["P06", "P07"],
         "adaptation": "One unified campaign browser with mission thumbnails, progress, current selection and previous/next campaign actions.",
         "intentionalDeviation": "Provide explicit Preview on touch and keyboard without requiring a hold; use actual input bindings and include compatible downloads in the same experience."
       }
@@ -5174,11 +4203,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5187,10 +4212,7 @@
       },
       "historicalProposal": {
         "surface": "Unrevealed mission gallery",
-        "phases": [
-          "P06",
-          "P16"
-        ],
+        "phases": ["P06", "P16"],
         "adaptation": "Use a stable unrevealed-card appearance while keeping mission and campaign navigation available.",
         "intentionalDeviation": "Distinguish unrevealed, unavailable, downloading and incompatible using text plus icons; do not infer these question marks mean missing files or purchase locks."
       }
@@ -5221,11 +4243,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5234,11 +4252,7 @@
       },
       "historicalProposal": {
         "surface": "Mixed-progress mission gallery",
-        "phases": [
-          "P06",
-          "P07",
-          "P16"
-        ],
+        "phases": ["P06", "P07", "P16"],
         "adaptation": "Keep installed, unrevealed and completed missions together in one stable ordered gallery, with independent artwork ownership and progress fields.",
         "intentionalDeviation": "Do not equate a visible picture with completed progress or a nonzero score; show compatibility and installation status explicitly."
       }
@@ -5269,11 +4283,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5282,11 +4292,7 @@
       },
       "historicalProposal": {
         "surface": "Settings",
-        "phases": [
-          "P02",
-          "P05",
-          "P16"
-        ],
+        "phases": ["P02", "P05", "P16"],
         "adaptation": "Compact settings categories with live relevant previews, readable selectors, quick master sound, text size, Plain style and reduced effects.",
         "intentionalDeviation": "Expose only controls backed by actual capabilities; do not copy unsupported brightness/gamma controls or create a long mixed settings form."
       }
@@ -5317,11 +4323,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5330,11 +4332,7 @@
       },
       "historicalProposal": {
         "surface": "Pause",
-        "phases": [
-          "P03",
-          "P05",
-          "P07"
-        ],
+        "phases": ["P03", "P05", "P07"],
         "adaptation": "Use a consistent compact pause panel with Resume primary, Retry and Missions; keep optional Help/Settings reachable.",
         "intentionalDeviation": "Restore the correct opener and explicit pause owner; Back from a child screen must not silently resume either Couch player."
       }
@@ -5365,11 +4363,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5378,11 +4372,7 @@
       },
       "historicalProposal": {
         "surface": "Results",
-        "phases": [
-          "P07",
-          "P08-B",
-          "P16"
-        ],
+        "phases": ["P07", "P08-B", "P16"],
         "adaptation": "Prioritize earned artwork and clear awards, with named Next primary and Retry/Browse always available.",
         "intentionalDeviation": "Do not require perfect stars for progression; final campaign results name the successor. A still does not establish tally or transition timing."
       }
@@ -5413,11 +4403,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5426,9 +4412,7 @@
       },
       "historicalProposal": {
         "surface": "Life loss feedback",
-        "phases": [
-          "P08-B"
-        ],
+        "phases": ["P08-B"],
         "adaptation": "Create an original compact broken-link/drone-loss emblem and pixel debris around the authoritative loss location, followed by clear recovery feedback.",
         "intentionalDeviation": "Keep hit location, cause and safe re-entry readable; do not copy the skull or assume duration, actor responsibility or camera behavior. Reduced effects retain a static cue."
       }
@@ -5459,11 +4443,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5472,10 +4452,7 @@
       },
       "historicalProposal": {
         "surface": "Attempt lost",
-        "phases": [
-          "P07",
-          "P08-B"
-        ],
+        "phases": ["P07", "P08-B"],
         "adaptation": "Compact loss result with Retry selected, the actual failure reason, difficulty shortcut and Missions; preserve attempted setup.",
         "intentionalDeviation": "No mandatory long failure animation or extra confirmation on ordinary Retry. Use edition-appropriate original imagery and no effect that overwrites original artwork."
       }
@@ -5506,11 +4483,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5519,10 +4492,7 @@
       },
       "historicalProposal": {
         "surface": "Countdown",
-        "phases": [
-          "P01",
-          "P08-B"
-        ],
+        "phases": ["P01", "P08-B"],
         "adaptation": "FPV arming cue with legible count and short optional sound, preserving arena context and neutral-input protection.",
         "intentionalDeviation": "One frame does not prove full sequence or duration. Countdown cannot run while required artwork is still preparing or silently replace explicit Resume."
       }
@@ -5553,11 +4523,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5566,9 +4532,7 @@
       },
       "historicalProposal": {
         "surface": "Start signal",
-        "phases": [
-          "P08-B"
-        ],
+        "phases": ["P08-B"],
         "adaptation": "Brief original launch signal that clears promptly when controls become active; reduced-effects variant uses static text and an outline.",
         "intentionalDeviation": "Avoid a full-width effect covering live hazards, time penalties before control is available or a second launch confirmation."
       }
@@ -5599,11 +4563,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5612,10 +4572,7 @@
       },
       "historicalProposal": {
         "surface": "Cut and actor trails",
-        "phases": [
-          "P08-A",
-          "P08-B"
-        ],
+        "phases": ["P08-A", "P08-B"],
         "adaptation": "Distinct active-cut endpoint, committed cut and actor motion trails, with terrain/actor silhouettes visible over both concealed and revealed regions.",
         "intentionalDeviation": "Preserve the supplied misspelled filename. Do not infer exact trail duration, actor behavior or pickup effect from the still; use existing authoritative state and bounded cosmetic trails."
       }
@@ -5646,11 +4603,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5659,11 +4612,7 @@
       },
       "historicalProposal": {
         "surface": "Dense arena and loss state",
-        "phases": [
-          "P08-A",
-          "P08-B",
-          "P11-D"
-        ],
+        "phases": ["P08-A", "P08-B", "P11-D"],
         "adaptation": "Use this as a later-campaign mixed-state readability specimen: distinguish enemy roles, active loss cue, terrain and capture boundary over the artwork.",
         "intentionalDeviation": "Do not add a new mission count or copy the dense layout wholesale. Actor identities, collision ownership and elapsed animation timing remain unverified."
       }
@@ -5694,11 +4643,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5707,12 +4652,7 @@
       },
       "historicalProposal": {
         "surface": "Corridors and partial reveal",
-        "phases": [
-          "P08-A",
-          "P08-B",
-          "P11-C",
-          "P11-D"
-        ],
+        "phases": ["P08-A", "P08-B", "P11-C", "P11-D"],
         "adaptation": "Use as a route-clearance and effect-layering comparison for advanced Signal Pressure/Last Relay corridor missions, keeping original composition and readable exits.",
         "intentionalDeviation": "Do not infer speed boost, defeated actor ownership or area-capture semantics from icons alone. Widen cramped approaches where needed on the actual board."
       }
@@ -5743,11 +4683,7 @@
         "phase": "P00-P15",
         "acceptance": "Use as visual/UX comparison only. Exact mechanics and timings remain unverified."
       },
-      "acceptance": [
-        "ui-navigation",
-        "ui-feedback",
-        "ui-release"
-      ],
+      "acceptance": ["ui-navigation", "ui-feedback", "ui-release"],
       "implementation": {
         "runtimeIdentity": null,
         "assetBindings": [],
@@ -5756,11 +4692,7 @@
       },
       "historicalProposal": {
         "surface": "Active long cut and patterned hazards",
-        "phases": [
-          "P08-A",
-          "P08-B",
-          "P11-A"
-        ],
+        "phases": ["P08-A", "P08-B", "P11-A"],
         "adaptation": "Review a long active cut and border traffic over semantic warning patches in the existing Marked Ground reference adaptation.",
         "intentionalDeviation": "Replace English-word collision geometry with original field markers, maintain localizable warning text and offer short safe alternatives. This is a comparison specimen, not an extra mission."
       }

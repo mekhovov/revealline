@@ -1,0 +1,39 @@
+{
+  "controllerCommit": "ca3f3fd638e02e1907a0811d7759d24ba8f726b6",
+  "controllerTree": "c12820bdf90ec8feaeeab389ab092e9921ad2551",
+  "runId": 35962558115,
+  "jobs": [
+    {
+      "id": 107514064168,
+      "name": "assemble",
+      "conclusion": "success"
+    },
+    {
+      "id": 107515171490,
+      "name": "deploy",
+      "conclusion": "success"
+    }
+  ],
+  "deploymentId": 6631370106,
+  "deploymentStatusId": 18767390016,
+  "receiptArtifactId": 10792966805,
+  "receiptBytes": 195763,
+  "receiptSha256": "d1998ebb5033d54267baf74861821dc5404b2f7cc26111ab0b0068d9616e8100",
+  "inventory": {
+    "files": 4271,
+    "bytes": 625227678,
+    "sha256": "55f1444efc52dcdbf9de8b8f80c584696fe6034a62872838cda169c8101b4e69"
+  },
+  "zipReceipt": {
+    "distributionSha256": "1b87a11577263b909b8ce06024938c4b67c459ea645abe5d7cd0ace6d6ad1dda",
+    "manifestSha256": "c24422d298192f6de4d79d01188790c7d1d603a6737d6673e7efc4ba8685bad4",
+    "gameSourceRevision": "1518e15e248b59c6470cc6931023eaf6f1ac363c",
+    "version": "v0.97.0",
+    "membersVerified": 1114,
+    "manifestFilesVerified": 1113,
+    "uncompressedBytesVerified": 594881682,
+    "crcAndHashesVerified": true
+  },
+  "publicAudit": "NOT_RUN",
+  "reviewed": false
+}

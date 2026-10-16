@@ -1,0 +1,106 @@
+{
+  "format": "fpv-actor-track-functional.v1",
+  "at": "2026-10-02T06:53:44.074Z",
+  "worldModelSHA256": "78f606f2d7acc02c0cacccfcf6566996658854666b1ad453a906e2fa94ed7208",
+  "qualification": "Actual fixed-step controls, replay and portable data roundtrips. Temporary functional checks; no additional unit coverage, physical hardware, browser or deployment acceptance.",
+  "passed": 20,
+  "total": 20,
+  "checks": [
+    {
+      "name": "Observe a live stationary subject with actual self-level commands and replay",
+      "pass": true,
+      "ticks": 100
+    },
+    {
+      "name": "Follow a moving subject with actual self-level commands and replay",
+      "pass": true,
+      "ticks": 365,
+      "travel": 6000,
+      "playerTravelZ": 4696
+    },
+    {
+      "name": "Observe a live stationary subject with actual acro commands and replay",
+      "pass": true,
+      "ticks": 100
+    },
+    {
+      "name": "Follow a moving subject with actual acro commands and replay",
+      "pass": true,
+      "ticks": 370,
+      "travel": 6000,
+      "playerTravelZ": 4791
+    },
+    {
+      "name": "Occluding static geometry blocks observation",
+      "pass": true
+    },
+    {
+      "name": "Outside subject range never gains dwell",
+      "pass": true
+    },
+    {
+      "name": "Grounded observation never gains dwell",
+      "pass": true
+    },
+    {
+      "name": "Turning away resets consecutive dwell and subject travel",
+      "pass": true
+    },
+    {
+      "name": "Body pitch changes the full 3D nose cone",
+      "pass": true
+    },
+    {
+      "name": "Relative subject speed is measured from actual movement",
+      "pass": true
+    },
+    {
+      "name": "Blocked moving route cannot fabricate follow travel",
+      "pass": true,
+      "travel": 778,
+      "heldTicks": 500
+    },
+    {
+      "name": "Defeated subjects cannot be observed",
+      "pass": true
+    },
+    {
+      "name": "Pause retains progress; recorded prefix recovery resumes exactly",
+      "pass": true
+    },
+    {
+      "name": "Layered definitions and portable compiled pack preserve actor tracking",
+      "pass": true,
+      "bytes": 1722
+    },
+    {
+      "name": "New criterion validation rejects missing subject, hazards, impossible movement and malformed limits",
+      "pass": true
+    },
+    {
+      "name": "Unscored tracking practice completes without creating proof evidence",
+      "pass": true
+    },
+    {
+      "name": "IndexedDB transaction API installs/reopens exact objectives and editable ZIP roundtrips",
+      "pass": true,
+      "storage": "Production world-store API on fake-indexeddb; browser storage is a separate qualification",
+      "zipBytes": 1789
+    },
+    {
+      "name": "Changing tracking rules invalidates previous exact-dependency proof",
+      "pass": true
+    },
+    {
+      "name": "All 24 original v1 demonstrations still complete",
+      "pass": true,
+      "proofs": 24
+    },
+    {
+      "name": "All pre-adventure world demonstrations retain exact identities and final states",
+      "pass": true,
+      "proofs": 90,
+      "frames": 156223
+    }
+  ]
+}

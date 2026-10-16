@@ -1,0 +1,103 @@
+{
+  "human-reaction-1": {
+    "source": "1.ogg",
+    "sourceSha256": "8d772bc252baf058887877cddf99090fb8149aaa41672e5178cbd2d8874f73be",
+    "sha256": "4fb0c8881f4ddee958b94e03b70339b291e90c6139adffe9326ffd6d1bf6209a",
+    "bytes": 67244,
+    "duration": 0.7,
+    "portableBytes": 5996,
+    "portableSha256": "d980edc4cfe48e781a70656bacc68030c9a6b922f056fff63167e43d42859081",
+    "peakDbfs": -20.0,
+    "maximum50msDbfs": -30.908836251156874,
+    "listeningReview": "pending"
+  },
+  "human-reaction-2": {
+    "source": "2.ogg",
+    "sourceSha256": "283b8f19a2de2808f1a27be4fd6551644ab8b418bfa7c35a3cc42cbd8bf94783",
+    "sha256": "212de184cd976cc1aef23ad0c2a13af7353c1dbc3564264718e7dfb8f589dd1e",
+    "bytes": 48782,
+    "duration": 0.5076875,
+    "portableBytes": 4460,
+    "portableSha256": "d6615407ef5c3b6629745d8dd2dc1b6c906c099c7e65030d94d6733393da17ac",
+    "peakDbfs": -20.0,
+    "maximum50msDbfs": -31.44644937378091,
+    "listeningReview": "pending"
+  },
+  "human-reaction-3": {
+    "source": "3.ogg",
+    "sourceSha256": "0a841804764f30887861224d7f3a1b8e1922f7574e42c16f221d29ecfd348e0f",
+    "sha256": "ff99273589efd9db0fe0931d6bdfc2908b563e4fed9e2436f2df053b07688abe",
+    "bytes": 30016,
+    "duration": 0.3122083333333333,
+    "portableBytes": 2924,
+    "portableSha256": "1db90de7c27138131cf9c131b5a227d303b98151793d4c11845cf9f35e451133",
+    "peakDbfs": -22.261304291063627,
+    "maximum50msDbfs": -30.0,
+    "listeningReview": "pending"
+  },
+  "human-reaction-4": {
+    "source": "4.ogg",
+    "sourceSha256": "dfc67cd0aa6a1d71cd9ec8eea07f64dbbf301e23817331687c66cb42e409b503",
+    "sha256": "0dfbe18eddc5a832af74a9413084329a7d2a33691fec12b2d489d5a11bb0201c",
+    "bytes": 64882,
+    "duration": 0.6753958333333333,
+    "portableBytes": 5804,
+    "portableSha256": "b87531ee6463743abeb19ab6d2cf8380089c15b245a6f1a699d8476aed318d95",
+    "peakDbfs": -20.0,
+    "maximum50msDbfs": -30.781074002326704,
+    "listeningReview": "pending"
+  },
+  "human-reaction-5": {
+    "source": "7.ogg",
+    "sourceSha256": "70c60da09a7b0b5252cc067f08d46f286504e0cf2945fddf3f71989623d55c5e",
+    "sha256": "448601efaac9ed7cd7121a9a210ea75d434c91b1776b681e04493c096b3fdacf",
+    "bytes": 37216,
+    "duration": 0.3872083333333333,
+    "portableBytes": 3500,
+    "portableSha256": "a91552a1cc27b3ccdd005c355e5b4278dd00fcbcf9a3f8ad7ea51effc0d598d9",
+    "peakDbfs": -20.0,
+    "maximum50msDbfs": -31.272876837083775,
+    "listeningReview": "pending"
+  },
+  "human-reaction-6": {
+    "source": "8.ogg",
+    "sourceSha256": "6a26b40b153682581ec18dfcf1a61d3e623396b718a19c5dbeafa0a1d1f063b7",
+    "sha256": "fce6fcfb558076547f18569542a364ccc677185568fed96f90d1e643906896c8",
+    "bytes": 59670,
+    "duration": 0.6211041666666667,
+    "portableBytes": 5228,
+    "portableSha256": "37cb7f8024f58c7672687ae5d6872e3866afbe2036315a3aa2fba77c028e3857",
+    "peakDbfs": -20.0,
+    "maximum50msDbfs": -33.65703256143681,
+    "listeningReview": "pending"
+  },
+  "human-reaction-7": {
+    "source": "9.ogg",
+    "sourceSha256": "1c4424ef4b6479b48abab901d63effae54c3e539831ee5b1dfb5e89b26736e35",
+    "sha256": "c600f66cf99796d9981621a5fccc97430fa7b7c9c493f27dbc56b79986b49edd",
+    "bytes": 63938,
+    "duration": 0.6655625,
+    "portableBytes": 5612,
+    "portableSha256": "2f8c7f69f0df46479bb4b6b885cc5adcad3dda1e5d0cb68ce8a3a41b8ac00b46",
+    "peakDbfs": -22.356306153283803,
+    "maximum50msDbfs": -30.0,
+    "listeningReview": "pending"
+  },
+  "human-reaction-8": {
+    "source": "10.ogg",
+    "sourceSha256": "58ddbe590c26c3f54b2ec69991bc0087bdaca2b09acd3e8692a96f570dcf0e10",
+    "sha256": "df6a067eec36f2a2ab8599e0541ea0ab04befaf7d268e8815d0f859fe8b0d542",
+    "bytes": 58082,
+    "duration": 0.6045625,
+    "portableBytes": 5228,
+    "portableSha256": "d84e65a5e3df70ede5e2249cec52eb77eb0b673920b5ec5ab579a0dbe70cad91",
+    "peakDbfs": -20.0,
+    "maximum50msDbfs": -32.57486766234474,
+    "listeningReview": "pending"
+  },
+  "production": {
+    "ffmpeg": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers",
+    "scriptSha256": "5c84223dc84de5f80d3c281a752e814cd1ffcb2923e949bf036ea474becf850b",
+    "processing": "48kHz mono PCM16; trim >0.015 plus3ms/20ms; atmost700ms;80Hz highpass;3ms/20ms fades;peak<=-20dBFS;max50msRMS<=-30dBFS; portableMP3-64kbps"
+  }
+}

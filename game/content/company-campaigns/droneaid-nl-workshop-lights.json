@@ -1,0 +1,567 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "A fictional Dutch FPV workshop with carbon-frame quadcopter, goggles, soldering station and a Ukraine-support equipment case.",
+      "bytes": 370758,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-workshop-lights-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-01.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "1505965b83050fc942d20e180a7752ee7435df4b8b468247d07979c20093404c",
+      "width": 640
+    },
+    {
+      "alt": "A fictional DroneAid-inspired FPV workshop scene for Find Your Bench, with a carbon-frame quad and Ukraine-support colours.",
+      "bytes": 367175,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-workshop-lights-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-02.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "d2d1570cab85c70dbd3a23edcc0adece08eb6e3e4de3c7146248b85aedea4fc2",
+      "width": 640
+    },
+    {
+      "alt": "A fictional DroneAid-inspired FPV workshop scene for Tool Library, with a carbon-frame quad and Ukraine-support colours.",
+      "bytes": 353642,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-workshop-lights-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-03.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "1e4ecc8b44c3fa471766d973f9fd2bfe7b403890ce043ee7782c2f8ae8b19e5a",
+      "width": 640
+    },
+    {
+      "alt": "A fictional DroneAid-inspired FPV workshop scene for First Connections, with a carbon-frame quad and Ukraine-support colours.",
+      "bytes": 375865,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-workshop-lights-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-04.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "1956d802ea3311befa7db59221c8b8aef4289f7428ea8629ae752ae130e65473",
+      "width": 640
+    },
+    {
+      "alt": "A fictional DroneAid-inspired FPV workshop scene for Shared Worktable, with carbon-frame quads and Ukraine-support colours.",
+      "bytes": 377024,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-workshop-lights-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-05.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "507e585fb610ea689d2ad0b4fd3c2557c1c7e7ba5720ced58d1c81c8cc13cfa5",
+      "width": 640
+    },
+    {
+      "alt": "A fictional DroneAid-inspired FPV workshop scene for Lights Across the Room, with carbon-frame quads and Ukraine-support colours.",
+      "bytes": 370395,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-workshop-lights-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-workshop-lights-06.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "eb0f09900436e3600cac7e4e6883d962f0ba228026ab5dbfa25361f974b4d95f",
+      "width": 640
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 1,
+      "format": "CampaignDesignV1",
+      "id": "droneaid-nl-workshop-lights",
+      "missionIds": [
+        "droneaid-nl-workshop-lights-01",
+        "droneaid-nl-workshop-lights-02",
+        "droneaid-nl-workshop-lights-03",
+        "droneaid-nl-workshop-lights-04",
+        "droneaid-nl-workshop-lights-05",
+        "droneaid-nl-workshop-lights-06"
+      ],
+      "name": "Workshop Lights",
+      "revision": "2"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "droneaid-nl-workshop-lights",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 10, "x": 29, "y": 13 },
+        { "h": 3, "w": 7, "x": 10, "y": 23 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-01-map",
+      "name": "Open the Doors",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 31.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 8, "w": 2, "x": 22, "y": 10 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 10, "x": 30, "y": 14 },
+        { "h": 3, "w": 7, "x": 11, "y": 23 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-02-map",
+      "name": "Find Your Bench",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 32.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 8, "w": 2, "x": 18, "y": 8 },
+        { "h": 7, "w": 2, "x": 48, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 10, "x": 29, "y": 15 },
+        { "h": 3, "w": 7, "x": 12, "y": 23 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-03-map",
+      "name": "Tool Library",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 33.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 2, "x": 19, "y": 8 },
+        { "h": 7, "w": 2, "x": 47, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 10, "x": 30, "y": 13 },
+        { "h": 3, "w": 7, "x": 13, "y": 23 },
+        { "h": 4, "w": 7, "x": 53, "y": 8 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-04-map",
+      "name": "First Connections",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 7, "w": 2, "x": 20, "y": 8 },
+        { "h": 7, "w": 2, "x": 46, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 10, "x": 29, "y": 14 },
+        { "h": 3, "w": 7, "x": 14, "y": 23 },
+        { "h": 4, "w": 7, "x": 53, "y": 7 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-05-map",
+      "name": "Shared Worktable",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 8, "w": 2, "x": 21, "y": 8 },
+        { "h": 7, "w": 2, "x": 45, "y": 22 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 10, "x": 30, "y": 15 },
+        { "h": 3, "w": 7, "x": 15, "y": 23 },
+        { "h": 4, "w": 7, "x": 53, "y": 8 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-workshop-lights-06-map",
+      "name": "Lights Across the Room",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 36.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 9, "w": 2, "x": 22, "y": 8 },
+        { "h": 7, "w": 2, "x": 44, "y": 22 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.48,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and can connect a workstation; it never grants a real-world approval or changes a business record.",
+        "combines": [],
+        "counterplay": "Watch the visible field drifters and shorten a risky cut by returning to an island.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [40, 180],
+        "introduces": ["foundations"],
+        "lesson": "Light a welcoming route through the first workroom.",
+        "mastery": "Connect the objective and finish without losing a life; learning assignments remain separate from arcade score.",
+        "memorableMoment": "A carbon-frame FPV quad, goggles and a donation case welcome a new day at a fictional Dutch workshop.",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "routeDecision": "Reach the centre bench before exploring the outer tables."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-workshop-lights-01",
+      "map": { "id": "droneaid-nl-workshop-lights-01-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Open the Doors",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-workshop-lights-01-picture",
+        "themeId": "droneaid-nl-workshop-lights-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.53,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and can connect a workstation; it never grants a real-world approval or changes a business record.",
+        "combines": [],
+        "counterplay": "Watch the visible field drifters and shorten a risky cut by returning to an island.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [40, 180],
+        "introduces": [],
+        "lesson": "Connect the shared bench and the quiet preparation table.",
+        "mastery": "Connect the objective and finish without losing a life; learning assignments remain separate from arcade score.",
+        "memorableMoment": "Paired FPV benches, violet drawers and yellow task lamps give every maker room to begin.",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "routeDecision": "Choose either short table return before crossing the centre aisle."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-workshop-lights-02",
+      "map": { "id": "droneaid-nl-workshop-lights-02-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Find Your Bench",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-workshop-lights-02-picture",
+        "themeId": "droneaid-nl-workshop-lights-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 12.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.56,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and can connect a workstation; it never grants a real-world approval or changes a business record.",
+        "combines": [],
+        "counterplay": "Watch the visible field drifters and shorten a risky cut by returning to an island.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [40, 180],
+        "introduces": [],
+        "lesson": "Bring the tool stations into one connected picture.",
+        "mastery": "Connect the objective and finish without losing a life; learning assignments remain separate from arcade score.",
+        "memorableMoment": "Soldering stations, precision drivers and motor trays surround a finished FPV quad.",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "routeDecision": "Connect the side shelves before attempting the broad middle field."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-workshop-lights-03",
+      "map": { "id": "droneaid-nl-workshop-lights-03-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Tool Library",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-workshop-lights-03-picture",
+        "themeId": "droneaid-nl-workshop-lights-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-backlog",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 30.5, "y": 13.5 }],
+      "coverage": 0.58,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and can connect a workstation; it never grants a real-world approval or changes a business record.",
+        "combines": ["foundations", "perimeter-patrol"],
+        "counterplay": "Use the interior returns to avoid the outer patrol; read the field drifters before leaving a safe surface.",
+        "difficulty": {
+          "band": 2,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 2,
+          "planning": 2,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [40, 180],
+        "introduces": ["perimeter-patrol"],
+        "lesson": "Join the separate work areas through a shared landing.",
+        "mastery": "Connect the objective and finish without losing a life; learning assignments remain separate from arcade score.",
+        "memorableMoment": "An intact FPV quad, goggles case and shared tool station connect three practical workshop benches.",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "routeDecision": "Use the middle landing to split two exposed crossings."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-workshop-lights-04",
+      "map": { "id": "droneaid-nl-workshop-lights-04-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "First Connections",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-workshop-lights-04-picture",
+        "themeId": "droneaid-nl-workshop-lights-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-backlog",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 14.5 }],
+      "coverage": 0.6,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and can connect a workstation; it never grants a real-world approval or changes a business record.",
+        "combines": ["foundations", "perimeter-patrol"],
+        "counterplay": "Use the interior returns to avoid the outer patrol; read the field drifters before leaving a safe surface.",
+        "difficulty": {
+          "band": 2,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 2,
+          "planning": 2,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [40, 180],
+        "introduces": [],
+        "lesson": "Make room for the busy workshop to work together.",
+        "mastery": "Connect the objective and finish without losing a life; learning assignments remain separate from arcade score.",
+        "memorableMoment": "Several carbon-frame FPV quads and sorted motor trays share one long timber workbench.",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "routeDecision": "Read the outer patrol and return through the bench islands."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-workshop-lights-05",
+      "map": { "id": "droneaid-nl-workshop-lights-05-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Shared Worktable",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 15.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-workshop-lights-05-picture",
+        "themeId": "droneaid-nl-workshop-lights-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 12.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-backlog",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 30.5, "y": 15.5 }],
+      "coverage": 0.64,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and can connect a workstation; it never grants a real-world approval or changes a business record.",
+        "combines": ["foundations", "perimeter-patrol"],
+        "counterplay": "Use the interior returns to avoid the outer patrol; read the field drifters before leaving a safe surface.",
+        "difficulty": {
+          "band": 2,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 2,
+          "planning": 2,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [40, 180],
+        "introduces": [],
+        "lesson": "Complete the illuminated workshop network.",
+        "mastery": "Connect the objective and finish without losing a life; learning assignments remain separate from arcade score.",
+        "memorableMoment": "Warm workshop lights reveal completed FPV quads and cases prepared for a fictional Ukraine-support donation.",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "routeDecision": "Connect the inner tables before completing the larger outer loop."
+      },
+      "format": "MissionDesignV1",
+      "id": "droneaid-nl-workshop-lights-06",
+      "map": { "id": "droneaid-nl-workshop-lights-06-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Lights Across the Room",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 18.5, "y": 8.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-workshop-lights-06-picture",
+        "themeId": "droneaid-nl-workshop-lights-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Workshop Lights",
+  "packs": [
+    {
+      "campaignIds": ["droneaid-nl-workshop-lights"],
+      "format": "PackDesignV1",
+      "id": "droneaid-nl-workshop-lights-pack",
+      "name": "Workshop Lights",
+      "revision": "2"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "2"
+}

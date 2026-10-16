@@ -1,0 +1,50 @@
+{
+  "baseMain": "908bc6b08d1999edafa79d1581d2bab9395285b7",
+  "mergedImplementationPR": 817,
+  "scope": "Audio-only integration qualification and host-fixture corrections; no runtime or asset changes.",
+  "tests": {
+    "focused": {
+      "passed": 138,
+      "failed": 0,
+      "evidence": "merged-main-focused.tap"
+    },
+    "couchAudioHost": {
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "merged-main-host.tap"
+    }
+  },
+  "changedFileChecks": {
+    "eslint": "passed",
+    "prettier": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "productionBuild": {
+    "status": "passed",
+    "evidence": "merged-main-build.json"
+  },
+  "nativeBrowser": {
+    "decoded": 56,
+    "total": 56,
+    "overlapScenarios": 7,
+    "highestStereoPeakDbfs": -19.477246856776713,
+    "allStereoAndMonoUnclipped": true,
+    "movementToggle": "quiet for both actors when off; ceramic player and ratchet enemy restore when on",
+    "consoleWarningsErrors": 0,
+    "evidence": "merged-main-native-mix.json",
+    "screenshot": "merged-main-native-audition.png",
+    "includesMusic": false,
+    "humanListening": false
+  },
+  "releaseScheduling": {
+    "milestone": 57,
+    "title": "v0.150.0 \u2014 Unified native experience",
+    "publication": "Single canonical publisher; this is not release acceptance."
+  },
+  "remaining": [
+    "Fresh built-package offline gameplay with Optional spatial sound effects installed",
+    "Sustained human listening with music and physical-device qualification (deferred)",
+    "Canonical immutable release qualification, publication and public acceptance"
+  ]
+}

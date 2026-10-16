@@ -1,0 +1,12 @@
+{
+  "formatVersion": 2,
+  "version": "v0.141.6",
+  "sourceRevision": "d3b48436318c9d056678089b219e47534b554897",
+  "sourceTree": "676620d7ec66d03c37bca9c174d684b797ed8a41",
+  "sourceUrl": "https://github.com/mekhovov/revealline/archive/d3b48436318c9d056678089b219e47534b554897.tar.gz",
+  "sourceManifestSha256": "3d807166a69766c28848718e8a3f6f6a427e361556fcc633ffd2acba9a6ebee7",
+  "distributionSha256": "8e0b2d3779de4df09d4329875cfdabdfe7da768ad2ddeb4cd9a71318d818d3c1",
+  "manifestSha256": "79e6b672d951379c4a2c7fde0456496f87120eb4a3d764780fe2e6aa6520106f",
+  "play": "v0.141.6/site/game/",
+  "download": "v0.141.6/site/distribution.zip"
+}

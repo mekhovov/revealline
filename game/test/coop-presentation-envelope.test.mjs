@@ -159,6 +159,41 @@ test('format limits match the bounded transfer contract', () => {
   });
 });
 
+test('WebP Team envelopes preserve original bytes and require matching decoded full-frame dimensions', async () => {
+  // Header-only fixture; the injected decoder is a separate tested boundary.
+  const bytes = Buffer.alloc(26);
+  bytes.write('RIFF');
+  bytes.writeUInt32LE(18, 4);
+  bytes.write('WEBPVP8L', 8);
+  bytes.writeUInt32LE(5, 16);
+  bytes[20] = 0x2f;
+  bytes.writeUInt32LE(1151 | (575 << 14), 21);
+  const f = fixture({ images: [bytes] });
+  f.manifest.presentation.assets[0].mime = 'image/webp';
+  let decodes = 0;
+  const prepared = await readCoopPresentationEnvelope(envelope(f), {
+    decodeImage: async (blob) => {
+      decodes++;
+      assert.equal(blob.type, 'image/webp');
+      assert.deepEqual(Buffer.from(await blob.arrayBuffer()), bytes);
+      return { image: { naturalWidth: 1152, naturalHeight: 576 }, release() {} };
+    },
+  });
+  assert.equal(decodes, 1);
+  const exported = exportCoopPresentationEnvelope(prepared);
+  assert.deepEqual(
+    Buffer.from(await exported.arrayBuffer()),
+    Buffer.from(await envelope(f).arrayBuffer()),
+  );
+  disposeCoopPresentationEnvelope(prepared);
+  await assert.rejects(
+    readCoopPresentationEnvelope(envelope(f), {
+      decodeImage: async () => ({ image: { naturalWidth: 1, naturalHeight: 1 }, release() {} }),
+    }),
+    /dimensions/,
+  );
+});
+
 test('two-level import validates every picture sequentially, exposes frozen identity, and exports original bytes', async () => {
   const f = fixture(),
     d = decoder(),

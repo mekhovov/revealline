@@ -1,0 +1,134 @@
+{
+  "sourceCommit": "ff5c1ab5ee0c3ede3688eec899c76a930a0d8431",
+  "date": "2026-10-15",
+  "review": "Native CUA, one same-origin instrumented browser session; no player storage cleared",
+  "comparison": {
+    "appliedAt": "2026-10-15T12:19:59.614034+00:00",
+    "sourceCommit": "ff5c1ab5ee0c3ede3688eec899c76a930a0d8431",
+    "guardOnly": true,
+    "files": {
+      "world-app.mjs": "c84b5e43c68a076687295b0516ca5f53eaec024bb0435eff28cddcd1f4e750de",
+      "world-store.mjs": "427f5589efe75451f14085541e396fef681969e7232565582147b20ab2e718dd",
+      "regional-delivery.mjs": "3cbd9768531917bdf4ad8079a0c3dc1c324ac90f2ee8beaad8b1936f93f9a05e"
+    },
+    "frozenOriginalReceipt": {
+      "sourceRevision": "e006821b9ce49d97e52ec9bdd9c2ae4725ce94b5",
+      "revision": "e574811fd6cba39a955378c315caa0c119a65d01b4fecc7faa9d7bd66fd9e160",
+      "origin": "http://127.0.0.1:9135",
+      "launcherURL": "http://127.0.0.1:9135/revealline/practice/fpv-worlds/app/?lang=en",
+      "entryURL": "http://127.0.0.1:9135/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html",
+      "libraryURL": "http://127.0.0.1:9135/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html?lang=en#packs",
+      "boundary": "Instrumented diagnostic derivative of e006, NOT an unchanged qualified package. Direct entry only; do not install launcher/offline worker. Separate origin/database; frozen9118 untouched.",
+      "stageStatus": "prepared-native-review-pending",
+      "instrumentedFiles": {
+        "world-store.mjs": {
+          "before": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0",
+          "after": "427f5589efe75451f14085541e396fef681969e7232565582147b20ab2e718dd"
+        },
+        "regional-delivery.mjs": {
+          "before": "badd18807ba190d45f1d12e619ac599481cbefce6f05af0e19e78f27deba9791",
+          "after": "3cbd9768531917bdf4ad8079a0c3dc1c324ac90f2ee8beaad8b1936f93f9a05e"
+        },
+        "world-app.mjs": {
+          "before": "e9158c3fa0c49439252fe0ba94da8f5117a0e7099a24e49d50f8dd9da66ce28c",
+          "after": "8172f3686c99a795fb148d20478f7964b608051b270d959a01793c8f75e299b8"
+        }
+      }
+    }
+  },
+  "loadEvents": [
+    {
+      "name": "load-start",
+      "at": 32510,
+      "hidden": false,
+      "focused": true,
+      "openDialogs": ["worlds-shell-home-dialog", "worlds-shell-missions-dialog"],
+      "id": "desert-expedition-study",
+      "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7"
+    },
+    {
+      "name": "load-validation-done",
+      "at": 33186,
+      "hidden": false,
+      "focused": true,
+      "openDialogs": ["worlds-shell-home-dialog", "worlds-shell-missions-dialog"],
+      "checked": 2062,
+      "elapsedMs": 675.5
+    },
+    {
+      "name": "load-start",
+      "at": 73781,
+      "hidden": false,
+      "focused": true,
+      "openDialogs": ["flight-dialog", "journey-chooser", "worlds-shell-pause-dialog"],
+      "id": "desert-expedition-study",
+      "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d"
+    },
+    {
+      "name": "load-validation-done",
+      "at": 74177,
+      "hidden": false,
+      "focused": true,
+      "openDialogs": ["flight-dialog", "journey-chooser", "worlds-shell-pause-dialog"],
+      "checked": 2050,
+      "elapsedMs": 395.90000000596046
+    },
+    {
+      "name": "load-start",
+      "at": 141948,
+      "hidden": false,
+      "focused": true,
+      "openDialogs": ["flight-dialog", "journey-chooser", "worlds-shell-pause-dialog"],
+      "id": "desert-expedition-study",
+      "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7"
+    },
+    {
+      "name": "load-validation-done",
+      "at": 142355,
+      "hidden": false,
+      "focused": true,
+      "openDialogs": ["flight-dialog", "journey-chooser", "worlds-shell-pause-dialog"],
+      "checked": 2062,
+      "elapsedMs": 407
+    }
+  ],
+  "nativeActions": [
+    "Both saved Desert revisions retained, correct title after each switch, ready/disarmed",
+    "Settings, Controls tab, Back and Escape return to paused flight",
+    "Deliberate Arm starts normal physics; explicit Pause stops flight"
+  ],
+  "baselineObservations": {
+    "retainedInstallMs": 318222,
+    "cursorDeletionMs": 317152,
+    "first256VerifiedFilesMs": 38825,
+    "manualChooserExit": "Baseline remaining verification accelerated after leaving chooser; no code change in this observation"
+  },
+  "limits": [
+    "Sequential single-browser observations, not a controlled benchmark or hardware FPS claim",
+    "Guard comparison keeps old cursor-based storage; no #1432 batching included",
+    "No post-guard installation timing or general storage-performance claim",
+    "Fresh uninstrumented package qualification remains pending"
+  ],
+  "evidence": [
+    {
+      "name": "desert-covered-observer-native-20261015.json",
+      "bytes": 39591,
+      "sha256": "0094de427776056b7ad2688eefebdb698db6982f46d20a24f59404aa5ed7e44a"
+    },
+    {
+      "name": "desert-phase-baseline-exit-recovery-20261015.json",
+      "bytes": 169738,
+      "sha256": "f55c953f77e2467c58d96b23a13fd0bbb2a6e34dc60545202fe0aa271c4c4bff"
+    },
+    {
+      "name": "desert-phase-retained-install-complete-20261015.json",
+      "bytes": 154611,
+      "sha256": "ce06374f39704df6fe01a45c0b2271200d03acd167a5536d95286ef0e2774504"
+    },
+    {
+      "name": "desert-covered-observer-paused-20261015.png",
+      "bytes": 61186,
+      "sha256": "1421e76f24ce31ebd9793b2363165a9086b6cfc54aae91e37b31dce3442dbbac"
+    }
+  ]
+}

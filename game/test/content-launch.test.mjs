@@ -11,6 +11,7 @@ import {
   resolvePackLaunch,
   packLaunchHref,
 } from '../content-launch.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const source = await json('../content/packs/catalog.json');
@@ -74,6 +75,21 @@ test('pack launch rejects unknown, ambiguous and partial routes without acceptin
     assert.throws(() => resolvePackLaunch(new URLSearchParams(query), catalog));
 });
 
+test('pack launch validation follows the active locale', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('uk', { persist: false });
+  assert.throws(
+    () => resolvePackLaunch(new URLSearchParams('pack=unknown'), catalog),
+    /Цей вбудований пакет недоступний/,
+  );
+  setLocale('en', { persist: false });
+  assert.throws(
+    () => resolvePackLaunch(new URLSearchParams('pack=unknown'), catalog),
+    /This bundled pack is not available/,
+  );
+});
+
 test('pack launch href encodes selector choices and autoplay explicitly', () => {
   assert.equal(
     packLaunchHref('./game/', {
@@ -135,7 +151,11 @@ test('separate extras and game expose wired pack and level selectors with exact 
     const encoded = `pack=${pack.id}&amp;campaign=${campaign.id}&amp;level=${level.id}&amp;play=1`;
     const matching = cards.filter((card) => card.includes(`href="../game/?${encoded}"`));
     assert.equal(matching.length, 1, `${pack.name} must have one real first-mission launch card`);
-    assert.ok(matching[0].includes(`<h3>${pack.name}</h3>`));
+    assert.equal(
+      matching[0].match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/)?.[1].trim(),
+      pack.name,
+      'The original title is retained beside its translation marker.',
+    );
     const route = resolvePackLaunch(new URLSearchParams(encoded.replaceAll('&amp;', '&')), {
       ...catalog,
       packs: allPacks,

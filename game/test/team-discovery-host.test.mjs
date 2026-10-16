@@ -5,6 +5,8 @@ import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { TEAM_ARENA_PREFERENCE_KEY } from '../couch/team-arena-preference.mjs';
+import { TEAM_CONTEXTUAL_TEACHING_FORMAT } from '../couch/team-contextual-teaching.mjs';
+import { ENEMY_STATS_KEY } from '../enemy-stats.mjs';
 
 // Actual Team markup, host, prepared originals and simulation. Finite DOM/Image
 // boundaries do not establish native layout, physical devices or public play.
@@ -33,18 +35,28 @@ const settled = (f, state = 'ready') =>
         : status(f).dataset.state === state,
     () => status(f).textContent,
   );
-const started = (f, title) =>
+const prepared = (f, title) =>
   waitFor(
     () => !dialog(f).open && f.$('coop-stage').textContent === title.toUpperCase(),
     () => status(f).textContent,
   );
+async function started(f, title) {
+  await prepared(f, title);
+  await waitFor(() => f.$('coop-overlay').hidden);
+}
 function pause(f) {
   enter(f, f.$('coop-start'));
   f.tap('Escape');
   assert.equal(f.$('coop-overlay').hidden, false);
   assert.match(f.$('coop-overlay-title').textContent, /paused/i);
 }
-const currentImage = (f) => f.drawImages.at(-1);
+const currentImage = (f) => {
+  // Actors are painted after terrain. Match an actual decoded original rather
+  // than assuming the final image command is the arena picture.
+  const image = f.drawImages.findLast((drawn) => f.artwork.calls.decodes.includes(drawn));
+  assert.ok(image, 'The painter draws a decoded arena original.');
+  return image;
+};
 
 test('Team discovery opens through keyboard and Back restores the exact lobby opener', async (t) => {
   const f = await page(t, {
@@ -64,7 +76,7 @@ test('Team discovery opens through keyboard and Back restores the exact lobby op
       .map((button) => button.querySelector('strong').textContent),
     ['First Connection', 'Relay Yard'],
   );
-  assert.equal(f.doc.activeElement.id, 'journey-search');
+  assert.equal(f.doc.activeElement, card(f, 'First Connection'));
   assert.equal(f.$('coop-menu').hidden, false);
   enter(f, f.$('journey-back'));
   assert.equal(dialog(f).open, false);
@@ -73,17 +85,51 @@ test('Team discovery opens through keyboard and Back restores the exact lobby op
   assert.equal(f.$('coop-level').value, 'first-connection');
 });
 
-test('one deliberate Play prepares Relay Yard and starts it without another Start screen', async (t) => {
+test('a Team mission card starts the exact arena with one activation', async (t) => {
   const f = await page(t, options);
+  const actions = f.$('coop-menu').querySelector('.native-menu-actions');
+  assert.equal(f.$('coop-discovery-cancel').parentNode, actions);
+  assert.equal(status(f).parentNode, actions);
   await open(f);
   enter(f, card(f, 'Relay Yard'));
-  await started(f, 'Relay Yard');
+  await prepared(f, 'Relay Yard');
   assert.equal(f.$('coop-menu').hidden, true);
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(currentImage(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   assert.equal(f.$('coop-level').value, 'relay-yard');
-  assert.equal(f.$('coop-clock').textContent, '0:00');
+  const picture = currentImage(f);
+  f.press('KeyD');
+  f.tick(240);
+  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.equal(currentImage(f), picture, 'Direct play retains the admitted picture.');
+  assert.notEqual(f.$('coop-clock').textContent, '0:00');
 });
+
+for (const [title, journey] of [
+  ['Harbor Handoff', 'team-expedition-v1'],
+  ['Expedition Homecoming', 'team-expedition-v1'],
+  ['First contact', 'humanoid-hunt-v1'],
+])
+  test(`Team discovery hands ${title} to its exact remote campaign`, async (t) => {
+    const f = await page(t, options);
+    await open(f);
+    const button = card(f, title);
+    const missionId = button.dataset.missionId;
+    enter(f, button);
+    await waitFor(
+      () => f.visits.length > 0 || /Could not open/.test(f.$('journey-chooser-status').textContent),
+      () => f.$('journey-chooser-status').textContent,
+    );
+    assert.equal(f.visits.length, 1, f.$('journey-chooser-status').textContent);
+    const destination = new URL(f.visits[0]);
+    assert.equal(destination.pathname, '/game/couch/relay-rescue.html');
+    assert.equal(destination.searchParams.get('journey'), journey);
+    assert.equal(destination.searchParams.get('library-mission'), missionId);
+    // A same-mode handoff changes the owning campaign without a cross-mode return.
+    assert.equal(destination.searchParams.get('return'), null);
+    assert.equal(destination.searchParams.get('journey-return'), null);
+    assert.equal(destination.searchParams.size, 2);
+  });
 
 test('a newer Back focus during Play admission prevents preparation and keeps the current setup', async (t) => {
   const f = await page(t, options);
@@ -93,18 +139,19 @@ test('a newer Back focus during Play admission prevents preparation and keeps th
   f.$('coop-discovery-cancel').addEventListener('focusin', () => {
     if (!redirect) return;
     redirect = false;
-    f.$('coop-level').focus();
+    // The arena selector now belongs to Settings; redirect to its visible opener.
+    f.$('coop-settings-open').focus();
   });
   enter(f, card(f, 'Relay Yard'));
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(f.artwork.calls.reads.length, reads);
-  assert.equal(f.doc.activeElement.id, 'coop-level');
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   assert.equal(dialog(f).open, false);
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(f.$('coop-level').value, 'first-connection');
 });
 
-test('successful built-in discovery updates only the existing Team arena bookmark', async (t) => {
+test('successful built-in discovery starts directly and writes only its stats identity and arena bookmark', async (t) => {
   const values = new Map();
   const writes = [];
   const f = await page(t, {
@@ -120,10 +167,26 @@ test('successful built-in discovery updates only the existing Team arena bookmar
         },
       }),
   });
+  assert.deepEqual(
+    writes,
+    [`${ENEMY_STATS_KEY}:writer`],
+    'Opening the host allocates its statistics writer only.',
+  );
   await open(f);
+  assert.deepEqual(
+    writes,
+    [`${ENEMY_STATS_KEY}:writer`],
+    'Browsing missions awards no progress and saves no arena.',
+  );
   enter(f, card(f, 'Relay Yard'));
   await started(f, 'Relay Yard');
-  assert.deepEqual(writes, [TEAM_ARENA_PREFERENCE_KEY]);
+  assert.deepEqual(writes, [`${ENEMY_STATS_KEY}:writer`, TEAM_ARENA_PREFERENCE_KEY]);
+  assert.equal(values.has(ENEMY_STATS_KEY), false, 'Starting awards no enemy defeats.');
+  assert.equal(
+    values.has(TEAM_CONTEXTUAL_TEACHING_FORMAT),
+    false,
+    'No unshown teaching is persisted.',
+  );
   const bookmark = JSON.parse(values.get(TEAM_ARENA_PREFERENCE_KEY));
   assert.equal(bookmark.levelId, 'relay-yard');
   assert.equal(bookmark.packId, COOP_STARTER_PACK.id);
@@ -131,14 +194,18 @@ test('successful built-in discovery updates only the existing Team arena bookmar
 });
 
 test('a bookmark callback with a newer focus choice is not overwritten after accepted Play', async (t) => {
+  const callbackFocus = [];
   const f = await page(t, {
     ...options,
-    beforeImport: ({ install, $ }) =>
+    beforeImport: ({ install, $, doc }) =>
       install('localStorage', {
         value: {
           getItem: () => null,
           setItem(key) {
-            if (key === TEAM_ARENA_PREFERENCE_KEY) $('coop-pause').focus();
+            if (key === TEAM_ARENA_PREFERENCE_KEY) {
+              $('coop-pause').focus();
+              callbackFocus.push(doc.activeElement.id);
+            }
           },
         },
       }),
@@ -146,6 +213,11 @@ test('a bookmark callback with a newer focus choice is not overwritten after acc
   await open(f);
   enter(f, card(f, 'Relay Yard'));
   await started(f, 'Relay Yard');
+  assert.deepEqual(
+    callbackFocus,
+    ['coop-pause'],
+    'The visible Pause action accepted native focus.',
+  );
   assert.equal(f.doc.activeElement.id, 'coop-pause');
   assert.equal(f.$('coop-overlay').hidden, true);
 });
@@ -165,6 +237,8 @@ test('cancelling held preparation keeps the paused attempt and exact picture ava
     },
   });
   pause(f);
+  assert.equal(f.$('coop-discovery-cancel').parentNode, f.$('coop-tools'));
+  assert.equal(status(f).parentNode, f.$('coop-tools'));
   const image = currentImage(f);
   const coverage = f.$('coop-coverage').textContent;
   await open(f, true);
@@ -244,12 +318,12 @@ test('an opened local Team pack stays discoverable after playing a built-in aren
   });
   await f.selectFile(JSON.stringify(pack));
   await open(f);
-  assert.equal(cards(f).length, 16);
+  assert.equal(cards(f).length, 118, '116 current missions and two local routes');
   enter(f, card(f, 'First Connection'));
   await started(f, 'First Connection');
   f.tap('Escape');
   await open(f, true);
-  assert.equal(cards(f).length, 16);
+  assert.equal(cards(f).length, 118, 'Playing a built-in arena retains both local routes');
   enter(f, card(f, 'Local route 2'));
   await waitFor(() => f.$('coop-discard-dialog').open);
   enter(f, f.$('coop-discard-confirm'));

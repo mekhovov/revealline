@@ -1,0 +1,23 @@
+{
+  "format": "revealline-default-build-inspection.v1",
+  "version": "0.142.4",
+  "sourceRevision": null,
+  "inspectedCheckout": "265b7407dcfa4d9835c6e4b4f8d84a645ca2263d",
+  "baseMain": "3f097ad2b921c1626f52388b2acc2c916858bcf8",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "publicationAssessment": "not-performed",
+  "payloadBytesIncludingManifest": 958771488,
+  "files": 2719,
+  "manifestDescriptor": {
+    "path": "manifest.json",
+    "bytes": 406486,
+    "sha256": "912d867116799e6d3b88013385d2963d41f28a0b916716d74de0ba6032a098dc"
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ]
+}

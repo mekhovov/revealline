@@ -2,7 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
-import { authoritativeCheckpoint } from '../replay.mjs';
+import {
+  authoritativeCheckpoint,
+  createRecorder,
+  recordInput,
+  exportReplay,
+  verifyReplay,
+} from '../replay.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { FRESH_SOLO_VISUAL_RELEASE } from '../presentation/fresh-visual-theme.mjs';
 const slot = 'revealline.suspended.dev.v1';
 const ticks = (h, n) => {
@@ -16,6 +23,46 @@ const start = async (h) => {
   h.$('shell-featured').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
 };
+function winOpening(h) {
+  const run = h.rendered.run,
+    picture = h.rendered.backdrop,
+    options = {
+      seed: run.seed,
+      classId: run.classId,
+      turnPolicy: run.turnPolicy,
+      classRecipes: run.classRecipes,
+    },
+    reference = createRun(run.level, options),
+    recorder = createRecorder(run.level, options);
+  assert.equal(run.levelId, 'signal-01');
+  assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
+  // Wait for the patrol to clear the crossing, then make a legal current-speed
+  // cut. The accepted level, actors, artwork and outcome remain untouched.
+  for (let i = 0; i < 180; i++) {
+    recordInput(recorder, {});
+    stepRun(reference, {}, FIXED_DT);
+    h.frame();
+    assert.equal(run.lives, 3);
+    assert.equal(reference.lives, 3);
+  }
+  h.key('ArrowDown');
+  for (let i = 0; i < 469; i++) {
+    recordInput(recorder, { direction: 'down' });
+    stepRun(reference, { direction: 'down' }, FIXED_DT);
+    h.frame();
+    assert.equal(run.lives, 3);
+    assert.equal(reference.lives, 3);
+  }
+  h.key('ArrowDown', false);
+  h.frame(0);
+  assert.equal(run.status, 'won');
+  assert.equal(reference.status, 'won');
+  assert.equal(run.tick, 649);
+  assert.equal(run.lives, 3);
+  assert.equal(h.rendered.backdrop, picture);
+  assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
+  assert.equal(verifyReplay(exportReplay(recorder, reference)).match, true);
+}
 function saved(h) {
   h.$('pause-button').click();
   const value = JSON.parse(h.storage.getItem(slot));
@@ -79,11 +126,7 @@ test('real victory Retry retains visuals and failed Next keeps results before on
   const firstPin = saved(h).visualThemePin;
   h.$('start-button').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
-  h.key('ArrowDown');
-  ticks(h, 460);
-  h.key('ArrowDown', false);
-  h.frame(0);
-  assert.equal(h.rendered.run.status, 'won', 'A full vertical cut wins the actual opening mission');
+  winOpening(h);
   const won = h.rendered.run;
   h.$('retry-button').click();
   await settle(() => {
@@ -93,11 +136,7 @@ test('real victory Retry retains visuals and failed Next keeps results before on
   assert.deepEqual(saved(h).visualThemePin, firstPin);
   h.$('start-button').click();
   await settle(() => h.doc.body.dataset.flightState === 'running');
-  h.key('ArrowDown');
-  ticks(h, 460);
-  h.key('ArrowDown', false);
-  h.frame(0);
-  assert.equal(h.rendered.run.status, 'won');
+  winOpening(h);
   await settle(() =>
     [...h.$('missions').children].every((button) => button.dataset.pictureState !== 'loading'),
   );

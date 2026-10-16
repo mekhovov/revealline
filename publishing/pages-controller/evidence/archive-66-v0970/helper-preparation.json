@@ -1,0 +1,29 @@
+{
+  "status": "VALIDATED_PUBLIC_AUDIT_READY",
+  "donor": "publishing/pages-controller/evidence/archive-65-v0960/ at e9efe3db4d7a6dea7403539b5bff64c97afda2a9",
+  "adaptation": "Archive65\u219266 code-owned archive/version/tree/lock/inventory identities;1121files594897841bytes. Transport, exactURL/MIME/hash, deadlines/retry, authority revalidation and metadata bounds unchanged.",
+  "helperSha256": {
+    "http_audit.py": "62e3252d350f7088bb0fd4205804eae292ccbe52c4e1b010a02cf376804f1df9",
+    "audit_binding.py": "c4dd594c303868a0e4688d8e9fb843d54d73f7d1951513f5a5459d0d3160ea07",
+    "test_http_audit.py": "11a3e1db3f503852a0566c7225696992f5d0957f576e457fbdd8bd4020fb5d2d"
+  },
+  "tests": {
+    "total": 28,
+    "passed": 28,
+    "failed": 0,
+    "log": "helper-tests-final.txt",
+    "logSha256": "b327d5f968f3c459f469a43372eaf795af75680f4d744e6f5189689c9cff47fb"
+  },
+  "capacity": {
+    "freeMetadataGuardBytes": 33554432,
+    "persistedMetadataCapBytes": 29360128,
+    "maxLogLineBytes": 4096,
+    "maxSetupBytes": 3145728,
+    "maxReportBytes": 5242880,
+    "worstCaseBytes": 26755072,
+    "formula": "1121 * (3 attempt rows + 1 result row) * 4096 + 5 MiB report + 3 MiB setup",
+    "payloadPersistence": false,
+    "shortWritesAndENOSPC": "Raise visibly; no partial PASS."
+  },
+  "nativeAcceptance": false
+}

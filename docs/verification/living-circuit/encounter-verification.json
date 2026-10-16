@@ -1,0 +1,74 @@
+{
+  "format": "snake-encounter-verification.v1",
+  "mainBaseline": "e3e1e8b8d3b061a85c77f7bc82159db810dff688",
+  "catalogue": {
+    "before": 120,
+    "after": 144,
+    "added": 24,
+    "revisedFoundation": 33,
+    "revisedField": 14,
+    "newCampaign": "classic-expeditions-v1"
+  },
+  "checks": {
+    "snakeSuite": {
+      "passed": 216,
+      "failed": 0,
+      "scope": "complete classic-snake-*.test.mjs, concurrency 2"
+    },
+    "hostMenus": {
+      "passed": 95,
+      "method": "94/95 broad batch; stale bare-click wait replaced with existing awaited mission activation; affected full Solo file then 5/5"
+    },
+    "controllers": {
+      "passed": 57,
+      "failed": 0
+    },
+    "fieldMissionProofs": 288,
+    "foundationProofs": 66,
+    "ratingSetups": 585,
+    "priorRatingKeysAndBudgetsPreserved": 249,
+    "sampledJammerSetups": 45,
+    "lint": "pass",
+    "validation": "pass",
+    "canonicalSharedProjections": 6,
+    "optionalPackageChecks": {
+      "passed": 9,
+      "failed": 0
+    }
+  },
+  "browser": {
+    "desktop": "same simulation move18 comparison, moving live board at18\u219220 during interference",
+    "mobile": {
+      "viewport": [320, 640],
+      "documentWidth": 320,
+      "teamBoard": [290, 217.5],
+      "effects": "reduced and live",
+      "actions": "actual Orchard Fork Retry\u2192Pause\u2192Choose, looping result replay, Retry/Home visible"
+    },
+    "shortLandscape": {
+      "viewport": [740, 360],
+      "locale": "uk",
+      "surface": "actual Moving Shadow pause menu"
+    },
+    "previewOrigin": "http://127.0.0.1:50359",
+    "userOriginUntouched": "http://127.0.0.1:50355"
+  },
+  "limits": [
+    "Automatic pilot can inspect hidden simulation actors; qualification does not establish human difficulty.",
+    "Nine foundation proofs contain four/five consecutive turning steps; Shared Detour Solo route takes 57.88 seconds. Alternative comfortable routes need player review.",
+    "Fast source-first routes can prevent bursts; slow fixture witnesses demonstrate actual hidden-prey movement.",
+    "No physical controller hardware session or public deployment claimed."
+  ],
+  "integration": {
+    "chapterEnvironmentPR": {
+      "number": 1095,
+      "head": "528bcb83d007b548f58fb281d0051870653a1b92",
+      "state": "open draft; not merged"
+    },
+    "automaticContinuationPR": {
+      "number": 1098,
+      "head": "7e01f7f4cda4443c72304593d3d7173bf0050705",
+      "state": "open; separate transition implementation not merged"
+    }
+  }
+}

@@ -1,0 +1,282 @@
+TAP version 13
+# Subtest: ordinary Solo uses the global remains choice, ignores preview override and changes no paused state
+ok 1 - ordinary Solo uses the global remains choice, ignores preview override and changes no paused state
+  ---
+  duration_ms: 913.908167
+  type: 'test'
+  ...
+# Subtest: Versus reads and changes global remains for both boards without starting either player
+ok 2 - Versus reads and changes global remains for both boards without starting either player
+  ---
+  duration_ms: 1638.81975
+  type: 'test'
+  ...
+# Subtest: Team shares the preference without creating combat mechanics, starting or writing Solo data
+ok 3 - Team shares the preference without creating combat mechanics, starting or writing Solo data
+  ---
+  duration_ms: 120.473458
+  type: 'test'
+  ...
+# Subtest: practice remains affect only painter options through a real combat route and Retry
+    # Subtest: hide
+    ok 1 - hide
+      ---
+      duration_ms: 8744.815791
+      type: 'test'
+      ...
+    # Subtest: show
+    ok 2 - show
+      ---
+      duration_ms: 8594.553959
+      type: 'test'
+      ...
+    1..2
+ok 4 - practice remains affect only painter options through a real combat route and Retry
+  ---
+  duration_ms: 17340.111042
+  type: 'test'
+  ...
+# Subtest: ordinary game ignores preview-remains even when a practice scenario remains in tab storage
+ok 5 - ordinary game ignores preview-remains even when a practice scenario remains in tab storage
+  ---
+  duration_ms: 1087.72675
+  type: 'test'
+  ...
+# Subtest: only one exact, explicitly owned practice query may hide remains
+ok 6 - only one exact, explicitly owned practice query may hide remains
+  ---
+  duration_ms: 0.836208
+  type: 'test'
+  ...
+# Subtest: missing, malformed, unknown and duplicate options retain the usual presentation
+ok 7 - missing, malformed, unknown and duplicate options retain the usual presentation
+  ---
+  duration_ms: 0.325459
+  type: 'test'
+  ...
+# Subtest: reading cosmetic options leaves the query unchanged and returns an immutable choice
+ok 8 - reading cosmetic options leaves the query unchanged and returns an immutable choice
+  ---
+  duration_ms: 0.24675
+  type: 'test'
+  ...
+# Subtest: actual Studio remains control has a native label and translates through the runtime catalog without changing selection
+ok 9 - actual Studio remains control has a native label and translates through the runtime catalog without changing selection
+  ---
+  duration_ms: 22.776
+  type: 'test'
+  ...
+# Subtest: only explicit owned preview choices override global remains
+ok 10 - only explicit owned preview choices override global remains
+  ---
+  duration_ms: 0.121958
+  type: 'test'
+  ...
+# Subtest: edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+ok 11 - edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+  ---
+  duration_ms: 136.472292
+  type: 'test'
+  ...
+# Subtest: edition theater reports unavailable catalog through its ordinary boot status
+ok 12 - edition theater reports unavailable catalog through its ordinary boot status
+  ---
+  duration_ms: 19.681959
+  type: 'test'
+  ...
+# Subtest: real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+ok 13 - real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+  ---
+  duration_ms: 35.533
+  type: 'test'
+  ...
+# Subtest: real theater preserves denied-save intent and its recording across a persisted return
+ok 14 - real theater preserves denied-save intent and its recording across a persisted return
+  ---
+  duration_ms: 14.357875
+  type: 'test'
+  ...
+# Subtest: real theater boot failure retains usable shared reading controls without playback
+ok 15 - real theater boot failure retains usable shared reading controls without playback
+  ---
+  duration_ms: 4.483458
+  type: 'test'
+  ...
+# Subtest: terminal exit during delayed boot retires authority and fences late replay startup
+ok 16 - terminal exit during delayed boot retires authority and fences late replay startup
+  ---
+  duration_ms: 6.082583
+  type: 'test'
+  ...
+# Subtest: history-restored replay controls follow unchanged saved intent without touching playback
+ok 17 - history-restored replay controls follow unchanged saved intent without touching playback
+  ---
+  duration_ms: 14.546334
+  type: 'test'
+  ...
+# Subtest: history-restored replay controls follow unchanged session-only intent without touching playback
+ok 18 - history-restored replay controls follow unchanged session-only intent without touching playback
+  ---
+  duration_ms: 17.027666
+  type: 'test'
+  ...
+# Subtest: recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+ok 19 - recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+  ---
+  duration_ms: 167.343417
+  type: 'test'
+  ...
+# Subtest: Theater adopts global remains without rewriting recordings or advancing a paused replay
+ok 20 - Theater adopts global remains without rewriting recordings or advancing a paused replay
+  ---
+  duration_ms: 10.269208
+  type: 'test'
+  ...
+# Subtest: Versus Settings uses native categories, consumes tab keys once and returns to its opener
+not ok 21 - Versus Settings uses native categories, consumes tab keys once and returns to its opener
+  ---
+  duration_ms: 1764.324125
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/shared-settings-versus.test.mjs:16:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'race-enemy-remains-retry'
+    - 'race-enemy-remains'
+                         ^
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'race-enemy-remains'
+  actual: 'race-enemy-remains-retry'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/shared-settings-versus.test.mjs:49:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: paused Versus keeps both runs and requires explicit Resume after appearance changes
+ok 22 - paused Versus keeps both runs and requires explicit Resume after appearance changes
+  ---
+  duration_ms: 1699.3
+  type: 'test'
+  ...
+# Subtest: Versus quick sound shares the Settings master without starting or replacing a match
+ok 23 - Versus quick sound shares the Settings master without starting or replacing a match
+  ---
+  duration_ms: 1542.894833
+  type: 'test'
+  ...
+# Subtest: modeled controller selects Settings categories and Back preserves its Ready match
+ok 24 - modeled controller selects Settings categories and Back preserves its Ready match
+  ---
+  duration_ms: 1672.149959
+  type: 'test'
+  ...
+# Subtest: Studio slow preview warns once, then accepts later exact-document readiness
+ok 25 - Studio slow preview warns once, then accepts later exact-document readiness
+  ---
+  duration_ms: 0.848875
+  type: 'test'
+  ...
+# Subtest: Studio accepts ready without depending on the iframe load event
+ok 26 - Studio accepts ready without depending on the iframe load event
+  ---
+  duration_ms: 0.113
+  type: 'test'
+  ...
+# Subtest: Studio terminal boot failure settles even after a slow warning
+ok 27 - Studio terminal boot failure settles even after a slow warning
+  ---
+  duration_ms: 0.051166
+  type: 'test'
+  ...
+# Subtest: stale, blank and foreign preview documents cannot report ready
+ok 28 - stale, blank and foreign preview documents cannot report ready
+  ---
+  duration_ms: 0.113333
+  type: 'test'
+  ...
+# Subtest: replaced previews stop before reading or notifying, including queued callbacks
+ok 29 - replaced previews stop before reading or notifying, including queued callbacks
+  ---
+  duration_ms: 0.056833
+  type: 'test'
+  ...
+# Subtest: closing or leaving Studio cancels the owned monitor and late callbacks
+ok 30 - closing or leaving Studio cancels the owned monitor and late callbacks
+  ---
+  duration_ms: 0.085416
+  type: 'test'
+  ...
+# Subtest: inaccessible frame remains unknown and does not throw or claim successful boot
+ok 31 - inaccessible frame remains unknown and does not throw or claim successful boot
+  ---
+  duration_ms: 0.104167
+  type: 'test'
+  ...
+# Subtest: owned practice observes a post-ready render failure without repeating readiness
+ok 32 - owned practice observes a post-ready render failure without repeating readiness
+  ---
+  duration_ms: 0.050958
+  type: 'test'
+  ...
+# Subtest: foreign or replaced practice cannot overwrite an accepted ready status with failure
+ok 33 - foreign or replaced practice cannot overwrite an accepted ready status with failure
+  ---
+  duration_ms: 0.232083
+  type: 'test'
+  ...
+# Subtest: practice render failure before first readiness is visible without a ready flash
+ok 34 - practice render failure before first readiness is visible without a ready flash
+  ---
+  duration_ms: 0.251417
+  type: 'test'
+  ...
+# Subtest: Studio pagehide persisted=false retires pending media without focus or late launch
+ok 35 - Studio pagehide persisted=false retires pending media without focus or late launch
+  ---
+  duration_ms: 53.711667
+  type: 'test'
+  ...
+# Subtest: Studio pagehide persisted=true retires pending media without focus or late launch
+ok 36 - Studio pagehide persisted=true retires pending media without focus or late launch
+  ---
+  duration_ms: 32.529416
+  type: 'test'
+  ...
+# Subtest: Studio BFcache retirement stops post-ready monitoring and deliberate relaunch gets a fresh owner
+ok 37 - Studio BFcache retirement stops post-ready monitoring and deliberate relaunch gets a fresh owner
+  ---
+  duration_ms: 49.939792
+  type: 'test'
+  ...
+# Subtest: Studio exposes the remains option only for a validated enabled Solo mission and remembers its choice
+ok 38 - Studio exposes the remains option only for a validated enabled Solo mission and remembers its choice
+  ---
+  duration_ms: 172.202333
+  type: 'test'
+  ...
+# Subtest: Studio snapshots remains before media awaits and transports it outside byte-identical scenario data
+ok 39 - Studio snapshots remains before media awaits and transports it outside byte-identical scenario data
+  ---
+  duration_ms: 80.757167
+  type: 'test'
+  ...
+# Subtest: Studio ignores the remembered hidden-remains choice for ordinary and disabled previews
+ok 40 - Studio ignores the remembered hidden-remains choice for ordinary and disabled previews
+  ---
+  duration_ms: 57.25225
+  type: 'test'
+  ...
+1..40
+# tests 42
+# suites 0
+# pass 41
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18714.896084

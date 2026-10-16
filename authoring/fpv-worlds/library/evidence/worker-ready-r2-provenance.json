@@ -1,0 +1,226 @@
+{
+  "format": "FPVWorldLibraryReadyEvidence.v1",
+  "admittedSource": "01fc6ad206f6ea7e6dd78921f799e2ed1a773915",
+  "fixtureSHA256": "2fd14f9cdeff55efc53be07fb92c4a327b35e95b930b28aa064aff286a8abbe6",
+  "admittedMembers": 102,
+  "runtimeOverlays": [],
+  "artifacts": [
+    {
+      "file": "worker-ready-r2-failure.json.gz",
+      "rawBytes": 110333,
+      "rawSHA256": "fe6dbcad4763847d31855db84b72a8967e2fa242041552146cebb502dac06ebf",
+      "storedBytes": 13795,
+      "storedSHA256": "f1a14cd2c270f0c8d802cce286975d27042da947fd0332299b67b0b9cc1e2bfa",
+      "gzip": true
+    },
+    {
+      "file": "worker-ready-r2-failure.png",
+      "rawBytes": 85918,
+      "rawSHA256": "6f30db2fa4c8ab7f31eaed0f29d130d01270008125032652c3ee221f07403cf8",
+      "storedBytes": 85918,
+      "storedSHA256": "6f30db2fa4c8ab7f31eaed0f29d130d01270008125032652c3ee221f07403cf8",
+      "gzip": false
+    },
+    {
+      "file": "worker-ready-r2-closed-scenes.json.gz",
+      "rawBytes": 112062,
+      "rawSHA256": "ed5e6cf1947b282e7c9826985f7ce3d35526a774bef1e8077ca835e3514d2a0b",
+      "storedBytes": 13484,
+      "storedSHA256": "988b221890866604be7bcd9cb5980e2d7a569cb1b04f12fb16dfb7ae85303a10",
+      "gzip": true
+    },
+    {
+      "file": "worker-ready-r2-closed-scenes.png",
+      "rawBytes": 74636,
+      "rawSHA256": "fb410aa1184c851d31431e04004648d055f1f49524265b5e0cdf53a6bc6267bf",
+      "storedBytes": 74636,
+      "storedSHA256": "fb410aa1184c851d31431e04004648d055f1f49524265b5e0cdf53a6bc6267bf",
+      "gzip": false
+    },
+    {
+      "file": "worker-ready-r2-fixture.json.gz",
+      "rawBytes": 20757,
+      "rawSHA256": "2fd14f9cdeff55efc53be07fb92c4a327b35e95b930b28aa064aff286a8abbe6",
+      "storedBytes": 6897,
+      "storedSHA256": "1265e6b9719092a68ee0caaa6cc12d91bf9c006bc09481d97f606c94b133a88e",
+      "gzip": true
+    },
+    {
+      "file": "worker-ready-r2-observer.js.gz",
+      "rawBytes": 2862,
+      "rawSHA256": "6a40f2c699d16ed2ef1272a00386581244ab71c93c77061acc1ee3b4214e6231",
+      "storedBytes": 1176,
+      "storedSHA256": "51f4f2f18a25111a1fd34122b0c83c9c5daca85fc19332199f74a5f735714264",
+      "gzip": true
+    },
+    {
+      "file": "worker-ready-r2-browser.mjs.gz",
+      "rawBytes": 21625,
+      "rawSHA256": "4acb651657cb2412766fd0bcba1b36c0a71ba25d2d53124e9da8a7300dc04ec4",
+      "storedBytes": 6722,
+      "storedSHA256": "0e7f777bda1c2c325473da4a15d67bd31739946296654bcdef25b4368f11e183",
+      "gzip": true
+    },
+    {
+      "file": "worker-ready-r2-index.html.gz",
+      "rawBytes": 1456,
+      "rawSHA256": "037cc515e16b723f480c2099aaf24f709aed7c8a96ca6d99c827854852596565",
+      "storedBytes": 770,
+      "storedSHA256": "c82abb756ff5b6d6a8b6385d54f3837ea0a48f2293cdffbf692206ad42f1c778",
+      "gzip": true
+    },
+    {
+      "file": "worker-ready-r2-host.html.gz",
+      "rawBytes": 38594,
+      "rawSHA256": "e59c7e0365792d8f8dd05258377130b5233031cf82b24b0f8d7faf2f895f8b6e",
+      "storedBytes": 9831,
+      "storedSHA256": "c26dfc4860bf303418a7ef6ad6014c4fbd25d5c4126d1041bcaf34dd99c3ec4e",
+      "gzip": true
+    },
+    {
+      "file": "worker-ready-r2-prepare.mjs.gz",
+      "rawBytes": 4813,
+      "rawSHA256": "7d539cf9ee1443b70e55c75e9e5a17d64195aaf10468a5b290daebd1b38867c2",
+      "storedBytes": 1700,
+      "storedSHA256": "307c341d140aa058e7347f209d976c81f558698fd7f683246809bcbc217731e5",
+      "gzip": true
+    }
+  ],
+  "failure": {
+    "status": "failed",
+    "passedChecks": 120,
+    "error": {
+      "message": "Timeout: ordinary selected course ready",
+      "stack": "Error: Timeout: ordinary selected course ready\n    at until (http://127.0.0.1:8934/browser-harness.mjs:46:50)\n    at async execute (http://127.0.0.1:8934/browser-harness.mjs:270:3)"
+    },
+    "statuses": [
+      {
+        "at": 648.5999999940395,
+        "wall": "2026-10-04T16:48:00.814Z",
+        "visibility": "visible",
+        "hidden": false,
+        "focused": true,
+        "active": "BODY",
+        "flightOpen": false,
+        "status": "Preparing scene…",
+        "armDisabled": true,
+        "pauseDisabled": false,
+        "value": "Preparing scene…",
+        "stack": "Error: status write\n    at HTMLParagraphElement.set [as textContent] (http://127.0.0.1:8934/ready-diagnostic.js:32:62)\n    at startFlight (http://127.0.0.1:8934/player/optional-practice/civilian-fpv/world-app.mjs:4721:36)"
+      },
+      {
+        "at": 1660.4000000059605,
+        "wall": "2026-10-04T16:48:01.825Z",
+        "visibility": "visible",
+        "hidden": false,
+        "focused": true,
+        "active": "worlds-shell-action-menu",
+        "flightOpen": true,
+        "status": "Paused. Arm deliberately to continue.",
+        "armDisabled": true,
+        "pauseDisabled": false,
+        "value": "Paused. Arm deliberately to continue.",
+        "stack": "Error: status write\n    at HTMLParagraphElement.set [as textContent] (http://127.0.0.1:8934/ready-diagnostic.js:32:62)\n    at pauseFlight (http://127.0.0.1:8934/player/optional-practice/civilian-fpv/world-app.mjs:3650:38)\n    at advanceFrame (http://127.0.0.1:8934/player/optional-practice/civilian-fpv/world-app.mjs:4411:7)\n    at frame (http://127.0.0.1:8934/player/optional-practice/civilian-fpv/world-app.mjs:4394:7)\n    at http://127.0.0.1:8934/ready-diagnostic.js:49:23"
+      },
+      {
+        "at": 1702.5,
+        "wall": "2026-10-04T16:48:01.868Z",
+        "visibility": "visible",
+        "hidden": false,
+        "focused": true,
+        "active": "worlds-shell-action-menu",
+        "flightOpen": true,
+        "status": "Checking saved best…",
+        "armDisabled": true,
+        "pauseDisabled": false,
+        "value": "Checking saved best…",
+        "stack": "Error: status write\n    at HTMLParagraphElement.set [as textContent] (http://127.0.0.1:8934/ready-diagnostic.js:32:62)\n    at startFlight (http://127.0.0.1:8934/player/optional-practice/civilian-fpv/world-app.mjs:4908:38)"
+      }
+    ],
+    "final": {
+      "at": 30635.5,
+      "wall": "2026-10-04T16:48:30.801Z",
+      "visibility": "visible",
+      "hidden": false,
+      "focused": true,
+      "active": "worlds-shell-action-menu",
+      "flightOpen": true,
+      "status": "Checking saved best…",
+      "armDisabled": true,
+      "pauseDisabled": false
+    },
+    "maxFrameGap": 1012.7999999821186,
+    "dropped": {},
+    "errors": [],
+    "analysis": "The initial pause is the native frame execution-gap guard, with a 1012.8 ms entry gap while visible and focused. The sustained timeout occurs later: Checking saved best remains through 30.6 seconds; no Ready write or dropped status. Empty reference lookup finished (sector status none, no records). A pending renderer.prepare is an inference, not directly observed."
+  },
+  "repeat": {
+    "status": "ready-boundary-observed",
+    "passedChecks": 120,
+    "statuses": [
+      {
+        "at": 414.59999999403954,
+        "wall": "2026-10-04T16:56:39.181Z",
+        "visibility": "visible",
+        "hidden": false,
+        "focused": true,
+        "active": "BODY",
+        "flightOpen": false,
+        "status": "Preparing scene…",
+        "armDisabled": true,
+        "pauseDisabled": false,
+        "value": "Preparing scene…",
+        "stack": "Error: status write\n    at HTMLParagraphElement.set [as textContent] (http://127.0.0.1:8934/ready-diagnostic.js:32:62)\n    at startFlight (http://127.0.0.1:8934/player/optional-practice/civilian-fpv/world-app.mjs:4721:36)"
+      },
+      {
+        "at": 651.3999999761581,
+        "wall": "2026-10-04T16:56:39.418Z",
+        "visibility": "visible",
+        "hidden": false,
+        "focused": true,
+        "active": "worlds-shell-action-menu",
+        "flightOpen": true,
+        "status": "Checking saved best…",
+        "armDisabled": true,
+        "pauseDisabled": false,
+        "value": "Checking saved best…",
+        "stack": "Error: status write\n    at HTMLParagraphElement.set [as textContent] (http://127.0.0.1:8934/ready-diagnostic.js:32:62)\n    at startFlight (http://127.0.0.1:8934/player/optional-practice/civilian-fpv/world-app.mjs:4908:38)"
+      },
+      {
+        "at": 694,
+        "wall": "2026-10-04T16:56:39.461Z",
+        "visibility": "visible",
+        "hidden": false,
+        "focused": true,
+        "active": "worlds-shell-action-menu",
+        "flightOpen": true,
+        "status": "Ready. Choose your controls, then arm.",
+        "armDisabled": true,
+        "pauseDisabled": false,
+        "value": "Ready. Choose your controls, then arm.",
+        "stack": "Error: status write\n    at HTMLParagraphElement.set [as textContent] (http://127.0.0.1:8934/ready-diagnostic.js:32:62)\n    at startFlight (http://127.0.0.1:8934/player/optional-practice/civilian-fpv/world-app.mjs:4939:36)"
+      }
+    ],
+    "final": {
+      "at": 1474.199999988079,
+      "wall": "2026-10-04T16:56:40.241Z",
+      "visibility": "visible",
+      "hidden": false,
+      "focused": true,
+      "active": "world-viewport",
+      "flightOpen": true,
+      "status": "Ready. Choose your controls, then arm.",
+      "armDisabled": false,
+      "pauseDisabled": false
+    },
+    "maxFrameGap": 210.2000000178814,
+    "coordinatorAction": "Closed fourteen known completed GPU fixture tabs before repeating this unchanged diagnostic. No runtime, harness, timeout, focus guard, or automatic resume changes.",
+    "analysis": "Ready was written at 694 ms and remained present at the final 1474.2 ms observation. This operational response is consistent with resource contention, but does not establish an exclusive cause."
+  },
+  "limits": [
+    "Both runs are bounded readiness diagnostics, not full admitted Library acceptance.",
+    "Native observer overhead makes timings diagnostic only; no hardware performance claim.",
+    "Success-path diagnostic ends before the full harness error aggregation; no zero-console claim is inferred from a missing field.",
+    "Original failures and exact Ready predicate are preserved. No additional observer staged pending full unchanged fixture repeat."
+  ]
+}

@@ -56,17 +56,18 @@ npm --prefix platforms/ios run native:open
 
 Select the App target and a simulator, resolve Swift packages, then Run. For a device, configure a real signing team and a bundle identifier you own in Xcode. `local.revealline.playtest` is a scaffold identifier, not a provisioned store identity. Keep the app identifier and `capacitor://localhost` stable once real player data exists. Preserve Xcode's resolved Swift dependency file after resolution: the npm lockfile alone does not freeze all native transitive packages. No signing account, certificate or provisioning profile is supplied here.
 
-The generated marketing version is 0.3.0 and build number starts at 1. Increment the build number for each store upload. The app icon and all three splash slots now use the game's original pixel emblem: an opaque 1024px RGB icon and 2732px RGB splash images. The launch storyboard uses the matching `#091324` background and fits the whole emblem without cropping. Native launch appearance still needs an actual iOS check.
+The generated marketing version is 0.3.0 and build number starts at 1. Increment the build number for each store upload. The app icon and all three splash slots derive from the generated FPV / LINE master: an opaque 1024px RGB icon and 2732px RGB splash images. The launch storyboard retains its `#091324` background and fits the whole icon without cropping. Native launch appearance still needs an actual iOS check.
 
 The same deterministic renderer creates the desktop ICNS. From the repository root, verify or deliberately regenerate the five designated native image files:
 
 ```sh
 node scripts/native-art.mjs --verify
 node scripts/native-art.mjs --write --replace
+node scripts/brand-icons.mjs --verify
 node --test scripts/native-art.test.mjs
 ```
 
-Verification is read-only and is also the command's default. `--write` alone creates missing files but refuses to overwrite differing artwork; `--write --replace` explicitly replaces only these fixed destinations. The script preflights every path, rejects symlinks, and does not accept arbitrary output paths. It regenerates the existing 32px geometry without editing source images. PNG dimensions, RGB data, checksums and ICNS entries are tested; Apple `iconutil` decoded the resulting ICNS on this Mac. These checks do not establish the final appearance inside a running iOS app.
+Verification is read-only and is also the command's default. `--write` alone creates missing files but refuses to overwrite differing artwork; `--write --replace` explicitly replaces only these fixed destinations. The script preflights every path, rejects symlinks, and does not accept arbitrary output paths. Packaging preserves the master composition and uses deterministic nearest-neighbour sizing; it does not redraw the artwork. PNG dimensions, opaque RGB data, checksums and ICNS entries are tested independently. These checks do not establish the final appearance inside a running iOS app.
 
 ## Files and platform boundary
 

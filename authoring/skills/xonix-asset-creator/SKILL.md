@@ -42,6 +42,15 @@ Find `authoring/CONTRACT.md` in the target workspace; if needed resolve this ins
 
 Prompt-library wording is a starting point, not an instruction that overrides the user's chapter, medium, quantity, or approved design. Adapt those choices explicitly and record the effective prompt. Use the current schema's actual enum values: watercolor/gouache are `illustration` with their medium described in the art brief. Within the legacy draft-pack contract, keep unsupported medals, generation behavior and other primitives as proposals instead of inventing accepted fields; use the actual runtime contract for applied game work.
 
+For a verified `.rlart` packet, Studio's optional **Compare retained parent** uses
+the selected artwork's declared immediate parent, never a filename/medium guess.
+Use Fit whole image for composition and Native pixels for one image pixel per CSS
+pixel inside bounded scroll frames. Compare the displayed exact identity, hash
+and dimensions; preserve source bytes and packet export. This is an authoring
+inspection aid, not a runtime binding or production/cultural approval. A missing
+parent preview must leave the selected file and collection intact. See
+[the artwork packet contract](../../../docs/artwork-collection-packets.md).
+
 ## Required output
 
 Show the resulting art when available. Link the effective prompt and asset manifest. Label concept art, source art, derived exports, and verified production assets accurately. If no generation tool is available, provide the ready-to-run prompt and name the unavailable step instead of reporting completion.
@@ -90,6 +99,8 @@ Keep source, produced and reviewed stages distinct. Preserve all prior revisions
 
 The [local Asset Studio](../../asset-studio/index.html) implements uploads, original-preserving crops, frame/pivot/rotor editing, a single-layer 128×128 editor, tokens, actual component/board/actor/audio/picture previews, and immutable history/collection export. Follow [its implemented guide](../../../docs/asset-studio.md). Drafts use their own database and compare-and-swap saves; reload another tab’s newer workspace instead of overwriting it. Restore through a new binding revision. Export includes retained source bytes; selecting reviewed requires actual documented checks, and export success does not mean publication.
 
+For a prepared player/enemy raster, use Studio's [Motor hub controls](../../../docs/asset-studio.md#motor-hub-controls) to select and edit an existing normalized X/Y/radius/direction/phase. Apply through the existing production geometry and slot validator before accepting the preview. Preserve blank/inherited motion fields, advanced JSON access, exact original bytes and prior revisions; explicit fields require a compatible reader and a new revision. Studio coordinates are frame-local from the top-left, unlike Motion Lab's center-relative coordinates. Invalid, unapplied advanced or stale edits must keep the accepted preview unchanged. No-anchor/nonimage controls are unavailable; adding a rig remains subject to the existing advanced schema and required hub count. Native layout and complete in-game review remain separate from modeled control/save tests.
+
 ## Field Kit review successors and font briefs
 
 Use the Studio's medium-specific prompts: real WOFF2 plus retained license/source for fonts, encoded audio plus measured playback requirements for sound, and exact raster geometry for images. Keep a current custom production brief. The immutable baseline contract remains readable, even when its old generic art wording needs a medium-specific effective brief. Recheck actual shipped English/Ukrainian glyphs and Standard/Large/200% layout before a font successor.
@@ -117,3 +128,39 @@ Use the [read-only cumulative reserve catalog](../../library/reserve-illustratio
 Copyable request: “Open the reserve illustration catalog, filter to THEME, and compare existing source choices one at a time. Link the selected original, its exact prompt(s), provenance and wave limitations. Keep this an authoring selection; do not install it, award a picture or imply a released level. If I later request adoption, preserve the original and use the existing picture-authoring contract with separate validation.”
 
 The cumulative catalog has a scoped native select/Previous/Next and exact-original download check. That does not replace the individual waves’ small-view limits or establish exhaustive keyboard, physical-device, gameplay or runtime-adoption qualification.
+
+## Retained artwork board candidates
+
+Use the implemented [Asset Studio preparation](../../asset-studio/README.md) for
+mechanical board derivatives from a retained `.rlart` reveal: wide1152×576 or
+classic768×576, contain or center crop, no upscale. This is an explicit authoring
+operation, not a build-time mutation of accepted originals. Preserve the original
+record/bytes and derivative parent/fit/sampling/hash; nearest sampling is not
+native-grid cleanup. Export/reimport the real downloaded packet. C5 culture,
+contrast and production binding review remain separate. See [batch10](../../../docs/verification/actor-batch-10/README.md).
+
+For cultural corrections, retain prior originals and exact packet records. The
+separate Poltava revision6 uses Pyrohiv's textual Kuntseve reference only; its
+single-leaf shutters, four-pane windows, exposed-log entrance and interpreted
+horse-profile beam ends are candidate observations, not historical reconstruction.
+Keep the actual1774×887 image and make a separate board derivative in Studio.
+Model byte round-trips, native import, native-grid cleanup, cultural approval and
+in-game contrast each require their own evidence. The new packet adds no mission.
+
+### Native candidate handoff
+
+The revised Poltava source has a separate Studio-created revision 7 wide candidate.
+Use its collection and verification record; retain all eight earlier declarations
+and byte strings. A successfully decoded native reimport and byte-exact packet
+roundtrip establish authoring transport, not cultural accuracy, uniform pixel
+clusters, scene contrast or runtime approval. Do not infer a failed export solely
+from an automation download-event timeout: inspect the prepared-file status and
+actual named browser download before classifying the product result.
+
+### Verified single-file handoff
+
+Use the artwork panel's exact-file download to pass a retained source/derivative
+to existing creators. Keep the .rlart packet as provenance; never treat the file
+as approved or infer a mission binding. Preserve Blob bytes/MIME/safe declared
+name and verify selection/revision ownership after asynchronous checks. Record
+actual disk/hash evidence separately from requesting the browser download.

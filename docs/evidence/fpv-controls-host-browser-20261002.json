@@ -1,0 +1,44 @@
+{
+  "format": "FPVHostControlsBrowserEvidence.v1",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "Arm focuses the viewport",
+      "data": true
+    },
+    {
+      "name": "Keyboard throttle lifts the actual lesson drone",
+      "data": {
+        "height": 502,
+        "throttle": 728,
+        "ticks": 109
+      }
+    },
+    {
+      "name": "Keyboard still flies after HUD button takes focus",
+      "data": {
+        "roll": 1211
+      }
+    },
+    {
+      "name": "Pause stops actual flight",
+      "data": true
+    },
+    {
+      "name": "Menu keys cannot advance paused flight",
+      "data": true
+    },
+    {
+      "name": "Expanded guide visibly disables real flight arming",
+      "data": true
+    },
+    {
+      "name": "Opening controls lab keeps host state unchanged",
+      "data": true
+    }
+  ],
+  "limitations": [
+    "Controlled DOM keyboard events; no physical radio acceptance.",
+    "Host player UI exercised through its normal buttons."
+  ]
+}

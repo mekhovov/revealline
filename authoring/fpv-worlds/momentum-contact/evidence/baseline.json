@@ -1,0 +1,573 @@
+{
+  "format": "fpv-hunt-momentum-baseline.v1",
+  "sourceRevision": "2d447bc790bdf3951251c99041c8a918363ece0a",
+  "files": {
+    "optional-practice/civilian-fpv/world-model.mjs": "95b4547019dcc44d2fb7dd426718fe01ee824ad714967a61edf7ccafb0f71ce2",
+    "optional-practice/civilian-fpv/snake-hunt.mjs": "6ae79b5bc2f1d601305f34ec1ee1bb65d935ff2c11428feec96baeedc56d8d05",
+    "docs/evidence/sim-snake-hunt-flight-proofs.json": "1690e742899e19ef784e2bbafb9c1689d1d75b5190f303113030c37e5dad1012"
+  },
+  "courses": [
+    {
+      "id": "snake-hunt-loops-01",
+      "identity": "3b4a1c3fc34c705d"
+    },
+    {
+      "id": "snake-hunt-loops-02",
+      "identity": "cb5af0f8873b2a63"
+    },
+    {
+      "id": "snake-hunt-loops-03",
+      "identity": "4646cf2eb8780f84"
+    },
+    {
+      "id": "snake-hunt-loops-04",
+      "identity": "d154d7194625a062"
+    },
+    {
+      "id": "snake-hunt-loops-05",
+      "identity": "2032ff1d09bb4d10"
+    },
+    {
+      "id": "snake-hunt-loops-06",
+      "identity": "86f62172427c11a0"
+    },
+    {
+      "id": "snake-hunt-weave-01",
+      "identity": "1fd6471e7501cbe6"
+    },
+    {
+      "id": "snake-hunt-weave-02",
+      "identity": "79a1cc4db002c46f"
+    },
+    {
+      "id": "snake-hunt-weave-03",
+      "identity": "5718be4455dbb364"
+    },
+    {
+      "id": "snake-hunt-weave-04",
+      "identity": "5771923bdf896839"
+    },
+    {
+      "id": "snake-hunt-weave-05",
+      "identity": "b79dc21793195b8a"
+    },
+    {
+      "id": "snake-hunt-weave-06",
+      "identity": "31dd3d0c1307edab"
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "identity": "7a0b520c505b369c"
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "identity": "32ddc2e3772c67c3"
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "identity": "4bb975c0a6c13095"
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "identity": "98231d4fb2bab9aa"
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "identity": "f3c76ffd96e59d5f"
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "identity": "a8158db3a041cf40"
+    },
+    {
+      "id": "snake-hunt-chase-01",
+      "identity": "29d5f9a1eee0c54f"
+    },
+    {
+      "id": "snake-hunt-chase-02",
+      "identity": "7d2187cbef14db64"
+    },
+    {
+      "id": "snake-hunt-chase-03",
+      "identity": "01b9494dd4385932"
+    },
+    {
+      "id": "snake-hunt-chase-04",
+      "identity": "1d9fd67d61c58ea5"
+    },
+    {
+      "id": "snake-hunt-chase-05",
+      "identity": "8012b94f01055490"
+    },
+    {
+      "id": "snake-hunt-chase-06",
+      "identity": "c91ff32dfaa62cd9"
+    },
+    {
+      "id": "snake-hunt-interception-loop-intercept",
+      "identity": "87fde9899f3423ba"
+    },
+    {
+      "id": "snake-hunt-interception-two-return-lanes",
+      "identity": "5aa29fc9c2ba76ef"
+    },
+    {
+      "id": "snake-hunt-interception-corner-approach",
+      "identity": "123e730a32e8b2d0"
+    },
+    {
+      "id": "snake-hunt-interception-crossing-patrols",
+      "identity": "0af9c00724097fdb"
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "identity": "e4f72e7ef2119926"
+    },
+    {
+      "id": "snake-hunt-interception-staggered-interception",
+      "identity": "1acc61b450d8adee"
+    },
+    {
+      "id": "snake-hunt-route-choices-warehouse-return",
+      "identity": "9586a414f8d7e715"
+    },
+    {
+      "id": "snake-hunt-route-choices-courtyard-approaches",
+      "identity": "0767d7a495801f82"
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "identity": "62580d92ae17749e"
+    },
+    {
+      "id": "snake-hunt-route-choices-boundary-cutback",
+      "identity": "acdb5b6cb78fd27f"
+    },
+    {
+      "id": "snake-hunt-route-choices-cross-route-choice",
+      "identity": "f4d190b08a35083f"
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "identity": "dc83846a2b0b4d08"
+    },
+    {
+      "id": "snake-hunt-ground-routes-low-pass-depot",
+      "identity": "ebc583128e1cc807"
+    },
+    {
+      "id": "snake-hunt-ground-routes-split-yard-return",
+      "identity": "7e783801753dd500"
+    },
+    {
+      "id": "snake-hunt-ground-routes-crossing-arrivals",
+      "identity": "22dfa2bb72ff1f5b"
+    },
+    {
+      "id": "snake-hunt-ground-routes-shelter-arc",
+      "identity": "4c28fb8fe462cfdc"
+    },
+    {
+      "id": "snake-hunt-ground-routes-freight-slalom",
+      "identity": "2b037eb18b810f1f"
+    },
+    {
+      "id": "snake-hunt-ground-routes-forked-depot",
+      "identity": "a682f8b8a384a380"
+    },
+    {
+      "id": "snake-hunt-approach-windows-low-roof-window",
+      "identity": "c493212fc881f7ea"
+    },
+    {
+      "id": "snake-hunt-approach-windows-roofline-exchange",
+      "identity": "2c507fd99c33913e"
+    },
+    {
+      "id": "snake-hunt-approach-windows-return-slot",
+      "identity": "46ac9c8522e311d4"
+    },
+    {
+      "id": "snake-hunt-approach-windows-staggered-roofs",
+      "identity": "1d49ebd2e6260507"
+    },
+    {
+      "id": "snake-hunt-approach-windows-window-chain",
+      "identity": "4d86d994066e593e"
+    },
+    {
+      "id": "snake-hunt-approach-windows-three-yard-finale",
+      "identity": "3a59b447f6ecb47b"
+    },
+    {
+      "id": "native-pursuit-refuge-return",
+      "identity": "cb0399429b973f68"
+    },
+    {
+      "id": "native-pursuit-meeting-yard",
+      "identity": "b6d7b83bfa3cffbd"
+    },
+    {
+      "id": "native-pursuit-runner-court",
+      "identity": "1c2f4e12f6cab75c"
+    },
+    {
+      "id": "native-pursuit-burst-lanes",
+      "identity": "9112756abe5f6643"
+    },
+    {
+      "id": "native-pursuit-refuge-return",
+      "identity": "b8e39faef6189918"
+    },
+    {
+      "id": "native-pursuit-switchback-crossing",
+      "identity": "148b660f5ae3bea1"
+    },
+    {
+      "id": "native-pursuit-meeting-yard",
+      "identity": "bf364ae9edd1d98f"
+    },
+    {
+      "id": "native-pursuit-armor-windows",
+      "identity": "8c8d4d94ea6c2f13"
+    },
+    {
+      "id": "adventure-coast-01",
+      "identity": "d393d9dc2cdbf8ac"
+    },
+    {
+      "id": "adventure-coast-02",
+      "identity": "3b4dfcf92ac24b24"
+    },
+    {
+      "id": "adventure-coast-03",
+      "identity": "d4e57d46b263b9b3"
+    },
+    {
+      "id": "adventure-coast-04",
+      "identity": "210391f9a173f079"
+    },
+    {
+      "id": "adventure-coast-05",
+      "identity": "923d46f923372d2d"
+    },
+    {
+      "id": "adventure-quarry-01",
+      "identity": "3fa340eba3f435b4"
+    },
+    {
+      "id": "adventure-quarry-02",
+      "identity": "6d4d3cd2ff691c81"
+    },
+    {
+      "id": "adventure-quarry-03",
+      "identity": "9a113e46e3713a55"
+    },
+    {
+      "id": "adventure-quarry-04",
+      "identity": "1caf2b5b48a5bdd2"
+    },
+    {
+      "id": "adventure-quarry-05",
+      "identity": "a7cbbf241ab8c431"
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "identity": "637c54bc7f16fbad"
+    },
+    {
+      "id": "adventure-rooftops-02",
+      "identity": "6b01dcda04f018d9"
+    },
+    {
+      "id": "adventure-rooftops-03",
+      "identity": "7c70b3d832650381"
+    },
+    {
+      "id": "adventure-rooftops-04",
+      "identity": "5ed1fecffb664a97"
+    },
+    {
+      "id": "adventure-rooftops-05",
+      "identity": "4003a54d1fd34302"
+    },
+    {
+      "id": "adventure-orchard-01",
+      "identity": "39243be8ab62510e"
+    },
+    {
+      "id": "adventure-orchard-02",
+      "identity": "1c45351e324ce4f8"
+    },
+    {
+      "id": "adventure-orchard-03",
+      "identity": "b1ab510e63c8bb46"
+    },
+    {
+      "id": "adventure-orchard-04",
+      "identity": "66d8d85351118e23"
+    },
+    {
+      "id": "adventure-orchard-05",
+      "identity": "53fcb2e424178960"
+    },
+    {
+      "id": "adventure-solar-farm-01",
+      "identity": "b77f58c7950920dd"
+    },
+    {
+      "id": "adventure-solar-farm-02",
+      "identity": "1f47af7d5f8a2e2f"
+    },
+    {
+      "id": "adventure-solar-farm-03",
+      "identity": "bb72971048dde3c3"
+    },
+    {
+      "id": "adventure-solar-farm-04",
+      "identity": "1c63fbf497207a55"
+    },
+    {
+      "id": "adventure-solar-farm-05",
+      "identity": "db63feaa5ca42699"
+    },
+    {
+      "id": "adventure-rail-depot-01",
+      "identity": "0ee57e4f5ae6e36a"
+    },
+    {
+      "id": "adventure-rail-depot-02",
+      "identity": "d47ea721585bd9a1"
+    },
+    {
+      "id": "adventure-rail-depot-03",
+      "identity": "214fcba8a95ee419"
+    },
+    {
+      "id": "adventure-rail-depot-04",
+      "identity": "eb40f955ccd4288b"
+    },
+    {
+      "id": "adventure-rail-depot-05",
+      "identity": "229a0544f2a84658"
+    },
+    {
+      "id": "woodland-01",
+      "identity": "1c47c14d883b740f"
+    },
+    {
+      "id": "woodland-02",
+      "identity": "eb1d529b3d3e00a0"
+    },
+    {
+      "id": "woodland-03",
+      "identity": "c56634122985257f"
+    },
+    {
+      "id": "woodland-04",
+      "identity": "816eb9ccbee739d6"
+    },
+    {
+      "id": "woodland-05",
+      "identity": "6ac551684372a2d6"
+    },
+    {
+      "id": "woodland-06",
+      "identity": "2103471b771e85f4"
+    },
+    {
+      "id": "woodland-07",
+      "identity": "284f18928f5e8d4b"
+    },
+    {
+      "id": "woodland-08",
+      "identity": "24b24db9621baec9"
+    },
+    {
+      "id": "courtyard-01",
+      "identity": "12fe004c06475577"
+    },
+    {
+      "id": "courtyard-02",
+      "identity": "72f2754a35002534"
+    },
+    {
+      "id": "courtyard-03",
+      "identity": "f7065fd14eb2f7b5"
+    },
+    {
+      "id": "courtyard-04",
+      "identity": "8ec54c3b11e729cd"
+    },
+    {
+      "id": "courtyard-05",
+      "identity": "17f7577ed3a93f23"
+    },
+    {
+      "id": "courtyard-06",
+      "identity": "5691d8d404d3a9a8"
+    },
+    {
+      "id": "courtyard-07",
+      "identity": "406edf13dca1efa3"
+    },
+    {
+      "id": "courtyard-08",
+      "identity": "7984cad0355a7c02"
+    },
+    {
+      "id": "warehouse-01",
+      "identity": "8bcf631f885754bc"
+    },
+    {
+      "id": "warehouse-02",
+      "identity": "c2fa91b3230377aa"
+    },
+    {
+      "id": "warehouse-03",
+      "identity": "87bb468d38498e04"
+    },
+    {
+      "id": "warehouse-04",
+      "identity": "02d9a79166ddda7f"
+    },
+    {
+      "id": "warehouse-05",
+      "identity": "0913f4dd9f2bd83b"
+    },
+    {
+      "id": "warehouse-06",
+      "identity": "cffa6dfd26f1e843"
+    },
+    {
+      "id": "warehouse-07",
+      "identity": "e712b7ba20610cc5"
+    },
+    {
+      "id": "warehouse-08",
+      "identity": "48d618aa4a97e0f4"
+    },
+    {
+      "id": "stadium-01",
+      "identity": "1cf288d48cefed0d"
+    },
+    {
+      "id": "stadium-02",
+      "identity": "354a431b29f3dc22"
+    },
+    {
+      "id": "stadium-03",
+      "identity": "879c469c26e9a62a"
+    },
+    {
+      "id": "stadium-04",
+      "identity": "0296096807fc10f2"
+    },
+    {
+      "id": "stadium-05",
+      "identity": "d79d1eb302e3b80d"
+    },
+    {
+      "id": "stadium-06",
+      "identity": "aaa95a1d07144626"
+    },
+    {
+      "id": "stadium-07",
+      "identity": "201d98181c7b146f"
+    },
+    {
+      "id": "stadium-08",
+      "identity": "092787ddb12b8d75"
+    },
+    {
+      "id": "container-yard-01",
+      "identity": "1bed23119c5fb82b"
+    },
+    {
+      "id": "container-yard-02",
+      "identity": "8b75f2fd5817aa83"
+    },
+    {
+      "id": "container-yard-03",
+      "identity": "988a786656816ea8"
+    },
+    {
+      "id": "container-yard-04",
+      "identity": "bd60fadc69b39d69"
+    },
+    {
+      "id": "container-yard-05",
+      "identity": "b22648d12041a47a"
+    },
+    {
+      "id": "container-yard-06",
+      "identity": "42550035d6485211"
+    },
+    {
+      "id": "container-yard-07",
+      "identity": "e6bc433f2ee2658b"
+    },
+    {
+      "id": "container-yard-08",
+      "identity": "192c5446d4ebe5d8"
+    },
+    {
+      "id": "garage-01",
+      "identity": "4ffd496ad72c79b0"
+    },
+    {
+      "id": "garage-02",
+      "identity": "747536f144c43fbc"
+    },
+    {
+      "id": "garage-03",
+      "identity": "da0ccb9ce6929f92"
+    },
+    {
+      "id": "garage-04",
+      "identity": "5d2255a5c90168e1"
+    },
+    {
+      "id": "garage-05",
+      "identity": "40b43e3a1e06d341"
+    },
+    {
+      "id": "garage-06",
+      "identity": "5c04355c6c1364ca"
+    },
+    {
+      "id": "garage-07",
+      "identity": "eab2870679a1696c"
+    },
+    {
+      "id": "garage-08",
+      "identity": "3bd218162e169abe"
+    }
+  ],
+  "replays": [
+    {
+      "kind": "all-catches",
+      "finalStateIdentity": "cbde57f921e595d7",
+      "status": "complete",
+      "ticks": 1232
+    },
+    {
+      "kind": "deliberate-tail-contact",
+      "finalStateIdentity": "2420615982e6b957",
+      "status": "failed",
+      "ticks": 1007
+    },
+    {
+      "kind": "pulses-do-not-catch",
+      "finalStateIdentity": "d99d1101bfc8519a",
+      "status": "active",
+      "ticks": 60
+    },
+    {
+      "kind": "wrong-order-contact",
+      "finalStateIdentity": "b396d2025885f3c6",
+      "status": "active",
+      "ticks": 60
+    }
+  ]
+}

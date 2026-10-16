@@ -1,9 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { componentPreview } from '../../authoring/asset-studio/component-specimens.mjs';
+import { setLocale } from '../i18n/index.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 const slots = createDefaultThemeBundle().slots;
+test.after(() => setLocale('en', { persist: false }));
 const draw = (id, state, file = false) => {
   const document = new Document(),
     surface = document.createElement('div');
@@ -21,6 +23,13 @@ const draw = (id, state, file = false) => {
 };
 
 test('component input specimens use native kinds, preserve selected state, and label errors', () => {
+  const names = {
+    checkbox: 'checkbox',
+    radio: 'radio button',
+    toggle: 'toggle',
+    slider: 'slider',
+    text: 'text field',
+  };
   for (const [kind, type] of [
     ['checkbox', 'checkbox'],
     ['radio', 'radio'],
@@ -31,7 +40,7 @@ test('component input specimens use native kinds, preserve selected state, and l
     const surface = draw(`ui.input.${kind}`, 'selected', true),
       input = surface.querySelector('input');
     assert.equal(input.type, type);
-    assert.equal(input.getAttribute('aria-label'), `Component specimen ${kind}`);
+    assert.equal(input.getAttribute('aria-label'), `Component specimen: ${names[kind]}`);
     assert.equal(input.style.borderImageWidth, '6px 5px 7px 4px');
     if (['checkbox', 'radio', 'toggle'].includes(kind)) {
       assert.equal(input.checked, true);
@@ -158,4 +167,21 @@ test('chip specimens toggle locally and a disabled chip preserves its native sta
   const disabled = draw('ui.button.chip', 'disabled').querySelector('button');
   disabled.click();
   assert.equal(disabled.getAttribute('aria-pressed'), 'false');
+});
+
+test('component specimens update their text and accessibility labels when the locale changes', () => {
+  setLocale('en', { persist: false });
+  const tabs = draw('ui.button.tab', 'selected'),
+    tabList = tabs.querySelector('[role="tablist"]');
+  assert.equal(tabList.getAttribute('aria-label'), 'Component category specimen');
+
+  setLocale('uk', { persist: false });
+  const textInput = draw('ui.input.text', 'error'),
+    input = textInput.querySelector('input');
+  assert.equal(input.getAttribute('placeholder'), 'Позивний пілота');
+  assert.equal(input.getAttribute('aria-label'), 'Зразок компонента: текстове поле');
+  assert.equal(tabList.getAttribute('aria-label'), 'Зразок категорій компонентів');
+  assert.match(textInput.textContent, /Помилка перевірки зразка/);
+  assert.match(tabs.textContent, /Керування/);
+  assert.match(tabs.textContent, /Аудіо/);
 });

@@ -1,0 +1,734 @@
+import { pursuitRoster } from '../hunt/pursuit-goals.mjs';
+import {
+  REWARD_BOARD_SECONDS,
+  REWARD_STORY_SECONDS,
+  advanceRewardAge,
+  animateRewardArrival,
+} from '../ui/reward-arrival.mjs';
+import { advanceCelebration, celebrationFrame, drawCelebration } from '../ui/celebration.mjs';
+import { createCreatorStore, loadInstalledCreatorBundle } from './installed.mjs';
+import {
+  createCreatorRuntime,
+  creatorAttemptKey,
+  creatorCampaignDestination,
+  creatorEarnedMissionId,
+  creatorProfileKey,
+} from './runtime.mjs';
+import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
+import { attachInput } from '../ui/input.mjs';
+import { FIXED_DT } from '../core/index.mjs';
+import { createJourneyProfileStore } from '../journey/profile.mjs';
+import { claimProfileWriter } from '../profile-writer.mjs';
+import { SESSION_STORAGE_BYTES } from '../sessions.mjs';
+import { downloadCreatorFile } from './download.mjs';
+import { createCreatorVictoryStoryHost } from './victory-story-host.mjs';
+import { createCreatorPlayerVictoryStory } from './player-victory-story.mjs';
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { attachCreatorPlayerNavigation } from './player-navigation.mjs';
+import { attachCreatorPlayerMenu } from './player-menu.mjs';
+import { createRunningEnemyPreferences } from '../hunt/running-enemy-preferences.mjs';
+import { huntDefinition } from '../hunt/running-enemy-definition.mjs';
+import { mountRunningEnemyControls } from '../ui/running-enemy-controls.mjs';
+import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
+import { attachHuntStatus } from '../ui/hunt-status.mjs';
+
+const $ = (id) => document.getElementById(id);
+const status = (message, error = false) => {
+  localizedText($('status'), message);
+  $('status').classList.toggle('error', error);
+  if (error) $('status').hidden = false;
+  localizedText($('creator-settings-status'), error ? message : '');
+  $('creator-settings-status').hidden = !error;
+};
+const fail = (error) =>
+  status(error.message || localizedMessage('errors:creator.operationFailed'), true);
+const store = createCreatorStore();
+const search = new URLSearchParams(location.search),
+  edition = search.get('edition'),
+  requestedMissionId = search.get('mission');
+let runtime,
+  painter,
+  input,
+  profile,
+  lease,
+  pack,
+  paused = true,
+  busy = true,
+  ended = false,
+  savedRaw = null,
+  accumulator = 0,
+  previousTime = null,
+  frameId,
+  lastSaveTick = 0,
+  pictureURL,
+  pictureSha256,
+  storyPlayer,
+  earnedCelebration,
+  pendingReward = null,
+  presentingReward = false,
+  startMissionId = null,
+  nextMissionId = null,
+  activationEpoch = 0;
+const saveKey = creatorAttemptKey(edition);
+const runningEnemyPreferences = createRunningEnemyPreferences();
+let menu;
+const playerMenu = attachCreatorPlayerMenu({
+  getState: () => ({
+    busy,
+    ready: !!runtime,
+    paused,
+    ended,
+    presenting: presentingReward,
+    savedRaw,
+    pack,
+    attempt: runtime?.current(),
+    missionId: startMissionId,
+    missionOrder: runtime?.missionOrder,
+  }),
+  onInputReset: () => {
+    activationEpoch++;
+    menu?.refresh();
+  },
+  onChooseMission: (missionId) =>
+    operation(async (epoch) => {
+      if (!runtime.missionOrder.includes(missionId))
+        throw new Error(t('errors:creator.chooseBoundedAttempt'));
+      await adoptDisplay(
+        await runtime.start({
+          missionId,
+          difficulty: $('difficulty').value,
+          turnPolicy: $('steering').value,
+          runningEnemies: runningEnemyPreferences.snapshot().enabled,
+          runningEnemyStyle: runningEnemyPreferences.snapshot().style,
+        }),
+        true,
+        epoch,
+      );
+    }),
+});
+const runningEnemyControls = mountRunningEnemyControls({
+  container: $('creator-panel-gameplay'),
+  preferences: runningEnemyPreferences,
+  getAcceptedStyle: () =>
+    runtime?.current() ? (runtime.current().run.level.pursuit ? 'varied' : 'original') : null,
+  getAcceptedActors: () => pursuitRoster(runtime?.current()?.run.level),
+  getCurrentEnabled: () => {
+    const current = runtime?.current();
+    return current ? !!huntDefinition(current.run.level) : null;
+  },
+  getAcceptedEnabled: () => runtime?.current()?.selection.runningEnemies ?? null,
+  onRestart: () =>
+    playerMenu.request(() =>
+      operation(async () => {
+        pause();
+        const epoch = activationEpoch;
+        await adoptDisplay(
+          await runtime.start({
+            ...runtime.current().selection,
+            runningEnemies: runningEnemyPreferences.snapshot().enabled,
+            runningEnemyStyle: runningEnemyPreferences.snapshot().style,
+          }),
+          true,
+          epoch,
+        );
+      }),
+    ),
+});
+// Use the same cosmetic preference owners as Solo and Versus. These controls
+// change presentation only; the running-enemy choice is accepted at launch.
+const remainsLabel = document.createElement('label');
+remainsLabel.className = 'settings-check';
+const remainsInput = document.createElement('input');
+remainsInput.type = 'checkbox';
+remainsInput.id = 'creator-enemy-remains';
+remainsInput.setAttribute('aria-describedby', 'creator-enemy-remains-hint');
+const remainsText = document.createElement('span');
+localizedText(remainsText, localizedMessage('common:preferences.enemyRemains'));
+remainsLabel.append(remainsInput, remainsText);
+const remainsHint = document.createElement('p');
+remainsHint.id = 'creator-enemy-remains-hint';
+remainsHint.className = 'micro-note';
+localizedText(remainsHint, localizedMessage('common:preferences.enemyRemainsHint'));
+const remainsStatus = document.createElement('p');
+remainsStatus.id = 'creator-enemy-remains-status';
+remainsStatus.className = 'micro-note';
+remainsStatus.setAttribute('role', 'status');
+remainsStatus.hidden = true;
+const remainsRetry = document.createElement('button');
+remainsRetry.id = 'creator-enemy-remains-retry';
+remainsRetry.type = 'button';
+remainsRetry.hidden = true;
+localizedText(remainsRetry, localizedMessage('common:preferences.retryEncounterSave'));
+$('creator-panel-display').append(remainsLabel, remainsHint, remainsStatus, remainsRetry);
+const encounterDisplay = attachEncounterDisplayControls({ prefix: 'creator-' });
+const huntFeedback = document.createElement('div');
+huntFeedback.id = 'creator-hunt-feedback';
+$('hud').after(huntFeedback);
+const huntStatus = attachHuntStatus({ container: huntFeedback, mode: 'solo' });
+menu = attachCreatorPlayerNavigation({
+  getScope: () =>
+    busy
+      ? 'creator-busy'
+      : !runtime
+        ? 'creator-error'
+        : document.body.dataset.earnedView === 'on'
+          ? 'creator-earned-media'
+          : ended
+            ? 'creator-result'
+            : paused
+              ? 'creator-menu'
+              : 'flight',
+  getDefaultFocus: () =>
+    document.body.dataset.earnedView === 'on' ? $('earned-continue') : playerMenu.primary(),
+  getRoot: () => (document.body.dataset.earnedView === 'on' ? $('earned') : playerMenu.root()),
+  onBack: () => {
+    if (document.body.dataset.earnedView === 'on') {
+      $('earned-continue').click();
+      return true;
+    }
+    return playerMenu.back();
+  },
+});
+function persistAttempt() {
+  const attempt = runtime?.current();
+  if (!attempt || !['running', 'respawning'].includes(attempt.run.status)) return;
+  try {
+    if (!lease?.writable) throw new Error(lease?.reason || t('errors:creator.savingUnavailable'));
+    const saved = JSON.stringify(runtime.suspend());
+    if (new TextEncoder().encode(saved).length > SESSION_STORAGE_BYTES)
+      throw new Error(t('errors:creator.attemptSaveBudgetExceeded'));
+    if (localStorage.getItem(saveKey) !== savedRaw)
+      throw new Error(t('errors:creator.attemptChangedInAnotherTab'));
+    localStorage.setItem(saveKey, saved);
+    savedRaw = saved;
+    $('save-status').dataset.error = 'false';
+    localizedText($('save-status'), localizedMessage('interface:creator.attemptSavedOnDevice'));
+  } catch (error) {
+    $('save-status').dataset.error = 'true';
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.attemptSaveFailed', { error: error.message }),
+    );
+  }
+}
+function pause() {
+  activationEpoch++;
+  if (!runtime?.current() || paused) return;
+  paused = true;
+  input?.clear();
+  runtime.pause();
+  accumulator = 0;
+  persistAttempt();
+  localizedText($('pause'), localizedMessage('common:actions.resume'));
+  status(localizedMessage('interface:creator.pausedReady'));
+  playerMenu.refresh();
+  menu.refresh({ focus: true });
+}
+function setRunning() {
+  if (document.hidden || document.hasFocus?.() === false) return;
+  paused = false;
+  input.clear();
+  previousTime = null;
+  accumulator = 0;
+  playerMenu.refresh();
+  runningEnemyControls.refresh();
+  menu.refresh();
+  localizedText($('pause'), localizedMessage('common:actions.pause'));
+  $('arena').focus();
+  status(localizedMessage('interface:creator.closeLineToReveal'));
+}
+function updateControls() {
+  const hasRun = !!runtime?.current();
+  $('start').disabled = busy || !runtime || !startMissionId || (hasRun && !ended);
+  $('resume').hidden = !savedRaw || hasRun;
+  $('resume').disabled = busy;
+  $('pause').disabled = busy || !hasRun || ended;
+  $('retry').disabled = busy || !hasRun;
+  $('export-attempt').disabled = busy || !hasRun || ended;
+  $('difficulty').disabled = busy || (hasRun && !ended);
+  $('steering').disabled = busy || (hasRun && !ended);
+  $('import-attempt').disabled = busy || !runtime;
+  $('import-progress').disabled = busy || !profile;
+  $('export-progress').disabled = busy || !profile;
+  $('next').disabled = busy;
+  playerMenu.refresh();
+  runningEnemyControls.refresh();
+  menu.refresh();
+}
+async function operation(action) {
+  if (busy) return;
+  busy = true;
+  updateControls();
+  try {
+    await action(activationEpoch);
+  } catch (error) {
+    fail(error);
+  } finally {
+    busy = false;
+    updateControls();
+  }
+}
+async function showEarned(preferredMissionId = null) {
+  const project = pack.manifest.content.project;
+  const progress = profile.snapshot(),
+    clears = progress.clears.solo;
+  preferredMissionId ??= creatorEarnedMissionId(runtime.missionOrder, progress);
+  const missions = preferredMissionId
+    ? [
+        project.missions.find(({ id }) => id === preferredMissionId),
+        ...project.missions.filter(({ id }) => id !== preferredMissionId),
+      ]
+    : project.missions;
+  const mission = missions.find(
+    (candidate) => candidate && clears[candidate.id]?.gameplayId.startsWith(`${pack.editionId}:`),
+  );
+  if (!mission) {
+    $('earned').hidden = true;
+    return null;
+  }
+  const receipt = clears[mission.id];
+  const picture = project.assets.find(({ id }) => id === mission.presentation.backgroundAssetId);
+  const runtimePicture = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
+  if (!picture || !runtimePicture) throw new Error(t('errors:creator.earnedPictureMissing'));
+  if (pictureSha256 !== picture.sha256) {
+    if (pictureURL) URL.revokeObjectURL(pictureURL);
+    pictureURL = URL.createObjectURL(runtimePicture.blob);
+    pictureSha256 = picture.sha256;
+  }
+  $('earned-picture').src = pictureURL;
+  $('earned-picture').alt = picture.alt;
+  await $('earned-picture').decode?.();
+  if ($('earned-picture').parentElement !== $('creator-story-stage'))
+    $('creator-story-stage').replaceChildren($('earned-picture'));
+  localizedText($('earned-caption'), () =>
+    t('interface:creator.earnedPictureCaption', {
+      mission: mission.name,
+      difficulty: t(`interface:missionLibrary.difficulty.${receipt.difficulty}`),
+      credit: pack.manifest.content.credits.picture,
+    }),
+  );
+  $('earned').hidden = false;
+  return Object.freeze({
+    mission,
+    posterAsset: picture,
+    posterElement: $('earned-picture'),
+  });
+}
+function setEarnedView(active) {
+  document.body.dataset.earnedView = active ? 'on' : 'off';
+  $('creator-home').inert = active;
+  $('arena').inert = active;
+  document.querySelector('.touch-controls').inert = active;
+}
+async function adoptDisplay(attempt, running, epoch) {
+  pendingReward = null;
+  presentingReward = false;
+  setEarnedView(false);
+  storyPlayer?.reset();
+  painter.setLevel(attempt.run.level, { seed: attempt.run.seed });
+  // This standalone player exposes authored edition artwork, not a shared
+  // appearance selector. Ambient review/preferences must not reinterpret it.
+  painter.setAttemptAppearance(null);
+  await painter.setLook(attempt.theme, 'neutral-marker');
+  const size = boardPaintSizeForRun(attempt.run);
+  $('board').width = size.width;
+  $('board').height = size.height;
+  $('title').textContent =
+    `${pack.review.name} · ${attempt.manifest.name ?? attempt.run.level.name}`;
+  $('difficulty').value = attempt.selection.difficulty;
+  $('steering').value = attempt.selection.turnPolicy;
+  ended = false;
+  startMissionId = attempt.manifest.missionId;
+  nextMissionId = null;
+  paused = true;
+  lastSaveTick = attempt.run.tick;
+  if (profile.snapshot().cursors.solo !== attempt.manifest.missionId)
+    profile.record({ type: 'select', mode: 'solo', missionId: attempt.manifest.missionId });
+  $('next').hidden = true;
+  persistAttempt();
+  if (
+    running &&
+    epoch === activationEpoch &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    !document.querySelector('dialog[open]')
+  )
+    setRunning();
+  else {
+    localizedText($('pause'), localizedMessage('common:actions.resume'));
+    status(localizedMessage('interface:creator.savedAttemptRestored'));
+  }
+}
+async function finish() {
+  presentingReward = runtime.current().run.status === 'won';
+  ended = true;
+  paused = true;
+  busy = true;
+  updateControls();
+  input.clear();
+  if (runtime.current().run.status === 'won') {
+    status(localizedMessage('interface:creator.pictureRevealedVerifying'));
+    try {
+      const receipt = await runtime.completion();
+      profile.record(receipt);
+      await profile.flush();
+      const missionId = receipt.missionId,
+        earned = await showEarned(missionId);
+      nextMissionId = runtime.nextMissionId(missionId);
+      startMissionId = creatorCampaignDestination(runtime.missionOrder, profile.snapshot(), {
+        missionId: requestedMissionId,
+      }).missionId;
+      status(
+        nextMissionId
+          ? localizedMessage('interface:creator.levelCompletePictureSaved')
+          : localizedMessage('interface:creator.campaignCompletePicturesSaved'),
+      );
+      $('next').hidden = false;
+      localizedText(
+        $('next'),
+        localizedMessage(
+          nextMissionId
+            ? 'interface:creator.nextLevel'
+            : 'interface:creator.backToMyCreationsAction',
+        ),
+      );
+      if (earned) {
+        $('earned').hidden = true;
+        pendingReward = { run: runtime.current().run, age: 0, receipt, earned, expanded: false };
+      }
+    } catch (error) {
+      presentingReward = false;
+      pendingReward = null;
+      fail(error);
+    }
+  } else status(localizedMessage('interface:creator.tryAnotherCrossing'));
+  try {
+    if (
+      lease.writable &&
+      (runtime.current().run.status !== 'won' || profile.status().durable) &&
+      localStorage.getItem(saveKey) === savedRaw
+    ) {
+      localStorage.removeItem(saveKey);
+      savedRaw = null;
+      if (runtime.current().run.status === 'won')
+        localizedText(
+          $('save-status'),
+          localizedMessage('interface:creator.completionSavedOnDevice'),
+        );
+    }
+  } catch {
+    /* Progress export and Next remain available when local storage refuses access. */
+  }
+  busy = false;
+  updateControls();
+}
+function frame(time) {
+  frameId = requestAnimationFrame(frame);
+  menu.update(time);
+  const dt = previousTime === null ? 0 : Math.min((time - previousTime) / 1000, 0.1);
+  previousTime = time;
+  const attempt = runtime?.current();
+  if (!attempt || !painter) return;
+  if (!paused && !busy && !ended) {
+    accumulator += dt;
+    while (accumulator >= FIXED_DT) {
+      const command = input.poll();
+      if (paused || busy || ended) break;
+      runtime.step(command);
+      accumulator -= FIXED_DT;
+      if (['won', 'lost'].includes(attempt.run.status)) {
+        void finish();
+        break;
+      }
+    }
+    if (!ended && attempt.run.tick - lastSaveTick >= 600) {
+      lastSaveTick = attempt.run.tick;
+      persistAttempt();
+    }
+  }
+  if (pendingReward) {
+    const reward = pendingReward;
+    if (reward.run !== attempt.run) pendingReward = null;
+    else {
+      reward.age = advanceRewardAge(
+        reward.age,
+        dt,
+        document.hidden || !document.hasFocus() || !!document.querySelector('dialog[open]'),
+      );
+      if (!reward.expanded && reward.age >= REWARD_BOARD_SECONDS) {
+        const from = $('board').getBoundingClientRect();
+        reward.expanded = true;
+        $('earned').hidden = false;
+        setEarnedView(true);
+        earnedCelebration = { ...painter.celebration };
+        animateRewardArrival(
+          $('earned-picture'),
+          from,
+          document.body.dataset.effects === 'reduced',
+        );
+        $('earned-continue').focus({ preventScroll: true });
+      }
+      if (reward.age >= REWARD_STORY_SECONDS) {
+        pendingReward = null;
+        void storyPlayer.show({
+          receipt: reward.receipt,
+          posterElement: reward.earned.posterElement,
+          posterAsset: reward.earned.posterAsset,
+        });
+      }
+    }
+  }
+  if (document.body.dataset.earnedView === 'on') {
+    const canvas = $('earned-confetti');
+    if (canvas.width !== window.innerWidth) canvas.width = window.innerWidth;
+    if (canvas.height !== window.innerHeight) canvas.height = window.innerHeight;
+    earnedCelebration = advanceCelebration(earnedCelebration, dt, {
+      paused: document.hidden || !document.hasFocus(),
+      reduced: document.body.dataset.effects === 'reduced',
+    });
+    const rewardFrame = celebrationFrame(earnedCelebration);
+    canvas.hidden = !rewardFrame.active;
+    const context = canvas.getContext('2d');
+    if (rewardFrame.active) context.clearRect(0, 0, canvas.width, canvas.height);
+    drawCelebration(
+      context,
+      rewardFrame,
+      { accent: '#75dfdd', safe: '#b8e9a2', paper: '#fff1c9', danger: '#d6b0ff' },
+      canvas.width,
+      canvas.height,
+    );
+  }
+  painter.draw($('board').getContext('2d'), attempt.run, dt, {
+    paused: paused || busy || document.hidden || !document.hasFocus(),
+    celebrationPaused:
+      document.hidden || !document.hasFocus() || !!document.querySelector('dialog[open]'),
+    reduced: document.body.dataset.effects === 'reduced',
+    fullReveal: attempt.run.status === 'won',
+    showCombatScrap: encounterDisplay.snapshot().showRemains,
+    brutal: encounterDisplay.snapshot().brutal,
+    blood: encounterDisplay.snapshot().blood,
+    backdrop: attempt.picture,
+  });
+  huntStatus.render(attempt.run);
+  $('hud').textContent = t('interface:creator.hud', {
+    coverage: Math.round(attempt.run.coverage * 100),
+    lives: t('common:counts.lives', { count: attempt.run.lives }),
+    points: t('common:counts.points', { count: attempt.run.score }),
+    paused: paused && !ended ? t('interface:creator.hudPaused') : '',
+  });
+}
+$('start').onclick = () =>
+  playerMenu.request(() =>
+    operation(async (epoch) =>
+      adoptDisplay(
+        await runtime.start({
+          missionId: startMissionId,
+          difficulty: $('difficulty').value,
+          turnPolicy: $('steering').value,
+          runningEnemies: runningEnemyPreferences.snapshot().enabled,
+          runningEnemyStyle: runningEnemyPreferences.snapshot().style,
+        }),
+        true,
+        epoch,
+      ),
+    ),
+  );
+$('resume').onclick = () =>
+  operation(async (epoch) => adoptDisplay(await runtime.restore(savedRaw), true, epoch));
+$('retry').onclick = () =>
+  playerMenu.request(() =>
+    operation(async () => {
+      pause();
+      const epoch = activationEpoch,
+        current = runtime.current().selection;
+      await adoptDisplay(await runtime.start(current), true, epoch);
+    }),
+  );
+$('pause').onclick = () => {
+  if (paused) setRunning();
+  else pause();
+};
+$('earned-continue').onclick = () => {
+  pendingReward = null;
+  presentingReward = false;
+  storyPlayer?.reset();
+  setEarnedView(false);
+  updateControls();
+  $('next').focus({ preventScroll: true });
+};
+$('next').onclick = () => {
+  if (!nextMissionId) return void (location.href = './#installed');
+  const missionId = nextMissionId;
+  void operation(async (epoch) => {
+    const current = runtime.current().selection;
+    await adoptDisplay(
+      await runtime.start({
+        missionId,
+        difficulty: current.difficulty,
+        turnPolicy: current.turnPolicy,
+        runningEnemies: runningEnemyPreferences.snapshot().enabled,
+        runningEnemyStyle: runningEnemyPreferences.snapshot().style,
+      }),
+      true,
+      epoch,
+    );
+  });
+};
+$('export-attempt').onclick = () => {
+  try {
+    pause();
+    downloadCreatorFile(
+      new Blob([JSON.stringify(runtime.suspend(), null, 2)], { type: 'application/json' }),
+      'revealline-custom-attempt.json',
+    );
+  } catch (error) {
+    fail(error);
+  }
+};
+$('import-attempt').onchange = () =>
+  operation(async () => {
+    const file = $('import-attempt').files[0];
+    if (!file || file.size > SESSION_STORAGE_BYTES)
+      throw new Error(t('errors:creator.chooseBoundedAttempt'));
+    pause();
+    await adoptDisplay(await runtime.restore(await file.text()), false);
+  });
+$('export-progress').onclick = () => {
+  try {
+    downloadCreatorFile(
+      new Blob([profile.export()], { type: 'application/json' }),
+      'revealline-custom-progress.json',
+    );
+  } catch (error) {
+    fail(error);
+  }
+};
+$('import-progress').onchange = () =>
+  operation(async () => {
+    const file = $('import-progress').files[0];
+    if (!file || file.size > 8 * 1024 * 1024)
+      throw new Error(t('errors:creator.chooseBoundedProgress'));
+    profile.restore(await file.text());
+    await profile.flush();
+    startMissionId = creatorCampaignDestination(runtime.missionOrder, profile.snapshot(), {
+      missionId: requestedMissionId,
+    }).missionId;
+    storyPlayer.reset();
+    await showEarned();
+  });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) pause();
+});
+window.addEventListener('blur', pause);
+window.addEventListener('pagehide', () => {
+  pause();
+  lease?.release();
+  storyPlayer?.dispose();
+  runtime?.dispose();
+  painter?.dispose();
+  huntStatus.dispose();
+  runningEnemyControls.dispose();
+  runningEnemyPreferences.dispose();
+  encounterDisplay.dispose();
+  input?.destroy();
+  menu.destroy();
+  playerMenu.destroy();
+  store.close();
+  cancelAnimationFrame(frameId);
+  if (pictureURL) URL.revokeObjectURL(pictureURL);
+});
+// Menus remain usable while loading or after an installation error as well.
+frameId = requestAnimationFrame(frame);
+try {
+  pack = await loadInstalledCreatorBundle(store, edition);
+  const response = await fetch('../../authoring/motion-lab/presets.json');
+  if (!response.ok) throw new Error(t('errors:creator.presentationPresetsUnavailable'));
+  painter = new BoardPainter(await response.json());
+  lease = await claimProfileWriter(navigator.locks, `revealline.creator.${edition}`);
+  const profileKey = creatorProfileKey(edition);
+  profile = createJourneyProfileStore({
+    profileKey,
+    ...(lease.writable
+      ? {}
+      : {
+          backend: {
+            profileKey,
+            read: async () =>
+              (await import('../journey/profile.mjs')).createJourneyBackend({ profileKey }).read(),
+            commit: async () => {
+              throw new Error(lease.reason);
+            },
+          },
+        }),
+    onStatus: (value) => {
+      if (value.error) {
+        $('save-status').dataset.error = 'true';
+        localizedText(
+          $('save-status'),
+          localizedMessage('interface:creator.sessionOnlyError', { error: value.error }),
+        );
+        playerMenu.refresh();
+      }
+    },
+  });
+  await profile.load();
+  runtime = createCreatorRuntime(pack);
+  startMissionId = creatorCampaignDestination(runtime.missionOrder, profile.snapshot(), {
+    missionId: requestedMissionId,
+  }).missionId;
+  storyPlayer = createCreatorPlayerVictoryStory({
+    runtime,
+    host: createCreatorVictoryStoryHost({
+      document,
+      presentationOptions: {
+        get reducedMotion() {
+          return document.body.dataset.effects === 'reduced';
+        },
+      },
+      nodes: {
+        surface: $('earned'),
+        stage: $('creator-story-stage'),
+        status: $('creator-story-status'),
+        retry: $('creator-story-retry'),
+      },
+    }),
+    nodes: {
+      surface: $('earned'),
+      stage: $('creator-story-stage'),
+      status: $('creator-story-status'),
+      retry: $('creator-story-retry'),
+    },
+  });
+  input = attachInput({
+    arena: $('arena'),
+    continuousSteering: () => true,
+    active: () => !paused && !busy && !ended,
+    onPause: () => (paused ? setRunning() : pause()),
+  });
+  try {
+    savedRaw = localStorage.getItem(saveKey);
+  } catch {
+    $('save-status').dataset.error = 'true';
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.attemptStorageUnavailable'),
+    );
+  }
+  $('title').textContent = pack.review.name;
+  status(
+    savedRaw
+      ? localizedMessage('interface:creator.unfinishedAttemptAvailable')
+      : localizedMessage('interface:creator.readyToPlayCustomCampaign'),
+  );
+  if (!lease.writable) {
+    $('save-status').dataset.error = 'true';
+    localizedText($('save-status'), lease.reason);
+  }
+  await showEarned();
+  busy = false;
+  updateControls();
+} catch (error) {
+  busy = false;
+  updateControls();
+  fail(error);
+}

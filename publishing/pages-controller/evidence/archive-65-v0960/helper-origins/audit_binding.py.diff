@@ -1,0 +1,65 @@
+--- donor/audit_binding.py
++++ archive65/audit_binding.py
+@@ -1,4 +1,4 @@
+-"""Read-only, fail-closed intake of the actual Archive59 initial-deployment receipts."""
++"""Read-only, fail-closed intake of the actual Archive65 initial-deployment receipts."""
+ import hashlib
+ import io
+ import json
+@@ -13,11 +13,11 @@
+ AUTHORITY_ROOT = ROOT
+ INFRA = ROOT / 'repository'
+ REQUEST = ROOT / 'execution-request.reviewed.json'
+-BASE = 'https://mekhovov.github.io/revealline-archive-59/'
+-REPO = 'mekhovov/revealline-archive-59'
+-TREE = '60e7ab0b6240de281df3bc668dd71ac5cb070fb2'
+-INVENTORY_SHA = '787197923251ee6049d5103bbd48e41f094f5cc34ff57dad3cff0c7849a7edf1'
+-LOCK_SHA = '5b2f10c1260ab5936d2d4717a565cb57a11416fbf6c482c2e95f74902d0917f6'
++BASE = 'https://mekhovov.github.io/revealline-archive-65/'
++REPO = 'mekhovov/revealline-archive-65'
++TREE = 'a8b6df07f906fa701562866075e07d60dc3dfcd1'
++INVENTORY_SHA = '16522f243b4eadbea8085ff5cecb6d796b2ca572fbe6247c467091c2162cdb92'
++LOCK_SHA = '3cdda8b2ff4a315a909295d08314e4f7db43ea713bbe722c4f4741e494aaa12c'
+ ROLES = {'main', 'commit', 'run', 'deployment', 'statuses', 'artifacts', 'receiptZIP'}
+ 
+ 
+@@ -61,7 +61,7 @@
+     value, lock = json.loads(raw), json.loads(lock_raw)
+     require(set(value) == {'base', 'files'} and value['base'] == BASE, 'Wrong inventory envelope')
+     rows = value['files']; current = {r['path']: r for r in rows}
+-    require(len(rows) == len(current) == 1091 and sum(r['bytes'] for r in rows) == 590954684, 'Wrong finite inventory')
++    require(len(rows) == len(current) == 1120 and sum(r['bytes'] for r in rows) == 594895002, 'Wrong finite inventory')
+     # This is the initial archive: no predecessor or previously deployed rows exist.
+     return raw, rows, lock
+ 
+@@ -71,7 +71,7 @@
+     request_raw = local_bytes(REQUEST, 32768)
+     request = json.loads(request_raw)
+     require(set(request) == {'format', 'reviewed', 'archiveCommit', 'archiveTree', 'sourceCheckoutCommit', 'runId', 'deploymentId', 'deploymentStatusId', 'receiptArtifactId', 'pins'}, 'Unexpected execution request fields')
+-    require(request['format'] == 'revealline-archive59-http-request.v1' and request['reviewed'] is True, 'Actual request requires explicit review')
++    require(request['format'] == 'revealline-archive65-http-request.v1' and request['reviewed'] is True, 'Actual request requires explicit review')
+     for key in ['archiveCommit', 'sourceCheckoutCommit']:
+         require(isinstance(request[key], str) and re.fullmatch('[a-f0-9]{40}', request[key]), 'Actual commit required: ' + key)
+     require(request['archiveTree'] == TREE, 'Unreviewed successor tree')
+@@ -98,18 +98,18 @@
+     matches = [a for a in values['artifacts']['artifacts'] if a['id'] == request['receiptArtifactId']]
+     require(len(matches) == 1, 'Receipt artifact identity missing/duplicated')
+     artifact = matches[0]; zip_raw = bodies['receiptZIP']
+-    require(artifact['name'] == 'archive59-verification-receipts' and artifact['expired'] is False and artifact['workflow_run']['id'] == run_id and artifact['workflow_run']['head_sha'] == commit, 'Wrong receipt artifact run')
++    require(artifact['name'] == 'archive65-verification-receipts' and artifact['expired'] is False and artifact['workflow_run']['id'] == run_id and artifact['workflow_run']['head_sha'] == commit, 'Wrong receipt artifact run')
+     require(artifact['size_in_bytes'] == len(zip_raw) and artifact['digest'] == 'sha256:' + sha(zip_raw), 'Original receipt ZIP digest differs')
+     require(git('rev-parse', 'HEAD').decode().strip() == request['sourceCheckoutCommit'] and git('rev-parse', 'HEAD^{tree}').decode().strip() == TREE, 'Held source checkout changed')
+     require(git('show', request['sourceCheckoutCommit'] + ':expected-inventory.json') == raw and local_bytes(INFRA / 'expected-inventory.json') == raw, 'Inventory not from held exact source')
+     require(git('show', request['sourceCheckoutCommit'] + ':source-lock.json') == local_bytes(ROOT / 'inputs/source-lock.json'), 'Source-lock differs from reviewed source')
+     with zipfile.ZipFile(io.BytesIO(zip_raw)) as archive:
+-        names = ['receipt.json', 'expected-inventory.json', 'zip-receipt-v0.90.0.json']
++        names = ['receipt.json', 'expected-inventory.json', 'zip-receipt-v0.96.0.json']
+         require(sorted(archive.namelist()) == sorted(names), 'Receipt ZIP has unexpected/duplicate members')
+         require(sum(i.file_size for i in archive.infolist()) <= 1024**2 and all(i.file_size <= 512*1024 for i in archive.infolist()), 'Receipt members exceed bounds')
+         require(archive.testzip() is None and archive.read('expected-inventory.json') == raw, 'Hosted receipt inventory differs')
+         receipt = json.loads(archive.read('receipt.json'))
+-        require(receipt['status'] == 'PASS' and receipt['files'] == 1091 and receipt['bytes'] == 590954684 and receipt['archiveId'] == 'archive-59' and receipt['archiveCommit'] == commit and receipt['archiveTree'] == TREE and receipt['expectedInventorySha256'] == INVENTORY_SHA and receipt['noHistoricalBuilds'] is True, 'Hosted complete-inventory receipt differs')
++        require(receipt['status'] == 'PASS' and receipt['files'] == 1120 and receipt['bytes'] == 594895002 and receipt['archiveId'] == 'archive-65' and receipt['archiveCommit'] == commit and receipt['archiveTree'] == TREE and receipt['expectedInventorySha256'] == INVENTORY_SHA and receipt['noHistoricalBuilds'] is True, 'Hosted complete-inventory receipt differs')
+         require(receipt['toolingCommit'] == lock['toolingCommit'] and len(receipt['releases']) == 1, 'Hosted source cohort differs')
+         for expected in lock['releases']:
+             versions = [r for r in receipt['releases'] if r['version'] == expected['version']]

@@ -1,0 +1,256 @@
+{
+  "format": "FPVRailwayPilotPreparation.v1",
+  "actualSizeM": [
+    384,
+    384
+  ],
+  "futureDesignTargetM": [
+    4000,
+    4000
+  ],
+  "terrainCells": 9,
+  "sceneryCells": 9,
+  "sourceBytes": 5675931,
+  "terrainManifestSHA256": "ed0ea8d9a7dcde8453fd89186c1e8f1982c122e91deee8cc3b33daa6fba5980c",
+  "sceneryManifestSHA256": "1cfd2659a7bf1429a47d2652274d437204ffebc3f2ed5bc7a7d48a8959c59f3d",
+  "licensedPlacements": 8,
+  "originalArchitecturePieces": 224,
+  "geometryBytes": 824256,
+  "textureBytes": 2446676,
+  "resourceBytes": 3270932,
+  "routes": [
+    {
+      "id": "under-trestle",
+      "from": [
+        155,
+        4,
+        160
+      ],
+      "to": [
+        224,
+        4,
+        160
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "above-bridge-deck",
+      "from": [
+        192,
+        22,
+        124
+      ],
+      "to": [
+        192,
+        22,
+        228
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "north-freight-lane",
+      "from": [
+        250,
+        19,
+        32
+      ],
+      "to": [
+        250,
+        19,
+        108
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "station-canopy",
+      "from": [
+        166,
+        19,
+        28
+      ],
+      "to": [
+        166,
+        19,
+        104
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "maintenance-hall",
+      "from": [
+        300,
+        20,
+        32
+      ],
+      "to": [
+        300,
+        20,
+        108
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "cutting-traverse",
+      "from": [
+        32,
+        0,
+        180
+      ],
+      "to": [
+        352,
+        0,
+        180
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "field-recovery",
+      "from": [
+        80,
+        8,
+        268
+      ],
+      "to": [
+        80,
+        8,
+        336
+      ],
+      "halfWidth": 2
+    }
+  ],
+  "spawns": [
+    {
+      "id": "freight-yard",
+      "position": {
+        "x": 250000,
+        "y": 16000,
+        "z": 40000
+      }
+    },
+    {
+      "id": "trestle-approach",
+      "position": {
+        "x": 160000,
+        "y": 4000,
+        "z": 160000
+      }
+    },
+    {
+      "id": "maintenance-entry",
+      "position": {
+        "x": 300000,
+        "y": 19000,
+        "z": 32000
+      }
+    },
+    {
+      "id": "field-recovery",
+      "position": {
+        "x": 80000,
+        "y": 8000,
+        "z": 280000
+      }
+    }
+  ],
+  "sourceReceiptSHA256": "7ff863d7bb7f088bd0db536cd7c8a36f64df678132c93ce28d909273acb50833",
+  "licenseSHA256": "8ad3a0453dc1416d54e9af692dafe875a24069d577fe64edb193d3c8d868881a",
+  "playerReady": false,
+  "movingSubjects": false,
+  "revision": "structure-r1",
+  "parentTerrainManifestSHA256": "74fed25caacb37797094706a0257e562c8ac594781578948d6789ea89120e8fd",
+  "parentSceneryManifestSHA256": "ac591533ee71318cf631e79b8513eb7df61733e86578c8113d879c449f6ebcdb",
+  "structure": {
+    "originalAuthored": true,
+    "pieces": 66,
+    "surfaces": 7,
+    "triangles": 792,
+    "parentTerrainUnchanged": true,
+    "parentSurfacesUnchanged": true,
+    "probes": [
+      {
+        "id": "trestle-side-brace",
+        "from": [
+          184,
+          22.15,
+          160
+        ],
+        "to": [
+          190,
+          22.15,
+          160
+        ],
+        "clear": false
+      },
+      {
+        "id": "trestle-open-side-triangle",
+        "from": [
+          184,
+          19,
+          160
+        ],
+        "to": [
+          190,
+          19,
+          160
+        ],
+        "clear": true
+      },
+      {
+        "id": "hall-roof-tie",
+        "from": [
+          300,
+          21,
+          70
+        ],
+        "to": [
+          300,
+          24,
+          70
+        ],
+        "clear": false
+      },
+      {
+        "id": "hall-service-cabinet",
+        "from": [
+          282,
+          16,
+          51
+        ],
+        "to": [
+          282,
+          16,
+          57
+        ],
+        "clear": false
+      },
+      {
+        "id": "hall-workbench",
+        "from": [
+          316.5,
+          18,
+          54
+        ],
+        "to": [
+          316.5,
+          14.5,
+          54
+        ],
+        "clear": false
+      },
+      {
+        "id": "hall-below-roof",
+        "from": [
+          284,
+          20,
+          70
+        ],
+        "to": [
+          316,
+          20,
+          70
+        ],
+        "clear": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,501 @@
+{
+  "format": "moving-edges-source-intake.v1",
+  "observedOn": "2026-09-29",
+  "baseCommit": "da8bae6ddbe751d6a3d4659544c8a5b7bb35e668",
+  "disposition": "source-only-preservation; runtime-adoption-not-approved",
+  "verification": {
+    "exactGitBlobs": true,
+    "jsonParses": true,
+    "runtimeChanges": false,
+    "newVisualAcceptance": false,
+    "fullSuitesRun": false
+  },
+  "collections": [
+    {
+      "name": "moving-edges",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05",
+      "files": 13,
+      "bytes": 1457193
+    },
+    {
+      "name": "moving-edges-art",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05",
+      "files": 35,
+      "bytes": 35193698
+    },
+    {
+      "name": "moving-edges-chapters",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05",
+      "files": 10,
+      "bytes": 1298149
+    }
+  ],
+  "fileCount": 58,
+  "totalBytes": 37949040,
+  "files": [
+    {
+      "path": "authoring/library/moving-edges-art/derivatives.json",
+      "mode": "100644",
+      "blob": "fb91e84385930476bef38309305c86c8b102bb56",
+      "bytes": 7353,
+      "sha256": "4a88240c4e61cead1f209069977a1f8a506c2429401e64f121afb46424a458c4",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/generation-results.json",
+      "mode": "100644",
+      "blob": "e0ac643fbc644706fa181607ba9430e65d5bd724",
+      "bytes": 16341,
+      "sha256": "a5f18cc48667235bbee8472b9729dbcb0f16806e7ff49c0cba838da1ed65eb87",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/index.html",
+      "mode": "100644",
+      "blob": "f3ff11ee96d1c07d228b2919352df1e601848f05",
+      "bytes": 6852,
+      "sha256": "adc4cb5692b75d8bd4b9b35faf11f93830febc10ac28eee39364613748c25118",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/layout-briefs.json",
+      "mode": "100644",
+      "blob": "2a6efd37a6c197d394dadae89a20d59d6294b923",
+      "bytes": 3871,
+      "sha256": "31be1df6632f9de1413104799a029f6e4c1ed8e2d0bd3f91e67dce260ca11042",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/manifest.json",
+      "mode": "100644",
+      "blob": "b600c4a62a02be897c13f0c38e6e36b7e74748fb",
+      "bytes": 9330,
+      "sha256": "c16bfec962cc8afa7e8717f4e39e1719b3ec9caa7911d54d409c067bdbb601e1",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/breakwater-return-coupa.png",
+      "mode": "100644",
+      "blob": "44e664ba3c6e2d6ed5c3730e498678538c0bee4c",
+      "bytes": 2635887,
+      "sha256": "e2eb3e89295a695f85d27d034457abd398749e7c1dc27ec07a9bdf7ed86cf56f",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/breakwater-return-fpv.png",
+      "mode": "100644",
+      "blob": "b8fd4bb970fe678ee8b7680683b7ab621800211f",
+      "bytes": 2822472,
+      "sha256": "592b96cf8aa0165fa1ea01bef7085e3f6ecee3ffdc553382432c7869871cd5aa",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/breakwater-return-retro.png",
+      "mode": "100644",
+      "blob": "a0d74e144ca6f6340bed255aa9d54ad73e9e40aa",
+      "bytes": 2642886,
+      "sha256": "1a6cf10c89c674a52093390f798ab981a51023a5af772036ffd88c3ba6b99d96",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/breakwater-return-ukraine.png",
+      "mode": "100644",
+      "blob": "3d6d17dcaef851152181ae38b5d8ffeaf073c13a",
+      "bytes": 2766348,
+      "sha256": "9f6b3b8cdb68648efbe4d58614b70a6976d76eeffff0225fd25d6a668fa94ef3",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/survey-wheel-coupa.png",
+      "mode": "100644",
+      "blob": "9a62b7c2f8399a4ebabc9002a729b4bd3f14d581",
+      "bytes": 3151700,
+      "sha256": "d2e32f910fe3831f81be3a5f0a4985ab95f0b13f9f83bae098123dd344f5b753",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/survey-wheel-fpv.png",
+      "mode": "100644",
+      "blob": "8b74f7e24e73fbd24c08e7c2bc27e7079e67fe56",
+      "bytes": 2642402,
+      "sha256": "1673efbcdff9bdab97576d94b0da18ec87492dc7e48340f1ce6b26ef3706a78a",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/survey-wheel-retro.png",
+      "mode": "100644",
+      "blob": "b0d4a1dba9159618c57c11c94cf858b931fcc9d2",
+      "bytes": 2696356,
+      "sha256": "8f479806a4bb953f592d6c2eec6a601bce429584ea132e99bcab09290144a2bc",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/survey-wheel-ukraine.png",
+      "mode": "100644",
+      "blob": "ff5f74f3c4149128b89b21808e5344b16affc6a9",
+      "bytes": 3373654,
+      "sha256": "403df334ca1db88b8536aedca8d056fc4f6b663184f8c02d5a8c19c0baa366d2",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/terrace-stitch-coupa.png",
+      "mode": "100644",
+      "blob": "2283db32171cd3a969d3b5bb4d9679a22ae2e7c3",
+      "bytes": 2844215,
+      "sha256": "24d887954886059a5eacfe133e94caf59011fdef79cd98324581038c55b1c65f",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/terrace-stitch-fpv.png",
+      "mode": "100644",
+      "blob": "f62fd9e2dad335d9f4e9ad184bf0cb62e75c9ace",
+      "bytes": 2949957,
+      "sha256": "3574e0abdc8beb4d89739524582f2588c4d59e74caf6a9c8b9e4a6ce9975ea68",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/terrace-stitch-retro.png",
+      "mode": "100644",
+      "blob": "410be0b81941aa056f38db4820c886fea094c6cb",
+      "bytes": 2883767,
+      "sha256": "209f3c08bb7df5d3fd3d450dd38a5854923083033150772265896c0f60552bdb",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/originals/terrace-stitch-ukraine.png",
+      "mode": "100644",
+      "blob": "5d1fb225e6afea8b65c521df4fcd8918ef69133f",
+      "bytes": 3116991,
+      "sha256": "2891cf3ec46f5f751b1779e7568bf1920f8c6903779879eb265ca8a9252c1897",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/prompts.json",
+      "mode": "100644",
+      "blob": "ca61105e8b6b48b10b47b915b89d020fb8d64830",
+      "bytes": 26517,
+      "sha256": "8a8fc29d73d5981c5185e6f3eeaae30b1efdd87841797a6479264c47b41b30b7",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/provenance.json",
+      "mode": "100644",
+      "blob": "100574fb8067237ed0c3de1370545f2cc10ac6b8",
+      "bytes": 24925,
+      "sha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/README.md",
+      "mode": "100644",
+      "blob": "9f4b3433cca70f4f5ac08fed4e164048aa321fde",
+      "bytes": 5876,
+      "sha256": "b04d2ea6e16f29170d2fe1e0fb099d1c26753212f4e9603f32b801ed6e799cf7",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/render-previews.mjs",
+      "mode": "100644",
+      "blob": "8c6f132e9e78fe4bdb77dac4cf2810e761367ab8",
+      "bytes": 5075,
+      "sha256": "7224954af28d1449a2d72727d9df57645641e597e5a20618a5912f5ad89d7522",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/breakwater-return-coupa.jpg",
+      "mode": "100644",
+      "blob": "d6c4f432b46fc055728cc1d6e16ba0aa34aa6ed1",
+      "bytes": 39875,
+      "sha256": "28d3fbf4cc72949e38a01e836c5a0eaf7ec1a6d8d15ee921108926e3b9476da0",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/breakwater-return-fpv.jpg",
+      "mode": "100644",
+      "blob": "012a7eec76a75000ff340bb881eff121be90fba3",
+      "bytes": 40865,
+      "sha256": "149893d683a9a9b4f0892f1c0abed01f056fd7c0490e1fe707e3d75c67420150",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/breakwater-return-retro.jpg",
+      "mode": "100644",
+      "blob": "c0532bbd6f3e1bf63c37136ad727d7afa8d98995",
+      "bytes": 40691,
+      "sha256": "9308ffb4722698386b65cc6bff879cfa8833d64f8bd9fc827a50cfe7e46de6bf",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/breakwater-return-ukraine.jpg",
+      "mode": "100644",
+      "blob": "77d9e4532dc8d471e7c007e93f3e1055a77adcbc",
+      "bytes": 39805,
+      "sha256": "bec12603d32d6a96aa6c9a9e43c31675d5fdb51412661798c3a8bb19aab46b0e",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/survey-wheel-coupa.jpg",
+      "mode": "100644",
+      "blob": "98b880292d8eeb26498f4bb5cba874395ca291e1",
+      "bytes": 48660,
+      "sha256": "216da47b7285cd6d57edcc499d9f735d59cc87a1eaecec392deae5c0c958644a",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/survey-wheel-fpv.jpg",
+      "mode": "100644",
+      "blob": "125c2658f54c6554adf814d32ebfdf5d19159b11",
+      "bytes": 37822,
+      "sha256": "d322c45f12541613d0e4150cfc3e975e31a95b7bcc126061a52e1acd444ca426",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/survey-wheel-retro.jpg",
+      "mode": "100644",
+      "blob": "9560ea953d273df648061a010fd58271b7a83d80",
+      "bytes": 40432,
+      "sha256": "7e7c6e575b4189cbb783695af4660f4c8e832148d69c97e05220765ad94cd5ce",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/survey-wheel-ukraine.jpg",
+      "mode": "100644",
+      "blob": "a519ab358bdb7267bc98cb74c964799579eb7afc",
+      "bytes": 53812,
+      "sha256": "c0b68b34be4aa3c7158216b9ecb669a3c36d3b09fc2907bf187fc281fb3170ed",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/terrace-stitch-coupa.jpg",
+      "mode": "100644",
+      "blob": "3858b818a1a58c0d6f59584551f3c6e9adf4a871",
+      "bytes": 47195,
+      "sha256": "fc6cc12f655cfaa778bd30584ae2b0c1e0698df95d639b1a03c5a6349b98496f",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/terrace-stitch-fpv.jpg",
+      "mode": "100644",
+      "blob": "b8bb446953321a114d7939ca919169c938c8547d",
+      "bytes": 46679,
+      "sha256": "eb3820eff52cb1ee8b7f07e8f0825f6ead9e1ca63fce1f47187e3fff6f64ac73",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/terrace-stitch-retro.jpg",
+      "mode": "100644",
+      "blob": "4848a978d924adf0c8f0442f2eceb7adc2a860af",
+      "bytes": 44532,
+      "sha256": "bf210f18a6a6368f0f202fc97c9dc9292756f00fa20f2da46ee1108a2b0f1a86",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/thumbnails/terrace-stitch-ukraine.jpg",
+      "mode": "100644",
+      "blob": "46d5b358007796e91017e949d127e0c2a80c4b1b",
+      "bytes": 46816,
+      "sha256": "1fe76a0a28e1d4ff6f14c43993601e8c3239889d93a7f603e16b7080f7c0fe8d",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/verification.json",
+      "mode": "100644",
+      "blob": "46aaf64ace04930625209237949290a0899ba651",
+      "bytes": 23379,
+      "sha256": "d4d23aa92bdcc855eccbef263ac3e748e26b130a3b6a26f453072075ecb9b192",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-art/verify.mjs",
+      "mode": "100644",
+      "blob": "ccd43105119755afc8ef323f2848e7904014060f",
+      "bytes": 10360,
+      "sha256": "20bfc048e14f630107632ef4acf3ef9d3bf1015aa692677b906cbc410ac97a31",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/build.mjs",
+      "mode": "100644",
+      "blob": "bb27a8604e3fba8abe1e6df66c2802c65d587534",
+      "bytes": 15853,
+      "sha256": "bf514558341debda914d8a21fe13d011e7e8c357ec7fc765d0968f690d5e4bfd",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/descriptors/coupa.json",
+      "mode": "100644",
+      "blob": "d4ea3239f46f5af7ef5ab87cc5b208863f8dcced",
+      "bytes": 1724,
+      "sha256": "bf3162e289bd1cdca8f8b88a0143e7f4a4118be6a4370fe3cb31696f6d7454fd",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/descriptors/fpv.json",
+      "mode": "100644",
+      "blob": "803febe54fdf78e8dc9a49a7c93b159824440d60",
+      "bytes": 1706,
+      "sha256": "c8b4bd2ce09eac0315bf23545dac602d0753734d276b35e70f75c00e8707557a",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/descriptors/retro.json",
+      "mode": "100644",
+      "blob": "999a0f7c61483d3ecf343c094ce0461fb5486ff6",
+      "bytes": 1724,
+      "sha256": "108d632c5085bdd812178146176d998148a40bc14c464748cd150836314f1d3f",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/descriptors/ukraine.json",
+      "mode": "100644",
+      "blob": "36de0fefdd1dc4bcca74815177f70265ec2033aa",
+      "bytes": 1742,
+      "sha256": "07530e0815ad1b4176dbae81e9fcb9aeb6309f0e6f03821b31b09a9c5ca2f878",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/editions.json",
+      "mode": "100644",
+      "blob": "6ff2b1435791cfa748a274051edc86eeb15021c3",
+      "bytes": 7837,
+      "sha256": "f62fc13b531bf8e0c1839dff0eb4e3994c9d3c00d73e87da43444d3dde12ea2d",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/README.md",
+      "mode": "100644",
+      "blob": "62b2758f395d2b2db3a7f16ebf5aabb7ea6a8d91",
+      "bytes": 6056,
+      "sha256": "33d164c50e27bc3fba96735af335a367a4d4f39319026ccccd9e61b717690a17",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/routes.json",
+      "mode": "100644",
+      "blob": "1bf61a76061600570102b88088b6b606680c7afe",
+      "bytes": 1224248,
+      "sha256": "4e94a41feb9dc61e7eb57d3e8ff9c05b41c7bd3a8536473b1a4b8fe57b76718f",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/test-chapters.mjs",
+      "mode": "100644",
+      "blob": "a8575916dfad187619c95421b2bfc8ed9dd55e34",
+      "bytes": 16581,
+      "sha256": "c8f771d96b56865649b7989672dfc42621e84e92d97a1f23c3f136725cd58f47",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges-chapters/verify.mjs",
+      "mode": "100644",
+      "blob": "52608066d2a15c8f9f2024f0b6548c4bc3a344f3",
+      "bytes": 20678,
+      "sha256": "6a7105166f37b6d735a55ad03b1f203e0be4b27c0baf4117c1922b7ce550d97f",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/AI-REQUEST.md",
+      "mode": "100644",
+      "blob": "482687cbba042da0e85b4d32d0f1a9c8198ebf59",
+      "bytes": 3778,
+      "sha256": "523c3cf13ac65e21fed0ec74c9f55a97b5e6f6aacc83e79f33d116ef9716eff4",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/build.mjs",
+      "mode": "100644",
+      "blob": "93d1d46532e99f69a0c834f8358adb3862d631b4",
+      "bytes": 8075,
+      "sha256": "7ea4a077d333b7a10c91315b8ea55902e6ff103122f2e47ffa8838be57e8846e",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/controls.mjs",
+      "mode": "100644",
+      "blob": "1c8ed43105a55d4fd96dde5d4f0bbeb04273f020",
+      "bytes": 15666,
+      "sha256": "1f24e0fd094383d5a47c0430652ed3b64caa362244d8d63e03c7f078baae7ce3",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/layouts.json",
+      "mode": "100644",
+      "blob": "4f3def773ab900e91ad14826cdb8bb3251a86ea2",
+      "bytes": 6888,
+      "sha256": "f9f15bd2d88d23d88922d90b41b4639c62347b8f26e46b99c66c6328b4bbc82c",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/mechanic-cases.json",
+      "mode": "100644",
+      "blob": "246ba47b9c3e7455d8c8b6b4a8ab4e1bbd47e87e",
+      "bytes": 26559,
+      "sha256": "94bb30067811a3c85b6053ff6f1fd575f4886ffc8b8e883d447aaead496fbbbe",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/mechanics-plan.json",
+      "mode": "100644",
+      "blob": "b03e4f49948fb36e905c79ec8902a7f4c40a17b9",
+      "bytes": 7203,
+      "sha256": "1358e01dc0622e3339fcfb4229b02abb67e431b8d9186da3827cd51f21850140",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/mechanics-proof.json",
+      "mode": "100644",
+      "blob": "6d1c98e36dd99d4936d15e59fa11d4d7a4901173",
+      "bytes": 822833,
+      "sha256": "511c10e633421367ea0e221a9e65094517f5699f24e4ccec81c0c34b4d654965",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/mechanics.mjs",
+      "mode": "100644",
+      "blob": "e28cdcbd670894325da280b7c9b02f1b3058dcbd",
+      "bytes": 17282,
+      "sha256": "f595e09dc4434bbbe5557b6655c13caaa5b0a29feeb8cd9b5d79443bf7e417c8",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/README.md",
+      "mode": "100644",
+      "blob": "88701d55ce5acb5e23bc0ae9ad0cca4be662fa97",
+      "bytes": 10405,
+      "sha256": "dac6e5c05db39e5633263a6d0bf1c7853a2cd478a97758831546a8c3bdfc5a00",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/routes.json",
+      "mode": "100644",
+      "blob": "b30ea65797a5f23a68995df226adaccce31365f7",
+      "bytes": 509628,
+      "sha256": "19d9be49c5db2b1b5235213896b0f100e6cc48988a00566aea68a65ef7e152a6",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/test-mechanics.mjs",
+      "mode": "100644",
+      "blob": "3f0b412c18baef4fd8561c221c02e9cbd88d71fc",
+      "bytes": 9267,
+      "sha256": "11c3dc28f4bd089fb7b18719eaf1e54fd64e659d2414a0bc87020af4051220f4",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/test-source.mjs",
+      "mode": "100644",
+      "blob": "5b07877bde0061c33900f2436371ce820ed847be",
+      "bytes": 5887,
+      "sha256": "7415b2b610ee39f1b6fce5eaed4f46e38a59bb5e10e04c20b6aa73030d90c614",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    },
+    {
+      "path": "authoring/library/moving-edges/verify.mjs",
+      "mode": "100644",
+      "blob": "c5b54919cf17d5d1860ea53ccaac4aa087cb1fb5",
+      "bytes": 13722,
+      "sha256": "67f39a5efbf54ca5e5d7a0102cf7c1a56f44f30f88d69e33e5c73d23ad753068",
+      "sourceCommit": "15882073cd8329b0c117c4716694b588ac4c4d05"
+    }
+  ]
+}

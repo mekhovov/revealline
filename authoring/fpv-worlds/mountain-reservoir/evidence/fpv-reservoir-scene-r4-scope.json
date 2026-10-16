@@ -1,0 +1,17 @@
+{
+  "format": "FPVReservoirR4SolidColliderScope.v1",
+  "unchangedImportedRendering": {
+    "meshes": true,
+    "materials": true,
+    "accessors": true,
+    "bufferViews": true,
+    "images": true,
+    "textures": true,
+    "samplers": true
+  },
+  "binaryExact": true,
+  "binarySHA256": "197cbf051dc33ed14100fae5459d472ca675bf8dc7f86b9235087b7c6a7552a0",
+  "changedSceneNodes": "Two additional empty semantic collider markers for identical dam and roof cuboids; imported visible geometry/materials/texture data exact r3.",
+  "courseChange": "Same rectangular dam and hut roof envelopes now use solid box colliders, not closed triangle shells. Revision r4; route/bounds/spawn/rules unchanged.",
+  "firstCollisionFailure": "evidence/fpv-reservoir-r3-collision-failure.json"
+}

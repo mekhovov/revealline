@@ -1,7 +1,23 @@
-import { attachMusicCredit } from '../ui/music-credit.mjs';
+import {
+  t,
+  localizedText,
+  localizedAttribute,
+  localizedMessage,
+  render as renderMessage,
+} from '../i18n/index.mjs';
+import { createGameWakeLock } from '../ui/game-wake-lock.mjs';
+import { localOfficialRecordingIds } from '../official-downloads.mjs';
+import { installedPresentation } from '../installed-app.mjs';
+import { attachMusicCredit, musicStatusLabel } from '../ui/music-credit.mjs';
+import { renderMusicCreatorLinks } from '../ui/music-credits.mjs';
 import { attachQuickMusicControls } from '../ui/quick-music-controls.mjs';
-import { SOUNDTRACK_CATALOGUE, SOUNDTRACK_ARCHIVES } from '../content/soundtrack-catalogue.mjs';
+import {
+  SOUNDTRACK_CATALOGUE,
+  SOUNDTRACK_ARCHIVES,
+  SOUNDTRACK_BUNDLED_ASSETS,
+} from '../content/soundtrack-catalogue.mjs';
 import { createSoundtrackSource } from '../soundtrack-source.mjs';
+import { prepareOpeningTheme, usesOpeningThemeDefault } from '../opening-soundtrack.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
@@ -20,6 +36,8 @@ export function attachCouchMusicHost({
   audioMaster,
   audioPreferences,
   soundscape,
+  onlineCatalogueDownload = {},
+  onlineSourceStore = null,
   canOpen = () => true,
   canControl = () => true,
   quickAfter = [],
@@ -48,16 +66,21 @@ export function attachCouchMusicHost({
     menuGestureAccepted = false;
   const section = doc.createElement('section');
   section.setAttribute('data-couch-music', prefix);
-  section.setAttribute('aria-label', 'Music');
+  localizedAttribute(section, 'aria-label', () => t('interface:music'));
   const make = (tag, name, text) => {
     const node = doc.createElement(tag);
     node.id = `${prefix}-music-${name}`;
-    if (text !== undefined) node.textContent = text;
+    if (text !== undefined) localizedText(node, text);
     section.append(node);
     return node;
   };
-  make('h3', 'title', 'Music');
-  const status = make('p', 'status', 'Loading the shared music library…');
+  make('h3', 'title', localizedMessage('interface:music'));
+  const status = make('p', 'status'),
+    statusText = doc.createElement('span'),
+    statusSources = doc.createElement('span');
+  statusSources.id = `${prefix}-music-status-source`;
+  localizedText(statusText, localizedMessage('interface:loadingTheSharedMusicLibrary'));
+  status.append(statusText, statusSources);
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   const action = (name, text, fn) => {
@@ -66,11 +89,11 @@ export function attachCouchMusicHost({
     node.onclick = () => run(fn);
     return node;
   };
-  const play = action('play', 'Play music', () => session.play());
-  action('pause', 'Pause music', () => session.pause());
-  action('previous', 'Previous track', () => player.previous());
-  action('next', 'Next track', () => player.next());
-  const label = make('label', 'volume-label', 'Music volume · this session');
+  const play = action('play', localizedMessage('interface:playMusic2'), () => session.play());
+  action('pause', localizedMessage('interface:pauseMusic'), () => session.pause());
+  action('previous', localizedMessage('interface:previousTrack'), () => player.previous());
+  action('next', localizedMessage('interface:nextTrack'), () => player.next());
+  const label = make('label', 'volume-label', localizedMessage('interface:musicVolumeThisSession'));
   label.setAttribute('for', `${prefix}-music-volume`);
   const volume = make('input', 'volume');
   for (const [key, value] of Object.entries({ type: 'range', min: '0', max: '1', step: '0.01' })) {
@@ -86,9 +109,29 @@ export function attachCouchMusicHost({
       report(error);
     }
   };
-  action('library', 'Music library', () => open());
-  const retry = action('retry', 'Retry music library', () => load());
-  make('p', 'note', 'Music volume lasts for this visit. Master sound is shared across game modes.');
+  const effectsLabel = make(
+    'label',
+    'effects-volume-label',
+    localizedMessage('interface:globalSettings.effectsVolumeThisSession'),
+  );
+  effectsLabel.setAttribute('for', `${prefix}-music-effects-volume`);
+  const effectsVolume = make('input', 'effects-volume');
+  for (const [key, value] of Object.entries({ type: 'range', min: '0', max: '1', step: '0.01' })) {
+    effectsVolume.setAttribute(key, value);
+    effectsVolume[key] = value;
+  }
+  effectsVolume.value = String(sound.settings.sfx);
+  effectsVolume.oninput = effectsVolume.onchange = () => {
+    try {
+      sound.configure({ sfx: Number(effectsVolume.value) });
+    } catch (error) {
+      effectsVolume.value = String(sound.settings.sfx);
+      report(error);
+    }
+  };
+  action('library', localizedMessage('interface:musicLibrary'), () => open());
+  const retry = action('retry', localizedMessage('interface:retryMusicLibrary'), () => load());
+  make('p', 'note', localizedMessage('interface:musicVolumeLastsForThisVisitMasterSoundIsShared'));
   root.append(section);
   const compactCredit = attachMusicCredit({
     document: doc,
@@ -104,70 +147,63 @@ export function attachCouchMusicHost({
     .map((node) => {
       const title = doc.createElement('span'),
         file = doc.createElement('span'),
-        link = doc.createElement('a');
+        links = doc.createElement('div');
       title.className = 'couch-music-credit-title';
       file.className = 'couch-music-credit-file';
-      link.textContent = 'Music source';
-      link.setAttribute('target', '_blank');
-      link.setAttribute('rel', 'noopener noreferrer');
-      node.replaceChildren(title, file, link);
+      node.replaceChildren(title, file, links);
       node.hidden = true;
-      return { node, title, file, link, identity: null };
+      return { node, title, file, links, identity: null };
     });
-  function sourceWebsite(track) {
-    for (const value of [...(track.websites ?? []).map((site) => site.url), track.rights?.source]) {
-      try {
-        const url = new URL(value);
-        if (['http:', 'https:'].includes(url.protocol) && !url.username && !url.password)
-          return url.href;
-      } catch {
-        // Legacy source credits can be plain text rather than a website.
-      }
-    }
-    return null;
-  }
   function renderCredits(playback) {
     const master = audioMaster?.snapshot(),
       track = playback.track,
       audible =
         playback.playing &&
-        ['mp3', 'published'].includes(track?.kind) &&
+        ['mp3', 'published', 'remote'].includes(track?.kind) &&
         playback.volume > 0 &&
         !master?.muted &&
         (master?.volume ?? 1) > 0 &&
         !panel?.isOpen();
     for (const credit of credits) {
+      renderMusicCreatorLinks(credit.links, track, {
+        document: doc,
+        label: () => t('common:music.creatorSource'),
+      });
       credit.node.hidden = !audible;
       if (!audible) continue;
-      const title = `Now playing: ${track.title}${track.artist ? ` · ${track.artist}` : ''}`,
-        file = track.fileName ? `File: ${track.fileName}` : 'Original filename not recorded',
-        url = sourceWebsite(track),
-        identity = JSON.stringify([title, file, url]);
+      const title = () =>
+          t('common:music.nowPlaying', {
+            title: `${track.title}${track.artist ? ` · ${track.artist}` : ''}`,
+          }),
+        file = () =>
+          track.fileName
+            ? t('common:music.file', { filename: track.fileName })
+            : t('interface:originalFilenameNotRecorded'),
+        identity = JSON.stringify([track.title, track.artist, track.fileName]);
       if (credit.identity === identity) continue;
       credit.identity = identity;
-      credit.title.textContent = title;
-      credit.title.setAttribute('title', title);
-      credit.file.textContent = file;
-      credit.file.setAttribute('title', file);
-      credit.link.hidden = !url;
-      if (url) {
-        credit.link.textContent = `Source: ${new URL(url).hostname}`;
-        credit.link.setAttribute('href', url);
-      } else credit.link.removeAttribute('href');
+      localizedText(credit.title, title);
+      localizedAttribute(credit.title, 'title', title);
+      localizedText(credit.file, file);
+      localizedAttribute(credit.file, 'title', file);
     }
   }
   const source = createSoundtrackSource({
     catalogue: SOUNDTRACK_CATALOGUE,
     archives: SOUNDTRACK_ARCHIVES,
+    bundled: SOUNDTRACK_BUNDLED_ASSETS,
     readLocal: (hash, options) =>
       library?.readAsset(hash, { ...options, allowMissing: true }) ?? null,
     installedOnly: () => library?.snapshot().library?.listening?.installedOnly ?? false,
   });
+  const wakeLock = createGameWakeLock({ document: doc });
   const player = createSoundtrackPlayer({
+    localPlayback: installedPresentation(),
     soundscape: sound,
     audioElement: media,
     secondAudioElement: doc.createElement('audio'),
     catalogue: source.catalogue,
+    bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),
     audioMaster,
     readAsset: (hash, options) => source.readAsset(hash, options),
     onChange: () => {
@@ -195,7 +231,11 @@ export function attachCouchMusicHost({
   });
   panel = attachSoundtrackPanel({
     document: doc,
+    settingsRoot: section,
+    onlineCatalogueDownload,
+    onlineSourceStore,
     catalogue: source.catalogue,
+    bundled: SOUNDTRACK_BUNDLED_ASSETS,
     readAsset: (hash, options) => source.readAsset(hash, options),
     store,
     player,
@@ -214,7 +254,7 @@ export function attachCouchMusicHost({
     onVolume: () => render(),
     onPlayback: () => render(),
     onOpen: () => {
-      if (!canOpen()) throw new Error('Return to Audio Settings to open the music library.');
+      if (!canOpen()) throw new Error(t('interface:returnToAudioSettingsToOpenTheMusicLibrary'));
       visit = getOwner();
       onOpen();
     },
@@ -236,18 +276,31 @@ export function attachCouchMusicHost({
       track = state.playback;
     const preparing =
       ['idle', 'loading', 'saving'].includes(state.library.status) || state.preparing;
-    const text = preparing
-      ? state.library.status === 'saving'
-        ? 'Saving the shared music library…'
-        : 'Preparing the shared music library…'
-      : state.library.error
-        ? `Music library: ${state.library.error}. Gameplay and built-in music remain available.`
-        : warning ||
-          contextWarning ||
-          track.preparation?.message ||
-          track.error ||
-          `${track.track?.title || 'Selected soundtrack'} · ${track.status}${state.needsPlayGesture ? ' · Choose Play music.' : ''}`;
-    if (status.textContent !== text) status.textContent = text;
+    const text = () =>
+      preparing
+        ? state.library.status === 'saving'
+          ? t('interface:savingTheSharedMusicLibrary')
+          : t('interface:preparingTheSharedMusicLibrary')
+        : state.library.error
+          ? t('common:music.libraryError', { error: state.library.error })
+          : renderMessage(warning) ||
+            renderMessage(contextWarning) ||
+            track.preparation?.message ||
+            track.error ||
+            `${track.track?.title || t('interface:selectedSoundtrack')} · ${musicStatusLabel(track.status)}${state.needsPlayGesture ? ' ' + t('interface:choosePlayMusic') + '' : ''}`;
+    localizedText(statusText, text);
+    renderMusicCreatorLinks(
+      statusSources,
+      preparing ||
+        state.library.error ||
+        renderMessage(warning) ||
+        renderMessage(contextWarning) ||
+        track.preparation?.message ||
+        track.error
+        ? null
+        : track.track,
+      { document: doc, label: () => t('common:music.creatorSource') },
+    );
     status.dataset.state = preparing
       ? 'busy'
       : state.library.error || warning || track.error
@@ -280,7 +333,12 @@ export function attachCouchMusicHost({
     const pending = session.loadLibrary({ signal: lifetime.signal });
     render();
     try {
-      return await pending;
+      const result = await pending;
+      const accepted = library.snapshot().library;
+      const generation = library.snapshot().generation;
+      if (accepted && usesOpeningThemeDefault(accepted, { fresh: generation === 0 }))
+        await prepareOpeningTheme(player, accepted, { fresh: true });
+      return result;
     } finally {
       render();
     }
@@ -292,7 +350,13 @@ export function attachCouchMusicHost({
   }
   const unsubscribeMaster = audioMaster?.subscribe(() => render());
   function startRememberedMenuMusic(event) {
-    if (disposed || !event.isTrusted || menuGestureAccepted) return;
+    if (
+      event.target?.closest?.('.music-creator-links') ||
+      disposed ||
+      !event.isTrusted ||
+      menuGestureAccepted
+    )
+      return;
     const state = session.snapshot(),
       master = audioMaster?.snapshot();
     if (
@@ -334,7 +398,10 @@ export function attachCouchMusicHost({
   doc.addEventListener('keydown', startRememberedMenuMusic, true);
   // A native click observes explicit mute/unmute after its own button handler.
   doc.addEventListener('click', startRememberedMenuMusic);
-  void run(load);
+  void run(async () => {
+    player.setLocalRecordingIds(await localOfficialRecordingIds(source.catalogue));
+    await load();
+  });
   return Object.freeze({
     sound,
     player,
@@ -355,6 +422,7 @@ export function attachCouchMusicHost({
       render();
     },
     update(active, theme, state) {
+      wakeLock.setActive(active);
       const scene = getScene({ active, scene: context.scene });
       if (context.scene !== scene) {
         context = Object.freeze({ ...context, scene });
@@ -369,7 +437,10 @@ export function attachCouchMusicHost({
       session.setAcceptedContext(context);
       render();
     },
-    contextPending(themeId, message = 'Preparing exact mission music assignments…') {
+    contextPending(
+      themeId,
+      message = localizedMessage('interface:preparingExactMissionMusicAssignments'),
+    ) {
       contextWarning = message;
       context = Object.freeze({ scene: context.scene ?? 'menu', themeId });
       session.setAcceptedContext(context);
@@ -379,6 +450,7 @@ export function attachCouchMusicHost({
     dispose() {
       if (disposed) return;
       disposed = true;
+      wakeLock.dispose();
       lifetime.abort();
       doc.removeEventListener('pointerdown', startRememberedMenuMusic, true);
       doc.removeEventListener('keydown', startRememberedMenuMusic, true);

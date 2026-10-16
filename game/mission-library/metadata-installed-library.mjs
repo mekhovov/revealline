@@ -22,7 +22,9 @@ export async function createMetadataInstalledMissionLibrary({
   launchClassic,
   launchCustom,
   progressClassic,
+  progressStateClassic,
   progressCustom,
+  progressStateCustom,
 }) {
   if (
     !Array.isArray(journeySources) ||
@@ -36,7 +38,9 @@ export async function createMetadataInstalledMissionLibrary({
       launchClassic,
       launchCustom,
     ].some((fn) => typeof fn !== 'function') ||
-    [progressClassic, progressCustom].some((fn) => fn !== undefined && typeof fn !== 'function')
+    [progressClassic, progressStateClassic, progressCustom, progressStateCustom].some(
+      (fn) => fn !== undefined && typeof fn !== 'function',
+    )
   )
     throw new TypeError(
       'Metadata inventory browsing needs explicit readiness and launch adapters.',
@@ -66,6 +70,7 @@ export async function createMetadataInstalledMissionLibrary({
       levelId: row.levelId,
       levelRevision: row.levelRevision,
       levelIndex: row.levelIndex,
+      rulesEdition: row.rulesEdition,
     });
   const exactBase = (row) => {
     const level = baseEntry?.campaign?.levels?.[row.levelIndex];
@@ -140,6 +145,7 @@ export async function createMetadataInstalledMissionLibrary({
       });
     },
     progress: progressClassic,
+    progressState: progressStateClassic,
   });
   const rows = sources.flatMap((source) => source.entries);
   const library = createMissionLibrary([...journeySources, ...sources]);
@@ -153,7 +159,9 @@ export async function createMetadataInstalledMissionLibrary({
       const pending = metadataCustomLibrarySources(inventory, {
         isCurrent: (value) => getInventory() === value,
         isOfficial: (pack) => {
-          const peers = rows.filter((row) => row.packId === pack.id);
+          const peers = rows.filter(
+            (row) => row.packId === pack.id && row.rulesEdition === 'original',
+          );
           return (
             peers.length > 0 &&
             peers.every((row) => matches(pack, row)) &&
@@ -166,6 +174,7 @@ export async function createMetadataInstalledMissionLibrary({
         launch: (binding, context) =>
           launchCustom(binding, { ...metadataContext(context), inventory }),
         progress: progressCustom,
+        progressState: progressStateCustom,
       });
       cache.set(inventory, pending);
       pending.catch(() => {

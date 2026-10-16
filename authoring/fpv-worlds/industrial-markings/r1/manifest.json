@@ -1,0 +1,203 @@
+{
+  "format": "IndustrialMarkingProof.v1",
+  "id": "industrial-gate-pad",
+  "revision": "r1",
+  "previous": null,
+  "stage": "produced",
+  "source": {
+    "path": "source.json",
+    "sha256": "a5f142f8665fe15a918062e2057206204253d655c00bb52e6339b38ff08f83da",
+    "encoding": "original-utf8",
+    "author": "RevealLine procedural source",
+    "license": "CC0-1.0"
+  },
+  "generator": {
+    "path": "authoring/fpv-worlds/industrial-markings/generate.mjs",
+    "sha256": "03cd57169f35c1dcc5333e281d272012abb92055c0d060316a44a62bdfb0db81",
+    "pngEncoderSha256": "f268d930f82fd60bab8af46d913f2fabbf263924076ce6a83ec47c3959aabd59"
+  },
+  "toolchain": {
+    "gltfTransform": "v4.5.1",
+    "gltfValidator": "2.0.0-dev.3.10",
+    "lockfileSha256": "9c9acded2d86889e2822e293d28c940994646744874ba45b873f9a2d50d58b03"
+  },
+  "dependency": {
+    "kind": "installed-engine-builtin",
+    "collection": {
+      "id": "industrial-workshop",
+      "revision": "r1"
+    }
+  },
+  "color": {
+    "baseColor": "sRGB",
+    "roughness": "linear scalar 0.86",
+    "metalness": "linear scalar 0",
+    "alpha": "MASK 0.5",
+    "magFilter": "LINEAR",
+    "minFilter": "LINEAR_MIPMAP_LINEAR",
+    "wrap": "CLAMP_TO_EDGE",
+    "normalMap": null,
+    "neutralSrgb": [
+      0,
+      64,
+      118,
+      192,
+      255
+    ]
+  },
+  "geometry": {
+    "units": "metres",
+    "triangles": 12,
+    "primitives": 6,
+    "semanticAnchors": 0,
+    "colliders": 0,
+    "roles": {
+      "gate": {
+        "format": "IndustrialMarkingAnchor.v1",
+        "role": "gate",
+        "visualOnly": true,
+        "units": "metres",
+        "aperture": {
+          "width": 3.6,
+          "height": 2.8
+        },
+        "clearance": 0.015,
+        "translation": [
+          -2.6,
+          0,
+          0
+        ],
+        "bounds": {
+          "min": [
+            -4.595000003576279,
+            6.5565109175214076e-9,
+            0
+          ],
+          "max": [
+            -0.6049999964237214,
+            2.799999993443489,
+            0
+          ]
+        }
+      },
+      "landing-pad": {
+        "format": "IndustrialMarkingAnchor.v1",
+        "role": "landing-pad",
+        "visualOnly": true,
+        "units": "metres",
+        "hostRadius": 1.3,
+        "visibleRadius": 1.28,
+        "direction": "-Z",
+        "translation": [
+          2,
+          0,
+          0
+        ],
+        "bounds": {
+          "min": [
+            0.7200000286102295,
+            0.002,
+            -1.2799999713897705
+          ],
+          "max": [
+            3.2799999713897705,
+            0.002,
+            1.2799999713897705
+          ]
+        }
+      },
+      "calibration": {
+        "format": "IndustrialMarkingAnchor.v1",
+        "role": "calibration",
+        "visualOnly": true,
+        "units": "metres",
+        "notForRuntime": true,
+        "translation": [
+          -0.5,
+          0.15,
+          1.5
+        ],
+        "bounds": {
+          "min": [
+            -1.300000011920929,
+            -0.050000002980232244,
+            1.5
+          ],
+          "max": [
+            0.30000001192092896,
+            0.35000000298023226,
+            1.5
+          ]
+        }
+      }
+    }
+  },
+  "files": [
+    {
+      "path": "markings.png",
+      "bytes": 981,
+      "sha256": "ca090b130e686168dedab0350a177a038c41038a3d6bdbf96fe2afb6c756c473"
+    },
+    {
+      "path": "markings.glb",
+      "bytes": 8152,
+      "sha256": "57da4671dbb4c3a2aafb96785eb1bf83d14719106279e6fd0f9720800f9a5bf2"
+    }
+  ],
+  "validation": {
+    "uri": "markings.glb",
+    "mimeType": "model/gltf-binary",
+    "validatorVersion": "2.0.0-dev.3.10",
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    },
+    "info": {
+      "version": "2.0",
+      "generator": "glTF-Transform v4.5.1",
+      "resources": [
+        {
+          "pointer": "/buffers/0",
+          "mimeType": "application/gltf-buffer",
+          "storage": "glb",
+          "byteLength": 1824
+        },
+        {
+          "pointer": "/images/0",
+          "mimeType": "image/png",
+          "storage": "buffer-view",
+          "image": {
+            "width": 128,
+            "height": 128,
+            "format": "rgba",
+            "primaries": "srgb",
+            "transfer": "srgb",
+            "bits": 8
+          }
+        }
+      ],
+      "animationCount": 0,
+      "materialCount": 1,
+      "hasMorphTargets": false,
+      "hasSkins": false,
+      "hasTextures": true,
+      "hasDefaultScene": true,
+      "drawCallCount": 6,
+      "totalVertexCount": 24,
+      "totalTriangleCount": 12,
+      "maxUVs": 1,
+      "maxInfluences": 0,
+      "maxAttributes": 3
+    }
+  },
+  "review": {
+    "browser": "pending",
+    "independentViewer": "not-run",
+    "runtimeAdoption": "not-installed",
+    "physics": "no semantic nodes; existing course/proof source untouched"
+  }
+}

@@ -25,6 +25,7 @@ import inspect_qualified_artifact as inspector
 import upload_source
 import upload_distribution
 from release_limits import MAX_DISTRIBUTION_BYTES
+from source_manifest import frozen_proof_key, inspection_source, MAX_MANIFEST
 
 MIB = 1024**2
 RESERVE = 512 * MIB
@@ -32,12 +33,31 @@ SMALL_NAMES = {'manifest.json', 'release.json', 'distribution.zip.sha256',
                'source-qualification.json', 'source-qualification-evidence.zip',
                'verification.json', 'qualification-evidence-record.json'}
 NAMES = SMALL_NAMES | {'source.tar', 'distribution.zip'}
+
+
+def binding_names(binding):
+    names = {row['name'] for row in binding['release']['assets']}
+    require(names in (NAMES, SMALL_NAMES | {'source-manifest.json', 'distribution.zip'}),
+            'Exactly one supported nine-asset contract required')
+    return names
+
+
+class PinnedManifest(upload_source.PinnedSource):
+    asset_name = 'source-manifest.json'
+    inspection_role = 'sourceManifest'
+    maximum_bytes = MAX_MANIFEST
+
 HEX = re.compile(r'[0-9a-f]{64}')
 COMMIT = re.compile(r'[0-9a-f]{40}')
 WORKFLOW = '.github/workflows/qualify-release-source.yml'
-GATES = ['validate', 'lint', 'format', 'native-format', 'motion-syntax', 'test']
-COMMANDS = ['npm run validate', 'npm run lint', 'npm run format:check',
-            'npm run format:native:check', 'node --check authoring/motion-lab/app.js']
+FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
+QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
+GATES = ['validate', 'motion-syntax', 'test']
+COMMANDS = ['npm run validate', 'node --check authoring/motion-lab/app.js']
+# Keep the retained-workflow evidence contract in lockstep with the fast
+# qualification workflow.  Lint and formatting are intentionally no longer
+# release gates, so evidence must neither require nor fabricate their steps.
+GATE_STEP_NAMES = ['Validate source', 'Check motion lab syntax']
 WAIVER_FORMAT = 'revealline-source-qualification.v2'
 POLICY_PATH = 'publishing/test-policy.json'
 WAIVER_AUTHORIZATION = 'explicit-user-request-20260922'
@@ -102,11 +122,12 @@ def validate_binding(body, mode, repository):
         require(isinstance(release, dict) and set(release) == {'id', 'tag', 'assets'} and
                 positive(release['id'], 10**14) and release['tag'] == source['version'], 'Exact draft id/tag required')
         rows = release['assets']
-        require(isinstance(rows, list) and len(rows) == 9 and {r['name'] for r in rows} == NAMES,
+        require(isinstance(rows, list) and len(rows) == 9 and len(binding_names(binding)) == 9,
                 'Exactly nine unique reviewed asset descriptors required')
         for row in rows:
             limit = 64 * MIB if row['name'] == 'source-qualification-evidence.zip' else (
                 2_000_000_000 if row['name'] == 'source.tar' else
+                MAX_MANIFEST if row['name'] == 'source-manifest.json' else
                 MAX_DISTRIBUTION_BYTES if row['name'] == 'distribution.zip' else 4 * MIB)
             require(set(row) == {'name', 'bytes', 'sha256'} and positive(row['bytes'], limit) and
                     HEX.fullmatch(row['sha256']), 'Invalid asset descriptor or bounded length')
@@ -122,7 +143,8 @@ class RecordedGitHub(upload_source.GitHub):
     def upload(self, path, stream, size, expected_hash):
         if path.endswith('/assets?name=distribution.zip'):
             return upload_distribution.GitHub.upload(self, path, stream, size, expected_hash)
-        require(path.endswith('/assets?name=source.tar'), 'Only the two original member POSTs are permitted')
+        require(any(path.endswith('/assets?name=' + name) for name in ('source.tar', 'source-manifest.json')),
+                'Only the two original member POSTs are permitted')
         return super().upload(path, stream, size, expected_hash)
 
     def get(self, path):
@@ -173,34 +195,66 @@ def committed_test_policy(repo, source):
 
 
 def source_jobs_check(jobs, source, waived=False):
+    job_name = lambda job: str(job.get('name', '')).removeprefix('qualify / ')
     required = ['qualify', 'freeze'] if waived else ['qualify', 'test (1)', 'test (2)', 'test (3)', 'test (4)', 'freeze']
     for name in required:
-        matched = [j for j in jobs if j.get('name') == name]
+        matched = [j for j in jobs if job_name(j) == name]
         require(len(matched) == 1 and matched[0].get('status') == 'completed' and
                 matched[0].get('conclusion') == 'success' and matched[0].get('head_sha') == source,
                 'Actual successful source/freeze job missing: ' + name)
     if waived:
-        tests = [j for j in jobs if j.get('name') == 'test' or str(j.get('name', '')).startswith('test (')]
-        names = [j.get('name') for j in tests]
+        tests = [j for j in jobs if job_name(j) == 'test' or job_name(j).startswith('test (')]
+        names = [job_name(j) for j in tests]
         require(names == ['test'] or len(names) == 4 and set(names) == {'test (1)', 'test (2)', 'test (3)', 'test (4)'},
                 'Actual skipped test job inventory missing')
         require(all(j.get('status') == 'completed' and j.get('conclusion') == 'skipped' and
                     j.get('head_sha') == source for j in tests), 'Waived test jobs must actually be skipped')
 
 
+def recoverable_fastline_inspection_failure(run, jobs, source):
+    """A failed parent is reusable only when its sole failure followed a valid freeze."""
+    if run.get('path') != FASTLINE_WORKFLOW or run.get('conclusion') != 'failure':
+        return False
+    failed = [job for job in jobs if job.get('conclusion') == 'failure']
+    admission = [job for job in jobs if job.get('name') == 'admission']
+    return (len(failed) == 1 and failed[0].get('name') == 'inspect-artifact' and
+            len(admission) == 1 and admission[0].get('conclusion') == 'success' and
+            all(job.get('status') == 'completed' and job.get('head_sha') == source and
+                job.get('conclusion') in ('success', 'skipped', 'failure') for job in jobs))
+
+
+def active_fastline_inspection(run, jobs, source):
+    """Permit only this exact run to inspect after its qualification jobs passed."""
+    current = os.environ.get('GITHUB_RUN_ID', '')
+    if (not current.isdigit() or run.get('id') != int(current) or
+            run.get('path') != FASTLINE_WORKFLOW or run.get('status') != 'in_progress' or
+            run.get('conclusion') is not None):
+        return False
+    admission = [job for job in jobs if job.get('name') == 'admission']
+    inspection = [job for job in jobs if job.get('name') == 'inspect-artifact']
+    return (len(admission) == 1 and admission[0].get('status') == 'completed' and
+            admission[0].get('conclusion') == 'success' and
+            len(inspection) == 1 and inspection[0].get('status') == 'in_progress' and
+            inspection[0].get('conclusion') is None and
+            not any(job.get('conclusion') == 'failure' for job in jobs) and
+            all(job.get('head_sha') == source for job in jobs))
+
+
 def artifact_authority(api, binding, policy_body=None):
     repo, expected = binding['repository'], binding['artifact']
     item = api.get(f'/repos/{repo}/actions/artifacts/{expected["id"]}')
-    require(item.get('id') == expected['id'] and item.get('name') == 'qualified-release-snapshot' and
+    allowed_names = {'qualified-release-snapshot',
+                     f'qualified-release-{binding["source"]["version"]}-{binding["source"]["commit"]}'}
+    require(item.get('id') == expected['id'] and item.get('name') in allowed_names and
             item.get('expired') is False and item.get('size_in_bytes') == expected['bytes'] and
             item.get('digest') == 'sha256:' + expected['sha256'] and
             item.get('workflow_run', {}).get('id') == expected['runId'] and
             item.get('workflow_run', {}).get('head_sha') == binding['source']['commit'], 'Artifact authority differs')
     run = api.get(f'/repos/{repo}/actions/runs/{expected["runId"]}')
     require(run.get('id') == expected['runId'] and run.get('event') == 'workflow_dispatch' and
-            run.get('path') == WORKFLOW and run.get('head_sha') == binding['source']['commit'] and
-            run.get('status') == 'completed' and run.get('conclusion') == 'success',
-            'Original manual source/freeze run is not completed successfully')
+            run.get('path') in QUALIFICATION_WORKFLOWS and run.get('head_sha') == binding['source']['commit'] and
+            run.get('status') in ('in_progress', 'completed'),
+            'Original manual source/freeze run identity differs')
     jobs = []
     for page in range(1, 11):
         response = api.get(f'/repos/{repo}/actions/runs/{expected["runId"]}/jobs?per_page=100&page={page}')
@@ -211,9 +265,13 @@ def artifact_authority(api, binding, policy_body=None):
             break
     else:
         raise ValueError('Jobs exceed pagination bound')
+    require(active_fastline_inspection(run, jobs, binding['source']['commit']) or
+            run.get('conclusion') == 'success' or
+            recoverable_fastline_inspection_failure(run, jobs, binding['source']['commit']),
+            'Original manual source/freeze run is not completed successfully')
     waived = policy_body is not None and test_policy(policy_body)['mode'] == 'waived'
     # A policy permits skipping; an explicitly opted-in successful test run remains valid.
-    skipped = any(j.get('name') in ['test', 'test (1)'] and
+    skipped = any(str(j.get('name', '')).removeprefix('qualify / ') in ['test', 'test (1)'] and
                   j.get('conclusion') == 'skipped' for j in jobs)
     source_jobs_check(jobs, binding['source']['commit'], waived=waived and skipped)
     return item
@@ -324,7 +382,7 @@ def qualification_check(q, binding):
             'Reviewed qualification identity/result differs')
     gates = q['gates']
     require([g['gate'] for g in gates] == GATES and all(successful(g['step']) for g in gates) and
-            [g['command'] for g in gates[:5]] == COMMANDS, 'All six actual source gates required')
+            [g['command'] for g in gates[:len(COMMANDS)]] == COMMANDS, 'All configured source gates required')
     counts_pass(q['tests'])
     require(positive(q['testFiles'], 10000), 'Actual test-file count missing')
     families = [gates[-1]['actualJobSteps'], q['additionalManualQualification']['shards']]
@@ -341,7 +399,7 @@ def qualification_check(q, binding):
     frozen = q['frozenArtifactCorroboration']
     require(frozen['artifactId'] == binding['artifact']['id'] and
             all(frozen.get(k) is True for k in ['wholeOriginalArtifactVerifiedBeforeQualification',
-                'sourceTarGitBlobTypeModeAndPaxCommitVerified', 'allInnerZipManifestBytesVerified',
+                frozen_proof_key(frozen), 'allInnerZipManifestBytesVerified',
                 'frozenOfflineInventoryAndBindingsVerified']), 'Qualification frozen original coverage missing')
 
 
@@ -355,9 +413,9 @@ def waiver_qualification_check(q, binding):
             q.get('version') == source['version'] and q.get('allTrackedSourceContentsAndModesMatch') is True,
             'Reviewed qualification identity/result differs')
     gates = q['gates']
-    require([g['gate'] for g in gates] == GATES[:5] and [g['command'] for g in gates] == COMMANDS and
+    require([g['gate'] for g in gates] == GATES[:len(COMMANDS)] and [g['command'] for g in gates] == COMMANDS and
             all(successful(g['step']) and 'actualJobSteps' not in g for g in gates),
-            'All five actual non-test source gates required')
+            'All configured non-test source gates required')
     policy = q['testPolicy']
     require(set(policy) == {'mode', 'authorization', 'reason', 'policyEvidence'} and
             policy['mode'] == 'waived' and policy['authorization'] == WAIVER_AUTHORIZATION and
@@ -374,12 +432,44 @@ def waiver_qualification_check(q, binding):
                 item in q['evidencePins'], 'Waiver original pin missing')
     require(policy['policyEvidence']['path'] == POLICY_PATH, 'Waiver policy must use its canonical evidence path')
     require(policy['policyEvidence']['bytes'] <= 16384, 'Waiver policy exceeds its 16 KiB bound')
-    require(successful(q['ordinaryBuildCorroboration']['step']) and
-            q['ordinaryBuildCorroboration']['command'] == 'npm run build', 'Actual successful ordinary build missing')
+    premerge = q.get('preMergeValidationCorroboration')
+    legacy_build = q.get('ordinaryBuildCorroboration')
+    focused = q.get('focusedAdmissionCorroboration')
+    focused_valid = (isinstance(focused, dict) and
+        set(focused) == {'runId', 'jobId', 'aggregateJobId', 'classificationSteps', 'sourceRevision',
+                         'sourceTree', 'genericBuild', 'fullTests', 'scope'} and
+        positive(focused.get('runId'), 10**14) and positive(focused.get('jobId'), 10**14) and
+        positive(focused.get('aggregateJobId'), 10**14) and
+        isinstance(focused.get('classificationSteps'), list) and len(focused['classificationSteps']) == 2 and
+        [row.get('name') for row in focused['classificationSteps']] ==
+            ['Capture the reviewed changed-path set', 'Select the fail-closed focused gate'] and
+        all(successful(row) for row in focused['classificationSteps']) and
+        isinstance(focused.get('sourceRevision'), str) and COMMIT.fullmatch(focused['sourceRevision']) and
+        isinstance(focused.get('sourceTree'), str) and COMMIT.fullmatch(focused['sourceTree']) and
+        set(focused.get('genericBuild', {})) == {'status', 'jobId'} and
+        focused['genericBuild'].get('status') == 'skipped-by-fast-release-policy' and
+        positive(focused['genericBuild'].get('jobId'), 10**14) and
+        focused.get('fullTests') == {'status': 'waived-and-skipped'} and
+        isinstance(focused.get('scope'), str) and focused['scope'].strip())
+    require(sum(row is not None for row in (premerge, legacy_build, focused)) == 1 and
+            ((isinstance(premerge, dict) and set(premerge) == {'runId', 'jobId', 'command', 'step',
+              'sourceRevision', 'sourceTree', 'artifactBuild', 'scope'} and
+              positive(premerge.get('runId'), 10**14) and positive(premerge.get('jobId'), 10**14) and
+              premerge.get('command') == 'npm run validate' and
+              successful(premerge.get('step', {})) and
+              isinstance(premerge.get('sourceRevision'), str) and COMMIT.fullmatch(premerge['sourceRevision']) and
+              isinstance(premerge.get('sourceTree'), str) and COMMIT.fullmatch(premerge['sourceTree']) and
+              isinstance(premerge.get('scope'), str) and premerge['scope'].strip() and
+              set(premerge.get('artifactBuild', {})) == {'status', 'step'} and
+              premerge['artifactBuild'].get('status') == 'deferred-to-frozen-source' and
+              successful(premerge['artifactBuild'].get('step', {}))) or
+             (isinstance(legacy_build, dict) and legacy_build.get('command') == 'npm run build' and
+              successful(legacy_build.get('step', {}))) or focused_valid),
+            'Actual successful PR validation and explicit artifact deferral missing')
     frozen = q['frozenArtifactCorroboration']
     require(frozen['artifactId'] == binding['artifact']['id'] and
             all(frozen.get(k) is True for k in ['wholeOriginalArtifactVerifiedBeforeQualification',
-                'sourceTarGitBlobTypeModeAndPaxCommitVerified', 'allInnerZipManifestBytesVerified',
+                frozen_proof_key(frozen), 'allInnerZipManifestBytesVerified',
                 'frozenOfflineInventoryAndBindingsVerified']), 'Qualification frozen original coverage missing')
 
 
@@ -429,22 +519,101 @@ def verify_evidence(body, qualification, source, policy_body=None):
                 require(policy_original == policy_body, 'Waiver policy differs from the exact committed source')
             run = parse(archive.read(waiver['runEvidence']['path']))
             jobs = parse(archive.read(waiver['jobsEvidence']['path']))
-            require(run.get('id') == waiver['runId'] and run.get('event') == 'workflow_dispatch' and
-                    run.get('path') == WORKFLOW and run.get('head_sha') == source['commit'] and successful(run),
-                    'Waiver original run identity/result differs')
+            qualification_workflow = qualification.get('workflowPath', WORKFLOW)
             job_rows = jobs.get('jobs')
+            require(run.get('id') == waiver['runId'] and run.get('event') == 'workflow_dispatch' and
+                    run.get('path') in QUALIFICATION_WORKFLOWS and
+                    qualification_workflow == run.get('path') and
+                    run.get('head_sha') == source['commit'] and run.get('status') == 'completed' and
+                    (run.get('conclusion') == 'success' or
+                     isinstance(job_rows, list) and
+                     recoverable_fastline_inspection_failure(run, job_rows, source['commit'])),
+                    'Waiver original run identity/result differs')
             require(isinstance(job_rows, list) and 0 < len(job_rows) <= 1000 and jobs.get('total_count') == len(job_rows) and
                     all(j.get('run_id') == run['id'] and positive(j.get('id'), 10**14) for j in job_rows) and
                     len({j['id'] for j in job_rows}) == len(job_rows), 'Waiver original jobs incomplete or borrowed')
             source_jobs_check(job_rows, source['commit'], waived=True)
-            qualify = next(j for j in job_rows if j.get('name') == 'qualify')
-            names = ['Validate source', 'Lint source', 'Check formatting',
-                     'Check native formatting', 'Check motion lab syntax']
-            for gate, name in zip(qualification['gates'], names):
+            qualify = next(j for j in job_rows if str(j.get('name', '')).removeprefix('qualify / ') == 'qualify')
+            for gate, name in zip(qualification['gates'], GATE_STEP_NAMES):
                 matched = [s for s in qualify.get('steps', []) if s.get('name') == name]
                 require(gate.get('jobId') == qualify['id'] and len(matched) == 1 and
                         all(gate['step'].get(k) == matched[0].get(k) for k in ['name', 'number', 'status', 'conclusion']) and
                         successful(matched[0]), 'Waiver mandatory gate lacks its actual job/step original')
+            premerge = qualification.get('preMergeValidationCorroboration')
+            if premerge is not None:
+                pr_run = parse(archive.read('runs/pr/run.json'))
+                pr_jobs = parse(archive.read('runs/pr/jobs.json'))
+                equivalence = parse(archive.read('preparation/source-equivalence.json'))
+                require(pr_run.get('id') == premerge['runId'] and pr_run.get('event') == 'pull_request' and
+                        pr_run.get('path') == '.github/workflows/deploy-pages.yml' and
+                        pr_run.get('head_sha') == premerge['sourceRevision'] and successful(pr_run),
+                        'PR validation original run identity/result differs')
+                pr_rows = pr_jobs.get('jobs')
+                require(isinstance(pr_rows, list) and 0 < len(pr_rows) <= 1000 and
+                        pr_jobs.get('total_count') == len(pr_rows) and
+                        all(j.get('run_id') == pr_run['id'] and positive(j.get('id'), 10**14) for j in pr_rows) and
+                        len({j['id'] for j in pr_rows}) == len(pr_rows),
+                        'PR validation original jobs incomplete or borrowed')
+                builds = [j for j in pr_rows if j.get('name') == 'build']
+                require(len(builds) == 1 and builds[0]['id'] == premerge['jobId'] and successful(builds[0]) and
+                        builds[0].get('head_sha') == premerge['sourceRevision'],
+                        'PR validation build job identity/result differs')
+                build_steps = builds[0].get('steps', [])
+                for retained, name in [(premerge['step'], 'Validate release-critical source'),
+                                       (premerge['artifactBuild']['step'],
+                                        'Defer full artifact build to merged-source qualification')]:
+                    matched = [s for s in build_steps if s.get('name') == name]
+                    require(len(matched) == 1 and all(retained.get(k) == matched[0].get(k)
+                            for k in ['name', 'number', 'status', 'conclusion']) and successful(matched[0]),
+                            'PR validation step lacks its actual job original')
+                for name in ['Verify exact tracked source before commands',
+                             'Verify tracked source after fast release gate']:
+                    matched = [s for s in build_steps if s.get('name') == name]
+                    require(len(matched) == 1 and successful(matched[0]),
+                            'PR validation source identity step missing')
+                pr_equivalence, frozen_equivalence = equivalence.get('prSource', {}), equivalence.get('frozenSource', {})
+                require(all(pr_equivalence.get(k) == v for k, v in
+                            [('commit', premerge['sourceRevision']), ('tree', premerge['sourceTree'])]) and
+                        all(frozen_equivalence.get(k) == source[k] for k in ['commit', 'tree']),
+                        'PR validation/source equivalence identity differs')
+            focused = qualification.get('focusedAdmissionCorroboration')
+            if focused is not None:
+                pr_run = parse(archive.read('runs/pr/run.json'))
+                pr_jobs = parse(archive.read('runs/pr/jobs.json'))
+                equivalence = parse(archive.read('preparation/source-equivalence.json'))
+                require(pr_run.get('id') == focused['runId'] and pr_run.get('event') == 'pull_request' and
+                        pr_run.get('path') == '.github/workflows/deploy-pages.yml' and
+                        pr_run.get('head_sha') == focused['sourceRevision'] and successful(pr_run),
+                        'Focused admission original run identity/result differs')
+                pr_rows = pr_jobs.get('jobs')
+                require(isinstance(pr_rows, list) and 0 < len(pr_rows) <= 1000 and
+                        pr_jobs.get('total_count') == len(pr_rows) and
+                        all(j.get('run_id') == pr_run['id'] and positive(j.get('id'), 10**14) for j in pr_rows) and
+                        len({j['id'] for j in pr_rows}) == len(pr_rows),
+                        'Focused admission original jobs incomplete or borrowed')
+                by_name = {name: [job for job in pr_rows if job.get('name') == name]
+                           for name in ('preflight', 'focused', 'release-ready', 'build', 'test')}
+                require(all(len(rows) == 1 for rows in by_name.values()),
+                        'Focused admission job family missing or duplicated')
+                preflight, focused_job, ready, build, tests = [by_name[name][0] for name in
+                    ('preflight', 'focused', 'release-ready', 'build', 'test')]
+                require(successful(preflight) and successful(focused_job) and successful(ready) and
+                        focused_job['id'] == focused['jobId'] and ready['id'] == focused['aggregateJobId'] and
+                        build['id'] == focused['genericBuild']['jobId'] and
+                        build.get('conclusion') == tests.get('conclusion') == 'skipped' and
+                        all(job.get('head_sha') == focused['sourceRevision']
+                            for rows in by_name.values() for job in rows),
+                        'Focused admission job identity/result differs')
+                for retained in focused['classificationSteps']:
+                    matched = [row for row in focused_job.get('steps', []) if row.get('name') == retained['name']]
+                    require(len(matched) == 1 and all(retained.get(key) == matched[0].get(key)
+                            for key in ['name', 'number', 'status', 'conclusion']) and successful(matched[0]),
+                            'Focused admission classification step lacks its actual original')
+                pr_equivalence, frozen_equivalence = equivalence.get('prSource', {}), equivalence.get('frozenSource', {})
+                require(all(pr_equivalence.get(k) == v for k, v in
+                            [('commit', focused['sourceRevision']), ('tree', focused['sourceTree'])]) and
+                        all(frozen_equivalence.get(k) == source[k] for k in ['commit', 'tree']),
+                        'Focused admission/source equivalence identity differs')
         return {'files': len(rows), 'originalBytes': sum(r['bytes'] for r in rows),
                 'manifestSha256': sha(manifest_body), 'everyMemberCRCAndHashVerified': True,
                 'allQualificationPinsResolved': True}
@@ -477,22 +646,29 @@ class DraftUploadAPI:
 
     def upload(self, path, stream, size, digest):
         binding = self.binding
+        names = binding_names(binding)
         prefix = f'/repos/{binding["repository"]}/releases/{binding["release"]["id"]}/assets?name='
-        name = next((name for name in NAMES - SMALL_NAMES if path == prefix + name), None)
+        name = next((name for name in names - SMALL_NAMES if path == prefix + name), None)
         require(name is not None, 'Only original payload uploads are permitted')
         expected = next(row for row in binding['release']['assets'] if row['name'] == name)
         require(size == expected['bytes'] and digest == expected['sha256'], 'POST descriptor differs')
-        assets = asset_set(self.api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
+        assets = asset_set(self.api, binding, SMALL_NAMES, names - SMALL_NAMES)
         require(not any(asset['name'] == name for asset in assets), 'Original appeared before POST; refusing overwrite')
         return self.api.upload(path, stream, size, digest)
 
 
 def small_assets_check(binding, bodies, inspection, policy_body=None, *, require_committed_policy=False):
     source = binding['source']
+    names = binding_names(binding)
+    source_name, source_role = inspection_source(inspection)
+    require(source_name in names, 'Inspection source contract differs from reviewed assets')
     for name, body in bodies.items():
         if name != 'source-qualification-evidence.zip':
             sensitive_check(body)
     q = parse(bodies['source-qualification.json'])
+    proof_key = frozen_proof_key(q.get('frozenArtifactCorroboration', {}))
+    require((source_name == 'source-manifest.json') == (proof_key == 'sourceManifestGitContentsAndModesVerified'),
+            'Qualification and inspection source contracts differ')
     if q.get('format') == WAIVER_FORMAT and require_committed_policy:
         require(policy_body is not None and test_policy(policy_body)['mode'] == 'waived',
                 'Waiver upload requires the exact committed policy')
@@ -500,7 +676,8 @@ def small_assets_check(binding, bodies, inspection, policy_body=None, *, require
     prior = parse(bodies['verification.json'])
     for key in ['format', 'status', 'gitHead', 'gitTree', 'version', 'manifestSha256', 'releaseHashChainVerified']:
         require(prior[key] == inspection[key], 'Reviewed inspection differs: ' + key)
-    for role in ['artifact', 'sourceTar', 'distribution']:
+    require(inspection_source(prior) == (source_name, source_role), 'Reviewed source contract differs')
+    for role in ['artifact', source_role, 'distribution']:
         require(all(prior[role][k] == inspection[role][k] for k in ['bytes', 'sha256']), 'Reviewed original payload differs')
     require(prior['distribution']['allManifestBytesVerified'] is True and
             prior['distribution']['innerManifestIdentical'] is True, 'Prior whole byte verification missing')
@@ -521,11 +698,11 @@ def small_assets_check(binding, bodies, inspection, policy_body=None, *, require
                 'Qualification frozen input differs from reviewed original: ' + role)
     descriptors = {r['name']: r for r in binding['release']['assets']}
     rows = record_value['attachments']
-    require(len(rows) == 8 and {r['name'] for r in rows} == NAMES - {'qualification-evidence-record.json'},
+    require(len(rows) == 8 and {r['name'] for r in rows} == names - {'qualification-evidence-record.json'},
             'Evidence record must bind the other eight attachments')
     for row in rows:
         require(all(row[k] == descriptors[row['name']][k] for k in ['bytes', 'sha256']), 'Attachment record differs')
-    for name, role, member in [('source.tar', 'sourceTar', 'source.tar'),
+    for name, role, member in [(source_name, source_role, source_name),
                                ('distribution.zip', 'distribution', 'site/distribution.zip')]:
         row = next(r for r in rows if r['name'] == name)
         require(row.get('originalMember') == inspection[role]['outerMember'] == source['version'] + '/' + member and
@@ -535,7 +712,10 @@ def small_assets_check(binding, bodies, inspection, policy_body=None, *, require
 
 
 def upload_originals(binding, out, inspection, api, policy_body=None):
-    assets = asset_set(api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
+    names = binding_names(binding)
+    source_name, _ = inspection_source(inspection)
+    require(source_name in names, 'Inspection source contract differs')
+    assets = asset_set(api, binding, SMALL_NAMES, names - SMALL_NAMES)
     bodies = {}
     small = out / 'evidence/reviewed-small-assets'
     small.mkdir()
@@ -559,9 +739,10 @@ def upload_originals(binding, out, inspection, api, policy_body=None):
     # Fully verify BOTH held payload descriptors before either single-attempt POST.
     with contextlib.ExitStack() as stack:
         holders = []
-        for module, name, cls in [(upload_source, 'source.tar', upload_source.PinnedSource),
+        source_cls = PinnedManifest if source_name == 'source-manifest.json' else upload_source.PinnedSource
+        for module, name, cls in [(upload_source, source_name, source_cls),
                                   (upload_distribution, 'distribution.zip', upload_distribution.PinnedDistribution)]:
-            prefix = 'source' if name == 'source.tar' else 'member'
+            prefix = 'source' if name == source_name else 'member'
             args = SimpleNamespace(**common, **{prefix + '_bytes': descriptors[name]['bytes'],
                                                prefix + '_sha256': descriptors[name]['sha256']})
             holder = cls(args)
@@ -569,7 +750,7 @@ def upload_originals(binding, out, inspection, api, policy_body=None):
             holders.append((module, name, holder))
         for module, name, holder in holders:
             # Recheck the complete draft before each decision, including a no-POST recovery.
-            current = asset_set(api, binding, SMALL_NAMES, NAMES - SMALL_NAMES)
+            current = asset_set(api, binding, SMALL_NAMES, names - SMALL_NAMES)
             existing = next((asset for asset in current if asset['name'] == name), None)
             if existing is not None:
                 holder.unchanged()
@@ -587,7 +768,7 @@ def upload_originals(binding, out, inspection, api, policy_body=None):
             result = module.perform(holder, DraftUploadAPI(api, binding), binding['repository'],
                                     binding['release']['id'], binding['release']['tag'])
             record(out / 'evidence' / (name + '.upload-result.json'), result)
-        final_assets = asset_set(api, binding, NAMES)
+        final_assets = asset_set(api, binding, names)
         record(out / 'evidence/all-nine-assets.json', {'status': 'VERIFIED_RELEASE_ASSETS', 'assets': final_assets,
                'releaseId': binding['release']['id'], 'sourceCommit': binding['source']['commit'], 'tag': binding['release']['tag']})
 

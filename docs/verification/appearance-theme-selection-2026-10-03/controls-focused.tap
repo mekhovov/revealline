@@ -1,0 +1,175 @@
+TAP version 13
+# Subtest: company startup presentation block supplies the admitted candidate and waits for its resources
+ok 1 - company startup presentation block supplies the admitted candidate and waits for its resources
+  ---
+  duration_ms: 41.473625
+  ...
+# Subtest: actual custom campaign adoption latches interface and exact arcade dependency
+ok 2 - actual custom campaign adoption latches interface and exact arcade dependency
+  ---
+  duration_ms: 1044.009167
+  ...
+# Subtest: actual custom campaign adoption latches interface and exact arcade dependency while preserving the personal choice
+ok 3 - actual custom campaign adoption latches interface and exact arcade dependency while preserving the personal choice
+  ---
+  duration_ms: 509.063875
+  ...
+# Subtest: a cancelled custom campaign load preserves the active run, interface and SIM pin
+ok 4 - a cancelled custom campaign load preserves the active run, interface and SIM pin
+  ---
+  duration_ms: 423.967708
+  ...
+# Mission preparation failed. Error: Review fixture custom theme font decode failed.
+#     at TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/curated-community-theme-host.test.mjs:241:19)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: a failed custom campaign load preserves the active run, interface and SIM pin
+ok 5 - a failed custom campaign load preserves the active run, interface and SIM pin
+  ---
+  duration_ms: 435.802792
+  ...
+# Subtest: immediate: staged appearance preserves the actual paused Solo cut, saved slot and replay
+ok 6 - immediate: staged appearance preserves the actual paused Solo cut, saved slot and replay
+  ---
+  duration_ms: 2127.0795
+  ...
+# Subtest: grid-center: staged appearance preserves the actual paused Solo cut, saved slot and replay
+ok 7 - grid-center: staged appearance preserves the actual paused Solo cut, saved slot and replay
+  ---
+  duration_ms: 1675.585791
+  ...
+# Subtest: unified appearance survives Solo, Team, Versus and Solo return without altering display or progress
+    # Subtest: Solo immediately applies its complete family from real Settings
+    ok 1 - Solo immediately applies its complete family from real Settings
+      ---
+      duration_ms: 662.274916
+      ...
+    # Subtest: Team applies chrome from paused Options without changing a single painter command
+    ok 2 - Team applies chrome from paused Options without changing a single painter command
+      ---
+      duration_ms: 470.429542
+      ...
+    # Subtest: Versus preserves Appearance category, paused checkpoint and exact Back opener
+    ok 3 - Versus preserves Appearance category, paused checkpoint and exact Back opener
+      ---
+      duration_ms: 2134.440792
+      ...
+    # Subtest: fresh Solo adopts without an implicit save or start
+    ok 4 - fresh Solo adopts without an implicit save or start
+      ---
+      duration_ms: 679.053291
+      ...
+    1..4
+ok 8 - unified appearance survives Solo, Team, Versus and Solo return without altering display or progress
+  ---
+  duration_ms: 3947.434833
+  ...
+# Subtest: controller can cancel native editing or immediately select a family without changing Ready
+ok 9 - controller can cancel native editing or immediately select a family without changing Ready
+  ---
+  duration_ms: 1976.990042
+  ...
+# Subtest: denied appearance saving leaves Team local choice usable without replacing shared records
+ok 10 - denied appearance saving leaves Team local choice usable without replacing shared records
+  ---
+  duration_ms: 100.625625
+  ...
+# Subtest: actual host storage notifications preserve focus, pause and latest accepted appearance
+ok 11 - actual host storage notifications preserve focus, pause and latest accepted appearance
+  ---
+  duration_ms: 1822.80075
+  ...
+# Subtest: Versus controller commits and cancels family controls without starting or replacing Ready
+ok 12 - Versus controller commits and cancels family controls without starting or replacing Ready
+  ---
+  duration_ms: 2136.772416
+  ...
+# Subtest: prepared context leaves the accepted interface and preferences unchanged until a synchronous single-use commit
+ok 13 - prepared context leaves the accepted interface and preferences unchanged until a synchronous single-use commit
+  ---
+  duration_ms: 15.436291
+  ...
+# Subtest: prepared context rejects stale highContrast intent and leaves the current context in charge
+ok 14 - prepared context rejects stale highContrast intent and leaves the current context in charge
+  ---
+  duration_ms: 5.881542
+  ...
+# Subtest: prepared context rejects stale arcadeArt intent and leaves the current context in charge
+ok 15 - prepared context rejects stale arcadeArt intent and leaves the current context in charge
+  ---
+  duration_ms: 5.0385
+  ...
+# Subtest: prepared context rejects an intervening different context or a disposed owner
+ok 16 - prepared context rejects an intervening different context or a disposed owner
+  ---
+  duration_ms: 5.533041
+  ...
+# Subtest: failed font preparation retains the exact accepted context and lets a later preparation recover
+ok 17 - failed font preparation retains the exact accepted context and lets a later preparation recover
+  ---
+  duration_ms: 5.699458
+  ...
+# Subtest: failed stylesheet preparation never adopts its requested context and the original context recovers
+ok 18 - failed stylesheet preparation never adopts its requested context and the original context recovers
+  ---
+  duration_ms: 4.041291
+  ...
+# Subtest: a late earlier refresh cannot overwrite a synchronously committed prepared context
+ok 19 - a late earlier refresh cannot overwrite a synchronously committed prepared context
+  ---
+  duration_ms: 6.050959
+  ...
+# Subtest: an old context family pin reaches Arcade unchanged and a later context uses its own revision
+ok 20 - an old context family pin reaches Arcade unchanged and a later context uses its own revision
+  ---
+  duration_ms: 3.991958
+  ...
+# Subtest: cards and the selector immediately apply the same complete choice without replacing focused controls
+ok 21 - cards and the selector immediately apply the same complete choice without replacing focused controls
+  ---
+  duration_ms: 14.61875
+  ...
+# Subtest: Follow, original Field Kit and curated revisions have matching cards/options and exact context/custom colors
+ok 22 - Follow, original Field Kit and curated revisions have matching cards/options and exact context/custom colors
+  ---
+  duration_ms: 232.746333
+  ...
+# Subtest: rapid immediate choices retain the accepted theme until resources load, ignore superseded loads and preserve newest focus on failure
+ok 23 - rapid immediate choices retain the accepted theme until resources load, ignore superseded loads and preserve newest focus on failure
+  ---
+  duration_ms: 12.471333
+  ...
+# Subtest: v1 preference migration is read-only, preserves unknown intent and permits explicit recovery
+ok 24 - v1 preference migration is read-only, preserves unknown intent and permits explicit recovery
+  ---
+  duration_ms: 4.56825
+  ...
+# Subtest: complete Apply clears independent SIM appearance but preserves accessibility and legacy records
+ok 25 - complete Apply clears independent SIM appearance but preserves accessibility and legacy records
+  ---
+  duration_ms: 0.207708
+  ...
+# Subtest: all installed Arcade treatments preserve native sprite coverage and source ownership
+ok 26 - all installed Arcade treatments preserve native sprite coverage and source ownership
+  ---
+  duration_ms: 172.307625
+  ...
+# Subtest: theme cache isolates all installed variants and retained Industrial history without touching original media
+ok 27 - theme cache isolates all installed variants and retained Industrial history without touching original media
+  ---
+  duration_ms: 1.950125
+  ...
+# Subtest: an already failed preload is replaced and fetched before the host accepts a theme
+ok 28 - an already failed preload is replaced and fetched before the host accepts a theme
+  ---
+  duration_ms: 3.17025
+  ...
+1..28
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30323.34

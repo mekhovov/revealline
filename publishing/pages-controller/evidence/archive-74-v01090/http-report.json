@@ -1,0 +1,20 @@
+{
+  "format": "revealline-archive-http-report.v1",
+  "status": "PASS",
+  "base": "https://mekhovov.github.io/revealline-archive-74/",
+  "files": 1145,
+  "expectedBytes": 595439486,
+  "verifiedBytes": 595439486,
+  "failedFiles": 0,
+  "skipped": [],
+  "expectedInventorySha256": "3c0ce0c9e7c7bed8fffd5bb248777239d6b4559a850c797a64b01fc785f4a99c",
+  "method": "GET every finite expected path with Accept-Encoding: identity; stream and compare exact byte count and SHA-256 without retaining bodies",
+  "verifiedAt": "2026-09-25T02:13:22.783117+00:00",
+  "infrastructureCommit": "6c9cd53b7e55f411b9a41c5926720284a62f75bf",
+  "infrastructureTree": "f6be672de1b7fef3b6776e191655555d82181991",
+  "runId": 36084943061,
+  "deploymentId": 6652182989,
+  "deploymentStatusId": 18814701022,
+  "receiptArtifactId": 10843472459,
+  "failures": []
+}

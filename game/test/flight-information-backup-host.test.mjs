@@ -1,3 +1,5 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -37,12 +39,15 @@ async function closeDetails(page) {
   assert.equal(page.doc.activeElement, page.$('overlay-field-details'));
 }
 async function restoreFlight(page, original) {
-  closeLibrary(page);
-  page.$('continue-saved').click();
-  await settle(() => !page.$('continue-saved').disabled);
+  page.$('save-json').value = JSON.stringify(original);
+  await activateHostAction(page.$('import-save'));
+  assert.equal(page.$('library-dialog').open, false);
   page.frame(0);
   assert.equal(info(page).snapshot.paused, true);
-  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), original.replay.checkpoint);
+  assert.deepEqual(
+    authoritativeCheckpoint(page.rendered.run),
+    nativeSession(original).replay.checkpoint,
+  );
 }
 async function assertLifecycle(page) {
   const before = authoritativeCheckpoint(page.rendered.run),
@@ -75,7 +80,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     ticks(page);
     page.$('library-button').click();
     const original = JSON.parse(storage.getItem(sessionKey));
-    assert.equal(verifyReplay(original.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(original).replay).match, true);
     const library = loadLibrary(storage, profileKey, { campaigns: [campaign] }).library;
     page.$('save-json').value = JSON.stringify({
       format: BACKUP_FORMAT,
@@ -101,9 +106,9 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     );
     assert.equal(page.doc.body.dataset.textSize, 'standard');
     const undone = JSON.parse(storage.getItem(sessionKey));
-    assert.deepEqual(undone.replay, original.replay);
-    assert.deepEqual(undone.continuation, original.continuation);
-    assert.equal(verifyReplay(undone.replay).match, true);
+    assert.deepEqual(nativeSession(undone).replay, nativeSession(original).replay);
+    assert.deepEqual(nativeSession(undone).continuation, nativeSession(original).continuation);
+    assert.equal(verifyReplay(nativeSession(undone).replay).match, true);
     await restoreFlight(page, original);
     await assertLifecycle(page);
   });
@@ -142,8 +147,9 @@ test('a real backup commit failure keeps Details and both page lifecycles usable
   const retained = JSON.parse(storage.getItem(sessionKey));
   // The existing import pause boundary refreshes savedAt before commit.
   // Verify every other stored field and replay, rather than treating that timestamp as damage.
-  assert.deepEqual({ ...retained, savedAt: original.savedAt }, original);
-  assert.equal(verifyReplay(retained.replay).match, true);
+  nativeSession(retained).savedAt = nativeSession(original).savedAt;
+  assert.deepEqual(retained, original);
+  assert.equal(verifyReplay(nativeSession(retained).replay).match, true);
   assert.equal(page.$('import-save').disabled, false);
   storage.setItem = setItem;
   closeLibrary(page);

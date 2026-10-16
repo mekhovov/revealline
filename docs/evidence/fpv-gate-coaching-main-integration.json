@@ -1,0 +1,40 @@
+{
+  "format": "FPVGateCoachingSolarIntegration.v1",
+  "before": "7c19bbd89aa01f7895b15914b8e33a4a7cf3c7b2",
+  "mergedMain": "72d6661b117e1cf1d76ac5de44381685c63d19b9",
+  "merge": "f942dab3e5404923f65c80cf6ad6133d23e28597",
+  "checks": [
+    {
+      "name": "optional-practice/civilian-fpv/world-app.mjs exact through Solar integration",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-model.mjs exact through Solar integration",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-collision.mjs exact through Solar integration",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-catalogue.mjs exact through Solar integration",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-demonstrations.mjs exact through Solar integration",
+      "passed": true
+    }
+  ],
+  "runtime": {
+    "optional-practice/civilian-fpv/world-app.mjs": "451d9145f22bc5b3eb77f7ea605a46a5bb4b6e4ce2b138bb8bb7d4f75be14019",
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+  },
+  "incomingRuntime": [
+    "optional-practice/civilian-fpv/renderer.mjs",
+    "optional-practice/civilian-fpv/world-visuals.mjs"
+  ],
+  "scope": "Existing main Solar-only atlas/UV guards; no Warehouse/School course, physics, recording, or coaching change. Source v2 freezes current main renderer/visuals."
+}

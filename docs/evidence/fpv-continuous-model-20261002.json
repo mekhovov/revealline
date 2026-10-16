@@ -1,0 +1,248 @@
+{
+  "format": "FPVWholeLessonPracticeModelEvidence.v1",
+  "passed": true,
+  "summary": {
+    "lessons": 26,
+    "objectives": 122,
+    "comparedTicks": 21875,
+    "allOrdinaryIdentitiesUnchanged": true,
+    "sustainedTicks": 39100,
+    "recorderRejectedAfterReset": true
+  },
+  "results": [
+    {
+      "id": "beginner-01",
+      "mode": "self-level",
+      "ticks": 360,
+      "objectives": 3,
+      "ordinaryFinalIdentity": "9c5c44ff0f549053",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-02",
+      "mode": "self-level",
+      "ticks": 564,
+      "objectives": 3,
+      "ordinaryFinalIdentity": "f79e1ebe9e9f5a3b",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-03",
+      "mode": "self-level",
+      "ticks": 561,
+      "objectives": 3,
+      "ordinaryFinalIdentity": "df7c0c7ddcbe98f8",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "ticks": 696,
+      "objectives": 5,
+      "ordinaryFinalIdentity": "2b02d54e3f436aa4",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-05",
+      "mode": "self-level",
+      "ticks": 654,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "7b57e5174cee28c4",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-06",
+      "mode": "self-level",
+      "ticks": 828,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "e2cdac9d77db8835",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "ticks": 948,
+      "objectives": 5,
+      "ordinaryFinalIdentity": "52ca8f0f6d942fda",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-08",
+      "mode": "self-level",
+      "ticks": 830,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "502bfd5fba0dd1fa",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "ticks": 899,
+      "objectives": 5,
+      "ordinaryFinalIdentity": "fd81a13164a8da78",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-10",
+      "mode": "self-level",
+      "ticks": 732,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "573b969949ebedb6",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "ticks": 945,
+      "objectives": 5,
+      "ordinaryFinalIdentity": "d22d2c0ed2f3769e",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "ticks": 1032,
+      "objectives": 6,
+      "ordinaryFinalIdentity": "4d5e90cdbe3cccac",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "ticks": 654,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "11f9978ff8f10766",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "ticks": 757,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "fe32539fa7036a87",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-15",
+      "mode": "acro",
+      "ticks": 360,
+      "objectives": 3,
+      "ordinaryFinalIdentity": "a263ee9df3245fc6",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "ticks": 712,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "98a71c96624ef754",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "ticks": 608,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "e31f382df014b710",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "ticks": 961,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "c3cb25ef47210af2",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "ticks": 973,
+      "objectives": 6,
+      "ordinaryFinalIdentity": "4278125617729278",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "ticks": 908,
+      "objectives": 5,
+      "ordinaryFinalIdentity": "85322821714cc6d5",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "ticks": 959,
+      "objectives": 5,
+      "ordinaryFinalIdentity": "f68bc332fde2cd48",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "ticks": 1763,
+      "objectives": 10,
+      "ordinaryFinalIdentity": "1eed4ab679368ff7",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "ticks": 1057,
+      "objectives": 5,
+      "ordinaryFinalIdentity": "2845a2ff4aec8315",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "ticks": 1031,
+      "objectives": 5,
+      "ordinaryFinalIdentity": "7524261f630f7a40",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "ticks": 676,
+      "objectives": 4,
+      "ordinaryFinalIdentity": "d8840ecf804778f1",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "ticks": 1407,
+      "objectives": 8,
+      "ordinaryFinalIdentity": "e0364f091e3eb2a4",
+      "practiceStatus": "active",
+      "recorderRejected": true
+    }
+  ]
+}

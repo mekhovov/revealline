@@ -1,0 +1,3 @@
+Observed in actual Codex in-app browser, approved actors, Check all fixtures:
+{"mode":"solo","reduced":false,"background":"dark","placement":"interior","sizeIndex":1,"heading":0}: Occupied-size target differs.
+This fixture sizing failure is retained. Correct actual display sizing before rerunning; do not weaken the occupied-envelope check.

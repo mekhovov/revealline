@@ -1,0 +1,99 @@
+{
+  "format": "revealline-archive65-public-reconciliation.v1",
+  "status": "PASS_WITH_NATIVE_LIMITS",
+  "verifiedAt": "2026-09-24T05:27:32.542336+00:00",
+  "http": {
+    "status": "PASS",
+    "files": 1120,
+    "bytes": 594895002,
+    "attempts": 1120,
+    "failedFiles": 0,
+    "failedAttempts": 0,
+    "retriedFiles": 0,
+    "skipped": 0,
+    "uniqueExactPaths": true,
+    "allRowsMatchInventory": true,
+    "allRowsMatchAttempts": true,
+    "allFinalURLsExact": true,
+    "report": {
+      "path": "http/http-20260924T052425Z-784e662c/http-report.json",
+      "bytes": 1638,
+      "sha256": "53577dd4f21b351cc7db949fab0f96d4bfa7ff7f96258111a0d8f7ea791b0143"
+    },
+    "results": {
+      "path": "http/http-20260924T052425Z-784e662c/http-results.jsonl",
+      "bytes": 912803,
+      "sha256": "22feda8ea982e735d80acd2f9d2129721f77232595e2b4fe8569d6b7fbaf121d"
+    },
+    "attemptsLog": {
+      "path": "http/http-20260924T052425Z-784e662c/http-attempts.jsonl",
+      "bytes": 912803,
+      "sha256": "22feda8ea982e735d80acd2f9d2129721f77232595e2b4fe8569d6b7fbaf121d"
+    }
+  },
+  "finalAuthorities": [
+    {
+      "path": "final-authorities/artifacts.json",
+      "bytes": 1454,
+      "sha256": "297b651acde225d394ef377394906fe3f93eff7a51dd53c694910e12add97bf1"
+    },
+    {
+      "path": "final-authorities/commit.json",
+      "bytes": 2773,
+      "sha256": "bf5860d78cea20707ce5506ec5738d23a80d09e094043dbbbcb0d30bbd239e2b"
+    },
+    {
+      "path": "final-authorities/deployment.json",
+      "bytes": 3856,
+      "sha256": "12aefc6cbbad5d4fe0a8317ea804ef7f94b4f04ac5117a69be4f9ef08cdaa4b9"
+    },
+    {
+      "path": "final-authorities/main.json",
+      "bytes": 358,
+      "sha256": "345fb2eb42c2c26d6e36ca5f79117a28016621f17bcb69d7653bceed8bcfa7a2"
+    },
+    {
+      "path": "final-authorities/run.json",
+      "bytes": 13238,
+      "sha256": "b13989b65252d50a9cab5f3a8c8c8b4c2583c48407cbf9305b44ea418a8c33da"
+    },
+    {
+      "path": "final-authorities/statuses.json",
+      "bytes": 6817,
+      "sha256": "c38ce70ad6569a39df087c9cd6b6233345b2f7fef8cfb013723a053105b01ed1"
+    }
+  ],
+  "deployment": {
+    "repository": "mekhovov/revealline-archive-65",
+    "commit": "cca5acb23db5d0c7991255ddd08884d2a12634ca",
+    "tree": "a8b6df07f906fa701562866075e07d60dc3dfcd1",
+    "runId": 35959521293,
+    "deploymentId": 6630815744,
+    "statusId": 18766139595,
+    "receiptArtifactId": 10790898967,
+    "unchangedAfterHTTP": true
+  },
+  "helperReview": {
+    "reviewer": "ux0_navigation",
+    "status": "APPROVED_READ_ONLY",
+    "scope": "Exact archive identities and bounded metadata persistence; transport, MIME, body hash, URL, read deadlines/retries, full inventory and final authority revalidation unchanged.",
+    "capacityWorstCaseBytes": 26738688,
+    "capacityPersistedLimitBytes": 29360128,
+    "freeSpaceGuardBytes": 33554432,
+    "testCount": 28,
+    "testFailures": 0
+  },
+  "native": {
+    "path": "native-observation.json",
+    "bytes": 3291,
+    "sha256": "caf451ad0e0b6b48893abe79bbbe1180d57c3fbed30530a462451b58aea70e7d"
+  },
+  "limitations": [
+    "Native evidence is bounded 1280x720 DPR2 browser interaction, not touch or physical-controller certification.",
+    "Existing Solo save was not started or replaced; no Solo progression acceptance.",
+    "Team and Versus session play worked; physical-disk exhaustion produced IndexedDB FILE_ERROR_NO_SPACE.",
+    "No persistence, backup, offline, successful recovery, full balance, exhaustive accessibility or clean-console claim.",
+    "This preserves published v0.96.0; it is not public acceptance of UX0 v0.98.0.",
+    "No payload bodies persisted by HTTP audit."
+  ]
+}
