@@ -884,6 +884,7 @@ if (audioDirectory) {
       coverage: [
         'public .rlsound import of two exact archived CC0 originals with pinned hashes',
         'local Blob-backed HTMLMediaElement streaming; no claim about remote delivery',
+        'public recording-mode filter disabled for listening; no gameplay-video permission claim',
         'ordered playlist current/next admission via public explicit Next',
         '60 seconds without transport input requires a natural near-end transition',
         'separate audio-proof mode requires both exact MP3 hashes and native playback advancement',
@@ -895,6 +896,13 @@ if (audioDirectory) {
         { type: 'click', selector: '#soundtrack-advanced-backup-toggle' },
         { type: 'upload', selector: '#soundtrack-bundle-file', file: AUDIO_BUNDLE_FILE },
         { type: 'click', selector: '#soundtrack-import-bundle', timeoutMs: 60000 },
+        { type: 'expect', selector: '#soundtrack-use-selection:enabled' },
+        // These originals are listening fixtures. Their unchanged metadata does
+        // not claim the additional permissions required by recording mode.
+        { type: 'click', selector: '#soundtrack-advanced-listening-toggle' },
+        { type: 'check', selector: '#soundtrack-recording-mode', value: false },
+        { type: 'click', selector: '#soundtrack-apply-listening', timeoutMs: 60000 },
+        { type: 'expect', selector: '#soundtrack-use-selection:enabled' },
         // Play this playlist commits the imported draft itself. Its controls
         // stay disabled until public import has completed media admission.
         { type: 'select', selector: '#soundtrack-selection', value: AUDIO_PLAYLIST_ID },
