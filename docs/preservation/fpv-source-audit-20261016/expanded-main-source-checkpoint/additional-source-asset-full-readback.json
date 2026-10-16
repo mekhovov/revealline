@@ -1,0 +1,8 @@
+{
+  "createdUTC": "2026-10-16T07:02:51.828594+00:00",
+  "assetId": 646421685,
+  "bytes": 16420788,
+  "sha256": "d9e35b9a98f2e337fb1236d9a6e1857ad7fdb39c9dad2df6bf04203498913f4d",
+  "authenticatedFullGitHubAssetReadbackPassed": true,
+  "coldAcceptance": "PENDING after recording exact captured shallow boundary; failed initial fsck retained."
+}
