@@ -1,0 +1,88 @@
+name: FPV preservation readback
+
+on:
+  pull_request:
+    paths:
+      - authoring/fpv-development-preservation/**
+      - docs/reports/fpv-development-preservation-20261016/published-parts/**
+      - .github/workflows/fpv-preservation-readback.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fpv-preservation-readback-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  plans:
+    runs-on: ubuntu-24.04
+    outputs:
+      plans: ${{ steps.plans.outputs.plans }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          sparse-checkout: |
+            authoring/fpv-development-preservation
+            docs/reports/fpv-development-preservation-20261016/published-parts
+      - id: plans
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          base = Path('docs/reports/fpv-development-preservation-20261016/published-parts')
+          paths = sorted(str(p) for p in base.glob('part-*.json')
+                         if re.fullmatch(r'part-[0-9a-f]{64}\.json', p.name))
+          if not paths:
+              raise SystemExit('No sealed published preservation plans')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write('plans=' + json.dumps(paths, separators=(',', ':')) + '\n')
+          PY
+  verify:
+    needs: plans
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        plan: ${{ fromJSON(needs.plans.outputs.plans) }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PLAN_PATH: ${{ matrix.plan }}
+      EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          sparse-checkout: |
+            authoring/fpv-development-preservation
+            docs/reports/fpv-development-preservation-20261016/published-parts
+      - name: Verify the exact head and required reader
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          command -v gh
+          sudo apt-get update -qq
+          sudo apt-get install -y zstd
+      - name: Authenticate readback and restore every sealed member
+        shell: bash
+        run: |
+          mkdir "$RUNNER_TEMP/preservation-receipts"
+          plan_name="$(basename "$PLAN_PATH" .json)"
+          python3 authoring/fpv-development-preservation/verify_published.py \
+            --plan "$PLAN_PATH" \
+            --work "$RUNNER_TEMP/preservation-part" \
+            --receipt "$RUNNER_TEMP/preservation-receipts/$plan_name-verified.json"
+      - name: Retain the small verification receipt
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: preservation-readback-${{ strategy.job-index }}
+          path: ${{ runner.temp }}/preservation-receipts/*.json
+          if-no-files-found: warn
+          retention-days: 90

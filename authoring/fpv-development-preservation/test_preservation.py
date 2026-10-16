@@ -12,6 +12,7 @@ from pack import safe_relative, privacy_hold, pack_part
 from verify_upload import restore_part
 from restore import link_target, restore
 from build_index import build
+from verify_published import verify_plan
 
 
 class PreservationTests(unittest.TestCase):
@@ -210,6 +211,20 @@ class PreservationTests(unittest.TestCase):
         inventory.write_text(valid + '\n')
         result = build([inventory], state, [], [], catalogue, '/old/root', inventory_set_final=True)
         self.assertTrue(result['coverageComplete'])
+
+    def test_cloud_plan_requires_every_source_check_exactly_once(self):
+        sha = hashlib.sha256(b'known').hexdigest()
+        header = {'format': 'FPVCASPart.v1', 'number': 1,
+                  'objects': [{'sha256': sha, 'bytes': 5, 'member': 'objects/' + sha}]}
+        check = {'path': 'packages/original.zip', 'sha256': sha, 'bytes': 5,
+                 'sourceBeforeAndAfterSHA256Match': True}
+        plan = {'format': 'FPVCASPartPublished.v1', 'repo': 'mekhovov/revealline',
+                'releaseId': 414505790, 'partManifest': header, 'sourceChecks': [check]}
+        verify_plan(plan)
+        for checks in [[], [check, check], [dict(check, sourceBeforeAndAfterSHA256Match=False)],
+                       [dict(check, path='../outside')], [dict(check, bytes=6)]]:
+            with self.assertRaises(ValueError):
+                verify_plan(dict(plan, sourceChecks=checks))
 
 
 if __name__ == '__main__':
