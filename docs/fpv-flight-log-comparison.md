@@ -143,6 +143,15 @@ reference samples cannot disappear. Commands are held between samples; achieved
 rotation is linearly interpolated. Squared linear error is integrated exactly
 over time, preserving command discontinuities.
 
+Verified export also checks each recorded input's consumption substep against its
+timestamp and the synchronous mission-admission schedule. An inconsistent time is
+rejected even if the flight's physics hashes still match.
+Valid late-arriving samples retain their actual mission-boundary consumption;
+queued samples retain their first eligible substep. Verification finishes before
+either output file is written.
+This establishes consistency with the declared history, not authenticated capture
+of an original physical input stream.
+
 `comparable: true` means only that the requested angular motion matched within
 the declared tolerance. It does not establish equal throttle, battery, environment,
 aircraft, controller or assists. Review those settings and the frozen configuration
