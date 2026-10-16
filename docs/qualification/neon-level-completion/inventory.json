@@ -1,6 +1,6 @@
 {
   "format": "revealline-neon-delivery-audit.v1",
-  "sourceRevision": "cb663b0a42acaf36e7a17b2b40b9bdb6c1e08d05",
+  "sourceRevision": "29cf36e4068a139612ec014f2cfd5ec5994f9592",
   "scope": "Source catalog, exact public URLs and image byte bindings. Not a browser, offline-install or human-balance approval.",
   "catalogIdentityCount": 164,
   "catalogIdentities": [
