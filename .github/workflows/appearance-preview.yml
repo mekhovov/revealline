@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/appearance-preview.yml'
       - 'docs/appearance-preview-testing.md'
+      - 'game/app.mjs'
       - 'game/presentation/**'
       - 'game/ui/theme-*'
       - 'game/ui/menu-controls.css'
@@ -15,6 +16,10 @@ on:
       - 'game/ui/mode-choice.mjs'
       - 'game/ui/story-dialog.mjs'
       - 'game/ui/operation-status.mjs'
+      - 'game/ui/visual-quality-policy.mjs'
+      - 'game/ui/demo-audio.mjs'
+      - 'game/ui/demo-host.mjs'
+      - 'game/ui/soundtrack-panel.mjs'
       - 'game/replay-theater/**'
       - 'game/editions/model.mjs'
       - 'game/editions/package-budget.mjs'
@@ -46,6 +51,14 @@ on:
       - 'game/test/menu-style-host.test.mjs'
       - 'game/test/win-picture-host.test.mjs'
       - 'game/test/demo-reward.test.mjs'
+      - 'game/test/visual-quality-policy.test.mjs'
+      - 'game/test/solo-render-submission.test.mjs'
+      - 'game/test/demo-audio.test.mjs'
+      - 'game/test/demo-audio-host.test.mjs'
+      - 'game/test/soundtrack-panel.test.mjs'
+      - 'game/test/soundtrack-host.test.mjs'
+      - 'game/test/solo-demo-media-admission-host.test.mjs'
+      - 'game/test/helpers/audio-view-writes.mjs'
       - 'optional-practice/civilian-fpv/*.mjs'
       - 'optional-practice/civilian-fpv/*.css'
       - 'optional-practice/civilian-fpv/index.html'
@@ -129,6 +142,12 @@ jobs:
         game/test/win-picture-host.test.mjs
         game/test/demo-reward.test.mjs
         game/test/solo-demo-media-admission-host.test.mjs
+        game/test/visual-quality-policy.test.mjs
+        game/test/solo-render-submission.test.mjs
+        game/test/demo-audio.test.mjs
+        game/test/demo-audio-host.test.mjs
+        game/test/soundtrack-panel.test.mjs
+        game/test/soundtrack-host.test.mjs
         game/test/company-studio-ui.test.mjs
         game/test/company-studio-preview.test.mjs
         game/test/studio-appearance-basis.test.mjs
