@@ -1,0 +1,139 @@
+{
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "candidate": {
+    "revision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
+    "tree": "c4d176a8d5af6dfc0becc70e2a5a42a40ce5a367",
+    "run": 38963874667,
+    "artifact": 12074887637,
+    "outer": {
+      "bytes": 1090917792,
+      "sha256": "22a0d121c0afe086392aaaec392af3d15c544b920c36d96422c84043259aa33f"
+    },
+    "inner": {
+      "bytes": 1073304249,
+      "sha256": "7049aedea080d135bb83101861cf30e7ca350333a2e0bd8cf75b02003fb012e9"
+    },
+    "manifestSHA256": "64d8a4bc84d2869c87856935a6d65ca2897c693c8bc46908c1a90110e5e9422c",
+    "producer": "Exact retained Appearance CI package, Node22.13.1 Linux; 819/819 focused checks across65completefiles. No substitute rebuild."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "producer": "Fresh exact-source normal Linux build under Node22.13.1, original source flags/budgets. New archive/manifest identity; not the historical macOS baseline artifact.",
+    "historicalArtifactInvestigation": {
+      "mainRun": 38817575550,
+      "pagesArtifact": 12011437947,
+      "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
+      "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
+    },
+    "publishVerifiedNormal": true,
+    "publication": "Only after all normal build, full ZIP member and exact source/CSP proofs pass: retain existing distribution.zip and manifest with independent normal-baseline-proof metadata. Positive ready is independent of later offline outcomes; no current failed baseline-source report is admitted.",
+    "publisher": {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 13941,
+      "sha256": "b7bd4c75ce4ff04e26545aee7d488d8d674173379d372bb815b47a7935567887",
+      "workflow": ".github/workflows/solo-remote-offline-temporary.yml"
+    }
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "300s artifact transfer;600s each outer/inner verification;1200s baseline build;480s each source proof;75min helper unchanged inside145min job. Existing normal baseline ZIP+manifest may be separately uploaded only with positive verified ready. All profiles remain separately bounded/read back. Every command and row deadline is unchanged.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 29360128,
+    "scratch": "Fresh exact common RUNNER_TEMP/sc-sixchars/rNN root and child path/device/inode authority; <=52-byte row path. Profile admission requires matching common scratch-authority receipt in addition to command/raw/plan closure.",
+    "workflowBudgetMinutes": {
+      "initialize": 1,
+      "threeCheckouts": 9,
+      "node": 3,
+      "sourceDependencies": 10,
+      "browserDependencies": 10,
+      "display": 3,
+      "ownerTests": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "evidenceUpload": 10,
+      "baselineUploadAdmission": 2,
+      "baselineUpload": 10,
+      "sum": 142,
+      "job": 145
+    }
+  },
+  "format": "SoloHostedOfflinePairPlan.v1",
+  "status": "integrated-pending-current-artifact-and-first-eight-review",
+  "cohort": "linux-offline-persistence-2ec-pair-v1",
+  "profileEvidenceBytes": 1082130432,
+  "rowEvidenceBytes": 33554432,
+  "scope": "Exactly one fresh Linux b117 baseline and one retained exact2ec candidate. Public Starter install, passive worker/cache hash premise, full browser/server shutdown, same-profile offline restart. Original access fixture only; no authentication/gameplay/physical/PWA/performance qualification. Local failures remain failed. No retry.",
+  "rows": [
+    {
+      "id": "offline-baseline-p1",
+      "kind": "offline-persistence",
+      "engine": "chromium",
+      "source": "baseline",
+      "timeoutMs": 900000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "offline-candidate-p1",
+      "kind": "offline-persistence",
+      "engine": "chromium",
+      "source": "candidate",
+      "timeoutMs": 900000,
+      "performanceExclusion": true
+    }
+  ],
+  "offline": {
+    "serverPort": 18791,
+    "observationTimeoutMs": 600000,
+    "downloadTimeoutMs": 300000,
+    "maximumReportBytes": 2097152,
+    "profileMaximumBytes": 536870912,
+    "archiveMaximumBytes": 536870912,
+    "profileMaximumMembers": 20000,
+    "preservationTimeoutMs": 180000,
+    "retirementTimeoutMs": 180000,
+    "driver": {
+      "path": "scripts/observe-solo-offline-persistence.mjs",
+      "bytes": 39643,
+      "sha256": "62749f55c4332e0180c8fb08a48b737009e9e492ea929e530afc4b005a0392de"
+    }
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-offline.mjs",
+      "bytes": 17622,
+      "sha256": "59c7cc921cd83040878b87fd530c5a69cdfb43f7073069229e9edd3d545898c2"
+    },
+    {
+      "path": "scripts/observe-solo-offline-persistence.mjs",
+      "bytes": 39643,
+      "sha256": "62749f55c4332e0180c8fb08a48b737009e9e492ea929e530afc4b005a0392de"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 13941,
+      "sha256": "b7bd4c75ce4ff04e26545aee7d488d8d674173379d372bb815b47a7935567887"
+    }
+  ],
+  "acceptance": {
+    "execution": "Exact public pre-close premise, settled observation and clean common process closure; completed-diagnostic is not product success.",
+    "negativeOutcome": "Observed restart/cache failure remains negative but does not prevent candidate after valid baseline premise/closure/preservation.",
+    "preservation": "Bounded full type/mode/member hash archive readback and unchanged source rehash, then separate exact-profile retirement; uncertainty stops dependent work.",
+    "failure": "No retry or repair. Every failed/partial/not-run row retained. No aggregate offline qualification pass."
+  }
+}
