@@ -19,6 +19,15 @@ import {
 } from './optional-installation-download-check.mjs';
 import { admitPinnedHistoricalPractice } from './practice-historical-admission.mjs';
 import {
+  selectHistoricalMigration,
+  MIGRATION_IDS,
+  assertMigrationOwnership,
+  assertMigrationUnrelated,
+  assertMigrationWorldRetention,
+  openHistoricalMigrationSurface,
+  seedHistoricalMigrationWorld,
+} from './optional-installation-migration.mjs';
+import {
   selectHistoricalInstallationMode,
   revealHistoricalAcademyControl,
 } from './practice-historical-ui.mjs';
@@ -29,6 +38,13 @@ import {
   verifyHistoricalSessionAfterUpdate,
   disposeHistoricalAcademySession,
 } from './optional-installation-active-session.mjs';
+import {
+  selectHistoricalWindowMode,
+  configureHistoricalSessionWindow,
+  minimizeHistoricalSessionWindow,
+  restoreHistoricalSessionWindow,
+  disposeHistoricalSessionWindow,
+} from './optional-installation-active-window.mjs';
 import {
   INSTALLATION_WORLD_SEED,
   selectInstallationWorldSeed,
@@ -129,6 +145,29 @@ const version = envelope.version,
   failedFixture = 'v0.0.1';
 const quotaPackageIds = selectQuotaPackages(process.env.OPTIONAL_INSTALLATION_QUOTA_PACKAGES);
 const worldSeedEnabled = selectInstallationWorldSeed(process.env.OPTIONAL_INSTALLATION_WORLD_SEED);
+const migrationEnabled = selectHistoricalMigration(process.env.OPTIONAL_INSTALLATION_MIGRATION, {
+  historical: historicalPrevious,
+  worldSeed: worldSeedEnabled,
+  download: process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
+  quota: process.env.OPTIONAL_INSTALLATION_QUOTA_PROBE,
+  quotaPackages: process.env.OPTIONAL_INSTALLATION_QUOTA_PACKAGES,
+  activeSession: process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION,
+  activeWindow: process.env.OPTIONAL_INSTALLATION_ACTIVE_WINDOW,
+});
+const migrationAuthorityNames = migrationEnabled
+  ? [
+      'optional-installation-migration.mjs',
+      'practice-worker-cache-inventory.mjs',
+      'optional-installation-download-check.mjs',
+      'practice-download-fault.mjs',
+    ]
+  : [];
+const migrationAuthority = await Promise.all(
+  migrationAuthorityNames.map(async (name) => ({
+    path: name,
+    sha256: sha(await readFile(new URL(name, import.meta.url))),
+  })),
+);
 assert.ok(
   new Set([version, priorVersion, failedFixture]).size === 3,
   'Candidate, previous and failed-fixture versions must differ.',
@@ -187,6 +226,9 @@ const worldSeed = worldSeedEnabled
         'One template copied, named and installed through public Workshop controls; visible Library identity plus read-only exact World Studio database fingerprints. Browser-context offline and process restart only: no machine-wide outage, OS reboot, imported .rlpack/assets, human flight or physical-device qualification.',
     }
   : null;
+if (migrationEnabled)
+  worldSeed.scope =
+    'One world template copied and installed through historical Workshop controls; exact nonempty project/revision database fingerprints and visible Library identity before upgrade and after every package upgrade/rollback. No process restart, populated assets/recordings, flight or physical-device qualification.';
 const password = process.env.OPTIONAL_INSTALLATION_PASSWORD;
 const downloadFaultsEnabled = selectInstallationDownloadFaults(
   process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
@@ -196,6 +238,12 @@ const downloadMatrix = installationDownloadFaultMatrix(
 );
 const activeSessionMode = process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION;
 const activeSessionEnabled = selectHistoricalActiveSession(activeSessionMode);
+const activeWindowMode = process.env.OPTIONAL_INSTALLATION_ACTIVE_WINDOW;
+const activeWindowEnabled = selectHistoricalWindowMode(activeWindowMode);
+assert(
+  !activeWindowEnabled || activeSessionEnabled,
+  'Owned-window mode requires the historical active-session lane.',
+);
 assert(
   !activeSessionEnabled || (historicalPrevious && !downloadFaultsEnabled),
   'Active-session observation requires pinned historical admission and a separate fault-free run.',
@@ -205,6 +253,18 @@ const activeSession = activeSessionEnabled
   ? {
       sourceSha256: sha(await readFile(activeSessionURL)),
       passed: false,
+    }
+  : null;
+const activeWindowURL = new URL('./optional-installation-active-window.mjs', import.meta.url);
+const focusSourcePath = path.resolve(
+  path.dirname(modulePath),
+  '../playwright-core/lib/coreBundle.js',
+);
+const activeWindow = activeWindowEnabled
+  ? {
+      sourceSha256: sha(await readFile(activeWindowURL)),
+      focusSourcePath,
+      focusSourceSha256: sha(await readFile(focusSourcePath)),
     }
   : null;
 assert(!downloadFaultsEnabled || worldSeedEnabled, 'Download faults require the saved-world seed.');
@@ -255,6 +315,14 @@ const entries = new Map(),
   checkpoints = [],
   errors = [],
   osApps = [];
+const migrationOldEntries = new Map();
+const migration = {
+  protocol: 'optional-installation-all-three-historical.v1',
+  passed: false,
+  transitions: [],
+  checks: [],
+  authority: migrationAuthority,
+};
 let served, context, cdp, report;
 let currentStep = 'staging admitted packages';
 const acquiringResources = { pending: new Set(), errors: [] };
@@ -408,6 +476,34 @@ try {
       await pointer(fpv, priorVersion);
       await pointer(gym, version);
       await pointer(worlds, version);
+      if (migrationEnabled) {
+        for (const id of MIGRATION_IDS) {
+          const oldItem = previous.envelope.packages.find((row) => row.id === id);
+          const currentItem = envelope.packages.find((row) => row.id === id);
+          assert(oldItem && currentItem);
+          assert.notEqual(oldItem.distribution.sha256, currentItem.distribution.sha256);
+          assert.notEqual(oldItem.revision, currentItem.revision);
+          const oldFiles = readEditionZip(previous.admittedBytes.get(oldItem.distribution.path));
+          assert.deepEqual(JSON.parse(oldFiles.get('launcher/app.webmanifest')), manifests.get(id));
+          migrationOldEntries.set(id, oldFiles);
+          migration.transitions.push({
+            id,
+            previous: oldItem,
+            current: currentItem,
+            changedFiles: [...new Set([...oldFiles.keys(), ...entries.get(id).keys()])]
+              .filter(
+                (name) =>
+                  !oldFiles.has(name) ||
+                  !entries.get(id).has(name) ||
+                  !oldFiles.get(name).equals(entries.get(id).get(name)),
+              )
+              .sort(),
+          });
+          await stage(id, priorVersion, oldFiles);
+          await stageLauncher(id, oldFiles);
+          await pointer(id, priorVersion);
+        }
+      }
       await put('.xonix-build.json', JSON.stringify({ tool: 'xonix-game-cli', formatVersion: 1 }));
       requireObservationTime();
       await trackObservedResource(acquiringResources, 'Local server', async () => {
@@ -497,6 +593,19 @@ try {
       }
       async function revealOfflineUI(id) {
         const adapter = OBSERVED_PACKAGES[id];
+        if (
+          migrationEnabled &&
+          id !== fpv &&
+          new URL(page.url()).pathname === new URL(url(entry(id, priorVersion))).pathname
+        ) {
+          await openHistoricalMigrationSurface(
+            page,
+            id,
+            id === gym ? 'offline' : 'packs',
+            url(entry(id, priorVersion)),
+          );
+          return;
+        }
         if (id === fpv) await revealFPVOffline(page, () => clickFPV('#help'));
         else {
           await revealControl(id, adapter.panel, 'content');
@@ -526,7 +635,14 @@ try {
           expected:
             /ready offline|ready for offline|prepared offline|offline runtime preparation completed/i,
         });
-        await page.locator(adapter.close).click();
+        if (
+          !(
+            migrationEnabled &&
+            id !== fpv &&
+            new URL(page.url()).pathname === new URL(url(entry(id, priorVersion))).pathname
+          )
+        )
+          await page.locator(adapter.close).click();
       }
       async function inspect(label) {
         const state = await page.evaluate(async () => ({
@@ -686,6 +802,236 @@ try {
         importedProfiles,
         expectedImportedProfileExport(importedProfiles.format, profileFixture),
       );
+      if (migrationEnabled) {
+        const references = {},
+          inventories = new Map(),
+          launchers = new Map();
+        async function openMigrationLauncher(id, selected) {
+          requireObservationTime();
+          const files = selected === priorVersion ? migrationOldEntries.get(id) : entries.get(id);
+          const workerBytes = files.get('launcher/worker.js');
+          const revision = workerBytes.toString('utf8').match(/,\s*"([a-f0-9]{64})"\);\s*$/)?.[1];
+          assert(revision, 'Require the admitted launcher revision.');
+          const workerScope = url(relativeRoot(id) + 'app/');
+          const cacheName = `revealline.optional.${id === gym ? 'civilian-flight' : 'package'}.v1:${new URL(workerScope).pathname}:${revision}`;
+          const inventory = practiceWorkerCacheInventory({
+            workerBytes,
+            baseURL: workerScope,
+            cacheName,
+          });
+          await page.goto(workerScope);
+          await unlockObservedPage(page, password);
+          await page.locator('#prepare').waitFor({ state: 'visible' });
+          assert(
+            matchesLaunchedAppURL(
+              await page.locator('#prepare').getAttribute('href'),
+              url(entry(id, selected)),
+            ),
+          );
+          requireObservationTime();
+          await page.locator('#prepare').press('Enter');
+          await page.waitForURL((observed) =>
+            matchesLaunchedAppURL(observed, url(entry(id, selected))),
+          );
+          await unlockObservedPage(page, password);
+          await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor({ state: 'visible' });
+          // Leave the old launcher client through its public Play action before
+          // awaiting ordinary replacement activation. Never force skipWaiting.
+          await page.waitForFunction(
+            async ({ scope, cacheName }) => {
+              const caches = (await globalThis.caches.keys()).filter((name) =>
+                name.includes(`:${new URL(scope).pathname}:`),
+              );
+              const worker = (await globalThis.navigator.serviceWorker.getRegistrations()).find(
+                (row) => row.scope === scope,
+              );
+              return (
+                worker?.active?.state === 'activated' &&
+                caches.length === 1 &&
+                caches[0] === cacheName
+              );
+            },
+            { scope: workerScope, cacheName },
+          );
+          await boundedOperation('Read admitted stable launcher hashes', () =>
+            readPreparedCacheFingerprints(page, [inventory]),
+          );
+          launchers.set(id, { workerScope, cacheName, inventory });
+        }
+        for (const id of MIGRATION_IDS) {
+          for (const selected of [priorVersion, version]) {
+            const item = (selected === priorVersion ? previous.envelope : envelope).packages.find(
+              (row) => row.id === id,
+            );
+            const files = selected === priorVersion ? migrationOldEntries.get(id) : entries.get(id);
+            const workerScope = url(site(id, selected) + `optional-practice/${id}/`);
+            const cacheName = `revealline.optional.${id === gym ? 'civilian-flight' : 'package'}.v1:${new URL(workerScope).pathname}:${item.revision}`;
+            const inventory = practiceWorkerCacheInventory({
+              workerBytes: files.get(`optional-practice/${id}/worker.js`),
+              baseURL: workerScope,
+              cacheName,
+            });
+            inventories.set(`${id}:${selected}`, inventory);
+            if (selected === priorVersion)
+              references[id] = {
+                active: {
+                  version: selected,
+                  scope: url(site(id, selected)),
+                  workerScope,
+                  cacheName,
+                },
+              };
+          }
+        }
+        await openMigrationLauncher(fpv, priorVersion);
+        await openMigrationLauncher(gym, priorVersion);
+        await prepare(gym);
+        await openMigrationLauncher(worlds, priorVersion);
+        worldSeed.template = (
+          await boundedOperation('Historical public world seed', () =>
+            seedHistoricalMigrationWorld(
+              page,
+              readWorldDatabase,
+              url(entry(worlds, priorVersion)),
+              { requireActive: requireObservationTime },
+            ),
+          )
+        ).template;
+        worldSeed.preparedBeforeInstallation = true;
+        await open(worlds, priorVersion);
+        await prepare(worlds);
+        async function retained(label) {
+          requireObservationTime();
+          const worldVersion = references[worlds].active.version;
+          await open(worlds, worldVersion);
+          if (worldVersion === priorVersion)
+            await openHistoricalMigrationSurface(
+              page,
+              worlds,
+              'packs',
+              url(entry(worlds, priorVersion)),
+            );
+          else await openInstallationWorldTab(page, 'packs');
+          const world = {
+            label,
+            card: await readInstallationWorldCard(page),
+            database: await readWorldDatabase(page),
+          };
+          assertInstallationWorldSeed(world, worldSeed.baseline);
+          worldSeed.baseline ??= world;
+          worldSeed.checks.push(world);
+          await open(fpv, references[fpv].active.version);
+          assert.equal(await exportedProof(), savedProof);
+          assert.equal(await exportedProfiles(), savedProfiles);
+          const state = await inspect(`migration:${label}`);
+          assertMigrationOwnership(state, references, keyFor, [...launchers.values()]);
+          const cacheFingerprints = await boundedOperation(
+            'Read admitted migration dependency hashes',
+            () =>
+              readPreparedCacheFingerprints(page, [
+                ...MIGRATION_IDS.flatMap((id) =>
+                  [references[id].active, references[id].previous]
+                    .filter(Boolean)
+                    .map((ref) => inventories.get(`${id}:${ref.version}`)),
+                ),
+                ...[...launchers.values()].map((row) => row.inventory),
+              ]),
+          );
+          migration.checks.push({
+            label,
+            proofSha256: sha(savedProof),
+            profileSha256: sha(savedProfiles),
+            cacheFingerprints,
+            references: structuredClone(references),
+          });
+          return state;
+        }
+        let baseline = await retained('historical-baseline');
+        for (const id of MIGRATION_IDS) {
+          await stageLauncher(id);
+          await pointer(id, version);
+          await openMigrationLauncher(id, version);
+          await prepare(id);
+          const item = envelope.packages.find((row) => row.id === id);
+          const workerScope = url(site(id) + `optional-practice/${id}/`);
+          references[id] = {
+            previous: references[id].active,
+            active: {
+              version,
+              scope: url(site(id)),
+              workerScope,
+              cacheName: `revealline.optional.${id === gym ? 'civilian-flight' : 'package'}.v1:${new URL(workerScope).pathname}:${item.revision}`,
+            },
+          };
+          const state = await retained(`after-upgrade:${id}`);
+          assertMigrationUnrelated(baseline, state, id, keyFor);
+          baseline = state;
+        }
+        for (const id of MIGRATION_IDS) {
+          await open(id);
+          const button = await revealOfflineRemoval(id);
+          await activateOfflineAction(page, {
+            button,
+            status: OBSERVED_PACKAGES[id].status,
+            expected: /removed/i,
+          });
+          const removed = references[id].active;
+          references[id] = { active: references[id].previous };
+          const state = await inspect(`migration:current-removed:${id}`);
+          assert(!state.caches.includes(removed.cacheName));
+          assert(!state.workers.some((worker) => worker.scope === removed.workerScope));
+          assertMigrationUnrelated(baseline, state, id, keyFor);
+          await context.setOffline(true);
+          await page.goto(url(relativeRoot(id) + 'app/'));
+          assert.equal(
+            await page.evaluate(async () => {
+              try {
+                await fetch('/migration-uncached-network-probe', { cache: 'no-store' });
+                return false;
+              } catch {
+                return true;
+              }
+            }),
+            true,
+          );
+          await page.locator('#open').waitFor({ state: 'visible' });
+          await page.locator('#open').press('Enter');
+          await page.waitForURL((observed) =>
+            matchesLaunchedAppURL(observed, url(entry(id, priorVersion))),
+          );
+          await unlockObservedPage(page, password);
+          await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor({ state: 'visible' });
+          baseline = await retained(`after-rollback:${id}`);
+          await context.setOffline(false);
+        }
+        migration.passed = assertMigrationWorldRetention(worldSeed);
+        report = {
+          format: 'OptionalInstallationHistoricalMigrationObservation.v1',
+          passed: errors.length === 0 && migration.passed,
+          createdAt: new Date().toISOString(),
+          protocol: migration.protocol,
+          qualified: false,
+          publicEligible: false,
+          sourceRevision: envelope.sourceRevision,
+          sourceTree: envelope.sourceTree,
+          browser: await send('Browser.getVersion'),
+          envelopeSha256: sha(envelopeBytes),
+          artifacts: envelope.packages,
+          transition,
+          harnessSha256,
+          helperSha256,
+          historicalAuthority,
+          proof: { sha256: sha(savedProof), attempts: 1, synthetic: true },
+          profiles: { sha256: sha(savedProfiles), radioVerified: false },
+          migration,
+          checkpoints,
+          errors,
+          scope:
+            'All three exact pinned historical runtimes upgraded to admitted current bytes and rolled back through public app-shell removal. Historical World template projects/revisions are nonempty and fingerprinted; shared Academy synthetic proof/profile are preserved. Gym has no populated persistent flight records. Browser-context offline historical launcher relaunch only; no process restart, OS installation, offline flight, populated world assets/recordings, physical devices, human review or public deployment qualification.',
+        };
+        return;
+      }
+      // Default journey: prepare current siblings, then qualify restart.
       await open(gym);
       await prepare(gym);
       await open(worlds);
@@ -991,18 +1337,30 @@ try {
           });
         }
       }
-      let sessionGuard, upgraded;
+      let sessionGuard, windowGuard, upgraded;
       try {
         if (activeSessionEnabled) {
           const priorWindow = appWindows.get(fpv);
           assert(priorWindow, 'Retained historical standalone window is required.');
           currentStep = 'prepare real historical active Academy session';
+          if (activeWindowEnabled)
+            windowGuard = await configureHistoricalSessionWindow({
+              context,
+              previousPage: priorWindow,
+              updatePage: page,
+              expectedPreviousURL: url(entry(fpv, priorVersion)) + '?lang=en',
+              expectedUpdateURL: page.url(),
+              mode: activeWindowMode,
+              playwrightSourceSha256: activeWindow.focusSourceSha256,
+              receipt: activeWindow,
+            });
           sessionGuard = await prepareHistoricalAcademySession(priorWindow, {
             expectedURL: url(entry(fpv, priorVersion)) + '?lang=en',
             receipt: activeSession,
             mode: activeSessionMode,
           });
           await page.bringToFront();
+          if (windowGuard) await minimizeHistoricalSessionWindow(windowGuard);
           await snapshotPausedAfterTransfer(sessionGuard);
         }
         await stageLauncher(fpv);
@@ -1030,6 +1388,7 @@ try {
             previousVersion: installed(upgraded, fpv).previous.version,
             checkpoint: 'candidate-installed-over-previous-candidate',
           };
+          if (windowGuard) await restoreHistoricalSessionWindow(windowGuard);
           await verifyHistoricalSessionAfterUpdate(sessionGuard);
           const image = await sessionGuard.page.screenshot({ timeout: 5000 });
           const imagePath = output + '.active-session-paused.png';
@@ -1037,8 +1396,12 @@ try {
           activeSession.screenshot = { path: imagePath, bytes: image.length, sha256: sha(image) };
         }
       } finally {
-        if (sessionGuard) {
-          await disposeHistoricalAcademySession(sessionGuard);
+        try {
+          if (sessionGuard) await disposeHistoricalAcademySession(sessionGuard);
+        } finally {
+          if (windowGuard) await disposeHistoricalSessionWindow(windowGuard);
+        }
+        if (sessionGuard || windowGuard) {
           await boundedOperation('Restore observer foreground after old-session check', () =>
             page.bringToFront(),
           );
@@ -1323,7 +1686,9 @@ try {
     }),
   );
   report = {
-    format: 'OptionalInstallationObservation.v1',
+    format: migrationEnabled
+      ? 'OptionalInstallationHistoricalMigrationObservation.v1'
+      : 'OptionalInstallationObservation.v1',
     passed: false,
     browserPreparationPassed: false,
     createdAt: new Date().toISOString(),
@@ -1390,13 +1755,33 @@ try {
     ...(cleanupErrors.length ? { retainedDirectory: work } : { temporaryProfileRemoved: true }),
   };
   report.passed &&= !cleanupErrors.length;
+  if (migrationEnabled) {
+    report.qualified = false;
+    report.publicEligible = false;
+    migration.sourceStable =
+      harnessSha256 === sha(await readFile(fileURLToPath(import.meta.url))) &&
+      helperSha256 === sha(await readFile(helperURL)) &&
+      (
+        await Promise.all(
+          [...migrationAuthority, ...historicalAuthority].map(
+            async (item) =>
+              item.sha256 === sha(await readFile(new URL(item.path, import.meta.url))),
+          ),
+        )
+      ).every(Boolean);
+    report.migration = migration;
+    report.passed &&= migration.sourceStable && migration.passed;
+  }
   if (worldSeedEnabled) {
     worldSeed.sourceStable =
       worldSeedSourceSha256 === sha(await readFile(worldSeedURL)) &&
       continuitySourceSha256 === sha(await readFile(continuityURL));
     try {
       worldSeed.passed =
-        assertInstallationWorldRetention(worldSeed, coldRelaunchRounds) && worldSeed.sourceStable;
+        (migrationEnabled
+          ? assertMigrationWorldRetention(worldSeed)
+          : assertInstallationWorldRetention(worldSeed, coldRelaunchRounds)) &&
+        worldSeed.sourceStable;
     } catch (error) {
       worldSeed.passed = false;
       worldSeed.failure = error.message;
@@ -1456,6 +1841,19 @@ try {
     activeSession.sourceStable =
       activeSession.sourceSha256 === sha(await readFile(activeSessionURL));
     report.activeSession = activeSession;
+    if (activeWindowEnabled) {
+      activeWindow.sourceStable =
+        activeWindow.sourceSha256 === sha(await readFile(activeWindowURL)) &&
+        activeWindow.focusSourceSha256 === sha(await readFile(focusSourcePath));
+      activeSession.browserConfiguration = activeWindow;
+      report.passed &&= Boolean(
+        activeWindow.configured &&
+          activeWindow.minimized &&
+          activeWindow.restored &&
+          activeWindow.cleanup?.completed &&
+          activeWindow.sourceStable,
+      );
+    }
     report.passed &&= Boolean(
       activeSession.passed &&
         activeSession.cleanup?.completed &&

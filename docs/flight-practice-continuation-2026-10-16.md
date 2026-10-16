@@ -130,6 +130,57 @@ Gym's records are unpopulated. The two earlier failed receipts remain unchanged.
 
 ## Maintainer recipe and tests
 
+### Three real overall-timeout runs pass
+
+Original receipts: [Gym](flight-practice-continuation-20261016/overall-gym.json),
+[Academy](flight-practice-continuation-20261016/overall-academy.json) and
+[Worlds](flight-practice-continuation-20261016/overall-worlds.json). Each passes
+13 checkpoints, one selected fault, pristine retry/removal, retained data,
+historical Academy update/rollback and cleanup on Chrome 155.0.8059.80.
+First-byte-to-client-abort is 298,514.165 / 298,763.223 / 295,937.351 ms;
+the overall operation begins before that response. Each has sixty ordered original
+one-byte writes, with maximum gaps of 5,049.126 / 5,040.754 / 5,025.874 ms,
+no Cancel, no silent retry and no server safety/cleanup termination.
+
+Academy's status explicitly names the five-minute limit. Gym and Worlds expose
+generic failure, so their exact internal error cause is not inferred from text.
+Server transmission is not direct browser receipt timing. These are genuine
+wall-clock functional observations, not accelerated clocks or performance tests.
+Builds/tests ran concurrently. The [original nine-file authority](flight-practice-continuation-20261016/overall-authority.tgz)
+has SHA-256 `c37a05d56cdcb0f893cb5ed9f902e3ab899e735898113838ee9c1838f12bf9fb`.
+Independent audit matches all authority files and all 351 admitted cache pins per
+receipt. Pointers, workers, caches, five World witnesses and post-fault/retry
+database/card identities are unchanged; archived exact-export assertions retain
+proof/profile. Cleanup succeeds and `publicEligible` stays false.
+
+### Active-session first attempt remains failed
+
+The [original](flight-practice-continuation-20261016/active-first-failed.json)
+fails **before update** while waiting for natural blur after activating a separate
+window. Four initial checkpoints and actual visible flight/pause observations
+exist, but they do not qualify update continuity. All apps/profile are cleaned up.
+[Executed authority](flight-practice-continuation-20261016/active-first-authority.tgz)
+is retained unchanged. The resumed-height witness could include descent, so the
+new helper requires positive upward gain and keeps bounded failed-transfer data.
+
+[Separate plain-page probes](flight-practice-continuation-20261016/window-probes-originals.tgz)
+identify the installed Playwright focus-emulation override. Neither ordinary
+headless nor visible-window switching under that override provides real blur.
+After removing it only on owned targets, native minimization produces trusted
+browser blur and restoring the window produces trusted focus. No event is
+dispatched and no app state/package byte is changed. The separate opt-in diagnostic
+now requires that configuration, normal original geometry, actual paused HUD,
+real B update, explicit resumed upward motion, unchanged document identity and
+both independently successful cleanups. Native app execution is pending;
+ordinary switching, uninterrupted background flight and physical inputs stay open.
+
+The all-three genuine historical migration lane is also implemented, independently
+reviewed and unit-tested, with its own report/protocol rather than skipped default
+OS/restart checks. Historical/current bytes and complete runtime/launcher cache
+inventories are checked per package; nonempty World projects/revisions and shared
+proof/profile are witnesses, not fictional Gym records or imported assets.
+Its native execution remains pending.
+
 The [new native sample receipt](flight-practice-continuation-20261016/sample-recipe.json)
 passes the temporary fourth-package catalogue, explicit start/pause/retry,
 preparation, changed-version update, closed-tabs offline reopening, rollback and
@@ -142,17 +193,26 @@ not the frozen candidate above. Cleanup passes.
 The current integrated-main practice suite passes **362 tests, zero failures or
 skips**. Earlier 360-test and 143-test observer logs remain historical. A later
 153-test observer run has one flaky fake-DOM progress assertion failure, preserved
-in `observer-first-fixture-failure.log`; its unchanged focused retry passed 8/8.
+in the [lossless original-log archive](flight-practice-continuation-20261016/observer-first-fixture-failure-original.tgz);
+its unchanged focused retry passed 8/8. The plain-text copy is replaced, not edited;
+its bytes remain in that archive and original Git history.
 The fake wait incorrectly asserted before the HTTP client's first data event and
 could leave its first-data promise unresolved after an early abort. Bounded polling,
 settled error/abort/end paths and joined fixture promises repair that harness;
 delayed-data and pre-data-abort regressions are deterministic. No production
 deadline or Cancel acceptance bound is increased.
 
-The expanded suite now passes **168 tests**, with one explicit external historical
+At source `3a1b5e3c3`, the expanded suite passes **168 tests**, with one explicit external historical
 bundle skip; the opt-in real-bundle suite separately passes **7/7**. The actual-body
 writer and installation-observer regression run passes **32/32**. The new active-session
 helper's **11/11** tests are synthetic and independently reviewed, not native proof.
+After the separate migration/window lanes, **186 observer tests pass**, with the
+same one explicit historical-bundle skip. The first expanded run failed a source
+order assertion that accidentally matched the new migration branch instead of
+the default restart branch. Its original console output is retained in
+`migration-seed-contract-first-failed.tgz`; the corrected assertion explicitly
+scopes the default journey and still requires seeding before its first Worlds
+preparation. Independent session/window/migration tests pass 29/29.
 Scoped formatting, lint and whitespace checks pass. Original logs are retained
 alongside this report; a name-filtered sample run is not a second full suite.
 
@@ -185,7 +245,15 @@ cross-device copies use the existing exact prepared-byte write. Source validatio
 post-clone equality, changed/generated fallback and write errors remain intact.
 Synthetic actual-function-body tests cover both platforms, corrupted/failed clones,
 unavailable filesystem checks and surfaced writes; the real-file independence tests
-remain. A full rebuilt distribution and native production journey are still next,
+remain. The third ordinary build, source `3a1b5e3c348b4623caa949e23602fc5f9fc0b444`,
+reached `.xonix-build-FXPjBJ` while the checkout was still clean at that source.
+Only after preparation and immutable entry/manifest/ZIP-buffer creation did
+observer-only changes resume. The writer retains those exact prepared bytes even
+if source files later differ. The backup branch
+`codex/practice-built-shell-3a1b-20261016` preserves the original clean source for
+the strict production-browser observer; later harness commits are not relabelled
+as its build source. Writing is still in progress, so a completed distribution
+and native production journey remain unqualified,
 not implied by this infrastructure repair. Hosting/capacity remain separate.
 
 ## Still open
@@ -193,7 +261,7 @@ not implied by this infrastructure repair. Hosting/capacity remain separate.
 The acceptance checklist remains authoritative. Priorities are the corrected
 production-distribution player journey, then
 distinct-release **active-flight** protection and Gym/Worlds migrations. Actual
-verification-phase cancellation, the real five-minute overall limit, imported
+verification-phase cancellation, imported
 assets/offline flight, actual eviction, broader browser accessibility/performance
 and real participant/package reviews remain unqualified. Real hardware and hosting
 are deferred, not passed. No local test populates the public catalogue.
