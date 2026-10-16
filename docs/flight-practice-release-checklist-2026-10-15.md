@@ -352,9 +352,13 @@ admitted candidate, with 22 total checkpoints, six exact prepared-cache inventor
 and preserved proof/profile/World records after every fault and retry/removal.
 Earlier failed observer attempts remain retained. This closes the named short
 download subcases, not local-verification cancellation or the overall bound.
-Separate one-app five-minute observers and a historical Academy active-session
-observer are implemented and independently reviewed; their native results are
-still pending. Default and all-short journeys remain compatible.
+All three separate real five-minute runs now pass (thirteen checkpoints each),
+with continued original-byte writes, app-side abort, no Cancel or server deadline,
+and exact preservation/retry/removal. Academy explicitly names the five-minute
+limit; Gym/Worlds generic text does not independently identify an internal timer.
+The active-session first attempt remains failed before update due to automation
+focus emulation; the separate owned-window minimization/native migration checks
+are pending. Default and all-short journeys remain compatible.
 
 16 October correction: both package worker families now announce their return to
 Downloading before awaiting the next dependency. Previously a stalled next response
