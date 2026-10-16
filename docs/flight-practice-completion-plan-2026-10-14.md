@@ -74,6 +74,18 @@ mechanics, lessons and rendering remain outside this workstream.
 
 Fresh primary-source guidance sharpens acceptance rather than adding features:
 
+- [MDN's waiting-worker reference](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/waiting)
+  distinguishes an installed waiting worker from the active one. Keep migration
+  acceptance bound to the actual active revision and exact scope, with waiting
+  and installing states reported separately. A registered worker alone is not
+  proof that the selected version owns a working offline installation.
+- [web.dev's offline fallback example](https://web.dev/articles/offline-fallback-page)
+  illustrates keeping navigation and recovery available when a task cannot run
+  offline. Apply this separately to an unavailable app and an unprepared imported
+  or remote world: neither a cached directory nor an installed icon promises
+  that every world asset is available. Keep retry/return and specific errors
+  ahead of additional discovery features.
+
 - [W3C pointer cancellation](https://www.w3.org/WAI/WCAG22/Understanding/pointer-cancellation.html)
   recommends native click/up-event activation. Do not move Home/Retry/Next under
   a held pointer when cancelling auto-next. Cancel the countdown immediately,
