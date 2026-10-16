@@ -33,6 +33,19 @@ The earlier production Regional adapter attempt measured 1.41× real time agains
 
 ## Inputs, transactions and recovery
 
+The [third-review runtime report](fpv-advanced-runtime-qualification-2026-10-16-third-review.json)
+refreshes all six runtime/source checks after the replay-consumption validator
+change. The [World/Regional check](fpv-advanced-regional-browser-smoke-2026-10-16-third-review.json)
+also rechecks recovery, cancellation and disposal. Backend identities, simulation
+frequency and both golden traces remain unchanged. Earlier timing and native
+runtime evidence stays bound to its original sources.
+
+Replay validates consumption indices against the mission-admission boundary and
+the first substep permitted by each timestamp. This catches inconsistent event
+times that final physics hashes can miss, while accepting late samples at a
+mission boundary and future samples at their eligible substep. It verifies a
+declared history's consistency, not authenticity of a physical input stream.
+
 Input samples contain monotonically increasing sequence IDs, normalized calibrated controls and integer microsecond availability timestamps in the simulation's session clock. The main thread assigns the effective availability time; physics consumes the latest available sample at each substep and records exactly that sequence. It never claims fresh hardware input at 250 Hz.
 
 The practice display separately labels the consumed sample's age in simulation time, the measured age of the main-thread browser poll, and the observed browser polling interval. Actual device hardware cadence is unavailable. A worker pause does not fabricate additional samples or advance simulation time.

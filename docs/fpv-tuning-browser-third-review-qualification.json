@@ -1,0 +1,332 @@
+{
+  "format": "FpvTuningBrowserQualification.v1",
+  "createdAt": "2026-10-16T05:05:26.401Z",
+  "fixture": "Production tuning component and store in an isolated loopback-only component harness. Host flight is represented by captured callbacks; touch is browser emulation, not physical-device qualification.",
+  "sources": [
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/platform.mjs",
+      "sha256": "1bcc979c6990c197be6cc015a17b05481b3c15a680b55eb33782b14cb54e81a8"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-controller.mjs",
+      "sha256": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "sha256": "bd606bf22bd1dc80f26e11f23b7f368d5139885b433c5a9e8e36b9df26b2de4d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "sha256": "bb03e8493a578d9d845637fcc1f90a9820400a1b75474fce71c73d4b83c7e5ee"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/betaflight-import.mjs",
+      "sha256": "550a6c32dc0bb8bf8eca15f8e5b24a15a277dde6232a951e2286361c44d223ab"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-contact.mjs",
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-response.mjs",
+      "sha256": "89ec7b85d787ac077de36bba66c9e9a851c49721d8f2d598db8c461ecb6ae363"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-support.mjs",
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "sha256": "0e63e3c62e40fd2b34059109e1c05a8c851d0078fe26bf7586a17b5138ba0172"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rates.mjs",
+      "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-library.mjs",
+      "sha256": "ff08c8f3e3da605c86e5518a14043e76a7d5d52c5abcc8f3e12de6d8dfc08696"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "sha256": "6b82719afe20dac20346c8c5a3a88132b557faf96f8740ee92ea7be6344c2d43"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning.css",
+      "sha256": "1db1a07a432c7fabfb334cf4456556fcd6a5c93d42b04d42632020ef1f76098e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "sha256": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538"
+    },
+    {
+      "path": "scripts/smoke-fpv-tuning.mjs",
+      "sha256": "3eb785028b1145fe4c6beb398c9d4ef1242cafae3c6baa1e8371a2cc8d0c950c"
+    }
+  ],
+  "sourceStable": true,
+  "changedSources": [],
+  "results": [
+    {
+      "engine": "chromium",
+      "version": "155.0.8059.80",
+      "touch": false,
+      "checks": {
+        "keyboardOrTouchEntry": true,
+        "linkedAxesAndAlgorithmDrafts": true,
+        "testReturnSave": true,
+        "droneAssignmentCamera": true,
+        "numericCommitMatchesSavedUnits": true,
+        "independentSetupDraftAcrossProfiles": true,
+        "cameraValidationAndRawDraftPreservation": true,
+        "fractionalCameraDegrees": true,
+        "importReceipt": {
+          "sourceSha256": "d142edab892abe5e24fe5b517558c12db78d1273ae8442edc8d9a9965f2cc72a",
+          "sourceBytes": 55,
+          "firmware": {
+            "version": "2025.12.5",
+            "origin": "manual"
+          },
+          "operation": "patch",
+          "ignoredSettings": 1,
+          "backupRestore": true,
+          "reloadPersistence": true
+        },
+        "importAtomicAndExplicitAssignment": true,
+        "headerInferredDefaults": true,
+        "staleImportPreviewRejected": true,
+        "explicitRotationOnlyCliExport": true,
+        "download": true,
+        "realCrossTabStaleEdit": true,
+        "reloadPersistence": true,
+        "localizedResponsiveLayout": true,
+        "focusReturn": true
+      },
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "version": "155.0.8059.80",
+      "touch": true,
+      "checks": {
+        "keyboardOrTouchEntry": true,
+        "linkedAxesAndAlgorithmDrafts": true,
+        "testReturnSave": true,
+        "droneAssignmentCamera": true,
+        "numericCommitMatchesSavedUnits": true,
+        "independentSetupDraftAcrossProfiles": true,
+        "cameraValidationAndRawDraftPreservation": true,
+        "fractionalCameraDegrees": true,
+        "importReceipt": {
+          "sourceSha256": "d142edab892abe5e24fe5b517558c12db78d1273ae8442edc8d9a9965f2cc72a",
+          "sourceBytes": 55,
+          "firmware": {
+            "version": "2025.12.5",
+            "origin": "manual"
+          },
+          "operation": "patch",
+          "ignoredSettings": 1,
+          "backupRestore": true,
+          "reloadPersistence": true
+        },
+        "importAtomicAndExplicitAssignment": true,
+        "headerInferredDefaults": true,
+        "staleImportPreviewRejected": true,
+        "explicitRotationOnlyCliExport": true,
+        "download": true,
+        "realCrossTabStaleEdit": true,
+        "reloadPersistence": true,
+        "localizedResponsiveLayout": true,
+        "focusReturn": true
+      },
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "touch": false,
+      "checks": {
+        "keyboardOrTouchEntry": true,
+        "linkedAxesAndAlgorithmDrafts": true,
+        "testReturnSave": true,
+        "droneAssignmentCamera": true,
+        "numericCommitMatchesSavedUnits": true,
+        "independentSetupDraftAcrossProfiles": true,
+        "cameraValidationAndRawDraftPreservation": true,
+        "fractionalCameraDegrees": true,
+        "importReceipt": {
+          "sourceSha256": "d142edab892abe5e24fe5b517558c12db78d1273ae8442edc8d9a9965f2cc72a",
+          "sourceBytes": 55,
+          "firmware": {
+            "version": "2025.12.5",
+            "origin": "manual"
+          },
+          "operation": "patch",
+          "ignoredSettings": 1,
+          "backupRestore": true,
+          "reloadPersistence": true
+        },
+        "importAtomicAndExplicitAssignment": true,
+        "headerInferredDefaults": true,
+        "staleImportPreviewRejected": true,
+        "explicitRotationOnlyCliExport": true,
+        "download": true,
+        "realCrossTabStaleEdit": true,
+        "reloadPersistence": true,
+        "localizedResponsiveLayout": true,
+        "focusReturn": true
+      },
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "touch": true,
+      "checks": {
+        "keyboardOrTouchEntry": true,
+        "linkedAxesAndAlgorithmDrafts": true,
+        "testReturnSave": true,
+        "droneAssignmentCamera": true,
+        "numericCommitMatchesSavedUnits": true,
+        "independentSetupDraftAcrossProfiles": true,
+        "cameraValidationAndRawDraftPreservation": true,
+        "fractionalCameraDegrees": true,
+        "importReceipt": {
+          "sourceSha256": "d142edab892abe5e24fe5b517558c12db78d1273ae8442edc8d9a9965f2cc72a",
+          "sourceBytes": 55,
+          "firmware": {
+            "version": "2025.12.5",
+            "origin": "manual"
+          },
+          "operation": "patch",
+          "ignoredSettings": 1,
+          "backupRestore": true,
+          "reloadPersistence": true
+        },
+        "importAtomicAndExplicitAssignment": true,
+        "headerInferredDefaults": true,
+        "staleImportPreviewRejected": true,
+        "explicitRotationOnlyCliExport": true,
+        "download": true,
+        "realCrossTabStaleEdit": true,
+        "reloadPersistence": true,
+        "localizedResponsiveLayout": true,
+        "focusReturn": true
+      },
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "version": "26.5",
+      "touch": false,
+      "checks": {
+        "keyboardOrTouchEntry": true,
+        "linkedAxesAndAlgorithmDrafts": true,
+        "testReturnSave": true,
+        "droneAssignmentCamera": true,
+        "numericCommitMatchesSavedUnits": true,
+        "independentSetupDraftAcrossProfiles": true,
+        "cameraValidationAndRawDraftPreservation": true,
+        "fractionalCameraDegrees": true,
+        "importReceipt": {
+          "sourceSha256": "d142edab892abe5e24fe5b517558c12db78d1273ae8442edc8d9a9965f2cc72a",
+          "sourceBytes": 55,
+          "firmware": {
+            "version": "2025.12.5",
+            "origin": "manual"
+          },
+          "operation": "patch",
+          "ignoredSettings": 1,
+          "backupRestore": true,
+          "reloadPersistence": true
+        },
+        "importAtomicAndExplicitAssignment": true,
+        "headerInferredDefaults": true,
+        "staleImportPreviewRejected": true,
+        "explicitRotationOnlyCliExport": true,
+        "download": true,
+        "realCrossTabStaleEdit": true,
+        "reloadPersistence": true,
+        "localizedResponsiveLayout": true,
+        "focusReturn": true
+      },
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "version": "26.5",
+      "touch": true,
+      "checks": {
+        "keyboardOrTouchEntry": true,
+        "linkedAxesAndAlgorithmDrafts": true,
+        "testReturnSave": true,
+        "droneAssignmentCamera": true,
+        "numericCommitMatchesSavedUnits": true,
+        "independentSetupDraftAcrossProfiles": true,
+        "cameraValidationAndRawDraftPreservation": true,
+        "fractionalCameraDegrees": true,
+        "importReceipt": {
+          "sourceSha256": "d142edab892abe5e24fe5b517558c12db78d1273ae8442edc8d9a9965f2cc72a",
+          "sourceBytes": 55,
+          "firmware": {
+            "version": "2025.12.5",
+            "origin": "manual"
+          },
+          "operation": "patch",
+          "ignoredSettings": 1,
+          "backupRestore": true,
+          "reloadPersistence": true
+        },
+        "importAtomicAndExplicitAssignment": true,
+        "headerInferredDefaults": true,
+        "staleImportPreviewRejected": true,
+        "explicitRotationOnlyCliExport": true,
+        "download": true,
+        "realCrossTabStaleEdit": true,
+        "reloadPersistence": true,
+        "localizedResponsiveLayout": true,
+        "focusReturn": true
+      },
+      "status": "passed",
+      "errors": []
+    }
+  ],
+  "pass": true
+}
