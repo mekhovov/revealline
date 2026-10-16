@@ -79,6 +79,12 @@ timing regressions are not five-minute qualification.
 
 ## Separate historical active-session lane
 
+Only the explicit `owned-window-minimize-98ad851` diagnostic uses an isolated
+visible Chrome context. Headless installed-app windows can acknowledge native
+minimization without changing state; the preserved third attempt records that
+failure. Visibility does not waive actual bounds, focus/pause, identity or cleanup
+checks. Default, migration and download lanes remain headless.
+
 With the pinned historical admission above, set
 `OPTIONAL_INSTALLATION_ACTIVE_SESSION=academy-v0.142.4-98ad851`. Do not combine it
 with download/quota faults. The retained historical standalone window uses normal

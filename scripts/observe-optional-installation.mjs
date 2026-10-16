@@ -264,6 +264,7 @@ const focusSourcePath = path.resolve(
 );
 const activeWindow = activeWindowEnabled
   ? {
+      browserMode: 'headed-isolated-Chrome',
       sourceSha256: sha(await readFile(activeWindowURL)),
       focusSourcePath,
       focusSourceSha256: sha(await readFile(focusSourcePath)),
@@ -366,7 +367,9 @@ async function launchBrowser(offline = false) {
   await trackObservedResource(acquiringResources, 'Browser', async () => {
     const launchedContext = await chromium.launchPersistentContext(profile, {
       channel: 'chrome',
-      headless: true,
+      // Only the explicit native-window diagnostic needs real desktop windows.
+      // Headless installed-app minimization can acknowledge without transitioning.
+      headless: !activeWindowEnabled,
       locale: 'en-US',
       viewport: { width: 1280, height: 900 },
       offline,

@@ -318,6 +318,16 @@ does not qualify network-wide isolation.
 
 ### C5 — Distinct-package update, active-session protection and rollback
 
+Latest: [all-three native migration](flight-practice-continuation-20261016/migration-passed.json)
+passes 10 checkpoints and seven exact data witnesses on candidate `b8aec0821`;
+Gym and Worlds now have genuine distinct-payload upgrade/offline rollback evidence,
+not just isolation checks. Runtime and retained launcher hashes, actual active
+launcher revision, sibling ownership, proofs/profiles and nonempty World
+projects/revisions/cards remain exact. Imported assets and running-flight
+protection are not covered. Three historical active-session attempts remain
+failed before update; an isolated visible-window retry is next. Do not mark all
+of C5 closed.
+
 Progress: the [genuine historical Academy observation](flight-practice-historical-upgrade-2026-10-16.md)
 passes old/current launcher and runtime upgrade, exact proof/profile preservation,
 failed-install preservation and offline rollback. Current publishing admission
