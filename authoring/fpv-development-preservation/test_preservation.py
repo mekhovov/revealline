@@ -138,6 +138,57 @@ class PreservationTests(unittest.TestCase):
         self.assertEqual(len(result['files']), 2)
         self.assertEqual(len(result['directAssets']), 1)
         self.assertFalse(result['coverageComplete'])
+        state.write_text(json.dumps({'complete': True}))
+        result = build([inventory], state, [], [direct], catalogue, '/old/root', approved)
+        self.assertFalse(result['coverageComplete'])  # A primary walk alone is not the final inventory set.
+        result = build([inventory], state, [], [direct], catalogue, '/old/root', approved, True)
+        self.assertTrue(result['coverageComplete'])
+
+    def test_exact_clearance_and_active_reservation_do_not_claim_durability(self):
+        source = self.root / 'source'
+        (source / 'coupa').mkdir(parents=True)
+        original = source / 'coupa/public-app.bin'
+        original.write_bytes(b'public app')
+        sha = hashlib.sha256(b'public app').hexdigest()
+        row = {'kind': 'file', 'path': 'coupa/public-app.bin', 'bytes': 10, 'sha256': sha,
+               'mtime_ns': original.stat().st_mtime_ns, 'mode': 420, 'review': []}
+        inventory = self.root / 'inventory.jsonl'
+        inventory.write_text(json.dumps(row) + '\n')
+        known, library, reserved, clearance = [self.root / x for x in ['known.json', 'library.json', 'reserved.json', 'clearance.json']]
+        known.write_text('{}')
+        library.write_text('{"archives": []}')
+        reserved.write_text(json.dumps([sha]))
+        clearance.write_text(json.dumps({'rows': [{'path': row['path'], 'sha256': sha, 'decision': 'allow-app-archive'}]}))
+        stage, receipts = self.root / 'parts', self.root / 'receipts'
+        subprocess.run(['python3', str(Path(__file__).parent / 'pack.py'), '--manifest', str(inventory),
+                        '--source-root', str(source), '--stage', str(stage), '--receipts', str(receipts),
+                        '--release-index', str(known), '--library-preflight', str(library),
+                        '--reserved-digests', str(reserved), '--clearances', str(clearance)], check=True,
+                       stdout=subprocess.PIPE, text=True)
+        result = json.loads((receipts / 'batch.json').read_text())
+        self.assertEqual(result['reservedForActiveBatchObjects'], 1)
+        self.assertEqual(result['held'], [])
+        self.assertEqual(result['uniqueObjectsToPack'], 0)
+        self.assertFalse(result['finalCoverageClaimed'])
+        self.assertFalse(list(stage.iterdir()))
+
+    def test_rejects_nonzero_payload_after_tar_terminator(self):
+        raw = b'expected object'
+        sha = hashlib.sha256(raw).hexdigest()
+        header = {'format': 'FPVCASPart.v1', 'number': 1,
+                  'objects': [{'sha256': sha, 'bytes': len(raw), 'member': 'objects/' + sha}]}
+        archive = self.root / 'trailing.tar.zst'
+        stream = io.BytesIO()
+        with tarfile.open(fileobj=stream, mode='w', format=tarfile.USTAR_FORMAT) as tar:
+            for name, content in [('part-manifest.json', json.dumps(header).encode()), ('objects/' + sha, raw)]:
+                member = tarfile.TarInfo(name)
+                member.size = len(content)
+                tar.addfile(member, io.BytesIO(content))
+        with archive.open('xb') as output:
+            subprocess.run(['zstd', '-q', '-c'], input=stream.getvalue() + b'unplanned payload after TAR EOF',
+                           stdout=output, check=True)
+        with self.assertRaisesRegex(ValueError, 'trailing'):
+            restore_part(archive, self.root / 'restored', header)
 
 
 if __name__ == '__main__':

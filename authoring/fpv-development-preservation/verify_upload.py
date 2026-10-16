@@ -81,9 +81,15 @@ def restore_part(archive, destination, expected_header):
                 if size != x['bytes'] or h.hexdigest() != x['sha256'] or digest(path) != x['sha256']:
                     raise ValueError('Restored member bytes differ')
                 seen.add(member.name)
+            # Read through tarfile's stream buffer, not just the underlying pipe: it
+            # may already hold bytes following the end-of-archive marker.
+            while data := tar.fileobj.read(4 * 1024 * 1024):
+                if any(data):
+                    raise ValueError('Unexpected nonzero trailing content after TAR terminator')
         # Drain tar padding and force successful decompressor completion.
-        while process.stdout.read(4 * 1024 * 1024):
-            pass
+        while data := process.stdout.read(4 * 1024 * 1024):
+            if any(data):
+                raise ValueError('Unexpected nonzero trailing decompressed content')
         process.stdout.close()
         if process.wait() != 0:
             raise RuntimeError('zstd readback restore failed')
@@ -108,6 +114,8 @@ def main():
     local = json.loads(Path(a.local_receipt).read_text())
     archive, work = Path(local['archive']), Path(a.work)
     work.mkdir()
+    print(json.dumps({'event': 'local-part-verification-start', 'bytes': local['bytes'],
+                      'sha256': local['sha256']}), flush=True)
     if archive.stat().st_size != local['bytes'] or digest(archive) != local['sha256']:
         raise ValueError('Completed local part changed')
     if a.verify_only:
@@ -119,6 +127,7 @@ def main():
     if not candidates:
         alias = work / name
         alias.symlink_to(archive)
+        print(json.dumps({'event': 'upload-start', 'bytes': local['bytes'], 'name': name}), flush=True)
         result = subprocess.run(['gh', 'release', 'upload', TAG, str(alias), '--repo', REPO])
         candidates = [x for x in assets() if x['name'] == name]
         if result.returncode and not candidates:
