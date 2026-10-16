@@ -9,9 +9,9 @@ Consecutive-rAF observations begin at the second callback. The first frame times
 The prepared cases cover:
 
 - `first-return`: a real capture and win.
-- `long-rail`: a longer authored cut/capture route with patrols.
+- `long-rail`: version 2 stops after two nonterminal authored captures with patrols, then pauses and exports. It keeps the long-cut requirement without requiring the unrelated final winning cut.
 - `first-fracture`: version 2 makes one real capture, waits for earned erosion on the unchanged Fractured Grid definition, then explicitly pauses and exports. It requires both mechanics, not victory or recapture. The earlier native victory attempts remain failed; their corrective input sequence is not reused. Bounded model variants at 1.4–1.8 seconds of held input retain the required mechanics, but do not replace native acceptance.
-- `sentry-detour`: the existing Standard, seed 1, grid-centred route, including an actual fired projectile. The immediate-turn route currently produces no projectile and is deliberately excluded from that claim.
+- `sentry-detour`: version 2 uses the existing Standard, seed 1, grid-centred route through actual capture and projectile activity, then pauses before the model's final winning cut. The earlier native victory failure is preserved. The immediate-turn route currently produces no projectile and is deliberately excluded from that claim.
 - `signal-07`: thirty seconds of the shipped lane-boss mission. Its warning/active phases activate the same jammer-picture filter used by reception interference.
 - `original-art-opening`: the public opening Journey and its registered originals, with a real long cut and large capture. Its recording must confirm at least twenty trail cells and five hundred claimed cells.
 - `original-art-opening-warm`: the same original-art capture after a public reload in one browser context. It requires the work probe for fresh pre-play calibration on each document, forbids browser routing, and retains cache-control metadata. This establishes a warm-cache attempt, not inferred body-cache hits.
