@@ -9,6 +9,7 @@ import {
   validateNativeA11yPlan,
   nativeA11yScope,
   assertNativeFocusWitness,
+  nativeFocusGeometry,
   keyboardReach,
   readNativeFocusWitness,
   trackNativeServerRequests,
@@ -25,7 +26,17 @@ function witness() {
     visible: true,
     centerHit: true,
     rect: { x: 20, y: 20, width: 200, height: 44 },
-    viewport: { width: 640, height: 378, dpr: 4, visualScale: 1, outerWidth: 1280 },
+    viewport: {
+      width: 640,
+      height: 378,
+      dpr: 4,
+      visualScale: 1,
+      outerWidth: 1280,
+      visualWidth: 640,
+      visualHeight: 378,
+      visualOffsetLeft: 0,
+      visualOffsetTop: 0,
+    },
     outline: { width: '3px', style: 'solid', color: 'rgb(255, 216, 92)' },
     motion: { animationName: 'none', transitionDuration: '0s', scrollBehavior: 'auto' },
     reducedMotion: true,
@@ -53,6 +64,7 @@ test('strict six-case plan rejects arbitrary selectors, missing locales and prod
     (p) => p.cases.pop(),
     (p) => p.cases.reverse(),
     (p) => (p.protocol = 'production'),
+    (p) => (p.protocol = 'practice-directory-native-zoom-a11y.v1'),
     (p) => (p.distribution = '/tmp/dist'),
     (p) => (p.script = 'anything'),
     (p) => (p.repository = 'relative'),
@@ -71,7 +83,7 @@ test('fixed matrix covers EN/UK and all three packages once', () => {
     ['en', 'en', 'en', 'uk', 'uk', 'uk'],
   );
 });
-test('focus witness requires native geometry, outline, keyboard visibility, no clipping and reduced media', () => {
+test('focus witness requires native geometry, outline, keyboard visibility, bounded edges and reduced media', () => {
   assertNativeFocusWitness(witness(), zoom);
   for (const mutate of [
     (w) => (w.active = false),
@@ -95,6 +107,55 @@ test('focus witness requires native geometry, outline, keyboard visibility, no c
     assert.throws(() => assertNativeFocusWitness(w, zoom));
   }
 });
+test('fractional native viewport retains raw overflow and accepts less than half a physical pixel only', () => {
+  const w = witness();
+  w.rect = { x: 32, y: 350.6015625, width: 576, height: 55.99609375 };
+  Object.assign(w.viewport, { height: 406, visualHeight: 406.5 });
+  const geometry = nativeFocusGeometry(w, zoom);
+  assert.equal(geometry.policy, 'visual-viewport-half-device-pixel.v1');
+  assert.equal(geometry.bottomOverflowCss, 0.09765625);
+  assert.equal(geometry.bottomOverflowDevicePixels, 0.390625);
+  assert.equal(geometry.allowanceCss, 0.125);
+  assert.equal(geometry.legacyIntegerBoundsPassed, false);
+  assert.equal(geometry.withinPrecision, true);
+  assertNativeFocusWitness(w, zoom);
+  for (const excess of [0.125, 0.25, 1, 10]) {
+    w.rect.y = w.viewport.visualHeight + excess - w.rect.height;
+    assert.throws(() => assertNativeFocusWitness(w, zoom), /Focused control is clipped/);
+  }
+});
+test('native geometry rejects missing or inconsistent viewports and never substitutes integer bounds', () => {
+  for (const mutate of [
+    (w) => delete w.viewport.visualHeight,
+    (w) => (w.viewport.visualWidth = null),
+    (w) => (w.viewport.visualHeight = NaN),
+    (w) => (w.viewport.visualWidth = Infinity),
+    (w) => (w.viewport.visualHeight = 0),
+    (w) => (w.viewport.visualWidth = -1),
+    (w) => (w.viewport.height = 378.5),
+    (w) => (w.viewport.width = 640.5),
+    (w) => (w.viewport.visualHeight = 379),
+    (w) => (w.viewport.visualWidth = 641),
+    (w) => (w.viewport.visualOffsetTop = 0.01),
+    (w) => (w.viewport.visualOffsetLeft = 0.01),
+    (w) => (w.viewport.dpr = 0.5),
+    (w) => (w.viewport.dpr = Infinity),
+    (w) => (w.viewport.visualScale = 2),
+  ]) {
+    const w = witness();
+    mutate(w);
+    assert.throws(() => assertNativeFocusWitness(w, zoom));
+  }
+  const w = witness(),
+    fractionalZoom = { ...zoom, dpr: 2.5 };
+  w.viewport.dpr = 2.5;
+  w.rect = { x: 20, y: 334.199, width: 200, height: 44 };
+  assertNativeFocusWitness(w, fractionalZoom);
+  w.rect.y = 334.2;
+  assert.throws(() => assertNativeFocusWitness(w, fractionalZoom), /Focused control is clipped/);
+  w.rect = { x: 440.2, y: 20, width: 200, height: 44 };
+  assert.throws(() => assertNativeFocusWitness(w, fractionalZoom), /Focused control is clipped/);
+});
 test('Tab reachability uses real keyboard events and stops on verified focus', async () => {
   let tabs = 0;
   const receipt = [],
@@ -112,11 +173,11 @@ test('Tab reachability uses real keyboard events and stops on verified focus', a
   assert.equal(receipt[0].tabs, 3);
   assert.equal(receipt[0].passed, true);
 });
-test('failed focus retains exact target geometry and reason without relaxing clipping', async () => {
+test('failed focus retains exact target geometry, precision residual and reason', async () => {
   const receipt = [],
     w = witness();
   w.id = 'prepare';
-  w.rect = { x: 32, y: 350.6, width: 576, height: 56 };
+  w.rect = { x: 32, y: 350.75, width: 576, height: 56 };
   w.viewport.height = 406;
   w.viewport.visualHeight = 406.5;
   await assert.rejects(
@@ -133,6 +194,7 @@ test('failed focus retains exact target geometry and reason without relaxing cli
   assert.equal(receipt[0].id, 'prepare');
   assert.deepEqual(receipt[0].rect, w.rect);
   assert.equal(receipt[0].viewport.visualHeight, 406.5);
+  assert.equal(receipt[0].geometry.bottomOverflowDevicePixels, 1);
   assert.equal(receipt[0].passed, false);
   assert.equal(receipt[0].failure, 'Focused control is clipped.');
 });
@@ -433,7 +495,7 @@ test('source server adapter retains its original handler and joins delayed reads
   assert.equal(owned.pending(), 0);
 });
 
-function journeyFixture() {
+function journeyFixture({ mainReturnLocale = 'en' } = {}) {
   const root = 'http://127.0.0.1:1234/revealline/',
     spec = A11Y_CASES[0],
     version = 'v0.1.0';
@@ -506,7 +568,8 @@ function journeyFixture() {
         evaluate: async (fn) =>
           fn === readNativeFocusWitness ? { ...witness(), id: key } : p.active === key,
         getAttribute: async (name) => {
-          if (name === 'lang') return 'en';
+          if (name === 'lang')
+            return kind === 'launcher' && p.currentURL === urls.main ? mainReturnLocale : 'en';
           if (name === 'aria-live') return 'polite';
           if (name === 'role') return 'status';
           if (name === 'open') return null;
@@ -575,10 +638,32 @@ test('bounded matrix adapter follows ordinary Details/guide/return/Escape route 
   assert.equal(result.escapeFocus, 'shell-home-practice');
   assert.equal(result.escapeFocusWitness.focusVisible, true);
   assert.equal(result.onboarding, 'Start from Home');
+  assert.equal(result.mainReturnLocale, 'en');
   assert(f.launcher.closed);
   assert(f.actions.some((x) => x[1] === 'Enter' && x[2] === 'DETAILS'));
   assert(!f.actions.some((x) => x[1] === 'Enter' && x[2] === 'PLAY'));
   assert.equal(result.directoryStatus.spoken, false);
+});
+test('matching return query cannot hide an incorrect actual main document language', async () => {
+  const f = journeyFixture({ mainReturnLocale: 'uk' });
+  const result = await runNativeA11yCase({
+    page: f.main,
+    spec: f.spec,
+    fixture: f.fixture,
+    run: async (_, work) => work(),
+    report: { cases: [] },
+    capture: async (_, name) => ({ path: name }),
+    unlock: async () => false,
+    openPractice: async (page, click) => click(page, '#shell-home-practice'),
+    assertLink: (href) => ({ href }),
+    zoom,
+    password: undefined,
+    acquire: async (_, work) => work(),
+  });
+  assert.equal(new URL(f.launcher.currentURL).searchParams.get('lang'), 'en');
+  assert.equal(result.mainReturnLocale, 'uk');
+  assert.equal(result.passed, false);
+  assert.match(result.failure, /Main return must retain requested language/);
 });
 test('observer explicitly uses headed owned profile, native zoom and source-only server with no override hooks', async () => {
   const source = await readFile(
