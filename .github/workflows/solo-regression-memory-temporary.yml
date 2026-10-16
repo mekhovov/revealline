@@ -1,4 +1,4 @@
-name: Temporary Solo bounded baseline classification
+name: Temporary Solo bounded canonical and baseline checks
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -28,35 +28,29 @@ jobs:
       max-parallel: 2
       matrix:
         include:
-          - label: baseline
+          - label: candidate
+            case: team-default-entry-host
+            source: 9768c2ebe051834e69b3d6a74322a655244d59c7
+          - label: candidate
+            case: coop-picture-recovery-focus
+            source: 9768c2ebe051834e69b3d6a74322a655244d59c7
+          - label: candidate
             case: soundtrack-host
+            source: 9768c2ebe051834e69b3d6a74322a655244d59c7
+          - label: baseline
+            case: course-selection-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: presentation-readiness
+            case: course-pause-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: route-choices-chapter
+            case: terminal-navigation
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: team-equipment-review
+            case: offline-team-retention-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: team-equipment-art
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: content-route-loader
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: journey-mode-navigation
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: test-inspect-goals
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: test-production-panel
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: difficulty-host
+            case: offline-download-play-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
     env:
       CI: '1'
