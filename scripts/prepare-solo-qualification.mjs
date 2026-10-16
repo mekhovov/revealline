@@ -18,6 +18,7 @@ import {
 import { scenarioFormatForLevel, validateScenario } from '../game/content.mjs';
 import { jammerPictureStrength } from '../game/ui/jammer-picture.mjs';
 import { combatView } from '../game/ui/combat-view.mjs';
+import { soloReactionDanger } from '../game/ui/reaction-danger.mjs';
 import {
   emptyLibrary,
   recordLibraryCompletion,
@@ -27,12 +28,32 @@ import {
 } from '../game/library.mjs';
 import { dataIdentity } from '../game/data-json.mjs';
 import { validateQualification } from './solo-qualification.mjs';
+import {
+  AUDIO_FIXTURE_FORMAT,
+  AUDIO_PLAYLIST_ID,
+  AUDIO_BUNDLE_FILE,
+  AUDIO_RECORDINGS,
+  AUDIO_SPEECH,
+  speechFixtureProvenance,
+  verifyAudioFixtureBytes,
+} from './prepare-solo-audio-fixtures.mjs';
 
 // Compile existing content; never edit a saved player profile or an accepted run.
 // Fixed-step evidence below identifies workloads, not desktop/device performance.
-const directory = process.argv[2];
+const [directory, ...arguments_] = process.argv.slice(2);
 if (!directory)
-  throw new Error('Usage: node scripts/prepare-solo-qualification.mjs <new-output-directory>');
+  throw new Error(
+    'Usage: node scripts/prepare-solo-qualification.mjs <new-output-directory> [--audio-fixtures=<prepared-directory>]',
+  );
+assert(
+  arguments_.length <= 1 && arguments_.every((arg) => arg.startsWith('--audio-fixtures=')),
+  'Unknown preparation option',
+);
+const audioDirectory = arguments_[0]?.slice('--audio-fixtures='.length);
+assert(
+  audioDirectory === undefined || audioDirectory.length > 0,
+  'Audio fixture directory is empty',
+);
 await mkdir(resolve(directory)); // Refuse to mix with or overwrite old evidence.
 const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url)));
 const themes = (await json('../game/content-design/themes.json')).themes;
@@ -111,29 +132,18 @@ const play = (segments) =>
       ? { type: 'key', key: key(direction), ms: Math.max(1, Math.round(ticks * FIXED_DT * 1000)) }
       : { type: 'wait', ms: Math.max(1, Math.round(ticks * FIXED_DT * 1000)) },
   );
-const finish = [
-  { type: 'wait', ms: 500 },
-  { type: 'click', selector: '#skip-celebration', optional: true },
-  { type: 'click', selector: '#show-result', optional: true },
-  {
-    type: 'expect',
-    selector: '#game-overlay',
-    attribute: 'data-kind',
-    value: 'won',
-    timeoutMs: 10000,
-  },
-];
+const finish = [{ type: 'result', outcome: 'won', timeoutMs: 20000 }];
 const start = [
   { type: 'click', selector: '#start-button', timeoutMs: 60000 },
   { type: 'wait', phase: 'running', timeoutMs: 60000 },
 ];
-const launch = (id) => [
+const prepare = (id) => [
   { type: 'upload', selector: '#import-file', file: `${id}.xonix.json` },
   { type: 'click', selector: '#preview-button', timeoutMs: 60000 },
   { type: 'follow', selector: '#open-preview', timeoutMs: 120000 },
   { type: 'snapshot', group: 'prepared' },
-  ...start,
 ];
+const launch = (id) => [...prepare(id), ...start];
 const saved = [];
 const put = async (file, value) => {
   const body = JSON.stringify(value, null, 2) + '\n';
@@ -153,6 +163,7 @@ for (const workload of workloads) {
     jammerTicks: 0,
     maximumTrailCells: 0,
     maximumClaimedCells: 0,
+    safeNonterminalCaptures: 0,
   };
   const events = {};
   const nativeSegments = [];
@@ -174,6 +185,10 @@ for (const workload of workloads) {
       for (const event of run.events) events[event.type] = (events[event.type] ?? 0) + 1;
       features.shots += run.events.filter((event) => event.type === 'combat.fired').length;
       features.closures += run.events.filter((event) => event.type === 'cut.closed').length;
+      if (!soloReactionDanger(run))
+        features.safeNonterminalCaptures += run.events.filter(
+          (event) => event.type === 'cells.claimed',
+        ).length;
       features.eroded += run.events.filter((event) => event.type === 'cells.eroded').length;
       const view = combatView(run);
       if (view?.valid) {
@@ -187,6 +202,7 @@ for (const workload of workloads) {
     }
   flushNative();
   workload.nativeSegments = nativeSegments;
+  workload.safeNonterminalCaptures = features.safeNonterminalCaptures;
   assert.equal(run.status, workload.expected, `${workload.id}: stale legal input recipe`);
   assert.equal(verifyReplay(exportReplay(recorder, run)).match, true);
   if (workload.coverage.includes('earned-erosion')) assert(features.eroded > 0);
@@ -462,6 +478,142 @@ await put(
     ],
   }),
 );
+const speechProvenance = await speechFixtureProvenance();
+await put('recorded-speech.provenance.json', speechProvenance);
+const pause = [
+  { type: 'click', selector: '#pause-button' },
+  { type: 'wait', phase: 'paused' },
+];
+const audioSettings = [
+  { type: 'click', selector: '#settings-button' },
+  // The clip is pinned in English. This is the visible public language control,
+  // not a preference/storage injection or an assumption about the host locale.
+  { type: 'select', selector: '#settings-dialog [data-language-select]', value: 'en' },
+  { type: 'click', selector: '#settings-tab-audio' },
+  { type: 'click', selector: '#settings-master-mute' },
+];
+const closeAudioSettings = [{ type: 'click', selector: '[data-close="settings-dialog"]' }];
+const speechWorkload = workloads.find(({ id }) => id === 'long-rail');
+assert(
+  speechWorkload.safeNonterminalCaptures > 0,
+  'Speech route needs a nonterminal capture without an authoritative warning',
+);
+assert(
+  !speechWorkload.level.classic?.hunt && !speechWorkload.level.runningEnemies,
+  'Speech route must select the guide speaker',
+);
+await put(
+  'recorded-speech.qualification.json',
+  validateQualification({
+    format: 'SoloQualificationV1',
+    id: 'recorded-guide-capture-speech',
+    kind: 'performance',
+    timeoutMs: 300000,
+    entryPath: 'playground/',
+    readySelector: '#import-file',
+    audioRequirements: { recordedHashes: [AUDIO_SPEECH.sha256] },
+    replayRequirements: { closures: 2 },
+    coverage: [
+      'unchanged Long Rail route; intermediate capture remains running',
+      'public master/reaction speech controls and English language selection',
+      'shipped guide capture pilot recording; native exact-hash start required in separate audio-proof mode',
+      'generated macOS speech original; listening qualification remains pending',
+    ],
+    actions: [
+      ...prepare(speechWorkload.id),
+      ...audioSettings,
+      // Before the first flight, unmuting alone need not create an AudioContext.
+      // Public Studio playback supplies a gesture-owned context; changing the
+      // speech control then invokes the actual safe-phase warmup path.
+      { type: 'click', selector: '#soundtrack-open', timeoutMs: 60000 },
+      { type: 'select', selector: '#soundtrack-quick-style', value: 'ambient' },
+      { type: 'click', selector: '#soundtrack-play-style' },
+      { type: 'click', selector: '#soundtrack-close', timeoutMs: 60000 },
+      { type: 'check', selector: '[data-reaction-option="sounds"]', value: true },
+      { type: 'check', selector: '[data-reaction-option="speech"]', value: false },
+      { type: 'check', selector: '[data-reaction-option="speech"]', value: true },
+      ...closeAudioSettings,
+      {
+        type: 'audio-ready',
+        recordedHashes: [AUDIO_SPEECH.sha256],
+        timeoutMs: 30000,
+        fallbackMs: 5000,
+      },
+      { type: 'snapshot', group: 'recorded-speech-ready' },
+      ...start,
+      ...play(speechWorkload.nativeSegments),
+      ...finish,
+      { type: 'snapshot', group: 'recorded-speech-result' },
+      { type: 'exportReplay' },
+    ],
+  }),
+);
+if (audioDirectory) {
+  const provenance = JSON.parse(await readFile(resolve(audioDirectory, 'provenance.json')));
+  assert.equal(provenance.format, AUDIO_FIXTURE_FORMAT);
+  assert.equal(provenance.status, 'prepared-not-executed');
+  assert.equal(provenance.playlistId, AUDIO_PLAYLIST_ID);
+  assert.equal(provenance.bundle.file, AUDIO_BUNDLE_FILE);
+  assert.equal(provenance.recordings.length, AUDIO_RECORDINGS.length);
+  for (const pin of AUDIO_RECORDINGS) {
+    const recording = provenance.recordings.find(({ id }) => id === pin.id);
+    assert.equal(recording?.status, 'verified');
+    assert.equal(recording.sha256, pin.sha256);
+    assert.equal(recording.bytes, pin.bytes);
+  }
+  const bundle = verifyAudioFixtureBytes(
+    await readFile(resolve(audioDirectory, AUDIO_BUNDLE_FILE)),
+    { ...provenance.bundle, id: AUDIO_BUNDLE_FILE },
+  );
+  await writeFile(resolve(directory, AUDIO_BUNDLE_FILE), bundle, { flag: 'wx' });
+  saved.push({ file: AUDIO_BUNDLE_FILE, sha256: provenance.bundle.sha256 });
+  await put('recorded-music.provenance.json', provenance);
+  await put(
+    'recorded-music.qualification.json',
+    validateQualification({
+      format: 'SoloQualificationV1',
+      id: 'recorded-local-stream-current-next-and-natural-transition',
+      kind: 'performance',
+      timeoutMs: 360000,
+      entryPath: 'playground/',
+      readySelector: '#import-file',
+      audioRequirements: {
+        streamedHashes: AUDIO_RECORDINGS.map(({ sha256 }) => sha256),
+        minimumAdvanceSeconds: 1,
+        naturalTransitionsAtLeast: 1,
+      },
+      coverage: [
+        'public .rlsound import of two exact archived CC0 originals with pinned hashes',
+        'local Blob-backed HTMLMediaElement streaming; no claim about remote delivery',
+        'ordered playlist current/next admission via public explicit Next',
+        '60 seconds without transport input requires a natural near-end transition',
+        'separate audio-proof mode requires both exact MP3 hashes and native playback advancement',
+      ],
+      actions: [
+        ...prepare('first-return'),
+        ...audioSettings,
+        { type: 'click', selector: '#soundtrack-open', timeoutMs: 60000 },
+        { type: 'click', selector: '#soundtrack-advanced-backup-toggle' },
+        { type: 'upload', selector: '#soundtrack-bundle-file', file: AUDIO_BUNDLE_FILE },
+        { type: 'click', selector: '#soundtrack-import-bundle', timeoutMs: 60000 },
+        // Play this playlist commits the imported draft itself. Its controls
+        // stay disabled until public import has completed media admission.
+        { type: 'select', selector: '#soundtrack-selection', value: AUDIO_PLAYLIST_ID },
+        { type: 'click', selector: '#soundtrack-use-selection', timeoutMs: 60000 },
+        { type: 'wait', ms: 5000 },
+        { type: 'click', selector: '#soundtrack-next' },
+        { type: 'wait', ms: 5000 },
+        { type: 'click', selector: '#soundtrack-close' },
+        ...closeAudioSettings,
+        { type: 'snapshot', group: 'recorded-music-ready' },
+        ...start,
+        { type: 'wait', ms: 60000, label: 'natural-music-transition' },
+        ...pause,
+        { type: 'snapshot', group: 'recorded-music-result' },
+      ],
+    }),
+  );
+}
 await put(
   'recovery.qualification.json',
   validateQualification({
@@ -599,6 +751,9 @@ await put('index.json', {
   evidenceKind:
     'prepared inputs plus separately identified model correctness; no native execution yet',
   files: saved.slice(),
+  audioFixtureStatus: audioDirectory
+    ? 'speech and local streaming actions prepared; separate native audio-proof run still required'
+    : 'speech prepared; local streaming scenario not prepared (supply --audio-fixtures)',
   instructions:
     'Pass the game base URL and one .qualification.json to scripts/qualify-solo-runtime.mjs. Inputs enter through public Playground import and full preview. Each native expected result is enforced; route drift is retained as failure, never repaired by writing state.',
 });
