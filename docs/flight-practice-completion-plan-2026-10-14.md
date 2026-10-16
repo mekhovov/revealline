@@ -2,6 +2,15 @@
 
 ## 16 October research and execution update
 
+Fresh audited software progress: observer `8e29a04c3` passes real imported-model
+offline flight through both restarted Worlds routes, all-three final verification
+response cancellation, and historical Academy ordinary-browser update continuity
+with complete owned cleanup. See the [new receipts and precise limits](flight-practice-continuation-2026-10-16.md).
+Next: the full production-build directory journey and offline Gym/Academy flights.
+Installed-PWA active-session continuity, hash-in-progress cancellation, actual
+eviction, accepted performance/accessibility and human-review evidence remain
+separate gaps. Hosting and physical hardware stay deferred, not passed.
+
 Latest-main follow-up: PR #1512 merged; later work rebased cleanly onto
 `facf1627e`. Real hardware and hosting remain explicitly deferred. Independent
 audit confirms the three-app migration/rollback receipt's 630 cached-member
