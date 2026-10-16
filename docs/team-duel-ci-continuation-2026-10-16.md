@@ -217,3 +217,25 @@ complements the native receipts. Default Team picture/bootstrap hosts pass 24/24
 observer/routing 89/89 and the industrial verifier 7/7, each as a complete scoped
 cohort. Counts overlap and are not a whole-repository result. Targeted lint,
 formatting and whitespace checks pass. Final-head hosted results remain required.
+
+## Completed integration check at `690a85f3c`
+
+PR source `690a85f3c1fc62ea1142d635ac41d63d18b6b13b` now passes the
+[complete focused job](https://github.com/mekhovov/revealline/actions/runs/38848553634/job/116804504229).
+The corrected full real-source external build passes in 966.4 seconds, including
+all 32 generated original bodies, exact admitted Production originals, loose/ZIP/manifest
+equality, optional chapter ownership and unchanged core budgets. The final
+combined focused cohort reports 1,354 passes with no failures or skips; this is
+a scoped cohort, not the broad repository suite. [Retained job log](verification/team-duel-gameplay-audio-2026-10-16/hosted-690a-focused.log.gz)
+and [check states](verification/team-duel-gameplay-audio-2026-10-16/hosted-690a-checks.json)
+preserve the exact source result. All six industrial feature jobs, candidate,
+preview and utility verification also pass. Broad test/build and full assembly
+remain skipped under the repository's explicit fast-release policy.
+
+The later [native custom-audio continuation](team-duel-native-gameplay-audio-2026-10-16.md)
+then discovers and corrects a Duel semantic-cooldown defect. Its complete local
+audio cohort passes 55/55; the complete actual-host cohort passes 7/7, including
+a real keyboard-grown trail strike on each board and deliberate Restart.
+Those later source changes require their own final-head hosted checks; the 690a
+result is not relabeled as covering them. Publication and full required-evidence
+authorities remain separate.

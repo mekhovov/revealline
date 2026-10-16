@@ -45,15 +45,16 @@ Retry off, ran through the ordinary start, keyboard and Restart controls. No
 run state, event, clock, decoder result or buffer was inserted. Real trail
 crossings and enemy impacts consumed the one reserve and ended each attempt.
 
-The [cold receipt](verification/team-duel-gameplay-audio-2026-10-16/team-cold.json)
+The [cold receipt](verification/team-duel-gameplay-audio-2026-10-16/team-cold.json.gz)
 retains terminal delivery `2849`: warning plus the native bank's `loss` voice,
-buffer `238`. Custom failure buffer `2853` decoded 97 ms later. Both buffers
+buffer `238`. Custom failure buffer `2853`'s decoded-and-hashed identity was
+recorded 97 ms later. Both buffers
 have the same original SHA-256
 `574ed8153f407aff77e2ad5316ac1ca8d1b6aec95ddfc6b793e76bdc8f0e4a14`.
 The custom buffer starts zero times through the retained cold snapshot, 11.849
-seconds after its decode. Readiness does not replay the expired defeat.
+seconds after that identity record. Readiness does not replay the expired defeat.
 
-After deliberate Restart, the [ready receipt](verification/team-duel-gameplay-audio-2026-10-16/team-ready.json)
+After deliberate Restart, the [ready receipt](verification/team-duel-gameplay-audio-2026-10-16/team-ready.json.gz)
 retains terminal delivery `8739`, one custom voice named `failure`, board `solo`,
 native source `8741`, exact buffer `2853`. Its fallback-bank identity list is
 empty; the different same-byte `loss` buffer remains `238`. The successful native
@@ -62,7 +63,7 @@ failure start through the 11.618-second follow-up. A simultaneous warning remain
 separately owned. Natural earlier support/revival/capture activity is also
 retained; no custom OGG pickup or MP3 victory gameplay pass is inferred.
 
-[Input attempts](verification/team-duel-gameplay-audio-2026-10-16/team-actions.json)
+[Input attempts](verification/team-duel-gameplay-audio-2026-10-16/team-actions.json.gz)
 and a [native result image](verification/team-duel-gameplay-audio-2026-10-16/team.jpg)
 accompany the raw observations. An independent read-only review verifies the
 native start/voice/decode joins, snapshot prefixes and exact candidate overlays.
@@ -76,18 +77,19 @@ a diagnosed timeout. Expert, FPV actors, sound on and deliberate continuation
 remained selected. The actual first arena is `orchard-crossing`, three lives per
 seat and a 90-second race.
 
-The [cold](verification/team-duel-gameplay-audio-2026-10-16/duel-cold.json) and
-[warm](verification/team-duel-gameplay-audio-2026-10-16/duel-warm.json) receipts
+The [cold](verification/team-duel-gameplay-audio-2026-10-16/duel-cold.json.gz) and
+[warm](verification/team-duel-gameplay-audio-2026-10-16/duel-warm.json.gz) receipts
 show both boards delivering real batches containing `lineImpact.arrived`,
 `lineImpact.cleared` and `player.failed`. The first failures start native `impact`
-and `neutralized` voices. Custom failure buffer `4615` then decodes. Despite that
+and `neutralized` voices. Custom failure buffer `4615`'s identity is then recorded
+after native decoding and byte hashing. Despite that
 readiness, subsequent failure deliveries `7581` and `7584` still contain no custom
 failure voice: the generic impact has already occupied the same board/family
 cooldown used by the semantic replacement.
 
 This negative native result is retained, not reported as a Duel custom-audio
-pass. The [final paused observation](verification/team-duel-gameplay-audio-2026-10-16/duel-before-fix.json),
-[input attempts](verification/team-duel-gameplay-audio-2026-10-16/duel-actions.json)
+pass. The [final paused observation](verification/team-duel-gameplay-audio-2026-10-16/duel-before-fix.json.gz),
+[input attempts](verification/team-duel-gameplay-audio-2026-10-16/duel-actions.json.gz)
 and [image](verification/team-duel-gameplay-audio-2026-10-16/duel-before-fix.jpg)
 preserve its actual scope. The diagnosed correction must retain per-board
 semantic cooldowns, ordinary recording-family limits, pause/mute, native voice
@@ -118,10 +120,72 @@ inserted to repair it.
 The corrected source file SHA-256 is
 `943fe7c3319348ba98f723e03a44ae57e1acbbafe8e284ef44547a3aade0d060`.
 The negative native receipts above remain bound to their earlier source; they
-are not promoted to an after-correction pass. Native confirmation of the corrected
-candidate and final-source hosted checks remain separate completion conditions.
+are not promoted to an after-correction pass. Corrected native confirmation is recorded below. Final-source hosted checks
+remain a separate completion condition.
+
+## Corrected native Duel confirmation
+
+The corrected source is `42774e835ff34c367b51c1fd83bd0664269d60ec`, with local
+observation candidate `6e74a45aa5aa892fc0903b2c36c98ed49ceb6201`, tree
+`a110d17713606a92aa17a3a6a39831afa9be0120`. The [new binding](verification/team-duel-gameplay-audio-2026-10-16/corrected-candidate-binding.json)
+pins all 146 overlays and five actual runtime source members. The
+[120,744-byte retained candidate](verification/team-duel-gameplay-audio-2026-10-16/corrected-review-candidate.bundle)
+requires that source commit and has SHA-256
+`6d3e22114b73718c388cc2623d1d9d2b53b870b75312dad8a015838034ce9046`.
+The same genuine revision-107 compiler output and unchanged reviewed retained
+assets accompany the source correction. [Transport binding](verification/team-duel-gameplay-audio-2026-10-16/corrected-transport-binding.json)
+and [offered-byte receipts](verification/team-duel-gameplay-audio-2026-10-16/corrected-candidate-requests.jsonl.gz)
+retain their earlier response-prepared limitation; no baseline or performance
+result is inferred.
+
+Ordinary UI again selects Duel Expedition `orchard-crossing`, Expert, FPV actors,
+sound on, automatic Next/Retry off. The [cold checkpoint](verification/team-duel-gameplay-audio-2026-10-16/duel-corrected-cold.json.gz)
+has zero custom starts through 9.339 seconds after custom buffer `4639`'s
+decoded-and-hashed identity record. Same-byte bank `loss` is the different native
+buffer `38`. Both retain the exact 38,444-byte original SHA above and native
+48 kHz, mono, 28,800-frame, 0.6-second buffer facts. These timestamps include
+hashing and do not measure decoder completion latency alone.
+
+In the [ready checkpoint](verification/team-duel-gameplay-audio-2026-10-16/duel-corrected-warm.json.gz),
+the actual impact/clear/failure batches now produce custom voice `failure` for
+board 0, delivery `7494` / source `7497`, and board 1, delivery `7531` / source
+`7534`. Both native starts use exact custom buffer `4639`; neither is a
+fallback-bank buffer. The previously witnessed suppression is corrected in
+ordinary gameplay on each seat.
+
+The [paused checkpoint](verification/team-duel-gameplay-audio-2026-10-16/duel-corrected-paused.json.gz)
+keeps the same 33 deliveries and 109 native starts after native movement while
+Resume is focused. Both pause flags are true and the context is suspended. A
+post-click locator timeout is retained; fresh UI confirms that Pause actually
+succeeded. A later DOM-focused Resume loses native focus and safely pauses
+again. Native Shift+Tab/Return and temporary browser visibility restore ordinary
+focus; no focus, clock or pause guard is bypassed.
+
+The [actual drawn result](verification/team-duel-gameplay-audio-2026-10-16/duel-corrected-result.json.gz)
+ends both boards at zero lives and zero territory. The later board-1 failure is
+delivery `8885` / source `8888`; board 0 is `9070` / `9072`. Exactly one separate
+match-result owner, `duel-result`, is delivery `9073` / source `9074`. All use the
+same ready custom buffer. Board 0's terminal failure and the match-result cue
+share audio time `166.192`: one result owner does not mean one total failure
+playback across that settlement. The [later follow-up](verification/team-duel-gameplay-audio-2026-10-16/duel-corrected-followup.json.gz)
+still has 44 deliveries, five total custom failure starts and one match-result
+delivery. All cumulative record prefixes and candidate byte pins pass independent
+read-only review, with zero dropped records or observer errors.
+
+[Ordinary input/focus attempts](verification/team-duel-gameplay-audio-2026-10-16/duel-corrected-actions.json.gz)
+and the [native result image](verification/team-duel-gameplay-audio-2026-10-16/duel-corrected-result.jpg)
+retain successful and unsuccessful actions. The complete actual-host cohort
+passes all seven cases, without skips; its [retained result](verification/team-duel-gameplay-audio-2026-10-16/actual-host-final-seven.tap.gz)
+also covers capture, victory, cancellation and the legacy admission guard. The
+native run completes the WAV failure/recovery subtask. OGG/MP3 gameplay, acoustic
+listening and production/public/frozen acceptance remain separate.
 
 ## Observation boundaries
+
+The raw native JSON reports and input-attempt receipts are retained as lossless
+gzip files. [Original-byte pins](verification/team-duel-gameplay-audio-2026-10-16/raw-observation-pins.json)
+record each original name, byte count and SHA-256; all 13 round-trip to the exact
+captured bytes. Compression changes no observation or source-admission claim.
 
 The development hook installs in the game's own realm before the ordinary host
 import. Wrappers preserve receivers, arguments, original return promises and
@@ -132,7 +196,7 @@ source checks protect the outer observer. Nine adapter regressions and all 61
 combined observer/routing cases pass, without skips.
 
 All native records have zero dropped events/starts/decodes/hashes or observer
-errors. The temporary tab and both owned helper attempts were closed/stopped.
+errors. The temporary tabs and all owned helper attempts were closed/stopped.
 There is no native context-closure receipt; source lifecycle tests retain that
 separate coverage. No acoustic clarity, mono/headphone, all-codec gameplay,
 controller, sustained-pressure, public installation or frozen-release acceptance

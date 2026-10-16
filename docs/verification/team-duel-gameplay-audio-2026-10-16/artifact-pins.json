@@ -1,0 +1,191 @@
+{
+  "format": "revealline-team-duel-gameplay-audio-artifacts.v1",
+  "scope": "Exact retained diagnostic, candidate, native and hosted artifacts; source/publication/acoustic scopes remain separate in the report.",
+  "files": [
+    {
+      "path": "actual-host-final-seven.tap.gz",
+      "bytes": 611,
+      "sha256": "56517af2f4bb3b18b083e996e358639c022445466767c0e44d1213e50ce3cd13"
+    },
+    {
+      "path": "before-fix-candidate-requests.jsonl.gz",
+      "bytes": 134650,
+      "sha256": "30f75535d9d3ed51ccaa12f5a194e7778dad6c156b4ad0b3fd5cb0d8a8203bfa"
+    },
+    {
+      "path": "before-fix-transport-binding.json",
+      "bytes": 1675,
+      "sha256": "fdb459b4f06152d52c1c641f840457d5cee1b80b4f86bfd77a3e41f68b28882f"
+    },
+    {
+      "path": "candidate-binding.json",
+      "bytes": 42776,
+      "sha256": "f85cae4824b9d939815d2ecc6503aa2cd79a0acd3a252fb1d90cebcd89b467d6"
+    },
+    {
+      "path": "corrected-candidate-binding.json",
+      "bytes": 43541,
+      "sha256": "bd104cd580a9a4c9295e6706e336088459af444e860a4426139988910537cb9c"
+    },
+    {
+      "path": "corrected-candidate-requests.jsonl.gz",
+      "bytes": 72169,
+      "sha256": "aa42abd2cacff033310cd63c781c3918e47e587903bb44de08cbb25d1df64108"
+    },
+    {
+      "path": "corrected-review-candidate.bundle",
+      "bytes": 120744,
+      "sha256": "6d3e22114b73718c388cc2623d1d9d2b53b870b75312dad8a015838034ce9046"
+    },
+    {
+      "path": "corrected-transport-binding.json",
+      "bytes": 1675,
+      "sha256": "34510b9d72b39c8b9c37d30adec7b3de68b2853c6f1ecd80f5d3b5edf707cefd"
+    },
+    {
+      "path": "duel-actions.json.gz",
+      "bytes": 334,
+      "sha256": "a1581c0ed0541ac494049709939a346e9a297751065b52711a90bf937005bf76"
+    },
+    {
+      "path": "duel-before-fix.jpg",
+      "bytes": 74754,
+      "sha256": "6939221e337707ac1f5f799d767e2b77e6f48a872363057fe415a1bd4700febb"
+    },
+    {
+      "path": "duel-before-fix.json.gz",
+      "bytes": 9967,
+      "sha256": "e83b3d50cc81951529963d9268e649797e64f4873293a6fe4f5216dad091d7de"
+    },
+    {
+      "path": "duel-cold.json.gz",
+      "bytes": 9055,
+      "sha256": "d4404c154c8311470087e5dea5b521a67a649c922cd867a8d7766be10e0a5447"
+    },
+    {
+      "path": "duel-corrected-actions.json.gz",
+      "bytes": 917,
+      "sha256": "b9b09fb1baf6930c7f8e0d5c2bbece482dbcf92c21cd7d7dad06e1b36d1daadc"
+    },
+    {
+      "path": "duel-corrected-cold.json.gz",
+      "bytes": 9175,
+      "sha256": "c6a6df6031ac8b72de7332524048f277d99e786f2cf1098b8fba0c40ba3ed25c"
+    },
+    {
+      "path": "duel-corrected-followup.json.gz",
+      "bytes": 11884,
+      "sha256": "9951866348b780d4fd5de5c79c63033e356183da2cfc65b4c6472ba79a276251"
+    },
+    {
+      "path": "duel-corrected-paused.json.gz",
+      "bytes": 10702,
+      "sha256": "99d3b088fbc7a74e471714ae57c4d57c1f3d64146514ef5b725459b148ca2390"
+    },
+    {
+      "path": "duel-corrected-result.jpg",
+      "bytes": 107065,
+      "sha256": "c2668923b190a2440be3c03dcabaa9f289239794ec4370ab6fa8875d785c5421"
+    },
+    {
+      "path": "duel-corrected-result.json.gz",
+      "bytes": 11874,
+      "sha256": "28947fed9c8d3e40fc8b80b87f87be57e3af4dc8a0cf974003b1b8a92b4c66bd"
+    },
+    {
+      "path": "duel-corrected-warm.json.gz",
+      "bytes": 10684,
+      "sha256": "5659e3481b18a74ff7c4a1d6ba48a0504fc0cd9d6222e5a2a8a031170e9a193a"
+    },
+    {
+      "path": "duel-warm.json.gz",
+      "bytes": 9966,
+      "sha256": "bdf709d4f4f9dbd0e17bb69b295971dde25bbf1c0d3db025411db277be2adb6c"
+    },
+    {
+      "path": "gameplay-observer-routing-final.tap.gz",
+      "bytes": 2994,
+      "sha256": "59ef748183c59f0c7ee9f74c43216f1e16084f32b45fb009ee2823d6dc978d4f"
+    },
+    {
+      "path": "hosted-690a-checks.json",
+      "bytes": 3526,
+      "sha256": "ba99fbc10c076e6ba1cdd494ec066710bf914794958f912f9f89368c01d7c3ab"
+    },
+    {
+      "path": "hosted-690a-focused.log.gz",
+      "bytes": 203014,
+      "sha256": "71936aa0f25733ee6a87340f53fa3f65113fb3ce99c6cf3cc7de8e2bd0e5c49e"
+    },
+    {
+      "path": "local-review-candidate.bundle",
+      "bytes": 110696,
+      "sha256": "5b3bf7911c7ad7405f27c306d82b35771926731285ec09c83234e4e4dc514fd5"
+    },
+    {
+      "path": "native-impact-host-red-valid.tap.gz",
+      "bytes": 994,
+      "sha256": "30e8f0edbe5452fa6932ed4b88e9a8a424b5bdd41d3d657f0df6cddef577aada"
+    },
+    {
+      "path": "native-impact-host-red-wide.tap.gz",
+      "bytes": 941,
+      "sha256": "462166f85803c09c890a1d331ef96c68d758cc0fb7d8920e4793bdbb13236ea4"
+    },
+    {
+      "path": "native-impact-host-red.tap.gz",
+      "bytes": 1002,
+      "sha256": "fee260ec15f9c84aaf01f21fe8e2326869137c1781836874c43c65245339e39e"
+    },
+    {
+      "path": "native-impact-host-route-diagnostic.tap.gz",
+      "bytes": 1251,
+      "sha256": "7d570e9cfae7fc9c3857beee96ae38ae24aa07753638e35f71dbef1458c390ee"
+    },
+    {
+      "path": "native-impact-host-route-final.tap.gz",
+      "bytes": 621,
+      "sha256": "e6222ce2c5e795dd8188d6206807ceb70b3652f61d5a5abc172bf84efaa91670"
+    },
+    {
+      "path": "raw-observation-pins.json",
+      "bytes": 3139,
+      "sha256": "47d01c17c3bb589353e934b665365df2aa144cfcac9cbca85b092965aa0cb428"
+    },
+    {
+      "path": "studio-line-impact-audio-cohort.log.gz",
+      "bytes": 2994,
+      "sha256": "34ffc8f8e9dfd1c2ff357cd03dcc74e3ce79f9c69a0a40206f6f8d8ae6f93b72"
+    },
+    {
+      "path": "studio-line-impact-regression-green.log.gz",
+      "bytes": 600,
+      "sha256": "1171fa776d078b12259c7a4c53a2cd3ff68130b03f745f1aab7bec8c4ea0d78f"
+    },
+    {
+      "path": "studio-line-impact-regression-red.log.gz",
+      "bytes": 913,
+      "sha256": "01405805b1e272d64c8c8099f0297ac9d6fdd8dd6503f3ddecf4d6f658ada3c2"
+    },
+    {
+      "path": "team-actions.json.gz",
+      "bytes": 454,
+      "sha256": "b88f9af83fd2367275ef29a35ec3b992392753c5f6c88e61c64e560e7beb524f"
+    },
+    {
+      "path": "team-cold.json.gz",
+      "bytes": 7678,
+      "sha256": "fc45069f7e15198c2c4a726d4da048701ede67a5b822f16b21873f4dc9bbeb83"
+    },
+    {
+      "path": "team-ready.json.gz",
+      "bytes": 10396,
+      "sha256": "3a5c61dd16d5ed22cd9425887016ddd4a223e274b9c796e4382d7785b1f93a39"
+    },
+    {
+      "path": "team.jpg",
+      "bytes": 105763,
+      "sha256": "a8e8a69b82276f8aef884441dcca86a9da6d420f94d4fb322d555deeb4f39b63"
+    }
+  ]
+}

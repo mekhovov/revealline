@@ -1,0 +1,84 @@
+{
+  "format": "revealline-native-audio-original-bytes.v1",
+  "scope": "Lossless gzip retention of exact original native DOM reports and input-attempt receipts; decode-and-hash identity timestamps are not isolated decoder latency.",
+  "files": [
+    {
+      "path": "duel-actions.json.gz",
+      "originalName": "duel-actions.json",
+      "originalBytes": 1112,
+      "originalSha256": "87faf33d0ae27f4050d583d8285fb6822288c3dea25f8665443b4264b545d1eb"
+    },
+    {
+      "path": "duel-before-fix.json.gz",
+      "originalName": "duel-before-fix.json",
+      "originalBytes": 107006,
+      "originalSha256": "7365753da4a1c02046e9d72f0cd80cb6b5b55ece89de4efbd95dd1beb14c05bb"
+    },
+    {
+      "path": "duel-cold.json.gz",
+      "originalName": "duel-cold.json",
+      "originalBytes": 81909,
+      "originalSha256": "5b4383ec2d534cbb58f9046f356b11c4c8602b72924af134c80cdc4f86269b2f"
+    },
+    {
+      "path": "duel-corrected-actions.json.gz",
+      "originalName": "duel-corrected-actions.json",
+      "originalBytes": 3939,
+      "originalSha256": "a882d3ae3ef606b6318957d8dfc3561a3f6448c31a5e0125b55e4561af135621"
+    },
+    {
+      "path": "duel-corrected-cold.json.gz",
+      "originalName": "duel-corrected-cold.json",
+      "originalBytes": 84230,
+      "originalSha256": "c31d1fe116408877cfa7c4578f63661d231cc4802fe203bee9877832f87450fd"
+    },
+    {
+      "path": "duel-corrected-followup.json.gz",
+      "originalName": "duel-corrected-followup.json",
+      "originalBytes": 147988,
+      "originalSha256": "7379fd7366519fc71bd987b5cbfa5311dd9bdb6bdd78de39570f5571f6d3ae65"
+    },
+    {
+      "path": "duel-corrected-paused.json.gz",
+      "originalName": "duel-corrected-paused.json",
+      "originalBytes": 121003,
+      "originalSha256": "fd19a65b5a3eb5c84dbdd117e8613729fdc55190cc4698c4c95debb22990f099"
+    },
+    {
+      "path": "duel-corrected-result.json.gz",
+      "originalName": "duel-corrected-result.json",
+      "originalBytes": 147987,
+      "originalSha256": "8e0a18b01d060d6fd35d7354a91b1d3a4282e033517ccf6224e54281075f5a75"
+    },
+    {
+      "path": "duel-corrected-warm.json.gz",
+      "originalName": "duel-corrected-warm.json",
+      "originalBytes": 121003,
+      "originalSha256": "a2fc1c1267ccd6a1f9358bab861b25523ce8aa3fa80a310015095557f2ecc1e1"
+    },
+    {
+      "path": "duel-warm.json.gz",
+      "originalName": "duel-warm.json",
+      "originalBytes": 107016,
+      "originalSha256": "d288e3f0dd11ebe57d2e3b2502ba20c9c5fd17953ee15c186fda4d9cf825a6a7"
+    },
+    {
+      "path": "team-actions.json.gz",
+      "originalName": "team-actions.json",
+      "originalBytes": 2484,
+      "originalSha256": "2e21fe5d3909ed751dfb667f516e6f0334aaecaf5fe9961d792f71ea4efd338e"
+    },
+    {
+      "path": "team-cold.json.gz",
+      "originalName": "team-cold.json",
+      "originalBytes": 50058,
+      "originalSha256": "85661bcf193225af50ff4f063fb1128d497f329263cc69a0fd25468341ae03da"
+    },
+    {
+      "path": "team-ready.json.gz",
+      "originalName": "team-ready.json",
+      "originalBytes": 102950,
+      "originalSha256": "5ea13ef59de4aefd2eaaffbc608a7155925b6133de9f82d0fed2d0b9c67a1b68"
+    }
+  ]
+}
