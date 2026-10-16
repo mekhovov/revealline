@@ -168,7 +168,7 @@ export function createSoundtrackPlayer({
       ? bindAudioMasterMedia({ audioMaster, element: deck.media, volume: 0 })
       : null;
 
-  let library = emptySoundtrackLibrary(),
+  let library = resolveSoundtrackLibrary(emptySoundtrackLibrary()),
     context = {},
     override = null,
     playlist = null,
@@ -206,7 +206,8 @@ export function createSoundtrackPlayer({
   let failed = new Set(),
     fallbackUsed = false,
     failureFallback = null;
-  let baseSelection = null;
+  let baseSelection = null,
+    selectionLibrary = null;
   const gainLeases = new Map();
   const tracks = () => [
     ...soundtrackTracks(library),
@@ -228,26 +229,34 @@ export function createSoundtrackPlayer({
         }
       : {}),
   });
-  const resolveBase = () => {
+  const resolveSelectionLibrary = () => {
+    if (selectionLibrary?.library === library && selectionLibrary.override === override)
+      return selectionLibrary.resolved;
+    let selected = library;
+    if (library.selection.playlistId !== override)
+      selected = { ...selected, selection: { playlistId: override } };
+    if (localPlayback && library.listening && !library.listening.installedOnly)
+      selected = { ...selected, listening: { ...library.listening, installedOnly: true } };
+    // Both the saved library and this policy-adjusted copy are resolver-owned
+    // and deeply frozen. Scene changes must not re-copy every track's metadata.
+    const resolved = resolveSoundtrackLibrary(selected);
+    selectionLibrary = { library, override, resolved };
+    return resolved;
+  };
+  const resolveBase = (value = context) => {
     if (
       cacheableCatalogue &&
       baseSelection?.library === library &&
-      baseSelection.context === context &&
+      baseSelection.context === value &&
       baseSelection.override === override
     )
       return baseSelection.selected;
-    const selectionLibrary =
-      library.selection.playlistId === override
-        ? library
-        : { ...library, selection: { playlistId: override } };
     const selected = resolveSoundtrackSelection(
-      localPlayback && library.listening
-        ? { ...selectionLibrary, listening: { ...library.listening, installedOnly: true } }
-        : selectionLibrary,
-      selectionContext(),
+      resolveSelectionLibrary(),
+      selectionContext(value),
       { catalogue: catalogue ?? undefined },
     );
-    if (cacheableCatalogue) baseSelection = { library, context, override, selected };
+    if (cacheableCatalogue) baseSelection = { library, context: value, override, selected };
     return selected;
   };
   const resolve = () => {
@@ -1075,6 +1084,8 @@ export function createSoundtrackPlayer({
     }
     cancelPreload();
     library = next;
+    baseSelection = null;
+    selectionLibrary = null;
     if (remoteSelection && next.listening?.recordingMode) {
       const allowed = remoteTracks.filter(onlineSoundtrackRecordingAllowed),
         remoteIds = new Set(remoteTracks.map((track) => track.id)),
@@ -1145,10 +1156,9 @@ export function createSoundtrackPlayer({
       maxDepth: 3,
       maxString: 512,
     });
-    resolveSoundtrackSelection(
-      { ...library, selection: { playlistId: override } },
-      selectionContext(owned),
-    );
+    // Validate and resolve before cancelling or changing the current context.
+    // The following resolve() can reuse this result for immutable catalogues.
+    resolveBase(owned);
     cancelPreload();
     const sceneChanged = (context.scene ?? 'gameplay') !== (owned.scene ?? 'gameplay');
     context = owned;
