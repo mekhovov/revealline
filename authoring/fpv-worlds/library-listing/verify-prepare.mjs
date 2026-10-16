@@ -1,7 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { mkdtemp, readFile, writeFile, lstat, mkdir } from "node:fs/promises";
+import {
+  mkdtemp,
+  readFile,
+  writeFile,
+  lstat,
+  mkdir,
+  readdir,
+  symlink,
+} from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
@@ -44,6 +52,29 @@ test("in-repository or relative destinations refuse before archive access", asyn
       /outside the repository|absolute fresh external/,
     );
 });
+test("source fixture is not a production HTML entry", async () => {
+  const entries = await readdir(new URL("./", import.meta.url));
+  assert.deepEqual(
+    entries.filter((name) => name.endsWith(".html")),
+    [],
+  );
+});
+test("an external symlink into the repository refuses before archive access", async () => {
+  const root = await mkdtemp(join(tmpdir(), "fpv-listing-prepare-link-"));
+  const repository = fileURLToPath(new URL("../../../", import.meta.url));
+  const alias = join(root, "source-alias");
+  await symlink(repository, alias, "dir");
+  await assert.rejects(
+    prepareListingContract({
+      archive: "/not-read.zip",
+      output: join(alias, "tmp-output"),
+    }),
+    /outside the repository/,
+  );
+  await assert.rejects(lstat(join(repository, "tmp-output")), {
+    code: "ENOENT",
+  });
+});
 test(
   "original archive preparation reproduces exact native-observed files and refuses repeat overwrite",
   { skip: !archive },
@@ -69,7 +100,12 @@ test(
     ])
       assert.deepEqual(
         await readFile(join(output, name)),
-        await readFile(new URL(name, import.meta.url)),
+        await readFile(
+          new URL(
+            name === "index.html" ? "index.html.template" : name,
+            import.meta.url,
+          ),
+        ),
       );
     const before = await readFile(join(output, "identity.json"));
     await assert.rejects(

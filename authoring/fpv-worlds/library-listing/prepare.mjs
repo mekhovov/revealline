@@ -1,9 +1,16 @@
 import { createHash } from "node:crypto";
 import { createReadStream } from "node:fs";
-import { lstat, mkdir, readFile, writeFile } from "node:fs/promises";
+import { lstat, mkdir, readFile, realpath, writeFile } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { isAbsolute, relative, resolve, sep } from "node:path";
+import {
+  basename,
+  dirname,
+  isAbsolute,
+  relative,
+  resolve,
+  sep,
+} from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const run = promisify(execFile);
@@ -24,6 +31,10 @@ const OWNED_FILES = {
     "c2d819373994e2ac9e87b93fb04fe8df522d75d7a4167dcf6361a52496533f62",
 };
 const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
+function isInside(root, destination) {
+  const path = relative(root, destination);
+  return path !== ".." && !path.startsWith(`..${sep}`) && !isAbsolute(path);
+}
 async function archiveHash(path) {
   const digest = createHash("sha256");
   for await (const chunk of createReadStream(path)) digest.update(chunk);
@@ -34,23 +45,28 @@ export async function prepareListingContract({ archive, output }) {
     throw new Error(
       "Supply the original archive and an absolute fresh external output directory.",
     );
-  const destination = resolve(output),
+  const requestedDestination = resolve(output),
     sourceRoot = fileURLToPath(new URL("../../../", import.meta.url));
-  const relativeDestination = relative(sourceRoot, destination);
-  if (
-    relativeDestination !== ".." &&
-    !relativeDestination.startsWith(`..${sep}`) &&
-    !isAbsolute(relativeDestination)
-  )
+  if (isInside(sourceRoot, requestedDestination))
     throw new Error(
       "Stage outside the repository; do not duplicate production bytes in source.",
     );
   try {
-    await lstat(destination);
+    await lstat(requestedDestination);
     throw new Error("Existing evidence/output must not be overwritten.");
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
   }
+  // Resolve the existing parent before archive access, so an external alias
+  // cannot stage production bytes back into this source checkout.
+  const destination = resolve(
+    await realpath(dirname(requestedDestination)),
+    basename(requestedDestination),
+  );
+  if (isInside(await realpath(sourceRoot), destination))
+    throw new Error(
+      "Stage outside the repository; symlink destinations into source are refused.",
+    );
   if ((await archiveHash(resolve(archive))) !== ARCHIVE_SHA256)
     throw new Error(
       "Expected the exact original qualified optional Worlds runtime archive.",
@@ -75,7 +91,8 @@ with zipfile.ZipFile(sys.argv[1]) as z:
     );
   const files = new Map([["packaged-world-store.mjs", stdout]]);
   for (const [name, expected] of Object.entries(OWNED_FILES)) {
-    const bytes = await readFile(new URL(name, import.meta.url));
+    const sourceName = name === "index.html" ? "index.html.template" : name;
+    const bytes = await readFile(new URL(sourceName, import.meta.url));
     if (sha(bytes) !== expected)
       throw new Error(`Observed native harness identity changed: ${name}`);
     files.set(name, bytes);
