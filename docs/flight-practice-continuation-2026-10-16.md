@@ -5,6 +5,39 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+Frozen observer `752e4c999` has three further failed native receipts in
+[the unchanged original archive](flight-practice-continuation-20261016/native-752e-failed-originals.tgz),
+SHA-256 `8a26ac2a813dc34cf889367443bc50ccb54178f21ad92fcbb4f4377ba0a6b1a4`:
+
+- Imported-world run 1 stops before installation: direct app URLs have no
+  language query, while the parent incorrectly used the stricter launcher URL
+  predicate. Cleanup succeeds. The new bounded identity check accepts only the
+  exact admitted direct entry or its exact English launcher query, not arbitrary
+  query parameters, fragments, credentials, ports or versions.
+- Ordinary-browser active-session run 5 completes genuine upward motion,
+  native focus-loss pause, real B preparation, unchanged old document identity,
+  stable paused return and explicit resumed upward motion in 7.2 seconds.
+  Its overall result remains failed: cleanup closes the target before detaching
+  its target-bound session. The correction detaches page sessions first, keeps
+  the separate updater control until exact target closure, and retains all
+  failure/late-ownership checks. The new regression fails before and passes after.
+- Production v2 run 1 admits the current package but stops before browser
+  acquisition: hashing all 3,493 original files on the network drive exceeds
+  the observer's separate 120-second distribution-I/O deadline. No player
+  journey, package startup or performance failure is inferred.
+
+The next cancellation check explicitly covers final verification response
+latency, not per-file hashing interruption. Independent review reproduced a
+timer-dispatch false-pass in its first proposal; absolute deadline checks and
+independent event-time validation fix it. The reviewed revision passes 38 unit
+tests; integrated cancellation/URL/window tests pass 61/61. Actual browser
+receipts remain required. Runtime bytes and publication policy are unchanged.
+The complete expanded observer suite passes 276 tests with one explicit
+historical-fixture skip. Scoped lint and whitespace checks pass. The imported
+world adapter now follows native Library fragments only after its own public
+navigation, and follows actual Settings Back state within a fixed five-action
+bound; arbitrary navigation is still rejected.
+
 PR #1512 merged at original source `3a1b5e3c3`. The four later follow-up commits
 were rebased cleanly onto main `facf1627e2bb039ee7e5a3b9d662ded4c4ef3368`.
 Their rewritten head before the next observer batch is `224f97d35`; original
