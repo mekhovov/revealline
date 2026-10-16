@@ -1,13 +1,12 @@
 # Solo regression evidence snapshot
 
-As of **2026-10-16 18:35 UTC**, **1,947 of the original 1,948 files** have complete
-recorded results at their stated source revisions. **One file remains without a
-complete canonical result:** `game/test/couch-encounter-help.test.mjs`.
+As of **2026-10-16 19:52 UTC**, **all 1,948 original files** have complete recorded
+file results at their stated source revisions. Failed files remain failed.
 The count includes `scripts/test-practice-directory-accessibility.mjs`, whose only
 test was skipped; it is an observed file result, not executed assertion coverage.
 This is neither a complete-suite pass nor a single-revision qualification.
 
-The partition is **1,233 historical local files + 711 distinct remote files +
+The partition is **1,233 historical local files + 712 distinct remote files +
 three local tooling files at `dbf61c518`**. The repository now contains **1,964 test
 paths**: the original 1,948 plus 16 later additions. Added files and overlapping
 reruns remain separate. The [machine-readable ledger](solo-regression-audit.json)
@@ -46,22 +45,36 @@ pass**. All 276 original assertions remain; bounded fixture waits release and
 join only their owned actions. Earlier stalls and incomplete results remain
 retained.
 
-The last Couch encounter gap has narrower evidence. Both filtered case-five
-arms complete the terminal, checkpoint and board comparisons, then fail focus
-identity: `BUTTON#race-help-back` instead of `BUTTON#race-help`. Earlier case-three
-diagnostics pass the DOM-array comparison and fail a separate final focus
-identity. A reviewed proposal changes only those two failure-formatting calls,
-preserving `Object.is`, all arguments, deep comparisons and deadlines. The
-unobserved final case stays unchanged. A complete canonical rerun is still
-required; filtered diagnostics receive no coverage credit.
+The final Couch encounter file at `087d067b0` completes **5/8**, with three
+failures and no skips or cancellations. Exact `b1174522` running the identical
+corrected formatter fixture also completes **5/8**; all three named semantic
+failures match. The two changed calls preserve `Object.is` and all expected
+objects, checkpoints, renders, save and focus assertions. This closes the last
+original-file observation gap; it does not turn those failed expectations into
+passes. Earlier filtered diagnostics and resource failures remain retained.
 
-Seven newly retained script failure groups remain unclassified against an exact
-baseline: external distribution, hosted soundtrack publication, pack indexes,
-current-entry links, Countercurrent production, release catalog and soundtrack
-distribution. The actual diagnostics include an offline-size bound, registry and
-catalog expectations, a pinned `music.mjs` authority mismatch, and an isolated
-fixture missing `mp3-inspection.mjs`. These are retained failures, not blanket
-baseline waivers. Earlier unresolved groups remain explicit in the ledger.
+The ten-job follow-up now retains **20 verified artifacts and all ten target
+receipts**, with zero integrity problems. Nine files completed; the exact baseline
+external-distribution file timed out at 600 seconds after its first two cases,
+so its third case remains unobserved. Five complete untouched baseline groups
+(hosted soundtrack, pack indexes, current-entry links, Countercurrent and release
+catalog) reproduce all **13 named candidate failures** exactly.
+
+The corrected soundtrack fixture completes **9/10**. Untouched `b1174522` also
+completes **9/10** and fails the same archived-CLI case, but at a different first
+missing module: baseline omits `scripts/build-entry-writer.mjs`; corrected candidate
+omits `publishing/vendor/acorn-8.18.0.mjs`. This is evidence of an already incomplete
+CLI fixture copy, not identical diagnostics or a whole-file pass. The added MP3
+inspection dependency restores the other nine paths. Further fixture expansion
+and production changes remain out of scope.
+
+The external-distribution candidate fails its core-cache **<64 MiB** assertion.
+Its timed-out baseline test does not establish pass or failure at that assertion.
+Separate hash-verified production metadata records **71,915,598 bytes** on original
+`b1174522` and **72,021,985 bytes** on `8c1af9d1`: both exceed 64 MiB and remain below
+72 MiB. Those are production-version artifacts, not the test's `external-check`
+build, so this establishes an existing artifact threshold overrun without
+claiming that the baseline test completed. No budget was relaxed.
 
 The latest verified package at source `8c1af9d1` / runtime `138e3284b` retains
 **55 complete focused files, 542/542 tests**, with zero skips or cancellations on
@@ -83,5 +96,4 @@ a classification of every later remote failure.
 
 No result here establishes physical iPhone, installed-PWA, Steam Deck, thermal or
 power acceptance. Native performance and offline correctness have separate raw
-reports and qualification decisions. No new tests were executed to produce this
-ledger update.
+reports and qualification decisions. This ledger only classifies already retained results.

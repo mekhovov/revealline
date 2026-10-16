@@ -20,6 +20,8 @@ on:
       - 'game/ui/demo-audio.mjs'
       - 'game/ui/demo-host.mjs'
       - 'game/ui/soundtrack-panel.mjs'
+      - 'game/ui/enemy-guide.mjs'
+      - 'game/ui/enemy-body-assets.mjs'
       - 'game/replay-theater/**'
       - 'game/editions/model.mjs'
       - 'game/editions/package-budget.mjs'
@@ -57,6 +59,8 @@ on:
       - 'game/test/demo-audio-host.test.mjs'
       - 'game/test/soundtrack-panel.test.mjs'
       - 'game/test/soundtrack-host.test.mjs'
+      - 'game/test/enemy-guide-panel.test.mjs'
+      - 'game/test/enemy-body-assets.test.mjs'
       - 'game/test/solo-demo-media-admission-host.test.mjs'
       - 'game/test/helpers/audio-view-writes.mjs'
       - 'optional-practice/civilian-fpv/*.mjs'
@@ -148,6 +152,8 @@ jobs:
         game/test/demo-audio-host.test.mjs
         game/test/soundtrack-panel.test.mjs
         game/test/soundtrack-host.test.mjs
+        game/test/enemy-guide-panel.test.mjs
+        game/test/enemy-body-assets.test.mjs
         game/test/company-studio-ui.test.mjs
         game/test/company-studio-preview.test.mjs
         game/test/studio-appearance-basis.test.mjs

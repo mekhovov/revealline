@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-16T18:39:08.374418+00:00",
-  "status": "complete-file-observations-with-one-original-file-gap-and-retained-failures",
+  "updatedAt": "2026-10-16T19:52:14.173313+00:00",
+  "status": "complete-original-file-observations-with-retained-failures-and-one-wholly-skipped-file",
   "scope": "Separate historical local inventory, mixed-source remote continuation/recovery, added tooling, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures, cancellations and unobserved work remain visible.",
   "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
   "frozenRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
@@ -2673,13 +2673,13 @@
     "No physical iPhone17Pro Safari or SteamDeckOLED qualification is implied."
   ],
   "remoteContinuation": {
-    "checkpointAt": "2026-10-16T18:37:31.322414+00:00",
+    "checkpointAt": "2026-10-16T19:46:14.696447+00:00",
     "currentRuntimeContext": "Verified artifact source8c1af9d1/runtime138e3284b. Completed inventory remains mixed-source; latest formatter source d12fcb945 and finite-owner fixture source6b9dadba4 share runtime138e. No single-final-source whole-suite pass.",
     "originalInventoryFiles": 1948,
     "historicalLocalCompleteFiles": 1233,
-    "remoteUniqueCompleteFiles": 711,
-    "totalUniqueOriginalFilesObserved": 1947,
-    "originalFilesStillUnobserved": 1,
+    "remoteUniqueCompleteFiles": 712,
+    "totalUniqueOriginalFilesObserved": 1948,
+    "originalFilesStillUnobserved": [],
     "overlap": [],
     "original715": {
       "runId": 38865274741,
@@ -2725,7 +2725,7 @@
         "sha256": "5e4a5d97303970d636d475598930545a5f40ecf99c1cedbb5bf16b6c325db1d0"
       }
     },
-    "classificationStatus": "Four newly retained untouched-b117 comparisons match all18 named failures exactly. Five canonical formatter files retain22 named failures:20 match both earlier diagnostic revisions exactly; two restoration errors differ only in disclosed generated writer/attempt/session identities. Couch static completes2/36 on both current canonical and b117 with the same declared corrected fixture; all34 named failures match. Seven newly retained script failure groups remain unclassified. All failures remain failures.",
+    "classificationStatus": "All original1948 file observations complete across recorded sources, including failures and one wholly skipped file. Latest10 target receipts retained with zero integrity problems:9 complete and1 baseline timeout. Five untouched script groups reproduce13 named failures exactly; Couch corrected-fixture pair reproduces3. Soundtrack original baseline9/10 misses build-entry-writer, corrected candidate9/10 misses vendored acorn: shared incomplete CLI-copy boundary, different observed errors. External baseline test timed out before third-case result; independently verified originalbaseline and8c1 artifact metadata both exceed its historical64MiB threshold while remaining under72MiB. No baseline full-file pass or runtime budget change inferred.",
     "boundedIdentityPair": {
       "path": ".cache/solo-followup/regression-audit/remote-memory-38873458942/bounded-identity-classification-final.json",
       "bytes": 24352,
@@ -3714,9 +3714,9 @@
       "sha256": "3a0b6f5a447ee577259c32b3a858c6207eba8820fc02e1584437f4bf9133be0c"
     },
     "checkpointProof": {
-      "path": ".cache/solo-followup/regression-audit/retained-closure-1835/coverage.json",
-      "bytes": 218702,
-      "sha256": "3454ffd1985f16399641d0311b86ec890f4cdbd7fdb6c63745432f7c49a5771b"
+      "path": ".cache/solo-followup/regression-audit/retained-final-ten-1951-v2/coverage.json",
+      "bytes": 199674,
+      "sha256": "69ab0d8cc85a8c7ff6e319377f88c09e83f4cb3c8371b86eb09e9661fcf0cc19"
     },
     "completedCombinedRun": {
       "runId": 38885848296,
@@ -4165,9 +4165,9 @@
       "sha256": "cad3312b73020cad842a1c36a514dce946dab1478c80210410742a93aea98262"
     },
     "latestSourceBoundary": {
-      "revision": "8c1af9d191224893bad9012f7638940a869d6096",
-      "runtimeRevision": "138e3284b94ccff2b53dbab397949faf91442482",
-      "scope": "New Demo admission source committed; focused proof binds exact bytes. Full lint/validation passed; formatting retains eight byte-identical baseline files. Appearance run38939661031 succeeded; artifact acquisition is active and inner source/CSP/native qualification remains pending."
+      "headContext": "d1fa4cb62b076ec03386ececf207fa876ec5773e plus pending narrow guide source edits; no native/package proof for those edits yet",
+      "verifiedNativeArtifact": "8c1af9d191224893bad9012f7638940a869d6096",
+      "scope": "Historical completion inventory is not whole-final-source validation."
     },
     "earlierCheckpoint1216": {
       "checkpointAt": "2026-10-16T12:16:24.163601+00:00",
@@ -6040,6 +6040,93 @@
       "case3": "Earlier diagnostic arms pass DOM-array deep equality and fail final focus identity: BUTTON#race-help-read versus BUTTON#race-help.",
       "next": "Parent authorized a narrow canonical formatting proposal for the two proven failing identity calls, then source-paired complete remote files. No new run or credit yet.",
       "scope": "Filtered case5 and incomplete prior full diagnostics grant no canonical complete-file credit."
+    },
+    "finalTenCheckpoint": {
+      "workflowSource": "46f3f8c42b195f73ddfe0200d46ffa3609c39d75",
+      "run": 38952976786,
+      "canonicalSource": "087d067b03881bbb15f4b91f8f61c2fe235e414c",
+      "runtimeRevision": "138e3284b94ccff2b53dbab397949faf91442482",
+      "retention": {
+        "path": ".cache/solo-followup/regression-audit/remote-final-ten-38952976786/verified-results-final-1948.json",
+        "bytes": 71847,
+        "sha256": "283194a347fe32ed1cea2047e04f3300ae8025a44b0696c654c87ef360cba545"
+      },
+      "comparison": {
+        "path": ".cache/solo-followup/regression-audit/retained-final-ten-1951-v2/comparisons.json",
+        "bytes": 70820,
+        "sha256": "5b8a209dede68698eae86ba18a7e2ce3ce11d6097d3af368e2bdbd1d626016bf"
+      },
+      "retainedArtifacts": 20,
+      "completeTargets": 9,
+      "pendingBaselineCases": [],
+      "canonicalCouchCounts": {
+        "tests": 8,
+        "pass": 5,
+        "fail": 3,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "canonicalSoundtrackCounts": {
+        "tests": 10,
+        "pass": 9,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "scope": "All10 target receipts retained;9 complete files and one600s timeout. Five untouched script baselines reproduce13 named failures exactly; corrected Couch b117 pair reproduces3. Soundtrack both complete9/10 at same archivedCLI case but first missing module differs. External baseline third case remains unobserved; no baseline-pass claim.",
+      "verifiedTargets": 10,
+      "incompleteBaselineCases": [
+        "external-distribution"
+      ]
+    },
+    "previousFinalTenCheckpoint": {
+      "workflowSource": "46f3f8c42b195f73ddfe0200d46ffa3609c39d75",
+      "run": 38952976786,
+      "canonicalSource": "087d067b03881bbb15f4b91f8f61c2fe235e414c",
+      "runtimeRevision": "138e3284b94ccff2b53dbab397949faf91442482",
+      "retention": {
+        "path": ".cache/solo-followup/regression-audit/remote-final-ten-38952976786/verified-results-1924.json",
+        "bytes": 45400,
+        "sha256": "9ca6d29a4c405710ab871c7d0286c4fa0f29cfd21deda4ff89536f7eeb0afb66"
+      },
+      "comparison": {
+        "path": ".cache/solo-followup/regression-audit/retained-final-ten-1924-v2/comparisons.json",
+        "bytes": 24503,
+        "sha256": "92231e43823517f753f96d10005fc074b70ad8ff78ac61058e9adb3e5fbb425f"
+      },
+      "retainedArtifacts": 13,
+      "completeTargets": 6,
+      "pendingBaselineCases": [
+        "external-distribution",
+        "production-countercurrent",
+        "release-catalog",
+        "soundtrack-distribution"
+      ],
+      "canonicalCouchCounts": {
+        "tests": 8,
+        "pass": 5,
+        "fail": 3,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "canonicalSoundtrackCounts": {
+        "tests": 10,
+        "pass": 9,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "scope": "The final original gap is complete, including failed assertions. Three Couch failures reproduce with the same corrected fixture on exact b117, not untouched-baseline coverage. Three available untouched script baseline groups reproduce four exact semantic failures. Remaining baseline reports await coordinated retention; no claimed suite pass."
+    },
+    "externalDistributionBudgetAuthority": {
+      "proof": {
+        "path": ".cache/solo-followup/external-distribution-budget-artifacts-01/receipt.json",
+        "bytes": 2020,
+        "sha256": "263fb3d214cab6a690b83b6fc2a8dd4eb125e95aefb7f0f40db469c31c815095"
+      },
+      "baselineCoreBytes": 71915598,
+      "candidate8c1CoreBytes": 72021985,
+      "scope": "Verified production0.151.1 artifacts, not test external-check builds. Both over64MiB and under72MiB; original baseline600s test timeout remains incomplete."
     }
   },
   "historicalTopLevelContext": "Top-level frozenRuntimeRevision/currentHeadContext, completeInventory and supplementaryTooling describe the original06:33 local checkpoint; remoteContinuation holds the current deduplicated inventory and16 later files."
