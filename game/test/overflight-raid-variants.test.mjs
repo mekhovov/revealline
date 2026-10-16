@@ -406,6 +406,38 @@ function resultUI() {
   return { document, footer, base };
 }
 
+test('Marathon next-contract prose has its own result panel while numeric scores remain compact', () => {
+  for (const locale of ['en', 'uk']) {
+    const { document, base } = resultUI();
+    document.documentElement.lang = locale;
+    const mode = createOverflightRaidVariant(base, { variant: 'marathon' });
+    const run = mode.createRun(
+      compileOverflightHuntProject(
+        createOverflightHuntProject({
+          rulesVersion: 4,
+          layout: 'relay-ruins-receiver-gardens',
+          seed: 42,
+        }),
+      ),
+    );
+    victory(run);
+    mode.renderResults({ run, document, formatTime: String, text: (key) => key });
+    const rows = document.getElementById('result-stats').children;
+    const detail = rows.filter((row) => row.className.includes('overflight-result-detail'));
+    assert.equal(detail.length, 1, 'only the route description needs the full-width text panel');
+    assert.equal(
+      detail[0].children[0].textContent,
+      locale === 'uk' ? 'Наступний контракт' : 'Next contract',
+    );
+    assert.equal(detail[0].children[1].textContent, overflightMarathonNextContract(run, locale));
+    assert.ok(
+      rows
+        .filter((row) => !detail.includes(row))
+        .every((row) => row.className === 'overflight-result-stat'),
+    );
+  }
+});
+
 test('Marathon buttons bank once, refresh results and continue only with the host guard', async () => {
   const { document, footer, base } = resultUI(),
     mode = createOverflightRaidVariant(base, { variant: 'marathon' });
