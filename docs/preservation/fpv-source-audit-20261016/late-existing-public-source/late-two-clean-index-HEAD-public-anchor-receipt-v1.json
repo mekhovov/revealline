@@ -1,0 +1,31 @@
+{
+  "createdUTC": "2026-10-16T09:35:14.829237+00:00",
+  "branch": "codex/preservation-fpv-source-audit-20261016",
+  "head": "824e3100728dbad91290463cb988c734a0edd61e",
+  "previousHead": "b0fa131f5fec68d39fd8893c2bff7df75b8f1448",
+  "publicSourceHEADs": [
+    {
+      "sha": "b012f2a9da0e572f6d77d39add4d71f692388dbb",
+      "tree": "fef802d33eea675f7cdaea603952640a1277e1ae",
+      "parents": [
+        "11aa297825203fdd0dd4db075f5eaeb9aa34660e"
+      ],
+      "alreadyPublicAPIObject": true
+    },
+    {
+      "sha": "e20d329916b06b3c661974ee3ddca53e5516dc17",
+      "tree": "6a055d53e7eeda799c68edd2037dd10b8dc7db3f",
+      "parents": [
+        "050d8ea3248edb4176e7b59fbc855a7dcf821ffb"
+      ],
+      "alreadyPublicAPIObject": true
+    }
+  ],
+  "unchangedApplicationTree": "2834bbd364b6c4e155c70c3e8ede2fc654b75c49",
+  "inputPrivateComparisonSHA256": "107c87761c5f6884b1f55f042c1c5499a9332f3b24f2b0c714e45d7779d6781c",
+  "allExactAPIReadbacksPassed": true,
+  "originalCheckoutMutation": false,
+  "newSourceBodyPublication": false,
+  "generatedArchivalMetadataNotNewOriginalScope": true,
+  "allVolumeComplete": false
+}
