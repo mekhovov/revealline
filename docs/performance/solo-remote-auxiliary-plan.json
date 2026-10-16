@@ -257,6 +257,56 @@
           "performanceExclusion": true
         }
       ]
+    },
+    {
+      "id": "speech-webkit",
+      "recipe": "speech",
+      "engine": "webkit",
+      "helperMinutes": 75,
+      "wholeJobMinutes": 120,
+      "rows": [
+        {
+          "id": "speech-webkit-baseline",
+          "source": "baseline",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 540000,
+          "performanceExclusion": true
+        },
+        {
+          "id": "speech-webkit-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 540000,
+          "performanceExclusion": true
+        }
+      ]
+    },
+    {
+      "id": "music-webkit",
+      "recipe": "music",
+      "engine": "webkit",
+      "helperMinutes": 75,
+      "wholeJobMinutes": 120,
+      "rows": [
+        {
+          "id": "music-webkit-baseline",
+          "source": "baseline",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 600000,
+          "performanceExclusion": true
+        },
+        {
+          "id": "music-webkit-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 600000,
+          "performanceExclusion": true
+        }
+      ]
     }
   ],
   "duplicateAvoidance": "The two original Chromium Retry source arms are mapped to prospective sustained Retry phase, not dispatched here. A new successful report would be source-scoped; no historical macOS credit.",
@@ -273,8 +323,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-auxiliary.mjs",
-      "bytes": 16004,
-      "sha256": "0fb6061d899f388ab15f0c98e600404671ffd456cbfbcceba090d492f77f9e84"
+      "bytes": 16352,
+      "sha256": "346c0e21bb06cfc7d2e278f2d4b61cfa9685e620e203c5f2ec72f93c2922af7f"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
