@@ -11122,7 +11122,6 @@ try {
     else gameWakeLock.dispose();
   });
   function update(elapsed) {
-    if (['won', 'lost'].includes(run.status)) sound.setPreparationPhase('paused');
     gameWakeLock.setActive(
       !demoHost?.active && started && !paused && run.status === 'running' && !document.hidden,
     );
@@ -11135,6 +11134,7 @@ try {
       }
       return;
     }
+    if (['won', 'lost'].includes(run.status)) sound.setPreparationPhase('paused');
     controllerInactive = false;
     // The isolated lesson owns its controller; the paused parent must not
     // sample the same pad or turn a child Confirm into a parent menu action.
@@ -12319,7 +12319,8 @@ try {
   );
   window.addEventListener('blur', guardInstallOfflineBlur(suspendInteraction));
   function restoreListening() {
-    if (document.hidden || soundtrackDisposed || enemyGuide?.practiceActive) return;
+    if (document.hidden || !document.hasFocus() || soundtrackDisposed || enemyGuide?.practiceActive)
+      return;
     sound.setPreparationPhase(started && !paused ? 'playing' : started ? 'paused' : 'menu');
     if (!soundtrackPlayer) {
       // The procedural fallback is used when file-audio setup is unavailable.
