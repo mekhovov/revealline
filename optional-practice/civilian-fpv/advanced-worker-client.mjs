@@ -1,4 +1,5 @@
 let serial = 0;
+export const ADVANCED_VERIFICATION_WATCHDOG_MS = 420000;
 
 /** One dedicated worker owns one reference flight. A failed or timed-out worker
  * is terminated; callers must explicitly create a new session to fly again. */
@@ -6,11 +7,21 @@ export function createAdvancedWorkerClient({
   Worker: WorkerClass = globalThis.Worker,
   url = new URL('./advanced-worker.mjs', import.meta.url),
   watchdogMs = 10000,
+  verificationWatchdogMs = ADVANCED_VERIFICATION_WATCHDOG_MS,
 } = {}) {
   if (typeof WorkerClass !== 'function')
     throw new Error('Advanced practice requires Web Workers on this platform.');
   if (!Number.isFinite(watchdogMs) || watchdogMs < 1 || watchdogMs > 60000)
     throw new Error('Invalid Advanced worker deadline');
+  // A complete twelve-minute recording may need six minutes at the minimum
+  // qualified 2x capacity, plus one minute of setup margin. Flight/init requests
+  // keep their short watchdog; recording and recovery verification use this bound.
+  if (
+    !Number.isFinite(verificationWatchdogMs) ||
+    verificationWatchdogMs < 1 ||
+    verificationWatchdogMs > ADVANCED_VERIFICATION_WATCHDOG_MS
+  )
+    throw new Error('Invalid Advanced verification deadline');
   const session = `advanced-${Date.now()}-${++serial}`;
   const worker = new WorkerClass(url, { type: 'module' });
   let requestId = 0,
@@ -52,7 +63,7 @@ export function createAdvancedWorkerClient({
     return new Promise((resolve, reject) => {
       const timer = setTimeout(
         () => dispose(new Error('Advanced worker did not respond. Practice is paused.')),
-        watchdogMs,
+        ['verify-recording', 'restore'].includes(type) ? verificationWatchdogMs : watchdogMs,
       );
       waiting.set(id, { resolve, reject, timer });
       try {

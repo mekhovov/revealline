@@ -1,8 +1,9 @@
 # FPV tuning: reviewed completion plan
 
-Reviewed 16 October 2026 against the original six-phase plan, implementation at
-`8202201b7`, and current upstream documentation. The branch is rebased onto
-`741948b14`. This document supplements the original plan; the
+Reviewed 16 October 2026 against the original six-phase plan and current upstream
+documentation. The first review used implementation `8202201b7` on `741948b14`;
+the second review rebased the accumulated work onto `3585f2c32` before edits.
+This document supplements the original plan; the
 [implementation status](fpv-tuning-implementation-status.md) retains earlier
 results and limitations.
 
@@ -40,7 +41,7 @@ flight fidelity. Lens presets, arbitrary gravity adjustments, automatic PID
 conversion, online preset catalogs and actual Betaflight execution do not enter
 this completion scope.
 
-## Remaining software work
+## Software completion scope
 
 1. **Audit and correct active-input diagnostics.** Keyboard, touch, gamepad and
    radio diagnostics must refer to the source actually controlling the flight.
@@ -107,3 +108,88 @@ this completion scope.
 Software completion means all six work items above have implementation and
 verification evidence. It does not relabel deferred physical gates as passed.
 Progress and exact verification results are recorded in the implementation status.
+
+## First software completion review — 16 October 2026
+
+The first review recorded all six software items as implemented and locally verified.
+The second review below reopens specific correctness checks found by exercising
+additional transitions. The
+[implementation status](fpv-tuning-implementation-status.md) and
+[combined verification receipt](fpv-tuning-continuation-verification.json)
+record that review's exact scope, source hashes and preserved earlier failures.
+
+| Item                                         | Completion evidence                                                                                                                                               |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Active-input diagnostics                     | Accepted-input ownership regressions; final three-engine editor matrix.                                                                                           |
+| Transfer provenance                          | Import/library/history/backup tests; browser and native receipt persistence.                                                                                      |
+| Regional efficiency                          | Exact replay and rollback; final bounded adapter capacity of 5.497× / 9.653×.                                                                                     |
+| Response comparison                          | Verified CSV export with explicit timing/units, matching-command analysis, size/minimum-observation guards; 14 focused tests.                                     |
+| Recording identities and practice comparison | Recomputed recording/recovery metadata; verified arena ghost, mismatch/tamper rejection, timed maneuvers and cancellation/disposal tests.                         |
+| Local delivery                               | Practice regressions, release validation, six runtime checks, desktop fixture and iOS staging, normal Pages CLI build and actual installer/offline browser tests. |
+
+That review established readiness for the normal Pages integration process.
+Deferred physical, wider-platform, public-deployment and promotion gates remain
+as listed above. No synthetic result substitutes for those measurements.
+
+## Second review — draft integrity, transfer clarity and recovery
+
+Reviewed again on 16 October against `90d1a1ef9`. Before edits, the branch was
+rebased onto new `main` commit `3585f2c32`; the two existing feature commits are
+now `0759c993a` and `f69a58fb7`. Earlier evidence remains bound to its recorded
+source hashes and is preserved rather than relabeled as a new run.
+
+Fresh primary-source review supports these refinements:
+
+| Reference checked | Relevant behavior | Decision |
+| --- | --- | --- |
+| [WebFPV, 1 October notes](https://webfpv.org/notes/) | Describes fixes for one aircraft's saved tune/camera overwriting another and for camera values resetting on navigation. | Test independent setup drafts and cross-environment navigation, beyond a successful save/reload path. |
+| [FPV Tools rate comparison](https://github.com/FPVibe/fpv-tools#-rate-profile-comparison) | Separate editable profiles, saved history, overlays and per-axis visibility. | Visible draft values and save results must agree; changing the compared profile must not discard another edit. |
+| [VelociDrone desktop manual](https://www.velocidrone.com/desktop_manual) and [mobile manual](https://www.velocidrone.com/mobile_manual) | Distinguish temporary rates from explicit saved settings; document rate copying and camera FOV conventions. | Keep test/apply/save distinct, normalize native parameter steps visibly, and preserve our explicitly labeled vertical FOV. |
+| [Betaflight preset UI](https://betaflight.com/docs/wiki/app/presets-tab) | Firmware selection, options and CLI review precede application. | A preview cannot authorize saving a different invisible result; header inference and export choices must match the advertised workflow. |
+| [Liftoff 1.4.4](https://www.liftoff-game.com/news/update-144-released) | Documents immediate feedback from flight-controller edits. | Preserve fast draft testing while retaining this SIM's immutable recorded attempts. |
+| [Rapier determinism guidance](https://rapier.rs/docs/user_guides/javascript/determinism/) | Exact behavior depends on consistent initialization and state evolution. | Bounds checks alone do not verify imported recovery; compare restored dynamic state with a replay of its consumed history before adoption. |
+
+These are documented examples and our engineering conclusions, not measurements
+of competitor flight fidelity. No new cloud service, firmware execution, rate
+converter or unmeasured physics effect is added by this review.
+
+### Reopened software checks
+
+1. **Independent setup drafts:** camera, drone name and assignment edits survive
+   rate-profile changes, returning from practice and reopening the editor. Save,
+   revert and refresh have explicit scope; stale-library protection remains.
+2. **Current practice origin:** after a normal World or Regional flight is
+   selected, later Test draft / Apply & restart uses that current environment,
+   never a retained origin from an earlier test session.
+3. **Representable numeric values:** numbers, sliders, curves and saved profiles
+   agree after committing an edit. Preserve ordinary partial typing, normalize
+   native steps visibly, and reject invalid/non-finite inputs without silent saves.
+4. **Preview/save consistency:** manual rate changes invalidate or explicitly
+   supersede an import preview; saving cannot silently use an older hidden curve.
+5. **Header-derived baselines:** a supported firmware header can supply the
+   version when a patch explicitly starts from firmware defaults. Conflicting or
+   unverified versions still fail clearly.
+6. **Rates-only CLI export:** expose the existing export option to omit throttle,
+   allowing rotation rates to transfer across otherwise incompatible throttle
+   models. Default exports and exact target-version validation remain explicit.
+7. **Verified recovery adoption:** reject in-range but history-inconsistent motor,
+   controller and body state before replacing an active session. Imported recovery
+   uses bounded, cancellable verification; transactional rollback keeps its fast
+   trusted internal path. Valid full-duration recovery and cancellation retain
+   the active flight until successful adoption.
+
+The exit gate is targeted regression coverage for all seven checks, actual
+browser interaction for editor/transfer changes, recovery verification in real
+workers, the full practice suite, release validation, and refreshed local
+packaging/offline evidence for changed runtime bytes. Numerical timing remains
+frozen and unchanged; a replay consistency fix does not claim a physics upgrade.
+
+The newly rebased Pages candidate workflow is diagnostic-only and deliberately
+rejects changes to build/publishing tooling and package manifests. This feature
+branch changes those paths, so it must not be presented as eligible for that
+workflow or widen its gate to obtain a result. The normal production build and
+existing main-branch review/publication process remain the delivery route.
+
+Physical radio, pilot feedback, measured aircraft response and the other deferred
+acceptance/promotion gates above remain open as agreed with the user. They do not
+block these seven concrete software corrections.

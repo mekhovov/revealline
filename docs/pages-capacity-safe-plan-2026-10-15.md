@@ -267,7 +267,7 @@ accepted inventory. This supplemental check is not a second download of the full
 archive or full gameplay qualification. No savings, content removal or candidate
 forecast occurred.
 
-## Rolling metadata extraction — verification in progress
+## Rolling metadata extraction — production verified
 
 The next isolated branch starts from refreshed main
 `428329745c3078941338ae6157e2ae1a55c28462`. Extract only the existing Node metadata
@@ -285,6 +285,109 @@ absent release directories, paths with spaces and unchanged workflow inputs/orde
 Scoped lint, new-test formatting and whitespace checks pass. Independent review
 confirmed literal-body parity, the frozen protected HTML digest, unchanged helper
 and workflow bindings/gates, and found no concrete blocker. Exact-head hosted CI
-and actual production execution remain required before advancing. No capacity
+passed all 223 focused tests. PR #1539 merged as
+`9cd97a220e5337367afbdb9bd1affb6fde9b6363`; publication `38837441435` passed
+build, deploy and public verification. Independently checked receipt consistency,
+artifact `12020475380` run/source provenance and five representative live file
+hashes. The archive remained 966,236,160 bytes, raw 963,262,271 bytes, 3,424 files,
+SHA-256 `28e6a6930b613049ed521000f5f1d7c675acd47c53b72b2791404efcfe03fe14`.
+This is not a second full archive download or gameplay qualification. No capacity
 guard, permission, application storage, runtime content or publication origin is
 changed by this extraction.
+
+## Manual exact candidate measurement — implementation under verification
+
+This isolated unit starts from refreshed main
+`741948b14a09a816e49054c443511186bb99eb41`. Its publication `38838919718`
+subsequently passed all three jobs and matched public source. Receipt consistency
+and artifact `12020866255` provenance were independently checked: 966,236,160
+archive bytes, SHA-256
+`918755ed737f934f0831e36d561463e0873961ee5e1f2c4b13ad334567e6a5bd`.
+No new savings or capacity reservation follows from that dated baseline.
+
+The proposed manual-only workflow measures one same-repository, open PR based
+directly on an exact current main. Draft status is captured, not changed. A
+trusted preflight composes a clean synthetic merge without pushing it, freezes
+the candidate selector as data, downloads selected public stable package bytes,
+and records tag commit/tree, release/asset IDs, sizes, checksums and complete
+overlay closure. It freezes evidence by artifact ID plus preflight checksum.
+
+The candidate job reconstructs the exact synthetic commit/tree, runs the complete
+production main-pages profile without API credentials or persisted checkout
+credentials, adds the frozen overlay and byte-identical rolling metadata, and
+uses the unchanged 980 MB raw/archive guards and pinned Pages archive action.
+Its artifact has a diagnostic-only name and never enters a deployment job.
+
+A fresh trusted final job never checks out or executes candidate code. It checks
+GitHub run/artifact provenance against the controller main SHA separately from
+the synthetic source SHA in receipts. It streams the actual archive without
+extracting its paths, derives every member's count/size/hash, cross-checks receipts
+and the complete owned overlay closure, and regenerates rolling JSON/protected
+HTML using the trusted literal writer. It redownloads external inputs and rereads
+current main and PR head/base/draft/state before any current-queue conclusion.
+Changed or unverifiable inputs leave diagnostics historical/ineligible. Missing
+or over-budget evidence never becomes an accepted archive measurement.
+
+For this first unit, changes to scripts, publishing code, workflows, root package
+contracts, game build configuration, or the complete parsed transitive import
+closure of the frozen overlay renderer are unsupported and rejected. Selector
+data is independently validated. Renames include both source and destination
+paths. This conservative boundary prevents frozen tooling from measuring a
+different production payload; broader build-contract support needs later review.
+
+The synthetic source date is deterministic diagnostic metadata, not a prediction
+of a future GitHub merge identity. Explicit merge, deployment and qualification
+flags remain false. Complete archive bytes do not prove source-content, gameplay,
+native or offline correctness; no per-PR attribution or capacity reservation is
+granted. Parent-first composition is subsequent work, not implemented here.
+Hosted exact-head checks and actual diagnostic execution remain required before
+this checkpoint can be called verified. No content removal, public URL, storage, Studio/SIM,
+offline dependency, full release, production permission or guard is changed.
+
+Local scoped verification passed 118 tests with zero failures or skips, including
+real shallow synthetic-merge reconstruction, complete protected metadata bytes,
+adversarial actual-archive fixtures, release identity/byte rechecks and focused
+routing/workflow separation. Scoped lint and whitespace checks passed. Tiny Git
+fixtures passed both on the external volume and, to avoid its slow metadata
+operations, in a small local temporary directory; no full local build/download
+was run. Independent review reproduced the 18-file trusted renderer closure and
+33 contract/overlay tests, and found no remaining concrete integration blocker.
+Actual hosted diagnostic execution remains pending and is not claimed here.
+
+## Reported PR base versus current main — correction under verification
+
+PR #1542 merged as `2169552a0571b9d62bce116054f1e21aabd10fa1` after every
+applicable exact-head check passed at `e0910ed913c3882505ee5d792543e400be557ee7`;
+only test/build were policy-selected skips. Hosted focused verification passed
+291 tests with no failures/skips. MERGED, main reachability and preserved branch
+were verified. Production `38843253681` passed build, deploy and verification.
+Independent receipt consistency, artifact `12022447052` run/source provenance and
+five representative live inventory hashes passed. Its accepted archive remains
+966,236,160 bytes, raw 963,262,721 bytes, 3,424 files, SHA-256
+`1a188c8affbd93830309493556e832329d0c1380b6ea619c7dcc911582628d07`.
+No capacity savings or completed candidate measurement follows from this.
+
+Before dispatch, read-only REST and GraphQL inspection of draft #1541 revealed
+that its reported PR base snapshot remained
+`741948b14a09a816e49054c443511186bb99eb41` while the actual main branch ref was
+`2169552a0571b9d62bce116054f1e21aabd10fa1`. GitHub compare independently showed
+the reported base is an ancestor of main (ahead two, behind zero). The existing
+validator reproduced an overly strict stale-base rejection. Rebinding someone
+else's PR or manufacturing a fresh PR would avoid, not fix, this queue limitation.
+
+The narrow correction freezes current main and reported PR base independently.
+Current main must still equal the workflow/controller SHA and the explicit
+`refs/heads/main` lookup. A reported older base is accepted only after a real
+fetched-Git ancestry proof; malformed, missing, unrelated or newer bases fail.
+Synthetic composition still uses frozen current main plus exact head, never the
+older base. Final freshness separately pins reported base, actual main, head,
+draft, state, repository and target; movement remains historical/ineligible.
+No permission, guard, origin, application or qualification boundary changes.
+
+The initial validator rejection was reproduced against the actual PR snapshot.
+The corrected path accepted that exact snapshot only with a real local Git
+ancestry proof. All 120 scoped tests pass with zero failures/skips, including
+real older/equal/diverged/newer/missing/malformed base fixtures and unchanged
+source composition. Scoped lint and formatting pass. Independent review found
+no concrete blocker. Exact-head CI and actual runner acceptance remain required;
+#1541 remains draft with its native-art and other qualification holds intact.

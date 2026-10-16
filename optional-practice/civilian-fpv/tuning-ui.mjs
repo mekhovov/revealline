@@ -12,7 +12,6 @@ import { exportJSONFile, exportTextFile } from '../../game/platform.mjs';
 import {
   previewBetaflightImport,
   previewNativeRateImport,
-  betaflightDefaultRateProfile,
   exportBetaflightRates,
   exportNativeRateProfile,
   resolveBetaflightPresetBundle,
@@ -60,7 +59,8 @@ export function mountFlightTuning({
   translatedAttribute(root, 'aria-label', t('Rates & throttle', 'Рейти й газ'));
   const removers = [],
     buttons = [],
-    drafts = new Map();
+    drafts = new Map(),
+    setupDrafts = new Map();
   let library,
     selected,
     draft,
@@ -80,7 +80,9 @@ export function mountFlightTuning({
     draftFlightActive = false,
     busy = false,
     fileExporting = false,
-    openEpoch = 0;
+    openEpoch = 0,
+    numericCommits = [],
+    numericFailure = null;
   const el = (tag, text, parent = root, translate = true) => {
     const node = doc.createElement(tag);
     if (text !== undefined) node.textContent = text;
@@ -180,6 +182,7 @@ export function mountFlightTuning({
   action(
     t('New Actual profile', 'Новий профіль Actual'),
     async () => {
+      remember();
       const nextId = id();
       await mutate(() =>
         store.createProfile(
@@ -194,6 +197,8 @@ export function mountFlightTuning({
   action(
     t('Duplicate', 'Дублювати'),
     async () => {
+      commitNumericInputs();
+      remember();
       const nextId = id();
       await mutate(() =>
         store.createProfile(
@@ -226,10 +231,13 @@ export function mountFlightTuning({
   action(
     t('Delete & reassign', 'Видалити й перепризначити'),
     async () => {
+      remember();
       const old = selected,
         next = replacement.value;
       await mutate(() => store.removeProfile(old, next, library.revision));
       drafts.delete(old);
+      for (const pending of setupDrafts.values())
+        if (pending.profileId === old) pending.profileId = next;
       load(next);
     },
     management,
@@ -356,7 +364,9 @@ export function mountFlightTuning({
   action(
     t('Save drone assignment & camera', 'Зберегти профіль і камеру дрона'),
     async () => {
-      await mutate(() => store.saveSetup(readSetup(), editRevision));
+      const setup = readSetup();
+      await mutate(() => store.saveSetup(setup, editRevision));
+      setupDrafts.delete(setup.id);
       onSaved(store.effective());
     },
     setupPanel,
@@ -364,6 +374,7 @@ export function mountFlightTuning({
   action(
     t('Duplicate drone setup', 'Дублювати налаштування дрона'),
     async () => {
+      remember();
       const setup = readSetup();
       setup.id = id();
       setup.name += ` ${t('copy', 'копія')}`;
@@ -477,7 +488,7 @@ export function mountFlightTuning({
         importKind.value === 'patch'
           ? importBaseline.value === 'draft'
             ? baseline
-            : betaflightDefaultRateProfile(version.value)
+            : 'firmware-defaults'
           : undefined,
       ...(sourceProfile.value !== '' ? { selectedProfile: Number(sourceProfile.value) } : {}),
       baselineKind:
@@ -559,6 +570,16 @@ export function mountFlightTuning({
     t('Save import as new profile', 'Зберегти імпорт як новий профіль'),
     async () => {
       if (!imported) throw new Error(t('Preview the import first', 'Спочатку перегляньте імпорт'));
+      if (rateProfileIdentity(portable()) !== rateProfileIdentity(imported.profile)) {
+        clearImportPreview();
+        throw new Error(
+          t(
+            'Rates changed after the import preview. Preview again, or use Save for next flight to keep the edited draft.',
+            'Рейти змінено після перегляду імпорту. Перегляньте імпорт знову або збережіть змінену чернетку для наступного польоту.',
+          ),
+        );
+      }
+      remember();
       const nextId = id();
       await mutate(() =>
         store.createProfile(
@@ -668,6 +689,7 @@ export function mountFlightTuning({
     transfer,
   );
   function portable() {
+    commitNumericInputs();
     if (draft.format !== TUNED_RESPONSE_FORMAT)
       throw new Error(
         t(
@@ -687,13 +709,31 @@ export function mountFlightTuning({
     },
     transfer,
   );
+  const includeThrottleExport = field(
+    t('Include throttle settings in CLI export', 'Додати налаштування газу до експорту CLI'),
+    'checkbox',
+    transfer,
+  );
+  includeThrottleExport.checked = true;
   action(
     t('Export rate-only CLI', 'Експортувати CLI лише рейтів'),
     () => {
       if (hashingImport !== null) clearImportPreview();
-      text.value = exportBetaflightRates(portable(), { targetVersion: version.value });
+      text.value = exportBetaflightRates(portable(), {
+        targetVersion: version.value,
+        includeThrottle: includeThrottleExport.checked,
+      });
       uploadedSource = null;
       resolvedPreset = null;
+      status.textContent = includeThrottleExport.checked
+        ? t(
+            'CLI export ready: rotation rates and throttle settings.',
+            'Експорт CLI готовий: рейти обертання й налаштування газу.',
+          )
+        : t(
+            'CLI export ready: rotation rates only; throttle settings are omitted.',
+            'Експорт CLI готовий: лише рейти обертання; налаштування газу пропущено.',
+          );
     },
     transfer,
   );
@@ -712,6 +752,7 @@ export function mountFlightTuning({
     async () => {
       await mutate(() => store.restore(text.value, library.revision));
       drafts.clear();
+      setupDrafts.clear();
       load();
     },
     transfer,
@@ -786,6 +827,7 @@ export function mountFlightTuning({
     actions,
   );
   async function save() {
+    commitNumericInputs();
     const profileId = selected,
       changes = {
         name: profileName.value,
@@ -797,6 +839,7 @@ export function mountFlightTuning({
     await mutate(() => store.saveEditing(profileId, changes, setup, revision));
     if (disposed) return;
     drafts.delete(profileId);
+    setupDrafts.delete(setup.id);
     load(profileId);
     onSaved(store.effective());
     status.textContent = t(
@@ -821,6 +864,7 @@ export function mountFlightTuning({
   action(
     t('Test draft · unscored', 'Перевірити чернетку · без заліку'),
     () => {
+      commitNumericInputs();
       remember();
       testing = true;
       draftFlightActive = true;
@@ -840,6 +884,7 @@ export function mountFlightTuning({
     t('Revert draft', 'Скасувати чернетку'),
     () => {
       drafts.delete(selected);
+      setupDrafts.delete(library.selectedSetupId);
       algorithmDrafts = {};
       load(selected);
     },
@@ -849,6 +894,7 @@ export function mountFlightTuning({
     t('Refresh library', 'Оновити бібліотеку'),
     () => {
       drafts.clear();
+      setupDrafts.clear();
       store.refresh();
       load();
     },
@@ -900,6 +946,15 @@ export function mountFlightTuning({
         algorithms: clone(algorithmDrafts),
         baseRevision: editRevision,
       });
+    if (library) {
+      const setup = readSetup();
+      setupDrafts.set(setup.id, {
+        name: setup.name,
+        profileId: setup.profileId,
+        camera: clone(setup.camera),
+        baseRevision: editRevision,
+      });
+    }
   }
   function setOptions(node, options, value) {
     releaseChildren(node);
@@ -918,11 +973,15 @@ export function mountFlightTuning({
     selected = profileId ?? setup.profileId ?? library.defaultProfileId;
     const saved = library.profiles.find((item) => item.id === selected) ?? library.profiles[0];
     selected = saved.id;
-    const cached = drafts.get(selected);
+    const cached = drafts.get(selected),
+      pendingSetup = setupDrafts.get(setup.id);
     draft = clone(cached?.response ?? saved.response);
     draftProvenance = clone(cached ? (cached.provenance ?? null) : (saved.provenance ?? null));
     algorithmDrafts = clone(cached?.algorithms ?? {});
-    editRevision = cached?.baseRevision ?? library.revision;
+    editRevision = Math.min(
+      cached?.baseRevision ?? library.revision,
+      pendingSetup?.baseRevision ?? library.revision,
+    );
     profileName.value = cached?.name ?? saved.name;
     setOptions(
       profileSelect,
@@ -944,11 +1003,11 @@ export function mountFlightTuning({
       saved.history.map((p) => [String(p.revision), `${p.revision + 1}: ${p.name}`]),
       String(saved.history.at(-1)?.revision ?? ''),
     );
-    setupName.value = setup.name;
-    camera = clone(setup.camera);
+    setupName.value = pendingSetup?.name ?? setup.name;
+    camera = clone(pendingSetup?.camera ?? setup.camera);
     tilt.value = String(camera.tilt);
     fov.value = String(camera.verticalFov);
-    paintAssignment();
+    paintAssignment(pendingSetup ? pendingSetup.profileId : setup.profileId);
     paintFields();
     const error = store.status().error;
     if (error) report(new Error(error));
@@ -958,15 +1017,14 @@ export function mountFlightTuning({
         'Ця чернетка старіша за зміну бібліотеки. Експортуйте її перед оновленням; перезапис новіших налаштувань заблоковано.',
       );
   }
-  function paintAssignment() {
-    const setup = library.setups.find((item) => item.id === library.selectedSetupId);
+  function paintAssignment(profileId = assignment.value || null) {
     setOptions(
       assignment,
       [
         ['', t('Player default', 'Типовий профіль гравця')],
         ...library.profiles.map((p) => [p.id, p.name]),
       ],
-      setup.profileId ?? '',
+      profileId ?? '',
     );
     affected.textContent = `${t('Shared by: ', 'Використовують: ')}${
       profileUsers(library, selected)
@@ -987,6 +1045,8 @@ export function mountFlightTuning({
     library = store.snapshot();
     if (editRevision === previousRevision) editRevision = library.revision;
     for (const cached of drafts.values())
+      if (cached.baseRevision === previousRevision) cached.baseRevision = library.revision;
+    for (const cached of setupDrafts.values())
       if (cached.baseRevision === previousRevision) cached.baseRevision = library.revision;
   }
   async function mutate(fn) {
@@ -1039,11 +1099,63 @@ export function mountFlightTuning({
     );
     paintFields();
   });
+  function commitNumericInputs() {
+    try {
+      for (const commit of numericCommits) commit();
+    } catch (failure) {
+      report(failure);
+      numericFailure = status.textContent;
+      throw failure;
+    }
+  }
   function number(label, value, min, max, step, change, parent = values) {
     const row = el('div', undefined, parent);
     row.className = 'tuning-number';
     const input = field(label, 'number', row),
       slider = field(label, 'range', row);
+    let applied = value;
+    const precision = String(step).split('.')[1]?.length ?? 0;
+    const invalid = (message) => {
+      input.setAttribute('aria-invalid', 'true');
+      input.setCustomValidity?.(message);
+    };
+    const update = (node, commit) => {
+      const n = node.value.trim() ? Number(node.value) : Number.NaN;
+      if (!Number.isFinite(n) || n < min || n > max) {
+        const message = t(
+          `${label}: enter a value from ${min} to ${max}.`,
+          `${label}: введіть значення від ${min} до ${max}.`,
+        );
+        invalid(message);
+        if (commit) throw new Error(message);
+        return;
+      }
+      const normalized = Number((Math.round(n / step) * step).toFixed(precision));
+      if (!commit && Math.abs(normalized - n) > 1e-9) {
+        // A partially typed number stays editable until blur/change or an action
+        // commits it. Never show that number as an already applied rate.
+        invalid(t(`Uses increments of ${step}.`, `Крок значення: ${step}.`));
+        return;
+      }
+      slider.value = String(normalized);
+      if (commit) input.value = String(normalized);
+      input.removeAttribute('aria-invalid');
+      input.setCustomValidity?.('');
+      if (numericFailure && status.textContent === numericFailure) status.textContent = '';
+      numericFailure = null;
+      if (Math.abs(normalized - applied) > 1e-9) change(normalized);
+      applied = normalized;
+      paintPreview();
+    };
+    const checkedUpdate = (node, commit) => {
+      try {
+        update(node, commit);
+      } catch (failure) {
+        report(failure);
+        numericFailure = status.textContent;
+      }
+    };
+    numericCommits.push(() => update(input, true));
     for (const node of [input, slider]) {
       Object.assign(node, {
         min: String(min),
@@ -1051,21 +1163,24 @@ export function mountFlightTuning({
         step: String(step),
         value: String(value),
       });
-      listen(node, 'input', () => {
-        const n = Number(node.value);
-        if (!Number.isFinite(n) || n < min || n > max) return;
-        input.value = slider.value = String(n);
-        try {
-          change(n);
-          paintPreview();
-        } catch (failure) {
-          report(failure);
-        }
-      });
+      listen(node, 'input', () => checkedUpdate(node, node === slider));
+      listen(node, 'change', () => checkedUpdate(node, true));
     }
-    return { input, slider };
+    return {
+      input,
+      slider,
+      setValue(value) {
+        // Linked edits change the peer's draft too. Keep its comparison value
+        // synchronized so typing the peer's former value is still a new edit.
+        applied = value;
+        input.value = slider.value = String(value);
+        input.removeAttribute('aria-invalid');
+        input.setCustomValidity?.('');
+      },
+    };
   }
   function paintFields() {
+    numericCommits = [];
     releaseChildren(values);
     values.replaceChildren();
     axisInputs = {};
@@ -1128,9 +1243,7 @@ export function mountFlightTuning({
               if (link.checked && axis !== 'yaw') {
                 const other = axis === 'roll' ? 'pitch' : 'roll';
                 draft.rates.axes[other][key] = Math.round(value / factor);
-                if (axisInputs[other]?.[key])
-                  for (const node of Object.values(axisInputs[other][key]))
-                    node.value = String(value);
+                axisInputs[other]?.[key]?.setValue(value);
               }
             },
             group,

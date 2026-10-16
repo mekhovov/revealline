@@ -11,11 +11,14 @@ const finite = (value) => typeof value === 'number' && Number.isFinite(value);
 const check = (condition, message) => assert.ok(condition, message);
 const label = (value) =>
   typeof value === 'string' && value.trim().length > 0 && value.length <= 500;
+const checkCSVBytes = (text) =>
+  check(typeof text === 'string' && Buffer.byteLength(text) <= maximumBytes, 'CSV exceeds 32 MiB');
+const checkCSVRows = (rows) => check(rows <= maximumRows, 'CSV exceeds 250,000 data rows');
 
 /** Numeric CSV only, with RFC-style quoted fields. No formulas or expressions
  * are evaluated. A source's units and column mapping must be explicit. */
 export function parseFlightCSV(text) {
-  check(typeof text === 'string' && Buffer.byteLength(text) <= maximumBytes, 'CSV exceeds 32 MiB');
+  checkCSVBytes(text);
   const rows = [];
   let row = [],
     field = '',
@@ -30,7 +33,7 @@ export function parseFlightCSV(text) {
   const line = () => {
     cell();
     if (row.some((value) => value !== '')) rows.push(row);
-    check(rows.length <= maximumRows + 1, 'CSV exceeds 250,000 data rows');
+    checkCSVRows(rows.length - 1);
     row = [];
   };
   text = text.replace(/^\uFEFF/, '');
@@ -346,15 +349,50 @@ export function compareFlightLogs(referenceCSV, candidateCSV, configuration) {
 
 export async function exportAdvancedFlightTrace(source) {
   const original = typeof source === 'string' ? source : JSON.stringify(source);
-  const { replayAdvancedRecording } = await import(
-    '../optional-practice/civilian-fpv/advanced-simulation.mjs'
+  const {
+    ADVANCED_FREQUENCIES,
+    ADVANCED_MAX_SECONDS,
+    ADVANCED_MISSION_HZ,
+    ADVANCED_RECORDING_BYTES,
+    replayAdvancedRecording,
+  } = await import('../optional-practice/civilian-fpv/advanced-simulation.mjs');
+  check(
+    typeof original === 'string' && Buffer.byteLength(original) <= ADVANCED_RECORDING_BYTES,
+    'Recording exceeds the 8 MiB import limit',
   );
+  const record = JSON.parse(original);
+  // Count the exact union of mission observations and consumed input times
+  // before replay. Invalid recording structures remain the verifier's concern.
+  // No command transition or input-sequence event is discarded to fit the CSV.
+  const frequency = record?.config?.frequency,
+    missionTicks = record?.missionTicks;
+  if (
+    [...ADVANCED_FREQUENCIES, 2000].includes(frequency) &&
+    Number.isInteger(missionTicks) &&
+    missionTicks >= 0 &&
+    missionTicks <= ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ &&
+    Array.isArray(record.inputs)
+  ) {
+    const missionSteps = frequency / ADVANCED_MISSION_HZ,
+      eventSteps = new Set();
+    for (const input of record.inputs) {
+      const step = Array.isArray(input) ? input[0] : undefined;
+      if (
+        Number.isSafeInteger(step) &&
+        step >= 0 &&
+        step < missionTicks * missionSteps &&
+        step % missionSteps !== 0
+      ) {
+        eventSteps.add(step);
+        checkCSVRows(missionTicks + 1 + eventSteps.size);
+      }
+    }
+  }
   const replay = await replayAdvancedRecording(original, { includeTelemetry: true });
   check(
     replay.verified && replay.verificationScope === 'complete',
     'Only complete verified replays can be exported',
   );
-  const record = JSON.parse(original);
   const { createRateEvaluator } = await import('../optional-practice/civilian-fpv/rates.mjs');
   const evaluator = record.config.configuration.rateProfile
     ? createRateEvaluator(record.config.configuration.rateProfile)
@@ -377,10 +415,12 @@ export async function exportAdvancedFlightTrace(source) {
     };
   });
   const telemetry = replay.telemetrySamples;
+  check(telemetry.length >= 3, 'At least three achieved-rate observations are required');
   const observedTimes = new Set(telemetry.map((sample) => sample.seconds));
   const times = [...new Set([...observedTimes, ...events.map((event) => event.time)])].sort(
     (a, b) => a - b,
   );
+  checkCSVRows(times.length);
   let eventIndex = -1,
     observationIndex = 0;
   const headers = [
@@ -427,6 +467,7 @@ export async function exportAdvancedFlightTrace(source) {
       })
       .join('\n') +
     '\n';
+  checkCSVBytes(csv);
   return {
     csv,
     metadata: {

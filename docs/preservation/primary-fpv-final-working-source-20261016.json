@@ -1,0 +1,255 @@
+{
+  "format": "PrimaryAppWorkingSourceSnapshot.v1",
+  "createdUTC": "2026-10-16T04:41:04.137352+00:00",
+  "head": "f69a58fb7170fd742e14205b8df9faf493653115",
+  "branch": "codex/fpv-rates-and-tuning",
+  "stableReadback": true,
+  "humanCheckoutMutation": false,
+  "trackedModified": 21,
+  "appUntracked": 7,
+  "excludedPrivateOrMigrationPaths": [
+    ".specstory/cli/config.toml",
+    "docs/codex-migration-guide.md"
+  ],
+  "files": [
+    {
+      "path": "docs/fpv-advanced-backend.md",
+      "kind": "tracked-modified",
+      "bytes": 23365,
+      "sha256": "a9caab3dde145e9ef73ec76ec1b629db6dad76eb2ce4fea06f34ef9bd6a34ea5",
+      "gitBlob": "91da525fc4ac74af7e4e079d8eeb190ef550af7e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-advanced-runtime-qualification.md",
+      "kind": "tracked-modified",
+      "bytes": 18571,
+      "sha256": "4892851fc231348dd56c128e8f2ca1a56e8e82b4c4cd855596f82ea4640f6724",
+      "gitBlob": "fe89ee8e6cc0babdd6783d66e0cf0244cb4e2317",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-pages-live-testing.md",
+      "kind": "tracked-modified",
+      "bytes": 10806,
+      "sha256": "31bfe561634d94f4754ad8c810c05010ac53ba8bb733a64ee2c84dcc6b24b2ec",
+      "gitBlob": "b3b70b29bdef6086a4d0681b85c7b14488c59d55",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-rates-and-tuning.md",
+      "kind": "tracked-modified",
+      "bytes": 17070,
+      "sha256": "c4127cd9622f9beec4280950e94e7d0fc8adca345523e124f8e1c3bf40c8ee0d",
+      "gitBlob": "8c83fd4ddb1f5700b529d510d153394aa6540750",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-tuning-completion-plan.md",
+      "kind": "tracked-modified",
+      "bytes": 20687,
+      "sha256": "b614fb69d248070719d3acea590a3f67cc3ab344cf37347afa7126c651939264",
+      "gitBlob": "be189b3ca4aef03db5f131fadcb9f42e8041c866",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-tuning-implementation-status.md",
+      "kind": "tracked-modified",
+      "bytes": 28020,
+      "sha256": "9e24b197e131f74af16e9da8fff1d782fca83931bc695264a032c42df0fc0454",
+      "gitBlob": "5c2939715f32dbb84c8d8d4a0a05326edd9eac22",
+      "mode": "100644"
+    },
+    {
+      "path": "game/test/fpv-advanced-regional.test.mjs",
+      "kind": "tracked-modified",
+      "bytes": 26051,
+      "sha256": "3d4a8c73fbc7097c9586f9718032e8205c5e0a3acc0ecd20ef764ffcba34a78a",
+      "gitBlob": "03c99b88c8316fefab4fe35d0728c73a51fe2af0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/test/fpv-advanced-terrain-storage.test.mjs",
+      "kind": "tracked-modified",
+      "bytes": 4555,
+      "sha256": "bb0a2503c284a9e7b1ea9ee0c6596beaa6f54418159de71d8204759483eab40b",
+      "gitBlob": "08f80af6017c2b0175cdd1e3ff60586b06447801",
+      "mode": "100644"
+    },
+    {
+      "path": "game/test/fpv-advanced-worker.test.mjs",
+      "kind": "tracked-modified",
+      "bytes": 12030,
+      "sha256": "86855c06d76d3c616e092ded447aeee55ea6b77bc0b681411622a1aba2104bcd",
+      "gitBlob": "b45657afa6ceaf2f940808e311222f403ba206ac",
+      "mode": "100644"
+    },
+    {
+      "path": "game/test/fpv-betaflight-import.test.mjs",
+      "kind": "tracked-modified",
+      "bytes": 21364,
+      "sha256": "738b70b2406f7ec00c410a3c866d3224428d88bb82596f66506ecc2516fbd547",
+      "gitBlob": "b31b9e05351ad3f143a2157ef2bf19b684c9036b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/test/fpv-tuning-ui.test.mjs",
+      "kind": "tracked-modified",
+      "bytes": 43806,
+      "sha256": "3c89995dd0d9f839fe0fe81eb5e701b25b09560ba4a353e25900fdec0aa609f4",
+      "gitBlob": "261b10afea10f5fbf28be25f4b28a31e1baa4ca9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "kind": "tracked-modified",
+      "bytes": 94010,
+      "sha256": "5ef5d3987dd54318e373092d6d72ec536b4c5722b30db2fb494cd94e7792a8d4",
+      "gitBlob": "8ede0769b7e66a661adfbe01f620e5af84413c0d",
+      "mode": "100644"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+      "kind": "tracked-modified",
+      "bytes": 24165,
+      "sha256": "ecdc2b84abaf06e7fcdbbd87929402deb200d9a540a6a52b02b01fad7b98dc66",
+      "gitBlob": "aafea144c0392590b1ac3af8c3195d97d798ca40",
+      "mode": "100644"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "kind": "tracked-modified",
+      "bytes": 62846,
+      "sha256": "3d0fddb60a45bf5e5bb4e8a57bb5329d8eefa7a5ff8c8e8b0d6f858d78c73691",
+      "gitBlob": "b707cffa763f373263a13c156d2212ca86654dc1",
+      "mode": "100644"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "kind": "tracked-modified",
+      "bytes": 4000,
+      "sha256": "0e2e763c4bf25005158b8af15a581228fd6f51ec0f5a77f5667fa6a42d5a4581",
+      "gitBlob": "fbdc009ef85fca36563635f409e87963af242a87",
+      "mode": "100644"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "kind": "tracked-modified",
+      "bytes": 6216,
+      "sha256": "c52e64bd20c07e0d2531b010aaefc307fa4d2811623220da2e033fd364413de3",
+      "gitBlob": "c58cf3e45c01b800d7878c450d992abe06d0d8c5",
+      "mode": "100644"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/betaflight-import.mjs",
+      "kind": "tracked-modified",
+      "bytes": 37560,
+      "sha256": "550a6c32dc0bb8bf8eca15f8e5b24a15a277dde6232a951e2286361c44d223ab",
+      "gitBlob": "59a106ef0b656cb375506f5a906023bd9907179d",
+      "mode": "100644"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "kind": "tracked-modified",
+      "bytes": 57767,
+      "sha256": "40d17b2d4867e775e85870980783cd0fbca9dc4cf463aedc17e1d902ed156926",
+      "gitBlob": "e494dc3cadddc21f86867a9c02588abfe4ae0e55",
+      "mode": "100644"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "kind": "tracked-modified",
+      "bytes": 402372,
+      "sha256": "e273310b7b4224c62e301a68a67d7c793cecda9f9a3746b7a389e9c97bb9b1ba",
+      "gitBlob": "bc48e00da04483f784febd004b9909e9c63f70aa",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/smoke-fpv-advanced-regional.mjs",
+      "kind": "tracked-modified",
+      "bytes": 18652,
+      "sha256": "7f79dcfaef3961443caa6f9539d5f93b933408339d991fabb075b8392b660fa3",
+      "gitBlob": "59eaca5fcb37174c3ca5d479d84c0c2dc7415635",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/smoke-fpv-tuning.mjs",
+      "kind": "tracked-modified",
+      "bytes": 25352,
+      "sha256": "f4c8bfe7ddfbbf9d9d595fda954b24f0d3dca2641dd328abb9d0f07c3b260bcb",
+      "gitBlob": "4da8aae1711e82fe957a36f4bf09054dc491fb6d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-advanced-regional-browser-smoke-2026-10-16-second-review-final.json",
+      "kind": "app-untracked",
+      "bytes": 82772,
+      "sha256": "4e07efcfb58e63b6ba16002b1b4618722aa5c890acf32379e20c65ab3dc6af51",
+      "gitBlob": "84101bb930f57f1e1292aaf1a5e9c8af99ebba38",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-advanced-regional-browser-smoke-2026-10-16-second-review-pointer-attempt.json",
+      "kind": "app-untracked",
+      "bytes": 68068,
+      "sha256": "2b3df6181295fda4afda7bac8803e30c964288d2a298cf4029d9b4d48eba53c3",
+      "gitBlob": "4f2a0dc4e7feed6b47ce76f0e5708f46fa7f008e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-advanced-regional-browser-smoke-2026-10-16-second-review.json",
+      "kind": "app-untracked",
+      "bytes": 82773,
+      "sha256": "baf68f1bbec83d0dac285015d9193d5561d37b89d8f8e19b05b924122ac0bdb9",
+      "gitBlob": "40a4631bcbd12ea932096702df98ccaab6aaa9af",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-advanced-runtime-qualification-2026-10-16-second-review.json",
+      "kind": "app-untracked",
+      "bytes": 585709,
+      "sha256": "4eb86147f63505d269417677e5c9105d430dd2446f5f94f4d87bd5c6990f283e",
+      "gitBlob": "134fdd73d753acfe1aba1d3c75784661b269c0fb",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-regional-contact-capacity-2026-10-16-second-review.json",
+      "kind": "app-untracked",
+      "bytes": 14372,
+      "sha256": "00fd4f18f28a7a5b2facb6a60c2bd8fdf8fc92de3c7e63fd5418f67e240297c6",
+      "gitBlob": "72b4508ff0b0a934087a22e13a268f299440b427",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-tuning-browser-second-review-before-linked-fix.json",
+      "kind": "app-untracked",
+      "bytes": 10980,
+      "sha256": "cebec08d476993298428da4d52bff83333c61a3e7b22ec9da917f1ead6db1b2c",
+      "gitBlob": "9ff7244db62659c319e94d19e41ca8d02f98ebe7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/fpv-tuning-browser-second-review-qualification.json",
+      "kind": "app-untracked",
+      "bytes": 10980,
+      "sha256": "596554af4edaf56ba578e78308d6bea3c9c4d891e90f36c75dad6694c371b1a9",
+      "gitBlob": "a6c361e7ee566f4f06bccd510c0f2eabbc7638f5",
+      "mode": "100644"
+    }
+  ],
+  "secretScan": {
+    "patterns": [
+      "private_key",
+      "aws_access_key",
+      "github_token",
+      "slack_token",
+      "google_api_key",
+      "credential_url"
+    ],
+    "findings": [],
+    "scannedFiles": 28
+  },
+  "qualification": "WIP preservation only; no fresh tests or correctness claim. Primary checkout remains under its existing owner.",
+  "previousHistoricalSnapshot": "80ba467daf4f73666e0fe93f00592f7c172dc1e3",
+  "purpose": "Point-time app WIP preservation; no correctness/merge/native/public/persistence/offline/endurance claim. Later owner changes are separate."
+}

@@ -156,6 +156,53 @@ test('CSV handles quoted fields and BOM but rejects ambiguous headers, malformed
     assert.throws(() => readFlightTrace(csv().replace('0,10,10', `0,${value},10`), mapping()));
 });
 
+test('CSV capacity accepts the exact row boundary and measures UTF-8 bytes, not characters', () => {
+  const rows = 'value\n' + '0\n'.repeat(250000);
+  assert.equal(parseFlightCSV(rows).rows.length, 250000);
+  assert.throws(() => parseFlightCSV(rows + '0\n'), /250,000 data rows/);
+  const bytesAtLimit = 'é'.repeat(16 * 1024 * 1024);
+  assert.equal(Buffer.byteLength(bytesAtLimit), 32 * 1024 * 1024);
+  // The exact byte boundary reaches normal CSV validation; one more multibyte
+  // character must fail the shared byte guard before field validation begins.
+  assert.throws(() => parseFlightCSV(bytesAtLimit), /field exceeds 4,096/);
+  assert.throws(() => parseFlightCSV(bytesAtLimit + 'é'), /CSV exceeds 32 MiB/);
+});
+
+test('trace row preflight preserves event rows and rejects overflow before replay or CLI writes', async (t) => {
+  // At 1 kHz, these consumed events plus 36,001 mission observations have
+  // exactly 250,000 distinct times. The deliberately invalid format proves
+  // that the accepted boundary proceeds to verification without a long replay.
+  const source = {
+    format: 'invalid-test-format',
+    config: { frequency: 1000 },
+    missionTicks: 36000,
+    inputs: Array.from({ length: 225263 }, (_, step) => [step, step, step * 1000]),
+  };
+  await assert.rejects(exportAdvancedFlightTrace(source), /Unsupported Advanced recording/);
+  source.inputs.push([225263, 225263, 225263000]);
+  const serialized = JSON.stringify(source);
+  assert.ok(Buffer.byteLength(serialized) < 6 * 1024 * 1024);
+  await assert.rejects(exportAdvancedFlightTrace(serialized), /CSV exceeds 250,000 data rows/);
+
+  const directory = await mkdtemp(path.join(tmpdir(), 'fpv-log-capacity-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const input = path.join(directory, 'record.json'),
+    output = path.join(directory, 'trace.csv'),
+    meta = path.join(directory, 'meta.json');
+  await writeFile(input, serialized);
+  assert.throws(
+    () =>
+      execFileSync(
+        process.execPath,
+        ['scripts/fpv-flight-log-comparison.mjs', 'trace', input, output, meta],
+        { stdio: 'pipe' },
+      ),
+    (error) => error.status === 1 && /CSV exceeds 250,000 data rows/.test(String(error.stderr)),
+  );
+  await assert.rejects(access(output), { code: 'ENOENT' });
+  await assert.rejects(access(meta), { code: 'ENOENT' });
+});
+
 test('source mappings require known units, distinct axes and provenance without guessing firmware', () => {
   for (const mutate of [
     (m) => {
@@ -246,6 +293,45 @@ test('verified SIM trace freezes input, includes comparison/configuration and de
   );
   assert.equal(trace.provenance.sha256, exported.metadata.csvSha256);
   await assert.rejects(exportAdvancedFlightTrace(record), /verification failed/);
+});
+
+test('verified trace export requires two completed missions and leaves no short-flight output files', async (t) => {
+  for (const ticks of [0, 1]) {
+    const record = await recording(ticks);
+    const replay = await replayAdvancedRecording(record);
+    assert.equal(replay.verified, true);
+    assert.equal(replay.verificationScope, 'complete');
+    await assert.rejects(
+      exportAdvancedFlightTrace(record),
+      /At least three achieved-rate observations are required/,
+    );
+  }
+  const exported = await exportAdvancedFlightTrace(await recording(2));
+  const trace = readFlightTrace(exported.csv, exported.metadata.mapping);
+  assert.equal(trace.observations.length, 3);
+  assert.deepEqual(
+    trace.observations.map((sample) => sample.time),
+    [0, 0.02, 0.04],
+  );
+
+  const directory = await mkdtemp(path.join(tmpdir(), 'fpv-log-short-flight-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const input = path.join(directory, 'record.json'),
+    output = path.join(directory, 'trace.csv'),
+    meta = path.join(directory, 'meta.json');
+  await writeFile(input, JSON.stringify(await recording(1)));
+  assert.throws(
+    () =>
+      execFileSync(
+        process.execPath,
+        ['scripts/fpv-flight-log-comparison.mjs', 'trace', input, output, meta],
+        { stdio: 'pipe' },
+      ),
+    (error) =>
+      error.status === 1 && /At least three achieved-rate observations/.test(String(error.stderr)),
+  );
+  await assert.rejects(access(output), { code: 'ENOENT' });
+  await assert.rejects(access(meta), { code: 'ENOENT' });
 });
 
 test('export preserves boundary and sub-mission command pulses without fabricating achieved observations', async () => {

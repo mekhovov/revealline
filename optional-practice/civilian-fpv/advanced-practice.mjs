@@ -799,7 +799,6 @@ export function mountAdvancedPractice({
       verificationClient = createAdvancedWorkerClient({
         Worker: WorkerClass,
         url: workerURL,
-        watchdogMs: 60000,
       });
       await verificationClient.initialize(options);
       const checked = await verificationClient.verifyRecording(source);

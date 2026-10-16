@@ -1,11 +1,58 @@
 # FPV tuning implementation status
 
 Updated 2026-10-16. Work is on `codex/fpv-rates-and-tuning`, refreshed cleanly onto
-`origin/main` at `741948b14a09a816e49054c443511186bb99eb41` before this continuation.
-The previous implementation is the rebased commit `8202201b7`. Unrelated local
-files are preserved. A local commit does not deploy GitHub Pages.
+`origin/main` at `3585f2c32` before the second review. The earlier implementation
+and completion commits are now `0759c993a` and `f69a58fb7`; their original hashes
+remain in historical reports. Unrelated local files are preserved. A local commit
+does not deploy GitHub Pages.
 
-## Reviewed continuation
+## Second review — draft and recovery integrity
+
+The renewed [plan review](fpv-tuning-completion-plan.md#second-review--draft-integrity-transfer-clarity-and-recovery)
+uses additional examples from WebFPV, FPV Tools, VelociDrone, Liftoff and
+Betaflight. It identified seven concrete corrections to the already implemented
+feature set:
+
+- Drone name, assignment and camera drafts now survive profile changes and editor
+  reopening independently. Revision checks still reject another tab's newer saves.
+- Normal World and Regional launches replace the previous draft-test origin, so
+  later testing and restarting stay in the currently selected environment.
+- Numeric fields preserve partial typing and normalize supported increments on
+  commit. Save, test and export commit pending values; invalid entries block them.
+- Saving an import checks that its preview still matches the visible rates. A
+  manual edit cannot silently save an older imported curve.
+- A verified CLI header can select a firmware-default patch baseline. Explicit
+  version conflicts and unsupported releases remain rejected.
+- CLI export exposes the choice to omit throttle, allowing rotation-only transfer
+  between versions with different throttle models.
+- Imported Advanced recovery replays consumed history in a detached worker and
+  compares complete physics/controller/terrain state before adoption. Cancellation
+  terminates that candidate and preserves the existing paused flight. Trusted
+  internal transaction rollback remains synchronous; backend identities and
+  physics timing are unchanged.
+
+The maximum-duration recovery regression passes with 43,200 input changes,
+360 terrain events and 24 sparse checkpoints. Its recording/recovery sizes remain
+4,983,692 / 5,061,598 bytes. An isolated local run verified recovery in 14.680 s;
+that is a local measurement, not a wider-device guarantee. The public verification
+deadline is seven minutes, with a visible cancel control.
+
+The refreshed [six-runtime matrix](fpv-advanced-runtime-qualification-2026-10-16-second-review.json)
+retains exact arena and Regional replay agreement across Node 20/22/24, Chrome,
+Firefox and WebKit. The frozen 250 Hz mode passes every numerical/contact/capacity
+gate, with a lowest measured capacity of 7.092×. Firefox's 1,000 Hz candidate
+measured 1.602× and failed the 2× capacity gate; that result is preserved without
+retry or threshold changes. The 500 Hz candidate passed at 3.610×. These are local
+measurements on one ARM64 host, not qualification of the wider platform matrix.
+The refreshed [Regional adapter probe](fpv-regional-contact-capacity-2026-10-16-second-review.json)
+passes at 5.508× for terrain and 6.339× for mixed scenery. Host counters still show
+about 99.5% activity even with task-owned heavy jobs separated; these runs do not
+establish performance on an idle host or dense production regions.
+
+The sections below preserve the first review's source-bound evidence and claims.
+They do not stand in for refreshed verification of the second-review changes.
+
+## First reviewed continuation — historical evidence
 
 The [updated completion plan](fpv-tuning-completion-plan.md) incorporates current
 WebFPV, QuadMath, Flight Division, VelociDrone, Liftoff and Betaflight references.
@@ -19,7 +66,7 @@ remaining software work. Advanced remains optional and unscored.
 - Imports retain bounded inert receipts with exact source hashes, version
   assumptions, baseline, preset dependencies/options and applied/unapplied fields.
   Revisions and backups preserve them; edited rates cannot claim an unchanged
-  imported result. All six [continuation editor cases](fpv-tuning-browser-continuation-qualification.json)
+  imported result. All six [final editor cases](fpv-tuning-browser-final-qualification.json)
   pass in Chrome, Firefox and WebKit, including narrow touch emulation and receipt
   persistence. Physical touch and USB qualification remain deferred.
 - Advanced recordings and snapshots now carry recomputed comparison metadata.
@@ -33,8 +80,8 @@ remaining software work. Advanced remains optional and unscored.
   can be reverted. Regional free flight has no defined scored sector route, so
   Advanced sector/competition selection remains gated. Legacy ghost/sector rules
   are preserved.
-  The [actual Chrome comparison check](fpv-advanced-comparison-browser-qualification.json)
-  verifies 84 recorded mission intervals, 85 ghost positions, same-time pose,
+  The [final Chrome comparison check](fpv-advanced-comparison-browser-final-qualification.json)
+  verifies 82 recorded mission intervals, 83 ghost positions, same-time pose,
   export/import, tamper rejection, rate-only compatibility, aircraft mismatch,
   cancellation and disposal. Ten workers are created and all ten terminated;
   there are no page errors. This is a local fixture, not physical flight evidence.
@@ -42,10 +89,10 @@ remaining software work. Advanced remains optional and unscored.
   collision casts already resolved by the worker. Historical golden replay fields
   and hashes stay exact. Full-duration exports remain bounded: 4,983,692 bytes for
   the Regional recording and 5,061,598 bytes for recovery.
-  The [new capacity measurement](fpv-regional-contact-capacity-2026-10-16-coverage.json)
-  passes the single-host bounded fixture's 2× gate: terrain **3.216×**, mixed
-  terrain/scenery **10.501×**, with all 45 source hashes unchanged. In-interval
-  CPU counters still show 99.54%/93.54% host activity, so this does not isolate
+  The [final capacity measurement](fpv-regional-contact-capacity-2026-10-16-final.json)
+  passes the single-host bounded fixture's 2× gate: terrain **5.497×**, mixed
+  terrain/scenery **9.653×**, with all 45 source hashes unchanged. In-interval
+  CPU counters still show 98.90%/93.80% host activity, so this does not isolate
   every cause of improvement or qualify all regions/devices. The old failed
   measurement remains unchanged.
 - The [flight-log comparison tool](fpv-flight-log-comparison.md) exports only fully
@@ -53,11 +100,67 @@ remaining software work. Advanced remains optional and unscored.
   labeled 50 Hz achieved observations. It requires explicit units/signs/clock
   offsets, detects gaps and command mismatches, and reports numerical response
   differences without changing a tune or qualifying a physical aircraft.
+- The [final runtime matrix](fpv-advanced-runtime-qualification-2026-10-16-final.json)
+  pins 20 unchanged sources and agrees exactly across Node 20/22/24 and Chrome,
+  Firefox and WebKit for both backends. All measured frequency candidates pass
+  numerical/contact/capacity/repetition checks in this run; the frozen 250 Hz
+  mode's lowest capacity is 22.56×. Golden arena/Regional hashes remain
+  `46294848`/`9d00dd70`. This is still one ARM64 machine; earlier Rosetta and
+  higher-frequency failure evidence remains separately identified.
+
+Combined verification now passes **589 practice regressions**, plus **17 targeted
+worker/practice checks** after the final verification-deadline correction and
+**14 focused flight-log tests** after the final CSV boundary review. The full
+practice run preceded those last CLI-only guards; the focused run verifies them.
+Trace export now shares the reader's 250,000-row / 32 MiB bounds and requires
+three achieved observations (40 ms), rejecting failure before either output file
+is written. The release-critical validation command passes, and lint passes for all **40
+changed modules**. The unchanged native build/platform suite passes **75 tests**.
+The first continuation practice run's single source-inventory budget failure was
+resolved with a separate, bounded original-input allowance; runtime and complete
+source delivery caps remain 12 MiB for Academy and 20 MiB for World.
+
+The final reports were refreshed after a verification-only deadline correction:
+complete 12-minute replay verification has a cancellable seven-minute deadline,
+while initialization and ordinary mission requests retain the ten-second
+watchdog. An earlier [editor attempt](fpv-tuning-browser-final-load-timeout.json)
+had a Firefox navigation timeout before interaction while builds/tests competed
+for the host. It is preserved; the single final rerun used the same thresholds
+and passed all six cases. Previous source-bound reports and historical failures
+remain separate evidence.
+
+The [final native continuation report](fpv-native-continuation-qualification.json)
+checks all 172 original runtime source files against the checkout. Ordinary
+simulator-only stages contain 183 files / 18,261,435 bytes for desktop and
+188 files / 18,335,662 bytes for iOS. An explicitly separate Electron test fixture
+passes CLI receipt import/history, backup and recording dialogs, arena comparison,
+Regional landing and takeoff, process-restart persistence and return to Legacy.
+All five workers terminate and no page/stderr errors remain. iOS staging does not
+establish iOS execution, signing or physical-device qualification; the overall
+native rollout gate remains closed.
+
+The normal production Pages CLI now completes against the final sources. The
+[generated-site check](fpv-pages-continuation-live-testing-evidence.json) passes
+Academy and World online and in isolated offline contexts using the visible
+keyboard-accessible installer controls. Rates persist, Advanced restarts and
+exports remain unscored, and all workers dispose. The 3,432-file publication
+payload is 963,601,242 bytes; its conservative archive forecast leaves 7,784,192
+bytes below the unchanged 980,000,000-byte cap. The
+[live-testing guide](fpv-pages-live-testing.md) preserves the rejected temporary
+path and outdated test-locator attempts and explains the final result. Public
+HTTPS, the real password form and installed-update behavior remain deployment
+checks. No public deployment or Advanced promotion occurred.
+
+All six first-review software completion items received implementation and
+verification evidence. The second review reopens seven additional correctness
+checks, listed in the completion plan. The user's deferred physical acceptance
+gates and platform/publication requirements remain explicitly open. The
+[combined verification receipt](fpv-tuning-continuation-verification.json) binds
+the final source files, test results and delivery reports.
 
 The evidence section below preserves the earlier implementation's measurements.
-Its historical source pins, byte counts and failed capacity run are not silently
-relabelled as measurements of this continuation. Current combined delivery and
-performance checks are recorded separately after the final source freeze.
+Its source pins, byte counts and failed capacity run describe that earlier
+snapshot. Current delivery results are recorded above.
 
 ## Delivery boundary
 

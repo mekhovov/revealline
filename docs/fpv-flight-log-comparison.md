@@ -15,6 +15,13 @@ npm run fpv:flight-log -- trace recording.json trace.csv trace-metadata.json
 ```
 
 The complete recording is replayed and verified before any output is written.
+The exporter first checks whether the union of command events and mission
+observations fits the same 250,000-row limit used by the CSV reader. It rejects an
+oversized union before replay when the recording's timing fields can be counted.
+After verification, it checks the exact row count and the final CSV's UTF-8 size
+against the reader's 32 MiB limit before writing either output file. A recording
+can fit the 8 MiB recording quota yet produce an oversized diagnostic trace; that
+export fails explicitly, without dropping command transitions or sequence events.
 The CSV contains requested/achieved roll, pitch and yaw, throttle, battery voltage,
 current, saturation, consumed-input sequence and browser sample age where known.
 The metadata retains the frozen configuration, comparison identity, recording and
@@ -30,7 +37,9 @@ comparator use only real mission observations for interpolation and resolution.
 Battery/current/saturation are blank at interpolated rows. Sequence and sample age
 follow the actual consumed event. The exporter includes the initial state. It does
 not create additional sensor observations or hardware latency measurements. A recording with
-fewer than two completed mission intervals is too short for the comparison tool.
+fewer than two completed mission intervals is rejected before either export file
+is written. The minimum trace spans **40 ms with three achieved observations**
+at 0, 20 and 40 ms, matching the comparison reader's minimum.
 
 ## Prepare measured data
 
@@ -121,7 +130,8 @@ npm run fpv:flight-log -- compare measured.csv trace.csv comparison.json report.
 
 The tool requires complete time-window coverage and rejects missing-data gaps,
 non-finite values, duplicate timestamps, ambiguous columns and malformed CSV.
-Inputs are bounded to 32 MiB, 250,000 samples and 128 columns per CSV. Comparisons
+Inputs and exported traces share the same 32 MiB UTF-8 and 250,000-data-row
+limits; the header is not a data row. Inputs allow at most 128 columns. Comparisons
 are bounded to twelve minutes. Existing output files are never overwritten.
 
 ## Interpret the result
