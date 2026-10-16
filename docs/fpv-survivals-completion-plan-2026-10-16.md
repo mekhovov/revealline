@@ -42,3 +42,25 @@ These are design adaptations, not proof of enjoyment, ordinary-player balance or
 - Broad whole-game presentation adapters are delivered. Further mode-specific redesign is deferred, not silently added to this batch.
 - Iris Xe Windows, M1 Safari, physical controller/phone and five-player tests remain **skipped at the user's direction, not passed**.
 - A finite local implementation/check gate may finish while visual appeal, audible-mix acceptance and ordinary-player enjoyment remain ready for review. Do not label those judgments passed without evidence.
+
+## Delivery checkpoint after execution
+
+- **Implemented:** version-aware Marathon previews, followed by a native-discovered
+  full-width result-panel correction at `3a6631bd9`; numeric stats unchanged.
+- **Measured:** both exact-map default Systems controls win, both alternate-route
+  one-airframe controls lose; all ten upgrades earned. No numerical buff added.
+- **Qualified locally:** ten native short restart entries and a fresh15-minute
+  local-spacing soak at `79354e383` pass their explicit available-Mac gates;
+  p95=11.1ms, p99=13.4ms, no dropped time. Experimental movement stays opt-in.
+- **Compared:** two branches from one naturally earned capped Marathon checkpoint
+  both finish five contracts at eight ranks; the offered refit trades more score
+  for more time/damage. No seed search or equipment/healing grants.
+- **Checked:**60/60 integration checks before layout correction;61/61 afterward.
+- **Review-ready:** linked native maps, builds, reduced effects and soundtrack /
+  Classic/Reactions/boss samples retain source attribution. Subjective acceptance
+  and provisional medals remain explicitly unmeasured.
+
+Native panel screenshots and desktop/narrow wrapping checks are complete; native
+before/after full summaries match exactly. Publication and pushed-head reconciliation
+are recorded in the linked evidence report rather than assumed from this checklist.
+No additional exhaustive matrix, new mode or unavailable-device gate is introduced.

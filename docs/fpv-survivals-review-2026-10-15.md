@@ -1,5 +1,19 @@
 # FPV Survivals — delivery review and proposed priorities
 
+**Current continuation, 16 October:** [researched remaining delivery plan](fpv-survivals-completion-plan-2026-10-16.md) and [source/evidence report](qualification/overflight/review-completion-20261016/README.md). Historical checkpoints below retain their tested-source boundaries.
+
+**Current local completion:** truthful Marathon previews and a readable full-width
+next-contract panel are implemented. Both exact-map default Systems controls win;
+one-airframe challenge losses remain. Ten native short retries and a fresh15-minute
+local-spacing soak pass (p95 11.1ms / p99 13.4ms on the available Mac). Both earned
+Marathon retain/refit branches clear five contracts with eight ranks and a measured
+score/time/damage tradeoff. The final changed-flow cohort passes61/61. Native panel
+before/after full gameplay summaries match. See the current report for source
+boundaries; human visual/audio/enjoyment judgments and provisional medals remain
+ready for review, while external trials stay skipped. Historical open items below
+are superseded only where the current report explicitly records a completed gate.
+
+
 
 ## 16 October — late-choice pacing correction
 
