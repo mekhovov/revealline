@@ -1,0 +1,495 @@
+{
+  "format": "GitlessPublicationDifferenceSnapshot.v1",
+  "createdUTC": "2026-10-16T03:36:47.005245+00:00",
+  "files": [
+    {
+      "directory": "fpv-regional-label-consistency-20261015",
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "bytes": 60868,
+      "sha256": "daff901bdb3c46ddc5f52ec6368f7ce5c4614e4ba21bdfc1979dc7fd64cde3a9",
+      "gitBlob": "e0a3724cb2a7340224f6c5710b238bf38c786c3f",
+      "previousPublication": {
+        "branch": "codex/fpv-regional-library-labels-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-regional-label-consistency-20261015",
+      "path": "optional-practice/civilian-fpv/regional-session.mjs",
+      "bytes": 14398,
+      "sha256": "8241c9f04e98a14ddf6c75b882f75d2d169f003517753928680054f8b512d9cd",
+      "gitBlob": "42da8112a6cd87e97d527410cb09817cd5cb6d76",
+      "previousPublication": {
+        "branch": "codex/fpv-regional-library-labels-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-regional-label-consistency-20261015",
+      "path": "game/test/fpv-regional-library-labels.test.mjs",
+      "bytes": 9706,
+      "sha256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272",
+      "gitBlob": "680e09cb5496bb152d6bc6ac4b14f7aa7c48bd1b",
+      "previousPublication": {
+        "branch": "codex/fpv-regional-library-labels-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-regional-label-consistency-20261015",
+      "path": "game/test/fixtures/fpv-regional-labels-metadata.json",
+      "bytes": 14757,
+      "sha256": "d19d86f670febf58924cabb169cf93f7e22358ab8ddde493fe68da5fae75046c",
+      "gitBlob": "43dde6034da40f19c7013b868b61fb150968bd60",
+      "previousPublication": {
+        "branch": "codex/fpv-regional-library-labels-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-regional-label-consistency-20261015",
+      "path": "publishing/industrial-feature-tests.json",
+      "bytes": 8871,
+      "sha256": "a26385cb9588ecd3d8f3330fc6427aba761eb183edb70d27a2c730aa41bb496b",
+      "gitBlob": "c5f764e7a82b46026a4e6808bdc9bdcae4795b69",
+      "previousPublication": {
+        "branch": "codex/fpv-regional-library-labels-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-regional-label-consistency-20261015",
+      "path": "docs/fpv-regional-label-consistency-20261015.md",
+      "bytes": 2753,
+      "sha256": "376071550c47f4049383a73e4af05d583e643ce07000a4481ea976d6efbaf774",
+      "gitBlob": "e4d5fbd3b11f17ff86444fcd4f7fe6a2bc4266c8",
+      "previousPublication": {
+        "branch": "codex/fpv-regional-library-labels-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-preparation-observer-20261015",
+      "path": "authoring/fpv-worlds/regions/endurance.mjs",
+      "bytes": 27559,
+      "sha256": "23b996854a7f1b4f16273a0cb59ffa566be033180d0f7e11ed0d88719d074e36",
+      "gitBlob": "ae389b22d9d54ce39a2967d3713ead9c0b3fbbe0",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-preparation-observer-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-preparation-observer-20261015",
+      "path": "authoring/fpv-worlds/regions/endurance-attribution.mjs",
+      "bytes": 16803,
+      "sha256": "938bfc34d0fb9fefe415309ee8e74665b8c8541aad1340dae343a6ccff5528de",
+      "gitBlob": "0c1b48b85ee9ea501dcc6d961b39450afd7ba327",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-preparation-observer-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-preparation-observer-20261015",
+      "path": "game/test/fpv-endurance-attribution.test.mjs",
+      "bytes": 15364,
+      "sha256": "ef690af8bb5dfa2bdc0205b6907b7d4f665a8ab187696a5951c383553b194d13",
+      "gitBlob": "40d23ef50b302517c26b5fa6c31e9c922af37869",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-preparation-observer-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-preparation-observer-20261015",
+      "path": "docs/fpv-endurance-preparation-observer.md",
+      "bytes": 3398,
+      "sha256": "26e98681cca04f67111526c70d875015b8a1aa1d5c07d47fc561c6166a07d6e4",
+      "gitBlob": "a52aecceb265b41e511fb6a87ee362b579eb5fe7",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-preparation-observer-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-preparation-observer-20261015",
+      "path": "docs/evidence/fpv-endurance-preparation-observer-20261015.json",
+      "bytes": 3359,
+      "sha256": "d6e14574af90b598a74bb3a8d638e5d306cc7d7f7a59ca9e6c4b8755eddc233d",
+      "gitBlob": "1f65b01e2fbd3b8d16678a5ef57a83769f3b45c5",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-preparation-observer-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-lunar-connections-20261015",
+      "path": "authoring/fpv-worlds/regions/lunar-basin/verify-preparation.mjs",
+      "bytes": 5710,
+      "sha256": "03bc52ec01cf1fed04fb0e5e8c24262d271aa681bd7e7d38da0dbf6e3562055b",
+      "gitBlob": "c55e1d07c466a64f1b402480ddfd3d6e30c07c4e",
+      "previousPublication": {
+        "head": "694afb3add9cccfb78c0e1c5340b1aaf3e3aae4a",
+        "base": "3d2725009e93684c23cb39aace9cf204eac2e6e4",
+        "branch": "codex/fpv-lunar-basin-source-20261015"
+      },
+      "previousManifestBlob": "72609bc97ed01ad40fb8ca83a12d174e2606c133",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-lunar-library-source-20261015",
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "bytes": 50618,
+      "sha256": "1ae164c75dfea3814b83acdc3571ea0bf893855c2e0733212ec5191a22a01e6e",
+      "gitBlob": "2e6e656fcec571d05a28be003c3c021417a04c7d",
+      "previousPublication": {
+        "head": "66b318e7c9b7d6ef05dd2c7f4869de1d41a5101f",
+        "base": "38143616d6ef78a4e90c4e94fe84d4c8288d0945",
+        "branch": "codex/fpv-lunar-library-20261015"
+      },
+      "previousManifestBlob": "0f49e8f087fe87d8a96e539b92f1678b2073dfc9",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-lunar-library-source-20261015",
+      "path": "authoring/fpv-worlds/regions/lunar-basin/verify-library.mjs",
+      "bytes": 10860,
+      "sha256": "cc60cf539f415b0e0febfa2fab48e2006334d27ff022169c2d9d436c0373c3c0",
+      "gitBlob": "e1ca3a0fda4958a973b5011a72cbb252b049b755",
+      "previousPublication": {
+        "head": "66b318e7c9b7d6ef05dd2c7f4869de1d41a5101f",
+        "base": "38143616d6ef78a4e90c4e94fe84d4c8288d0945",
+        "branch": "codex/fpv-lunar-library-20261015"
+      },
+      "previousManifestBlob": "3bfd8c457e43696e5144c965a5a6ae3684bfa366",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-lunar-library-source-20261015",
+      "path": "authoring/fpv-worlds/regions/lunar-basin/LIBRARY.md",
+      "bytes": 3234,
+      "sha256": "bab3ce765eb95be5e9e59589350d89ffe33934f0a9ca360392c725bc2a3f10bd",
+      "gitBlob": "20cd6395b9afaf8ccbd0b85dc1b014eeb7033444",
+      "previousPublication": {
+        "head": "66b318e7c9b7d6ef05dd2c7f4869de1d41a5101f",
+        "base": "38143616d6ef78a4e90c4e94fe84d4c8288d0945",
+        "branch": "codex/fpv-lunar-library-20261015"
+      },
+      "previousManifestBlob": "2c09d6320fa32fe612baa3372ee4f094803f3d28",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-city-refinement-20261015",
+      "path": "authoring/fpv-worlds/regions/canal-city/commanded-flight-verification.json",
+      "bytes": 17550,
+      "sha256": "5fbe1630e7c8055fb5ecb1124b38043d64a79a32cd2fce910e5c3c95c06f7f5f",
+      "gitBlob": "9e11261c9ac22b11bf9f0540c8ab5c52d302bc9e",
+      "previousPublication": {
+        "head": "a68c2d6d6a9d558b5e9659852c877f0ce36e5d0e",
+        "base": "17cd3f63e6f9c25e78bad9bc925b28efb339e290",
+        "branch": "codex/fpv-canal-city-preparation-20261015"
+      },
+      "previousManifestBlob": "08f1de5c0a334f9f7db5080f1f4f1dc678661adf",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-city-refinement-20261015",
+      "path": "authoring/fpv-worlds/regions/canal-city/design-and-provenance.md",
+      "bytes": 5210,
+      "sha256": "1308783f742aab88b59791f2a5c385387fa9873efda4f684c2270528738e27ed",
+      "gitBlob": "34a32f15e34c68e4ced1f2ed410194decfc9ef6e",
+      "previousPublication": {
+        "head": "a68c2d6d6a9d558b5e9659852c877f0ce36e5d0e",
+        "base": "17cd3f63e6f9c25e78bad9bc925b28efb339e290",
+        "branch": "codex/fpv-canal-city-preparation-20261015"
+      },
+      "previousManifestBlob": "ec3e52663725b7a5bd02ff5b8da234b6fc582471",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-city-refinement-20261015",
+      "path": "authoring/fpv-worlds/regions/canal-city/design.mjs",
+      "bytes": 8988,
+      "sha256": "5b64604bf920792e125529bb8ff64a88906cacbfc6fda993b93bca825125ddb2",
+      "gitBlob": "0235ad3f0b555b13256632e0e055229b3abd1feb",
+      "previousPublication": {
+        "head": "a68c2d6d6a9d558b5e9659852c877f0ce36e5d0e",
+        "base": "17cd3f63e6f9c25e78bad9bc925b28efb339e290",
+        "branch": "codex/fpv-canal-city-preparation-20261015"
+      },
+      "previousManifestBlob": "bc0a8f5ad2613c66e00f4189440a3c49614e237f",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-city-refinement-20261015",
+      "path": "authoring/fpv-worlds/regions/canal-city/determinism.json",
+      "bytes": 4040,
+      "sha256": "6a4fec6b6e1a95e3b5c7a1a17b79981b60954bb059f7b4968c1c31cae2ec0aa6",
+      "gitBlob": "8505b9d73c9d09f21269d28cb68ea5317216019c",
+      "previousPublication": {
+        "head": "a68c2d6d6a9d558b5e9659852c877f0ce36e5d0e",
+        "base": "17cd3f63e6f9c25e78bad9bc925b28efb339e290",
+        "branch": "codex/fpv-canal-city-preparation-20261015"
+      },
+      "previousManifestBlob": "8ba720ac18600b9db44128b1d4ec7626b89f5756",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-city-refinement-20261015",
+      "path": "authoring/fpv-worlds/regions/canal-city/preparation-verification.json",
+      "bytes": 216,
+      "sha256": "124a55f48124475682162b10cc430f76f9b2343edb87a5903053a204df098538",
+      "gitBlob": "927fc9a4f30f9f8db485fc4baa61c1b7588c3c91",
+      "previousPublication": {
+        "head": "a68c2d6d6a9d558b5e9659852c877f0ce36e5d0e",
+        "base": "17cd3f63e6f9c25e78bad9bc925b28efb339e290",
+        "branch": "codex/fpv-canal-city-preparation-20261015"
+      },
+      "previousManifestBlob": "e150f325769f8cd8b9d0bdf72d5e1f4d39d8f825",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-city-refinement-20261015",
+      "path": "authoring/fpv-worlds/regions/canal-city/preparation.json",
+      "bytes": 3577,
+      "sha256": "23e0661307d0a38380ac7750d4876174a0e9d7a321c10335a4e792b92fbb7e02",
+      "gitBlob": "344aec31771fe2f67a1f5f53e8cd1f22c26258b2",
+      "previousPublication": {
+        "head": "a68c2d6d6a9d558b5e9659852c877f0ce36e5d0e",
+        "base": "17cd3f63e6f9c25e78bad9bc925b28efb339e290",
+        "branch": "codex/fpv-canal-city-preparation-20261015"
+      },
+      "previousManifestBlob": "12767b447d783621ebcf2b9c45223abb431267ed",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-city-refinement-20261015",
+      "path": "authoring/fpv-worlds/regions/canal-city/prepare.mjs",
+      "bytes": 17354,
+      "sha256": "83960ddaf74e169f8a5892847e72ea4d1ecb7b95d9762d9305b57b7f43bedfe7",
+      "gitBlob": "1eab022ff5924df297781981725507e092c45306",
+      "previousPublication": {
+        "head": "a68c2d6d6a9d558b5e9659852c877f0ce36e5d0e",
+        "base": "17cd3f63e6f9c25e78bad9bc925b28efb339e290",
+        "branch": "codex/fpv-canal-city-preparation-20261015"
+      },
+      "previousManifestBlob": "831501ecf73f663516927e3e6ecbaa63bd6492db",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-city-refinement-20261015",
+      "path": "authoring/fpv-worlds/regions/canal-city/verify-preparation.mjs",
+      "bytes": 7161,
+      "sha256": "02125378db1453f1ecfd427c885394351290a17d38dd801344e07c169e7b2283",
+      "gitBlob": "ec2786bb06b3c36b5b8e6a75d7d569eb47923443",
+      "previousPublication": {
+        "head": "a68c2d6d6a9d558b5e9659852c877f0ce36e5d0e",
+        "base": "17cd3f63e6f9c25e78bad9bc925b28efb339e290",
+        "branch": "codex/fpv-canal-city-preparation-20261015"
+      },
+      "previousManifestBlob": "1565aa9673d3f8858473fb266c918e61557803f5",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-attribution-retention-20261015",
+      "path": "authoring/fpv-worlds/regions/endurance-attribution.mjs",
+      "bytes": 12056,
+      "sha256": "fcfbf3e0519bebefdd1ced6596924d394f60176ed48146310ff120e58ef65d40",
+      "gitBlob": "c6940a4e58960648c87c7748762cd77dbaed1ffe",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-attribution-retention-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-attribution-retention-20261015",
+      "path": "game/test/fpv-endurance-attribution.test.mjs",
+      "bytes": 6392,
+      "sha256": "616b3562b9ef9b275702850c279a7690f385ea0003d17b89ba0190afa31080fd",
+      "gitBlob": "5631aed2ef27d15df1b392bcf6e7e190de356bdd",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-attribution-retention-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-attribution-retention-20261015",
+      "path": "publishing/industrial-feature-tests.json",
+      "bytes": 8639,
+      "sha256": "4356be0cf7eddf26f7ef88d4d99b4cf3fc1bf9b1f33389c143af7c604eea517d",
+      "gitBlob": "b4abc24ed6a4de3adddf16e9bc4a5aef24392577",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-attribution-retention-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-attribution-retention-20261015",
+      "path": "docs/fpv-endurance-attribution-retention.md",
+      "bytes": 2519,
+      "sha256": "c194cbe3b8c4b562f3e013530db432b42a7c6cd92860ff13fa01a310130eb5e3",
+      "gitBlob": "9b756a78c7361370b4faea23140fddc2d58e5783",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-attribution-retention-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-endurance-attribution-retention-20261015",
+      "path": "docs/evidence/fpv-endurance-attribution-retention-20261015.json",
+      "bytes": 2691,
+      "sha256": "1acbe5e83e3e31e226408ecb9df728976b011114e397a847a9dbcecaf67a8632",
+      "gitBlob": "d6b42d1fccc7fac9dd9d31ed46bfa8bbe8550383",
+      "previousPublication": {
+        "branch": "codex/fpv-endurance-attribution-retention-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-library-integrated-20261015",
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "bytes": 40825,
+      "sha256": "9f0083b6a275e0c1b6711d4003c062621b94d494bfa6cb4eb3893278c1ca4fd4",
+      "gitBlob": "64477ddc0d15dd8b77a3b7dff88bed79c6d7ac27",
+      "previousPublication": {
+        "head": "655c956c6346b852e2a824148a1332ae5723aac7",
+        "base": "c43e51b301c19039c57e2cbb0659359647597520",
+        "branch": "codex/fpv-canal-city-library-20261015"
+      },
+      "previousManifestBlob": "893a78cd36f65f4c7e7c95110649107ae30665bd",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-library-integrated-20261015",
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 381167,
+      "sha256": "0a06794125c284c4de691c11907243ae76a6553af1e1404ad5267215e84ceef4",
+      "gitBlob": "2d40c1489a8bf7dd61904ec77c7e669a212a7e7f",
+      "previousPublication": {
+        "head": "655c956c6346b852e2a824148a1332ae5723aac7",
+        "base": "c43e51b301c19039c57e2cbb0659359647597520",
+        "branch": "codex/fpv-canal-city-library-20261015"
+      },
+      "previousManifestBlob": "223008a0c1383b6a41e66cb7606e7f38befa9b7b",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-library-integrated-20261015",
+      "path": "authoring/fpv-worlds/regions/canal-city/verify-library-pin.mjs",
+      "bytes": 3510,
+      "sha256": "f780980a43210b02137cb049916ab448637ccb405fb7a95bd0d2534b1930eb2b",
+      "gitBlob": "b1101a29c16b93132133e4d5285007f7abcc8926",
+      "previousPublication": {
+        "head": "655c956c6346b852e2a824148a1332ae5723aac7",
+        "base": "c43e51b301c19039c57e2cbb0659359647597520",
+        "branch": "codex/fpv-canal-city-library-20261015"
+      },
+      "previousManifestBlob": "5a19fed17a57ca78a6b8ba076157d53316d4520a",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-canal-library-integrated-20261015",
+      "path": "docs/fpv-canal-library-admission.md",
+      "bytes": 2779,
+      "sha256": "2dc908a63a287923e3e0eafaebe5bc7d2765d1241759e4dbb6cc87a93000745f",
+      "gitBlob": "8a7c2190fa299f4318b8b0af65a28900d6dc19ab",
+      "previousPublication": {
+        "head": "655c956c6346b852e2a824148a1332ae5723aac7",
+        "base": "c43e51b301c19039c57e2cbb0659359647597520",
+        "branch": "codex/fpv-canal-city-library-20261015"
+      },
+      "previousManifestBlob": "3a4747567538c94b086a20b4dec8d2a21ca97dbb",
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-world-record-regressions-20261015",
+      "path": "game/test/fpv-world-record-archive.test.mjs",
+      "bytes": 8440,
+      "sha256": "eb7b3f7f713198e46327386654261f3854c7fc5b255bd9ef0a2ebeb5d98b404e",
+      "gitBlob": "46b30a758bfb06c6a58a49b6036893d1dcf733fa",
+      "previousPublication": {
+        "branch": "codex/fpv-world-record-regressions-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-world-record-regressions-20261015",
+      "path": "game/test/fpv-world-record-storage.test.mjs",
+      "bytes": 8227,
+      "sha256": "6d9ec755349a30ff0498d0ad8c4f0c7e0ee4a2f3b7ef510bdfb27142ad94afe4",
+      "gitBlob": "78608eaaa4a60350916b7912d23586260abf69f9",
+      "previousPublication": {
+        "branch": "codex/fpv-world-record-regressions-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-world-record-regressions-20261015",
+      "path": "publishing/industrial-feature-tests.json",
+      "bytes": 8693,
+      "sha256": "482d42a087943e95437e76c0a8541f04a4eae5725db74ce0087c358293ec1bc6",
+      "gitBlob": "1c7bb6325bb2a0802cfbee8e4da5a8394164143a",
+      "previousPublication": {
+        "branch": "codex/fpv-world-record-regressions-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-world-record-regressions-20261015",
+      "path": "docs/fpv-world-record-regressions.md",
+      "bytes": 3916,
+      "sha256": "7c35c36397d648b5b51a5de80fde9c2b4c455ebe8510d5775f9d17ef83c0102f",
+      "gitBlob": "1cf9be18796598f3000bdd09e44d689741c51c21",
+      "previousPublication": {
+        "branch": "codex/fpv-world-record-regressions-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    },
+    {
+      "directory": "fpv-world-record-regressions-20261015",
+      "path": "docs/evidence/fpv-world-record-regressions-20261015.json",
+      "bytes": 2109,
+      "sha256": "f0154b28ebc61b8f65cedd3f9cc66fbea4599f5f9216d5b5c65b74ee05bca4ac",
+      "gitBlob": "1a415465b9628b9915d1234a988888132de194bb",
+      "previousPublication": {
+        "branch": "codex/fpv-world-record-regressions-20261015"
+      },
+      "previousManifestBlob": null,
+      "preservationOnly": true
+    }
+  ],
+  "secretScan": {
+    "scanned": 37,
+    "patterns": [
+      "private_key",
+      "aws_access_key",
+      "github_token",
+      "slack_token",
+      "google_api_key",
+      "credential_url"
+    ],
+    "findings": []
+  },
+  "boundary": "Exact inactive Gitless source/evidence snapshots. Difference from an older publication manifest is not proof of missing GitHub data or a qualification result. Complete unlisted source/assets/failed candidates remain archive-required."
+}
