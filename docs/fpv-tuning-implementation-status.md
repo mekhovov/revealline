@@ -1,6 +1,63 @@
 # FPV tuning implementation status
 
-Updated 2026-10-16. Work is on `codex/fpv-rates-and-tuning`, initially rebased before implementation, then refreshed cleanly onto `origin/main` at `0c51ebcfdfa18307f23a63dfc093ddc556ec1946` for GitHub Pages readiness. Unrelated local files are preserved. The feature branch is prepared for a reviewed live-test publication; a local commit does not deploy GitHub Pages.
+Updated 2026-10-16. Work is on `codex/fpv-rates-and-tuning`, refreshed cleanly onto
+`origin/main` at `741948b14a09a816e49054c443511186bb99eb41` before this continuation.
+The previous implementation is the rebased commit `8202201b7`. Unrelated local
+files are preserved. A local commit does not deploy GitHub Pages.
+
+## Reviewed continuation
+
+The [updated completion plan](fpv-tuning-completion-plan.md) incorporates current
+WebFPV, QuadMath, Flight Division, VelociDrone, Liftoff and Betaflight references.
+On 16 October the user explicitly deferred physical radio, real-aircraft data and
+experienced-pilot feedback. Those gates remain unmeasured and do not block the
+remaining software work. Advanced remains optional and unscored.
+
+- Diagnostics follow the active keyboard/touch/controller/radio source and retain
+  only accepted mission inputs. Paused live previews and last-flight response are
+  labeled separately; unavailable browser/hardware measurements are not invented.
+- Imports retain bounded inert receipts with exact source hashes, version
+  assumptions, baseline, preset dependencies/options and applied/unapplied fields.
+  Revisions and backups preserve them; edited rates cannot claim an unchanged
+  imported result. All six [continuation editor cases](fpv-tuning-browser-continuation-qualification.json)
+  pass in Chrome, Firefox and WebKit, including narrow touch emulation and receipt
+  persistence. Physical touch and USB qualification remain deferred.
+- Advanced recordings and snapshots now carry recomputed comparison metadata.
+  Old supported records without it remain valid. Replay identity retains its
+  established meaning; comparison excludes personal rotation/camera choices and
+  includes physical constraints and complete Regional terrain history. Forged
+  JSON or partial recovery does not count as complete verified comparison evidence.
+- The reference arena consumes that metadata through a separate verification
+  worker and displays a compatible recording as an unscored ghost. Timed manual
+  hover, turn/stop and throttle cues support repeatable practice; aircraft drafts
+  can be reverted. Regional free flight has no defined scored sector route, so
+  Advanced sector/competition selection remains gated. Legacy ghost/sector rules
+  are preserved.
+  The [actual Chrome comparison check](fpv-advanced-comparison-browser-qualification.json)
+  verifies 84 recorded mission intervals, 85 ghost positions, same-time pose,
+  export/import, tamper rejection, rate-only compatibility, aircraft mismatch,
+  cancellation and disposal. Ten workers are created and all ten terminated;
+  there are no page errors. This is a local fixture, not physical flight evidence.
+- Regional admission now checks verified swept-volume coverage without repeating
+  collision casts already resolved by the worker. Historical golden replay fields
+  and hashes stay exact. Full-duration exports remain bounded: 4,983,692 bytes for
+  the Regional recording and 5,061,598 bytes for recovery.
+  The [new capacity measurement](fpv-regional-contact-capacity-2026-10-16-coverage.json)
+  passes the single-host bounded fixture's 2× gate: terrain **3.216×**, mixed
+  terrain/scenery **10.501×**, with all 45 source hashes unchanged. In-interval
+  CPU counters still show 99.54%/93.54% host activity, so this does not isolate
+  every cause of improvement or qualify all regions/devices. The old failed
+  measurement remains unchanged.
+- The [flight-log comparison tool](fpv-flight-log-comparison.md) exports only fully
+  verified replay traces, with exact consumed-input command times and separately
+  labeled 50 Hz achieved observations. It requires explicit units/signs/clock
+  offsets, detects gaps and command mismatches, and reports numerical response
+  differences without changing a tune or qualifying a physical aircraft.
+
+The evidence section below preserves the earlier implementation's measurements.
+Its historical source pins, byte counts and failed capacity run are not silently
+relabelled as measurements of this continuation. Current combined delivery and
+performance checks are recorded separately after the final source freeze.
 
 ## Delivery boundary
 
@@ -8,15 +65,15 @@ Rates, throttle, named profiles, drone setups and Betaflight transfers are integ
 
 Regional Advanced now resolves ground/roof landings, takeoff and wall contacts against exact verified terrain in its worker, then admits every substep trace before committing a complete mission interval. Missing terrain and region-edge motion still roll back and pause. Recordings preserve deduplicated collider frames and their ordered changes for replay. Contact behavior remains a reference implementation awaiting real-aircraft and wider-device qualification.
 
-| Phase                        | Implemented                                                                                                                                                                                                                            | Remaining acceptance work                                                                                                       |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| 0 — Base and compatibility   | Updated-main base; legacy identities and all 24 published Academy demonstrations retained; migration/recovery regressions.                                                                                                             | None for the local baseline.                                                                                                    |
-| 1 — Rates and throttle       | Actual, Betaflight, Quick with both expo modes, KISS and Raceflight; independent axes, full limits, versioned throttle, no duplicate portable-input expo.                                                                              | Physical-controller comparison sessions.                                                                                        |
-| 2 — Profiles and tuning      | Named/revisioned profiles, shared-use warnings, drone assignments/camera, overlays and preview, diagnostics, draft test/compare/revert, immutable attempts, backups and stale-edit protection.                                         | Physical USB/touch device matrix and experienced-pilot assessment.                                                              |
-| 3 — Betaflight transfer      | Complete/diff/patch operations, five exact releases, headerless/version selection, ordered profiles/defaults, preview, atomic new profiles, native/CLI export and local preset bundles. Native sharing preserves cancellation.         | Other releases/custom defaults remain unadvertised; online catalogs and other firmware are outside this release.                |
-| 4 — Advanced foundation      | Replaceable v2 controller, finite feedforward filter, Rapier worker, all-axis frequency qualification, compact recordings/recovery, full rollback, verified Regional collider frames/contact continuation, native inactivity handling. | Dense-world and physical-device performance; measured real-aircraft response.                                                   |
-| 5 — Aircraft and comparisons | Editable reference templates, SI parameters, battery/motor/drag/noise/filter controls; separate replay/comparison identities; ghosts and sector references retain their own frozen rates.                                              | Real-aircraft measurements/logs; propwash, ground effect and Betaflight PID conversion remain gated behind validation.          |
-| 6 — Rollout                  | Optional/unscored gates; simulator-only native qualification build with strict CSP and source hashes; unsupported states; package/offline/lifecycle checks.                                                                            | Physical device/iOS/pilot qualification and verified/default promotion. The complete game still exceeds its native site budget. |
+| Phase                        | Implemented                                                                                                                                                                                                                            | Remaining acceptance work                                                                                                                                            |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0 — Base and compatibility   | Updated-main base; legacy identities and all 24 published Academy demonstrations retained; migration/recovery regressions.                                                                                                             | None for the local baseline.                                                                                                                                         |
+| 1 — Rates and throttle       | Actual, Betaflight, Quick with both expo modes, KISS and Raceflight; independent axes, full limits, versioned throttle, no duplicate portable-input expo.                                                                              | Physical-controller comparison sessions.                                                                                                                             |
+| 2 — Profiles and tuning      | Named/revisioned profiles, shared-use warnings, drone assignments/camera, overlays and preview, diagnostics, draft test/compare/revert, immutable attempts, backups and stale-edit protection.                                         | Physical USB/touch device matrix and experienced-pilot assessment.                                                                                                   |
+| 3 — Betaflight transfer      | Complete/diff/patch operations, five exact releases, headerless/version selection, ordered profiles/defaults, preview, atomic new profiles, native/CLI export and local preset bundles. Native sharing preserves cancellation.         | Other releases/custom defaults remain unadvertised; online catalogs and other firmware are outside this release.                                                     |
+| 4 — Advanced foundation      | Replaceable v2 controller, finite feedforward filter, Rapier worker, all-axis frequency qualification, compact recordings/recovery, full rollback, verified Regional collider frames/contact continuation, native inactivity handling. | Dense-world and physical-device performance; measured real-aircraft response.                                                                                        |
+| 5 — Aircraft and comparisons | Editable reference templates, SI parameters, battery/motor/drag/noise/filter controls; production replay/comparison metadata and verified arena ghost; Legacy ghosts and sector references retain their own frozen rates.              | Real-aircraft measurements/logs; propwash, ground effect and Betaflight PID conversion remain gated. Advanced competition requires qualified route/rule integration. |
+| 6 — Rollout                  | Optional/unscored gates; simulator-only native qualification build with strict CSP and source hashes; unsupported states; package/offline/lifecycle checks.                                                                            | Physical device/iOS/pilot qualification and verified/default promotion. The complete game still exceeds its native site budget.                                      |
 
 ## Continuation findings and fixes
 
@@ -32,7 +89,7 @@ Regional Advanced now resolves ground/roof landings, takeoff and wall contacts a
 - Isolated offline testing exposed a World worker-entry scope mismatch despite correctly cached dependencies. World now starts the shared Advanced implementation through a bootstrap inside its own offline scope. Explicit routing covers reference practice restarts, Regional flight and detached recovery workers; package checks pin the new entry without widening service-worker scope.
 - The final recovery review added rejection of non-finite body state, mismatched collider properties and forged storage counters. Terrain history decodes each shared mesh once, preventing hundreds of frame references from multiplying its memory footprint. Regression tests verify atomic rejection and preservation of the active attempt.
 
-## Evidence
+## Earlier implementation evidence
 
 - Rates: 48,024 tagged-source angular samples and 10,010 throttle samples, maximum observed error approximately 0.000832°/s and zero output counts. Fixtures cover 4.5.2, 4.5.5, 2025.12.4, 2025.12.5 and 2026.6.2.
 - Duration/storage: the existing 12-minute 1,998°/s rate stress flight remains bounded and deterministic. The Regional full-duration test consumes 43,200 changing input samples, 360 frame events, 64 frame definitions, 65 deduplicated colliders, 720 hashes and 24 checkpoints. Its recording is 4,983,515 bytes and recovery is 5,061,421 bytes; complete replay and recovered continuation pass. Regional recording and recovery quotas are checked separately.

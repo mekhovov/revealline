@@ -148,6 +148,9 @@ test('diagnostics discard invalid samples and cadence restarts after missing inp
   assert.equal(fresh.cadenceHz, null);
   p.timestamp = 130;
   assert.equal(radio.diagnostics().cadenceHz, 100);
+  p.timestamp = 0;
+  assert.equal(radio.diagnostics().sampleAgeMs, null);
+  assert.equal(radio.diagnostics().cadenceHz, null);
   connected = false;
   assert.deepEqual(radio.diagnostics(), unavailable);
   connected = true;

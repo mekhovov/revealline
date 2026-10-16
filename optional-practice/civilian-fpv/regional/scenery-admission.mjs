@@ -1,5 +1,9 @@
 import { createRestoreContainment } from './restore-containment.mjs';
-import { createRegionMotionQuery, createRegionFlightSupportQuery } from './region-motion-query.mjs';
+import {
+  createRegionMotionQuery,
+  createRegionMotionCoverageQuery,
+  createRegionFlightSupportQuery,
+} from './region-motion-query.mjs';
 import * as THREE from '../vendor/three.module.js';
 import RAPIER from '../vendor/rapier/rapier.mjs';
 import {
@@ -295,6 +299,7 @@ export async function prepareSceneryWindow(
     return true;
   }
   return Object.freeze({
+    motionCoverage: createRegionMotionCoverageQuery({ covers, live }),
     prepareRestoreProof: (assertCurrent) => {
       live();
       return restoreContainment.prepare(assertCurrent);

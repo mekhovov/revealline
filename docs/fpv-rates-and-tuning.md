@@ -36,6 +36,12 @@ Throttle has midpoint, expo and Off/Scale/Clip limiting. The **Betaflight 2025.1
 
 The graphs overlay a solid draft curve and a dashed saved curve. Axis toggles and center, half-stick and full-stick readouts make comparisons easier. The optional rotation animation uses the same rate evaluator. Diagnostics distinguish raw input, calibrated input, requested rotation and achieved rotation. Browser sample age and observed timestamp cadence are shown only when measurements are available; they are not a claim about radio polling speed or simulation frequency.
 
+Diagnostics name the active source: keyboard, touch, game controller or calibrated
+radio. While tuning is open, they identify either a live radio preview or the last
+accepted flight input. The achieved rate always identifies its last accepted
+flight step; it is not presented as the response to a new draft. A connected radio
+in the background does not replace another source's readings.
+
 Radio endpoint calibration and device dead zones remain in the radio setup. Betaflight import does not import receiver calibration, RC smoothing or extra deadband stages. Self-level maximum tilt and the existing airframe's response time remain separate from portable rates.
 
 ## Drone setups and camera
@@ -63,6 +69,14 @@ The verified source releases are **4.5.2, 4.5.5, 2025.12.4, 2025.12.5 and 2026.6
 Assignments and `defaults` commands are processed in order. PID profiles and rate profiles are separate namespaces. By default, the final selected rate profile is previewed; the source-profile control can select another supported profile explicitly. The current importer qualifies the upstream four-profile layout, indexes 0–3. Custom firmware builds with different counts or defaults need separate verification.
 
 Choose **Preview import** to review the resulting curves, changed fields, inferred defaults, firmware normalization and unapplied settings. Then choose **Save import as new profile** and assign that new profile explicitly. A malformed import does not partially modify a saved profile.
+
+Saved imports retain an **import receipt** with the original text digest, firmware
+assumptions, operation, source profile, baseline and applied/unapplied settings.
+Preset receipts also retain resolved file digests, ordered includes and option
+choices. Long reviews are explicitly truncated with their original counts. The
+receipt is inert history, not a firmware authenticity check. Renames, duplicates,
+revision history and complete-library backups preserve it. Editing rates removes
+the current receipt; the previous revision retains the original import record.
 
 This is **rate/throttle compatibility**, not a copy of the whole aircraft. PID, feedforward tuning, filters, TPA, RC smoothing, motor-output limits and hardware settings are reported as unapplied. CLI commands are parsed as text and are never executed. Unsupported settings do not become active automatically after an update.
 
@@ -95,6 +109,25 @@ If another tab changes settings, export an unsaved draft before choosing **Refre
 ### Experimental Advanced practice
 
 The tuning editor can open **Advanced reference practice**, an unscored arena using a separate fixed-step controller and aircraft model. Choose a whoop, freestyle or racing reference template, adjust its SI-unit aircraft/controller values, and explicitly restart to test the draft. **Save aircraft for next flight** keeps the running attempt unchanged. These templates have not yet been matched to measured real aircraft, and their controller gains are not Betaflight PID numbers.
+
+Choose **Hover and land**, **Turn and stop** or **Throttle pulse** for timed,
+repeatable cues. Restart from the same launch point and follow them manually.
+**Revert aircraft draft** restores the last saved aircraft/controller values.
+Return to Rates & throttle to compare, save or revert the rate draft.
+
+Under **Unscored comparison**, keep a completed practice as a reference or import
+an arena recording. The complete recording is checked in a separate worker before
+its cyan ghost can appear. The ghost follows its own recorded position and
+orientation at the same flight time and has no collisions or score. Rotation
+rates may differ; aircraft, controller, throttle limits, timing and arena must
+match. Cancelling or failing verification preserves the previous reference.
+Restart practice to compare from time zero. The reference is temporary; export it
+before leaving if you want to import it in another tuning session. Regional
+recordings are not arena ghosts.
+
+For numerical response analysis, the [flight-log comparison tool](fpv-flight-log-comparison.md)
+exports verified replay telemetry and compares explicitly mapped CSV data. Its
+50 Hz telemetry cannot establish motor-delay or sensor-filter fidelity.
 
 The Advanced controller includes a separate feedforward low-pass cutoff. New tunes default to 30 Hz to make stick transitions consistent across physics frequencies; zero explicitly disables it. Older experimental v1 tunes retain their unsmoothed choice when migrated. The revised experimental v2 backend rejects v1 Advanced recordings rather than replaying them with changed physics. Legacy Academy/World recordings remain supported.
 
