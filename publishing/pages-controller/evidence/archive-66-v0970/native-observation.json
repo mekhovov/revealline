@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "kind": "bounded-native-browser-observation",
+  "release": "v0.97.0",
+  "archive": "https://mekhovov.github.io/revealline-archive-66/",
+  "observedOn": "2026-09-24",
+  "recordedAt": "2026-09-24T05:44:54Z",
+  "browser": "Codex in-app browser",
+  "viewport": { "width": 1280, "height": 720, "devicePixelRatio": 2, "visualViewportScale": 1 },
+  "input": ["native mouse click", "native keyboard press/release"],
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "observations": [
+    "Archive root Play opened the canonical archived game. Loading flight systems appeared before Home.",
+    "Solo Home displayed v0.97.0 and New Journey / 91 missions. Existing Continue destination First return was not activated or replaced.",
+    "Workshop opened. Content Studio was subsequently reached through its known direct route; this is not evidence of normal player navigation into Studio.",
+    "In Studio, selected Inner receiver approach / balance pending and inspected the bundled Sentinel receiver successor. UI reported 5 missions inspected and applied draft unchanged. Source showed sentinel-inner-receiver-review / inner-receiver-1 with the Twin receiver east-shield at (50.5,19.5). Apply and Save were not activated. This proves inspection/compilation only, not a Twin receiver gameplay clear or human balance.",
+    "Studio header return link did not navigate on click or Return; direct navigation was also aborted. No JavaScript dialog was exposed by the browser API. Source contains an unsaved-edit beforeunload guard, but that does not conclusively identify this browser interruption. Opened a separate owned tab for play checks; did not apply or discard the inspected draft through Studio controls.",
+    "From Solo Home, Team link opened the correct archived route. Preparation status resolved to Team Journey / 12 missions, Stepping exchange, picture ready and focused Start together.",
+    "Native Return started Team. Keyboard movement banked 1.0% territory with 2 reserves. Escape paused both players at 0:08 with Resume together focused. The cut-bank status named the remaining occupied region.",
+    "Team-to-Versus link presented the deliberate discard dialog with Stay focused. Tab then Return discarded only this temporary test attempt and opened the canonical archived Versus Journey.",
+    "Versus displayed 91 missions, First return / Horizon School, two player identities and focused Start race. Return launched both decoded boards. Screenshot confirmed shared artwork at revealed boundaries and both actor sprites.",
+    "Keyboard movement and Escape produced paused boards with Resume race focused. Resumed play and native direction changes completed First return: Sunflower won with 34.3%, 3 lives and 8160 points; Skyline retained 0.0%, 3 lives and 0 points.",
+    "Next mission acknowledged preparation with Checking the authored original for both boards and visible Cancel picture loading. It then started both successor boards without a second Start action. Escape confirmed Prologue / Choose your share with Resume race focused.",
+    "All owned archive66 tabs were closed after verification. No viewport override was left active."
+  ],
+  "limitations": [
+    "The physical test machine is out of disk space. Team and Versus reported FILE_ERROR_NO_SPACE or database-connection-closing and visibly offered Retry saving and Export. Session play worked, but persistence, offline readiness and storage recovery are not passing results.",
+    "Raw database error text is exposed to players; retain a UX5 friendly-recovery-copy follow-up without hiding Retry/Export or failure status.",
+    "Studio return navigation needs a separate normal-capacity/browser investigation. Frozen release bytes were not modified.",
+    "No physical controller, physical touch, screen reader, mobile viewport, exhaustive mission, replay, full Solo completion, cross-campaign ending or comprehensive offline qualification is claimed.",
+    "No user saves were cleared, no source draft was applied, and no clean-console verdict is claimed."
+  ]
+}

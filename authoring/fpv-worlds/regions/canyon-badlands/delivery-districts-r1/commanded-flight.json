@@ -1,0 +1,1039 @@
+{
+  "passed": true,
+  "actualExtentM": [
+    768,
+    768
+  ],
+  "sourcePins": {
+    "terrain": "219b438a19fdd7decd022cd48d145b1a45505198e86e9270cf818696894210a4",
+    "scenery": "3b704a760c06c7ed066e11050cadcb1af27d5ad18ed87e63e2a66137507fcff6"
+  },
+  "authoredStarts": 12,
+  "actualCommandedRoutes": 24,
+  "records": [
+    {
+      "mode": "self-level",
+      "route": "retained-basin-circuit",
+      "segments": [
+        {
+          "ticks": 1712,
+          "position": {
+            "x": 189940,
+            "y": 27875,
+            "z": 70000
+          }
+        },
+        {
+          "ticks": 1388,
+          "position": {
+            "x": 210039,
+            "y": 27887,
+            "z": 144924
+          }
+        },
+        {
+          "ticks": 1574,
+          "position": {
+            "x": 130077,
+            "y": 27887,
+            "z": 189992
+          }
+        },
+        {
+          "ticks": 2095,
+          "position": {
+            "x": 90030,
+            "y": 27886,
+            "z": 70068
+          }
+        }
+      ],
+      "ticks": 6769,
+      "contacts": 0,
+      "recentres": 7,
+      "inFlightRecentres": 6,
+      "maxCrossTrackM": 0.24665765749314292,
+      "maxHeightErrorM": 0.16100000000000136
+    },
+    {
+      "mode": "self-level",
+      "route": "retained-gorge-approach",
+      "segments": [
+        {
+          "ticks": 1631,
+          "position": {
+            "x": 239959,
+            "y": 33877,
+            "z": 219942
+          }
+        },
+        {
+          "ticks": 1500,
+          "position": {
+            "x": 210041,
+            "y": 33886,
+            "z": 299928
+          }
+        },
+        {
+          "ticks": 1581,
+          "position": {
+            "x": 279968,
+            "y": 33886,
+            "z": 359951
+          }
+        }
+      ],
+      "ticks": 4712,
+      "contacts": 0,
+      "recentres": 3,
+      "inFlightRecentres": 2,
+      "maxCrossTrackM": 0.38764027951357916,
+      "maxHeightErrorM": 0.16100000000000136
+    },
+    {
+      "mode": "self-level",
+      "route": "twin-spire-gap",
+      "segments": [
+        {
+          "ticks": 969,
+          "position": {
+            "x": 162000,
+            "y": 17875,
+            "z": 127942
+          }
+        },
+        {
+          "ticks": 689,
+          "position": {
+            "x": 170004,
+            "y": 21908,
+            "z": 154925
+          }
+        }
+      ],
+      "ticks": 1658,
+      "contacts": 0,
+      "recentres": 2,
+      "inFlightRecentres": 1,
+      "maxCrossTrackM": 0.20685181505654338,
+      "maxHeightErrorM": 0.3336645649432519
+    },
+    {
+      "mode": "self-level",
+      "route": "complete-gorge-run",
+      "segments": [
+        {
+          "ticks": 1631,
+          "position": {
+            "x": 239959,
+            "y": 33877,
+            "z": 219942
+          }
+        },
+        {
+          "ticks": 1500,
+          "position": {
+            "x": 210041,
+            "y": 33886,
+            "z": 299928
+          }
+        },
+        {
+          "ticks": 1581,
+          "position": {
+            "x": 279968,
+            "y": 33886,
+            "z": 359951
+          }
+        },
+        {
+          "ticks": 1186,
+          "position": {
+            "x": 299966,
+            "y": 33886,
+            "z": 419935
+          }
+        },
+        {
+          "ticks": 1392,
+          "position": {
+            "x": 250057,
+            "y": 33886,
+            "z": 479957
+          }
+        },
+        {
+          "ticks": 1149,
+          "position": {
+            "x": 249990,
+            "y": 33886,
+            "z": 539935
+          }
+        },
+        {
+          "ticks": 1620,
+          "position": {
+            "x": 299980,
+            "y": 33887,
+            "z": 619944
+          }
+        },
+        {
+          "ticks": 1910,
+          "position": {
+            "x": 330002,
+            "y": 33887,
+            "z": 729925
+          }
+        }
+      ],
+      "ticks": 11969,
+      "contacts": 0,
+      "recentres": 8,
+      "inFlightRecentres": 7,
+      "maxCrossTrackM": 0.38764027951357916,
+      "maxHeightErrorM": 0.16100000000000136
+    },
+    {
+      "mode": "self-level",
+      "route": "complete-fork-run",
+      "segments": [
+        {
+          "ticks": 1493,
+          "position": {
+            "x": 180052,
+            "y": 33876,
+            "z": 589957
+          }
+        },
+        {
+          "ticks": 1785,
+          "position": {
+            "x": 125023,
+            "y": 33889,
+            "z": 679948
+          }
+        },
+        {
+          "ticks": 1213,
+          "position": {
+            "x": 100041,
+            "y": 33886,
+            "z": 739930
+          }
+        }
+      ],
+      "ticks": 4491,
+      "contacts": 0,
+      "recentres": 3,
+      "inFlightRecentres": 2,
+      "maxCrossTrackM": 0.09976923076923705,
+      "maxHeightErrorM": 0.16599999999999682
+    },
+    {
+      "mode": "self-level",
+      "route": "mesa-terrace-contour",
+      "segments": [
+        {
+          "ticks": 1569,
+          "position": {
+            "x": 519942,
+            "y": 114921,
+            "z": 80000
+          }
+        },
+        {
+          "ticks": 1599,
+          "position": {
+            "x": 609922,
+            "y": 114885,
+            "z": 100012
+          }
+        },
+        {
+          "ticks": 2200,
+          "position": {
+            "x": 679977,
+            "y": 114887,
+            "z": 214944
+          }
+        }
+      ],
+      "ticks": 5368,
+      "contacts": 0,
+      "recentres": 4,
+      "inFlightRecentres": 3,
+      "maxCrossTrackM": 0.1703569032436597,
+      "maxHeightErrorM": 0.16200000000000614
+    },
+    {
+      "mode": "self-level",
+      "route": "twin-butte-figure-eight",
+      "segments": [
+        {
+          "ticks": 1232,
+          "position": {
+            "x": 509941,
+            "y": 124876,
+            "z": 250030
+          }
+        },
+        {
+          "ticks": 1391,
+          "position": {
+            "x": 569958,
+            "y": 124886,
+            "z": 299941
+          }
+        },
+        {
+          "ticks": 1009,
+          "position": {
+            "x": 580010,
+            "y": 124887,
+            "z": 349926
+          }
+        },
+        {
+          "ticks": 736,
+          "position": {
+            "x": 560059,
+            "y": 124886,
+            "z": 374964
+          }
+        },
+        {
+          "ticks": 1136,
+          "position": {
+            "x": 619937,
+            "y": 124886,
+            "z": 379962
+          }
+        },
+        {
+          "ticks": 1588,
+          "position": {
+            "x": 689950,
+            "y": 124886,
+            "z": 439954
+          }
+        },
+        {
+          "ticks": 1644,
+          "position": {
+            "x": 630049,
+            "y": 124887,
+            "z": 514961
+          }
+        },
+        {
+          "ticks": 1436,
+          "position": {
+            "x": 550073,
+            "y": 124886,
+            "z": 499989
+          }
+        },
+        {
+          "ticks": 1182,
+          "position": {
+            "x": 530027,
+            "y": 124886,
+            "z": 440060
+          }
+        },
+        {
+          "ticks": 1298,
+          "position": {
+            "x": 559950,
+            "y": 124887,
+            "z": 375068
+          }
+        },
+        {
+          "ticks": 1919,
+          "position": {
+            "x": 450063,
+            "y": 124887,
+            "z": 410005
+          }
+        },
+        {
+          "ticks": 1494,
+          "position": {
+            "x": 420034,
+            "y": 124887,
+            "z": 330074
+          }
+        },
+        {
+          "ticks": 1117,
+          "position": {
+            "x": 449972,
+            "y": 124887,
+            "z": 280048
+          }
+        }
+      ],
+      "ticks": 17182,
+      "contacts": 0,
+      "recentres": 15,
+      "inFlightRecentres": 14,
+      "maxCrossTrackM": 0.3977052189454421,
+      "maxHeightErrorM": 0.16500000000000625
+    },
+    {
+      "mode": "self-level",
+      "route": "sunset-shelf-contour",
+      "segments": [
+        {
+          "ticks": 2001,
+          "position": {
+            "x": 569928,
+            "y": 124873,
+            "z": 619999
+          }
+        },
+        {
+          "ticks": 2101,
+          "position": {
+            "x": 669964,
+            "y": 124889,
+            "z": 699952
+          }
+        },
+        {
+          "ticks": 1278,
+          "position": {
+            "x": 719948,
+            "y": 124886,
+            "z": 650052
+          }
+        }
+      ],
+      "ticks": 5380,
+      "contacts": 0,
+      "recentres": 4,
+      "inFlightRecentres": 3,
+      "maxCrossTrackM": 0.3422396820943153,
+      "maxHeightErrorM": 0.16899999999999693
+    },
+    {
+      "mode": "self-level",
+      "route": "ridge-crown-opening",
+      "segments": [
+        {
+          "ticks": 998,
+          "position": {
+            "x": 345000,
+            "y": 84875,
+            "z": 89934
+          }
+        }
+      ],
+      "ticks": 998,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "ridge-skyline-approach",
+      "segments": [
+        {
+          "ticks": 1284,
+          "position": {
+            "x": 369937,
+            "y": 109875,
+            "z": 65000
+          }
+        }
+      ],
+      "ticks": 1284,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "needle-east-passage",
+      "segments": [
+        {
+          "ticks": 1141,
+          "position": {
+            "x": 210000,
+            "y": 33875,
+            "z": 329936
+          }
+        }
+      ],
+      "ticks": 1141,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "arrival-landmark-approach",
+      "segments": [
+        {
+          "ticks": 855,
+          "position": {
+            "x": 85000,
+            "y": 15875,
+            "z": 124937
+          }
+        }
+      ],
+      "ticks": 855,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "retained-basin-circuit",
+      "segments": [
+        {
+          "ticks": 1712,
+          "position": {
+            "x": 189938,
+            "y": 27875,
+            "z": 70000
+          }
+        },
+        {
+          "ticks": 1376,
+          "position": {
+            "x": 210021,
+            "y": 27886,
+            "z": 144922
+          }
+        },
+        {
+          "ticks": 1573,
+          "position": {
+            "x": 130069,
+            "y": 27887,
+            "z": 189987
+          }
+        },
+        {
+          "ticks": 2072,
+          "position": {
+            "x": 90031,
+            "y": 27887,
+            "z": 70072
+          }
+        }
+      ],
+      "ticks": 6733,
+      "contacts": 0,
+      "recentres": 7,
+      "inFlightRecentres": 6,
+      "maxCrossTrackM": 0.242230468768904,
+      "maxHeightErrorM": 0.16100000000000136
+    },
+    {
+      "mode": "acro",
+      "route": "retained-gorge-approach",
+      "segments": [
+        {
+          "ticks": 1631,
+          "position": {
+            "x": 239967,
+            "y": 33877,
+            "z": 219941
+          }
+        },
+        {
+          "ticks": 1500,
+          "position": {
+            "x": 210035,
+            "y": 33887,
+            "z": 299930
+          }
+        },
+        {
+          "ticks": 1581,
+          "position": {
+            "x": 279968,
+            "y": 33886,
+            "z": 359947
+          }
+        }
+      ],
+      "ticks": 4712,
+      "contacts": 0,
+      "recentres": 3,
+      "inFlightRecentres": 2,
+      "maxCrossTrackM": 0.38799140295515927,
+      "maxHeightErrorM": 0.1599999999999966
+    },
+    {
+      "mode": "acro",
+      "route": "twin-spire-gap",
+      "segments": [
+        {
+          "ticks": 969,
+          "position": {
+            "x": 162000,
+            "y": 17875,
+            "z": 127941
+          }
+        },
+        {
+          "ticks": 689,
+          "position": {
+            "x": 169996,
+            "y": 21908,
+            "z": 154923
+          }
+        }
+      ],
+      "ticks": 1658,
+      "contacts": 0,
+      "recentres": 2,
+      "inFlightRecentres": 1,
+      "maxCrossTrackM": 0.20656772672685064,
+      "maxHeightErrorM": 0.333528373266077
+    },
+    {
+      "mode": "acro",
+      "route": "complete-gorge-run",
+      "segments": [
+        {
+          "ticks": 1631,
+          "position": {
+            "x": 239967,
+            "y": 33877,
+            "z": 219941
+          }
+        },
+        {
+          "ticks": 1500,
+          "position": {
+            "x": 210035,
+            "y": 33887,
+            "z": 299930
+          }
+        },
+        {
+          "ticks": 1581,
+          "position": {
+            "x": 279968,
+            "y": 33886,
+            "z": 359947
+          }
+        },
+        {
+          "ticks": 1186,
+          "position": {
+            "x": 299961,
+            "y": 33887,
+            "z": 419932
+          }
+        },
+        {
+          "ticks": 1392,
+          "position": {
+            "x": 250050,
+            "y": 33887,
+            "z": 479958
+          }
+        },
+        {
+          "ticks": 1148,
+          "position": {
+            "x": 249954,
+            "y": 33886,
+            "z": 539942
+          }
+        },
+        {
+          "ticks": 1620,
+          "position": {
+            "x": 299983,
+            "y": 33886,
+            "z": 619950
+          }
+        },
+        {
+          "ticks": 1909,
+          "position": {
+            "x": 330025,
+            "y": 33887,
+            "z": 729932
+          }
+        }
+      ],
+      "ticks": 11967,
+      "contacts": 0,
+      "recentres": 8,
+      "inFlightRecentres": 7,
+      "maxCrossTrackM": 0.38799140295515927,
+      "maxHeightErrorM": 0.1599999999999966
+    },
+    {
+      "mode": "acro",
+      "route": "complete-fork-run",
+      "segments": [
+        {
+          "ticks": 1487,
+          "position": {
+            "x": 180056,
+            "y": 33876,
+            "z": 589978
+          }
+        },
+        {
+          "ticks": 1785,
+          "position": {
+            "x": 125025,
+            "y": 33889,
+            "z": 679947
+          }
+        },
+        {
+          "ticks": 1203,
+          "position": {
+            "x": 100046,
+            "y": 33887,
+            "z": 739930
+          }
+        }
+      ],
+      "ticks": 4475,
+      "contacts": 0,
+      "recentres": 3,
+      "inFlightRecentres": 2,
+      "maxCrossTrackM": 0.10038461538462151,
+      "maxHeightErrorM": 0.16599999999999682
+    },
+    {
+      "mode": "acro",
+      "route": "mesa-terrace-contour",
+      "segments": [
+        {
+          "ticks": 1569,
+          "position": {
+            "x": 519940,
+            "y": 114921,
+            "z": 80000
+          }
+        },
+        {
+          "ticks": 1599,
+          "position": {
+            "x": 609921,
+            "y": 114885,
+            "z": 100005
+          }
+        },
+        {
+          "ticks": 2200,
+          "position": {
+            "x": 679974,
+            "y": 114886,
+            "z": 214941
+          }
+        }
+      ],
+      "ticks": 5368,
+      "contacts": 0,
+      "recentres": 4,
+      "inFlightRecentres": 3,
+      "maxCrossTrackM": 0.16942268755636247,
+      "maxHeightErrorM": 0.16200000000000614
+    },
+    {
+      "mode": "acro",
+      "route": "twin-butte-figure-eight",
+      "segments": [
+        {
+          "ticks": 1233,
+          "position": {
+            "x": 509929,
+            "y": 124876,
+            "z": 250033
+          }
+        },
+        {
+          "ticks": 1391,
+          "position": {
+            "x": 569957,
+            "y": 124887,
+            "z": 299944
+          }
+        },
+        {
+          "ticks": 1009,
+          "position": {
+            "x": 580010,
+            "y": 124887,
+            "z": 349925
+          }
+        },
+        {
+          "ticks": 736,
+          "position": {
+            "x": 560058,
+            "y": 124886,
+            "z": 374965
+          }
+        },
+        {
+          "ticks": 1136,
+          "position": {
+            "x": 619937,
+            "y": 124887,
+            "z": 379966
+          }
+        },
+        {
+          "ticks": 1588,
+          "position": {
+            "x": 689950,
+            "y": 124886,
+            "z": 439948
+          }
+        },
+        {
+          "ticks": 1643,
+          "position": {
+            "x": 630038,
+            "y": 124887,
+            "z": 514963
+          }
+        },
+        {
+          "ticks": 1436,
+          "position": {
+            "x": 550076,
+            "y": 124886,
+            "z": 499985
+          }
+        },
+        {
+          "ticks": 1182,
+          "position": {
+            "x": 530031,
+            "y": 124887,
+            "z": 440063
+          }
+        },
+        {
+          "ticks": 1301,
+          "position": {
+            "x": 559950,
+            "y": 124886,
+            "z": 375070
+          }
+        },
+        {
+          "ticks": 1919,
+          "position": {
+            "x": 450061,
+            "y": 124887,
+            "z": 409960
+          }
+        },
+        {
+          "ticks": 1494,
+          "position": {
+            "x": 420043,
+            "y": 124886,
+            "z": 330076
+          }
+        },
+        {
+          "ticks": 1116,
+          "position": {
+            "x": 449971,
+            "y": 124886,
+            "z": 280045
+          }
+        }
+      ],
+      "ticks": 17184,
+      "contacts": 0,
+      "recentres": 11,
+      "inFlightRecentres": 10,
+      "maxCrossTrackM": 0.4026786779146423,
+      "maxHeightErrorM": 0.16400000000000148
+    },
+    {
+      "mode": "acro",
+      "route": "sunset-shelf-contour",
+      "segments": [
+        {
+          "ticks": 2001,
+          "position": {
+            "x": 569927,
+            "y": 124873,
+            "z": 620000
+          }
+        },
+        {
+          "ticks": 2105,
+          "position": {
+            "x": 669966,
+            "y": 124889,
+            "z": 699948
+          }
+        },
+        {
+          "ticks": 1278,
+          "position": {
+            "x": 719946,
+            "y": 124886,
+            "z": 650052
+          }
+        }
+      ],
+      "ticks": 5384,
+      "contacts": 0,
+      "recentres": 4,
+      "inFlightRecentres": 3,
+      "maxCrossTrackM": 0.34153257531306513,
+      "maxHeightErrorM": 0.16899999999999693
+    },
+    {
+      "mode": "acro",
+      "route": "ridge-crown-opening",
+      "segments": [
+        {
+          "ticks": 998,
+          "position": {
+            "x": 345000,
+            "y": 84875,
+            "z": 89936
+          }
+        }
+      ],
+      "ticks": 998,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "ridge-skyline-approach",
+      "segments": [
+        {
+          "ticks": 1284,
+          "position": {
+            "x": 369937,
+            "y": 109875,
+            "z": 65000
+          }
+        }
+      ],
+      "ticks": 1284,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "needle-east-passage",
+      "segments": [
+        {
+          "ticks": 1141,
+          "position": {
+            "x": 210000,
+            "y": 33875,
+            "z": 329937
+          }
+        }
+      ],
+      "ticks": 1141,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "arrival-landmark-approach",
+      "segments": [
+        {
+          "ticks": 855,
+          "position": {
+            "x": 85000,
+            "y": 15875,
+            "z": 124937
+          }
+        }
+      ],
+      "ticks": 855,
+      "contacts": 0,
+      "recentres": 1,
+      "inFlightRecentres": 0,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    }
+  ],
+  "solidContacts": [
+    {
+      "mode": "self-level",
+      "target": "twin-west-rock",
+      "ticks": 139,
+      "contacts": 1,
+      "position": {
+        "x": 142134,
+        "y": 17867,
+        "z": 104004
+      }
+    },
+    {
+      "mode": "self-level",
+      "target": "ridge-arch-solid-crown",
+      "ticks": 413,
+      "contacts": 1,
+      "position": {
+        "x": 345010,
+        "y": 88867,
+        "z": 64117
+      }
+    },
+    {
+      "mode": "acro",
+      "target": "twin-west-rock",
+      "ticks": 139,
+      "contacts": 1,
+      "position": {
+        "x": 142134,
+        "y": 17866,
+        "z": 104004
+      }
+    },
+    {
+      "mode": "acro",
+      "target": "ridge-arch-solid-crown",
+      "ticks": 413,
+      "contacts": 1,
+      "position": {
+        "x": 345010,
+        "y": 88867,
+        "z": 64117
+      }
+    }
+  ],
+  "playerReady": false,
+  "claim": "Production controlled-command evidence for the 768 m authored district pair; not native FPS, final art or public admission."
+}

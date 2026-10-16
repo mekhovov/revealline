@@ -1,0 +1,351 @@
+TAP version 13
+# Subtest: automatic first preparation cancels to the visible native summary, retaining late disposal
+ok 1 - automatic first preparation cancels to the visible native summary, retaining late disposal
+  ---
+  duration_ms: 16.434584
+  type: 'test'
+  ...
+# Subtest: mission and Load cancellation each return to their own visible opener
+ok 2 - mission and Load cancellation each return to their own visible opener
+  ---
+  duration_ms: 15.869667
+  type: 'test'
+  ...
+# Subtest: appearance cancellation returns to Actors without changing the retained run or override
+ok 3 - appearance cancellation returns to Actors without changing the retained run or override
+  ---
+  duration_ms: 11.493666
+  type: 'test'
+  ...
+# Subtest: collapsed or unavailable setup falls back to summary or enabled Start without reopening details
+ok 4 - collapsed or unavailable setup falls back to summary or enabled Start without reopening details
+  ---
+  duration_ms: 11.118542
+  type: 'test'
+  ...
+# Subtest: cancellation preserves unrelated focus and old completion cannot retire a newer opener
+ok 5 - cancellation preserves unrelated focus and old completion cannot retire a newer opener
+  ---
+  duration_ms: 12.1065
+  type: 'test'
+  ...
+# Subtest: host measures only opted-in uninterrupted play and retains both painter costs
+ok 6 - host measures only opted-in uninterrupted play and retains both painter costs
+  ---
+  duration_ms: 12.146125
+  type: 'test'
+  ...
+# Subtest: changing comparison conditions and viewport resets samples without mixing configurations
+ok 7 - changing comparison conditions and viewport resets samples without mixing configurations
+  ---
+  duration_ms: 11.199417
+  type: 'test'
+  ...
+# Subtest: a controller pause during the actual input poll cannot append a paused timing sample
+ok 8 - a controller pause during the actual input poll cannot append a paused timing sample
+  ---
+  duration_ms: 9.039375
+  type: 'test'
+  ...
+# Subtest: Retry cue and background return begin new measurement segments without sampling waits
+ok 9 - Retry cue and background return begin new measurement segments without sampling waits
+  ---
+  duration_ms: 13.531625
+  type: 'test'
+  ...
+# Subtest: contact study pauses and clears input, resets measurements and only changes the second painter
+ok 10 - contact study pauses and clears input, resets measurements and only changes the second painter
+  ---
+  duration_ms: 11.629
+  type: 'test'
+  ...
+# Subtest: actual event handler replaces stale loss feedback without stealing focus or repeating status
+ok 11 - actual event handler replaces stale loss feedback without stealing focus or repeating status
+  ---
+  duration_ms: 10.125875
+  type: 'test'
+  ...
+# Subtest: a live loss uses the actual event cause and existing advice, never the retained run cause
+ok 12 - a live loss uses the actual event cause and existing advice, never the retained run cause
+  ---
+  duration_ms: 2.642125
+  type: 'test'
+  ...
+# Subtest: unknown event causes use the fixed fallback without raw codes or coercion
+ok 13 - unknown event causes use the fixed fallback without raw codes or coercion
+  ---
+  duration_ms: 0.615208
+  type: 'test'
+  ...
+# Subtest: terminal completion outranks every other event in either order and a won run ignores stale cause
+ok 14 - terminal completion outranks every other event in either order and a won run ignores stale cause
+  ---
+  duration_ms: 0.414125
+  type: 'test'
+  ...
+# Subtest: recovery and meaningful capture replace stale reasons while ordinary ticks preserve the current status
+ok 15 - recovery and meaningful capture replace stale reasons while ordinary ticks preserve the current status
+  ---
+  duration_ms: 0.1265
+  type: 'test'
+  ...
+# Subtest: projection is read-only and does not invoke accessors or inherited status/cause fields
+ok 16 - projection is read-only and does not invoke accessors or inherited status/cause fields
+  ---
+  duration_ms: 0.326625
+  type: 'test'
+  ...
+# Subtest: a real failure, recovery and nonterminal capture produce three messages with no tick spam
+not ok 17 - a real failure, recovery and nonterminal capture produce three messages with no tick spam
+  ---
+  duration_ms: 29.417125
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/playable-benchmark-outcome.test.mjs:132:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'Captured 20 cells. 0.8% revealed.'
+    - 'Captured 30 cells. 1.3% revealed.'
+                ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Captured 30 cells. 1.3% revealed.'
+  actual: 'Captured 20 cells. 0.8% revealed.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/playable-benchmark-outcome.test.mjs:158:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a real win after recovery replaces the retained failure cause and the same-tick capture
+not ok 18 - a real win after recovery replaces the retained failure cause and the same-tick capture
+  ---
+  duration_ms: 15.514333
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/playable-benchmark-outcome.test.mjs:175:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        61,
+        138,
+    +   730
+    -   675
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 61
+    1: 138
+    2: 675
+  actual:
+    0: 61
+    1: 138
+    2: 730
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/playable-benchmark-outcome.test.mjs:192:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a real exhausted attempt gives terminal advice instead of promising another recovery
+ok 19 - a real exhausted attempt gives terminal advice instead of promising another recovery
+  ---
+  duration_ms: 9.196292
+  type: 'test'
+  ...
+# Subtest: bounded cohort resolves exact current default Solo source identities and original pins
+ok 20 - bounded cohort resolves exact current default Solo source identities and original pins
+  ---
+  duration_ms: 11.779833
+  type: 'test'
+  ...
+# Subtest: real introductory capture wins and Retry exactly repeats setup and result without changing source
+not ok 21 - real introductory capture wins and Retry exactly repeats setup and result without changing source
+  ---
+  duration_ms: 17.89575
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/playable-benchmark.test.mjs:70:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'running' !== 'won'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'won'
+  actual: 'running'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/playable-benchmark.test.mjs:83:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: real self-contact failure consumes lives and reaches loss before a fresh deterministic Retry
+ok 22 - real self-contact failure consumes lives and reaches loss before a fresh deterministic Retry
+  ---
+  duration_ms: 11.282583
+  type: 'test'
+  ...
+# Subtest: native pursuit and interception warnings, impacts and captures come from their actual source missions
+not ok 23 - native pursuit and interception warnings, impacts and captures come from their actual source missions
+  ---
+  duration_ms: 25.779375
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/playable-benchmark.test.mjs:147:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    8 !== 60
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 60
+  actual: 8
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/playable-benchmark.test.mjs:159:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: pause and render-frame partitioning do not advance or retime the real fixed-step simulation
+ok 24 - pause and render-frame partitioning do not advance or retime the real fixed-step simulation
+  ---
+  duration_ms: 12.977625
+  type: 'test'
+  ...
+# Subtest: selection retains the old run through loading/failure and disposes superseded or departed work
+ok 25 - selection retains the old run through loading/failure and disposes superseded or departed work
+  ---
+  duration_ms: 0.336708
+  type: 'test'
+  ...
+# Subtest: explicit cancellation keeps the prior scene and rejects even an abort-ignoring loader
+ok 26 - explicit cancellation keeps the prior scene and rejects even an abort-ignoring loader
+  ---
+  duration_ms: 0.177625
+  type: 'test'
+  ...
+# Subtest: the existing picture boundary verifies and decodes the exact original before ownership
+ok 27 - the existing picture boundary verifies and decodes the exact original before ownership
+  ---
+  duration_ms: 152.649708
+  type: 'test'
+  ...
+# Subtest: adoption failure rolls back and releases only the failed replacement
+ok 28 - adoption failure rolls back and releases only the failed replacement
+  ---
+  duration_ms: 0.228375
+  type: 'test'
+  ...
+# Subtest: 600 ms ready cue never advances simulation and starts exactly one owned retry
+ok 29 - 600 ms ready cue never advances simulation and starts exactly one owned retry
+  ---
+  duration_ms: 4.998625
+  type: 'test'
+  ...
+# Subtest: Retry requires a fresh matching press/release after terminal focus moves
+ok 30 - Retry requires a fresh matching press/release after terminal focus moves
+  ---
+  duration_ms: 0.348875
+  type: 'test'
+  ...
+# Subtest: terminal focus wait respects intervening navigation and final departure
+ok 31 - terminal focus wait respects intervening navigation and final departure
+  ---
+  duration_ms: 0.119625
+  type: 'test'
+  ...
+# Subtest: native D-pad and chosen swipe mode steer the actual run, with fresh-key gating after Retry
+ok 32 - native D-pad and chosen swipe mode steer the actual run, with fresh-key gating after Retry
+  ---
+  duration_ms: 8.105042
+  type: 'test'
+  ...
+# Subtest: scene owns the exact approved actor lease, resets visual phase on Retry, and releases resources
+ok 33 - scene owns the exact approved actor lease, resets visual phase on Retry, and releases resources
+  ---
+  duration_ms: 1696.6465
+  type: 'test'
+  ...
+# Subtest: native Scout loader verifies both treatments and exposes only source provenance with delegated actors
+ok 34 - native Scout loader verifies both treatments and exposes only source provenance with delegated actors
+  ---
+  duration_ms: 2.423417
+  type: 'test'
+  ...
+# Subtest: explicit v4 Scout cohort remains separate from unchanged v3 images and delegated approval
+ok 35 - explicit v4 Scout cohort remains separate from unchanged v3 images and delegated approval
+  ---
+  duration_ms: 4.112667
+  type: 'test'
+  ...
+# Subtest: explicit v5 optical bodies retain the shared rig and separate unchanged v4 provenance
+ok 36 - explicit v5 optical bodies retain the shared rig and separate unchanged v4 provenance
+  ---
+  duration_ms: 3.97175
+  type: 'test'
+  ...
+# Subtest: known cohort table rejects aliases, cross-cohort manifests and extra or redirected entries before file reads
+ok 37 - known cohort table rejects aliases, cross-cohort manifests and extra or redirected entries before file reads
+  ---
+  duration_ms: 11.713583
+  type: 'test'
+  ...
+# Subtest: candidate byte, source, native geometry and decode mismatches fail without admitting images
+ok 38 - candidate byte, source, native geometry and decode mismatches fail without admitting images
+  ---
+  duration_ms: 20.777708
+  type: 'test'
+  ...
+# Subtest: candidate cancellation rejects promptly and closes a decoder that returns late
+ok 39 - candidate cancellation rejects promptly and closes a decoder that returns late
+  ---
+  duration_ms: 3.902542
+  type: 'test'
+  ...
+# Subtest: comparison replacement pauses without changing the real run and releases failed, stale or retired candidates
+ok 40 - comparison replacement pauses without changing the real run and releases failed, stale or retired candidates
+  ---
+  duration_ms: 6.568333
+  type: 'test'
+  ...
+# Subtest: the shipped Scout option has exact dependencies and adds no mode core files
+ok 41 - the shipped Scout option has exact dependencies and adds no mode core files
+  ---
+  duration_ms: 2793.605292
+  type: 'test'
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 37
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6365.585959

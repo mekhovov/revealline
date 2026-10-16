@@ -1,0 +1,282 @@
+{
+  "format": "revealline-presentation-envelope-capacity-evidence.v1",
+  "checkedAt": "2026-09-24T22:24:18.090Z",
+  "base": "d55b10d523e15d991cbedc6e283fab396120ee47",
+  "branch": "codex/presentation-envelope-capacity",
+  "versionUnchanged": "0.107.0",
+  "node": "v20.19.5",
+  "prettier": "3.6.2",
+  "sources": {
+    "game/presentation/document-codec.mjs": {
+      "sha256": "7fc5252a0db138afdf6aa3f30ca78e1257190f5c9385f97bbc60f6a8dde04804",
+      "bytes": 5586,
+      "baseSha256": "e6f3eb5ad63be9bb48079a4e63046632981802ce41bec732d67d1fbf8015f10f"
+    },
+    "game/test/presentation-document-codec.test.mjs": {
+      "sha256": "711974e337a8cf9e256d4de43b4c16ff3448c33ca3f44e4d4dc30589fb4f1c65",
+      "bytes": 13065,
+      "baseSha256": "948d6bb3dc31aada90bd172cd088fe8decc49c8d33c1f1cd613c2b704c60fc63"
+    },
+    "docs/presentation-metadata.md": {
+      "sha256": "1eb1ad84d25a4c8eec2e49391b973d95a605f3296ee10a6edadc0814829563c3",
+      "bytes": 5866,
+      "baseSha256": "3516560b305dbfec3f7730468301588491cf8259d9c6636d7b0fe55a629e9db3"
+    }
+  },
+  "change": {
+    "logicalNodeLimit": 100000,
+    "dictionaryEntries": 4096,
+    "wrapperNodes": 3,
+    "encodedEnvelopeNodeLimit": 104099,
+    "unchanged": [
+      "logical bytes8MiB",
+      "encoded bytes5MiB",
+      "logical depth18/envelope19",
+      "record/array limits",
+      "string limit8192",
+      "legacy raw2048-array/node/byte boundaries",
+      "dictionary semantics",
+      "production history and original payloads",
+      "compiled bytes for previously admitted inputs"
+    ]
+  },
+  "triggeringQuickControls": {
+    "sourceHead": "41cbf2be98969b462ced59382e1d2671eb07423a",
+    "stackedBase": "c80cfe01cdd0379977dac2ea0ddfe236d53a7591",
+    "sourceCodecGitBlob": "dd9b4df6de9e7e01db19914b43e573633c4859dc",
+    "dependencyRepairedLedgerSha256": "56a1072d6be815efc823c075326ce12baa18853bbc47ce17ec52334855640a20",
+    "futureReplacement": {
+      "logicalNodes": 99761,
+      "encodedNodes": 100307,
+      "dictionaryEntries": 543,
+      "logicalBytes": 6372343,
+      "encodedBytes": 3622897,
+      "assetRecords": 2546,
+      "themeRecords": 78
+    },
+    "method": "Read-only module-loader overlay substitutes only this exact codec into the separate unpushed quick-controls repair. No combined source commit, generated ledger or runtime change is included here.",
+    "after": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 11
+    },
+    "logicalHeadroom": 239
+  },
+  "checks": {
+    "focused": {
+      "passed": 69,
+      "failed": 0,
+      "skipped": 0,
+      "logs": [
+        "codec-data-model-green.tap",
+        "bundle-green.tap",
+        "production-history-main.tap"
+      ]
+    },
+    "static": {
+      "eslint": true,
+      "prettier": true,
+      "diffCheck": true
+    },
+    "fullRepositoryTests": false,
+    "build": false
+  },
+  "preservedFailures": {
+    "initialRegressions": "codec-red.tap",
+    "sparseFixtureFailures": [
+      "bundle-initial-sparse-failure.tap",
+      "bundle-second-sparse-failure.tap"
+    ],
+    "broaderRun": "codec-metadata-initial.tap",
+    "preexistingMetadataIO": {
+      "originalCodecControl": "metadata-io-baseline-control.tap",
+      "actualBytes": 3386243,
+      "expectedBytes": 5242880,
+      "path": "game/test/presentation-metadata-io.test.mjs:202",
+      "status": "Unchanged baseline fixture pads logical canonical bytes and assumes encoded bytes equal them despite compact metadata. Not repaired in this prerequisite."
+    }
+  },
+  "limitations": [
+    "No new logical capacity; further history must satisfy original100000-node cap.",
+    "No source-stage review approval, media/content admission, visual/audio/device/offline/frozen/public qualification.",
+    "PR333 stays unpushed pending prerequisite review.",
+    "No generated ledger, compiled assets, workflow or version changes."
+  ],
+  "files": {
+    "README.md": {
+      "bytes": 3618,
+      "sha256": "e31253f7e08572b4f838f7d4e69818ce1818b5e59a8453f53acafc6fef6fd2d3"
+    },
+    "bundle-green.tap": {
+      "bytes": 6911,
+      "sha256": "46b40e6ef3c0fa2f88a289b0d064be3c3ef3ea11002361c666ecfedb29424316",
+      "tests": {
+        "tests": 31,
+        "pass": 31,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "bundle-initial-sparse-failure.tap": {
+      "bytes": 8584,
+      "sha256": "df4a48458b91a7cff8e0174042459bf18dfd01f419173862d7d247b9c24ae082",
+      "tests": {
+        "tests": 31,
+        "pass": 29,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "bundle-second-sparse-failure.tap": {
+      "bytes": 8989,
+      "sha256": "b6599389b01e24867a3721296e8f204cc287bad8b4987f60d8f35bd0bb673bab",
+      "tests": {
+        "tests": 31,
+        "pass": 29,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "codec-data-model-green.tap": {
+      "bytes": 5777,
+      "sha256": "1f68913a041b9308d593c077ca754f5900ffc332ecd1451bd593b05493fe3ce6",
+      "tests": {
+        "tests": 26,
+        "pass": 26,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "codec-metadata-initial.tap": {
+      "bytes": 8516,
+      "sha256": "b7e04688ca7faf1d127977a71dc837d289eca570a8a03da70ec0569f1497ce9c",
+      "tests": {
+        "tests": 34,
+        "pass": 33,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exactRawArchive": "codec-metadata-initial.tap.gz",
+      "normalization": "Trailing horizontal whitespace removed; exact raw bytes retained in linked gzip"
+    },
+    "codec-red.tap": {
+      "bytes": 5264,
+      "sha256": "7f0298d81811fe25814e46730658a20e7a4c187e26f02ea5f0cd553bd128a036",
+      "tests": {
+        "tests": 10,
+        "pass": 8,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exactRawArchive": "codec-red.tap.gz",
+      "normalization": "Trailing horizontal whitespace removed; exact raw bytes retained in linked gzip"
+    },
+    "integration-probe-loader.txt": {
+      "bytes": 325,
+      "sha256": "b437fb431449bb52e9029856879976787076855c55791ad929e3bdbfb3caa523"
+    },
+    "metadata-io-baseline-control.tap": {
+      "bytes": 2272,
+      "sha256": "df3792b379610703240203e9bd415b422ad1d3eb6e0b3f15d8d07c640e3d1044",
+      "tests": {
+        "tests": 4,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 3,
+        "todo": 0
+      },
+      "exactRawArchive": "metadata-io-baseline-control.tap.gz",
+      "normalization": "Trailing horizontal whitespace removed; exact raw bytes retained in linked gzip"
+    },
+    "original-capacity-diagnostic-loader.txt": {
+      "bytes": 1258,
+      "sha256": "88cd7cdbe7208d4e7266df4e6a496a7c072ce7b81ea000a83bec2a6b48cf36db"
+    },
+    "production-history-main.tap": {
+      "bytes": 2699,
+      "sha256": "8cb9df4db9d02a537c9131797bcd8f3497a51aeafc506297e881791b8c0687e3",
+      "tests": {
+        "tests": 12,
+        "pass": 12,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "quick-controls-capacity-green.tap": {
+      "bytes": 3602,
+      "sha256": "12f8c4387780529ec3c78f5d9aeae50784b9cc7e3f4766b1f90f6aaf3e3a31c3",
+      "tests": {
+        "tests": 12,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 11,
+        "todo": 0
+      }
+    },
+    "quick-controls-capacity-original-baseline.tap": {
+      "bytes": 3115,
+      "sha256": "384cab80899095779fb6e765cb8d935f7e824f1fa411372b0dba879356479c53",
+      "tests": {
+        "tests": 12,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 11,
+        "todo": 0
+      }
+    },
+    "quick-controls-capacity-original-failure.tap": {
+      "bytes": 5580,
+      "sha256": "6b4af99f5abcf2fa0ce4c919f699fc43811e2433aba3baa2f891bcbcfbf003f8",
+      "tests": {
+        "tests": 12,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 11,
+        "todo": 0
+      }
+    },
+    "static-checks.txt": {
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    "codec-metadata-initial.tap.gz": {
+      "bytes": 2254,
+      "sha256": "cc079f6359b38c2359e4969ed21922192124a70854c1adc648c225efbd4240f1",
+      "uncompressedBytes": 8520,
+      "uncompressedSha256": "7b57ad6ad63c3769684ca3250587d8619451114546e86ddbc24df5756c1a59f3",
+      "purpose": "Exact raw output retained before whitespace-only display normalization"
+    },
+    "codec-red.tap.gz": {
+      "bytes": 1279,
+      "sha256": "e7e372ab01cad692240870ed0af71d599b893a43c0c884a8a2961446f85de1ff",
+      "uncompressedBytes": 5272,
+      "uncompressedSha256": "737592c5d8e3c0464ba54bf0e9e933ae359fd5f527bf9da79918674c85e7add8",
+      "purpose": "Exact raw output retained before whitespace-only display normalization"
+    },
+    "metadata-io-baseline-control.tap.gz": {
+      "bytes": 976,
+      "sha256": "ba6cc4d0b4fa9611b8d1be163294d24ef63bf1a7942f9523cbcd803415064868",
+      "uncompressedBytes": 2276,
+      "uncompressedSha256": "13e8f0e410420c70ab6ba24423bb9341d90a35e3437ae4f3a52f128815dada8a",
+      "purpose": "Exact raw output retained before whitespace-only display normalization"
+    }
+  }
+}

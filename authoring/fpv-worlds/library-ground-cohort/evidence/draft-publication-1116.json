@@ -1,0 +1,120 @@
+{
+  "format": "LibraryGroundCohortDraftPublication.v1",
+  "observedAt": "2026-10-05T12:52:45.133243+00:00",
+  "sourceHead": "bdbb7c96fbf83841508794dc1ee750075099d171",
+  "nativeStack": 1103,
+  "members": [
+    {
+      "number": 1101,
+      "head": "d78ae3bdd84e7f92ea88f94f8ca9e3fe04afe009",
+      "baseRef": "main",
+      "baseSha": "cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873",
+      "draft": true,
+      "stack": {
+        "id": 1736561,
+        "number": 1103,
+        "base": {
+          "ref": "main",
+          "sha": "cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873"
+        },
+        "size": 3,
+        "position": 1
+      },
+      "url": "https://github.com/mekhovov/revealline/pull/1101"
+    },
+    {
+      "number": 1102,
+      "head": "c958e5e13d0357e46b9a2c489802708adcdc05d8",
+      "baseRef": "codex/fpv-versioned-ground-motion",
+      "baseSha": "d78ae3bdd84e7f92ea88f94f8ca9e3fe04afe009",
+      "draft": true,
+      "stack": {
+        "id": 1736561,
+        "number": 1103,
+        "base": {
+          "ref": "main",
+          "sha": "cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873"
+        },
+        "size": 3,
+        "position": 2
+      },
+      "url": "https://github.com/mekhovov/revealline/pull/1102"
+    },
+    {
+      "number": 1116,
+      "head": "bdbb7c96fbf83841508794dc1ee750075099d171",
+      "baseRef": "codex/fpv-harbor-docks-support-v1",
+      "baseSha": "c958e5e13d0357e46b9a2c489802708adcdc05d8",
+      "draft": true,
+      "stack": {
+        "id": 1736561,
+        "number": 1103,
+        "base": {
+          "ref": "main",
+          "sha": "cfa30a228eb25d2bc7e4dd6d76e417c0d76a6873"
+        },
+        "size": 3,
+        "position": 3
+      },
+      "url": "https://github.com/mekhovov/revealline/pull/1116"
+    }
+  ],
+  "operation": "gh stack link 1103 1116",
+  "parentsUnchanged": true,
+  "branchPush": "new branch, no force",
+  "focusedChecks": {
+    "sourceContract": {
+      "passed": 60,
+      "failed": 0,
+      "nativeWorker": false
+    },
+    "reactionProjection": {
+      "status": "verified-byte-identical",
+      "modules": 28,
+      "recordings": 24,
+      "bytes": 894461
+    },
+    "workerProjection": {
+      "status": "verified-byte-identical",
+      "bytes": 6783,
+      "packageSlotsAdded": 0
+    },
+    "syntax": "passed",
+    "diffCheck": "passed"
+  },
+  "frozenAdmission": {
+    "source": "2c99a82508f23e508666d7354a1b473507514d48",
+    "runtimeInputEquivalenceVerified": true,
+    "distinctInputs": 138,
+    "freshAdmissionAtPublishedHead": false
+  },
+  "festivalCarryForward": {
+    "pr": 1113,
+    "head": "bfb05fff7589a223abf59e071088fc928749fff9",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "rule": "After eligible Festival publication is inherited, copy its unchanged row into this cumulative feed before final qualification; if this cohort lands first, the later compatible row publication must update this feed too. Do not add the unpublished row early."
+  },
+  "retainedEvidence": [
+    {
+      "path": "authoring/fpv-worlds/library-ground-cohort/evidence/source-contract-bdbb7c96f.json",
+      "bytes": 32829,
+      "sha256": "7fd4256874ba9cbcd09ef084ca8a39995cc2d1af4d853e0276d1cfca08329252"
+    },
+    {
+      "path": "authoring/fpv-worlds/library-ground-cohort/evidence/runtime-equivalence-bdbb7c96f.json",
+      "bytes": 3633,
+      "sha256": "1421ea1c8b14373b069d8df76afb02a8aee1a126e48e06e71b05c15e0edc7ed5"
+    }
+  ],
+  "remaining": [
+    "Coordinate current-main integration of the ground/Harbor/cohort stack.",
+    "Run fresh final exact-source package admission after the disk floor or qualified exact-head CI permits it.",
+    "Qualify exact old/new capable players, native workers, retained storage and stopped-origin recovery.",
+    "Complete protected review, publication and actual public launch; Harbor catalogue row is a separate gate."
+  ],
+  "publicEligible": false,
+  "nativeQualification": false,
+  "heavyBuildsRun": false
+}

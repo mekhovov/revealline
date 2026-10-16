@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: the feature manifest selects every required stream and real test paths
+ok 1 - the feature manifest selects every required stream and real test paths
+  ---
+  duration_ms: 6.800666
+  ...
+# Subtest: industrial host phases install their locked SIM fixtures before executing native Studio checks
+ok 2 - industrial host phases install their locked SIM fixtures before executing native Studio checks
+  ---
+  duration_ms: 14.049292
+  ...
+# Subtest: TAP receipts cannot turn skipped, failed, absent or canceled tests into passing evidence
+ok 3 - TAP receipts cannot turn skipped, failed, absent or canceled tests into passing evidence
+  ---
+  duration_ms: 0.338417
+  ...
+# Subtest: deadline cleanup kills a descendant after its parent closes early
+ok 4 - deadline cleanup kills a descendant after its parent closes early
+  ---
+  duration_ms: 1409.142584
+  ...
+# Subtest: aborting cannot accept an exit-zero child and kills its surviving descendants
+ok 5 - aborting cannot accept an exit-zero child and kills its surviving descendants
+  ---
+  duration_ms: 264.935542
+  ...
+# Subtest: cleanup EPERM preserves the interrupted exit-zero outcome as failed execution evidence
+ok 6 - cleanup EPERM preserves the interrupted exit-zero outcome as failed execution evidence
+  ---
+  duration_ms: 261.11875
+  ...
+# Subtest: a failed child spawn still produces serializable failed execution evidence
+ok 7 - a failed child spawn still produces serializable failed execution evidence
+  ---
+  duration_ms: 1.71525
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2007.945375

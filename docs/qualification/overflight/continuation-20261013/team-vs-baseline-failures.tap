@@ -1,0 +1,67 @@
+TAP version 13
+# Subtest: fresh Team missing package offers one Download & play action and starts only after exact verified readiness
+not ok 1 - fresh Team missing package offers one Download & play action and starts only after exact verified readiness
+  ---
+  duration_ms: 6797.866709
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/offline-download-play-host.test.mjs:172:1'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture ready. Start remains a separate action.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/coop-presentation-fixture.mjs:42:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/offline-download-play-host.test.mjs:175:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: Team Download & play never reclaims focus or starts after a newer lobby choice
+not ok 2 - Team Download & play never reclaims focus or starts after a newer lobby choice
+  ---
+  duration_ms: 6492.6325
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/offline-download-play-host.test.mjs:234:1'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Team picture ready. Start remains a separate action.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/coop-presentation-fixture.mjs:42:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/offline-download-play-host.test.mjs:236:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fresh Versus missing package offers one Download & play action and admits that exact race once ready
+not ok 3 - fresh Versus missing package offers one Download & play action and admits that exact race once ready
+  ---
+  duration_ms: 10322.617292
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/offline-download-play-host.test.mjs:272:1'
+  failureType: 'testCodeFailure'
+  error: 'Observable Team condition did not settle. Ready. First clear wins.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/wait-for.mjs:15:12)
+    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/coop-presentation-fixture.mjs:42:5)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/offline-download-play-host.test.mjs:344:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 0
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 24464.243792

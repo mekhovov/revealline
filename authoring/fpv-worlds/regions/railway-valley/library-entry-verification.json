@@ -1,0 +1,132 @@
+{
+  "passed": true,
+  "identity": {
+    "id": "railway-valley-expanse",
+    "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7"
+  },
+  "records": [
+    {
+      "quality": "low",
+      "surfaces": 9,
+      "geometryDigest": "91833da12d3ef01a0990d9989a4acc732e1d0c057c2483ce075dc145f09428fc"
+    },
+    {
+      "quality": "balanced",
+      "surfaces": 9,
+      "geometryDigest": "91833da12d3ef01a0990d9989a4acc732e1d0c057c2483ce075dc145f09428fc"
+    },
+    {
+      "quality": "high",
+      "surfaces": 9,
+      "geometryDigest": "91833da12d3ef01a0990d9989a4acc732e1d0c057c2483ce075dc145f09428fc"
+    }
+  ],
+  "exactDescriptor": true,
+  "oldRevisionPreserved": true,
+  "playerAdmission": false,
+  "claim": "Source-only exact pin, presentation, safe preparation and disposal. Native player and package acceptance remain separate.",
+  "delivery": {
+    "verifiedResponses": 619,
+    "totalWithDescriptorBytes": 17943638,
+    "productionSessionCases": [
+      {
+        "mode": "self-level",
+        "spawnId": "freight-hall",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 676872,
+        "textureBytes": 2446676
+      },
+      {
+        "mode": "self-level",
+        "spawnId": "viaduct-river-gap",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 590328,
+        "textureBytes": 0
+      },
+      {
+        "mode": "self-level",
+        "spawnId": "quarry-under-conveyor",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 597264,
+        "textureBytes": 2446676
+      },
+      {
+        "mode": "self-level",
+        "spawnId": "station-canopy",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 597216,
+        "textureBytes": 2446676
+      },
+      {
+        "mode": "self-level",
+        "spawnId": "foundry-gantries",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 709584,
+        "textureBytes": 2446676
+      },
+      {
+        "mode": "self-level",
+        "spawnId": "timber-crane-line",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 599376,
+        "textureBytes": 2446676
+      },
+      {
+        "mode": "acro",
+        "spawnId": "freight-hall",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 676872,
+        "textureBytes": 2446676
+      },
+      {
+        "mode": "acro",
+        "spawnId": "viaduct-river-gap",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 590328,
+        "textureBytes": 0
+      },
+      {
+        "mode": "acro",
+        "spawnId": "quarry-under-conveyor",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 597264,
+        "textureBytes": 2446676
+      },
+      {
+        "mode": "acro",
+        "spawnId": "station-canopy",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 597216,
+        "textureBytes": 2446676
+      },
+      {
+        "mode": "acro",
+        "spawnId": "foundry-gantries",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 709584,
+        "textureBytes": 2446676
+      },
+      {
+        "mode": "acro",
+        "spawnId": "timber-crane-line",
+        "ticks": 100,
+        "contacts": 0,
+        "geometryBytes": 599376,
+        "textureBytes": 2446676
+      }
+    ],
+    "disposalZero": true
+  },
+  "runtimeBase": "e1f124d2a732bea20b59b10f156afd5b1b01138f"
+}

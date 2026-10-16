@@ -13,7 +13,7 @@ const repository = 'owner/game',
   canonical = scope + 'releases/v0.29.1/site/',
   hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
-async function fixture(t) {
+async function fixture(t, { localized = false, branded = false, communities = false } = {}) {
   const source = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-current-'));
   t.after(() => fs.rm(source, { recursive: true, force: true }));
   const assets = {
@@ -26,6 +26,24 @@ async function fixture(t) {
     'game/app.mjs': 'export const frozen = true;',
     'service-worker.js': '/* original scoped worker */',
   };
+  if (communities) {
+    assets['game/communities/index.html'] = '<a href="droneaid/">DroneAid</a>';
+    assets['game/community/index.html'] = '<script src="redirect.mjs"></script>';
+    assets['game/community/redirect.mjs'] = 'export const legacy = true;';
+    assets['game/communities/entry.mjs'] = 'export const shared = true;';
+    for (const slug of ['droneaid', 'droneaid-community'])
+      assets[`game/communities/${slug}/index.html`] =
+        `<html data-community="${slug}"><script type="module" src="../entry.mjs"></script></html>`;
+  }
+  if (branded) assets['icons/icon-192.png'] = 'frozen icon fixture';
+  if (localized)
+    for (const name of [
+      'i18n/style.css',
+      'vendor/i18next-26.4.2.min.js',
+      'i18n/catalogs.mjs',
+      'i18n/bootstrap.mjs',
+    ])
+      assets[`game/${name}`] = '/* immutable locale fixture */';
   for (const [relative, bytes] of Object.entries(assets)) {
     await fs.mkdir(path.dirname(path.join(source, relative)), { recursive: true });
     await fs.writeFile(path.join(source, relative), bytes);
@@ -67,6 +85,61 @@ function navigate(page, href) {
   return destination;
 }
 
+test('public community aliases preserve clean nested routes, saved links and frozen entry bytes', async (t) => {
+  const { source, assets, plan } = await fixture(t, { communities: true });
+  const paths = [
+    'game/communities',
+    'game/communities/droneaid',
+    'game/communities/droneaid',
+    'game/communities/droneaid-community',
+    'game/community',
+  ];
+  const navigation = new Map(plan.metadata.navigationRoutes.map(({ from, to }) => [from, to]));
+  for (const base of [scope, 'http://127.0.0.1:8768/', 'http://127.0.0.1:8768/project/']) {
+    for (const route of paths) {
+      const name = `${route}/index.html`,
+        page = plan.files.get(name);
+      assert.ok(page, name);
+      for (const suffix of ['', '/', '/index.html']) {
+        assert.equal(
+          navigate(page, `${base}${route}${suffix}?campaign=retained&presentation=abc#saved`),
+          `${base}releases/v0.29.1/site/${name}?campaign=retained&presentation=abc#saved`,
+        );
+        assert.equal(
+          navigation.get(route + suffix),
+          route + (suffix === '/index.html' ? suffix : '/'),
+        );
+      }
+      assert.deepEqual(await fs.readFile(path.join(source, name)), Buffer.from(assets[name]));
+    }
+  }
+  assert.ok(!navigation.has('game/communities/unpublished'));
+  assert.ok(
+    !plan.files.has('game/communities/entry.mjs'),
+    'Runtime modules stay in the frozen release graph.',
+  );
+});
+
+test('localized aliases resolve locale assets within the same immutable release at every depth', async (t) => {
+  const { plan, source, assets } = await fixture(t, { localized: true });
+  for (const entry of plan.metadata.htmlEntries) {
+    const page = plan.files.get(entry.path);
+    assert.ok(page.includes('data-language-control'));
+    assert.ok(page.includes('data-i18n="website:page.opening"'));
+    assert.ok(page.includes('<noscript><p lang="uk">'));
+    const sources = [...page.matchAll(/(?:src|href)="([^"]*(?:i18n|i18next)[^"]*)"/g)];
+    assert.equal(sources.length, 4);
+    for (const [, relative] of sources)
+      assert.ok(new URL(relative, scope + entry.path).href.startsWith(canonical + 'game/'));
+    assert.equal(
+      navigate(page, scope + entry.path + '?practice=1#cut'),
+      entry.target + '?practice=1#cut',
+    );
+  }
+  for (const [relative, bytes] of Object.entries(assets))
+    assert.equal(await fs.readFile(path.join(source, relative), 'utf8'), bytes);
+});
+
 test('all current HTML aliases preserve queries/fragments with auditable source and output hashes', async (t) => {
   const { source, assets, plan } = await fixture(t);
   assert.equal(plan.metadata.canonicalSite, canonical);
@@ -80,9 +153,9 @@ test('all current HTML aliases preserve queries/fragments with auditable source 
       navigate(page, scope + entry.path + '?pack=old&value=%3C%2Fscript%3E#saved%20cut'),
       entry.target + '?pack=old&value=%3C%2Fscript%3E#saved%20cut',
     );
-    assert.ok(page.includes(`<a href="${entry.relativeTarget}">`));
+    assert.ok(page.includes(`<a href="${entry.relativeTarget}" data-i18n="common:actions.play">`));
     assert.ok(page.includes('>Play</a>'));
-    assert.ok(page.includes('Opening Reveal / Line…'));
+    assert.ok(page.includes('Opening FPV / LINE…'));
     assert.doesNotMatch(page, /<(?:script|link)\b[^>]*(?:src=|rel="stylesheet")/);
   }
   const destination = path.join(source, 'output');
@@ -225,7 +298,7 @@ test('actual launcher and runtime links stay versioned; About history uses the g
     link = {};
   let destination;
   for (const base of [canonical, 'http://127.0.0.1:8768/']) {
-    vm.runInNewContext(launch, {
+    await vm.runInNewContext(launch, {
       URL,
       document: { currentScript: { src: base + 'site/launch.mjs' }, getElementById: () => link },
       location: {
@@ -292,6 +365,9 @@ test('actual launcher and runtime links stay versioned; About history uses the g
           catalog.html,
         );
         generatedCatalogLinks++;
+      } else if (filename === 'app/update.html') {
+        assert.equal(relative, 'game/index.html');
+        assert.match(tag, /id="boot-update-action"/);
       } else if (!['privacy.html', 'credits.html'].includes(filename))
         // Public privacy/credits pages are generated by the unchanged distribution CLI.
         assert.ok(
@@ -303,4 +379,14 @@ test('actual launcher and runtime links stay versioned; About history uses the g
     assert.ok(checked > 0, relative);
   }
   assert.equal(generatedCatalogLinks, 1);
+});
+
+test('current entry favicon follows the immutable icon graph at every alias depth', async (t) => {
+  const { plan } = await fixture(t, { branded: true });
+  for (const entry of plan.metadata.htmlEntries) {
+    const page = plan.files.get(entry.path).toString();
+    const icon = page.match(/<link rel="icon" type="image\/png" href="([^"]+)">/);
+    assert.ok(icon, entry.path);
+    assert.equal(new URL(icon[1], scope + entry.path).href, canonical + 'icons/icon-192.png');
+  }
 });

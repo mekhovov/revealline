@@ -1,0 +1,109 @@
+TAP version 13
+# Subtest: a maximum logical document admits only the bounded dictionary and wrapper overhead
+not ok 1 - a maximum logical document admits only the bounded dictionary and wrapper overhead
+  ---
+  duration_ms: 535.055083
+  location: '/private/tmp/revealline-soundtrack-ledger-v106/game/test/presentation-document-codec.test.mjs:58:1'
+  failureType: 'testCodeFailure'
+  error: 'JSON exceeds its structural budget.'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:41:13)
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:84:18)
+    boundedJSON (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:92:18)
+    encodePresentationDocument (file:///private/tmp/revealline-soundtrack-ledger-v106/game/presentation/document-codec.mjs:84:24)
+    TestContext.<anonymous> (file:///private/tmp/revealline-soundtrack-ledger-v106/game/test/presentation-document-codec.test.mjs:64:19)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+  ...
+# Subtest: envelope overhead cannot authorize another logical node or another dictionary entry
+not ok 2 - envelope overhead cannot authorize another logical node or another dictionary entry
+  ---
+  duration_ms: 397.978958
+  location: '/private/tmp/revealline-soundtrack-ledger-v106/game/test/presentation-document-codec.test.mjs:75:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /item budget/. Input:
+
+    'TypeError: JSON exceeds its structural budget.'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'JSON exceeds its structural budget.'
+  name: 'TypeError'
+  stack: |-
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:41:13)
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:84:18)
+    copy (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:84:18)
+    boundedJSON (file:///private/tmp/revealline-soundtrack-ledger-v106/game/data-json.mjs:92:18)
+    decodePresentationDocument (file:///private/tmp/revealline-soundtrack-ledger-v106/game/presentation/document-codec.mjs:92:19)
+    file:///private/tmp/revealline-soundtrack-ledger-v106/game/test/presentation-document-codec.test.mjs:103:25
+    getActual (node:assert:498:5)
+    Function.throws (node:assert:644:24)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/revealline-soundtrack-ledger-v106/game/test/presentation-document-codec.test.mjs:103:12)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    Test.postRun (node:internal/test_runner/test:889:19)
+    Test.run (node:internal/test_runner/test:835:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: fitting legacy canonical bytes and independently owned records stay exact
+ok 3 - fitting legacy canonical bytes and independently owned records stay exact
+  ---
+  duration_ms: 0.558542
+  ...
+# Subtest: large repeated provenance uses deterministic lossless metadata without editing input
+ok 4 - large repeated provenance uses deterministic lossless metadata without editing input
+  ---
+  duration_ms: 173.845
+  ...
+# Subtest: raw legacy arrays remain bounded while the explicit envelope admits up to4096
+ok 5 - raw legacy arrays remain bounded while the explicit envelope admits up to4096
+  ---
+  duration_ms: 78.741125
+  ...
+# Subtest: only exact sorted used string dictionaries and integer indexes are accepted
+ok 6 - only exact sorted used string dictionaries and integer indexes are accepted
+  ---
+  duration_ms: 3.087375
+  ...
+# Subtest: small wire dictionaries cannot bypass expanded bytes, strings, nodes or depth
+ok 7 - small wire dictionaries cannot bypass expanded bytes, strings, nodes or depth
+  ---
+  duration_ms: 87.291916
+  ...
+# Subtest: logical8MiB and encoded5MiB ceilings are exact and independent
+ok 8 - logical8MiB and encoded5MiB ceilings are exact and independent
+  ---
+  duration_ms: 342.646542
+  ...
+# Subtest: serialized raw and compact metadata accept exactly5MiB and reject the next byte
+ok 9 - serialized raw and compact metadata accept exactly5MiB and reject the next byte
+  ---
+  duration_ms: 441.01825
+  ...
+# Subtest: codec never invokes toJSON or accepts custom prototypes and bounds dictionary cardinality
+ok 10 - codec never invokes toJSON or accepts custom prototypes and bounds dictionary cardinality
+  ---
+  duration_ms: 28.688292
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 8
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2621.595917

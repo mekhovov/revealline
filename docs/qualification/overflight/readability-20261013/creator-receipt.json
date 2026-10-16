@@ -1,0 +1,25 @@
+{
+  "sourceOrigin": "http://127.0.0.1:8896",
+  "importOrigin": "http://127.0.0.1:8897",
+  "storageScope": "Empty game profile on separate local origin in the same browser; not a newly created browser user profile.",
+  "downloadSHA256": "ce040b75d6f6fe0f279f9187fea8c6e6bff32cedeb3d362b286453251c99f1df",
+  "downloadBytes": 13417,
+  "authoredTitle": {
+    "en": "Raid · Readability review 20261013",
+    "uk": "Наліт · Перевірка 20261013"
+  },
+  "firstLeaderX": 360,
+  "nativePackageId": "2c5e959cb7ecd5c0",
+  "compiledIdentity": "c40e7f018ca69e3e",
+  "reexportSHA256": "ce040b75d6f6fe0f279f9187fea8c6e6bff32cedeb3d362b286453251c99f1df",
+  "exactByteRoundTrip": true,
+  "nativeResult": {
+    "timeDisplayed": "00:25",
+    "cleared": 54,
+    "score": 22550,
+    "bestChain": 27,
+    "damageTaken": 0,
+    "armorBreaks": 7
+  },
+  "browserRuntimeErrors": []
+}

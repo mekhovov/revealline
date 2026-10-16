@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "0c8346c312d63f3a68d5f70a63ea104f8c6bb707",
+  "combinedPR": 796,
+  "audioInputPR": 794,
+  "releaseMilestone": "v0.150.0 \u2014 Unified native experience",
+  "preservedPR": 795,
+  "focusedAudioTests": {
+    "passed": 119,
+    "failed": 0
+  },
+  "hostTests": {
+    "initialPassed": 43,
+    "initialFailed": 1,
+    "correctedTeamBriefingTargetedRerun": "passed",
+    "independentCampaignCompanyReplayPassed": 23
+  },
+  "lint": "passed",
+  "format": "passed",
+  "validation": "passed",
+  "productionBuild": {
+    "status": "failed",
+    "reason": "Offline distribution exceeds 64 MiB",
+    "files": 1296,
+    "bytes": 94521304
+  },
+  "remaining": [
+    "Fix combined offline-core budget without raising the limit",
+    "Complete required checks on final source",
+    "Rerun current-bank native and offline qualification",
+    "Sustained human listening and physical-device review"
+  ],
+  "scope": "This record covers the audio and combined branches, not concurrent work in other checkouts."
+}

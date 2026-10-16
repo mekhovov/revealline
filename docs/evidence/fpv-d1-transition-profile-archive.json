@@ -1,0 +1,70 @@
+{
+  "format": "FPVD1TransitionProfileArchive.v1",
+  "candidate": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "tree": "6a90e48f99151041d899b4b8d6b2de5fcffd8b2f",
+  "archives": [
+    {
+      "file": "fpv-d1-transition-profile-v2-receipt.json.gz",
+      "gzipMtime": 0,
+      "compressedBytes": 23797,
+      "compressedSha256": "518158d7804385eb88eaa3f9c9ba001da47e95e4d707e70409e86c9db152090e",
+      "rawFile": "fpv-d1-transition-profile-v2-detailed.json",
+      "rawBytes": 297216,
+      "rawSha256": "bd663fbd528273925a6bb82b6733a6a61d4b243f1830368c8373a4c2368de625",
+      "losslessRoundTripVerified": true
+    },
+    {
+      "file": "fpv-d1-transition-profile-v2-analysis.json.gz",
+      "gzipMtime": 0,
+      "compressedBytes": 7247,
+      "compressedSha256": "53a5a25c3de7fc6ca3f87d6e054a13b71e29c24f42947d0b85d4741535036ec8",
+      "rawFile": "fpv-d1-transition-profile-analysis.json",
+      "rawBytes": 105705,
+      "rawSha256": "59de1a742b33db68632fb73a9d19865c6ad3b8647d436eedcd669c047b7c0cd7",
+      "losslessRoundTripVerified": true
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "fpv-d1-transition-profile-v1-harness.html",
+      "bytes": 28466,
+      "sha256": "1ec25db46accd0c0096970a81e7df72b117baf7d44b9962cfe659ec301dfceea"
+    },
+    {
+      "file": "fpv-d1-transition-profile-v1-manifest.json",
+      "bytes": 10027,
+      "sha256": "2e7093f2137e8a32eecfcce1d11bff240b16661b37301ec33113d9f617b98303"
+    },
+    {
+      "file": "fpv-d1-transition-profile-v1-summary-observation.json",
+      "bytes": 1122,
+      "sha256": "8de81dab4d2b291185b29ac73e6e82bcd1e777ed1e387d630f57b603f40ae50b"
+    },
+    {
+      "file": "fpv-d1-transition-profile-v2-harness.html",
+      "bytes": 28923,
+      "sha256": "3e1b0cc71c2e296765e3791319efc886d3641d3a2b6fc7a0bf0b5eebe0f6ae64"
+    },
+    {
+      "file": "fpv-d1-transition-profile-v2-manifest.json",
+      "bytes": 10243,
+      "sha256": "c735d6fb95fcf5457d62fe378ee2a7fc7d93c89c0a91c85a59f8f41dd8aa4f98"
+    },
+    {
+      "file": "fpv-d1-transition-profile-analyzer.mjs",
+      "bytes": 6120,
+      "sha256": "985f908840ce12248f7eae791f8783b5074a7474af97c5036826907be6262f83"
+    },
+    {
+      "file": "fpv-d1-transition-profile-v2-browser.png",
+      "bytes": 160716,
+      "sha256": "8be477ddf314d863741b8dd40583db9ce94a7b26f3d73d5d4309fab6bbebce5d"
+    }
+  ],
+  "provenance": {
+    "v1": "Only the operator-reported visible summary was recovered. Complete v1 receipt is not retained.",
+    "v2": "Complete JSON transferred from the read-only DOM receipt field after the separate visible focused v2 run.",
+    "analysis": "Rerunning the retained analyzer against the original v2 receipt reproduces the original analysis byte-for-byte.",
+    "sourceInputs": "All31 committed-source hashes before/after are exact e572; no production edits."
+  }
+}

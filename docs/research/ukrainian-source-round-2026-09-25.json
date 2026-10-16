@@ -1,0 +1,295 @@
+{
+  "format": "revealline.ukrainian-source-research.v1",
+  "updated": "2026-09-25",
+  "status": "research-only",
+  "approval": {
+    "publication": false,
+    "gameCatalogueAdmission": false,
+    "musical": false,
+    "cultural": false
+  },
+  "baselines": {
+    "gameMain": "f54a6ecbdf329c7fd175d90ec258537d035c72e7",
+    "archiveMain": "275525e791d7f135e581f56c22100eb1bca16804",
+    "archiveTrackCount": 128,
+    "currentUkrainianAuditionHoldings": [
+      "Ukrainian Air Force Band and three Vinnytsia choirs — Oi u luzi chervona kalyna",
+      "Youth Ethno Group Zoretsvit and Folk Ensemble Kalyna — A v kryvoho tantsia",
+      "Kate Orange — Oi khodyt son kolo vikon"
+    ],
+    "dedupe": "Normalized NFKD case-folded title/artist comparison against the 128-track archive catalogue and JSON audition holdings; all six leads had zero matches."
+  },
+  "policy": {
+    "sourceRule": "Technical and licence claims use the creator page, Wikimedia Commons file page/API, or the linked Creative Commons licence only.",
+    "deliveryRule": "A published CC licence can permit game embedding, offline copies and an MP3 derivative, but no row is cleared until the exact acquired bytes, contributor chain, attribution, derivative marking and source-specific obligations are verified.",
+    "recordingModeRule": "Unknown Content ID or gameplay-video claim status keeps Recording mode disabled.",
+    "listeningRule": "Published descriptions inform provisional style and scene only. No file was downloaded or auditioned in this research round."
+  },
+  "candidates": [
+    {
+      "id": "mykluho-maklay.pro-kozaka-nechaya",
+      "title": "Pro kozaka Nechaya (Oi z-za hory, da shche y z-za lymanu)",
+      "artist": "Mykluho Maklay",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Mykluho_Maklay_-_%D0%9C%D0%B8%D0%BA%D0%BB%D1%83%D1%85%D0%BE_%D0%9C%D0%B0%D0%BA%D0%BB%D0%B0%D0%B9_-_%D0%9F%D1%80%D0%BE_%D0%BA%D0%BE%D0%B7%D0%B0%D0%BA%D0%B0_%D0%9D%D0%B5%D1%87%D0%B0%D1%8F_(Cossack_song)_-FolkRockVideo.webm",
+      "licence": "CC BY 3.0 Unported",
+      "licenceURL": "https://creativecommons.org/licenses/by/3.0/",
+      "acquisitionRoute": "Resolve the named Wikimedia Commons File page through the Commons API and retain the exact native WebM plus API/file-page evidence; do not reacquire from YouTube.",
+      "native": {
+        "commonsTitle": "File:Mykluho Maklay - Миклухо Маклай - Про козака Нечая (Cossack song) -FolkRockVideo.webm",
+        "mime": "video/webm",
+        "bytes": 35618012,
+        "sha1": "d2abb3081dda365e7d107572e00215a1435dcbd8",
+        "sha256": null
+      },
+      "publishedDuration": "6:19",
+      "provenance": "The Commons description identifies an historical song about the death of Cossack colonel Danylo Nechai, recorded by the named Ukrainian male vocal group in Lviv on 15 November 2014.",
+      "provisionalStyle": [
+        "Ukrainian historical song",
+        "Cossack song",
+        "male a cappella"
+      ],
+      "provisionalScene": "gameplay or dramatic world, subject to listening",
+      "provisionalEnergy": "unknown; the source describes a cappella performance rather than an instrumental rhythm section",
+      "permissions": {
+        "webGameEmbedding": "permitted by the published licence with attribution",
+        "publicMp3Redistribution": "permitted for a marked derivative with attribution",
+        "offlineGameCopy": "permitted by the published licence with attribution",
+        "modification": "permitted with change notice and attribution",
+        "gameplayVideo": "permitted by the published licence; automated-claim risk is unverified",
+        "contentId": "unknown",
+        "recordingModeEligible": false
+      },
+      "blockers": [
+        "Commons records an automated YouTube licence review and warns that a human must still review derivative-work or third-party-rights issues.",
+        "Exact SHA-256, full decode, loudness, peak and derivative checks require bounded hosted acquisition.",
+        "Full-track, game-fit, vocal-language, Content ID and Ukrainian cultural review are pending."
+      ]
+    },
+    {
+      "id": "mykluho-maklay.oi-moroze-morozenku",
+      "title": "Oi Moroze, Morozenku",
+      "artist": "Mykluho Maklay",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9C%D0%B8%D0%BA%D0%BB%D1%83%D1%85%D0%BE_%D0%9C%D0%B0%D0%BA%D0%BB%D0%B0%D0%B9_-_%D0%9E%D0%B9_%D0%9C%D0%BE%D1%80%D0%BE%D0%B7%D0%B5_%D0%9C%D0%BE%D1%80%D0%BE%D0%B7%D0%B5%D0%BD%D0%BA%D1%83.webm",
+      "licence": "CC BY 3.0 Unported",
+      "licenceURL": "https://creativecommons.org/licenses/by/3.0/",
+      "acquisitionRoute": "Resolve the named Wikimedia Commons File page through the Commons API and retain the exact native WebM plus API/file-page evidence; do not reacquire from YouTube.",
+      "native": {
+        "commonsTitle": "File:Миклухо Маклай - Ой Морозе Морозенку.webm",
+        "mime": "video/webm",
+        "bytes": 34275502,
+        "sha1": "6c791e82c28eb20fbda9119d63527a17027d8d8d",
+        "sha256": null
+      },
+      "publishedDuration": "5:12",
+      "provenance": "The Commons recording is categorized as a Ukrainian traditional song. A separate Commons public-domain score identifies Oi Moroze, Morozenku as a Ukrainian folk song documented in a 1916 Vienna edition; the recording page names Mykluho Maklay as performer.",
+      "provenanceSource": "https://commons.wikimedia.org/wiki/File:Oi_Moroze,_Morozenku._Narodna_pisnia.jpg",
+      "provisionalStyle": [
+        "Ukrainian historical song",
+        "Cossack repertoire",
+        "male a cappella"
+      ],
+      "provisionalScene": "dramatic gameplay or world, subject to listening",
+      "provisionalEnergy": "unknown; source metadata does not establish rhythmic gameplay energy",
+      "permissions": {
+        "webGameEmbedding": "permitted by the published licence with attribution",
+        "publicMp3Redistribution": "permitted for a marked derivative with attribution",
+        "offlineGameCopy": "permitted by the published licence with attribution",
+        "modification": "permitted with change notice and attribution",
+        "gameplayVideo": "permitted by the published licence; automated-claim risk is unverified",
+        "contentId": "unknown",
+        "recordingModeEligible": false
+      },
+      "blockers": [
+        "Commons records an automated YouTube licence review and warns that a human must still review derivative-work or third-party-rights issues.",
+        "Exact SHA-256, full decode, loudness, peak and derivative checks require bounded hosted acquisition.",
+        "Full-track, game-fit, vocal-language, Content ID and Ukrainian cultural review are pending."
+      ]
+    },
+    {
+      "id": "tsimbl.hutsul-melodies",
+      "title": "Hutsul Melodies",
+      "artist": "Shaun Williams ensemble; source credited to tsimbl",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Hutsul_Melodies_-_%22Music_of_the_Carpathian_Mountains%22_at_Indiana_University_4.11.2014).webm",
+      "licence": "CC BY 3.0 Unported",
+      "licenceURL": "https://creativecommons.org/licenses/by/3.0/",
+      "acquisitionRoute": "Resolve the named Wikimedia Commons File page through the Commons API and retain the exact native WebM plus API/file-page evidence; do not reacquire from YouTube.",
+      "native": {
+        "commonsTitle": "File:Hutsul Melodies - \"Music of the Carpathian Mountains\" at Indiana University 4.11.2014).webm",
+        "mime": "video/webm",
+        "bytes": 95316570,
+        "sha1": "061beb7d30732593a0e4eb31887528d8b0bcfa7a",
+        "sha256": null
+      },
+      "publishedDuration": "5:11",
+      "provenance": "The source documents a lecture-demonstration suite consisting of a tylynka improvisation and Hutsul kolomyiky. It names Shaun Williams on tylynka and tsymbaly, Dena El Saffar and Tiffany Schoneboom on violins, Thomas McShane on viola, Robert Widlowski on bass and Juan Sebastián Rojas on bubyn.",
+      "provisionalStyle": [
+        "Hutsul",
+        "kolomyika",
+        "Carpathian ensemble",
+        "instrumental"
+      ],
+      "provisionalScene": "gameplay/world; menu opening may require an edit, subject to listening",
+      "provisionalEnergy": "potentially medium-high after the tylynka opening; not yet listened",
+      "permissions": {
+        "webGameEmbedding": "permitted by the published licence with attribution",
+        "publicMp3Redistribution": "permitted for a marked derivative with attribution",
+        "offlineGameCopy": "permitted by the published licence with attribution",
+        "modification": "permitted with change notice and attribution",
+        "gameplayVideo": "permitted by the published licence; automated-claim risk is unverified",
+        "contentId": "unknown",
+        "recordingModeEligible": false
+      },
+      "blockers": [
+        "The 2017 Commons review verified the stated CC licence, but contributor attribution and the absence of unlicensed embedded material still need intake review.",
+        "The 95.3 MB source exceeds the small-file round and requires a bounded hosted acquisition job.",
+        "Exact SHA-256, full decode, loudness, peak, transitions, Content ID, game-fit and Ukrainian cultural review are pending."
+      ]
+    },
+    {
+      "id": "meraki-caravan.karchata",
+      "title": "Karchata",
+      "artist": "Meraki Caravan",
+      "sourcePage": "https://merakicaravan.bandcamp.com/track/karchata",
+      "licence": "CC BY-SA 4.0 International",
+      "licenceURL": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "acquisitionRoute": "Purchase the creator's $1-or-more Bandcamp digital track, then retain the exact lossless/native download, receipt, page snapshot and licence link. No purchase was made in this research round.",
+      "native": {
+        "advertisedFormats": ["MP3", "FLAC"],
+        "advertisedResolution": "24-bit/48 kHz",
+        "bytes": null,
+        "sha1": null,
+        "sha256": null
+      },
+      "publishedDuration": "6:02",
+      "provenance": "The creator page calls Karchata a Ukrainian folk song and credits Meraki Caravan for vocals, instrumentation and arrangement, My Lady On Fire and Jason Felitto for recording/mastering, and Folknery as inspiration rather than the source recording.",
+      "provisionalStyle": [
+        "Ukrainian folk song",
+        "folk fusion",
+        "world rhythm",
+        "vocal"
+      ],
+      "provisionalScene": "gameplay/world, subject to listening",
+      "provisionalEnergy": "unknown; the published description mentions world rhythms but does not establish game-fit",
+      "permissions": {
+        "webGameEmbedding": "permitted by CC BY-SA 4.0 with attribution and ShareAlike compliance for adaptations",
+        "publicMp3Redistribution": "permitted; a modified MP3 must carry CC BY-SA 4.0, attribution and a change notice",
+        "offlineGameCopy": "permitted with attribution and applicable ShareAlike/no-additional-restrictions obligations",
+        "modification": "permitted under CC BY-SA 4.0",
+        "gameplayVideo": "permitted by the published licence; automated-claim risk is unverified",
+        "contentId": "unknown",
+        "recordingModeEligible": false
+      },
+      "blockers": [
+        "Manual paid acquisition is required before exact bytes and hashes can be pinned.",
+        "Confirm the folk composition and arrangement provenance independently before publication because the creator cites Folknery as inspiration.",
+        "Full-track, game-fit, vocal-language, Content ID and Ukrainian cultural review are pending.",
+        "Distribution metadata must preserve CC BY-SA 4.0 and must not add effective restrictions to the track derivative."
+      ]
+    },
+    {
+      "id": "hanna-ostapenko.doshchyku",
+      "title": "Doshchyku",
+      "artist": "Hanna Ostapenko and Oksana Slipchenko; arrangement by Mykola Lysenko",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9B%D0%B8%D1%81%D0%B5%D0%BD%D0%BA%D0%BE_%D0%94%D0%BE%D1%89%D0%B8%D0%BA%D1%83_-_%D0%93%D0%B0%D0%BD%D0%BD%D0%B0_%D0%9E%D1%81%D1%82%D0%B0%D0%BF%D0%B5%D0%BD%D0%BA%D0%BE.ogv",
+      "licence": "CC BY-SA 3.0 Unported",
+      "licenceURL": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "acquisitionRoute": "Resolve the named Wikimedia Commons File page through the Commons API and retain the exact native OGV plus API/file-page evidence; do not reacquire from YouTube.",
+      "native": {
+        "commonsTitle": "File:Лисенко Дощику - Ганна Остапенко.ogv",
+        "mime": "application/ogg",
+        "bytes": 18313449,
+        "sha1": "7efa152395ebe5ebe2adbd2ec5ca1b86b7a7018e",
+        "sha256": null
+      },
+      "publishedDuration": "2:10",
+      "provenance": "The Commons page identifies the Ukrainian folk song Doshchyku in Mykola Lysenko's arrangement, performed by soloist Hanna Ostapenko with accompanist Oksana Slipchenko at the 2017 World Classics in Ukrainian competition.",
+      "provisionalStyle": [
+        "Ukrainian folk song",
+        "Lysenko art-song arrangement",
+        "voice and piano"
+      ],
+      "provisionalScene": "menu, results or reflective world, subject to listening",
+      "provisionalEnergy": "low-medium; not a Shchedryk-energy replacement",
+      "permissions": {
+        "webGameEmbedding": "permitted by the published licence with attribution and ShareAlike compliance for adaptations",
+        "publicMp3Redistribution": "permitted; a modified MP3 must retain CC BY-SA 3.0-compatible terms, attribution and change notice",
+        "offlineGameCopy": "permitted with attribution and applicable ShareAlike obligations",
+        "modification": "permitted under CC BY-SA 3.0",
+        "gameplayVideo": "permitted by the published licence; automated-claim risk is unverified",
+        "contentId": "unknown",
+        "recordingModeEligible": false
+      },
+      "blockers": [
+        "Confirm the performance/uploader permission chain and exact attribution for both performers before publication.",
+        "Exact SHA-256, full decode, loudness, peak and derivative checks require bounded hosted acquisition.",
+        "Full-track, game-fit, pronunciation, Content ID and Ukrainian cultural review are pending."
+      ]
+    },
+    {
+      "id": "andrii-bondarenko.ikhav-kozak-za-dunai",
+      "title": "Ikhav kozak za Dunai / Schöne Minka",
+      "artist": "Oksana Dondyk, Roman Shnurenko, Oleksandra Kovalenko, Yakiv Dushakov and Andrii Bondarenko",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:%D0%9B%D1%8E%D0%B4%D0%B2%D1%96%D0%B3_%D0%B2%D0%B0%D0%BD_%D0%91%D0%B5%D1%82%D1%85%D0%BE%D0%B2%D0%B5%D0%BD._Sch%C3%B6ne_Minka_-_%D0%87%D1%85%D0%B0%D0%B2_%D0%BA%D0%BE%D0%B7%D0%B0%D0%BA_%D0%B7%D0%B0_%D0%94%D1%83%D0%BD%D0%B0%D0%B9.webm",
+      "licence": "CC BY 3.0 Unported",
+      "licenceURL": "https://creativecommons.org/licenses/by/3.0/",
+      "acquisitionRoute": "Resolve the named Wikimedia Commons File page through the Commons API and retain the exact native WebM plus API/file-page evidence; do not reacquire from YouTube.",
+      "native": {
+        "commonsTitle": "File:Людвіг ван Бетховен. Schöne Minka - Їхав козак за Дунай.webm",
+        "mime": "video/webm",
+        "bytes": 18656178,
+        "sha1": "6ee4819ded2542f65d020bc8ea528fd5964e8a47",
+        "sha256": null
+      },
+      "publishedDuration": "2:49",
+      "provenance": "The source identifies Beethoven's WoO 158a No. 16 treatment of the Ukrainian song Ikhav kozak za Dunai and names the two vocal soloists, violinist, cellist and pianist from the 12 June 2016 Lysenko Museum concert.",
+      "provisionalStyle": [
+        "Ukrainian repertoire",
+        "classical chamber arrangement",
+        "vocal"
+      ],
+      "provisionalScene": "menu or reflective world, subject to listening",
+      "provisionalEnergy": "low-medium; supporting variety rather than the opening-theme benchmark",
+      "permissions": {
+        "webGameEmbedding": "permitted by the published licence with attribution",
+        "publicMp3Redistribution": "permitted for a marked derivative with attribution",
+        "offlineGameCopy": "permitted by the published licence with attribution",
+        "modification": "permitted with change notice and attribution",
+        "gameplayVideo": "permitted by the published licence; automated-claim risk is unverified",
+        "contentId": "unknown",
+        "recordingModeEligible": false
+      },
+      "blockers": [
+        "Commons records an automated YouTube licence review and warns that a human must still review derivative-work or third-party-rights issues.",
+        "Confirm performer attribution and the precise public-domain/arrangement chain before publication.",
+        "Exact SHA-256, full decode, loudness, peak, listening, Content ID, game-fit and Ukrainian cultural review are pending."
+      ]
+    }
+  ],
+  "excludedDuringThisRound": [
+    {
+      "lead": "YouTube-only Ukrainian recordings",
+      "reason": "No independent reusable recording file and recording-specific redistribution evidence."
+    },
+    {
+      "lead": "Pixabay Ukrainian tracks",
+      "reason": "The standing standalone-distribution restriction conflicts with the public MP3 archive requirement."
+    },
+    {
+      "lead": "Kyle Misko Ukrainian arrangements",
+      "reason": "Sampled-recording provenance remains unresolved."
+    },
+    {
+      "lead": "Dmytro Ignatov's Hutsul/Ukrainian releases",
+      "reason": "The surfaced creator pages are all-rights-reserved; free streaming or purchase does not grant public MP3 redistribution."
+    },
+    {
+      "lead": "Kolyadka by Marcus Denight feat. Sergey Korzhenevskiy",
+      "reason": "It is another Shchedryk arrangement and cannot count as a distinct composition in this round."
+    },
+    {
+      "lead": "Generic Ukrainian-tagged or Ukrainian-artist electronic tracks",
+      "reason": "Artist nationality or a generic folk tag does not establish Ukrainian repertoire."
+    }
+  ],
+  "nextAction": "Prepare a small hosted acquisition/review job for the five Commons originals and separately decide whether to purchase Karchata. Preserve exact sources and licence evidence, generate no public files, and present complete-track comparisons before any archive admission."
+}

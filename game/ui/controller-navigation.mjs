@@ -1,4 +1,13 @@
-const CONTROLS = 'button,a[href],select,input:not([type="hidden"]),textarea,summary';
+import { contentText } from '../i18n/content.mjs';
+import { localizedText, onLocaleChange, t } from '../i18n/index.mjs';
+import { menuGroupNeighbor } from './menu-navigation-groups.mjs';
+import {
+  createControllerFieldEditor,
+  supportsControllerField,
+} from './controller-field-editor.mjs';
+import { settingsPanelBack } from './settings-panels.mjs';
+const CONTROLS =
+  'button,a[href],select,input:not([type="hidden"]),textarea,summary,[data-controller-editor]';
 const DIRECTIONS = new Set(['up', 'right', 'down', 'left']);
 
 /** Controller edges operate existing DOM controls; this adapter never polls a
@@ -8,7 +17,11 @@ export function attachControllerNavigation({
   getScope = () => 'ui',
   getRoot = () => doc,
   getDefaultFocus = () => null,
-  getControlLabels = () => ({ directions: 'D-pad', confirm: 'South', back: 'East' }),
+  getControlLabels = () => ({
+    directions: 'D-pad',
+    confirm: t('common:controls.south'),
+    back: t('common:controls.east'),
+  }),
   getReadingPrompt = null,
   accept = () => true,
   onBack = () => {},
@@ -16,22 +29,59 @@ export function attachControllerNavigation({
   onHint = () => {},
   onReadingChange = () => {},
   onNativeInput = () => {},
+  activateControl = (element) => element.click(),
   keyboard = false,
   ownsKeyboardEvent = () => false,
   onTabBoundary = () => false,
   nativeReadingScroll = false,
+  resolveEditor = () => null,
+  activateFileInput = null,
 } = {}) {
   let scope = null,
     root = null,
     engaged = false,
     focused = null,
     editing = null,
+    surfaceEditor = null,
     reading = null,
+    localeReading = null,
     nativeScroll = null,
     readingInvalidated = false,
+    confirmTransaction = null,
     destroyed = false,
     focusing = false;
   const listeners = [];
+  let inputMode = null;
+  const inputRoots = new Map(),
+    inputHints = new WeakSet(),
+    inputAttributes = ['data-menu-input', 'data-menu-confirm', 'data-menu-back'];
+  function setMenuInput(mode, target = getRoot()) {
+    if (destroyed || doc.hidden || doc.hasFocus?.() === false || !target?.setAttribute) return;
+    inputMode = mode;
+    if (!inputRoots.has(target))
+      inputRoots.set(
+        target,
+        inputAttributes.map((attribute) => target.getAttribute(attribute)),
+      );
+    const labels = getControlLabels();
+    // Input modality belongs to this navigator, including nested scopes. Keep
+    // ancestors current so inherited caption selectors cannot show two devices.
+    for (const ownedRoot of inputRoots.keys()) {
+      ownedRoot.setAttribute('data-menu-input', mode);
+      ownedRoot.setAttribute('data-menu-confirm', labels.confirm);
+      ownedRoot.setAttribute('data-menu-back', labels.back);
+    }
+    for (const hint of target.querySelectorAll('[data-menu-controller-hint]')) {
+      const render = () => {
+        const current = getControlLabels();
+        return `${current.confirm} · ${t('common:controls.confirm')} / ${current.back} · ${t('common:actions.back')}`;
+      };
+      if (!inputHints.has(hint)) {
+        inputHints.add(hint);
+        localizedText(hint, render);
+      } else if (hint.textContent !== render()) localizedText(hint, render);
+    }
+  }
   const readingContent = new WeakMap();
   const listen = (type, fn) => {
     doc.addEventListener(type, fn, true);
@@ -47,7 +97,8 @@ export function attachControllerNavigation({
     if (
       !element ||
       !element.isConnected ||
-      (!allowDisabled && element.disabled) ||
+      // :disabled includes inherited fieldset disabling (and its legend exception).
+      (!allowDisabled && (element.disabled || element.matches(':disabled'))) ||
       !root?.contains(element)
     )
       return false;
@@ -87,6 +138,64 @@ export function attachControllerNavigation({
     editing = null;
     if (message) hint(message);
   }
+  function endSurfaceEditor({ commit = false, restoreFocus = false } = {}) {
+    const owner = surfaceEditor;
+    if (!owner) return;
+    surfaceEditor = null;
+    cancelConfirm();
+    owner.element.removeAttribute('data-controller-editing');
+    owner.adapter.exit({ commit });
+    if (
+      restoreFocus &&
+      !destroyed &&
+      getScope() === owner.scope &&
+      getRoot() === owner.root &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false
+    ) {
+      if (!focus(owner.element)) ensureFocus();
+    }
+  }
+  function beginSurfaceEditor(element, adapter = null) {
+    const owner = { element, scope, root, adapter: null };
+    owner.adapter =
+      adapter ||
+      createControllerFieldEditor({
+        element,
+        root,
+        document: doc,
+        label: label(element),
+        activateControl,
+        onFinish: (commit) => {
+          if (surfaceEditor === owner) endSurfaceEditor({ commit, restoreFocus: true });
+        },
+      });
+    if (
+      !['enter', 'handle', 'isCurrent', 'exit'].every(
+        (method) => typeof owner.adapter[method] === 'function',
+      )
+    )
+      throw new TypeError('A controller editor needs enter, handle, isCurrent and exit methods.');
+    cancelEdit();
+    cancelReading();
+    endSurfaceEditor();
+    surfaceEditor = owner;
+    element.setAttribute('data-controller-editing', 'true');
+    if (owner.adapter.enter() === false && surfaceEditor === owner) endSurfaceEditor();
+  }
+  function handleSurfaceEditor(command) {
+    const owner = surfaceEditor;
+    if (!owner) return;
+    const result = owner.adapter.handle(command);
+    if (surfaceEditor === owner && (result === 'done' || result === 'cancel'))
+      endSurfaceEditor({ commit: result === 'done', restoreFocus: true });
+  }
+  function cancelConfirm() {
+    if (!confirmTransaction) return false;
+    confirmTransaction.element?.removeAttribute?.('data-controller-pressed');
+    confirmTransaction = null;
+    return true;
+  }
   const readingState = () =>
     reading ? { regionId: reading.regionId, label: reading.label } : null;
   function readingMetrics(region) {
@@ -110,7 +219,7 @@ export function attachControllerNavigation({
     previous.region.removeAttribute('data-controller-reading');
     if (focused === previous.region || focused === previous.exit) mark(null);
     readingInvalidated ||= invalidated;
-    onReadingChange(null);
+    onReadingChange(null, { restoreFocus, invalidated });
     if (message) readingMessage(message, previous);
     if (
       restoreFocus &&
@@ -123,13 +232,21 @@ export function attachControllerNavigation({
     return true;
   }
   function endReading({ restoreFocus = true } = {}) {
-    return cancelReading({ restoreFocus, message: 'Reading ended. Choose an action when ready.' });
+    return cancelReading({
+      restoreFocus,
+      message: t('interface:readingEndedChooseAnActionWhenReady'),
+    });
   }
   function readingHint() {
     const scrollable = !!readingMetrics(reading.region)?.max;
     if (getReadingPrompt) return `${reading.label}: ${getReadingPrompt({ scrollable })}`;
     const labels = getControlLabels();
-    return `${reading.label}: ${scrollable ? 'Up/Down scroll' : 'All text is visible'} · ${labels.confirm} or ${labels.back} returns`;
+    return t('gameplay:orReturns', {
+      value1: reading.label,
+      value2: scrollable ? t('interface:upDownScroll') : t('interface:allTextIsVisible'),
+      value3: labels.confirm,
+      value4: labels.back,
+    });
   }
   function readingCurrent(owner = reading) {
     return (
@@ -139,7 +256,7 @@ export function attachControllerNavigation({
       visible(owner.origin) &&
       (doc.activeElement === owner.region ||
         (keyboard && owner.exit && doc.activeElement === owner.exit && visible(owner.exit))) &&
-      owner.region.textContent === owner.text &&
+      (owner.region.textContent === owner.text || localeReading === owner) &&
       owner.region.hasAttribute('data-game-reading') &&
       (owner.region.getAttribute('aria-label') || owner.region.getAttribute('aria-labelledby')) &&
       !(owner.region.tabIndex < 0) &&
@@ -163,8 +280,46 @@ export function attachControllerNavigation({
     readingMessage(readingHint(), owner);
     return true;
   }
-  function beginReading({ region, origin, label: name, exit = null } = {}) {
+  listeners.push(
+    onLocaleChange(
+      () => {
+        if (
+          destroyed ||
+          doc.hidden ||
+          doc.hasFocus?.() === false ||
+          scope !== getScope() ||
+          root !== getRoot() ||
+          !readingCurrent()
+        )
+          return void cancelReading({ invalidated: true });
+        const owner = reading;
+        localeReading = owner;
+        return () => {
+          try {
+            if (
+              destroyed ||
+              doc.hidden ||
+              doc.hasFocus?.() === false ||
+              scope !== getScope() ||
+              root !== getRoot() ||
+              !readingCurrent(owner)
+            )
+              return;
+            owner.text = owner.region.textContent;
+            readingContent.set(owner.region, owner.text);
+            if (owner.labelSource) owner.label = owner.labelSource();
+            refreshReadingHint();
+          } finally {
+            localeReading = null;
+          }
+        };
+      },
+      { before: true },
+    ),
+  );
+  function beginReading({ region, origin, label: name, getLabel = null, exit = null } = {}) {
     if (destroyed) return false;
+    const labelSource = typeof getLabel === 'function' ? getLabel : null;
     sync();
     if (
       scope === 'flight' ||
@@ -208,6 +363,7 @@ export function attachControllerNavigation({
       origin,
       exit,
       label: name.trim(),
+      labelSource,
       text: region.textContent,
       scope,
       root,
@@ -226,7 +382,9 @@ export function attachControllerNavigation({
     return !!reading;
   }
   function relinquish() {
-    cancelEdit('Controller edit cancelled.');
+    cancelConfirm();
+    endSurfaceEditor();
+    cancelEdit(t('interface:controllerEditCancelled'));
     cancelReading({ invalidated: true });
     engaged = false;
     mark(null);
@@ -257,6 +415,12 @@ export function attachControllerNavigation({
     );
   }
   listen('pointerdown', (event) => {
+    if (!event.defaultPrevented && event.isPrimary !== false && getRoot()?.contains(event.target))
+      setMenuInput(event.pointerType === 'touch' ? 'touch' : 'pointer');
+    if (surfaceEditor?.adapter.contains?.(event.target)) {
+      onNativeInput(event);
+      return;
+    }
     nativeScroll = null;
     const owner = reading;
     if (
@@ -314,6 +478,46 @@ export function attachControllerNavigation({
     if (reading) relinquish();
   });
   listen('keydown', (event) => {
+    if (!event.defaultPrevented && getRoot()?.contains(event.target)) setMenuInput('keyboard');
+    if (surfaceEditor) {
+      if (sync()) {
+        event.preventDefault();
+        onNativeInput(event);
+        return;
+      }
+      if (surfaceEditor?.adapter.keydown?.(event) === true) {
+        onNativeInput(event);
+        return;
+      }
+      if (
+        surfaceEditor &&
+        keyboard &&
+        !event.defaultPrevented &&
+        !event.ctrlKey &&
+        !event.altKey &&
+        !event.metaKey
+      ) {
+        const direction = {
+          ArrowUp: 'up',
+          ArrowDown: 'down',
+          ArrowLeft: 'left',
+          ArrowRight: 'right',
+        }[event.key];
+        if (direction || ['Enter', ' ', 'Escape'].includes(event.key)) {
+          event.preventDefault();
+          if (!event.repeat || direction)
+            handleSurfaceEditor(
+              direction
+                ? { direction }
+                : event.key === 'Escape'
+                  ? { back: true }
+                  : { confirm: true },
+            );
+          onNativeInput(event);
+          return;
+        }
+      }
+    }
     // Explicit host capture owns these keys before document-level menu navigation.
     // Relinquish stale previews without consuming the event or moving focus.
     if (keyboard && ownsKeyboardEvent(event)) {
@@ -349,19 +553,25 @@ export function attachControllerNavigation({
     if ((reading || editing) && event.key === 'Escape' && !event.defaultPrevented) {
       event.preventDefault();
       if (reading) endReading();
-      else cancelEdit('Choice cancelled.');
+      else cancelEdit(t('interface:choiceCancelled'));
     } else relinquish();
     onNativeInput(event);
   });
   listen('focusin', (event) => {
     if (focusing) return;
+    if (surfaceEditor) {
+      if (surfaceEditor.adapter.contains?.(event.target) || event.target === surfaceEditor.element)
+        return;
+      endSurfaceEditor();
+    }
     if (
       reading &&
       event.target !== reading.region &&
       !(event.target === reading.exit && readingCurrent())
     )
-      cancelReading({ invalidated: true, message: 'Reading ended.' });
-    if (editing && event.target !== editing.element) cancelEdit('Controller edit cancelled.');
+      cancelReading({ invalidated: true, message: t('interface:readingEnded') });
+    if (editing && event.target !== editing.element)
+      cancelEdit(t('interface:controllerEditCancelled'));
     if (engaged) mark(visible(event.target) ? event.target : null);
   });
   const selectOptions = (element) =>
@@ -386,16 +596,29 @@ export function attachControllerNavigation({
       nextRoot = getRoot();
     if (scope !== nextScope || root !== nextRoot) {
       invalidated = scope !== null;
+      cancelConfirm();
       cancelEdit();
+      endSurfaceEditor();
       cancelReading();
       scope = nextScope;
       root = nextRoot;
+      if (inputMode && scope !== 'flight') setMenuInput(inputMode, root);
       mark(null);
       if (engaged && scope !== 'flight') ensureFocus();
     }
+    if (
+      surfaceEditor &&
+      (!visible(surfaceEditor.element) ||
+        !surfaceEditor.adapter.isCurrent() ||
+        doc.hidden ||
+        doc.hasFocus?.() === false)
+    ) {
+      invalidated = true;
+      endSurfaceEditor();
+    }
     if (reading && !readingCurrent()) {
       invalidated = true;
-      cancelReading({ message: 'The reading region changed. Choose it again to read.' });
+      cancelReading({ message: t('interface:theReadingRegionChangedChooseItAgainToRead') });
     }
     if (reading) {
       const max = readingMetrics(reading.region).max;
@@ -410,14 +633,16 @@ export function attachControllerNavigation({
         signature(editing.element) !== editing.signature)
     ) {
       invalidated = true;
-      cancelEdit('The control changed. Choose it again to edit.');
+      cancelEdit(t('interface:theControlChangedChooseItAgainToEdit'));
     }
     if (scope === 'flight') {
       cancelEdit();
+      endSurfaceEditor();
       cancelReading();
       mark(null);
     } else if (
       engaged &&
+      !surfaceEditor &&
       !reading &&
       (!visible(doc.activeElement) || !controls().includes(doc.activeElement))
     ) {
@@ -426,21 +651,52 @@ export function attachControllerNavigation({
     }
     return invalidated;
   }
-  const label = (element) =>
-    element.getAttribute('aria-label') ||
-    [...(element.labels?.[0]?.childNodes || [])]
-      .filter((node) => node.nodeType === 3)
-      .map((node) => node.textContent)
-      .join('')
-      .trim() ||
-    element.id ||
-    'Value';
+  function labelText(node, referenced = false) {
+    if (!node) return '';
+    if (node.nodeType === 3) return node.textContent;
+    if (
+      node.nodeType !== 1 ||
+      (!referenced && (node.hidden || node.getAttribute('aria-hidden') === 'true')) ||
+      /^(INPUT|SELECT|TEXTAREA|BUTTON|OPTION|OPTGROUP|SCRIPT|STYLE|TEMPLATE|SVG)$/.test(
+        node.tagName.toUpperCase(),
+      )
+    )
+      return '';
+    // Localized captions live in nested spans. Read those text nodes without
+    // allowing embedded controls, option lists or decorative icons into the name.
+    return [...(node.childNodes || [])].map((child) => labelText(child)).join('');
+  }
+  function label(element) {
+    const normalize = (text) => text.replace(/\s+/gu, ' ').trim();
+    const references = (element.getAttribute('aria-labelledby') || '')
+      .split(/\s+/u)
+      .filter(Boolean);
+    return (
+      // An explicit accessible-name reference may intentionally name a hidden caption.
+      normalize(references.map((id) => labelText(doc.getElementById(id), true)).join(' ')) ||
+      normalize(element.getAttribute('aria-label') || '') ||
+      normalize([...(element.labels || [])].map((caption) => labelText(caption)).join(' ')) ||
+      element.id ||
+      t('interface:value')
+    );
+  }
   function paintEdit() {
     if (!editing) return;
     const value =
       editing.kind === 'select' ? editing.options[editing.index].label : String(editing.draft);
-    const controls = getControlLabels();
-    editing.preview.textContent = `${editing.label}: ${value} · ${controls.directions} changes · ${controls.confirm} confirms · ${controls.back} cancels`;
+    const controls =
+      inputMode === 'keyboard'
+        ? { directions: '↑ ↓ ← →', confirm: 'Enter', back: 'Esc' }
+        : getControlLabels();
+    localizedText(editing.preview, () =>
+      t('gameplay:changesConfirmsCancels', {
+        value1: contentText(editing, 'label'),
+        value2: value,
+        value3: controls.directions,
+        value4: controls.confirm,
+        value5: controls.back,
+      }),
+    );
     hint(editing.preview.textContent);
   }
   function beginEdit(element) {
@@ -448,7 +704,7 @@ export function attachControllerNavigation({
     let state;
     if (kind === 'select') {
       const options = selectOptions(element);
-      if (!options.length) return hint('No enabled choices are available.');
+      if (!options.length) return hint(t('interface:noEnabledChoicesAreAvailable'));
       state = {
         options,
         index: Math.max(
@@ -462,7 +718,7 @@ export function attachControllerNavigation({
         step = Number(element.step || 1),
         draft = Number(element.value);
       if (![min, max, step, draft].every(Number.isFinite) || max < min || step <= 0)
-        return hint('Use keyboard or touch for this value.');
+        return hint(t('interface:useKeyboardOrTouchForThisValue'));
       state = { min, max, step, draft: Math.max(min, Math.min(max, draft)) };
     }
     const preview = doc.createElement('div');
@@ -504,12 +760,52 @@ export function attachControllerNavigation({
         edit.element.dispatchEvent(new EventType('input', { bubbles: true }));
       edit.element.dispatchEvent(new EventType('change', { bubbles: true }));
     }
-    hint('Choice applied.');
+    hint(t('interface:choiceApplied'));
   }
   function move(direction) {
     const items = controls(),
       current = ensureFocus();
     if (!current || items.length < 2) return;
+    const grouped = menuGroupNeighbor(items, current, direction);
+    if (grouped) return focus(grouped);
+    const journeyGrid = current.closest('#journey-cards');
+    if (journeyGrid) {
+      // Read the rendered rows on every edge: filtering, zoom and rotation may
+      // change columns without replacing the focused mission. Card heights are
+      // not reliable row markers because their authored text can differ.
+      const entries = items
+        .filter((element) => journeyGrid.contains(element))
+        .map((element) => ({ element, rect: element.getBoundingClientRect() }))
+        .sort((a, b) => a.rect.y - b.rect.y || a.rect.x - b.rect.x);
+      const rows = [];
+      for (const entry of entries) {
+        const row = rows.at(-1);
+        if (row && Math.abs(row[0].rect.y - entry.rect.y) <= 1) row.push(entry);
+        else rows.push([entry]);
+      }
+      const rowIndex = rows.findIndex((row) => row.some(({ element }) => element === current)),
+        row = rows[rowIndex],
+        from = row.find(({ element }) => element === current).rect,
+        cx = from.x + from.width / 2;
+      const horizontal = direction === 'left' || direction === 'right',
+        step = direction === 'down' || direction === 'right' ? 1 : -1,
+        candidates = horizontal ? row : rows[rowIndex + step];
+      if (candidates) {
+        const next = candidates
+          .map(({ element, rect }) => ({ element, dx: rect.x + rect.width / 2 - cx }))
+          .filter(({ element, dx }) => element !== current && (!horizontal || dx * step > 1))
+          .sort((a, b) => Math.abs(a.dx) - Math.abs(b.dx))[0];
+        if (next) focus(next.element);
+      } else if (!horizontal) {
+        // Top/bottom exits reach adjacent menu controls without wrapping to a
+        // different mission. Left/right row edges always retain the selection.
+        const gridItems = items.filter((element) => journeyGrid.contains(element)),
+          edge = step < 0 ? gridItems[0] : gridItems.at(-1),
+          next = items[items.indexOf(edge) + step];
+        if (next && !journeyGrid.contains(next)) focus(next);
+      }
+      return;
+    }
     const grid = current.closest('#gallery-grid,#missions');
     if (grid) {
       const from = current.getBoundingClientRect();
@@ -535,17 +831,78 @@ export function attachControllerNavigation({
   }
   function activate(element) {
     if (!visible(element)) return;
+    const adapter = resolveEditor(element);
+    if (adapter) return beginSurfaceEditor(element, adapter);
     if (element.tagName === 'SELECT' || (element.tagName === 'INPUT' && element.type === 'range'))
       return beginEdit(element);
+    if (supportsControllerField(element)) return beginSurfaceEditor(element);
+    if (element.tagName === 'INPUT' && element.type === 'file' && activateFileInput)
+      return activateFileInput(element);
     if (
       element.tagName === 'TEXTAREA' ||
       (element.tagName === 'INPUT' &&
         !['checkbox', 'radio', 'button', 'submit'].includes(element.type))
     )
-      return hint(
-        'Use keyboard or touch for text, dates and file pickers. Other controls remain available.',
-      );
-    element.click();
+      return hint(t('interface:useKeyboardOrTouchForTextDatesAndFilePickers'));
+    activateControl(element);
+  }
+  function beginConfirm(capturedTarget = null) {
+    sync();
+    if (scope === 'flight') return null;
+    setMenuInput('controller');
+    engaged = true;
+    const element =
+      capturedTarget ||
+      (surfaceEditor ? doc.activeElement : reading?.region || editing?.element || ensureFocus());
+    if (!element || (!surfaceEditor && !visible(element))) return null;
+    cancelConfirm();
+    confirmTransaction = { element, scope, root, reading, editing, surfaceEditor };
+    element.setAttribute('data-controller-pressed', 'true');
+    return element;
+  }
+  function confirmCurrent() {
+    return (
+      !!confirmTransaction &&
+      scope === getScope() &&
+      root === getRoot() &&
+      confirmTransaction.scope === scope &&
+      confirmTransaction.root === root &&
+      (confirmTransaction.surfaceEditor
+        ? surfaceEditor === confirmTransaction.surfaceEditor && surfaceEditor.adapter.isCurrent()
+        : visible(confirmTransaction.element)) &&
+      (doc.activeElement === confirmTransaction.element ||
+        confirmTransaction.element.contains?.(doc.activeElement))
+    );
+  }
+  function commitConfirm() {
+    const transaction = confirmTransaction;
+    if (!transaction) return null;
+    transaction.element?.removeAttribute?.('data-controller-pressed');
+    confirmTransaction = null;
+    if (
+      scope !== getScope() ||
+      root !== getRoot() ||
+      transaction.scope !== scope ||
+      transaction.root !== root ||
+      (!transaction.surfaceEditor && !visible(transaction.element))
+    )
+      return null;
+    if (transaction.surfaceEditor) {
+      if (
+        surfaceEditor !== transaction.surfaceEditor ||
+        !surfaceEditor.adapter.isCurrent() ||
+        doc.activeElement !== transaction.element
+      )
+        return null;
+      handleSurfaceEditor({ confirm: true });
+    } else if (transaction.reading) {
+      if (reading !== transaction.reading || !readingCurrent(transaction.reading)) return null;
+      endReading();
+    } else if (transaction.editing) {
+      if (editing !== transaction.editing) return null;
+      commitEdit();
+    } else activate(transaction.element);
+    return transaction.element;
   }
   function readDirection(direction) {
     const owner = reading;
@@ -568,7 +925,7 @@ export function attachControllerNavigation({
     const boundary = max === 0 ? 'all' : top === 0 ? 'start' : top === max ? 'end' : null;
     if (boundary && reading.boundary !== boundary)
       readingMessage(
-        `${boundary === 'all' ? 'All text is visible.' : boundary === 'start' ? 'Start of details.' : 'End of details.'} ${readingHint()}`,
+        `${boundary === 'all' ? t('interface:allTextIsVisible2') : boundary === 'start' ? t('interface:startOfDetails') : t('interface:endOfDetails')} ${readingHint()}`,
         owner,
       );
     reading.boundary = boundary;
@@ -689,10 +1046,14 @@ export function attachControllerNavigation({
     }
     if (editing && event.key === 'Escape') {
       event.preventDefault();
-      cancelEdit('Choice cancelled.');
+      cancelEdit(t('interface:choiceCancelled'));
       return true;
     }
     if (event.key === 'Escape') {
+      if (settingsPanelBack(root)) {
+        event.preventDefault();
+        return true;
+      }
       // Native dialogs keep their cancellable Escape lifecycle.
       if (root.tagName === 'DIALOG') return false;
       event.preventDefault();
@@ -749,6 +1110,37 @@ export function attachControllerNavigation({
       focus(next);
       return true;
     }
+    // In game Settings, arrows select the next control until Confirm explicitly
+    // enters value editing. Keep text/file inputs and ordinary forms native.
+    const settingField = event.target?.closest?.('select,input');
+    const directionalSetting =
+      settingField?.closest?.('.native-settings') &&
+      visible(settingField) &&
+      (settingField.tagName === 'SELECT' ||
+        ['range', 'checkbox', 'radio'].includes(settingField.type));
+    if (
+      directionalSetting &&
+      (event.key.startsWith('Arrow') ||
+        event.key === 'Enter' ||
+        (event.key === ' ' && !['checkbox', 'radio'].includes(settingField.type)))
+    ) {
+      event.preventDefault();
+      setMenuInput('keyboard');
+      const direction = {
+        ArrowUp: 'up',
+        ArrowDown: 'down',
+        ArrowLeft: 'left',
+        ArrowRight: 'right',
+      }[event.key];
+      if (direction) {
+        if (editing) editDirection(direction);
+        else move(direction);
+      } else if (!event.repeat) {
+        if (editing) commitEdit();
+        else activate(settingField);
+      }
+      return true;
+    }
     if (['Enter', ' '].includes(event.key)) {
       if (current >= 0) return false; // Native activation owns actual controls.
       event.preventDefault();
@@ -769,11 +1161,22 @@ export function attachControllerNavigation({
   }
   function handle(command = {}) {
     if (destroyed) return;
+    if (command.confirmCancel) {
+      cancelConfirm();
+      return;
+    }
+    if (command.confirmStart) return beginConfirm();
+    if (command.confirmCommit) return commitConfirm();
     if (sync()) return;
     if (scope === 'flight') return;
     if (!command.confirm && !command.back && !command.menu && !DIRECTIONS.has(command.direction))
       return;
+    setMenuInput('controller');
     engaged = true;
+    if (surfaceEditor) {
+      handleSurfaceEditor(command);
+      return;
+    }
     if (reading) {
       if (command.back || command.menu || command.confirm) endReading();
       else readDirection(command.direction);
@@ -781,10 +1184,11 @@ export function attachControllerNavigation({
     }
     const element = ensureFocus();
     if (command.back) {
-      if (editing) cancelEdit('Choice cancelled.');
+      if (editing) cancelEdit(t('interface:choiceCancelled'));
+      else if (settingsPanelBack(root)) return;
       else onBack();
     } else if (command.menu) {
-      if (editing) cancelEdit('Choice cancelled.');
+      if (editing) cancelEdit(t('interface:choiceCancelled'));
       else onMenu();
     } else if (command.confirm) {
       if (editing) commitEdit();
@@ -794,24 +1198,35 @@ export function attachControllerNavigation({
   }
   return {
     handle,
+    beginConfirm,
+    confirmCurrent,
+    commitConfirm,
+    cancelConfirm,
     sync,
     beginReading,
     endReading,
     readingState,
+    editorState: () => (surfaceEditor ? { element: surfaceEditor.element } : null),
     refreshReadingHint,
     // One focus handoff; callers own readiness/foreground/intent checks.
     // Unlike engage(), this does not enable later controller scope refocusing.
     focusAvailable() {
       if (destroyed) return null;
       sync();
+      if (surfaceEditor) {
+        surfaceEditor.adapter.focus?.();
+        return surfaceEditor.element;
+      }
       return scope === 'flight' ? null : ensureFocus();
     },
     engage() {
       if (destroyed) return;
       sync();
       if (scope === 'flight') return;
+      setMenuInput('controller');
       engaged = true;
-      if (reading) focus(reading.region);
+      if (surfaceEditor) surfaceEditor.adapter.focus?.();
+      else if (reading) focus(reading.region);
       else ensureFocus();
     },
     clear: relinquish,
@@ -820,6 +1235,13 @@ export function attachControllerNavigation({
       relinquish();
       destroyed = true;
       listeners.forEach((remove) => remove());
+      for (const [target, previous] of inputRoots) {
+        inputAttributes.forEach((attribute, index) => {
+          if (previous[index] === null) target.removeAttribute(attribute);
+          else target.setAttribute(attribute, previous[index]);
+        });
+      }
+      inputRoots.clear();
     },
   };
 }

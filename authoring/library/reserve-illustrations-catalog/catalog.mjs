@@ -1,130 +1,103 @@
-globalThis.RevealLineToolLaunch?.attached();
-import { createOperationStatus } from '../../../game/ui/operation-status.mjs';
-const $ = (id) => document.getElementById(id);
-const base = new URL('.', import.meta.url);
-let entries = [];
-let visible = [];
-let current = null;
-let themes = {};
-let imageRequest = 0;
-const catalogStatus = createOperationStatus($('catalog-status')),
-  imageStatus = createOperationStatus($('image-status'));
-const catalogLease = catalogStatus.begin({ message: 'Loading the reserve catalog…' });
+import { t } from '../../../game/i18n/index.mjs';
+import { mountAuthoringReference } from '../../../game/ui/authoring-reference.mjs';
+import { mountRevealAuditViewer } from '../../design-atlas/reveal-audit-viewer.mjs';
+import { mountReservePresentation } from './presentation.mjs';
+import { RESERVE_MANIFEST, RESERVE_README } from './sources.mjs';
 
-function link(pin) {
-  if (
-    !/^\.\.\/reserve-illustrations-wave-\d+\/[A-Za-z0-9/_-]+\.(png|txt|json|md)$/.test(pin?.url)
-  ) {
-    throw new Error('Invalid source link in catalog.');
-  }
-  const url = new URL(pin.url, base);
-  if (url.origin !== base.origin) throw new Error('Source link left this authoring library.');
-  return url.href;
-}
-
-function show(entry) {
-  current = entry;
-  $('selection').value = entry.id;
-  const position = visible.indexOf(entry);
-  $('previous').disabled = position === 0;
-  $('next').disabled = position === visible.length - 1;
-  $('position').textContent = `${position + 1} of ${visible.length}`;
-  $('theme-wave').textContent = `${themes[entry.themeId]} · Wave ${entry.wave} · Source only`;
-  $('title').textContent = entry.title;
-  $('dimensions').textContent =
-    `${entry.width} × ${entry.height} pixels · 2:1 · ${(entry.original.bytes / 1048576).toFixed(2)} MiB · PNG original`;
-  $('download').href = link(entry.original);
-  $('download').download = entry.original.path.split('/').at(-1);
-  $('prompt').href = link(entry.prompts[0]);
-  $('cleanup').hidden = entry.prompts.length < 2;
-  if (entry.prompts[1]) $('cleanup').href = link(entry.prompts[1]);
-  else $('cleanup').removeAttribute('href');
-  $('provenance').href = link(entry.provenance);
-  $('notes').href = link(entry.notes);
-  $('sha').textContent = entry.original.sha256;
-  $('blob').textContent = entry.original.gitBlob;
-  $('path').textContent = entry.original.path;
-  const request = ++imageRequest;
-  const lease = imageStatus.begin({
-    message: `Loading ${entry.title}…`,
-    isCurrent: () => request === imageRequest,
+const owners = new WeakMap();
+export function mountReserveCatalog({
+  document: doc = globalThis.document,
+  window: win = doc.defaultView,
+  ...options
+} = {}) {
+  if (owners.has(doc)) return owners.get(doc);
+  const host = mountAuthoringReference({ document: doc, window: win });
+  const staticSources = [RESERVE_MANIFEST, RESERVE_README].map((file) => ({
+    ...file,
+    id: file.path,
+    title: () => t('tools:reserveCatalog.' + file.id),
+  }));
+  let viewer = mountRevealAuditViewer({
+    document: doc,
+    window: win,
+    navigation: host.navigation,
+    sources: staticSources,
   });
-  const old = $('image-slot').querySelector('img');
-  old?.removeAttribute('src');
-  const image = document.createElement('img');
-  image.width = entry.width;
-  image.height = entry.height;
-  image.alt = `${entry.title} — ${themes[entry.themeId]} reserve illustration`;
-  image.decoding = 'async';
-  image.onload = () => {
-    if (request === imageRequest)
-      lease.finish({ message: 'Complete original shown; fitted to this page without cropping.' });
-  };
-  image.onerror = () => {
-    if (request === imageRequest)
-      lease.finish({
-        state: 'error',
-        message:
-          'This original could not load. Check the local server and retry the selection; the source links remain available.',
+  let installed = false;
+  const presentation = mountReservePresentation({
+    document: doc,
+    window: win,
+    ...options,
+    autoStart: false,
+    onManifest(manifest) {
+      if (installed) return;
+      const descriptors = new Map();
+      const text = (file, key) =>
+        descriptors.set(file.path, {
+          ...file,
+          id: file.path,
+          kind: 'text',
+          title: () => t('tools:reserveCatalog.' + key) + ' · ' + file.path.split('/').at(-1),
+        });
+      text(RESERVE_MANIFEST, 'manifest');
+      text(RESERVE_README, 'readme');
+      for (const entry of manifest.entries) {
+        descriptors.set(entry.original.path, {
+          ...entry.original,
+          id: entry.original.path,
+          kind: 'image',
+          width: entry.width,
+          height: entry.height,
+          title: entry.title,
+        });
+        entry.prompts.forEach((pin, index) => text(pin, index ? 'cleanup' : 'prompt'));
+        text(entry.provenance, 'provenance');
+        text(entry.notes, 'notes');
+      }
+      viewer.destroy();
+      viewer = mountRevealAuditViewer({
+        document: doc,
+        window: win,
+        navigation: host.navigation,
+        sources: [...descriptors.values()],
       });
+      installed = true;
+    },
+  });
+  const bindings = [
+    ['image-read', () => presentation.current?.original],
+    ['prompt', () => presentation.current?.prompts[0]],
+    ['cleanup', () => presentation.current?.prompts[1]],
+    ['provenance', () => presentation.current?.provenance],
+    ['notes', () => presentation.current?.notes],
+    ['catalog-manifest', () => RESERVE_MANIFEST],
+    ['catalog-readme', () => RESERVE_README],
+  ];
+  const cleanup = bindings.map(([id, pin]) => {
+    const node = doc.getElementById(id);
+    const click = (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      const source = pin();
+      if (source && viewer) viewer.open(source.path, node);
+    };
+    node.addEventListener('click', click);
+    return () => node.removeEventListener('click', click);
+  });
+  const originalDestroy = host.destroy;
+  host.destroy = () => {
+    presentation.destroy();
+    viewer?.destroy();
+    cleanup.forEach((fn) => fn());
+    originalDestroy();
+    owners.delete(doc);
   };
-  $('image-slot').replaceChildren(image);
-  // This is the sole image request. Lists and links contain no thumbnails or preloads.
-  image.src = link(entry.original);
+  host.presentation = presentation;
+  owners.set(doc, host);
+  presentation.load();
+  return host;
 }
-
-function filter() {
-  visible = entries.filter(
-    (entry) => $('theme').value === 'all' || entry.themeId === $('theme').value,
-  );
-  $('selection').replaceChildren(
-    ...visible.map((entry) => new Option(`Wave ${entry.wave} · ${entry.title}`, entry.id)),
-  );
-  show(visible.includes(current) ? current : visible[0]);
-}
-
-try {
-  const response = await fetch(new URL('manifest.json', base));
-  if (!response.ok) throw new Error(`Catalog request failed (${response.status}).`);
-  const manifest = await response.json();
-  if (
-    manifest.format !== 'revealline-reserve-catalog.v1' ||
-    manifest.sourceOnly !== true ||
-    manifest.entries?.length !== 40
-  )
-    throw new Error('Unrecognized reserve catalog.');
-  entries = manifest.entries;
-  themes = manifest.themes;
-  for (const entry of entries) {
-    if (
-      !entry.sourceOnly ||
-      !themes[entry.themeId] ||
-      !entry.prompts?.length ||
-      entry.width !== 2 * entry.height
-    )
-      throw new Error('Invalid reserve record.');
-    for (const pin of [entry.original, ...entry.prompts, entry.provenance, entry.notes]) link(pin);
-  }
-  for (const [id, label] of Object.entries(themes)) $('theme').append(new Option(label, id));
-  $('theme').addEventListener('change', filter);
-  $('selection').addEventListener('change', () =>
-    show(visible.find((entry) => entry.id === $('selection').value)),
-  );
-  $('previous').addEventListener('click', () =>
-    show(visible[Math.max(0, visible.indexOf(current) - 1)]),
-  );
-  $('next').addEventListener('click', () =>
-    show(visible[Math.min(visible.length - 1, visible.indexOf(current) + 1)]),
-  );
-  $('catalog').hidden = false;
-  catalogLease.finish({
-    message: '40 selected originals. Choose a theme or illustration; only that image loads.',
-  });
-  filter();
-} catch (error) {
-  $('catalog').hidden = true;
-  catalogLease.finish({
-    state: 'error',
-    message: `${error.message} Reload to retry. Serve the authoring catalog over HTTP using the command in its README.`,
-  });
+if (globalThis.document?.getElementById('reserve-retry')) {
+  globalThis.RevealLineToolLaunch?.attached();
+  mountReserveCatalog();
 }

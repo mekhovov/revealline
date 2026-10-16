@@ -8,6 +8,7 @@ import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { applyFieldKitCopy } from '../ui/field-kit-copy.mjs';
 import { CONTROLLER_PREVIEW_STATUS_FORMAT } from '../ui/controller-preview.mjs';
 import { editorCellFromPointer } from '../playground/board-view.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const defaults = { textFace: 'pixel', textSize: 'standard', reducedEffects: false };
 const encode = (patch = {}) => JSON.stringify({ ...defaults, ...patch });
@@ -984,6 +985,34 @@ test('Playground: live measurement handles empty and nonfinite controls without 
   assert.match(f.$('control-readout').textContent, /all measured boxes inside viewport/);
   assert.equal(f.frame.sourceWrites, 1);
   assert.equal(f.sessionWrites.length, 1);
+});
+
+test('Playground: live measurement copy switches language without replacing the preview', async (t) => {
+  const originalLocale = getLocale();
+  try {
+    const f = await harness(t, 'playground');
+    await f.start();
+    mountedMeasurementChild(f);
+    const preview = previewIdentity(f);
+    assert.match(f.$('layout-readout').textContent, /whole arena visible/);
+    assert.match(f.$('control-readout').textContent, /2 measured boxes/);
+    assert.match(f.$('launch-readout').textContent, /visible in viewport/);
+
+    setLocale('uk', { persist: false });
+    assert.match(f.$('layout-readout').textContent, /усю арену видно/);
+    assert.match(f.$('control-readout').textContent, /виміряно 2 області/);
+    assert.match(f.$('launch-readout').textContent, /видно у вікні перегляду/);
+    assert.deepEqual(previewIdentity(f), preview);
+
+    f.$('preview-button').click();
+    assert.match(f.$('control-readout').textContent, /Вимірювання керування недоступні/);
+    assert.match(f.$('control-readout').textContent, /Очікуємо поточний документ перегляду/);
+    setLocale('en', { persist: false });
+    assert.match(f.$('control-readout').textContent, /Control measurements unavailable/);
+    assert.match(f.$('control-readout').textContent, /Waiting for the current preview document/);
+  } finally {
+    setLocale(originalLocale, { persist: false });
+  }
 });
 
 test('Playground: new preview clears live measurements immediately while retaining the explicit snapshot', async (t) => {

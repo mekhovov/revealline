@@ -1,0 +1,15 @@
+{
+  "commands": [
+    "npm run i18n:build",
+    "npm run i18n:check"
+  ],
+  "exitCode": 0,
+  "localization": {
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "messages": 13029,
+    "references": 9026
+  }
+}

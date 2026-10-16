@@ -12,6 +12,16 @@ const missing = () =>
     'Presentation file unavailable: ./assets/d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d.png',
   );
 const settle = (f, state) => waitFor(() => f.$('coop-picture-status').dataset.state === state);
+function assertAcceptedPicture(f, levelId) {
+  const binding = COOP_PICTURE_BINDINGS.find((row) => row.levelId === levelId),
+    decoded = f.artwork.calls.decodes.at(-1);
+  assert.ok(binding);
+  assert.ok(decoded, 'The selected arena must finish decoding its exact original.');
+  assert.equal(decoded.sha256, binding.picture.sha256);
+  // Shared actors now paint after the original. Verify the accepted decoder
+  // object at the background layer instead of treating the final sprite as art.
+  assert.equal(f.drawImages[0], decoded, 'The accepted original paints beneath shared actors.');
+}
 
 // Native methods remain finite observations. The actual browser owns scrolling,
 // viewport fit and hit testing; the real host owns selection, errors and focus.
@@ -53,14 +63,9 @@ for (const [width, height] of [
 ])
   test(`failed picture → Retry → pending Cancel is visible at ${width}×${height} without starting a flight`, async (t) => {
     const f = await waiting(t, { width, height });
-    assert.deepEqual(f.scrolls, [
-      {
-        id: 'coop-picture-cancel',
-        options: nearest,
-        active: 'coop-picture-cancel',
-        level: 'relay-yard',
-      },
-    ]);
+    assert.equal(f.doc.activeElement, f.doc.body);
+    assert.equal(f.$('coop-picture-cancel').hidden, false);
+    assert.deepEqual(f.scrolls, [], 'Passive preparation keeps Cancel secondary.');
     f.scrolls.length = 0;
     const error = missing();
     f.gates[0].reject(error);
@@ -99,13 +104,14 @@ for (const [width, height] of [
     assert.equal(f.drawImages.length, 0);
     f.tap('Enter');
     assert.equal(f.doc.activeElement.id, 'coop-canvas');
-    assert.equal(f.drawImages.at(-1).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
+    assertAcceptedPicture(f, 'relay-yard');
   });
 
 test('visible recovery controls retain their viewport and explicit Cancel reveals only its own Retry', async (t) => {
   const f = await waiting(t, { visible: true });
   assert.deepEqual(f.scrolls, []);
   f.$('coop-picture-retry')._rect.y = 921;
+  f.$('coop-picture-cancel').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-picture-status').dataset.state, 'cancelled');
   assert.deepEqual(f.scrolls, [
@@ -147,7 +153,7 @@ test('a failed picture can be replaced by a different arena through the real sel
   assert.equal(f.doc.activeElement.id, 'coop-start');
   assert.equal(f.drawImages.length, 0);
   f.tap('Enter');
-  assert.equal(f.drawImages.at(-1).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+  assertAcceptedPicture(f, 'first-connection');
   assert.equal(f.$('coop-stage').textContent, 'FIRST CONNECTION');
 });
 
@@ -252,7 +258,7 @@ test('a pending reveal exception cannot prevent the real picture read or later r
       });
     },
   });
-  assert.equal(attempts, 1);
+  assert.equal(attempts, 0, 'Passive preparation never reveals or focuses Cancel.');
   assert.equal(f.artwork.calls.reads.length, 1);
   f.gates[0].reject(missing());
   await settle(f, 'error');
@@ -260,6 +266,7 @@ test('a pending reveal exception cannot prevent the real picture read or later r
   f.$('coop-picture-retry').focus();
   f.tap('Enter');
   await waitFor(() => f.artwork.calls.reads.length === 2);
+  assert.equal(attempts, 1, 'Explicit Retry owns the pending Cancel reveal.');
   f.gates[1].resolve();
   await settle(f, 'ready');
   assert.equal(f.$('coop-start').disabled, false);
@@ -297,11 +304,19 @@ test('newer focus during pending Cancel remains authoritative even after returni
       });
     },
   });
+  assert.equal(moved, false, 'Passive preparation does not hand focus to Cancel.');
+  assert.equal(f.doc.activeElement, f.doc.body);
+  f.gates[0].reject(missing());
+  await settle(f, 'error');
+  f.scrolls.length = 0;
+  f.$('coop-picture-retry').focus();
+  f.tap('Enter');
+  await waitFor(() => f.artwork.calls.reads.length === 2);
   assert.equal(moved, true);
   assert.equal(f.doc.activeElement, f.doc.body);
   const attempts = f.focusAttempts.length;
   assert.deepEqual(f.scrolls, []);
-  f.gates[0].resolve();
+  f.gates[1].resolve();
   await settle(f, 'ready');
   assert.equal(f.doc.activeElement, f.doc.body);
   assert.equal(f.focusAttempts.length, attempts, 'Completion cannot revive the retired handoff');

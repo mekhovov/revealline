@@ -1,0 +1,21 @@
+{
+  "scope": "Native normal regional Library source-host journey; not a packaged/offline or real-device qualification",
+  "sourceCommit": "cc014ad46dc4c22c23bf49f3f4e745415b6c3b7b",
+  "descriptorSha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443",
+  "observations": [
+    "Normal Library card downloaded the real immutable remote 38-file source; Saved review-r1 showed 5.7 MiB.",
+    "First Fly prepared successfully and remained paused/disarmed at 16 m with zero input; no Retry required.",
+    "Explicit Arm, keyboard throttle/forward and Space produced a paused actual flight at 5 m, vertical speed +2.7 m/s, drift 0.6 m/s and 63% throttle.",
+    "Page reload retained the saved region; Fly again reached Ready at 16 m with zero input directly.",
+    "Native console had no warning or error."
+  ],
+  "limitations": [
+    "This source host lacks the unrelated generated optional-world worker; generic world-feed unavailability is not counted as a package test.",
+    "No full-network-offline, browser restart, player device FPS or large-archipelago claim.",
+    "The later Tropical live material setter has functional same-material/geometry/pose coverage; shared renderer invocation awaits integrated #1310 qualification."
+  ],
+  "screenshot": {
+    "name": "tropical-normal-library-flight-20261015.png",
+    "sha256": "c7df49f35153a5d7518bf737b4973b51a7eb33ab2d8a43641ffe07c6bb534981"
+  }
+}

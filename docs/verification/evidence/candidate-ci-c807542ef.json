@@ -1,0 +1,58 @@
+{
+  "format": "revealline-company-candidate-ci-observation.v1",
+  "qualified": false,
+  "sourceRevision": "c807542ef4840ce739beb7af86424488f7508772",
+  "sourceTree": "6be6aa62a151a6d32638f46f8fa08aad1b9cbaaf",
+  "run": {
+    "id": 36501496913,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/36501496913",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "jobs": [
+    {
+      "name": "optional-practice",
+      "id": 109193145182,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/36501496913/job/109193145182",
+      "conclusion": "success",
+      "completedAt": "2026-09-29T00:08:30Z"
+    },
+    {
+      "name": "candidate",
+      "id": 109193145424,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/36501496913/job/109193145424",
+      "conclusion": "success",
+      "completedAt": "2026-09-29T00:30:07Z"
+    }
+  ],
+  "cohorts": [
+    {
+      "name": "company:test",
+      "tests": 947,
+      "pass": 947,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    {
+      "name": "practice:test",
+      "tests": 165,
+      "pass": 165,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  ],
+  "reportedChecks": [
+    "Generated source and public media eligibility",
+    "Both historical source release formats",
+    "All eighteen company editions compiled twice and original ZIP members inspected",
+    "Both optional packages compiled twice and admitted"
+  ],
+  "log": {
+    "path": ".cache/phase7-c807542ef/ci-run.log",
+    "bytes": 1182168,
+    "sha256": "2353b9747a7abe496c12b36c9fb2de6c55f6c65ba228466c0c0fd292e09f3a33"
+  },
+  "scope": "Observed exact-head GitHub Actions completion and downloaded raw job log. Other test cohorts overlap and are not added to these counts. Local selected-edition and optional original-byte admission has separate receipts. No all-edition artifact-body download, default qualification, hosting, release, public-byte or physical-device claim."
+}

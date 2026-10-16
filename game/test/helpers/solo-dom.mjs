@@ -1,5 +1,6 @@
 // Minimal browser boundary for the actual solo entry. No layout or pixel claims.
 import assert from 'node:assert/strict';
+import { rasterDimensions } from './raster-image.mjs';
 import { readFile } from 'node:fs/promises';
 import { BoardPainter } from '../../ui/render.mjs';
 import { Document, Element, Events } from './couch-dom.mjs';
@@ -41,6 +42,11 @@ export class SoloElement extends Element {
   get lastElementChild() {
     return this.children.at(-1) ?? null;
   }
+  prepend(...nodes) {
+    const prior = [...this.children];
+    this.append(...nodes);
+    this.children = [...nodes, ...prior.filter((node) => !nodes.includes(node))];
+  }
   showModal() {
     this.open = true;
     this.setAttribute('open', '');
@@ -52,6 +58,14 @@ export class SoloElement extends Element {
   }
   focus() {
     if (!this.disabled) super.focus();
+  }
+  getContext() {
+    // Guides and sprite admission need a usable inert Canvas boundary. Drawing
+    // assertions install their explicit observable context in soloPage below.
+    return (this._canvasContext ??= new Proxy(
+      { canvas: this, id: this.id },
+      { get: (target, key) => (Object.hasOwn(target, key) ? target[key] : () => {}) },
+    ));
   }
 }
 class SoloDocument extends Document {
@@ -66,6 +80,11 @@ class SoloDocument extends Document {
   }
   createElement(tag) {
     return new SoloElement(this, tag);
+  }
+  createTextNode(value) {
+    const node = new SoloElement(this, 'span');
+    node.textContent = value;
+    return node;
   }
 }
 function mount(document, html) {
@@ -118,8 +137,9 @@ export function memoryStorage(entries = {}) {
     },
   };
 }
-function assetDatabase(indexedDB = memoryIndexedDB().indexedDB) {
-  const connections = new Set();
+export function soloDatabase(indexedDB) {
+  const connections = new Set(),
+    databases = new Map();
   return {
     close() {
       for (const db of connections) {
@@ -127,8 +147,13 @@ function assetDatabase(indexedDB = memoryIndexedDB().indexedDB) {
         db.close();
       }
     },
-    open(...args) {
-      const request = indexedDB.open(...args);
+    open(name, ...args) {
+      // The finite model represents one database. Browser names must not share
+      // schema/version state, but explicit test routers keep their own policy.
+      if (indexedDB === undefined && !databases.has(name))
+        databases.set(name, memoryIndexedDB().indexedDB);
+      const backend = indexedDB === undefined ? databases.get(name) : indexedDB;
+      const request = backend.open(name, ...args);
       let success;
       Object.defineProperty(request, 'onsuccess', {
         get: () => success,
@@ -143,8 +168,23 @@ function assetDatabase(indexedDB = memoryIndexedDB().indexedDB) {
     },
   };
 }
-export async function settle(predicate, message = 'Asynchronous host action did not settle.') {
-  await waitFor(predicate, { message });
+export async function settle(
+  predicate,
+  message = 'Asynchronous host action did not settle.',
+  options = {},
+) {
+  // The focused gate runs independent host processes concurrently. Its runner
+  // can schedule a valid asynchronous handoff later than the interactive
+  // fixture's five-second default; retain the fast local feedback while
+  // giving CI a deterministic scheduler allowance.
+  const timeoutMs = options.timeoutMs ?? (process.env.CI ? 20_000 : 5_000);
+  await waitFor(predicate, { ...options, timeoutMs, message });
+}
+export function clickVisibleSimulator(page) {
+  const simulator = page.$('solo-fpv-sim');
+  if (simulator.hidden) simulator.parentElement.querySelector('[data-mode-more]')?.click();
+  assert.equal(simulator.hidden, false, 'SIM must be revealed through More before launch.');
+  simulator.click();
 }
 let sequence = 0;
 export async function soloPage(
@@ -169,7 +209,9 @@ export async function soloPage(
     parentWindow,
     pictures,
     waitForPictures = true,
+    animationFrames = false,
     initialReadyTimeoutMs = 5000,
+    browserSetup,
     readPads = () => [],
   } = {},
 ) {
@@ -181,7 +223,7 @@ export async function soloPage(
   );
   const doc = new SoloDocument(),
     win = new Events(),
-    db = assetDatabase(assetIndexedDB);
+    db = soloDatabase(assetIndexedDB);
   const mediaDB = soundtrackIndexedDB ?? memoryIndexedDB().indexedDB;
   const audioElements = [];
   if (audio?.filePlayback !== false && audio) {
@@ -230,6 +272,8 @@ export async function soloPage(
       return element;
     };
   }
+  Object.assign(win, doc.defaultView);
+  doc.defaultView = win;
   win.parent = parentWindow ?? win;
   doc.parentNode = win;
   const html = await readFile(new URL('../../index.html', import.meta.url), 'utf8');
@@ -275,7 +319,19 @@ export async function soloPage(
     matchMedia: () => ({ matches: false }),
     Option: class extends SoloElement {
       constructor(label, value) {
-        super(doc, 'option', { label, text: label, textContent: label, value });
+        super(doc, 'option', { textContent: label, value });
+      }
+      get label() {
+        return this.getAttribute('label') ?? this.textContent;
+      }
+      set label(value) {
+        this.setAttribute('label', value);
+      }
+      get text() {
+        return this.textContent;
+      }
+      set text(value) {
+        this.textContent = value;
       }
     },
     fetch: async (path, options) => {
@@ -357,16 +413,15 @@ export async function soloPage(
       },
     },
   };
+  if (animationFrames) {
+    win.performance = { now: () => now };
+    win.requestAnimationFrame = globals.requestAnimationFrame;
+    win.cancelAnimationFrame = globals.cancelAnimationFrame;
+  }
   // Presentation bytes, manifests and header/hash validation remain real. Only
   // browser codecs are modeled, as they are unavailable in the Node DOM host.
-  const pngDimensions = async (blob) => {
-    const bytes = new Uint8Array(await blob.arrayBuffer());
-    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-    assert.deepEqual([...bytes.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-    return { width: view.getUint32(16), height: view.getUint32(20) };
-  };
   if (typeof globalThis.createImageBitmap !== 'function')
-    globals.createImageBitmap = async (blob) => ({ ...(await pngDimensions(blob)), close() {} });
+    globals.createImageBitmap = async (blob) => ({ ...(await rasterDimensions(blob)), close() {} });
   if (typeof globalThis.FontFace !== 'function')
     globals.FontFace = class {
       constructor(family) {
@@ -396,16 +451,15 @@ export async function soloPage(
     globals.Image = class {
       set src(value) {
         this.source = value;
+        const data = /^data:(image\/(?:png|jpeg|webp));base64,/.exec(value);
         const blob =
           codecBlobs.get(value) ??
-          (/^data:image\/png;base64,/.test(value)
-            ? new Blob([Buffer.from(value.split(',')[1], 'base64')], { type: 'image/png' })
-            : null);
+          (data ? new Blob([Buffer.from(value.split(',')[1], 'base64')], { type: data[1] }) : null);
         if (!blob) {
           queueMicrotask(() => this.onerror?.());
           return;
         }
-        void pngDimensions(blob).then(
+        void rasterDimensions(blob).then(
           ({ width, height }) => {
             if (this.source !== value) return;
             this.naturalWidth = this.width = width;
@@ -428,8 +482,11 @@ export async function soloPage(
       return audio.context;
     };
   win.location = globals.location;
+  // Window and global URL share the same page-owned object URL registry.
+  win.URL = globals.URL;
   // Real browser Window and global sessionStorage refer to the same tab store.
   win.sessionStorage = previewStorage;
+  browserSetup?.({ document: doc, window: win, globals });
   for (const [key, value] of Object.entries(globals)) {
     originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
     Object.defineProperty(globalThis, key, { value, configurable: true, writable: true });
@@ -459,6 +516,9 @@ export async function soloPage(
     win.emit('pagehide', { persisted: false });
     await new Promise((resolve) => setImmediate(resolve));
     db.close();
+    // Model the retired page, not a still-connected document in the next host's
+    // JavaScript realm. Live locale bindings must not refresh detached controls.
+    doc.documentElement.remove();
     console.error = originalError;
     for (const [key, value] of originals)
       value ? Object.defineProperty(globalThis, key, value) : delete globalThis[key];
@@ -495,12 +555,18 @@ export async function soloPage(
     }
   }
   await initialReady(
-    () => $('builtin-packs').children.length > 0,
+    () => !!doc.body.dataset.editionId || $('builtin-packs').children.length > 0,
     'Bundled pack index must finish loading.',
   );
-  function frame(ms = 1000 / 120) {
+  function frame(ms = 1000 / 120, { dispatchAnimationFrames = true } = {}) {
     now += ms;
     scene.update(now, ms);
+    if (animationFrames && dispatchAnimationFrames && !doc.hidden) {
+      for (const [id, callback] of [...frames]) {
+        if (!frames.delete(id)) continue;
+        callback(now);
+      }
+    }
   }
   if (waitForPictures)
     await initialReady(

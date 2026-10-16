@@ -8,7 +8,14 @@ import { Script, createContext, constants } from 'node:vm';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { MENU_STYLE_PREFERENCES_KEY } from '../menu-style-preferences.mjs';
 import { applyFieldKitCopy } from '../ui/field-kit-copy.mjs';
+import { getLocale } from '../i18n/index.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
+import { resolveAuthoringEditor } from '../ui/authoring-editors.mjs';
+import { pageActorArtPool } from '../presentation/actor-art-pool.mjs';
+import { overflightFieldKitArt } from '../presentation/overflight-field-kit-art.mjs';
 
 const NativeURL = globalThis.URL;
 const route = new NativeURL('../../authoring/motion-lab/', import.meta.url);
@@ -50,6 +57,11 @@ class MotionElement extends Element {
         get(target, key) {
           if (key in target) return target[key];
           if (key === 'measureText') return (text) => ({ width: String(text).length * 0.3 });
+          if (key === 'createImageData')
+            return (width, height) => {
+              target.calls.push({ op: key, args: [width, height] });
+              return { width, height, data: new Uint8ClampedArray(width * height * 4) };
+            };
           return (...args) => {
             target.calls.push({ op: key, args });
           };
@@ -118,13 +130,14 @@ async function harness(
     withLauncher = false,
     failModule = false,
     prepareAbility = (value) => value,
+    allowCollectionWrites = false,
   } = {},
 ) {
   const doc = new MotionDocument(),
     host = new Events(),
     media = Object.assign(new Events(), { matches: reduced });
   doc.defaultView = host;
-  doc.documentElement.lang = 'uk'; // Existing English fallback remains explicit.
+  doc.documentElement.lang = getLocale(); // Match the locale bootstrap used by the real page.
   const html = await readFile(new NativeURL('index.html', route), 'utf8');
   mountMarkup(doc, html);
   const scripts = [...html.matchAll(/<script\b([^>]*)>/g)].map((match) => ({
@@ -151,25 +164,37 @@ async function harness(
     entered = deferred();
   if (!holdBoot) boot.resolve();
   let raw = stored,
+    collectionRaw = null,
     failWrites = denied,
     counter = 0,
     imageId = 0;
   const storage = {
     getItem(key) {
       reads.push(key);
-      assert.ok([DISPLAY_PREFERENCES_KEY, 'xonix.motion-lab.collection.v1'].includes(key));
+      assert.ok(
+        [
+          DISPLAY_PREFERENCES_KEY,
+          MENU_STYLE_PREFERENCES_KEY,
+          'xonix.motion-lab.collection.v1',
+        ].includes(key),
+      );
       if (denied) throw new Error('Storage unavailable');
-      return key === DISPLAY_PREFERENCES_KEY ? raw : null;
+      return key === DISPLAY_PREFERENCES_KEY
+        ? raw
+        : key === 'xonix.motion-lab.collection.v1'
+          ? collectionRaw
+          : null;
     },
     setItem(key, value) {
       writes.push([key, value]);
-      assert.equal(
-        key,
-        DISPLAY_PREFERENCES_KEY,
-        'These display actions must not save the separate lab collection or a player profile.',
+      assert.ok(
+        key === DISPLAY_PREFERENCES_KEY ||
+          (allowCollectionWrites && key === 'xonix.motion-lab.collection.v1'),
+        'Only explicit collection cases may save the lab collection; never a game profile.',
       );
       if (failWrites) throw new Error('Storage unavailable');
-      raw = value;
+      if (key === DISPLAY_PREFERENCES_KEY) raw = value;
+      else collectionRaw = value;
     },
   };
   host.localStorage = storage;
@@ -432,6 +457,9 @@ if (owner) {
     get raw() {
       return raw;
     },
+    get collectionRaw() {
+      return collectionRaw;
+    },
     set failWrites(value) {
       failWrites = value;
     },
@@ -494,10 +522,110 @@ if (owner) {
       fn(time);
     },
     key(code, repeat = false) {
+      $('arena').focus();
       host.emit('keydown', { target: $('arena'), code, repeat });
     },
   };
 }
+test('Overflight effect inspection uploads exact shared pixels, preserves native study state and releases its canvases', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const panel = h.$('overflight-motion-study'),
+    canvas = panel.querySelector('canvas'),
+    select = panel.querySelector('select'),
+    controls = panel.querySelectorAll('input'),
+    progress = controls.find((control) => control.type === 'range'),
+    reduced = controls.find((control) => control.type === 'checkbox'),
+    before = freezeView(h),
+    frameOwners = h.frames.size;
+  const sourceCanvases = new Set();
+  const paints = () => {
+    const calls = canvas.context.calls.filter((call) => call.op === 'drawImage');
+    for (const call of calls) sourceCanvases.add(call.args[0]);
+    canvas.context.calls.length = 0;
+    return calls;
+  };
+  paints();
+  select.value = 'drop';
+  progress.value = '50';
+  progress.emit('input');
+  const full = paints();
+  assert.equal(full.length, 2, 'The complete impact includes its ring and shared pixel source');
+  const source = full[1].args[0],
+    upload = source.context.calls.find((call) => call.op === 'putImageData').args[0];
+  assert.deepEqual(upload.data, overflightFieldKitArt('pickup.overflight-impact').rgba);
+  assert.equal(source.context.calls.filter((call) => call.op === 'createImageData').length, 1);
+  reduced.checked = true;
+  reduced.emit('input');
+  assert.equal(paints().length, 1, 'Reduction removes decorative impact pixels');
+  select.value = 'warning';
+  select.emit('input');
+  assert.equal(paints().length, 2, 'Reduced effects retain the hostile warning ring and marker');
+  assert.deepEqual(freezeView(h), before);
+  assert.equal(h.frames.size, frameOwners, 'Scrubbing never creates a second animation clock');
+  assert.deepEqual(h.writes, [], 'Inspection never writes gameplay or appearance preferences');
+  h.host.emit('pagehide', { persisted: false });
+  for (const owned of [canvas, ...sourceCanvases]) {
+    assert.equal(owned.width, 0);
+    assert.equal(owned.height, 0);
+  }
+  for (const control of [select, progress, reduced])
+    assert.equal(control.listeners.get('input')?.size ?? 0, 0);
+});
+
+test('Motion shared actor controls use the actual host with one playback owner and unchanged player sandbox state', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  h.tick(0);
+  h.tick(100);
+  const root = h.$('shared-actor-study');
+  assert.equal(root.open, false);
+  assert.equal(pageActorArtPool(h.doc).stats().reservedBytes, 0);
+  root.open = true;
+  root.emit('toggle');
+  await waitFor(() => !h.$('shared-actor-play').disabled);
+  assert.equal(h.frames.size, 1, 'Opening the editor does not start another clock');
+  h.$('shared-actor-play').click();
+  const position = h.$('heading-value').textContent,
+    queue = h.$('turn-queue').textContent;
+  assert.equal(h.frames.size, 1, 'Actor Play retires the player sandbox frame');
+  h.tick(200);
+  h.tick(420);
+  assert.equal(h.$('shared-actor-frame').value, '2');
+  assert.equal(h.$('heading-value').textContent, position);
+  assert.equal(h.$('turn-queue').textContent, queue);
+  h.change('shared-actor-accessory', '-2');
+  assert.equal(h.frames.size, 0);
+  h.$('shared-actor-export').click();
+  const descriptor = JSON.parse(h.$('shared-actor-source').value);
+  assert.equal(descriptor.frames[2].accessory, -2);
+  assert.deepEqual(
+    h.writes,
+    [],
+    'Drafts never write collection, gameplay or appearance preferences',
+  );
+  h.$('shared-actor-play').click();
+  h.$('play-pause').click();
+  assert.equal(h.$('shared-actor-play').getAttribute('aria-pressed'), 'false');
+  h.tick(600);
+  h.tick(700);
+  assert.equal(
+    h.$('shared-actor-frame').value,
+    '2',
+    'Player Play freezes the actor at its selected frame',
+  );
+  h.host.emit('pagehide', { persisted: true });
+  assert.equal(h.frames.size, 0);
+  assert.equal(pageActorArtPool(h.doc).stats().reservedBytes, 0);
+  h.host.emit('pageshow', { persisted: true });
+  await waitFor(() => !h.$('shared-actor-play').disabled);
+  assert.equal(h.frames.size, 0);
+  h.cap(true);
+  assert.match(h.$('shared-actor-effects').textContent, /Reduced effects|Зменшення ефектів/);
+  h.host.emit('pagehide', { persisted: false });
+  assert.equal(pageActorArtPool(h.doc).stats().reservedBytes, 0);
+});
+
 function policy(h, face, size, effects) {
   assert.equal(h.doc.body.dataset.textFace, face);
   assert.equal(h.doc.body.dataset.textSize, size);
@@ -520,15 +648,318 @@ function freezeView(h) {
   };
 }
 
+function characterPaintTrace(h, id) {
+  return h.$(id).context.calls.map((call) =>
+    call.args
+      ? {
+          ...call,
+          args: call.args.map((value) => (typeof value === 'object' ? value?.src : value)),
+        }
+      : { ...call },
+  );
+}
+
+test('Inspection responses change real wing paint without changing paired arena traces or recipe exports', async (t) => {
+  let baseline;
+  const poses = new Map();
+  for (const response of ['follow', 'idle', 'cruise', 'boost', 'slow'])
+    await t.test(response, async (t) => {
+      const h = await harness(t);
+      await h.ready();
+      h.change('character', 'ukrainian-bird');
+      for (const image of h.images) image.onload?.();
+      h.$('show-particles').checked = false;
+      h.$('show-particles').emit('change');
+      h.tick(0);
+      h.tick(100);
+      h.$('parts-editor-export').click();
+      const before = await h.objectURLs.at(-1).blob.text(),
+        frame = [...h.frames.keys()];
+      h.$('inspection-travel').focus();
+      h.change('inspection-travel', response);
+      assert.deepEqual([...h.frames.keys()], frame, 'Selection keeps the existing frame owner');
+      assert.equal(h.doc.activeElement, h.$('inspection-travel'));
+      h.$('arena').context.calls.length = 0;
+      h.$('inspection').context.calls.length = 0;
+      h.tick(200);
+      const actual = {
+        arena: characterPaintTrace(h, 'arena'),
+        speed: h.$('speed-value').textContent,
+        heading: h.$('heading-value').textContent,
+        mode: h.$('state-label').textContent,
+        recipe: h.$('parts-editor-json').value,
+      };
+      if (response === 'follow') baseline = actual;
+      else assert.deepEqual(actual, baseline, 'Only the enlarged inspection changes');
+      poses.set(response, characterPaintTrace(h, 'inspection'));
+      h.$('parts-editor-export').click();
+      assert.equal(await h.objectURLs.at(-1).blob.text(), before);
+      assert.deepEqual(h.writes, []);
+    });
+  assert.notDeepEqual(poses.get('idle'), poses.get('cruise'));
+  assert.notDeepEqual(poses.get('cruise'), poses.get('boost'));
+  assert.notDeepEqual(poses.get('slow'), poses.get('cruise'));
+});
+
+for (const reduced of [false, true])
+  test(`Inspection response retains paused phase, drafts and lifetime ownership with reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    h.change('character', 'ukrainian-bird');
+    for (const image of h.images) image.onload?.();
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    h.$('parts-editor-json').value = '{pending';
+    const before = freezeView(h),
+      paint = () => {
+        h.$('inspection').context.calls.length = 0;
+        h.$('rotor-editor-guides').emit('change');
+        return characterPaintTrace(h, 'inspection');
+      },
+      original = paint();
+    h.$('inspection-travel').focus();
+    for (const response of ['boost', 'idle', 'slow', 'cruise', 'follow']) {
+      h.change('inspection-travel', response);
+      assert.deepEqual(paint(), original, 'Wing phase does not reset or advance during pause');
+      assert.equal(h.$('parts-editor-json').value, '{pending');
+      assert.equal(h.doc.activeElement, h.$('inspection-travel'));
+      assert.equal(h.frames.size, 0);
+    }
+    assert.deepEqual(freezeView(h), before);
+    h.host.emit('pagehide', { persisted: true });
+    h.host.emit('pageshow', { persisted: true });
+    assert.equal(h.frames.size, 0, 'Returning still requires explicit Play');
+    h.host.emit('pagehide', { persisted: false });
+    h.$('inspection').context.calls.length = 0;
+    h.change('inspection-travel', 'boost');
+    assert.deepEqual(
+      h.$('inspection').context.calls,
+      [],
+      'Disposed selection listeners are removed',
+    );
+    assert.deepEqual(h.writes, []);
+  });
+
+for (const reduced of [false, true])
+  test(`Inspection exhaust responds to selected speed at a frozen time with reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    h.change('character', 'retro-craft');
+    for (const image of h.images) image.onload?.();
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    const paint = (response) => {
+      h.$('inspection').context.calls.length = 0;
+      h.change('inspection-travel', response);
+      return characterPaintTrace(h, 'inspection');
+    };
+    const idle = paint('idle'),
+      cruise = paint('cruise'),
+      boost = paint('boost');
+    assert.notDeepEqual(idle, cruise, 'Actual thruster geometry responds even when time is frozen');
+    assert.notDeepEqual(cruise, boost);
+    assert.deepEqual(paint('idle'), idle, 'Changing speed does not rephase the flicker clock');
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.$('play-pause').textContent, 'Play');
+    assert.deepEqual(h.writes, []);
+  });
+
+test('Inspection response native select retains EN/UK labels, focus and paused intent', async (t) => {
+  const { setLocale, translateDOM } = await import('../i18n/index.mjs'),
+    previous = getLocale(),
+    h = await harness(t);
+  try {
+    await h.ready();
+    h.host.emit('blur');
+    const select = h.$('inspection-travel'),
+      label = select.parentElement,
+      options = select.children;
+    assert.equal(select.tagName, 'SELECT');
+    assert.equal(select.value, 'follow');
+    assert.equal(options.length, 5);
+    assert.equal(select.getAttribute('aria-describedby'), 'inspection-travel-hint');
+    select.focus();
+    h.change('inspection-travel', 'boost');
+    for (const [locale, title, option] of [
+      ['en', 'Inspection travel response', 'Boost'],
+      ['uk', 'Реакція огляду на рух', 'Прискорення'],
+    ]) {
+      setLocale(locale, { persist: false });
+      translateDOM(label);
+      assert.equal(label.children[0].textContent, title);
+      assert.equal(options.find((node) => node.value === 'boost').textContent, option);
+      assert.equal(select.value, 'boost');
+      assert.equal(h.doc.activeElement, select);
+      assert.equal(h.frames.size, 0);
+      assert.deepEqual(h.writes, []);
+    }
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+for (const reduced of [false, true])
+  test(`Motion attachments edit actual wing paint while retaining paused clocks and reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    h.change('character', 'ukrainian-bird');
+    h.images.find((image) => image.src.endsWith('ukrainian-bird.png')).onload();
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    assert.equal(h.$('parts-editor-root').hidden, false);
+    const before = freezeView(h),
+      writes = h.writes.length,
+      source = h.$('parts-editor-json').value,
+      paint = () => {
+        const calls = h.$('inspection').context.calls;
+        calls.length = 0;
+        h.$('rotor-editor-guides').emit('change');
+        return calls.filter((call) =>
+          ['translate', 'rotate', 'lineTo', 'ellipse', 'fillRect'].includes(call.op),
+        );
+      },
+      original = paint();
+    const rotations = original.filter((call) => call.op === 'rotate').slice(1);
+    assert.equal(rotations.length, 2, 'Real paintCharacter draws both attached wings');
+    if (reduced) assert.ok(rotations.every((call) => call.args[0] === 0));
+    else assert.ok(rotations.every((call) => call.args[0] !== 0));
+    h.$('parts-editor-x').focus();
+    h.change('parts-editor-anchor', '1');
+    h.change('parts-editor-x', '0.25');
+    h.change('parts-editor-rate', '3');
+    const accepted = h.$('parts-editor-json').value,
+      edited = paint();
+    assert.equal(JSON.parse(accepted)[0].anchors[1][0], 0.25);
+    assert.equal(JSON.parse(accepted)[0].frequencyHz, 3);
+    assert.notDeepEqual(edited, original);
+    h.$('parts-editor-json').value = '{pending';
+    h.$('parts-editor-apply').click();
+    assert.match(h.$('parts-editor-status').textContent, /rejected/);
+    assert.deepEqual(paint(), edited, 'Rejected text retains the actual accepted preview');
+    h.external({ textFace: 'plain', textSize: 'large', reducedEffects: reduced });
+    assert.equal(h.$('parts-editor-json').value, '{pending');
+    h.$('parts-editor-json').value = accepted;
+    h.$('parts-editor-apply').click();
+    h.$('parts-editor-reset').click();
+    assert.equal(h.$('parts-editor-json').value, source);
+    assert.deepEqual(paint(), original, 'Restoring the source preserves the exact paused phase');
+    assert.deepEqual(freezeView(h), before);
+    assert.equal(h.$('play-pause').textContent, 'Play');
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.writes.length, writes);
+    assert.equal(h.doc.activeElement, h.$('parts-editor-x'));
+    h.host.emit('pagehide', { persisted: true });
+    h.host.emit('pageshow', { persisted: true });
+    assert.equal(h.frames.size, 0, 'BFCache return does not resume edited animation');
+    assert.deepEqual(paint(), original);
+  });
+
+test('Motion attachment controls offer fractional keyboard steps and commit completed edits without advancing paused playback', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  h.change('character', 'ukrainian-bird');
+  h.images.find((image) => image.src.endsWith('ukrainian-bird.png')).onload();
+  h.tick(0);
+  h.tick(100);
+  h.host.emit('blur');
+  const before = freezeView(h),
+    writes = h.writes.length;
+  for (const [id, value, acceptedValue] of [
+    ['parts-editor-x', '0.25', (parts) => parts[0].anchors[0][0]],
+    ['parts-editor-y', '-0.25', (parts) => parts[0].anchors[0][1]],
+    ['parts-editor-rate', '3.25', (parts) => parts[0].frequencyHz],
+  ]) {
+    const control = h.$(id),
+      increment = Number(control.getAttribute('step')),
+      accepted = h.$('parts-editor-json').value;
+    assert.equal(control.type, 'number');
+    assert.ok(
+      increment > 0 && increment <= 0.01,
+      `${id} needs a fractional native increment; a unit step jumps across the normalized body`,
+    );
+    control.focus();
+    h.change(id, value, 'input');
+    assert.equal(h.$('parts-editor-json').value, accepted, 'Typing alone is not a recipe commit');
+    control.emit('change');
+    assert.equal(acceptedValue(JSON.parse(h.$('parts-editor-json').value)), Number(value));
+    assert.deepEqual(freezeView(h), before);
+    assert.equal(h.doc.activeElement, control);
+  }
+  assert.equal(h.frames.size, 0);
+  assert.equal(h.$('play-pause').textContent, 'Play');
+  assert.equal(h.writes.length, writes);
+});
+
+test('Motion attachment drafts are per character and live edits keep the existing single frame owner', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  h.change('character', 'ukrainian-bird');
+  h.images.find((image) => image.src.endsWith('ukrainian-bird.png')).onload();
+  h.tick(0);
+  h.tick(100);
+  const frames = [...h.frames.keys()],
+    before = freezeView(h),
+    writes = h.writes.length;
+  h.change('parts-editor-rate', '3.25');
+  const accepted = h.$('parts-editor-json').value;
+  assert.deepEqual([...h.frames.keys()], frames);
+  assert.deepEqual(freezeView(h), before);
+  assert.equal(h.$('play-pause').textContent, 'Pause');
+  h.$('parts-editor-json').value = '{unapplied';
+  h.change('character', 'retro-craft');
+  assert.equal(JSON.parse(h.$('parts-editor-json').value)[0].type, 'thruster');
+  h.change('parts-editor-rate', '1.25');
+  h.change('character', 'ukrainian-bird');
+  assert.equal(
+    h.$('parts-editor-json').value,
+    accepted,
+    'Pending text cannot overwrite another character',
+  );
+  h.change('character', 'retro-craft');
+  assert.equal(JSON.parse(h.$('parts-editor-json').value)[0].flickerHz, 1.25);
+  h.change('animation-recipe', 'swallow-flight');
+  assert.equal(
+    JSON.parse(h.$('parts-editor-json').value)[0].frequencyHz,
+    2.1,
+    'An explicit recipe change starts from its own source attachments',
+  );
+  h.host.emit('pagehide', { persisted: false });
+  const afterDispose = h.$('parts-editor-json').value;
+  h.change('parts-editor-rate', '4');
+  h.$('parts-editor-reset').click();
+  assert.equal(h.$('parts-editor-json').value, afterDispose);
+  assert.equal(h.frames.size, 0);
+  assert.equal(h.writes.length, writes);
+});
+
 test('Motion HTML adopts reading policy before held app startup with one explicit size writer', async (t) => {
   const h = await harness(t, {
     stored: encode({ textFace: 'plain', textSize: 'large' }),
     holdBoot: true,
   });
   assert.equal(h.entries.length, 1);
+  const theme = h.scripts.find(
+    (script) => script.attrs.src === '../../game/presentation/theme-bootstrap.mjs',
+  );
+  const accessGate = h.scripts.find((script) => script.attrs.src === '../../game/access-gate.mjs');
+  assert.ok(
+    theme && theme.offset < h.entries[0].offset,
+    'Shared theme markers precede reading setup',
+  );
+  assert.ok(accessGate && accessGate.offset < theme.offset, 'Access gate precedes app startup');
   assert.ok(
     h.entries[0].offset <
-      Math.min(...h.scripts.filter((s) => s !== h.entries[0]).map((s) => s.offset)),
+      Math.min(
+        ...h.scripts
+          .filter((s) => s !== h.entries[0] && s !== theme && s !== accessGate)
+          .map((s) => s.offset),
+      ),
   );
   policy(h, 'plain', 'large', 'full');
   assert.equal(h.doc.querySelectorAll('[data-field-kit-text-size]').length, 0);
@@ -819,7 +1250,12 @@ test('Motion graph first arriving in an unfocused document starts paused until e
 
 test('Motion cached interruption before first application delivery cannot autoplay before or after return', async (t) => {
   const h = await harness(t);
+  const palette = h.doc.body.dataset.menuPalette;
+  const ornaments = h.doc.body.dataset.menuOrnaments;
+  assert.ok(palette && ornaments, 'The real shared tool chrome has mounted.');
   h.host.emit('pagehide', { persisted: true });
+  assert.equal(h.doc.body.dataset.menuPalette, palette);
+  assert.equal(h.doc.body.dataset.menuOrnaments, ornaments);
   // Visible/focused flags can already look normal when the delayed application
   // first evaluates. Entry-owned interruption, not those flags, must win.
   assert.equal(h.doc.hidden, false);
@@ -837,6 +1273,12 @@ test('Motion cached interruption before first application delivery cannot autopl
   h.tick(100);
   assert.equal(h.frames.size, 1);
   h.host.emit('pagehide', { persisted: false });
+  assert.equal(
+    h.doc.body.dataset.menuPalette,
+    undefined,
+    'Terminal departure releases shared tool chrome.',
+  );
+  assert.equal(h.doc.body.dataset.menuOrnaments, undefined);
   for (const type of ['blur', 'pagehide', 'pageshow', 'storage'])
     assert.equal(h.host.listeners.get(type)?.size ?? 0, 0, type);
   assert.equal(h.doc.listeners.get('visibilitychange')?.size ?? 0, 0);
@@ -948,7 +1390,13 @@ test('Motion real launcher graph failure retains locked study, Reload, navigatio
   h.change('motion-text-size', 'large');
   policy(h, 'pixel', 'large', 'full');
   assert.equal(h.writes.length, 1);
-  assert.ok(h.reads.every((key) => key === DISPLAY_PREFERENCES_KEY));
+  assert.ok(
+    h.reads.every((key) => [DISPLAY_PREFERENCES_KEY, MENU_STYLE_PREFERENCES_KEY].includes(key)),
+  );
+  assert.ok(
+    h.reads.includes(MENU_STYLE_PREFERENCES_KEY),
+    'Shared tool chrome may read its own preference even when the application fails.',
+  );
 });
 
 for (const failure of ['network', 'validation']) {
@@ -1220,7 +1668,7 @@ test('Motion real scan reveals and expires DOM note text on the rendering frame 
   assert.equal(h.doc.body.textContent.includes(secret), false);
   h.key('KeyE');
   assert.ok(row.textContent.includes(secret));
-  assert.match(h.$('ability-readout').textContent, /0 markers updated · 1 notes visible/);
+  assert.match(h.$('ability-readout').textContent, /0 markers updated · 1 note visible/);
   h.tick(100);
   h.tick(200);
   assert.ok(row.textContent.includes(secret));
@@ -1233,7 +1681,7 @@ test('Motion real scan reveals and expires DOM note text on the rendering frame 
   assert.equal(row.getAttribute('aria-label'), null);
   assert.match(
     h.$('ability-readout').textContent,
-    /1 notes visible/,
+    /1 note visible/,
     'The general readout deliberately has not refreshed in these 34 ms.',
   );
   const painted = h
@@ -1301,6 +1749,98 @@ test('Motion superseded PNG byte read cannot allocate a URL or replace the newer
   assert.equal(h.objectURLs.length, urls);
   assert.equal(h.$('background-status').textContent, status);
   assert.equal(h.revoked.includes(accepted.src), false);
+});
+
+for (const phase of ['byte read', 'native decode'])
+  for (const rejection of ['unsupported type', 'oversized file'])
+    test(`Motion rejected replacement retires pending ${phase}: ${rejection}`, async (t) => {
+      const h = await harness(t);
+      await h.ready();
+      const accepted = await uploadBackground(h, 'static-default.png');
+      accepted.onload();
+      const acceptedURL = accepted.src,
+        gate = deferred();
+      let pending, lateLoad, lateError, pendingURL;
+      if (phase === 'byte read')
+        selectBackground(h, {
+          name: 'pending.png',
+          type: 'image/png',
+          size: 122,
+          arrayBuffer: () => gate.promise,
+        });
+      else {
+        pending = await uploadBackground(h, 'animated-first-frame.webp', 'image/webp');
+        pendingURL = pending.src;
+        lateLoad = pending.onload;
+        lateError = pending.onerror;
+      }
+      const count = h.objectURLs.length,
+        control = h.$('motion-text-size'),
+        state = freezeView(h),
+        frames = h.frames.size;
+      control.focus();
+      selectBackground(
+        h,
+        rejection === 'unsupported type'
+          ? { name: 'rejected.txt', type: 'text/plain', size: 8 }
+          : { name: 'rejected.png', type: 'image/png', size: 25 * 1024 * 1024 + 1 },
+      );
+      const status = h.$('background-status').textContent;
+      assert.match(status, /Choose a PNG, JPEG, WebP or GIF/);
+      if (phase === 'byte read') {
+        gate.resolve(await (await backgroundFile('static-default.png')).arrayBuffer());
+        await settleBackground();
+        if (h.objectURLs.length > count) h.images.at(-1).onload?.();
+      } else {
+        lateLoad();
+        lateError();
+      }
+      assert.equal(
+        h.revoked.includes(acceptedURL),
+        false,
+        'rejected selection retains the last accepted image',
+      );
+      assert.equal(h.objectURLs.length, count, 'retired byte reads cannot allocate another URL');
+      assert.equal(
+        h.$('background-status').textContent,
+        status,
+        'late completion cannot replace the rejection',
+      );
+      assert.equal(h.$('clear-background').disabled, false);
+      assert.equal(h.doc.activeElement.id, control.id);
+      assert.deepEqual(freezeView(h), state);
+      assert.equal(h.frames.size, frames, 'background rejection does not change playback');
+      if (pending) {
+        assert.equal(pending.onload, null);
+        assert.equal(pending.onerror, null);
+        assert.ok(h.revoked.includes(pendingURL));
+      }
+      const paintStart = h.$('arena').context.calls.length;
+      h.$('background-fit').emit('change');
+      const painted = h
+        .$('arena')
+        .context.calls.slice(paintStart)
+        .filter((call) => call.op === 'drawImage')
+        .map((call) => call.args[0]);
+      assert.ok(painted.includes(accepted), 'the real renderer still uses accepted A');
+      assert.equal(painted.includes(pending), false);
+      assert.equal(h.writes.length, 0);
+    });
+
+test('Motion cancelled file picker preserves the pending background intent', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const accepted = await uploadBackground(h, 'static-default.png');
+  accepted.onload();
+  const pending = await uploadBackground(h, 'animated-first-frame.webp', 'image/webp'),
+    pendingURL = pending.src;
+  h.$('background-file').files = [];
+  h.$('background-file').emit('change');
+  assert.equal(h.revoked.includes(pendingURL), false);
+  pending.onload();
+  assert.equal(h.revoked.includes(accepted.src), true);
+  assert.match(h.$('background-status').textContent, /animated-first-frame.webp/);
+  assert.equal(h.revoked.includes(pendingURL), false);
 });
 
 test('Motion Clear while reading PNG bytes prevents late URL, image and status resurrection', async (t) => {
@@ -1504,6 +2044,222 @@ test('Motion recipe replacement refreshes the rotor value text after a manual ra
   assert.equal(h.doc.activeElement, h.$('animation-recipe'));
 });
 
+for (const reduced of [false, true])
+  test(`Motion hub edits and JSON round trip preserve paused clocks and reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    h.images.find((image) => image.src.startsWith('https:')).onload();
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    const before = freezeView(h),
+      writes = h.writes.length,
+      source = JSON.parse(h.$('rotor-editor-json').value),
+      drawRotations = () => {
+        const calls = h.$('inspection').context.calls;
+        calls.length = 0;
+        h.$('rotor-editor-guides').emit('change');
+        return calls.filter((call) => call.op === 'rotate').map((call) => call.args[0]);
+      },
+      originalPose = drawRotations();
+    assert.ok(originalPose.length > 4, 'Loaded body paints the actual rotor layer');
+    h.$('rotor-editor-phase').focus();
+    h.change('rotor-editor-direction', '-1');
+    h.change('rotor-editor-phase', '45.5');
+    const edited = JSON.parse(h.$('rotor-editor-json').value);
+    assert.equal(edited[0].direction, -1);
+    assert.equal(edited[0].phaseDegrees, 45.5);
+    assert.notDeepEqual(drawRotations(), originalPose);
+    assert.match(h.$('rotor-editor-summary').textContent, /Counterclockwise/);
+    h.$('rotor-editor-json').value = '[invalid';
+    h.$('rotor-editor-apply').click();
+    assert.match(h.$('rotor-editor-status').textContent, /rejected/);
+    h.$('rotor-editor-json').value = JSON.stringify(edited);
+    h.$('rotor-editor-apply').click();
+    assert.match(h.$('rotor-editor-status').textContent, /applied/);
+    h.$('rotor-editor-reset').click();
+    assert.deepEqual(JSON.parse(h.$('rotor-editor-json').value), source);
+    assert.deepEqual(
+      drawRotations(),
+      originalPose,
+      'Editing and reset never reset or advance paused animation clocks',
+    );
+    assert.deepEqual(freezeView(h), before);
+    assert.equal(h.$('play-pause').textContent, 'Play');
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.doc.body.dataset.effects, reduced ? 'reduced' : 'full');
+    assert.equal(
+      h.writes.length,
+      writes,
+      'Rotor drafts never write preferences, collection or game state',
+    );
+    assert.equal(h.doc.activeElement, h.$('rotor-editor-phase'), 'Review never moves focus');
+  });
+
+for (const reduced of [false, true])
+  test(`Motion hub envelope edits preserve actual paint, guides, paused state and reduced=${reduced}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    assert.equal(h.$('rotor-editor-x').disabled, true);
+    assert.match(h.$('rotor-editor-envelope').textContent, /image dimensions/);
+    h.images.find((image) => image.src.startsWith('https:')).onload();
+    assert.equal(h.$('rotor-editor-x').disabled, false);
+    h.tick(0);
+    h.tick(100);
+    h.host.emit('blur');
+    h.cap(reduced);
+    h.$('rotor-editor-guides').checked = true;
+    const draw = () => {
+        const calls = h.$('inspection').context.calls;
+        calls.length = 0;
+        h.$('rotor-editor-guides').emit('change');
+        return calls.map((call) => ({ ...call, ...(call.args ? { args: [...call.args] } : {}) }));
+      },
+      original = h.$('rotor-editor-json').value,
+      before = freezeView(h),
+      sourcePaint = draw(),
+      writes = h.writes.length;
+    h.$('rotor-editor-x').focus();
+    h.change('rotor-editor-x', '-0.2');
+    h.change('rotor-editor-y', '-0.2');
+    h.change('rotor-editor-radius', '0.2');
+    assert.match(h.$('rotor-editor-status').textContent, /applied/);
+    const accepted = h.$('rotor-editor-json').value,
+      rig = JSON.parse(accepted),
+      changedPaint = draw();
+    assert.equal(rig[0].x, -0.2);
+    assert.equal(rig[0].y, -0.2);
+    assert.equal(rig[0].radiusScale, 1.25);
+    assert.notDeepEqual(changedPaint, sourcePaint);
+    const outlines = changedPaint.filter((call) => call.op === 'strokeRect');
+    assert.ok(
+      outlines.some((call) => call.args[2] > 1 && call.args[3] > 1),
+      'Guide includes the actual contained image frame',
+    );
+    const frame = outlines.find((call) => call.args[2] > 1 && call.args[3] > 1);
+    assert.ok(
+      changedPaint.some(
+        (call) =>
+          call.op === 'translate' &&
+          call.args[0] === rig[0].x * frame.args[2] &&
+          call.args[1] === rig[0].y * frame.args[3],
+      ),
+      'Guide uses the same normalized anchor as the painted rotor',
+    );
+    assert.ok(
+      changedPaint.some((call) => call.op === 'arc' && call.args[2] === 0.2 * frame.args[2]),
+      'Sweep radius is measured against contained image width',
+    );
+    h.change('rotor-editor-x', '-0.49');
+    assert.match(h.$('rotor-editor-status').textContent, /Rig rejected/);
+    assert.equal(h.$('rotor-editor-json').value, accepted);
+    assert.deepEqual(
+      draw(),
+      changedPaint,
+      'Invalid envelope edit cannot alter any painted command',
+    );
+    h.$('rotor-editor-json').value = '[[0,0]]';
+    h.$('rotor-editor-apply').click();
+    assert.match(h.$('rotor-editor-status').textContent, /three values/);
+    assert.deepEqual(draw(), changedPaint);
+    h.$('rotor-editor-json').value = accepted;
+    h.$('rotor-editor-apply').click();
+    assert.equal(h.$('rotor-editor-json').value, accepted);
+    h.$('rotor-editor-reset').click();
+    assert.equal(h.$('rotor-editor-json').value, original);
+    assert.deepEqual(draw(), sourcePaint);
+    assert.deepEqual(freezeView(h), before);
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.$('play-pause').textContent, 'Play');
+    assert.equal(h.doc.body.dataset.effects, reduced ? 'reduced' : 'full');
+    assert.equal(h.doc.activeElement, h.$('rotor-editor-x'));
+    assert.equal(h.writes.length, writes);
+  });
+
+test('Motion envelope validation and guide use the decoded non-square source aspect, not its body fit box', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const image = h.images.find((image) => image.src.startsWith('https:'));
+  image.naturalWidth = 128;
+  image.naturalHeight = 64;
+  image.onload();
+  h.host.emit('blur');
+  assert.match(h.$('rotor-editor-envelope').textContent, /does not pass/);
+  h.$('rotor-editor-json').value = '[{"x":0,"y":0,"radiusScale":1}]';
+  h.$('rotor-editor-apply').click();
+  assert.match(h.$('rotor-editor-status').textContent, /applied/);
+  h.$('rotor-editor-guides').checked = true;
+  const draw = () => {
+    const calls = h.$('inspection').context.calls;
+    calls.length = 0;
+    h.$('rotor-editor-guides').emit('change');
+    return calls.map((call) => ({ ...call, ...(call.args ? { args: [...call.args] } : {}) }));
+  };
+  const accepted = h.$('rotor-editor-json').value,
+    priorPaint = draw(),
+    frame = priorPaint.filter((call) => call.op === 'strokeRect').find((call) => call.args[2] > 1);
+  assert.equal(frame.args[2] / frame.args[3], 2);
+  h.change('rotor-editor-y', '0.19');
+  assert.match(h.$('rotor-editor-status').textContent, /Rig rejected/);
+  assert.equal(h.$('rotor-editor-json').value, accepted);
+  assert.deepEqual(
+    draw(),
+    priorPaint,
+    '0.16 width radius is 0.32 height radius; y 0.19 cannot fit',
+  );
+  h.change('rotor-editor-y', '0.15');
+  assert.match(h.$('rotor-editor-status').textContent, /applied/);
+  assert.equal(JSON.parse(h.$('rotor-editor-json').value)[0].y, 0.15);
+});
+
+test('Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated', async (t) => {
+  const h = await harness(t, { holdBoot: true });
+  await h.start();
+  await h.entered.promise;
+  assert.equal(
+    h.$('rotor-editor-root').hidden,
+    true,
+    'Rotor controls stay hidden during held startup',
+  );
+  h.boot.resolve();
+  await h.ready();
+  h.images.find((image) => image.src.startsWith('https:')).onload();
+  if (h.$('play-pause').textContent === 'Play') h.$('play-pause').click();
+  h.key('KeyD');
+  h.tick(0);
+  h.tick(100);
+  const before = freezeView(h),
+    frames = [...h.frames.keys()],
+    writes = h.writes.length,
+    source = JSON.parse(h.$('rotor-editor-json').value);
+  h.$('rotor-editor-phase').focus();
+  h.change('rotor-editor-phase', '91');
+  h.$('rotor-editor-json').value = '[invalid';
+  h.external({ textFace: 'plain', textSize: 'large', reducedEffects: true });
+  assert.equal(
+    h.$('rotor-editor-json').value,
+    '[invalid',
+    'Reading changes preserve an unsubmitted rig draft',
+  );
+  assert.equal(h.$('play-pause').textContent, 'Pause');
+  assert.deepEqual([...h.frames.keys()], frames, 'Editing never cancels or adds a preview frame');
+  assert.deepEqual(freezeView(h), before);
+  assert.equal(h.doc.activeElement, h.$('rotor-editor-phase'));
+  h.change('animation-recipe', 'swallow-flight');
+  assert.equal(h.$('rotor-editor-root').hidden, true);
+  h.change('animation-recipe', before.recipe);
+  assert.equal(h.$('rotor-editor-root').hidden, false);
+  assert.equal(h.$('rotor-editor-phase').value, '91', 'Recipe changes retain the body rig draft');
+  h.$('rotor-editor-reset').click();
+  assert.deepEqual(JSON.parse(h.$('rotor-editor-json').value), source);
+  h.external({ reducedEffects: false });
+  h.tick(200);
+  assert.equal(h.frames.size, 1);
+  assert.equal(h.$('play-pause').textContent, 'Pause');
+  assert.equal(h.writes.length, writes);
+});
+
 function rotationGeometry(h) {
   h.host.innerWidth = h.doc.documentElement.clientWidth = 844;
   h.host.innerHeight = h.doc.documentElement.clientHeight = 390;
@@ -1522,6 +2278,57 @@ function rotationGeometry(h) {
   target._rect = { x: 624, y: 390, width: 180, height: 30 };
   return { controls, target, field };
 }
+
+test('Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host', async (t) => {
+  const { setLocale, translateDOM } = await import('../i18n/index.mjs'),
+    previous = getLocale(),
+    h = await harness(t),
+    classic = createContext({ navigator: { languages: ['en'] }, Intl });
+  // Execute the actual classic resources selected by Motion HTML, independently
+  // of the ESM import cache used by the application harness.
+  const scripts = h.scripts.filter((script) =>
+    /\/(?:i18next-26\.4\.2\.min\.js|catalogs\.mjs|bootstrap\.mjs)$/.test(script.attrs.src || ''),
+  );
+  assert.equal(scripts.length, 3);
+  for (const script of scripts) {
+    const url = new NativeURL(script.attrs.src, route);
+    new Script(await readFile(url, 'utf8'), { filename: url.pathname }).runInContext(classic);
+  }
+  try {
+    await h.ready();
+    const labels = h.doc
+      .querySelectorAll('[data-i18n]')
+      .filter((node) => node.getAttribute('data-i18n').startsWith('tools:motionLab.rotorEditor.'));
+    assert.equal(labels.length, 15);
+    for (const [locale, hubLabel] of [
+      ['en', 'Motor hub'],
+      ['uk', 'Маточина двигуна'],
+    ]) {
+      setLocale(locale, { persist: false });
+      translateDOM(h.$('rotor-editor-root'));
+      classic.RevealLineI18n.setLocale(locale, { persist: false });
+      assert.equal(classic.RevealLineI18n.t('tools:motionLab.rotorEditor.hub'), hubLabel);
+      for (const label of labels) {
+        const key = label.getAttribute('data-i18n');
+        assert.equal(label.textContent, classic.RevealLineI18n.t(key));
+        assert.doesNotMatch(label.textContent, /motionLab\.rotorEditor\./);
+      }
+      h.change('rotor-editor-phase', '42');
+      assert.equal(
+        h.$('rotor-editor-status').textContent,
+        classic.RevealLineI18n.t('tools:motionLab.rotorEditor.applied'),
+      );
+      assert.doesNotMatch(h.$('rotor-editor-summary').textContent, /motionLab\.rotorEditor\./);
+      assert.match(h.$('rotor-editor-summary').textContent, /42/);
+      assert.match(
+        h.$('rotor-editor-hub').children[0].textContent,
+        locale === 'uk' ? /Маточина/ : /Hub/,
+      );
+    }
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
 
 test('Motion rotation reveals the currently focused rotor field without changing its paused study', async (t) => {
   const h = await harness(t);
@@ -1677,3 +2484,420 @@ test('Motion resize reveals the control when its labeled field is taller than th
   target.emit('resize');
   assert.equal(calls.length, 1, 'Descendant events cannot pretend to be a viewport resize.');
 });
+
+test('Motion locale changes preserve paused movement, live controls and image ownership', async (t) => {
+  const { setLocale, getLocale } = await import('../i18n/index.mjs');
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const h = await harness(t);
+  try {
+    await h.ready();
+    h.tick(0);
+    h.tick(100);
+    h.$('play-pause').click();
+    h.$('ability-action').click();
+    h.change('character-scale', '1.25', 'input');
+    h.change('cruise-speed', '11', 'input');
+    const focused = h.$('character-scale');
+    focused.focus();
+    const before = freezeView(h);
+    const options = [...h.$('character').children];
+    const writes = h.writes.length;
+    const requests = h.requests.length;
+    const gate = deferred();
+    selectBackground(h, {
+      name: 'Мій кадр.png',
+      type: 'image/png',
+      size: 122,
+      arrayBuffer: () => gate.promise,
+    });
+    const phase = h.$('background-status').dataset.state;
+    for (const locale of ['uk', 'en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(h.doc.activeElement, focused);
+      assert.deepEqual(h.$('character').children, options);
+      const view = freezeView(h);
+      delete view.queue;
+      const expected = { ...before };
+      delete expected.queue;
+      assert.deepEqual(view, expected);
+      assert.equal(h.frames.size, 0, 'Translating a paused study cannot grant Play intent.');
+      assert.equal(h.writes.length, writes);
+      assert.equal(h.requests.length, requests);
+      assert.equal(h.objectURLs.length, 0);
+      assert.equal(h.$('background-status').dataset.state, phase);
+      assert.match(
+        h.$('background-status').textContent,
+        locale === 'uk' ? /Підготовка локального/ : /Preparing local/,
+      );
+      assert.equal(h.$('play-pause').textContent, locale === 'uk' ? 'Відтворити' : 'Play');
+      assert.equal(h.$('scale-output').textContent, locale === 'uk' ? '1,25×' : '1.25×');
+      assert.match(h.$('motion-event').textContent, locale === 'uk' ? /Пауза/ : /Paused/);
+      assert.match(h.$('ability-message').textContent, locale === 'uk' ? /Пауза/ : /Paused/);
+      assert.equal(
+        h.$('ability-class').children.find((option) => option.value === 'scout').textContent,
+        locale === 'uk' ? 'Розвідник' : 'Scout',
+      );
+      assert.match(h.$('ability-description').textContent, locale === 'uk' ? /^Імпульс/ : /^Pulse/);
+    }
+    gate.resolve(await (await backgroundFile('static-default.png')).arrayBuffer());
+    await waitFor(() => h.objectURLs.length === 1);
+    const accepted = h.images.at(-1);
+    accepted.onload();
+    const url = accepted.src;
+    assert.match(h.$('background-status').textContent, /Мій кадр\.png.*Лише локальний/);
+    setLocale('en', { persist: false });
+    assert.match(h.$('background-status').textContent, /Мій кадр\.png.*Local display only/);
+    assert.deepEqual(
+      freezeView(h),
+      before,
+      'Returning to English exposes unchanged movement coordinates.',
+    );
+    assert.equal(accepted.src, url);
+    assert.equal(h.revoked.includes(url), false);
+    assert.equal(h.objectURLs.length, 1);
+    assert.equal(h.frames.size, 0);
+    assert.equal(h.writes.length, writes);
+    assert.equal(h.doc.activeElement, focused);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('Motion locked collection groups preserve authored alternatives and focused selection across locales', async (t) => {
+  const { setLocale } = await import('../i18n/index.mjs');
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const h = await harness(t);
+  try {
+    await h.ready();
+    h.$('play-pause').click();
+    h.change('character', 'fpv-night');
+    const control = h.$('character');
+    control.focus();
+    const conditionList = h.$('unlock-conditions');
+    const rows = [...conditionList.querySelectorAll('li')];
+    const options = [...control.children];
+    const before = freezeView(h);
+    const writes = h.writes.length;
+    assert.equal(rows.length, 5, 'Two progress rows and two separately grouped alternatives.');
+    for (const locale of ['uk', 'en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(h.doc.activeElement, control);
+      assert.equal(control.value, 'fpv-night');
+      assert.deepEqual(control.children, options);
+      assert.deepEqual(conditionList.querySelectorAll('li'), rows);
+      assert.match(
+        conditionList.textContent,
+        locale === 'uk' ? /будь-якої однієї групи/ : /any one group/,
+      );
+      assert.doesNotMatch(conditionList.textContent, /or Or|або Або/);
+      assert.match(
+        h.$('character-status').textContent,
+        locale === 'uk' ? /Концепція нічного корпусу/ : /Earned night body concept/,
+      );
+      assert.equal(h.$('equip-character').disabled, true);
+      assert.equal(h.writes.length, writes);
+      assert.equal(h.frames.size, 0);
+    }
+    setLocale('en', { persist: false });
+    assert.deepEqual(freezeView(h), before);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+test('Motion accepted collection notices translate without repeating mutations or saving game progress', async (t) => {
+  const { setLocale } = await import('../i18n/index.mjs');
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  const h = await harness(t, { allowCollectionWrites: true });
+  try {
+    await h.ready();
+    h.$('play-pause').click();
+    h.change('equip-scope', 'context');
+    const checkNotice = (id, english, ukrainian) => {
+      const saved = h.collectionRaw;
+      const writes = [...h.writes];
+      const reads = [...h.reads];
+      const requests = h.requests.length;
+      const view = freezeView(h);
+      h.$('character-scale').focus();
+      for (const locale of ['uk', 'en', 'uk', 'en']) {
+        setLocale(locale, { persist: false });
+        assert.match(h.$(id).textContent, locale === 'uk' ? ukrainian : english);
+        assert.equal(h.collectionRaw, saved);
+        assert.deepEqual(h.writes, writes);
+        assert.deepEqual(h.reads, reads);
+        assert.equal(h.requests.length, requests);
+        assert.equal(h.frames.size, 0);
+        assert.equal(h.doc.activeElement, h.$('character-scale'));
+      }
+      assert.deepEqual(freezeView(h), view);
+    };
+    h.$('equip-character').click();
+    assert.equal(JSON.parse(h.collectionRaw).equipped.length, 1);
+    checkNotice('collection-message', /^Equipped\. Saved/, /^Оформлення встановлено\. Збережено/);
+
+    h.change('reward-fixture', 'fpv-first-clear');
+    h.$('apply-fixture').click();
+    assert.equal(JSON.parse(h.collectionRaw).events.length, 1);
+    checkNotice(
+      'collection-message',
+      /^Simulated test result applied/,
+      /^Імітований тестовий результат застосовано/,
+    );
+    h.change('character', 'fpv-racer');
+    h.change('equip-scope', 'global');
+    h.$('equip-character').click();
+    checkNotice('collection-message', /a more-specific choice applies/, /діє точніше налаштування/);
+    const writes = h.writes.length;
+    h.$('apply-fixture').click();
+    assert.equal(h.writes.length, writes, 'Rejecting a duplicate must not save.');
+    checkNotice('collection-message', /this event was already counted/, /цю подію вже зараховано/);
+
+    h.$('reset-collection').click();
+    assert.deepEqual(JSON.parse(h.collectionRaw).events, []);
+    assert.deepEqual(JSON.parse(h.collectionRaw).equipped, []);
+    checkNotice('collection-message', /^Test collection reset/, /^Тестову колекцію скинуто/);
+
+    h.$('apply-class-appearance').click();
+    checkNotice('ability-message', /^Class appearance applied/, /^Оформлення класу застосовано/);
+
+    h.failWrites = true;
+    const retained = h.collectionRaw;
+    h.change('character', 'neutral-marker');
+    h.$('equip-character').click();
+    assert.equal(h.collectionRaw, retained, 'Failed writes retain the previous persisted profile.');
+    checkNotice('collection-message', /Browser storage unavailable/, /Сховище браузера недоступне/);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});
+
+function motionNavigation(t, h) {
+  let time = 0;
+  h.doc.parentNode = h.host;
+  h.host.getComputedStyle = (element) => ({
+    display: element.style.display || 'block',
+    visibility: element.style.visibility || 'visible',
+  });
+  const guard = attachControllerConfirmGuard({ document: h.doc, now: () => time });
+  const navigation = attachControllerNavigation({
+    document: h.doc,
+    keyboard: true,
+    getScope: () => 'authoring',
+    getRoot: () => h.doc.body,
+    resolveEditor: resolveAuthoringEditor,
+    ownsKeyboardEvent: (event) => !!event.target.closest('[data-controller-editor]'),
+    activateControl: guard.activate,
+  });
+  t.after(() => {
+    navigation.destroy();
+    guard.destroy();
+  });
+  return {
+    navigation,
+    confirm(button) {
+      time += 2000;
+      button.focus();
+      guard.begin(button);
+      navigation.beginConfirm();
+      navigation.commitConfirm();
+      guard.finish();
+    },
+  };
+}
+
+test('Motion menu arrow navigation and consumed keys never steer, act or pause the arena', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  motionNavigation(t, h);
+  const link = h.doc.querySelector('a[href]');
+  link.focus();
+  const arrow = link.emit('keydown', { code: 'ArrowRight', key: 'ArrowRight' });
+  assert.equal(arrow.defaultPrevented, true, 'The real menu navigator consumed this direction');
+  assert.notEqual(h.doc.activeElement, link, 'Menu focus actually moved');
+  assert.equal(h.$('autoplay').checked, true, 'A menu direction must not become arena intent');
+  const ability = h.$('ability-readout').textContent;
+  for (const code of ['KeyE', 'KeyR']) {
+    link.focus();
+    link.emit('keydown', { code, key: code.slice(-1).toLowerCase() });
+    assert.equal(h.$('ability-readout').textContent, ability);
+  }
+  for (const code of ['ArrowLeft', 'KeyE', 'KeyR', 'Escape', 'Space', 'ShiftLeft']) {
+    h.$('arena').focus();
+    h.host.emit('keydown', { target: h.$('arena'), code, defaultPrevented: true });
+  }
+  assert.equal(h.$('autoplay').checked, true);
+  assert.equal(
+    h.$('play-pause').textContent,
+    'Pause',
+    'Consumed Escape must not pause a live study',
+  );
+  assert.equal(h.$('ability-readout').textContent, ability);
+  assert.equal(h.$('boost').getAttribute('aria-pressed'), 'false');
+  assert.equal(h.$('slow').getAttribute('aria-pressed'), 'false');
+});
+
+test('Motion native shortcuts require foreground arena focus, retain ability controls and release held modifiers outside it', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const arena = h.$('arena'),
+    other = h.$('cruise-speed');
+  other.focus();
+  h.host.emit('keydown', { target: arena, code: 'ArrowLeft' });
+  assert.equal(
+    h.$('autoplay').checked,
+    true,
+    'A stale arena target cannot borrow another focus owner',
+  );
+  arena.focus();
+  h.doc.focused = false;
+  h.host.emit('keydown', { target: arena, code: 'ArrowLeft' });
+  h.doc.focused = true;
+  h.doc.hidden = true;
+  h.host.emit('keydown', { target: arena, code: 'ArrowLeft' });
+  h.doc.hidden = false;
+  h.host.emit('keydown', { target: arena, code: 'ArrowLeft', ctrlKey: true });
+  assert.equal(h.$('autoplay').checked, true);
+  h.key('KeyE');
+  assert.match(h.$('ability-readout').textContent, /1 note visible/);
+  h.key('ArrowRight');
+  assert.equal(h.$('autoplay').checked, false);
+  assert.equal(h.doc.querySelector('[data-direction="right"]').classList.contains('is-held'), true);
+  h.key('ShiftLeft');
+  h.key('Space');
+  h.tick(100);
+  h.tick(200);
+  assert.equal(h.$('boost').getAttribute('aria-pressed'), 'true');
+  assert.equal(h.$('slow').getAttribute('aria-pressed'), 'true');
+  other.focus();
+  h.host.emit('keyup', { target: other, code: 'ShiftLeft' });
+  h.host.emit('keyup', { target: other, code: 'Space' });
+  h.tick(300);
+  assert.equal(h.$('boost').getAttribute('aria-pressed'), 'false');
+  assert.equal(h.$('slow').getAttribute('aria-pressed'), 'false');
+  h.key('Escape');
+  assert.equal(h.$('play-pause').textContent, 'Play');
+  assert.equal(h.frames.size, 0);
+  h.key('ArrowUp');
+  assert.equal(h.frames.size, 0, 'Direction while paused is not Play intent');
+  h.$('play-pause').click();
+  h.$('ability-pickup').emit('keydown', { code: 'Enter', key: 'Enter' });
+  assert.equal(
+    h.$('play-pause').textContent,
+    'Pause',
+    'Explicit native action buttons retain their own handlers',
+  );
+  const down = h.doc.querySelector('[data-direction="down"]');
+  down.focus();
+  down.emit('keydown', { code: 'Enter', key: 'Enter' });
+  assert.equal(down.classList.contains('is-held'), true);
+  down.emit('keyup', { code: 'Enter', key: 'Enter' });
+  assert.equal(h.frames.size, 1, 'Native direction release retains intentional travel');
+});
+
+test('Motion four direction buttons accept real guarded controller activation and a paused click never resumes or latches', async (t) => {
+  const h = await harness(t);
+  await h.ready();
+  const input = motionNavigation(t, h);
+  for (const direction of ['up', 'left', 'down', 'right']) {
+    const button = h.doc.querySelector(`[data-direction="${direction}"]`);
+    input.confirm(button);
+    assert.equal(h.$('autoplay').checked, false);
+    assert.equal(button.classList.contains('is-held'), true);
+    assert.equal(
+      h.doc
+        .querySelectorAll('[data-direction]')
+        .filter((node) => node.classList.contains('is-held')).length,
+      1,
+    );
+  }
+  input.confirm(h.$('play-pause'));
+  assert.equal(h.frames.size, 0);
+  const left = h.doc.querySelector('[data-direction="left"]');
+  input.confirm(left);
+  assert.equal(h.frames.size, 0);
+  assert.equal(h.$('play-pause').textContent, 'Play');
+  assert.equal(
+    left.classList.contains('is-held'),
+    false,
+    'Paused activation does not change deliberate direction',
+  );
+  input.confirm(h.$('play-pause'));
+  input.confirm(left);
+  assert.equal(
+    left.classList.contains('is-held'),
+    true,
+    'The paused pulse released its source so the next explicit activation works',
+  );
+  assert.equal(h.frames.size, 1);
+  for (const id of ['boost', 'slow']) {
+    input.confirm(h.$(id));
+    assert.equal(h.$(id).getAttribute('aria-pressed'), 'true');
+    input.navigation.clear();
+    assert.equal(h.$(id).getAttribute('aria-pressed'), 'false');
+    assert.equal(h.frames.size, 1, 'Releasing a held modifier does not change Play intent');
+  }
+});
+
+for (const input of ['native', 'controller'])
+  test(`Motion ${input} Clear returns its foreground focus before disabling itself`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    const controls = motionNavigation(t, h);
+    const image = await uploadBackground(h, 'static-default.png');
+    image.onload();
+    const clear = h.$('clear-background'),
+      source = h.$('background-file');
+    assert.equal(clear.disabled, false);
+    clear.focus();
+    const focus = [];
+    h.doc.addEventListener('focusin', (event) =>
+      focus.push({ target: event.target, clearDisabled: clear.disabled }),
+    );
+    if (input === 'controller') controls.confirm(clear);
+    else {
+      const enter = clear.emit('keydown', { code: 'Enter', key: 'Enter' });
+      assert.equal(enter.defaultPrevented, false, 'The native button retains activation');
+      clear.click(); // Modeled native button default; browser receipt is separate.
+    }
+    assert.equal(h.doc.activeElement, source);
+    assert.equal(clear.disabled, true);
+    assert.equal(
+      focus.some((event) => event.target === source && !event.clearDisabled),
+      true,
+      'Focus must leave before disabled-control fallback can select body or Sections',
+    );
+    controls.navigation.handle({});
+    assert.equal(h.doc.activeElement, source);
+    assert.ok(h.revoked.includes(image.src));
+  });
+
+for (const owner of ['another control', 'hidden document', 'unfocused document'])
+  test(`Motion Clear does not replace focus owned by ${owner}`, async (t) => {
+    const h = await harness(t);
+    await h.ready();
+    const image = await uploadBackground(h, 'static-default.png');
+    image.onload();
+    const clear = h.$('clear-background'),
+      source = h.$('background-file'),
+      other = h.$('cruise-speed');
+    clear.focus();
+    if (owner === 'another control') other.focus();
+    if (owner === 'hidden document') h.doc.hidden = true;
+    if (owner === 'unfocused document') h.doc.focused = false;
+    clear.click();
+    assert.equal(clear.disabled, true);
+    assert.notEqual(h.doc.activeElement, source);
+    if (owner === 'another control') assert.equal(h.doc.activeElement, other);
+    h.doc.hidden = false;
+    h.doc.focused = true;
+    h.host.emit('focus');
+    assert.notEqual(
+      h.doc.activeElement,
+      source,
+      'Returning foreground must not replay a stale handoff',
+    );
+  });

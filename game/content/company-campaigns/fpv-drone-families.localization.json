@@ -1,0 +1,206 @@
+{
+  "campaignId": "fpv-drone-families",
+  "campaignRevision": "1",
+  "format": "revealline-campaign-localization.v1",
+  "records": [
+    {
+      "fields": { "name": { "en": "Drone Families", "uk": "Родини дронів" } },
+      "id": "fpv-drone-families",
+      "identity": "e6e38f63850fdc3a",
+      "kind": "campaign"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.lesson": {
+          "en": "Reveal the viewing gallery and separate FPV from airframe type. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "Відкрийте галерею спостереження й відокремте FPV від типу конструкції. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original drone museum entrance with a large goggles silhouette and several distinct unarmed aircraft silhouettes, separated classification columns.",
+          "uk": "Оригінальний вхід до музею дронів із великим силуетом окулярів, кількома різними неозброєними апаратами й окремими колонками класифікації."
+        },
+        "design.routeDecision": {
+          "en": "Open the wide viewing bay or connect the camera and airframe alcoves separately. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Відкрийте широку зону огляду або окремо з’єднайте ніші камери й конструкції. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A View, Not a Shape", "uk": "Спосіб бачити, а не форма" }
+      },
+      "id": "fpv-drone-families-01",
+      "identity": "d029fe07d98940cb",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.lesson": {
+          "en": "Connect the rotor-family plinths and count before comparing. The pursuer commits to one observed point on the unfinished trail. Keep a short return ready and close before its finite approach reaches you.",
+          "uk": "З’єднайте стенди роторних родин і порахуйте перед порівнянням. Переслідувач обирає одну помічену точку на незавершеній лінії. Тримайте напоготові короткий шлях повернення й замкніть лінію до його наближення."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original overhead silhouettes of four-, six- and eight-rotor civilian display craft on differently shaped museum plinths.",
+          "uk": "Оригінальні верхні силуети цивільних виставкових апаратів із чотирма, шістьма й вісьмома роторами на музейних постаментах різної форми."
+        },
+        "design.routeDecision": {
+          "en": "Collect the small-count plinths first or reach the broad comparison island. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Спершу зберіть менші стенди або досягніть широкого острова порівняння. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "More Than Four Rotors", "uk": "Не лише чотири ротори" }
+      },
+      "id": "fpv-drone-families-02",
+      "identity": "d00fb77a5ca31242",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.lesson": {
+          "en": "Join wing and rotor galleries without turning a silhouette into a performance claim. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте галереї крил і роторів без висновків про характеристики за силуетом. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original civilian fixed-wing and multicopter display sculptures with broad wing surface and distinct rotor discs, no performance specifications.",
+          "uk": "Оригінальні цивільні виставкові скульптури літакового апарата й мультикоптера з широким крилом і виразними дисками роторів; без характеристик продуктивності."
+        },
+        "design.routeDecision": {
+          "en": "Cross between the wing gallery and rotor terrace or secure both outer returns. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Перейдіть між галереєю крила й терасою роторів або закріпіть зовнішні повернення. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Wings Tell Another Story", "uk": "Крила розповідають інакше" }
+      },
+      "id": "fpv-drone-families-03",
+      "identity": "5636fd8dc6a3a76b",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу. Позначена смуга попереджає перед пострілом; до імпульсу замкніть усю незахищену лінію — недостатньо лише відвести персонажа."
+        },
+        "design.lesson": {
+          "en": "Open the spacious race exhibit and distinguish a public sport from unrestricted flying. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Відкрийте простору спортивну експозицію та відрізніть змагання від необмеженого польоту. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original fictional civilian drone-sport exhibition with stylized gates, viewing gallery and a large pause emblem; no real event photography.",
+          "uk": "Оригінальна вигадана цивільна виставка дронового спорту зі стилізованими воротами, оглядовою галереєю та великою емблемою паузи; без фотографій реальної події."
+        },
+        "design.routeDecision": {
+          "en": "Use the wide spectator-side return or capture the quiet course-map terrace. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Оберіть широке повернення біля глядацької зони або тиху терасу плану траси. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "A Sport Has a Setting", "uk": "Спорт має свої умови" }
+      },
+      "id": "fpv-drone-families-04",
+      "identity": "89fa423ac35686c8",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу. Позначена смуга попереджає перед пострілом; до імпульсу замкніть усю незахищену лінію — недостатньо лише відвести персонажа."
+        },
+        "design.lesson": {
+          "en": "Connect the civilian task cards and choose evidence before claiming a best design. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "З’єднайте картки цивільних завдань і оберіть докази перед оцінкою конструкції. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original triptych of classroom model, museum camera and fictional parcel-study station, with separate evidence labels and no technical delivery plan.",
+          "uk": "Оригінальний триптих навчальної моделі, музейної камери й вигаданої станції дослідження посилок з окремими етикетками доказів; без технічного плану доставки."
+        },
+        "design.routeDecision": {
+          "en": "Join the three purpose islands one at a time or capture the paired research bays. Keep a second return ready before the warning locks your trail or heading.",
+          "uk": "Приєднайте три острови мети по черзі або захопіть парні дослідницькі зони. Підготуйте другий шлях повернення до того, як попередження зафіксує вашу лінію або напрямок."
+        },
+        "name": { "en": "Purpose Changes the Questions", "uk": "Мета змінює запитання" }
+      },
+      "id": "fpv-drone-families-05",
+      "identity": "144d17bc805cf056",
+      "kind": "mission"
+    },
+    {
+      "fields": {
+        "design.captureConsequence": {
+          "en": "The captured relay opens its matching return. This fictional reveal never changes a business record or a real-world delivery.",
+          "uk": "Захоплене реле відкриває відповідний шлях повернення. Це вигадане відкриття не змінює бізнес-записів чи справжньої доставки."
+        },
+        "design.counterplay": {
+          "en": "The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return. The marked lane warns before firing; close the whole exposed line before the pulse, not only the craft. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+          "uk": "Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу. Позначена смуга попереджає перед пострілом; до імпульсу замкніть усю незахищену лінію — недостатньо лише відвести персонажа. Кожна пронумерована ціль відкриває відповідний перехід. Закриті переходи блокують лінію; відкриті стають безпечними шляхами повернення без додаткового захоплення."
+        },
+        "design.lesson": {
+          "en": "Complete the comparison hall using separate columns for view, structure and purpose. The interceptor commits to one observed heading after its warning. Change your route after the lock and close on the nearer return.",
+          "uk": "Завершіть зал порівняння з окремими графами огляду, конструкції та мети. Після попередження перехоплювач обирає один помічений напрямок руху. Змініть маршрут після фіксації й замкніть лінію біля ближчого виходу."
+        },
+        "design.mastery": {
+          "en": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+          "uk": "З’єднайте всі обов’язкові цілі й завершіть сутичку без втрати життя; необов’язкове навчання залишається окремим від аркадного прогресу."
+        },
+        "design.memorableMoment": {
+          "en": "Original completed classification atlas with aircraft silhouettes, camera icons, context cards and intentional unknown fields in a lavender museum hall.",
+          "uk": "Оригінальний завершений атлас класифікації із силуетами апаратів, значками камер, контекстними картками й навмисно невідомими полями в лавандовій музейній залі."
+        },
+        "design.routeDecision": {
+          "en": "Connect the four atlas columns through short returns or enclose the outer comparison court. Choose which numbered relay will open the most useful return connector first.",
+          "uk": "Поєднайте чотири графи короткими поверненнями або охопіть зовнішній двір порівняння. Оберіть пронумероване реле, яке першим відкриє найкорисніший перехід для повернення."
+        },
+        "name": { "en": "Curate the Family Atlas", "uk": "Упорядкуйте атлас родин" }
+      },
+      "id": "fpv-drone-families-06",
+      "identity": "6e72558fdaf06180",
+      "kind": "mission"
+    }
+  ],
+  "revision": "1"
+}

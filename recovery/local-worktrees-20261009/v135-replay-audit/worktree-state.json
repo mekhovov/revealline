@@ -1,0 +1,32 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/v135-replay-audit/go_test",
+  "branch": "codex/v135-replay-audit",
+  "head": "651b78756039f48d332a97528503193d9111c382",
+  "status": [
+    "A  docs/player-first-ux2-couch-secondary-navigation.md",
+    "M  game/build-config.json",
+    "M  game/couch/couch-shell.mjs",
+    "M  game/couch/couch.css",
+    "M  game/couch/index.html",
+    "M  game/couch/relay-rescue.mjs",
+    "M  game/test/couch-shell.test.mjs",
+    "M  game/test/shared-pause-hierarchy.test.mjs",
+    "M  package-lock.json",
+    "M  package.json"
+  ],
+  "localCommitCountOutsideOriginMain": 7,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "31ef01e5174d5242d604a0129032df1bdeec393642e01769fd2b5fb41ccfbd6c",
+      "bytes": 21641
+    },
+    "untrackedArchive": null,
+    "localCommitPatch": {
+      "path": "local-commits.patch",
+      "sha256": "d9532ba19e67536990c2b3578eb21a48142a85a7f14172dc2c8edd8976b7c01e",
+      "bytes": 1868537
+    },
+    "conflictStages": 0
+  }
+}

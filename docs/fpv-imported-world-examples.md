@@ -1,0 +1,137 @@
+# Examples for installed worlds
+
+The source and admitted-package browsers each pass **47/47 checks**, including
+both complete rendered demonstrations with identical final states. All three
+packages pass source-bound admission with two identical builds. The branch
+integrates merged capacity main through the explicit audit below; protected
+publication checks remain required. This is
+a focused D5 prerequisite, independent of the capacity and D4 editor changes.
+
+An installed world can import and verify a demonstration yet have no Watch action:
+the host only searched optional records for built-in catalogue entries. Conversely,
+an imported copy of a built-in course could borrow its bundled example without
+matching the imported pack's dependency identity.
+
+The focused host change keeps bundled examples scoped to built-in entries. Installed
+projects use only verified, completed demonstration records with the exact
+`fpv-pack:<SHA-256>`, normalized course (including revision), requested mode,
+runtime model/backend and self-consistent recorded response identity. Lookup cache
+keys include project, pack and mode. Full independent replay before playback remains
+the authority for physics, course/world/rules/conditions identities and final state.
+Lookup does not construct a physics world. Import verification, missing/invalid
+record bytes, dependency guidance, rewards and playback pause guards are unchanged.
+
+The draft is based on main `5931ef12678cc52ab332fbbfe5516ad93a60caa9`; only
+`world-app.mjs` changes among admitted runtime inputs, growing by 474 bytes.
+Capacity PR #1047 is independent. Its reviewed integrated reserve of 17,552 bytes,
+less the projected 6,281-byte coaching change and this draft, leaves 10,797 bytes
+before D4 mode editing. This is arithmetic, not a combined admission result.
+
+The [current input audit](evidence/fpv-imported-examples-input-scope.json) compares
+all 95 original inputs with qualified disposal source `d9ad2561e`: 94 are exact,
+and the host is the sole 474-byte delta. This branch totals 16,771,214 original
+source bytes with 6,002 bytes free before integrating the independent capacity,
+coaching or editor increments. No input path or policy changes. This audit is
+consistent with the completed source-bound package admission described below.
+
+Candidate `79a721dd19343726fed30f618a2d7c8cd164d691` integrates main
+`b625c933c0628ad16e4d4cacae9c8f1c1665ab15` (starter data/docs only). Its host is
+byte-identical to the accepted source browser. Full `npm run validate` and scoped
+lint pass. Existing runtime, notebook, content, archive and appearance checks
+pass 56/57: the remaining pre-arm appearance-focus assertion is the previously
+reproduced baseline failure, not a claimed pass. The exact commands and limits
+are in [local checks](evidence/fpv-imported-examples-local-checks.json).
+
+The [admission receipt](evidence/fpv-imported-examples-admission.json) verifies
+all three packages, two identical builds, committed original inputs and ZIP
+members. The Worlds player has 102 members totaling 15,565,052 bytes. Its ZIP
+SHA-256 is `616faa168dfdc1023accf1eae2753cbe9c1c8b9cb148b1c4a6c60047fc72e02a`.
+The [staging receipt](evidence/fpv-imported-examples-admitted-player.json)
+checks every member twice and reuses 99 immutable admitted files; only three
+files (287,535 bytes) are newly written. The package browser fixture uses this
+exact player and candidate host without a source overlay. It keeps the explicit
+baseline comparison, private storage and controlled scheduling; its frozen
+wrappers are bound in [package provenance](evidence/fpv-imported-examples-package-provenance.json).
+The actual packaged run passes all 47 checks with empty runtime and operator
+console warning/error logs. Its [source/package comparison](evidence/fpv-imported-examples-source-package-comparison.json)
+confirms identical check outcomes, phase labels and mode/tick/final-state/pulse
+counts for both complete demonstrations. The source fixture's retained player
+and candidate package differ only in the host, its generated worker inventory
+and package descriptor; the effective candidate host is exact in both runs.
+The full [package receipt](evidence/fpv-imported-examples-package-browser-v1.json.gz)
+is retained losslessly: 29,583 raw bytes, SHA-256
+`3370636451297172380e779c802d02729d72ef1368f9be3bb58c974e8cde7b33`.
+Timing observations are preserved but are not a performance comparison.
+This admission precedes the separately qualified capacity merge; it does not
+claim a combined latest-main package or installed/public release acceptance.
+
+The subsequent ordinary merge of main `ef9d606b647e3d209201b77c5cf4fdbf90bde772`
+is recorded in the [95-input integration audit](evidence/fpv-imported-examples-main-integration.json).
+The demonstrated host and 93 other inputs remain exact. Only the generated
+reaction projection changes from 849,454 to 838,378 bytes, matching the already
+qualified #1047 artifact byte for byte (AST, tokens, comments, line terminators,
+25 source pins and 24 recording payloads preserved). This combined source totals
+16,760,138 bytes with 17,078 bytes free. The merge does not change package limits,
+licenses, proof data or the frozen browser fixture. Fresh exact-head protected CI
+must verify integrated admission; the audit is not a new combined browser run.
+
+The manual preparer executes the actual private lookup functions extracted from
+the host through Acorn, with real course validators and recorded proofs. Its 46
+functional checks include baseline reproduction, exact positive lookup, wrong
+pack/revision/mode/session/response/runtime controls, invalid/missing/incomplete
+records, cross-pack shared-object cache separation and copied built-in exclusion.
+Both retained D4 industrial split-level authoring recordings keep every ordinary
+control and final identity; only their session marker changes to demonstration.
+Independent replays complete at 4,024 Self-level and 3,670 Acro ticks. Archive
+import resets claimed verification as expected. This is source-level evidence,
+not a native browser or final package pass. No new unit coverage is added.
+
+The bounded browser fixture uses the full immutable d9ad admitted player closure
+and an explicit source-host overlay. Native File imports/IndexedDB and actual
+catalogue actions compare baseline and candidate, exercise proof removal/import,
+same-course alternate pack SHA, retained revision activation, pack removal with
+proof preservation, exact reinstallation, HTTP reload and two complete rendered
+Watch replays without rewards. It keeps the real performance clock and pause
+guards, uses controlled RAF timestamps, and stops on lost focus, unexpected pause
+or stalled progress. It does not claim FPS, physical device acceptance or offline
+qualification. The admitted player contents are never modified in place.
+
+Frozen candidate `cc1ffbbadf092caf3871f52203e2edf2f119d74c`, host SHA-256
+`6d93d9c36fb8d0c576907d98618d7aa73637bb49bd8d72ec310508241b96045c`,
+passes that native browser contract. Self-level renders all 4,024 recorded ticks
+to final identity `c6a52efd455aeefa`; Acro renders all 3,670 ticks to
+`4a4560272f8dc41a`. Notebook/reward data and unavailable proof bytes remain exact.
+Runtime errors are empty; the browser operator also reported empty console
+warning/error logs. Controlled scheduling is functional evidence, not a timing
+or FPS claim. The complete [receipt](evidence/fpv-imported-examples-source-browser-v1.json.gz)
+is preserved losslessly with deterministic gzip; its uncompressed size is 29,494
+bytes and SHA-256 is `9a73e2e1b3d1bf784aebe1d32acf5c2d21d50fb5296fb4d90a1e23c395cebfc2`.
+[Provenance](evidence/fpv-imported-examples-browser-provenance.json) binds the
+screenshot, frozen wrappers and all 102 admitted members. Decompress the gzip
+to recover the original full JSON; no observations were dropped.
+
+The first fixture preparation attempt failed closed when it compared a raw Git
+i18n module with its valid package projection. The corrected preparer separately
+checks the original Git source delta (host only) and every admitted member's
+exact bytes/hash. No package content or production assertion was changed to
+make the fixture pass. This is a preparation diagnostic, not a browser failure.
+
+Prepare from retained D4 authoring proofs, then freeze for root-owned browser work:
+
+```sh
+node scripts/qualify-fpv-imported-examples.mjs \
+  --starter /absolute/path/to/retained-d4-r5 \
+  --out /tmp/new-imported-examples-data
+node scripts/prepare-fpv-imported-examples-browser.mjs \
+  --player-root /absolute/path/to/immutable-d9ad-player \
+  --player-receipt docs/evidence/fpv-world-disposal-admitted-player.json \
+  --data /tmp/new-imported-examples-data \
+  --out dist/fpv-imported-examples-new
+```
+
+After this prerequisite and D4 mode editing, the next content increment is
+[Mountain Reservoir](fpv-mountain-reservoir-readiness.md): one external authored
+world, eight distinct bilingual courses and sixteen optional exact-pack examples.
+The readiness audit specifies original asset/provenance, collision, budget,
+distribution and acceptance limits. No reservoir content is delivered by this
+lookup fix.

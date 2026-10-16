@@ -1,0 +1,13 @@
+# Hunt authoring and briefing follow-up
+
+The continuation merged main `e48adf318` into the Hunt branch, preserving both the new Hunt presentation and main's earned-picture/reward-arrival and retained Team-import ownership behavior.
+
+The authoring audit found Team optional actors were missing from Studio's map markers because the shared marker helper read only Solo's `level.classic.combatPatrols`. The helper now reads each mode's accepted descriptor, includes Hunt kind, and provides localized runner/guard descriptions. Studio uses the original humanoid pixel sprites; Playground also shows the optional population. Mission thumbnails gain the missing Team markers through the same helper.
+
+Studio's rules now express the actual objective: optional hunting alongside capture, capture AND quota, or all targets with no required capture percentage. The effective-rules panel includes Team encounters and Hunt authority. A matching legend explains contact/enclosure, non-retention and guard shots.
+
+Browser inspection exposed another mismatch: the actual Solo Hunt-only ready card still said “Reveal 60%” even though its HUD correctly showed the six-target objective. The shared mission briefing now reads the accepted Hunt descriptor, includes v9 in terrain/relay/pickup guidance, and describes contact, enclosure, scoring and optional graphic effects. Solo reads the accepted run level when producing that briefing. Imported Hunt rules in Solo/Versus discovery also use the correct Hunt goal. Team Support advice now includes slowing humanoids and intercepting guards' projectiles.
+
+The independent review also corrected inherited capture markers in Hunt-only geometry from “required” to “optional in Hunt”, and made Ukrainian target counts grammatical for the shipped six-target routes. EN/UK copy is supplied. The existing Studio practice draft was switched from capture-plus-quota to Hunt-only through Inspect/Apply. The board contained four runners and two guards; the accepted rules showed “all 6 targets; no capture percentage required”. The actual Solo iframe loaded and accepted movement/pause input with Hunt counters and no browser errors. A direct Team-finale source inspection showed all six humanoids in markers and its no-capture-percentage goal. The refreshed Solo ready screen was rechecked in the browser and correctly requested all six targets with no capture threshold. These are authoring/runtime observations, not a human difficulty or catchability sign-off.
+
+Automated suites remain WAIVED_SKIPPED_NOT_PASSED under `publishing/test-policy.json`. Formatting and scoped lint were run for these changes. Final integrated validation is recorded in the implementation report.

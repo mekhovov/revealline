@@ -1,12 +1,12 @@
 # Quick music controls
 
-Music can be controlled without opening Settings or the Music Studio.
+Music transport lives in **Settings → Audio**. The normal landing keeps only passive song information and Sound on/off.
 
 - **B** plays or pauses music.
 - **N** selects the next song.
-- The main menu and pause menu have **Play music / Pause music** and **Next song** buttons, plus the current song title and artist.
-- Touch players can pause the game and tap either music button.
-- Controller players can open Pause, navigate with the D-pad or stick, and confirm normally. Resume remains the initial pause-menu action.
+- **Settings → Audio** has **Previous**, **Play music / Pause music** and **Next song**, plus the current song title and artist.
+- Solo's compact Pause keeps **Next song**; open Settings from Pause for the full transport. Resume remains the initial pause-menu action.
+- Keyboard, touch and controller players reach the same Audio controls. Late music initialization does not add new actions to the landing.
 
 Music Pause does not pause a flight or mute its sound effects. Next while music is paused changes the selected song and leaves music paused. Existing mute and volume settings remain unchanged. If browser permission blocks playback, choose Play music to retry.
 
@@ -38,3 +38,36 @@ After this correction, the affected quick-controls, Solo soundtrack-host and Cou
 ### Stronger unmuted regression evidence
 
 The initial revision-2 retry tests inherited a muted fixture, which bypassed automatic lifecycle retry. The final tests explicitly enable sound and assert an unmuted output. Against the original `d34659f95a5a89a9227c17fbd35649e8a4c23521` runtime, keyboard retry requested Play twice and pointer capture started Play before the button. Both tests fail on that source and pass on the corrected runtime. These targeted runs select two tests and intentionally skip the other 19 host tests; they are not a full-suite qualification. Original revision-2 evidence remains retained.
+
+## Current archive-player reconciliation
+
+On 25 September 2026, the reviewed controls were replayed without conflict onto the exact merged
+public-archive source `3883259987913cb646eb44cf2580083dad673a70`. Range-diff marks all five
+existing quick-control commits as patch-equivalent. The controls keep using that host's single
+transport and live 128-recording catalogue; they do not create another deck, copy the catalogue,
+or change its trust boundary.
+
+The post-merge quick-control, audio, Couch and input cohort passes **439/439** tests. The complete
+presentation-production-history file passes **12/12**. The separate Team production/history and
+recipe cohort passes 7/10 and retains the exact base's three source-stage failures: two
+`team.enemy.drifter` assertions and the Team Support review assertion. An independent run at the
+exact merged base reproduces those same three failures. They remain inherited evidence and are
+not reported as quick-control passes. This feature changes no Team recipe input or generated
+presentation output.
+
+Revision 5 of the fingerprint audit is preserved as the record that exposed nine quick-control
+runtime paths outside the then-current Field Kit dependency graph. The follow-up closes that gap:
+all nine paths now bind the UI and screen recipes, while the five JavaScript paths that own playback
+also bind the audio recipes. Independent mutation tests prove that each path changes exactly those
+consumer groups and that every missing path is rejected.
+
+The corrected closure appends Field Kit revision 78. Its UI, screen and audio recipes are explicitly
+back at `source`; none inherits revision 77's approval or review evidence. Motion, effects and Team
+retain their unchanged historical fingerprints. The revision-6 audit pins the source files, new
+group fingerprints, generated outputs and focused **14/14** dependency/history and **40/40**
+quick-control/host results. A test-only correction also advances the controller echo clock through
+the current 1,250 ms guard window before asserting native keyboard ownership.
+
+Independent final review, hosted source gates, actual browser layout, physical keyboard, touch and
+controller checks, frozen-build inspection and public release acceptance remain pending. PR #333
+is now based directly on `main` after the online catalogue integration merged.

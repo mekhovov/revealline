@@ -15,7 +15,7 @@ import {
   isNavigationAllowed,
 } from './policy.mjs';
 
-export const MAX_SITE_BYTES = 512 * 1024 * 1024;
+export const MAX_SITE_BYTES = 768 * 1024 * 1024;
 export const MAX_RESOURCE_BYTES = 64 * 1024 * 1024;
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const plain = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);

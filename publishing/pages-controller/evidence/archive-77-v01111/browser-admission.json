@@ -1,0 +1,21 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-77",
+  "infrastructureCommit": "22865e8c736ef25f611ceed09fcd06e5e80a4730",
+  "deploymentId": 6655347572,
+  "versions": [
+    "v0.111.1"
+  ],
+  "scope": "Historical online preservation: complete exact-byte public audit plus fresh root, title, version and About/return navigation through the archived native UI. This does not claim physical-device/controller, comprehensive offline, every multiplayer mode, or balance acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-77-v01111/public-acceptance.json",
+      "sha256": "e705ccee79eb08d465263910c415adf864e2a9c8835406055497df4a1c380e02"
+    }
+  ],
+  "limitations": [
+    "No renewed physical touch/controller or comprehensive offline acceptance is claimed.",
+    "This admission preserves v0.111.1; v0.112.0 remains the separate immutable release selected by this controller change."
+  ]
+}

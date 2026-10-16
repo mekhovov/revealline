@@ -1,0 +1,196 @@
+{
+  "parent": "626cafc7d252375a8cc928e094aff74bb0c5456a",
+  "productionReview": "deferred-not-passed",
+  "files": [
+    {
+      "path": "authoring/asset-studio/README.md",
+      "bytes": 3717,
+      "sha256": "74118fc8f4c56ae026d4a6f4ac35d879ae29a94a9cda6f416dc33f224454ced6"
+    },
+    {
+      "path": "authoring/asset-studio/artwork-panel.mjs",
+      "bytes": 16409,
+      "sha256": "b6fe0cb179d50bd288b681eba1daeba89e9d73e25b063c1ff7ba95bd4cbe9815"
+    },
+    {
+      "path": "authoring/asset-studio/index.html",
+      "bytes": 60586,
+      "sha256": "8d307ce5ca15c2a5eae3b45d31d93a4e99492525e6d8752435c4a39134f82d49"
+    },
+    {
+      "path": "authoring/asset-studio/studio.css",
+      "bytes": 23144,
+      "sha256": "653d54f95777ca0fdcb35ef3345f3acdc0cc17f53c29182239602f1b826cd75f"
+    },
+    {
+      "path": "authoring/prompts/enemy-workflows.json",
+      "bytes": 8432,
+      "sha256": "7e84b7662343b71a3451a493807eb2740a8f112bf921f93795589c50a60149ee"
+    },
+    {
+      "path": "authoring/prompts/field-kit-production.md",
+      "bytes": 8113,
+      "sha256": "550b234e623071b168b0e3ae400a67ade930c5f4c354b3768a5927e02e134860"
+    },
+    {
+      "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "bytes": 27065,
+      "sha256": "3a9449c0e206e1528af7eb8cbdb7579d0ace522867aa87106946aa4ae5d29c61"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 371175,
+      "sha256": "6771a95b1e2d6912169e24647cfdbfa7ea62847c286108d53266668fd9045353"
+    },
+    {
+      "path": "docs/artwork-collection-packets.md",
+      "bytes": 12760,
+      "sha256": "03d2070d45e9dfdd32b2bc0e0a71c35ec1f30b2ac3916333f7aa9143dee9c17f"
+    },
+    {
+      "path": "docs/character-game-feel-plan.md",
+      "bytes": 35519,
+      "sha256": "87631f28810a9d240e6dd52a2d3c1368967964e1e18c2075a2c8e2de2428fbfa"
+    },
+    {
+      "path": "docs/delivery-priorities.md",
+      "bytes": 49843,
+      "sha256": "23b4ae17a7cc1e72a1788591693a2161a46f0522e399be7a72042c99c1b66bd3"
+    },
+    {
+      "path": "docs/enemy-guide.md",
+      "bytes": 12669,
+      "sha256": "02536dd9b99bfd6a8a6b14875a31bd096cd5faafd7d4dcb5245de2ef5c5ec7f9"
+    },
+    {
+      "path": "docs/plan-status-2026-09-29.md",
+      "bytes": 20604,
+      "sha256": "8cde70ebd199db4a4bd058296e4185a6de164a8b3dbcaa2adbdde6f7f7ef2d53"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 461028,
+      "sha256": "d79d2c84f2f8059e5a7103d99d91605b626f6f0c506351f8c8b6c3f938d03417"
+    },
+    {
+      "path": "game/enemy-guide.mjs",
+      "bytes": 5473,
+      "sha256": "c97118aa0f4f423de7057de34ec4a85e977f075b14d0a868453d060190cfbd6f"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 981975,
+      "sha256": "ac0fe2db5eb32c72b6c6433f3461a75b15f33d4db9a6268bd650d72fa6fcccbe"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "bytes": 431443,
+      "sha256": "e2d772c331b66cc67bfb0c3eb2d605a2bd053067a13f84808350840088a3476b"
+    },
+    {
+      "path": "game/locales/en/tools.json",
+      "bytes": 230829,
+      "sha256": "0824f6c124e36788630c764339ffe33e9f375f11d3abd6eda8e02de64d31ed15"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 704571,
+      "sha256": "7435d1129c98c046ad6c740d6c7ba9603b1053a3d5ad5ade31619fe0b6600d8a"
+    },
+    {
+      "path": "game/locales/uk/tools.json",
+      "bytes": 383753,
+      "sha256": "edc0b1f9b57d852b7910937ce60b2527931bbdd973097bea54a7626a1dae4453"
+    },
+    {
+      "path": "game/test/edition-controller-practice.test.mjs",
+      "bytes": 10252,
+      "sha256": "beeb03674b269546454885efb1d6119859b1ed7c05437ce3e0e5a3ba59a334d9"
+    },
+    {
+      "path": "game/test/enemy-guide-host.test.mjs",
+      "bytes": 27274,
+      "sha256": "97227f51a72bad50ddb22d9df89c2b296453d092430fff6a24384ad6d19b78c8"
+    },
+    {
+      "path": "game/test/enemy-guide-panel.test.mjs",
+      "bytes": 37851,
+      "sha256": "34d8245123e75ed5ad5b829d38a8720b8110f1ff89f32d7e6c2112c0278661c0"
+    },
+    {
+      "path": "game/test/enemy-guide.test.mjs",
+      "bytes": 4392,
+      "sha256": "8e730ef30da2d834699019964e342aba83f068ad399ab2506a349158bf62a465"
+    },
+    {
+      "path": "game/ui/edition-controller-practice.mjs",
+      "bytes": 6048,
+      "sha256": "ce1ae8bc2fa70e093b5591f960e63ddd411b15b4d20f49029affb3f2fb66b55b"
+    },
+    {
+      "path": "game/ui/enemy-guide.mjs",
+      "bytes": 20512,
+      "sha256": "bc56745d30875a7210fa16475fe22f7a83cabd1381b59b9e0fd8f1586553bb21"
+    },
+    {
+      "path": "authoring/asset-studio/artwork-comparison.mjs",
+      "bytes": 4162,
+      "sha256": "e8ff78b41a3bb469dd5bdb76526c2a6512fde91e45e73ae46b22b8e3997beb3f"
+    },
+    {
+      "path": "game/encounter-guide.mjs",
+      "bytes": 4198,
+      "sha256": "b2fa4619c4e654611d2c5581fc033e8ee08f4e814197ede40a9a00e761873a26"
+    },
+    {
+      "path": "game/test/artwork-comparison.test.mjs",
+      "bytes": 15372,
+      "sha256": "211f38799ef7b04bdf769fd1a695f668f1b5ebaa6af97a3e01266b46a4e2f56f"
+    },
+    {
+      "path": "game/test/encounter-guide.test.mjs",
+      "bytes": 18074,
+      "sha256": "bd28170bfdbc59765512cbcc86c3f8bb399db4c4da6e71f7ed9b3489e8bb8471"
+    },
+    {
+      "path": "docs/verification/actor-batch-16/README.md",
+      "bytes": 5222,
+      "sha256": "b97a57f16f3ba393ab6d9ca119cc7789532d5f9f81ad42a4d7c4d9305deaa7f4"
+    },
+    {
+      "path": "docs/verification/actor-batch-16/artwork-parent-fit.png",
+      "bytes": 144746,
+      "sha256": "245372f33f04520aa6d93c98949ea5af9daea023b9742725d68a135ea2ceaa5d"
+    },
+    {
+      "path": "docs/verification/actor-batch-16/artwork-tests.tap",
+      "bytes": 7600,
+      "sha256": "5680700ab20f52e6d27dc25e0efaf95005a3aaaf4b73f36ce094a97f236fd9c7"
+    },
+    {
+      "path": "docs/verification/actor-batch-16/encounter-tests.tap",
+      "bytes": 17457,
+      "sha256": "143511d5f75dd8db985f7c5d350176dd2ca145e0caab60c94ff5de699e88bc20"
+    },
+    {
+      "path": "docs/verification/actor-batch-16/guide-head-fixture-check.tap",
+      "bytes": 1134,
+      "sha256": "8f6930211013289cda40723620d04fd97a185d8b692c63bd99b5401e0e74191e"
+    },
+    {
+      "path": "docs/verification/actor-batch-16/guide-head-geometry-failure.tap",
+      "bytes": 1767,
+      "sha256": "68bf2bedaf33399f419f2296167ac50398fc631d772e9521098a2cf47b070444"
+    },
+    {
+      "path": "docs/verification/actor-batch-16/guide-head-start-failure.tap",
+      "bytes": 1617,
+      "sha256": "763dfea9ccc3963d37364474b826815964999c34cd1f7912b4781d4d006a8568"
+    },
+    {
+      "path": "docs/verification/actor-batch-16/initial-guide-cohort.tap",
+      "bytes": 21789,
+      "sha256": "46c1145bf5de73e19bf8e64ba3c20fde43cadbea7087960ac1f73d760e4127e9"
+    }
+  ]
+}

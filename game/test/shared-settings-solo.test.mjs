@@ -17,7 +17,16 @@ function activate(page, id) {
   page.$(id).focus();
   press(page, 'Enter');
 }
-const categoryNames = ['controls', 'audio', 'display', 'data'];
+const categoryNames = [
+  'gameplay',
+  'controls',
+  'audio',
+  'display',
+  'accessibility',
+  'data',
+  'content',
+  'extras',
+];
 function category(page, selected) {
   for (const name of categoryNames) {
     const active = name === selected,
@@ -76,13 +85,13 @@ test('Home quick sound toggles the existing master in place and remains synchron
   heldAtTitle(page, run);
 });
 
-test('Solo Settings opens Appearance by default, returns to its Home opener and retains the chosen category on reopening', async (t) => {
+test('Solo Settings opens Display by default, returns to its Home opener and retains the chosen category on reopening', async (t) => {
   const page = await soloPage(t, { titleScreen: true }),
     run = page.rendered.run,
     before = [...page.storage.map];
   activate(page, 'shell-options');
   assert.equal(page.$('settings-dialog').open, true);
-  assert.equal(page.$('settings-tab-display').textContent, 'Appearance & accessibility');
+  assert.equal(page.$('settings-tab-display').textContent, 'Display & Language');
   category(page, 'display');
   activate(page, 'settings-tab-data');
   category(page, 'data');
@@ -115,13 +124,17 @@ test('category arrows, Home and End cross the real document adapter exactly once
     };
   }
   for (const [key, expected] of [
-    ['ArrowRight', 'data'],
-    ['ArrowRight', 'controls'],
-    ['ArrowRight', 'audio'],
-    ['ArrowRight', 'display'],
-    ['ArrowLeft', 'audio'],
-    ['Home', 'controls'],
-    ['End', 'data'],
+    ['ArrowDown', 'accessibility'],
+    ['ArrowDown', 'data'],
+    ['ArrowDown', 'content'],
+    ['ArrowDown', 'extras'],
+    ['ArrowDown', 'gameplay'],
+    ['ArrowDown', 'controls'],
+    ['ArrowDown', 'audio'],
+    ['ArrowDown', 'display'],
+    ['ArrowUp', 'audio'],
+    ['Home', 'gameplay'],
+    ['End', 'extras'],
   ]) {
     focusCounts.clear();
     const event = press(page, key);

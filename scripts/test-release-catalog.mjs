@@ -48,6 +48,10 @@ test('catalog has a portable shared presentation with identical assets and font 
   assert.ok(files.includes('game/ui/fonts/field-kit/Exo2-OFL.txt'));
   assert.ok(files.includes('game/ui/fonts/field-kit/Handjet-OFL.txt'));
   assert.ok(files.includes('game/ui/fonts/field-kit/IBMPlexMono-OFL.txt'));
+  assert.ok(files.includes('game/ui/fonts/Tiny5-Regular.ttf'));
+  assert.ok(files.includes('game/ui/fonts/OFL.txt'));
+  assert.ok(files.includes('game/ui/fonts/METADATA.pb'));
+  assert.ok(files.includes('game/ui/fonts/provenance.json'));
   assert.ok(
     !files.some((file) => /(?:^|\/)(?:app|library|media-store|session-store)\.mjs$/.test(file)),
   );

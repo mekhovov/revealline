@@ -1,0 +1,29 @@
+{
+  "format": "FPVFreeWorldFlights.v1",
+  "verifiedAt": "2026-10-14T05:08:49.930Z",
+  "runtime": "civilian-world-fixed.v2",
+  "checks": [
+    {
+      "id": "cc0-coaster-park",
+      "mode": "self-level",
+      "packSha256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-coaster-park",
+      "mode": "acro",
+      "packSha256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    }
+  ],
+  "limitations": [
+    "Content commands/replay verification; browser installation and visual inspection are separate.",
+    "No physical-device performance or human acceptance claim."
+  ]
+}

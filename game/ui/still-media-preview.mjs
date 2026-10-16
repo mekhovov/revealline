@@ -1,9 +1,10 @@
+import { t } from '../i18n/index.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { validateStillAsset } from '../media-library.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from './render.mjs';
 
-const cancelled = () => new DOMException('Still preview cancelled.', 'AbortError');
+const cancelled = () => new DOMException(t('interface:stillPreviewCancelled'), 'AbortError');
 const check = (signal) => {
   if (signal.aborted) throw cancelled();
 };
@@ -13,7 +14,7 @@ const disposeImage = (image) => {
 };
 
 function decodeBrowserImage(source, { signal, ImageClass }) {
-  required(typeof ImageClass === 'function', 'Browser image decoding is unavailable.');
+  required(typeof ImageClass === 'function', t('interface:browserImageDecodingIsUnavailable'));
   check(signal);
   return new Promise((resolve, reject) => {
     const image = new ImageClass();
@@ -30,12 +31,18 @@ function decodeBrowserImage(source, { signal, ImageClass }) {
       } else resolve(image);
     };
     const abort = () => finish(cancelled());
-    const timer = setTimeout(() => finish(new Error('Still preview decode timed out.')), 15000);
+    const timer = setTimeout(
+      () => finish(new Error(t('interface:stillPreviewDecodeTimedOut'))),
+      15000,
+    );
     signal.addEventListener('abort', abort, { once: true });
-    image.onerror = () => finish(new Error('The preview image could not decode.'));
+    image.onerror = () => finish(new Error(t('interface:thePreviewImageCouldNotDecode')));
     image.onload = async () => {
       try {
-        required(typeof image.decode === 'function', 'Complete image decoding is unavailable.');
+        required(
+          typeof image.decode === 'function',
+          t('interface:completeImageDecodingIsUnavailable'),
+        );
         await image.decode();
         finish();
       } catch (error) {
@@ -101,12 +108,12 @@ export function createStillMediaPreview({
 } = {}) {
   required(
     canvas?.ownerDocument?.createElement && canvas.getContext?.('2d'),
-    'Still preview needs a working 2D canvas.',
+    t('interface:stillPreviewNeedsAWorking2dCanvas'),
   );
   const painter = new BoardPainter(presets);
   const decode =
     decodeImage ?? ((src, options) => decodeBrowserImage(src, { ...options, ImageClass }));
-  required(typeof decode === 'function', 'A still preview decoder is required.');
+  required(typeof decode === 'function', t('interface:aStillPreviewDecoderIsRequired'));
   let generation = 0,
     pending = null,
     disposed = false;
@@ -115,7 +122,7 @@ export function createStillMediaPreview({
     { theme, level, seed = 1, asset = null, blob = null, legacyBackground = null },
     { signal } = {},
   ) {
-    if (disposed) throw new Error('Still preview has been disposed.');
+    if (disposed) throw new Error(t('interface:stillPreviewHasBeenDisposed'));
     const ticket = ++generation;
     pending?.abort();
     const own = new AbortController();
@@ -135,28 +142,33 @@ export function createStillMediaPreview({
         fit = 'cover';
       required(
         (asset === null) === (blob === null),
-        'Preview needs both the still asset and its original Blob.',
+        t('interface:previewNeedsBothTheStillAssetAndItsOriginalBlob'),
       );
       if (asset !== null) {
         const record = validateStillAsset(asset);
         let owned;
         try {
           const bytes = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get.call(blob);
-          required(bytes === record.bytes, 'Preview bytes differ from the still record.');
+          required(bytes === record.bytes, t('interface:previewBytesDifferFromTheStillRecord'));
           owned = Blob.prototype.slice.call(blob, 0, bytes, record.mime);
         } catch (error) {
-          throw new TypeError(`Preview requires the matching original Blob. ${error.message}`);
+          throw new TypeError(
+            t('gameplay:previewRequiresTheMatchingOriginalBlob', { value1: error.message }),
+          );
         }
         const digest = new Uint8Array(
           await crypto.subtle.digest('SHA-256', await owned.arrayBuffer()),
         );
         check(own.signal);
         const hash = Array.from(digest, (byte) => byte.toString(16).padStart(2, '0')).join('');
-        required(hash === record.sha256, 'Preview original bytes do not match the saved SHA-256.');
+        required(
+          hash === record.sha256,
+          t('interface:previewOriginalBytesDoNotMatchTheSavedSha256'),
+        );
         required(
           typeof URLImpl?.createObjectURL === 'function' &&
             typeof URLImpl?.revokeObjectURL === 'function',
-          'Local preview object URLs are unavailable.',
+          t('interface:localPreviewObjectUrlsAreUnavailable'),
         );
         objectURL = URLImpl.createObjectURL(owned);
         source = objectURL;
@@ -168,10 +180,10 @@ export function createStillMediaPreview({
           maxString: 6 * 1024 * 1024,
         });
         const header = inspectImageDataUrl(background.dataUrl);
-        required(header.valid, 'The authored background image is invalid.');
+        required(header.valid, t('interface:theAuthoredBackgroundImageIsInvalid'));
         required(
           ['contain', 'cover'].includes(background.fit ?? 'cover'),
-          'The authored background fit is unsupported.',
+          t('interface:theAuthoredBackgroundFitIsUnsupported'),
         );
         source = background.dataUrl;
         expected = header;
@@ -186,14 +198,14 @@ export function createStillMediaPreview({
             image.height === expected.height &&
             (image.naturalWidth ?? image.width) === expected.width &&
             (image.naturalHeight ?? image.height) === expected.height,
-          'Decoded preview dimensions differ from the original image.',
+          t('interface:decodedPreviewDimensionsDifferFromTheOriginalImage'),
         );
       }
       const staged = canvas.ownerDocument.createElement('canvas');
       staged.width = size.width;
       staged.height = size.height;
       const context = staged.getContext('2d');
-      required(context, 'Still preview staging canvas is unavailable.');
+      required(context, t('interface:stillPreviewStagingCanvasIsUnavailable'));
       painter.drawGallery(context, {
         theme: look,
         level: map,

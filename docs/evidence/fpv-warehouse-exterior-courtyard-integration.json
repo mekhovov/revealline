@@ -1,0 +1,67 @@
+{
+  "format": "FPVWarehouseCourtyardIntegrationAudit.v1",
+  "before": "b5a7a3b5a04ce158d3cb6aa97124f2709dcfef0f",
+  "after": "45da28a5adb1e0713c0eeab4868801c72c4a84a4",
+  "checks": [
+    {
+      "name": "Only one Courtyard-guarded hook and one pure helper differ; remaining runtime AST exact",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-assets.mjs exact",
+      "passed": true,
+      "details": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c"
+    },
+    {
+      "name": "authoring/fpv-worlds/scenery-runtime.template.mjs exact",
+      "passed": true,
+      "details": "0c74755053c0162575b22328935156ed2829503e6eb953a68e65889581224bba"
+    },
+    {
+      "name": "authoring/fpv-worlds/assets/kenney/runtime-provenance.json exact",
+      "passed": true,
+      "details": "ce3fa3bc8bc8e7e80f1cad23a720700f28eddc311b30ca03149bd55193ef1c04"
+    },
+    {
+      "name": "optional-practice/civilian-fpv/renderer.mjs exact",
+      "passed": true,
+      "details": "0fa5a05706705fd6128d13b18a4714c7a8010bdfc2adc6ed96d7b43906647a75"
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-catalogue.mjs exact",
+      "passed": true,
+      "details": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc"
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-themes.mjs exact",
+      "passed": true,
+      "details": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549"
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-model.mjs exact",
+      "passed": true,
+      "details": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e"
+    },
+    {
+      "name": "optional-practice/civilian-fpv/model.mjs exact",
+      "passed": true,
+      "details": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-demonstrations.mjs exact",
+      "passed": true,
+      "details": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+    },
+    {
+      "name": "Recounted original source inventory under unchanged16MiB",
+      "passed": true,
+      "details": {
+        "files": 95,
+        "bytes": 16748220,
+        "headroom": 28996
+      }
+    }
+  ],
+  "sourceInventoryRecountOnly": true,
+  "qualification": "Original437checks/221pairs and860package/player evidence retained; this is scoped inactive-Courtyard integration, not a fresh admission or browser run."
+}

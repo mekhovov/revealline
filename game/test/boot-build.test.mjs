@@ -5,13 +5,28 @@ import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { buildProject, PUBLIC_SECURITY_HEADERS } from '../../scripts/game-cli.mjs';
-import { iosHTMLPolicy, IOS_CSP } from '../../scripts/native-cli.mjs';
+import { projectEditionModuleIndentation } from '../../scripts/edition-code-indentation.mjs';
+import { iosHTMLPolicy, IOS_CSP, stageNative, verifySite } from '../../scripts/native-cli.mjs';
+import { loadNativeSite } from '../../platforms/desktop/resources.mjs';
+import {
+  LAUNCHER_APPEARANCE_FILES,
+  LAUNCHER_NAVIGATION_FILES,
+} from '../../scripts/offline-launcher.mjs';
 
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const playerPresentationFiles = [
+  'game/ui/win-picture.css',
+  'game/presentation/theme-bootstrap.mjs',
+  'game/presentation/theme-entry.mjs',
+  'game/presentation/industrial-workshop.css',
   'game/ui/handheld-play.css',
+  'game/ui/touch-steering.css',
   'game/ui/field-kit-fonts.css',
+  'game/ui/brand-identity.css',
+  'game/ui/art/identity/fpv-line/wordmark.png',
+  'game/ui/art/identity/fpv-line/icon-32.png',
+  'game/ui/art/identity/fpv-line/icon-192.png',
   'game/ui/field-kit-tokens.css',
   'game/ui/field-kit-components.css',
   'game/ui/field-kit-flow.css',
@@ -29,7 +44,31 @@ const playerPresentationFiles = [
   'game/ui/fonts/field-kit/Exo2-OFL.txt',
   'game/ui/fonts/field-kit/IBMPlexMono-OFL.txt',
   'game/ui/fonts/field-kit/provenance.json',
+  'game/ui/fonts/departure-mono/DepartureMono-Regular.woff2',
+  'game/ui/fonts/departure-mono/LICENSE',
+  'game/ui/fonts/Tiny5-Regular.ttf',
+  'game/ui/fonts/OFL.txt',
+  'game/ui/fonts/METADATA.pb',
+  'game/ui/fonts/provenance.json',
 ];
+const ambientRuntimeFiles = [
+  'game/ui/menu-retune.mjs',
+  'game/ui/menu-retune.css',
+  'game/ui/native-menu.css',
+  'game/ui/global-settings-view.css',
+  'game/ui/menu-scenes.mjs',
+  'game/ui/menu-scene-motion.mjs',
+  'game/ui/menu-signal-loss.mjs',
+  'game/ui/menu-scenes.css',
+  'game/ui/art/menu-scenes/analog-noise-atlas.png',
+  'game/ui/art/menu-scenes/droneaid-main-background.png',
+  'game/ui/art/menu-scenes/droneaid-wordmark-light.svg',
+];
+
+const editionProjectedRuntimeFiles = new Set([
+  'game/ui/menu-scenes.mjs',
+  'game/ui/menu-scene-motion.mjs',
+]);
 
 test('the actual game has a static dark guard before resources and a single caught module entry', async () => {
   const html = await fs.readFile(new URL('index.html', sourceRoot), 'utf8');
@@ -39,15 +78,20 @@ test('the actual game has a static dark guard before resources and a single caug
   assert.ok(firstStyle > 0 && firstStyle < firstResource);
   assert.match(
     html.slice(firstStyle, html.indexOf('</style>', firstStyle)),
-    /body\s*>\s*:not\(#boot-screen\):not\(script\)[\s\S]*?display:\s*none\s*!important/,
+    /body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)[\s\S]*?display:\s*none\s*!important/,
   );
   assert.match(html, /<section\b[^>]*id="boot-screen"/);
   assert.match(html, /<noscript\s*>[\s\S]*?JavaScript is disabled/);
   assert.match(html, /<script src="boot.mjs" defer><\/script>/);
   assert.match(html, /<script id="boot-phaser" src="vendor\/phaser-4.2.1.min.js" defer><\/script>/);
-  assert.doesNotMatch(html, /<link\b[^>]*\shref="[^\"]+\.css"/);
+  const earlyStyles = [...html.matchAll(/<link\b[^>]*\shref="([^"]+\.css)"/g)];
+  assert.deepEqual(
+    earlyStyles.map((match) => match[1]),
+    ['presentation/industrial-workshop.css', 'access-gate.css'],
+  );
   assert.match(html, /data-boot-href="ui\/operation-status.css"/);
   assert.match(html, /data-boot-href="ui\/handheld-play.css"/);
+  assert.match(html, /data-boot-href="ui\/quick-music-controls.css"/);
   assert.doesNotMatch(html, /<script\b[^>]*src="app.mjs"/);
   assert.equal([...html.matchAll(/id="boot-status"/g)].length, 1);
   assert.ok(
@@ -61,7 +105,7 @@ test('native wrapper CSP precedes bootstrap and permits the existing external-sc
   const transformed = iosHTMLPolicy(original);
   const html = transformed.toString();
   assert.ok(html.indexOf('Content-Security-Policy') < html.indexOf('src="boot.mjs"'));
-  assert.match(IOS_CSP, /script-src 'self';/);
+  assert.match(IOS_CSP, /script-src 'self' 'wasm-unsafe-eval';/);
   assert.match(
     PUBLIC_SECURITY_HEADERS['Content-Security-Policy'],
     /style-src 'self' 'unsafe-inline';/,
@@ -98,15 +142,40 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
       await copy(path.posix.normalize(path.posix.join(path.posix.dirname(name), match[1])));
     }
   };
-  // The HTML, boot code, landing and offline generator inputs are actual source.
-  // Unrelated gameplay dependencies are inert fixture resources, not a claim
-  // that this small build runs the simulation or a native device.
+  // The HTML, boot, presentation and menu import/asset closure are
+  // actual source. The app entry and unrelated styles remain inert fixtures:
+  // this verifies packaging and offline bytes, not rendered/native gameplay.
   await copy('game/index.html');
   for (const name of [
     'game/boot.mjs',
+    'game/access-gate.mjs',
     'game/boot.css',
+    ...[...LAUNCHER_APPEARANCE_FILES, ...LAUNCHER_NAVIGATION_FILES].map((name) => `game/${name}`),
     ...playerPresentationFiles,
+    ...ambientRuntimeFiles,
     'game/offline.mjs',
+    'game/offline/app.html',
+    'game/offline/navigation.css',
+    'game/offline/app-worker.template.js',
+    'game/downloads.css',
+    'game/installed-app.mjs',
+    'game/edition-context.mjs',
+    'game/profile-writer.mjs',
+    'game/i18n/index.mjs',
+    'game/i18n/bootstrap.mjs',
+    'game/i18n/style.css',
+    'game/vendor/i18next-26.4.2.min.js',
+    'game/vendor/lz-string-1.5.0.min.js',
+    'game/vendor/LZ-STRING-LICENSE.txt',
+    'game/locales/en/common.json',
+    'game/locales/en/interface.json',
+    'game/locales/uk/common.json',
+    'game/locales/uk/interface.json',
+    ...['en', 'uk'].flatMap((language) =>
+      ['common', 'interface', 'gameplay', 'controllerEditor', 'errors'].map(
+        (namespace) => `game/locales/${language}/${namespace}.json`,
+      ),
+    ),
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
     'site/index.html',
@@ -117,6 +186,9 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'site/landing.css',
   ])
     await copy(name);
+  // The frozen launcher module is authored for its generated `app/` directory,
+  // so its relative imports intentionally do not resolve in the source tree.
+  await put('game/offline/app.mjs', await fs.readFile(new URL('offline/app.mjs', sourceRoot)));
   const html = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
   for (const [, relative] of html.matchAll(/<link[^>]*href="([^"]+\.css)"/g))
     if (!copied.has(`game/${relative}`))
@@ -124,9 +196,20 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   await put('game/vendor/phaser-4.2.1.min.js', 'globalThis.Phaser = {};');
   await put('game/app.mjs', 'export {};');
   await put('game/content-launch.mjs', 'export {};');
+  await copy('game/snake/route.js');
   await put(
     'game/build-config.json',
-    JSON.stringify({ version: '0.29.0', entry: 'game/index.html', include: ['game', 'site'] }),
+    JSON.stringify({
+      version: '0.29.0',
+      entry: 'game/index.html',
+      include: [
+        'game',
+        'site',
+        // Presentation imports can cross into the shared motion primitives.
+        // Ship precisely those copied files, not the whole authoring tree.
+        ...[...copied].filter((name) => !name.startsWith('game/') && !name.startsWith('site/')),
+      ],
+    }),
   );
   const out = path.join(directory, 'build');
   const first = await buildProject({ root, out });
@@ -142,7 +225,10 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   assert.match(credits, /href="\.\/game\/ui\/field-kit-compiled.css"/);
   for (const name of ['Handjet-OFL.txt', 'Exo2-OFL.txt', 'IBMPlexMono-OFL.txt'])
     assert.ok(credits.includes(`./game/ui/fonts/field-kit/${name}`));
-  assert.doesNotMatch(credits, /Pixelify|Tiny5/);
+  assert.match(credits, /Tiny5 by the Tiny5 Project Authors/);
+  assert.match(credits, /\.\/game\/ui\/fonts\/OFL\.txt/);
+  assert.match(credits, /\.\/game\/ui\/fonts\/provenance\.json/);
+  assert.doesNotMatch(credits, /Pixelify/);
   assert.match(landing, /src="\.\/site\/launch.mjs"/);
   assert.match(landing, /id="launch-game"[^>]*href="\.\/game\/"/);
   assert.doesNotMatch(landing, /__REVEALLINE_VERSION__|landing-pack-select/);
@@ -160,6 +246,9 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/boot.mjs',
     'game/boot.css',
     'game/ui/handheld-play.css',
+    'game/ui/touch-steering.css',
+    ...ambientRuntimeFiles,
+    'authoring/motion-lab/animation.mjs',
     'site/launch.mjs',
     'site/about.html',
     'game/presentation/page-entry.mjs',
@@ -170,5 +259,45 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     const bytes = await fs.readFile(path.join(out, name));
     assert.equal(record.bytes, bytes.length);
     assert.equal(record.sha256, digest(bytes));
+    if (ambientRuntimeFiles.includes(name)) {
+      const source = await fs.readFile(new URL(`../${name}`, sourceRoot));
+      assert.deepEqual(
+        bytes,
+        editionProjectedRuntimeFiles.has(name)
+          ? projectEditionModuleIndentation(name, source)
+          : source,
+      );
+    }
+  }
+  const nativeFiles = [...ambientRuntimeFiles];
+  const bridge = path.join(directory, 'fixture-bridge.mjs');
+  await fs.writeFile(bridge, 'export const fixture = true;\n');
+  for (const platform of ['desktop', 'ios']) {
+    const native = path.join(directory, `native-${platform}`);
+    await stageNative({
+      site: out,
+      out: native,
+      platform,
+      ...(platform === 'ios' ? { bridge } : {}),
+    });
+    const verified = await verifySite(native, { native: true });
+    for (const name of nativeFiles) {
+      const record = verified.manifest.files.find((entry) => entry.path === name);
+      const source = await fs.readFile(path.join(out, name));
+      assert.equal(record?.sha256, digest(source), `${platform} must retain exact ${name}`);
+      assert.deepEqual(await fs.readFile(path.join(native, name)), source);
+    }
+    if (platform === 'desktop') {
+      const site = await loadNativeSite(native);
+      for (const name of nativeFiles) {
+        const response = await site.handle(new Request(`revealline://app/${name}`));
+        assert.equal(response.status, 200, name);
+        assert.equal(
+          digest(Buffer.from(await response.arrayBuffer())),
+          digest(await fs.readFile(path.join(out, name))),
+          name,
+        );
+      }
+    }
   }
 });

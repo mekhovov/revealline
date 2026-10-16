@@ -72,15 +72,42 @@ const packWrites = (p) =>
     ),
   );
 
+async function openLibrary(p) {
+  const opener = p.$('race-chapters'),
+    activate = opener.onclick;
+  let operation, timer;
+  opener.onclick = function (...args) {
+    operation = activate.apply(this, args);
+    return operation;
+  };
+  opener.focus();
+  try {
+    opener.click();
+  } finally {
+    opener.onclick = activate;
+  }
+  assert.equal(typeof operation?.then, 'function', 'The real Missions action owns preparation.');
+  assert.match(p.$('race-message').textContent, /Preparing missions/);
+  try {
+    await Promise.race([
+      operation,
+      new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error('Missions preparation did not settle.')), 120000);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+  assert.equal(p.$('journey-chooser')?.open, true);
+}
+
 for (const missing of ['storage', 'locks', 'denied storage getter']) {
   test(`missing ${missing} keeps the Base library usable and all installed downloads unavailable`, async (t) => {
     const p = await fixture(t, missing);
     const initialWrites = packWrites(p),
       initialRequests = p.requests.length;
     assert.equal(p.$('race-chapters').disabled, false);
-    p.$('race-chapters').focus();
-    p.$('race-chapters').click();
-    await settle(() => p.$('journey-chooser')?.open);
+    await openLibrary(p);
     assert.match(
       p.$('race-library-inventory-status').textContent,
       missing === 'denied storage getter'

@@ -1,5 +1,12 @@
 import assert from 'node:assert/strict';
-import { authoritativeCheckpoint } from '../../replay.mjs';
+import {
+  authoritativeCheckpoint,
+  createRecorder,
+  recordInput,
+  exportReplay,
+  verifyReplay,
+} from '../../replay.mjs';
+import { assertRouteEvidence } from './route-evidence.mjs';
 import { createRun, stepRun, FIXED_DT } from '../../core/index.mjs';
 
 /** Translate raw fixed-tick recordings into real fresh gestures at every capture.
@@ -10,6 +17,13 @@ export function playKeyboardRoute(p, runs, controls, row) {
     classId: 'scout',
     turnPolicy: row.turnPolicy,
   });
+  const recorder = row.evidence
+    ? createRecorder(reference.level, {
+        seed: row.seed,
+        classId: 'scout',
+        turnPolicy: row.turnPolicy,
+      })
+    : null;
   for (const run of runs())
     assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
   let previous = null;
@@ -24,6 +38,7 @@ export function playKeyboardRoute(p, runs, controls, row) {
           'running',
           'The recorded route cannot end before its next gesture',
         );
+        if (recorder) recordInput(recorder, { direction });
         stepRun(reference, { direction }, FIXED_DT);
         captured = reference.events.some((event) => event.type === 'capture.stopped');
       } while (reference.tick < end && !captured);
@@ -50,9 +65,21 @@ export function playKeyboardRoute(p, runs, controls, row) {
     }
   }
   for (const keys of controls) if (previous) p.key(keys[previous], false);
+  if (recorder)
+    assert.equal(
+      verifyReplay(exportReplay(recorder, reference)).match,
+      true,
+      'Exact public replay',
+    );
   for (const run of runs()) {
     assert.equal(run.status, 'won');
-    assert.equal(authoritativeCheckpoint(run).hash, row.checkpoint);
+    assert.deepEqual(
+      authoritativeCheckpoint(run),
+      authoritativeCheckpoint(reference),
+      'Final released host and reference',
+    );
+    if (row.evidence) assertRouteEvidence(run, row.evidence);
+    else assert.equal(authoritativeCheckpoint(run).hash, row.checkpoint);
   }
   return { freshCaptureGestures };
 }

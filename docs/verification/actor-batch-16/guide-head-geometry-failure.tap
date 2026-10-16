@@ -1,0 +1,55 @@
+TAP version 13
+# (node:14048) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/tmp/encounter-guide-baseline-loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks
+not ok 1 - the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks
+  ---
+  duration_ms: 12.517333
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/enemy-guide-panel.test.mjs:245:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   -17.92,
+    +   -53.760000000000005,
+    +   71.68,
+    +   71.68
+    -   -14,
+    -   -42,
+    -   56,
+    -   56
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: -14
+    1: -42
+    2: 56
+    3: 56
+  actual:
+    0: -17.92
+    1: -53.760000000000005
+    2: 71.68
+    3: 71.68
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/enemy-guide-panel.test.mjs:269:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 580.453625

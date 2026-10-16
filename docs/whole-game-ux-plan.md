@@ -1,5 +1,13 @@
 # Reveal Line: whole-game UX and production execution
 
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
+> **24 September 2026:** The approved [player-first UX plan](player-first-ux-execution.md)
+> replaces the execution order below. Older status and evidence remain historical;
+> existing mechanics, compatibility and unfinished production requirements remain.
+
 > **Current status:** use the
 > [completed and remaining delivery plan](plan-status-2026-09-23.md) for released
 > features, active promotion, prioritized remaining work and evidence limits.

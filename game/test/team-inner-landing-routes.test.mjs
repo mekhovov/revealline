@@ -8,6 +8,7 @@ import { playTeamFoundationRoute } from './helpers/team-foundation-route.mjs';
 import { inspectTeamRoamerGoal } from './helpers/team-roamer-goal.mjs';
 import { perimeterConnectedFoundations } from './helpers/team-foundation-goal.mjs';
 import { page } from './helpers/coop-host.mjs';
+import { playSpecializedTeamRoute } from './helpers/team-specialized-host-route.mjs';
 
 const source = createTeamSpatialOriginalCandidates(),
   project = compileContentProject(source);
@@ -154,33 +155,5 @@ for (const [kind, difficulty] of [
     assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(2);
-    const keys = [
-      { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-      { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-    ];
-    let previous = [null, null],
-      frames = 1;
-    for (const s of evidence[kind].log) {
-      for (const [seat, d] of [s.a, s.b].entries())
-        if (d && d !== previous[seat]) f.tap(keys[seat][d]);
-      previous = [s.a, s.b];
-      for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-        const reserves = { gentle: 4, standard: 2, expert: 1 }[difficulty];
-        assert.equal(
-          f.$('coop-reserves').textContent,
-          `${reserves} reserve${reserves === 1 ? '' : 's'}`,
-        );
-        if (frames === 391) assert.equal(f.$('coop-coverage').textContent, '1.4%');
-        if (frames === 801) assert.equal(f.$('coop-coverage').textContent, '5.5%');
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    assert.equal(frames, kind === 'partial' ? 802 : 4822);
-    assert.equal(f.$('coop-coverage').textContent, kind === 'partial' ? '5.5%' : '79.5%');
-    if (kind === 'partial') assert.equal(f.$('coop-overlay').hidden, true);
-    else assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.deepEqual(f.visits, []);
+    playSpecializedTeamRoute(f, source, 'twin-depots', difficulty, `inner-${kind}`);
   });

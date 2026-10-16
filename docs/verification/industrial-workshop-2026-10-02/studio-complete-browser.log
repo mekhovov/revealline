@@ -1,0 +1,34 @@
+buttons [
+  'New industrial theme',
+  'Duplicate current appearance',
+  'Choose a source',
+  'Export compact runtime',
+  'Continue',
+  'Back',
+  'Default',
+  'Hover',
+  'Focus',
+  'Pressed',
+  '✓ Selected',
+  '— Unavailable',
+  '… Loading',
+  '× Error',
+  'Open actual board preview',
+  'Compare industrial arcade art',
+  'Export inspection report'
+]
+tokens [
+  { name: 'amber', type: 'color', value: '#ebc879' },
+  { name: 'borderWidth', type: 'number', value: '2' },
+  { name: 'controlLine', type: 'color', value: '#d9b665' },
+  { name: 'cornerSize', type: 'number', value: '0' }
+]
+forms [ 'Validate and stage tokens' ]
+runtime {
+  bytes: 3444497,
+  source: { id: 'theme-b555d22e-07bb-4fae-9581-a1bd882d0356', revision: 2 },
+  text: '#252d27'
+}
+arcade 35 native sprite comparisons · original on the left, industrial on the right. Both boards use the same initial state. Pixel geometry and source pictures stay unchanged; this is a visual specimen, not a recorded playtest. · Workshop verification · theme-b555d22e-07bb-4fae-9581-a1bd882d0356@2
+simCandidate {"resources":{"candidate":{"source":{"id":"theme-b555d22e-07bb-4fae-9581-a1bd882d0356","revision":2},"familyId":"candidate-7f663fa48a09601a","interfaceId":"candidate-7f663fa48a09601a","identity":"6e66508134c464a8","sim":{"collectionId":"industrial-workshop","revision":"r1"}},"flight":{"available":true,"disposed":false,"quality":"balanced","drone":"utility","presentation":{"collectionId":"industrial-workshop","revision":"r1","profileId":"industrial-workshop"},"effects":{"playerPulse":10211269,"hostilePulse":15708281,"ghost":10668760,"ghostEmissive":3563113,"trail":10668760,"goalOutline":10143181,"goalActive":16765572,"goalComplete":9808542,"goalInactive":8366516,"goalGlow":15250524,"goalGlowInactive":9092023,"goalEmissive":11829819,"goalBadge":15250524,"directionArrow":15390635},"importedMaterialBindings":{"applied":0,"diagnostics":[]},"registered":{"geometries":77,"materials":42,"textures":15},"renderer":{"calls":127,"triangles":5666,"geometries":77,"textures":18,"programs":8,"contextLost":false}},"specimen":{"geometries":43,"textures":13,"programs":4}},"panel":"#252d27","preferences":"[[\"revealline.theme-family.v1\",\"{\\\"familyId\\\":\\\"industrial-workshop\\\",\\\"arcadeArt\\\":\\\"authored\\\",\\\"highContrast\\\":false,\\\"opaqueHud\\\":false}\"]]"}
+{"workspace":"theme-b555d22e-07bb-4fae-9581-a1bd882d0356","export":{"name":"revealline-theme-b555d22e-07bb-4fae-9581-a1bd882d0356-r2.rltheme","bytes":8471687},"errors":[]}

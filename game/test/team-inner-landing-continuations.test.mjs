@@ -7,6 +7,7 @@ import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { playTeamFoundationRoute } from './helpers/team-foundation-route.mjs';
 import { inspectTeamRoamerGoal } from './helpers/team-roamer-goal.mjs';
 import { page } from './helpers/coop-host.mjs';
+import { playSpecializedTeamRoute } from './helpers/team-specialized-host-route.mjs';
 
 const read = async (name) =>
   JSON.parse(await readFile(new URL(`./fixtures/${name}.json`, import.meta.url)));
@@ -71,35 +72,7 @@ for (const row of evidence.rows) {
     assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(2);
-    const keys = [
-      { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-      { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-    ];
-    let previous = [null, null],
-      frames = 1;
-    const expected = row.outcomes[0];
-    for (const s of row.log) {
-      for (const [seat, d] of [s.a, s.b].entries())
-        if (d && d !== previous[seat]) f.tap(keys[seat][d]);
-      previous = [s.a, s.b];
-      for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-        assert.equal(
-          f.$('coop-reserves').textContent,
-          `${expected.reserves} reserve${expected.reserves === 1 ? '' : 's'}`,
-        );
-        assert.doesNotMatch(f.$('coop-message').textContent, /needs a rescue|reserve used/);
-        if (frames === 391) assert.equal(f.$('coop-coverage').textContent, '1.4%');
-        if (frames === 801) assert.equal(f.$('coop-coverage').textContent, '5.5%');
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    assert.equal(frames, expected.tick);
-    assert.equal(f.$('coop-coverage').textContent, `${(expected.coverage * 100).toFixed(1)}%`);
-    assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.deepEqual(f.visits, []);
+    playSpecializedTeamRoute(f, source, 'twin-depots', row.difficulty, 'inner-full');
   });
 }
 for (const [index, row] of evidence.negative.entries())

@@ -1,0 +1,577 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "Original illustrated linen exhibition square with a fictional shirt on a dark wooden plinth, blank record cards and warm arched galleries.",
+      "bytes": 161965,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-threads-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-01-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "948ae2b5db094f54aec6e7d9fe57408bb121dd535b471943425378a7af9de2af",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated thread-study gallery with offset linen ribbons, crimson and charcoal thread, wooden trays and a magnifier revealing woven texture.",
+      "bytes": 170394,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-threads-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-02-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "3b0ba003bc7e170dbb16dc46ba35f6bbdbaf81bf6dc9e8b34b7fce78dc3cec72",
+      "width": 960
+    },
+    {
+      "alt": "Original white-on-white textile samples in raking museum light; illustrative patterns, not a reconstruction of a named historic object.",
+      "bytes": 263606,
+      "format": "AssetRevisionV1",
+      "height": 640,
+      "id": "ukraine-threads-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-03-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "16b7fcca255f5915b14cadf0bddb3d543df5a214bb881144eff9f8024d6dce70",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated exhibition with two distinct fictional linen garment displays, separate blank record cards and a broad shared reading terrace.",
+      "bytes": 158455,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-threads-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-04-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "22ae3b4e43d3e02260437d980e4a421d73bbacc0a35dfd0e809a0300150dec16",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated long gallery with a fictional fringed ivory textile draped across a wooden bench and two separate blank record cards.",
+      "bytes": 173578,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-threads-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-05-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "d3c81a60d651ba8c9e2801a4de4608e5580fa4d2df5a4df44210e41c5de405c4",
+      "width": 960
+    },
+    {
+      "alt": "Original illustrated contemporary textile festival plaza with flowing ivory banners, invented crimson-and-charcoal designs and an amber-lit display stage.",
+      "bytes": 207158,
+      "format": "AssetRevisionV1",
+      "height": 480,
+      "id": "ukraine-threads-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/discovery/ukraine-threads-06-v1.jpg",
+      "review": "candidate",
+      "revision": "1",
+      "sha256": "f85f89cd0a3513736e1b88867982878176affe8ee8e7c72171c6887ded041614",
+      "width": 960
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 1,
+      "discovery": {
+        "exhibitLayout": "gallery",
+        "feedback": {
+          "format": "revealline-campaign-feedback.v1",
+          "lines": {
+            "en": ["Another thread joins your exhibition."],
+            "uk": ["Ще одна нитка доповнила вашу виставку."]
+          },
+          "revision": "feedback-b49aedd7a0984ad6",
+          "victoryMotif": "open-horizon-v1"
+        },
+        "finaleRewardRef": { "id": "ukraine-threads-finale", "revision": "5" }
+      },
+      "format": "CampaignDesignV1",
+      "id": "ukraine-threads",
+      "missionIds": [
+        "ukraine-threads-01",
+        "ukraine-threads-02",
+        "ukraine-threads-03",
+        "ukraine-threads-04",
+        "ukraine-threads-05",
+        "ukraine-threads-06"
+      ],
+      "name": "Threads Across Ukraine",
+      "revision": "1"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "ukraine-threads",
+  "maps": [
+    {
+      "format": "MapDesignV1",
+      "foundations": [{ "h": 7, "w": 13, "x": 28, "y": 11 }],
+      "height": 36,
+      "id": "ukraine-threads-01-map",
+      "name": "Read the Cloth",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 9, "x": 31, "y": 15 },
+        { "h": 4, "w": 9, "x": 11, "y": 23 },
+        { "h": 4, "w": 8, "x": 48, "y": 10 }
+      ],
+      "height": 36,
+      "id": "ukraine-threads-02-map",
+      "name": "Stitch Paths",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 15, "x": 15, "y": 10 },
+        { "h": 2, "w": 16, "x": 43, "y": 23 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 4, "w": 12, "x": 28, "y": 8 },
+        { "h": 4, "w": 7, "x": 31, "y": 17 },
+        { "h": 3, "w": 12, "x": 28, "y": 26 }
+      ],
+      "height": 36,
+      "id": "ukraine-threads-03-map",
+      "name": "White on White",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 16, "w": 2, "x": 21, "y": 10 },
+        { "h": 16, "w": 2, "x": 47, "y": 10 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 6, "w": 15, "x": 12, "y": 18 },
+        { "h": 6, "w": 15, "x": 44, "y": 17 },
+        { "h": 4, "w": 11, "x": 30, "y": 25 }
+      ],
+      "height": 36,
+      "id": "ukraine-threads-04-map",
+      "name": "Many Local Voices",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 19.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [{ "h": 8, "w": 3, "x": 33, "y": 8 }],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 8, "w": 8, "x": 32, "y": 7 },
+        { "h": 8, "w": 8, "x": 32, "y": 22 },
+        { "h": 4, "w": 7, "x": 12, "y": 22 }
+      ],
+      "height": 36,
+      "id": "ukraine-threads-05-map",
+      "name": "A Rushnyk’s Story",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [{ "h": 3, "id": "slow-1", "kind": "slow", "w": 16, "x": 28, "y": 17 }],
+      "walls": [
+        { "h": 11, "w": 2, "x": 24, "y": 8 },
+        { "h": 11, "w": 2, "x": 46, "y": 18 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV1",
+      "foundations": [
+        { "h": 8, "w": 13, "x": 29, "y": 13 },
+        { "h": 3, "w": 9, "x": 10, "y": 24 },
+        { "h": 4, "w": 9, "x": 49, "y": 8 },
+        { "h": 3, "w": 7, "x": 53, "y": 19 }
+      ],
+      "height": 36,
+      "id": "ukraine-threads-06-map",
+      "name": "Wear It Today",
+      "revision": "1",
+      "spawns": [{ "id": "home", "x": 35.5, "y": 0.5 }],
+      "terrain": [],
+      "walls": [
+        { "h": 2, "w": 11, "x": 17, "y": 8 },
+        { "h": 2, "w": 12, "x": 45, "y": 26 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.48,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": [],
+        "counterplay": "Read the field drifter before leaving safety and return to an interior island when a broad cut becomes risky.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [60, 180],
+        "introduces": ["foundations"],
+        "lesson": "Reveal the exhibition square and read the record before interpreting its ornament.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "An original warm linen exhibition square with red-and-black textile studies and an open object plinth.",
+        "pacingBeat": "discover",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "ukraine-threads-01-discovery", "revision": "6" },
+        "routeDecision": "Return through the exhibition plinth or open the wide label gallery first."
+      },
+      "format": "MissionDesignV1",
+      "id": "ukraine-threads-01",
+      "map": { "id": "ukraine-threads-01-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Read the Cloth",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 14.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "ukraine-threads-01-picture",
+        "themeId": "ukraine-threads-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.53,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": [],
+        "counterplay": "Read the field drifter before leaving safety and return to an interior island when a broad cut becomes risky.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [60, 180],
+        "introduces": [],
+        "lesson": "Connect offset sample aisles and compare a material with a technique.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "An original textile sample gallery with magnified thread textures, offset linen aisles and red stitched paths.",
+        "pacingBeat": "choose",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "ukraine-threads-02-discovery", "revision": "5" },
+        "routeDecision": "Choose the upper sample aisle or connect the two lower plinths before crossing between rows."
+      },
+      "format": "MissionDesignV1",
+      "id": "ukraine-threads-02",
+      "map": { "id": "ukraine-threads-02-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Stitch Paths",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 15.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "ukraine-threads-02-picture",
+        "themeId": "ukraine-threads-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 12.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.56,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": [],
+        "counterplay": "Read the field drifter before leaving safety and return to an interior island when a broad cut becomes risky.",
+        "difficulty": {
+          "band": 1,
+          "coordination": 0,
+          "execution": 1,
+          "mechanicLoad": 1,
+          "planning": 1,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [60, 180],
+        "introduces": [],
+        "lesson": "Reveal nested galleries and notice texture as well as colour.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "Original ivory textile architecture with angled light revealing raised white threads, openwork and nested exhibition courts.",
+        "pacingBeat": "combine",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "ukraine-threads-03-discovery", "revision": "6" },
+        "routeDecision": "Use the outer textile ledge before moving into the small inner gallery."
+      },
+      "format": "MissionDesignV1",
+      "id": "ukraine-threads-03",
+      "map": { "id": "ukraine-threads-03-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "White on White",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 16.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "ukraine-threads-03-picture",
+        "themeId": "ukraine-threads-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 12.5, "y": 18.5 }],
+      "coverage": 0.5,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": ["foundations", "perimeter-patrol"],
+        "counterplay": "Watch both the field drifter and perimeter patrol; use interior returns to shorten an exposed cut.",
+        "difficulty": {
+          "band": 2,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 2,
+          "planning": 2,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [60, 180],
+        "introduces": ["perimeter-patrol"],
+        "lesson": "Connect two exhibit branches without reducing them to one pattern.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "An original Ukrainian textile museum garden with separate linen pavilions joined by a warm reading terrace.",
+        "pacingBeat": "breathe",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "ukraine-threads-04-discovery", "revision": "5" },
+        "routeDecision": "Explore either exhibit branch first, returning through the wide shared reading terrace."
+      },
+      "format": "MissionDesignV1",
+      "id": "ukraine-threads-04",
+      "map": { "id": "ukraine-threads-04-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Many Local Voices",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 17.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "ukraine-threads-04-picture",
+        "themeId": "ukraine-threads-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 32.5, "y": 7.5 }],
+      "coverage": 0.6,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": ["foundations", "perimeter-patrol"],
+        "counterplay": "Watch both the field drifter and perimeter patrol; use interior returns to shorten an exposed cut.",
+        "difficulty": {
+          "band": 2,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 2,
+          "planning": 2,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [180, 360],
+        "introduces": [],
+        "lesson": "Connect the long exhibition hall and its small provenance alcoves.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "An original linen exhibition hall with suspended rushnyk-inspired studies, archival alcoves and soft red accents.",
+        "pacingBeat": "mastery",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "ukraine-threads-05-discovery", "revision": "5" },
+        "routeDecision": "Use the hall’s side alcoves to shorten exposed crossings toward the far exhibit."
+      },
+      "format": "MissionDesignV1",
+      "id": "ukraine-threads-05",
+      "map": { "id": "ukraine-threads-05-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "A Rushnyk’s Story",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 18.5, "y": 8.5 }],
+      "presentation": {
+        "backgroundAssetId": "ukraine-threads-05-picture",
+        "themeId": "ukraine-threads-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "field-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "heading": [1, -1],
+          "id": "second-gap",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 12.5,
+          "y": 27.5
+        },
+        {
+          "clockwise": true,
+          "id": "outer-interference",
+          "role": "perimeter-patrol",
+          "tier": "measured",
+          "x": 71.5,
+          "y": 18.5
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 13.5 }],
+      "coverage": 0.64,
+      "design": {
+        "captureConsequence": "A completed cut reveals the picture and connects the discovery point. It never certifies real skills or changes real equipment.",
+        "combines": ["foundations", "perimeter-patrol"],
+        "counterplay": "Watch both the field drifter and perimeter patrol; use interior returns to shorten an exposed cut.",
+        "difficulty": {
+          "band": 2,
+          "coordination": 0,
+          "execution": 2,
+          "mechanicLoad": 2,
+          "planning": 2,
+          "threatDensity": 3,
+          "timePressure": 0
+        },
+        "durationSeconds": [180, 360],
+        "introduces": [],
+        "lesson": "Join the contemporary design plaza and complete the textile exhibit.",
+        "mastery": "Connect the discovery and finish without losing a life; the untimed explanation remains separate from arcade score.",
+        "memorableMoment": "An original contemporary textile plaza with linen banners, red-and-black graphic rhythms and an amber festival stage.",
+        "pacingBeat": "resolve",
+        "practices": ["closure", "enemy-seeded-closure"],
+        "rewardRef": { "id": "ukraine-threads-06-discovery", "revision": "5" },
+        "routeDecision": "Connect the central festival platform or take three smaller design islands in sequence."
+      },
+      "format": "MissionDesignV1",
+      "id": "ukraine-threads-06",
+      "map": { "id": "ukraine-threads-06-map", "revision": "1" },
+      "modes": ["solo"],
+      "name": "Wear It Today",
+      "objectives": [{ "hidden": false, "id": "discovery", "required": true, "x": 19.5, "y": 7.5 }],
+      "presentation": {
+        "backgroundAssetId": "ukraine-threads-06-picture",
+        "themeId": "ukraine-threads-theme"
+      },
+      "revision": "1",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Threads Across Ukraine",
+  "packs": [
+    {
+      "campaignIds": ["ukraine-threads"],
+      "format": "PackDesignV1",
+      "id": "ukraine-threads-pack",
+      "name": "Threads Across Ukraine",
+      "revision": "7"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "7"
+}
