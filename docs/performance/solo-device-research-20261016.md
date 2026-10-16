@@ -98,3 +98,20 @@ flashing can identify unexpectedly large repaint regions. These diagnostics
 remain separate from low-overhead qualification. [Power guidance](https://webkit.org/blog/8970/how-web-content-can-affect-power-usage/),
 [CPU timeline](https://webkit.org/blog/8993/cpu-timeline-in-web-inspector/),
 [Rendering diagnostics](https://developer.chrome.com/docs/devtools/rendering/performance).
+
+The menu artwork owner also needs to defer preparation, not just animation,
+while stopped. Its image-load, profile-update and context-restoration callbacks
+can otherwise compile shaders and upload textures behind another screen. The
+targeted correction belongs in that existing owner; showing the menu again must
+prepare the latest image and preserve its CSS fallback. This follows WebKit's
+recommendation to stop hidden work and reduce unnecessary drawing, without
+changing gameplay callbacks or introducing a second scheduler.
+
+MDN recommends compiling shaders and linking programs before querying their
+status, because synchronous status checks can stall. The optional
+`KHR_parallel_shader_compile` extension permits nonblocking completion polling;
+it does not promise less total compilation work and is not universally available.
+The current menu shader's synchronous checks remain a separate preparation
+attribution target. A shader rewrite or a compatibility-dependent startup path
+is not justified by the present traces alone. [WebGL best practices](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices),
+[Parallel shader compilation](https://developer.mozilla.org/en-US/docs/Web/API/KHR_parallel_shader_compile).
