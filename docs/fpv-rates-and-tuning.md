@@ -28,7 +28,7 @@ Each profile uses one rate algorithm for all three axes, with separate roll, pit
 | KISS       | RC rate, rate and expo                                  |
 | Raceflight | Rate, Acro+ and expo                                    |
 
-The editor displays each algorithm's own units. Changing algorithms retains the values entered for each algorithm during the current edit instead of interpreting the old numbers as another model. Optional linked roll/pitch editing leaves yaw independent.
+The editor displays each algorithm's own units. Changing algorithms retains the values entered for each algorithm during the current edit instead of interpreting the old numbers as another model. Optional linked roll/pitch editing leaves yaw independent. Numeric entries are normalized to the firmware's supported increments when committed: for example, an Actual maximum of 895°/s becomes 900°/s. Saving, exporting and testing also commit pending entries. Empty or out-of-range entries require correction before those actions.
 
 Each axis also has a commanded-rate limit. The new rate profiles support limits up to 1,998 degrees per second; Legacy feel retains its original range. The curve shows the requested rotation. The aircraft's response, self-level assistance and available motor authority determine the achieved rotation.
 
@@ -52,6 +52,8 @@ Choose **Player default** to inherit the current default, or assign a complete n
 
 Camera tilt is measured in degrees. **Vertical FOV** is the vertical field of view in degrees, not horizontal or diagonal FOV. Camera settings are saved with the drone and excluded from portable rate files. Existing camera values are preserved during migration.
 
+Unsaved drone names, assignments and camera settings remain with their drone setup when you switch rate profiles, switch setups or close and reopen tuning. **Save drone assignment & camera** saves the selected setup independently. **Revert draft** restores the selected profile and setup; **Refresh library** discards all retained drafts before loading saved settings. Unsaved drafts survive within the open SIM session, not a browser reload.
+
 The resolved flight configuration carries a fingerprint of its response settings and any saved Advanced aircraft/controller tuning. Names, profile/setup IDs, aircraft labels and camera settings do not affect that fingerprint. The simulation's recording identity also includes its backend, timing, world and rules; the configuration fingerprint alone does not establish replay compatibility or comparison eligibility.
 
 ## Import from Betaflight
@@ -64,11 +66,13 @@ Paste CLI text or upload a text/JSON file in **Import / export**. Choose the ope
 | Sparse diff            | Reconstructs against verified defaults for the exact source release.                        |
 | Snippet / preset patch | Applies only supplied fields to the selected baseline and preserves everything else.        |
 
-The verified source releases are **4.5.2, 4.5.5, 2025.12.4, 2025.12.5 and 2026.6.2**. A version header is not required in the file, but complete configurations and sparse diffs need a source version selected when no header is present. Headerless `dump rates` files are normal. Conflicting headers and unverified versions are rejected instead of guessed.
+The verified source releases are **4.5.2, 4.5.5, 2025.12.4, 2025.12.5 and 2026.6.2**. A version header is not required in the file, but complete configurations and sparse diffs need a source version selected when no header is present. Headerless `dump rates` files are normal. Choosing firmware defaults as a patch baseline also uses the file's verified version header when no version is selected. Conflicting headers and unverified versions are rejected instead of guessed.
 
 Assignments and `defaults` commands are processed in order. PID profiles and rate profiles are separate namespaces. By default, the final selected rate profile is previewed; the source-profile control can select another supported profile explicitly. The current importer qualifies the upstream four-profile layout, indexes 0–3. Custom firmware builds with different counts or defaults need separate verification.
 
 Choose **Preview import** to review the resulting curves, changed fields, inferred defaults, firmware normalization and unapplied settings. Then choose **Save import as new profile** and assign that new profile explicitly. A malformed import does not partially modify a saved profile.
+
+If you edit the rates after previewing, **Save import as new profile** requests another preview instead of saving the older imported curve. Use **Save for next flight** to retain your edited draft as an ordinary profile revision without the original import receipt.
 
 Saved imports retain an **import receipt** with the original text digest, firmware
 assumptions, operation, source profile, baseline and applied/unapplied settings.
@@ -94,7 +98,7 @@ There is no online preset catalog or native importer for other firmware in this 
 
 ## Export, history and recovery
 
-**Export SIM rates** produces a portable rate/throttle file. **Export rate-only CLI** targets a selected verified Betaflight release and includes the supported throttle settings when their model matches. An incompatible throttle target is rejected. Exports omit receiver calibration, camera settings and aircraft tuning.
+**Export SIM rates** produces a portable rate/throttle file. **Export rate-only CLI** targets a selected verified Betaflight release. **Include throttle settings in CLI export** is enabled initially; clear it to export rotation rates across different throttle-model versions. With throttle included, an incompatible target is rejected. With throttle omitted, the receiving configuration's throttle settings remain untouched. Exports omit receiver calibration, camera settings and aircraft tuning.
 
 Each profile retains up to 24 prior revisions. **Restore revision to draft** lets you inspect an older version before saving it. **Revert draft** discards the current experiment and reloads the saved settings.
 
@@ -133,7 +137,7 @@ The Advanced controller includes a separate feedforward low-pass cutoff. New tun
 
 In Regional flight, the pause menu offers **Try Advanced here**. It starts an Acro practice flight above the selected starting point using the same streamed and verified terrain. The physics worker handles ground and roof landings, takeoff and wall collisions using the verified collision meshes. Missing terrain and region boundaries still reject the whole mission interval and pause flight. **Use Legacy** restarts with the existing Regional model. Advanced Regional flights remain unscored, and contact behavior has not yet been matched to measured real aircraft.
 
-Regional recordings include the collision geometry and ordered terrain changes needed to replay their flight. Recovery files also retain the current controller, motors, battery and terrain state. Importing recovery checks the region and starting point before adopting it. Older experimental Regional recovery files cannot resume the new contact backend; the reference arena and historical Legacy flights keep their existing identities.
+Regional recordings include the collision geometry and ordered terrain changes needed to replay their flight. Recovery files also retain the current controller, motors, battery and terrain state. Importing recovery checks the region and starting point, replays the consumed flight history in a separate worker, and compares the complete restored dynamics before adopting it. The current flight stays paused and unchanged during verification. **Cancel recovery verification** stops the candidate worker; failed or cancelled recovery preserves the current flight. A maximum-duration recording may take several minutes to verify, with a seven-minute limit. Older experimental Regional recovery files cannot resume the new contact backend; the reference arena and historical Legacy flights keep their existing identities.
 
 Advanced recording and aircraft exports use the platform's file/share support. Backgrounding, app inactivity or graphics loss pauses practice; returning never resumes automatically. Physical-device qualification and verified/default Advanced rollout remain gated.
 

@@ -1884,6 +1884,45 @@ test('World draft testing enters unscored free flight and returns to the unsaved
   assert.equal(worldTuningControl(h, 'Rate algorithm', 'select').value, 'legacy');
 });
 
+for (const destination of ['World', 'Regional']) test(`a normal ${destination} launch replaces the prior tuning-test origin`, async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const h = fixture(t, { rendererFactory: () => ({
+    available: true, setPresentation() {}, setCourse() {}, setQuality() {},
+    setDrone() {}, setGhost() {}, setPath() {}, setRegional() {}, draw() {}, dispose() {},
+    async prepareRegionalFrame() {}, async prepare() { return true; },
+  }) });
+  await h.app.ready;
+  const entries = WORLD_CATALOGUE.filter((item) => !item.legacy && !item.beginner && item.activity !== 'hunt');
+  await h.app.startFlight(entries[0]);
+  await openWorldTuning(h);
+  worldTuningControl(h, 'Vertical FOV (degrees)').value = '105';
+  await worldTuningClick(h, 'Test draft · unscored');
+  await settleUntil(() => h.$('world-fov').value === '105', 'The first draft must be adopted');
+  let next = entries[1];
+  if (destination === 'Regional') {
+    const [{ createEnduranceFixture }, { regionalReviewEntry }] = await Promise.all([
+      import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+      import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+    ]);
+    const { terrain } = await createEnduranceFixture();
+    next = regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source });
+  }
+  await h.app.startFlight(next);
+  await openWorldTuning(h);
+  worldTuningControl(h, 'Vertical FOV (degrees)').value = '107';
+  await worldTuningClick(h, 'Test draft · unscored');
+  await settleUntil(() => h.$('world-fov').value === '107', 'The new draft must be adopted');
+  assert.equal(h.app.snapshot().course, next.id, 'Test uses the newly selected environment');
+  h.doc.querySelector('.tuning-return').click();
+  await new Promise((resolve) => setImmediate(resolve));
+  worldTuningControl(h, 'Vertical FOV (degrees)').value = '113';
+  await worldTuningClick(h, 'Apply & restart');
+  await settleUntil(() => h.$('world-fov').value === '113', 'The saved restart must be adopted');
+  assert.equal(h.app.snapshot().course, next.id, 'Apply returns to this draft’s environment');
+});
+
 test('Regional host freezes its assigned rates and camera until the next flight', async (t) => {
   const priorLocale = getLocale();
   setLocale('en', { persist: false });
@@ -2024,7 +2063,9 @@ test('Regional host explicitly switches into the real Advanced worker and preser
     }),
   });
   h.win.Worker = RegionalWorker;
+  const timerDelays = [];
   h.win.setTimeout = (callback, delay) => {
+    timerDelays.push(delay);
     const timer = setTimeout(callback, delay);
     if (delay === 60000) timer.unref();
     return timer;
@@ -2110,6 +2151,7 @@ test('Regional host explicitly switches into the real Advanced worker and preser
   );
   assert.equal(h.app.snapshot().state.status, 'paused');
   const recoveredWorker = RegionalWorker.instances.at(-1);
+  assert.ok(timerDelays.includes(420000), 'Recovery uses the complete replay verification allowance');
   assert.notEqual(recoveredWorker, worker, 'Recovery creates a detached worker before adoption');
   assert.equal(recoveredWorker.url.href, workerURL, 'Recovery preserves the World-scoped entry');
   assert.equal(recoveredWorker.options.type, 'module');
@@ -2120,6 +2162,38 @@ test('Regional host explicitly switches into the real Advanced worker and preser
   await settleUntil(() => !toggle.disabled, 'Oversized recovery releases controls');
   assert.equal(oversizedRead, false, 'The shared recovery limit rejects oversized files before reading');
   assert.equal(h.app.snapshot().state.status, 'paused');
+  const beforeCancelledRecovery = h.app.snapshot().state;
+  const cancelRecovery = h.doc.querySelectorAll('button').find((row) => row.textContent === 'Cancel recovery verification');
+  let finishFileRead;
+  file.files = [{ size: recoveryFile.length, text: () => new Promise((resolve) => { finishFileRead = resolve; }) }];
+  file.emit('change');
+  await settleUntil(() => typeof finishFileRead === 'function' && !cancelRecovery.hidden, 'File reading should be pending before worker verification');
+  cancelRecovery.click();
+  await settleUntil(() => !toggle.disabled && cancelRecovery.hidden, 'Cancelling file reading promptly releases the menu');
+  assert.deepEqual(h.app.snapshot().state, beforeCancelledRecovery, 'Cancelling before restore leaves the prepared terrain and flight unchanged');
+  assert.equal(RegionalWorker.instances.at(-1), recoveredWorker, 'File reading never creates a detached worker');
+  finishFileRead(recoveryFile);
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.deepEqual(h.app.snapshot().state, beforeCancelledRecovery, 'A late file read cannot adopt after cancellation');
+  assert.equal(RegionalWorker.instances.at(-1), recoveredWorker);
+  h.win.Worker = class extends RegionalWorker {
+    postMessage(message) {
+      if (message.type === 'restore') this.messages.push(structuredClone(message));
+      else super.postMessage(message);
+    }
+  };
+  file.files = [{ size: recoveryFile.length, text: async () => recoveryFile }];
+  file.emit('change');
+  await settleUntil(() => RegionalWorker.instances.at(-1) !== recoveredWorker && RegionalWorker.instances.at(-1).messages.some((message) => message.type === 'restore'), 'Detached verification should be pending');
+  const cancelledWorker = RegionalWorker.instances.at(-1);
+  assert.equal(cancelRecovery.hidden, false);
+  assert.equal(cancelRecovery.disabled, false);
+  cancelRecovery.click();
+  await settleUntil(() => !toggle.disabled && cancelRecovery.hidden, 'Cancellation promptly releases the menu');
+  assert.equal(cancelledWorker.terminated, true, 'Cancel retires the detached verification owner');
+  assert.equal(recoveredWorker.terminated, false, 'Cancel preserves the existing verified flight');
+  assert.deepEqual(h.app.snapshot().state, beforeCancelledRecovery);
+  assert.match(cancelRecovery.parentElement.textContent, /cancelled/);
   toggle.click();
   await settleUntil(
     () => !h.app.snapshot().state.advanced && h.app.snapshot().state.reason === 'prepared',

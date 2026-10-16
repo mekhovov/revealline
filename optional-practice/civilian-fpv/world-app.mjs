@@ -53,7 +53,7 @@ import { mountFlightTuning } from './tuning-ui.mjs';
 import { TUNED_RESPONSE_FORMAT } from './flight-response.mjs';
 import { mountAdvancedPractice } from './advanced-practice.mjs';
 import { createAdvancedRegionalSession } from './advanced-regional.mjs';
-import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
+import { createAdvancedWorkerClient, ADVANCED_VERIFICATION_WATCHDOG_MS } from './advanced-worker-client.mjs';
 import { ADVANCED_REGIONAL_RECOVERY_BYTES } from './advanced-simulation.mjs';
 import {
   mountFlightFullscreen,
@@ -4905,6 +4905,8 @@ export function mountWorldApp({
     controls.exportRecording.textContent = txt('Export Advanced recording', 'Експорт запису Advanced');
     controls.exportRecovery.textContent = txt('Export recovery', 'Експорт відновлення');
     controls.restore.textContent = txt('Restore recovery file', 'Відновити з файлу');
+    controls.cancelRecovery.textContent = txt('Cancel recovery verification', 'Скасувати перевірку відновлення');
+    controls.cancelRecovery.hidden = !advanced || !controls.recovery;
     controls.help.textContent = unavailable && !advanced
       ? txt('Advanced is unavailable: this platform cannot start a simulation worker.', 'Advanced недоступний: платформа не підтримує окремий потік симуляції.')
       : txt('Experimental Acro · unscored · air start 2 m above the selected point. Landings and collisions use the verified terrain. Uses portable rates, or Actual defaults for Legacy feel.',
@@ -6300,6 +6302,7 @@ export function mountWorldApp({
     regionalPreparing = null;
     flight = nextFlight;
     current = entry;
+    if (!options.tuningDraft) tuningReturnEntry = null;
     recorder = null;
     checkpointRequest = checkpointSession = replayProof = playingPlaylist = null;
     learningDemoReturn = lessonReturn = null;
@@ -6533,6 +6536,7 @@ export function mountWorldApp({
     if (!ownsAttempt()) return;
     flight = null;
     current = entry;
+    if (!options.tuningDraft) tuningReturnEntry = null;
     if (!options.replayProof && !options.preview && !options.checkpoint && !entry.freeFlight)
       lastCatalogueFlightKey = keyOf(entry);
     recorder = null;
@@ -8637,6 +8641,7 @@ export function mountWorldApp({
     regionalAdvancedExport = el('button'),
     regionalAdvancedRecoveryExport = el('button'),
     regionalAdvancedRestore = el('button'),
+    regionalAdvancedCancelRecovery = el('button'),
     regionalAdvancedRecoveryFile = el('input'),
     regionalAdvancedMessage = el('p');
   regionalAdvancedRoot.hidden = true;
@@ -8644,13 +8649,14 @@ export function mountWorldApp({
   regionalAdvancedButton.dataset.regionalAdvanced = 'toggle';
   regionalAdvancedHelp.id = 'regional-advanced-help';
   regionalAdvancedButton.setAttribute('aria-describedby', regionalAdvancedHelp.id);
-  for (const control of [regionalAdvancedExport, regionalAdvancedRecoveryExport, regionalAdvancedRestore]) control.type = 'button';
+  for (const control of [regionalAdvancedExport, regionalAdvancedRecoveryExport, regionalAdvancedRestore, regionalAdvancedCancelRecovery]) control.type = 'button';
+  regionalAdvancedCancelRecovery.hidden = true;
   regionalAdvancedRecoveryFile.type = 'file';
   regionalAdvancedRecoveryFile.accept = '.json,application/json';
   regionalAdvancedRecoveryFile.hidden = true;
   regionalAdvancedMessage.setAttribute('role', 'status');
-  regionalAdvancedRoot.append(regionalAdvancedButton, regionalAdvancedHelp, regionalAdvancedExport, regionalAdvancedRecoveryExport, regionalAdvancedRestore, regionalAdvancedRecoveryFile, regionalAdvancedMessage);
-  regionalAdvancedControls = { root: regionalAdvancedRoot, button: regionalAdvancedButton, help: regionalAdvancedHelp, exportRecording: regionalAdvancedExport, exportRecovery: regionalAdvancedRecoveryExport, restore: regionalAdvancedRestore, busy: false };
+  regionalAdvancedRoot.append(regionalAdvancedButton, regionalAdvancedHelp, regionalAdvancedExport, regionalAdvancedRecoveryExport, regionalAdvancedRestore, regionalAdvancedCancelRecovery, regionalAdvancedRecoveryFile, regionalAdvancedMessage);
+  regionalAdvancedControls = { root: regionalAdvancedRoot, button: regionalAdvancedButton, help: regionalAdvancedHelp, exportRecording: regionalAdvancedExport, exportRecovery: regionalAdvancedRecoveryExport, restore: regionalAdvancedRestore, cancelRecovery: regionalAdvancedCancelRecovery, recovery: null, busy: false };
   regionalStartRoot.after(regionalAdvancedRoot);
   on(regionalAdvancedButton, 'click', async () => {
     if (!current?.regional || regionalAdvancedControls.busy || regionalAdvancedButton.disabled) return;
@@ -8698,35 +8704,51 @@ export function mountWorldApp({
     regionalAdvancedRecoveryFile.value = '';
     regionalAdvancedRecoveryFile.click();
   });
+  on(regionalAdvancedCancelRecovery, 'click', () => regionalAdvancedControls.recovery?.cancel());
   on(regionalAdvancedRecoveryFile, 'change', async () => {
     const file = regionalAdvancedRecoveryFile.files?.[0], selected = flight;
     if (!file || !current?.regionalAdvanced || !selected?.restoreRecovery || regionalAdvancedControls.busy) return;
     regionalAdvancedControls.busy = true;
     pauseFlight();
+    let rejectCancellation;
+    const cancelled = new Promise((_, reject) => { rejectCancellation = reject; });
+    const owner = { restoreStarted: false, cancel() {
+      if (owner.restoreStarted) selected.cancelPreparation();
+      rejectCancellation(new DOMException('Recovery verification cancelled', 'AbortError'));
+    } };
+    regionalAdvancedControls.recovery = owner;
     paintRegionalAdvanced();
+    regionalAdvancedMessage.textContent = txt('Verifying recovery. Flight stays paused; you can cancel.', 'Перевірка відновлення. Політ залишається на паузі; перевірку можна скасувати.');
     let recoveryTimeout = null;
     try {
       if (file.size > ADVANCED_REGIONAL_RECOVERY_BYTES) throw new Error(txt('Recovery file is too large.', 'Файл відновлення завеликий.'));
-      const value = JSON.parse(await file.text());
+      const value = JSON.parse(await Promise.race([file.text(), cancelled]));
       if (disposed || flight !== selected) return;
+      owner.restoreStarted = true;
       await Promise.race([
         selected.restoreRecovery(value),
+        cancelled,
         new Promise((_, reject) => {
           recoveryTimeout = win.setTimeout(() => {
             if (!disposed && flight === selected) selected.cancelPreparation();
             reject(new DOMException('Regional recovery preparation timed out', 'TimeoutError'));
-          }, 30000);
+          }, ADVANCED_VERIFICATION_WATCHDOG_MS);
         }),
       ]);
       win.clearTimeout(recoveryTimeout);
+      regionalAdvancedControls.recovery = null;
+      paintRegionalAdvanced();
       if (disposed || flight !== selected) return;
       sceneReady = false;
       await prepareRegionalFlight();
       regionalAdvancedMessage.textContent = txt('Recovery restored. Flight stays paused; arm when ready.', 'Політ відновлено на паузі; увімкніть, коли будете готові.');
     } catch (error) {
-      if (!disposed && flight === selected) regionalAdvancedMessage.textContent = txt(`Recovery failed: ${error.message}`, `Не вдалося відновити: ${error.message}`);
+      if (!disposed && flight === selected) regionalAdvancedMessage.textContent = error.name === 'AbortError'
+        ? txt('Recovery verification cancelled. The current flight is unchanged.', 'Перевірку відновлення скасовано. Поточний політ не змінено.')
+        : txt(`Recovery failed: ${error.message}`, `Не вдалося відновити: ${error.message}`);
     } finally {
       win.clearTimeout(recoveryTimeout);
+      if (regionalAdvancedControls.recovery === owner) regionalAdvancedControls.recovery = null;
       regionalAdvancedControls.busy = false;
       if (!disposed && flight) updateHUD(flight.snapshot());
     }

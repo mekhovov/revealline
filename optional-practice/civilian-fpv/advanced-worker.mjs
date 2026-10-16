@@ -5,6 +5,7 @@ import {
   createAdvancedSimulation,
   initAdvancedRuntime,
   replayAdvancedRecording,
+  verifyAdvancedRecovery,
 } from './advanced-simulation.mjs';
 
 /** Serial request processing keeps init, steps and restores in one ownership
@@ -67,9 +68,16 @@ export function createAdvancedWorkerHandler(postMessage) {
           case 'snapshot':
             result = simulation.snapshot();
             break;
-          case 'restore':
-            result = simulation.restore(message.snapshot);
+          case 'restore': {
+            const receivingSimulation = simulation;
+            const saved = await verifyAdvancedRecovery(message.snapshot, {
+              expectedIdentity: receivingSimulation.identity,
+            });
+            if (simulation !== receivingSimulation || session !== requestSession)
+              throw new Error('Advanced recovery was cancelled.');
+            result = receivingSimulation.restore(saved);
             break;
+          }
           case 'recording':
             result = simulation.recording();
             break;

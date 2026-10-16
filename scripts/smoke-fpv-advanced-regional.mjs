@@ -5,7 +5,10 @@ import { readFile, writeFile, mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { replayAdvancedRecording } from '../optional-practice/civilian-fpv/advanced-simulation.mjs';
+import {
+  createAdvancedSimulation,
+  replayAdvancedRecording,
+} from '../optional-practice/civilian-fpv/advanced-simulation.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const mime = {
@@ -110,7 +113,7 @@ export async function smokeAdvancedRegional({ playwrightModule, output, screensh
     page.on('worker', (worker) => workers.push(worker.url()));
     await page.addInitScript(() => {
       const NativeWorker = window.Worker;
-      window.qualificationWorkers = { created: 0, terminated: 0, live: 0 };
+      window.qualificationWorkers = { created: 0, terminated: 0, live: 0, recoveryRequests: 0 };
       window.Worker = class extends NativeWorker {
         constructor(...args) {
           super(...args);
@@ -125,6 +128,10 @@ export async function smokeAdvancedRegional({ playwrightModule, output, screensh
             window.qualificationWorkers.live--;
           }
           return super.terminate();
+        }
+        postMessage(message, ...args) {
+          if (message.type === 'restore') window.qualificationWorkers.recoveryRequests++;
+          return super.postMessage(message, ...args);
         }
       };
     });
@@ -199,6 +206,84 @@ export async function smokeAdvancedRegional({ playwrightModule, output, screensh
       finalHash: recording.finalHash,
       nodeReplayVerified: replay.verified,
     };
+    const recoveryDownloadReady = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Export recovery', exact: true }).click();
+    const recoveryDownload = await recoveryDownloadReady,
+      recoveryExport = path.join(temporary, 'recovery.json');
+    await recoveryDownload.saveAs(recoveryExport);
+    const recovery = JSON.parse(await readFile(recoveryExport, 'utf8'));
+    const recoveryRoot = page
+      .getByRole('button', { name: 'Restore recovery file', exact: true })
+      .locator('..');
+    const recoveryInput = recoveryRoot.locator('input[type="file"]');
+    const recoveryStatus = recoveryRoot.locator('[role="status"]');
+    const importRecovery = (value, name) =>
+      recoveryInput.setInputFiles({
+        name,
+        mimeType: 'application/json',
+        buffer: Buffer.from(JSON.stringify(value)),
+      });
+    const corrupted = structuredClone(recovery);
+    corrupted.simulation.controller.state.integral.roll += 0.001;
+    await importRecovery(corrupted, 'corrupt-recovery.json');
+    await recoveryStatus.filter({ hasText: /Recovery failed:.*replay verification/ }).waitFor();
+    evidence.rejectedRecovery = await page.evaluate(() => ({
+      state: window.qualificationApp.snapshot().state,
+      workers: window.qualificationWorkers,
+    }));
+    requireCheck(
+      evidence.rejectedRecovery.state.ticks === recovery.simulation.state.missionTick &&
+        evidence.rejectedRecovery.workers.live === 1,
+      'Invalid recovery changed the active attempt or leaked its candidate worker',
+    );
+    await page.locator('[data-mode-action="pause-resume"]').click();
+    await page.waitForFunction(
+      (tick) => window.qualificationApp.snapshot().state.ticks >= tick + 10,
+      recovery.simulation.state.missionTick,
+    );
+    await page.keyboard.press('Escape');
+    await importRecovery(recovery, 'valid-recovery.json');
+    await recoveryStatus.filter({ hasText: 'Recovery restored.' }).waitFor();
+    evidence.restoredRecovery = await page.evaluate(() => ({
+      state: window.qualificationApp.snapshot().state,
+      workers: window.qualificationWorkers,
+    }));
+    requireCheck(
+      evidence.restoredRecovery.state.ticks === recovery.simulation.state.missionTick &&
+        evidence.restoredRecovery.state.status === 'paused' &&
+        evidence.restoredRecovery.workers.live === 1,
+      'Verified recovery did not replace the flight atomically while remaining paused',
+    );
+    // Extend this genuine browser snapshot in the same frozen Node simulation.
+    // A 30-second history gives the real worker enough replay work to exercise
+    // physical Cancel activation, without stubbing its verification protocol.
+    const extended = structuredClone(recovery),
+      extension = createAdvancedSimulation(recovery.simulation.recording.config);
+    try {
+      extension.restore(recovery.simulation);
+      for (let mission = 0; mission < 1500; mission++) extension.stepMission();
+      extended.simulation = extension.snapshot();
+    } finally {
+      extension.dispose();
+    }
+    const priorRequests = evidence.restoredRecovery.workers.recoveryRequests;
+    await importRecovery(extended, 'cancel-recovery.json');
+    await page.waitForFunction(
+      (count) => window.qualificationWorkers.recoveryRequests > count,
+      priorRequests,
+    );
+    await page.getByRole('button', { name: 'Cancel recovery verification', exact: true }).click();
+    await recoveryStatus.filter({ hasText: 'Recovery verification cancelled.' }).waitFor();
+    evidence.cancelledRecovery = await page.evaluate(() => ({
+      state: window.qualificationApp.snapshot().state,
+      workers: window.qualificationWorkers,
+    }));
+    evidence.cancelledRecovery.candidateMissions = extended.simulation.state.missionTick;
+    requireCheck(
+      evidence.cancelledRecovery.state.ticks === recovery.simulation.state.missionTick &&
+        evidence.cancelledRecovery.workers.live === 1,
+      'Cancelling verification changed the attempt or retained the detached worker',
+    );
     if (screenshot) await page.screenshot({ path: screenshot });
     await page.locator('[data-regional-advanced="toggle"]').click();
     await page.waitForFunction(
@@ -314,7 +399,7 @@ export async function smokeAdvancedRegional({ playwrightModule, output, screensh
       passed: passed && pins.every((source) => source.unchanged),
       sourceStable: pins.every((source) => source.unchanged),
       scope:
-        'Actual World host, Three renderer, verified six-cell terrain fixture and production Advanced module worker; keyboard/menu restart, pause, recording download and Node replay, verified terrain landing and continued takeoff, exact exported contact replay, switch back to Legacy, disposal. Fixture boot only; production access gate unchanged. One headless Chrome ARM64 host, no native or device qualification.',
+        'Actual World host, Three renderer, verified six-cell terrain fixture and production Advanced module worker; keyboard/menu restart, pause, recording download and Node replay, recovery file download and verified import, finite controller corruption rejected without adoption, physical cancellation of a real worker replaying a snapshot extended by 30 seconds, verified terrain landing and continued takeoff, exact exported contact replay, switch back to Legacy, disposal. Fixture boot only; production access gate unchanged. One headless Chrome ARM64 host, no native or device qualification.',
       sources: pins,
       workers,
       pageErrors: errors,
