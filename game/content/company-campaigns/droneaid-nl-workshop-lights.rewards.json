@@ -1,0 +1,739 @@
+[
+  {
+    "brandId": "droneaid-nl",
+    "campaignId": "droneaid-nl-workshop-lights",
+    "format": "revealline-completion-reward.v1",
+    "id": "droneaid-nl-workshop-lights-01-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Open the workshop picture and meet its real-world inspiration.",
+        "title": "A workshop is also a community"
+      },
+      "uk": {
+        "teaser": "Відкрийте майстерню та дізнайтеся про її реальне джерело натхнення.",
+        "title": "Майстерня — це також спільнота"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-01-reveal-v2",
+          "sha256": "1505965b83050fc942d20e180a7752ee7435df4b8b468247d07979c20093404c"
+        },
+        "id": "droneaid-nl-workshop-lights-01-image",
+        "locales": {
+          "en": {
+            "alt": "An illustrated Dutch workshop with a carbon-frame FPV quad, goggles and a donation case.",
+            "title": "A workshop is also a community"
+          },
+          "uk": {
+            "alt": "Ілюстрована нідерландська майстерня з FPV-квадрокоптером на карбоновій рамі, окулярами та кейсом.",
+            "title": "Майстерня — це також спільнота"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "droneaid-nl-workshop-lights-01-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "DroneAid Netherlands describes teaching electronics, soldering and drone building to veterans and civilians while supporting Ukraine. This room is a fictional illustration inspired by that public mission.",
+              "Find the shared table in the picture. Imagine a newcomer asking one question and an experienced participant explaining one unfamiliar word. Both are contributions to learning together."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "A workshop is also a community"
+          },
+          "uk": {
+            "paragraphs": [
+              "DroneAid Netherlands розповідає про навчання ветеранів і цивільних електроніці, паянню та складанню дронів, а також про підтримку України. Ця кімната — вигадана ілюстрація, натхнена публічною місією організації.",
+              "Знайдіть спільний стіл. Уявіть запитання новачка та пояснення незнайомого слова від досвідченого учасника. Обидва роблять внесок у спільне навчання."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "Майстерня — це також спільнота"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "76f10a0cd766fd24" },
+            { "difficulty": "standard", "gameplayId": "6f89e1c5498e4fd2" },
+            { "difficulty": "expert", "gameplayId": "e43e9532aa46b25b" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-01"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "droneaid-nl-workshop-lights-01", "kind": "mission" }
+  },
+  {
+    "brandId": "droneaid-nl",
+    "campaignId": "droneaid-nl-workshop-lights",
+    "format": "revealline-completion-reward.v1",
+    "id": "droneaid-nl-workshop-lights-02-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover two different spaces for one shared learning goal.",
+        "title": "A place to ask and a place to try"
+      },
+      "uk": {
+        "teaser": "Відкрийте два різні простори для однієї спільної навчальної мети.",
+        "title": "Місце для запитань і спроб"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-02-reveal-v2",
+          "sha256": "d2d1570cab85c70dbd3a23edcc0adece08eb6e3e4de3c7146248b85aedea4fc2"
+        },
+        "id": "droneaid-nl-workshop-lights-02-image",
+        "locales": {
+          "en": {
+            "alt": "Two FPV workbenches with violet drawers and yellow task lamps provide separate preparation spaces.",
+            "title": "A place to ask and a place to try"
+          },
+          "uk": {
+            "alt": "Два FPV-верстаки з фіолетовими шухлядами та жовтими лампами створюють окремі місця для підготовки.",
+            "title": "Місце для запитань і спроб"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "droneaid-nl-workshop-lights-02-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "This fictional room includes a shared bench and a quieter preparation table. They show two ways to participate; neither is a measure of someone’s ability.",
+              "Choose where you would first observe a demonstration, then where you would explain it back in your own words. The public DroneAid workshop description is the inspiration, not a report about a particular session."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "A place to ask and a place to try"
+          },
+          "uk": {
+            "paragraphs": [
+              "У цій вигаданій кімнаті є спільний верстак і тихіший стіл для підготовки. Це два способи участі, а не оцінка чиїхось здібностей.",
+              "Оберіть, де ви спершу спостерігали б за демонстрацією, а де пояснили б її своїми словами. Публічний опис майстерень DroneAid є джерелом натхнення, а не звітом про конкретне заняття."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "Місце для запитань і спроб"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "883b2505dc47b21c" },
+            { "difficulty": "standard", "gameplayId": "fd0b370a377af157" },
+            { "difficulty": "expert", "gameplayId": "1628a62a972fc98e" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-02"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "droneaid-nl-workshop-lights-02", "kind": "mission" }
+  },
+  {
+    "brandId": "droneaid-nl",
+    "campaignId": "droneaid-nl-workshop-lights",
+    "format": "revealline-completion-reward.v1",
+    "id": "droneaid-nl-workshop-lights-03-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Collect the tool-library illustration and solve a shared-workspace puzzle.",
+        "title": "Tools have a home"
+      },
+      "uk": {
+        "teaser": "Зберіть ілюстрацію бібліотеки інструментів і розв’яжіть загадку спільного простору.",
+        "title": "Кожен інструмент має місце"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-03-reveal-v2",
+          "sha256": "1e4ecc8b44c3fa471766d973f9fd2bfe7b403890ce043ee7782c2f8ae8b19e5a"
+        },
+        "id": "droneaid-nl-workshop-lights-03-image",
+        "locales": {
+          "en": {
+            "alt": "Precision drivers, soldering stations and motor trays surround a completed quad in an illustrated workshop.",
+            "title": "Tools have a home"
+          },
+          "uk": {
+            "alt": "Точні викрутки, паяльні станції та лотки з моторами оточують готовий квадрокоптер у вигаданій майстерні.",
+            "title": "Кожен інструмент має місце"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "droneaid-nl-workshop-lights-03-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "DroneAid’s public site identifies tools as one way to support its workshops. A tool’s usefulness also depends on people knowing where to find and return it.",
+              "In this fictional library, imagine a labelled place for the driver, a place for inspected tools and a place for an item needing attention. Clear labels help the next person avoid guessing; the illustration is not a tool-use lesson."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "Tools have a home"
+          },
+          "uk": {
+            "paragraphs": [
+              "На публічному сайті DroneAid інструменти названо одним зі способів підтримки майстерень. Їхня користь залежить і від того, чи знають учасники, де їх знайти та куди повернути.",
+              "У цій вигаданій бібліотеці уявіть підписані місця для викрутки, перевірених інструментів і речей, що потребують уваги. Зрозумілі позначки допомагають наступній людині; ілюстрація не є інструкцією з використання інструментів."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "Кожен інструмент має місце"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "0f407701f003d3df" },
+            { "difficulty": "standard", "gameplayId": "b4d8404aeecb61ce" },
+            { "difficulty": "expert", "gameplayId": "0ac7c207b50fbca3" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-03"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "droneaid-nl-workshop-lights-03", "kind": "mission" }
+  },
+  {
+    "brandId": "droneaid-nl",
+    "campaignId": "droneaid-nl-workshop-lights",
+    "format": "revealline-completion-reward.v1",
+    "id": "droneaid-nl-workshop-lights-04-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Reveal three benches and practise a useful question.",
+        "title": "Connect people before assumptions"
+      },
+      "uk": {
+        "teaser": "Відкрийте три столи та сформулюйте корисне запитання.",
+        "title": "Спершу розмова, потім припущення"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-04-reveal-v2",
+          "sha256": "1956d802ea3311befa7db59221c8b8aef4289f7428ea8629ae752ae130e65473"
+        },
+        "id": "droneaid-nl-workshop-lights-04-image",
+        "locales": {
+          "en": {
+            "alt": "Three practical workshop benches share a tool station, intact quad and goggles case.",
+            "title": "Connect people before assumptions"
+          },
+          "uk": {
+            "alt": "Три робочі столи майстерні мають спільні інструменти, цілий квадрокоптер і кейс для окулярів.",
+            "title": "Спершу розмова, потім припущення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "droneaid-nl-workshop-lights-04-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "The three benches in this original scene represent preparation, explanation and shared reflection. They are not a wiring diagram or a documented DroneAid workflow.",
+              "Imagine passing a practice object to another participant. “What have you already checked, and what is still unknown?” makes the next conversation more useful than assuming the object is finished."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "Connect people before assumptions"
+          },
+          "uk": {
+            "paragraphs": [
+              "Три столи в цій оригінальній сцені уособлюють підготовку, пояснення та спільне осмислення. Це не схема з’єднань і не опис робочого процесу DroneAid.",
+              "Уявіть, що передаєте навчальний предмет іншому учаснику. Запитання «Що вже перевірено, а що поки невідомо?» корисніше за припущення, що предмет уже готовий."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "Спершу розмова, потім припущення"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "3929029de82d6401" },
+            { "difficulty": "standard", "gameplayId": "37b0e71fff28ace0" },
+            { "difficulty": "expert", "gameplayId": "1858ab6990cbda41" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-04"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "droneaid-nl-workshop-lights-04", "kind": "mission" }
+  },
+  {
+    "brandId": "droneaid-nl",
+    "campaignId": "droneaid-nl-workshop-lights",
+    "format": "revealline-completion-reward.v1",
+    "id": "droneaid-nl-workshop-lights-05-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Discover contributions that do not all look alike.",
+        "title": "Many contributions, one table"
+      },
+      "uk": {
+        "teaser": "Дізнайтеся про внески, які не обов’язково схожі між собою.",
+        "title": "Різні внески за спільним столом"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-05-reveal-v2",
+          "sha256": "507e585fb610ea689d2ad0b4fd3c2557c1c7e7ba5720ced58d1c81c8cc13cfa5"
+        },
+        "id": "droneaid-nl-workshop-lights-05-image",
+        "locales": {
+          "en": {
+            "alt": "Several finished quads and sorted motor trays share a long timber worktable.",
+            "title": "Many contributions, one table"
+          },
+          "uk": {
+            "alt": "Кілька готових квадрокоптерів і впорядковані лотки з моторами стоять на довгому дерев’яному столі.",
+            "title": "Різні внески за спільним столом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "droneaid-nl-workshop-lights-05-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "DroneAid’s public invitation describes different roles, including instructors, fundraisers and designers. Community participation is broader than handling a tool.",
+              "In this fictional room, one person might explain a label while another makes a clear illustration. Choose two different contributions and explain how they help the same group. No personal value is scored."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "Many contributions, one table"
+          },
+          "uk": {
+            "paragraphs": [
+              "У публічному запрошенні DroneAid згадано різні ролі, зокрема інструкторів, фандрейзерів і дизайнерів. Участь у спільноті не обмежується роботою з інструментами.",
+              "У цій вигаданій кімнаті хтось пояснює позначку, а хтось створює зрозумілу ілюстрацію. Оберіть два різні внески та поясніть, як вони допомагають одній групі. Особисті якості не оцінюються балами."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              }
+            ],
+            "title": "Різні внески за спільним столом"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e4a7d8a17c8661a7" },
+            { "difficulty": "standard", "gameplayId": "0f0a76b11850dbe4" },
+            { "difficulty": "expert", "gameplayId": "1e1c9ae6104af6fa" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-05"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "droneaid-nl-workshop-lights-05", "kind": "mission" }
+  },
+  {
+    "brandId": "droneaid-nl",
+    "campaignId": "droneaid-nl-workshop-lights",
+    "format": "revealline-completion-reward.v1",
+    "id": "droneaid-nl-workshop-lights-06-discovery",
+    "locales": {
+      "en": {
+        "teaser": "Light the whole room and discover where real-world evidence belongs.",
+        "title": "A complete picture is not a report"
+      },
+      "uk": {
+        "teaser": "Освітіть усю кімнату та дізнайтеся, де шукати докази реальних результатів.",
+        "title": "Завершена картина — ще не звіт"
+      }
+    },
+    "payloads": [
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-06-reveal-v2",
+          "sha256": "eb0f09900436e3600cac7e4e6883d962f0ba228026ab5dbfa25361f974b4d95f"
+        },
+        "id": "droneaid-nl-workshop-lights-06-image",
+        "locales": {
+          "en": {
+            "alt": "Warm lights reveal completed quads and protected cases in a fictional Ukraine-support workshop.",
+            "title": "A complete picture is not a report"
+          },
+          "uk": {
+            "alt": "Теплі лампи освітлюють готові квадрокоптери й захисні кейси у вигаданій майстерні підтримки України.",
+            "title": "Завершена картина — ще не звіт"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "droneaid-nl-workshop-lights-06-knowledge",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "DroneAid Netherlands publishes public reporting on donations and expenses. The numbers belong to dated reports; this illustration and your game score are not evidence of real-world impact.",
+              "Describe one thing the picture shows and one thing it cannot prove. A useful community story can celebrate contribution while linking readers to the actual source."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public reports",
+                "url": "https://drone-aid.nl/en/reports"
+              }
+            ],
+            "title": "A complete picture is not a report"
+          },
+          "uk": {
+            "paragraphs": [
+              "DroneAid Netherlands публікує звітність про пожертви та витрати. Числа належать до датованих звітів; ця ілюстрація й ваш ігровий рахунок не доводять реального впливу.",
+              "Назвіть одну річ, яку показує картина, й одну, якої вона не може довести. Корисна розповідь про спільноту може відзначати внесок людей і водночас посилатися на справжнє джерело."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public reports",
+                "url": "https://drone-aid.nl/en/reports"
+              }
+            ],
+            "title": "Завершена картина — ще не звіт"
+          }
+        },
+        "type": "knowledge"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "0f922ce1046565f2" },
+            { "difficulty": "standard", "gameplayId": "ad2042c9534ea851" },
+            { "difficulty": "expert", "gameplayId": "9376e068ad7251e7" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "droneaid-nl-workshop-lights-06", "kind": "mission" }
+  },
+  {
+    "brandId": "droneaid-nl",
+    "campaignId": "droneaid-nl-workshop-lights",
+    "format": "revealline-completion-reward.v1",
+    "id": "droneaid-nl-workshop-lights-finale",
+    "locales": {
+      "en": {
+        "teaser": "Win all six missions to unlock the full workshop gallery and community reflection guide.",
+        "title": "A Workshop Built Together"
+      },
+      "uk": {
+        "teaser": "Переможіть у всіх шести місіях, щоб відкрити повну галерею майстерні та запитання про спільноту.",
+        "title": "Майстерня, створена разом"
+      }
+    },
+    "payloads": [
+      {
+        "id": "droneaid-nl-workshop-lights-guide",
+        "locales": {
+          "en": {
+            "paragraphs": [
+              "Your six discoveries form a fictional community workshop: welcome, different learning spaces, shared tools, useful questions, varied contributions and evidence-backed stories.",
+              "Imagine explaining this gallery to a newcomer. Choose one welcoming detail, one question that prevents an assumption and one link that supports a real claim. A picture can invite curiosity; the source provides the factual context.",
+              "DroneAid Netherlands publicly describes supporting Ukraine through technical learning and donated drones, including support for the Ukrainian Armed Forces. These scenes do not depict actual workshops, certify assembly skills or show deployment outcomes."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              },
+              {
+                "title": "DroneAid Netherlands — Public reports",
+                "url": "https://drone-aid.nl/en/reports"
+              }
+            ],
+            "title": "A Workshop Built Together"
+          },
+          "uk": {
+            "paragraphs": [
+              "Шість відкриттів утворюють вигадану майстерню: гостинність, різні навчальні простори, спільні інструменти, корисні запитання, різноманітні внески та розповіді з джерелами.",
+              "Уявіть, що пояснюєте галерею новому учаснику. Оберіть одну гостинну деталь, одне запитання, що запобігає припущенню, та одне посилання на підтвердження факту. Картина пробуджує цікавість, а джерело дає фактичний контекст.",
+              "DroneAid Netherlands публічно описує підтримку України через технічне навчання й передавання дронів, зокрема підтримку Збройних сил України. Сцени не показують реальних занять, не підтверджують навичок складання та не відображають результатів застосування."
+            ],
+            "sources": [
+              {
+                "title": "DroneAid Netherlands — Public mission and workshops",
+                "url": "https://drone-aid.nl/en"
+              },
+              {
+                "title": "DroneAid Netherlands — Public reports",
+                "url": "https://drone-aid.nl/en/reports"
+              }
+            ],
+            "title": "Майстерня, створена разом"
+          }
+        },
+        "type": "knowledge"
+      },
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-01-reveal-v2",
+          "sha256": "1505965b83050fc942d20e180a7752ee7435df4b8b468247d07979c20093404c"
+        },
+        "id": "droneaid-nl-workshop-lights-01-image",
+        "locales": {
+          "en": {
+            "alt": "An illustrated Dutch workshop with a carbon-frame FPV quad, goggles and a donation case.",
+            "title": "A workshop is also a community"
+          },
+          "uk": {
+            "alt": "Ілюстрована нідерландська майстерня з FPV-квадрокоптером на карбоновій рамі, окулярами та кейсом.",
+            "title": "Майстерня — це також спільнота"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-02-reveal-v2",
+          "sha256": "d2d1570cab85c70dbd3a23edcc0adece08eb6e3e4de3c7146248b85aedea4fc2"
+        },
+        "id": "droneaid-nl-workshop-lights-02-image",
+        "locales": {
+          "en": {
+            "alt": "Two FPV workbenches with violet drawers and yellow task lamps provide separate preparation spaces.",
+            "title": "A place to ask and a place to try"
+          },
+          "uk": {
+            "alt": "Два FPV-верстаки з фіолетовими шухлядами та жовтими лампами створюють окремі місця для підготовки.",
+            "title": "Місце для запитань і спроб"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-03-reveal-v2",
+          "sha256": "1e4ecc8b44c3fa471766d973f9fd2bfe7b403890ce043ee7782c2f8ae8b19e5a"
+        },
+        "id": "droneaid-nl-workshop-lights-03-image",
+        "locales": {
+          "en": {
+            "alt": "Precision drivers, soldering stations and motor trays surround a completed quad in an illustrated workshop.",
+            "title": "Tools have a home"
+          },
+          "uk": {
+            "alt": "Точні викрутки, паяльні станції та лотки з моторами оточують готовий квадрокоптер у вигаданій майстерні.",
+            "title": "Кожен інструмент має місце"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-04-reveal-v2",
+          "sha256": "1956d802ea3311befa7db59221c8b8aef4289f7428ea8629ae752ae130e65473"
+        },
+        "id": "droneaid-nl-workshop-lights-04-image",
+        "locales": {
+          "en": {
+            "alt": "Three practical workshop benches share a tool station, intact quad and goggles case.",
+            "title": "Connect people before assumptions"
+          },
+          "uk": {
+            "alt": "Три робочі столи майстерні мають спільні інструменти, цілий квадрокоптер і кейс для окулярів.",
+            "title": "Спершу розмова, потім припущення"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-05-reveal-v2",
+          "sha256": "507e585fb610ea689d2ad0b4fd3c2557c1c7e7ba5720ced58d1c81c8cc13cfa5"
+        },
+        "id": "droneaid-nl-workshop-lights-05-image",
+        "locales": {
+          "en": {
+            "alt": "Several finished quads and sorted motor trays share a long timber worktable.",
+            "title": "Many contributions, one table"
+          },
+          "uk": {
+            "alt": "Кілька готових квадрокоптерів і впорядковані лотки з моторами стоять на довгому дерев’яному столі.",
+            "title": "Різні внески за спільним столом"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "asset": {
+          "assetId": "droneaid-nl-workshop-lights-06-reveal-v2",
+          "sha256": "eb0f09900436e3600cac7e4e6883d962f0ba228026ab5dbfa25361f974b4d95f"
+        },
+        "id": "droneaid-nl-workshop-lights-06-image",
+        "locales": {
+          "en": {
+            "alt": "Warm lights reveal completed quads and protected cases in a fictional Ukraine-support workshop.",
+            "title": "A complete picture is not a report"
+          },
+          "uk": {
+            "alt": "Теплі лампи освітлюють готові квадрокоптери й захисні кейси у вигаданій майстерні підтримки України.",
+            "title": "Завершена картина — ще не звіт"
+          }
+        },
+        "type": "image"
+      },
+      {
+        "id": "droneaid-nl-workshop-lights-official-source",
+        "locales": {
+          "en": { "title": "Read DroneAid Netherlands’ public mission" },
+          "uk": { "title": "Прочитати про місію DroneAid Netherlands" }
+        },
+        "type": "url",
+        "url": "https://drone-aid.nl/en"
+      }
+    ],
+    "requirements": {
+      "learning": [],
+      "mastery": [],
+      "missions": [
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "76f10a0cd766fd24" },
+            { "difficulty": "standard", "gameplayId": "6f89e1c5498e4fd2" },
+            { "difficulty": "expert", "gameplayId": "e43e9532aa46b25b" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-01"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "883b2505dc47b21c" },
+            { "difficulty": "standard", "gameplayId": "fd0b370a377af157" },
+            { "difficulty": "expert", "gameplayId": "1628a62a972fc98e" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-02"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "0f407701f003d3df" },
+            { "difficulty": "standard", "gameplayId": "b4d8404aeecb61ce" },
+            { "difficulty": "expert", "gameplayId": "0ac7c207b50fbca3" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-03"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "3929029de82d6401" },
+            { "difficulty": "standard", "gameplayId": "37b0e71fff28ace0" },
+            { "difficulty": "expert", "gameplayId": "1858ab6990cbda41" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-04"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "e4a7d8a17c8661a7" },
+            { "difficulty": "standard", "gameplayId": "0f0a76b11850dbe4" },
+            { "difficulty": "expert", "gameplayId": "1e1c9ae6104af6fa" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-05"
+        },
+        {
+          "bindings": [
+            { "difficulty": "gentle", "gameplayId": "0f922ce1046565f2" },
+            { "difficulty": "standard", "gameplayId": "ad2042c9534ea851" },
+            { "difficulty": "expert", "gameplayId": "9376e068ad7251e7" }
+          ],
+          "missionId": "droneaid-nl-workshop-lights-06"
+        }
+      ]
+    },
+    "revision": "1",
+    "scope": { "id": "droneaid-nl-workshop-lights", "kind": "campaign" }
+  }
+]

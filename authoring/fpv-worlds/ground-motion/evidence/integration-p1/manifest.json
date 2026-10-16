@@ -1,0 +1,159 @@
+{
+  "runtimeRevision": "c888632ecefe7b3846ef19d16a693eb060a91fc3",
+  "baselineRevision": "e03fdbb5cd73176a01df49347fbe9eab722f1882",
+  "files": [
+    {
+      "file": "fpv-ground-p1-integration-characterize.mjs",
+      "source": "/tmp/fpv-ground-p1-integration-characterize.mjs",
+      "encoding": "identity",
+      "rawBytes": 2807,
+      "rawSHA256": "28bb1a0df48d61415d4c30fc03d8e0bb0979bb3df70327069d1b7c82a363ccba",
+      "storedBytes": 2807,
+      "storedSHA256": "28bb1a0df48d61415d4c30fc03d8e0bb0979bb3df70327069d1b7c82a363ccba"
+    },
+    {
+      "file": "fpv-ground-p1-probe-cache.mjs",
+      "source": "/tmp/fpv-ground-p1-probe-cache.mjs",
+      "encoding": "identity",
+      "rawBytes": 2265,
+      "rawSHA256": "2b4d0b3475560d83bd7b323d63258fe8ed88192822d73fb1ed71057792232ec1",
+      "storedBytes": 2265,
+      "storedSHA256": "2b4d0b3475560d83bd7b323d63258fe8ed88192822d73fb1ed71057792232ec1"
+    },
+    {
+      "file": "fpv-ground-p1-integrated-parity.mjs",
+      "source": "/tmp/fpv-ground-p1-integrated-parity.mjs",
+      "encoding": "identity",
+      "rawBytes": 6360,
+      "rawSHA256": "285db330bfd17924926166d60600fb4ae57499109f9645edf9ac6013e05d141d",
+      "storedBytes": 6360,
+      "storedSHA256": "285db330bfd17924926166d60600fb4ae57499109f9645edf9ac6013e05d141d"
+    },
+    {
+      "file": "fpv-ground-p1-composition-before.json.gz",
+      "source": "/tmp/fpv-ground-p1-composition-before.json",
+      "encoding": "gzip",
+      "rawBytes": 10978,
+      "rawSHA256": "11b25f7ebcaec7351dce962f10d57dd80e32a975efc2ee380a5790140bdaaeb2",
+      "storedBytes": 1667,
+      "storedSHA256": "98e8d50656c6d0525e09e2bde4cff6c151b4c51a4690bee85b80ab26d8416c85"
+    },
+    {
+      "file": "fpv-ground-p1-probe-cache-before.json.gz",
+      "source": "/tmp/fpv-ground-p1-probe-cache-before.json",
+      "encoding": "gzip",
+      "rawBytes": 1376,
+      "rawSHA256": "f420735a9683c7479e603e7e369a407cff5853fa7fb4145b4a93064a460cdd47",
+      "storedBytes": 326,
+      "storedSHA256": "fb7ce588428ff3ee26ef5c79ae3e90d1b7c26af5bca7038af6f1ab6f12943072"
+    },
+    {
+      "file": "fpv-ground-p1-probe-cache-after.json.gz",
+      "source": "/tmp/fpv-ground-p1-probe-cache-after.json",
+      "encoding": "gzip",
+      "rawBytes": 1586,
+      "rawSHA256": "54eabbfd0a0ea85c9b3f4f853ae08453c4c4be9d45886c67edcca20aeddc469c",
+      "storedBytes": 335,
+      "storedSHA256": "e049a722abcc09a220534be1ae548017ebf7483884bf1e9af88dd931bb965c08"
+    },
+    {
+      "file": "fpv-ground-p1-existing-pursuit.log.gz",
+      "source": "/tmp/fpv-ground-p1-existing-pursuit.log",
+      "encoding": "gzip",
+      "rawBytes": 8882,
+      "rawSHA256": "11608135436e04f03639934c67c2cfa7ca02217c0628e373f9f4b737841e70b4",
+      "storedBytes": 1867,
+      "storedSHA256": "da4fe897b60187cdaabb67aebfb441dc8bdcffb66812af7cefe4de3c25910282"
+    },
+    {
+      "file": "fpv-ground-p1-integrated-parity-r1.json.gz",
+      "source": "/tmp/fpv-ground-p1-integrated-parity-r1.json",
+      "encoding": "gzip",
+      "rawBytes": 168123,
+      "rawSHA256": "f4b79f8ce62efa2428a1eeaa1a6152c8ab6a9020260377f53096e1a65221597c",
+      "storedBytes": 16482,
+      "storedSHA256": "381798793b9b780ff50e69cdad095e21933de7a691227b0e9deaeee9dcfc16e3"
+    },
+    {
+      "file": "fpv-ground-p1-integrated-parity-r1.log.gz",
+      "source": "/tmp/fpv-ground-p1-integrated-parity-r1.log",
+      "encoding": "gzip",
+      "rawBytes": 169,
+      "rawSHA256": "4d509a214e3c3455dfa25676dda7a15de0a6a5d823ec7a1367e70203203fe107",
+      "storedBytes": 134,
+      "storedSHA256": "9e5713a0c91c1fd684314a33793579692dc1ac0903b8cc8d94d4f9ba7af47b43"
+    },
+    {
+      "file": "fpv-ground-p1-retained-ten.json.gz",
+      "source": "/tmp/fpv-ground-p1-retained-ten.json",
+      "encoding": "gzip",
+      "rawBytes": 4199,
+      "rawSHA256": "b0ba517571b266c0da1c9140a573ec6ac8e6e9ffe795fc0973731f458163ceca",
+      "storedBytes": 1047,
+      "storedSHA256": "c68e4119d4669010daef06e06dec0d94b670703f777e878e6a277185bb8b26d8"
+    },
+    {
+      "file": "fpv-ground-p1-retained-ten.log.gz",
+      "source": "/tmp/fpv-ground-p1-retained-ten.log",
+      "encoding": "gzip",
+      "rawBytes": 31,
+      "rawSHA256": "f74f2055e2294c88b1cab8bd22713e1cf8f07b072978f98d8f4e619d2982d5ec",
+      "storedBytes": 51,
+      "storedSHA256": "d0f438b5a33394476fdd05601d1a02c815674e28306b8ad0a452f2b40b44c806"
+    },
+    {
+      "file": "fpv-ground-p1-mixed-recordings.mjs",
+      "source": "/tmp/fpv-ground-p1-mixed-recordings.mjs",
+      "encoding": "identity",
+      "rawBytes": 2504,
+      "rawSHA256": "85b8d82e40de66d90ff71173ce1c0d6717a63bb2881b33089277514783ba5e37",
+      "storedBytes": 2504,
+      "storedSHA256": "85b8d82e40de66d90ff71173ce1c0d6717a63bb2881b33089277514783ba5e37"
+    },
+    {
+      "file": "fpv-ground-p1-mixed-recordings.json.gz",
+      "source": "/tmp/fpv-ground-p1-mixed-recordings.json",
+      "encoding": "gzip",
+      "rawBytes": 284,
+      "rawSHA256": "e2710bed193e9a222098c27e732c296d676f5ca6379bdce8d56019555a1c8661",
+      "storedBytes": 234,
+      "storedSHA256": "e46ed1324d8a21af1e26955155550c1a3f61e06a04707ba119618430eadec652"
+    },
+    {
+      "file": "fpv-ground-p1-mixed-recordings.log.gz",
+      "source": "/tmp/fpv-ground-p1-mixed-recordings.log",
+      "encoding": "gzip",
+      "rawBytes": 1011,
+      "rawSHA256": "2304ceccd23c176f0803e942ee1a9d601b445549c90e31df10c9b5e8882e1857",
+      "storedBytes": 522,
+      "storedSHA256": "2e79e83171fac0d8bae7572f936eb5778c5230dd572fc063bbc312bdfcc89ba7"
+    },
+    {
+      "file": "fpv-ground-p1-mixed-recordings-r2.mjs",
+      "source": "/tmp/fpv-ground-p1-mixed-recordings-r2.mjs",
+      "encoding": "identity",
+      "rawBytes": 2551,
+      "rawSHA256": "b06cf5042986a2bb3f6e8c649843f2215d20607893df104aa07048cfd3ad45ea",
+      "storedBytes": 2551,
+      "storedSHA256": "b06cf5042986a2bb3f6e8c649843f2215d20607893df104aa07048cfd3ad45ea"
+    },
+    {
+      "file": "fpv-ground-p1-mixed-recordings-r2.json.gz",
+      "source": "/tmp/fpv-ground-p1-mixed-recordings-r2.json",
+      "encoding": "gzip",
+      "rawBytes": 282455,
+      "rawSHA256": "58c90e1332377cfd78a20a8e9c66d68e6e74754e32d3c2f1b1bcc4229097b731",
+      "storedBytes": 10912,
+      "storedSHA256": "815b69a6d21090ed2444bd46a40b095c70848a539f0f80d73394ed74f2d588ef"
+    },
+    {
+      "file": "fpv-ground-p1-mixed-recordings-r2.log.gz",
+      "source": "/tmp/fpv-ground-p1-mixed-recordings-r2.log",
+      "encoding": "gzip",
+      "rawBytes": 30,
+      "rawSHA256": "ebc9861fd8f9fa1cb3dc8584174d13b50e0bd8d30e70d784bba42b76bbff0b61",
+      "storedBytes": 50,
+      "storedSHA256": "a9b8ff818343475387b702ad862da70b6fc13a32b02ac3470995380fe0281f31"
+    }
+  ]
+}

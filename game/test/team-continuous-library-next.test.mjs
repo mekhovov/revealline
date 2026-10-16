@@ -14,6 +14,8 @@ import { createCoop, startCoop } from '../coop/core.mjs';
 import { COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
+import { contentText } from '../i18n/content.mjs';
 
 // Execute the production navigation and adoption functions unchanged, with a
 // controlled completed-result/picture-lease boundary. This is transaction
@@ -138,6 +140,11 @@ function fixture({
     console: { error() {} },
     COOP_STARTER_PACK,
     COOP_PLAYTEST_CONFIGURATIONS,
+    localizedText,
+    t,
+    contentText,
+    picturePreparationText: () => null,
+    earnedTeamPicture: () => null,
     librarySuccessor,
     coopPackDestination,
     TEAM_LIBRARY_JOURNEY_EDITION,
@@ -170,9 +177,16 @@ function fixture({
     accumulator: 0,
     lastBuiltInArena: 'relay-yard',
     presentationPage: { ready: Promise.resolve() },
+    // These rows are already-local campaign fixtures. Optional package fetches
+    // have a separate integration fixture; retain this transaction boundary.
+    async ensureTeamPicturePackage(selection, { signal }) {
+      assert.equal(signal.aborted, false);
+      assert(leases.includes(selection));
+    },
     displayPreferences: { snapshot: () => ({ effectiveReducedEffects: true, textFace: 'sans' }) },
     currentRecipe: () => ({ options: { difficulty: 'standard', seed: 17 } }),
     freshRecipe: (level, options) => ({ level, options }),
+    beginInstalledTeamAttempt() {},
     newPictureSelection(recipe, sourcePack, pinnedPack, artworkSource) {
       const selection = {
         sourcePack,
@@ -277,7 +291,9 @@ test('Team preserves authored successors and crosses Journey → Classic by exac
 test('Classic → same-name Custom ignores search and final Custom never wraps', () => {
   const f = fixture();
   f.library.search('Relay Yard', { mode: 'team', collection: 'Classic' });
-  assert.equal(f.api.teamDestination().nextDiscoveryRow, f.customRows[0]);
+  const firstDestination = f.api.teamDestination();
+  assert.ifError(firstDestination.error);
+  assert.equal(firstDestination.nextDiscoveryRow, f.customRows[0]);
   const last = f.customRows.at(-1);
   f.ctx.acceptedPicture.sourcePack = last.pack;
   f.ctx.acceptedPicture.levelId = last.levelId;
@@ -319,7 +335,8 @@ test('boundary Next stages exact Custom artwork behind earned result, then adopt
     oldRun = f.ctx.run,
     oldPicture = f.ctx.acceptedPicture;
   const pending = f.api.nextArena();
-  await Promise.resolve();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert(f.calls.some((call) => Array.isArray(call) && call[0] === 'select'));
   assert.equal(f.ctx.run, oldRun);
   assert.equal(f.ctx.acceptedPicture, oldPicture);
   assert.equal(f.$('coop-next-cancel').hidden, false);
@@ -345,7 +362,8 @@ for (const outcome of ['cancel', 'failure', 'paint-failure', 'adoption-failure']
     const oldRun = f.ctx.run,
       oldPicture = f.ctx.acceptedPicture;
     const pending = f.api.nextArena();
-    await Promise.resolve();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert(f.calls.some((call) => Array.isArray(call) && call[0] === 'select'));
     if (outcome === 'cancel') f.api.cancelNext({ restore: true });
     if (outcome === 'paint-failure')
       f.ctx.painter.paint = () => {

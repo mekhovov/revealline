@@ -21,7 +21,7 @@
   fallback['errors:loadingFlightSystems'] = 'Loading flight systems…';
   const t = (key) => host.RevealLineI18n?.t(key) || fallback[key];
   const doc = host.document;
-  if (!doc || host.RevealLineBoot) return;
+  if (!doc || host.RevealLineBoot || host.RevealLineSnakeRedirect) return;
   const appURL = new URL('./app.mjs', doc.currentScript.src).href;
   let state = 'loading';
   let failure = null;
@@ -30,10 +30,26 @@
   let frame = null;
   let padNeutral = false;
   let padCommand = null;
+  let inputOwners = 0;
+  let startupUpdates;
+  function suspendInput() {
+    inputOwners++;
+    padNeutral = false;
+    padCommand = null;
+    let released = false;
+    return () => {
+      if (released) return;
+      released = true;
+      inputOwners--;
+      padNeutral = false;
+      padCommand = null;
+    };
+  }
   const styleCleanups = new Set();
   const $ = (id) => doc.getElementById(id);
 
   function stop() {
+    startupUpdates?.dispose();
     host.clearTimeout(slowTimer);
     host.cancelAnimationFrame(frame);
     host.removeEventListener('error', resourceError, true);
@@ -150,7 +166,7 @@
     controls[(index + direction + controls.length) % controls.length].focus();
   }
   function keydown(event) {
-    if (state === 'ready' || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (inputOwners || state === 'ready' || event.altKey || event.ctrlKey || event.metaKey) return;
     // Native keyboard/pointer interaction wins until a held pad returns neutral.
     padNeutral = false;
     if (['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft'].includes(event.key)) {
@@ -161,7 +177,7 @@
   function pollPad() {
     if (state === 'ready') return;
     frame = host.requestAnimationFrame(pollPad);
-    if (doc.hidden || !doc.hasFocus()) {
+    if (inputOwners || doc.hidden || !doc.hasFocus()) {
       padNeutral = false;
       padCommand = null;
       return;
@@ -195,7 +211,10 @@
       else controls[0]?.focus();
     } else moveFocus(command === 'down' ? 1 : -1);
   }
-  function mount() {
+  async function mount() {
+    if (mounted) return;
+    await host.RevealLineAccess?.ready;
+    await host.RevealLineAccess?.scriptsReady;
     if (mounted) return;
     mounted = true;
     doc.addEventListener('keydown', keydown);
@@ -207,6 +226,33 @@
       state = 'file';
       renderFailure();
       return;
+    }
+    // Optional recovery action must not delay styles, rendering or offline play.
+    if (
+      $('boot-updates') &&
+      /^https?:$/.test(host.location.protocol) &&
+      (host.navigator?.standalone ||
+        host.matchMedia?.('(display-mode: standalone)').matches ||
+        host.matchMedia?.('(display-mode: fullscreen)').matches)
+    ) {
+      // Keep a plain recovery link usable even if the optional module fails.
+      const source = new URL(appURL);
+      const release = source.pathname.indexOf('/releases/');
+      const root =
+        release >= 0
+          ? source.pathname.slice(0, release + 1)
+          : source.pathname.replace(/game\/.*$/, '');
+      const community = root.includes('/editions/');
+      const update = new URL(`${root}app/${community ? '?manage' : 'update.html'}`, source.origin);
+      if (!community) update.searchParams.set('return', host.location.href);
+      $('boot-update-action').href = update.href;
+      $('boot-updates').hidden = false;
+      void import('./boot-updates.mjs')
+        .then(({ attachBootUpdates }) => {
+          if (state !== 'ready')
+            startupUpdates = attachBootUpdates({ document: doc, window: host });
+        })
+        .catch(() => {});
     }
     if (state === 'failed') {
       renderFailure();
@@ -233,9 +279,9 @@
       })
       .catch(fail);
   }
-  host.RevealLineBoot = Object.freeze({ ready, fail, progress });
+  host.RevealLineBoot = Object.freeze({ ready, fail, progress, suspendInput });
   host.addEventListener('error', resourceError, true);
-  if (doc.readyState !== 'complete')
+  if (doc.readyState !== 'complete' && !host.RevealLineAccess?.scriptsReady)
     doc.addEventListener('DOMContentLoaded', mount, { once: true });
   else mount();
 })();

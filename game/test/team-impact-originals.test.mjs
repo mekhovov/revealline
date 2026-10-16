@@ -6,6 +6,8 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { TEAM_LIBRARY_JOURNEY_EDITION } from '../mission-library/team-source.mjs';
+import { coopArenaGuidance } from '../couch/coop-briefing.mjs';
+import { createTeamContextualTeaching } from '../couch/team-contextual-teaching.mjs';
 
 const historical = createTeamSpatialOriginalCandidates();
 const source = createTeamImpactOriginalCandidates();
@@ -54,9 +56,9 @@ test('all36 Team successor manifests own the v2 line-impact policy and isolated 
   assert.equal(resolved, 36);
 });
 
-test('current Team entry and unified-library launch use the successor while historical route stays intact', () => {
-  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-trail-impact-originals-1');
-  assert.equal(TEAM_LIBRARY_JOURNEY_EDITION, 'team-trail-impact-originals-1');
+test('impact Team entry remains selectable after the complete specialist successor becomes current', () => {
+  assert.equal(DEFAULT_JOURNEY_ROUTES.team, 'team-cultural-specialist-originals-2');
+  assert.equal(TEAM_LIBRARY_JOURNEY_EDITION, 'team-cultural-specialist-originals-2');
   const current = createCandidateTeamHost(source, {
     corePackIds: source.packs.map((pack) => pack.id),
   });
@@ -85,4 +87,36 @@ test('safe exposure precedes the explicit lesson and the first three spatial mis
       ),
       mission.id,
     );
+});
+
+test('every current Team route teaches the exact slow-and-intercept Support capability', () => {
+  for (const mission of source.missions) {
+    const manifest = resolveMission(project, mission.id, {
+      mode: 'team',
+      difficulty: 'standard',
+    });
+    const guidance = coopArenaGuidance(manifest.level);
+    assert.deepEqual(
+      guidance.supportCapabilities,
+      {
+        intercept: true,
+        slow: true,
+        specialist: false,
+        interceptorSeat: null,
+        disruptorSeat: null,
+      },
+      mission.id,
+    );
+    const teacher = createTeamContextualTeaching({ getStorage: () => null });
+    teacher.opening(guidance);
+    assert.deepEqual(
+      teacher.observe([{ type: 'cut.closed' }], guidance),
+      {
+        kind: 'support',
+        key: 'interface:team.teaching.supportSlowAndIntercept',
+        values: {},
+      },
+      mission.id,
+    );
+  }
 });

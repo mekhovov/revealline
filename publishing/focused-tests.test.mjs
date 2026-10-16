@@ -1,137 +1,933 @@
-import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import test from "node:test";
-import { fileURLToPath } from "node:url";
-import { focusedTestPlan } from "./focused-tests.mjs";
+import assert from 'node:assert/strict';
+import { EventEmitter } from 'node:events';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import test from 'node:test';
+import { fileURLToPath } from 'node:url';
+import {
+  focusedCommandExecutionPlan,
+  focusedTestPlan,
+  loadFocusedExecutionInputs,
+  packageScriptShellSemantics,
+  runFocusedCommands,
+  runFocusedCommandsParallel,
+} from './focused-tests.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
-const manifest = JSON.parse(
-  await readFile(path.join(directory, "focused-test-map.json"), "utf8"),
-);
+const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
 
-test("localization and offline paths select only their bounded gates", () => {
+test('candidate measurement tooling always selects its security and archive regressions', () => {
+  for (const changed of [
+    'scripts/pages-candidate-measurement.mjs',
+    'scripts/pages-candidate-contract.mjs',
+    'scripts/pages-candidate-overlay.mjs',
+    'scripts/pages-candidate-archive.py',
+    '.github/workflows/measure-pages-candidate.yml',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    for (const kind of ['measurement', 'contract', 'overlay', 'archive'])
+      assert.ok(command.args.includes(`scripts/test-pages-candidate-${kind}.mjs`));
+  }
+});
+
+test('capacity comparison tooling selects its regression suite without broad runtime fallback', () => {
+  for (const changed of ['scripts/pages-capacity-report.mjs', 'scripts/test-pages-capacity-report.mjs']) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes('scripts/test-pages-capacity-report.mjs'));
+  }
+});
+
+test('shared Pages evidence scripts retain their publishing regression gates', () => {
+  for (const kind of ['capacity', 'archive']) {
+    const plan = focusedTestPlan([`scripts/pages-${kind}-evidence.py`], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes(`scripts/test-pages-${kind}-evidence.mjs`));
+  }
+});
+
+test('rolling metadata scripts retain their publishing regression gates', () => {
+  for (const changed of [
+    'scripts/write-main-pages-metadata.mjs',
+    'scripts/test-main-pages-metadata.mjs',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes('scripts/test-main-pages-metadata.mjs'));
+  }
+});
+
+test('the real company package script exposes all tests to exact focused deduplication', async () => {
+  const { scripts } = JSON.parse(await readFile(path.join(directory, '../package.json'), 'utf8'));
+  const prefix = 'node --test ';
+  assert.ok(scripts['company:test'].startsWith(prefix));
+  const patterns = scripts['company:test'].slice(prefix.length).trim().split(/\s+/u);
+  assert.ok(patterns.every((pattern) => /^[a-z0-9_./*-]+\.mjs$/iu.test(pattern)));
+  const showcase = 'game/test/showcase-studio-playthrough.test.mjs';
+  assert.ok(patterns.includes(showcase));
+  assert.equal(scripts['company:showcase:test'], prefix + showcase);
+  const commands = [
+    { id: 'company', command: 'npm', args: ['run', 'company:test'] },
+    { id: 'showcase', command: 'node', args: ['--test', showcase] },
+    { id: 'unrelated', command: 'node', args: ['--test', 'game/test/unrelated.test.mjs'] },
+  ];
+  // Complete synthetic glob inventory: no file execution is claimed here.
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: scripts,
+    repositoryFiles: patterns.map((pattern) => pattern.replaceAll('*', 'example')),
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(execution.diagnostics, []);
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['company', 'unrelated'],
+  );
+  assert.deepEqual(
+    execution.deduplicated.map(({ testFile }) => testFile),
+    [showcase],
+  );
+  assert.equal(execution.packageCoverage[0].tests.length, new Set(patterns).size);
+});
+
+test('ownership inventory changes select route coverage and artwork screening regressions', () => {
   const plan = focusedTestPlan(
-    ["game/localization/en.json", "game/offline/install.mjs"],
+    ['scripts/content-inventory.mjs', 'game/content-design/content-lifecycle.mjs'],
     manifest,
   );
-  assert.deepEqual(plan.categories, ["localization", "offline"]);
+  assert.deepEqual(plan.categories, ['content-inventory']);
+  assert.deepEqual(plan.unknownRuntime, []);
+  assert.deepEqual(
+    plan.commands.map(({ id }) => id),
+    ['content-inventory'],
+  );
+  assert.ok(plan.commands[0].args.includes('game/test/content-lifecycle.test.mjs'));
+  assert.ok(plan.commands[0].args.includes('game/test/artwork-screening.test.mjs'));
+});
+
+test('combined company screening selects exact-copy, ownership and strict-review regressions', () => {
+  const plan = focusedTestPlan(['scripts/company-artwork-screening.mjs'], manifest);
+  assert.deepEqual(plan.categories, ['content-inventory']);
+  assert.deepEqual(plan.unknownRuntime, []);
+  assert.ok(plan.commands[0].args.includes('scripts/test-company-artwork-screening.mjs'));
+});
+
+test('company ownership reports select retained identity and profile preservation checks', () => {
+  const plan = focusedTestPlan(['scripts/company-content-inventory.mjs'], manifest);
+  assert.ok(plan.categories.includes('company-content-inventory'));
+  assert.deepEqual(plan.unknownRuntime, []);
+  const command = plan.commands.find(({ id }) => id === 'company-content-inventory');
+  assert.ok(command.args.includes('scripts/test-company-content-inventory.mjs'));
+  assert.ok(command.args.includes('game/test/edition-retained-presentation.test.mjs'));
+  assert.ok(command.args.includes('game/test/edition-profile-compatibility.test.mjs'));
+});
+
+test('published size reports select metadata integrity and cache-owner measurement checks', () => {
+  const plan = focusedTestPlan(['scripts/report-published-offline-packages.mjs'], manifest);
+  assert.ok(plan.categories.includes('offline-package-measurements'));
+  assert.deepEqual(plan.unknownRuntime, []);
+  const command = plan.commands.find(({ id }) => id === 'offline-package-measurements');
+  assert.ok(command.args.includes('scripts/test-report-published-offline-packages.mjs'));
+  assert.ok(command.args.includes('scripts/test-report-offline-packages.mjs'));
+});
+
+test('official download changes require ownership recovery and gameplay-admission checks', () => {
+  for (const file of ['game/official-downloads.mjs', 'game/test/official-downloads.test.mjs']) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'official-download-retention');
+    assert.ok(command);
+    for (const required of [
+      'game/test/official-downloads.test.mjs',
+      'game/test/offline-download-access.test.mjs',
+      'game/test/offline-team-retention-host.test.mjs',
+    ])
+      assert.ok(command.args.includes(required));
+  }
+});
+
+test('online play changes retain optional-offline and published host coverage', () => {
+  for (const file of [
+    'game/offline-download-access.mjs',
+    'game/offline/service-worker.template.js',
+    'game/ui/company-startup.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    const command = plan.commands.find(({ id }) => id === 'optional-offline-play');
+    assert.ok(command);
+    assert.ok(command.args.includes('game/test/published-solo-entry-host.test.mjs'));
+    assert.ok(command.args.includes('game/test/optional-offline-access.test.mjs'));
+  }
+});
+
+test('localization and offline paths select only their bounded gates', () => {
+  const plan = focusedTestPlan(['game/localization/en.json', 'game/offline/install.mjs'], manifest);
+  assert.deepEqual(plan.categories, ['localization', 'offline']);
   assert.equal(plan.unknownRuntime.length, 0);
   assert.deepEqual(
     plan.commands.map(({ id }) => id),
-    ["i18n-check", "localization-runtime", "offline-runtime"],
+    ['i18n-check', 'localization-runtime', 'offline-runtime'],
   );
 });
 
-test("unknown runtime paths fail closed through validate", () => {
-  const plan = focusedTestPlan(["game/new-player-runtime.mjs"], manifest);
+test('unknown runtime paths fail closed through validate', () => {
+  const plan = focusedTestPlan(['game/new-player-runtime.mjs'], manifest);
   assert.deepEqual(plan.categories, []);
-  assert.deepEqual(plan.unknownRuntime, ["game/new-player-runtime.mjs"]);
+  assert.deepEqual(plan.unknownRuntime, ['game/new-player-runtime.mjs']);
   assert.deepEqual(
     plan.commands.map(({ id }) => id),
-    ["unknown-runtime-validate"],
+    ['unknown-runtime-validate'],
   );
 });
 
-test("release roots delegate unknown-runtime validation to their required exact-head build", () => {
-  const plan = focusedTestPlan(["game/new-player-runtime.mjs"], manifest, {
+test('release roots delegate unknown-runtime validation to their required exact-head build', () => {
+  const plan = focusedTestPlan(['game/new-player-runtime.mjs'], manifest, {
     fallbackHandled: true,
   });
   assert.deepEqual(plan.categories, []);
-  assert.deepEqual(plan.unknownRuntime, ["game/new-player-runtime.mjs"]);
+  assert.deepEqual(plan.unknownRuntime, ['game/new-player-runtime.mjs']);
   assert.deepEqual(plan.commands, []);
 });
 
-test("Team picture authority changes avoid the broad navigation matrix", () => {
+test('Team picture authority changes avoid the broad navigation matrix', () => {
   const plan = focusedTestPlan(
     [
-      "game/couch/coop-picture-bindings.mjs",
-      "game/couch/coop-presentation.mjs",
-      "game/test/coop-historical-import-picture.test.mjs",
-      "game/test/coop-picture-bindings.test.mjs",
-      "game/test/coop-reviewed-successor-picture.test.mjs",
-      "package.json",
-      "package-lock.json",
-      "game/build-config.json",
+      'game/couch/coop-picture-bindings.mjs',
+      'game/couch/coop-presentation.mjs',
+      'game/test/coop-historical-import-picture.test.mjs',
+      'game/test/coop-picture-bindings.test.mjs',
+      'game/test/coop-reviewed-successor-picture.test.mjs',
+      'package.json',
+      'package-lock.json',
+      'game/build-config.json',
     ],
     manifest,
   );
-  assert.deepEqual(plan.categories, ["team-picture-bindings"]);
+  assert.deepEqual(plan.categories, ['team-picture-bindings']);
   assert.deepEqual(plan.unknownRuntime.sort(), [
-    "game/build-config.json",
-    "package-lock.json",
-    "package.json",
+    'game/build-config.json',
+    'package-lock.json',
+    'package.json',
   ]);
   assert.deepEqual(
     plan.commands.map(({ id }) => id),
-    ["team-picture-bindings", "unknown-runtime-validate"],
+    ['team-picture-bindings', 'unknown-runtime-validate'],
   );
 });
 
-test("other Team runtime paths retain the navigation gate", () => {
-  const plan = focusedTestPlan(["game/couch/relay-rescue.mjs"], manifest);
-  assert.deepEqual(plan.categories, ["localization", "player-navigation-team"]);
+test('other Team runtime paths retain the navigation gate', () => {
+  const plan = focusedTestPlan(['game/couch/relay-rescue.mjs'], manifest);
+  assert.deepEqual(plan.categories, ['localization', 'player-navigation-team']);
   assert.deepEqual(plan.unknownRuntime, []);
+  assert.equal(plan.commands.find(({ id }) => id === 'player-navigation-team')?.timeoutMs, 1200000);
 });
 
-test("documentation-only changes have a zero-command bounded plan", () => {
-  const plan = focusedTestPlan(["docs/fast-release-mode.md"], manifest);
-  assert.deepEqual(plan, { categories: [], unknownRuntime: [], commands: [] });
+test('Solo result-continuation coverage runs directly without the unrelated Team navigation bundle', () => {
+  const file = 'game/test/solo-result-continuation-host.test.mjs';
+  const plan = focusedTestPlan([file], manifest);
+  assert.ok(!plan.categories.includes('player-navigation-team'));
+  assert.deepEqual(plan.commands.map(({ id }) => id), [
+    'unknown-runtime-validate',
+    `changed-test:${file}`,
+  ]);
 });
 
-test("changed test files are executed directly without shell evaluation", () => {
-  const plan = focusedTestPlan(["game/test/offline-new.test.mjs"], manifest);
-  assert.ok(plan.commands.some(({ id }) => id === "offline-runtime"));
+test('Versus runtime changes retain native controller Start ownership coverage once', () => {
+  const file = 'game/test/mission-library-controller-host.test.mjs';
+  const plan = focusedTestPlan(['game/couch/couch.mjs', file], manifest);
+  const command = plan.commands.find(({ id }) => id === 'player-navigation-team');
+  assert.ok(command.args.includes(file));
+  assert.equal(plan.commands.filter(({ args }) => args.includes(file)).length, 1);
+});
+
+test('documentation-only changes have a zero-command bounded plan', () => {
+  const plan = focusedTestPlan(['docs/fast-release-mode.md'], manifest);
+  assert.deepEqual(plan, {
+    categories: [],
+    unknownRuntime: [],
+    deferredTests: [],
+    commands: [],
+  });
+});
+
+test('changed test files are executed directly without shell evaluation', () => {
+  const plan = focusedTestPlan(['game/test/offline-new.test.mjs'], manifest);
+  assert.ok(plan.commands.some(({ id }) => id === 'offline-runtime'));
+  assert.ok(plan.commands.some(({ id }) => id === 'changed-test:game/test/offline-new.test.mjs'));
+});
+
+test('manifest-declared changed tests are not executed twice', () => {
+  const plan = focusedTestPlan(['game/test/coop-picture-bindings.test.mjs'], manifest);
+  assert.deepEqual(
+    plan.commands.map(({ id }) => id),
+    ['team-picture-bindings'],
+  );
+});
+
+test('publishing changes run the exact-head controller and release-object gates', () => {
+  const plan = focusedTestPlan(['publishing/pages-controller/public-byte-audit.mjs'], manifest);
+  assert.deepEqual(plan.categories, ['publishing']);
+  const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+  assert.ok(command);
+  for (const required of [
+    'publishing/focused-tests.test.mjs',
+    'publishing/fastline-merge-controller.test.mjs',
+    'publishing/fastline-release-inputs.test.mjs',
+    'publishing/fastline-release-objects.test.mjs',
+    'publishing/fastline-release-publisher.test.mjs',
+    'publishing/source-workflow.test.mjs',
+  ])
+    assert.ok(command.args.includes(required), `Missing focused gate: ${required}`);
+});
+
+test('production Team retained-successor coverage is not deferred', () => {
+  const retained = 'game/test/coop-reviewed-successor-picture.test.mjs';
+  const plan = focusedTestPlan([retained], manifest);
+  assert.deepEqual(plan.deferredTests, []);
+  assert.ok(plan.commands.some((command) => command.args.includes(retained)));
+  assert.ok(manifest.categories.every((category) => !category.deferredChangedTestPatterns?.length));
+});
+
+test('an explicit synthetic deferral is reported without altering production coverage', () => {
+  const retained = 'game/test/coop-reviewed-successor-picture.test.mjs';
+  const synthetic = structuredClone(manifest);
+  const category = synthetic.categories.find((entry) => entry.id === 'team-picture-bindings');
+  for (const command of category.commands)
+    command.args = command.args.filter((argument) => argument !== retained);
+  category.deferredChangedTestPatterns = [
+    '^game/test/coop-reviewed-successor-picture\\.test\\.mjs$',
+  ];
+  const plan = focusedTestPlan([retained], synthetic);
+  assert.deepEqual(plan.categories, ['team-picture-bindings']);
+  assert.deepEqual(plan.deferredTests, [retained]);
+  assert.ok(!plan.commands.some((command) => command.args.includes(retained)));
   assert.ok(
-    plan.commands.some(
-      ({ id }) => id === "changed-test:game/test/offline-new.test.mjs",
+    focusedTestPlan([retained], manifest).commands.some((command) =>
+      command.args.includes(retained),
     ),
   );
 });
 
-test("manifest-declared changed tests are not executed twice", () => {
-  const plan = focusedTestPlan(
-    ["game/test/coop-picture-bindings.test.mjs"],
-    manifest,
+test('unsafe paths and empty selections are rejected', () => {
+  assert.throws(() => focusedTestPlan([], manifest), /requires bounded/u);
+  assert.throws(() => focusedTestPlan(['../outside.mjs'], manifest), /requires bounded/u);
+});
+
+test('company measurement tools under docs and shared Journey writes retain company gates', () => {
+  for (const changed of [
+    'docs/verification/company-review.html',
+    'docs/verification/company-review.mjs',
+    'docs/verification/company-review-model.mjs',
+    'scripts/test-company-review.mjs',
+    'game/journey/profile.mjs',
+    'game/app.mjs',
+    'game/index.html',
+    'game/runtime-content-provider.mjs',
+    'game/ui/edition-play.css',
+    'game/ui/edition-lessons.mjs',
+    'game/ui/edition-navigation.mjs',
+    'game/ui/edition-controller-practice.mjs',
+    'game/ui/body-backing.mjs',
+    'game/profile-writer.mjs',
+    'game/external-chapter-pointer.mjs',
+    'game/external-chapter-backup.mjs',
+    'game/presentation/actor-appearance-pin.mjs',
+    'game/replay-actor-context.mjs',
+    'game/editions/runtime-assets.json',
+    'game/editions/standalone/route-loader.mjs',
+    'scripts/edition-runtime.mjs',
+    'scripts/edition-provider-parity.mjs',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.ok(plan.categories.includes('company-editions'), changed);
+    assert.deepEqual(plan.unknownRuntime, [], changed);
+    assert.ok(
+      plan.commands.some(({ id }) => id === 'company-runtime-and-publication'),
+      changed,
+    );
+    assert.ok(
+      plan.commands.some(({ id }) => id === 'company-review-measurements'),
+      changed,
+    );
+  }
+});
+
+test('focused command execution reports every failure and continues once per command', () => {
+  const commands = [
+    { id: 'exit', command: 'node', args: ['exit'] },
+    { id: 'returned-error', command: 'node', args: ['returned-error'] },
+    { id: 'thrown-error', command: 'node', args: ['thrown-error'] },
+    { id: 'signal', command: 'node', args: ['signal'] },
+    { id: 'later-pass', command: 'node', args: ['later-pass'] },
+  ];
+  const calls = [];
+  const stderr = [];
+  const results = [
+    { status: 7, signal: null },
+    { status: null, signal: null, error: new Error('returned') },
+    new Error('thrown'),
+    { status: 0, signal: 'SIGTERM' },
+    { status: 0, signal: null },
+  ];
+  const summary = runFocusedCommands(commands, {
+    spawn(command, args) {
+      calls.push([command, ...args]);
+      const result = results.shift();
+      if (result instanceof Error) throw result;
+      return result;
+    },
+    stdout: { write() {} },
+    stderr: {
+      write(message) {
+        stderr.push(message);
+      },
+    },
+  });
+  assert.deepEqual(
+    calls,
+    commands.map(({ command, args }) => [command, ...args]),
+  );
+  assert.equal(summary.attempted, commands.length);
+  assert.deepEqual(
+    summary.failures.map(({ id }) => id),
+    ['exit', 'returned-error', 'thrown-error', 'signal'],
+  );
+  assert.equal(summary.exitCode, 7);
+  assert.equal(stderr.length, 4);
+  assert.match(stderr[1], /returned/u);
+  assert.match(stderr[2], /thrown/u);
+  assert.match(stderr[3], /SIGTERM/u);
+});
+
+test('focused command execution uses real child exit status and still runs later commands', () => {
+  const summary = runFocusedCommands(
+    [
+      {
+        id: 'real-exit',
+        command: process.execPath,
+        args: ['-e', 'process.exit(5)'],
+      },
+      {
+        id: 'real-pass',
+        command: process.execPath,
+        args: ['-e', 'process.exit(0)'],
+      },
+    ],
+    {
+      stdout: { write() {} },
+      stderr: { write() {} },
+    },
+  );
+  assert.equal(summary.attempted, 2);
+  assert.deepEqual(
+    summary.failures.map(({ id, status }) => [id, status]),
+    [['real-exit', 5]],
+  );
+  assert.equal(summary.exitCode, 5);
+});
+
+test('focused command execution reports a timeout and stops the remaining queue', () => {
+  const calls = [];
+  const stderr = [];
+  const timeout = Object.assign(new Error('timed out'), { code: 'ETIMEDOUT' });
+  const summary = runFocusedCommands(
+    [
+      { id: 'blocked', command: 'node', args: ['blocked'], timeoutMs: 4321 },
+      { id: 'must-not-run', command: 'node', args: ['later'] },
+    ],
+    {
+      spawn(command, args, options) {
+        calls.push([command, ...args, options.timeout, options.killSignal]);
+        return { status: null, signal: 'SIGTERM', error: timeout };
+      },
+      stdout: { write() {} },
+      stderr: { write(message) { stderr.push(message); } },
+      timeoutMs: 1234,
+    },
+  );
+  assert.deepEqual(calls, [['node', 'blocked', 4321, 'SIGTERM']]);
+  assert.equal(summary.attempted, 1);
+  assert.deepEqual(summary.failures.map(({ id, timedOut }) => [id, timedOut]), [['blocked', true]]);
+  assert.equal(summary.exitCode, 124);
+  assert.match(stderr.at(-1), /timed out after 4321ms/u);
+});
+
+test('focused command execution succeeds only when every command succeeds', () => {
+  const summary = runFocusedCommands([{ id: 'pass', command: 'node', args: ['pass'] }], {
+    spawn() {
+      return { status: 0, signal: null };
+    },
+    stdout: { write() {} },
+    stderr: { write() {} },
+  });
+  assert.deepEqual(summary, { attempted: 1, failures: [], exitCode: 0 });
+});
+
+test('fallback validation receives its bounded thirty-minute budget without widening other commands', async () => {
+  const plan = focusedTestPlan(['game/new-player-runtime.mjs'], manifest);
+  const execution = focusedCommandExecutionPlan(plan.commands);
+  const fallback = execution.commands.find(({ id }) => id === 'unknown-runtime-validate');
+  assert.ok(fallback);
+  assert.equal(fallback.timeoutMs, 30 * 60 * 1000);
+  const calls = [];
+  const summary = await runFocusedCommandsParallel(
+    [...execution.commands, { id: 'ordinary', command: 'node', args: ['ordinary'] }],
+    {
+      concurrency: 2,
+      stdout: { write() {} },
+      stderr: { write() {} },
+      spawnChild(command, args, options) {
+        calls.push([command, args, options.timeout, options.killSignal]);
+        const child = new EventEmitter();
+        setImmediate(() => child.emit('close', args.includes('validate') ? 7 : 0, null));
+        return child;
+      },
+    },
+  );
+  assert.deepEqual(calls, [
+    ['npm', ['run', 'validate'], 1800000, 'SIGTERM'],
+    ['node', ['ordinary'], 600000, 'SIGTERM'],
+  ]);
+  assert.equal(summary.exitCode, 7);
+  assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [
+    ['unknown-runtime-validate', 7],
+  ]);
+});
+
+test('bounded parallel focused execution retains every command verdict', async () => {
+  let active = 0;
+  let maximumActive = 0;
+  const summary = await runFocusedCommandsParallel(
+    [
+      { id: 'first', command: 'node', args: ['first'] },
+      { id: 'second', command: 'node', args: ['second'] },
+      { id: 'failure', command: 'node', args: ['failure'] },
+    ],
+    {
+      concurrency: 2,
+      stdout: { write() {} },
+      stderr: { write() {} },
+      spawnChild(_command, args) {
+        const child = new EventEmitter();
+        active += 1;
+        maximumActive = Math.max(maximumActive, active);
+        setImmediate(() => {
+          active -= 1;
+          child.emit('close', args[0] === 'failure' ? 9 : 0, null);
+        });
+        return child;
+      },
+    },
+  );
+  assert.equal(summary.attempted, 3);
+  assert.deepEqual(summary.failures.map(({ id, status }) => [id, status]), [['failure', 9]]);
+  assert.equal(summary.exitCode, 9);
+  assert.equal(maximumActive, 2, 'independent commands use the bounded worker pool');
+});
+
+test('parallel focused execution rejects invalid worker limits', async () => {
+  await assert.rejects(
+    runFocusedCommandsParallel([], { concurrency: 0, stdout: { write() {} }, stderr: { write() {} } }),
+    /concurrency/u,
+  );
+});
+
+test('execution planning removes only exact tests covered by the selected package script', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'any-id-a', command: 'node', args: ['--test', 'tests/a.test.mjs'] },
+    { id: 'any-id-b', command: 'node', args: ['--test', 'other/b.test.mjs'] },
+    { id: 'syntax', command: 'node', args: ['--check', 'tests/a.test.mjs'] },
+  ];
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: {
+      suite: 'node --test tests/*.test.mjs scripts/test-extra.mjs',
+    },
+    shellSemantics: 'posix',
+    repositoryFiles: [
+      'tests/a.test.mjs',
+      'tests/c.test.mjs',
+      'other/b.test.mjs',
+      'scripts/test-extra.mjs',
+    ],
+  });
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['aggregate', 'any-id-b', 'syntax'],
+  );
+  assert.deepEqual(execution.packageCoverage, [
+    {
+      id: 'aggregate',
+      script: 'suite',
+      tests: ['tests/a.test.mjs', 'tests/c.test.mjs', 'scripts/test-extra.mjs'],
+    },
+  ]);
+  assert.deepEqual(execution.deduplicated, [
+    {
+      id: 'any-id-a',
+      testFile: 'tests/a.test.mjs',
+      coveredBy: ['aggregate'],
+    },
+  ]);
+  assert.deepEqual(execution.diagnostics, []);
+  const before = new Set([
+    ...execution.packageCoverage[0].tests,
+    'tests/a.test.mjs',
+    'other/b.test.mjs',
+  ]);
+  const after = new Set([...execution.packageCoverage[0].tests, 'other/b.test.mjs']);
+  assert.deepEqual(after, before);
+});
+
+test('package-script drift cannot silently remove focused coverage', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'a', command: 'node', args: ['--test', 'tests/a.test.mjs'] },
+    { id: 'b', command: 'node', args: ['--test', 'tests/b.test.mjs'] },
+  ];
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: { suite: 'node --test tests/a.test.mjs' },
+    shellSemantics: 'posix',
+    repositoryFiles: ['tests/a.test.mjs', 'tests/b.test.mjs'],
+  });
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['aggregate', 'b'],
   );
   assert.deepEqual(
-    plan.commands.map(({ id }) => id),
-    ["team-picture-bindings"],
+    execution.deduplicated.map(({ testFile }) => testFile),
+    ['tests/a.test.mjs'],
   );
 });
 
-test("publishing changes run the exact-head controller, authority, determinism and public-byte gates", () => {
-  const plan = focusedTestPlan(
-    ["publishing/pages-controller/public-byte-audit.mjs"],
-    manifest,
+test('missing files and unsupported or missing scripts retain every command', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'a', command: 'node', args: ['--test', 'tests/a.test.mjs'] },
+  ];
+  for (const inputs of [
+    {
+      packageScripts: { suite: 'node --test tests/missing.test.mjs' },
+      shellSemantics: 'posix',
+      repositoryFiles: ['tests/a.test.mjs'],
+    },
+    {
+      packageScripts: { suite: 'node --test tests/a.test.mjs && echo unsafe' },
+      shellSemantics: 'posix',
+      repositoryFiles: ['tests/a.test.mjs'],
+    },
+    {
+      packageScripts: {},
+      shellSemantics: 'posix',
+      repositoryFiles: ['tests/a.test.mjs'],
+    },
+  ]) {
+    const execution = focusedCommandExecutionPlan(commands, inputs);
+    assert.deepEqual(execution.commands, commands);
+    assert.deepEqual(execution.deduplicated, []);
+    assert.equal(execution.diagnostics.length, 1);
+  }
+});
+
+test('POSIX wildcard coverage excludes leading-dot files unless the pattern names the dot', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'hidden', command: 'node', args: ['--test', 'tests/.hidden.test.mjs'] },
+  ];
+  const execution = focusedCommandExecutionPlan(commands, {
+    packageScripts: { suite: 'node --test tests/*.test.mjs' },
+    repositoryFiles: ['tests/a.test.mjs', 'tests/.hidden.test.mjs'],
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['aggregate', 'hidden'],
   );
-  assert.deepEqual(plan.categories, ["publishing"]);
-  const command = plan.commands.find(
-    ({ id }) => id === "publishing-controller",
+  assert.deepEqual(execution.packageCoverage[0].tests, ['tests/a.test.mjs']);
+});
+
+test('shell expansion syntax and non-string scripts retain all commands', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'literal-dollar', command: 'node', args: ['--test', 'tests/$CASE.test.mjs'] },
+  ];
+  for (const script of [
+    'node --test tests/$CASE.test.mjs',
+    'node --test "tests/a.test.mjs"',
+    'node --test tests/a.test.mjs && echo unsafe',
+    42,
+    null,
+    [],
+    {},
+  ]) {
+    const execution = focusedCommandExecutionPlan(commands, {
+      packageScripts: { suite: script },
+      repositoryFiles: ['tests/$CASE.test.mjs', 'tests/a.test.mjs'],
+      shellSemantics: 'posix',
+    });
+    assert.deepEqual(execution.commands, commands);
+    assert.deepEqual(execution.deduplicated, []);
+    assert.equal(execution.diagnostics.length, 1);
+  }
+});
+
+test('deduplication requires confirmed POSIX npm script-shell semantics', () => {
+  const commands = [
+    { id: 'aggregate', command: 'npm', args: ['run', 'suite'] },
+    { id: 'a', command: 'node', args: ['--test', 'tests/a.test.mjs'] },
+  ];
+  const inputs = {
+    packageScripts: { suite: 'node --test tests/*.test.mjs' },
+    repositoryFiles: ['tests/a.test.mjs'],
+  };
+  const unsupported = focusedCommandExecutionPlan(commands, inputs);
+  assert.deepEqual(unsupported.commands, commands);
+  assert.deepEqual(
+    unsupported.diagnostics.map(({ reason }) => reason),
+    ['unsupported-script-shell'],
   );
-  assert.ok(command);
-  for (const required of [
-    "publishing/focused-tests.test.mjs",
-    "publishing/fastline-merge-controller.test.mjs",
-    "publishing/fastline-release-inputs.test.mjs",
-    "publishing/fastline-release-objects.test.mjs",
-    "publishing/fastline-release-publisher.test.mjs",
-    "publishing/pages-controller/archive-authority.test.mjs",
-    "publishing/pages-controller/assemble.test.mjs",
-    "publishing/pages-controller/metadata.test.mjs",
-    "publishing/pages-controller/public-byte-audit.test.mjs",
-    "publishing/pages-controller/release-asset.test.mjs",
-  ])
-    assert.ok(
-      command.args.includes(required),
-      `Missing focused gate: ${required}`,
+  assert.equal(
+    packageScriptShellSemantics('/root', {
+      platform: 'linux',
+      spawn() {
+        return { status: 0, signal: null, stdout: 'null\n' };
+      },
+    }),
+    'posix',
+  );
+  assert.equal(
+    packageScriptShellSemantics('/root', {
+      platform: 'linux',
+      spawn() {
+        return { status: 0, signal: null, stdout: '/bin/bash\n' };
+      },
+    }),
+    null,
+  );
+  assert.equal(
+    packageScriptShellSemantics('/root', {
+      platform: 'win32',
+      spawn() {
+        throw new Error('must not run');
+      },
+    }),
+    null,
+  );
+});
+
+test('execution input loading fails closed for missing directories, links, nonfiles and I/O errors', async () => {
+  const commands = [{ id: 'aggregate', command: 'npm', args: ['run', 'suite'] }];
+  const readFile = async () =>
+    JSON.stringify({
+      scripts: {
+        suite: 'node --test tests/*.test.mjs other/exact.test.mjs',
+      },
+    });
+  const inputs = await loadFocusedExecutionInputs(commands, '/root', {
+    readFile,
+    async readDirectory() {
+      return [
+        {
+          name: 'a.test.mjs',
+          isFile: () => true,
+          isSymbolicLink: () => false,
+        },
+        {
+          name: 'linked-file.test.mjs',
+          isFile: () => false,
+          isSymbolicLink: () => true,
+        },
+        {
+          name: 'linked-directory.test.mjs',
+          isFile: () => false,
+          isSymbolicLink: () => true,
+        },
+        {
+          name: 'directory.test.mjs',
+          isFile: () => false,
+          isSymbolicLink: () => false,
+        },
+      ];
+    },
+    async statPath(candidate) {
+      if (candidate.endsWith('linked-file.test.mjs')) return { isFile: () => true };
+      if (candidate.endsWith('linked-directory.test.mjs')) return { isFile: () => false };
+      throw new Error('unreadable');
+    },
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(inputs, {
+    packageScripts: {
+      suite: 'node --test tests/*.test.mjs other/exact.test.mjs',
+    },
+    repositoryFiles: ['tests/a.test.mjs', 'tests/linked-file.test.mjs'],
+    shellSemantics: 'posix',
+  });
+  const execution = focusedCommandExecutionPlan(
+    [...commands, { id: 'a', command: 'node', args: ['--test', 'tests/a.test.mjs'] }],
+    inputs,
+  );
+  assert.deepEqual(
+    execution.commands.map(({ id }) => id),
+    ['aggregate', 'a'],
+  );
+  assert.deepEqual(execution.deduplicated, []);
+  assert.deepEqual(
+    execution.diagnostics.map(({ reason }) => reason),
+    ['unresolved-package-tests'],
+  );
+
+  const missingDirectory = await loadFocusedExecutionInputs(commands, '/root', {
+    readFile,
+    async readDirectory() {
+      throw new Error('missing');
+    },
+    async statPath() {
+      throw new Error('missing');
+    },
+    shellSemantics: 'posix',
+  });
+  assert.deepEqual(missingDirectory.repositoryFiles, []);
+  assert.deepEqual(focusedCommandExecutionPlan(commands, missingDirectory).commands, commands);
+});
+
+test('missing or malformed npm shell-probe output cannot authorize deduplication', () => {
+  for (const stdout of [undefined, null, 42, Buffer.from('null'), '', '  ', 'undefined']) {
+    assert.equal(
+      packageScriptShellSemantics('/root', {
+        platform: 'linux',
+        spawn() {
+          return { status: 0, signal: null, stdout };
+        },
+      }),
+      null,
     );
+  }
+  for (const result of [
+    { status: 1, signal: null, stdout: 'null' },
+    { status: 0, signal: 'SIGTERM', stdout: 'null' },
+    { status: 0, error: new Error('probe unavailable'), stdout: 'null' },
+  ]) {
+    assert.equal(
+      packageScriptShellSemantics('/root', { platform: 'linux', spawn: () => result }),
+      null,
+    );
+  }
+  assert.equal(
+    packageScriptShellSemantics('/root', {
+      platform: 'linux',
+      spawn() {
+        throw new Error('probe unavailable');
+      },
+    }),
+    null,
+  );
 });
 
-test("unsafe paths and empty selections are rejected", () => {
-  assert.throws(() => focusedTestPlan([], manifest), /requires bounded/u);
-  assert.throws(
-    () => focusedTestPlan(["../outside.mjs"], manifest),
-    /requires bounded/u,
+test('company packaging and boot admission always select company and startup regressions', () => {
+  for (const changed of [
+    'game/boot.mjs',
+    'game/ui/company-startup.mjs',
+    'game/ui/install-offline-panel.mjs',
+    'game/editions/offline-package-id.mjs',
+    'scripts/company-offline-packages.mjs',
+    'scripts/offline-content.mjs',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.ok(plan.categories.includes('company-editions'), changed);
+    assert.ok(plan.categories.includes('company-offline-startup'), changed);
+    assert.deepEqual(plan.unknownRuntime, [], changed);
+    assert.ok(
+      plan.commands.some((c) => c.id === 'company-runtime-and-publication'),
+      changed,
+    );
+    const startup = plan.commands.find((c) => c.id === 'company-offline-startup');
+    for (const required of [
+      'game/test/boot.test.mjs',
+      'game/test/offline-download-access.test.mjs',
+      'game/test/official-downloads.test.mjs',
+      'game/test/install-offline-panel.test.mjs',
+      'scripts/test-offline-core-closure.mjs',
+    ])
+      assert.ok(startup.args.includes(required), required);
+  }
+});
+
+test('neutral pilot recording changes select real engine replay and source parity checks', () => {
+  const plan = focusedTestPlan(['game/content-design/neutral-pilot-session.mjs'], manifest);
+  assert.deepEqual(plan.categories, ['neutral-pilot-evidence']);
+  assert.deepEqual(plan.unknownRuntime, []);
+  assert.ok(plan.commands[0].args.includes('game/test/neutral-pilot-session.test.mjs'));
+});
+
+test('Journey star sidecars select previous-release storage and backup compatibility checks', () => {
+  for (const file of [
+    'game/journey/stars.mjs',
+    'game/journey/profile.mjs',
+    'game/mission-library/creator-source.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.ok(plan.categories.includes('journey-star-compatibility'));
+    const command = plan.commands.find(({ id }) => id === 'journey-star-compatibility');
+    assert.ok(command.args.includes('game/test/journey-stars.test.mjs'));
+    assert.ok(command.args.includes('game/test/journey-backup.test.mjs'));
+  }
+});
+
+test('focused CI installs the locked native fixture owner before selected checks', async () => {
+  const consumers = [
+    'game/test/community-ownership-concurrency.test.mjs',
+    'game/test/fpv-world-appearance-ui.test.mjs',
+    'game/test/fpv-world-content.test.mjs',
+  ];
+  const plan = focusedTestPlan(consumers, manifest);
+  for (const file of consumers)
+    assert.ok(plan.commands.some(({ command, args }) => command === 'node' && args.includes(file)));
+
+  const workflow = await readFile(
+    path.join(directory, '../.github/workflows/deploy-pages.yml'),
+    'utf8',
   );
+  const focused = workflow.split('  focused:\n')[1].split('\n  test:')[0];
+  assert.match(focused, /timeout-minutes: 90/u);
+  const steps = focused.split(/\n      - /);
+  const install = steps.findIndex((step) =>
+    step.startsWith('name: Install pinned authoring dependencies for selected focused gates\n'),
+  );
+  const rootInstall = steps.findIndex((step) =>
+    step.startsWith('name: Install dependencies once for selected focused gates\n'),
+  );
+  const execute = steps.findIndex((step) => step.startsWith('name: Run selected focused gates\n'));
+  assert.ok(rootInstall >= 0 && install > rootInstall && execute > install);
+  assert.match(steps[install], /if: steps\.plan\.outputs\.required == 'true'/);
+  assert.match(steps[install], /working-directory: source/);
+  assert.match(
+    steps[install],
+    /run: npm ci --prefix authoring\/fpv-worlds --ignore-scripts --include=dev --prefer-offline\s*$/,
+  );
+  assert.doesNotMatch(steps[install], /--omit=dev|continue-on-error|\|\|/);
+
+  const owner = JSON.parse(
+    await readFile(path.join(directory, '../authoring/fpv-worlds/package.json'), 'utf8'),
+  );
+  const lock = JSON.parse(
+    await readFile(path.join(directory, '../authoring/fpv-worlds/package-lock.json'), 'utf8'),
+  );
+  assert.match(owner.devDependencies['fake-indexeddb'], /^\d+\.\d+\.\d+$/);
+  for (const [name, version] of Object.entries({
+    ...owner.dependencies,
+    ...owner.devDependencies,
+  })) {
+    assert.equal(lock.packages['node_modules/' + name].version, version);
+    assert.match(lock.packages['node_modules/' + name].integrity, /^sha512-/);
+  }
+  assert.equal(
+    lock.packages[''].devDependencies['fake-indexeddb'],
+    owner.devDependencies['fake-indexeddb'],
+  );
+  assert.equal(lock.packages['node_modules/fake-indexeddb'].dev, true);
 });

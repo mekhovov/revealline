@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -112,7 +113,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       original = JSON.parse(before.slot),
       library = profile(page.storage).library;
     assert.deepEqual(before.checkpoint, liveCheckpoint);
-    assert.equal(verifyReplay(original.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(original).replay).match, true);
     for (const value of ['large', 'standard', 'large']) {
       const padReads = page.padReads;
       page.change('text-size', value);
@@ -134,20 +135,23 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(page.rendered.paused, false);
     assert.deepEqual(authoritativeCheckpoint(run), before.checkpoint);
     ticks(page, 12); // Explicit Resume continues the saved direction; no fresh key.
-    assert.equal(run.tick, original.replay.ticks + 12);
+    assert.equal(run.tick, nativeSession(original).replay.ticks + 12);
     assert.ok(run.player.y > pausedY, 'Resume retains the deliberate downward direction');
     page.$('pause-button').click();
     page.frame(0);
     const continued = JSON.parse(page.storage.getItem(sessionKey));
-    assert.equal(continued.runId, original.runId);
-    assert.equal(continued.campaignKey, original.campaignKey);
+    assert.equal(nativeSession(continued).runId, nativeSession(original).runId);
+    assert.equal(nativeSession(continued).campaignKey, nativeSession(original).campaignKey);
     assert.equal(run.turnPolicy, turnPolicy);
-    assert.equal(continued.continuation.direction, 'down');
-    assert.deepEqual(continued.replay.segments, [
-      { ...original.replay.segments[0], ticks: original.replay.ticks + 12 },
+    assert.equal(nativeSession(continued).continuation.direction, 'down');
+    assert.deepEqual(nativeSession(continued).replay.segments, [
+      {
+        ...nativeSession(original).replay.segments[0],
+        ticks: nativeSession(original).replay.ticks + 12,
+      },
     ]);
-    assert.deepEqual(continued.replay.checkpoint, authoritativeCheckpoint(run));
-    assert.equal(verifyReplay(continued.replay).match, true);
+    assert.deepEqual(nativeSession(continued).replay.checkpoint, authoritativeCheckpoint(run));
+    assert.equal(verifyReplay(nativeSession(continued).replay).match, true);
     size(page, 'large');
     assert.deepEqual(page.errors, []);
   });
@@ -226,7 +230,7 @@ test('actual complete-backup import and Undo adopt text size while preserving th
   assert.equal(page.rendered.paused, true);
   const original = JSON.parse(page.storage.getItem(sessionKey)),
     library = profile(page.storage).library;
-  assert.equal(verifyReplay(original.replay).match, true);
+  assert.equal(verifyReplay(nativeSession(original).replay).match, true);
   page.$('save-json').value = JSON.stringify({
     format: BACKUP_FORMAT,
     library: updatePreferences(library, { textSize: 'large' }),
@@ -257,11 +261,11 @@ test('actual complete-backup import and Undo adopt text size while preserving th
     assert.doesNotMatch(page.$(id).textContent, /Pending pack launch cancelled|newer play choice/);
   assert.equal(profile(page.storage).library.preferences.textSize, 'standard');
   const restored = JSON.parse(page.storage.getItem(sessionKey));
-  assert.equal(restored.runId, original.runId);
-  assert.equal(restored.campaignKey, original.campaignKey);
-  assert.deepEqual(restored.replay, original.replay);
-  assert.deepEqual(restored.continuation, original.continuation);
-  assert.equal(verifyReplay(restored.replay).match, true);
+  assert.equal(nativeSession(restored).runId, nativeSession(original).runId);
+  assert.equal(nativeSession(restored).campaignKey, nativeSession(original).campaignKey);
+  assert.deepEqual(nativeSession(restored).replay, nativeSession(original).replay);
+  assert.deepEqual(nativeSession(restored).continuation, nativeSession(original).continuation);
+  assert.equal(verifyReplay(nativeSession(restored).replay).match, true);
   page.frame(0);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, 0);

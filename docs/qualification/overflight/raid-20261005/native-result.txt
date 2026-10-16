@@ -1,0 +1,68 @@
+- main:
+  - button "Menu"
+  - generic: "Overflight: Raid"
+  - button "Pause" [disabled]
+  - region "Overflight battlefield":
+    - generic: Hull 20 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 01:02
+    - generic: Level 9
+    - generic: 214 Cleared
+    - paragraph: Sector 3 · Finish the hunt · Targets 7/7
+    - generic: Chain 7 · ×2 · 4.0s
+    - generic: Score 71,900
+    - paragraph: Automated review · Sweeper build
+    - generic: Broad pass 2
+    - generic: Slowing wake 2
+    - generic: Sweep momentum 2
+    - generic: Quick recharge 2
+    - generic: Boost 0.6s
+    - generic: RUSH ACTIVE 0.4s
+    - progressbar "Rush"
+    - status: RUSH ACTIVE 5.0s
+    - generic "Diagnostics"
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+  - dialog "Results":
+    - heading "Results" [active] [level=1]
+    - generic: ✦
+    - paragraph: Hunt accomplished
+    - heading "Raid complete" [level=2]
+    - paragraph: Command target destroyed. Refine your route, chase a longer chain, or try another build.
+    - paragraph: Automated review · Sweeper build
+    - term: Time
+    - definition: 01:02
+    - term: Score
+    - definition: 71,900
+    - term: Cleared
+    - definition: "214"
+    - term: Best chain
+    - definition: "67"
+    - term: Hull lost
+    - definition: "80"
+    - term: Couriers caught
+    - definition: "5"
+    - term: Couriers escaped
+    - definition: "48"
+    - term: Armor breaks
+    - definition: "7"
+    - generic: ✓ Command tank destroyed
+    - generic: ✓ No airframes lost
+    - heading "Your build" [level=3]
+    - strong: Broad pass
+    - generic: Level 2
+    - strong: Slowing wake
+    - generic: Level 2
+    - strong: Sweep momentum
+    - generic: Level 2
+    - strong: Quick recharge
+    - generic: Level 2
+    - generic: Engineer — A fine route through a complicated place.
+    - status: Automated review
+    - button "Retry same ground"
+    - button "New sortie"
+    - paragraph: Fastest clear and highest score are separate records. Same ground, a new approach.
+    - button "Back"
+    - button "Retry"
+- text: + + + + + + + + +

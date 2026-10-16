@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reveal Line — Team freeze moving parts</title>
+    <link rel="stylesheet" href="../../../game/ui/field-kit-fonts.css" />
+    <style>
+      body {
+        margin: 24px;
+        color: #edf3e8;
+        background: #07111c;
+        font:
+          16px 'Field Kit UI',
+          sans-serif;
+      }
+      h1 {
+        font:
+          600 32px 'Field Kit Display',
+          sans-serif;
+      }
+      p {
+        max-width: 85ch;
+      }
+      .controls,
+      #poses {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin: 20px 0;
+      }
+      button,
+      select,
+      label {
+        min-height: 44px;
+        font: inherit;
+      }
+      button,
+      select {
+        padding: 8px;
+        color: inherit;
+        background: #182b43;
+        border: 1px solid #738d91;
+      }
+      label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      :focus-visible {
+        outline: 3px solid #ffd64a;
+        outline-offset: 3px;
+      }
+      figure {
+        margin: 0;
+        padding: 12px;
+        border: 1px solid #738d91;
+      }
+      figcaption {
+        max-width: 160px;
+      }
+      canvas {
+        display: block;
+        image-rendering: pixelated;
+      }
+      #board {
+        max-width: 100%;
+        height: auto;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Team freeze: moving parts follow the effect</h1>
+    <p>
+      Five checkpoints earned by ordinary movement through the real timed-bonus Team core.
+      Frozen-start and frozen-held poses must match; expiry releases the existing cosmetic clock.
+      Contact cues, role identity and effect duration remain unchanged.
+    </p>
+    <p>
+      The optional test body borrows the verified Scout image and motor geometry for a supported
+      custom drifter slot. This is a renderer compatibility fixture, not a new enemy, approved art
+      binding or production default. Current tank bodies have travel-only treads and no rotors.
+      Crops are 96-pixel copies of the actual painter at 1:1. The board may scale to fit.
+    </p>
+    <div class="controls">
+      <button id="load">Load prepared actors</button>
+      <button id="cancel" hidden>Cancel loading</button>
+      <label
+        >Checkpoint
+        <select id="phase" disabled>
+          <option value="0">Before pickup</option>
+          <option value="1">Freeze starts</option>
+          <option value="2" selected>Freeze held</option>
+          <option value="3">Effect expires</option>
+          <option value="4">Moving again</option>
+        </select></label
+      >
+      <label><input id="rig" type="checkbox" checked disabled /> Prepared rotor test body</label>
+      <label><input id="reduced" type="checkbox" disabled /> Reduced effects</label>
+      <label><input id="light" type="checkbox" disabled /> Light field</label>
+    </div>
+    <p id="status" role="status">
+      Ready to verify the current compiled images. No records or awards are written.
+    </p>
+    <div id="poses"></div>
+    <canvas
+      id="board"
+      width="720"
+      height="360"
+      aria-label="Selected Team bonus checkpoint"
+    ></canvas>
+    <script type="module" src="./team-freeze.mjs"></script>
+  </body>
+</html>

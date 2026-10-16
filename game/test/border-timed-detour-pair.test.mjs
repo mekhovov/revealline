@@ -21,6 +21,7 @@ import {
 } from '../replay.mjs';
 import { createDuel, resumeDuel, stepDuel, UNTIMED_DUEL_PROTOCOL } from '../multiplayer.mjs';
 
+const entryRoutesBeforeCandidate = structuredClone(DEFAULT_JOURNEY_ROUTES);
 const source = createBorderTimedDetourPairCandidates();
 const project = compileContentProject(source);
 const presets = ['gentle', 'standard', 'expert'];
@@ -72,7 +73,7 @@ function collectionRoute(id, difficulty) {
 
 test('two optional successors preserve current geometry, actors, goals, pictures, order and untouched introduction', () => {
   const before = createWholeErosionReviewCandidates();
-  assert.equal(DEFAULT_JOURNEY_ROUTES.solo, 'whole-spatial-v11');
+  assert.deepEqual(DEFAULT_JOURNEY_ROUTES, entryRoutesBeforeCandidate);
   assert.deepEqual(source.maps, before.maps);
   assert.deepEqual(source.assets, before.assets);
   assert.equal(source.policyId, before.policyId);

@@ -12,7 +12,7 @@ import {
   exportReplay,
   verifyReplay,
 } from '../replay.mjs';
-import { chooseJourneyMission } from './helpers/library-selection.mjs';
+import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
 import { playCurrentTeamRoute } from './helpers/current-team-route.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
@@ -26,6 +26,19 @@ import { getLocale, setLocale } from '../i18n/index.mjs';
 const fetchResponse = async (path) =>
   String(path).includes('/content-design/assets/') ? new Response(await readFile(path)) : undefined;
 
+function openSoloResult(page) {
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  assert.equal(page.rendered.run.status, 'won');
+  assert.equal(page.$('game-overlay').hidden, true);
+  // Let the real reward presentation reveal its visible result control.
+  for (let i = 0; i < 100 && page.$('show-result').hidden; i++) page.frame(100);
+  assert.equal(page.$('show-result').hidden, false);
+  page.$('show-result').click();
+  assert.equal(page.$('game-overlay').hidden, false);
+  assert.equal(page.$('game-overlay').dataset.kind, 'won');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+}
+
 test('a real released Sentinel uses its caption only after victory, with exact physics and objective facts', async (t) => {
   const p = await soloPage(t, {
     search: '?journey=whole-originals-v3',
@@ -35,7 +48,19 @@ test('a real released Sentinel uses its caption only after victory, with exact p
     pictures: { Image: PNGImage },
     fetchResponse,
   });
-  await chooseJourneyMission(p, 'shell-play', 'whole-originals-v3', 'first-relay');
+  await openMissionLibrary(p, 'shell-play');
+  const card = [...p.$('journey-cards').children].find((node) => {
+    const [source, edition, , runtimeId] = JSON.parse(node.dataset.missionId);
+    return (
+      source === 'journey:whole-originals-v3' &&
+      edition === 'whole-originals-v3' &&
+      runtimeId.endsWith('/first-relay')
+    );
+  });
+  assert.ok(card, 'The released Sentinel mission is available in the library.');
+  await activateMissionCard(card);
+  assert.equal(p.$('start-button').hidden, false);
+  p.$('start-button').click();
   await settle(() => {
     p.frame(0);
     return p.rendered.run.levelId === 'first-relay' && p.doc.body.dataset.flightState === 'running';
@@ -108,6 +133,7 @@ test('a real released Sentinel uses its caption only after victory, with exact p
   assert.deepEqual(authoritativeCheckpoint(p.rendered.run), authoritativeCheckpoint(reference));
   assert.equal(verifyReplay(exportReplay(recorder, reference)).match, true);
   assert.equal(p.rendered.backdrop, acceptedPicture);
+  openSoloResult(p);
   assert.equal(p.$('journey-reactions').hidden, false);
   assert.match(p.$('journey-reactions').textContent, /^Sentinel — /);
   assert.match(p.$('overlay-copy').textContent, /captured.*points/);
@@ -134,6 +160,7 @@ test('Solo result has a silent optional Guide caption; changing the choice prese
   // Standard pressure.v4 completes the same straight return at tick469.
   for (let i = 0; i < 469; i++) p.frame();
   assert.equal(p.rendered.run.status, 'won');
+  openSoloResult(p);
   assert.equal(p.$('journey-reactions').hidden, false);
   assert.match(p.$('journey-reactions').textContent, /^Guide — /);
   assert.equal(p.$('next-button').hidden, false);
@@ -223,7 +250,7 @@ test('real authored Team victory uses Engineer and does not replace completion f
   assert.match(f.$('coop-overlay-copy').textContent, /Разом ви відкрили/);
   assert.match(f.$('coop-overlay-copy').textContent, /Спільні контури/);
   assert.match(f.$('coop-overlay-copy').textContent, /Порятунки/);
-  assert.match(f.$('coop-next').textContent, /^Далі:/);
+  assert.equal(f.$('coop-next').textContent, 'Наступна кампанія: Shared returns');
   assert.equal(f.doc.activeElement.id, 'coop-next');
   setLocale('en', { persist: false });
   assert.equal(f.$('coop-overlay-copy').textContent, result);

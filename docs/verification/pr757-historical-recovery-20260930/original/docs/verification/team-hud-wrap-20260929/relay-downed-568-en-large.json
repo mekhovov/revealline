@@ -1,0 +1,497 @@
+{
+  "elements": [
+    {
+      "client": [
+        448,
+        50
+      ],
+      "id": "hud",
+      "label": null,
+      "rect": {
+        "bottom": 50.296875,
+        "height": 50.296875,
+        "left": 12,
+        "right": 460,
+        "top": 0,
+        "width": 448,
+        "x": 12,
+        "y": 0
+      },
+      "scroll": [
+        448,
+        50
+      ],
+      "text": "1SUNFLOWERDown · free rescue available\n            Crawl to your partner\n          \n          \n            TEAM TERRITORY0.0%0 reserves\n          \n          \n            2SKYLINEOn safe ground\n            Support ready"
+    },
+    {
+      "client": [
+        174,
+        50
+      ],
+      "id": "identity sunflower",
+      "label": null,
+      "rect": {
+        "bottom": 50.296875,
+        "height": 50.296875,
+        "left": 12,
+        "right": 185.9296875,
+        "top": 0,
+        "width": 173.9296875,
+        "x": 12,
+        "y": 0
+      },
+      "scroll": [
+        174,
+        50
+      ],
+      "text": "1SUNFLOWERDown · free rescue available\n            Crawl to your partner"
+    },
+    {
+      "client": [
+        174,
+        50
+      ],
+      "id": "identity skyline",
+      "label": null,
+      "rect": {
+        "bottom": 50.296875,
+        "height": 50.296875,
+        "left": 286.0703125,
+        "right": 460,
+        "top": 0,
+        "width": 173.9296875,
+        "x": 286.0703125,
+        "y": 0
+      },
+      "scroll": [
+        174,
+        50
+      ],
+      "text": "2SKYLINEOn safe ground\n            Support ready"
+    },
+    {
+      "client": [
+        544,
+        23
+      ],
+      "id": "coop-objective",
+      "label": null,
+      "rect": {
+        "bottom": 77.6953125,
+        "height": 23.3984375,
+        "left": 12,
+        "right": 556,
+        "top": 54.296875,
+        "width": 544,
+        "x": 12,
+        "y": 54.296875
+      },
+      "scroll": [
+        544,
+        23
+      ],
+      "text": "Capture the shield anchors · 0 / 2 secured"
+    },
+    {
+      "client": [
+        212,
+        106
+      ],
+      "id": "coop-canvas",
+      "label": "One shared arena. Sunflower is marked 1 and Skyline is marked 2.",
+      "rect": {
+        "bottom": 229.34375,
+        "height": 106,
+        "left": 178,
+        "right": 390,
+        "top": 123.34375,
+        "width": 212,
+        "x": 178,
+        "y": 123.34375
+      },
+      "scroll": [
+        212,
+        106
+      ],
+      "text": ""
+    },
+    {
+      "client": [
+        544,
+        45
+      ],
+      "id": "coop-message",
+      "label": null,
+      "rect": {
+        "bottom": 320,
+        "height": 45,
+        "left": 12,
+        "right": 556,
+        "top": 275,
+        "width": 544,
+        "x": 12,
+        "y": 275
+      },
+      "scroll": [
+        544,
+        45
+      ],
+      "text": "A roaming enemy caught an unfinished line. Sunflower needs a rescue. Hold Support nearby or capture 2% new territory."
+    },
+    {
+      "client": [
+        84,
+        40
+      ],
+      "id": "coop-pause",
+      "label": null,
+      "rect": {
+        "bottom": 44,
+        "height": 44,
+        "left": 476,
+        "right": 564,
+        "top": 0,
+        "width": 88,
+        "x": 476,
+        "y": 0
+      },
+      "scroll": [
+        84,
+        40
+      ],
+      "text": "Pause"
+    },
+    {
+      "client": [
+        156,
+        180
+      ],
+      "id": "control-card sunflower",
+      "label": null,
+      "rect": {
+        "bottom": 266.34375,
+        "height": 180,
+        "left": 12,
+        "right": 168,
+        "top": 86.34375,
+        "width": 156,
+        "x": 12,
+        "y": 86.34375
+      },
+      "scroll": [
+        156,
+        180
+      ],
+      "text": "1 Sunflower\n          \n            \n            \n            \n          ✥Drag to steer\n              \n                ↑\n              \n              \n                ←\n              \n              1\n              \n                →\n              \n              \n                ↓\n              \n     "
+    },
+    {
+      "client": [
+        40,
+        40
+      ],
+      "id": "",
+      "label": "Player 1 up",
+      "rect": {
+        "bottom": 130.34375,
+        "height": 44,
+        "left": 68,
+        "right": 112,
+        "top": 86.34375,
+        "width": 44,
+        "x": 68,
+        "y": 86.34375
+      },
+      "scroll": [
+        40,
+        40
+      ],
+      "text": "↑"
+    },
+    {
+      "client": [
+        40,
+        40
+      ],
+      "id": "",
+      "label": "Player 1 left",
+      "rect": {
+        "bottom": 174.34375,
+        "height": 44,
+        "left": 24,
+        "right": 68,
+        "top": 130.34375,
+        "width": 44,
+        "x": 24,
+        "y": 130.34375
+      },
+      "scroll": [
+        40,
+        40
+      ],
+      "text": "←"
+    },
+    {
+      "client": [
+        40,
+        40
+      ],
+      "id": "",
+      "label": "Player 1 right",
+      "rect": {
+        "bottom": 174.34375,
+        "height": 44,
+        "left": 112,
+        "right": 156,
+        "top": 130.34375,
+        "width": 44,
+        "x": 112,
+        "y": 130.34375
+      },
+      "scroll": [
+        40,
+        40
+      ],
+      "text": "→"
+    },
+    {
+      "client": [
+        40,
+        40
+      ],
+      "id": "",
+      "label": "Player 1 down",
+      "rect": {
+        "bottom": 218.34375,
+        "height": 44,
+        "left": 68,
+        "right": 112,
+        "top": 174.34375,
+        "width": 44,
+        "x": 68,
+        "y": 174.34375
+      },
+      "scroll": [
+        40,
+        40
+      ],
+      "text": "↓"
+    },
+    {
+      "client": [
+        72,
+        40
+      ],
+      "id": "",
+      "label": "Player 1 Boost",
+      "rect": {
+        "bottom": 266.34375,
+        "height": 44,
+        "left": 12,
+        "right": 88,
+        "top": 222.34375,
+        "width": 76,
+        "x": 12,
+        "y": 222.34375
+      },
+      "scroll": [
+        72,
+        40
+      ],
+      "text": "Boost"
+    },
+    {
+      "client": [
+        72,
+        40
+      ],
+      "id": "",
+      "label": "Player 1 Support; hold beside a downed partner to rescue",
+      "rect": {
+        "bottom": 266.34375,
+        "height": 44,
+        "left": 92,
+        "right": 168,
+        "top": 222.34375,
+        "width": 76,
+        "x": 92,
+        "y": 222.34375
+      },
+      "scroll": [
+        72,
+        40
+      ],
+      "text": "Support"
+    },
+    {
+      "client": [
+        156,
+        180
+      ],
+      "id": "control-card skyline",
+      "label": null,
+      "rect": {
+        "bottom": 266.34375,
+        "height": 180,
+        "left": 400,
+        "right": 556,
+        "top": 86.34375,
+        "width": 156,
+        "x": 400,
+        "y": 86.34375
+      },
+      "scroll": [
+        156,
+        180
+      ],
+      "text": "2 Skyline\n          \n            \n            \n            \n          ✥Drag to steer\n              \n                ↑\n              \n              \n                ←\n              \n              2\n              \n                →\n              \n              \n                ↓\n              \n       "
+    },
+    {
+      "client": [
+        40,
+        40
+      ],
+      "id": "",
+      "label": "Player 2 up",
+      "rect": {
+        "bottom": 130.34375,
+        "height": 44,
+        "left": 456,
+        "right": 500,
+        "top": 86.34375,
+        "width": 44,
+        "x": 456,
+        "y": 86.34375
+      },
+      "scroll": [
+        40,
+        40
+      ],
+      "text": "↑"
+    },
+    {
+      "client": [
+        40,
+        40
+      ],
+      "id": "",
+      "label": "Player 2 left",
+      "rect": {
+        "bottom": 174.34375,
+        "height": 44,
+        "left": 412,
+        "right": 456,
+        "top": 130.34375,
+        "width": 44,
+        "x": 412,
+        "y": 130.34375
+      },
+      "scroll": [
+        40,
+        40
+      ],
+      "text": "←"
+    },
+    {
+      "client": [
+        40,
+        40
+      ],
+      "id": "",
+      "label": "Player 2 right",
+      "rect": {
+        "bottom": 174.34375,
+        "height": 44,
+        "left": 500,
+        "right": 544,
+        "top": 130.34375,
+        "width": 44,
+        "x": 500,
+        "y": 130.34375
+      },
+      "scroll": [
+        40,
+        40
+      ],
+      "text": "→"
+    },
+    {
+      "client": [
+        40,
+        40
+      ],
+      "id": "",
+      "label": "Player 2 down",
+      "rect": {
+        "bottom": 218.34375,
+        "height": 44,
+        "left": 456,
+        "right": 500,
+        "top": 174.34375,
+        "width": 44,
+        "x": 456,
+        "y": 174.34375
+      },
+      "scroll": [
+        40,
+        40
+      ],
+      "text": "↓"
+    },
+    {
+      "client": [
+        72,
+        40
+      ],
+      "id": "",
+      "label": "Player 2 Boost",
+      "rect": {
+        "bottom": 266.34375,
+        "height": 44,
+        "left": 400,
+        "right": 476,
+        "top": 222.34375,
+        "width": 76,
+        "x": 400,
+        "y": 222.34375
+      },
+      "scroll": [
+        72,
+        40
+      ],
+      "text": "Boost"
+    },
+    {
+      "client": [
+        72,
+        40
+      ],
+      "id": "",
+      "label": "Player 2 Support; hold beside a downed partner to rescue",
+      "rect": {
+        "bottom": 266.34375,
+        "height": 44,
+        "left": 480,
+        "right": 556,
+        "top": 222.34375,
+        "width": 76,
+        "x": 480,
+        "y": 222.34375
+      },
+      "scroll": [
+        72,
+        40
+      ],
+      "text": "Support"
+    }
+  ],
+  "lang": "en",
+  "scroll": [
+    568,
+    320
+  ],
+  "textSize": "large",
+  "viewport": [
+    568,
+    320
+  ]
+}

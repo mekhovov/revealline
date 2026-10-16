@@ -1,0 +1,1284 @@
+{
+  "status": "running",
+  "phase": "Actual Watch playback adventure-coast-01/acro",
+  "checks": [
+    {
+      "name": "All 102 admitted files, harness, wrapper and optional archive hashes match",
+      "passed": true
+    },
+    {
+      "name": "60 original examples cover 30 distinct Adventure challenges",
+      "passed": true
+    },
+    {
+      "name": "Exact 30-example mode partition acro",
+      "passed": true
+    },
+    {
+      "name": "Exact 30-example mode partition self-level",
+      "passed": true
+    },
+    {
+      "name": "Exact installed Adventure identity and unscored session markers",
+      "passed": true
+    },
+    {
+      "name": "Complete current catalogue retained",
+      "passed": true,
+      "catalogue": 196
+    },
+    {
+      "name": "adventure-coast-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level initially has no bundled Watch action",
+      "passed": true
+    },
+    {
+      "name": "Wrong exact pack remains missing-dependency",
+      "passed": true
+    },
+    {
+      "name": "Changed normalized course is invalid",
+      "passed": true
+    },
+    {
+      "name": "Wrong replay final identity is invalid despite valid transport hash",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro unusable proof does not enable Watch",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level unusable proof does not enable Watch",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro unusable proof does not enable Watch",
+      "passed": true
+    },
+    {
+      "name": "Rejected imports preserve notebook, rewards, recovery and bookmark",
+      "passed": true
+    },
+    {
+      "name": "All 60 verified and saved through unchanged host",
+      "passed": true,
+      "status": "Imported 60/60 records or examples; 60 verified."
+    },
+    {
+      "name": "adventure-coast-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level actual host replay verification complete",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level exact saved identities and original proof",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level existing selected-mode catalogue Watch lookup",
+      "passed": true
+    },
+    {
+      "name": "60 verified examples plus two distinct retained invalid records; missing pack replaced by correct exact record",
+      "passed": true
+    },
+    {
+      "name": "All 60 imports award no progress and preserve recovery",
+      "passed": true
+    },
+    {
+      "name": "Exact record bytes survive native HTTP iframe reload",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-coast-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-quarry-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rail-depot-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-rooftops-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-01/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-02/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-03/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-04/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/acro lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "adventure-solar-farm-05/self-level lookup restored from IndexedDB",
+      "passed": true
+    },
+    {
+      "name": "Persistence reload retains protected player data",
+      "passed": true
+    },
+    {
+      "name": "Both modes selected in each of all six Adventure worlds",
+      "passed": true
+    }
+  ]
+}

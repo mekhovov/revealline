@@ -1,0 +1,298 @@
+{
+  "format": "revealline-candidate-admission-summary.v1",
+  "sourceRevision": "c807542ef4840ce739beb7af86424488f7508772",
+  "sourceTree": "6be6aa62a151a6d32638f46f8fa08aad1b9cbaaf",
+  "version": "v0.142.2",
+  "publicEligible": false,
+  "promotable": false,
+  "published": false,
+  "sourceCleanAtCompletion": true,
+  "preparedFrom": "Exact clean committed source; no release allocation or publication action.",
+  "basePath": "/revealline/",
+  "selectedEdition": {
+    "id": "fpv-learning",
+    "contentSha256": "77f862035392266e8c3e9f1b03d3c89d3b4755e3947431b6792a19ac8b2329b7",
+    "distribution": {
+      "bytes": 33282781,
+      "path": "distribution-fpv-learning.zip",
+      "sha256": "693c78f220ada0897252572b3058253a9de4dcfd3185d66c741af9e41eb5838c"
+    },
+    "manifest": {
+      "bytes": 93740,
+      "path": "manifest-fpv-learning.json",
+      "sha256": "6b1500aa2204080f74e377856189034e1fcebfdcc48ae6492a4aafe7d016b43c"
+    },
+    "sourceArchive": {
+      "bytes": 32972147,
+      "path": "source-fpv-learning.zip",
+      "sha256": "080e6311cae8f3b9c930fb96f342ccd22f3a5c00de69aaea397d3919b0b00f87"
+    },
+    "sourceInventory": {
+      "bytes": 117838,
+      "path": "source-inventory-fpv-learning.json",
+      "sha256": "5591da31351b6c9ff1a53c8162541a2baf20c8f8e0b552b8d226b61a3613305b"
+    },
+    "runtime": {
+      "bytes": 33183009,
+      "files": 688
+    },
+    "stableLauncher": {
+      "bytes": 12685,
+      "currentPointer": {
+        "bytes": 115,
+        "path": "editions/fpv-learning/app/current.json",
+        "sha256": "ea57da618d891a57d1ff715b3ae4f3c2f5669019ae2b1bf45058a40fe1474807"
+      },
+      "files": 6
+    },
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "checksumsVerified": true,
+    "zipMembersVerified": true,
+    "presentationProviderParityVerified": true,
+    "sourceEligibility": {
+      "assets": 294,
+      "files": 5149,
+      "format": "revealline-public-source-eligibility.v1",
+      "status": "verified"
+    },
+    "comparison": {
+      "previousSourceRevision": "83706c9924e3972b106966a9bfffe542d1fde5e3",
+      "identicalFiles": 682,
+      "addedPaths": [],
+      "removedPaths": [],
+      "changedFiles": [
+        {
+          "path": "edition-build.json",
+          "before": {
+            "bytes": 93514,
+            "path": "edition-build.json",
+            "sha256": "5d79889adeaeb01e18dc93518e2af63e1da5609752e98bfcc74beafcea54ca06"
+          },
+          "after": {
+            "bytes": 93514,
+            "path": "edition-build.json",
+            "sha256": "a1d2641797101a740ecc756be7396723912816519c1fa703524921effab2a2f3"
+          }
+        },
+        {
+          "path": "game/app.mjs",
+          "before": {
+            "bytes": 470926,
+            "path": "game/app.mjs",
+            "sha256": "1ead88f36cb5d4bf0b7bd32b513cbfa1dc4afc9afadde15daf82a902f3864e1f"
+          },
+          "after": {
+            "bytes": 471107,
+            "path": "game/app.mjs",
+            "sha256": "9bc15e9e8760031d926b29a5407f689dca3ee08d6dc6cc0c6829866bced940a8"
+          }
+        },
+        {
+          "path": "game/build-info.json",
+          "before": {
+            "bytes": 186,
+            "path": "game/build-info.json",
+            "sha256": "f838881a3ef0471dd2ff6bef8b67050e4c0a064389cf27748fcf0082d1cc953e"
+          },
+          "after": {
+            "bytes": 186,
+            "path": "game/build-info.json",
+            "sha256": "7875eeb6d6f9279b375d41e604457ce213c545422636983dd07fa46f71827c11"
+          }
+        },
+        {
+          "path": "offline-cache.json",
+          "before": {
+            "bytes": 93230,
+            "path": "offline-cache.json",
+            "sha256": "803f9166db5f385c0011fa7471e3ee35a9fb35c64a482cdb030bd227d874e55b"
+          },
+          "after": {
+            "bytes": 93230,
+            "path": "offline-cache.json",
+            "sha256": "801a9e2f2acc890edae6b57f529ac7eb15840ecf828fcece380db8eeb5237983"
+          }
+        },
+        {
+          "path": "service-worker.js",
+          "before": {
+            "bytes": 97323,
+            "path": "service-worker.js",
+            "sha256": "c7ae83b5a8e2af396cb58992a8176c8592cf593be3093164fb2afe38362bd2fd"
+          },
+          "after": {
+            "bytes": 97323,
+            "path": "service-worker.js",
+            "sha256": "11dd7062b3fe30c761f7684207dfec7d2af6ab2bc7aa6fb7b9c151a69741d2fb"
+          }
+        }
+      ],
+      "scope": "Runtime manifest members, excluding the manifest itself. App source changed; four other changed members contain generated build/cache provenance. Pack content identity is unchanged."
+    },
+    "artifactRoot": "fpv-edition"
+  },
+  "optionalPackages": {
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "zipMembersVerified": true,
+    "checksumsVerified": true,
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "7e37b9a633a161b5475e7a14c9c50307fe61b9889b033cba85dd69c3d90fd87a",
+        "entry": "optional-practice/civilian-flight/index.html",
+        "distribution": {
+          "bytes": 183178,
+          "path": "distribution-optional-civilian-flight.zip",
+          "sha256": "6cb47d44c08b6e7d5e454a322be8fc5022c64ab21650bbfd56e59e69e537b2a5"
+        },
+        "manifest": {
+          "bytes": 5631,
+          "path": "manifest-optional-civilian-flight.json",
+          "sha256": "ddc2f3e14b1582b488a394262c023dcfeaf292e3e6d567b38a8dd50d8a24a579"
+        },
+        "sourceArchive": {
+          "bytes": 195018,
+          "path": "source-optional-civilian-flight.zip",
+          "sha256": "d64ccd6691e258c683f78624ee8e3fe11806da602045569add555869b200d62b"
+        },
+        "sourceInventory": {
+          "bytes": 8686,
+          "path": "source-inventory-optional-civilian-flight.json",
+          "sha256": "1f7a6ef8bf88806974ca4e820c802a7b6b2efac7ce729c5fc01a27181d4c384c"
+        },
+        "runtime": {
+          "files": 29,
+          "bytes": 179026,
+          "includesManifest": true,
+          "limits": {
+            "files": 64,
+            "bytes": 8388608
+          }
+        },
+        "source": {
+          "files": 31,
+          "bytes": 190530,
+          "includesSourceInventory": true
+        }
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "c70c5fb13cdfb4256a06bfc2dc13acb496c2443f63bdc73171d4724966ace5c8",
+        "entry": "optional-practice/civilian-fpv/index.html",
+        "distribution": {
+          "bytes": 2755824,
+          "path": "distribution-optional-civilian-fpv.zip",
+          "sha256": "4e4a57fc44a3c5c31c93f9ecfcb2f23be637bf1de661ba9e82edf3be0839fb50"
+        },
+        "manifest": {
+          "bytes": 9242,
+          "path": "manifest-optional-civilian-fpv.json",
+          "sha256": "dc48accdebc0c8a915ff2e1974c562320b36cfe98638c7f8c119a28510267263"
+        },
+        "sourceArchive": {
+          "bytes": 2770522,
+          "path": "source-optional-civilian-fpv.zip",
+          "sha256": "2da6a33af0c65d7bed78a840294a44c398e2a3b6e258a45afa147030f4ce0b47"
+        },
+        "sourceInventory": {
+          "bytes": 15182,
+          "path": "source-inventory-optional-civilian-fpv.json",
+          "sha256": "4f11bdc29fe7ab6f5703793f3a55f075dda5acb56949b784bdb711d5d218fa95"
+        },
+        "runtime": {
+          "files": 50,
+          "bytes": 2748526,
+          "includesManifest": true,
+          "limits": {
+            "files": 64,
+            "bytes": 8388608
+          }
+        },
+        "source": {
+          "files": 52,
+          "bytes": 2762920,
+          "includesSourceInventory": true
+        }
+      }
+    ],
+    "artifactRoot": "optional-flight"
+  },
+  "rawReceipts": [
+    {
+      "path": "fpv-admission.json",
+      "bytes": 9686,
+      "sha256": "ffe99755b33447381d1377ffcf94da6cd1b2b1a195c56ffe31981af840e79c55"
+    },
+    {
+      "path": "optional-admission.json",
+      "bytes": 5759,
+      "sha256": "1de0aafdc53983e88eeec1af4d89de3aa5d63e7f5191a817abe1831d1b8a8586"
+    },
+    {
+      "path": "fpv-edition.log",
+      "bytes": 500,
+      "sha256": "2e86b5062b9a0c40daf115592fe5f95bfed5850abfc3e8335965c3547d413c23"
+    },
+    {
+      "path": "optional-flight.log",
+      "bytes": 460,
+      "sha256": "60e52c98fb84d2d399020e1c8a222b43c1f754ea4c84476ab11656251a2d0159"
+    },
+    {
+      "path": "ci-status-observation.json",
+      "bytes": 302,
+      "sha256": "ec5e8cb18e8deb3dea70bcd95c433d6c117461be1bf0945cc7eaaf0444fdee14"
+    },
+    {
+      "path": "release-775-observation.json",
+      "bytes": 269,
+      "sha256": "2d8e44d63210615969a39d98772c9797441c57b24bd2f17a9d01341e62caa35a"
+    }
+  ],
+  "qualification": {
+    "artifactScope": "Selected FPV edition and both optional packages only; no local all-edition build, default ZIP, complete hosted output or public deployment.",
+    "defaultAndWholeSiteCapacity": "Not measured for c807. The preceding 837 exact candidate has its separately pinned default STORE-size projection and same-source four-edition lower bound; neither is a composed-site admission.",
+    "runtimeAndDevice": "Existing historical runtime evidence remains scoped to its exact artifacts and device. New c807 browser measurements are separate and pending at summary preparation.",
+    "humanReview": "Human pacing and physical device/radio evidence remain deferred; source/candidate checks do not replace them.",
+    "releaseGates": "Merged-main default release qualification, exact reviewed selectors, immutable release download verification and complete hosted output admission remain publication prerequisites.",
+    "capsUnchanged": {
+      "defaultArchiveBytes": 800000000,
+      "mainHostedBytes": 950000000,
+      "coreOfflineBytes": 67108864,
+      "coreOfflineFiles": 2000,
+      "editionAssetBytes": 33554432,
+      "optionalPackageBytes": 8388608,
+      "optionalPackageFiles": 64
+    },
+    "distributionPolicy": "Main repository only. Host the reviewed subset that fits complete output admission; other editions remain explicit immutable GitHub Release downloads. No new repository, target or cap increase."
+  },
+  "observedAt": "2026-09-29T00:13:21.187Z",
+  "ci": {
+    "conclusion": null,
+    "created_at": "2026-09-29T00:07:14Z",
+    "event": "pull_request",
+    "head_sha": "c807542ef4840ce739beb7af86424488f7508772",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/36501496913",
+    "id": 36501496913,
+    "run_attempt": 1,
+    "status": "in_progress",
+    "updated_at": "2026-09-29T00:07:18Z",
+    "observationOnly": true,
+    "artifactDownloaded": false
+  },
+  "releaseQueue": {
+    "releasePullRequest": {
+      "base": "main",
+      "head": "d828cd360b92215c62868592a8a2102b8b209068",
+      "html_url": "https://github.com/mekhovov/revealline/pull/775",
+      "merged": false,
+      "merged_at": null,
+      "number": 775,
+      "state": "open",
+      "title": "Release v0.142.3 — fix Steam Deck Confirm before native input handoff"
+    },
+    "scope": "Read-only pull request metadata; no release allocation, selector mutation, label change or dispatch."
+  }
+}

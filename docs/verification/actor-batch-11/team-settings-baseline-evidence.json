@@ -1,0 +1,27 @@
+{
+  "baseline": "b20348a1",
+  "overriddenModules": [
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/app.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/couch/coop-actor-presentation.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/couch/couch.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/couch/relay-rescue.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/i18n/catalogs.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/replay-theater/app.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/studio/studio.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/ui/practice-presentation.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/helpers/coop-host.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/helpers/couch-host.mjs",
+    "/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/helpers/solo-dom.mjs"
+  ],
+  "baselineHtml": ["game/couch/index.html", "game/couch/relay-rescue.html", "game/index.html"],
+  "fixtures": {
+    "game/test/coop-shared-settings.test.mjs": {
+      "identicalToBaseline": true,
+      "sha256": "a48114c7577567950fd8350b75b69559bf8fe69508e24cec0b80fad8df12fcd5"
+    },
+    "game/test/settings-restoration-host.test.mjs": {
+      "identicalToBaseline": true,
+      "sha256": "2215f7d4cd4e532141e72fd1ca8d95f636b3fe601e96c1b04df7485493d32f46"
+    }
+  }
+}

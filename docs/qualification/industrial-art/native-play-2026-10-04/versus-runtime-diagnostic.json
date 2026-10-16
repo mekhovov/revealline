@@ -1,0 +1,121 @@
+{
+  "format": "revealline-local-recording-runtime-diagnostic.v1",
+  "recording": "versus-crossing-post.json",
+  "recordingRawSha256": "4644c0450f0fa8c164724f4f30e3fdd4ec63e66c56a9042657cba9401759290e",
+  "protocol": "revealline-local-capture-recording.v1",
+  "recordedBuild": "dev",
+  "browser": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "match": true,
+    "stateSha256": "020e9faffb324cd1f13f43dc714dc0048d9e8f3b504138e626d413c6d705eac2"
+  },
+  "node": {
+    "version": "v22.22.2",
+    "v8": "12.4.254.21-node.39",
+    "platform": "darwin",
+    "arch": "arm64",
+    "match": false,
+    "stateSha256": "d083692354403e52c9535b4dd8408a869877cac9c0024d6a7929cdc69c23d8c6"
+  },
+  "recordedStateSha256": "020e9faffb324cd1f13f43dc714dc0048d9e8f3b504138e626d413c6d705eac2",
+  "ticks": 19335,
+  "outcome": {
+    "status": "finished",
+    "reason": "First clear",
+    "winner": 0,
+    "boards": [
+      {
+        "status": "won",
+        "score": 12810,
+        "coverage": 0.5620886353663888,
+        "lives": 3,
+        "claimedCount": 1281,
+        "totalClaimable": 2279
+      },
+      {
+        "status": "running",
+        "score": 0,
+        "coverage": 0,
+        "lives": 3,
+        "claimedCount": 0,
+        "totalClaimable": 2279
+      }
+    ]
+  },
+  "comparison": {
+    "summaryEqual": true,
+    "allOtherStateFieldsEqual": true,
+    "differences": 11,
+    "maxAbsoluteNumericDelta": 1.9593215938584763e-12,
+    "changedFields": [
+      {
+        "path": "runs.0.enemies.0.x",
+        "browser": 47.03136588232069,
+        "node": 47.031365882320614,
+        "delta": -7.815970093361102e-14
+      },
+      {
+        "path": "runs.0.enemies.0.y",
+        "browser": 18.41706932631036,
+        "node": 18.41706932630926,
+        "delta": -1.1013412404281553e-12
+      },
+      {
+        "path": "runs.0.enemies.0.vx",
+        "browser": -10.942462159594363,
+        "node": -10.942462159594369,
+        "delta": -5.329070518200751e-15
+      },
+      {
+        "path": "runs.0.enemies.0.vy",
+        "browser": 1.5378627656087247,
+        "node": 1.5378627656087254,
+        "delta": 6.661338147750939e-16
+      },
+      {
+        "path": "runs.0.classic.actorTime",
+        "browser": 161.11843891404502,
+        "node": 161.11843891404484,
+        "delta": -1.7053025658242404e-13
+      },
+      {
+        "path": "runs.0.classic.combatPatrols.actors.1.x",
+        "browser": 54.08020048259862,
+        "node": 54.08020048259861,
+        "delta": -7.105427357601002e-15
+      },
+      {
+        "path": "runs.1.enemies.0.x",
+        "browser": 10.559237117317705,
+        "node": 10.559237117316785,
+        "delta": -9.201528428093297e-13
+      },
+      {
+        "path": "runs.1.enemies.0.y",
+        "browser": 8.977868693990324,
+        "node": 8.977868693992283,
+        "delta": 1.9593215938584763e-12
+      },
+      {
+        "path": "runs.1.enemies.0.vx",
+        "browser": -7.587922338002291,
+        "node": -7.587922338002304,
+        "delta": -1.3322676295501878e-14
+      },
+      {
+        "path": "runs.1.enemies.0.vy",
+        "browser": -8.032803657033185,
+        "node": -8.032803657033178,
+        "delta": 7.105427357601002e-15
+      },
+      {
+        "path": "runs.1.classic.actorTime",
+        "browser": 161.12500000001785,
+        "node": 161.1250000000176,
+        "delta": -2.5579538487363607e-13
+      }
+    ]
+  },
+  "qualification": "Native browser replay matches the exact legacy v1 digest and clears the mission. Node reconstructs the same summary and topology but differs in low-order floating-point fields; CLI qualification remains rejected. This is not human-play, device, art or release approval.",
+  "requiredNext": "Design a versioned portable recording/checkpoint successor or matching-runtime qualification path. Preserve the exact legacy v1 digest; do not silently round or relax historical validation."
+}

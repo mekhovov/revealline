@@ -1,0 +1,21 @@
+{
+  "generatedFromCurrentLocales": true,
+  "changed": [
+    {
+      "locale": "uk",
+      "ns": "interface",
+      "key": "freeRescue",
+      "before": "Безкоштовний порятунок",
+      "after": "Порятунок"
+    },
+    {
+      "locale": "uk",
+      "ns": "interface",
+      "key": "crawlToAlly",
+      "before": "Повзіть до союзника",
+      "after": "До напарника"
+    }
+  ],
+  "contentRegistryChanged": false,
+  "fullContentExtraction": "Not completed: sparse checkout lacks unrelated original-fpv-pressure source pack"
+}

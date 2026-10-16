@@ -1,15 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { canonicalJSON, dataIdentity } from '../data-json.mjs';
-import {
-  createCreatorTeamAttempt,
-  generateCreatorTeamCampaign,
-  prepareCreatorTeamCampaign,
-} from '../creator/team.mjs';
+import { canonicalJSON } from '../data-json.mjs';
+import { generateCreatorTeamCampaign, prepareCreatorTeamCampaign } from '../creator/team.mjs';
 import {
   CREATOR_TEAM_DATABASE,
+  createInstalledTeamAttempt,
+  createInstalledTeamAttemptSnapshot,
   createInstalledTeamCampaignStore,
+  installedTeamGameplayId,
 } from '../creator/team-installed.mjs';
+import { stepCoop } from '../coop/core.mjs';
+import { resolveGameplayTuning as historicalTuning } from '../gameplay-tuning-v1.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 async function prepared(seed = 12) {
@@ -19,6 +20,116 @@ async function prepared(seed = 12) {
     seed,
   });
   return prepareCreatorTeamCampaign(generated.pack, generated.provenance);
+}
+
+function recordRoute(run, { finishHistorical = false } = {}) {
+  const segments = [],
+    tick = (directions) => {
+      const commands = directions.map((direction, seat) => {
+          if (
+            finishHistorical &&
+            (run.needsNeutral[seat] || run.players[seat].blockedDirection === direction)
+          )
+            return { direction: null, boost: false, support: false };
+          const player = run.players[seat],
+            coverDrifters = Boolean(run.level.goal.cores),
+            support =
+              player.support.readyAt <= run.time &&
+              (run.enemies.some(
+                (enemy) =>
+                  enemy.active !== false &&
+                  ((coverDrifters && enemy.type === 'drifter') ||
+                    ['warning', 'commit'].includes(enemy.phase)) &&
+                  Math.hypot(enemy.x - player.x, enemy.y - player.y) <= 5.9,
+              ) ||
+                run.impacts.some(
+                  (impact) => Math.hypot(impact.x - player.x, impact.y - player.y) <= 5.9,
+                ));
+          return { direction, boost: true, support };
+        }),
+        previous = segments.at(-1);
+      stepCoop(run, commands);
+      if (previous && canonicalJSON(previous.commands) === canonicalJSON(commands))
+        previous.ticks++;
+      else segments.push({ ticks: 1, commands });
+    },
+    toward = (axis, targets) =>
+      run.players.map((player, seat) =>
+        Math.abs(player[axis] - targets[seat]) <= 0.051
+          ? null
+          : player[axis] < targets[seat]
+            ? axis === 'x'
+              ? 'right'
+              : 'down'
+            : axis === 'x'
+              ? 'left'
+              : 'up',
+      ),
+    at = (axis, targets) =>
+      run.players.every((player, seat) => Math.abs(player[axis] - targets[seat]) <= 0.051),
+    stage = (directions, done, limit = 1800) => {
+      let ticks = 0;
+      while (!done() && run.status === 'running' && ticks++ < limit)
+        tick(typeof directions === 'function' ? directions() : directions);
+    };
+  if (run.level.goal.coverage) {
+    stage(
+      () => toward('y', [12.5, 12.5]),
+      () => at('y', [12.5, 12.5]),
+    );
+    stage(['right', 'left'], () => run.claimedCount > 0);
+    stage(
+      () => toward('x', [26.5, 45.5]),
+      () => at('x', [26.5, 45.5]),
+    );
+    stage(['down', 'down'], () => run.players.every((player) => player.y >= 34.99));
+    stage(
+      () => toward('y', [22.5, 22.5]),
+      () => at('y', [22.5, 22.5]),
+    );
+    const upper = run.claimedCount;
+    stage(['right', 'left'], () => run.claimedCount > upper);
+    stage(
+      () => toward('x', [26.5, 45.5]),
+      () => at('x', [26.5, 45.5]),
+    );
+    stage(
+      () => toward('y', [26.5, 26.5]),
+      () => at('y', [26.5, 26.5]),
+    );
+    const lower = run.claimedCount;
+    stage(['right', 'left'], () => run.status === 'won' || run.claimedCount > lower);
+  } else {
+    stage(
+      () => toward('y', [12.5, 12.5]),
+      () => at('y', [12.5, 12.5]),
+    );
+    stage(['right', 'left'], () => run.claimedCount > 0);
+    stage(
+      () => toward('x', [23.5, 48.5]),
+      () => at('x', [23.5, 48.5]),
+    );
+    stage(['up', 'up'], () => run.strongholds[0].anchors.every((anchor) => anchor.captured));
+    stage(
+      () => toward('y', [6.5, 6.5]),
+      () => at('y', [6.5, 6.5]),
+    );
+    stage(['right', 'left'], () => run.status === 'won');
+  }
+  if (finishHistorical) {
+    stage(['up', 'up'], () => run.players.every((player) => player.y <= 0.51));
+    stage(
+      () => toward('x', [60.5, 50.5]),
+      () => at('x', [60.5, 50.5]),
+    );
+    stage(['down', 'down'], () => run.players.every((player) => player.y >= 34.99));
+    stage(
+      () => toward('x', [10.5, 20.5]),
+      () => at('x', [10.5, 20.5]),
+    );
+    stage(['up', 'up'], () => run.players.every((player) => player.y <= 1));
+  }
+  return segments;
 }
 
 function writeEdition(indexedDB, editionId, update) {
@@ -103,14 +214,35 @@ test('legal Team clears persist under the exact edition and reject mutable run i
     campaign = await prepared(7),
     { editionId } = await store.install(campaign),
     level = campaign.pack.levels[0],
-    run = createCreatorTeamAttempt(campaign.pack, level.id, 'standard', 'full'),
+    run = createInstalledTeamAttempt(campaign.pack, level.id, 'standard', 'full'),
+    gameplayId = installedTeamGameplayId(campaign.pack, level.id, 'standard', 'full'),
+    segments = recordRoute(run),
+    attempt = createInstalledTeamAttemptSnapshot({
+      editionId,
+      attemptId: 'run-installed-team-1',
+      gameplayId,
+      presetId: 'full',
+      run,
+      segments,
+    }),
+    reward = {
+      kind: 'picture',
+      sourceKind: 'registered-original',
+      sha256: 'a'.repeat(64),
+      bytes: 1200,
+      mime: 'image/png',
+      width: 1152,
+      height: 576,
+    },
     receipt = {
       editionId,
       levelId: level.id,
       runId: 'run-installed-team-1',
-      gameplayId: dataIdentity({ ruleset: run.ruleset, level: run.level }),
+      gameplayId,
       difficulty: 'standard',
       presetId: 'full',
+      attempt,
+      reward,
     };
   const first = await store.recordCompletion(receipt),
     duplicate = await store.recordCompletion(receipt),
@@ -122,16 +254,14 @@ test('legal Team clears persist under the exact edition and reject mutable run i
     gameplayId: receipt.gameplayId,
     difficulty: 'standard',
     presetId: 'full',
+    reward,
   });
-  const changedAttempt = createCreatorTeamAttempt(campaign.pack, level.id, 'gentle', 'full');
   await assert.rejects(
     store.recordCompletion({
       ...receipt,
-      gameplayId: dataIdentity({
-        ruleset: changedAttempt.ruleset,
-        level: changedAttempt.level,
-      }),
+      gameplayId: installedTeamGameplayId(campaign.pack, level.id, 'gentle', 'full'),
       difficulty: 'gentle',
+      attempt: { ...attempt, difficulty: 'gentle' },
     }),
     /cannot change identity/,
   );
@@ -141,16 +271,74 @@ test('legal Team clears persist under the exact edition and reject mutable run i
       runId: 'run-installed-team-2',
       gameplayId: 'changed-gameplay',
     }),
-    /does not match the installed configuration/,
+    /differs from its exact replayed attempt/,
   );
   await assert.rejects(
     store.recordCompletion({
       ...receipt,
       editionId: 'f'.repeat(64),
       runId: 'missing',
+      attempt: { ...attempt, editionId: 'f'.repeat(64), attemptId: 'missing' },
     }),
     /no longer installed/,
   );
+  store.close();
+  const reopened = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB }),
+    reopenedInventory = await reopened.inventory();
+  assert.deepEqual(reopenedInventory.editions[0].progress.clears[level.id].reward, reward);
+  reopened.close();
+});
+
+test('unfinished Team checkpoints replay exactly, reject stale writers and clear only their own attempt', async () => {
+  const memory = managedIndexedDB(),
+    store = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB }),
+    campaign = await prepared(8),
+    { editionId } = await store.install(campaign),
+    level = campaign.pack.levels[0],
+    run = createInstalledTeamAttempt(campaign.pack, level.id, 'expert', 'joint'),
+    gameplayId = installedTeamGameplayId(campaign.pack, level.id, 'expert', 'joint'),
+    commands = [
+      { direction: 'down', boost: true, support: false },
+      { direction: 'down', boost: true, support: false },
+    ];
+  for (let index = 0; index < 25; index++) stepCoop(run, commands);
+  const snapshot = createInstalledTeamAttemptSnapshot({
+      editionId,
+      attemptId: 'saved-team-attempt',
+      gameplayId,
+      presetId: 'joint',
+      run,
+      segments: [{ ticks: 25, commands }],
+    }),
+    saved = await store.recordAttempt(snapshot, { expectedGeneration: 0 }),
+    restored = await store.restoreAttempt(editionId, level.id);
+  assert.equal(saved.generation, 1);
+  assert.equal(restored.generation, 1);
+  assert.deepEqual(restored.snapshot, snapshot);
+  assert.equal(restored.run.tick, run.tick);
+  assert.deepEqual(restored.run.players, run.players);
+  await assert.rejects(
+    store.recordAttempt(snapshot, { expectedGeneration: 0 }),
+    /changed in another tab/,
+  );
+  await assert.rejects(
+    store.clearAttempt({
+      editionId,
+      levelId: level.id,
+      attemptId: 'newer-attempt',
+      expectedGeneration: 1,
+    }),
+    /newer installed Team attempt/,
+  );
+  const cleared = await store.clearAttempt({
+    editionId,
+    levelId: level.id,
+    attemptId: snapshot.attemptId,
+    expectedGeneration: 1,
+  });
+  assert.equal(cleared.generation, 2);
+  assert.deepEqual(cleared.attempts, {});
+  await assert.rejects(store.restoreAttempt(editionId, level.id), /no saved attempt/);
 });
 
 test('inventory and launch reject changed stored package bytes before gameplay', async () => {
@@ -169,4 +357,109 @@ test('inventory and launch reject changed stored package bytes before gameplay',
   });
   await assert.rejects(reopened.inventory(), /integrity check/);
   await assert.rejects(reopened.load(editionId), /integrity check/);
+});
+
+test('a verified old Retry completion clears only its matching checkpoint without issuing another receipt', async () => {
+  const memory = managedIndexedDB(),
+    store = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB }),
+    campaign = await prepared(8),
+    { editionId } = await store.install(campaign),
+    level = campaign.pack.levels[0],
+    tuning = historicalTuning('standard'),
+    gameplayId = installedTeamGameplayId(campaign.pack, level.id, 'standard', 'full', tuning),
+    run = createInstalledTeamAttempt(campaign.pack, level.id, 'standard', 'full', tuning),
+    segments = recordRoute(run, { finishHistorical: true }),
+    attempt = createInstalledTeamAttemptSnapshot({
+      editionId,
+      attemptId: 'old-picture-id',
+      gameplayId,
+      presetId: 'full',
+      tuning,
+      run,
+      segments,
+    }),
+    receipt = {
+      editionId,
+      levelId: level.id,
+      runId: attempt.attemptId,
+      gameplayId,
+      difficulty: 'standard',
+      presetId: 'full',
+      attempt,
+    },
+    first = await store.recordCompletion(receipt),
+    retry = createInstalledTeamAttempt(campaign.pack, level.id, 'standard', 'full', tuning),
+    commands = segments[0].commands;
+  for (let i = 0; i < 10; i++) stepCoop(retry, commands);
+  const snapshot = createInstalledTeamAttemptSnapshot({
+    editionId,
+    attemptId: attempt.attemptId,
+    gameplayId,
+    presetId: 'full',
+    tuning,
+    run: retry,
+    segments: [{ ticks: 10, commands }],
+  });
+  const saved = await store.recordAttempt(snapshot, { expectedGeneration: first.generation });
+  await assert.rejects(
+    store.recordCompletion({ ...receipt, expectedGeneration: first.generation }),
+    /changed in another tab/,
+  );
+  await assert.rejects(
+    store.recordCompletion({
+      ...receipt,
+      attempt: {
+        ...attempt,
+        checkpoint: { ...attempt.checkpoint, stateIdentity: '0000000000000000' },
+      },
+      expectedGeneration: saved.generation,
+    }),
+    /verification/,
+  );
+  assert.deepEqual((await store.recordCompletion(receipt)).attempts[level.id], snapshot);
+  const cleaned = await store.recordCompletion({
+    ...receipt,
+    expectedGeneration: saved.generation,
+  });
+  assert.equal(cleaned.generation, saved.generation + 1);
+  assert.deepEqual(cleaned.clears, first.clears);
+  assert.deepEqual(cleaned.attempts, {});
+  const newer = await store.recordAttempt(
+    { ...snapshot, attemptId: 'newer-id' },
+    { expectedGeneration: cleaned.generation },
+  );
+  const duplicate = await store.recordCompletion({
+    ...receipt,
+    expectedGeneration: newer.generation,
+  });
+  assert.deepEqual(duplicate, newer);
+  const divergedRun = createInstalledTeamAttempt(
+    campaign.pack,
+    level.id,
+    'standard',
+    'full',
+    tuning,
+  );
+  const neutral = [
+    { direction: null, boost: false, support: false },
+    { direction: null, boost: false, support: false },
+  ];
+  stepCoop(divergedRun, neutral);
+  const divergedSnapshot = createInstalledTeamAttemptSnapshot({
+    editionId,
+    attemptId: attempt.attemptId,
+    gameplayId,
+    presetId: 'full',
+    tuning,
+    run: divergedRun,
+    segments: [{ ticks: 1, commands: neutral }],
+  });
+  const diverged = await store.recordAttempt(divergedSnapshot, {
+    expectedGeneration: newer.generation,
+  });
+  await assert.rejects(
+    store.recordCompletion({ ...receipt, expectedGeneration: diverged.generation }),
+    /newer installed Team attempt/,
+  );
+  store.close();
 });

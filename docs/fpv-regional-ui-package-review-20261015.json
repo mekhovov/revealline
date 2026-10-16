@@ -1,0 +1,167 @@
+{
+  "scope": "Historical exact UI package qualification, not qualification of later rebased commits",
+  "retrieval": {
+    "sourceRevision": "c2e18b4bb9b0efd27bae9a795a06c415fa4291f9",
+    "sourceTree": "9c5e7d765594a63913ba2934d77aad954835f899",
+    "version": "v0.151.1",
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "revision": "7348eeecdbb1f38e87ebccad3c0c22e456c04d8e3dda3900611648359f534289",
+    "cloudRun": 38661454390,
+    "githubArtifactId": 11938648679,
+    "topLevelChecksumsVerified": 15,
+    "browserOfflineVerified": false,
+    "files": {
+      "github-artifact.zip": {
+        "bytes": 23036895,
+        "sha256": "b836b337a4fd04d14332cf13eabca0a8a7ac07072e3b0fad8481ad41ea9f2c30"
+      },
+      "distribution-optional-fpv-worlds.zip": {
+        "bytes": 17399922,
+        "sha256": "8d172b202d55f90295316215c6ac9db264a91d790d7031246b90bb092a43692c"
+      },
+      "manifest-optional-fpv-worlds.json": {
+        "bytes": 28768,
+        "sha256": "97a9b648ae7b20a54f38677b00a57c84d63a69ee377cdecba17d1e6bfa3395ff"
+      }
+    }
+  },
+  "archives": {
+    "sourceRevision": "c2e18b4bb9b0efd27bae9a795a06c415fa4291f9",
+    "sourceTree": "9c5e7d765594a63913ba2934d77aad954835f899",
+    "version": "v0.151.1",
+    "scope": "Every archive member length/hash and exact inventory verified; not native/browser qualification",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "kind": "distribution",
+        "verifiedMembers": 94,
+        "uncompressedBytes": 3739613,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3753297,
+        "archiveSHA256": "365475eea7ba9391014bcbf3f30680c827fb73a21edf8bcd1cdf6b32db840067"
+      },
+      {
+        "id": "civilian-flight",
+        "kind": "source",
+        "verifiedMembers": 96,
+        "uncompressedBytes": 3773167,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3787187,
+        "archiveSHA256": "22fbc45d631dc69edaf4c1ceb65375e1ad9c97b55b34633a53a8c4d78fd4486a"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "distribution",
+        "verifiedMembers": 101,
+        "uncompressedBytes": 6751694,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6766712,
+        "archiveSHA256": "062b437c73996d7855dbfea9765690b00973600755e5d45ca1e08b1bbf8f304e"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "source",
+        "verifiedMembers": 103,
+        "uncompressedBytes": 6786758,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6802080,
+        "archiveSHA256": "c4cf9ff55c2c298b6c98187941bf9dee4f1e795a3187d148a5d5c8b3e8376de0"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "distribution",
+        "verifiedMembers": 157,
+        "uncompressedBytes": 17374494,
+        "limits": {
+          "files": 159,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17399922,
+        "archiveSHA256": "8d172b202d55f90295316215c6ac9db264a91d790d7031246b90bb092a43692c"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "source",
+        "verifiedMembers": 159,
+        "uncompressedBytes": 17417457,
+        "limits": {
+          "files": 159,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17443189,
+        "archiveSHA256": "844d2f54bfdc189976a3a14c6fd16c09d1487c9da85f91ee556c022b987ebe62"
+      }
+    ]
+  },
+  "importClosure": {
+    "scope": "Finished archive transitive import graph; no source-file fallback or execution",
+    "validatorSource": "3ccc72b25a29d5cd93b1bd4ecc4dd09d9b1e5207",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "modules": 68,
+        "imports": 96
+      },
+      {
+        "id": "civilian-fpv",
+        "modules": 81,
+        "imports": 152
+      },
+      {
+        "id": "fpv-worlds",
+        "modules": 129,
+        "imports": 319
+      }
+    ]
+  },
+  "native": {
+    "sourceRevision": "c2e18b4bb9b0efd27bae9a795a06c415fa4291f9",
+    "origin": "http://127.0.0.1:9047",
+    "packageRevision": "7348eeecdbb1f38e87ebccad3c0c22e456c04d8e3dda3900611648359f534289",
+    "observations": [
+      "Fresh launcher Download -> Ready offline -> Open prepared game",
+      "Normal Explore -> remote Urban review-r1 Download -> Saved -> Fly ready at 3 m with zero input/disarmed",
+      "Menu fully labelled; Tower Court Restart here returns ready zero-input/disarmed",
+      "Explicit Arm and keyboard flight then Space produce paused movement",
+      "Compact Menu/View present; no stale Preparing flight announcement"
+    ],
+    "screenshot": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-ui-package-flight.png",
+    "contextRecovery": {
+      "result": "passed",
+      "method": "Explicit external toolbar invoking WEBGL_lose_context against the unchanged packaged player; actual loss and restoration events observed",
+      "observations": [
+        "Installed Urban review-r1 Fly starts ready at 3 m, zero input and disarmed",
+        "After deliberate Arm and W for one second, loss event 1 pauses flight, disables Arm and displays the interruption cue",
+        "Restoration event 1 leaves flight paused; no automatic arming",
+        "Menu exposes labelled Retry and Starting point; Retry retains the pause menu and restores flight/camera setup",
+        "Deliberate Resume, W 1800 ms, Shift+Up 1200 ms, then Space produces paused flight at 2.6 m, vertical speed +3.3 m/s, drift 0.8 m/s and throttle 64 percent"
+      ],
+      "screenshots": [
+        "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-ui-package-context-recovery.png",
+        "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-ui-package-context-recovered-flight.png"
+      ]
+    },
+    "stoppedOriginOffline": "not repeated on this candidate",
+    "hardwareAcceptance": false
+  },
+  "limitations": [
+    "No stopped-origin or all-network-offline journey repeated on this candidate",
+    "No physical controller, phone, handheld or device FPS acceptance",
+    "No qualification of later controller ambiguity, cold preparation, Railway appearance or automatically rebased source",
+    "publicEligible remains false"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-10-15T14:51:39.279722+00:00",
+  "scope": "Bounded authoring native structural, camera and material tier review; early source study, not player/Library/final-art/device qualification",
+  "sourceHead": "03e5b140",
+  "cameraHead": "cf495a6c",
+  "materialBytesHead": "aff67a91",
+  "materialProofHead": "2a9dde65",
+  "previewTierHead": "41ccf750",
+  "origins": [
+    9163,
+    9165
+  ],
+  "checks": {
+    "dishPiersMeetShell": true,
+    "receiverAndThreeFeedStrutsVisible": true,
+    "brokenRimCameraAboveTerrain": true,
+    "previousUndergroundBlueVoidAbsent": true,
+    "tiers": {
+      "balanced": "9163 dish + support view",
+      "performance": "9165 terrain and scenery query forwarding, supports555528B/45meshes",
+      "quality": "9165 terrain and scenery query forwarding, supports555528B/45meshes"
+    },
+    "nativeWarningsErrors": [],
+    "releaseEachTier": "Resources released; no live scenery or collision."
+  },
+  "evidence": [
+    "lunar-composition-r2-supports-native-20261015.png",
+    "lunar-composition-r2-dish-native-20261015.png",
+    "lunar-composition-r2-rim-native-20261015.png",
+    "lunar-composition-performance-native-20261015.png",
+    "lunar-composition-quality-native-20261015.png"
+  ],
+  "acceptance": {
+    "boundedSourceCorrection": true,
+    "representativeArt": false,
+    "libraryAdmission": false
+  },
+  "remaining": [
+    "Exact immutable corrected delivery, retained-source parity and Library package/native admission.",
+    "Sparse low-detail landscape and landmark refinement remain below final representative art standard.",
+    "No hardware FPS, collision-flight or all-view acceptance inferred from this static review."
+  ],
+  "preservation": [
+    "9151 original underground camera/material negative review retained.",
+    "9161 corrected palette but unsupported dish evidence retained.",
+    "9163 frozen before tier-forwarding authoring correction retained."
+  ]
+}

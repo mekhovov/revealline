@@ -1,0 +1,55 @@
+{
+  "format": "FPVAlpineStationApronDeliveryPreparation.v1",
+  "sourceHead": "a2361327dfae9d78e63b3c0e0d51071056359781",
+  "sourceReceiptHead": "32f3405c28ffb55b9416e46f7ff5d881c08522d1",
+  "sourceMerge": "e51ff517ed7a870bf57736d9115dda781521f64c",
+  "sourceRevision": "relief-r5-station-apron",
+  "oldImmutableHead": "02f2b140d06cc930d8d4dd6b01abcd860db75436",
+  "oldNamespace": "authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/",
+  "newNamespace": "authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/",
+  "revision": "station-r5",
+  "pin": {
+    "bytes": 115316,
+    "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa"
+  },
+  "payloadFiles": 722,
+  "payloadBytes": 22584529,
+  "totalWithDescriptorBytes": 22699845,
+  "reusedBlobCount": 716,
+  "changedPayloads": [
+    {
+      "path": "scenery/alpine-12-12.glb",
+      "bytes": 47920,
+      "sha256": "429fb5364767387ce3de9484c5868dffee914d2bc50072af8856d30bda397ed9"
+    },
+    {
+      "path": "scenery/alpine-12-12.json",
+      "bytes": 58643,
+      "sha256": "0f0c3bfc9e9806177ae74bab0718bfb20bf1f275f31d6235d169ef6d14372b5d"
+    },
+    {
+      "path": "scenery/alpine-13-12.glb",
+      "bytes": 268788,
+      "sha256": "fb5e2997036e59d05f226409e42776193ab7efb7a332c09f76a40d8db7b8e994"
+    },
+    {
+      "path": "scenery/alpine-13-12.json",
+      "bytes": 338668,
+      "sha256": "96c0f6a43bb206e1fd35dcf99f2a8f484b613c8b390966ddeab3a0c988215989"
+    },
+    {
+      "path": "scenery/region.json",
+      "bytes": 50338,
+      "sha256": "991f8d7811ac63ca541d1523b497ec546828433aecd257f76f311101f9d30cc1"
+    },
+    {
+      "path": "terrain/region.json",
+      "bytes": 105522,
+      "sha256": "ba98fa057b0bb664f36649c43b521c2a8212ba63c06a895e3b63692c3787b867"
+    }
+  ],
+  "oldFilesPreserved": true,
+  "actualDownloadedByteQualification": false,
+  "productionSessionQualification": false,
+  "playerAdmission": false
+}

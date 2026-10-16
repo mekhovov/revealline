@@ -1,0 +1,143 @@
+{
+  "format": "classic-snake-boundary-observations.v1",
+  "observedAt": "2026-10-03T01:06:18.291Z",
+  "scope": "Focused direct production model observations of admitted explicit fixtures; no test runner or live state mutation. Added regression test file remains unrun under suite waiver.",
+  "coreSha256": "6625ed2469b201fa1a852e974c179b706bd3dca893bc81d6ecd7e21eec4b7c0f",
+  "unchangedSource": true,
+  "queuedTurnRestore": {
+    "reverseAccepted": false,
+    "downAccepted": true,
+    "reversePendingAccepted": false,
+    "leftAccepted": true,
+    "thirdAccepted": false,
+    "head": {
+      "x": 5,
+      "y": 3
+    },
+    "pending": ["left"],
+    "exactReplay": true
+  },
+  "vacatingTail": {
+    "tick": 3,
+    "status": "running",
+    "body": [
+      {
+        "x": 4,
+        "y": 2
+      },
+      {
+        "x": 4,
+        "y": 3
+      },
+      {
+        "x": 5,
+        "y": 3
+      },
+      {
+        "x": 5,
+        "y": 2
+      }
+    ],
+    "exactReplay": true
+  },
+  "teamSwap": {
+    "tick": 3,
+    "elapsedMs": 600,
+    "status": "lost",
+    "catches": 0,
+    "events": [
+      {
+        "type": "snake.failed",
+        "tick": 3,
+        "playerId": 0,
+        "cause": "head-swap",
+        "at": {
+          "x": 8,
+          "y": 5
+        }
+      },
+      {
+        "type": "snake.failed",
+        "tick": 3,
+        "playerId": 1,
+        "cause": "head-swap",
+        "at": {
+          "x": 7,
+          "y": 5
+        }
+      },
+      {
+        "type": "run.completed",
+        "tick": 3,
+        "status": "lost",
+        "catches": 0,
+        "score": 0,
+        "failure": {
+          "cause": "head-swap",
+          "players": [
+            {
+              "playerId": 0,
+              "cause": "head-swap",
+              "at": {
+                "x": 8,
+                "y": 5
+              }
+            },
+            {
+              "playerId": 1,
+              "cause": "head-swap",
+              "at": {
+                "x": 7,
+                "y": 5
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "exactReplay": true
+  },
+  "stepLimit": {
+    "limit": 30000,
+    "tick": 30000,
+    "elapsedMs": 6000000,
+    "status": "lost",
+    "failure": {
+      "cause": "step-limit",
+      "players": []
+    },
+    "turns": 0,
+    "exactReplay": true,
+    "observationAndReplayWallMs": 36
+  },
+  "inputLimit": {
+    "limit": 16384,
+    "tick": 16383,
+    "elapsedMs": 3276600,
+    "status": "lost",
+    "failure": {
+      "cause": "input-limit",
+      "players": []
+    },
+    "turns": 16384,
+    "exactReplay": true
+  },
+  "catchClock": {
+    "afterCatch": {
+      "tick": 11,
+      "catches": 1,
+      "elapsedMs": 1980
+    },
+    "followingFatalStep": {
+      "tick": 12,
+      "elapsedMs": 2150,
+      "cause": "wall"
+    },
+    "exactReplay": true
+  },
+  "limits": [
+    "These are model observations, not physical keyboard/gamepad/touch qualification.",
+    "An authored Solo win is retained separately; Team campaign completion and every mission solution are not claimed.",
+    "UI wrapper ownership, wall-clock scheduling, pausing, import/export and visual behavior require separate host evidence."
+  ]
+}

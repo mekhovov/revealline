@@ -1,0 +1,53 @@
+{
+  "recordedAt": "2026-09-29T05:33:49.462731+00:00",
+  "files": [
+    {
+      "path": "browser-observation-final.json",
+      "bytes": 3193397,
+      "sha256": "2c943ad9352dcb1022f0c9cc93bf9c1d07fcdad5d8119214a719201452a4cc1e",
+      "status": "finalized",
+      "elapsedSeconds": 7204.141
+    },
+    {
+      "path": "browser-observation-checkpoint-io-failure.json",
+      "bytes": 3038380,
+      "sha256": "7d9316fe3be11067719394702e2f94e430f7c76b5b6edc3f1ee0ac1211898dd4",
+      "status": "incomplete",
+      "elapsedSeconds": 6932.625099999994
+    },
+    {
+      "path": "browser-observation-running.json",
+      "bytes": 2638710,
+      "sha256": "bc6ed2c4ec6ae30566acc05ae27767ef0fd978fe5e9bba55e1cbad3f73cf8e32",
+      "status": "incomplete",
+      "elapsedSeconds": 5985.667899999976
+    }
+  ],
+  "storageFailure": {
+    "at": "2026-09-29T05:22:57.506Z",
+    "elapsedSeconds": 6720.5555,
+    "observerType": "checkpoint-storage-unavailable",
+    "observerName": "DataError",
+    "observerMessage": "Failed to write blobs (IOError)",
+    "localWrites": "ENOSPC while opening report files and a tiny shell write probe",
+    "priorLocalSnapshotUnchanged": true,
+    "retainedMemoryCheckpointSeconds": 6932.625099999994,
+    "finalSave": "Disk space later became available; exact final bytes saved atomically and hash-verified before tab/server cleanup.",
+    "causeOfSpaceRecovery": "Not determined; no unrelated files or processes modified.",
+    "recoveryDatabaseRetest": false
+  },
+  "resourceCleanup": {
+    "observerTab": "34",
+    "observerURL": "http://127.0.0.1:8820/game/test/browser/demo-watch.html",
+    "tabCloseConfirmed": true,
+    "serverExecSession": 67109,
+    "verifiedServerPID": 57077,
+    "verifiedServerCommand": "python3 -m http.server 8820 --bind 127.0.0.1",
+    "verifiedServerCwd": "/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test",
+    "serverStoppedBySessionCtrlC": true,
+    "sessionExitCode": 0,
+    "port8820ListenerAbsentAfterStop": true,
+    "port8779Untouched": true,
+    "limitations": "Tab/server ownership and closure verified; no per-Worker/listener/browser-process cleanup counters or post-close heap snapshot obtained."
+  }
+}

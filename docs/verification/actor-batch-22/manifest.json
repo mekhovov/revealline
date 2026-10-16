@@ -1,0 +1,154 @@
+{
+  "parent": "a9ef79cdbaf5dabdcfe62893356bbf8bcc2b128d",
+  "productionReview": "deferred-not-passed",
+  "tests": {
+    "proceduralRotors": {
+      "pass": 50,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "motionBackground": {
+      "pass": 101,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "lensPracticeReplayRetry": {
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    }
+  },
+  "nativeEvidence": "Bounded local IAB keyboard capture/Pause/Resume at 1280x720; see native-observation.json. Not whole-roster, hardware, production, public or offline qualification.",
+  "files": [
+    {
+      "path": "game/ui/fpv-body-recipes.mjs",
+      "bytes": 5788,
+      "sha256": "f1e454e2878d9f404261d040eb2916d4d739f070287903a0bff9ea067b82df46"
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "bytes": 35351,
+      "sha256": "dd57c1d5e27bc3e0b382eeb4a08bb470eaffa8415adf826a4892fbea908ad157"
+    },
+    {
+      "path": "game/test/company-fpv-body-recipes.test.mjs",
+      "bytes": 12873,
+      "sha256": "0dc0ef0f12310c699b611a4d4280c6ff9ae1ca146ae2ccf03e700b5d656489fa"
+    },
+    {
+      "path": "game/test/pressure-combination-practice.test.mjs",
+      "bytes": 11722,
+      "sha256": "3d72bd02044a0053d7e664e921f4bf3cb4e67db051284360783e528a42dbf04f"
+    },
+    {
+      "path": "game/test/fixtures/pursuit-intercept-clear-routes.json",
+      "bytes": 31314,
+      "sha256": "43caa1faf0bbaf01e4b2ed653dd74b2e282ca12a630e47c40640fe9bd2bb5701"
+    },
+    {
+      "path": "authoring/motion-lab/app.js",
+      "bytes": 80101,
+      "sha256": "fa3dbfa7a7b48430cd2cc00e8a6910115ce7a69c475ec6878fc976a3500d9ea4"
+    },
+    {
+      "path": "game/test/motion-lab-display-host.test.mjs",
+      "bytes": 99721,
+      "sha256": "52401b95b06d65e0cda102ea0aeeded2275ab52e5adee2d06da3a1e8bcfd1920"
+    },
+    {
+      "path": "authoring/motion-lab/README.md",
+      "bytes": 53154,
+      "sha256": "b251a7fc8071ebe76e38ec976713c497d79981065239e84100969e807d51ce2f"
+    },
+    {
+      "path": "authoring/prompts/field-kit-production.md",
+      "bytes": 11038,
+      "sha256": "e7c757d766014c98a3dfe6295af2ee1291674b3f4760785df59dd1d6235c0ab9"
+    },
+    {
+      "path": "authoring/skills/xonix-animation-director/SKILL.md",
+      "bytes": 30891,
+      "sha256": "c682189d1d3973b698882edbb9d24f46bf576a5a5e94db06bbc95ede1cb30d63"
+    },
+    {
+      "path": "docs/character-game-feel-plan.md",
+      "bytes": 40507,
+      "sha256": "6b112ba454de0d1aea0a813eabe88d10a54a1026055d9bf030dca11e6fa8b824"
+    },
+    {
+      "path": "docs/drone-reference-review.md",
+      "bytes": 29853,
+      "sha256": "8990630d6ed752d6550674e4ec5e0c77aaec90377f5bf00711db7887aa2028d3"
+    },
+    {
+      "path": "docs/plan-status-2026-09-29.md",
+      "bytes": 28301,
+      "sha256": "d8c9cc8b738c2dee67bc0a9bd64826a6694894671b80bb1bc065b3493499ec5f"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/README.md",
+      "bytes": 7823,
+      "sha256": "c5eb01b82a641c9d4a1a9db55ba5e0254129d8eeb4b069de9611e8c220a67ac5"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/local-module-bytes.json",
+      "bytes": 312,
+      "sha256": "ba78b9c2b7655e3d52b3d64533269e55098c714d89aee8c7539cfa42111ab44d"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/motion-fixture-copy-red.tap.gz",
+      "bytes": 770,
+      "sha256": "aa38f1d58916085f45913667f5850a17cd65f11e3121892356435766245c0c37"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/motion-focused.tap",
+      "bytes": 24141,
+      "sha256": "7d5d7eab7050b331fb3d63dd58ab60b112b046d873eac79fcd692129d77a06ba"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/motion-parent-red.tap.gz",
+      "bytes": 707,
+      "sha256": "95ca32feb4e8442c317c825c7d17854d0244bef973b54e2135076d8b95d9f42a"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/native-observation.json",
+      "bytes": 991,
+      "sha256": "98f013c8be4da3cc9350c345130cf253255eb175d69bc7a592d599453db28c18"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/pressure-practice.tap",
+      "bytes": 450,
+      "sha256": "3fba2404e49b14b91ee85ee7e3da2c0b70e21b42d215ca3b3c6f142f88261f8b"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/rotors-focused.tap",
+      "bytes": 12385,
+      "sha256": "79ce4b1de287e964ab73d7b9405567bd4a35876782e6892197ad7cbd024828a1"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/rotors-parent-red.tap.gz",
+      "bytes": 9602,
+      "sha256": "4c20b5c87cebc4987ac40c90e2aabbc9c05474c07757667b87386873f3079667"
+    }
+  ],
+  "preservedLogDecoding": [
+    {
+      "path": "docs/verification/actor-batch-22/motion-fixture-copy-red.tap.gz",
+      "decodedBytes": 4632,
+      "decodedSha256": "8a30757a5fcf4e95775c6976234ff76a88b5a7bfe3cb50efe97892a22941ca9d"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/motion-parent-red.tap.gz",
+      "decodedBytes": 3957,
+      "decodedSha256": "984470204cfa3e4d47e2fab6e2ef558f936177a902921de10bdf0e996e106885"
+    },
+    {
+      "path": "docs/verification/actor-batch-22/rotors-parent-red.tap.gz",
+      "decodedBytes": 215929,
+      "decodedSha256": "611214e992ab1e68cb3a86ac478e65942d59844440d94a21686973ab8e1e2142"
+    }
+  ]
+}

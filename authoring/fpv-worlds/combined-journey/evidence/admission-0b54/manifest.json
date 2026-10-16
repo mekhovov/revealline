@@ -1,0 +1,150 @@
+{
+  "sourceRevision": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+  "sourceTree": "e946452076002444bfea9cd7d320da095bf927b5",
+  "fullValidationExit": 0,
+  "admissionExit": 0,
+  "packages": [
+    "civilian-flight",
+    "civilian-fpv",
+    "fpv-worlds"
+  ],
+  "buildsPerPackage": 2,
+  "sourceInputCount": 95,
+  "sourceBytes": 16741638,
+  "sourceReserveBytes": 35578,
+  "worldsMembers": 102,
+  "stagingChecks": 223,
+  "nativeAdmittedBrowser": "Pending; source453 pass remains explicitly separate.",
+  "archiveDirectory": "/private/tmp/fpv-combined-final-admission-0b54fd0fd",
+  "files": [
+    {
+      "file": "manifest-optional-civilian-flight.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/manifest-optional-civilian-flight.json",
+      "rawBytes": 8847,
+      "rawSHA256": "4ca5f6e376611bfb16bc2f0e465245399ede8ffd06de4028c17f583e2cf58c28",
+      "storedBytes": 2854,
+      "storedSHA256": "1ab216b7399aeeb81148c2a39fda1655d479b0342e60a60820848193d1065bb9"
+    },
+    {
+      "file": "manifest-optional-civilian-fpv.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/manifest-optional-civilian-fpv.json",
+      "rawBytes": 12570,
+      "rawSHA256": "d351c820c59bf9c06385929ad91dbc7b83b879460dc2dfae9c32ce037d776338",
+      "storedBytes": 4014,
+      "storedSHA256": "b2a605eb21a64bc507ee53c16b66a802083d8e224de7133b78d723deb2ac75e8"
+    },
+    {
+      "file": "manifest-optional-fpv-worlds.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/manifest-optional-fpv-worlds.json",
+      "rawBytes": 18746,
+      "rawSHA256": "0cd2175e2bf6d46b141df46154df8af61c7267905c6f902c67e9044ffafe0d32",
+      "storedBytes": 5868,
+      "storedSHA256": "e76ae49ec76c6210e7852706cc97024ffacf439d51a9e79fe9468e562f9a9591"
+    },
+    {
+      "file": "optional-candidate-verification.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/optional-candidate-verification.json",
+      "rawBytes": 1142,
+      "rawSHA256": "26920e9789f5851f4fa962910cfd386ed5f0e19735f1bcc65b34dcac9952bab9",
+      "storedBytes": 612,
+      "storedSHA256": "b229ea8b2a13bb958b463e687591fbf43f37282ea1a191fa391d39d76f1895dc"
+    },
+    {
+      "file": "optional-checksums.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/optional-checksums.json",
+      "rawBytes": 2136,
+      "rawSHA256": "be4e29fb949716f966a336a4b0aa3d47d8ce22c3e98ebc99d705e860361ea558",
+      "storedBytes": 919,
+      "storedSHA256": "f151d658b8b684198d9873826a93cdc44efa8ef2dc47e5d614fd2a7231dfaefa"
+    },
+    {
+      "file": "optional-package-review.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/optional-package-review.json",
+      "rawBytes": 2838,
+      "rawSHA256": "eff4316df6d7365810556e516ff33b11224a94d95a403dc0843b0df374c4742c",
+      "storedBytes": 459,
+      "storedSHA256": "b6297bb3f4c132d5c011dadcfad674e70ae3a3516ba7004e348f2d79a8be59c0"
+    },
+    {
+      "file": "optional-packages.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/optional-packages.json",
+      "rawBytes": 2633,
+      "rawSHA256": "1a3915d95fd1fa5d8d3506ed9b5e47b34933715091348b7e98c90c9aafe49a89",
+      "storedBytes": 1073,
+      "storedSHA256": "2b6c1a5813cb3de133e52e555b1e87e7bf75204b9626060e36326977bfcd9b73"
+    },
+    {
+      "file": "source-inventory-optional-civilian-flight.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/source-inventory-optional-civilian-flight.json",
+      "rawBytes": 14052,
+      "rawSHA256": "bd93b656d7f413d7993074de8ce03a90948b6ed4c9236bcabac6dd20fc99ef2c",
+      "storedBytes": 3449,
+      "storedSHA256": "60b0e6324089097db4a777d7fb9fecb4dce477ba2f3131827b2b513de6a4cd49"
+    },
+    {
+      "file": "source-inventory-optional-civilian-fpv.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/source-inventory-optional-civilian-fpv.json",
+      "rawBytes": 21034,
+      "rawSHA256": "78a5e20d6578a690bda105d44769431bac2808332e029b48cb70952fa6659853",
+      "storedBytes": 4993,
+      "storedSHA256": "8437c4ff3aad2a660ec068fd029a73fcc39e2c325be81f1ea3ac758fb7d57110"
+    },
+    {
+      "file": "source-inventory-optional-fpv-worlds.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-admission-0b54fd0fd/source-inventory-optional-fpv-worlds.json",
+      "rawBytes": 32166,
+      "rawSHA256": "a39cfe07d5b61b9f96cd810926eabcb2b46ecc2809a0dddeddeb389d2d63ab47",
+      "storedBytes": 7146,
+      "storedSHA256": "e68bdff4ff258fc50660fd63dd14c207c60207fb19ae48f312bd6a1fcad4c93f"
+    },
+    {
+      "file": "fpv-combined-final-validate.log.gz",
+      "originalPath": "/tmp/fpv-combined-final-validate.log",
+      "rawBytes": 3676,
+      "rawSHA256": "31402988a94f83b18b55d31575a4fb00f8b7cf5191f6a0614effcf2070f8890f",
+      "storedBytes": 1535,
+      "storedSHA256": "aadb80cdef43e2ddd81befb7b4da33674d9af044edc81018fed178ce9d8d3f6d"
+    },
+    {
+      "file": "fpv-combined-final-admission-0b54fd0fd.log.gz",
+      "originalPath": "/tmp/fpv-combined-final-admission-0b54fd0fd.log",
+      "rawBytes": 421,
+      "rawSHA256": "5789b53a9dd3779795554c8831ffa8e35e83bb1c4ec7cf1fc0549d891793286b",
+      "storedBytes": 289,
+      "storedSHA256": "a3182f392c62e860d3a72b2ed2d2c899b901917bb6fd6c894e415b107c4428b7"
+    },
+    {
+      "file": "fpv-combined-final-source-bridge.json.gz",
+      "originalPath": "/tmp/fpv-combined-final-source-bridge.json",
+      "rawBytes": 17257,
+      "rawSHA256": "b595c85460981bcee4143a96da84d646139b8291693c1c3be2c90db0340d92d2",
+      "storedBytes": 5604,
+      "storedSHA256": "ddda65ea7a7bc77f74c53b3b9e9c7deb397853d5091c5bbece882efd0dd291a1"
+    },
+    {
+      "file": "fpv-combined-final-player-0b54fd0fd.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-final-player-0b54fd0fd.json",
+      "rawBytes": 42957,
+      "rawSHA256": "63f8feb89d56aa008ccd26bc982acd822881ef254486c07c44b5450936800e14",
+      "storedBytes": 7351,
+      "storedSHA256": "c734176a23f4a54c45c3e845d643858973046b1466febb06f079875d6d812225"
+    },
+    {
+      "file": "fixture.json.gz",
+      "originalPath": "/private/tmp/fpv-combined-journey-admitted-0b54f-r4/fixture.json",
+      "rawBytes": 47433,
+      "rawSHA256": "d7e0cb7c4b508f0641f05d57f2a85a4a2bf433f29911195744d618baa10c0776",
+      "storedBytes": 8962,
+      "storedSHA256": "373480a6dcfd62881dd82117a5764982b187977c8e3b15e6223f5fd3927b4397"
+    },
+    {
+      "file": "fpv-library-1093-main-update-40b2.json.gz",
+      "originalPath": "/tmp/fpv-library-1093-main-update-40b2.json",
+      "rawBytes": 10433,
+      "rawSHA256": "24d9230d81e35da3e843f64831a9298e506620f2d3af69a088aa226963e3de1d",
+      "storedBytes": 2065,
+      "storedSHA256": "890545bdf01ee31736aa15719e0ee91d09f43052c96a46b1f1455ed80f27876a"
+    }
+  ],
+  "restore": "gzip -dc <name.gz> > <name>; compare rawBytes/rawSHA256"
+}

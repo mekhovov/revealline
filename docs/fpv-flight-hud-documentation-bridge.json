@@ -1,0 +1,23 @@
+{
+  "purpose": "All admitted package inputs remain byte-exact after documentation/evidence checkpoint",
+  "packages": [
+    {
+      "package": "civilian-flight",
+      "inputs": 42,
+      "mismatches": [],
+      "sourceRevision": "3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852"
+    },
+    {
+      "package": "civilian-fpv",
+      "inputs": 69,
+      "mismatches": [],
+      "sourceRevision": "3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852"
+    },
+    {
+      "package": "fpv-worlds",
+      "inputs": 105,
+      "mismatches": [],
+      "sourceRevision": "3bbdc8dda7e1613fe4c2b838c40ffbbe9493f852"
+    }
+  ]
+}

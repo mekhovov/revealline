@@ -1,0 +1,16 @@
+{
+  "format": "FPVStoppedOriginEvidence.v1",
+  "origin": "http://127.0.0.1:58606",
+  "stoppedAtUTC": "2026-10-04T22:15:21Z",
+  "refusalObservedAtUTC": "2026-10-04T22:15:21Z",
+  "verifiedPID": 95480,
+  "verifiedCommand": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -m http.server 0 --bind 127.0.0.1 --directory /private/tmp/fpv-festival-r5-native-0b54-v1",
+  "execSession": 16479,
+  "stop": "Ctrl-C to the verified dedicated exec session; exit0",
+  "request": "curl --max-time 3 --silent --show-error --output /dev/null http://127.0.0.1:58606/",
+  "result": {
+    "exitCode": 7,
+    "message": "Failed to connect to 127.0.0.1 port58606: connection refused"
+  },
+  "scope": "Only dedicated Festival server stopped; fixture files remain immutable. This receipt proves origin refusal, not the subsequent browser offline journey."
+}

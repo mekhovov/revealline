@@ -1,0 +1,118 @@
+{
+  "format": "FPVWorldVisualCapacityEvidence.v1",
+  "candidate": "d9ac8ee1937fb473107278ad613d33314ab9dd0d",
+  "files": [
+    {
+      "path": "fpv-visual-capacity-d9ac-validate.log.gz",
+      "originalBytes": 3676,
+      "originalSHA256": "85e84e06907e14c87a87291bde18f83910222e2ec62bc52c3704dc40753785d1",
+      "storedBytes": 1534,
+      "storedSHA256": "cdcd97f9407c12577822fe6d4c8b26062a6c0d175b6dea91282253c79c64f152"
+    },
+    {
+      "path": "fpv-visual-capacity-d9ac-admission.log.gz",
+      "originalBytes": 417,
+      "originalSHA256": "c39cd20852f7bb4f25f6dcb3c730d926ab635adc2b735099ea91ef3333da933b",
+      "storedBytes": 290,
+      "storedSHA256": "9989fe7f75efdeb71b44151a6350289c040331d1051f57adad6cfa8c4dbc6c22"
+    },
+    {
+      "path": "fpv-visual-capacity-compare-d9ac.json.gz",
+      "originalBytes": 2226,
+      "originalSHA256": "8196abf58c5836a3d6eb57df4c5f0fdb54b40f4a017d9d7652eec209fcf44bc9",
+      "storedBytes": 837,
+      "storedSHA256": "64c47c51140c3995e49316c937107668174d7a2aec046449de4f825386fb122b"
+    },
+    {
+      "path": "fpv-visual-capacity-compare-d9ac.mjs.gz",
+      "originalBytes": 3153,
+      "originalSHA256": "83165f80c7e6b9ffbbf21076811e79c6f6ddb4b68eb87858366fe4e7f38d7878",
+      "storedBytes": 1390,
+      "storedSHA256": "4ae2fdaa7146008d2a3ddfd1ca1fa1f7e7d23f2074879c6696cd5843d98952d2"
+    },
+    {
+      "path": "fpv-visual-capacity-identity-d9ac.json.gz",
+      "originalBytes": 584,
+      "originalSHA256": "ab62f72ba60d800b8bec196f29758a989cc37b64c6ccd82397a24782c2aa3aa7",
+      "storedBytes": 391,
+      "storedSHA256": "c314839684a4bff0ea04697b71091146f51076b28d3580411307165a59f8ffd1"
+    },
+    {
+      "path": "fpv-visual-capacity-existing-checks-d9ac.log.gz",
+      "originalBytes": 865,
+      "originalSHA256": "c6f415f427fe9d8289e5f2723e8c986c4b83b9c2212a31850bc44fd79a6ea059",
+      "storedBytes": 347,
+      "storedSHA256": "ce32585fc630b77dc85cc65d7f2f04c84ebfbdfb02347763e60503f957f33c56"
+    },
+    {
+      "path": "source-inventory-optional-civilian-fpv.json.gz",
+      "originalBytes": 21034,
+      "originalSHA256": "4e21f533fd15265424bc850a168bc161613bc70947a80d5ebc29dfc418390ce5",
+      "storedBytes": 4999,
+      "storedSHA256": "ec366b59256743faa930480e059babd6b3e45ac74936d830eb92cbc3ccb99e8e"
+    },
+    {
+      "path": "source-inventory-optional-civilian-flight.json.gz",
+      "originalBytes": 14052,
+      "originalSHA256": "4c8247750d6efd5ff91647be6b27b65430d3fecb47c7f52d56d4b04f08793bca",
+      "storedBytes": 3451,
+      "storedSHA256": "2142e3e719757c0b021c032248833e86553ce6f95a7af03971078b9a3daa1ea8"
+    },
+    {
+      "path": "source-inventory-optional-fpv-worlds.json.gz",
+      "originalBytes": 32166,
+      "originalSHA256": "9f37289a9a15211b4ba3bb1b3ea725c293946ce5373201a8853e3d000343b23e",
+      "storedBytes": 7140,
+      "storedSHA256": "c826378dc2f20ee14a1b8ad4b00220740a78d4c85c7f69bede607dcd3c19f343"
+    },
+    {
+      "path": "optional-packages.json.gz",
+      "originalBytes": 2633,
+      "originalSHA256": "d70d82caae994364b93a6f28a9ce0566b045ab31d8843990b288e080a510076a",
+      "storedBytes": 1080,
+      "storedSHA256": "739a4c341c9be1c158d3236638453f880dcc7e928e700400dc70c18cca68b779"
+    },
+    {
+      "path": "optional-package-review.json.gz",
+      "originalBytes": 2838,
+      "originalSHA256": "f1d9c1d2243f8d35b20760e37a8d7155fb5552d2b4b8b60e5ce90630da0369fc",
+      "storedBytes": 459,
+      "storedSHA256": "620c8aa20d64e21b94c5e761447df94a1b8bb3d7455d4ef6e418ff5a447d051c"
+    },
+    {
+      "path": "manifest-optional-civilian-fpv.json.gz",
+      "originalBytes": 12570,
+      "originalSHA256": "2dc857d6b1e0eafd7e6cb4a4f39afe42b8a7c04a96036d0ab7aea2db27b45528",
+      "storedBytes": 4013,
+      "storedSHA256": "3c6bcf77e2c4fabc86a76b5ecdf0ee6c072b6d41a979440f0eee00e58a0c4a9c"
+    },
+    {
+      "path": "manifest-optional-fpv-worlds.json.gz",
+      "originalBytes": 18746,
+      "originalSHA256": "4fb8da974d780fe5390d87b30fba633e9f38ea255ff19793165b0acd1825b5b9",
+      "storedBytes": 5868,
+      "storedSHA256": "f9f8e2a198152fe7021453d30f676429b2fe9cdfc915d92f0a74d8f72bab2c2e"
+    },
+    {
+      "path": "optional-candidate-verification.json.gz",
+      "originalBytes": 1142,
+      "originalSHA256": "349cab841b26bac8b6576a3ae0a6604eef6487c7245483e7ea6faa39ef410952",
+      "storedBytes": 611,
+      "storedSHA256": "656a230b4996c0fe4324d3021d41fbe1dd54184229ae5a4b1985c48e33216207"
+    },
+    {
+      "path": "optional-checksums.json.gz",
+      "originalBytes": 2136,
+      "originalSHA256": "40e8fbc118354c14250d414f09099e82c1b237e17d71c6a5833f74a65ef0c2ab",
+      "storedBytes": 922,
+      "storedSHA256": "3e0d8261f91b7183bc910b61e4d3f7bd4640c1496279a2c7269943fcc4e0b6ab"
+    },
+    {
+      "path": "manifest-optional-civilian-flight.json.gz",
+      "originalBytes": 8847,
+      "originalSHA256": "3c7dfd59fcf5263bd3a49463e0b65903d84abdc7b57fa5ad39280903eb78f41a",
+      "storedBytes": 2857,
+      "storedSHA256": "f3df7f3257e76886fb5ac257ae59de636e8b7e96284502fa4b08fcfaf9e338c6"
+    }
+  ]
+}

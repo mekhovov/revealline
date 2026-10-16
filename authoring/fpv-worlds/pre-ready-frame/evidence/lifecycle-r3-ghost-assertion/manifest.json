@@ -1,0 +1,25 @@
+{
+  "format": "FPVLifecycleFailedEvidence.v1",
+  "completeReceipt": true,
+  "sourceRevision": "2f9a7a87876a4ee64eb5b7c581b3ea339aaba146",
+  "fixtureSha256": "89b3fa0e047d8bf55a4c05f90732a95f49026ec0191e44120caf88635fca11dd",
+  "files": [
+    {
+      "source": "/tmp/fpv-warm-lifecycle-8942-failed.json",
+      "bytes": 475698,
+      "sha256": "bbe95bc4579de18d6e75a1451a67fcd8be15709507fe19bcb5af544c20f21807",
+      "gzip": "fpv-warm-lifecycle-8942-failed.json.gz",
+      "gzipBytes": 28116,
+      "gzipSha256": "5819b4af63cf7e906a003a753d4586302b8227e74be07091d2e02bd0bf09c300"
+    },
+    {
+      "source": "/tmp/fpv-warm-lifecycle-8942-summary.json",
+      "bytes": 31081,
+      "sha256": "f72bfd5274ae182e15795a5ae5640c4470ce0f1c510fce05fd0146301d0ed9c1",
+      "gzip": "fpv-warm-lifecycle-8942-summary.json.gz",
+      "gzipBytes": 4000,
+      "gzipSha256": "b3edec552c234175d219db9120f649e2855c8a59be8fa558c1044815d7ba4513"
+    }
+  ],
+  "finding": "Genuine verified practice has 60 native frames and14 ghost samples. Native ghost pose matches the player at tick0 in FPV; unchanged production overlap culling intentionally sets visible=false. Fixture incorrectly demanded visibility before switching to a non-overlapping camera."
+}

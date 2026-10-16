@@ -1,0 +1,102 @@
+{
+  "receiptUTC": "2026-10-15T20:23:37.303930+00:00",
+  "sourceRevision": "e27e6e5d9deab1a6488e55729d275816d2d98a0d",
+  "packageRevision": "bffea641cb1ff497ece02f4e3489cfe62bdc068adb393783a4ed4a052e8296b1",
+  "artifact": 12001767730,
+  "origin": "http://127.0.0.1:9196",
+  "scope": "CUA normal player navigation using exact cloud package; genuine UI, no player-store injection or storage clearing. Same origin reopened after preserved connection-closing negative.",
+  "acceptedBoundary": "Library shortcut opens the existing canonical record/recovery settings, retains flight safety, and returns focus. This does not repair or explain the preserved connection invalidation.",
+  "observations": {
+    "desktop": "1280x720 Enter selects shortcut; Progress & Collection, focus backup-proofs; Escape closes Settings and returns library-flight-records focus",
+    "compact": "390x844 shortcut opens selected panel/backup focus, no overflow; Escape first returns categories, second returns Library shortcut. Back works.",
+    "locales": "English/Ukrainian shortcut and canonical category/backup labels observed; one existing storage-help status remains English immediately after locale change, not a complete localization pass.",
+    "oneCanonicalControlSet": true,
+    "initialSafety": "Existing First three builtin attempt explicitly paused before Library shortcut; canonical data stays Paused/Arm available. Mission-card click had already started builtin; no explicit-arm claim for this initial case.",
+    "negative": "Two normal Roadworks Play attempts failed before download. Both World and regional actions eventually displayed IDBDatabase connection is closing. Source/model/native cause unresolved. All raw negatives remain preserved.",
+    "freshConnection": "Normal close/reopen same exact origin/package/storage. Before shortcut/locale actions, first normal Roadworks Play now downloads and prepares Ready/Motors off at0m.",
+    "afterShortcut": "Menu→Settings→Content & Offline→Library→shortcut Enter focuses backup-proofs; Escape returns Library focus. Installed Roadworks Fly then succeeds Ready/disarmed.",
+    "explicitArmAndPause": "After that cached Fly, actual explicit Arm/resume starts running at0m/zero throttle. Pause then Settings→Content & Offline→Library→shortcut click stays Paused, Arm available, backup focus; Escape returns Library focus.",
+    "newConnectionFailureReproduced": false,
+    "failureCauseKnown": false,
+    "rootTabsClosed": true,
+    "dataCleared": false
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-closing-db-negative-native-20261015.txt",
+      "bytes": 18471,
+      "sha256": "d522037604d05235447e42350e5e9348a0f26ceba3db5f50d4d9ff8ba1e54c31"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-compact-panel-native-20261015.png",
+      "bytes": 32853,
+      "sha256": "25fbeae90828dee4cccf14b741ae38d1e4a1ed4e37e94e909fd8b662cbdf2107"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-desktop-panel-native-20261015.png",
+      "bytes": 55770,
+      "sha256": "d993604befba565d06f8c70382851f7ac4365b7cc66ce108eb8248a1b4873006"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-desktop-panel-native-20261015.txt",
+      "bytes": 17710,
+      "sha256": "8182097f13e7bc87d0a4ecaab2d911d338d7cc03ae585c29467f2892564f1584"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-paused-data-native-20261015.png",
+      "bytes": 57442,
+      "sha256": "6217042e7ba70472647cd3b2ec427953a661e93deb2eede2db12fab16f329d81"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-paused-data-native-20261015.txt",
+      "bytes": 18878,
+      "sha256": "17e5dc86d2169e00941d55b7f5524fa2591f7636e114120f1ffb767f7ebefa3c"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-pr-body-before-native-20261015.md",
+      "bytes": 2006,
+      "sha256": "d05f8834bf031ac9fafc304447f6f0d0fbd7ba3c5c1d00f56a7ec77450f8e0fc"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-reopen-paused-records-native-20261015.png",
+      "bytes": 57826,
+      "sha256": "100449e28751da18987aba41c92827267ab14726533692ca75f8c5f7ac9c2af0"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-reopen-paused-records-native-20261015.txt",
+      "bytes": 18965,
+      "sha256": "97b2dcde583f332fd75edd696217fefef531744221b768433ca3ddfa3d8d7761"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-reopen-roadworks-ready-native-20261015.png",
+      "bytes": 51736,
+      "sha256": "bc8bd7d77c44017c43faeb0a37d4fff874ff545472249a6db955c966fc5e3558"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-reopen-roadworks-ready-native-20261015.txt",
+      "bytes": 1373,
+      "sha256": "70cde4796408e6272cce765df8ba5ff472d3dced331be0e8c8a2cfc2b7589d80"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-roadworks-download-negative-native-20261015.txt",
+      "bytes": 17338,
+      "sha256": "e9e345eabb218ef676fcef5996d4f885f77f510ab9fd0f71f54a39813ff1d906"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-e27-uk-native-20261015.txt",
+      "bytes": 28154,
+      "sha256": "e169ba50cfc749096044e50097a02517073ce70ca766507f54ab522971d02ef5"
+    }
+  ],
+  "relatedReadOnlyDiagnosis": {
+    "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/library-records-roadworks-readonly-diagnosis-20261015/diagnosis-receipt.json",
+    "sha256": "5181b98371e1fa2c4c4330e5801a66a96afeeca016f7f45725586f85c529c338",
+    "scope": "External HTTP/hash/parser and memory-boundary ownership observations; no browser-cause proof."
+  },
+  "remaining": [
+    "diagnose native connection-closing trigger without data loss",
+    "physical controller/radio/touch acceptance",
+    "whole application restart/network-wide offline/eviction",
+    "public deployment/launch"
+  ]
+}

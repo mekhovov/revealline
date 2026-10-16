@@ -1,0 +1,76 @@
+{
+  "format": "FPVAlpineStationLibraryNative.v1",
+  "sourceHead": "d60dac54e5865bfc0e611eaec0503d255c4cbfcf",
+  "origin": "http://127.0.0.1:9174",
+  "artifactId": 11993068037,
+  "cloudRun": 38775327596,
+  "packageRevision": "2f967ccd619a6e7b5ff8ef9d55db4250060413d8e1fef8b5c129d9e11aed0795",
+  "immutableSourceCommit": "ffb79b67479f9ed5c8104610695ac8b5cb04edc7",
+  "deliveryRevision": "station-r3",
+  "descriptorSHA256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d",
+  "boundedNativeAccepted": true,
+  "reviewer": "coordinator CUA native observation",
+  "download": {
+    "firstAttempt": "Generic failure before a saved Fly offer appeared; negative screenshot preserved. Browser console had no error/warning.",
+    "recovery": "Refresh and one unchanged repeat Download saved station-r3; observed progress 15.3/21.5 MiB.",
+    "causeEstablished": false,
+    "firstAttemptReliabilityEstablished": false
+  },
+  "passed": [
+    "Normal recovered download and cached Fly after reload; UK locale and station-r3 retained.",
+    "Glacial 114 m and Summit 564 m starts prepare Ready/disarmed.",
+    "Summit FPV station detail, Chase and Overview; view changes do not arm.",
+    "Acro change stays paused; explicit Arm produces active Regional review, then pause.",
+    "EN/UK pause shows six correct start labels; previous r1/r2 offers stay visible.",
+    "390\u00d7844 and 844\u00d7390 browser layouts match document width with no horizontal overflow or observed control overlap."
+  ],
+  "limitations": [
+    "Two input tool deadlines were followed by correct observed navigation/paused state; no latency claim.",
+    "Not all six starts were independently flown natively.",
+    "Old r1/r2 offers were retained, but not reinstalled in this origin.",
+    "No real network-wide offline/browser restart, physical-device/controller or public-launch acceptance.",
+    "Bounded station material detail only; minified timber moire and wider representative art remain open."
+  ],
+  "evidence": [
+    {
+      "file": "alpine-station-r3-download-failure-native-20261015.png",
+      "bytes": 170603,
+      "sha256": "efdd5cce54e9139db258758ac479d39a32051c751cf020d3e76a2a93b7cbb050"
+    },
+    {
+      "file": "alpine-station-r3-fpv-native-20261015.png",
+      "bytes": 80989,
+      "sha256": "fa9d667dcf198ea64bd78826e3bc37d9e4b58a0de7aad5897c608abbcce40d9d"
+    },
+    {
+      "file": "alpine-station-r3-overview-native-20261015.png",
+      "bytes": 28060,
+      "sha256": "b6747b71d3962840479d11af31b12989c607fa35df31b7778b50c269c23bd900"
+    },
+    {
+      "file": "alpine-station-r3-portrait-native-20261015.png",
+      "bytes": 17375,
+      "sha256": "88538d60ab862770c69e499d5d617e7a041b16c887dc03916086513312394278"
+    },
+    {
+      "file": "alpine-station-r3-landscape-native-20261015.png",
+      "bytes": 17914,
+      "sha256": "e398abb231381e5a696c35310dd693bfc4e090a56814aa0bab6fe17c7a698f76"
+    },
+    {
+      "file": "alpine-station-r3-menu-en-native-20261015.txt",
+      "bytes": 3171,
+      "sha256": "8adbdc0119d616baee39c76377d34f165bc315a03ec51b6502d59a8138b5fcfb"
+    },
+    {
+      "file": "alpine-station-r3-menu-uk-native-20261015.txt",
+      "bytes": 4899,
+      "sha256": "bba4c658cf3347860e7cefb781a3b4470f215cf5554ea411bfdc474b38e23731"
+    },
+    {
+      "file": "alpine-station-r3-cached-library-uk-native-20261015.txt",
+      "bytes": 13696,
+      "sha256": "a4e9ea4a75c43d253f9594b5a709ac4d771ea0d0c9721f55dbfb23daf25751cd"
+    }
+  ]
+}

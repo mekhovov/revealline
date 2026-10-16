@@ -10,6 +10,9 @@ import { auditSources } from './localization-audit.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const locales = ['en', 'uk'];
+export const isTranslationKeyLiteral = (value) =>
+  typeof value === 'string' &&
+  /^(?:common|interface|gameplay|content|tools|website|errors):\w+(?:\.\w+)*$/.test(value);
 export async function readCatalogs(directory = root) {
   const resources = {};
   for (const locale of locales) {
@@ -81,12 +84,37 @@ export function compactContentRegistry(registry) {
     }
     records.push([identity, groupIds.get(serialized)]);
   }
-  return (
+  const plain =
     '// Generated from explicitly registered first-party content.\n' +
     `const messages = ${JSON.stringify(messages)};\n` +
     `const groups = ${JSON.stringify(groups)}.map(entries => ({fields: Object.fromEntries(entries.map(([field, index]) => [field, messages[index]]))}));\n` +
-    `export default Object.fromEntries(${JSON.stringify(records)}.map(([identity, index]) => [identity, groups[index]]));\n`
+    `export default Object.fromEntries(${JSON.stringify(records)}.map(([identity, index]) => [identity, groups[index]]));\n`;
+  // The registry is generated lookup data, not an authored replay dependency.
+  // Use the same pinned synchronous decoder as the locale bundle, preserving
+  // exact strings and shared field records without a fetch or dynamic eval.
+  // Generated identities are 64-bit hex strings. Transport their exact bytes
+  // separately instead of asking the text dictionary to compress random hex.
+  // Keep arbitrary identities supported for older callers and small fixtures.
+  const hexKeys = records.every(([identity]) => /^[a-f0-9]{16}$/.test(identity));
+  const keys = hexKeys
+    ? Buffer.from(records.map(([identity]) => identity).join(''), 'hex').toString('base64')
+    : null;
+  const payload = LZString.compressToBase64(
+    JSON.stringify([messages, groups, hexKeys ? records.map(([, index]) => index) : records]),
   );
+  const packed =
+    '// Generated from explicitly registered first-party content.\n' +
+    `/* lz-string 1.5.0\n${catalogDecoderLicense}*/\n` +
+    'const decode = (function(module, define, angular) {\n' +
+    catalogDecoder +
+    '\nreturn LZString.decompressFromBase64;\n})();\n' +
+    `const [messages, entries, records] = JSON.parse(decode(${JSON.stringify(payload)}));\n` +
+    'const groups = entries.map(fields => ({fields: Object.fromEntries(fields.map(([field, index]) => [field, messages[index]]))}));\n' +
+    (hexKeys
+      ? `const identities = Array.from(atob(${JSON.stringify(keys)}), byte => byte.charCodeAt(0).toString(16).padStart(2, '0')).join('').match(/.{16}/g) || [];\n` +
+        'export default Object.fromEntries(records.map((index, row) => [identities[row], groups[index]]));\n'
+      : 'export default Object.fromEntries(records.map(([identity, index]) => [identity, groups[index]]));\n');
+  return Buffer.byteLength(packed) < Buffer.byteLength(plain) ? packed : plain;
 }
 async function sourceFiles(directory = root) {
   const output = [];
@@ -156,11 +184,7 @@ export async function extractTranslations(directory = root) {
         if (node.type === 'CallExpression' && ['t', 'localizedMessage'].includes(node.callee?.name))
           add(node.arguments[0]?.value, file, node.loc.start.line);
         // Explicit key registries keep compatibility adapters visible to validation.
-        if (
-          node.type === 'Literal' &&
-          typeof node.value === 'string' &&
-          /^(?:common|interface|gameplay|content|tools|website|errors):[\w.]+$/.test(node.value)
-        )
+        if (node.type === 'Literal' && isTranslationKeyLiteral(node.value))
           add(node.value, file, node.loc.start.line);
         const markup =
           node.type === 'TemplateElement'

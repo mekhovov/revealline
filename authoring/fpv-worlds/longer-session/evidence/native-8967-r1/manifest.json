@@ -1,0 +1,106 @@
+{
+  "format": "FPVLongerNativeSessionEvidence.v1",
+  "sourceRevision": "0b54fd0fdf8fe06dc900024a8b59713340b09bb3",
+  "sourceTree": "e946452076002444bfea9cd7d320da095bf927b5",
+  "fixtureSHA256": "a2ca92b3e1f6424a3ab543867f3e38d9cbf860e7ab38eee3b1fe20245a6a405a",
+  "files": [
+    {
+      "path": "fpv-longer-8967-passed.json.gz",
+      "bytes": 213716,
+      "sha256": "03876d437b456228986ca2fff8ab659d1145b8948fd6ecd723b3e028fbafd9da",
+      "storedBytes": 22072,
+      "storedSHA256": "c89869460029530c735d930b6746b5ab6bc9dbf7de37450ad1f7f6d6fdb7aba9",
+      "encoding": "gzip"
+    },
+    {
+      "path": "fpv-longer-8967-summary.json.gz",
+      "bytes": 30260,
+      "sha256": "e2d51387e55bc8d6fd29b7ad6855da288ad51cd048725425f1d0ffa585a2f2d9",
+      "storedBytes": 2930,
+      "storedSHA256": "abfde01aa8f21f9f505e6bb1b92411ff85197d044558be8ad83d09cf048d9716",
+      "encoding": "gzip"
+    },
+    {
+      "path": "fpv-longer-8967-passed.png",
+      "bytes": 9703,
+      "sha256": "cd512af2146d33d89a481e92610938998b02b73c03f479e20ddfd5a0975745e9",
+      "storedBytes": 9703,
+      "storedSHA256": "cd512af2146d33d89a481e92610938998b02b73c03f479e20ddfd5a0975745e9",
+      "encoding": "original"
+    },
+    {
+      "path": "fixture.json.gz",
+      "bytes": 47534,
+      "sha256": "a2ca92b3e1f6424a3ab543867f3e38d9cbf860e7ab38eee3b1fe20245a6a405a",
+      "storedBytes": 8636,
+      "storedSHA256": "211893e38a1c425f2cc4bd21f2ed03a8f484339dad50922376cfb62ca0e9655a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "index.html.gz",
+      "bytes": 864,
+      "sha256": "82cd38415de4fb3d84f2d60218bba74447095023ff716a346d9a7206bec7f9df",
+      "storedBytes": 534,
+      "storedSHA256": "d6133c065dc2359a1440aeadce9872074d11dc262677f27c6eed2947731b5f11",
+      "encoding": "gzip"
+    },
+    {
+      "path": "longer-host.html.gz",
+      "bytes": 33733,
+      "sha256": "0ea5621dec726b1b046c70a204ce85eca8adb2cbedb2bde38b56629afc22ec90",
+      "storedBytes": 8146,
+      "storedSHA256": "ff71586676e81983a06a11904f896007150eed65f0c3e22b39c0d384334b8606",
+      "encoding": "gzip"
+    },
+    {
+      "path": "admitted-player.json.gz",
+      "bytes": 42957,
+      "sha256": "63f8feb89d56aa008ccd26bc982acd822881ef254486c07c44b5450936800e14",
+      "storedBytes": 7351,
+      "storedSHA256": "c734176a23f4a54c45c3e845d643858973046b1466febb06f079875d6d812225",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source-inventory-optional-fpv-worlds.json.gz",
+      "bytes": 32166,
+      "sha256": "a39cfe07d5b61b9f96cd810926eabcb2b46ecc2809a0dddeddeb389d2d63ab47",
+      "storedBytes": 7146,
+      "storedSHA256": "e68bdff4ff258fc50660fd63dd14c207c60207fb19ae48f312bd6a1fcad4c93f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "pre-run-design.md.gz",
+      "bytes": 3559,
+      "sha256": "158a9c9d95e58637911a3ef037a7ce7942290f162e5aa4473b082410f72ea9cc",
+      "storedBytes": 1897,
+      "storedSHA256": "da9a19484bf63748d43422ee60bca339aed39c70856e956717262938503acdba",
+      "encoding": "gzip"
+    }
+  ],
+  "qualifiedCode": [
+    {
+      "path": "../../run.mjs",
+      "bytes": 18723,
+      "sha256": "cab04f585534075ac4d9ded3ea7a9aba88f0b082c1e2cb575ad28a2724af008e"
+    },
+    {
+      "path": "../../probe-host.mjs",
+      "bytes": 14232,
+      "sha256": "3c4f92f6a8e2a4a2c58eea16eedcff510269f2313de90978392e5d29180a02a3"
+    },
+    {
+      "path": "../../prepare.mjs",
+      "bytes": 9746,
+      "sha256": "8f35beb302cb0250e7b86e6f1714318fe0ab614aefbc88e02f0783f91d370766"
+    }
+  ],
+  "acceptance": {
+    "checks": 306,
+    "windows": 8,
+    "runtimeMembers": 102,
+    "sourceInputs": 95,
+    "overlays": 0,
+    "nativeClock": true,
+    "browserRunPort": 8967
+  }
+}

@@ -1,0 +1,752 @@
+{
+  "format": "FPVRegionalDelivery.v1",
+  "id": "canyon-arrival-landmarks-study",
+  "revision": "districts-r1",
+  "title": {
+    "en": "Canyon Badlands — six districts",
+    "uk": "Каньйон — шість районів"
+  },
+  "terrain": {
+    "path": "terrain/region.json",
+    "bytes": 22303,
+    "sha256": "219b438a19fdd7decd022cd48d145b1a45505198e86e9270cf818696894210a4"
+  },
+  "scenery": {
+    "path": "scenery/region.json",
+    "bytes": 21707,
+    "sha256": "3b704a760c06c7ed066e11050cadcb1af27d5ad18ed87e63e2a66137507fcff6"
+  },
+  "files": [
+    {
+      "path": "scenery/canyon-0-0.glb",
+      "bytes": 18376,
+      "sha256": "67abf6185fe0bae8ab034da41a43c4b647f5c3425bf54a5d40728f3215bd939a"
+    },
+    {
+      "path": "scenery/canyon-0-0.json",
+      "bytes": 43972,
+      "sha256": "99a865ba9eb3e985cbfeddfc22053a11e5e1cc085486ac701520dab65aa58b84"
+    },
+    {
+      "path": "scenery/canyon-0-1.glb",
+      "bytes": 19560,
+      "sha256": "4f68ba21d0ac1c0b91eebc66cbded0f21e495a50ef9d78edc83b40b62993207f"
+    },
+    {
+      "path": "scenery/canyon-0-1.json",
+      "bytes": 47845,
+      "sha256": "b845b65bc955368095dd8b7a11bba2def812287fdf1597d82ab4211b0546e168"
+    },
+    {
+      "path": "scenery/canyon-0-2.glb",
+      "bytes": 28600,
+      "sha256": "2c4c6bcbe64cb0bc0359597334f6646de1e57d60934b8c59bfa10535271089fc"
+    },
+    {
+      "path": "scenery/canyon-0-2.json",
+      "bytes": 78822,
+      "sha256": "2e429f97adce1edb117d88d7896f4e92c705f98be790a863177e29ab47ae239a"
+    },
+    {
+      "path": "scenery/canyon-0-3.glb",
+      "bytes": 13792,
+      "sha256": "580c1846c242f5bdcc3c102eb74de7b22a1f09ab5fac27f67563462c0f39cbd5"
+    },
+    {
+      "path": "scenery/canyon-0-3.json",
+      "bytes": 40295,
+      "sha256": "d8187ba0845caa3b8e577a1c4165cff4dca6549584de299f467f627014934acb"
+    },
+    {
+      "path": "scenery/canyon-0-4.glb",
+      "bytes": 8252,
+      "sha256": "966e3b268cb8ea23e8f460af76a2711cb10f5c982f74b21c3188fc3e806fdbcc"
+    },
+    {
+      "path": "scenery/canyon-0-4.json",
+      "bytes": 21060,
+      "sha256": "221de06d293f44dd5d3a35bae72223b6d51acadd0cf0dba02dc3c7fd66d6636f"
+    },
+    {
+      "path": "scenery/canyon-0-5.glb",
+      "bytes": 13796,
+      "sha256": "8208d0722b37d4801997cee3c62eac6fe68a2b2d44e55f6eff69e25c3452056f"
+    },
+    {
+      "path": "scenery/canyon-0-5.json",
+      "bytes": 40626,
+      "sha256": "c38f8cceeeadb75240a9ada7bdb6e0b1e3ee8517dbabe9a81cfa22e9e56327eb"
+    },
+    {
+      "path": "scenery/canyon-1-0.glb",
+      "bytes": 20412,
+      "sha256": "94799d2327b8b999880637975d0f8bec8a47d8f4ecc035efe9083bceaf990e58"
+    },
+    {
+      "path": "scenery/canyon-1-0.json",
+      "bytes": 50836,
+      "sha256": "fe0ee585ebd8fa44876f178b34b2c52bf680e8b4ae9613786ebe4d9da1a7c3ee"
+    },
+    {
+      "path": "scenery/canyon-1-1.glb",
+      "bytes": 22728,
+      "sha256": "e90c8d03aa7b82ce808e4811ee420b1eb871e475ebe6ef80135bc3074aa8c722"
+    },
+    {
+      "path": "scenery/canyon-1-1.json",
+      "bytes": 58523,
+      "sha256": "f22194a9a9669c21f1a848bc2bec059a9b6e2a2159c684f79ca7e4e4f4bf80af"
+    },
+    {
+      "path": "scenery/canyon-1-2.glb",
+      "bytes": 18376,
+      "sha256": "d95a2cca837fb1d228684be0f16dc5fb8b6a96599f4e46e0589e0ecaa9625f34"
+    },
+    {
+      "path": "scenery/canyon-1-2.json",
+      "bytes": 44007,
+      "sha256": "f2979e5e7cc9c07e95386565c09a3563a44f3fcef7b20527d538b36d8fde9b51"
+    },
+    {
+      "path": "scenery/canyon-1-3.glb",
+      "bytes": 5816,
+      "sha256": "c084582d3616a3eedd254cbab025e74ac34731ace2d4beb595ac97cde46af9ab"
+    },
+    {
+      "path": "scenery/canyon-1-3.json",
+      "bytes": 13102,
+      "sha256": "3596c1bf30051b85caffe4fa9a4d1a61ca5042c84fa4d2b3ac99def551e83867"
+    },
+    {
+      "path": "scenery/canyon-1-4.glb",
+      "bytes": 5824,
+      "sha256": "c0d4a3e00a780ab0fef15a7f4108203cbf1e2b0c866a4fded0f9237c71cbe953"
+    },
+    {
+      "path": "scenery/canyon-1-4.json",
+      "bytes": 13102,
+      "sha256": "1c83d447819deea8022040c4a1ba0db9b9e978c594ff5f9883888899db4638c7"
+    },
+    {
+      "path": "scenery/canyon-1-5.glb",
+      "bytes": 5824,
+      "sha256": "be88098b17c2112b075e01fbd223c380e35541dec319574ca0854a8c59879c98"
+    },
+    {
+      "path": "scenery/canyon-1-5.json",
+      "bytes": 13217,
+      "sha256": "95c1d8624cf9d9649fd98ceab11cd723a8e9a395bdf40a8a81804f35c92abfb2"
+    },
+    {
+      "path": "scenery/canyon-2-0.glb",
+      "bytes": 28492,
+      "sha256": "d7b90f1c188a381b76f43fe3c05fad6d4682459e466245c7623df5e80c19caae"
+    },
+    {
+      "path": "scenery/canyon-2-0.json",
+      "bytes": 78704,
+      "sha256": "28b296f02815412a321021987ceef82b2eac6c3571b6888e6c8f634acc51e23a"
+    },
+    {
+      "path": "scenery/canyon-2-1.glb",
+      "bytes": 22128,
+      "sha256": "9f224c9d8d847ff33f5f1f054338ab7825ee373b52e46b2d41ef3a460e3c4ac0"
+    },
+    {
+      "path": "scenery/canyon-2-1.json",
+      "bytes": 56558,
+      "sha256": "76cbe2aaf63e58bcb7a1503a47b5aa10e91987590c8bdb1746bdbdb6126447e1"
+    },
+    {
+      "path": "scenery/canyon-2-2.glb",
+      "bytes": 20464,
+      "sha256": "8d2742533cd627b664cf1635b1b341283bbe6cea9778eb0e36d8a325aa471296"
+    },
+    {
+      "path": "scenery/canyon-2-2.json",
+      "bytes": 51227,
+      "sha256": "cfd1295c70b556c012d85ce202906886b138b8ac40bfc96d04888ce677d1bd42"
+    },
+    {
+      "path": "scenery/canyon-2-3.glb",
+      "bytes": 10112,
+      "sha256": "1cdebc275bf9096b2df3e877584da015e1c2bbce15cfecabe0bd6448234e99c3"
+    },
+    {
+      "path": "scenery/canyon-2-3.json",
+      "bytes": 27304,
+      "sha256": "e876e8c9493a87f690dbeb2e7d9fcfa7fd49aaa6ba344d9952c4ebc65e7f0972"
+    },
+    {
+      "path": "scenery/canyon-2-4.glb",
+      "bytes": 6260,
+      "sha256": "a0666435904c8077bb51a2d8a36adf8e482235999c0f4452dde0f95992745b86"
+    },
+    {
+      "path": "scenery/canyon-2-4.json",
+      "bytes": 14573,
+      "sha256": "b05907f61b34868a8a30125948c713d23d8a1191b32d608841096e5a9e08f59d"
+    },
+    {
+      "path": "scenery/canyon-2-5.glb",
+      "bytes": 6276,
+      "sha256": "80bface44a68fbced176a68943b34dbd1f79abbf457d1f542b580d3378c2305f"
+    },
+    {
+      "path": "scenery/canyon-2-5.json",
+      "bytes": 14664,
+      "sha256": "c6b9c646d2384d609251d6309942ac7ae05745cac9f71de5e7f479fbe32bbc92"
+    },
+    {
+      "path": "scenery/canyon-3-0.glb",
+      "bytes": 6264,
+      "sha256": "afd830c08c664d0608e1b9aff9c5cb86596c269d6fe185a2f9357139e50cbe53"
+    },
+    {
+      "path": "scenery/canyon-3-0.json",
+      "bytes": 14576,
+      "sha256": "5e261ffd26a84ddb2ce5b1a10904e158a12216c8dbc36e7116b7441dc70430f6"
+    },
+    {
+      "path": "scenery/canyon-3-1.glb",
+      "bytes": 13776,
+      "sha256": "bafbf2977e5e8b8ab1efb6111531199ee1276a567642c85502159cf1827ee528"
+    },
+    {
+      "path": "scenery/canyon-3-1.json",
+      "bytes": 40335,
+      "sha256": "38905ea8c4395e4a07d98aace0f2e26e8b1ec9dc44d2c98a823d235cce1a4258"
+    },
+    {
+      "path": "scenery/canyon-3-2.glb",
+      "bytes": 6328,
+      "sha256": "7beaa47ab5657d575e270bcff952805714cd3ed9587d900e40822db211ead20e"
+    },
+    {
+      "path": "scenery/canyon-3-2.json",
+      "bytes": 15004,
+      "sha256": "eca2969bc636627f9e3ee092e40af60b2e01b3f69e280723dd4aaf47ec3018b9"
+    },
+    {
+      "path": "scenery/canyon-3-3.glb",
+      "bytes": 7984,
+      "sha256": "4a08125c788df632e4d21e9a0d65796825f48d809d8324b8e8d292024a4788e0"
+    },
+    {
+      "path": "scenery/canyon-3-3.json",
+      "bytes": 20461,
+      "sha256": "b8eeadbd93e2bc4d9f1f1139acdb5e684047bdb0188fc0cf1038c04194781284"
+    },
+    {
+      "path": "scenery/canyon-3-4.glb",
+      "bytes": 10104,
+      "sha256": "0419aca7a67b208341a672b9b485c9d61f4da89334fcba7555f956521ab00c50"
+    },
+    {
+      "path": "scenery/canyon-3-4.json",
+      "bytes": 27322,
+      "sha256": "c220884a8bf7c1913b2c5a529982c45d6528592e9fb0657fb0a11e7303816079"
+    },
+    {
+      "path": "scenery/canyon-3-5.glb",
+      "bytes": 6328,
+      "sha256": "24606eca657723ea89d0818f63664f0bdb6d4b96b65dda3d7322982aa6808f6a"
+    },
+    {
+      "path": "scenery/canyon-3-5.json",
+      "bytes": 14884,
+      "sha256": "512c2df85031b5dfe018b2f76056bd6b9f227753edfd215cbc7a857c94a6220f"
+    },
+    {
+      "path": "scenery/canyon-4-0.glb",
+      "bytes": 5788,
+      "sha256": "8e19a14806b201c687bfe0a9304f61cb0a0b075ed5dce9537d6c4905c1ebcd95"
+    },
+    {
+      "path": "scenery/canyon-4-0.json",
+      "bytes": 13180,
+      "sha256": "116f59ae211659375679457cabea6e193fd9a30a2001a412f2fee0fc4ea7a98a"
+    },
+    {
+      "path": "scenery/canyon-4-1.glb",
+      "bytes": 10112,
+      "sha256": "a1e24f1887ab125ce53940b53a055c4d37ce7b628290bc294595fa76d596cc4d"
+    },
+    {
+      "path": "scenery/canyon-4-1.json",
+      "bytes": 27429,
+      "sha256": "7fdf7d705f2034e364d1ec28aaceec3628a75f6f6aa4e72a767f4c4633a3927c"
+    },
+    {
+      "path": "scenery/canyon-4-2.glb",
+      "bytes": 6272,
+      "sha256": "a08d7e7555d9b3c489c6bf4078ef406569b3c15b9636e9d662b8a24b098e24b5"
+    },
+    {
+      "path": "scenery/canyon-4-2.json",
+      "bytes": 14741,
+      "sha256": "29094f3a9612a2fe6a6d6523fcfd1cee51745142256cf0afb0fa52779cae5041"
+    },
+    {
+      "path": "scenery/canyon-4-3.glb",
+      "bytes": 6328,
+      "sha256": "47025ed06412b2f73fe0cb33908ff3275875ced7bdbc6d4ec4bdb6c1af2f5e21"
+    },
+    {
+      "path": "scenery/canyon-4-3.json",
+      "bytes": 15013,
+      "sha256": "1f1963e74cfc8dab53ec4e16d7e285ba7c9379212b2073c8d7dbbbd284373ba9"
+    },
+    {
+      "path": "scenery/canyon-4-4.glb",
+      "bytes": 7992,
+      "sha256": "b677c05b7948a7cba57d8b071e5f4f80cee638cd48d68def95afb09ce7a89bf7"
+    },
+    {
+      "path": "scenery/canyon-4-4.json",
+      "bytes": 20623,
+      "sha256": "4820599e6380bd8c50b0974f48987ae47af499d7dbe8f1918430b28e5fff92fd"
+    },
+    {
+      "path": "scenery/canyon-4-5.glb",
+      "bytes": 13800,
+      "sha256": "580c396df62078af031947107ac76abfbc0563f526eeeeaa6ba6ff98ce344afa"
+    },
+    {
+      "path": "scenery/canyon-4-5.json",
+      "bytes": 40742,
+      "sha256": "87141aae6fab61a78d0eadddf2f7a056de33846601789f595eca6b7446c20d2f"
+    },
+    {
+      "path": "scenery/canyon-5-0.glb",
+      "bytes": 8248,
+      "sha256": "dc69c7dbf02c5a803b184dc7bbff57b7ed9e1f9db23a05f536bbc8ce0946adff"
+    },
+    {
+      "path": "scenery/canyon-5-0.json",
+      "bytes": 21203,
+      "sha256": "f56ce731dc969228d91ec1c222ac51a7e3f2a940263ca942e22d693f47f16651"
+    },
+    {
+      "path": "scenery/canyon-5-1.glb",
+      "bytes": 7984,
+      "sha256": "ffd2552d1b13eede6411a39e495f470bc95ba8fc1a3f2688a5dadabe3953477a"
+    },
+    {
+      "path": "scenery/canyon-5-1.json",
+      "bytes": 20533,
+      "sha256": "d4681ca091d4865fab80ddcebcf39931e5b3250102099f097b7a6f9bd6cae264"
+    },
+    {
+      "path": "scenery/canyon-5-2.glb",
+      "bytes": 8248,
+      "sha256": "147df8c0409d44793e7c59b8250ea1f0d45d301533ffdad8574e3c9f7f8cea3f"
+    },
+    {
+      "path": "scenery/canyon-5-2.json",
+      "bytes": 21084,
+      "sha256": "d8c47276b4b924b15f4e9d2af526a012d8a926d8a3d4204043d4d1d82aee8d4f"
+    },
+    {
+      "path": "scenery/canyon-5-3.glb",
+      "bytes": 5816,
+      "sha256": "859790f793709cbb26fcab29348d8c861e48f7e31971a72f12f8f1c3a7342748"
+    },
+    {
+      "path": "scenery/canyon-5-3.json",
+      "bytes": 13183,
+      "sha256": "ac5648a31d5e10b154172f95443d8c1373d0a4cd8869fa979ab18a160a4e1d57"
+    },
+    {
+      "path": "scenery/canyon-5-4.glb",
+      "bytes": 8252,
+      "sha256": "d3a4461605412301fe139487349fd509a5863e5841ef7cbcbe4131801cfc9810"
+    },
+    {
+      "path": "scenery/canyon-5-4.json",
+      "bytes": 21209,
+      "sha256": "813d9926337061970ee4660d0131652d956512a06851fb9e4de70d8d4a851fc6"
+    },
+    {
+      "path": "scenery/canyon-5-5.glb",
+      "bytes": 7984,
+      "sha256": "7a39e023a6ef8e69bbf9cc63df1ec125ff01b475d53c367d493d35c5058bf038"
+    },
+    {
+      "path": "scenery/canyon-5-5.json",
+      "bytes": 20637,
+      "sha256": "4d52ab194f6b03971203bd772cac2318324a663fef80005c9a34fc51f8af3a11"
+    },
+    {
+      "path": "scenery/region.json",
+      "bytes": 21707,
+      "sha256": "3b704a760c06c7ed066e11050cadcb1af27d5ad18ed87e63e2a66137507fcff6"
+    },
+    {
+      "path": "terrain/region.json",
+      "bytes": 22303,
+      "sha256": "219b438a19fdd7decd022cd48d145b1a45505198e86e9270cf818696894210a4"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-0.glb",
+      "bytes": 38404,
+      "sha256": "480143c75d4db05ea9b927cc1c476e24c8e1a2d3fd259c5e2eb05548a09be562"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-0.json",
+      "bytes": 11587,
+      "sha256": "c14fb5edf02119d11957ea9f7c64be63b2c09b78cd22375b98036a7cbe85c214"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-1.glb",
+      "bytes": 38388,
+      "sha256": "66ed2e48663f06a990c40e82fe58840dc6ba0adba7d9a25ed8b7b06d7759a20c"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-1.json",
+      "bytes": 11626,
+      "sha256": "6a09f2f4aa693decfc177b565a199089944745dd9b8fb8907acc7c86ad4f7630"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-2.glb",
+      "bytes": 38404,
+      "sha256": "a61d982667181ed6413667e0b9602740c9ecfcc00addbd8d3e689632feabdfb2"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-2.json",
+      "bytes": 12128,
+      "sha256": "e9475924034bea626e77fb9eaa69d16de255c1f4b195903c3a2fe3480d7ef08c"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-3.glb",
+      "bytes": 38404,
+      "sha256": "b21bd2300bc933b1b16174396b0d4648e54d1c64f1cc790f81b34685f0815368"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-3.json",
+      "bytes": 12128,
+      "sha256": "7c4a5703b25a8b1a8d6142c4255c084cc6f375e88585390756e3f0aadf5f59f2"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-4.glb",
+      "bytes": 38420,
+      "sha256": "a3bf3d2934594a8b28e4c168e917a9f85f8d78bf2bff499c6c350dae75677be8"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-4.json",
+      "bytes": 12128,
+      "sha256": "d9db31689d8597fb555888fb0a823412db5ce28572b926196f5d0e3272065b11"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-5.glb",
+      "bytes": 38420,
+      "sha256": "37ba1460be50c1650872ce01ead78bb8d785c6197e4bc1a045a9c26619c5c74d"
+    },
+    {
+      "path": "terrain/terrain/canyon-0-5.json",
+      "bytes": 12128,
+      "sha256": "0428f417e7a1e1da8eb0a8ade2d0bf7fac6e53dd6fa612f49876a0757d1ffc7a"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-0.glb",
+      "bytes": 38404,
+      "sha256": "797272927010faf114610926c67999bf2faf9cf3f83c0b6bae1b5f7665337831"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-0.json",
+      "bytes": 11311,
+      "sha256": "84f4d51a433229097080c6c157a93c272a85cc47cfa2e54e9d97a463a5f9445c"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-1.glb",
+      "bytes": 38404,
+      "sha256": "baa3cd9f214bb8b0a4406e128ec3f99f5d9bdb05e2767ab218fc7349ad3b4195"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-1.json",
+      "bytes": 11350,
+      "sha256": "12b719dbdfa3daedc215a6a78f70776b8861e266309abda16749eff0c41ffde1"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-2.glb",
+      "bytes": 38420,
+      "sha256": "c3aec6cd7609a55ef6de0a2c0511ae7ad1af0d4694d54c5799f8bf9392df2c84"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-2.json",
+      "bytes": 12128,
+      "sha256": "26bee06142cf8a09256686d86473174b4c70edf1904b5db490ef3d7a6ffb4d44"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-3.glb",
+      "bytes": 38420,
+      "sha256": "e5ef6ecb097bfd5a9c1c14fba3011a2b3d7e62d19c71c581a9c9f3b5610978dc"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-3.json",
+      "bytes": 12128,
+      "sha256": "a6415bed7e45d22f5d1581cb60f57547181120b4b438935e6c22a9df60fc7da1"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-4.glb",
+      "bytes": 38420,
+      "sha256": "554036220c98d27d57d6d8a62ea8d6b06a8f2551866cee57822ec7639283d230"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-4.json",
+      "bytes": 12128,
+      "sha256": "89a6ec2849c7c4c16d8866ec9c6f7795bb5c309114936270a504315d4b502f8f"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-5.glb",
+      "bytes": 38420,
+      "sha256": "b0af1462319af85626c03848f08633c91cdc0f41d27aab967e412615e32a4c8b"
+    },
+    {
+      "path": "terrain/terrain/canyon-1-5.json",
+      "bytes": 12128,
+      "sha256": "28ea11f922af910809772663470ca26a543b8666e1753c90aa1f80bb33d6e5f9"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-0.glb",
+      "bytes": 38420,
+      "sha256": "bca1237a247fe30297e98219a62a832364560bd032776309827264eb1163a697"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-0.json",
+      "bytes": 12081,
+      "sha256": "3be173d86fab0790d16afe502b91b3c054c2e5e748dc612d3acf27a8a5088abe"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-1.glb",
+      "bytes": 38420,
+      "sha256": "25f58769d8d4a469e7b8317b0e3ef6b040b77ea530210140d013ce1f6d7214c3"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-1.json",
+      "bytes": 12089,
+      "sha256": "426dfb21c6fcdac8757fd892f97d37c80252fdcff248e3817027dd9b353a06a3"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-2.glb",
+      "bytes": 38420,
+      "sha256": "c3fe8d8ae582a2cfec057ceba86c24750e6ae93d859a99ab8fe4fddc8b129179"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-2.json",
+      "bytes": 12128,
+      "sha256": "893b28b76b54af2056ccd8683749114ca24096396c65b7bcd506a21e2e6f4c65"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-3.glb",
+      "bytes": 38420,
+      "sha256": "dace6dd69dd340aeb2b5de05a5607dbdd87a792f69bf5db15a5b297b49d57386"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-3.json",
+      "bytes": 12128,
+      "sha256": "7602df553b27b29d70fde17d8e11b6e6d3b0399b88858c035473bc3fd0af95a0"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-4.glb",
+      "bytes": 38420,
+      "sha256": "8e482cb1b81f7b2c2bcd0b556337e09b2b97d3ba3a3a48a8746d9f39eec654fa"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-4.json",
+      "bytes": 12128,
+      "sha256": "d1324b70b8a2df268d4028a4f0c826ad23acf2d107e9776e4124f30e189b3ee1"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-5.glb",
+      "bytes": 38404,
+      "sha256": "cca7ab99600e7ccc8402a2f96c938c9378be207c82420836045e6f388e4b6be1"
+    },
+    {
+      "path": "terrain/terrain/canyon-2-5.json",
+      "bytes": 12128,
+      "sha256": "0b2b9c61ff43cab7861f3b779005d8aaa4712e974cfc561e2f63a259c77da860"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-0.glb",
+      "bytes": 38420,
+      "sha256": "a335da7f70da105c09a9d082594c5d96661748ead11db1e4608df8ef587458e9"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-0.json",
+      "bytes": 12128,
+      "sha256": "5a0f87293a07cdb43de6579b208af9a6faf4b933883e03176871f1cae0f19c36"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-1.glb",
+      "bytes": 38420,
+      "sha256": "28aaab17b56738ec189c571f0c9ca0f63775995ee580fa487aefe5d1809752d4"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-1.json",
+      "bytes": 12159,
+      "sha256": "e2db7cb5fdabf96628cef2bad4951972cab0b0919363978eb85d55bf2f30b224"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-2.glb",
+      "bytes": 38420,
+      "sha256": "6307d1be417854bffe9277bc73300850d77ee187e03ff87e8e900d3d223423eb"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-2.json",
+      "bytes": 12650,
+      "sha256": "f6c1792807918d03caf474fc4758e36b45e6621f3a70e6582f3471092d17b158"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-3.glb",
+      "bytes": 38420,
+      "sha256": "aeb170cb1ca73d8949253d6d1bbbe3be4ba69247725da062c811a786c9d6252b"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-3.json",
+      "bytes": 12290,
+      "sha256": "a64684ad4e78fdab4330fb4eca954d1b3569aeae9c4228e8adb33b04b9114df6"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-4.glb",
+      "bytes": 38420,
+      "sha256": "0521174849e66bbc840a5016abe79b80b1ec10586a57353507ee2c5905ca8eae"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-4.json",
+      "bytes": 12269,
+      "sha256": "114895f68dbb39bc761e223d0b84b58fa0bd858879c8b3c87d0dcbb5ab1b1699"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-5.glb",
+      "bytes": 38420,
+      "sha256": "8bc9c05d91ee78086874825911efd4280d970b3d4200215da1e5bda9b485a874"
+    },
+    {
+      "path": "terrain/terrain/canyon-3-5.json",
+      "bytes": 12154,
+      "sha256": "310ef382699a999b2e9bafed07f27287943ee986bf921628784330f64ee0b798"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-0.glb",
+      "bytes": 38420,
+      "sha256": "bd11e3b773f4d7215c5a02742ae9fbe36190ec29d138e30f6774cd774691fc9f"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-0.json",
+      "bytes": 12128,
+      "sha256": "1d479a20aa9c0a1c67b694d3bbd23008dc08c449ea47296be3ebade79e664481"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-1.glb",
+      "bytes": 38420,
+      "sha256": "5dfe6e67c2a41eb055945d2d224100176260fc8bfe726f417302528856482051"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-1.json",
+      "bytes": 12149,
+      "sha256": "fe222e461689b23b4596eb90875398ed9edb0ed5e4dbadf7f700641027dca632"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-2.glb",
+      "bytes": 38420,
+      "sha256": "bb8ad5aa985247900199d8cc6240764b82d28ffa743ddca7a43eded5df08a2e2"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-2.json",
+      "bytes": 12751,
+      "sha256": "8fe80850623352e0efe448af030fb80d8ace931374d426609ef69e402f530061"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-3.glb",
+      "bytes": 38420,
+      "sha256": "3c066394fdc9cd22ccb31f1f96d26937deff73786f2a401746b5e7cf65dbbdcc"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-3.json",
+      "bytes": 13024,
+      "sha256": "2199086b29721623d6032d29403794dc39ba82bf77adaab4b58902d3a6d1c5cf"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-4.glb",
+      "bytes": 38420,
+      "sha256": "d2b55d3dbc3dfa80d35a986afa106d563e778f2b2d421c131de5c75f0da29a52"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-4.json",
+      "bytes": 12694,
+      "sha256": "c4261924b4026103d67cf9c569ff8f0411ce4c9e8851bd4fba0f042fdabda7c5"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-5.glb",
+      "bytes": 38420,
+      "sha256": "94eb00d4d732775ea6eaf476f9b52374306897a4b22fc5fa42cc0dbb7ba097da"
+    },
+    {
+      "path": "terrain/terrain/canyon-4-5.json",
+      "bytes": 13095,
+      "sha256": "37da492819ad1c6fa2c22d75d70af7fc26750488cff909578f14cddcf2e8c2e3"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-0.glb",
+      "bytes": 38420,
+      "sha256": "5af66756d56cb9d05672605c6765cb3bf1224641cdc249a1db29583c23129c61"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-0.json",
+      "bytes": 12313,
+      "sha256": "99c0ce12c17cd570939600af73492ee4e0bc1bb50d609223a6b0dacad54933c0"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-1.glb",
+      "bytes": 38420,
+      "sha256": "1145154a4d028d4b94adc8b0b638d0a938c0046afea356c14d160f9fe42fb488"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-1.json",
+      "bytes": 12128,
+      "sha256": "373d0b8c50fa1d3e9570aab09e61afea8a730a518949a1fac070949e14477045"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-2.glb",
+      "bytes": 38420,
+      "sha256": "85c641816036a3bee1d329bc241de4eb617eeda58f6c4228f63bfc9290a89d6f"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-2.json",
+      "bytes": 12140,
+      "sha256": "1809ae8db4a248621fbe71ad4d4eb6a07d7b4cd5cca864c2047d3026111c1470"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-3.glb",
+      "bytes": 38420,
+      "sha256": "ef1abd9970d61054c2b373b7c069824e9c3489fb98cedaf1186598a597a81d9b"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-3.json",
+      "bytes": 12412,
+      "sha256": "fd052c35231c392e2c08d78ce186e794bd83c5c5a102c73071782a0c243866c7"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-4.glb",
+      "bytes": 38420,
+      "sha256": "2dbd0806db8d2145af575b1c618d68fb7f04563c0cd533d65d52abe36ff6503d"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-4.json",
+      "bytes": 12723,
+      "sha256": "6933adf77fe77e8beaa595b33b2490745fdb460beb01afc7917b06ed8df65239"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-5.glb",
+      "bytes": 38420,
+      "sha256": "cef4776cb3d7c6d3c46295bbf7fec8e2a3efb57844438e0be40a6e5f7c692d29"
+    },
+    {
+      "path": "terrain/terrain/canyon-5-5.json",
+      "bytes": 13217,
+      "sha256": "07b25db9353ab7f6b00d3485bc4d60951211a081ff1a076c72397790acfc75a9"
+    }
+  ],
+  "totalBytes": 3380298
+}

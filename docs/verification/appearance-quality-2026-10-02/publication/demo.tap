@@ -1,0 +1,310 @@
+TAP version 13
+# Subtest: Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 1 - Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 1896.385291
+  ...
+# Subtest: Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 2 - Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 4072.941709
+  ...
+# Subtest: the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+    # Subtest: save from Settings
+    ok 1 - save from Settings
+      ---
+      duration_ms: 760.855959
+      ...
+    # Subtest: restore in the next app instance
+    ok 2 - restore in the next app instance
+      ---
+      duration_ms: 998.363166
+      ...
+    1..2
+ok 3 - the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+  ---
+  duration_ms: 1759.554583
+  ...
+# Subtest: idle countdown counts only contiguous eligible foreground frames
+ok 4 - idle countdown counts only contiguous eligible foreground frames
+  ---
+  duration_ms: 0.614084
+  ...
+# Subtest: reduced-motion default is manual; malformed preferences fail safely
+ok 5 - reduced-motion default is manual; malformed preferences fail safely
+  ---
+  duration_ms: 0.451583
+  ...
+# Subtest: demo sound preference is opt-in and preserves existing v1 settings
+ok 6 - demo sound preference is opt-in and preserves existing v1 settings
+  ---
+  duration_ms: 0.083291
+  ...
+# Subtest: demo picture privacy is opt-in and survives existing v1 settings
+ok 7 - demo picture privacy is opt-in and survives existing v1 settings
+  ---
+  duration_ms: 0.07575
+  ...
+# Subtest: clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+ok 8 - clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+  ---
+  duration_ms: 0.152208
+  ...
+# Subtest: malformed clear-picture preferences fail closed without coercion
+ok 9 - malformed clear-picture preferences fail closed without coercion
+  ---
+  duration_ms: 0.180166
+  ...
+# Subtest: practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+ok 10 - practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+  ---
+  duration_ms: 7.429833
+  ...
+# Subtest: direct takeover applies its initiating action once at the first real tick without inventing steering
+ok 11 - direct takeover applies its initiating action once at the first real tick without inventing steering
+  ---
+  duration_ms: 33.18575
+  ...
+# Subtest: captions use emitted core events and maintain a six-second reading interval
+ok 12 - captions use emitted core events and maintain a six-second reading interval
+  ---
+  duration_ms: 0.459416
+  ...
+# Subtest: captions distinguish a real scan from other equipment without claiming a revealed objective
+ok 13 - captions distinguish a real scan from other equipment without claiming a revealed objective
+  ---
+  duration_ms: 1.843917
+  ...
+# Subtest: same-tick real cut and relay capture keep distinct captions in order until scene reset
+ok 14 - same-tick real cut and relay capture keep distinct captions in order until scene reset
+  ---
+  duration_ms: 13.940084
+  ...
+# Subtest: signal captions require an actual slowing or blocked-equipment event
+ok 15 - signal captions require an actual slowing or blocked-equipment event
+  ---
+  duration_ms: 1.898166
+  ...
+# Subtest: signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+ok 16 - signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+  ---
+  duration_ms: 4.966167
+  ...
+# Subtest: immediate: purposeful routes vary, close cuts and only lose to believable hazards
+ok 17 - immediate: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 3611.155833
+  ...
+# {"seed":123,"captures":5,"losses":1,"causes":["enemy-trail"],"bends":7,"ticks":2914}
+# {"seed":987654321,"captures":2,"losses":0,"causes":[],"bends":4,"ticks":1029}
+# Subtest: grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+ok 18 - grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 4350.66325
+  ...
+# {"seed":123,"captures":5,"losses":0,"causes":[],"bends":8,"ticks":2428}
+# {"seed":987654321,"captures":6,"losses":0,"causes":[],"bends":10,"ticks":3356}
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 19 - improvised preparation respects cancellation before it owns a player
+  ---
+  duration_ms: 0.79475
+  ...
+# Subtest: cancellation during route planning stops before publishing a recording
+ok 20 - cancellation during route planning stops before publishing a recording
+  ---
+  duration_ms: 52.91125
+  ...
+# Subtest: an exact earned Journey original is clear, owns the actual candidate image, and never changes progress
+ok 21 - an exact earned Journey original is clear, owns the actual candidate image, and never changes progress
+  ---
+  duration_ms: 12.177666
+  ...
+# Subtest: the retained first-earned original survives a later legitimate win and another installed difficulty
+ok 22 - the retained first-earned original survives a later legitimate win and another installed difficulty
+  ---
+  duration_ms: 6.393583
+  ...
+# Subtest: missing, malformed, foreign and wrong-mode receipts retain the current image but cannot reveal it
+ok 23 - missing, malformed, foreign and wrong-mode receipts retain the current image but cannot reveal it
+  ---
+  duration_ms: 44.996584
+  ...
+# Subtest: a foreign company cannot authorize the same exact asset through a matching historical campaign
+ok 24 - a foreign company cannot authorize the same exact asset through a matching historical campaign
+  ---
+  duration_ms: 6.512917
+  ...
+# Subtest: a current replacement original supplies the concealed backdrop without inheriting the old earned receipt
+ok 25 - a current replacement original supplies the concealed backdrop without inheriting the old earned receipt
+  ---
+  duration_ms: 180.825916
+  ...
+# Subtest: unowned entries, changed levels, foreign mission context and unavailable backgrounds fail before acquisition
+ok 26 - unowned entries, changed levels, foreign mission context and unavailable backgrounds fail before acquisition
+  ---
+  duration_ms: 8.121125
+  ...
+# Subtest: acquisition failures and bindings owned by another display never become clear or steal ownership
+ok 27 - acquisition failures and bindings owned by another display never become clear or steal ownership
+  ---
+  duration_ms: 8.678875
+  ...
+# Subtest: cancellation releases a late verified decode once and does not display an earned original
+ok 28 - cancellation releases a late verified decode once and does not display an earned original
+  ---
+  duration_ms: 3.481583
+  ...
+# Subtest: an earned release original stays clear when its retained history has no persistent assignment
+ok 29 - an earned release original stays clear when its retained history has no persistent assignment
+  ---
+  duration_ms: 337.541042
+  ...
+# Subtest: earned-original fallback fails concealed and releases mismatched or cancelled acquisitions
+ok 30 - earned-original fallback fails concealed and releases mismatched or cancelled acquisitions
+  ---
+  duration_ms: 239.664375
+  ...
+# Subtest: earned session originals use their combined view adapter while explicit acquisition overrides stay authoritative
+ok 31 - earned session originals use their combined view adapter while explicit acquisition overrides stay authoritative
+  ---
+  duration_ms: 199.054625
+  ...
+# Subtest: only the exact earned assignment reveals a picture, including shared Standard/Gentle identity
+ok 32 - only the exact earned assignment reveals a picture, including shared Standard/Gentle identity
+  ---
+  duration_ms: 72.942125
+  ...
+# Subtest: a later current assignment stays blurred even when its map has an earned older original
+ok 33 - a later current assignment stays blurred even when its map has an earned older original
+  ---
+  duration_ms: 148.404625
+  ...
+# Subtest: implicit earned legacy originals use the retained art seed and exact installed owner
+ok 34 - implicit earned legacy originals use the retained art seed and exact installed owner
+  ---
+  duration_ms: 52.359
+  ...
+# Subtest: read failures, foreign pins and invalid earned receipts never authorize clear artwork
+ok 35 - read failures, foreign pins and invalid earned receipts never authorize clear artwork
+  ---
+  duration_ms: 66.296291
+  ...
+# Subtest: preview eligibility requires installed identity and verified art without granting an earned picture
+ok 36 - preview eligibility requires installed identity and verified art without granting an earned picture
+  ---
+  duration_ms: 75.029333
+  ...
+# Subtest: cancelled late acquisition releases its bitmap, and resolved ownership disposes once
+ok 37 - cancelled late acquisition releases its bitmap, and resolved ownership disposes once
+  ---
+  duration_ms: 82.942875
+  ...
+# Subtest: blur reduces real high-frequency detail without modifying its source pixels
+ok 38 - blur reduces real high-frequency detail without modifying its source pixels
+  ---
+  duration_ms: 2.270625
+  ...
+# Subtest: the box blur preserves analytic edge-clamped averages with wide kernels and repeated passes
+ok 39 - the box blur preserves analytic edge-clamped averages with wide kernels and repeated passes
+  ---
+  duration_ms: 0.273291
+  ...
+# Subtest: the weak signal retains subdued scene composition while obscuring original fine detail
+ok 40 - the weak signal retains subdued scene composition while obscuring original fine detail
+  ---
+  duration_ms: 51.974625
+  ...
+# Subtest: different scene compositions produce different recognizable signal impressions
+ok 41 - different scene compositions produce different recognizable signal impressions
+  ---
+  duration_ms: 47.762209
+  ...
+# Subtest: muted broad color distinguishes warm and cool pictures without restoring full chroma
+ok 42 - muted broad color distinguishes warm and cool pictures without restoring full chroma
+  ---
+  duration_ms: 4.124583
+  ...
+# Subtest: equally lit pictures keep distinct subdued palettes, not only different brightness
+ok 43 - equally lit pictures keep distinct subdued palettes, not only different brightness
+  ---
+  duration_ms: 6.03325
+  ...
+# Subtest: transparent picture silhouettes cannot survive through the concealed alpha channel
+ok 44 - transparent picture silhouettes cannot survive through the concealed alpha channel
+  ---
+  duration_ms: 3.0775
+  ...
+# Subtest: concealment supports tiny and nondivisible images and rejects invalid pixel bounds
+ok 45 - concealment supports tiny and nondivisible images and rejects invalid pixel bounds
+  ---
+  duration_ms: 227.181
+  ...
+# Subtest: filter caches one bounded blurred source and fails closed for undecoded/unreadable replacements
+ok 46 - filter caches one bounded blurred source and fails closed for undecoded/unreadable replacements
+  ---
+  duration_ms: 55.685333
+  ...
+# Subtest: an unreadable source is quarantined until replacement or explicit cache reset
+ok 47 - an unreadable source is quarantined until replacement or explicit cache reset
+  ---
+  duration_ms: 0.289333
+  ...
+# Subtest: the cached picture filter presents concealed pixels while clear pictures retain their original
+ok 48 - the cached picture filter presents concealed pixels while clear pictures retain their original
+  ---
+  duration_ms: 15.008458
+  ...
+# Subtest: receiver snow is monochrome with localized horizontal impulse streaks
+ok 49 - receiver snow is monochrome with localized horizontal impulse streaks
+  ---
+  duration_ms: 20.182166
+  ...
+# Subtest: animated snow reuses its bitmap, freezes by time and keeps concealed geometry across frames
+ok 50 - animated snow reuses its bitmap, freezes by time and keeps concealed geometry across frames
+  ---
+  duration_ms: 12.439291
+  ...
+# Subtest: demo noise evolves independently for pictures with different broad palettes
+ok 51 - demo noise evolves independently for pictures with different broad palettes
+  ---
+  duration_ms: 7.680458
+  ...
+# Subtest: muted color never restores source chromatic detail, including by averaging animated frames
+ok 52 - muted color never restores source chromatic detail, including by averaging animated frames
+  ---
+  duration_ms: 10.265667
+  ...
+# Subtest: actual painter protects first frame, late backdrop, victory and gallery while leaving the player sharp
+ok 53 - actual painter protects first frame, late backdrop, victory and gallery while leaving the player sharp
+  ---
+  duration_ms: 390.944
+  ...
+# Subtest: disposing a painter clears its blur cache and rejects late setLook asset adoption
+ok 54 - disposing a painter clears its blur cache and rejects late setLook asset adoption
+  ---
+  duration_ms: 43.580416
+  ...
+# Subtest: scene transition modifies only the already concealed picture and releases its bounded cache
+ok 55 - scene transition modifies only the already concealed picture and releases its bounded cache
+  ---
+  duration_ms: 53.964625
+  ...
+# Subtest: reduced effects and invalid transition inputs skip transition work, and failed filtering cannot expose raw art
+ok 56 - reduced effects and invalid transition inputs skip transition work, and failed filtering cannot expose raw art
+  ---
+  duration_ms: 28.407875
+  ...
+# Subtest: clear demo previews bypass transition and jammer noise without altering simulation or ordinary rendering
+ok 57 - clear demo previews bypass transition and jammer noise without altering simulation or ordinary rendering
+  ---
+  duration_ms: 11.637625
+  ...
+1..57
+# tests 59
+# suites 0
+# pass 59
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15337.799375

@@ -7,6 +7,7 @@ import {
   inspectDecodedVisualTrim,
   isCompletePlaybackRange,
   preparePlaybackRange,
+  prepareVideoTransform,
   seekDistinctPresentedFrame,
   VIDEO_EDIT_FORMAT,
   VISUAL_TRIM_INSPECTION_FORMAT,
@@ -23,14 +24,62 @@ const info = Object.freeze({
   sha256: digest(sourceBytes),
 });
 const exactAudioInspection =
-  (audioTrackCount = 0, codecs = []) =>
+  (audioTrackCount = 0, codecs = [], videoCodec) =>
   async (blob) => ({
     format: AUDIO_TRACK_INSPECTION_FORMAT,
     bytes: blob.size,
     sha256: digest(Buffer.from(await blob.arrayBuffer())),
     audioTrackCount,
     codecs,
+    videoTrackCount: 1,
+    videoCodecs: [videoCodec || (blob.type === 'video/webm' ? 'vp9' : 'avc')],
   });
+const exactAacInspection =
+  ({ outputBytes, outputDuration = 4, outputEndOffset = 0, outputRms = 0.2 } = {}) =>
+  async (blob, { range } = {}) => {
+    const bytes = Buffer.from(await blob.arrayBuffer()),
+      output = outputBytes ? bytes.equals(outputBytes) : false,
+      duration = output ? outputDuration : info.durationSeconds,
+      selected = range ?? { startSeconds: 0, endSeconds: duration },
+      windowDuration = Math.min(
+        0.12,
+        Math.max(0.04, (selected.endSeconds - selected.startSeconds) * 0.04),
+      );
+    return {
+      format: AUDIO_TRACK_INSPECTION_FORMAT,
+      bytes: blob.size,
+      sha256: digest(bytes),
+      audioTrackCount: 1,
+      codecs: ['aac'],
+      videoTrackCount: 1,
+      videoCodecs: ['avc'],
+      audioTimelines: [
+        {
+          codec: 'aac',
+          sampleRate: 48_000,
+          numberOfChannels: 1,
+          canDecode: true,
+          trackStartSeconds: 0,
+          trackEndSeconds: duration + (output ? outputEndOffset : 0),
+          inspectedRange: { ...selected },
+          windows: [0.2, 0.5, 0.8].map((fraction) => {
+            const center =
+                selected.startSeconds + (selected.endSeconds - selected.startSeconds) * fraction,
+              startSeconds = center - windowDuration / 2,
+              endSeconds = center + windowDuration / 2;
+            return {
+              startSeconds,
+              endSeconds,
+              decodedStartSeconds: startSeconds,
+              decodedEndSeconds: endSeconds,
+              frameCount: Math.round(windowDuration * 48_000),
+              channels: [{ rms: output ? outputRms : 0.2, meanAbsolute: 0.18, peak: 0.3 }],
+            };
+          }),
+        },
+      ],
+    };
+  };
 const exactVisualInspection = async ({ sourceInfo, outputInfo, range }) => ({
   format: VISUAL_TRIM_INSPECTION_FORMAT,
   sourceSha256: sourceInfo.sha256,
@@ -78,6 +127,92 @@ test('playback range retains complete original and rejects clamping or empty ran
     { startSeconds: NaN, endSeconds: 4 },
   ])
     assert.throws(() => preparePlaybackRange(info, invalid), /Playback range/);
+});
+
+test('bounded video transform profiles preserve display aspect/orientation without upscaling', () => {
+  const landscape = { ...info, width: 1920, height: 1080 },
+    portrait = { ...info, width: 1080, height: 1920 };
+  assert.deepEqual(prepareVideoTransform(landscape, 'balanced'), {
+    format: VIDEO_EDIT_FORMAT,
+    operation: 'video-transform',
+    profile: 'balanced',
+    sourceSha256: info.sha256,
+    sourceWidth: 1920,
+    sourceHeight: 1080,
+    sourceDisplayOrientation: 'landscape',
+    width: 1280,
+    height: 720,
+    outputDisplayOrientation: 'landscape',
+    fit: 'contain',
+    allowsUpscale: false,
+    targetVideoBitrate: 2_500_000,
+  });
+  const compactPortrait = prepareVideoTransform(portrait, 'compact');
+  assert.deepEqual([compactPortrait.width, compactPortrait.height], [202, 358]);
+  assert.equal(compactPortrait.sourceDisplayOrientation, 'portrait');
+  assert.equal(compactPortrait.outputDisplayOrientation, 'portrait');
+  assert.ok(compactPortrait.width < compactPortrait.height);
+  const rotatedDisplay = { ...info, width: 360, height: 640 };
+  assert.deepEqual(
+    [
+      prepareVideoTransform(rotatedDisplay, 'source').width,
+      prepareVideoTransform(rotatedDisplay, 'source').height,
+    ],
+    [360, 640],
+  );
+  assert.deepEqual(
+    [
+      prepareVideoTransform(rotatedDisplay, 'compact').width,
+      prepareVideoTransform(rotatedDisplay, 'compact').height,
+    ],
+    [202, 358],
+  );
+  const small = prepareVideoTransform(info, 'balanced');
+  assert.deepEqual([small.width, small.height], [640, 360]);
+  assert.throws(() => prepareVideoTransform(info, 'unbounded'), /supported video size/);
+});
+
+test('Balanced and Compact derive an even bounded transform for every display orientation', () => {
+  const cases = [
+    {
+      dimensions: [1920, 1080],
+      orientation: 'landscape',
+      balanced: [1280, 720],
+      compact: [640, 360],
+    },
+    {
+      dimensions: [1080, 1920],
+      orientation: 'portrait',
+      balanced: [404, 718],
+      compact: [202, 358],
+    },
+    { dimensions: [1000, 1000], orientation: 'square', balanced: [720, 720], compact: [360, 360] },
+    { dimensions: [853, 480], orientation: 'landscape', balanced: [852, 478], compact: [638, 358] },
+  ];
+  for (const {
+    dimensions: [width, height],
+    orientation,
+    balanced,
+    compact,
+  } of cases) {
+    const source = { ...info, width, height };
+    for (const [profile, expected] of [
+      ['balanced', balanced],
+      ['compact', compact],
+    ]) {
+      const result = prepareVideoTransform(source, profile);
+      assert.deepEqual([result.width, result.height], expected);
+      assert.equal(result.sourceDisplayOrientation, orientation);
+      assert.equal(result.outputDisplayOrientation, orientation);
+      assert.equal(result.width % 2, 0);
+      assert.equal(result.height % 2, 0);
+      assert.ok(result.width <= width && result.height <= height, 'profiles never upscale');
+      assert.ok(
+        Math.abs(result.width / result.height / (width / height) - 1) <= 0.01,
+        'even encoder dimensions remain within the reviewed aspect tolerance',
+      );
+    }
+  }
 });
 
 test('decoded-frame step publishes only a distinct browser-presented timestamp', async () => {
@@ -315,9 +450,222 @@ test('optional physical trim verifies changed bytes and decoded duration/orienta
   );
   assert.equal(result.evidence.audioSync.status, 'not-present');
   assert.equal(result.evidence.audioSync.verification, 'authenticated-container-track-inventory');
+  assert.deepEqual(result.evidence.videoCodec, {
+    output: 'avc',
+    verification: 'authenticated-container-track-inventory',
+  });
   assert.doesNotMatch(result.evidence.audioSync.note, /Fixture timestamps matched/);
   assert.equal(result.evidence.visual.format, VISUAL_TRIM_INSPECTION_FORMAT);
   assert.equal(result.evidence.visual.start.meanAbsoluteRgbError, 0.003);
+});
+
+test('physical transform authenticates silent WebM input and publishes only verified AVC MP4', async () => {
+  const webmBytes = Buffer.from('complete silent webm source'),
+    outputBytes = Buffer.from('converted avc mp4 output'),
+    webmInfo = Object.freeze({
+      ...info,
+      mime: 'video/webm',
+      bytes: webmBytes.length,
+      sha256: digest(webmBytes),
+    });
+  const boundary = createOptionalPhysicalTrimBoundary({
+    loadAdapter: async () => ({
+      support: async (original, source) => {
+        assert.equal(original.type, 'video/webm');
+        assert.equal(source, webmInfo);
+        return { supported: true, formats: ['video/mp4'] };
+      },
+      trim: async () => ({ blob: new Blob([outputBytes], { type: 'video/mp4' }) }),
+    }),
+    inspectVideo: async (blob) => {
+      const bytes = Buffer.from(await blob.arrayBuffer()),
+        source = bytes.equals(webmBytes);
+      return {
+        info: {
+          mime: blob.type,
+          width: 640,
+          height: 360,
+          durationSeconds: source ? 6 : 4,
+          bytes: bytes.length,
+          sha256: digest(bytes),
+        },
+        dispose() {},
+      };
+    },
+    inspectAudio: exactAudioInspection(),
+    inspectVisual: exactVisualInspection,
+  });
+  const result = await boundary.trim(new Blob([webmBytes], { type: 'video/webm' }), webmInfo, {
+    startSeconds: 1,
+    endSeconds: 5,
+  });
+  assert.equal(result.info.mime, 'video/mp4');
+  assert.equal(result.evidence.sourceSha256, webmInfo.sha256);
+  assert.equal(result.evidence.outputSha256, digest(outputBytes));
+  assert.equal(result.evidence.audioSync.status, 'not-present');
+  assert.deepEqual(result.evidence.videoCodec, {
+    output: 'avc',
+    verification: 'authenticated-container-track-inventory',
+  });
+});
+
+test('resize/compression review binds exact decoded dimensions and a bounded bitrate observation', async () => {
+  const largeSourceBytes = Buffer.from('large source video'),
+    outputBytes = Buffer.alloc(100_000, 7),
+    largeInfo = Object.freeze({
+      ...info,
+      width: 1920,
+      height: 1080,
+      durationSeconds: 4,
+      bytes: largeSourceBytes.length,
+      sha256: digest(largeSourceBytes),
+    });
+  const boundary = createOptionalPhysicalTrimBoundary({
+    loadAdapter: async () => ({
+      support: async (_original, _source, _range, options) => {
+        assert.deepEqual([options.transform.width, options.transform.height], [640, 360]);
+        assert.equal(options.transform.targetVideoBitrate, 900_000);
+        return { supported: true, formats: ['video/mp4'] };
+      },
+      trim: async (_original, _range, options) => {
+        assert.equal(options.transform.profile, 'compact');
+        return { blob: new Blob([outputBytes], { type: 'video/mp4' }) };
+      },
+    }),
+    inspectVideo: async (blob) => {
+      const bytes = Buffer.from(await blob.arrayBuffer()),
+        source = bytes.equals(largeSourceBytes);
+      return {
+        info: {
+          mime: 'video/mp4',
+          width: source ? 1920 : 640,
+          height: source ? 1080 : 360,
+          durationSeconds: source ? 4 : 2,
+          bytes: bytes.length,
+          sha256: digest(bytes),
+        },
+        dispose() {},
+      };
+    },
+    inspectAudio: exactAudioInspection(),
+    inspectVisual: exactVisualInspection,
+  });
+  const result = await boundary.trim(
+    new Blob([largeSourceBytes], { type: 'video/mp4' }),
+    largeInfo,
+    { startSeconds: 1, endSeconds: 3 },
+    { transform: 'compact' },
+  );
+  assert.deepEqual([result.info.width, result.info.height], [640, 360]);
+  assert.equal(result.evidence.transform.profile, 'compact');
+  assert.equal(result.evidence.transform.targetVideoBitrate, 900_000);
+  assert.equal(result.evidence.transform.observedContainerBitsPerSecond, 400_000);
+  assert.equal(result.evidence.transform.bitrateReviewLimit, 2_056_000);
+});
+
+test('portrait display orientation survives profile derivation and exact output inspection', async () => {
+  const portraitBytes = Buffer.from('rotated display-matrix source'),
+    outputBytes = Buffer.alloc(50_000, 11),
+    portraitInfo = Object.freeze({
+      ...info,
+      width: 360,
+      height: 640,
+      durationSeconds: 4,
+      bytes: portraitBytes.length,
+      sha256: digest(portraitBytes),
+    });
+  const boundary = createOptionalPhysicalTrimBoundary({
+    loadAdapter: async () => ({
+      support: async (_original, source, _range, options) => {
+        assert.deepEqual([source.width, source.height], [360, 640]);
+        assert.deepEqual([options.transform.width, options.transform.height], [202, 358]);
+        return { supported: true, formats: ['video/mp4'] };
+      },
+      trim: async (_original, _range, options) => {
+        assert.deepEqual([options.transform.width, options.transform.height], [202, 358]);
+        return { blob: new Blob([outputBytes], { type: 'video/mp4' }) };
+      },
+    }),
+    inspectVideo: async (blob) => {
+      const bytes = Buffer.from(await blob.arrayBuffer()),
+        source = bytes.equals(portraitBytes);
+      return {
+        info: {
+          mime: 'video/mp4',
+          width: source ? 360 : 202,
+          height: source ? 640 : 358,
+          durationSeconds: 4,
+          bytes: bytes.length,
+          sha256: digest(bytes),
+        },
+        dispose() {},
+      };
+    },
+    inspectAudio: exactAudioInspection(),
+    inspectVisual: exactVisualInspection,
+  });
+  const original = new Blob([portraitBytes], { type: 'video/mp4' });
+  assert.equal(
+    (
+      await boundary.support(portraitInfo, {
+        original,
+        range: { startSeconds: 0, endSeconds: 4 },
+        transform: 'compact',
+      })
+    ).supported,
+    true,
+  );
+  const result = await boundary.trim(
+    original,
+    portraitInfo,
+    { startSeconds: 0, endSeconds: 4 },
+    { transform: 'compact' },
+  );
+  assert.deepEqual([result.info.width, result.info.height], [202, 358]);
+  assert.deepEqual(
+    [result.evidence.transform.sourceWidth, result.evidence.transform.sourceHeight],
+    [360, 640],
+  );
+  assert.equal(result.evidence.transform.sourceDisplayOrientation, 'portrait');
+  assert.equal(result.evidence.transform.outputDisplayOrientation, 'portrait');
+  assert.deepEqual([result.evidence.transform.width, result.evidence.transform.height], [202, 358]);
+  assert.ok(result.info.width < result.info.height);
+});
+
+test('resize/compression withholds output on dimension or bitrate drift', async () => {
+  const outputBytes = Buffer.alloc(600_000, 3);
+  async function attempt({ width = 640, height = 360, bytes = outputBytes } = {}) {
+    const boundary = createOptionalPhysicalTrimBoundary({
+      loadAdapter: async () => ({
+        support: async () => ({ supported: true, formats: ['video/mp4'] }),
+        trim: async () => ({ blob: new Blob([bytes], { type: 'video/mp4' }) }),
+      }),
+      inspectVideo: async (blob) => {
+        const source = blob.size === sourceBytes.length;
+        return {
+          info: {
+            mime: 'video/mp4',
+            width: source ? 640 : width,
+            height: source ? 360 : height,
+            durationSeconds: source ? 6 : 1,
+            bytes: blob.size,
+            sha256: digest(Buffer.from(await blob.arrayBuffer())),
+          },
+          dispose() {},
+        };
+      },
+      inspectAudio: exactAudioInspection(),
+      inspectVisual: exactVisualInspection,
+    });
+    return boundary.trim(
+      new Blob([sourceBytes], { type: 'video/mp4' }),
+      info,
+      { startSeconds: 1, endSeconds: 2 },
+      { transform: 'compact' },
+    );
+  }
+  await assert.rejects(attempt({ width: 638 }), /dimensions differ/);
+  await assert.rejects(attempt(), /bitrate review allowance/);
 });
 
 test('physical trim rejects unchanged bytes, decoded timing drift and orientation changes', async () => {
@@ -355,7 +703,7 @@ test('physical trim rejects unchanged bytes, decoded timing drift and orientatio
   );
   await assert.rejects(
     rejects({ output: Buffer.from('different'), width: 360, height: 640 }),
-    /orientation/,
+    /dimensions/,
   );
 });
 
@@ -445,7 +793,7 @@ test('physical trim fails closed without exact-byte audio-track inspection', asy
   assert.equal(adapterSupport, 0);
 });
 
-test('audio-bearing source is rejected before adapter capability or conversion', async () => {
+test('audio-bearing source without decoded timeline evidence is rejected before conversion', async () => {
   let adapterSupport = 0;
   const boundary = createOptionalPhysicalTrimBoundary({
     loadAdapter: async () => ({
@@ -462,7 +810,7 @@ test('audio-bearing source is rejected before adapter capability or conversion',
     range: { startSeconds: 1, endSeconds: 5 },
   });
   assert.equal(capability.supported, false);
-  assert.match(capability.reason, /contains audio.*timing and synchronization/i);
+  assert.match(capability.reason, /decoded AAC audio track/i);
   assert.equal(adapterSupport, 0);
 });
 
@@ -501,7 +849,122 @@ test('audio-bearing output is withheld even when the adapter claims verified syn
       startSeconds: 1,
       endSeconds: 5,
     }),
-    /output contains audio without decoded timing and synchronization evidence/,
+    /added an unexpected audio track/,
+  );
+});
+
+test('AVC plus AAC trim publishes only after decoded PCM windows and A/V endpoints match', async () => {
+  const outputBytes = Buffer.from('verified avc plus aac output'),
+    inspectAudio = exactAacInspection({ outputBytes });
+  const boundary = createOptionalPhysicalTrimBoundary({
+    loadAdapter: async () => ({
+      support: async () => ({ supported: true, formats: ['video/mp4'] }),
+      trim: async () => ({ blob: new Blob([outputBytes], { type: 'video/mp4' }) }),
+    }),
+    inspectVideo: async (blob) => {
+      const bytes = Buffer.from(await blob.arrayBuffer()),
+        output = bytes.equals(outputBytes);
+      return {
+        info: {
+          mime: 'video/mp4',
+          width: 640,
+          height: 360,
+          durationSeconds: output ? 4 : 6,
+          bytes: bytes.length,
+          sha256: digest(bytes),
+        },
+        dispose() {},
+      };
+    },
+    inspectAudio,
+    inspectVisual: exactVisualInspection,
+  });
+  const result = await boundary.trim(
+    new Blob([sourceBytes], { type: 'video/mp4' }),
+    info,
+    { startSeconds: 1, endSeconds: 5 },
+    { transform: 'compact' },
+  );
+  assert.equal(result.evidence.audioSync.status, 'verified');
+  assert.equal(
+    result.evidence.audioSync.verification,
+    'exact-byte-container-and-decoded-pcm-windows.v1',
+  );
+  assert.equal(result.evidence.audioSync.source.windows.length, 3);
+  assert.equal(result.evidence.audioSync.output.trackEndSeconds, 4);
+});
+
+test('AAC output is withheld on endpoint or decoded PCM fingerprint drift', async () => {
+  for (const [inspectionOptions, message] of [
+    [{ outputEndOffset: 0.5 }, /endpoints do not align/],
+    [{ outputRms: 0.5 }, /fingerprint differs/],
+  ]) {
+    const outputBytes = Buffer.from(`bad audio ${JSON.stringify(inspectionOptions)}`),
+      boundary = createOptionalPhysicalTrimBoundary({
+        loadAdapter: async () => ({
+          support: async () => ({ supported: true, formats: ['video/mp4'] }),
+          trim: async () => ({ blob: new Blob([outputBytes], { type: 'video/mp4' }) }),
+        }),
+        inspectVideo: async (blob) => {
+          const bytes = Buffer.from(await blob.arrayBuffer()),
+            output = bytes.equals(outputBytes);
+          return {
+            info: {
+              mime: 'video/mp4',
+              width: 640,
+              height: 360,
+              durationSeconds: output ? 4 : 6,
+              bytes: bytes.length,
+              sha256: digest(bytes),
+            },
+            dispose() {},
+          };
+        },
+        inspectAudio: exactAacInspection({ outputBytes, ...inspectionOptions }),
+        inspectVisual: exactVisualInspection,
+      });
+    await assert.rejects(
+      boundary.trim(new Blob([sourceBytes], { type: 'video/mp4' }), info, {
+        startSeconds: 1,
+        endSeconds: 5,
+      }),
+      message,
+    );
+  }
+});
+
+test('non-AVC output is withheld even when the adapter claims AVC conversion', async () => {
+  const outputBytes = Buffer.from('adapter output with vp9 video');
+  let inspection = 0;
+  const boundary = createOptionalPhysicalTrimBoundary({
+    loadAdapter: async () => ({
+      support: async () => ({ supported: true, formats: ['video/mp4'] }),
+      trim: async () => ({ blob: new Blob([outputBytes], { type: 'video/mp4' }) }),
+    }),
+    inspectVideo: async (blob) => {
+      const bytes = Buffer.from(await blob.arrayBuffer()),
+        source = bytes.equals(sourceBytes);
+      return {
+        info: {
+          mime: blob.type,
+          width: 640,
+          height: 360,
+          durationSeconds: source ? 6 : 4,
+          bytes: bytes.length,
+          sha256: digest(bytes),
+        },
+        dispose() {},
+      };
+    },
+    inspectAudio: async (blob) =>
+      exactAudioInspection(0, [], inspection++ === 0 ? 'avc' : 'vp9')(blob),
+  });
+  await assert.rejects(
+    boundary.trim(new Blob([sourceBytes], { type: 'video/mp4' }), info, {
+      startSeconds: 1,
+      endSeconds: 5,
+    }),
+    /not exactly one authenticated AVC\/H\.264 video track/,
   );
 });
 
