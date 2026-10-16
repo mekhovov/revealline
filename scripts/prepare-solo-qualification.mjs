@@ -58,10 +58,27 @@ assert(
 await mkdir(resolve(directory)); // Refuse to mix with or overwrite old evidence.
 const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url)));
 const themes = (await json('../game/content-design/themes.json')).themes;
-const authored = compileContentProject(createAuthoredJourneyRoute('authored').source);
+const authoredRoute = createAuthoredJourneyRoute('authored');
+const authored = compileContentProject(authoredRoute.source);
 const fracture = compileContentProject(createFractureCandidates());
 const combat = compileContentProject(createCombatCandidates());
 const routes = await json('../game/test/fixtures/candidate-solo-tuned-host-routes.json');
+// The opening-only route ends after nine missions. Ten Next transitions need
+// the supported authored route whose explicit core packs include Border Bloom.
+// Assert its actual source pack/campaign order before preparing any inputs.
+const authoredCoreMissionIds = authoredRoute.corePackIds.flatMap((packId) => {
+  const pack = authoredRoute.source.packs.find((entry) => entry.id === packId);
+  assert(pack, `Missing declared core pack ${packId}`);
+  return pack.campaignIds.flatMap((campaignId) => {
+    const campaign = authoredRoute.source.campaigns.find((entry) => entry.id === campaignId);
+    assert(campaign, `Missing declared core campaign ${campaignId}`);
+    return campaign.missionIds;
+  });
+});
+assert.deepEqual(
+  authoredCoreMissionIds.slice(0, 11),
+  routes.rows.slice(0, 11).map((row) => row[0]),
+);
 const fractureRows = (await json('../game/test/fixtures/fracture-clear-routes.json')).sets.find(
   (set) => set.difficulty === 'standard' && set.turnPolicy === 'immediate',
 ).rows;
@@ -167,7 +184,7 @@ expectedDefinitions.set('recorded-guide-capture-speech', expectedDefinitions.get
 for (const id of ['enabled-local-audio-and-reactions', 'explicit-resume-recovery-handlers'])
   expectedDefinitions.set(id, expectedDefinitions.get('signal-07'));
 expectedDefinitions.set(
-  'ten-next-current-opening-v3',
+  'ten-next-authored-standard-v4',
   definition(
     applyGameplayTuning(
       resolveMission(authored, routes.rows[10][0], { difficulty: 'standard' }).level,
@@ -955,6 +972,17 @@ const heldRoutes = new Map([
   ['courtyard-return', courtyardHeldRoute],
   ...laterHeldRoutes.map((route) => [route.id, route.segments]),
 ]);
+await put('ten-next-sequence.model.json', {
+  kind: 'source-navigation-order',
+  routeId: authoredRoute.id,
+  corePackIds: authoredRoute.corePackIds,
+  declaredCoreMissionIds: authoredCoreMissionIds,
+  requiredMissionIds: routes.rows.slice(0, 11).map((row) => row[0]),
+  requiredWins: 11,
+  requiredNextActivations: 10,
+  scope:
+    'Source-order assertion only. The prior opening-only recipe reached its real nine-mission end and remains failed. The supported authored route supplies the unchanged eleven intended missions; no chapter is skipped or progress injected. Native completion remains required.',
+});
 const nextActions = [
   { type: 'click', selector: '#shell-featured', timeoutMs: 60000 },
   { type: 'wait', phase: 'running', timeoutMs: 60000 },
@@ -976,13 +1004,14 @@ await put(
   'ten-next.qualification.json',
   validateQualification({
     format: 'SoloQualificationV1',
-    id: 'ten-next-current-opening-v3',
+    id: 'ten-next-authored-standard-v4',
     kind: 'lifecycle',
     timeoutMs: 1200000,
-    query: { journey: 'opening' },
+    query: { journey: 'authored' },
     coverage: [
       'ten public Next transitions',
-      'first eleven authored routes',
+      'first eleven authored core missions in source pack/campaign order',
+      'supported authored entry includes Opening and Border Bloom; opening-only ends after nine',
       'Courtyard, Long Way Home, Behind the Patrol and Second Landing held-input routes v3; other mission inputs unchanged',
       'actual wins required; no progress seeding',
     ],
