@@ -6,8 +6,9 @@ Current checkpoint: unchanged `b8aec0821` packages pass all six restarted-offlin
 flight routes, the three real five-minute timeouts, and installed Academy
 different-version update continuity through actual native activation/blur/return.
 Independent audits verify these narrow passes; failed first attempts are retained.
-The full practice suite passes 388/388; observer `57d3b748c` passes 317 tests plus
-one explicit historical-fixture skip. Native browser zoom geometry is proved,
+The full expanded practice suite passes 390/390; the observer suite passes 357
+tests plus one explicit historical-fixture skip after delivery/C9 integration.
+Original native observer `57d3b748c` remains separately bound. Native zoom geometry is proved,
 but screenshots are cropped/blank and package accessibility remains unqualified.
 
 Production run 2 verifies every original build byte before/after but fails all six
