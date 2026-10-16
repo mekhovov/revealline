@@ -560,6 +560,8 @@ test('actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and 
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, flightTick);
   await startFlight(page);
+  page.frame(0);
+  assert.equal(page.rendered.run.tick, flightTick, 'Resume anchors the clock without a step.');
   ticks(page, 2);
   assert.equal(page.rendered.paused, false);
   assert.equal(page.rendered.run.tick, flightTick + 2);
@@ -676,23 +678,33 @@ test('actual hide/focus restores listening on the same stream while flight stays
   const media = musicMedia(page),
     url = media.src;
   media.currentTime = 0.015;
+  const lastVisiblePaint = page.rendered,
+    lastVisibleTick = page.rendered.run.tick;
   page.doc.hidden = true;
   page.doc.emit('visibilitychange');
   page.win.emit('blur');
   page.frame(0);
   const before = page.rendered.run.tick;
   assert.equal(media.paused, true);
-  assert.equal(page.rendered.paused, true);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.ok(page.rendered === lastVisiblePaint, 'A hidden page retains its last visible paint.');
+  assert.equal(page.rendered.run.tick, lastVisibleTick);
   page.doc.hidden = false;
   page.doc.emit('visibilitychange');
   page.win.emit('focus');
   await waitFor(() => !media.paused, 'Prior audio desire resumes on visible focus');
+  page.frame(0);
+  assert.ok(page.rendered !== lastVisiblePaint, 'Foreground return repaints the paused flight.');
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.rendered.run.tick, before);
   ticks(page, 12);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, before);
   assert.equal(media.src, url);
   assert.equal(media.currentTime, 0.015);
   await startFlight(page);
+  page.frame(0);
+  assert.equal(page.rendered.run.tick, before, 'Resume anchors the clock without a step.');
   ticks(page, 2);
   assert.equal(page.rendered.run.tick, before + 2);
   assert.deepEqual(page.errors, []);
