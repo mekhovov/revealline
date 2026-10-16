@@ -410,6 +410,50 @@ test("only the exact reviewed source, complete policy and actual changed paths a
   }
 });
 
+test("manual stack workflow exception is confined to its immutable reviewed identity", () => {
+  for (const name of [
+    ".github/workflows/deploy-pages.yml",
+    ".github/workflows/fastline-auto-merge.yml",
+    ".github/workflows/other.yml",
+    ".github/other",
+    "publishing/fastline-merge-controller.mjs",
+  ]) {
+    const input = policyFixture();
+    const approvals = structuredClone(REVIEWED_POLICY_CHANGES);
+    const paths = [...input.changedPaths, name].sort();
+    input.changedPaths = paths;
+    input.receiptPaths = paths;
+    approvals[0].paths = paths;
+    assert.equal(reviewedPolicyChangeMatches(input, approvals), false, name);
+  }
+  for (const field of ["repository", "number", "headSha", "baseSha"]) {
+    const input = policyFixture();
+    const approvals = structuredClone(REVIEWED_POLICY_CHANGES);
+    const value =
+      field === "repository"
+        ? "other/repo"
+        : field === "number"
+          ? 1559
+          : "a".repeat(40);
+    approvals[0][field] = value;
+    if (field === "repository") {
+      input.repository = value;
+      input.pullRequest.head.repo.full_name = value;
+      input.pullRequest.base.repo.full_name = value;
+    } else if (field === "number") input.pullRequest.number = value;
+    else if (field === "headSha") input.pullRequest.head.sha = value;
+    else input.pullRequest.base.sha = value;
+    assert.equal(reviewedPolicyChangeMatches(input, approvals), false, field);
+  }
+  for (const index of [0, 1, 2, 3, 5, 6]) {
+    const input = policyFixture();
+    const approvals = structuredClone(REVIEWED_POLICY_CHANGES);
+    input.candidatePolicyBlobs[index][1] = "d".repeat(40);
+    approvals[0].candidatePolicyBlobs[index][1] = "d".repeat(40);
+    assert.equal(reviewedPolicyChangeMatches(input, approvals), false);
+  }
+});
+
 test("approval inventory is strict, unique and cannot come from candidate input", () => {
   const input = policyFixture();
   for (const approvals of [
