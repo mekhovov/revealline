@@ -34,6 +34,18 @@ test('shared Pages evidence scripts retain their publishing regression gates', (
   }
 });
 
+test('rolling metadata scripts retain their publishing regression gates', () => {
+  for (const changed of [
+    'scripts/write-main-pages-metadata.mjs',
+    'scripts/test-main-pages-metadata.mjs',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes('scripts/test-main-pages-metadata.mjs'));
+  }
+});
+
 test('the real company package script exposes all tests to exact focused deduplication', async () => {
   const { scripts } = JSON.parse(await readFile(path.join(directory, '../package.json'), 'utf8'));
   const prefix = 'node --test ';
