@@ -1,8 +1,8 @@
 # Solo regression evidence snapshot
 
-As of **2026-10-16 13:35 UTC**, **1,805 of the original 1,948 files** have complete
-observations at their recorded source revisions; **143 remain unobserved**. This
-combines the historical local 1,233-file snapshot with 572 disjoint later files.
+As of **2026-10-16 15:15 UTC**, **1,870 of the original 1,948 files** have complete
+observations at their recorded source revisions; **78 remain unobserved**. This
+combines the historical local 1,233-file snapshot with 637 disjoint later files.
 It is not a complete-suite pass or a single-revision result. The
 [machine-readable ledger](solo-regression-audit.json) binds sources, comparisons
 and retained results to SHA-256 evidence.
@@ -16,11 +16,11 @@ retained. Source, test, TAP, resource and archive integrity checks passed for th
 cited receipts.
 
 The missing-only 179-file queue at `d56bc4c4` / runtime `a159dd2e` has retained
-**41 complete files: 27 passed and 14 failed**, plus seven resource-incomplete
-files. Its remaining jobs are not credited. Current live-file metadata identifies
-Couch static-picture and Gallery return; an earlier mistaken Still media-panel
-mapping is explicitly corrected in the ledger without changing retained proofs.
-The historical candidate device-controls observer remains separate and active.
+**98 complete files: 64 passed and 34 failed**. Thirteen incomplete records include
+12 distinct files and one uncorroborated partial artifact; none receives coverage.
+Fifteen newly complete failing groups still require classification where no earlier
+proof applies. Live jobs and the known obsolete queued Text-size fixture are kept
+separate from this retained checkpoint. No active job was canceled or duplicated.
 
 The exact `8c727777` CI package also retains **54 focused files, 535/535 tests**,
 with no skips or cancellations, on Node **22.13.1**. Fifty overlap existing
@@ -28,19 +28,43 @@ observations. Four add unique original coverage: Story dialog, curated appearanc
 packaging, optional FPV packaging and world-texture acceptance. The producer list,
 source hashes and full TAP are bound in the ledger; this is focused CI evidence.
 
-Ten newly complete failing groups still need exact baseline classification:
-Display preferences, Enemy guide editions, Enemy guide, External chapter app,
-Flight pictures, Flight preparation status, Fracture spatial candidates, Gentle
-routes, HUD numeric values and HUD status cues. Their original test bytes match
-`b1174522`, but byte equality alone does not classify the failures. All raw
-failures and resource-incomplete attempts remain retained.
+The completed 33-job continuation retains all source/test/TAP/resource artifacts
+without integrity errors. Nine complete canonical targets add eight unique files:
+Settings assists **1/1**, Text size **6/6**, Team pressure opening routes **1/37**,
+Versus continuous Next **9/9**, native CLI **18/18**, FPV content **2/2**, practice
+capacity **7/7**, and Whole spatial snapshot **8/10**. Still Workshop is already
+counted; its corrected full file is **5/6**, with the remaining allowlist diagnostic
+identical to baseline. Failed files remain failures.
 
-A prepared, not-yet-dispatched 33-job continuation includes three canonical
-fixture repairs, six never-launched original files, five paired identity-format
-diagnostics and fourteen exact-baseline classifications. It keeps at most two
-runners and the existing time/memory guards. The verified Story-dialog CI result
-removes that file from the earlier seven-file queue. Diagnostic copies never
-receive canonical inventory credit, and active files are excluded.
+Fourteen complete canonical baseline comparisons are now retained. Ten groups
+have identical named semantic diagnostics; two more differ only in the named
+random enemy-stat writer/session/attempt IDs. Exact raw differences and comparison
+rules are preserved. **Flight preparation status (baseline 2/2) and HUD status cues
+(baseline 8/8) pass baseline but failed candidate**; these receive separate
+readiness-boundary review, not a baseline waiver. The additional Team pressure
+and Whole spatial failures remain unclassified pending their exact evidence.
+
+The later runtime correction in `24b9d38ed` separates asset completion from
+foreground board submission and preserves the existing gameplay notice during
+board-only Resume. Its fixtures explicitly await the required submitted frame;
+the asset-only background wait retains the original no-frame behavior and
+deadline. The combined frozen-source result remains separate from these
+historical failed observations. [Readiness and terminal follow-up](solo-terminal-work-followup.md).
+
+The five paired identity diagnostic groups in the 33-job run remain diagnostic
+copies. One Couch Help baseline stopped at its resource guard; no complete-file
+credit is inferred. A separate completed four-job diagnostic run proves exact
+matching failures on baseline and candidate: Field Kit **3/8** on both and Couch
+installed chapters **25/27** on both. Bounded equality messages prevent the
+original output amplification without changing equality truth. Those copies
+still receive no canonical inventory credit, and original incomplete attempts
+remain retained.
+
+A seven-job successor is prepared but not yet dispatched at this checkpoint:
+six missing exact-baseline comparisons plus the corrected Device-controls
+canonical file, now that its historical observer has closed. It retains two
+runners and all existing resource/deadline guards. Source/workflow identities and
+no-overlap checks are in the ledger.
 
 A further 31 exact-baseline comparisons are retained. Twenty-six have identical
 named diagnostic fields; two more reproduce the same failures with only a
@@ -120,25 +144,25 @@ interruption/Resume cases with strict replay and checkpoint agreement. No deadli
 or correctness assertion was relaxed. These are Node correctness observations,
 not native performance or device acceptance.
 
-The unchanged device-controls diagnostic passes **15/15** on exact baseline.
-Its historical candidate run is still active and receives no completion credit;
-the earlier 145-minute timeout remains incomplete. Retained handle observations
-are diagnostic evidence, with observer overhead and bounded attribution explicit.
+The unchanged Device-controls diagnostic passes **15/15** on exact baseline.
+Its historical candidate observer closed at the **145-minute guard**, after
+printing 15 cases without a complete TAP footer or normal process exit. The raw
+TAP, source hashes, bounded handle report and owned-group cleanup are retained;
+this remains incomplete and does not identify a particular lingering handle.
 A static audit found exactly three custom fixtures—Device controls, Settings
 assists and Text size—that retained only the final cleanup callback, although
 the shared host now registers three. Commit `aa88d829` repairs those collectors
 with ordered, awaited cleanup and repairs the isolated Still Workshop dependency
-copier. Every assertion and deadline remains unchanged; complete canonical
-results are still pending. The device repair is not run alongside its active
-historical observer, and no exact lingering handle is inferred from this audit.
+copier. Assertions and deadlines remain unchanged. Settings and Text size now
+complete as recorded above; corrected Device-controls is only queued.
 
-The live inventory contains **1,959 files**, including **11 added after** the
-original launch: three archive/profile/startup tooling tests, four Solo
-correctness files, two Demo host files, the preparation-invalidation host file,
-and the cadence-calibration helper test. Their hashes and tracked-source state
-are listed separately; merely counting a new file grants no execution coverage.
-Later runtime and tooling checks do not overwrite the original 1,948-file
-partition or turn historical failures into passes.
+The known post-launch inventory contains **13 additional files**, making **1,961
+paths** when combined with the original list. Eleven were already recorded; the
+two new working-tree terminal-work regressions cover mission-list admission and
+transition performance. Their source hashes/tracked state are separate from the
+original 1,948-file partition. New paths and historical source observations do
+not establish final-runtime coverage. Root owns the final exact-source focused
+checks and subsequent artifact qualification.
 
 The added audio-fixture test was already present in the original launch inventory,
 although it was then uncommitted. It is not a fourth post-launch addition. The
