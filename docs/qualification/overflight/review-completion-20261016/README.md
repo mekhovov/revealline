@@ -175,3 +175,5 @@ The new results-panel source is `3a6631bd9`; the completed timing/refit source i
 `79354e383`. Native timing, headless campaign outcomes and UI review are kept
 separate. Current human visual/audio/gameplay acceptance remains ready for review,
 not passed. Previously waived trials and provisional medals remain explicit.
+
+Source and evidence are published in [PR1549](https://github.com/mekhovov/revealline/pull/1549), stacked on PR1534. Publication is not merge or deployment approval. A final independent read-only review found no concrete regression in the preview/panel runtime delta.
