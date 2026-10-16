@@ -1,18 +1,18 @@
 {
   "format": "revealline-neon-build-audit.v1",
   "scope": "Distribution files, exact links and offline descriptors; not browser installation or public deployment acceptance.",
-  "version": "0.151.4",
-  "buildSourceRevision": "3491baf7aed0e19aa918e55c4b8a011c14292ab3",
-  "distributionSHA256": "791724f3fd41c15474c80287ecc42d638bc2d1b958d06c21e8c53def05c03f79",
-  "distributionFiles": 3492,
-  "coreBytes": 71920028,
-  "reviewFilesOutsideCore": 141,
-  "reviewBytesOutsideCore": 33042827,
+  "version": "0.151.1",
+  "buildSourceRevision": "1399d031138c8940883741da8970b941b6c3acf0",
+  "distributionSHA256": "8dbe2e0cc0eb0c266bcd66041c54e2cbe0be22736304c08750862c365af58202",
+  "distributionFiles": 3448,
+  "coreBytes": 70139822,
+  "reviewFilesOutsideCore": 138,
+  "reviewBytesOutsideCore": 32278589,
   "galleries": [
     {
       "path": "authoring/library/neon-artwork/index.html",
-      "sha256": "6930bb336e04e4c2a64908ef7656047a95fb938292a31e90f39a8d61e7ef1dc4",
-      "exactMissionLinks": 54,
+      "sha256": "524233a72c74dcff62a5bca461176714650296ddb40f9261501f76e8b16e844c",
+      "exactMissionLinks": 53,
       "linkedFiles": [
         "authoring/library/neon-artwork/backgrounds/arrows.jpg",
         "authoring/library/neon-artwork/backgrounds/bandura.jpg",
@@ -81,8 +81,8 @@
     },
     {
       "path": "authoring/library/neon-mosaic/index.html",
-      "sha256": "b6882813949e317a617487ceb9ca9d1b87ebab8948db0d20fd1ef27c79af56a5",
-      "exactMissionLinks": 38,
+      "sha256": "f29d62af6aaf055392b40c0d3d8f282eff6f5f5827005212f4a927c53585072f",
+      "exactMissionLinks": 37,
       "linkedFiles": [
         "authoring/library/neon-mosaic/bandura/preview.svg",
         "authoring/library/neon-mosaic/bandura/scenario.json",
@@ -179,8 +179,8 @@
     {
       "id": "neon-mosaic-pack",
       "path": "game/content/packs/neon-mosaic-pack.json",
-      "sha256": "b7835f71ad45e7a8fcaae4b81f30fe91cf7c3e7e0e215a8a675f521b8f438ef6",
-      "bytes": 15623239,
+      "sha256": "09203e4c7ec3a53e0deccb2d2132cbce09f3e8a1ab5a2903cd780735648418b6",
+      "bytes": 15604102,
       "group": "chapter:neon-mosaic-pack"
     }
   ]
