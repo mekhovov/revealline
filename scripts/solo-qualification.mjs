@@ -195,7 +195,12 @@ export function evaluateQualificationBudgets(application) {
       stats.histogram.reduce((sum, n) => sum + n, 0),
       stats.count,
     );
-    const bound = quantileBound(stats.histogram, fraction, bounds, stats.maxMs);
+    const bound = quantileBound(
+      stats.histogram,
+      fraction,
+      stats.histogramUpperBoundsMs ?? bounds,
+      stats.maxMs,
+    );
     const status =
       bound.upperInclusiveMs !== null && bound.upperInclusiveMs <= limitMs
         ? 'pass'

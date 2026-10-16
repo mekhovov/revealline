@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  calibrateReadyCadence,
+  externalQualificationBudgets,
+} from './solo-qualification-observation.mjs';
+import {
   validateQualification,
   resourceStability,
   quantileBound,
@@ -308,4 +312,53 @@ test('offline native-recording inspection verifies actual captures and rejects a
   const tampered = structuredClone(replay);
   tampered.segments[0].ticks++;
   assert.throws(() => inspectQualificationReplay(tampered));
+});
+
+test('pre-play calibration keeps unstable, incomplete and active windows provisional', () => {
+  const ready = { ready: true, phase: 'briefing', picture: 'ready' };
+  const stable = calibrateReadyCadence(Array(30).fill(1000 / 60), ready);
+  assert.equal(stable.status, 'measured-before-play');
+  assert.equal(stable.baselineMs, 1000 / 60);
+  const disturbed = Array(30).fill(1000 / 60);
+  disturbed[5] = 80;
+  const result = calibrateReadyCadence(disturbed, ready);
+  assert.equal(result.status, 'provisional-unstable');
+  assert.equal(result.maximumMs, 80);
+  assert.equal(calibrateReadyCadence(Array(29).fill(16.7), ready).status, 'provisional-incomplete');
+  assert.equal(
+    calibrateReadyCadence(Array(30).fill(16.7), { ready: true, phase: 'running' }).status,
+    'provisional-unstable',
+  );
+});
+
+test('external baseline gates never synthesize missing internal counters or exact truncated quantiles', () => {
+  const bounds = [2, 4, 8.34, 16.67, 20, 33.34, 100, null];
+  const probe = {
+    phases: ['running'],
+    bounds,
+    totals: [100, 1667, 16.67, 0, 0],
+    counts: [[0, 0, 0, 100, 0, 0, 0, 0]],
+    missed: [0, 0, 0],
+    calibration: calibrateReadyCadence(Array(30).fill(1000 / 60), {
+      ready: true,
+      phase: 'briefing',
+    }),
+    work: {
+      bounds,
+      width: 11,
+      count: 100,
+      omittedCount: 0,
+      totals: [100, 200, 2, 100, 0, 0, 0, 0, 0, 0, 0],
+      recent: Array.from({ length: 100 }, () => [2, 0]).flat(),
+    },
+  };
+  const result = externalQualificationBudgets(probe);
+  assert.equal(result.status, 'pass-observed-external-window');
+  assert.equal(result.checks.length, 4);
+  assert.equal(result.exactRunningWork.p95Ms, 2);
+  assert(result.unobserved.some((text) => text.includes('input')));
+  probe.work.omittedCount = 1;
+  assert.equal(externalQualificationBudgets(probe).exactRunningWork, null);
+  probe.calibration.status = 'provisional-unstable';
+  assert.equal(externalQualificationBudgets(probe).status, 'inconclusive');
 });
