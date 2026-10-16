@@ -1,12 +1,44 @@
 # FPV continuous feature delivery
 
-Updated 2026-10-05. The owner requests a verified PR after each completed feature,
+## Current review — 16 October 2026
+
+Use the [current reviewed priorities](fpv-plan-review-20261016.md) and
+[large-worlds plan](fpv-large-worlds-delivery-plan.md). Older “current” headings,
+queue rows and estimates below are preserved historical checkpoints.
+
+The docs-only research review is based on main `aac03bf0`: R6 Library #1535 has
+merged after exact optional/Company original archive and bounded local native
+qualification. Public Pages `aac03bf0`, all 24 catalogue offers, capability and
+R6 descriptor now pass the independent HTTP/source gate (run 38830488894; receipt
+`ead3757b811f32ce2448006877ad45de27dc7ca000efe54fe716bd31720f7118`). Actual
+public R6 UI flight remains open; the frozen public ledger remains 13/23 regional
+launches, all ten families, 14 built-ins and 20 Worldpacks with one course sampled each. Capacity
+#1531 is merged and its 512 MiB regional limit publicly byte-verified. Actual
+all-24/native-above-256-MiB retention remains unqualified.
+
+Prioritize P0 storage-visibility/closing-connection diagnosis and public delivery,
+P1 measured performance, Library/setup simplicity and School/HUD coverage, then
+P2 Reservoir's representative standard → Festival → Harbor → Canals and optional
+repeatable activities. Later authored regions follow; integrated reliability/D6
+continues in parallel. Official-reference research and per-item rationale/exit
+gates are in the linked review. These are planning refinements, not newly shipped
+runtime features or a competitor performance comparison.
+
+Preserve both public storage failures and every endurance negative. No two-hour,
+physical-device, full offline/restart/eviction, final-art or all-plan pass exists.
+Internal storage is below the stable 3 GiB floor; heavy work stays external/cloud.
+Core 72 MiB, regional 512 MiB, Worldpacks 256 MiB and all other ceilings remain
+unchanged. The player-data problem is not inferred to be caused by low disk or
+solved by capacity expansion.
+
+Historical opening, 2026-10-05. The owner requests a verified PR after each
+completed feature,
 with the next independent item developed while source gates and deployment run.
 Additional unit coverage belongs in the final phase. Build, browser, replay,
 import/export and publication verification remain part of every applicable item.
 
-**Current scoped checkpoint:** see “5 October — Stick geometry observation qualified; publication held” at the end of this log, the active parallel delivery plan and the coordinator’s central checkpoint. Earlier tables and heads are history.
-**Current checkpoint:** see “5 October — Public21826 and imported catalogue truthfulness”
+**Historical scoped checkpoint:** see “5 October — Stick geometry observation qualified; publication held” at the end of this log, the active parallel delivery plan and the coordinator’s central checkpoint. Earlier tables and heads are history.
+**Historical checkpoint:** see “5 October — Public21826 and imported catalogue truthfulness”
 at the end of this log and the active parallel delivery
 plan. Earlier tables and heads are history.
 
