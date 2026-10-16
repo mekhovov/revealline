@@ -32,6 +32,12 @@ import {
 } from './optional-installation-imported-world.mjs';
 import { PACK } from './practice-imported-world-check.mjs';
 import {
+  selectOfflineFlightMode,
+  offlineFlightAuthority,
+  observeOfflineFlight,
+  assertOfflineFlightMatrix,
+} from './optional-installation-offline-flight.mjs';
+import {
   selectInstallationDownloadFaults,
   installationDownloadFaultMatrix,
   requireInstallationDownloadFaultBudget,
@@ -180,6 +186,40 @@ const importedWorldEnabled = selectImportedWorldMode(
     verificationCancel: process.env.OPTIONAL_INSTALLATION_VERIFICATION_CANCEL,
   },
 );
+const offlineFlightEnabled = selectOfflineFlightMode(
+  process.env.OPTIONAL_INSTALLATION_OFFLINE_FLIGHT,
+  {
+    importedWorld: importedWorldEnabled,
+    worldSeed: worldSeedEnabled,
+    historical: process.env.OPTIONAL_INSTALLATION_PREVIOUS_HISTORICAL,
+    previousBundle: previousBundlePath,
+    migration: process.env.OPTIONAL_INSTALLATION_MIGRATION,
+    activeSession: process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION,
+    activeWindow: process.env.OPTIONAL_INSTALLATION_ACTIVE_WINDOW,
+    quota: process.env.OPTIONAL_INSTALLATION_QUOTA_PROBE,
+    quotaPackages: process.env.OPTIONAL_INSTALLATION_QUOTA_PACKAGES,
+    download: process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
+    verificationCancel: process.env.OPTIONAL_INSTALLATION_VERIFICATION_CANCEL,
+    diagnostics: process.env.OPTIONAL_INSTALLATION_DIAGNOSTICS,
+  },
+);
+const offlineFlightURL = new URL('./optional-installation-offline-flight.mjs', import.meta.url);
+const offlineFlightSourceSha256 = offlineFlightEnabled
+  ? sha(await readFile(offlineFlightURL))
+  : null;
+const offlineFlight = offlineFlightEnabled
+  ? {
+      format: 'OptionalInstallationOfflineFlight.v1',
+      mode: 'all-three-en',
+      passed: false,
+      qualified: false,
+      publicEligible: false,
+      flights: [],
+      sourceSha256: offlineFlightSourceSha256,
+      scope:
+        'EN assisted Gym and Self-level Academy lift/pause plus original imported Worlds Self-level lift/pause, each after browser-process restart through stable launcher and installed standalone window. Browser-context offline, not machine-wide outage; no completed course, physical input or publication claim.',
+    }
+  : null;
 assert(
   !importedWorldEnabled || !previousBundlePath,
   'Imported-world lane uses current admitted apps, not historical candidates.',
@@ -438,7 +478,10 @@ const transition = {
         sourceTree: previous.envelope.sourceTree,
         package: previous.envelope.packages.find((row) => row.id === fpv),
         ...(historicalPrevious
-          ? { historicalAdmission: previous.receipt, observerAuthority: historicalAuthority }
+          ? {
+              historicalAdmission: previous.receipt,
+              observerAuthority: historicalAuthority,
+            }
           : {}),
       }
     : null,
@@ -485,7 +528,11 @@ const quotaProbePerPackage = {};
 const quotaCheckpoint = (label, id) => (quotaPackageIds.length === 1 ? label : `${label}:${id}`);
 function recordStatusDiagnostic(event) {
   if (statusDiagnostics.events.length < 4096)
-    statusDiagnostics.events.push({ step: currentStep, receivedAt: Date.now(), ...event });
+    statusDiagnostics.events.push({
+      step: currentStep,
+      receivedAt: Date.now(),
+      ...event,
+    });
   else statusDiagnostics.dropped++;
 }
 const observationDeadline = Date.now() + OBSERVATION_TIMEOUT_MS;
@@ -616,8 +663,18 @@ try {
       await pointer(gym, version);
       await pointer(worlds, version);
       if (importedWorldEnabled) {
+        if (offlineFlightEnabled) {
+          offlineFlight.runtime = offlineFlightAuthority(entries);
+          offlineFlight.sourceRevision = envelope.sourceRevision;
+          offlineFlight.sourceTree = envelope.sourceTree;
+          offlineFlight.envelopeSha256 = sha(envelopeBytes);
+        }
         importedWorld.authority = importedWorldAuthority(entries.get(worlds), importedPackBytes);
-        importedWorld.packSource = { ...importedPackSource, path: PACK.path, sha256: PACK.sha256 };
+        importedWorld.packSource = {
+          ...importedPackSource,
+          path: PACK.path,
+          sha256: PACK.sha256,
+        };
         importedWorld.sourceRevision = envelope.sourceRevision;
         importedWorld.sourceTree = envelope.sourceTree;
         importedWorld.envelopeSha256 = sha(envelopeBytes);
@@ -802,7 +859,10 @@ try {
           ),
           caches: (await globalThis.caches.keys()).sort(),
           workers: (await globalThis.navigator.serviceWorker.getRegistrations())
-            .map((row) => ({ scope: row.scope, active: row.active?.state ?? null }))
+            .map((row) => ({
+              scope: row.scope,
+              active: row.active?.state ?? null,
+            }))
             .sort((a, b) => a.scope.localeCompare(b.scope)),
         }));
         checkpoints.push({ label, ...state });
@@ -820,7 +880,10 @@ try {
           })
           .press('Enter');
         const value = await page
-          .getByRole('textbox', { name: 'Flight proof backup JSON', exact: true })
+          .getByRole('textbox', {
+            name: 'Flight proof backup JSON',
+            exact: true,
+          })
           .inputValue();
         await page.locator('[data-close="notebook-dialog"]').click();
         return value;
@@ -894,7 +957,11 @@ try {
             );
             assert(bytes.length > 0 && bytes.length <= 32 * 1024 * 1024);
             await writeFile(screenshot, bytes, { flag: 'wx' });
-            return { path: screenshot, bytes: bytes.length, sha256: sha(bytes) };
+            return {
+              path: screenshot,
+              bytes: bytes.length,
+              sha256: sha(bytes),
+            };
           },
         };
       }
@@ -911,6 +978,39 @@ try {
           restartConfirmed: browserRestart.contextClosed === true,
           // openPrepared just required a genuinely uncached failed network probe.
           networkProbeFailed: true,
+        });
+      }
+      async function additionalOfflineFlight(target, id, route) {
+        if (!offlineFlightEnabled || id === worlds) return;
+        assert([gym, fpv].includes(id));
+        assert(
+          ['browser-process-restart-launcher', 'browser-process-restart-standalone'].includes(
+            route,
+          ),
+        );
+        currentStep = `offline public flight: ${route}:${id}`;
+        // Immediate fresh stable-launcher navigation also requires the uncached
+        // network failure witness. No inherited flight or in-memory runtime.
+        await openPrepared(target, id);
+        const receipt = { route, packageId: id };
+        offlineFlight.flights.push(receipt);
+        await observeOfflineFlight(target, {
+          packageId: id,
+          expectedURL: target.url(),
+          deadlineAt: observationDeadline,
+          requireActive: requireObservationTime,
+          receipt,
+          restartConfirmed: browserRestart.contextClosed === true,
+          networkProbeFailed: true,
+          capture: async () => {
+            const file = `${output}.offline-flight-${route}-${id}.png`;
+            const bytes = await boundedOperation('Capture paused offline flight', () =>
+              target.screenshot({ timeout: 5000 }),
+            );
+            assert(bytes.length > 0 && bytes.length <= 32 * 1024 * 1024);
+            await writeFile(file, bytes, { flag: 'wx' });
+            return { path: file, bytes: bytes.length, sha256: sha(bytes) };
+          },
         });
       }
       await open(fpv, priorVersion);
@@ -935,7 +1035,10 @@ try {
         }),
       );
       await page
-        .getByRole('button', { name: 'Import and reverify proofs', exact: true })
+        .getByRole('button', {
+          name: 'Import and reverify proofs',
+          exact: true,
+        })
         .press('Enter');
       await page
         .locator('#flight-notebook')
@@ -1070,7 +1173,10 @@ try {
             try {
               launcherCheck.afterHashFailure = await boundedOperation(
                 'Read launcher state after hash failure',
-                () => page.evaluate(readMigrationLauncherState, { scope: workerScope }),
+                () =>
+                  page.evaluate(readMigrationLauncherState, {
+                    scope: workerScope,
+                  }),
                 2000,
               );
             } catch {
@@ -1215,7 +1321,9 @@ try {
           assert.equal(
             await page.evaluate(async () => {
               try {
-                await fetch('/migration-uncached-network-probe', { cache: 'no-store' });
+                await fetch('/migration-uncached-network-probe', {
+                  cache: 'no-store',
+                });
                 return false;
               } catch {
                 return true;
@@ -1358,7 +1466,12 @@ try {
           await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
           if (id === worlds) await verifyWorldSeed(page, `closed-window-round-${round}`);
         }
-        coldRounds.push({ round, closedPageCount, packages: packageIds, passed: true });
+        coldRounds.push({
+          round,
+          closedPageCount,
+          packages: packageIds,
+          passed: true,
+        });
       }
       const closedTabsRelaunch = {
         passed: true,
@@ -1374,7 +1487,9 @@ try {
         const pendingWindow = context
           .waitForEvent('page', { timeout: OPERATION_TIMEOUT_MS })
           .catch(() => null);
-        app.offlineLaunch = await send('PWA.launch', { manifestId: app.manifestId });
+        app.offlineLaunch = await send('PWA.launch', {
+          manifestId: app.manifestId,
+        });
         const appWindow = await pendingWindow;
         assert.ok(appWindow, 'Offline PWA.launch must create a new app window.');
         appWindows.set(app.id, appWindow);
@@ -1419,12 +1534,15 @@ try {
         await openPrepared(page, id);
         if (id === worlds) await verifyWorldSeed(page, 'browser-process-restart-launcher');
         if (id === worlds) await importedOfflineFlight(page, 'browser-process-restart-launcher');
+        await additionalOfflineFlight(page, id, 'browser-process-restart-launcher');
       }
       for (const app of osApps.filter((row) => row.installed)) {
         const pendingWindow = context
           .waitForEvent('page', { timeout: OPERATION_TIMEOUT_MS })
           .catch(() => null);
-        app.restartLaunch = await send('PWA.launch', { manifestId: app.manifestId });
+        app.restartLaunch = await send('PWA.launch', {
+          manifestId: app.manifestId,
+        });
         const appWindow = await pendingWindow;
         assert.ok(appWindow, 'Restarted PWA.launch must create an installed window.');
         appWindows.set(app.id, appWindow);
@@ -1438,6 +1556,7 @@ try {
           await verifyWorldSeed(appWindow, 'browser-process-restart-standalone');
         if (app.id === worlds)
           await importedOfflineFlight(appWindow, 'browser-process-restart-standalone');
+        await additionalOfflineFlight(appWindow, app.id, 'browser-process-restart-standalone');
       }
       await open(fpv, priorVersion);
       assert.equal(await exportedProof(), savedProof);
@@ -1545,7 +1664,11 @@ try {
                 const bytes = await page.screenshot({ timeout: 2000 });
                 const imagePath = `${output}.final-verifying-${id}.png`;
                 await writeFile(imagePath, bytes, { flag: 'wx' });
-                return { path: imagePath, bytes: bytes.length, sha256: sha(bytes) };
+                return {
+                  path: imagePath,
+                  bytes: bytes.length,
+                  sha256: sha(bytes),
+                };
               },
             });
             assert.equal(observed.passed, true);
@@ -1724,7 +1847,11 @@ try {
           const image = await sessionGuard.page.screenshot({ timeout: 5000 });
           const imagePath = output + '.active-session-paused.png';
           await writeFile(imagePath, image, { flag: 'wx' });
-          activeSession.screenshot = { path: imagePath, bytes: image.length, sha256: sha(image) };
+          activeSession.screenshot = {
+            path: imagePath,
+            bytes: image.length,
+            sha256: sha(image),
+          };
         }
       } finally {
         try {
@@ -2160,6 +2287,22 @@ try {
     }
     report.importedWorld = importedWorld;
     report.passed &&= importedWorld.passed;
+  }
+  if (offlineFlightEnabled) {
+    try {
+      offlineFlight.sourceStable =
+        offlineFlightSourceSha256 === sha(await readFile(offlineFlightURL));
+      offlineFlight.passed = assertOfflineFlightMatrix(
+        offlineFlight,
+        importedWorld,
+        browserRestart,
+      );
+    } catch (error) {
+      offlineFlight.passed = false;
+      offlineFlight.failure = error.message;
+    }
+    report.offlineFlight = offlineFlight;
+    report.passed &&= offlineFlight.passed;
   }
   if (quotaProbeEnabled) {
     report.quotaProbe = {
