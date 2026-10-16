@@ -16,6 +16,7 @@ concurrency:
 jobs:
   verify:
     if: >-
+      github.event.pull_request.head.sha == 'bc8afad425e6ae138278d6a0371a7bbbb0518571' &&
       github.repository == 'mekhovov/revealline' &&
       github.event.pull_request.number == 1552 &&
       github.event.pull_request.head.repo.full_name == github.repository &&
