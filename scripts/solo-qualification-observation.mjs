@@ -31,6 +31,114 @@ export function createRafIntervalClock(
   };
 }
 
+/** Self-contained browser collector. One fixed window, before game navigation;
+ * a lost foreground interval or deadline never starts a replacement window. */
+export function observeLowWorkCadence({ timeoutMs = 5000 } = {}, environment = globalThis) {
+  const documentRef = environment.document;
+  const registeredAtMs = environment.performance.now();
+  const state = () => ({
+    url: environment.location.href,
+    visible: !documentRef.hidden && documentRef.visibilityState === 'visible',
+    focused: documentRef.hasFocus(),
+    viewport: { width: environment.innerWidth, height: environment.innerHeight },
+    devicePixelRatio: environment.devicePixelRatio,
+  });
+  const initialState = state();
+  let foregroundThroughout = initialState.visible && initialState.focused;
+  let previous = null,
+    firstRafCallback = null,
+    frameId,
+    timerId,
+    finished = false;
+  const samples = [];
+  return new Promise((resolve) => {
+    const loseFocus = () => {
+      foregroundThroughout = false;
+    };
+    const observeState = () => {
+      const current = state();
+      foregroundThroughout &&= current.visible && current.focused;
+      return current;
+    };
+    const finish = (deadlineReached) => {
+      if (finished) return;
+      finished = true;
+      environment.cancelAnimationFrame(frameId);
+      environment.clearTimeout(timerId);
+      environment.removeEventListener('blur', loseFocus);
+      documentRef.removeEventListener('visibilitychange', observeState);
+      resolve({
+        samples,
+        initialState,
+        finalState: observeState(),
+        foregroundThroughout,
+        firstRafCallback,
+        elapsedMs: environment.performance.now() - registeredAtMs,
+        timeoutMs,
+        deadlineReached,
+      });
+    };
+    const frame = (timestampMs) => {
+      if (finished) return;
+      observeState();
+      const callbackAtMs = environment.performance.now();
+      if (previous === null)
+        firstRafCallback = {
+          registeredAtMs,
+          timestampMs,
+          callbackAtMs,
+          registrationToFirstCallbackMs: callbackAtMs - registeredAtMs,
+          timestampMinusRegistrationMs: timestampMs - registeredAtMs,
+        };
+      else samples.push(timestampMs - previous);
+      previous = timestampMs;
+      if (callbackAtMs - registeredAtMs >= timeoutMs) finish(true);
+      else if (samples.length === 30) finish(false);
+      else frameId = environment.requestAnimationFrame(frame);
+    };
+    environment.addEventListener('blur', loseFocus);
+    documentRef.addEventListener('visibilitychange', observeState);
+    timerId = environment.setTimeout(() => finish(true), timeoutMs);
+    frameId = environment.requestAnimationFrame(frame);
+  });
+}
+
+export function calibrateLowWorkCadence(observation) {
+  const state = {
+    ready:
+      observation.foregroundThroughout === true &&
+      observation.initialState?.url === 'about:blank' &&
+      observation.finalState?.url === 'about:blank' &&
+      observation.initialState?.viewport?.width === observation.finalState?.viewport?.width &&
+      observation.initialState?.viewport?.height === observation.finalState?.viewport?.height &&
+      observation.initialState?.devicePixelRatio === observation.finalState?.devicePixelRatio &&
+      observation.deadlineReached === false,
+    phase: 'before-game-navigation',
+    ...observation,
+  };
+  const result = calibrateReadyCadence(observation.samples, state);
+  return {
+    ...result,
+    protocol: 'foreground-about-blank-fixed-30-v1',
+    scope:
+      'One fixed window of 30 consecutive rAF intervals on foreground about:blank before game navigation, in the same browser page, context, viewport, DPR and CPU setting. No retry, trimming or gameplay recalibration. Browser scheduling cadence is not physical refresh rate, asset readiness or idle-application readiness. The admitted external B stays fixed across navigation and reload; application B remains independent.',
+  };
+}
+
+/** Installed separately in every document with the same pre-navigation value.
+ * Startup observations have no setter for this cadence or its admitted B. */
+export function frozenExternalCadence(calibration) {
+  return Object.freeze({
+    calibration,
+    baselineMs:
+      calibration?.status === 'measured-before-play' &&
+      Number.isFinite(calibration.baselineMs) &&
+      calibration.baselineMs > 0
+        ? calibration.baselineMs
+        : null,
+  });
+}
+
 /** Self-contained for installation before page scripts. Cadence eligibility is
  * not application/asset readiness: packaged title launches prepare on Start. */
 export function readPrePlayReadiness(documentRef = globalThis.document) {
