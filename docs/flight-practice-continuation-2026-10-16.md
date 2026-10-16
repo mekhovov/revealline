@@ -22,6 +22,36 @@ record two identical builds, committed inputs, complete ZIP admission and
 `publicEligible: false`. The external original is
 `/Volumes/alex/CodexMigrationStaging/flight-practice-download-recovery-20261016-candidate`.
 
+## Localized offline failure feedback — implementation continuation
+
+The maintained shared service now attaches additive, fixed `offlineCode` reasons
+without changing legacy messages, Error/AbortError identities, worker protocols
+or deadline values. All three apps and stable launchers use allowlisted EN/UK
+copy for known inactivity/overall deadlines, cancellation, unfinished verification,
+confirmed repair and retryable failures. Unknown exception text/URLs are not
+displayed. Only a known quota error selects storage-specific copy; generic
+security/permission errors remain unknown. Launcher failure rendering preserves
+verified actions, supports language changes without repeating an operation, and
+does not promise a saved copy exists. Both guide formats explain recovery.
+
+Independent review corrected the permission/storage distinction and an overly
+broad fallback availability claim before freezing. The integrated focused suite
+passes [209 tests](flight-practice-continuation-20261016/feedback-209-tests.log),
+the [guide checks](flight-practice-continuation-20261016/feedback-guide-tests.log)
+pass 4/4, and independent current launcher/resolver/admission checks pass 30/30.
+The first focused attempt lacked the external IndexedDB test dependency; the
+first broad suite exposed a real mismatch in admission's independently reconstructed
+launcher wrapper. [Original logs](flight-practice-continuation-20261016/feedback-first-test-attempts.tgz)
+remain failed. Admission now chooses exactly the old or additive-service wrapper
+from the archive's pinned parameter signature, without executing archive code.
+Eight admission regressions pass, including altered import/service rejection.
+The [unchanged original candidate](flight-practice-continuation-20261016/feedback-legacy-admission.json)
+also passes current admission for all three apps; compatibility was not assumed.
+
+These source/unit results do not update the existing candidate or native receipts.
+A fresh committed-source reproduced/admitted bundle and new native failure
+observations remain required before claiming the changed package bytes qualified.
+
 ## Six selected-appearance player journeys pass
 
 The [original receipt](flight-practice-continuation-20261016/personal-appearance.json)
@@ -171,7 +201,13 @@ browser blur and restoring the window produces trusted focus. No event is
 dispatched and no app state/package byte is changed. The separate opt-in diagnostic
 now requires that configuration, normal original geometry, actual paused HUD,
 real B update, explicit resumed upward motion, unchanged document identity and
-both independently successful cleanups. Native app execution is pending;
+both independently successful cleanups. The [second native attempt](flight-practice-continuation-20261016/active-second-failed.json)
+also remains failed, before update: genuine positive lift, pause and resumed lift
+were observed, but the first immediate native bounds read after requesting
+minimization still returned `normal`. This does not establish whether the
+transition was asynchronous or unsupported. The revised helper polls actual
+bounds within 1.5 seconds, records intermediate states, and still rejects a no-op
+or late transition; restoration requires the original geometry. Native retry is pending;
 ordinary switching, uninterrupted background flight and physical inputs stay open.
 
 The all-three genuine historical migration lane is also implemented, independently
@@ -179,7 +215,13 @@ reviewed and unit-tested, with its own report/protocol rather than skipped defau
 OS/restart checks. Historical/current bytes and complete runtime/launcher cache
 inventories are checked per package; nonempty World projects/revisions and shared
 proof/profile are witnesses, not fictional Gym records or imported assets.
-Its native execution remains pending.
+The [first native migration attempt](flight-practice-continuation-20261016/migration-first-failed.json)
+established the historical three-app baseline, then failed its strict dependency
+check with `Prepared cache disappeared` after opening the current Academy
+launcher. Cleanup succeeded. Upgrade/rollback qualification remains open while
+launcher-cache lifecycle and observer expectations are investigated. The
+[executed shared authority](flight-practice-continuation-20261016/native-d15-failed-authority.tgz)
+preserves both failed attempts' original observer/helper bytes at `d15c0874f`.
 
 The [new native sample receipt](flight-practice-continuation-20261016/sample-recipe.json)
 passes the temporary fourth-package catalogue, explicit start/pause/retry,

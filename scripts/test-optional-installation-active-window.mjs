@@ -24,6 +24,7 @@ function fixture() {
     pages = [],
     sessions = [];
   const flags = { sameWindow: false, failRestore: false };
+  const pendingBounds = new Map();
   const context = {
     pages: () => pages,
     newCDPSession: async (page) => sessions[pages.indexOf(page)],
@@ -41,12 +42,26 @@ function fixture() {
           return { targetInfo: { targetId: 'target' + index, url } };
         if (method === 'Browser.getWindowForTarget')
           return { windowId: flags.sameWindow ? 1 : index + 1, bounds: { ...windows[index] } };
-        if (method === 'Browser.getWindowBounds')
+        if (method === 'Browser.getWindowBounds') {
+          if (flags.hangRead) return new Promise(() => {});
+          const change = pendingBounds.get(params.windowId);
+          if (change && change.reads-- <= 0) {
+            Object.assign(windows[params.windowId - 1], change.bounds);
+            pendingBounds.delete(params.windowId);
+          }
           return { bounds: { ...windows[params.windowId - 1] } };
+        }
         if (method === 'Browser.setWindowBounds') {
           if (flags.failRestore && params.bounds.windowState === 'normal')
             throw Error('Restore failed');
-          Object.assign(windows[params.windowId - 1], params.bounds);
+          if (params.bounds.windowState && flags.ignoreState === params.bounds.windowState)
+            return {};
+          if (flags.deferReads)
+            pendingBounds.set(params.windowId, {
+              reads: flags.deferReads,
+              bounds: { ...params.bounds },
+            });
+          else Object.assign(windows[params.windowId - 1], params.bounds);
           return {};
         }
         if (method === 'Emulation.setFocusEmulationEnabled') {
@@ -177,4 +192,80 @@ test('late in-flight focus configuration cannot be reported as clean after defau
     false,
     'Late settlement never upgrades unresolved cleanup',
   );
+});
+
+test('asynchronous native minimize/normal transitions are observed, never inferred from command acknowledgement', async () => {
+  const f = fixture(),
+    g = await configureHistoricalSessionWindow(f.options);
+  f.flags.deferReads = 2;
+  try {
+    await minimizeHistoricalSessionWindow(g);
+    const minimized = f.receipt.windowTransitions[0];
+    assert.deepEqual(
+      minimized.samples.map((row) => row.bounds.windowState),
+      ['normal', 'normal', 'minimized'],
+    );
+    assert.equal(minimized.passed, true);
+    f.windows[0].left += 7;
+    await restoreHistoricalSessionWindow(g);
+    const normal = f.receipt.windowTransitions.find((row) => row.expected === 'normal');
+    assert.deepEqual(
+      normal.samples.map((row) => row.bounds.windowState),
+      ['minimized', 'minimized', 'normal'],
+    );
+    const geometry = f.receipt.windowTransitions.find((row) => row.geometry);
+    assert.deepEqual(
+      geometry.samples.map((row) => row.bounds.left),
+      [17, 17, 10],
+    );
+    assert.equal(f.receipt.restored, true);
+  } finally {
+    assert.equal((await disposeHistoricalSessionWindow(g)).completed, true);
+  }
+});
+
+test('unsupported/no-op minimize preserves the last normal state and fails within its declared bound', async () => {
+  const f = fixture(),
+    g = await configureHistoricalSessionWindow({ ...f.options, timeoutMs: 80 });
+  f.flags.ignoreState = 'minimized';
+  try {
+    await assert.rejects(minimizeHistoricalSessionWindow(g), /minimized/);
+    assert.notEqual(f.receipt.minimized, true);
+    const row = f.receipt.windowTransitions[0];
+    assert.equal(row.passed, false);
+    assert.equal(row.limitMs, 80);
+    assert(
+      row.samples.length > 0 &&
+        row.samples.every((sample) => sample.bounds.windowState === 'normal'),
+    );
+  } finally {
+    await disposeHistoricalSessionWindow(g);
+  }
+  assert.deepEqual(f.detached, [true, true]);
+});
+
+test('unsupported restore fails both verification and cleanup but never skips default restoration or detach', async () => {
+  const f = fixture(),
+    g = await configureHistoricalSessionWindow({ ...f.options, timeoutMs: 80 });
+  await minimizeHistoricalSessionWindow(g);
+  f.flags.ignoreState = 'normal';
+  await assert.rejects(restoreHistoricalSessionWindow(g), /normal/);
+  assert.notEqual(f.receipt.restored, true);
+  assert.equal((await disposeHistoricalSessionWindow(g)).completed, false);
+  assert.deepEqual(f.focus, [true, true]);
+  assert.deepEqual(f.detached, [true, true]);
+});
+
+test('a stalled bounds read is bounded and leaves cleanup unverified', async () => {
+  const f = fixture(),
+    g = await configureHistoricalSessionWindow({ ...f.options, timeoutMs: 40 });
+  f.flags.hangRead = true;
+  await assert.rejects(minimizeHistoricalSessionWindow(g), /deadline/);
+  assert.equal(f.receipt.windowTransitions[0].passed, false);
+  assert.notEqual(f.receipt.minimized, true);
+  const result = await disposeHistoricalSessionWindow(g);
+  assert.equal(result.completed, false);
+  assert(result.pendingAtStart.length > 0);
+  assert.deepEqual(f.focus, [true, true]);
+  assert.deepEqual(f.detached, [true, true]);
 });

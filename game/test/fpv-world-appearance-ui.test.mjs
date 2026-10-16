@@ -29,6 +29,62 @@ import { exportEditableZip } from '../../optional-practice/civilian-fpv/world-zi
 import { worldRecordIdentity } from '../../optional-practice/civilian-fpv/world-records.mjs';
 import { openWorldStore } from '../../optional-practice/civilian-fpv/world-store.mjs';
 
+function registerOfflineFeedbackTests() {
+  for (const locale of ['en', 'uk'])
+    for (const kind of ['overall', 'cancelled', 'unknown'])
+      test(`Worlds offline feedback ${locale} ${kind} uses safe localized reasons in both panels`, async (t) => {
+        const previous = getLocale();
+        setLocale(locale);
+        t.after(() => setLocale(previous));
+        const error =
+          kind === 'cancelled'
+            ? new DOMException('secret', 'AbortError')
+            : new Error(
+                kind === 'overall'
+                  ? 'Download exceeded five minutes. Retry on a faster connection.'
+                  : 'secret backend detail',
+              );
+        const f = fixture(t, {
+          url: `https://example.test/optional-practice/fpv-worlds/index.html?lang=${locale}`,
+          serviceWorker: {
+            getRegistration: async () => undefined,
+            register: async () => {
+              throw error;
+            },
+          },
+        });
+        await f.app.ready;
+        f.$('prepare-runtime').click();
+        await waitFor(() => !f.$('prepare-runtime').disabled);
+        const text = f.$('runtime-offline-status').textContent;
+        assert.equal(f.$('settings-runtime-offline-status').textContent, text);
+        assert.doesNotMatch(text, /secret|packaged simulator|пакунку симулятора/);
+        assert.match(
+          text,
+          kind === 'overall'
+            ? locale === 'uk'
+              ? /п’ять хвилин/
+              : /five minutes/
+            : kind === 'cancelled'
+              ? locale === 'uk'
+                ? /скасовано/
+                : /cancelled/
+              : locale === 'uk'
+                ? /Не вдалося/
+                : /failed/,
+        );
+        if (locale === 'en' && kind === 'overall') {
+          f.$('world-language').value = 'uk';
+          f.$('world-language').dispatchEvent(new Event('change'));
+          assert.match(f.$('runtime-offline-status').textContent, /п’ять хвилин/);
+          assert.equal(
+            f.$('settings-runtime-offline-status').textContent,
+            f.$('runtime-offline-status').textContent,
+          );
+        }
+      });
+}
+
 const requireAuthoring = createRequire(
   new URL('../../authoring/fpv-worlds/package.json', import.meta.url),
 );
@@ -37,9 +93,11 @@ const html = parse(
   await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url), 'utf8'),
 );
 
+registerOfflineFeedbackTests();
 function fixture(t, options = {}) {
   const {
     storage = new Map(),
+    serviceWorker,
     url = 'https://example.test/optional-practice/fpv-worlds/index.html',
     indexedDB = options?.open ? options : new IDBFactory(),
     ...factories
@@ -106,7 +164,7 @@ function fixture(t, options = {}) {
   Object.assign(win, {
     location: new URL(url),
     performance: { now: () => now },
-    navigator: { getGamepads: () => pads },
+    navigator: { getGamepads: () => pads, ...(serviceWorker ? { serviceWorker } : {}) },
     localStorage: {
       getItem: (key) => storage.get(key) ?? null,
       setItem: (key, value) => storage.set(key, value),

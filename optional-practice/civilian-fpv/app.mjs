@@ -73,6 +73,7 @@ import { COPY } from './copy.mjs';
 import { mountFlightNotebook } from './notebook.mjs';
 import { mountFlightStudio } from './studio.mjs';
 import { preparePracticeOffline, removePracticeOffline } from './offline.mjs';
+import { optionalOfflineFailureMessage } from '../install-context.mjs';
 import {
   academyRecording,
   createSimAppearanceSession,
@@ -1816,7 +1817,12 @@ export function mountFlightApp({
           $('transfer-status').textContent =
             c()[id === 'install-offline' ? 'offlineReady' : 'offlineRemoved'];
       } catch (error) {
-        if (!disposed) $('transfer-status').textContent = error.message;
+        if (!disposed)
+          $('transfer-status').textContent = optionalOfflineFailureMessage(
+            error,
+            locale,
+            id === 'install-offline' ? 'prepare' : 'remove',
+          );
       } finally {
         if (offlineRequest === request) offlineRequest = null;
         offlineBusy = false;
