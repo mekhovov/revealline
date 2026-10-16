@@ -9,13 +9,15 @@ permissions:
   contents: read
 jobs:
   original-source-cold-restore:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    if: github.repository == 'mekhovov/revealline' && ((github.event_name == 'pull_request' && github.event.pull_request.number == 1551 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'codex/preservation-fpv-source-audit-20261016') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/codex/preservation-fpv-source-audit-20261016'))
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Verify original source checkpoint from GitHub only
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           python3 - <<'PY'
@@ -32,7 +34,7 @@ jobs:
           blob=api('git/blobs/'+MANIFEST_OID);body=base64.b64decode(blob['content']);assert hashlib.sha1(b'blob '+str(len(body)).encode()+b'\0'+body).hexdigest()==MANIFEST_OID;assert hashlib.sha256(body).hexdigest()==MANIFEST_SHA256;m=json.loads(body);manifest=ROOT/'allowlist.json';manifest.write_bytes(body);assert len(m['objects'])==17824 and len(m['prerequisiteCommitSHAs'])==555
           asset=api('releases/assets/'+str(ASSET));assert asset['size']==389261798 and asset['state']=='uploaded' and asset['digest']=='sha256:'+BUNDLE_SHA256;bundle=ROOT/'history.bundle'
           with bundle.open('xb') as f:
-           p=subprocess.run(['gh','api','-H','Accept: application/octet-stream','repos/'+REPO+'/releases/assets/'+str(ASSET)],stdout=f,stderr=subprocess.PIPE,timeout=1200);assert p.returncode==0,p.stderr[:500]
+           p=subprocess.run(['gh','api','--allow-escape-sequences','-H','Accept: application/octet-stream','repos/'+REPO+'/releases/assets/'+str(ASSET)],stdout=f,stderr=subprocess.PIPE,timeout=1200);assert p.returncode==0,p.stderr[:500]
           assert bundle.stat().st_size==389261798 and sha256(bundle)==BUNDLE_SHA256
           repo=ROOT/'recovery.git';env={k:v for k,v in os.environ.items() if k not in ['GIT_DIR','GIT_COMMON_DIR','GIT_WORK_TREE','GIT_OBJECT_DIRECTORY','GIT_ALTERNATE_OBJECT_DIRECTORIES','GIT_INDEX_FILE']};env.update(GIT_NO_LAZY_FETCH='1',GIT_OPTIONAL_LOCKS='0',GIT_TERMINAL_PROMPT='0',GIT_AUTHOR_NAME='Codex',GIT_AUTHOR_EMAIL='codex@users.noreply.github.com',GIT_COMMITTER_NAME='Codex',GIT_COMMITTER_EMAIL='codex@users.noreply.github.com',GIT_AUTHOR_DATE='2026-10-16T05:20:00Z',GIT_COMMITTER_DATE='2026-10-16T05:20:00Z')
           def git(args,timeout=600):
