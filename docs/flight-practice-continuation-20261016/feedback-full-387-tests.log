@@ -1,0 +1,1953 @@
+
+> revealline@0.151.1 practice:test
+> node --test --test-concurrency=2 game/test/practice-directory.test.mjs game/test/practice-guide-current-copy.test.mjs game/test/civilian-practice.test.mjs game/test/civilian-practice-ui.test.mjs game/test/optional-installation.test.mjs game/test/optional-offline-feedback.test.mjs game/test/optional-offline-lifecycle.test.mjs game/test/fpv-offline-controls.test.mjs game/test/optional-practice-panel.test.mjs scripts/test-optional-practice.mjs scripts/test-practice-capacity.mjs scripts/test-audit-practice-png-capacity.mjs scripts/test-optional-installation-observer.mjs scripts/test-frozen-source.mjs scripts/test-bundle-optional-practice.mjs scripts/test-publish-optional-packages.mjs publishing/optional-package-admission.test.mjs publishing/optional-package-promotion.test.mjs publishing/optional-package-delivery.test.mjs game/test/fpv-radio.test.mjs game/test/fpv-flight-model.test.mjs game/test/fpv-flight-boundaries.test.mjs game/test/fpv-cooperative-replay.test.mjs game/test/fpv-notebook.test.mjs game/test/practice-rewards.test.mjs scripts/test-optional-fpv-package.mjs game/test/fpv-flight-ui.test.mjs game/test/fpv-replay-rate.test.mjs game/test/fpv-studio-setup.test.mjs scripts/test-analyze-fpv-heap.mjs game/test/data-json.test.mjs scripts/test-observe-fpv-completion.mjs scripts/test-fpv-observation-artifact.mjs
+
+TAP version 13
+# Subtest: Gym offline feedback en overall uses safe localized reasons
+ok 1 - Gym offline feedback en overall uses safe localized reasons
+  ---
+  duration_ms: 188.596042
+  ...
+# Subtest: Gym offline feedback en cancelled uses safe localized reasons
+ok 2 - Gym offline feedback en cancelled uses safe localized reasons
+  ---
+  duration_ms: 116.968375
+  ...
+# Subtest: Gym offline feedback en unknown uses safe localized reasons
+ok 3 - Gym offline feedback en unknown uses safe localized reasons
+  ---
+  duration_ms: 86.250458
+  ...
+# Subtest: Gym offline feedback uk overall uses safe localized reasons
+ok 4 - Gym offline feedback uk overall uses safe localized reasons
+  ---
+  duration_ms: 80.014875
+  ...
+# Subtest: Gym offline feedback uk cancelled uses safe localized reasons
+ok 5 - Gym offline feedback uk cancelled uses safe localized reasons
+  ---
+  duration_ms: 98.26925
+  ...
+# Subtest: Gym offline feedback uk unknown uses safe localized reasons
+ok 6 - Gym offline feedback uk unknown uses safe localized reasons
+  ---
+  duration_ms: 68.114875
+  ...
+# Subtest: actual optional page is playable with canvas fallback and verifies a complete keyboard practice transcript
+ok 7 - actual optional page is playable with canvas fallback and verifies a complete keyboard practice transcript
+  ---
+  duration_ms: 85.71175
+  ...
+# Subtest: reading and failed imports pause the gym and cannot grant completions or resume a held control
+ok 8 - reading and failed imports pause the gym and cannot grant completions or resume a held control
+  ---
+  duration_ms: 56.7095
+  ...
+# Subtest: final gym exit retires reparented controls before removing their shell
+ok 9 - final gym exit retires reparented controls before removing their shell
+  ---
+  duration_ms: 77.925875
+  ...
+# Subtest: gym title and settings reuse the accepted drill without starting or resuming it
+ok 10 - gym title and settings reuse the accepted drill without starting or resuming it
+  ---
+  duration_ms: 84.864125
+  ...
+# Subtest: a gym Pause pointer keeps its intent when moving focus first pauses flight input
+ok 11 - a gym Pause pointer keeps its intent when moving focus first pauses flight input
+  ---
+  duration_ms: 68.421875
+  ...
+# Subtest: gym reuses neutral controller menu navigation without arming on device join
+ok 12 - gym reuses neutral controller menu navigation without arming on device join
+  ---
+  duration_ms: 77.313542
+  ...
+# Subtest: gym controller Pause requires a fresh explicit Continue and samples hardware once per frame
+ok 13 - gym controller Pause requires a fresh explicit Continue and samples hardware once per frame
+  ---
+  duration_ms: 91.78025
+  ...
+# Subtest: gym menu keyboard navigation owns arrows and returns from nested help without flight input
+ok 14 - gym menu keyboard navigation owns arrows and returns from nested help without flight input
+  ---
+  duration_ms: 155.771375
+  ...
+# Subtest: Gym native Help retains instructions across blur and focus
+ok 15 - Gym native Help retains instructions across blur and focus
+  ---
+  duration_ms: 75.39775
+  ...
+# Subtest: gym Select Mission starts the selected drill with one action
+ok 16 - gym Select Mission starts the selected drill with one action
+  ---
+  duration_ms: 81.930042
+  ...
+# Subtest: gym shared selector keeps search and pause state, rejects filtered cards and supports controller Back
+ok 17 - gym shared selector keeps search and pause state, rejects filtered cards and supports controller Back
+  ---
+  duration_ms: 70.132916
+  ...
+# Subtest: gym imported catalogue replaces selector authority and exact route without inheriting completion
+ok 18 - gym imported catalogue replaces selector authority and exact route without inheriting completion
+  ---
+  duration_ms: 82.903584
+  ...
+# Subtest: a flight arrow released inside a controller menu is usable on the first press after Resume
+ok 19 - a flight arrow released inside a controller menu is usable on the first press after Resume
+  ---
+  duration_ms: 68.656375
+  ...
+# Subtest: gym adopts the complete common preference inventory and keeps practice tools reachable without changing the drill
+ok 20 - gym adopts the complete common preference inventory and keeps practice tools reachable without changing the drill
+  ---
+  duration_ms: 136.686166
+  ...
+# Subtest: gym shares six ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice
+ok 21 - gym shares six ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice
+  ---
+  duration_ms: 83.711166
+  ...
+# Subtest: gym cancels an imminent auto-next before a stalled animation timestamp
+ok 22 - gym cancels an imminent auto-next before a stalled animation timestamp
+  ---
+  duration_ms: 114.631625
+  ...
+# Subtest: gym cancels an imminent auto-next before a stalled callback execution
+ok 23 - gym cancels an imminent auto-next before a stalled callback execution
+  ---
+  duration_ms: 79.081167
+  ...
+# Subtest: all twelve authored civilian routes have ordered deterministic completion proofs
+ok 24 - all twelve authored civilian routes have ordered deterministic completion proofs
+  ---
+  duration_ms: 177.576875
+  ...
+# Subtest: landing alone, partial dwell and claimed completion never skip ordered checkpoints
+ok 25 - landing alone, partial dwell and claimed completion never skip ordered checkpoints
+  ---
+  duration_ms: 9.441333
+  ...
+# Subtest: pause freezes model, reset clears it, and hostile fixtures never enter authoring
+ok 26 - pause freezes model, reset clears it, and hostile fixtures never enter authoring
+  ---
+  duration_ms: 13.06675
+  ...
+# Subtest: keyboard and touch have explicit input ownership and require fresh controls after pause
+ok 27 - keyboard and touch have explicit input ownership and require fresh controls after pause
+  ---
+  duration_ms: 3.945666
+  ...
+# Subtest: standard gamepad is opt-in, neutral-gated, and disconnect/blur always pause with fallback
+ok 28 - standard gamepad is opt-in, neutral-gated, and disconnect/blur always pause with fallback
+  ---
+  duration_ms: 0.795792
+  ...
+# Subtest: optional removal unregisters only exact app scope and deletes only its own path-specific cache
+ok 29 - optional removal unregisters only exact app scope and deletes only its own path-specific cache
+  ---
+  duration_ms: 3.481083
+  ...
+# Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+ok 30 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+  ---
+  duration_ms: 3.816292
+  ...
+# Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+ok 31 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+  ---
+  duration_ms: 0.340208
+  ...
+# Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+ok 32 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+  ---
+  duration_ms: 0.337709
+  ...
+# Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+ok 33 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+  ---
+  duration_ms: 0.335166
+  ...
+# Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+ok 34 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+  ---
+  duration_ms: 0.245125
+  ...
+# Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+ok 35 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+  ---
+  duration_ms: 0.227792
+  ...
+# Subtest: many short array values use their serialized bytes without charging index keys
+ok 36 - many short array values use their serialized bytes without charging index keys
+  ---
+  duration_ms: 2.690375
+  ...
+# Subtest: repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+ok 37 - repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+  ---
+  duration_ms: 18.449875
+  ...
+# Subtest: repeated text never gives mutable or caller-frozen objects validation authority
+ok 38 - repeated text never gives mutable or caller-frozen objects validation authority
+  ---
+  duration_ms: 0.567416
+  ...
+# Subtest: repeated field names do not require per-field UTF-8 encoding
+ok 39 - repeated field names do not require per-field UTF-8 encoding
+  ---
+  duration_ms: 5.494792
+  ...
+# Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+ok 40 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+  ---
+  duration_ms: 85.760834
+  ...
+# Subtest: untrusted getters and toJSON hooks are rejected without invocation
+ok 41 - untrusted getters and toJSON hooks are rejected without invocation
+  ---
+  duration_ms: 0.575583
+  ...
+# Subtest: exact byte accounting retains structural and shape protections
+ok 42 - exact byte accounting retains structural and shape protections
+  ---
+  duration_ms: 0.821625
+  ...
+# Subtest: shared JSON boundary reports owned validation errors in the active locale
+ok 43 - shared JSON boundary reports owned validation errors in the active locale
+  ---
+  duration_ms: 2.072
+  ...
+# Subtest: cooperative replay matches every complete synchronous state and sampled path for all24 demonstrations
+ok 44 - cooperative replay matches every complete synchronous state and sampled path for all24 demonstrations
+  ---
+  duration_ms: 1363.301292
+  ...
+# Subtest: cooperative replay owns its inspected input and stops before the next200-tick batch after cancellation
+ok 45 - cooperative replay owns its inspected input and stops before the next200-tick batch after cancellation
+  ---
+  duration_ms: 31.424584
+  ...
+# Subtest: aborting transfer verification after an earlier valid proof grants and writes nothing, then allows a fresh import
+ok 46 - aborting transfer verification after an earlier valid proof grants and writes nothing, then allows a fresh import
+  ---
+  duration_ms: 30.654416
+  ...
+# Subtest: closing cancels active and queued verification immediately and a late verifier cannot mutate memory or disk
+ok 47 - closing cancels active and queued verification immediately and a late verifier cannot mutate memory or disk
+  ---
+  duration_ms: 13.549041
+  ...
+# Subtest: cancellation reaches the owned IndexedDB write transaction before an attempt can be durable
+ok 48 - cancellation reaches the owned IndexedDB write transaction before an attempt can be durable
+  ---
+  duration_ms: 14.323083
+  ...
+# Subtest: Node exactly matches all24 successful demonstration golden checkpoints without awarding progress
+ok 49 - Node exactly matches all24 successful demonstration golden checkpoints without awarding progress
+  ---
+  duration_ms: 631.073792
+  ...
+# Subtest: portable authority stress pins every250ticks across full acro rotations, yaw quadrants, gravity and bounded contacts
+ok 50 - portable authority stress pins every250ticks across full acro rotations, yaw quadrants, gravity and bounded contacts
+  ---
+  duration_ms: 828.686
+  ...
+# Subtest: a denied browser Gamepad request remains a diagnosable, unarmed device-selection failure
+ok 51 - a denied browser Gamepad request remains a diagnosable, unarmed device-selection failure
+  ---
+  duration_ms: 0.336583
+  ...
+# Subtest: real Three.js poses agree with model right-roll, forward-pitch and right-yaw controls in both modes
+ok 52 - real Three.js poses agree with model right-roll, forward-pitch and right-yaw controls in both modes
+  ---
+  duration_ms: 9.749917
+  ...
+# Subtest: touchdown preserves impact speed: the exact landing threshold passes and one unit below remains incomplete
+ok 53 - touchdown preserves impact speed: the exact landing threshold passes and one unit below remains incomplete
+  ---
+  duration_ms: 31.336166
+  ...
+# Subtest: swept obstacles stop a real directional flight without tunnelling and ignore author array order
+ok 54 - swept obstacles stop a real directional flight without tunnelling and ignore author array order
+  ---
+  duration_ms: 26.474334
+  ...
+# Subtest: checked-in integer rotation identities and bounded square roots
+ok 55 - checked-in integer rotation identities and bounded square roots
+  ---
+  duration_ms: 1.317167
+  ...
+# Subtest: all twelve bilingual courses and both criteria sets validate; older assisted model remains distinct
+ok 56 - all twelve bilingual courses and both criteria sets validate; older assisted model remains distinct
+  ---
+  duration_ms: 2.894166
+  ...
+# Subtest: manual throttle produces thrust, gravity and momentum; neutral attitude never silently holds position
+ok 57 - manual throttle produces thrust, gravity and momentum; neutral attitude never silently holds position
+  ---
+  duration_ms: 9.584708
+  ...
+# Subtest: Self-level centres attitude while Acro keeps tilt; both retain translation
+ok 58 - Self-level centres attitude while Acro keeps tilt; both retain translation
+  ---
+  duration_ms: 8.9
+  ...
+# Subtest: swept gate detects directed crossings between steps with inclusive boundaries at ±1 unit
+ok 59 - swept gate detects directed crossings between steps with inclusive boundaries at ±1 unit
+  ---
+  duration_ms: 0.288
+  ...
+# Subtest: holds require consecutive ticks and pause never integrates or catches up
+ok 60 - holds require consecutive ticks and pause never integrates or catches up
+  ---
+  duration_ms: 1.364167
+  ...
+# Subtest: fixed-width proof round trips exact state and rejects mode/course/response/continuation tampering
+ok 61 - fixed-width proof round trips exact state and rejects mode/course/response/continuation tampering
+  ---
+  duration_ms: 22.064209
+  ...
+# Subtest: continuously changing input recording fits the longest attempt with explicit overflow, never truncation
+ok 62 - continuously changing input recording fits the longest attempt with explicit overflow, never truncation
+  ---
+  duration_ms: 43.334625
+  ...
+# Subtest: Academy offline feedback en overall uses safe localized reasons
+ok 63 - Academy offline feedback en overall uses safe localized reasons
+  ---
+  duration_ms: 216.178667
+  ...
+# Subtest: Academy offline feedback en cancelled uses safe localized reasons
+ok 64 - Academy offline feedback en cancelled uses safe localized reasons
+  ---
+  duration_ms: 131.485208
+  ...
+# Subtest: Academy offline feedback en unknown uses safe localized reasons
+ok 65 - Academy offline feedback en unknown uses safe localized reasons
+  ---
+  duration_ms: 152.827875
+  ...
+# Subtest: Academy offline feedback uk overall uses safe localized reasons
+ok 66 - Academy offline feedback uk overall uses safe localized reasons
+  ---
+  duration_ms: 94.224333
+  ...
+# Subtest: Academy offline feedback uk cancelled uses safe localized reasons
+ok 67 - Academy offline feedback uk cancelled uses safe localized reasons
+  ---
+  duration_ms: 130.653208
+  ...
+# Subtest: Academy offline feedback uk unknown uses safe localized reasons
+ok 68 - Academy offline feedback uk unknown uses safe localized reasons
+  ---
+  duration_ms: 114.4755
+  ...
+# Subtest: SIM world selection freezes on first arm and applies queued preference only on reset
+ok 69 - SIM world selection freezes on first arm and applies queued preference only on reset
+  ---
+  duration_ms: 149.132042
+  ...
+# Subtest: a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+ok 70 - a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+  ---
+  duration_ms: 166.56075
+  ...
+# Subtest: unavailable recorded appearance remains visible after graphics preparation without altering its proof
+ok 71 - unavailable recorded appearance remains visible after graphics preparation without altering its proof
+  ---
+  duration_ms: 342.94475
+  ...
+# Subtest: native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+ok 72 - native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+  ---
+  duration_ms: 1082.999541
+  ...
+# Subtest: synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+ok 73 - synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+  ---
+  duration_ms: 4310.666167
+  ...
+# Subtest: radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+ok 74 - radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+  ---
+  duration_ms: 294.711416
+  ...
+# Subtest: immediate Retry preserves the completed proof while notebook verification yields
+ok 75 - immediate Retry preserves the completed proof while notebook verification yields
+  ---
+  duration_ms: 1662.17025
+  ...
+# Subtest: Controls camera chooser and toolbar stay synchronized for the narrow layout
+ok 76 - Controls camera chooser and toolbar stay synchronized for the narrow layout
+  ---
+  duration_ms: 132.809166
+  ...
+# Subtest: Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+ok 77 - Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+  ---
+  duration_ms: 1224.543333
+  ...
+# Subtest: radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+ok 78 - radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+  ---
+  duration_ms: 178.741375
+  ...
+# Subtest: graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+ok 79 - graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+  ---
+  duration_ms: 273.039625
+  ...
+# Subtest: replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+ok 80 - replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+  ---
+  duration_ms: 185.185083
+  ...
+# Subtest: Academy shared menu resumes paused playback without restarting or granting practice evidence
+ok 81 - Academy shared menu resumes paused playback without restarting or granting practice evidence
+  ---
+  duration_ms: 233.101083
+  ...
+# Subtest: Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+ok 82 - Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+  ---
+  duration_ms: 219.971125
+  ...
+# Subtest: touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+ok 83 - touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+  ---
+  duration_ms: 0.496625
+  ...
+# Subtest: full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+ok 84 - full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+  ---
+  duration_ms: 1391.955542
+  ...
+# Subtest: pending review aborts on reset, input change, dialog close and disposal without late playback
+ok 85 - pending review aborts on reset, input change, dialog close and disposal without late playback
+  ---
+  duration_ms: 585.991833
+  ...
+# Subtest: closing a replay import during file reading prevents verification and late playback
+ok 86 - closing a replay import during file reading prevents verification and late playback
+  ---
+  duration_ms: 151.857875
+  ...
+# Subtest: actual renderer detects unavailable WebGL without allocating a running fallback simulation
+ok 87 - actual renderer detects unavailable WebGL without allocating a running fallback simulation
+  ---
+  duration_ms: 5.566
+  ...
+# Subtest: disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+ok 88 - disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+  ---
+  duration_ms: 117.725584
+  ...
+# Subtest: stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+ok 89 - stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+  ---
+  duration_ms: 829.39775
+  ...
+# Subtest: cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+ok 90 - cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+  ---
+  duration_ms: 171.329667
+  ...
+# Subtest: cached radio restore requires a fresh arm edge and matching control pickup
+ok 91 - cached radio restore requires a fresh arm edge and matching control pickup
+  ---
+  duration_ms: 169.541125
+  ...
+# Subtest: game return keeps scoped offline controls available and serializes preparation/removal
+ok 92 - game return keeps scoped offline controls available and serializes preparation/removal
+  ---
+  duration_ms: 105.898166
+  ...
+# Subtest: disposing Academy cancels an owned offline verification and releases its progress panel
+ok 93 - disposing Academy cancels an owned offline verification and releases its progress panel
+  ---
+  duration_ms: 88.764209
+  ...
+# Subtest: unavailable offline capability stays explanatory and a failed prepare never reports ready
+ok 94 - unavailable offline capability stays explanatory and a failed prepare never reports ready
+  ---
+  duration_ms: 235.507125
+  ...
+# Subtest: ordinary unload disposes permanently and a late pageshow cannot revive it
+ok 95 - ordinary unload disposes permanently and a late pageshow cannot revive it
+  ---
+  duration_ms: 89.494959
+  ...
+# Subtest: selecting USB radio restores saved axis arm and button reset after reload
+ok 96 - selecting USB radio restores saved axis arm and button reset after reload
+  ---
+  duration_ms: 210.944333
+  ...
+# Subtest: tested TX15 default loads without saved calibration and does not auto-arm
+ok 97 - tested TX15 default loads without saved calibration and does not auto-arm
+  ---
+  duration_ms: 224.948416
+  ...
+# Subtest: TX15 default does not match an unrelated joystick
+ok 98 - TX15 default does not match an unrelated joystick
+  ---
+  duration_ms: 156.288083
+  ...
+# Subtest: camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+ok 99 - camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+  ---
+  duration_ms: 1380.286333
+  ...
+# Subtest: pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+ok 100 - pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+  ---
+  duration_ms: 0.614458
+  ...
+# Subtest: Academy title focus loss before flight initialization keeps the menu usable and disarmed
+ok 101 - Academy title focus loss before flight initialization keeps the menu usable and disarmed
+  ---
+  duration_ms: 171.50925
+  ...
+# Subtest: Academy shell keeps menu input out of native flight and requires explicit Start
+ok 102 - Academy shell keeps menu input out of native flight and requires explicit Start
+  ---
+  duration_ms: 248.927875
+  ...
+# Subtest: Academy native tool dialogs retain instructions across blur and focus
+    # Subtest: help-dialog
+    ok 1 - help-dialog
+      ---
+      duration_ms: 203.423125
+      ...
+    # Subtest: notebook-dialog
+    ok 2 - notebook-dialog
+      ---
+      duration_ms: 207.164375
+      ...
+    1..2
+ok 103 - Academy native tool dialogs retain instructions across blur and focus
+  ---
+  duration_ms: 411.126292
+  ...
+# Subtest: Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 104 - Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 352.540167
+  ...
+# Subtest: Academy categories retain every authored preference control and restore nested dialog focus
+ok 105 - Academy categories retain every authored preference control and restore nested dialog focus
+  ---
+  duration_ms: 287.487167
+  ...
+# Subtest: Academy global settings bind canonical records without startup writes or duplicate fields
+ok 106 - Academy global settings bind canonical records without startup writes or duplicate fields
+  ---
+  duration_ms: 517.410083
+  ...
+# Subtest: Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+ok 107 - Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+  ---
+  duration_ms: 319.164
+  ...
+# Subtest: fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+ok 108 - fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+  ---
+  duration_ms: 218.121792
+  ...
+# Subtest: Academy flight feedback and shared menu sound retain separate sliders and preference records
+ok 109 - Academy flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 202.618541
+  ...
+# Subtest: Academy result shortcuts choose once and launch a random prepared lesson directly
+ok 110 - Academy result shortcuts choose once and launch a random prepared lesson directly
+  ---
+  duration_ms: 189.971541
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled animation timestamp
+ok 111 - Academy cancels an imminent auto-next before a stalled animation timestamp
+  ---
+  duration_ms: 5211.791458
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled callback execution
+ok 112 - Academy cancels an imminent auto-next before a stalled callback execution
+  ---
+  duration_ms: 4225.123125
+  ...
+# Subtest: Academy shared library shows every course, previews the selected flight mode, and launches once
+ok 113 - Academy shared library shows every course, previews the selected flight mode, and launches once
+  ---
+  duration_ms: 198.473041
+  ...
+# Subtest: Academy mission library owns controller navigation and isolated pinned goals
+ok 114 - Academy mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 280.583917
+  ...
+# Subtest: flight attempts reverify before persistence, reject demonstration or completion flags and isolate transcript records
+ok 115 - flight attempts reverify before persistence, reject demonstration or completion flags and isolate transcript records
+  ---
+  duration_ms: 58.24625
+  ...
+# Subtest: flight finale remains locked at 11/12 and repeats never substitute; twelve Acro is separate
+ok 116 - flight finale remains locked at 11/12 and repeats never substitute; twelve Acro is separate
+  ---
+  duration_ms: 1970.927333
+  ...
+# Subtest: whole transfer verifies before granting any reward and failed saves remain explicitly recoverable
+ok 117 - whole transfer verifies before granting any reward and failed saves remain explicitly recoverable
+  ---
+  duration_ms: 30.400125
+  ...
+# Subtest: studio bundle round trip retains exact criteria, source text, verified demonstration and typed rewards
+ok 118 - studio bundle round trip retains exact criteria, source text, verified demonstration and typed rewards
+  ---
+  duration_ms: 15.18925
+  ...
+# Subtest: changed mode recomputes outcome, response changes require exact identity and proof digest pins every frame
+ok 119 - changed mode recomputes outcome, response changes require exact identity and proof digest pins every frame
+  ---
+  duration_ms: 21.40325
+  ...
+# Subtest: accepted flight return data cannot mutate later proof exports or verified projections
+ok 120 - accepted flight return data cannot mutate later proof exports or verified projections
+  ---
+  duration_ms: 11.805166
+  ...
+# Subtest: flight archive accepts a repeated proof at capacity but rejects a new one before mutation
+ok 121 - flight archive accepts a repeated proof at capacity but rejects a new one before mutation
+  ---
+  duration_ms: 45.209166
+  ...
+# Subtest: explicit retry revalidates a temporarily unreadable index and persists session-only verified work
+ok 122 - explicit retry revalidates a temporarily unreadable index and persists session-only verified work
+  ---
+  duration_ms: 14.081084
+  ...
+# Subtest: missing exact proof keeps a recovery warning while its previously earned discovery is preserved
+ok 123 - missing exact proof keeps a recovery warning while its previously earned discovery is preserved
+  ---
+  duration_ms: 137.3545
+  ...
+# Subtest: notebook close cancels initial hydration before ready and rejects queued or later evidence work
+ok 124 - notebook close cancels initial hydration before ready and rejects queued or later evidence work
+  ---
+  duration_ms: 11.739083
+  ...
+# Subtest: notebook forwards explicit import cancellation without a receipt or proof write
+ok 125 - notebook forwards explicit import cancellation without a receipt or proof write
+  ---
+  duration_ms: 33.745167
+  ...
+# Subtest: offline actions serialize button intent and retain the invoking dialog owner
+ok 126 - offline actions serialize button intent and retain the invoking dialog owner
+  ---
+  duration_ms: 7.488375
+  ...
+# Subtest: native offload uses only the runtime remover and retains world and proof data
+ok 127 - native offload uses only the runtime remover and retains world and proof data
+  ---
+  duration_ms: 7.887542
+  ...
+# Subtest: unavailable workers disable both native controls without invoking operations
+ok 128 - unavailable workers disable both native controls without invoking operations
+  ---
+  duration_ms: 0.426125
+  ...
+# Subtest: disposal aborts the download and a late success cannot repaint the removed host
+ok 129 - disposal aborts the download and a late success cannot repaint the removed host
+  ---
+  duration_ms: 0.353334
+  ...
+# Subtest: pagehide cancels preparation, reports cancellation and releases busy ownership
+ok 130 - pagehide cancels preparation, reports cancellation and releases busy ownership
+  ---
+  duration_ms: 6.266125
+  ...
+# Subtest: failed removal remains retryable and never reports a removed installation
+ok 131 - failed removal remains retryable and never reports a removed installation
+  ---
+  duration_ms: 7.180667
+  ...
+# Subtest: reordered unmapped radio, reversed pitch and full noncentring throttle normalize independently of stick diagram
+ok 132 - reordered unmapped radio, reversed pitch and full noncentring throttle normalize independently of stick diagram
+  ---
+  duration_ms: 2.309333
+  ...
+# Subtest: asymmetric centres and deadzones calibrate without a hidden response curve
+ok 133 - asymmetric centres and deadzones calibrate without a hidden response curve
+  ---
+  duration_ms: 0.342083
+  ...
+# Subtest: bounded imports reject duplicate channels, malformed counts, incomplete calibration, unknown fields and nonfinite input
+ok 134 - bounded imports reject duplicate channels, malformed counts, incomplete calibration, unknown fields and nonfinite input
+  ---
+  duration_ms: 2.351042
+  ...
+# Subtest: response profiles use an explicit bounded integer cubic blend and round trip
+ok 135 - response profiles use an explicit bounded integer cubic blend and round trip
+  ---
+  duration_ms: 0.298875
+  ...
+# Subtest: arming explains high throttle and neutral attitude requirements; held timestamps remain valid
+ok 136 - arming explains high throttle and neutral attitude requirements; held timestamps remain valid
+  ---
+  duration_ms: 0.620625
+  ...
+# Subtest: same-slot replacement and disconnect clear input; reappearance requires explicit verification and arm
+ok 137 - same-slot replacement and disconnect clear input; reappearance requires explicit verification and arm
+  ---
+  duration_ms: 0.269916
+  ...
+# Subtest: airborne pause requires pickup at previous controls, not low throttle; reset clears pickup
+ok 138 - airborne pause requires pickup at previous controls, not low throttle; reset clears pickup
+  ---
+  duration_ms: 0.273917
+  ...
+# Subtest: latched arm starts OFF, needs fresh OFF→ON after focus loss and cannot reconnect armed
+ok 139 - latched arm starts OFF, needs fresh OFF→ON after focus loss and cannot reconnect armed
+  ---
+  duration_ms: 0.448667
+  ...
+# Subtest: calibration profile replacement invalidates verification; malformed or throwing browser API is diagnosable
+ok 140 - calibration profile replacement invalidates verification; malformed or throwing browser API is diagnosable
+  ---
+  duration_ms: 0.76175
+  ...
+# Subtest: profiles have validated export/import and failed writes are visible session-only without changing Journey
+ok 141 - profiles have validated export/import and failed writes are visible session-only without changing Journey
+  ---
+  duration_ms: 9.722333
+  ...
+# Subtest: radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge
+ok 142 - radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge
+  ---
+  duration_ms: 1.01675
+  ...
+# Subtest: v2 axis switches preserve v1 calibration, reject flight-axis overlap and require fresh arming
+ok 143 - v2 axis switches preserve v1 calibration, reject flight-axis overlap and require fresh arming
+  ---
+  duration_ms: 2.02975
+  ...
+# Subtest: 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 144 - 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 1996.521042
+  ...
+# Subtest: 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 145 - 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 1271.222291
+  ...
+# Subtest: 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 146 - 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 2304.32125
+  ...
+# Subtest: 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+ok 147 - 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+  ---
+  duration_ms: 1171.75775
+  ...
+# Subtest: changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+ok 148 - changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+  ---
+  duration_ms: 414.043625
+  ...
+# Subtest: replay speed is localized and cannot change practice or start a replay by itself
+ok 149 - replay speed is localized and cannot change practice or start a replay by itself
+  ---
+  duration_ms: 322.208292
+  ...
+# Subtest: Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+ok 150 - Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+  ---
+  duration_ms: 57.8525
+  ...
+# Subtest: practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+ok 151 - practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+  ---
+  duration_ms: 9.392375
+  ...
+# Subtest: Radio setup import, explicit verification and save retain switch threshold and inversion
+ok 152 - Radio setup import, explicit verification and save retain switch threshold and inversion
+  ---
+  duration_ms: 14.910083
+  ...
+# Subtest: Acro notebook review chooses only evidence satisfying its mode rule
+ok 153 - Acro notebook review chooses only evidence satisfying its mode rule
+  ---
+  duration_ms: 46.286166
+  ...
+# Subtest: a custom imported course remains selectable with its exact reward and demonstration slot
+ok 154 - a custom imported course remains selectable with its exact reward and demonstration slot
+  ---
+  duration_ms: 7.411583
+  ...
+# Subtest: notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+ok 155 - notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+  ---
+  duration_ms: 11.775417
+  ...
+# Subtest: optional installations preserve previous versions and isolate stable roots without touching Journey
+ok 156 - optional installations preserve previous versions and isolate stable roots without touching Journey
+  ---
+  duration_ms: 1.839
+  ...
+# Subtest: optional launch references reject foreign origins, roots, entries and versions
+ok 157 - optional launch references reject foreign origins, roots, entries and versions
+  ---
+  duration_ms: 0.342333
+  ...
+# Subtest: an installation pointer is recorded only after a verified worker activates
+ok 158 - an installation pointer is recorded only after a verified worker activates
+  ---
+  duration_ms: 16.341458
+  ...
+# Subtest: launcher failures use localized safe copy, retain usable actions and retranslate without retrying
+ok 159 - launcher failures use localized safe copy, retain usable actions and retranslate without retrying
+  ---
+  duration_ms: 48.74075
+  ...
+# Subtest: legacy launcher failure never invents an available saved copy
+ok 160 - legacy launcher failure never invents an available saved copy
+  ---
+  duration_ms: 3.446416
+  ...
+# Subtest: stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+ok 161 - stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+  ---
+  duration_ms: 2.12425
+  ...
+# Subtest: launcher keeps missing-file repair and removal visible after checking an available release
+ok 162 - launcher keeps missing-file repair and removal visible after checking an available release
+  ---
+  duration_ms: 3.227459
+  ...
+# Subtest: launcher distinguishes unfinished verification from missing files without inventing readiness
+ok 163 - launcher distinguishes unfinished verification from missing files without inventing readiness
+  ---
+  duration_ms: 4.166792
+  ...
+# Subtest: verified app actions do not wait for unrelated retained-version or launcher checks
+ok 164 - verified app actions do not wait for unrelated retained-version or launcher checks
+  ---
+  duration_ms: 3.883583
+  ...
+# Subtest: retained ready copy stays reachable while active verification stalls, including locale changes
+ok 165 - retained ready copy stays reachable while active verification stalls, including locale changes
+  ---
+  duration_ms: 3.279958
+  ...
+# Subtest: invalid retained metadata cannot blank a separately verified active app
+ok 166 - invalid retained metadata cannot blank a separately verified active app
+  ---
+  duration_ms: 0.595416
+  ...
+# Subtest: leaving during readiness checks cancels publication and play intent even after pageshow
+ok 167 - leaving during readiness checks cancels publication and play intent even after pageshow
+  ---
+  duration_ms: 0.685208
+  ...
+# Subtest: abandoned fetch cannot replay play intent after pageshow, but a live timeout can fall back offline
+ok 168 - abandoned fetch cannot replay play intent after pageshow, but a live timeout can fall back offline
+  ---
+  duration_ms: 13.069042
+  ...
+# Subtest: stable launcher keeps locale and appearance on auto-play and verified offline fallback
+ok 169 - stable launcher keeps locale and appearance on auto-play and verified offline fallback
+  ---
+  duration_ms: 1.336334
+  ...
+# Subtest: stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+ok 170 - stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+  ---
+  duration_ms: 8.064708
+  ...
+# Subtest: fixed failure codes provide safe distinct English/Ukrainian guidance
+ok 171 - fixed failure codes provide safe distinct English/Ukrainian guidance
+  ---
+  duration_ms: 0.7235
+  ...
+# Subtest: older plain errors remain supported without parsing unknown prose
+ok 172 - older plain errors remain supported without parsing unknown prose
+  ---
+  duration_ms: 0.50175
+  ...
+# Subtest: unknown/storage/cancel errors cannot leak arbitrary text or become timeout claims
+ok 173 - unknown/storage/cancel errors cannot leak arbitrary text or become timeout claims
+  ---
+  duration_ms: 0.262541
+  ...
+# Subtest: unsupported service preserves legacy Error text and adds a typed code
+ok 174 - unsupported service preserves legacy Error text and adds a typed code
+  ---
+  duration_ms: 0.408291
+  ...
+# Subtest: registration security and permission failures do not imply a storage failure
+ok 175 - registration security and permission failures do not imply a storage failure
+  ---
+  duration_ms: 0.950042
+  ...
+# Subtest: caller cancellation preserves AbortError identity with an additive cancellation code
+ok 176 - caller cancellation preserves AbortError identity with an additive cancellation code
+  ---
+  duration_ms: 0.213083
+  ...
+# Subtest: fixed code classification reads hostile properties once and rejects non-string codes
+ok 177 - fixed code classification reads hostile properties once and rejects non-string codes
+  ---
+  duration_ms: 0.126333
+  ...
+# (node:89569) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: offline feedback adds idle-timeout code without changing legacy deadline/reason
+ok 178 - offline feedback adds idle-timeout code without changing legacy deadline/reason
+  ---
+  duration_ms: 6.731792
+  ...
+# Subtest: offline feedback adds overall-timeout code without changing legacy deadline/reason
+ok 179 - offline feedback adds overall-timeout code without changing legacy deadline/reason
+  ---
+  duration_ms: 6.534708
+  ...
+# Subtest: status cancellation owns lookup and reply lifetime without cancelling a playing worker
+ok 180 - status cancellation owns lookup and reply lifetime without cancelling a playing worker
+  ---
+  duration_ms: 1.06625
+  ...
+# Subtest: detailed readiness distinguishes missing dependencies from an inconclusive worker check
+ok 181 - detailed readiness distinguishes missing dependencies from an inconclusive worker check
+  ---
+  duration_ms: 29.127708
+  ...
+# Subtest: readiness accepts legacy replies but never certifies inconclusive, contradictory or foreign status
+ok 182 - readiness accepts legacy replies but never certifies inconclusive, contradictory or foreign status
+  ---
+  duration_ms: 139.647375
+  ...
+# Subtest: civilian-flight initial inconclusive preparation preserves previous records until a verified retry
+ok 183 - civilian-flight initial inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 12.944334
+  ...
+# Subtest: civilian-flight final inconclusive preparation preserves previous records until a verified retry
+ok 184 - civilian-flight final inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 20.073542
+  ...
+# Subtest: civilian-fpv initial inconclusive preparation preserves previous records until a verified retry
+ok 185 - civilian-fpv initial inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 13.554583
+  ...
+# Subtest: civilian-fpv final inconclusive preparation preserves previous records until a verified retry
+ok 186 - civilian-fpv final inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 23.146459
+  ...
+# Subtest: fpv-worlds initial inconclusive preparation preserves previous records until a verified retry
+ok 187 - fpv-worlds initial inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 15.117375
+  ...
+# Subtest: fpv-worlds final inconclusive preparation preserves previous records until a verified retry
+ok 188 - fpv-worlds final inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 20.392542
+  ...
+# Subtest: inconclusive preparation uses the caller locale and does not retry worker registration after lookup failure
+ok 189 - inconclusive preparation uses the caller locale and does not retry worker registration after lookup failure
+  ---
+  duration_ms: 0.946458
+  ...
+# Subtest: cancelling initial verification never records a late successful installation
+ok 190 - cancelling initial verification never records a late successful installation
+  ---
+  duration_ms: 7.413958
+  ...
+# Subtest: cancelling final verification rejects after activation without publishing a receipt
+ok 191 - cancelling final verification rejects after activation without publishing a receipt
+  ---
+  duration_ms: 12.884291
+  ...
+# Subtest: pagehide cancels its package operation and a fresh owner can reinstall
+ok 192 - pagehide cancels its package operation and a fresh owner can reinstall
+  ---
+  duration_ms: 10.968208
+  ...
+# Subtest: default progress belongs to the invoking native modal and Cancel restores its focus
+ok 193 - default progress belongs to the invoking native modal and Cancel restores its focus
+  ---
+  duration_ms: 7.704417
+  ...
+# Subtest: closing a moved settings owner cancels its download without reclaiming focus
+ok 194 - closing a moved settings owner cancels its download without reclaiming focus
+  ---
+  duration_ms: 6.675917
+  ...
+# Subtest: successful preparation removes progress without stealing focus from another control
+ok 195 - successful preparation removes progress without stealing focus from another control
+  ---
+  duration_ms: 7.213083
+  ...
+# Subtest: custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+ok 196 - custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+  ---
+  duration_ms: 8.22375
+  ...
+# Subtest: a closed explicit progress owner cannot start a hidden download
+ok 197 - a closed explicit progress owner cannot start a hidden download
+  ---
+  duration_ms: 0.69975
+  ...
+# Subtest: late registration is cancelled and cannot recreate an installation receipt
+ok 198 - late registration is cancelled and cannot recreate an installation receipt
+  ---
+  duration_ms: 13.444166
+  ...
+# Subtest: removal retains registration ownership after caller cancellation until even a late activated worker is removed
+ok 199 - removal retains registration ownership after caller cancellation until even a late activated worker is removed
+  ---
+  duration_ms: 8.060333
+  ...
+# Subtest: a stuck registration bounds removal waiting and a timed-out removal never runs later
+ok 200 - a stuck registration bounds removal waiting and a timed-out removal never runs later
+  ---
+  duration_ms: 7.396125
+  ...
+# Subtest: offload waits for worker write settlement and both game wrappers use scoped removal
+ok 201 - offload waits for worker write settlement and both game wrappers use scoped removal
+  ---
+  duration_ms: 13.775916
+  ...
+# Subtest: offload cancels an old verification before its pointer and exact cache are removed
+ok 202 - offload cancels an old verification before its pointer and exact cache are removed
+  ---
+  duration_ms: 7.206416
+  ...
+# Subtest: missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+ok 203 - missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+  ---
+  duration_ms: 25.050542
+  ...
+# Subtest: civilian-flight announces downloading before awaiting the next dependency
+ok 204 - civilian-flight announces downloading before awaiting the next dependency
+  ---
+  duration_ms: 20.564584
+  ...
+# Subtest: civilian-flight inspection exceptions are inconclusive without changing cached bytes
+ok 205 - civilian-flight inspection exceptions are inconclusive without changing cached bytes
+  ---
+  duration_ms: 6.930875
+  ...
+# Subtest: civilian-flight status distinguishes verified bytes from missing and hash-mismatched files
+ok 206 - civilian-flight status distinguishes verified bytes from missing and hash-mismatched files
+  ---
+  duration_ms: 4.282875
+  ...
+# Subtest: civilian-flight worker keeps cancellation received before its controller exists
+ok 207 - civilian-flight worker keeps cancellation received before its controller exists
+  ---
+  duration_ms: 0.789625
+  ...
+# Subtest: civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+ok 208 - civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+  ---
+  duration_ms: 7.084042
+  ...
+# Subtest: civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+ok 209 - civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+  ---
+  duration_ms: 1.295083
+  ...
+# Subtest: civilian-flight read-only status does not recreate a cache removed after its names were read
+ok 210 - civilian-flight read-only status does not recreate a cache removed after its names were read
+  ---
+  duration_ms: 0.397625
+  ...
+# Subtest: civilian-flight status cannot certify an empty dependency set or a missing package
+ok 211 - civilian-flight status cannot certify an empty dependency set or a missing package
+  ---
+  duration_ms: 0.103167
+  ...
+# Subtest: package announces downloading before awaiting the next dependency
+ok 212 - package announces downloading before awaiting the next dependency
+  ---
+  duration_ms: 7.782584
+  ...
+# Subtest: package inspection exceptions are inconclusive without changing cached bytes
+ok 213 - package inspection exceptions are inconclusive without changing cached bytes
+  ---
+  duration_ms: 7.080167
+  ...
+# Subtest: package status distinguishes verified bytes from missing and hash-mismatched files
+ok 214 - package status distinguishes verified bytes from missing and hash-mismatched files
+  ---
+  duration_ms: 5.987542
+  ...
+# Subtest: package worker keeps cancellation received before its controller exists
+ok 215 - package worker keeps cancellation received before its controller exists
+  ---
+  duration_ms: 1.789542
+  ...
+# Subtest: package worker waits for final writes then rejects cancellation, without announcing ready
+ok 216 - package worker waits for final writes then rejects cancellation, without announcing ready
+  ---
+  duration_ms: 6.328
+  ...
+# Subtest: package old controlling worker does not recreate an offloaded cache on a later asset read
+ok 217 - package old controlling worker does not recreate an offloaded cache on a later asset read
+  ---
+  duration_ms: 1.247958
+  ...
+# Subtest: package read-only status does not recreate a cache removed after its names were read
+ok 218 - package read-only status does not recreate a cache removed after its names were read
+  ---
+  duration_ms: 0.708375
+  ...
+# Subtest: package status cannot certify an empty dependency set or a missing package
+ok 219 - package status cannot certify an empty dependency set or a missing package
+  ---
+  duration_ms: 0.108375
+  ...
+# Subtest: optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+ok 220 - optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+  ---
+  duration_ms: 4.701667
+  ...
+# Subtest: unqualified source previews are limited to the loopback source entry
+ok 221 - unqualified source previews are limited to the loopback source entry
+  ---
+  duration_ms: 1.381083
+  ...
+# Subtest: Snake offers the exact World source preview only at a loopback source root
+ok 222 - Snake offers the exact World source preview only at a loopback source root
+  ---
+  duration_ms: 0.356292
+  ...
+# Subtest: launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+ok 223 - launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+  ---
+  duration_ms: 22.114042
+  ...
+# Subtest: shared practice entry is explicit, pauses once and never prefetches package bytes
+ok 224 - shared practice entry is explicit, pauses once and never prefetches package bytes
+  ---
+  duration_ms: 13.07925
+  ...
+# Subtest: closing an in-flight optional catalog discards late results and restores its opener
+ok 225 - closing an in-flight optional catalog discards late results and restores its opener
+  ---
+  duration_ms: 2.625292
+  ...
+# Subtest: a stalled optional catalog times out and leaves an explicit retry available
+ok 226 - a stalled optional catalog times out and leaves an explicit retry available
+  ---
+  duration_ms: 8.169042
+  ...
+# Subtest: Home and More share one public loader and restore the actual opener without resuming play
+ok 227 - Home and More share one public loader and restore the actual opener without resuming play
+  ---
+  duration_ms: 8.054
+  ...
+# Subtest: local gym and FPV previews stay separate and usable while the public catalog is unavailable
+ok 228 - local gym and FPV previews stay separate and usable while the public catalog is unavailable
+  ---
+  duration_ms: 9.101125
+  ...
+# Subtest: SIM opens the checked bundled entry directly without an interstitial or package download
+ok 229 - SIM opens the checked bundled entry directly without an interstitial or package download
+  ---
+  duration_ms: 9.943125
+  ...
+# Subtest: unavailable SIM offers recovery without navigating or downloading, and closing cancels late entry checks
+ok 230 - unavailable SIM offers recovery without navigating or downloading, and closing cancels late entry checks
+  ---
+  duration_ms: 13.471792
+  ...
+# Subtest: installed practice links retain launch intent and refresh the appearance pin on activation
+ok 231 - installed practice links retain launch intent and refresh the appearance pin on activation
+  ---
+  duration_ms: 7.062666
+  ...
+# Subtest: standalone directory preserves selected locale for main game, guide and package links
+ok 232 - standalone directory preserves selected locale for main game, guide and package links
+  ---
+  duration_ms: 1.846792
+  ...
+# Subtest: directory introduction stays accurate for empty and extended catalogues
+ok 233 - directory introduction stays accurate for empty and extended catalogues
+  ---
+  duration_ms: 0.232
+  ...
+# Subtest: standard-controller menu edges move visible focus and activate once, never repeat a held confirm
+ok 234 - standard-controller menu edges move visible focus and activate once, never repeat a held confirm
+  ---
+  duration_ms: 1.187334
+  ...
+# Subtest: bounded metadata binds to the authoritative catalogue and rejects executable redirects
+ok 235 - bounded metadata binds to the authoritative catalogue and rejects executable redirects
+  ---
+  duration_ms: 11.615958
+  ...
+# Subtest: last-known catalogue stays dated on request failure and bad details keep basic v1 cards
+ok 236 - last-known catalogue stays dated on request failure and bad details keep basic v1 cards
+  ---
+  duration_ms: 28.797875
+  ...
+# Subtest: play intent keeps only a validated locale and destination, never forwards arbitrary query routes
+ok 237 - play intent keeps only a validated locale and destination, never forwards arbitrary query routes
+  ---
+  duration_ms: 4.510041
+  ...
+# Subtest: an installation without an exact owning worker is not ready offline
+ok 238 - an installation without an exact owning worker is not ready offline
+  ---
+  duration_ms: 5.802625
+  ...
+# Subtest: an intentionally empty publication emits a catalogue, and a missing public catalogue fails verification
+ok 239 - an intentionally empty publication emits a catalogue, and a missing public catalogue fails verification
+  ---
+  duration_ms: 4.555667
+  ...
+# Subtest: all shipped player guides retain the same bilingual offline and input instructions
+ok 240 - all shipped player guides retain the same bilingual offline and input instructions
+  ---
+  duration_ms: 2.961
+  ...
+# Subtest: player guide navigation preserves only a supported locale in published and source routes
+ok 241 - player guide navigation preserves only a supported locale in published and source routes
+  ---
+  duration_ms: 2.763542
+  ...
+# Subtest: repository and shipped guides name the current rendered radio setup control in both locales
+ok 242 - repository and shipped guides name the current rendered radio setup control in both locales
+  ---
+  duration_ms: 8.785583
+  ...
+# Subtest: repository and shipped guides document the reachable maintained Detailed HUD in both locales
+ok 243 - repository and shipped guides document the reachable maintained Detailed HUD in both locales
+  ---
+  duration_ms: 2.876959
+  ...
+# Subtest: both guide formats distinguish incomplete verification from confirmed repair
+ok 244 - both guide formats distinguish incomplete verification from confirmed repair
+  ---
+  duration_ms: 3.154458
+  ...
+# Subtest: both guide formats explain deadline/cancel recovery without inventing a storage cause
+ok 245 - both guide formats explain deadline/cancel recovery without inventing a storage cause
+  ---
+  duration_ms: 2.934792
+  ...
+# Subtest: v1 promise, receipt and state bytes remain v1 with no practice additions
+ok 246 - v1 promise, receipt and state bytes remain v1 with no practice additions
+  ---
+  duration_ms: 5.681583
+  ...
+# Subtest: twelve distinct exact courses are required, independent of arcade clears
+ok 247 - twelve distinct exact courses are required, independent of arcade clears
+  ---
+  duration_ms: 5.875041
+  ...
+# Subtest: main reward accepts either declared mode; Acro distinction requires all twelve Acro attempts
+ok 248 - main reward accepts either declared mode; Acro distinction requires all twelve Acro attempts
+  ---
+  duration_ms: 27.524792
+  ...
+# Subtest: exact model, course, mode and explicit response policy constrain verifier projections
+ok 249 - exact model, course, mode and explicit response policy constrain verifier projections
+  ---
+  duration_ms: 3.063458
+  ...
+# Subtest: v2 requirements are explicit and bounded; practice scope cannot smuggle arcade or other courses
+ok 250 - v2 requirements are explicit and bounded; practice scope cannot smuggle arcade or other courses
+  ---
+  duration_ms: 2.279042
+  ...
+# Subtest: mixed v1/v2 state round-trips with strict container/receipt versions and exact evidence pins
+ok 251 - mixed v1/v2 state round-trips with strict container/receipt versions and exact evidence pins
+  ---
+  duration_ms: 7.567083
+  ...
+# Subtest: practice inputs are copied and deeply frozen; external frozen graphs are still validated
+ok 252 - practice inputs are copied and deeply frozen; external frozen graphs are still validated
+  ---
+  duration_ms: 1.185458
+  ...
+# Subtest: practice promises do not overwrite old promises and explicit conflicting imports fail closed
+ok 253 - practice promises do not overwrite old promises and explicit conflicting imports fail closed
+  ---
+  duration_ms: 1.19175
+  ...
+# Subtest: shared store persists/reloads mixed practice and arcade rewards without manufactured Journey clears
+ok 254 - shared store persists/reloads mixed practice and arcade rewards without manufactured Journey clears
+  ---
+  duration_ms: 9.194375
+  ...
+# Subtest: v2 explicit import uses versioned reservation fragments and rejects a conflicting durable promise
+ok 255 - v2 explicit import uses versioned reservation fragments and rejects a conflicting durable promise
+  ---
+  duration_ms: 4.10675
+  ...
+# Subtest: late mixed-version reconciliation releases a practice reservation without changing committed pins
+ok 256 - late mixed-version reconciliation releases a practice reservation without changing committed pins
+  ---
+  duration_ms: 4.240334
+  ...
+# Subtest: archive admission rejects a missing transitive import even when member hashes and counts match
+ok 257 - archive admission rejects a missing transitive import even when member hashes and counts match
+  ---
+  duration_ms: 339.731959
+  ...
+# Subtest: SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+ok 258 - SIM Worlds ships the shared defeat choice and recorded reactions in its verified offline closure
+  ---
+  duration_ms: 2476.603709
+  ...
+# Subtest: optional candidate is byte-reproducible and inventories only its selected public dependency closure
+ok 259 - optional candidate is byte-reproducible and inventories only its selected public dependency closure
+  ---
+  duration_ms: 691.346208
+  ...
+# Subtest: tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+ok 260 - tampered artifacts, omitted or extra dependencies and foreign commit identities fail admission
+  ---
+  duration_ms: 715.878375
+  ...
+# Subtest: source and generated-worker provenance are mandatory and bounded
+ok 261 - source and generated-worker provenance are mandatory and bounded
+  ---
+  duration_ms: 1265.1285
+  ...
+# Subtest: pinned generated launcher code still must match its committed template and isolated closure
+ok 262 - pinned generated launcher code still must match its committed template and isolated closure
+  ---
+  duration_ms: 944.294833
+  ...
+# Subtest: new launcher cannot omit its failure-copy import or service even with updated member pins
+ok 263 - new launcher cannot omit its failure-copy import or service even with updated member pins
+  ---
+  duration_ms: 1038.386334
+  ...
+# Subtest: pending human/device gates never become promotion approval and reviewed evidence pins are exact
+ok 264 - pending human/device gates never become promotion approval and reviewed evidence pins are exact
+  ---
+  duration_ms: 1154.066791
+  ...
+# Subtest: stable delivery pins destination, uploads envelope last and keeps unrelated assets
+ok 265 - stable delivery pins destination, uploads envelope last and keeps unrelated assets
+  ---
+  duration_ms: 11.11975
+  ...
+# Subtest: matching originals are verified without another POST
+ok 266 - matching originals are verified without another POST
+  ---
+  duration_ms: 0.875541
+  ...
+# Subtest: other-envelope originals exceeding the combined budget prevent every optional POST
+ok 267 - other-envelope originals exceeding the combined budget prevent every optional POST
+  ---
+  duration_ms: 0.305792
+  ...
+# Subtest: shared evidence already present in an edition counts once and is still downloaded
+ok 268 - shared evidence already present in an edition counts once and is still downloaded
+  ---
+  duration_ms: 0.509875
+  ...
+# Subtest: every conflicting original is rejected before any upload
+ok 269 - every conflicting original is rejected before any upload
+  ---
+  duration_ms: 0.142958
+  ...
+# Subtest: downloaded original mismatch is rejected before any upload
+ok 270 - downloaded original mismatch is rejected before any upload
+  ---
+  duration_ms: 0.195416
+  ...
+# Subtest: preflight rejects missing-id with zero POSTs
+ok 271 - preflight rejects missing-id with zero POSTs
+  ---
+  duration_ms: 0.153375
+  ...
+# Subtest: preflight rejects wrong-id with zero POSTs
+ok 272 - preflight rejects wrong-id with zero POSTs
+  ---
+  duration_ms: 0.690708
+  ...
+# Subtest: preflight rejects foreign-repository with zero POSTs
+ok 273 - preflight rejects foreign-repository with zero POSTs
+  ---
+  duration_ms: 0.242708
+  ...
+# Subtest: preflight rejects published with zero POSTs
+ok 274 - preflight rejects published with zero POSTs
+  ---
+  duration_ms: 0.231958
+  ...
+# Subtest: preflight rejects prerelease with zero POSTs
+ok 275 - preflight rejects prerelease with zero POSTs
+  ---
+  duration_ms: 0.198834
+  ...
+# Subtest: preflight rejects wrong-target with zero POSTs
+ok 276 - preflight rejects wrong-target with zero POSTs
+  ---
+  duration_ms: 0.298417
+  ...
+# Subtest: preflight rejects foreign-endpoint with zero POSTs
+ok 277 - preflight rejects foreign-endpoint with zero POSTs
+  ---
+  duration_ms: 0.138
+  ...
+# Subtest: preflight rejects duplicate-name with zero POSTs
+ok 278 - preflight rejects duplicate-name with zero POSTs
+  ---
+  duration_ms: 0.130208
+  ...
+# Subtest: preflight rejects duplicate-id with zero POSTs
+ok 279 - preflight rejects duplicate-id with zero POSTs
+  ---
+  duration_ms: 0.077375
+  ...
+# Subtest: preflight rejects missing-digest with zero POSTs
+ok 280 - preflight rejects missing-digest with zero POSTs
+  ---
+  duration_ms: 0.173292
+  ...
+# Subtest: replacement before the first POST fails the explicit draft ID guard
+ok 281 - replacement before the first POST fails the explicit draft ID guard
+  ---
+  duration_ms: 0.612166
+  ...
+# Subtest: replacement between check and upload cannot redirect the ID-specific POST
+ok 282 - replacement between check and upload cannot redirect the ID-specific POST
+  ---
+  duration_ms: 0.504583
+  ...
+# Subtest: replacement between files cannot receive the next asset
+ok 283 - replacement between files cannot receive the next asset
+  ---
+  duration_ms: 1.637166
+  ...
+# Subtest: replacement before final receipt prevents success
+ok 284 - replacement before final receipt prevents success
+  ---
+  duration_ms: 0.660542
+  ...
+# Subtest: publication between assets stops the remaining delivery
+ok 285 - publication between assets stops the remaining delivery
+  ---
+  duration_ms: 0.331125
+  ...
+# Subtest: tag-movement between assets stops the remaining delivery
+ok 286 - tag-movement between assets stops the remaining delivery
+  ---
+  duration_ms: 0.309208
+  ...
+# Subtest: foreign-asset between assets stops the remaining delivery
+ok 287 - foreign-asset between assets stops the remaining delivery
+  ---
+  duration_ms: 0.22625
+  ...
+# Subtest: ambiguous upload failure records unresolved outcome and never retries
+ok 288 - ambiguous upload failure records unresolved outcome and never retries
+  ---
+  duration_ms: 0.220416
+  ...
+# Subtest: attempt journal failure stops before sending a POST
+ok 289 - attempt journal failure stops before sending a POST
+  ---
+  duration_ms: 0.253375
+  ...
+# Subtest: reconciliation keeps all original receipt pins while allowing only the verified status distinction
+ok 290 - reconciliation keeps all original receipt pins while allowing only the verified status distinction
+  ---
+  duration_ms: 2.117208
+  ...
+# Subtest: only reviewed original package bytes enter isolated versioned paths and the stable launcher
+ok 291 - only reviewed original package bytes enter isolated versioned paths and the stable launcher
+  ---
+  duration_ms: 2978.346625
+  ...
+# Subtest: rollback changes only active launcher pointers and retains every frozen release byte
+ok 292 - rollback changes only active launcher pointers and retains every frozen release byte
+  ---
+  duration_ms: 2057.174959
+  ...
+# Subtest: the exact core release contract admits optional additions only with complete review and no unknown extras
+ok 293 - the exact core release contract admits optional additions only with complete review and no unknown extras
+  ---
+  duration_ms: 722.170458
+  ...
+# Subtest: reports shallow population and exact strong paths without traversing weak-only detached node
+ok 294 - reports shallow population and exact strong paths without traversing weak-only detached node
+  ---
+  duration_ms: 10.799375
+  ...
+# Subtest: comparison distinguishes same-sized replacement from surviving object identity
+ok 295 - comparison distinguishes same-sized replacement from surviving object identity
+  ---
+  duration_ms: 0.919584
+  ...
+# Subtest: rejects malformed graph widths, missing fields, dangling edges, duplicate IDs and unknown detachedness
+ok 296 - rejects malformed graph widths, missing fields, dangling edges, duplicate IDs and unknown detachedness
+  ---
+  duration_ms: 1.603375
+  ...
+# Subtest: missing detachedness remains explicitly unavailable rather than zero
+ok 297 - missing detachedness remains explicitly unavailable rather than zero
+  ---
+  duration_ms: 0.374
+  ...
+# Subtest: file loader binds exact bytes and rejects oversized sparse input before parsing
+ok 298 - file loader binds exact bytes and rejects oversized sparse input before parsing
+  ---
+  duration_ms: 19.596291
+  ...
+# Subtest: RGB decoder reverses all five filters exactly
+ok 299 - RGB decoder reverses all five filters exactly
+  ---
+  duration_ms: 5.423833
+  ...
+# Subtest: RGBA decoder reverses all five filters exactly
+ok 300 - RGBA decoder reverses all five filters exactly
+  ---
+  duration_ms: 12.723792
+  ...
+# Subtest: input bytes remain unchanged and metadata/chunk integrity is verified
+ok 301 - input bytes remain unchanged and metadata/chunk integrity is verified
+  ---
+  duration_ms: 1.862583
+  ...
+# Subtest: unsupported animation, bit depths and row filters fail rather than imply equality
+ok 302 - unsupported animation, bit depths and row filters fail rather than imply equality
+  ---
+  duration_ms: 1.047584
+  ...
+# Subtest: audit bounds are checked before network or output access
+ok 303 - audit bounds are checked before network or output access
+  ---
+  duration_ms: 2.304167
+  ...
+# Subtest: sparse publication checkouts include the full admitted directory import closure
+ok 304 - sparse publication checkouts include the full admitted directory import closure
+  ---
+  duration_ms: 1015.574709
+  ...
+# Subtest: maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+ok 305 - maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+  ---
+  duration_ms: 18122.218959
+  ...
+# Subtest: frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+ok 306 - frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+  ---
+  duration_ms: 15246.272416
+  ...
+# Subtest: runtime and retention require distinct bounded procedures with the same exact artifact identity
+ok 307 - runtime and retention require distinct bounded procedures with the same exact artifact identity
+  ---
+  duration_ms: 1.506958
+  ...
+# Subtest: both observer entry points preserve failed admission and refuse to overwrite earlier evidence
+ok 308 - both observer entry points preserve failed admission and refuse to overwrite earlier evidence
+  ---
+  duration_ms: 53.057792
+  ...
+# Subtest: artifact loader rejects a symlink outside the selected bundle before reading envelope content
+ok 309 - artifact loader rejects a symlink outside the selected bundle before reading envelope content
+  ---
+  duration_ms: 4.323875
+  ...
+# Subtest: shared loader admits complete frozen runtime and source bytes and rejects corrupt source even with intact runtime
+ok 310 - shared loader admits complete frozen runtime and source bytes and rejects corrupt source even with intact runtime
+  ---
+  duration_ms: 4193.556292
+  ...
+# Subtest: selected Gym admission pins its own revision; unsupported IDs fail before artifact access
+ok 311 - selected Gym admission pins its own revision; unsupported IDs fail before artifact access
+  ---
+  duration_ms: 1089.419084
+  ...
+# Subtest: cleanup records a failure while still closing every other owned resource
+ok 312 - cleanup records a failure while still closing every other owned resource
+  ---
+  duration_ms: 2.354875
+  ...
+# Subtest: a stalled observation wait times out without claiming that its underlying operation stopped
+ok 313 - a stalled observation wait times out without claiming that its underlying operation stopped
+  ---
+  duration_ms: 6.791333
+  ...
+# Subtest: frozen input checking rejects dirty, ignored or assumed-unchanged bytes and symlink objects
+ok 314 - frozen input checking rejects dirty, ignored or assumed-unchanged bytes and symlink objects
+  ---
+  duration_ms: 574.141583
+  ...
+# Subtest: plan fixes the protocol and bounds every external choice instead of accepting arbitrary input scripts
+ok 315 - plan fixes the protocol and bounds every external choice instead of accepting arbitrary input scripts
+  ---
+  duration_ms: 16.592542
+  ...
+# Subtest: artifact source and envelope pins are checked before reading any selected original
+ok 316 - artifact source and envelope pins are checked before reading any selected original
+  ---
+  duration_ms: 10.958167
+  ...
+# Subtest: an existing evidence directory is never overwritten, including a failed prior attempt
+ok 317 - an existing evidence directory is never overwritten, including a failed prior attempt
+  ---
+  duration_ms: 3.278334
+  ...
+# Subtest: failed admission retains exact plan and observer authority pins without launching a browser
+ok 318 - failed admission retains exact plan and observer authority pins without launching a browser
+  ---
+  duration_ms: 8.794625
+  ...
+# Subtest: trace overflow retains exactly the bounded prefix, closes the stream and is visibly nonpassing
+ok 319 - trace overflow retains exactly the bounded prefix, closes the stream and is visibly nonpassing
+  ---
+  duration_ms: 0.990583
+  ...
+# Subtest: complete traces preserve bytes; timeout and close failure stay separate capture failures
+ok 320 - complete traces preserve bytes; timeout and close failure stay separate capture failures
+  ---
+  duration_ms: 23.070375
+  ...
+# Subtest: capture failure never suppresses actual Retry/export/reload, and those follow the passive window
+ok 321 - capture failure never suppresses actual Retry/export/reload, and those follow the passive window
+  ---
+  duration_ms: 1.409833
+  ...
+# Subtest: route failure is retained without Retry or additional attempts; passive failure still allows independent functional check
+ok 322 - route failure is retained without Retry or additional attempts; passive failure still allows independent functional check
+  ---
+  duration_ms: 0.690041
+  ...
+# Subtest: cleanup attempts every owned resource and cannot report completion after one close fails
+ok 323 - cleanup attempts every owned resource and cannot report completion after one close fails
+  ---
+  duration_ms: 0.304667
+  ...
+# Subtest: task analysis retains full slow boundary intervals, accepts both actual Chrome task names and never claims exclusive cost
+ok 324 - task analysis retains full slow boundary intervals, accepts both actual Chrome task names and never claims exclusive cost
+  ---
+  duration_ms: 1.360292
+  ...
+# Subtest: task analysis rejects ambiguous renderers/markers/task families, missing task coverage and malformed intervals
+ok 325 - task analysis rejects ambiguous renderers/markers/task families, missing task coverage and malformed intervals
+  ---
+  duration_ms: 1.029208
+  ...
+# Subtest: frame summary retains slow samples and marks visibility/focus loss rather than filtering them away
+ok 326 - frame summary retains slow samples and marks visibility/focus loss rather than filtering them away
+  ---
+  duration_ms: 0.446959
+  ...
+# Subtest: bundled FPV pins final default bytes and has its own bounded cache outside core
+ok 327 - bundled FPV pins final default bytes and has its own bounded cache outside core
+  ---
+  duration_ms: 5168.159542
+  ...
+# Subtest: bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+ok 328 - bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+  ---
+  duration_ms: 1661.435375
+  ...
+# Subtest: actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+ok 329 - actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+  ---
+  duration_ms: 2331.946834
+  ...
+# Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+ok 330 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+  ---
+  duration_ms: 1735.618
+  ...
+# Subtest: vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+ok 331 - vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+  ---
+  duration_ms: 528.3175
+  ...
+# Subtest: rewritten archive hashes cannot replace a reviewed vendor dependency
+ok 332 - rewritten archive hashes cannot replace a reviewed vendor dependency
+  ---
+  duration_ms: 916.599834
+  ...
+# Subtest: package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+ok 333 - package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+  ---
+  duration_ms: 0.789833
+  ...
+# Subtest: source budget includes the final source-inventory member, not only its listed dependencies
+ok 334 - source budget includes the final source-inventory member, not only its listed dependencies
+  ---
+  duration_ms: 667.27
+  ...
+# Subtest: generic optional worker cleanup owns only its exact package scope
+ok 335 - generic optional worker cleanup owns only its exact package scope
+  ---
+  duration_ms: 0.534041
+  ...
+# Subtest: browser restart requires all pages closed and a confirmed persistent-context shutdown
+ok 336 - browser restart requires all pages closed and a confirmed persistent-context shutdown
+  ---
+  duration_ms: 7.644584
+  ...
+# Subtest: timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+ok 337 - timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+  ---
+  duration_ms: 3.774167
+  ...
+# Subtest: an expired restart cannot start browser acquisition after cleanup has begun
+ok 338 - an expired restart cannot start browser acquisition after cleanup has begun
+  ---
+  duration_ms: 2.864917
+  ...
+# Subtest: offline action requires fresh observable work, native Enter and a fresh terminal status
+ok 339 - offline action requires fresh observable work, native Enter and a fresh terminal status
+  ---
+  duration_ms: 14.163333
+  ...
+# Subtest: offline actions reject hidden controls before creating a witness or sending a key
+ok 340 - offline actions reject hidden controls before creating a witness or sending a key
+  ---
+  duration_ms: 0.774167
+  ...
+# Subtest: overall observation deadline encloses the journey but preserves report and cleanup
+ok 341 - overall observation deadline encloses the journey but preserves report and cleanup
+  ---
+  duration_ms: 5.800833
+  ...
+# Subtest: installation observer covers all three public app identities and current offline controls
+ok 342 - installation observer covers all three public app identities and current offline controls
+  ---
+  duration_ms: 8.723917
+  ...
+# Subtest: launcher destinations preserve exact app identity and the defined locale query
+ok 343 - launcher destinations preserve exact app identity and the defined locale query
+  ---
+  duration_ms: 1.105542
+  ...
+# Subtest: bounded operation returns results, preserves errors, and rejects stalls
+ok 344 - bounded operation returns results, preserves errors, and rejects stalls
+  ---
+  duration_ms: 5.982375
+  ...
+# Subtest: Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+ok 345 - Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+  ---
+  duration_ms: 2.092708
+  ...
+# Subtest: opt-in quota denial preserves pointers, resets before retry and retains exact helper authority
+ok 346 - opt-in quota denial preserves pointers, resets before retry and retains exact helper authority
+  ---
+  duration_ms: 1.318875
+  ...
+# Subtest: quota selection defaults to Academy and accepts only the explicit all-packages enum
+ok 347 - quota selection defaults to Academy and accepts only the explicit all-packages enum
+  ---
+  duration_ms: 1.562833
+  ...
+# Subtest: every quota-denied package preserves all pointers and leaves no package-scoped staging or worker
+ok 348 - every quota-denied package preserves all pointers and leaves no package-scoped staging or worker
+  ---
+  duration_ms: 2.489792
+  ...
+# Subtest: all-package quota orchestration keeps native controls, scoped fixtures and default receipt compatibility
+ok 349 - all-package quota orchestration keeps native controls, scoped fixtures and default receipt compatibility
+  ---
+  duration_ms: 2.522
+  ...
+# Subtest: Worlds removal opens the public Library and requires its actual removal control to be visible
+ok 350 - Worlds removal opens the public Library and requires its actual removal control to be visible
+  ---
+  duration_ms: 3.372792
+  ...
+# Subtest: profile import and every export open the ordinary transfer disclosure without toggling it closed
+ok 351 - profile import and every export open the ordinary transfer disclosure without toggling it closed
+  ---
+  duration_ms: 2.153917
+  ...
+# Subtest: profile export expectations preserve the entire legacy fixture and current radio library
+ok 352 - profile export expectations preserve the entire legacy fixture and current radio library
+  ---
+  duration_ms: 0.601
+  ...
+# Subtest: offline restart closes every page and rejects surviving windows
+ok 353 - offline restart closes every page and rejects surviving windows
+  ---
+  duration_ms: 0.678208
+  ...
+# Subtest: access-gated candidates require normal-form credentials and never expose them in errors
+ok 354 - access-gated candidates require normal-form credentials and never expose them in errors
+  ---
+  duration_ms: 0.285542
+  ...
+# Subtest: historical UI routing requires explicit mode and exact prior Academy origin/path
+ok 355 - historical UI routing requires explicit mode and exact prior Academy origin/path
+  ---
+  duration_ms: 17.628083
+  ...
+# Subtest: current candidate always uses current admission and historical admission is explicitly prior-only
+ok 356 - current candidate always uses current admission and historical admission is explicitly prior-only
+  ---
+  duration_ms: 1.801459
+  ...
+# Subtest: historical reveal mapping receives exactly one final Enter; current path retains current action
+ok 357 - historical reveal mapping receives exactly one final Enter; current path retains current action
+  ---
+  duration_ms: 2.46275
+  ...
+# Subtest: historical authority pins both helpers and refuses changed authority at completion
+ok 358 - historical authority pins both helpers and refuses changed authority at completion
+  ---
+  duration_ms: 6.666917
+  ...
+# Subtest: download retry restoration rejects changed pointers, missing original workers and temporary resources
+ok 359 - download retry restoration rejects changed pointers, missing original workers and temporary resources
+  ---
+  duration_ms: 15.711708
+  ...
+# Subtest: download restoration freshly exports both Academy records and reads the saved World again
+ok 360 - download restoration freshly exports both Academy records and reads the saved World again
+  ---
+  duration_ms: 3.667584
+  ...
+# Subtest: optional practice archives are reproducible, admitted completely and absent from core build inputs
+ok 361 - optional practice archives are reproducible, admitted completely and absent from core build inputs
+  ---
+  duration_ms: 2069.043
+  ...
+# Subtest: release-qualified practice retains the full shared menu stylesheet closure within its limit
+ok 362 - release-qualified practice retains the full shared menu stylesheet closure within its limit
+  ---
+  duration_ms: 216.464458
+  ...
+# Subtest: an unexpected runtime import fails closed before a package can be published
+ok 363 - an unexpected runtime import fails closed before a package can be published
+  ---
+  duration_ms: 408.178334
+  ...
+# Subtest: worker reports progress, validates cached dependencies and detects eviction
+ok 364 - worker reports progress, validates cached dependencies and detects eviction
+  ---
+  duration_ms: 16.624209
+  ...
+# Subtest: cancel discards only the incomplete version and keeps previous and foreign caches
+ok 365 - cancel discards only the incomplete version and keeps previous and foreign caches
+  ---
+  duration_ms: 0.671875
+  ...
+# Subtest: optional worker verifies every byte before activation and only replaces its own scope cache
+ok 366 - optional worker verifies every byte before activation and only replaces its own scope cache
+  ---
+  duration_ms: 3.830791
+  ...
+# Subtest: corruption or quota prevents optional activation and preserves previously installed caches
+ok 367 - corruption or quota prevents optional activation and preserves previously installed caches
+  ---
+  duration_ms: 4.670666
+  ...
+# Subtest: counts complete manifest bytes, stable launcher copies and pointer only for active version
+ok 368 - counts complete manifest bytes, stable launcher copies and pointer only for active version
+  ---
+  duration_ms: 2.491375
+  ...
+# Subtest: explicit future reserve is not a fictitious retained release or a capacity pass
+ok 369 - explicit future reserve is not a fictitious retained release or a capacity pass
+  ---
+  duration_ms: 0.10375
+  ...
+# Subtest: even an empty selection exactly at the guard still requires complete-site assembly
+ok 370 - even an empty selection exactly at the guard still requires complete-site assembly
+  ---
+  duration_ms: 0.175333
+  ...
+# Subtest: rejects duplicate immutable versions and competing stable launchers
+ok 371 - rejects duplicate immutable versions and competing stable launchers
+  ---
+  duration_ms: 0.399
+  ...
+# Subtest: rejects invalid core claims, counts and overflowing sums
+ok 372 - rejects invalid core claims, counts and overflowing sums
+  ---
+  duration_ms: 0.344917
+  ...
+# Subtest: rejects unsafe and duplicate pins, absent entry and absent active launcher
+ok 373 - rejects unsafe and duplicate pins, absent entry and absent active launcher
+  ---
+  duration_ms: 2.664084
+  ...
+# Subtest: config resolves paths relative to itself and pins candidate manifests without admitting archives
+ok 374 - config resolves paths relative to itself and pins candidate manifests without admitting archives
+  ---
+  duration_ms: 768.72825
+  ...
+# Subtest: the production main workflow stages practice before capacity and verifies the deployed selector
+ok 375 - the production main workflow stages practice before capacity and verifies the deployed selector
+  ---
+  duration_ms: 4.952583
+  ...
+# Subtest: main Pages staging emits an explicit empty catalogue without GitHub and refuses replacement
+ok 376 - main Pages staging emits an explicit empty catalogue without GitHub and refuses replacement
+  ---
+  duration_ms: 596.085667
+  ...
+# Subtest: optional CLI verifies local originals without GitHub and stages only downloaded reviewed selectors
+ok 377 - optional CLI verifies local originals without GitHub and stages only downloaded reviewed selectors
+  ---
+  duration_ms: 5433.488542
+  ...
+# Subtest: main Pages stages reviewed originals and public verification rejects stale versions or changed bytes
+ok 378 - main Pages stages reviewed originals and public verification rejects stale versions or changed bytes
+  ---
+  duration_ms: 2310.696291
+  ...
+# Subtest: optional selector remains unchanged after foreign tags, changed downloads or concurrent edits
+    # Subtest: tag
+    ok 1 - tag
+      ---
+      duration_ms: 1173.76275
+      ...
+    # Subtest: bytes
+    ok 2 - bytes
+      ---
+      duration_ms: 1485.008792
+      ...
+    # Subtest: concurrent
+    ok 3 - concurrent
+      ---
+      duration_ms: 2148.697542
+      ...
+    1..3
+ok 379 - optional selector remains unchanged after foreign tags, changed downloads or concurrent edits
+  ---
+  duration_ms: 4809.155459
+  ...
+# Subtest: optional upload refuses already published releases without sending any write request
+ok 380 - optional upload refuses already published releases without sending any write request
+  ---
+  duration_ms: 1598.620041
+  ...
+# Subtest: draft delivery uploads the envelope last, verifies downloaded originals and resumes without replacement
+ok 381 - draft delivery uploads the envelope last, verifies downloaded originals and resumes without replacement
+  ---
+  duration_ms: 16102.437125
+  ...
+# Subtest: optional delivery requires an explicit canonical positive release ID before any network access
+ok 382 - optional delivery requires an explicit canonical positive release ID before any network access
+  ---
+  duration_ms: 1697.982375
+  ...
+1..382
+# tests 387
+# suites 0
+# pass 387
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 93270.506292
