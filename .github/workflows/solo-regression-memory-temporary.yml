@@ -1,4 +1,4 @@
-name: Temporary Solo bounded memory comparison
+name: Temporary Solo bounded baseline classification
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -29,17 +29,35 @@ jobs:
       matrix:
         include:
           - label: baseline
-            case: team-default-entry-host
+            case: soundtrack-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: team-default-entry-host
-            source: 90f4d1a07ac032e3b57466e88c731e5f74ba1a69
           - label: baseline
-            case: coop-picture-recovery-focus
+            case: presentation-readiness
             source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: coop-picture-recovery-focus
-            source: 90f4d1a07ac032e3b57466e88c731e5f74ba1a69
+          - label: baseline
+            case: route-choices-chapter
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-equipment-review
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-equipment-art
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: content-route-loader
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: journey-mode-navigation
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: test-inspect-goals
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: test-production-panel
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: difficulty-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}

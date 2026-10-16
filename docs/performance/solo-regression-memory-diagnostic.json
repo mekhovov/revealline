@@ -1,46 +1,106 @@
 {
-  "format": "SoloBoundedMemoryDiagnosticManifestV3",
-  "purpose": "Temporary paired Linux diagnosis of two additional memory-heavy host fixtures. Exact b117/90f source; diagnostic copies preserve Object.is identity truth and bound mismatch labels. No production edits, assertion/golden/deadline changes or canonical pass credit.",
+  "format": "SoloBoundedBaselineClassificationManifestV4",
+  "purpose": "Exact original-main Linux execution of ten bounded unresolved regression groups, retaining full original tests and all failures. Named comparisons use prior retained candidate TAP; completed baseline files never count as candidate coverage.",
   "entries": [
     {
       "label": "baseline",
-      "case": "team-default-entry-host",
-      "mode": "bounded-object-identity",
+      "case": "soundtrack-host",
+      "mode": "original",
       "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/team-default-entry-host.test.mjs",
-      "testSHA256": "0a8193a2ca061638e687ad71c568263a9086840a15daec89257ccc221b7bc566",
-      "bytes": 13855
-    },
-    {
-      "label": "candidate",
-      "case": "team-default-entry-host",
-      "mode": "bounded-object-identity",
-      "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-      "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "file": "game/test/team-default-entry-host.test.mjs",
-      "testSHA256": "0a8193a2ca061638e687ad71c568263a9086840a15daec89257ccc221b7bc566",
-      "bytes": 13855
+      "file": "game/test/soundtrack-host.test.mjs",
+      "testSHA256": "12a7c90aa1e67195a4567b7cea6feefaffc01d5b8bead5c1eafe53b3404faa92",
+      "bytes": 44239
     },
     {
       "label": "baseline",
-      "case": "coop-picture-recovery-focus",
-      "mode": "bounded-object-identity",
+      "case": "presentation-readiness",
+      "mode": "original",
       "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-      "file": "game/test/coop-picture-recovery-focus.test.mjs",
-      "testSHA256": "78987dc3302fb885ae2ad500929012c0792cf5ef28efe2195168a7a85637e922",
-      "bytes": 13694
+      "file": "game/test/presentation-readiness.test.mjs",
+      "testSHA256": "1d342e2fbbe5a3a639b9f9b8a4cf99f1aec3004d42fdd56cf5a59591b60f61b3",
+      "bytes": 6443
     },
     {
-      "label": "candidate",
-      "case": "coop-picture-recovery-focus",
-      "mode": "bounded-object-identity",
-      "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-      "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "file": "game/test/coop-picture-recovery-focus.test.mjs",
-      "testSHA256": "78987dc3302fb885ae2ad500929012c0792cf5ef28efe2195168a7a85637e922",
-      "bytes": 13694
+      "label": "baseline",
+      "case": "route-choices-chapter",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/route-choices-chapter.test.mjs",
+      "testSHA256": "243f4d123426d07f548c20c9dcc07c4b738ef7c963b72319a41446e1d1f4cce5",
+      "bytes": 11802
+    },
+    {
+      "label": "baseline",
+      "case": "team-equipment-review",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/team-equipment-review.test.mjs",
+      "testSHA256": "9cd7548c65fb7c027f11c298ac8b694581eff3db5c65c3dcd4ee67dff78929b7",
+      "bytes": 6710
+    },
+    {
+      "label": "baseline",
+      "case": "team-equipment-art",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/team-equipment-art.test.mjs",
+      "testSHA256": "b7dc674bf2566f8028dca238f551dc8335a196a5704594e79bc345ee2d0f6fd4",
+      "bytes": 4512
+    },
+    {
+      "label": "baseline",
+      "case": "content-route-loader",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/content-route-loader.test.mjs",
+      "testSHA256": "dca836a883c6bf0f82ccef84af92f0e2adc34677fe6f36831df8491c5e41203c",
+      "bytes": 32235
+    },
+    {
+      "label": "baseline",
+      "case": "journey-mode-navigation",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/journey-mode-navigation.test.mjs",
+      "testSHA256": "bbb1923896e9e0cc5753313835470f9b6318d64c20bf6d87069a94c2c46047ba",
+      "bytes": 8775
+    },
+    {
+      "label": "baseline",
+      "case": "test-inspect-goals",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "scripts/test-inspect-goals.mjs",
+      "testSHA256": "8b4915451d4f947fa0f7237821a508790d791290b7f9538e8eacc3d89c13961d",
+      "bytes": 11953
+    },
+    {
+      "label": "baseline",
+      "case": "test-production-panel",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "scripts/test-production-panel.mjs",
+      "testSHA256": "66d6fe3a50ec78331ae7a398d64f373ae67317b184e1a8d9b83789a6d1195ef8",
+      "bytes": 14134
+    },
+    {
+      "label": "baseline",
+      "case": "difficulty-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/difficulty-host.test.mjs",
+      "testSHA256": "bdc3659ef10ab7d5fcc6beb7d725c8efbf1de02811863cb4a26354a93c60359d",
+      "bytes": 25744
     }
   ],
   "nodeVersion": "v22.22.2",
@@ -56,29 +116,22 @@
   "priorEvidence": {
     "runId": 38865274741,
     "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-    "interruptions": [
-      {
-        "batch": 6,
-        "jobId": 116856540908,
-        "file": "game/test/team-default-entry-host.test.mjs",
-        "sampledPeakGroupRSSBytes": 15751061504,
-        "jobLogSHA256": "01bfc6acdcdb2e53c6888e2fa2d7e83f4d733c4864df398c78bb8b7795bdacad"
-      },
-      {
-        "batch": 7,
-        "jobId": 116856540852,
-        "file": "game/test/coop-picture-recovery-focus.test.mjs",
-        "sampledPeakGroupRSSBytes": 15877931008,
-        "sampledAvailableBytes": 282599424,
-        "jobLogSHA256": "d1eeead620ada985e019f44530b5eb982342b54d1e988eaa753ea42c6723647d"
-      }
-    ],
-    "scope": "Runner shutdown and sampled severe memory pressure; no kernel OOM verdict or independently proven failing assertion yet."
+    "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+    "failureAuthoritySHA256": "c8d728cf76290577135049e78f2f9cdbe57992bbe04232155507df2b58ae9c74",
+    "scope": "Retained complete candidate failures only; baseline results are separate scoped comparisons, not passing waivers."
   },
-  "scope": "Exact historical49c candidate and originalmain targets are separate from this workflow revision and current e025 runtime. Only bounded diagnostic copies run; completed failed assertions remain failures, aborted runs remain incomplete.",
+  "scope": "Ten full original-main files under the same Node22/CI=1 Linux environment. Source and workflow revisions separate. Compare only observed named assertions; later assertions after a failure remain unexecuted. No candidate/full-suite/device acceptance inferred.",
   "sameTestBytesByCase": {
-    "team-default-entry-host": true,
-    "coop-picture-recovery-focus": true
+    "soundtrack-host": false,
+    "presentation-readiness": true,
+    "route-choices-chapter": true,
+    "team-equipment-review": true,
+    "team-equipment-art": true,
+    "content-route-loader": false,
+    "journey-mode-navigation": true,
+    "test-inspect-goals": true,
+    "test-production-panel": true,
+    "difficulty-host": true
   },
   "commandTemplate": [
     "node",
@@ -87,13 +140,171 @@
     "--test-reporter=tap",
     "selectedTestPath"
   ],
-  "diagnosticOverlay": "Only strict equality comparisons involving objects/functions use nativeAssert.ok(Object.is(actual, expected), bounded tag/id/sha labels). Acceptance is exactly strict Object.is identity; original primitive/deep comparisons, runtime and test deadlines remain exact. Copies are untracked siblings with retained exact hashes.",
-  "priorBoundedPair": {
-    "runId": 38866775177,
-    "workflowSourceRevision": "266823b7b968251dd56de81dd5a7011a215b849e",
-    "baselineRSSBytes": 13265383424,
-    "candidateRSSBytes": 13536002048,
-    "bothIncomplete": true,
-    "scope": "Both exact sources exceeded12GiB before any test result, with only TAP header retained. This diagnoses shared resource runaway, not a completed file or exact failing assertion."
-  }
+  "diagnosticOverlay": "None. Every selected test is the exact committed baseline file; no assertion, timeout, fixture, policy, golden or runtime changes.",
+  "comparisons": [
+    {
+      "case": "soundtrack-host",
+      "file": "game/test/soundtrack-host.test.mjs",
+      "baselineTestSHA256": "12a7c90aa1e67195a4567b7cea6feefaffc01d5b8bead5c1eafe53b3404faa92",
+      "candidateTestSHA256": "d79dc80e7338589ddf2012d8752166b45e710b529b30307a87e3584ac7ce1a05",
+      "sameTestBytes": false,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12034660916,
+      "candidateArtifactSHA256": "sha256:8b62c4d2bea8fee0cfa2ee5e9955ba548871e4ecd18ca25034f2a6caa79fd521",
+      "candidateTAPSHA256": "04e08559c21cb0df6d4bea04abc7e307109d07a9dd7ab2ac1c31e443904f4e6e",
+      "candidateFailureNames": [
+        "actual Settings \u2192 Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight",
+        "actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume"
+      ]
+    },
+    {
+      "case": "presentation-readiness",
+      "file": "game/test/presentation-readiness.test.mjs",
+      "baselineTestSHA256": "1d342e2fbbe5a3a639b9f9b8a4cf99f1aec3004d42fdd56cf5a59591b60f61b3",
+      "candidateTestSHA256": "1d342e2fbbe5a3a639b9f9b8a4cf99f1aec3004d42fdd56cf5a59591b60f61b3",
+      "sameTestBytes": true,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12034660916,
+      "candidateArtifactSHA256": "sha256:8b62c4d2bea8fee0cfa2ee5e9955ba548871e4ecd18ca25034f2a6caa79fd521",
+      "candidateTAPSHA256": "332e6f36d43bf5e7ad48dd769129129ce9d5a61624c58b60fd0a501ce16409ff",
+      "candidateFailureNames": [
+        "readiness accepts declared required revisions and retains optional historical source slots"
+      ]
+    },
+    {
+      "case": "route-choices-chapter",
+      "file": "game/test/route-choices-chapter.test.mjs",
+      "baselineTestSHA256": "243f4d123426d07f548c20c9dcc07c4b738ef7c963b72319a41446e1d1f4cce5",
+      "candidateTestSHA256": "243f4d123426d07f548c20c9dcc07c4b738ef7c963b72319a41446e1d1f4cce5",
+      "sameTestBytes": true,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12032459670,
+      "candidateArtifactSHA256": "sha256:de2e5386e0345595085c975e23eed81e27e7fcbc60042fcc29bb6b6575e19615",
+      "candidateTAPSHA256": "86d483430692aab6f7535e93b08e33ba15305590fb3877afbdc2dca6e9262b88",
+      "candidateFailureNames": [
+        "new chapter has one exact optional catalog entry while raw art and automatic/indexed content stay excluded"
+      ]
+    },
+    {
+      "case": "team-equipment-review",
+      "file": "game/test/team-equipment-review.test.mjs",
+      "baselineTestSHA256": "9cd7548c65fb7c027f11c298ac8b694581eff3db5c65c3dcd4ee67dff78929b7",
+      "candidateTestSHA256": "9cd7548c65fb7c027f11c298ac8b694581eff3db5c65c3dcd4ee67dff78929b7",
+      "sameTestBytes": true,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12032459670,
+      "candidateArtifactSHA256": "sha256:de2e5386e0345595085c975e23eed81e27e7fcbc60042fcc29bb6b6575e19615",
+      "candidateTAPSHA256": "868e92ff8fdecfb60209b57e14702b966e09c5c0c6a1a1d0eab8b272bac60e6d",
+      "candidateFailureNames": [
+        "five-image continuation authenticates exact originals, dependency closure and attributed evidence",
+        "actual production assembly reviews only exact five image originals with the separately reviewed37 Team recipes"
+      ]
+    },
+    {
+      "case": "team-equipment-art",
+      "file": "game/test/team-equipment-art.test.mjs",
+      "baselineTestSHA256": "b7dc674bf2566f8028dca238f551dc8335a196a5704594e79bc345ee2d0f6fd4",
+      "candidateTestSHA256": "b7dc674bf2566f8028dca238f551dc8335a196a5704594e79bc345ee2d0f6fd4",
+      "sameTestBytes": true,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12034075684,
+      "candidateArtifactSHA256": "sha256:3a3651dc26ff98734d2511ae21b77f41839d07a1079bdd0f7d881b21ac77c8f6",
+      "candidateTAPSHA256": "bebc736df5aaac197536df821e5636c93d8756cd89133760cdb4e33b38cb8b93",
+      "candidateFailureNames": [
+        "production actually binds every equipment PNG with exact authored geometry and scoped reviewed status"
+      ]
+    },
+    {
+      "case": "content-route-loader",
+      "file": "game/test/content-route-loader.test.mjs",
+      "baselineTestSHA256": "dca836a883c6bf0f82ccef84af92f0e2adc34677fe6f36831df8491c5e41203c",
+      "candidateTestSHA256": "82e77cf67ddd5b492a26e293cde4c69396ac5d512ce6114e29fdb7b510c0dc1d",
+      "sameTestBytes": false,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12032629777,
+      "candidateArtifactSHA256": "sha256:6449fb7570b8e0a127dd7e43b680e3ab20458029c8ae5ebdedb5325164927408",
+      "candidateTAPSHA256": "e6b6253030ec4d51f213b315fe3327be50c8c3def3dafac52b8276ebcc311cce",
+      "candidateFailureNames": [
+        "all supported routes are covered by pinned edition snapshots",
+        "duel-expedition-v1: async and synchronous routes retain exact historical content and fresh ownership",
+        "humanoid-hunt-v1: async and synchronous routes retain exact historical content and fresh ownership",
+        "pursuit-pilots-v1: async and synchronous routes retain exact historical content and fresh ownership",
+        "pursuit-campaigns-v1: async and synchronous routes retain exact historical content and fresh ownership",
+        "snake-hunt-v1: async and synchronous routes retain exact historical content and fresh ownership"
+      ]
+    },
+    {
+      "case": "journey-mode-navigation",
+      "file": "game/test/journey-mode-navigation.test.mjs",
+      "baselineTestSHA256": "bbb1923896e9e0cc5753313835470f9b6318d64c20bf6d87069a94c2c46047ba",
+      "candidateTestSHA256": "bbb1923896e9e0cc5753313835470f9b6318d64c20bf6d87069a94c2c46047ba",
+      "sameTestBytes": true,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12034352078,
+      "candidateArtifactSHA256": "sha256:f1d7cea27c36f5eb874cfaac5323e55e14900b8e40ade234f00954378c34e279",
+      "candidateTAPSHA256": "12bd0ff75f2abaada1abc4bf5fb16e4e217e41023b9228568ccad589b619080b",
+      "candidateFailureNames": [
+        "only explicit known Journey editions produce fixed Solo/Versus links, never Team or arbitrary URLs"
+      ]
+    },
+    {
+      "case": "test-inspect-goals",
+      "file": "scripts/test-inspect-goals.mjs",
+      "baselineTestSHA256": "8b4915451d4f947fa0f7237821a508790d791290b7f9538e8eacc3d89c13961d",
+      "candidateTestSHA256": "8b4915451d4f947fa0f7237821a508790d791290b7f9538e8eacc3d89c13961d",
+      "sameTestBytes": true,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12030969053,
+      "candidateArtifactSHA256": "sha256:7a3580a4a5f893363a9914823c5a11d0efdfd606a57c7464927472b471ae5cb4",
+      "candidateTAPSHA256": "5369ab03292e431a1c0e0305a22824cfe0e94d28b579a236d7a4462828102d17",
+      "candidateFailureNames": [
+        "all indexed packs include First Light and retain old fallback registrations",
+        "owned fixture build preserves the exact pack and includes its index in offline cache",
+        "base campaign conflict fails indexed build before replacing its previously valid output"
+      ]
+    },
+    {
+      "case": "test-production-panel",
+      "file": "scripts/test-production-panel.mjs",
+      "baselineTestSHA256": "66d6fe3a50ec78331ae7a398d64f373ae67317b184e1a8d9b83789a6d1195ef8",
+      "candidateTestSHA256": "66d6fe3a50ec78331ae7a398d64f373ae67317b184e1a8d9b83789a6d1195ef8",
+      "sameTestBytes": true,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12030969053,
+      "candidateArtifactSHA256": "sha256:7a3580a4a5f893363a9914823c5a11d0efdfd606a57c7464927472b471ae5cb4",
+      "candidateTAPSHA256": "3f2f87d02b440b5780125be6ec88ca4ec09ed1aed8f23858af016f9458a2da90",
+      "candidateFailureNames": [
+        "actual panel uses metadata only; native filters and Back retain focus, source text stays inert",
+        "explicit preview cancellation prevents late row completion, disposes URLs and never steals focus",
+        "preview failure is visible; filter, reload and lifecycle cancel current requests without approvals",
+        "late reload and invalid register preserve the current valid view and active filter",
+        "inspected reserves use their terminal checklist and reused production pictures stay excluded from spare totals"
+      ]
+    },
+    {
+      "case": "difficulty-host",
+      "file": "game/test/difficulty-host.test.mjs",
+      "baselineTestSHA256": "bdc3659ef10ab7d5fcc6beb7d725c8efbf1de02811863cb4a26354a93c60359d",
+      "candidateTestSHA256": "bdc3659ef10ab7d5fcc6beb7d725c8efbf1de02811863cb4a26354a93c60359d",
+      "sameTestBytes": true,
+      "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "candidateRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "candidateArtifactId": 12031996841,
+      "candidateArtifactSHA256": "sha256:5790090f9bf3ab0205bcf5811d52ae413878811f57332933740a7dd7e1c59a36",
+      "candidateTAPSHA256": "29642f46739ba6727842e6b79f65c6a47a8b9eb4be453f1aa58abda8321a70f2",
+      "candidateFailureNames": [
+        "replacing a two-chapter pack retains the active Gentle chapter and applies the next mode",
+        "ordinary practice selecting an authored campaign ignores saved Gentle and cannot award or save"
+      ]
+    }
+  ]
 }
