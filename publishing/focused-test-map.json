@@ -131,7 +131,7 @@
       "pathPatterns": [
         "^game/(installed-app|downloads)\\.mjs$",
         "^game/ui/(install-offline-panel|feedback-director|published-audio)\\.mjs$",
-        "^game/test/(multiplayer-offline-upgrade|team-duel-studio-audio|team-duel-studio-gameplay-host|asset-studio-sound-transfer|content-studio-host)\\.test\\.mjs$",
+        "^game/test/(multiplayer-offline-upgrade|team-duel-studio-audio|team-duel-studio-gameplay-host|coop-presentation-bootstrap-retry|coop-picture-host|asset-studio-sound-transfer|content-studio-host)\\.test\\.mjs$",
         "^game/test/helpers/coop-presentation-fixture\\.mjs$",
         "^game/couch/index\\.html$",
         "^game/test/duel-result-continuation-host\\.test\\.mjs$"
