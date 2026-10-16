@@ -1,0 +1,300 @@
+{
+  "format": "SoloHostedRasterManifestV1",
+  "status": "integrated-pending-current-artifact-and-first-eight-review",
+  "repository": "mekhovov/revealline",
+  "cohort": "linux-native-raster-latest-source-unbound",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "jobs": ["raster-chromium", "raster-webkit"],
+  "maxParallel": 2,
+  "performanceExclusion": true,
+  "helperTimeoutMs": 4500000,
+  "setupTimeoutMs": 2400000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 134217728,
+  "candidate": {
+    "revision": null,
+    "tree": null,
+    "run": null,
+    "artifact": null,
+    "outer": null,
+    "inner": null,
+    "manifestSHA256": null,
+    "producer": null
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "role": "Source identity only; no build or browser baseline in candidate visual regression."
+  },
+  "release": {
+    "status": "pending",
+    "candidateRevision": null,
+    "evidence": []
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-raster.mjs",
+      "bytes": 13406,
+      "sha256": "cf7f8f19a845d26582244c71a492d3344377904e7ca010814c520d8bc862dfda"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/observe-solo-native-raster.mjs",
+      "bytes": 19372,
+      "sha256": "fce811b820a76c296c5012b6929534f35cc413a9c44dc2066d4a92f585040ce1"
+    },
+    {
+      "path": "scripts/solo-raster-protocols.mjs",
+      "bytes": 41879,
+      "sha256": "d579882dd06cbc50881715116dd3a163a8654c19ead3356de031ad29d43e69d9"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 48206,
+      "sha256": "c3fb70a4edbc433a1ea8265e5d911eff2d4f96d02006ff7652c9b848d83bf8c0"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    }
+  ],
+  "raster": {
+    "cases": [
+      {
+        "quality": "full",
+        "mode": "settled"
+      },
+      {
+        "quality": "full",
+        "mode": "acquire"
+      },
+      {
+        "quality": "full",
+        "mode": "warning"
+      },
+      {
+        "quality": "full",
+        "mode": "active"
+      },
+      {
+        "quality": "reduced",
+        "mode": "settled"
+      },
+      {
+        "quality": "reduced",
+        "mode": "acquire"
+      },
+      {
+        "quality": "reduced",
+        "mode": "warning"
+      },
+      {
+        "quality": "reduced",
+        "mode": "active"
+      },
+      {
+        "quality": "minimal",
+        "mode": "settled"
+      },
+      {
+        "quality": "minimal",
+        "mode": "acquire"
+      },
+      {
+        "quality": "minimal",
+        "mode": "warning"
+      },
+      {
+        "quality": "minimal",
+        "mode": "active"
+      }
+    ],
+    "observationTimeoutMs": 120000,
+    "retryCount": 0,
+    "pixelTolerance": 0,
+    "conditionalLocalization": true,
+    "fixture": {
+      "path": "docs/performance/fixtures/solo-remote-raster/signal-07.qualification.fixture",
+      "bytes": 3214,
+      "sha256": "3cee13dba69ac219a54924a0a9663e03fa18115e02e9d79eb9503b8c62ae2a6b"
+    },
+    "primitiveInputs": {
+      "postTintPNGs": [
+        {
+          "owner": "A-with-replacements",
+          "stage": "after-tint",
+          "width": 768,
+          "height": 576,
+          "sha256": "c134d929ac46168e4a628c76f85808fd98ec798a75fb37d15ac18de5b4563694",
+          "bytes": 9856,
+          "path": "docs/performance/fixtures/solo-remote-raster/stage-A-with-replacements-after-tint.png"
+        },
+        {
+          "owner": "A-repeat",
+          "stage": "after-tint",
+          "width": 768,
+          "height": 576,
+          "sha256": "c134d929ac46168e4a628c76f85808fd98ec798a75fb37d15ac18de5b4563694",
+          "bytes": 9856,
+          "path": "docs/performance/fixtures/solo-remote-raster/stage-A-repeat-after-tint.png"
+        }
+      ],
+      "atlasUploads": [
+        {
+          "owner": 5,
+          "index": 0,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [0, 0],
+          "bytes": 16384,
+          "sha256": "ec7a0880116f1ca16eaa116db49c263b1e711e60cd3d91f69d89d466524e4c5f",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-5-frame-0.rgba"
+        },
+        {
+          "owner": 5,
+          "index": 1,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [64, 0],
+          "bytes": 16384,
+          "sha256": "5dd2f5c68f8f2f5e9104e329f7b6e93d0178bb7d3563d72f239db6544a0fd7f8",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-5-frame-1.rgba"
+        },
+        {
+          "owner": 5,
+          "index": 2,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [128, 0],
+          "bytes": 16384,
+          "sha256": "2023736efeb5f3c476e00af4117c238c4586a2b05c67f5c124bb8940b39d9ce9",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-5-frame-2.rgba"
+        },
+        {
+          "owner": 5,
+          "index": 3,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [192, 0],
+          "bytes": 16384,
+          "sha256": "1d79a406062e90c2dbda88e3f9283113b6241ba97f42a597170ba2f7d254136f",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-5-frame-3.rgba"
+        },
+        {
+          "owner": 7,
+          "index": 0,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [0, 0],
+          "bytes": 16384,
+          "sha256": "ec7a0880116f1ca16eaa116db49c263b1e711e60cd3d91f69d89d466524e4c5f",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-7-frame-0.rgba"
+        },
+        {
+          "owner": 7,
+          "index": 1,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [64, 0],
+          "bytes": 16384,
+          "sha256": "5dd2f5c68f8f2f5e9104e329f7b6e93d0178bb7d3563d72f239db6544a0fd7f8",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-7-frame-1.rgba"
+        },
+        {
+          "owner": 7,
+          "index": 2,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [128, 0],
+          "bytes": 16384,
+          "sha256": "2023736efeb5f3c476e00af4117c238c4586a2b05c67f5c124bb8940b39d9ce9",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-7-frame-2.rgba"
+        },
+        {
+          "owner": 7,
+          "index": 3,
+          "width": 64,
+          "height": 64,
+          "colorSpace": "srgb",
+          "arguments": [192, 0],
+          "bytes": 16384,
+          "sha256": "1d79a406062e90c2dbda88e3f9283113b6241ba97f42a597170ba2f7d254136f",
+          "path": "docs/performance/fixtures/solo-remote-raster/atlas-owner-7-frame-3.rgba"
+        }
+      ],
+      "originalAfterNoiseComparators": [
+        {
+          "owner": "A-with-replacements",
+          "stage": "after-noise",
+          "width": 768,
+          "height": 576,
+          "sha256": "324c96b64e23de8128ae28132f915c9861e169184a7c23b06b57102fa1655c70",
+          "bytes": 24003,
+          "path": "docs/performance/fixtures/solo-remote-raster/stage-A-with-replacements-after-noise.png"
+        },
+        {
+          "owner": "A-repeat",
+          "stage": "after-noise",
+          "width": 768,
+          "height": 576,
+          "sha256": "d6edf3f09339e8e4fd26947f1801fb3c231a7345ae6000af907f26daf1cbf5f8",
+          "bytes": 24321,
+          "path": "docs/performance/fixtures/solo-remote-raster/stage-A-repeat-after-noise.png"
+        }
+      ]
+    },
+    "attributeWitness": "Only conditional fresh prefix uses a declared forwarding getContext wrapper, collecting <=512 unique actual contexts and reading attributes once after all fixed draws. Full12 primary is exact-original/unwrapped. Conditional prefix PNGs must match all corresponding primary captures exactly before deeper localization."
+  },
+  "scope": "All12 unchanged synthetic presentation cases per Linux engine using default native Canvas APIs. New Linux browser/backend stratum, no software-force or GPU/physical-device claim. Original Mac strict failure retained. Public production payload/CSP; no live gameplay or authentication claim. Default backend unknown; actual context attributes recorded only where the conditional diagnostic is admitted.",
+  "acceptance": {
+    "primary": "All12 strict original invariants including identical-input, concealment, exposed positive controls, actor/lane visibility, animation, zero-dt stability and same-owner source replacement/restoration. Visual review remains pending separately.",
+    "conditional": "Only a clean full12 exact known control-failure class admits a fresh two-case prefix. All retained prefix PNGs must equal the same new cohort primary prefix; then14 compositor captures and6 fixed historical-input primitive draws. No automatic retry or relaxed threshold.",
+    "nonReproduction": "Latest Linux pass/non-reproduction cannot resolve prior Mac WebKit failure. Primitive historical comparisons remain descriptive, with no claimed latest live intermediate-input identity.",
+    "failure": "Any partial observation, deadline, cap, source/CSP mismatch, late request/page failure, unsettled source drain or unknown process closure fails and stops dependent localization."
+  },
+  "resources": {
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "finalizationReserveBytes": 4194304,
+    "helperDisjointMinutes": {
+      "candidatePreparation": 40,
+      "oneRowMaximum": 20,
+      "remainingFinalization": 15,
+      "total": 75
+    },
+    "jobDisjointMinutes": {
+      "checkoutAndNode": 7,
+      "dependenciesBrowsers": 20,
+      "testsAndBinding": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "upload": 10,
+      "total": 121,
+      "jobCap": 125
+    },
+    "stageProtocol": "Each stage120s observation, fresh browser/context, existing bounded cleanup and common outer1200s row. Four stages maximum; no extra warmup."
+  }
+}
