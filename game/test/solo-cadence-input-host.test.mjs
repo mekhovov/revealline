@@ -88,24 +88,31 @@ function second(page, schedule) {
   }
 }
 
-async function start(page) {
+async function start(page, mark = () => {}) {
+  mark('start:activate');
   await activateHostAction(page.$('start-button'));
+  mark('start:running-wait');
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(0);
+  mark('start:ready');
 }
 
-async function restart(page, setControls) {
+async function restart(page, setControls, mark) {
+  mark('restart:request');
   setControls();
   page.frame(0);
   const oldRun = page.rendered.run;
   await activateHostAction(page.$('overlay-restart'));
   assert.equal(page.$('restart-dialog').open, true);
+  mark('restart:confirm');
   await activateHostAction(page.$('restart-confirm'));
+  mark('restart:running-wait');
   await settle(
     () => page.rendered.run !== oldRun && page.doc.body.dataset.flightState === 'running',
   );
   page.frame(0);
   assert.equal(page.rendered.run.tick, 0);
+  mark('restart:ready');
 }
 
 function savedReplay(page) {
@@ -154,39 +161,58 @@ function recordedBehavior(replay) {
   return { counts, edges, effects };
 }
 
+function phaseRecorder() {
+  const began = process.hrtime.bigint();
+  const events = [];
+  return {
+    events,
+    mark(phase) {
+      // Await boundaries only: bounded diagnostics, no per-frame output.
+      if (events.length < 64)
+        events.push({ phase, elapsedMs: Number(process.hrtime.bigint() - began) / 1e6 });
+    },
+  };
+}
+
+async function preparedPage(t, source, mark) {
+  // Model the browser's synchronous dialog lifecycle, without changing the
+  // real confirmed Restart handler, preparation, focus or run ownership.
+  const showModal = SoloElement.prototype.showModal;
+  t.mock.method(SoloElement.prototype, 'showModal', function () {
+    if (this.open) return;
+    this.emit('beforetoggle', { oldState: 'closed', newState: 'open', bubbles: false });
+    showModal.call(this);
+  });
+  const pad = gamepad();
+  mark('fixture:open');
+  const page = await soloPage(t, {
+    campaign,
+    readPads: () => (source === 'gamepad' ? [pad] : []),
+  });
+  mark('fixture:class');
+  page.change('class-select', 'bomber');
+  await settle(() => page.rendered.run.classId === 'bomber' && !page.$('start-button').disabled);
+  const setControls = controls(page, source, pad);
+  if (source === 'gamepad') {
+    // Solo auto-joins a neutral controller. A face-button press here would
+    // already Confirm Start, so retain one ordinary public Start action.
+    page.frame(0);
+  }
+  await start(page, mark);
+  return { page, setControls };
+}
+
 for (const source of ['keyboard', 'gamepad']) {
   test(
     `actual Solo ${source} movement and discrete edges survive simulated display cadence and catch-up`,
     { timeout: 240000 },
     async (t) => {
-      // Model the browser's synchronous dialog lifecycle, without changing the
-      // real confirmed Restart handler, preparation, focus or run ownership.
-      const showModal = SoloElement.prototype.showModal;
-      t.mock.method(SoloElement.prototype, 'showModal', function () {
-        if (this.open) return;
-        this.emit('beforetoggle', { oldState: 'closed', newState: 'open', bubbles: false });
-        showModal.call(this);
-      });
-      const pad = gamepad();
-      const page = await soloPage(t, {
-        campaign,
-        readPads: () => (source === 'gamepad' ? [pad] : []),
-      });
-      page.change('class-select', 'bomber');
-      await settle(
-        () => page.rendered.run.classId === 'bomber' && !page.$('start-button').disabled,
-      );
-      const setControls = controls(page, source, pad);
-      if (source === 'gamepad') {
-        // Solo auto-joins a neutral controller. A face-button press here would
-        // already Confirm Start, so retain one ordinary public Start action.
-        page.frame(0);
-      }
-      await start(page);
+      const phase = phaseRecorder();
+      t.after(() => t.diagnostic(JSON.stringify({ source, phases: phase.events })));
+      const { page, setControls } = await preparedPage(t, source, phase.mark);
       const initial = checkpoint(page.rendered.run);
       let expectedFinal;
       const observations = [];
-      let interruption = null;
       t.after(() =>
         t.diagnostic(
           JSON.stringify({
@@ -194,12 +220,11 @@ for (const source of ['keyboard', 'gamepad']) {
             scope: 'simulated cadence correctness only',
             plannedSchedules: schedules.map((schedule) => schedule.name),
             observations,
-            interruption,
           }),
         ),
       );
       for (const [index, schedule] of schedules.entries()) {
-        if (index) await restart(page, setControls);
+        if (index) await restart(page, setControls, phase.mark);
         assert.equal(
           checkpoint(page.rendered.run),
           initial,
@@ -240,7 +265,9 @@ for (const source of ['keyboard', 'gamepad']) {
           expectedFinal,
           'Every schedule uses the same declared core commands.',
         );
+        phase.mark('pause:save');
         await activateHostAction(page.$('pause-button'));
+        phase.mark('pause:saved');
         const replay = savedReplay(page);
         assert.equal(replay.checkpoint.hash, expectedFinal);
         const behavior = recordedBehavior(replay);
@@ -272,10 +299,35 @@ for (const source of ['keyboard', 'gamepad']) {
           ...behavior,
         });
       }
-
+      assert.equal(
+        page.errors.length,
+        0,
+        page.errors
+          .slice(0, 8)
+          .map((error) => String(error).slice(0, 500))
+          .join('\n'),
+      );
+    },
+  );
+  test(
+    `actual Solo ${source} interruption discards stale discrete input and resumes with a fresh edge`,
+    { timeout: 240000 },
+    async (t) => {
+      const phase = phaseRecorder();
+      let interruption = null;
+      t.after(() =>
+        t.diagnostic(
+          JSON.stringify({
+            source,
+            scope: 'independent simulated interruption correctness only',
+            phases: phase.events,
+            interruption,
+          }),
+        ),
+      );
+      const { page, setControls } = await preparedPage(t, source, phase.mark);
       // The >250ms path must discard unconsumed discrete gestures, not turn
       // hidden elapsed time or a stale edge into new gameplay after Resume.
-      await restart(page, setControls);
       second(
         page,
         schedules.find((schedule) => schedule.name === '60Hz'),
@@ -288,7 +340,7 @@ for (const source of ['keyboard', 'gamepad']) {
       page.frame(10000);
       assert.equal(checkpoint(page.rendered.run), checkpoint(reference));
       setControls();
-      await start(page);
+      await start(page, phase.mark);
       page.frame(250);
       for (let tick = 0; tick < 30; tick++) stepRun(reference, {}, FIXED_DT);
       assert.equal(checkpoint(page.rendered.run), checkpoint(reference));
@@ -300,7 +352,9 @@ for (const source of ['keyboard', 'gamepad']) {
       page.frame(250);
       for (let tick = 0; tick < 30; tick++) stepRun(reference, {}, FIXED_DT);
       assert.equal(checkpoint(page.rendered.run), checkpoint(reference));
+      phase.mark('pause:save');
       await activateHostAction(page.$('pause-button'));
+      phase.mark('pause:saved');
       const replay = savedReplay(page);
       const behavior = recordedBehavior(replay);
       assert.deepEqual(behavior.edges, { action: [151], pickup: [151] });
