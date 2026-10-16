@@ -1,4 +1,4 @@
-name: Temporary Solo bounded canonical verification
+name: Temporary Solo combined scoped regression
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -28,12 +28,39 @@ jobs:
       max-parallel: 2
       matrix:
         include:
+          - label: touch-red
+            case: solo-touch-latency-host
+            source: 48f72933fa91c355f7d7ecbf3bc3a0f1cfd9023f
+          - label: touch-green
+            case: solo-touch-latency-host
+            source: f7b665906270f26c73f7e419a7258191532e3118
+          - label: candidate
+            case: solo-cadence-input-host
+            source: 02ee15b022e863baf9668b115f85b4020569a9f3
+          - label: candidate
+            case: solo-dense-replay-persistence
+            source: bb74b1eefa20120304f22468c924aa2955a717b3
+          - label: candidate
+            case: solo-pending-verification-gameplay-host
+            source: bb74b1eefa20120304f22468c924aa2955a717b3
           - label: candidate
             case: presentation-team-runtime
-            source: 050d8ea3248edb4176e7b59fbc855a7dcf821ffb
-          - label: candidate
-            case: selection-bookmark-host
-            source: 050d8ea3248edb4176e7b59fbc855a7dcf821ffb
+            source: a8af8fdc3a94d7f4c6ddb195531b8863c9dfb99c
+          - label: baseline
+            case: content-team-recovery-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: coop-terminal-player-hud
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: mission-library-solo-lifecycle-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: operation-focus-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: coop-startup-selection
+            source: b11745223861c3973ad4bf440cc536198b8e0371
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
@@ -142,7 +169,7 @@ jobs:
                      'dependencyHashes': {name: digest((root / name).read_bytes()) for name in [
                          'package.json', 'package-lock.json', 'authoring/fpv-worlds/package.json',
                          'authoring/fpv-worlds/package-lock.json']},
-                     'resourceBoundary': manifest['resourceBoundary'],
+                     'resourceBoundary': {**manifest['resourceBoundary'], **entry.get('resourceBoundary', {})},
                      'scope': 'Historical target source and diagnostic workflow source are separate authorities. Resource exhaustion is incomplete evidence.'}
           (out / 'manifest.json').write_bytes(raw)
           (out / 'selection.json').write_text(json.dumps(receipt, indent=2) + '\n')
@@ -181,9 +208,16 @@ jobs:
           digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
           head = lambda: subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
           started = now()
+          bounds = selection['resourceBoundary']
+          minimum_available = bounds['minimumAvailableBytes']
+          maximum_rss = bounds['maximumOwnedGroupRSSBytes']
+          maximum_wall = bounds['maximumWallSeconds']
+          assert minimum_available == 512 * 1024**2
+          assert 0 < maximum_rss <= 12 * 1024**3
+          assert 0 < maximum_wall <= 145 * 60
           deadline_path = base / 'batch-deadline.json'
           if not deadline_path.exists():
-              deadline_path.write_text(json.dumps({'deadlineUnix': time.time() + 145 * 60}) + '\n')
+              deadline_path.write_text(json.dumps({'deadlineUnix': time.time() + maximum_wall}) + '\n')
           deadline = json.loads(deadline_path.read_text())['deadlineUnix']
           def resources():
               values = {}
@@ -257,9 +291,9 @@ jobs:
                   stamp = time.monotonic()
                   samples, peak = [], 0
                   with log.open('xb') as stream:
-                      if row['resourcesBefore']['MemAvailableBytes'] < 512 * 1024**2:
+                      if row['resourcesBefore']['MemAvailableBytes'] < minimum_available:
                           row['resourceExhausted'] = {'kind': 'admission', 'sample': row['resourcesBefore'],
-                              'minimumAvailableBytes': 512 * 1024**2,
+                              'minimumAvailableBytes': minimum_available,
                               'scope': 'No child started because host memory was already below the resource boundary; incomplete evidence.'}
                           code = None
                       else:
@@ -272,8 +306,8 @@ jobs:
                                   observed.update({'at': now(), 'groupRSSBytes': group_rss(child.pid)})
                                   peak = max(peak, observed['groupRSSBytes'])
                                   samples.append(observed)
-                                  if observed['MemAvailableBytes'] < 512 * 1024**2 or observed['groupRSSBytes'] > 12 * 1024**3:
-                                      row['resourceExhausted'] = {'sample': observed, 'minimumAvailableBytes': 512 * 1024**2, 'maximumOwnedGroupRSSBytes': 12 * 1024**3, 'scope': 'Infrastructure capacity bound, not an assertion or test-deadline change; this file remains incomplete.'}
+                                  if observed['MemAvailableBytes'] < minimum_available or observed['groupRSSBytes'] > maximum_rss:
+                                      row['resourceExhausted'] = {'sample': observed, 'minimumAvailableBytes': minimum_available, 'maximumOwnedGroupRSSBytes': maximum_rss, 'scope': 'Infrastructure capacity bound, not an assertion or test-deadline change; this file remains incomplete.'}
                                       print(json.dumps({'resourceExhausted': name, 'boundary': row['resourceExhausted']}), flush=True)
                                       stop_child(signal.SIGTERM)
                                       try: code = child.wait(timeout=5)
