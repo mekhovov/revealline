@@ -346,13 +346,52 @@ export function mountFlightTuning({
   setupName.maxLength = 120;
   const assignment = select(t('Rates used by this drone', 'Рейти для цього дрона'), [], setupPanel);
   const tilt = field(t('Camera tilt (degrees)', 'Нахил камери (градуси)'), 'number', setupPanel);
-  Object.assign(tilt, { min: '0', max: '60', step: '1' });
+  Object.assign(tilt, { min: '0', max: '60', step: 'any' });
   const fov = field(
     t('Vertical FOV (degrees)', 'Вертикальне поле зору (градуси)'),
     'number',
     setupPanel,
   );
-  Object.assign(fov, { min: '40', max: '140', step: '1' });
+  Object.assign(fov, { min: '40', max: '140', step: 'any' });
+  function cameraValue(node, commit = true) {
+    const value = node.value.trim() ? Number(node.value) : Number.NaN,
+      min = Number(node.min),
+      max = Number(node.max);
+    if (!Number.isFinite(value) || value < min || value > max) {
+      const label = node.getAttribute('aria-label'),
+        message = t(
+          `${label}: enter a value from ${min} to ${max}.`,
+          `${label}: введіть значення від ${min} до ${max}.`,
+        );
+      node.setAttribute('aria-invalid', 'true');
+      node.setCustomValidity?.(message);
+      if (commit) {
+        const failure = new Error(message);
+        report(failure);
+        numericFailure = status.textContent;
+        throw failure;
+      }
+      return null;
+    }
+    node.removeAttribute('aria-invalid');
+    node.setCustomValidity?.('');
+    // Camera values are continuous degrees, including migrated fractions.
+    // Preserve text while typing; canonicalize only a committed valid value.
+    if (commit) node.value = String(value);
+    if (numericFailure && status.textContent === numericFailure) status.textContent = '';
+    numericFailure = null;
+    return value;
+  }
+  for (const node of [tilt, fov]) {
+    listen(node, 'input', () => cameraValue(node, false));
+    listen(node, 'change', () => {
+      try {
+        cameraValue(node);
+      } catch {
+        // cameraValue reports the error while retaining the editable text.
+      }
+    });
+  }
   el(
     'p',
     t(
@@ -865,6 +904,7 @@ export function mountFlightTuning({
     t('Test draft · unscored', 'Перевірити чернетку · без заліку'),
     () => {
       commitNumericInputs();
+      const setup = readSetup();
       remember();
       testing = true;
       draftFlightActive = true;
@@ -872,7 +912,7 @@ export function mountFlightTuning({
       const configuration = {
         ...store.effective(),
         response: clone(draft),
-        camera: readSetup().camera,
+        camera: setup.camera,
       };
       delete configuration.simulationIdentity;
       close();
@@ -905,12 +945,13 @@ export function mountFlightTuning({
       t('Advanced reference quad · experimental', 'Еталонний дрон Advanced · експериментальний'),
       () => {
         portable();
+        const setup = readSetup();
         remember();
         close();
         return onAdvanced({
           ...store.effective(),
           response: clone(draft),
-          camera: readSetup().camera,
+          camera: setup.camera,
         });
       },
       actions,
@@ -947,11 +988,12 @@ export function mountFlightTuning({
         baseRevision: editRevision,
       });
     if (library) {
-      const setup = readSetup();
-      setupDrafts.set(setup.id, {
-        name: setup.name,
-        profileId: setup.profileId,
-        camera: clone(setup.camera),
+      setupDrafts.set(library.selectedSetupId, {
+        name: setupName.value,
+        profileId: assignment.value || null,
+        // A draft may be incomplete. Keep its text rather than coercing an
+        // empty camera field to zero or discarding it during navigation.
+        cameraText: { tilt: tilt.value, verticalFov: fov.value },
         baseRevision: editRevision,
       });
     }
@@ -1004,9 +1046,10 @@ export function mountFlightTuning({
       String(saved.history.at(-1)?.revision ?? ''),
     );
     setupName.value = pendingSetup?.name ?? setup.name;
-    camera = clone(pendingSetup?.camera ?? setup.camera);
+    camera = clone(pendingSetup?.cameraText ?? setup.camera);
     tilt.value = String(camera.tilt);
     fov.value = String(camera.verticalFov);
+    for (const node of [tilt, fov]) cameraValue(node, false);
     paintAssignment(pendingSetup ? pendingSetup.profileId : setup.profileId);
     paintFields();
     const error = store.status().error;
@@ -1038,7 +1081,7 @@ export function mountFlightTuning({
       id: library.selectedSetupId,
       name: setupName.value,
       profileId: assignment.value || null,
-      camera: { tilt: Number(tilt.value), verticalFov: Number(fov.value) },
+      camera: { tilt: cameraValue(tilt), verticalFov: cameraValue(fov) },
     };
   }
   function acceptOwnSave(previousRevision) {

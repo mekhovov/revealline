@@ -185,6 +185,58 @@ test('radio timestamps are consumed once; late samples and stale sequences are e
   }
 });
 
+test('replay binds exact consumed substeps while preserving late and queued input at every frequency', async () => {
+  for (const frequency of [250, 500, 1000, 2000]) {
+    const sim = createAdvancedSimulation({ frequency, numericalReference: frequency === 2000 });
+    try {
+      sim.enqueueInput({ sequence: 0, timestampUs: 0, controls: controls(0.1) });
+      // Only the newest of two samples available at the same substep is consumed.
+      sim.enqueueInput({ sequence: 1, timestampUs: 8000, controls: controls(0.2) });
+      sim.enqueueInput({ sequence: 2, timestampUs: 8000, controls: controls(0.3) });
+      // A timestamp between substeps must wait for the following substep.
+      sim.enqueueInput({ sequence: 3, timestampUs: 12001, controls: controls(0.4) });
+      sim.stepMission();
+      // This sample arrives at 20 ms, with an older (but monotonic) timestamp.
+      sim.enqueueInput({ sequence: 4, timestampUs: 14000, controls: controls(0.5) });
+      sim.stepMission();
+      sim.enqueueInput({ sequence: 5, timestampUs: 40000, controls: controls(0.5) });
+      for (let mission = 2; mission < 51; mission++) sim.stepMission();
+      const record = sim.recording();
+      assert.deepEqual(
+        record.inputs.map((event) => event.slice(0, 3)),
+        [
+          [0, 0, 0],
+          [frequency * 0.008, 2, 8000],
+          [Math.ceil(frequency * 0.012001), 3, 12001],
+          [frequency / 50, 4, 14000],
+          [frequency / 25, 5, 40000],
+        ],
+      );
+      assert.equal(record.inputs.at(-1).length, 3, 'unchanged controls retain their input event');
+      const replay = await replayAdvancedRecording(record);
+      assert.deepEqual(replay.snapshot.recording.inputs, record.inputs);
+      assert.deepEqual(replay.telemetry, sim.telemetry());
+      const partial = await replayAdvancedRecording(record, { throughMission: 1 });
+      assert.equal(partial.verificationScope, 'prefix');
+      assert.deepEqual(partial.snapshot.recording.inputs, record.inputs.slice(0, 3));
+      for (const inputIndex of [0, 3, 4]) {
+        const moved = structuredClone(record);
+        moved.inputs[inputIndex][0]++;
+        await assert.rejects(replayAdvancedRecording(moved), /input consumption time/);
+        await assert.rejects(
+          replayAdvancedRecording(moved, { throughMission: 1 }),
+          /input consumption time/,
+        );
+      }
+      const future = structuredClone(record);
+      future.inputs[0][2] = 1;
+      await assert.rejects(replayAdvancedRecording(future), /input consumption time/);
+    } finally {
+      sim.dispose();
+    }
+  }
+});
+
 test('CCD prevents a reference quad crossing a 2 cm wall at 40 m/s at all candidate frequencies', () => {
   for (const frequency of [250, 500, 1000]) {
     const sim = createAdvancedSimulation({

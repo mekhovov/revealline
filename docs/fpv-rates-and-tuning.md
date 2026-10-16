@@ -52,6 +52,12 @@ Choose **Player default** to inherit the current default, or assign a complete n
 
 Camera tilt is measured in degrees. **Vertical FOV** is the vertical field of view in degrees, not horizontal or diagonal FOV. Camera settings are saved with the drone and excluded from portable rate files. Existing camera values are preserved during migration.
 
+Camera tilt accepts 0–60° and vertical FOV accepts 40–140°, including fractional
+degrees. Incomplete or out-of-range entries stay editable, including when you
+switch profiles or reopen tuning. Correct them before saving the setup,
+duplicating the drone or starting a draft flight. Rate-only exports do not use
+camera settings and remain available while a camera edit is unfinished.
+
 Unsaved drone names, assignments and camera settings remain with their drone setup when you switch rate profiles, switch setups or close and reopen tuning. **Save drone assignment & camera** saves the selected setup independently. **Revert draft** restores the selected profile and setup; **Refresh library** discards all retained drafts before loading saved settings. Unsaved drafts survive within the open SIM session, not a browser reload.
 
 The resolved flight configuration carries a fingerprint of its response settings and any saved Advanced aircraft/controller tuning. Names, profile/setup IDs, aircraft labels and camera settings do not affect that fingerprint. The simulation's recording identity also includes its backend, timing, world and rules; the configuration fingerprint alone does not establish replay compatibility or comparison eligibility.

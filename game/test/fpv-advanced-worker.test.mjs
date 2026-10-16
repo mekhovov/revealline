@@ -154,6 +154,7 @@ test('worker recovery verifies consumed dynamics before atomic adoption and pres
     });
     const original = (await request('snapshot')).result;
     for (const mutate of [
+      (saved) => (saved.recording.inputs[0][0] = 1),
       (saved) => (saved.state.motorSpeeds[0] += 0.01),
       (saved) => (saved.controller.state.integral.roll += 0.001),
       (saved) => {
@@ -168,7 +169,7 @@ test('worker recovery verifies consumed dynamics before atomic adoption and pres
       mutate(changed);
       assert.match(
         (await request('restore', { snapshot: changed })).error,
-        /replay verification|recovery dynamics/,
+        /input consumption time|replay verification|recovery dynamics/,
       );
       assert.deepEqual((await request('snapshot')).result, original);
     }

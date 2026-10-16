@@ -30,7 +30,25 @@ node scripts/game-cli.mjs build --out NEW_SITE --publication-profile main-pages
 node scripts/smoke-fpv-pages.mjs NEW_SITE PLAYWRIGHT_MODULE REPORT.json
 ```
 
-The [current second-review check](fpv-pages-second-review-live-testing-evidence.json)
+The [current third-review check](fpv-pages-third-review-live-testing-evidence.json)
+passes against the normal production build at
+`/private/tmp/fpv-rates-third-review-20261016-pages`, version `0.151.1`, after the
+rebase onto `20768f599` and the camera/replay validation fixes. Academy and World
+pass online and in isolated offline contexts, including saved rates, keyboard
+installer activation, Advanced start/restart/export and worker disposal.
+All 3,432 manifest entries and the archive checksum verify; both changed runtime
+modules match the checkout byte-for-byte. Generated/served bytes and the test
+runner remain unchanged during the check.
+
+The publication contains 3,434 files / 963,638,027 bytes. Its conservative archive
+forecast is 972,258,816 bytes, leaving 7,741,184 bytes below the unchanged cap.
+The distribution ZIP digest is
+`d775830b75a1376dec66d73f4be36566caae09f41c1958a916461ff4f83d4ba7`.
+This is a local working-tree build (`sourceRevision: null`), ready for the normal
+reviewed main publication process. Public HTTPS, the real password form and
+existing-install updates remain separate checks; no deployment was performed.
+
+The [historical second-review check](fpv-pages-second-review-live-testing-evidence.json)
 passes against the unmodified normal production build at
 `/private/tmp/fpv-rates-second-review-20261016-pages`, version `0.151.1`. Academy
 and World both pass online and in isolated offline contexts, including saved
@@ -45,6 +63,9 @@ The distribution ZIP digest is
 The local working-tree build has `sourceRevision: null`; exact committed CI
 publication, public HTTPS, the real password form and existing-install updates
 remain separate checks. No Pages deployment was performed.
+Its superseded temporary output was removed only after verifying its recorded
+manifest and archive digests, to make room for the third-review build. The
+repository evidence remains unchanged.
 
 The [first continuation check](fpv-pages-continuation-live-testing-evidence.json)
 used a successful, unmodified normal CLI build at
@@ -178,6 +199,11 @@ and publication process below.
    Check EN/UK, keyboard/touch and export cancellation. Physical-radio and pilot
    checks are deferred until those resources are available. Report device/browser
    details and the displayed/source build when filing problems.
+10. Clear camera tilt or enter an out-of-range FOV: saving, drone duplication and
+    starting practice must keep the editor open and request a valid value. Switch
+    profiles and reopen tuning to confirm the unfinished text survives. Correct
+    the values to fractional degrees and verify save/test/reload preserves them.
+    Rate-only exports should remain available during an unfinished camera edit.
 
 Physical flight fidelity, the device performance matrix, public HTTPS behavior,
 real radio sampling and scored competition eligibility are not established by
