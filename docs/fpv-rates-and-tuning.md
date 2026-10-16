@@ -44,6 +44,11 @@ in the background does not replace another source's readings.
 
 Radio endpoint calibration and device dead zones remain in the radio setup. Betaflight import does not import receiver calibration, RC smoothing or extra deadband stages. Self-level maximum tilt and the existing airframe's response time remain separate from portable rates.
 
+In Academy and World, importing a radio calibration or calibration library leaves
+your Rates & throttle profiles and current attempt unchanged. Any legacy flight
+response included in that file is validated but not applied, and the import
+message explains this. Use the Rates & throttle editor to transfer flight feel.
+
 ## Drone setups and camera
 
 A saved drone setup has its own name, stable identity, rate-profile assignment and camera settings. It is independent of a visual skin. Duplicate a drone setup when you want another saved combination.
@@ -59,6 +64,10 @@ duplicating the drone or starting a draft flight. Rate-only exports do not use
 camera settings and remain available while a camera edit is unfinished.
 
 Unsaved drone names, assignments and camera settings remain with their drone setup when you switch rate profiles, switch setups or close and reopen tuning. **Save drone assignment & camera** saves the selected setup independently. **Revert draft** restores the selected profile and setup; **Refresh library** discards all retained drafts before loading saved settings. Unsaved drafts survive within the open SIM session, not a browser reload.
+
+If a setup switch fails because storage is full or another tab saved newer data,
+the selector returns to the current drone and retains your edits. Correct the
+storage problem or refresh the library before retrying.
 
 The resolved flight configuration carries a fingerprint of its response settings and any saved Advanced aircraft/controller tuning. Names, profile/setup IDs, aircraft labels and camera settings do not affect that fingerprint. The simulation's recording identity also includes its backend, timing, world and rules; the configuration fingerprint alone does not establish replay compatibility or comparison eligibility.
 
@@ -95,6 +104,12 @@ The importer rejects a throttle patch when its source curve model differs from t
 ## Local preset bundles
 
 Upload a local preset folder and choose its entry file. **Resolve preset and review options** shows the dependencies, descriptions, warnings and available choices. After changing choices, resolve again before previewing the patch against its baseline.
+
+Changing an option or entry invalidates the prior result; **Preview import** and
+**Save import as new profile** cannot apply the old generated text. Switching
+entry files clears the previous file's option choices. Pasting new CLI text
+deliberately replaces the preset input. **Save for next flight** still saves the
+visible rate draft as an ordinary profile revision.
 
 Includes may be relative to the including file or rooted at the bundle's `presets/` directory. Includes are processed in order, and repeated includes remain meaningful. Missing files, cycles, paths outside the bundle and unsupported nesting reject the resolution. The resolver never fetches dependencies from a network location.
 
