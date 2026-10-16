@@ -46,7 +46,22 @@ test('Workshop destinations ship their actual authoring runtime and return paths
   );
   assert.match(motion, /href="\.\.\/\.\.\/game\/"/);
   assert.match(motion, /data-motion-text-size/);
-  assert.match(motion, /<script type="module" src="\.\/display-entry\.mjs"><\/script>/);
+  const displayEntries = [...motion.matchAll(/<script\b([^>]*)>/g)]
+    .map((match) =>
+      Object.fromEntries(
+        [...match[1].matchAll(/([^\s=]+)\s*=\s*"([^"]*)"/g)].map((entry) => [entry[1], entry[2]]),
+      ),
+    )
+    .filter((entry) => entry.src === './display-entry.mjs');
+  assert.equal(displayEntries.length, 1, 'The actual display entry is included exactly once.');
+  const displayEntry = displayEntries[0];
+  assert.equal(
+    displayEntry.type === 'application/x-revealline-locked'
+      ? displayEntry['data-access-type']
+      : displayEntry.type,
+    'module',
+    'The public access gate preserves the display entry module type.',
+  );
   // Shared preferences own this control, including startup failure. The generic
   // body-only adapter must not install a second, independent change listener.
   assert.doesNotMatch(motion, /data-field-kit-text-size/);
