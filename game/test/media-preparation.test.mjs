@@ -53,6 +53,9 @@ test('published cue buffers stay bounded without stopping an already playing voi
   });
   t.after(() => cues.close());
   await cues.prepare(['focus']);
+  const bufferBytes = 15 * h.context.sampleRate * 2 * 4;
+  assert.equal(cues.resourceSnapshot().decodedBytes, bufferBytes);
+  assert.equal(cues.resourceSnapshot().decodedBytesLimit, 32 * 1024 * 1024);
   assert.equal(cues.play('focus', { ui: true }), true);
   const playing = h.sources.at(-1),
     firstBuffer = playing.buffer;
@@ -64,12 +67,82 @@ test('published cue buffers stay bounded without stopping an already playing voi
   assert.equal(cues.has('focus'), false, 'Old cache entry is evicted at the total PCM budget.');
   assert.equal(cues.has('confirm'), true);
   assert.equal(cues.has('cancel'), true);
+  assert.equal(cues.resourceSnapshot().decodedBytes, bufferBytes * 2);
+  assert.equal(cues.resourceSnapshot().cacheEntries, 2);
+  assert.equal(cues.resourceSnapshot().loading, 0);
   assert.equal(
     playing.buffer,
     firstBuffer,
     'Playback owns its reference independently of the cache.',
   );
   assert.equal(stopped, false);
+  cues.close();
+  assert.equal(cues.resourceSnapshot().decodedBytes, 0);
+  assert.equal(cues.resourceSnapshot().cacheEntries, 0);
+});
+
+test('PCM snapshots read owned counters without initializing audio or accessing sample data', async (t) => {
+  const h = audioHarness();
+  t.after(() => h.soundscape.dispose());
+  h.soundscape.contextFactory = () => assert.fail('Diagnostics must not initialize audio.');
+  h.soundscape.setPublishedAudio(() => assert.fail('Diagnostics must not fetch cues.'));
+  const reactions = createReactionVoiceCache({
+    sound: h.soundscape,
+    library: { resolve: () => assert.fail('Diagnostics must not fetch speech.') },
+  });
+  t.after(() => reactions.dispose());
+  const admission = h.soundscape.mediaPreparation.snapshot();
+  const empty = h.soundscape.resourceSnapshot();
+  assert.equal(empty.effects.decodedBytes, 0);
+  assert.equal(empty.published.decodedBytes, 0);
+  assert.equal(empty.proceduralNoise.decodedBytes, 0);
+  assert.equal(reactions.snapshot().decodedBytes, 0);
+  assert.equal(reactions.snapshot().decodedBytesLimit, 12 * 1024 * 1024);
+  assert.equal(reactions.snapshot().perDecodeBytesLimit, 6 * 1024 * 1024);
+  assert.equal(reactions.snapshot().buffersLimit, 24);
+  h.soundscape.noise = {
+    length: 2000,
+    numberOfChannels: 1,
+    getChannelData: () => assert.fail('Diagnostics must not read or copy sample data.'),
+  };
+  assert.equal(h.soundscape.resourceSnapshot().proceduralNoise.decodedBytes, 8000);
+  assert.equal(h.soundscape.context, null);
+  assert.deepEqual(h.soundscape.mediaPreparation.snapshot(), admission);
+  await h.soundscape.dispose();
+  assert.equal(h.soundscape.resourceSnapshot().proceduralNoise.decodedBytes, 0);
+  assert.equal(h.soundscape.resourceSnapshot().published, null);
+});
+
+test('effect PCM counters follow decoded retention, eviction and disposal', async (t) => {
+  const h = audioHarness();
+  t.after(() => h.soundscape.dispose());
+  await h.soundscape.enable();
+  t.mock.method(globalThis, 'fetch', async (url) => {
+    const entry = Object.values(EFFECT_BANK).find((value) => String(url).endsWith(value.file));
+    return { ok: true, arrayBuffer: async () => new ArrayBuffer(entry.bytes) };
+  });
+  const size = 12 * 1024 * 1024;
+  h.context.decodeAudioData = async () => ({
+    duration: 1,
+    length: size / 8,
+    numberOfChannels: 2,
+  });
+  const director = h.soundscape.feedbackDirector;
+  await director.load('focus');
+  assert.equal(h.soundscape.resourceSnapshot().effects.decodedBytes, size);
+  await director.load('confirm');
+  await director.load('cancel');
+  assert.equal(director.buffers.has('focus'), false);
+  assert.deepEqual(director.resourceSnapshot(), {
+    decodedBytes: size * 2,
+    decodedBytesLimit: 32 * 1024 * 1024,
+    buffers: 2,
+    loading: 0,
+  });
+  assert.equal(h.soundscape.mediaPreparation.snapshot().reservedDecodeBytes, 0);
+  director.close();
+  assert.equal(director.resourceSnapshot().decodedBytes, 0);
+  assert.equal(director.resourceSnapshot().buffers, 0);
 });
 
 test('PCM reservations use actual sample rate without rejecting ordinary WAVs on high-rate devices', async (t) => {
@@ -343,6 +416,14 @@ test('effects and reactions share one native decoder; active play rejects bulk w
   assert.equal(decodes.length, 1);
   decodes.shift()(buffer);
   await Promise.all([effect, reaction]);
+  assert.equal(reactions.snapshot().decodedBytes, 32000);
+  assert.equal(reactions.snapshot().buffers, 1);
+  assert.equal(reactions.snapshot().loading, 0);
+  assert.equal(h.soundscape.resourceSnapshot().effects.decodedBytes, 32000);
+  assert.equal(h.soundscape.mediaPreparation.snapshot().reservedDecodeBytes, 0);
+  await reactions.cancel({ clear: true });
+  assert.equal(reactions.snapshot().decodedBytes, 0);
+  assert.equal(reactions.snapshot().buffers, 0);
   h.soundscape.setPreparationPhase('playing');
   const director = new FeedbackDirector(h.soundscape);
   t.after(() => director.close());

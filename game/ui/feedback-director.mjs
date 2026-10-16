@@ -189,6 +189,14 @@ export class FeedbackDirector {
     this.pending.set(name, promise);
     return promise;
   }
+  resourceSnapshot() {
+    return {
+      decodedBytes: this.decodedBytes,
+      decodedBytesLimit: EFFECT_CACHE_BYTES,
+      buffers: this.buffers.size,
+      loading: this.pending.size,
+    };
+  }
   play(
     name,
     {

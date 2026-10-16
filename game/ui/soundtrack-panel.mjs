@@ -170,6 +170,14 @@ export function attachSoundtrackPanel({
     controller = null,
     saved = null,
     preparedBackup = null;
+  const publicationLifetime = new AbortController();
+  const publish = (
+    work,
+    { signal = publicationLifetime.signal, eligible = () => !disposed } = {},
+  ) =>
+    onlineCatalogueDownload.preparation
+      ? onlineCatalogueDownload.preparation.run('main', work, { signal, eligible })
+      : Promise.resolve(work());
   let draftPublicStyles;
   let draft = adopt(emptySoundtrackLibrary()),
     assets = [],
@@ -2198,11 +2206,13 @@ export function attachSoundtrackPanel({
                 .snapshot()
                 .sources.map(({ url, enabled }) => ({ url, enabled })),
             };
-        if (disposed) return null;
-        sourcePreferences = value;
-        sourceManager.setSources(value.sources);
-        renderSources();
-        return value;
+        return await publish(() => {
+          if (disposed) return null;
+          sourcePreferences = value;
+          sourceManager.setSources(value.sources);
+          if (!onlineCatalogueDownload.preparation) renderSources();
+          return value;
+        });
       } catch (error) {
         if (!disposed) showSourceError(error);
         return null;
@@ -2223,12 +2233,15 @@ export function attachSoundtrackPanel({
       if (!previous || !sourceStore) throw new Error(t('interface:musicSourceStorageUnavailable'));
       const committed = await sourceStore.commit(next, { expectedGeneration: previous.generation });
       if (disposed) return false;
-      sourcePreferences = committed;
-      sourceManager.setSources(committed.sources);
-      localizedText(sourceStatus, () => t('interface:musicSourcesSaved'));
-      sourceSaving = false;
-      ownsSave = false;
-      renderSources();
+      await publish(() => {
+        sourcePreferences = committed;
+        sourceManager.setSources(committed.sources);
+        localizedText(sourceStatus, () => t('interface:musicSourcesSaved'));
+        sourceSaving = false;
+        ownsSave = false;
+        renderSources();
+      });
+      if (disposed) return false;
       await loadOnlineCatalogue(true);
       return true;
     } catch (error) {
@@ -2440,7 +2453,9 @@ export function attachSoundtrackPanel({
         throwIfSoundtrackAborted(current.signal);
         const snapshot = await sourceManager.refresh({ signal: current.signal });
         if (disposed || generation !== onlineCatalogueGeneration) return null;
-        receiveSources(snapshot);
+        // Admitted source publication already updated the subscribed view. Do
+        // not rebuild the same catalogue again after an asynchronous boundary.
+        if (!onlineCatalogueDownload.preparation) receiveSources(snapshot);
         if (!onlineCatalogue) {
           const error = snapshot.sources.find((source) => source.enabled && source.error)?.error;
           throw new Error(error || t('interface:thePublicSoundtrackCatalogueIsUnavailable'));
@@ -3213,17 +3228,19 @@ export function attachSoundtrackPanel({
     if (settingsLibraryPromise) return settingsLibraryPromise;
     settingsLibraryPromise = store
       .read()
-      .then((value) => {
-        if (disposed) return null;
-        saved = value;
-        draft = adopt(value.library);
-        draftPublicStyles = undefined;
-        assets = [...value.assets];
-        dirty = false;
-        render();
-        renderSettingsStyleStatus();
-        return value;
-      })
+      .then((value) =>
+        publish(() => {
+          if (disposed) return null;
+          saved = value;
+          draft = adopt(value.library);
+          draftPublicStyles = undefined;
+          assets = [...value.assets];
+          dirty = false;
+          render();
+          renderSettingsStyleStatus();
+          return value;
+        }),
+      )
       .catch((error) => {
         if (!disposed) {
           onError(error);
@@ -3888,6 +3905,7 @@ export function attachSoundtrackPanel({
     onlineCatalogueController = null;
     onlineCatalogueGeneration++;
     disposed = true;
+    publicationLifetime.abort();
     if (ownsSourceManager) sourceManager.dispose();
     if (ownsSourceStore) sourceStore?.close();
     feedback.dispose();

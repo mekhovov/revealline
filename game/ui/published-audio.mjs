@@ -124,6 +124,13 @@ export function createPublishedCues({ sound, readAudio }) {
     return promise;
   }
   return Object.freeze({
+    resourceSnapshot: () => ({
+      decodedBytes,
+      decodedBytesLimit: CUE_CACHE_BYTES,
+      // Entries also include unavailable/loading sentinels, not only PCM buffers.
+      cacheEntries: cache.size,
+      loading: loads.size,
+    }),
     has(name) {
       const value = cache.get(name);
       return !!value && value !== 'loading';

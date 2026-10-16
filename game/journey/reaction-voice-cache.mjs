@@ -220,6 +220,9 @@ export function createReactionVoiceCache({
       Object.freeze({
         buffers: buffers.size,
         decodedBytes: bytes,
+        decodedBytesLimit: REACTION_VOICE_LIMITS.decodedBytes,
+        buffersLimit: REACTION_VOICE_LIMITS.buffers,
+        perDecodeBytesLimit: REACTION_VOICE_LIMITS.perDecodeBytes,
         loading: pending.size,
         generation,
         closed,

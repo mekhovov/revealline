@@ -47,7 +47,7 @@ const sourceHashes={
 'game/ui/art/reactions/sentinel-react.svg':
 '34900da2d7a4782f0ee0d0da4eb483dc29724f757bdc73bac50e135422405e6d',
 'game/journey/reaction-voice-cache.mjs':
-'4c04fb38aa55822d3f09a8acfe49a6ae7579ac2a24a14d3c507269f861172de7',
+'dc5b229a4460123e23fce927876c2b3874016ad380cefb60a465eb99132502f5',
 'game/ui/media-preparation.mjs':'70cb3507090962cac6e8e97e86f65f43565f2273e436e31cf2832c2a2e6395c7',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
@@ -4786,6 +4786,9 @@ snapshot:()=>
 Object.freeze({
 buffers:buffers.size,
 decodedBytes:bytes,
+decodedBytesLimit:REACTION_VOICE_LIMITS.decodedBytes,
+buffersLimit:REACTION_VOICE_LIMITS.buffers,
+perDecodeBytesLimit:REACTION_VOICE_LIMITS.perDecodeBytes,
 loading:pending.size,
 generation,
 closed,

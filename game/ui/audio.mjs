@@ -89,6 +89,20 @@ export class Soundscape {
   setPreparationPhase(phase) {
     this.mediaPreparation.setPhase(phase);
   }
+  resourceSnapshot() {
+    // Export-time reads only: never initialize a context or touch PCM sample data.
+    return {
+      effects: this.feedbackDirector.resourceSnapshot(),
+      published: this.publishedAudio?.resourceSnapshot() ?? null,
+      proceduralNoise: {
+        buffers: Number(!!this.noise),
+        decodedBytes: (this.noise?.length ?? 0) * (this.noise?.numberOfChannels ?? 0) * 4,
+        durationLimitSeconds: 0.25,
+      },
+      accounting:
+        'Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.',
+    };
+  }
   prepareGameplayAudio(names) {
     return this.feedbackDirector.prepare(names);
   }
