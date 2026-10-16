@@ -39,7 +39,14 @@ const raw = (spec, height = 0, checkpoint = 0, throttle = 0) => ({
   stickVisible: true,
   stickY: (1 - 2 * throttle) * 30,
   stickRadius: 30,
-  stickModeLabel: spec.locale === 'en' ? 'Flight controls · Mode 2' : 'Органи керування · Mode 2',
+  stickModeLabel:
+    spec.packageId === 'civilian-fpv'
+      ? spec.locale === 'en'
+        ? 'Flight controls · Mode 2'
+        : 'Органи керування · Mode 2'
+      : spec.locale === 'en'
+        ? `Yaw 0%, Throttle ${Math.round(throttle * 100)}%`
+        : `Рискання 0%, Газ ${Math.round(throttle * 100)}%`,
   resultVisible: checkpoint === 2,
   resultHeading:
     spec.packageId === 'civilian-fpv'
@@ -99,9 +106,9 @@ test('all declared locales/modes/packages parse only their native first exercise
           {
             details: spec.locale === 'en' ? 'Height 9 m · 1.2–2.4 m' : 'Висота 9 м · 1,2–2,4 м',
           },
-          ...(packageId === 'civilian-fpv'
-            ? [{ stickVisible: false }, { stickY: -50 }, { stickModeLabel: 'Mode 1' }]
-            : [{ throttleText: null }, { throttleText: '101%' }]),
+          { stickVisible: false },
+          { stickY: -50 },
+          { stickModeLabel: 'Mode 1' },
         ])
           assert.throws(() => parsePublicFPVSnapshot({ ...raw(spec), ...patch }, spec));
         assert.throws(() =>
@@ -114,6 +121,21 @@ test('all declared locales/modes/packages parse only their native first exercise
           ),
         );
       }
+});
+
+test('Worlds keyboard uses visible stick geometry, not its touch-only percentage output', () => {
+  const spec = specFor('fpv-worlds');
+  const value = parsePublicFPVSnapshot(
+    {
+      ...raw(spec),
+      throttleText: null,
+      stickY: -6.8,
+      stickRadius: 34,
+      stickModeLabel: 'Yaw 0%, Throttle 60%',
+    },
+    spec,
+  );
+  assert.equal(value.throttle, 0.6);
 });
 
 test('Recording verified, result heading alone, expired flight and wrong exercise cannot counterfeit completion', () => {
@@ -272,6 +294,7 @@ test('DOM adapter reads maintained visible HUD and visible stick, never hidden l
             '#step-progress',
             '#flight-objective',
             '#flight-instruments',
+            '#world-touch-throttle',
           ].includes(selector),
         );
         return nodes.get(selector) ?? null;
@@ -294,6 +317,23 @@ test('DOM adapter reads maintained visible HUD and visible stick, never hidden l
     assert.equal(value.height, 1.8);
     assert.equal(value.throttle, 0.6);
     assert.match(value.identitySource, /not controller measurements/);
+    nodes.set('#world-viewport', viewport);
+    nodes.set('#world-left-stick > i', dot);
+    nodes.set('#world-left-stick', { ...element(), getAttribute: () => 'Yaw 0%, Throttle 59%' });
+    nodes.set('#result-panel', element('', false));
+    for (const [selector, value] of [
+      ['#flight-mode', 'self-level'],
+      ['#flight-source', 'keyboard'],
+      ['#flight-keyboard-preset', 'two-stick'],
+    ])
+      nodes.set(selector, { ...element(), value });
+    nodes.set('#flight-title', element('Lift and land', false));
+    nodes.set('#flight-dialog', { ...element(), dataset: { flightState: 'active' } });
+    const worlds = parsePublicFPVSnapshot(
+      await readPublicFPVSnapshot(page, 'fpv-worlds'),
+      specFor('fpv-worlds'),
+    );
+    assert.equal(worlds.throttle, (1 + 6 / 34) / 2);
     nodes.set(
       '[data-sim-hud="flight"] [data-hud-part="details"]',
       element('Height 1.8 m · 1.2–2.4 m', false),

@@ -2,14 +2,32 @@
 
 ## Decision boundary and current baseline
 
+**16 October result-action continuation:** one native Academy keyboard
+completion/export/exact-package replay now passes with clean shutdown on the
+guide-inclusive `80a32d6a9` candidate. The shared result-row repair preserves its
+occupied space when cancelling auto-next; 18 EN/UK component pointer/keyboard/
+release-outside cases pass. A new all-three candidate at `90d8443b2` reproduces
+twice and passes admission. Its first eight-case exercise attempt passes all four
+Academy cases (first-pointer Home, actual export and replay) but fails all four
+Worlds cases before any controller sample: the observer expected a touch-only
+percentage hidden during keyboard use. After the observer-only visible-stick
+geometry correction, all eight cases pass on identical package bytes with clean
+shutdown. [Exact evidence and limits](flight-practice-result-qualification-2026-10-16.md)
+retain both attempts; the failed matrix is not relabelled as complete.
+
+**Owner decision, 16 October:** defer real-hardware checks for now and continue
+other work. C9's physical controller/radio/touch cases are **deferred, not passed**;
+this does not waive the publisher's accessibility/review gates. Browser-based
+accessibility checks and actual human reviews remain separately tracked.
+
 **16 October HUD continuation:** [repair and exact evidence](flight-practice-hud-qualification-2026-10-16.md)
 records four genuine EN/UK Academy/Worlds Settings/Accessibility/reload/visible
 stationary-HUD passes on separately reproduced/admitted `6b420b1a2` packages.
 The first FPV exercise probe failed with 844 ground-only readings. Its observer
 correction has model-regression proof; a second probe genuinely completed the
-exercise in 13.353 seconds but failed pointer export and browser cleanup. No
-actual backup/replay exists. The separate keyboard export route remains native-
-unverified. Guides explain the reachable preferences. Browser work needs a safe
+exercise in 13.353 seconds but failed pointer export and browser cleanup. That
+attempt has no backup/replay. Later keyboard and pointer results are recorded
+above, separately. Guides explain the reachable preferences. Browser work needs a safe
 disk margin; historical evidence, human/review gates and hosting
 deferral remain unchanged.
 
