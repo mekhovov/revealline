@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-16T09:10:45.334614+00:00",
+  "updatedAt": "2026-10-16T10:10:34.712431+00:00",
   "status": "Incomplete repository regression inventory. Historical local failure groups are classified; remote continuation includes unresolved failures. No full-suite success claim.",
   "scope": "Separate historical local inventory, mixed-source remote continuation/recovery, added tooling, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures, cancellations and unobserved work remain visible.",
   "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
@@ -2718,7 +2718,7 @@
         "sha256": "925a72daa69647a2802bf76143938122ba845fc6b86c1b311e405540a4209100"
       }
     },
-    "classificationStatus": "Incomplete. Failed complete files remain failures. Exact-baseline receipts are assertion-specific; later assertions after early failure receive no coverage. Canonical fixture retests pending in38877133338 are separate from prior copies or interrupted originals.",
+    "classificationStatus": "Incomplete. Twelve newly retained baseline files reproduce all 28 observed named candidate diagnostics; two further baseline passes required fixture investigation. Soundtrack canonical30/30 is qualified. Selection-bookmark and Team ownership canonical run38879310649 is complete at GitHub, but its artifacts/TAP are not yet retained or credited during the quiet timing window. Other remote failure groups remain unclassified.",
     "boundedIdentityPair": {
       "path": ".cache/solo-followup/regression-audit/remote-memory-38873458942/bounded-identity-classification-final.json",
       "bytes": 24352,
@@ -2733,19 +2733,723 @@
       {
         "runId": 38875817263,
         "workflowSourceRevision": "8258ae0813e4cbb57d8875ec868c386e15e689db",
-        "purpose": "Ten exact original-main full files; first two retained; remainder pending."
+        "retainedFiles": 10,
+        "expectedFiles": 10,
+        "purpose": "Complete artifacts/source/TAP retained; classifications and exact outcomes are recorded in the adjacent proof sections. Failed files remain failures."
       },
       {
         "runId": 38877133338,
         "workflowSourceRevision": "7b29a828339579b3c61edbd7f6991b506d04d5f3",
-        "purpose": "Three canonical fixtures at9768/e025 plus five exact original-main host comparisons; pending retained results."
+        "retainedFiles": 8,
+        "expectedFiles": 8,
+        "purpose": "Complete artifacts/source/TAP retained; classifications and exact outcomes are recorded in the adjacent proof sections. Failed files remain failures."
       },
       {
         "runId": 38877911109,
         "workflowSourceRevision": "9bf8d29ab0e9785ae3bf19af4f0f5a0ed3630696",
-        "purpose": "Original-main image ownership, company PNG fixture and selection-bookmark comparison; pending."
+        "retainedFiles": 3,
+        "expectedFiles": 3,
+        "purpose": "Complete artifacts/source/TAP retained; classifications and exact outcomes are recorded in the adjacent proof sections. Failed files remain failures."
+      },
+      {
+        "runId": 38879310649,
+        "workflowSourceRevision": "e20d329916b06b3c661974ee3ddca53e5516dc17",
+        "sourceRevision": "050d8ea3248edb4176e7b59fbc855a7dcf821ffb",
+        "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+        "retainedFiles": 2,
+        "expectedFiles": 2,
+        "purpose": "Complete artifacts/source/TAP retained; classifications and exact outcomes are recorded in the adjacent proof sections. Failed files remain failures."
       }
     ],
-    "scope": "Unique-file progress across explicitly recorded sources, not an aggregate one-revision suite pass or final device/release acceptance. Historical frozenRuntimeRevision/currentHeadContext fields above belong to the06:33 local snapshot. Later copies/diagnostics are not counted twice. Remote artifacts retained with size,digest,ZIP CRC,source,test andTAP checks; resource-aborted files remain unobserved."
+    "scope": "Unique-file progress across explicitly recorded sources, not an aggregate one-revision suite pass or final device/release acceptance. Historical frozenRuntimeRevision/currentHeadContext fields above belong to the06:33 local snapshot. Later copies/diagnostics are not counted twice. Remote artifacts retained with size,digest,ZIP CRC,source,test andTAP checks; resource-aborted files remain unobserved.",
+    "classificationUpdatedAt": "2026-10-16T10:10:34.712431+00:00",
+    "retainedClassifications": {
+      "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "baselineFiles": 18,
+      "filesWithAllObservedCandidateDiagnosticsReproduced": 16,
+      "matchingNamedDiagnostics": 43,
+      "proofs": [
+        {
+          "path": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json",
+          "bytes": 107311,
+          "sha256": "99a56345ba7acbb11248ad2284fe0d73489b57dc21f318a5b6bfa7a591dc0a83"
+        },
+        {
+          "path": ".cache/solo-followup/regression-audit/remote-canonical-baseline-38877133338/classification-retained-1008.json",
+          "bytes": 54426,
+          "sha256": "0bb4d7c91e31f34c3e5a0ee1a8a3d3ae5336e185199fcc1e4e8f831112346bc1"
+        },
+        {
+          "path": ".cache/solo-followup/regression-audit/remote-ownership-baseline-38877911109/classification-retained-1008.json",
+          "bytes": 28183,
+          "sha256": "3893b98b30ab7cd0f98bfc0b3c0535eb339ff09086fd90fd0c65e6af9cbead5c"
+        }
+      ],
+      "groups": [
+        {
+          "file": "game/test/soundtrack-host.test.mjs",
+          "baselineCounts": {
+            "tests": 27,
+            "suites": 0,
+            "pass": 27,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 214142.414023
+          },
+          "candidateCounts": {
+            "tests": 30,
+            "suites": 0,
+            "pass": 28,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 131880.735031
+          },
+          "matchingNamedDiagnostics": 0,
+          "candidateOnlyNamedDiagnostics": 2,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/presentation-readiness.test.mjs",
+          "baselineCounts": {
+            "tests": 5,
+            "suites": 0,
+            "pass": 4,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 6584.770897
+          },
+          "candidateCounts": {
+            "tests": 5,
+            "suites": 0,
+            "pass": 4,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 6593.509758
+          },
+          "matchingNamedDiagnostics": 1,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/route-choices-chapter.test.mjs",
+          "baselineCounts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 7,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 32185.738322
+          },
+          "candidateCounts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 7,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 57473.88182
+          },
+          "matchingNamedDiagnostics": 1,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/team-equipment-review.test.mjs",
+          "baselineCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 1,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 1023.463954
+          },
+          "candidateCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 1,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 1273.095418
+          },
+          "matchingNamedDiagnostics": 2,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/team-equipment-art.test.mjs",
+          "baselineCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 2,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 1268.05424
+          },
+          "candidateCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 2,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 1048.533585
+          },
+          "matchingNamedDiagnostics": 1,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/content-route-loader.test.mjs",
+          "baselineCounts": {
+            "tests": 88,
+            "suites": 0,
+            "pass": 81,
+            "fail": 7,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 36492.314478
+          },
+          "candidateCounts": {
+            "tests": 88,
+            "suites": 0,
+            "pass": 82,
+            "fail": 6,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 35829.722378
+          },
+          "matchingNamedDiagnostics": 6,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 1,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/journey-mode-navigation.test.mjs",
+          "baselineCounts": {
+            "tests": 14,
+            "suites": 0,
+            "pass": 13,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 78469.497936
+          },
+          "candidateCounts": {
+            "tests": 14,
+            "suites": 0,
+            "pass": 13,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 53745.614479
+          },
+          "matchingNamedDiagnostics": 1,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "scripts/test-inspect-goals.mjs",
+          "baselineCounts": {
+            "tests": 11,
+            "suites": 0,
+            "pass": 8,
+            "fail": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 42922.124336
+          },
+          "candidateCounts": {
+            "tests": 11,
+            "suites": 0,
+            "pass": 8,
+            "fail": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 35054.587643
+          },
+          "matchingNamedDiagnostics": 3,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "scripts/test-production-panel.mjs",
+          "baselineCounts": {
+            "tests": 11,
+            "suites": 0,
+            "pass": 6,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 609.201557
+          },
+          "candidateCounts": {
+            "tests": 11,
+            "suites": 0,
+            "pass": 6,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 489.60451
+          },
+          "matchingNamedDiagnostics": 5,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/difficulty-host.test.mjs",
+          "baselineCounts": {
+            "tests": 11,
+            "suites": 0,
+            "pass": 9,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 103054.348054
+          },
+          "candidateCounts": {
+            "tests": 11,
+            "suites": 0,
+            "pass": 9,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 147047.625147
+          },
+          "matchingNamedDiagnostics": 2,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/course-selection-host.test.mjs",
+          "baselineCounts": {
+            "tests": 13,
+            "suites": 0,
+            "pass": 11,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 60694.027743
+          },
+          "candidateCounts": {
+            "tests": 13,
+            "suites": 0,
+            "pass": 11,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 56787.386935
+          },
+          "matchingNamedDiagnostics": 2,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-canonical-baseline-38877133338/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/course-pause-host.test.mjs",
+          "baselineCounts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 0,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 13147.061152
+          },
+          "candidateCounts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 0,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 12523.098922
+          },
+          "matchingNamedDiagnostics": 2,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-canonical-baseline-38877133338/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/terminal-navigation.test.mjs",
+          "baselineCounts": {
+            "tests": 11,
+            "suites": 0,
+            "pass": 3,
+            "fail": 8,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 371319.282858
+          },
+          "candidateCounts": {
+            "tests": 11,
+            "suites": 0,
+            "pass": 3,
+            "fail": 8,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 200585.969923
+          },
+          "matchingNamedDiagnostics": 8,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-canonical-baseline-38877133338/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/offline-team-retention-host.test.mjs",
+          "baselineCounts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 0,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 15127.596099
+          },
+          "candidateCounts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 0,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 14996.96697
+          },
+          "matchingNamedDiagnostics": 2,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-canonical-baseline-38877133338/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/offline-download-play-host.test.mjs",
+          "baselineCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 0,
+            "fail": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 32456.671317
+          },
+          "candidateCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 0,
+            "fail": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 24556.034846
+          },
+          "matchingNamedDiagnostics": 3,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-canonical-baseline-38877133338/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/presentation-team-runtime.test.mjs",
+          "baselineCounts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 3,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 2793.310254
+          },
+          "candidateCounts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 3,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 2700.71137
+          },
+          "matchingNamedDiagnostics": 1,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-ownership-baseline-38877911109/classification-retained-1008.json"
+        },
+        {
+          "file": "scripts/test-company-content-inventory.mjs",
+          "baselineCounts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 1,
+            "fail": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 1762.421948
+          },
+          "candidateCounts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 1,
+            "fail": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 2330.024416
+          },
+          "matchingNamedDiagnostics": 3,
+          "candidateOnlyNamedDiagnostics": 0,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-ownership-baseline-38877911109/classification-retained-1008.json"
+        },
+        {
+          "file": "game/test/selection-bookmark-host.test.mjs",
+          "baselineCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 3,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 44704.036222
+          },
+          "candidateCounts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 0,
+            "fail": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 12944.053902
+          },
+          "matchingNamedDiagnostics": 0,
+          "candidateOnlyNamedDiagnostics": 1,
+          "baselineOnlyNamedDiagnostics": 0,
+          "comparisonProof": ".cache/solo-followup/regression-audit/remote-ownership-baseline-38877911109/classification-retained-1008.json"
+        }
+      ],
+      "scope": "These18 supplementary complete baseline files classify43 named observed candidate diagnostics across16 files. They add no candidate inventory coverage and do not pass failed files. Soundtrack and selection-bookmark required separate faithful fixture repairs; both canonical full files now pass. Content-route-loader baseline has one additional failure; assertions not reached receive no credit.",
+      "previousCheckpointProofs": [
+        {
+          "path": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-retained-0917.json",
+          "bytes": 97695,
+          "sha256": "21f7146417d94641a57c9b85f3a4a85cf2db80c4cabe1a93c60b1c21bb146248"
+        },
+        {
+          "path": ".cache/solo-followup/regression-audit/remote-canonical-baseline-38877133338/classification-retained-0917.json",
+          "bytes": 20105,
+          "sha256": "06e9bacb638871663b1555650e2ac86ea2dbb4dd5c4a8f6fe724fc5611064526"
+        },
+        {
+          "path": ".cache/solo-followup/regression-audit/remote-ownership-baseline-38877911109/classification-retained-0917.json",
+          "bytes": 28183,
+          "sha256": "a10e54bf5f9774081df1503e99b970ba2190e8e57be0f72995598d4ff0b67030"
+        }
+      ]
+    },
+    "canonicalFixtureQualification": {
+      "runId": 38877133338,
+      "workflowSourceRevision": "7b29a828339579b3c61edbd7f6991b506d04d5f3",
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-canonical-baseline-38877133338/canonical-fixtures-qualified.json",
+        "bytes": 20589,
+        "sha256": "b2198ac2b21ac1b7061463b1b527036a6ea270168f647e0c08e1196a11b648c3"
+      },
+      "files": [
+        {
+          "file": "game/test/team-default-entry-host.test.mjs",
+          "sourceRevision": "9768c2ebe051834e69b3d6a74322a655244d59c7",
+          "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+          "counts": {
+            "tests": 13,
+            "suites": 0,
+            "pass": 8,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 50452.94452
+          },
+          "passed": false,
+          "complete": true,
+          "sameFailureSemanticsAsPairedBaseline": true,
+          "tapSHA256": "e3846884c405115b933613e37b91e255c76beb0dc3a487712a90ee28ead2f0e6",
+          "testSHA256": "78450faeb3e45e32e6f2a299f20c96cad86a1635ae5ae45abb4bd72ea0429764"
+        },
+        {
+          "file": "game/test/coop-picture-recovery-focus.test.mjs",
+          "sourceRevision": "9768c2ebe051834e69b3d6a74322a655244d59c7",
+          "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+          "counts": {
+            "tests": 18,
+            "suites": 0,
+            "pass": 17,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 13688.120081
+          },
+          "passed": false,
+          "complete": true,
+          "sameFailureSemanticsAsPairedBaseline": true,
+          "tapSHA256": "209f6a73839ad03201af807d8af2926bd2058d9a5a6bd72d4385615ca24524ec",
+          "testSHA256": "5b2df5ff56e7bd0d541e8990bf66b54ecedaa8b8a126f063586eb3a91099248c"
+        },
+        {
+          "file": "game/test/soundtrack-host.test.mjs",
+          "sourceRevision": "9768c2ebe051834e69b3d6a74322a655244d59c7",
+          "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+          "counts": {
+            "tests": 30,
+            "suites": 0,
+            "pass": 30,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 136267.423267
+          },
+          "passed": true,
+          "complete": true,
+          "sameFailureSemanticsAsPairedBaseline": null,
+          "tapSHA256": "cc83019b5f9c83bb20523bb7119a5055e348447f1ddfe7d6781fe7fbf4369413",
+          "testSHA256": "e8a0a08f2e37ded0aa5c66b282b27e2140a4f9f5d34f20801832cdca21f81e7b"
+        }
+      ],
+      "scope": "Three complete canonical fixture files; soundtrack is 30/30. The two bounded identity formatters retain all six observed baseline failures. These retests are supplementary and not added twice to original unique-file progress."
+    },
+    "laterCorrectnessAdditions": {
+      "files": [
+        {
+          "file": "game/test/solo-dense-replay-persistence.test.mjs",
+          "introducedAt": "bb74b1eefa20120304f22468c924aa2955a717b3",
+          "sha256": "7bdd742e41dec745a30f27b2f884ade16847e01e84590f07eee7e83733f3f0f7",
+          "declaredCases": 3,
+          "executionStatus": "Pending reviewed bounded remote complete-file observation; no execution credit from declaration."
+        },
+        {
+          "file": "game/test/solo-pending-verification-gameplay-host.test.mjs",
+          "introducedAt": "bb74b1eefa20120304f22468c924aa2955a717b3",
+          "sha256": "fd11a8826bd6e2d02de4fb89622667fb73d08ba6b647f128286838186b7b581b",
+          "declaredCases": 2,
+          "executionStatus": "Pending reviewed bounded remote complete-file observation; no execution credit from declaration."
+        },
+        {
+          "file": "game/test/solo-touch-latency-host.test.mjs",
+          "introducedAt": "48f72933fa91c355f7d7ecbf3bc3a0f1cfd9023f",
+          "sha256": "98411f1258919b4dce0070b0e6ac89a86e524973dcd1b475378ce168e97354b1",
+          "declaredCases": 4,
+          "executionStatus": "Pending reviewed bounded remote complete-file observation; no execution credit from declaration."
+        },
+        {
+          "file": "game/test/solo-cadence-input-host.test.mjs",
+          "introducedAt": "02ee15b022e863baf9668b115f85b4020569a9f3",
+          "sha256": "323b98f7cdb0388602dc878d72a8bd7be17717a6e97f24766570be19beb7e02e",
+          "declaredCases": 2,
+          "executionStatus": "Pending approved bounded remote complete-file observation; syntax/format review is not execution credit."
+        }
+      ],
+      "additionalFiles": 4,
+      "repositoryFileCountIfNoOtherInventoryChanges": 1955,
+      "scope": "Four further correctness files after the earlier1951-file checkpoint, outside original1948 and its three earlier additions. Record separate source-specific results without double counting."
+    },
+    "canonicalOwnershipAndBookmark": {
+      "runId": 38879310649,
+      "workflowSourceRevision": "e20d329916b06b3c661974ee3ddca53e5516dc17",
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-canonical-38879310649/verified-results-latest.json",
+        "sha256": "99ba1d1a09f8b78850157c616e37a4d360da7c48c97a9bc310db5719078e290b",
+        "bytes": 13705
+      },
+      "files": [
+        {
+          "file": "game/test/presentation-team-runtime.test.mjs",
+          "sourceRevision": "050d8ea3248edb4176e7b59fbc855a7dcf821ffb",
+          "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+          "counts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 2,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 2134.580814
+          },
+          "complete": true,
+          "passed": false,
+          "tapPath": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-canonical-38879310649/candidate-presentation-team-runtime.tap",
+          "tapSHA256": "8a0194d786dcd0ca53047d0e1114997841a4ce5ef89912b0c367389c1a9d0f76",
+          "testSHA256": "1ad8b3c4252384e77cd0d349a534108363aa4cf7d81deb6b668d5a170d012d5e"
+        },
+        {
+          "file": "game/test/selection-bookmark-host.test.mjs",
+          "sourceRevision": "050d8ea3248edb4176e7b59fbc855a7dcf821ffb",
+          "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+          "counts": {
+            "tests": 3,
+            "suites": 0,
+            "pass": 3,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 24985.109374
+          },
+          "complete": true,
+          "passed": true,
+          "tapPath": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-canonical-38879310649/candidate-selection-bookmark-host.tap",
+          "tapSHA256": "061f5ffc5cec0aaf1d9684719f7c04135fe353afb94cd10ee712611c8cd6fda3",
+          "testSHA256": "25bf85e3c80c40471ee09b5f485a31fbde76f4489aecd87167ae045f3a065e4e"
+        }
+      ],
+      "interpretation": "Bookmark3/3 passes after a neutral initial frame preserves all12 input ticks. Team2/4 retains exact58!=42 failures from the prior fixture assuming all roles are pooled; corrected role-specific fixture is prepared and awaits its own complete-file remote result. Initial42, missing/hash rejection, adopted snapshot identity, partial cleanup and close-once remain asserted."
+    }
   }
 }
