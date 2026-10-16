@@ -69,16 +69,45 @@ export function inspectReplayMechanics(
     projectileTicks: 0,
     jammerTicks: 0,
     movingTicks: 0,
+    directionChangesWithMovement: 0,
     maximumTrailCells: 0,
     maximumClaimedCells: 0,
   };
+  let previousAcceptedMovingDirection = null;
   for (const segment of replay.segments) {
     if (segment.releaseBefore) releaseInputs(run);
     for (let tick = 0; tick < segment.ticks; tick++) {
       const beforeX = run.player.x,
-        beforeY = run.player.y;
+        beforeY = run.player.y,
+        beforeStatus = run.status;
       stepRun(run, segment.input, FIXED_DT);
       if (run.player.x !== beforeX || run.player.y !== beforeY) features.movingTicks++;
+      const requested = segment.input.direction,
+        dx = run.player.x - beforeX,
+        dy = run.player.y - beforeY,
+        recovery = run.events.some((event) =>
+          ['player.failed', 'player.respawned', 'shield.absorbed'].includes(event.type),
+        );
+      if (recovery) previousAcceptedMovingDirection = null;
+      // The first moving command establishes a direction; it is not a reversal.
+      // Count only requested, accepted cardinal displacement. Repeated input,
+      // neutral/release boundaries, blocked turns and recovery teleports add none.
+      const acceptedMovement =
+        beforeStatus === 'running' &&
+        !recovery &&
+        requested === run.player.direction &&
+        ((requested === 'left' && dx < 0 && Math.abs(dy) <= 1e-9) ||
+          (requested === 'right' && dx > 0 && Math.abs(dy) <= 1e-9) ||
+          (requested === 'up' && dy < 0 && Math.abs(dx) <= 1e-9) ||
+          (requested === 'down' && dy > 0 && Math.abs(dx) <= 1e-9));
+      if (acceptedMovement) {
+        if (
+          previousAcceptedMovingDirection !== null &&
+          requested !== previousAcceptedMovingDirection
+        )
+          features.directionChangesWithMovement++;
+        previousAcceptedMovingDirection = requested;
+      }
       for (const event of run.events) {
         if (event.type === 'cut.closed') features.closures++;
         if (event.type === 'cells.eroded') features.eroded++;

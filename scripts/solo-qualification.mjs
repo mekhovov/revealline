@@ -184,6 +184,7 @@ export function validateQualification(scenario) {
           'projectileTicks',
           'jammerTicks',
           'movingTicks',
+          'directionChangesWithMovement',
           'maximumTrailCells',
           'maximumClaimedCells',
         ].includes(key),
