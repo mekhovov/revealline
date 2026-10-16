@@ -47,6 +47,14 @@ const observerFunction = (name) =>
     findObserverNode((node) => node.type === 'FunctionDeclaration' && node.id.name === name),
   );
 
+test('only the explicit owned-window lane opens a visible isolated Chrome context', () => {
+  const launch = observerFunction('launchBrowser');
+  assert.match(launch, /chromium\.launchPersistentContext\(profile,/);
+  assert.match(launch, /headless: !activeWindowEnabled/);
+  assert.match(launch, /channel: 'chrome'/);
+  assert.match(historicalObserverSource, /!activeWindowEnabled \|\| activeSessionEnabled/);
+});
+
 test('browser restart requires all pages closed and a confirmed persistent-context shutdown', async () => {
   let listener;
   const actions = [];
