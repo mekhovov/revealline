@@ -45,6 +45,7 @@ export function observeLowWorkCadence({ timeoutMs = 5000 } = {}, environment = g
   });
   const initialState = state();
   let foregroundThroughout = initialState.visible && initialState.focused;
+  let environmentStableThroughout = true;
   let previous = null,
     firstRafCallback = null,
     frameId,
@@ -58,6 +59,11 @@ export function observeLowWorkCadence({ timeoutMs = 5000 } = {}, environment = g
     const observeState = () => {
       const current = state();
       foregroundThroughout &&= current.visible && current.focused;
+      environmentStableThroughout &&=
+        current.url === initialState.url &&
+        current.viewport.width === initialState.viewport.width &&
+        current.viewport.height === initialState.viewport.height &&
+        current.devicePixelRatio === initialState.devicePixelRatio;
       return current;
     };
     const finish = (deadlineReached) => {
@@ -66,12 +72,14 @@ export function observeLowWorkCadence({ timeoutMs = 5000 } = {}, environment = g
       environment.cancelAnimationFrame(frameId);
       environment.clearTimeout(timerId);
       environment.removeEventListener('blur', loseFocus);
+      environment.removeEventListener('resize', observeState);
       documentRef.removeEventListener('visibilitychange', observeState);
       resolve({
         samples,
         initialState,
         finalState: observeState(),
         foregroundThroughout,
+        environmentStableThroughout,
         firstRafCallback,
         elapsedMs: environment.performance.now() - registeredAtMs,
         timeoutMs,
@@ -97,6 +105,7 @@ export function observeLowWorkCadence({ timeoutMs = 5000 } = {}, environment = g
       else frameId = environment.requestAnimationFrame(frame);
     };
     environment.addEventListener('blur', loseFocus);
+    environment.addEventListener('resize', observeState);
     documentRef.addEventListener('visibilitychange', observeState);
     timerId = environment.setTimeout(() => finish(true), timeoutMs);
     frameId = environment.requestAnimationFrame(frame);
@@ -107,6 +116,7 @@ export function calibrateLowWorkCadence(observation) {
   const state = {
     ready:
       observation.foregroundThroughout === true &&
+      observation.environmentStableThroughout === true &&
       observation.initialState?.url === 'about:blank' &&
       observation.finalState?.url === 'about:blank' &&
       observation.initialState?.viewport?.width === observation.finalState?.viewport?.width &&

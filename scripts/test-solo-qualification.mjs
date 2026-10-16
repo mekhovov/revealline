@@ -783,7 +783,15 @@ test('low-work cadence uses one fixed foreground window with first callback reta
 });
 
 test('low-work cadence retains instability, transient focus loss and deadline without retry', async () => {
-  for (const failure of ['unstable', 'blur', 'timeout', 'changed-viewport', 'nonpositive']) {
+  for (const failure of [
+    'unstable',
+    'blur',
+    'timeout',
+    'changed-viewport',
+    'restored-viewport',
+    'restored-dpr',
+    'nonpositive',
+  ]) {
     const fake = lowWorkBrowser();
     const pending = observeLowWorkCadence({}, fake.environment);
     fake.frame(0);
@@ -791,6 +799,18 @@ test('low-work cadence retains instability, transient focus loss and deadline wi
     for (let index = 1; index <= 30; index++) {
       if (index === 4 && failure === 'blur') fake.blur();
       if (index === 4 && failure === 'changed-viewport') fake.environment.innerWidth = 400;
+      if (index === 4 && failure === 'restored-viewport') {
+        fake.environment.innerWidth = 400;
+        fake.listeners.get('resize')();
+        fake.environment.innerWidth = 1280;
+        fake.listeners.get('resize')();
+      }
+      if (index === 4 && failure === 'restored-dpr') {
+        fake.environment.devicePixelRatio = 3;
+        fake.listeners.get('resize')();
+        fake.environment.devicePixelRatio = 1;
+        fake.listeners.get('resize')();
+      }
       if (index === 4 && failure === 'timeout') {
         fake.timeout();
         break;
