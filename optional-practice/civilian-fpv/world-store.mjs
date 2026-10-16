@@ -248,18 +248,27 @@ export async function openWorldStore({
       done = transactionDone(tx),
       activeRequest = request(tx.objectStore('projects').getAll()),
       allRequest = includeRevisions
-        ? request(tx.objectStore('revisions').getAll())
+        ? new Promise((resolve, reject) => {
+            const rows = [],
+              cursor = tx.objectStore('revisions').openCursor();
+            cursor.onerror = () => reject(cursor.error);
+            cursor.onsuccess = () => {
+              const current = cursor.result;
+              if (!current) return resolve(rows);
+              // Keep only metadata between deliveries, not every revision's asset Map.
+              const { assets, ...record } = current.value;
+              void assets;
+              rows.push(record);
+              current.continue();
+            };
+          })
         : Promise.resolve([]);
-    const [active, all] = await Promise.all([activeRequest, allRequest]);
-    await done;
+    const [active, all] = await Promise.all([activeRequest, allRequest, done]);
     const result = active.map((r) => ({ ...r, active: true }));
     if (includeRevisions)
       for (const row of all)
-        if (!active.some((r) => r.id === row.id && r.sha256 === row.sha256)) {
-          const { assets, ...record } = row;
-          void assets;
-          result.push({ ...record, active: false });
-        }
+        if (!active.some((r) => r.id === row.id && r.sha256 === row.sha256))
+          result.push({ ...row, active: false });
     return result;
   }
   async function activate(id, sha256, { expectedGeneration } = {}) {

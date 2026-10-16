@@ -16,6 +16,22 @@ import {
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
 
+test('candidate measurement tooling always selects its security and archive regressions', () => {
+  for (const changed of [
+    'scripts/pages-candidate-measurement.mjs',
+    'scripts/pages-candidate-contract.mjs',
+    'scripts/pages-candidate-overlay.mjs',
+    'scripts/pages-candidate-archive.py',
+    '.github/workflows/measure-pages-candidate.yml',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    for (const kind of ['measurement', 'contract', 'overlay', 'archive'])
+      assert.ok(command.args.includes(`scripts/test-pages-candidate-${kind}.mjs`));
+  }
+});
+
 test('capacity comparison tooling selects its regression suite without broad runtime fallback', () => {
   for (const changed of ['scripts/pages-capacity-report.mjs', 'scripts/test-pages-capacity-report.mjs']) {
     const plan = focusedTestPlan([changed], manifest);
@@ -31,6 +47,18 @@ test('shared Pages evidence scripts retain their publishing regression gates', (
     assert.deepEqual(plan.unknownRuntime, []);
     const command = plan.commands.find(({ id }) => id === 'publishing-controller');
     assert.ok(command.args.includes(`scripts/test-pages-${kind}-evidence.mjs`));
+  }
+});
+
+test('rolling metadata scripts retain their publishing regression gates', () => {
+  for (const changed of [
+    'scripts/write-main-pages-metadata.mjs',
+    'scripts/test-main-pages-metadata.mjs',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes('scripts/test-main-pages-metadata.mjs'));
   }
 });
 

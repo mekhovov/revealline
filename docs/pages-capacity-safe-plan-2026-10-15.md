@@ -230,7 +230,7 @@ Proceed in this order, verifying each checkpoint before advancing:
    tightening guards. If safe candidates are insufficient, report the gap for a
    human decision rather than removing shared gameplay or changing origins.
 
-## Shared evidence extraction — verification in progress
+## Shared evidence extraction — production verified
 
 The comparison foundation merged in #1529 as
 `0f0d4e152195901e59f211f3294203aff0b8e192`; publication `38825001991`
@@ -249,8 +249,107 @@ measurement remain subsequent work, not completed by this change.
 Local extraction, workflow-policy and focused-routing tests passed 73 cases,
 zero failures or skips. Scoped lint and whitespace checks passed. Independent
 read-only review confirmed both frozen-base bodies are byte-identical and found
-no concrete blocker; actual runner execution remains pending.
+no concrete blocker. PR #1536 merged as
+`9ce5d517b1cd9524284d313e23dce61e333f322f` after all applicable exact-head checks
+passed at `25cfa3408d2a5b8e163b1bab9ae59a4f3faa737d`; only test/build were
+policy-selected skips. Hosted focused verification passed all 211 tests.
 The external SMB volume does not support the hard-link fixture, so the unchanged
 tiny fixtures were rerun on the local filesystem without skipping that safeguard.
-No full local build, candidate measurement, production execution of the extracted
-scripts, content removal or merge authorization is claimed here.
+Production run `38832146563` passed build, deploy and public verification for the
+merge source. The actual archive remained 966,236,160 bytes with 3,424 files and
+963,262,271 raw bytes. Its SHA-256 was
+`d641e6a0fdeca8f64d7990b7ffce2ff62a56f145291c1339dfd097dbbc40ed6a`;
+artifact ID `12017618388` was independently bound to the same run and source.
+Receipt consistency and source identity were independently checked, then public
+`main-deployment.json`, `release.json`, `releases/index.html`, `game/index.html`
+and `optional-practice/civilian-fpv/regional-library.mjs` were hash-matched to the
+accepted inventory. This supplemental check is not a second download of the full
+archive or full gameplay qualification. No savings, content removal or candidate
+forecast occurred.
+
+## Rolling metadata extraction — production verified
+
+The next isolated branch starts from refreshed main
+`428329745c3078941338ae6157e2ae1a55c28462`. Extract only the existing Node metadata
+block to `scripts/write-main-pages-metadata.mjs`, adjusting one relative import.
+Do not change identity fields, JSON order/newlines, exclusive writes, partial-write
+failure behavior, the shared access-gate helper, source date binding or step order.
+The pre-extraction block is frozen by SHA-256
+`e859bca5b49c90d92ea23d0fdd2de06a0f0f7420dc1053b675ff5244d88cbf55`.
+
+Eleven new metadata cases plus focused-routing and workflow-policy coverage pass
+61 tests without failures or skips, using tiny fixtures on the external drive.
+They assert exact JSON and complete protected HTML bytes with fake gate metadata,
+all three output collisions, missing/incomplete gate configuration, existing or
+absent release directories, paths with spaces and unchanged workflow inputs/order.
+Scoped lint, new-test formatting and whitespace checks pass. Independent review
+confirmed literal-body parity, the frozen protected HTML digest, unchanged helper
+and workflow bindings/gates, and found no concrete blocker. Exact-head hosted CI
+passed all 223 focused tests. PR #1539 merged as
+`9cd97a220e5337367afbdb9bd1affb6fde9b6363`; publication `38837441435` passed
+build, deploy and public verification. Independently checked receipt consistency,
+artifact `12020475380` run/source provenance and five representative live file
+hashes. The archive remained 966,236,160 bytes, raw 963,262,271 bytes, 3,424 files,
+SHA-256 `28e6a6930b613049ed521000f5f1d7c675acd47c53b72b2791404efcfe03fe14`.
+This is not a second full archive download or gameplay qualification. No capacity
+guard, permission, application storage, runtime content or publication origin is
+changed by this extraction.
+
+## Manual exact candidate measurement — implementation under verification
+
+This isolated unit starts from refreshed main
+`741948b14a09a816e49054c443511186bb99eb41`. Its publication `38838919718`
+subsequently passed all three jobs and matched public source. Receipt consistency
+and artifact `12020866255` provenance were independently checked: 966,236,160
+archive bytes, SHA-256
+`918755ed737f934f0831e36d561463e0873961ee5e1f2c4b13ad334567e6a5bd`.
+No new savings or capacity reservation follows from that dated baseline.
+
+The proposed manual-only workflow measures one same-repository, open PR based
+directly on an exact current main. Draft status is captured, not changed. A
+trusted preflight composes a clean synthetic merge without pushing it, freezes
+the candidate selector as data, downloads selected public stable package bytes,
+and records tag commit/tree, release/asset IDs, sizes, checksums and complete
+overlay closure. It freezes evidence by artifact ID plus preflight checksum.
+
+The candidate job reconstructs the exact synthetic commit/tree, runs the complete
+production main-pages profile without API credentials or persisted checkout
+credentials, adds the frozen overlay and byte-identical rolling metadata, and
+uses the unchanged 980 MB raw/archive guards and pinned Pages archive action.
+Its artifact has a diagnostic-only name and never enters a deployment job.
+
+A fresh trusted final job never checks out or executes candidate code. It checks
+GitHub run/artifact provenance against the controller main SHA separately from
+the synthetic source SHA in receipts. It streams the actual archive without
+extracting its paths, derives every member's count/size/hash, cross-checks receipts
+and the complete owned overlay closure, and regenerates rolling JSON/protected
+HTML using the trusted literal writer. It redownloads external inputs and rereads
+current main and PR head/base/draft/state before any current-queue conclusion.
+Changed or unverifiable inputs leave diagnostics historical/ineligible. Missing
+or over-budget evidence never becomes an accepted archive measurement.
+
+For this first unit, changes to scripts, publishing code, workflows, root package
+contracts, game build configuration, or the complete parsed transitive import
+closure of the frozen overlay renderer are unsupported and rejected. Selector
+data is independently validated. Renames include both source and destination
+paths. This conservative boundary prevents frozen tooling from measuring a
+different production payload; broader build-contract support needs later review.
+
+The synthetic source date is deterministic diagnostic metadata, not a prediction
+of a future GitHub merge identity. Explicit merge, deployment and qualification
+flags remain false. Complete archive bytes do not prove source-content, gameplay,
+native or offline correctness; no per-PR attribution or capacity reservation is
+granted. Parent-first composition is subsequent work, not implemented here.
+Hosted exact-head checks and actual diagnostic execution remain required before
+this checkpoint can be called verified. No content removal, public URL, storage, Studio/SIM,
+offline dependency, full release, production permission or guard is changed.
+
+Local scoped verification passed 118 tests with zero failures or skips, including
+real shallow synthetic-merge reconstruction, complete protected metadata bytes,
+adversarial actual-archive fixtures, release identity/byte rechecks and focused
+routing/workflow separation. Scoped lint and whitespace checks passed. Tiny Git
+fixtures passed both on the external volume and, to avoid its slow metadata
+operations, in a small local temporary directory; no full local build/download
+was run. Independent review reproduced the 18-file trusted renderer closure and
+33 contract/overlay tests, and found no remaining concrete integration blocker.
+Actual hosted diagnostic execution remains pending and is not claimed here.
