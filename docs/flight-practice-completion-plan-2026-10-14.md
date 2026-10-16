@@ -15,10 +15,16 @@ also passes five exact saved-project/card witnesses through offline browser and
 standalone-window restart, plus nine existing installation/recovery checkpoints.
 It is not offline-flight, imported-asset or distinct-release migration evidence.
 
-Next: distinct-release active-session update/rollback and current timeout/
-cancellation recovery. A genuine `v0.142.4` historical candidate now reproduces,
-but needs a narrowly pinned historical admission/UI adapter; current publisher
-contracts remain strict. Real hardware is
+The [historical upgrade continuation](flight-practice-historical-upgrade-2026-10-16.md)
+passes nine native checkpoints with genuine older/current Academy payloads and
+original launchers, exact proof/profile retention, failed-install preservation
+and offline rollback. Its narrowly pinned historical diagnostic authority leaves
+current publishing strict. Active-flight protection and Gym/Worlds migrations
+are not covered.
+
+Next: distinct-release active-session protection and current timeout/
+cancellation recovery. Personal-appearance catalogue journeys now have a separate
+strict observer; native execution remains pending. Real hardware is
 deferred at the owner's subsequent request; hosting remains deferred. SIM flight
 mechanics, lessons and rendering remain outside this workstream.
 

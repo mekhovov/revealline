@@ -318,6 +318,12 @@ does not qualify network-wide isolation.
 
 ### C5 — Distinct-package update, active-session protection and rollback
 
+Progress: the [genuine historical Academy observation](flight-practice-historical-upgrade-2026-10-16.md)
+passes old/current launcher and runtime upgrade, exact proof/profile preservation,
+failed-install preservation and offline rollback. Current publishing admission
+remains unchanged. No flight was kept active; Gym/Worlds were unchanged isolation
+witnesses, not historical migrations. These remaining subcases stay open.
+
 1. Select a real admitted previous candidate A and current candidate B with
    different versions, commits/trees and actual changed archive bytes. Record the
    exact diff and stable installation identity. Do not rename B to impersonate A.
