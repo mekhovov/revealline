@@ -3,18 +3,19 @@
 from pathlib import Path
 import argparse,json,subprocess,hashlib,urllib.request,urllib.error,urllib.parse
 parser=argparse.ArgumentParser()
-parser.add_argument('--manifest',type=Path,default=Path(__file__).with_name('release-assets-manifest.json'))
+parser.add_argument('--manifest',type=Path,default=Path(__file__).with_name('release-assets-manifest-21.json'))
 parser.add_argument('--destination',type=Path,required=True)
 args=parser.parse_args()
 manifest=json.loads(args.manifest.read_text())
 assert manifest['complete'] and not manifest['remainingOriginalPaths']
+assert not manifest.get('remainingCloudArtifactIDs',[])
 destination=args.destination.expanduser().resolve()
 destination.mkdir(parents=False,exist_ok=False)
 token=subprocess.check_output(['gh','auth','token'],text=True).strip()
 class NoRedirect(urllib.request.HTTPRedirectHandler):
  def redirect_request(self,req,fp,code,msg,headers,newurl):return None
 def response_for(assetID):
- request=urllib.request.Request(f'https://api.github.com/repos/mekhovov/revealline/releases/assets/{assetID}',headers={'Authorization':'Bearer '+token,'Accept':'application/octet-stream','X-GitHub-Api-Version':'2022-11-28','User-Agent':'FPV-Original-Restore'})
+ request=urllib.request.Request(f'https://api.github.com/repos/mekhovov/revealline/releases/assets/{assetID}?preservation_restore=1',headers={'Authorization':'Bearer '+token,'Accept':'application/octet-stream','X-GitHub-Api-Version':'2022-11-28','User-Agent':'FPV-Original-Restore'})
  try:return urllib.request.build_opener(NoRedirect).open(request,timeout=60)
  except urllib.error.HTTPError as error:
   if error.code not in (301,302,303,307,308):raise RuntimeError('Asset API returned HTTP '+str(error.code)) from None
