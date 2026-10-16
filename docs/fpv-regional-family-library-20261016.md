@@ -35,8 +35,8 @@ back after the player has navigated away.
 
 ## Software verification completed
 
-Node 20.19.5: eleven new family/UI/navigation groups and six existing title/identity
-regressions pass (17 total). The coverage includes:
+Node 20.19.5: seventeen new family/UI/navigation groups and six existing title/identity
+regressions pass (23 total). The coverage includes:
 
 - All 24 exact offers in ten families, catalogue order and unchanged pin objects.
 - Active older saved defaults, unoffered revisions, unfamiliar IDs, and full
@@ -44,12 +44,25 @@ regressions pass (17 total). The coverage includes:
 - EN/UK labels, no implicit render/refresh mutations, exact Fly/Download actions,
   repaired loads, reviewed single-revision and world-ID-scoped removal.
 - Focus and disclosure continuity, including a download completing after closure.
+- Deferred metadata refresh selecting a different saved edition while a primary
+  Fly is intended: keep the exact world ID, full hash and action in Versions,
+  including radio/controller focus styling. Body blur preserves only that refresh
+  intent; an explicit move to another control cancels or updates it. A missing
+  Fly never becomes a Download or another edition's Fly on confirmation. If the
+  retained family is no longer listed, focus returns to Refresh with an honest
+  status message. EN/UK notices identify changed presentation or actions.
 - The real SIM menu adapter's controller join/release/D-pad/confirm sequence,
   calibrated-radio hold-and-centre gestures, and skipping closed edition controls.
 
 These tests use a deterministic minimal DOM and isolated metadata/store callbacks.
 They do not fetch scenery, seed player storage, fabricate accepted flight progress,
-measure native layout, or establish physical controller/browser support.
+measure native layout, or establish physical controller/browser support. The
+minimal DOM permits disabled-control focus; that one deferred-refresh case tests
+presentation ownership rather than asserting native browser behavior. Separate
+cases model pre-existing focus becoming body focus while controls are disabled.
+The regression first failed on the prior source with a disconnected active node,
+then passed after exact focus ownership and refresh-only restoration were added.
+Explicit install/remove focus behavior retains its separate existing coverage.
 
 ## Gates still open
 

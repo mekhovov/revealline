@@ -829,9 +829,26 @@ export function mountRegionalLibrary({
     return button;
   }
   function focusControl(node, deviceFocus) {
-    if (!node) return;
+    if (!node?.isConnected || node.disabled || !visible()) return;
     if (deviceFocus) node.dataset.fpvMenuFocus = '';
     node.focus();
+  }
+  function captureFocus(node = parent.ownerDocument.activeElement) {
+    if (!root.contains(node)) return null;
+    const primary = node?.closest?.('[data-region-primary]'),
+      version = node?.closest?.('[data-region-key]'),
+      family = node?.closest?.('[data-region-family]'),
+      summary = node?.tagName === 'SUMMARY';
+    if (!family || (!primary && !version && !summary)) return null;
+    return {
+      family: family.dataset.regionFamily,
+      id: version?.dataset.regionId ?? primary?.dataset.regionPrimaryId,
+      hash: version?.dataset.regionKey ?? primary?.dataset.regionPrimary,
+      primary: Boolean(primary),
+      summary,
+      action: node.dataset.regionAction,
+      device: node.dataset.fpvMenuFocus !== undefined,
+    };
   }
   function waitFor(value, signal) {
     return new Promise((resolve, reject) => {
@@ -843,7 +860,7 @@ export function mountRegionalLibrary({
         .finally(() => signal.removeEventListener('abort', cancel));
     });
   }
-  function paint() {
+  function paint(focusOverride = null) {
     if (closed) return;
     heading.textContent = txt('Regional free flight', 'Вільний політ у регіонах');
     help.textContent = txt(
@@ -855,14 +872,7 @@ export function mountRegionalLibrary({
     refresh.disabled = Boolean(operation);
     cancel.hidden = !operation;
     message.textContent = txt(...notice);
-    const focused = parent.ownerDocument.activeElement,
-      focusKey = focused?.closest?.('[data-region-key]')?.dataset.regionKey,
-      focusId = focused?.closest?.('[data-region-key]')?.dataset.regionId,
-      focusPrimary = focused?.closest?.('[data-region-primary]')?.dataset.regionPrimary,
-      focusFamily = focused?.closest?.('[data-region-family]')?.dataset.regionFamily,
-      focusSummary = focused?.tagName === 'SUMMARY',
-      deviceFocus = focused?.dataset.fpvMenuFocus !== undefined,
-      focusAction = focused?.dataset.regionAction;
+    const focus = focusOverride ?? captureFocus();
     for (const details of cards.querySelectorAll('[data-region-versions]')) {
       if (details.open) expandedFamilies.add(details.dataset.regionVersions);
       else expandedFamilies.delete(details.dataset.regionVersions);
@@ -870,6 +880,13 @@ export function mountRegionalLibrary({
     cards.replaceChildren();
     const families = regionalLibraryFamilies(pins, records),
       rows = families.flatMap((family) => family.rows);
+    if (focus && !families.some((family) => family.key === focus.family)) {
+      show(
+        'The focused version is no longer listed. Refresh or choose another region.',
+        'Варіант у фокусі більше не показано. Оновіть список або виберіть інший регіон.',
+      );
+      focusControl(refresh, focus.device);
+    }
     const edition = (row) => {
       if (row.edition) return title(row.edition);
       if (row.saved) return `${txt('Version', 'Версія')} ${row.saved.descriptor.revision}`;
@@ -1035,6 +1052,7 @@ export function mountRegionalLibrary({
       card.dataset.regionFamily = family.key;
       card.append(el('h3', title(family.title)));
       primaryView.dataset.regionPrimary = primaryLabels.hash;
+      primaryView.dataset.regionPrimaryId = primary.id;
       const chosen = primary.saved
         ? primary.saved.active
           ? txt('Current saved version', 'Поточна збережена версія')
@@ -1069,7 +1087,8 @@ export function mountRegionalLibrary({
       for (const row of family.rows) versions.append(versionCard(row));
       details.open =
         expandedFamilies.has(family.key) ||
-        family.rows.some((row) => row.id === focusId && regionalRowHash(row) === focusKey);
+        (!focus?.primary &&
+          family.rows.some((row) => row.id === focus?.id && regionalRowHash(row) === focus?.hash));
       details.addEventListener('toggle', () => {
         if (closed || !details.isConnected) return;
         if (details.open) expandedFamilies.add(family.key);
@@ -1077,22 +1096,45 @@ export function mountRegionalLibrary({
       });
       card.append(primaryView, details);
       cards.append(card);
-      if (focusFamily === family.key) {
-        if (focusSummary) focusControl(summary, deviceFocus);
-        else if (focusPrimary === primaryLabels.hash)
-          focusControl(
-            primaryView.querySelector(`[data-region-action="${focusAction}"]`) ?? primaryAction,
-            deviceFocus,
-          );
-        else if (focusKey) {
-          const version = [...versions.children].find(
-            (node) => node.dataset.regionId === focusId && node.dataset.regionKey === focusKey,
-          );
-          focusControl(
-            version?.querySelector(`[data-region-action="${focusAction}"]`),
-            deviceFocus,
-          );
+      if (focus?.family === family.key) {
+        const samePrimary =
+            focus.primary && focus.id === primary.id && focus.hash === primaryLabels.hash,
+          primaryTarget = samePrimary
+            ? primaryView.querySelector(`[data-region-action="${focus.action}"]`)
+            : null,
+          version = [...versions.children].find(
+            (node) => node.dataset.regionId === focus.id && node.dataset.regionKey === focus.hash,
+          ),
+          versionTarget = version?.querySelector(`[data-region-action="${focus.action}"]`);
+        let target = summary;
+        if (!focus.summary) {
+          if (primaryTarget) target = primaryTarget;
+          else if (versionTarget) {
+            // A metadata refresh can select another already-saved edition. Keep
+            // confirmation bound to the previously focused ID, hash and action.
+            details.open = true;
+            expandedFamilies.add(family.key);
+            target = versionTarget;
+          }
+          if (focus.primary && !primaryTarget) {
+            const changed = el(
+              'p',
+              samePrimary
+                ? txt(
+                    'The available action changed. Review Versions before continuing.',
+                    'Доступна дія змінилася. Перегляньте «Версії», перш ніж продовжувати.',
+                  )
+                : txt(
+                    'The shown edition changed. Review Versions before continuing.',
+                    'Показаний варіант змінився. Перегляньте «Версії», перш ніж продовжувати.',
+                  ),
+            );
+            changed.dataset.regionFocusNotice = '';
+            changed.setAttribute('role', 'status');
+            primaryView.append(changed);
+          }
         }
+        focusControl(target, focus.device);
       }
     }
     if (!families.length)
@@ -1113,9 +1155,16 @@ export function mountRegionalLibrary({
       requestEpoch = epoch;
     const doc = parent.ownerDocument,
       deviceFocus = doc.activeElement?.dataset.fpvMenuFocus !== undefined;
-    let restoreFocus = Boolean(row);
+    let restoreFocus = Boolean(row),
+      refreshFocus = kind === 'refresh' ? captureFocus() : null;
     const trackFocus = (event) => {
+      // Replacing/temporarily disabling a focused control may leave body focus.
+      // Retain refresh intent until an explicit move to another control occurs.
       if (event.target === doc.body) return;
+      if (kind === 'refresh') {
+        refreshFocus = captureFocus(event.target);
+        return;
+      }
       const family = event.target.closest?.('[data-region-family]'),
         version = event.target.closest?.('[data-region-key]'),
         primary = event.target.closest?.('[data-region-primary]'),
@@ -1124,7 +1173,7 @@ export function mountRegionalLibrary({
         !root.contains(event.target) ||
         family?.dataset.regionFamily !== (row && regionalFamilyKey(row.id)) ||
         (focusOrigin === 'primary'
-          ? primary?.dataset.regionPrimary !== hash
+          ? primary?.dataset.regionPrimary !== hash || primary?.dataset.regionPrimaryId !== row?.id
           : version?.dataset.regionKey !== hash || version?.dataset.regionId !== row?.id)
       )
         restoreFocus = false;
@@ -1298,7 +1347,7 @@ export function mountRegionalLibrary({
       cancel.disabled = false;
       doc.removeEventListener('focusin', trackFocus);
       if (!closed) {
-        paint();
+        paint(kind === 'refresh' && requestEpoch === epoch && visible() ? refreshFocus : null);
         if (restoreFocus && requestEpoch === epoch && visible()) {
           const hash = row.saved?.sha256 ?? row.pin?.sha256,
             family = [...cards.children].find(
