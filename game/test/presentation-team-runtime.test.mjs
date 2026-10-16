@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPresentationHost } from '../presentation/host.mjs';
+import { ACTOR_PRESENTATION_SLOTS, createPresentationHost } from '../presentation/host.mjs';
 import {
   TEAM_RUNTIME_IMAGE_SLOTS,
   isTeamRuntimeImageSlot,
@@ -218,15 +218,28 @@ for (const type of ['missing', 'hash'])
     assert(old.every((image) => image.closed === 0));
     assert(e.decoded.slice(old.length).every((image) => image.closed === 1));
     e.fail(null);
-    const recovered = await e.host.load();
+    const decodedBeforeRecovery = e.decoded.length,
+      pooledSlots = TEAM_RUNTIME_IMAGE_SLOTS.filter((id) => ACTOR_PRESENTATION_SLOTS.includes(id)),
+      snapshotSlots = TEAM_RUNTIME_IMAGE_SLOTS.filter(
+        (id) => !ACTOR_PRESENTATION_SLOTS.includes(id),
+      ),
+      recovered = await e.host.load();
     assert.notEqual(recovered, before);
-    assert.equal(e.decoded.length, old.length, 'Identical admitted artwork is decoded once.');
-    for (const id of TEAM_RUNTIME_IMAGE_SLOTS)
-      assert.equal(recovered.image(id).image, before.image(id).image);
-    assert(
-      old.every((image) => image.closed === 0),
-      'The adopted snapshot retains shared images.',
+    assert(pooledSlots.length > 0 && snapshotSlots.length > 0);
+    assert.equal(
+      e.decoded.length - decodedBeforeRecovery,
+      snapshotSlots.length,
+      'Only snapshot-owned roles require a replacement decode.',
     );
+    for (const id of pooledSlots) {
+      assert.equal(recovered.image(id).image, before.image(id).image);
+      assert.equal(before.image(id).image.closed, 0, 'The replacement retains the actor lease.');
+    }
+    for (const id of snapshotSlots) {
+      assert.notEqual(recovered.image(id).image, before.image(id).image);
+      assert.equal(before.image(id).image.closed, 1, 'The replaced snapshot releases its image.');
+      assert.equal(recovered.image(id).image.closed, 0, 'The replacement owns its new image.');
+    }
     assert(recovered.image('team.player.recovery'));
     e.host.close();
     assert(e.decoded.every((image) => image.closed === 1));

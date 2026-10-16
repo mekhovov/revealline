@@ -14,6 +14,24 @@ resource-aborted recovery file remains incomplete. The two retained sets have no
 overlap. All 119 referenced artifact archives passed digest, ZIP, source and test
 identity checks. These figures are a frozen checkpoint, not live run totals.
 
+Supplementary receipts retained after the quiet cohort classify18 complete baseline
+files. Sixteen reproduce all43 named candidate failure diagnostics; the route-loader baseline has one additional failure. The original
+soundtrack and selection-bookmark files pass on baseline and needed separate
+clock/paint fixture review. These comparisons do not increase the unique-file
+progress above or turn failed files into passes.
+
+| Later canonical fixture evidence                      | Retained result and limit                                                                                                                                                                                          |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Soundtrack host at `9768c2eb` / runtime `e0252ff8`    | 30/30 pass after an explicit neutral clock anchor and assertions against the retained hidden paint. Stream, pause/resume, checkpoint and durable-state checks remain intact.                                       |
+| Team default entry at the same source                 | 8/13 pass; all five failures match the paired baseline. Bounded identity formatting prevents cyclic DOM assertion output from exhausting memory.                                                                   |
+| Team picture recovery focus at the same source        | 17/18 pass; its one focus failure matches the paired baseline. The canonical full file now completes, rather than receiving credit from its prior resource-aborted attempt.                                        |
+| Selection bookmark at `050d8ea3` / runtime `e0252ff8` | 3/3 pass, preserving12 input ticks and exact saved checkpoint/selection assertions after a neutral clock anchor.                                                                                                   |
+| Team presentation ownership at the same source        | 2/4 pass. Both58!=42 failures came from the prior fixture treating all Team roles as pooled. The corrected fixture distinguishes32 actor leases from10 snapshot-owned roles and awaits its own full remote result. |
+
+All supplementary comparison and canonical-file receipt hashes are in the ledger.
+Remaining remote failures are still unclassified where exact baseline or canonical
+proof is absent. No new production defect is inferred from a fixture hypothesis.
+
 The table below preserves the **earlier local snapshot**, without adding later
 retests or remote results twice.
 
@@ -22,7 +40,7 @@ retests or remote results twice.
 | Original completed-file TAP totals | 14,013 tests: 13,587 passed, 394 failed, 32 cancelled; none skipped                                            |
 | Failing completed files            | 74: 73 reproduce exact baseline diagnostics; one candidate-only Canvas2D fixture gap was repaired and retested |
 | Remaining original files           | 710 host/build-lane files and five unit-lane files                                                             |
-| Files added after inventory launch | Three; current repository inventory is 1,951 files                                                             |
+| Files added after inventory launch | Three at that checkpoint; its repository inventory was 1,951 files                                             |
 | Later-added archive test           | 5/5                                                                                                            |
 | Later-added CPU-profile test       | Three cases within the separately recorded 37/37 qualification group                                           |
 | Later-added startup-evidence test  | 4/4                                                                                                            |
@@ -47,6 +65,13 @@ file remains **15/16**, with a separately paired selector timeout. The complete
 candidate-Solo file remains **16/18** on both revisions because two old assertions
 read nested capture-envelope fields from the outer object. The remaining
 assertions in those two cases have no coverage credit.
+
+Four further correctness files were later committed: dense replay/persistence,
+pending verification across public Next/Retry, touch latency diagnostics, and
+meaningful input across changing cadence. Their11 declared cases await the combined
+bounded remote observations; declarations are not passing coverage. They bring
+the file count to1,955 if there are no other additions;
+the original 1,948-file partition remains unchanged.
 
 The added audio-fixture test was already present in the original launch inventory,
 although it was then uncommitted. It is not a fourth post-launch addition. The
