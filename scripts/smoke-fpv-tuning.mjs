@@ -122,14 +122,60 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             const pitch = page.getByRole('group', { name: 'Pitch', exact: true });
             await roll
               .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
-              .fill('900');
+              .fill('895');
+            check(
+              (await roll
+                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .inputValue()) === '895',
+              'An unfinished number was snapped before committing',
+            );
+            await page.keyboard.press('Tab');
+            check(
+              (await roll
+                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .inputValue()) === '900' &&
+                (await roll
+                  .getByRole('slider', { name: 'Maximum rate (°/s)', exact: true })
+                  .inputValue()) === '900',
+              'Blur did not align the displayed number and slider with representable rates',
+            );
             check(
               (await pitch
                 .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
                 .inputValue()) === '900',
               'Linked pitch did not update',
             );
+            await pitch
+              .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+              .fill('670');
+            check(
+              (await roll
+                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .inputValue()) === '670',
+              'Returning the peer to its original rate left the linked draft stale',
+            );
+            await roll
+              .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+              .fill('900');
             await page.getByLabel('Rate algorithm', { exact: true }).selectOption('quick');
+            await page.getByLabel('Rate algorithm', { exact: true }).selectOption('betaflight');
+            const rcRate = roll.getByRole('spinbutton', { name: 'RC rate', exact: true });
+            for (const [typed, committed] of [
+              ['1.235', '1.24'],
+              ['0.25', '0.25'],
+            ]) {
+              await rcRate.fill('');
+              await rcRate.pressSequentially(typed);
+              check(
+                (await rcRate.inputValue()) === typed,
+                'Sequential typing lost the decimal or a digit',
+              );
+              await page.keyboard.press('Tab');
+              check(
+                (await rcRate.inputValue()) === committed,
+                'RC rate did not commit supported units',
+              );
+            }
             await page.getByLabel('Rate algorithm', { exact: true }).selectOption('actual');
             check(
               (await roll
@@ -139,6 +185,21 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             );
             await page.getByLabel('Camera tilt (degrees)', { exact: true }).fill('35');
             await page.getByLabel('Vertical FOV (degrees)', { exact: true }).fill('100');
+            await page.getByLabel('Drone name', { exact: true }).fill('Pending camera setup');
+            const draftProfileId = await page
+              .getByLabel('Rate profile', { exact: true })
+              .inputValue();
+            await page.getByLabel('Rate profile', { exact: true }).selectOption('legacy-feel');
+            await page.getByLabel('Rate profile', { exact: true }).selectOption(draftProfileId);
+            check(
+              (await page.getByLabel('Camera tilt (degrees)', { exact: true }).inputValue()) ===
+                '35' &&
+                (await page.getByLabel('Vertical FOV (degrees)', { exact: true }).inputValue()) ===
+                  '100' &&
+                (await page.getByLabel('Drone name', { exact: true }).inputValue()) ===
+                  'Pending camera setup',
+              'Selecting a rate profile discarded the independent drone draft',
+            );
             const beforeDraft = await page.evaluate(() => window.qualificationStore.export());
             await button('Test draft · unscored').click();
             await page.waitForFunction(() => window.qualificationEvents.tests.length === 1);
@@ -177,6 +238,8 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             evidence.checks.linkedAxesAndAlgorithmDrafts = true;
             evidence.checks.testReturnSave = true;
             evidence.checks.droneAssignmentCamera = true;
+            evidence.checks.numericCommitMatchesSavedUnits = true;
+            evidence.checks.independentSetupDraftAcrossProfiles = true;
             await page
               .getByText('Import / export · Betaflight and backups', { exact: true })
               .click();
@@ -193,6 +256,54 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 download.suggestedFilename().endsWith('.json'),
               'Browser export differs from preview',
             );
+            const firmware = page.getByLabel('Source / export firmware version', { exact: true });
+            await firmware.selectOption('4.5.2');
+            await button('Export rate-only CLI').click();
+            await page
+              .getByRole('status')
+              .filter({ hasText: 'different throttle curve' })
+              .waitFor();
+            const includeThrottle = page.getByLabel('Include throttle settings in CLI export', {
+              exact: true,
+            });
+            await includeThrottle.uncheck();
+            await button('Export rate-only CLI').click();
+            const rotationOnly = await transfer.inputValue();
+            check(
+              !/set (?:thr_|throttle_)/.test(rotationOnly) &&
+                rotationOnly.includes('throttle settings are omitted'),
+              'Explicit rotation-only export retained throttle',
+            );
+            await page.getByRole('status').filter({ hasText: 'rotation rates only' }).waitFor();
+            await includeThrottle.check();
+            await firmware.selectOption('');
+            await page.getByLabel('Patch baseline', { exact: true }).selectOption('defaults');
+            await transfer.fill('# Betaflight 4.5.2\nset roll_srate = 81');
+            await button('Preview import').click();
+            await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
+            await button('Save import as new profile').click();
+            await page.waitForFunction(
+              () => window.qualificationStore.snapshot().profiles.length === 3,
+            );
+            check(
+              await page.evaluate(() => {
+                const imported = window.qualificationStore.snapshot().profiles.at(-1);
+                return (
+                  imported.provenance.firmware.origin === 'header' &&
+                  imported.provenance.firmware.version === '4.5.2' &&
+                  imported.provenance.baseline.kind === 'firmware-defaults'
+                );
+              }),
+              'Header-inferred firmware defaults did not reach the saved receipt',
+            );
+            await page
+              .getByLabel('Replacement when deleting', { exact: true })
+              .selectOption(profileId);
+            await button('Delete & reassign').click();
+            await page.waitForFunction(
+              () => window.qualificationStore.snapshot().profiles.length === 2,
+            );
+            await page.getByLabel('Patch baseline', { exact: true }).selectOption('draft');
             const beforeImport = await page.evaluate(() => window.qualificationStore.export());
             await page
               .getByLabel('Source / export firmware version', { exact: true })
@@ -209,6 +320,23 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await button('Preview import').click();
             // SHA-256 source receipts finish asynchronously; never click Save
             // merely because the pointer action itself has completed.
+            await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
+            await roll
+              .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+              .fill('990');
+            await button('Save import as new profile').click();
+            await page.getByRole('status').filter({ hasText: 'changed' }).waitFor();
+            check(
+              await page.evaluate(() => window.qualificationStore.snapshot().profiles.length === 2),
+              'Stale import preview saved an obsolete curve',
+            );
+            check(
+              (await roll
+                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .inputValue()) === '990',
+              'Rejecting stale preview discarded the visible edit',
+            );
+            await button('Preview import').click();
             await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
             await button('Save import as new profile').click();
             await page.waitForFunction(
@@ -260,6 +388,9 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               backupRestore: true,
             };
             evidence.checks.importAtomicAndExplicitAssignment = true;
+            evidence.checks.headerInferredDefaults = true;
+            evidence.checks.staleImportPreviewRejected = true;
+            evidence.checks.explicitRotationOnlyCliExport = true;
             evidence.checks.download = true;
 
             const other = await context.newPage();

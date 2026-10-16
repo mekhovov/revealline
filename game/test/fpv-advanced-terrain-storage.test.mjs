@@ -7,6 +7,7 @@ import {
   createAdvancedSimulation,
   initAdvancedRuntime,
   replayAdvancedRecording,
+  verifyAdvancedRecovery,
 } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
 import { createAdvancedTerrainFrame } from '../../optional-practice/civilian-fpv/advanced-terrain.mjs';
 const size = (value) => new TextEncoder().encode(JSON.stringify(value)).byteLength;
@@ -91,7 +92,9 @@ test(
       assert.ok(size(record) < ADVANCED_RECORDING_BYTES);
       assert.ok(size(envelope) < ADVANCED_REGIONAL_RECOVERY_BYTES);
       const telemetry = sim.telemetry();
-      sim.restore(JSON.stringify(snapshot));
+      const verificationStarted = performance.now();
+      sim.restore(await verifyAdvancedRecovery(JSON.stringify(snapshot)));
+      const recoveryVerificationMs = performance.now() - verificationStarted;
       assert.deepEqual(sim.telemetry(), telemetry);
       const replay = await replayAdvancedRecording(exported);
       assert.deepEqual(replay.telemetry, telemetry);
@@ -109,6 +112,7 @@ test(
           inputs: 43200,
           checkpoints: 24,
           maximumSeconds: ADVANCED_MAX_SECONDS,
+          recoveryVerificationMs,
         }),
       );
     } finally {

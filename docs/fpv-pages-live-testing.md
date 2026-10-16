@@ -30,8 +30,24 @@ node scripts/game-cli.mjs build --out NEW_SITE --publication-profile main-pages
 node scripts/smoke-fpv-pages.mjs NEW_SITE PLAYWRIGHT_MODULE REPORT.json
 ```
 
-The [current continuation check](fpv-pages-continuation-live-testing-evidence.json)
-uses a successful, unmodified normal CLI build at
+The [current second-review check](fpv-pages-second-review-live-testing-evidence.json)
+passes against the unmodified normal production build at
+`/private/tmp/fpv-rates-second-review-20261016-pages`, version `0.151.1`. Academy
+and World both pass online and in isolated offline contexts, including saved
+rates, keyboard installer activation, Advanced start/restart/export and worker
+disposal. All 3,430 manifest entries and the ZIP checksum were verified, and all
+seven changed runtime modules match the checkout byte-for-byte.
+
+The publication contains 3,432 files / 963,612,018 bytes. Its conservative archive
+forecast is 972,226,560 bytes, leaving 7,773,440 bytes below the unchanged cap.
+The distribution ZIP digest is
+`899acc0d0311d450d8c82cc1c45044cb1d457dc5a9eb1f1c66515f10b950d6a4`.
+The local working-tree build has `sourceRevision: null`; exact committed CI
+publication, public HTTPS, the real password form and existing-install updates
+remain separate checks. No Pages deployment was performed.
+
+The [first continuation check](fpv-pages-continuation-live-testing-evidence.json)
+used a successful, unmodified normal CLI build at
 `/private/tmp/fpv-rates-completion-20261016-pages`, version `0.151.1`. Both packages
 pass online and in isolated offline contexts, including saved rates, keyboard
 installer activation, Advanced start/restart/export and worker disposal. The
@@ -39,7 +55,10 @@ site has 3,432 publication files / 963,601,242 bytes; its conservative archive
 forecast is 972,215,808 bytes, leaving 7,784,192 bytes below the unchanged cap.
 The distribution ZIP digest is
 `74dc9e80f48a9b517860e6d606fb8a33db8524780b4c535f3babf0398506c59f`.
-This is a local working-tree build, not a deployed or committed CI artifact.
+This was a local working-tree build, not a deployed or committed CI artifact.
+Its superseded temporary output was removed after checking its recorded manifest
+and ZIP digests to make room for the second-review build. The original receipts
+remain unchanged.
 
 The first continuation build rejected the `/tmp` symlink before staging; using
 the canonical parent completed normally. The first browser check then found an
@@ -118,6 +137,14 @@ does not waive them.
 
 ## Commit and live verification
 
+The latest-main rebase includes **Measure exact Pages candidate**, a read-only
+diagnostic workflow for narrowly eligible same-repository pull requests. Its
+contract rejects feature branches changing build/publishing tooling, package
+manifests and certain shared modules. This FPV branch changes those paths and is
+therefore outside that workflow's scope. Do not relax its contract or treat a
+local measurement as its successful run; use the ordinary reviewed main build
+and publication process below.
+
 1. Commit the reviewed implementation, tests and evidence while excluding
    unrelated local work. Rebase the feature branch again if `main` has moved.
    Run the repository's required checks on the resulting source.
@@ -142,12 +169,18 @@ does not waive them.
    and repeat a rates/Advanced test. Confirm another simulator's offline copy and
    existing profiles remain intact. Test an existing installation separately from
    a fresh profile.
-8. Check EN/UK, keyboard/touch, a real calibrated radio, export cancellation and
-   recovery. Report device/browser details and the displayed/source build when
-   filing problems.
+8. Check that unsaved camera edits survive profile changes, numeric entries show
+   their committed rate, and a new World/Regional selection becomes the next
+   draft test's origin. Change a previewed import and verify that saving it asks
+   for another preview; test header-derived defaults and rotation-only CLI export.
+9. Export Regional recovery, restore it, and cancel another restore while it is
+   verifying. The current paused flight must survive cancellation or corrupt data.
+   Check EN/UK, keyboard/touch and export cancellation. Physical-radio and pilot
+   checks are deferred until those resources are available. Report device/browser
+   details and the displayed/source build when filing problems.
 
 Physical flight fidelity, the device performance matrix, public HTTPS behavior,
 real radio sampling and scored competition eligibility are not established by
 this Pages delivery check. The historical Regional capacity failure under host contention remains evidence.
-The separate [final bounded capacity run](fpv-regional-contact-capacity-2026-10-16-final.json)
+The separate [second-review bounded capacity run](fpv-regional-contact-capacity-2026-10-16-second-review.json)
 passes on its pinned sources; neither result is changed by deployment.

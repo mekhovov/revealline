@@ -1,4 +1,10 @@
-import { boundedJSON, dataIdentity, exactKeys, required } from '../../game/data-json.mjs';
+import {
+  boundedJSON,
+  canonicalJSON,
+  dataIdentity,
+  exactKeys,
+  required,
+} from '../../game/data-json.mjs';
 import RAPIER from './vendor/rapier/rapier.mjs';
 import { initWorldRuntime, WORLD_COLLISION_BACKEND } from './world-collision.mjs';
 import {
@@ -1289,6 +1295,8 @@ export function createAdvancedSimulation(options = {}) {
       required(!proposal && !terrainProposal, 'A mission transaction is pending');
       return capture(true);
     },
+    // Structural restore is for trusted snapshots and transactional recovery.
+    // User-owned files must pass verifyAdvancedRecovery before adoption.
     restore(source) {
       assertLive();
       required(!proposal && !terrainProposal, 'A mission transaction is pending');
@@ -1485,6 +1493,56 @@ export function createAdvancedSimulation(options = {}) {
       }
     },
   };
+}
+
+/** Verify a user-owned recovery without modifying the receiving simulation.
+ * Future queued input is not part of the consumed history; its shape/order is
+ * checked by restore, while all consumed dynamics must match an exact replay.
+ * Run this in a disposable worker so cancellation terminates the replay. */
+export async function verifyAdvancedRecovery(source, { expectedIdentity } = {}) {
+  const saved = boundedJSON(source, {
+    maxBytes: ADVANCED_REGIONAL_SNAPSHOT_BYTES,
+    maxNodes: 2000000,
+    maxArray: 300000,
+    maxString: 12 * 1024 * 1024,
+    maxDepth: 30,
+  });
+  required(
+    expectedIdentity === undefined || saved.identity === expectedIdentity,
+    'Recovery belongs to another Advanced configuration',
+  );
+  await initAdvancedRuntime();
+  const candidate = createAdvancedSimulation({
+    ...saved.recording?.config,
+    numericalReference: saved.recording?.config?.frequency === 2000,
+  });
+  try {
+    candidate.restore(saved);
+    const replayed = await replayAdvancedRecording(candidate.recording());
+    const consumedState = (snapshot) => {
+      const state = { ...snapshot.state };
+      delete state.acceptedSequence;
+      delete state.acceptedTimestampUs;
+      delete state.checkpointBytes;
+      return {
+        world: snapshot.world,
+        bodyHandle: snapshot.bodyHandle,
+        state,
+        controller: snapshot.controller,
+        ...(snapshot.terrain ? { terrain: snapshot.terrain } : {}),
+      };
+    };
+    // Compare complete data, not just the small replay verification hash. This
+    // also binds contact caches and other Rapier state to the recorded history.
+    required(
+      canonicalJSON(consumedState(candidate.snapshot())) ===
+        canonicalJSON(consumedState(replayed.snapshot)),
+      'Advanced recovery dynamics do not match the recorded flight',
+    );
+    return saved;
+  } finally {
+    candidate.dispose();
+  }
 }
 
 /** Replays the recorded consumed samples, never a player's current library.

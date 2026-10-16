@@ -7,6 +7,8 @@ import {
   ADVANCED_MAX_SECONDS,
   replayAdvancedRecording,
 } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
+import RAPIER from '../../optional-practice/civilian-fpv/vendor/rapier/rapier.mjs';
+import { createAdvancedTerrainFrame } from '../../optional-practice/civilian-fpv/advanced-terrain.mjs';
 
 class FakeWorker {
   static instances = [];
@@ -73,8 +75,12 @@ test('complete recording verification has a bounded duration budget without weak
   const client = createAdvancedWorkerClient({ Worker: FakeWorker });
   try {
     const worker = FakeWorker.instances.at(-1);
-    const pending = [client.initialize({}), client.verifyRecording({})];
-    assert.deepEqual(delays, [10000, (ADVANCED_MAX_SECONDS * 1000) / 2 + 60000]);
+    const pending = [client.initialize({}), client.verifyRecording({}), client.restore({})];
+    assert.deepEqual(delays, [
+      10000,
+      (ADVANCED_MAX_SECONDS * 1000) / 2 + 60000,
+      (ADVANCED_MAX_SECONDS * 1000) / 2 + 60000,
+    ]);
     for (const message of worker.messages) worker.reply({ ...message, result: { accepted: true } });
     await Promise.all(pending);
     for (const value of [0, NaN, Infinity, 420001])
@@ -84,6 +90,100 @@ test('complete recording verification has a bounded duration budget without weak
       );
   } finally {
     client.dispose();
+  }
+});
+
+test('cancelling recovery verification terminates its worker and rejects promptly', async () => {
+  const client = createAdvancedWorkerClient({ Worker: FakeWorker });
+  const pending = assert.rejects(client.restore({}), { name: 'AbortError' });
+  client.dispose(new DOMException('Recovery cancelled', 'AbortError'));
+  await pending;
+  assert.equal(FakeWorker.instances.at(-1).terminated, true);
+  assert.equal(FakeWorker.instances.at(-1).listeners.size, 0);
+});
+
+test('worker recovery verifies consumed dynamics before atomic adoption and preserves future input', async () => {
+  let reply,
+    id = 0;
+  const handler = createAdvancedWorkerHandler((value) => (reply = value));
+  const request = async (type, fields = {}) => {
+    await handler.receive({ id: ++id, session: 'recovery', type, ...fields });
+    return reply;
+  };
+  try {
+    await request('init', {
+      options: { floor: false, terrain: { format: 'AdvancedRegionalTerrain.v1' } },
+    });
+    const staged = await request('stage-terrain', {
+      frame: createAdvancedTerrainFrame({
+        sourceIdentity: '123456789abcdef0',
+        colliders: [
+          {
+            id: 'floor',
+            vertices: [-5, 0, -5, -5, 0, 5, 5, 0, 5, 5, 0, -5],
+            indices: [0, 1, 2, 0, 2, 3],
+          },
+        ],
+      }),
+    });
+    await request('commit-terrain', {
+      decision: { transaction: staged.result.transaction, accepted: true },
+    });
+    const initial = (await request('snapshot')).result;
+    const changedInitial = structuredClone(initial);
+    changedInitial.state.motorSpeeds[0] = 0.2;
+    assert.match(
+      (await request('restore', { snapshot: changedInitial })).error,
+      /replay verification/,
+    );
+    assert.deepEqual((await request('snapshot')).result, initial);
+    for (let mission = 0; mission < 51; mission++)
+      await request('step', {
+        sample: {
+          sequence: mission,
+          timestampUs: mission * 20000,
+          controls: { roll: 0.01, pitch: 0, yaw: 0, throttle: 0.2 },
+        },
+      });
+    await request('input', {
+      sample: {
+        sequence: 51,
+        timestampUs: 1100000,
+        controls: { roll: 0, pitch: 0.02, yaw: 0, throttle: 0.3 },
+      },
+    });
+    const original = (await request('snapshot')).result;
+    for (const mutate of [
+      (saved) => (saved.state.motorSpeeds[0] += 0.01),
+      (saved) => (saved.controller.state.integral.roll += 0.001),
+      (saved) => {
+        const world = RAPIER.World.restoreSnapshot(Buffer.from(saved.world, 'base64'));
+        const body = world.getRigidBody(saved.bodyHandle);
+        body.setTranslation({ ...body.translation(), x: body.translation().x + 0.1 }, false);
+        saved.world = Buffer.from(world.takeSnapshot()).toString('base64');
+        world.free();
+      },
+    ]) {
+      const changed = structuredClone(original);
+      mutate(changed);
+      assert.match(
+        (await request('restore', { snapshot: changed })).error,
+        /replay verification|recovery dynamics/,
+      );
+      assert.deepEqual((await request('snapshot')).result, original);
+    }
+    const legacy = structuredClone(original);
+    delete legacy.recording.comparison;
+    assert.equal((await request('restore', { snapshot: legacy })).result.missionTick, 51);
+    assert.deepEqual((await request('snapshot')).result, original);
+    for (let mission = 51; mission <= 55; mission++) await request('step');
+    assert.equal((await request('telemetry')).result.consumedSequence, 51);
+    assert.equal(
+      (await replayAdvancedRecording((await request('recording')).result)).verified,
+      true,
+    );
+  } finally {
+    handler.dispose();
   }
 });
 
