@@ -13,6 +13,7 @@ import {
   beginQualificationUploadWitness,
   readPublicQualificationReplay,
   waitQualificationControl,
+  waitQualificationPreparation,
 } from './solo-qualification-export.mjs';
 import { createQualificationCpuProfile } from './solo-qualification-cpu-profile.mjs';
 import {
@@ -205,6 +206,7 @@ const report = {
   snapshots: [],
   uploads: [],
   pageErrors: [],
+  pageErrorWitnesses: [],
   failedResponses: [],
   externalCadenceCalibration: null,
   startupCadenceObservations: [],
@@ -219,6 +221,7 @@ async function save() {
 }
 await save();
 let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder;
+let activeAction = null;
 let partialReplay = false;
 let memorySnapshots = 0;
 async function profileMemory() {
@@ -274,7 +277,15 @@ try {
   page = await context.newPage();
   if (memoryProfile || cpuProfile || cpu !== 1) cdp = await context.newCDPSession(page);
   page.on('pageerror', (error) => {
-    if (report.pageErrors.length < 100) report.pageErrors.push(String(error.stack ?? error));
+    if (report.pageErrors.length < 100) {
+      report.pageErrorWitnesses.push({
+        errorIndex: report.pageErrors.length,
+        observedAt: new Date().toISOString(),
+        observedTopLevelURL: page.url().slice(0, 4096),
+        action: activeAction,
+      });
+      report.pageErrors.push(String(error.stack ?? error));
+    }
   });
   page.on('response', (response) => {
     if (response.status() >= 400 && report.failedResponses.length < 100)
@@ -716,6 +727,8 @@ try {
           status: 'running',
         };
       report.actions.push(record);
+      const previousAction = activeAction;
+      activeAction = { path, type: action.type };
       const timeout = remaining(action),
         locator = action.selector ? page.locator(action.selector) : null;
       try {
@@ -755,7 +768,26 @@ try {
           );
           await prepareObservation(`reload-${path}`);
         } else if (action.type === 'follow') {
-          const href = await locator.getAttribute('href');
+          const followDeadline = Date.now() + timeout;
+          const followRemaining = () => {
+            const value = followDeadline - Date.now();
+            assert(value > 0, 'Follow action deadline exceeded');
+            return value;
+          };
+          record.navigation = {
+            mode: 'same-page-prepared-url; does not activate the link or its popup target',
+            from: page.url(),
+          };
+          if (action.preparationStatusSelector) {
+            record.preparation = {};
+            await waitQualificationPreparation(
+              page,
+              action.preparationStatusSelector,
+              followRemaining(),
+              record.preparation,
+            );
+          }
+          const href = await locator.getAttribute('href', { timeout: followRemaining() });
           assert(href, 'Missing prepared UI link');
           const destination = new URL(href, page.url());
           assert.equal(
@@ -764,18 +796,26 @@ try {
             'Qualification navigation must stay in the admitted origin',
           );
           destination.searchParams.set('performance', '1');
-          await page.goto(destination.href, { waitUntil: 'domcontentloaded', timeout });
+          record.navigation.destination = destination.href;
+          await page.goto(destination.href, {
+            waitUntil: 'domcontentloaded',
+            timeout: followRemaining(),
+          });
           if (
             (fixtureAccess || serverFixtureAccess) &&
             (await page.locator('input[name=password]').isVisible())
           ) {
-            await page.locator('input[name=password]').fill('fixture-password');
-            await page.getByRole('button', { name: 'Unlock', exact: true }).click();
+            await page
+              .locator('input[name=password]')
+              .fill('fixture-password', { timeout: followRemaining() });
+            await page
+              .getByRole('button', { name: 'Unlock', exact: true })
+              .click({ timeout: followRemaining() });
           }
           await page.waitForFunction(
             () => document.documentElement.dataset.bootState === 'ready',
             null,
-            { timeout },
+            { timeout: followRemaining() },
           );
           await prepareObservation(`follow-${path}`);
         } else if (action.type === 'select') await locator.selectOption(action.value, { timeout });
@@ -1031,6 +1071,7 @@ try {
         throw error;
       } finally {
         record.completedAt = new Date().toISOString();
+        activeAction = previousAction;
       }
       // Serialize only between actions, never in a browser animation callback.
       if (action.type === 'snapshot' || action.type === 'repeat') await save();

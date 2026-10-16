@@ -1,4 +1,64 @@
 import assert from 'node:assert/strict';
+/* global document */
+
+// This public status belongs to preparation in the departing document. A hidden
+// ready indicator is valid; an absent indicator is not evidence of readiness.
+export async function waitQualificationPreparation(
+  page,
+  selector,
+  timeoutMs,
+  evidence,
+  now = () => performance.now(),
+) {
+  const started = now();
+  Object.assign(evidence, { selector, status: 'waiting', initial: null, final: null });
+  const read = () =>
+    page.evaluate((selector) => {
+      const target = document.querySelector(selector);
+      return {
+        url: document.URL.slice(0, 4096),
+        present: Boolean(target),
+        state: target?.getAttribute('data-state')?.slice(0, 64) ?? null,
+        message: target?.textContent?.slice(0, 512) ?? null,
+      };
+    }, selector);
+  try {
+    evidence.initial = await read();
+    if (!['ready', 'error'].includes(evidence.initial.state)) {
+      const timeout = timeoutMs - (now() - started);
+      assert(timeout > 0, 'Public preparation deadline exceeded');
+      await page.waitForFunction(
+        (selector) => {
+          const state = document.querySelector(selector)?.getAttribute('data-state');
+          return state === 'ready' || state === 'error';
+        },
+        selector,
+        { timeout },
+      );
+    }
+    evidence.final = await read();
+    assert.notEqual(
+      evidence.final.state,
+      'error',
+      `Public preparation failed: ${evidence.final.message ?? selector}`,
+    );
+    assert.equal(evidence.final.state, 'ready', 'Public preparation no longer ready');
+    evidence.status = 'ready';
+  } catch (error) {
+    evidence.status = 'failed';
+    evidence.failure = String(error.message ?? error);
+    if (!evidence.final) {
+      try {
+        evidence.final = await read();
+      } catch (readError) {
+        evidence.finalReadFailure = String(readError.message ?? readError);
+      }
+    }
+    throw error;
+  } finally {
+    evidence.elapsedMs = Math.max(0, now() - started);
+  }
+}
 
 // File upload APIs can bypass an inert page. Visibility alone is insufficient
 // when the tool has not yet installed its ordinary event handlers.

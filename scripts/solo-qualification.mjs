@@ -200,6 +200,10 @@ export function validateQualification(scenario) {
       if (action.timeoutMs !== undefined) integer(action.timeoutMs, 1, 120_000, 'action timeout');
       if (['click', 'select', 'check', 'fill', 'upload', 'expect', 'follow'].includes(action.type))
         string(action.selector, 'selector');
+      if (action.preparationStatusSelector !== undefined) {
+        assert.equal(action.type, 'follow', 'Preparation status is only supported before follow');
+        string(action.preparationStatusSelector, 'public preparation status selector');
+      }
       if (['select', 'fill'].includes(action.type)) string(action.value, 'control value');
       if (action.type === 'check') assert.equal(typeof action.value, 'boolean');
       if (action.type === 'upload') {
