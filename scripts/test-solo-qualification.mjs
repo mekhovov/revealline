@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import { webcrypto } from 'node:crypto';
+import { installAudioProof, evaluateAudioProof } from './solo-qualification-audio.mjs';
 import {
   calibrateReadyCadence,
   externalQualificationBudgets,
@@ -361,4 +364,181 @@ test('external baseline gates never synthesize missing internal counters or exac
   assert.equal(externalQualificationBudgets(probe).exactRunningWork, null);
   probe.calibration.status = 'provisional-unstable';
   assert.equal(externalQualificationBudgets(probe).status, 'inconclusive');
+});
+
+test('audio identity scenarios require bounded valid hashes and no-input transition windows', () => {
+  const hash = 'a'.repeat(64);
+  assert.doesNotThrow(() =>
+    validateQualification(
+      scenario(
+        [
+          { type: 'audio-ready', recordedHashes: [hash], fallbackMs: 5000, timeoutMs: 30000 },
+          { type: 'result', outcome: 'won', timeoutMs: 20000 },
+        ],
+        { audioRequirements: { recordedHashes: [hash] } },
+      ),
+    ),
+  );
+  for (const extra of [
+    { recordedHashes: ['invalid'] },
+    { recordedHashes: [hash, hash] },
+    { streamedHashes: [hash], naturalTransitionsAtLeast: 1 },
+    { recordedHashes: [hash], misspelledAdvanceSeconds: 1 },
+  ])
+    assert.throws(() =>
+      validateQualification(
+        scenario([{ type: 'snapshot', group: 'paused' }], { audioRequirements: extra }),
+      ),
+    );
+  assert.throws(() =>
+    validateQualification(
+      scenario([{ type: 'click', selector: '#next', label: 'natural-music-transition' }]),
+    ),
+  );
+  assert.throws(() =>
+    validateQualification(scenario([{ type: 'audio-ready', recordedHashes: [hash] }])),
+  );
+});
+
+test('recording identity requires resolved original bytes and actual gameplay start, not preference or preview', () => {
+  const sha256 = 'a'.repeat(64),
+    requirements = { recordedHashes: [sha256] };
+  const proof = {
+    sources: [{ id: 0, status: 'pending', sha256 }],
+    starts: [{ sourceId: 0, phase: 'running' }],
+    mediaEvents: [],
+  };
+  assert.equal(evaluateAudioProof(null, requirements).status, 'unobserved');
+  assert.equal(evaluateAudioProof(proof, requirements).status, 'unobserved');
+  proof.sources[0].status = 'resolved';
+  proof.starts[0].phase = 'paused';
+  assert.equal(evaluateAudioProof(proof, requirements).status, 'unobserved');
+  proof.starts[0].phase = 'picture';
+  assert.equal(evaluateAudioProof(proof, requirements).status, 'pass');
+});
+
+test('stream proof requires advancing exact recordings and a near-end switch inside an input-free window', () => {
+  const first = 'a'.repeat(64),
+    second = 'b'.repeat(64);
+  const event = (sourceId, atMs, name, currentTime, duration = 60) => ({
+    sourceId,
+    element: sourceId,
+    event: name,
+    atMs,
+    currentTime,
+    duration,
+  });
+  const proof = {
+    sources: [
+      { id: 0, status: 'resolved', sha256: first },
+      { id: 1, status: 'resolved', sha256: second },
+    ],
+    starts: [],
+    windows: [{ label: 'natural-music-transition', startMs: 10000, endMs: 70000 }],
+    mediaEvents: [
+      event(0, 0, 'playing', 0),
+      event(0, 2000, 'timeupdate', 2),
+      event(1, 5000, 'playing', 0, 44.5),
+      event(1, 10000, 'window-start', 5, 44.5),
+      event(1, 45000, 'timeupdate', 40, 44.5),
+      event(1, 45500, 'timeupdate', 40.5, 44.5),
+      event(0, 46000, 'playing', 0),
+      event(0, 48000, 'timeupdate', 2),
+    ],
+  };
+  const requirements = {
+    streamedHashes: [first, second],
+    minimumAdvanceSeconds: 1,
+    naturalTransitionsAtLeast: 1,
+  };
+  assert.equal(evaluateAudioProof(proof, requirements).status, 'pass');
+  assert.equal(
+    evaluateAudioProof(proof, requirements).checks.at(-1).transitions[0].mechanism,
+    'near-end-overlap',
+  );
+  const missingWindow = { ...proof, windows: [] };
+  assert.equal(evaluateAudioProof(missingWindow, requirements).status, 'unobserved');
+  const earlyManualSwitch = {
+    ...proof,
+    mediaEvents: proof.mediaEvents.map((row) =>
+      row.sourceId === 1 ? { ...row, duration: 90 } : row,
+    ),
+  };
+  assert.equal(evaluateAudioProof(earlyManualSwitch, requirements).status, 'unobserved');
+  const staticSecond = {
+    ...proof,
+    mediaEvents: proof.mediaEvents.map((row) =>
+      row.sourceId === 1 ? { ...row, currentTime: 0 } : row,
+    ),
+  };
+  assert.equal(evaluateAudioProof(staticSecond, requirements).status, 'unobserved');
+});
+
+test('explicit audio probe preserves native promises and links decoded buffers after asynchronous hashing', async () => {
+  const buffer = { duration: 1, sampleRate: 48000, numberOfChannels: 1 };
+  let nativePromise,
+    nativeStarts = 0,
+    nextURL = 0;
+  class Context {
+    decodeAudioData(_bytes, success) {
+      nativePromise = Promise.resolve(buffer);
+      nativePromise.then(success);
+      return nativePromise;
+    }
+  }
+  class Source {
+    start() {
+      nativeStarts++;
+    }
+  }
+  class Media {
+    play() {
+      return Promise.resolve();
+    }
+  }
+  const sandbox = {
+    window: { AudioContext: Context },
+    document: { body: { dataset: { flightState: 'running' } } },
+    AudioBufferSourceNode: Source,
+    HTMLMediaElement: Media,
+    URL: { createObjectURL: () => `blob:${nextURL++}` },
+    crypto: webcrypto,
+    performance: { now: () => 1 },
+    Uint8Array,
+    Map,
+    WeakMap,
+    Set,
+  };
+  vm.runInNewContext(`(${installAudioProof.toString()})()`, sandbox);
+  const bytes = new Uint8Array([1, 2, 3]).buffer;
+  const pending = new Context().decodeAudioData(bytes);
+  assert.equal(pending, nativePromise);
+  const decoded = await pending;
+  const player = new Source();
+  player.buffer = decoded;
+  player.start();
+  assert.equal(nativeStarts, 1);
+  let proof;
+  for (let i = 0; i < 100; i++) {
+    proof = sandbox.window.soloAudioProof.export();
+    if (proof.sources[0].status === 'resolved') break;
+    await new Promise((done) => setTimeout(done, 1));
+  }
+  assert.equal(proof.sources[0].decoded, true);
+  assert.equal(proof.starts[0].sourceId, 0);
+  assert.equal(
+    proof.sources[0].sha256,
+    '039058c6f2c0cb492c533b0a4d14ef77cc0f78abccced5287d84a1a2011cfb81',
+  );
+  assert.equal(sandbox.window.soloAudioProof.recordingsReady([proof.sources[0].sha256]), true);
+  assert.equal(
+    evaluateAudioProof(proof, { recordedHashes: [proof.sources[0].sha256] }).status,
+    'pass',
+  );
+  sandbox.URL.createObjectURL({ type: 'application/vnd.revealline.soundtrack', size: 3 });
+  assert.equal(
+    sandbox.window.soloAudioProof.export().sources.length,
+    1,
+    'Container upload is not a recording identity',
+  );
 });

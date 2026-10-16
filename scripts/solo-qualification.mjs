@@ -21,12 +21,26 @@ const types = new Set([
   'follow',
   'exportReplay',
   'reload',
+  'audio-ready',
+  'result',
 ]);
 function integer(value, minimum, maximum, name) {
   assert(Number.isInteger(value) && value >= minimum && value <= maximum, `Invalid ${name}`);
 }
 function string(value, name) {
   assert(typeof value === 'string' && value.length > 0 && value.length <= 4096, `Invalid ${name}`);
+}
+
+function hashes(values) {
+  assert(
+    Array.isArray(values) && values.length > 0 && values.length <= 16,
+    'Invalid recording hashes',
+  );
+  assert(
+    values.every((value) => typeof value === 'string' && /^[0-9a-f]{64}$/.test(value)),
+    'Invalid recording SHA256',
+  );
+  assert.equal(new Set(values).size, values.length, 'Duplicate recording hashes');
 }
 
 export function validateQualification(scenario) {
@@ -54,6 +68,39 @@ export function validateQualification(scenario) {
   if (scenario.expectAudio) {
     integer(scenario.expectAudio.nativeStartsAtLeast, 1, 1000000, 'audio source count');
     assert.equal(scenario.expectAudio.unmuted, true);
+  }
+  if (scenario.audioRequirements) {
+    const requirements = scenario.audioRequirements;
+    assert(
+      Object.keys(requirements).every((key) =>
+        [
+          'recordedHashes',
+          'streamedHashes',
+          'minimumAdvanceSeconds',
+          'naturalTransitionsAtLeast',
+        ].includes(key),
+      ),
+      'Unknown audio proof requirement',
+    );
+    assert(
+      requirements.recordedHashes || requirements.streamedHashes,
+      'Audio proof needs recording identities',
+    );
+    if (requirements.recordedHashes) hashes(requirements.recordedHashes);
+    if (requirements.streamedHashes) hashes(requirements.streamedHashes);
+    if (requirements.minimumAdvanceSeconds !== undefined)
+      assert(
+        Number.isFinite(requirements.minimumAdvanceSeconds) &&
+          requirements.minimumAdvanceSeconds > 0 &&
+          requirements.minimumAdvanceSeconds <= 30,
+      );
+    if (requirements.naturalTransitionsAtLeast !== undefined) {
+      integer(requirements.naturalTransitionsAtLeast, 1, 16, 'natural stream transitions');
+      assert(
+        requirements.streamedHashes?.length >= 2,
+        'Natural transitions require two known streams',
+      );
+    }
   }
   if (scenario.replayRequirements)
     for (const [key, value] of Object.entries(scenario.replayRequirements)) {
@@ -87,6 +134,20 @@ export function validateQualification(scenario) {
       if (action.type === 'key') {
         assert(keys.includes(action.key), 'Only gameplay keys are admitted');
         integer(action.ms, 1, 60_000, 'key duration');
+      }
+      if (action.type === 'audio-ready') {
+        hashes(action.recordedHashes);
+        integer(action.fallbackMs, 1, 60_000, 'non-profiling fixed preparation wait');
+      }
+      if (action.type === 'result')
+        assert(['won', 'lost'].includes(action.outcome), 'Invalid public outcome');
+      if (action.label !== undefined) {
+        string(action.label, 'action label');
+        if (action.label === 'natural-music-transition')
+          assert(
+            action.type === 'wait' && Number.isInteger(action.ms),
+            'Natural transition window must have no public input',
+          );
       }
       if (action.type === 'wait') {
         assert(
