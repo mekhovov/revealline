@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "glbs": 57,
+  "warnings": 0,
+  "sweeps": 2724,
+  "transitions": 244,
+  "peakResources": 561576,
+  "retainedAndStagedBytes": 1123152,
+  "terrainAgreement": 4,
+  "failures": [],
+  "playerReady": false
+}

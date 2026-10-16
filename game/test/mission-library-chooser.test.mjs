@@ -5,9 +5,15 @@ import { createMissionLibrary } from '../mission-library/library.mjs';
 import { journeyLibrarySource } from '../mission-library/journey-source.mjs';
 import { createJourneyCatalog } from '../journey/catalog.mjs';
 import { emptyJourneyProfile } from '../journey/profile.mjs';
+import {
+  JOURNEY_PICTURES_LIMIT,
+  JOURNEY_PICTURES_VERSION,
+  validateJourneyPictures,
+} from '../journey/pictures.mjs';
 import { attachJourneyChooser } from '../ui/journey-chooser.mjs';
 import { createMissionLibrarySessionState } from '../mission-library/handoff.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
@@ -100,6 +106,142 @@ function setup(sources, options = {}) {
   return { doc, library, chooser, opener, $: (id) => doc.getElementById(id) };
 }
 
+test('Random level launches a ready alternative from the visible mission results', async () => {
+  let launched = null;
+  const source = owner({
+    entries: [
+      { ...row('current'), name: 'Current line' },
+      { ...row('alternative'), name: 'Alternative line' },
+      { ...row('last'), name: 'Last line' },
+    ],
+    launch: (entry) => {
+      launched = entry.id;
+      return true;
+    },
+  });
+  const current = createMissionLibrary([source]).missions[0];
+  const h = setup([source], {
+    getCurrentId: () => current.id,
+    random: () => 0,
+  });
+
+  assert.equal(h.$('journey-random-level').textContent, 'Random level');
+  assert.equal(h.$('journey-random-level').disabled, false);
+  h.$('journey-random-level').click();
+  await tick();
+
+  assert.equal(launched, 'alternative', 'the current level is excluded when another is ready');
+  assert.equal(h.$('journey-chooser').open, false);
+  h.chooser.destroy();
+});
+
+test('Random level respects visible filters, while the Pause action resets to current host levels', async () => {
+  const launches = [];
+  const sources = [
+    owner({
+      entries: [
+        { ...row('solo-one', ['solo']), name: 'Solo one' },
+        { ...row('solo-two', ['solo']), name: 'Solo two' },
+      ],
+      launch: (entry) => {
+        launches.push(entry.id);
+        return true;
+      },
+    }),
+    owner({
+      id: 'team-owner',
+      entries: [{ ...row('team-only', ['team']), name: 'Team only' }],
+      launch: (entry) => {
+        launches.push(entry.id);
+        return true;
+      },
+    }),
+  ];
+  const filtered = setup(sources, { random: () => 0 });
+  filtered.$('journey-search').value = 'Solo two';
+  filtered.$('journey-search').emit('input');
+  filtered.$('journey-random-level').click();
+  await tick();
+  assert.deepEqual(launches, ['solo-two']);
+  filtered.chooser.destroy();
+
+  const pause = setup(sources, {
+    random: () => 0,
+    readState: () => ({ mode: 'team', search: 'no result' }),
+  });
+  assert.equal(pause.$('journey-cards').children.length, 0);
+  assert.equal(pause.chooser.playRandom({ resetFilters: true }), true);
+  await tick();
+  assert.deepEqual(launches, ['solo-two', 'solo-one']);
+  assert.equal(pause.chooser.state().mode, 'solo');
+  assert.equal(pause.chooser.state().search, '');
+  pause.chooser.destroy();
+});
+
+test('Archive is explicit, retains exact launch ownership and reveals a saved historical mission', async () => {
+  let launched;
+  const archivedOwner = owner({
+    id: 'historical',
+    lifecycle: 'archive',
+    launch: (value) => {
+      launched = value;
+      return true;
+    },
+  });
+  const h = setup([owner(), archivedOwner]);
+  const archived = h.library.missions.find((entry) => entry.lifecycle === 'archive');
+  assert.equal(h.$('journey-lifecycle').value, 'current');
+  assert.equal(h.$('journey-cards').children.length, 1);
+  assert.notEqual(h.$('journey-cards').children[0].dataset.missionId, archived.id);
+  h.$('journey-lifecycle').value = 'archive';
+  h.$('journey-lifecycle').emit('change');
+  assert.equal(h.$('journey-cards').children.length, 1);
+  assert.equal(h.$('journey-cards').children[0].dataset.missionId, archived.id);
+  h.chooser.close();
+  h.chooser.open(h.opener);
+  assert.equal(h.$('journey-lifecycle').value, 'archive');
+  h.$('journey-lifecycle').value = 'current';
+  h.$('journey-lifecycle').emit('change');
+  assert.equal(h.chooser.reveal(archived.id), true);
+  assert.equal(h.$('journey-lifecycle').value, 'archive');
+  h.doc.activeElement.click();
+  await tick();
+  assert.equal(launched, archivedOwner.entries[0]);
+  h.chooser.destroy();
+});
+
+test('opening an explicit historical edition starts on its Archive mission', () => {
+  const historical = owner({ id: 'historical', lifecycle: 'archive' });
+  const exact = createMissionLibrary([historical]).missions[0];
+  const h = setup([owner(), historical], { getCurrentId: () => exact.id });
+  assert.equal(h.$('journey-lifecycle').value, 'archive');
+  assert.equal(h.doc.activeElement.dataset.missionId, exact.id);
+  h.chooser.destroy();
+});
+
+test('a Solo-only content provider excludes unsupported filters and stale saved modes', () => {
+  const { $, chooser } = setup([owner({ collection: 'Journey' })], {
+    supportedModes: ['solo'],
+    availableCollectionsOnly: true,
+    description: 'Selected company',
+    readState: () => ({ mode: 'versus', collection: 'Custom' }),
+  });
+  assert.deepEqual(
+    [...$('journey-mode').children].map((option) => option.value),
+    ['solo'],
+  );
+  assert.deepEqual(
+    [...$('journey-collection').children].map((option) => option.value),
+    ['', 'Journey'],
+  );
+  assert.equal(chooser.state().mode, 'solo');
+  assert.equal(chooser.state().collection, '');
+  $('journey-mode').value = 'team';
+  $('journey-mode').emit('change');
+  assert.equal(chooser.state().mode, 'solo');
+  chooser.destroy();
+});
+
 test('opening and controller fallback focus the first enabled mission without a search step', () => {
   const { doc, $, chooser } = setup([
     owner({
@@ -121,9 +263,13 @@ test('opening and controller fallback focus the first enabled mission without a 
 });
 
 test('current mission is the initial target, then an explicit retained selection takes precedence', () => {
-  const source = owner({ entries: [row('first'), row('current'), row('selected')] });
+  const source = owner({
+    entries: [row('first'), row('current'), row('selected')],
+  });
   const rows = createMissionLibrary([source]).missions;
-  const { doc, $, chooser, opener } = setup([source], { getCurrentId: () => rows[1].id });
+  const { doc, $, chooser, opener } = setup([source], {
+    getCurrentId: () => rows[1].id,
+  });
   assert.equal(doc.activeElement.dataset.missionId, rows[1].id);
   assert.ok(doc.activeElement.scrolled > 0, 'A current mission below the fold is made visible.');
   $('journey-cards').children[2].focus();
@@ -200,7 +346,10 @@ test('a current host mission cannot override retained other-mode browsing', () =
 test('a retained remote mission that arrives unavailable yields to the first enabled card', async () => {
   const delayed = owner({
     id: 'delayed',
-    availability: () => ({ state: 'unavailable', reason: 'No compatible runtime.' }),
+    availability: () => ({
+      state: 'unavailable',
+      reason: 'No compatible runtime.',
+    }),
   });
   const expected = createMissionLibrary([delayed]).missions[0];
   const { doc, $, library, chooser } = setup([owner()], {
@@ -221,6 +370,8 @@ function resizeFixture() {
     media = Object.assign(new Events(), { matches: false });
   let nextFrame = 0;
   const view = Object.assign(new Events(), doc.defaultView, {
+    innerWidth: 1280,
+    innerHeight: 800,
     matchMedia: () => media,
     requestAnimationFrame(callback) {
       frames.set(++nextFrame, callback);
@@ -246,10 +397,17 @@ function resizeFixture() {
       frames.clear();
       for (const callback of callbacks) callback();
     },
+    rotate(width, height) {
+      view.innerWidth = width;
+      view.innerHeight = height;
+      media.matches = width <= 600 || height <= 720;
+      media.emit('change', { matches: media.matches });
+      view.emit('resize');
+    },
   };
 }
 
-test('viewport reflow keeps the focused mission visible without moving focus or taking input ownership', () => {
+test('viewport reflow preserves the visible anchor without scrolling the focused mission into view', () => {
   const f = resizeFixture(),
     card = f.$('journey-cards').children[1];
   card.focus();
@@ -261,13 +419,101 @@ test('viewport reflow keeps the focused mission visible without moving focus or 
   f.view.emit('resize');
   assert.equal(f.frames.size, 1, 'Repeated layout signals coalesce into one frame.');
   f.frame();
-  assert.equal(card.scrolled, before + 1);
+  assert.equal(card.scrolled ?? 0, before);
   assert.equal(f.doc.activeElement, card);
   assert.equal(f.chooser.state().selectedId, card.dataset.missionId);
-  assert.equal(focusEvents, 0, 'Reflow scrolls without another focus event.');
+  assert.equal(focusEvents, 0, 'Reflow preserves position without another focus event.');
   f.chooser.destroy();
   assert.equal(f.view.listeners.get('resize')?.size, 0);
   assert.equal(f.view.listeners.get('blur')?.size, 0);
+});
+
+test('coalesced resize signals retain the pre-reflow anchor through layout scroll events', () => {
+  const f = resizeFixture(),
+    list = f.$('journey-cards'),
+    first = list.children[0],
+    second = list.children[1],
+    beforeFirstScroll = first.scrolled ?? 0,
+    beforeSecondScroll = second.scrolled ?? 0;
+  list._rect = { x: 0, y: 100, width: 320, height: 240 };
+  first._rect = { x: 0, y: 112, width: 150, height: 155 };
+  second._rect = { x: 0, y: 280, width: 150, height: 155 };
+  list.scrollTop = 96;
+  list.emit('scroll');
+
+  f.view.emit('resize');
+  assert.equal(f.frames.size, 1);
+  first._rect.y = -200;
+  second._rect.y = 110;
+  list.scrollTop = 999;
+  list.emit('scroll');
+  f.media.emit('change', { matches: true });
+  assert.equal(f.frames.size, 1, 'A later media signal replaces only the queued frame.');
+
+  f.frame();
+  assert.equal(list.scrollTop, 687, 'The original first-card offset wins over reflow scrolling.');
+  assert.equal(first.scrolled ?? 0, beforeFirstScroll);
+  assert.equal(second.scrolled ?? 0, beforeSecondScroll);
+  f.chooser.destroy();
+});
+
+test('changing search retires the old scroll anchor before an immediate rotation', () => {
+  const f = resizeFixture(),
+    list = f.$('journey-cards'),
+    first = list.children[0],
+    second = list.children[1];
+  list._rect = { x: 0, y: 100, width: 320, height: 240 };
+  first._rect = { x: 0, y: -200, width: 150, height: 155 };
+  second._rect = { x: 0, y: 110, width: 150, height: 155 };
+  list.scrollTop = 310;
+  list.emit('scroll');
+  f.view.emit('resize');
+  first._rect.y = 100;
+  second._rect.y = 310;
+  f.$('journey-search').value = '';
+  f.$('journey-search').emit('input');
+  assert.equal(list.scrollTop, 0);
+  assert.equal(f.frames.size, 0, 'the previous layout operation is retired');
+  first._rect.y += 8;
+  second._rect.y += 8;
+  f.rotate(740, 360);
+  f.frame();
+  assert.equal(list.scrollTop, 8, 'rotation keeps the new first row, not the previous chapter');
+  f.chooser.destroy();
+});
+
+test('phone viewport and rotation matrix retains the exact top mission, offset and focus', () => {
+  const f = resizeFixture(),
+    list = f.$('journey-cards'),
+    card = list.children[0];
+  list._rect = { x: 0, y: 100, width: 320, height: 240 };
+  card._rect = { x: 0, y: 112, width: 150, height: 155 };
+  list.scrollTop = 96;
+  card.focus();
+  list.emit('scroll');
+  const beforeFocusScroll = card.scrolled ?? 0;
+  let expectedScroll = list.scrollTop;
+  for (const [width, height] of [
+    [320, 568],
+    [375, 667],
+    [568, 320],
+    [1280, 800],
+    [375, 667],
+  ]) {
+    card._rect.y += 7;
+    expectedScroll += 7;
+    f.rotate(width, height);
+    assert.equal(f.frames.size, 1, `${width}×${height} coalesces layout work.`);
+    f.frame();
+    assert.equal(list.scrollTop, expectedScroll, `${width}×${height} restores the pixel offset.`);
+    // A real scroll moves the card back to the captured visual offset. Mirror
+    // that geometry in the lightweight DOM before the next rotation.
+    card._rect.y -= 7;
+    assert.equal(f.doc.activeElement, card, `${width}×${height} keeps exact card focus.`);
+    assert.equal(f.$('journey-cards').children[0], card);
+    assert.equal(card.scrolled ?? 0, beforeFocusScroll, 'Rotation never invokes focus scrolling.');
+  }
+  f.chooser.destroy();
 });
 
 for (const action of ['search', 'another card', 'hidden', 'blur', 'close', 'destroy'])
@@ -299,13 +545,15 @@ for (const action of ['search', 'another card', 'hidden', 'blur', 'close', 'dest
     if (action !== 'destroy') f.chooser.destroy();
   });
 
-test('viewport changes do not scroll missions while Search, a closed chooser or background owns the page', () => {
+test('viewport changes preserve an anchor without scrolling a card into view or acting when hidden', () => {
   const f = resizeFixture(),
     card = f.doc.activeElement,
     before = card.scrolled ?? 0;
   f.$('journey-search').focus();
   f.view.emit('resize');
-  assert.equal(f.frames.size, 0);
+  assert.equal(f.frames.size, 1);
+  f.frame();
+  assert.equal(card.scrolled ?? 0, before);
   card.focus();
   f.doc.hidden = true;
   f.view.emit('resize');
@@ -327,7 +575,10 @@ for (const intervention of ['new focus', 'focus away and back', 'new input', 'ne
     let launches = 0,
       retired = 0;
     const { doc, $, chooser, opener } = setup([owner({ launch: () => ++launches })], {
-      launchContext: () => ({ isCurrent: () => !retired, retire: () => retired++ }),
+      launchContext: () => ({
+        isCurrent: () => !retired,
+        retire: () => retired++,
+      }),
     });
     chooser.close();
     opener.focus();
@@ -357,6 +608,32 @@ for (const intervention of ['new focus', 'focus away and back', 'new input', 'ne
       assert.equal(doc.captureListeners.get(type)?.size ?? 0, 0, 'The close guard is released.');
     if (intervention === 'new focus') assert.equal(doc.activeElement, help);
     if (intervention === 'new filter') assert.equal($('journey-search').value, 'newer search');
+    chooser.destroy();
+  });
+
+for (const outcome of ['cancel', 'failure'])
+  test(`touch ${outcome} restores the activated mission rather than a different focused card`, async () => {
+    let saved;
+    const { doc, $, chooser } = setup(
+      [
+        owner({
+          entries: [row('first'), row('second')],
+          launch: () => {
+            if (outcome === 'failure') throw new Error('Picture unavailable');
+            return false;
+          },
+        }),
+      ],
+      { writeState: (value) => (saved = value) },
+    );
+    const [first, second] = $('journey-cards').children;
+    first.focus();
+    second.click(); // A touch tap does not necessarily change native focus.
+    await tick();
+    assert.equal($('journey-chooser').open, true);
+    assert.equal(doc.activeElement, second);
+    assert.equal(chooser.state().selectedId, second.dataset.missionId);
+    assert.equal(saved.selectedId, second.dataset.missionId);
     chooser.destroy();
   });
 
@@ -503,10 +780,178 @@ test('one flat selector defaults to All/current mode, textual collections, campa
   assert.match(cards[1].textContent, /Earlier edition.*Classic/);
   assert.match(cards[2].textContent, /Player edition.*Custom/);
   assert(!cards[1].textContent.includes('Band'), 'Classic must not invent Journey difficulty.');
-  assert.match(cards[1].textContent, /65% coverage.*3 lives.*Play/);
+  assert.match(cards[1].textContent, /65% coverage.*3 lives/);
+  assert(!cards[1].textContent.includes('Play'));
   $('journey-mode').value = 'team';
   $('journey-mode').emit('change');
   assert.equal($('journey-cards').children.length, 1);
+  chooser.destroy();
+});
+
+test('campaign rail keeps the complete gallery and jumps to an exact campaign', () => {
+  const source = owner({
+    entries: [
+      { ...row('first'), campaignTitle: 'First light', levelIndex: 0 },
+      { ...row('second'), campaignTitle: 'First light', levelIndex: 1 },
+      {
+        ...row('third'),
+        campaignKey: 'second-v1',
+        campaignTitle: 'Crossing lines',
+        levelIndex: 0,
+      },
+    ],
+  });
+  const { doc, $, library, chooser } = setup([source]);
+  const rail = $('journey-campaign-rail'),
+    list = $('journey-cards');
+  assert.equal(rail.children.length, 2);
+  assert.match(rail.children[0].textContent, /First light · 2 missions/);
+  assert.match(rail.children[1].textContent, /Crossing lines · 1 mission/);
+  assert.equal(list.children.length, 3, 'Campaign shortcuts do not filter the full gallery.');
+  const crossing = library.missions.find((mission) => mission.campaignTitle === 'Crossing lines');
+  rail.children[1].click();
+  assert.equal(list.children.length, 3);
+  assert.equal(doc.activeElement.dataset.missionId, crossing.id);
+  assert.ok(doc.activeElement.scrolled > 0);
+  assert.equal(rail.children[1].getAttribute('aria-pressed'), 'true');
+  assert.equal(doc.activeElement.dataset.campaignStart, 'true');
+  chooser.destroy();
+});
+
+test('campaign rail preserves its exact keyboard focus and scroll across source refreshes', () => {
+  const source = owner({
+    entries: [
+      { ...row('first'), campaignTitle: 'First light', levelIndex: 0 },
+      {
+        ...row('second'),
+        campaignKey: 'second-v1',
+        campaignTitle: 'Crossing lines',
+        levelIndex: 0,
+      },
+    ],
+  });
+  const { doc, $, library, chooser } = setup([source]);
+  const rail = $('journey-campaign-rail');
+  const previous = rail.children[1];
+  const campaignKey = previous.dataset.campaignKey;
+  previous.focus();
+  rail.scrollLeft = 47;
+
+  library.register(
+    owner({
+      id: 'remote',
+      entries: [
+        {
+          ...row('remote'),
+          campaignKey: 'third-v1',
+          campaignTitle: 'Remote signal',
+          levelIndex: 0,
+        },
+      ],
+    }),
+  );
+
+  const replacement = [...rail.children].find(
+    (shortcut) => shortcut.dataset.campaignKey === campaignKey,
+  );
+  assert.notEqual(replacement, previous, 'The test exercises the rebuilt campaign rail.');
+  assert.equal(doc.activeElement, replacement);
+  assert.equal(doc.activeElement.dataset.campaignKey, campaignKey);
+  assert.equal(rail.scrollLeft, 47);
+  chooser.destroy();
+});
+
+test('campaign controls jump within the complete gallery without filtering other campaigns', () => {
+  const source = owner({
+    entries: [
+      { ...row('first'), campaignTitle: 'First light' },
+      {
+        ...row('second'),
+        campaignKey: 'second-v1',
+        campaignTitle: 'Crossing lines',
+      },
+    ],
+  });
+  const { doc, $, library, chooser } = setup([source]);
+  const first = library.missions[0],
+    second = library.missions[1];
+  $('journey-campaign').value = second.campaignKey;
+  $('journey-campaign').emit('change');
+  assert.equal($('journey-cards').children.length, 2);
+  assert.equal(doc.activeElement.dataset.missionId, second.id);
+  $('journey-campaign-rail').children[0].click();
+  assert.equal($('journey-campaign').value, first.campaignKey);
+  assert.equal($('journey-cards').children.length, 2);
+  assert.equal(doc.activeElement.dataset.missionId, first.id);
+  chooser.destroy();
+});
+
+test('mission cards expose structured current, completion and availability states', () => {
+  const source = owner({
+    entries: [row('current'), row('earned'), row('download')],
+    availability: (entry) =>
+      entry.id === 'download' ? { state: 'download', bytes: 2048 } : { state: 'ready' },
+    completion: (entry) =>
+      entry.id === 'earned'
+        ? {
+            state: 'earned',
+            record: { asset: { width: 2, height: 1 } },
+          }
+        : { state: 'unfinished' },
+    progressState: (entry) =>
+      entry.id === 'earned'
+        ? { state: 'completed', bestStars: 2 }
+        : { state: 'new', bestStars: null },
+  });
+  const rows = createMissionLibrary([source]).missions;
+  const { $, chooser } = setup([source], { getCurrentId: () => rows[0].id });
+  const [current, earned, download] = $('journey-cards').children;
+  assert.equal(current.dataset.current, 'true');
+  assert.equal(current.dataset.completionState, 'new');
+  assert.equal(earned.dataset.completionState, 'completed');
+  assert.equal(earned.dataset.bestStars, '2');
+  assert.equal(download.dataset.availabilityState, 'download');
+  assert.match(download.querySelector('.journey-card-action').textContent, /Download & play/);
+  chooser.destroy();
+});
+
+test('included bundled missions prepare on activation without a download badge', () => {
+  const source = owner({
+    entries: [row('included')],
+    availability: () => ({ state: 'download', bytes: 2048, included: true }),
+  });
+  const { $, chooser } = setup([source]);
+  const card = $('journey-cards').children[0];
+  assert.equal(card.dataset.availabilityState, 'included');
+  assert.equal(card.querySelector('.journey-card-action').hidden, true);
+  assert.equal(card.querySelector('.journey-card-action').textContent, '');
+  chooser.destroy();
+});
+
+test('unknown star grades preserve owner edition warnings and unavailable picture explanations', () => {
+  const warning =
+    'Earlier edition cleared on standard · no clear recorded for this selected edition';
+  const source = owner({
+    entries: [row('earlier'), row('unknown'), row('picture')],
+    progressState: () => ({ state: 'completed', bestStars: null }),
+    progress: (entry) => (entry.id === 'earlier' ? warning : ''),
+    completion: (entry) =>
+      entry.id === 'picture' ? { state: 'unavailable', reason: 'Picture is not available.' } : null,
+  });
+  const { $, chooser } = setup([source]);
+  const [earlier, unknown, picture] = $('journey-cards').children;
+  assert.equal(earlier.querySelector('.journey-card-progress').textContent, warning);
+  assert(earlier.getAttribute('aria-label').includes(warning));
+  assert.match(
+    unknown.querySelector('.journey-card-progress').textContent,
+    /Completed.*stars not recorded/i,
+  );
+  assert.equal(
+    picture.querySelector('.journey-card-progress').textContent,
+    'Picture is not available.',
+  );
+  assert.equal(earlier.dataset.completionState, 'completed');
+  assert.equal(earlier.dataset.bestStars, '');
   chooser.destroy();
 });
 
@@ -523,7 +968,7 @@ test('restoring a cancelled host transition retains the real opener and return l
   chooser.destroy();
 });
 
-test('Journey text refreshes with preset without eager board construction or loss of card focus', () => {
+test('Journey text refreshes with preset while keeping bounded visible previews and card focus', () => {
   let preset = 'Standard',
     diagrams = 0;
   const { doc, $, chooser } = setup([
@@ -550,19 +995,96 @@ test('Journey text refreshes with preset without eager board construction or los
   chooser.refresh();
   assert.match(card.textContent, /Band 3\/12 · Expert/);
   assert.equal(doc.activeElement, card);
-  assert.equal(diagrams, 0);
+  assert.equal(
+    diagrams,
+    2,
+    'Open and explicit refresh each rebuild only the visible card preview.',
+  );
   chooser.destroy();
 });
 
-test('download stays in picker, preserves search/focus/scroll, and requires a deliberate Play', async () => {
+test('late lazy previews use reserved card space without moving the focused mission', () => {
+  const doc = new Document(),
+    frames = [],
+    observed = [];
+  let intersection;
+  doc.defaultView.requestAnimationFrame = (callback) => {
+    frames.push(callback);
+    return frames.length;
+  };
+  doc.defaultView.cancelAnimationFrame = () => {};
+  doc.defaultView.IntersectionObserver = class {
+    constructor(callback) {
+      intersection = callback;
+    }
+    observe(target) {
+      observed.push(target);
+    }
+    unobserve() {}
+    disconnect() {}
+  };
+  const create = doc.createElement.bind(doc);
+  doc.createElement = (tag) => {
+    const element = create(tag);
+    if (tag === 'canvas')
+      element.getContext = () => ({
+        save() {},
+        restore() {},
+        fillRect() {},
+        beginPath() {},
+        moveTo() {},
+        lineTo() {},
+        fill() {},
+        stroke() {},
+        strokeRect() {},
+      });
+    return element;
+  };
+  const preview = {
+      width: 2,
+      height: 2,
+      cells: [0, 0, 0, 0],
+      terrain: [0, 0, 0, 0],
+      spawn: { x: 0, y: 0 },
+      actors: [],
+      objectives: [],
+    },
+    library = createMissionLibrary([
+      owner({
+        entries: [row('first'), row('current')],
+        card: () => preview,
+      }),
+    ]),
+    opener = doc.createElement('button');
+  doc.body.append(opener);
+  const chooser = attachJourneyChooser({
+    document: doc,
+    library,
+    getCurrentId: () => library.missions[1].id,
+  });
+  chooser.open(opener);
+  const focused = doc.activeElement,
+    before = focused.scrolled;
+  assert.equal(focused.dataset.missionId, library.missions[1].id);
+  assert.equal(new Set(observed).size, 2);
+  intersection([{ target: observed[0], isIntersecting: true }]);
+  assert.equal(frames.length, 0, 'Reserved preview space needs no focus correction.');
+  assert.equal(doc.activeElement, focused);
+  assert.equal(focused.scrolled, before);
+  chooser.destroy();
+});
+
+test('Download & play is one owned action, ignores repeated Confirm and retains return state', async () => {
   let finish,
     ready = false,
-    launches = 0;
+    launches = 0,
+    preparations = 0;
   const { doc, $, chooser, opener } = setup([
     owner({
       availability: () => (ready ? { state: 'ready' } : { state: 'download', bytes: 1048576 }),
       prepare: () =>
         new Promise((resolve) => {
+          preparations++;
           finish = () => {
             ready = true;
             resolve();
@@ -579,39 +1101,137 @@ test('download stays in picker, preserves search/focus/scroll, and requires a de
   const card = $('journey-cards').children[0];
   card.focus();
   $('journey-cards').scrollTop = 123;
-  assert.match(card.textContent, /Download · 1.0 MiB/);
+  assert.match(card.textContent, /Download & play · 1.0 MiB/);
   card.click();
   await tick();
-  assert.match(card.textContent, /Preparing · Cancel/);
+  assert.match(card.textContent, /Preparing…/);
   assert.equal($('journey-chooser').open, true);
   assert.equal(doc.activeElement, card);
-  finish();
-  await tick();
-  assert.match(card.textContent, /Play/);
-  assert.equal(launches, 0);
-  assert.equal($('journey-search').value, 'earlier');
-  assert.equal($('journey-cards').scrollTop, 123);
   card.click();
+  await tick();
+  assert.equal(preparations, 1, 'Repeated Confirm cannot cancel or duplicate preparation.');
+  finish();
   await tick();
   assert.equal(launches, 1);
   assert.equal($('journey-chooser').open, false);
+  assert.equal($('journey-search').value, 'earlier');
   chooser.open(opener);
   assert.equal(doc.activeElement, card);
   assert.equal($('journey-cards').scrollTop, 123);
   chooser.destroy();
 });
 
-test('cancel and failed download Retry remain inline without losing the selected collection', async () => {
-  let attempt = 0,
+test('download label switches locale without preparing content', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  let preparations = 0;
+  const { $, chooser } = setup([
+    owner({
+      availability: () => ({ state: 'download', bytes: 1572864 }),
+      prepare: () => preparations++,
+    }),
+  ]);
+  context.after(() => chooser.destroy());
+  const card = $('journey-cards').children[0];
+  assert.match(card.textContent, /Download & play · 1.5 MiB/);
+
+  setLocale('uk', { persist: false });
+  assert.match(card.textContent, /Завантажити й грати · 1,5 MiB/);
+  assert.equal(preparations, 0);
+});
+
+test('compact campaign title switches locale through its visible data attribute', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const { $, chooser } = setup([
+    owner({
+      presentation: (entry) => ({
+        ...entry,
+        edition: 'Earlier edition',
+        campaignTitle: getLocale() === 'uk' ? 'Українська кампанія' : 'English campaign',
+      }),
+    }),
+  ]);
+  const card = $('journey-cards').children[0];
+  assert.equal(card.dataset.campaignTitle, 'English campaign');
+
+  setLocale('uk', { persist: false });
+  assert.equal(card.dataset.campaignTitle, 'Українська кампанія');
+  chooser.destroy();
+});
+
+test('later focus away retires Download & play while same-card focus keeps it owned', async () => {
+  let downloadSignal,
+    finishDownload,
+    launches = 0,
     ready = false;
+  const readySource = () =>
+    owner({
+      id: 'ready',
+      entries: [{ ...row('ready'), name: 'Ready mission' }],
+    });
+  const { doc, $, library, chooser } = setup([
+    readySource(),
+    owner({
+      id: 'download',
+      entries: [{ ...row('download'), name: 'Pending mission' }],
+      availability: () => (ready ? { state: 'ready' } : { state: 'download', bytes: 123 }),
+      prepare: (_entry, { signal }) => {
+        downloadSignal = signal;
+        return new Promise((resolve) => {
+          finishDownload = () => {
+            ready = true;
+            resolve();
+          };
+        });
+      },
+      launch: () => ++launches,
+    }),
+  ]);
+  let cards = [...$('journey-cards').children],
+    pending = cards.find((card) => card.textContent.includes('Pending mission')),
+    readyCard = cards.find((card) => card.textContent.includes('Ready mission'));
+  pending.click();
+  await tick();
+  library.register(readySource());
+  cards = [...$('journey-cards').children];
+  pending = cards.find((card) => card.textContent.includes('Pending mission'));
+  readyCard = cards.find((card) => card.textContent.includes('Ready mission'));
+  assert.equal(
+    downloadSignal.aborted,
+    false,
+    'Restoring the same logical focus after a source refresh is not a later player action.',
+  );
+  pending.focus();
+  assert.equal(downloadSignal.aborted, false, 'Same-card focus retains the one-action launch.');
+
+  readyCard.focus();
+  assert.equal(downloadSignal.aborted, true, 'Later focus away retires the stale preparation.');
+  finishDownload();
+  await tick();
+  assert.equal(launches, 0);
+  assert.equal($('journey-chooser').open, true);
+  assert.equal(doc.activeElement, readyCard);
+  chooser.destroy();
+});
+
+test('failed Download & play retries inline and launches once without losing the selected collection', async () => {
+  let attempt = 0,
+    ready = false,
+    launches = 0;
   const { $, chooser } = setup([
     owner({
       availability: () => (ready ? { state: 'ready' } : { state: 'download', bytes: 4096 }),
       prepare: () => {
         attempt++;
-        if (attempt === 1) return new Promise(() => {});
-        if (attempt === 2) throw new Error('Network disconnected');
+        if (attempt === 1) throw new Error('Network disconnected');
         ready = true;
+      },
+      launch: () => {
+        launches++;
+        return false;
       },
     }),
   ]);
@@ -620,16 +1240,13 @@ test('cancel and failed download Retry remain inline without losing the selected
   const card = $('journey-cards').children[0];
   card.click();
   await tick();
-  card.click();
-  await tick();
-  assert.match($('journey-chooser-status').textContent, /cancelled/);
-  card.click();
-  await tick();
   assert.match(card.textContent, /Unavailable · Network disconnected · Retry/);
   assert.equal(card.disabled, false);
   card.click();
   await tick();
-  assert.match(card.textContent, /Play/);
+  assert(!card.textContent.includes('Play'));
+  assert.equal(attempt, 2);
+  assert.equal(launches, 1);
   assert.equal($('journey-collection').value, 'Classic');
   assert.equal($('journey-chooser').open, true);
   chooser.destroy();
@@ -675,7 +1292,7 @@ test('failed launch reopens the same result without losing search, scroll or sel
   chooser.destroy();
 });
 
-test('browsing never fetches/decode backgrounds or eagerly builds every diagram', () => {
+test('fallback preview decoding is bounded to the near-viewport budget', () => {
   let cards = 0;
   const { chooser, $ } = setup([
     owner({
@@ -687,9 +1304,9 @@ test('browsing never fetches/decode backgrounds or eagerly builds every diagram'
     }),
   ]);
   assert.equal($('journey-cards').children.length, 200);
-  assert.equal(cards, 0);
+  assert.equal(cards, 12);
   chooser.refresh();
-  assert.equal(cards, 0);
+  assert.equal(cards, 24, 'Explicit refresh releases and rebuilds only the bounded preview set.');
   chooser.destroy();
 });
 
@@ -781,7 +1398,7 @@ for (const exit of ['Play', 'Back'])
     restored.chooser.destroy();
   });
 
-test('already-closed cleanup still cancels downloads and invalidates a late launch', async () => {
+test('a different card retires pending preparation and closed cleanup invalidates a late launch', async () => {
   let downloadSignal, finishDownload, finishLaunch;
   const { doc, $, chooser } = setup([
     owner({
@@ -804,7 +1421,11 @@ test('already-closed cleanup still cancels downloads and invalidates a late laun
   cards.find((card) => card.querySelector('strong').textContent === 'Ready mission').click();
   await tick();
   assert.equal($('journey-chooser').open, false);
-  assert.equal(downloadSignal.aborted, false);
+  assert.equal(
+    downloadSignal.aborted,
+    true,
+    'Choosing another mission retires the stale Download & play intent immediately.',
+  );
   const newer = doc.createElement('button');
   doc.body.append(newer);
   newer.focus();
@@ -812,7 +1433,7 @@ test('already-closed cleanup still cancels downloads and invalidates a late laun
   assert.equal(
     downloadSignal.aborted,
     true,
-    'Closed cleanup still aborts outstanding preparation.',
+    'Closed cleanup preserves the retired preparation state.',
   );
   finishDownload();
   finishLaunch(false);
@@ -967,7 +1588,7 @@ for (const action of ['mode', 'campaign', 'collection', 'search', 'reveal'])
       control.emit(action === 'search' ? 'input' : 'change');
     }
     library.register(pending);
-    assert.equal($('journey-campaign').value, '');
+    assert.equal($('journey-campaign').value, action === 'campaign' ? '' : '');
     assert.equal(chooser.state().campaign, '');
     assert.equal($('journey-cards').children.length, 2);
     chooser.destroy();
@@ -982,7 +1603,7 @@ test('a new search keeps an already-visible explicitly selected campaign', () =>
   $('journey-search').emit('input');
   assert.equal($('journey-campaign').value, campaign);
   assert.equal(chooser.state().campaign, campaign);
-  assert.equal($('journey-cards').children.length, 1);
+  assert.equal($('journey-cards').children.length, 2);
   chooser.destroy();
 });
 
@@ -992,7 +1613,11 @@ test('an exact host-local reveal overrides a restored remote filter without laun
     [owner({ launch: () => ++launches }), owner({ id: 'team', entries: [row('team', ['team'])] })],
     {
       mode: 'solo',
-      readState: () => ({ mode: 'team', search: 'Last', campaign: 'not loaded' }),
+      readState: () => ({
+        mode: 'team',
+        search: 'Last',
+        campaign: 'not loaded',
+      }),
     },
   );
   const selected = library.forMode('solo')[0];
@@ -1008,10 +1633,37 @@ test('an exact host-local reveal overrides a restored remote filter without laun
   chooser.destroy();
 });
 
+test('an adopted mission updates the retained cursor without stealing gameplay focus', () => {
+  let launches = 0;
+  const source = owner({
+      entries: [row('first'), row('adopted')],
+      launch: () => ++launches,
+    }),
+    rows = createMissionLibrary([source]).missions,
+    { doc, $, chooser, opener } = setup([source]);
+  chooser.close();
+  opener.focus();
+  assert.equal(chooser.select(rows[1].id), true);
+  assert.equal(chooser.state().selectedId, rows[1].id);
+  assert.equal(doc.activeElement, opener);
+  chooser.open(opener);
+  assert.equal(doc.activeElement.dataset.missionId, rows[1].id);
+  assert.equal($('journey-mode').value, 'solo');
+  assert.equal(launches, 0);
+  assert.equal(chooser.select(createMissionLibrary([owner({ id: 'team' })]).missions[0].id), false);
+  assert.equal(doc.activeElement.dataset.missionId, rows[1].id);
+  chooser.destroy();
+});
+
 test('an invalid saved mode cannot override the current host default or restore stale selection', () => {
   const { doc, $, chooser } = setup([owner()], {
     mode: 'solo',
-    readState: () => ({ mode: 'online', selectedId: 'stale', campaign: 'stale', scroll: 25 }),
+    readState: () => ({
+      mode: 'online',
+      selectedId: 'stale',
+      campaign: 'stale',
+      scroll: 25,
+    }),
   });
   assert.equal($('journey-mode').value, 'solo');
   assert.equal(chooser.state().selectedId, $('journey-cards').children[0].dataset.missionId);
@@ -1023,7 +1675,11 @@ test('an invalid saved mode cannot override the current host default or restore 
 
 test('Journey adapter retains exact runtime objects and independent mode progress', () => {
   const catalog = createJourneyCatalog([
-    { id: 'new', title: 'New campaign', levels: [{ id: 'one', name: 'First' }] },
+    {
+      id: 'new',
+      title: 'New campaign',
+      levels: [{ id: 'one', name: 'First' }],
+    },
   ]);
   const profile = emptyJourneyProfile();
   profile.clears.solo[catalog.missions[0].id] = { complete: true };
@@ -1047,8 +1703,94 @@ test('Journey adapter retains exact runtime objects and independent mode progres
   assert.equal(selected, catalog.missions[0]);
 });
 
+test('Journey adapter indexes a maximum picture ledger once per store revision', () => {
+  const catalog = createJourneyCatalog([
+      {
+        id: 'current',
+        title: 'Current campaign',
+        levels: [
+          { id: 'earned', name: 'Earned' },
+          { id: 'earlier', name: 'Earlier' },
+          { id: 'unfinished', name: 'Unfinished' },
+        ],
+      },
+    ]),
+    profile = emptyJourneyProfile(),
+    [earned, earlier, unfinished] = catalog.missions;
+  profile.clears.solo[earlier.id] = {
+    runId: 'old-run',
+    gameplayId: 'old-gameplay',
+    difficulty: 'standard',
+  };
+  let revision = 0,
+    profileReads = 0,
+    pictureReads = 0;
+  const records = Array.from({ length: JOURNEY_PICTURES_LIMIT }, (_, index) => ({
+    mode: 'solo',
+    editionId: index === JOURNEY_PICTURES_LIMIT - 1 ? 'current-v1' : 'historical-v1',
+    missionId: index === JOURNEY_PICTURES_LIMIT - 1 ? earned.id : `historical-${index}`,
+    campaignKey: 'campaign@1',
+    levelId: `level-${index}`,
+    levelRevision: '1',
+    runId: `run-${index}`,
+    gameplayId: `gameplay-${index}`,
+    difficulty: 'standard',
+    name: `Mission ${index}`,
+    campaignTitle: 'Historical campaign',
+    themeId: 'horizon',
+    asset: {
+      format: 'AssetRevisionV1',
+      id: `picture-${index}`,
+      revision: '1',
+      kind: 'reveal-background',
+      path: 'content-design/assets/test/picture.png',
+      sha256: 'a'.repeat(64),
+      bytes: 100,
+      width: 32,
+      height: 16,
+      alt: 'Historical picture',
+      review: 'candidate',
+    },
+  }));
+  assert.equal(
+    validateJourneyPictures({ format: JOURNEY_PICTURES_VERSION, records }).records.length,
+    JOURNEY_PICTURES_LIMIT,
+  );
+  const source = journeyLibrarySource({
+    editionId: 'current-v1',
+    edition: 'Current Journey',
+    catalog,
+    profile: {
+      snapshot: () => {
+        profileReads++;
+        return structuredClone(profile);
+      },
+      pictures: () => {
+        pictureReads++;
+        return { format: JOURNEY_PICTURES_VERSION, records: structuredClone(records) };
+      },
+      stateRevision: () => revision,
+    },
+    launch: () => true,
+  });
+  assert.equal(source.progress(earned, 'solo'), '');
+  assert.equal(source.completion(earned, 'solo').state, 'earned');
+  assert.equal(source.progress(earlier, 'solo'), 'Cleared');
+  assert.equal(source.completion(earlier, 'solo').state, 'unavailable');
+  assert.equal(source.completion(unfinished, 'solo').state, 'unfinished');
+  assert.deepEqual({ profileReads, pictureReads }, { profileReads: 1, pictureReads: 1 });
+
+  records.at(-1).missionId = unfinished.id;
+  revision++;
+  assert.equal(source.completion(earned, 'solo').state, 'unfinished');
+  assert.equal(source.completion(unfinished, 'solo').state, 'earned');
+  assert.deepEqual({ profileReads, pictureReads }, { profileReads: 2, pictureReads: 2 });
+});
+
 test('extending the Journey picker preserves optional progress backup and return focus', () => {
-  const { doc, $, chooser } = setup([owner()], { profile: { snapshot: emptyJourneyProfile } });
+  const { doc, $, chooser } = setup([owner()], {
+    profile: { snapshot: emptyJourneyProfile },
+  });
   const backup = $('journey-backup-open');
   backup.click();
   assert.equal($('journey-backup').open, true);
@@ -1073,7 +1815,7 @@ test('exact source refresh replaces stale row authority but preserves focused di
   chooser.destroy();
 });
 
-test('switching mode during Solo preparation still offers ready Versus Play after a Solo failure', async () => {
+test('switching mode during Solo preparation keeps the ready Versus card after a Solo failure', async () => {
   let reject;
   const { $, chooser } = setup([
     owner({
@@ -1089,11 +1831,11 @@ test('switching mode during Solo preparation still offers ready Versus Play afte
   await tick();
   $('journey-mode').value = 'versus';
   $('journey-mode').emit('change');
-  assert.match($('journey-cards').children[0].textContent, /Play/);
+  assert(!$('journey-cards').children[0].textContent.includes('Play'));
   reject(new Error('Solo unavailable'));
   await tick();
   const card = $('journey-cards').children[0];
-  assert.match(card.textContent, /Play/);
+  assert(!card.textContent.includes('Play'));
   assert(!card.textContent.includes('Unavailable'));
   assert(!$('journey-chooser-status').textContent.includes('Solo unavailable'));
   assert.equal(card.disabled, false);

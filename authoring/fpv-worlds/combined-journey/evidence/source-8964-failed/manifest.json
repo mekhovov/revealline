@@ -1,0 +1,36 @@
+{
+  "sourceRevision": "504f3c02f2f66cf10311a3e20c74e49533839950",
+  "fixtureOrigin": "http://127.0.0.1:8964/",
+  "outcome": "Failed final fixture assertion requiring a renderer in reopened lobby that never launched flight; original created owner resources all zero.",
+  "checks": 453,
+  "passedChecks": 452,
+  "failedCheckNumber": 453,
+  "completedWatchTicks": 1616,
+  "presentationScope": "Default Industrial presentation; not authored natural quality or performance.",
+  "warnings": [],
+  "errors": [],
+  "files": [
+    {
+      "file": "fpv-combined-journey-8964-failed.json.gz",
+      "rawBytes": 6456044,
+      "rawSHA256": "a8ae371df567b90ad105614829c91171ac3d944a4dac50ea5d65c6575933ad43",
+      "storedBytes": 1027132,
+      "storedSHA256": "9b9c65baf6feb929da0cb441c9b12fc2b0566762f0e1559c7fddc7c0649e20fd"
+    },
+    {
+      "file": "fpv-combined-journey-8964-failed.png",
+      "rawBytes": 73878,
+      "rawSHA256": "ff5b49433c6bf617a4a5d4dcbf52e1eecf0a01c9deb0b47c4dad674aee27cc72",
+      "storedBytes": 73878,
+      "storedSHA256": "ff5b49433c6bf617a4a5d4dcbf52e1eecf0a01c9deb0b47c4dad674aee27cc72"
+    },
+    {
+      "file": "fixture.json.gz",
+      "rawBytes": 47642,
+      "rawSHA256": "cc46a7e01e34e7ff603ccdce596d1acce93c24c02220f2e1844fbe15aa1a1aa5",
+      "storedBytes": 9065,
+      "storedSHA256": "4d248fc136c7f84db535e4372da28b4d668bfe5ac0fd8dd9fdc5c37e8f1239c9"
+    }
+  ],
+  "restore": "gzip -dc <file.json.gz> > <original-file.json>; compare rawBytes/rawSHA256"
+}

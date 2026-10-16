@@ -1,0 +1,3482 @@
+{
+  "format": "fpv-public-per-offer-status.v1",
+  "capturedAt": "2026-10-15T22:52:30.380255+00:00",
+  "deployedSource": "b11745223861c3973ad4bf440cc536198b8e0371",
+  "reviewedLabelSource": "d09908f055d5392319951a303827d6be59848c8a",
+  "counts": {
+    "regionalOffers": 23,
+    "regionalBoundedNativeLaunches": 13,
+    "regionalSaved": 13,
+    "regionalInstallFailures": 1,
+    "regionalNativeNotAttempted": 9,
+    "ordinaryWorldpacks": 20,
+    "ordinaryBoundedNativeLaunches": 20,
+    "ordinaryCourseDefinitionsValidated": 41,
+    "builtinEnvironments": 14,
+    "builtinBoundedNativeLaunches": 14
+  },
+  "countsAreNotUniqueLandscapes": true,
+  "regionsRemainEarlyUnscoredStudies": true,
+  "inputEvidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-player-map-audit-20261015/player-map-inventory-20261015.json",
+      "bytes": 96859,
+      "sha256": "550103e5ac529e0fb28364ffcea34cd104cc2822ce5ef5427d0628d59f6ede99"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/launch-results.json",
+      "bytes": 9934,
+      "sha256": "f7b2869009eb0b3209de3c58b47bbe5c5034a24d5309bf7f69e068a105818cba"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/additional-installs.json",
+      "bytes": 2380,
+      "sha256": "0869c0d3d8814c5a04fcfa7ae387ebd5f3f59dd267264b0a2f08a4bfe0fbdcab"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/public-label-fix-retained-library.txt",
+      "bytes": 24017,
+      "sha256": "2808872bdeae666cfd122853d3be0f164dfca5ab3c9409d7deb7796ab4a8fae8"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/alpine-r2-capacity-reconstruction-readonly.json",
+      "bytes": 6745,
+      "sha256": "5e11b27024311e98c6a1707c606f0c5b2fc669ddabcdea576c1e82cdd27d3770"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-fpv-deployment-audit-20261015/audit-final-receipt.json",
+      "bytes": 16147,
+      "sha256": "18f5f5ae09d15e3e2fa17ae794482da7341eb8a0b8aa5d02339ebc9bbb9b42a5"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-fpv-deployment-audit-20261015/worldpack-production-validation.json",
+      "bytes": 8816,
+      "sha256": "0e878285b454eed89fcae0995923b3f0af5622d60baaab4e834f39c7b2e44276"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-regional-label-1528-20261015/public-source-receipt.json",
+      "bytes": 4300,
+      "sha256": "21c0f9eb7fe76eacb85b52b40b7a1ca7f5a7247f8a7dda275597e6f4c2a8c767"
+    }
+  ],
+  "publicLabelFixUI": {
+    "rootReportedNormalCloseReopen": true,
+    "savedRegionsStillVisible": 13,
+    "worldpacksRetainedAsReportedByRoot": 20,
+    "scope": "Root actual public b117 close/reopen observation plus retained Library AX snapshot; not an IndexedDB hash/backup/offline/restart receipt."
+  },
+  "capacity": {
+    "retainedAccountedBytes": 247085009,
+    "incomingAccountedBytes": 21850912,
+    "combinedAccountedBytes": 268935921,
+    "actualRetainedLimitBytes": 268435456,
+    "overByBytes": 500465,
+    "projectedCapacityRefusal": true
+  },
+  "capacityCausalityLimit": "The native install failure is preserved; exact thrown native cause was not captured. A read-only reconstruction independently exceeds the production retained limit by 500465 bytes. Other unattempted offers are not individually declared impossible to install.",
+  "regional": [
+    {
+      "catalogueIndex": 0,
+      "id": "alpine-highlands-study",
+      "offeredTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Station concourse",
+        "uk": "Майданчик між корпусами"
+      },
+      "revision": "station-r5",
+      "extentAsAdvertised": "4.096 × 4.096 km",
+      "description": {
+        "en": "4.096 × 4.096 km · six starting points · unscored free flight. A restrained grey apron distinguishes the station’s open concourse and approaches beneath the quieter timber wings. Explore the same connected snow and scree landscape. Separate material study; earlier editions remain available. Wider scenery and route detail are still being refined.",
+        "uk": "4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Стримане сіре покриття вирізняє відкритий прохід між корпусами та підходи до станції з дерев’яним облицюванням. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються."
+      },
+      "optionalDownloadBytesAsAdvertised": 22699845,
+      "descriptorAndFilesBytes": 22699845,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json",
+        "bytes": 115316,
+        "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 722,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 0,
+        "name": "Alpine Highlands · Station concourse",
+        "kind": "region",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "Overview",
+          "FPV"
+        ],
+        "starts": [
+          "Glacial valley",
+          "Summit station"
+        ],
+        "slug": "alpine-r5",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "Overview",
+        "FPV"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/alpine-r5-menu.txt",
+          "bytes": 3183,
+          "sha256": "3850070d83653b2554733be4b4e8f038fabd57fef3e047b6836cf3ee6c2eb161"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/alpine-r5-overview.png",
+          "bytes": 31737,
+          "sha256": "a27e985e2b134447954a95cedaead8cd7f3102ff73bd84241a07de0de2beef20"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/alpine-r5-summit-fpv.png",
+          "bytes": 73433,
+          "sha256": "ad735086c5e25ee90cbd78e8975837071ac13268c7d82610a960929e8ddb8241"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 1,
+      "id": "lunar-basin-study",
+      "offeredTitle": {
+        "en": "Lunar Basin — flight study",
+        "uk": "Місячна улоговина — тренувальна зона"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Lunar Basin — flight study",
+        "uk": "Місячна улоговина — тренувальна зона"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Shelter detail",
+        "uk": "Деталізовані укриття"
+      },
+      "revision": "composition-r3",
+      "extentAsAdvertised": "768 × 768 m",
+      "description": {
+        "en": "768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity.",
+        "uk": "768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття з ребрами покрівлі й обладнанням на опорах, розколоті скелі, звивисте русло та антену. Окремий пробний варіант composition-r3; попередня версія залишається доступною. Малонаповнений вигаданий ландшафт. Використовує земну фізику польоту симулятора, а не місячне тяжіння."
+      },
+      "optionalDownloadBytesAsAdvertised": 2093869,
+      "descriptorAndFilesBytes": 2093869,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/f58a1b5197a78243e30e42858d45ded1f55baa31/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r3/delivery.json",
+        "bytes": 14759,
+        "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 116,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 1,
+        "name": "Lunar Basin · Shelter detail",
+        "kind": "region",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ],
+        "slug": "lunar-r3",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "FPV"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/lunar-r3-fpv.png",
+          "bytes": 34550,
+          "sha256": "778273e4b4108b629e6d44661f96fe79d1ae24ee391ec4711ce85892dbb9da6c"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/lunar-r3-ready.txt",
+          "bytes": 738,
+          "sha256": "e68ba433a2fef9bf17911beca3feadf862afb6395b324dac29b467a180dc93ea"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 2,
+      "id": "alpine-highlands-study",
+      "offeredTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Quieter station surfaces",
+        "uk": "Стриманіші поверхні станції"
+      },
+      "revision": "station-r4",
+      "extentAsAdvertised": "4.096 × 4.096 km",
+      "description": {
+        "en": "4.096 × 4.096 km · six starting points · unscored free flight. Wider, softer timber seams make the summit station less visually busy. Explore the same connected snow and scree landscape. A separate material study; previous Alpine editions remain available. Wider scenery and route detail are still being refined.",
+        "uk": "4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Ширші й м’якші шви дерев’яного облицювання зменшують візуальний шум на верхній станції. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні альпійські версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються."
+      },
+      "optionalDownloadBytesAsAdvertised": 22694120,
+      "descriptorAndFilesBytes": 22694120,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/02f2b140d06cc930d8d4dd6b01abcd860db75436/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/delivery.json",
+        "bytes": 115316,
+        "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 722,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 44,
+        "kind": "regional",
+        "label": "Alpine Highlands · quieter station surfaces",
+        "catalogueIndex": 2,
+        "views": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "ready": true,
+        "explicitArm": true,
+        "pauseMenu": true,
+        "observedAt": "2026-10-15T22:48:26.459Z",
+        "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?lang=en#packs",
+        "slug": "region-03-alpine-r4",
+        "observationPhase": "Cached launch after normal public b117 close/reopen"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-03-alpine-r4-active.txt",
+          "bytes": 644,
+          "sha256": "0101d7ab92fd705eaa7e9c11e3b43027504d6ec88451685834dd6bf9d186140a"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-03-alpine-r4-chase.png",
+          "bytes": 28701,
+          "sha256": "783a239ce091bc10318fb00132d3d824c3ab1db9124bfb5860570e10fa1a7676"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-03-alpine-r4-fpv.png",
+          "bytes": 27495,
+          "sha256": "11a07897d80cf858ac9a84990983fe63736de58507b332eeba17bfadda799fa2"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-03-alpine-r4-overview.png",
+          "bytes": 31737,
+          "sha256": "a27e985e2b134447954a95cedaead8cd7f3102ff73bd84241a07de0de2beef20"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-03-alpine-r4-paused.txt",
+          "bytes": 3169,
+          "sha256": "e192d40b10bd4a6b8083a0bc98ce977cacd44a1d9d940a28118ec6af83e8dac8"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 3,
+      "id": "alpine-highlands-study",
+      "offeredTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Station surface details",
+        "uk": "Деталі поверхонь станції"
+      },
+      "revision": "station-r3",
+      "extentAsAdvertised": "4.096 × 4.096 km",
+      "description": {
+        "en": "4.096 × 4.096 km · six starting points · unscored free flight. Original timber station cladding, opaque backed panels and roof seams add detail to the refined-contour landscape. Separate station-r3 study; earlier Alpine editions remain available. The wider landscape and route detail are still being refined.",
+        "uk": "4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Оригінальне дерев’яне облицювання станції, непрозорі панелі й шви покрівлі додають деталей ландшафту з уточненими контурами. Окремий пробний варіант station-r3; попередні альпійські версії залишаються доступними. Деталі решти місцевості та маршрутів ще вдосконалюються."
+      },
+      "optionalDownloadBytesAsAdvertised": 22694130,
+      "descriptorAndFilesBytes": 22694130,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/ffb79b67479f9ed5c8104610695ac8b5cb04edc7/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r3/delivery.json",
+        "bytes": 115316,
+        "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 722,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 45,
+        "kind": "regional",
+        "label": "Alpine Highlands · station surface details",
+        "catalogueIndex": 3,
+        "views": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "ready": true,
+        "explicitArm": true,
+        "pauseMenu": true,
+        "observedAt": "2026-10-15T22:49:11.523Z",
+        "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?lang=en#packs",
+        "slug": "region-04-alpine-r3",
+        "observationPhase": "Cached launch after normal public b117 close/reopen"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-04-alpine-r3-active.txt",
+          "bytes": 644,
+          "sha256": "40857d5b0eaeccc96ce91b7c4277ef5d06931a94976b839f2c9e8df297893bc0"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-04-alpine-r3-chase.png",
+          "bytes": 28701,
+          "sha256": "783a239ce091bc10318fb00132d3d824c3ab1db9124bfb5860570e10fa1a7676"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-04-alpine-r3-fpv.png",
+          "bytes": 27495,
+          "sha256": "11a07897d80cf858ac9a84990983fe63736de58507b332eeba17bfadda799fa2"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-04-alpine-r3-overview.png",
+          "bytes": 31737,
+          "sha256": "a27e985e2b134447954a95cedaead8cd7f3102ff73bd84241a07de0de2beef20"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-04-alpine-r3-paused.txt",
+          "bytes": 3169,
+          "sha256": "b37ab617dafaef87af8fe56b4fe38851c1fa82b718bfcc7e7148a9ed01298dc0"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 4,
+      "id": "lunar-basin-study",
+      "offeredTitle": {
+        "en": "Lunar Basin — flight study",
+        "uk": "Місячна улоговина — тренувальна зона"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Lunar Basin — flight study",
+        "uk": "Місячна улоговина — тренувальна зона"
+      },
+      "titleConsistent": true,
+      "edition": null,
+      "revision": "composition-r2",
+      "extentAsAdvertised": "768 × 768 m",
+      "description": {
+        "en": "768 × 768 m · six starting points · unscored free flight. Explore a survey shelter, split rocks, winding channel, crater rim, fractured slabs and supported survey dish. Early fictional landscape study with sparse surroundings. Uses the simulator’s Earth flight physics, not Moon gravity.",
+        "uk": "768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття, розколоті скелі, звивисте русло, край кратера, кам’яні плити й антену на опорах. Раннє дослідження вигаданого ландшафту з малонаповненими околицями. Використовує земну фізику польоту симулятора, а не місячне тяжіння."
+      },
+      "optionalDownloadBytesAsAdvertised": 1981832,
+      "descriptorAndFilesBytes": 1981832,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/423f60966ec5dd4946a05ae1ea3c59f4910216ef/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r2/delivery.json",
+        "bytes": 18790,
+        "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 116,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 46,
+        "kind": "regional",
+        "label": "Lunar Basin · original composition",
+        "catalogueIndex": 4,
+        "views": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "ready": true,
+        "explicitArm": true,
+        "pauseMenu": true,
+        "observedAt": "2026-10-15T22:50:14.307Z",
+        "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?lang=en#packs",
+        "slug": "region-05-lunar-r2",
+        "observationPhase": "Cached launch after normal public b117 close/reopen"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-05-lunar-r2-active.txt",
+          "bytes": 643,
+          "sha256": "99bb8a876d7e8b7a512b9e92ec865c3cf8a0b0aaf4fe662a8855dece1522c8aa"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-05-lunar-r2-chase.png",
+          "bytes": 37616,
+          "sha256": "d17012f47e931a25d3c2bfaee2c118789b3e869498b81d7bb7a4e981f862f7df"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-05-lunar-r2-fpv.png",
+          "bytes": 33137,
+          "sha256": "164454571c45065fd8b4a4f8fcfce43d189227f3edb115ef7d5a0a69d3b09be8"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-05-lunar-r2-overview.png",
+          "bytes": 30838,
+          "sha256": "fa65396df9c3d8c21792a2f9db2f46a792eb2ef97f072d5bd0c83e5cf2fe2c4b"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-05-lunar-r2-paused.txt",
+          "bytes": 3150,
+          "sha256": "e16d5f101545f289a30bd6bf5dfd64bed4eb1a91939ae36c08a76b493dd4b20d"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 5,
+      "id": "alpine-highlands-study",
+      "offeredTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Refined contours",
+        "uk": "Уточнені контури"
+      },
+      "revision": "review-r2",
+      "extentAsAdvertised": "4.096 × 4.096 km",
+      "description": {
+        "en": "4.096 × 4.096 km · six starting points · unscored free flight. Refined snow and scree contours connect the glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Separate review-r2 study; the earlier revision remains available. Landscape and route detail are still being refined.",
+        "uk": "4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Уточнені межі снігу й осипів у льодовиковій долині, на серпантині, сніговій сідловині, біля верхньої станції, віадука та греблі. Окремий пробний варіант review-r2; попередня версія залишається доступною. Деталі місцевості та маршрутів ще вдосконалюються."
+      },
+      "optionalDownloadBytesAsAdvertised": 21759827,
+      "descriptorAndFilesBytes": 21759827,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/1708a06afb8ad82df5fe7c6b9ee304212b2b5a0a/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r2/delivery.json",
+        "bytes": 115311,
+        "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "normal-install-failed-in-current-retained-profile",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 722,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "normal-install-failed-in-current-retained-profile",
+      "nativeCase": null,
+      "capacityLimitPreserved": true,
+      "capacityRefusalReconstructed": true,
+      "nativeCauseCaptured": false,
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/alpine-r2-first-install-negative.txt",
+          "bytes": 24236,
+          "sha256": "8704948fee2746d44501f25327e61619df916160a8074d5ef7204be2536def70"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/alpine-r2-first-install-negative.png",
+          "bytes": 135459,
+          "sha256": "101995d0b5bdd0a541c2204b76552749e2d79e3b3b81cc0d6576848b58eccc2b"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/alpine-r2-capacity-reconstruction-readonly.json",
+          "bytes": 6745,
+          "sha256": "5e11b27024311e98c6a1707c606f0c5b2fc669ddabcdea576c1e82cdd27d3770"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/alpine-r2-source-path-readonly-audit.md",
+          "bytes": 3296,
+          "sha256": "fcbd434ff73ac04077cd6af6a0e3555b33fbd08e948a339374e714e95ded8cf2"
+        }
+      ],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 6,
+      "id": "alpine-highlands-study",
+      "offeredTitle": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Alpine Highlands — connected mountain study",
+        "uk": "Альпійське високогір’я — пробний гірський світ"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Original study",
+        "uk": "Початковий варіант"
+      },
+      "revision": "review-r1",
+      "extentAsAdvertised": "4.096 × 4.096 km",
+      "description": {
+        "en": "4.096 × 4.096 km · six starting points · unscored free flight. Explore a glacial valley, switchback pass, snow saddle, summit station, viaduct gorge and reservoir dam. Early landscape study; scenery and route detail are still being refined.",
+        "uk": "4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Досліджуйте льодовикову долину, перевал із серпантином, снігову сідловину, верхню станцію, ущелину з віадуком і греблю водосховища. Ранній варіант ландшафту; деталі місцевості та маршрутів ще вдосконалюються."
+      },
+      "optionalDownloadBytesAsAdvertised": 21066886,
+      "descriptorAndFilesBytes": 21066886,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/07be16fe40ade4c398299c4e64cb542b7523856c/authoring/fpv-worlds/regions/alpine-highlands/delivery-review-r1/delivery.json",
+        "bytes": 114992,
+        "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "offered-and-all-http-verified-native-not-attempted",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 720,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "offered-and-all-http-verified-native-not-attempted",
+      "nativeCase": null,
+      "nativeEvidence": [],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 7,
+      "id": "canal-city-study",
+      "offeredTitle": {
+        "en": "Canal City — bridges and courtyards",
+        "uk": "Місто каналів — мости й подвір’я"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Canal City — bridges and courtyards",
+        "uk": "Місто каналів — мости й подвір’я"
+      },
+      "titleConsistent": true,
+      "edition": null,
+      "revision": "district-r2",
+      "extentAsAdvertised": "384 × 384 m",
+      "description": {
+        "en": "384 × 384 m · six starting points · unscored free flight. Follow the canals beneath a masonry arch and high walkway, pass through warehouses and courtyards, or weave around basin moorings. Early composition study; surrounding banks remain sparse. Water is visual only.",
+        "uk": "384 × 384 м · шість місць старту · вільний політ без заліку. Літайте каналами під кам’яною аркою та високим переходом, крізь склади й подвір’я або між швартовними стовпами. Раннє дослідження композиції; навколишні береги ще малонаповнені. Вода лише візуальна."
+      },
+      "optionalDownloadBytesAsAdvertised": 6771851,
+      "descriptorAndFilesBytes": 6771851,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/04b0d9c5db0687d8df2ea9a3ea07b9ca9ddcaa5a/authoring/fpv-worlds/regions/canal-city/delivery-district-r2/delivery.json",
+        "bytes": 6580,
+        "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 38,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 22,
+        "name": "Canal City · district-r2",
+        "kind": "region",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "slug": "region-07-canal",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-07-canal-active.txt",
+          "bytes": 642,
+          "sha256": "431f54e3636d31daad555585b55cf6e525028d2f36ee1a573fcfca85f7c9c780"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-07-canal-fpv.png",
+          "bytes": 61907,
+          "sha256": "faf9001db6755235b0afe32bb9291f7091f5dfdcfcb0f81601c5bf72cf6972c9"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-07-canal-overview.png",
+          "bytes": 42209,
+          "sha256": "f7b1abc0db169913d2e76c45120516647a302313a230aabb8af8b96cd7674283"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-07-canal-paused.txt",
+          "bytes": 3165,
+          "sha256": "f6ddfaf97d764e2b6d55ee406524e3f046b1241f5e90967526359a9810035c1f"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-07-canal-ready.txt",
+          "bytes": 737,
+          "sha256": "d95b04e34f5ac9d6ad9b6ed778c90a316aee010f8aea66bccda542ec1cebc695"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 8,
+      "id": "desert-expedition-study",
+      "offeredTitle": {
+        "en": "Desert Expedition — rock routes",
+        "uk": "Пустельна експедиція — маршрути серед скель"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Desert Expedition — six rock compositions",
+        "uk": "Пустельна експедиція — шість скельних композицій"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Rock practice routes",
+        "uk": "Маршрути серед скель"
+      },
+      "revision": "landmarks-r1",
+      "extentAsAdvertised": "16.384 × 16.384 km",
+      "description": {
+        "en": "16.384 × 16.384 km · six close-range rock practice areas · unscored free flight. Weave between windstones, pass through a natural arch, climb the escarpment ribs and orbit the mesa crown. Early composition study; the wider terrain remains sparse.",
+        "uk": "16,384 × 16,384 км · шість невеликих зон для практики серед скель · вільний політ без заліку. Маневруйте між каменями, пролітайте крізь природну арку, піднімайтеся між скельними ребрами й облітайте вершину плато. Раннє дослідження композиції; решта ландшафту ще малонаповнена."
+      },
+      "optionalDownloadBytesAsAdvertised": 48164518,
+      "descriptorAndFilesBytes": 48164518,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/6cbd5efd0e5138431bdb29023b8eb696765168e7/authoring/fpv-worlds/regions/desert-expedition/delivery-landmarks-r1/delivery.json",
+        "bytes": 329271,
+        "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 2062,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 27,
+        "name": "Desert Expedition · Rock practice routes r1",
+        "kind": "region",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "slug": "region-08-desert-rocks",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-08-desert-rocks-active.txt",
+          "bytes": 644,
+          "sha256": "f569e613ab7f3ce04cae5c571347b77e80ddfc0576a44975554518f62d482c7c"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-08-desert-rocks-fpv.png",
+          "bytes": 28059,
+          "sha256": "c2d6542d97102ebb50c89d4de47b708673891f6977806846589f42f932a5085b"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-08-desert-rocks-overview.png",
+          "bytes": 27358,
+          "sha256": "49410f6e33a665e585e8d34687bab3e25e085c6af121e602971aa175ea950de5"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-08-desert-rocks-paused.txt",
+          "bytes": 3175,
+          "sha256": "8dd9138bacd7d55f7fd6613efb2eb6318c4bef294912eec797c14179466bee65"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-08-desert-rocks-ready.txt",
+          "bytes": 739,
+          "sha256": "67a71eaa6ce8b689f567cebd9b02b72b81406bbc3a674dec554e56921057597e"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 9,
+      "id": "desert-expedition-study",
+      "offeredTitle": {
+        "en": "Desert Expedition — 16 km relief study",
+        "uk": "Пустельна експедиція — дослідження рельєфу 16 км"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Desert Expedition — natural terrain study",
+        "uk": "Пустельна експедиція — дослідження природного рельєфу"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Open desert terrain",
+        "uk": "Відкритий пустельний рельєф"
+      },
+      "revision": "natural-r1",
+      "extentAsAdvertised": "16.384 × 16.384 km",
+      "description": {
+        "en": "16.384 × 16.384 km · six landscapes and six starting points · unscored free flight. Explore broad dunes, a dry wash, salt basin, escarpment, mesa corridor and rocky plain. Early terrain study focused on broad relief.",
+        "uk": "16,384 × 16,384 км · шість ландшафтів і шість стартових точок · вільний політ без заліку. Досліджуйте широкі дюни, сухе русло, соляну улоговину, уступ, прохід між плато та кам’янисту рівнину. Раннє дослідження великих форм рельєфу."
+      },
+      "optionalDownloadBytesAsAdvertised": 47883876,
+      "descriptorAndFilesBytes": 47883876,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/2ccdf059d9d0d55c6eb7e668da6cee9496288255/authoring/fpv-worlds/regions/desert-expedition/delivery-natural-r1/delivery.json",
+        "bytes": 327361,
+        "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "offered-and-all-http-verified-native-not-attempted",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 2050,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "offered-and-all-http-verified-native-not-attempted",
+      "nativeCase": null,
+      "nativeEvidence": [],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 10,
+      "id": "tropical-coastal-districts",
+      "offeredTitle": {
+        "en": "Tropical coast — connected harbour",
+        "uk": "Тропічне узбережжя — сполучені пірси гавані"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Tropical coast — connected harbour arrival",
+        "uk": "Тропічне узбережжя — сполучені пірси гавані"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Connected harbour",
+        "uk": "Сполучена гавань"
+      },
+      "revision": "harbour-r3",
+      "extentAsAdvertised": "768 × 768 m",
+      "description": {
+        "en": "768 × 768 m · connected wooden harbour decks and shore approach · six starting areas, unscored free flight. Separate harbour-r3 revision; the earlier coastal settlement remains available. Early coastal study; visual water only.",
+        "uk": "768 × 768 м · сполучені дерев’яні пірси гавані та вихід на берег · шість стартових місць, вільний політ без заліку. Окрема версія harbour-r3; попереднє прибережне поселення залишається доступним. Раннє дослідження узбережжя; вода лише візуальна."
+      },
+      "optionalDownloadBytesAsAdvertised": 7958922,
+      "descriptorAndFilesBytes": 7958922,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json",
+        "bytes": 6617,
+        "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 38,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 23,
+        "name": "Tropical coast · Connected harbour r3",
+        "kind": "region",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "slug": "region-10-tropical-harbour",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-10-tropical-harbour-active.txt",
+          "bytes": 643,
+          "sha256": "35081e06761255ea8c828fe96bed3ba990f36d2ca14ab421078d2e48b1222fc0"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-10-tropical-harbour-fpv.png",
+          "bytes": 50410,
+          "sha256": "fe59171866421d1f6ecfdd44db67a46a6bb1ad410ed4fe9c2645254146d4d7c5"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-10-tropical-harbour-overview.png",
+          "bytes": 39697,
+          "sha256": "46501b5f5c4e2d57c307c2f537e8ef7222dfb89fda5f0507e72055dfb63f721a"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-10-tropical-harbour-paused.txt",
+          "bytes": 3160,
+          "sha256": "f8c31b92695d36e9b1ee80699e5eb2d191cc93f624873f664aa956d559c6055e"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-10-tropical-harbour-ready.txt",
+          "bytes": 738,
+          "sha256": "fda85cf97e39a948f2a42f2c31e25bf1f057343f4c96baee1bc4668dffcd4e0a"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 11,
+      "id": "railway-valley-expanse",
+      "offeredTitle": {
+        "en": "Railway Valley — six districts",
+        "uk": "Залізнична долина — шість районів"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Railway Valley — six industrial districts",
+        "uk": "Залізнична долина — шість промислових районів"
+      },
+      "titleConsistent": true,
+      "edition": null,
+      "revision": "review-r1",
+      "extentAsAdvertised": "4.096 × 4.096 km",
+      "description": {
+        "en": "4.096 × 4.096 km · six starting areas · unscored free flight. Explore a freight hall, viaduct, quarry conveyor, station canopy, foundry and timber yard. Early landscape study with static trains and sparse scenery between districts.",
+        "uk": "4,096 × 4,096 км · шість місць старту · вільний політ без заліку. Досліджуйте вантажний цех, віадук, конвеєр кар’єру, навіс станції, ливарню й лісовий склад. Раннє дослідження ландшафту зі статичними потягами та невеликою кількістю деталей між районами."
+      },
+      "optionalDownloadBytesAsAdvertised": 17943638,
+      "descriptorAndFilesBytes": 17943638,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/53c3c5dc25ac0639c93ec663a10beb492844032b/authoring/fpv-worlds/regions/railway-valley/delivery-expanse-r1/delivery.json",
+        "bytes": 98773,
+        "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 618,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 25,
+        "name": "Railway Valley · Six districts review-r1",
+        "kind": "region",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "slug": "region-11-railway-districts",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-11-railway-districts-active.txt",
+          "bytes": 643,
+          "sha256": "ada5b8fa2cd294b52671993b49e43f3eee3864054e1970fe2b12cfd9e809babc"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-11-railway-districts-fpv.png",
+          "bytes": 64104,
+          "sha256": "ef981a7c8d5bf95854f346552979fdef18396a5a8506ce9fddaf57bee6366445"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-11-railway-districts-overview.png",
+          "bytes": 41207,
+          "sha256": "d10fd078c54cf6b236d61d0693d649d00a36408dd4b6cc5024f8fa6523fc7851"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-11-railway-districts-paused.txt",
+          "bytes": 3171,
+          "sha256": "07e362a1ce09192558c3c71e40fa6f662ac2493d7513546e452f9acd8b721f4b"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-11-railway-districts-ready.txt",
+          "bytes": 738,
+          "sha256": "12c107eaf78f2bcfd3ded2bc080792a24dfe44fe28253724afadbf9d1f9d7ca1"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 12,
+      "id": "coaster-gardens-study",
+      "offeredTitle": {
+        "en": "Coaster Gardens — connected park study",
+        "uk": "Сади атракціонів — дослідження парку зі сполученими доріжками"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Coaster Gardens — six connected park districts",
+        "uk": "Сади атракціонів — шість поєднаних паркових районів"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Connected park routes",
+        "uk": "Сполучені паркові маршрути"
+      },
+      "revision": "review-r2",
+      "extentAsAdvertised": "2.048 × 2.048 km",
+      "description": {
+        "en": "2.048 × 2.048 km · six starting points · unscored free flight. Explore the supported loop, linked approach paths, station courts and woodland routes. Early static park study; district scenery is still being refined and rides do not move.",
+        "uk": "2,048 × 2,048 км · шість стартових точок · вільний політ без заліку. Досліджуйте петлю на опорах, сполучені підходи, площі станцій і лісові маршрути. Ранній варіант парку; оформлення районів ще вдосконалюється, атракціони нерухомі."
+      },
+      "optionalDownloadBytesAsAdvertised": 34214390,
+      "descriptorAndFilesBytes": 34214390,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json",
+        "bytes": 32824,
+        "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 202,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 26,
+        "name": "Coaster Gardens · Connected park routes r2",
+        "kind": "region",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "slug": "region-12-coaster-connected",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-12-coaster-connected-active.txt",
+          "bytes": 643,
+          "sha256": "090192b56873f20e828f73bf98b83a3a6f04d8cb30e3a2c664f6c31369f4a4c7"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-12-coaster-connected-fpv.png",
+          "bytes": 57276,
+          "sha256": "6714e0fb6cc2a2d6f012f3c782aaf7c99eb6773113cf1a292b9d22027a3a8119"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-12-coaster-connected-overview.png",
+          "bytes": 38052,
+          "sha256": "fd72f97ade731dbbacc30e802453047c7c6ae5e9b0c4405f6f29851e3f25992e"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-12-coaster-connected-paused.txt",
+          "bytes": 3175,
+          "sha256": "f7312bd6f0a62811209cae87aff9fce006b3b17bda31a848a8fc8f57bfc01ac9"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-12-coaster-connected-ready.txt",
+          "bytes": 738,
+          "sha256": "b4768d1653dc1cc88d153129b79e5ad8fc808db40192e1dda0418f9f84164c8d"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 13,
+      "id": "coaster-gardens-study",
+      "offeredTitle": {
+        "en": "Coaster Gardens — 2 km study",
+        "uk": "Сади атракціонів — пробний світ 2 км"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Coaster Gardens — six connected park districts",
+        "uk": "Сади атракціонів — шість поєднаних паркових районів"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Original park study",
+        "uk": "Початкове дослідження парку"
+      },
+      "revision": "review-r1",
+      "extentAsAdvertised": "2.048 × 2.048 km",
+      "description": {
+        "en": "2.048 × 2.048 km · six park districts and six starting points · unscored free flight. Explore garden plazas, a looping landmark, station terraces, service halls and woodland paths. Early static park study; rides do not move.",
+        "uk": "2,048 × 2,048 км · шість паркових районів і шість стартових точок · вільний політ без заліку. Досліджуйте садові площі, петлю атракціону, тераси станції, службові павільйони й лісові доріжки. Ранній варіант парку; атракціони нерухомі."
+      },
+      "optionalDownloadBytesAsAdvertised": 33908597,
+      "descriptorAndFilesBytes": 33908597,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json",
+        "bytes": 29654,
+        "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "offered-and-all-http-verified-native-not-attempted",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 182,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "offered-and-all-http-verified-native-not-attempted",
+      "nativeCase": null,
+      "nativeEvidence": [],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 14,
+      "id": "hillside-town-study",
+      "offeredTitle": {
+        "en": "Hillside Town — civic court materials",
+        "uk": "Містечко на схилі — матеріали міського подвір’я"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Hillside Town — civic court materials",
+        "uk": "Містечко на схилі — матеріали міського подвір’я"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Civic courtyard materials",
+        "uk": "Матеріали міського подвір’я"
+      },
+      "revision": "courtyard-r5",
+      "extentAsAdvertised": "384 × 384 m",
+      "description": {
+        "en": "384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available.",
+        "uk": "384 × 384 м · відкритий ринковий прохід, озеленене міське подвір’я, різні дахи й чотири стартові точки · вільний політ без заліку. Невелике дослідження містечка з виразнішими матеріалами фасадів; дальні тераси ще малодетальні. Початкова версія містечка залишається доступною."
+      },
+      "optionalDownloadBytesAsAdvertised": 8667066,
+      "descriptorAndFilesBytes": 8667066,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json",
+        "bytes": 6579,
+        "sha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 38,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 24,
+        "name": "Hillside Town · Civic courtyard r5",
+        "kind": "region",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "slug": "region-14-hillside-civic",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-14-hillside-civic-active.txt",
+          "bytes": 642,
+          "sha256": "52d02c0903de284562fc07cf0c88739586064160cf53df3306d625115312f72e"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-14-hillside-civic-fpv.png",
+          "bytes": 38088,
+          "sha256": "24b9a259ab4505666e9b7440a5c25141ddb185c7072bee9905ea81bef1c3a2a4"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-14-hillside-civic-overview.png",
+          "bytes": 42836,
+          "sha256": "7e2eca3b8771b613fb3d144ea94cad2c45e9ab8de09ef94a1802b32b0987eae3"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-14-hillside-civic-paused.txt",
+          "bytes": 3092,
+          "sha256": "19c4acefeee835192c7059d50166809d64020710953e04f3128b9cf02db6cc96"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-14-hillside-civic-ready.txt",
+          "bytes": 737,
+          "sha256": "d95b04e34f5ac9d6ad9b6ed778c90a316aee010f8aea66bccda542ec1cebc695"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 15,
+      "id": "hillside-town-study",
+      "offeredTitle": {
+        "en": "Hillside Town — terraces and courtyards",
+        "uk": "Містечко на схилі — тераси та подвір’я"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Hillside Town — terraces and courtyards",
+        "uk": "Містечко на схилі — тераси та подвір’я"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Terraces and courtyards",
+        "uk": "Тераси та подвір’я"
+      },
+      "revision": "town-r2",
+      "extentAsAdvertised": "384 × 384 m",
+      "description": {
+        "en": "384 × 384 m · three terraces, graded streets, open doorways and an elevated pad · unscored free flight. Choose one of four starting points. Early town study with original building-kit materials.",
+        "uk": "384 × 384 м · три тераси, похилі вулиці, відкриті дверні проходи й піднятий майданчик · вільний політ без заліку. Виберіть одну з чотирьох стартових точок. Ранній огляд містечка з оригінальними матеріалами набору будівель."
+      },
+      "optionalDownloadBytesAsAdvertised": 8359044,
+      "descriptorAndFilesBytes": 8359044,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json",
+        "bytes": 6558,
+        "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "offered-and-all-http-verified-native-not-attempted",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 38,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "offered-and-all-http-verified-native-not-attempted",
+      "nativeCase": null,
+      "nativeEvidence": [],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 16,
+      "id": "tropical-coastal-districts",
+      "offeredTitle": {
+        "en": "Tropical coast — six flight districts",
+        "uk": "Тропічне узбережжя — шість районів польоту"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Tropical coast — six flight districts",
+        "uk": "Тропічне узбережжя — шість районів польоту"
+      },
+      "titleConsistent": true,
+      "edition": {
+        "en": "Six coastal districts",
+        "uk": "Шість прибережних районів"
+      },
+      "revision": "review-r2",
+      "extentAsAdvertised": "768 × 768 m",
+      "description": {
+        "en": "768 × 768 m · harbour, lagoon piers, reef rocks, palm valley, hillside huts and bamboo grove · unscored free flight. Follow shoreline routes, practise pier openings and explore the village paths. Early coastal study; visual water only.",
+        "uk": "768 × 768 м · гавань, пірси лагуни, прибережні скелі, пальмова долина, хатини на схилі й бамбуковий гай · вільний політ без заліку. Літайте вздовж берега, крізь отвори пірсів і над стежками поселення. Раннє дослідження узбережжя; вода лише візуальна."
+      },
+      "optionalDownloadBytesAsAdvertised": 7863766,
+      "descriptorAndFilesBytes": 7863766,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json",
+        "bytes": 6609,
+        "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "offered-and-all-http-verified-native-not-attempted",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 38,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "offered-and-all-http-verified-native-not-attempted",
+      "nativeCase": null,
+      "nativeEvidence": [],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 17,
+      "id": "canyon-expanse-study",
+      "offeredTitle": {
+        "en": "Canyon Expanse — broad relief study",
+        "uk": "Простори каньйону — дослідження рельєфу"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Canyon Expanse — broad relief study",
+        "uk": "Простори каньйону — дослідження рельєфу"
+      },
+      "titleConsistent": true,
+      "edition": null,
+      "revision": "relief-r1",
+      "extentAsAdvertised": "8.192 × 8.192 km",
+      "description": {
+        "en": "8.192 × 8.192 km · six starting areas · unscored free flight. Broad terrain-only relief with basins, mesas and ridges; an early landscape study with sparse detail.",
+        "uk": "8,192 × 8,192 км · шість місць старту · вільний політ без заліку. Відкритий рельєф з улоговинами, плато та хребтами; раннє дослідження ландшафту з невеликою кількістю деталей."
+      },
+      "optionalDownloadBytesAsAdvertised": 47975524,
+      "descriptorAndFilesBytes": 47975524,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/e561b41bb06d39775bf1bc5f9e078cabeeb84fef/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json",
+        "bytes": 329372,
+        "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 2050,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 28,
+        "name": "Canyon Expanse · Broad relief r1",
+        "kind": "region",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "slug": "region-17-canyon-expanse",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-17-canyon-expanse-active.txt",
+          "bytes": 643,
+          "sha256": "0cc19706f57d04ef95387dc275eedcadbe41506f94cb5352c30423583720ac82"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-17-canyon-expanse-fpv.png",
+          "bytes": 33434,
+          "sha256": "f44696c0660379bcfe6570d84427af992ac9a6ea0714f0f9c00716e292748bb5"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-17-canyon-expanse-overview.png",
+          "bytes": 28150,
+          "sha256": "282e7b94d4f8ae9d12b2da12039609c87d7e91a5794628002f73d9cf54de616d"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-17-canyon-expanse-paused.txt",
+          "bytes": 3164,
+          "sha256": "3ab4b40c386047ad951c7076a16350228deba80464653e161c395fde53876b0a"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-17-canyon-expanse-ready.txt",
+          "bytes": 738,
+          "sha256": "a87a32f58a1b86409d1c6c3dcb67acb2bb8ead66b67a3c3d23d6e3683b9b9305"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 18,
+      "id": "tropical-coastal-study",
+      "offeredTitle": {
+        "en": "Tropical coast — bounded flight study",
+        "uk": "Тропічне узбережжя — дослідження польоту"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Tropical coast — bounded flight study",
+        "uk": "Тропічне узбережжя — дослідження польоту"
+      },
+      "titleConsistent": true,
+      "edition": null,
+      "revision": "review-r1",
+      "extentAsAdvertised": "384 × 384 m",
+      "description": {
+        "en": "384 × 384 m · two piers, a stilt hut, palms and dunes · unscored free flight. Practise open bays, low passes and a shoreline circuit. Early coastal preview; visual water only.",
+        "uk": "384 × 384 м · два пірси, хатина на палях, пальми й дюни · вільний політ без заліку. Тренуйте проходи, низький політ та маршрут уздовж берега. Ранній огляд узбережжя; вода лише візуальна."
+      },
+      "optionalDownloadBytesAsAdvertised": 5989243,
+      "descriptorAndFilesBytes": 5989243,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json",
+        "bytes": 6602,
+        "sha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "offered-and-all-http-verified-native-not-attempted",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 38,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "offered-and-all-http-verified-native-not-attempted",
+      "nativeCase": null,
+      "nativeEvidence": [],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 19,
+      "id": "canyon-arrival-landmarks-study",
+      "offeredTitle": {
+        "en": "Canyon Badlands — six districts",
+        "uk": "Каньйон — шість районів"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Canyon Badlands — six districts",
+        "uk": "Каньйон — шість районів"
+      },
+      "titleConsistent": true,
+      "edition": null,
+      "revision": "districts-r1",
+      "extentAsAdvertised": "768 × 768 m",
+      "description": {
+        "en": "768 × 768 m · six districts and six starting points. Explore the basin, mesa, winding gorge, twin buttes, split ravine and sunset shelf in a stylized region for unscored free flight.",
+        "uk": "768 × 768 м · шість районів і шість стартових точок. Досліджуйте улоговину, плато, звивисту ущелину, парні скелі, роздвоєну балку й терасу у стилізованому регіоні для вільного польоту без заліку."
+      },
+      "optionalDownloadBytesAsAdvertised": 3404577,
+      "descriptorAndFilesBytes": 3404577,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/dbfa4cef92866938ce05815ee9beb4830d935647/authoring/fpv-worlds/regions/canyon-badlands/delivery-districts-r1/delivery.json",
+        "bytes": 24279,
+        "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "offered-and-all-http-verified-native-not-attempted",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 146,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "offered-and-all-http-verified-native-not-attempted",
+      "nativeCase": null,
+      "nativeEvidence": [],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 20,
+      "id": "canyon-arrival-landmarks-study",
+      "offeredTitle": {
+        "en": "Canyon Badlands — regional preview",
+        "uk": "Каньйон — огляд регіону"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Canyon arrival — rounded relief study",
+        "uk": "Вхід у каньйон — дослідження плавного рельєфу"
+      },
+      "titleConsistent": true,
+      "edition": null,
+      "revision": "rounded-r1",
+      "extentAsAdvertised": "384 × 384 m",
+      "description": {
+        "en": "384 × 384 m · basin, gorge and rock openings · unscored free flight. A stylized regional preview with twin spires, ridge passages and clear practice routes.",
+        "uk": "384 × 384 м · улоговина, ущелина та отвори у скелях · вільний політ без заліку. Стилізований огляд регіону з парними шпилями, проходами на хребті й відкритими тренувальними маршрутами."
+      },
+      "optionalDownloadBytesAsAdvertised": 1180140,
+      "descriptorAndFilesBytes": 1180140,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/5591a1ccbc9302665cc2e97c0cc13f96affae4e8/authoring/fpv-worlds/regions/canyon-badlands/delivery-rounded-r1/delivery.json",
+        "bytes": 6790,
+        "sha256": "5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "offered-and-all-http-verified-native-not-attempted",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 38,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "offered-and-all-http-verified-native-not-attempted",
+      "nativeCase": null,
+      "nativeEvidence": [],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 21,
+      "id": "railway-valley-study",
+      "offeredTitle": {
+        "en": "Railway Valley — regional preview",
+        "uk": "Залізнична долина — огляд регіону"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Railway Valley — structural study",
+        "uk": "Залізнична долина — дослідження конструкцій"
+      },
+      "titleConsistent": true,
+      "edition": null,
+      "revision": "structure-r1",
+      "extentAsAdvertised": "384 × 384 m",
+      "description": {
+        "en": "384 × 384 m · bridge, freight yard and open workshop · unscored free flight. An early regional preview with static trains and clear practice corridors.",
+        "uk": "384 × 384 м · міст, вантажний двір і відкритий цех · вільний політ без заліку. Ранній огляд регіону зі статичними потягами та відкритими маршрутами для практики."
+      },
+      "optionalDownloadBytesAsAdvertised": 5691267,
+      "descriptorAndFilesBytes": 5691267,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/31c0b54b668fa004be03f46f7ddcfa195ee734b3/authoring/fpv-worlds/regions/railway-valley/delivery-structure-r1/delivery.json",
+        "bytes": 6661,
+        "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "offered-and-all-http-verified-native-not-attempted",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 38,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": false,
+      "publicStatus": "offered-and-all-http-verified-native-not-attempted",
+      "nativeCase": null,
+      "nativeEvidence": [],
+      "labelFixPublicUIObserved": false,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    },
+    {
+      "catalogueIndex": 22,
+      "id": "urban-earthworks-study",
+      "offeredTitle": {
+        "en": "Urban earthworks — regional preview",
+        "uk": "Міські земляні споруди — огляд регіону"
+      },
+      "installedTitleBeforeCorrection": {
+        "en": "Urban Bando: loading halls and parking ramps",
+        "uk": "Міське бандо: вантажні зали й пандуси паркінгу"
+      },
+      "titleConsistent": true,
+      "edition": null,
+      "revision": "review-r2",
+      "extentAsAdvertised": "384 × 384 m",
+      "description": {
+        "en": "384 × 384 m · loading court, open workshop and connected parking ramps · unscored free flight. A regional preview with marked roads, building openings and rooftop passages.",
+        "uk": "384 × 384 м · вантажний двір, відкритий цех і сполучені пандуси паркінгу · вільний політ без заліку. Огляд регіону з розміченими дорогами, отворами будівель і проходами на дахах."
+      },
+      "optionalDownloadBytesAsAdvertised": 2275449,
+      "descriptorAndFilesBytes": 2275449,
+      "estimateIncludesDescriptor": true,
+      "pin": {
+        "url": "https://raw.githubusercontent.com/mekhovov/revealline/622fade3a7a4e70021cab9c509c1116d0378ad2b/authoring/fpv-worlds/regions/urban-bando/delivery-review-r2/delivery.json",
+        "bytes": 6603,
+        "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+      },
+      "descriptorHTTPVerified": true,
+      "descriptorIdMatches": true,
+      "sourceAdmission": "Default regional catalogue offer in main; unscored early study/preview, not final world art",
+      "playerPath": "Explore worlds or World library → Regional free flight → Download → Fly",
+      "publicLaunchVerification": "bounded-native-launch-passed",
+      "assetsAndNativeLaunchReverifiedHere": false,
+      "publicOffer": true,
+      "publicDescriptorAndAllAssetsExact": true,
+      "publicAssetCount": 38,
+      "labelFixDeliveredExactBytes": true,
+      "installedInRootProfile": true,
+      "publicStatus": "bounded-native-launch-passed",
+      "nativeCase": {
+        "launchRecordIndex": 29,
+        "name": "Urban Earthworks · Review r2",
+        "kind": "region",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV",
+          "Chase",
+          "Overview"
+        ],
+        "slug": "region-22-urban",
+        "observationPhase": "Initial public session before b117 label reload"
+      },
+      "observedViews": [
+        "FPV",
+        "Chase",
+        "Overview"
+      ],
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-22-urban-active.txt",
+          "bytes": 642,
+          "sha256": "431f54e3636d31daad555585b55cf6e525028d2f36ee1a573fcfca85f7c9c780"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-22-urban-fpv.png",
+          "bytes": 69626,
+          "sha256": "50b856e676315a155f1f5e8d6086538b4ee26c329d525ff6cd63bf50d735d21d"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-22-urban-overview.png",
+          "bytes": 46497,
+          "sha256": "4df46206836e2533178fcf16ba3f83d239522addce614df1abd476a728e7b07b"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-22-urban-paused.txt",
+          "bytes": 3025,
+          "sha256": "57f6e5523bf66ee79a01d95ef26298327cf60666c36faca82aa5a6a15253a441"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/region-22-urban-ready.txt",
+          "bytes": 737,
+          "sha256": "d95b04e34f5ac9d6ad9b6ed778c90a316aee010f8aea66bccda542ec1cebc695"
+        }
+      ],
+      "labelFixPublicUIObserved": true,
+      "sourceInventoryStatusSupersededByThisReceipt": "Not performed by this source/API audit; root owns actual Pages renderer"
+    }
+  ],
+  "ordinaryWorlds": [
+    {
+      "id": "mountain-reservoir",
+      "title": [
+        "Mountain Reservoir",
+        "Гірське водосховище"
+      ],
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "path": "authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "bytes": 1379988,
+      "courses": 8,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/ea57d2e321896ab873c2ca6ca06791a88362a674/authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "ae9d1d50834c2356daf73b506a6dab8c9c1267cc",
+        "bytes": 1379988,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 8,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": false,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 2,
+        "name": "Mountain Reservoir",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-01-reservoir-active.txt",
+          "bytes": 1169,
+          "sha256": "3cb585b988b8ba1ecc4b8b6a73f1c934471bc5adbcf6d12d3e5ce065318bf0d3"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-01-reservoir-fpv.png",
+          "bytes": 87557,
+          "sha256": "018ff8acd2ae01b3cebcf6124c0051848284b84a18e00bc38e6f4a786425cef6"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-01-reservoir-paused.txt",
+          "bytes": 2721,
+          "sha256": "3941c02293d3a079e697ae547b9f89c81d5f450d05e18420ed20672b94eb4d37"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-01-reservoir-ready.txt",
+          "bytes": 1388,
+          "sha256": "6822c4f537176d7f3551d12b7daf29d2b966e791176a849eafd44936ccbc5069"
+        }
+      ]
+    },
+    {
+      "id": "festival-grounds",
+      "title": [
+        "Festival Grounds",
+        "Фестивальний майданчик"
+      ],
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "path": "authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "bytes": 1256875,
+      "courses": 8,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/62d0e72f2963a61cc65ef829a320d9a1c2593b0c/authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "c2b09abae446ef186cacbc7569e82388d33ad165",
+        "bytes": 1256875,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 8,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": false,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 3,
+        "name": "Festival Grounds",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-02-festival-active.txt",
+          "bytes": 1161,
+          "sha256": "222f996b27c4d259a5f51d19a60780a34f92162a21d69c40e9492ffc6049e1fe"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-02-festival-fpv.png",
+          "bytes": 80342,
+          "sha256": "99939efa37180add0e0f5b3e19ab95191386ff6fc8ea838cae260ee22bcf8297"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-02-festival-paused.txt",
+          "bytes": 2717,
+          "sha256": "2b8ca3b1f46dcb697bdf96f4020fdac6a6ab63c2d9e3bf81a7e213bad99e2d04"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-02-festival-ready.txt",
+          "bytes": 1371,
+          "sha256": "83f1a981e0be154c2f0c9fd7a747aab85f3773a5ed5e7a8083dbcc7ac0667d9f"
+        }
+      ]
+    },
+    {
+      "id": "harbor-docks",
+      "title": [
+        "Harbor Docks",
+        "Портові доки"
+      ],
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "path": "authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "bytes": 879213,
+      "courses": 8,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/8af1b67220be4f26e9b68d821e2b574b63a23904/authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "f6c2c69ef83b1a400dc2a211813f5a00120812b2",
+        "bytes": 879213,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 8,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": false,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 4,
+        "name": "Harbor Docks",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-03-harbor-active.txt",
+          "bytes": 1138,
+          "sha256": "720111f7f216609913efb92706e0b33e2cb9fd13a7a25b08b7b24b884aab7371"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-03-harbor-fpv.png",
+          "bytes": 72796,
+          "sha256": "4cc9a853f814f330f268d2414c0ad06af65b8a5ca9971a627a286257886fc3fd"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-03-harbor-paused.txt",
+          "bytes": 2716,
+          "sha256": "f8b3b84b92c7ad19caae4d30f50f58517078003897550d6aec78d7b52193aac5"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-03-harbor-ready.txt",
+          "bytes": 1371,
+          "sha256": "87d9f50f3082932a8358ec8c039a1b0d2033453d628da0b8ea3c9096f95d7626"
+        }
+      ]
+    },
+    {
+      "id": "cc0-castle-court",
+      "title": [
+        "Castle Courtyard",
+        "Замкове подвір’я"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-castle-court/cc0-castle-court.r1.rlpack",
+      "sha256": "ee6d8ee8ea5d981f49cdeaa52282a33d36de3f98321883b0cb7cbcc630356ed0",
+      "bytes": 160544,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-castle-court/cc0-castle-court.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "aef60929e001d2ae109bc74ecf39a3a1d67a4582",
+        "bytes": 160544,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 5,
+        "name": "Castle Courtyard",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-04-castle-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-04-castle-fpv.png",
+          "bytes": 78433,
+          "sha256": "b930589b1c028646697c32ef53455fc9ddd1a605903e10327d99da2884e44364"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-04-castle-paused.txt",
+          "bytes": 2732,
+          "sha256": "f079bc6731a842250db5de6dc61af9a3872c929efb017fb298bb2dc46a967395"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-04-castle-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-city-plaza",
+      "title": [
+        "City Plaza",
+        "Міська площа"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-city-plaza/cc0-city-plaza.r1.rlpack",
+      "sha256": "08dd572b3812ffeac3ba1e87ef1890afa7e3d3f127493c189197d1739f1e78ce",
+      "bytes": 1289830,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-city-plaza/cc0-city-plaza.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "902cb737a0c7e6cbdd97a9492bb8bf04cf529b7f",
+        "bytes": 1289830,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 6,
+        "name": "City Plaza",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-05-city-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-05-city-fpv.png",
+          "bytes": 107354,
+          "sha256": "e895ff1b280e4ae8f774e23a6677ec0f6ac3b006eaf0d919efb31e172b12a99d"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-05-city-paused.txt",
+          "bytes": 2726,
+          "sha256": "448d55568caad90c377eb1f9f5203039f3fe8eb0fa4b77edddc6fc04bc0ba760"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-05-city-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-construction-site",
+      "title": [
+        "House Construction Site",
+        "Будівельний майданчик"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-construction-site/cc0-construction-site.r1.rlpack",
+      "sha256": "8d6f217d626c570815722fc23d04cd5297093ab0ff6a1f6886897a5d96ffe062",
+      "bytes": 2368301,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-construction-site/cc0-construction-site.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "8c83fb5f6a8ed835b7dac6e33d40c3652a0da27f",
+        "bytes": 2368301,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 7,
+        "name": "House Construction Site",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-06-construction-active.txt",
+          "bytes": 1170,
+          "sha256": "e8ddeeb1a5c1e039f6cef4b2d7ff03610c87ded17d19c0f6b7b621c7218eb133"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-06-construction-fpv.png",
+          "bytes": 99848,
+          "sha256": "04e11a72df2382d7f6b07cb6ab4638d6efc893c5b585490e2bdb214286363f8f"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-06-construction-paused.txt",
+          "bytes": 2739,
+          "sha256": "185c08671374e7c8dcea1a3ae41e697c5fcf249de1594028120a3cf62b7f5714"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-06-construction-ready.txt",
+          "bytes": 1389,
+          "sha256": "08d180a65baad89b68e3851c6c83cee9a2be54574c1554099d95aeb150079421"
+        }
+      ]
+    },
+    {
+      "id": "cc0-frontier-camp",
+      "title": [
+        "Frontier Camp",
+        "Табір на узліссі"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-frontier-camp/cc0-frontier-camp.r1.rlpack",
+      "sha256": "4c9b122ccfb6b28b46dd2b198b8d15477fde456d91a2f416498bf40948a5e92b",
+      "bytes": 172377,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-frontier-camp/cc0-frontier-camp.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "f8a0917713fe581d235a56f9ff022474d2cbec58",
+        "bytes": 172377,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 8,
+        "name": "Frontier Camp",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-07-frontier-active.txt",
+          "bytes": 1152,
+          "sha256": "3b26092fed9a88eacda66449edc8e4be30d510a44d043b276fd50c0901008763"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-07-frontier-fpv.png",
+          "bytes": 70900,
+          "sha256": "b799ccf054bf5c02d948135f0a9b2fe6109ba5ddd5c9026e8ebab8176bca15af"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-07-frontier-paused.txt",
+          "bytes": 2729,
+          "sha256": "0010164dd060d18e490900a32abf2e425f87428c4b871593d03b87ed1ca2bf3f"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-07-frontier-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-industrial-yard",
+      "title": [
+        "Industrial Service Yard",
+        "Промисловий двір"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-industrial-yard/cc0-industrial-yard.r1.rlpack",
+      "sha256": "74fc5afb38af089a0bf58740640b070532d36cdd181011b9ef2fb8742d496273",
+      "bytes": 1054654,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-industrial-yard/cc0-industrial-yard.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "edcd02e6aa250a8349bf480e8785a0dc2d80a13c",
+        "bytes": 1054654,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 9,
+        "name": "Industrial Service Yard",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-08-industrial-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-08-industrial-fpv.png",
+          "bytes": 82644,
+          "sha256": "412754a174b035f79d2f8ed650be361ab9f5eb02e7ffc289553ba93cbc8446db"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-08-industrial-paused.txt",
+          "bytes": 2739,
+          "sha256": "7d02ac52f0bb0e2d3c4aa2621941de605ea8d24c974c9fe11e11d1e45f090650"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-08-industrial-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-orbital-workshop",
+      "title": [
+        "Orbital Workshop",
+        "Орбітальна майстерня"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-orbital-workshop/cc0-orbital-workshop.r1.rlpack",
+      "sha256": "916d8da5a1b2b29ddc20ef7bf090fbc38038ea926d7bdd1a0e560ce513c5e71c",
+      "bytes": 155913,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-orbital-workshop/cc0-orbital-workshop.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "b0dbb47ca8ff126b8c6709c55e368bf5af71ba96",
+        "bytes": 155913,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 10,
+        "name": "Orbital Workshop",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-09-orbital-active.txt",
+          "bytes": 1152,
+          "sha256": "3b26092fed9a88eacda66449edc8e4be30d510a44d043b276fd50c0901008763"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-09-orbital-fpv.png",
+          "bytes": 79632,
+          "sha256": "19b6ad52cd293f7e84f2b61ba69436acc72e2cdb148faa0b9960db85de78a26e"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-09-orbital-paused.txt",
+          "bytes": 2732,
+          "sha256": "c0318d9557ae6fa74d19286f95d00e9459024f709455b0971ca8ba03d43c9482"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-09-orbital-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-pine-clearing",
+      "title": [
+        "Pine Clearing",
+        "Соснова галявина"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-pine-clearing/cc0-pine-clearing.r1.rlpack",
+      "sha256": "59c448a1226ad03a3881322ff7d9d766cc7ca35ef888267665fe66399cfe8b3f",
+      "bytes": 131266,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-pine-clearing/cc0-pine-clearing.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "5ab898de84fe8d9046f4339e81ee45d72c7344f2",
+        "bytes": 131266,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 11,
+        "name": "Pine Clearing",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-10-pine-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-10-pine-fpv.png",
+          "bytes": 75765,
+          "sha256": "f8966730d9473d6961faf6c5c477cda83860ecad148cee434b6d7a8d487eff30"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-10-pine-paused.txt",
+          "bytes": 2729,
+          "sha256": "f87cc4d3dc3c10c62f603ef75c179c34b872dad07cf034c7a32a606d018e27fd"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-10-pine-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-platform-garden",
+      "title": [
+        "Platform Garden",
+        "Сад платформ"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-platform-garden/cc0-platform-garden.r1.rlpack",
+      "sha256": "019d00195bcb03dd9f202e12cd948d369cdda271517bf4d493e68440b8e406b0",
+      "bytes": 159176,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-platform-garden/cc0-platform-garden.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "a1d25fb4c1746f2d1b5ceea5b932b2578406c3fe",
+        "bytes": 159176,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 12,
+        "name": "Platform Garden",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-11-platform-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-11-platform-fpv.png",
+          "bytes": 64215,
+          "sha256": "828f50d45655b16cd201739d5e0ccb86d7732ee289367251d3aeb6a88b3361d6"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-11-platform-paused.txt",
+          "bytes": 2731,
+          "sha256": "9afce86a1e75834b8c022736da55507c59f1666a72970fcda605a86042c217f9"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-11-platform-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-race-paddock",
+      "title": [
+        "Race Paddock",
+        "Гоночний паддок"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-race-paddock/cc0-race-paddock.r1.rlpack",
+      "sha256": "33443ec2cb18a9d4c8874f564e3644fd0cd36c03680d1b37cfd01bab1f9a949e",
+      "bytes": 394615,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-race-paddock/cc0-race-paddock.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "046c51b7eed19b155b713631ea5e8da0efcb8d7f",
+        "bytes": 394615,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 13,
+        "name": "Race Paddock",
+        "kind": "worldpack",
+        "download": true,
+        "ready": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-12-race-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-12-race-fpv.png",
+          "bytes": 65290,
+          "sha256": "b656ebf9d54b5da66040aafb2e1f173eb5697ae31243981ebf3945eacb56d728"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-12-race-paused.txt",
+          "bytes": 2728,
+          "sha256": "a510025210952163ec819de0d885a30fafe67e713da322767d2723485946885a"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-12-race-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-road-lab",
+      "title": [
+        "Roadworks Practice Park",
+        "Дорожній тренувальний парк"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-road-lab/cc0-road-lab.r1.rlpack",
+      "sha256": "97fe29db831659500a8850ed0e0a0252c37b6a6c893b37536e1967404683c355",
+      "bytes": 63754,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-road-lab/cc0-road-lab.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "8be30b6d2a21f25de2398a2c4248716fb173a068",
+        "bytes": 63754,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 14,
+        "name": "Roadworks Practice Park",
+        "kind": "worldpack",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ],
+        "preparedStatus": "Paused"
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-13-roadworks-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-13-roadworks-fpv.png",
+          "bytes": 60016,
+          "sha256": "d7e0f6eb819c643de412579156f2a7f430093c7009c2891bff23fb8ed52ddd5e"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-13-roadworks-paused.txt",
+          "bytes": 2739,
+          "sha256": "41b9a10d3e8e50aeb8f4b024c19d088ceafa5e8163148d44dffc910d64e42c5b"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-13-roadworks-ready.txt",
+          "bytes": 1367,
+          "sha256": "e2ba01ecd4e04f496cb4d95dd578887e6ec103f69c49415cf977c5b9154febe9"
+        }
+      ]
+    },
+    {
+      "id": "cc0-rock-grotto",
+      "title": [
+        "Rock Grotto",
+        "Скелястий грот"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-rock-grotto/cc0-rock-grotto.r1.rlpack",
+      "sha256": "8f4809f5f07d625046ec58f810fca9d52d14ad177b5564f16f0ee73da187a2f5",
+      "bytes": 1433783,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-rock-grotto/cc0-rock-grotto.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "4ce0f4f3ef715ec394776e9a9d9f9bbccef9a804",
+        "bytes": 1433783,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 15,
+        "name": "Rock Grotto",
+        "kind": "worldpack",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ],
+        "preparedStatus": "Ready"
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-14-grotto-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-14-grotto-fpv.png",
+          "bytes": 69345,
+          "sha256": "4fbcfa3d4d7a2313639215891713e6d6837ec3bbcfdfcaa43fd657e0ce02e30b"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-14-grotto-paused.txt",
+          "bytes": 2727,
+          "sha256": "9fe58d35008b1ab7457715ad1b477648003828c18fbe2891821f215ff7301cf2"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-14-grotto-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-ruined-halls",
+      "title": [
+        "Ruined Halls",
+        "Зруйновані зали"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-ruined-halls/cc0-ruined-halls.r1.rlpack",
+      "sha256": "01eb7bd2874bb07ff7617f792fa765ca1d8d3e6cad72445013a4c72e8c21324a",
+      "bytes": 1750695,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-ruined-halls/cc0-ruined-halls.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "170b62c2dbfb9569ef259968d7c8da3a7563d692",
+        "bytes": 1750695,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 16,
+        "name": "Ruined Halls",
+        "kind": "worldpack",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ],
+        "preparedStatus": "Ready"
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-15-ruins-active.txt",
+          "bytes": 1152,
+          "sha256": "3b26092fed9a88eacda66449edc8e4be30d510a44d043b276fd50c0901008763"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-15-ruins-fpv.png",
+          "bytes": 65664,
+          "sha256": "be6a6f4b6a87502a1219c5cb5ec3cd7f1c12f67ec58eff596469793ee980351d"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-15-ruins-paused.txt",
+          "bytes": 2728,
+          "sha256": "2e23a9c3124802c335fac5628d153eb5d30b6b0b65366adb0f56cecf487d2449"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-15-ruins-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-shipyard",
+      "title": [
+        "Dry-dock Shipyard",
+        "Верф сухого доку"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-shipyard/cc0-shipyard.r1.rlpack",
+      "sha256": "5b3f2251ff0fcbdfbd645a7f6394b2f13d23f544adc57fe2b8a8ccdcdce14e98",
+      "bytes": 608177,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-shipyard/cc0-shipyard.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "4181f6a618478ed2fceada350cff40d00397f020",
+        "bytes": 608177,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 17,
+        "name": "Dry-dock Shipyard",
+        "kind": "worldpack",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ],
+        "preparedStatus": "Ready"
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-16-shipyard-active.txt",
+          "bytes": 1152,
+          "sha256": "3b26092fed9a88eacda66449edc8e4be30d510a44d043b276fd50c0901008763"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-16-shipyard-fpv.png",
+          "bytes": 65233,
+          "sha256": "e2678bd7ae8eb5ab791de57964118a5b23333b44c3daaa50381e96d9e1c27522"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-16-shipyard-paused.txt",
+          "bytes": 2733,
+          "sha256": "f4708fabb7f06d9a2c36e864bada9ab362db8214628e8d940a07ac1b0fe8966b"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-16-shipyard-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-skate-plaza",
+      "title": [
+        "Skate Plaza",
+        "Скейт-площа"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-skate-plaza/cc0-skate-plaza.r1.rlpack",
+      "sha256": "388c68e57c43b4d3d450c57890b112408c0316e4e5e2d0e9eae00d9cb151e03b",
+      "bytes": 214473,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-skate-plaza/cc0-skate-plaza.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "d1a54fede1b0c42695dc11044df19fb26c0dd4e8",
+        "bytes": 214473,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 18,
+        "name": "Skate Plaza",
+        "kind": "worldpack",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ],
+        "preparedStatus": "Ready"
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-17-skate-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-17-skate-fpv.png",
+          "bytes": 62608,
+          "sha256": "5c61beef7fe1df4a001c38db798c2baa032a067f7bd5ae905d41f4382ca1c00e"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-17-skate-paused.txt",
+          "bytes": 2727,
+          "sha256": "344adf419e59431dd1dbaca5d9a33730def568517a14ec77877af97dffe74576"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-17-skate-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-village-green",
+      "title": [
+        "Village Green",
+        "Сільський парк"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-village-green/cc0-village-green.r1.rlpack",
+      "sha256": "3ca6c466023b6b764c47c70c15013b64d0af7ca4577104ff777707527d4192af",
+      "bytes": 620228,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-village-green/cc0-village-green.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "37dfb8161b75c2b1fcb8e24ad696ab49aaf6738e",
+        "bytes": 620228,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 19,
+        "name": "Village Green",
+        "kind": "worldpack",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ],
+        "preparedStatus": "Ready"
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-18-village-active.txt",
+          "bytes": 1152,
+          "sha256": "fa8cba71cea33d1a9edfad5521e1de64d47c1065c2fe45ebaccd8a446ba8fc93"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-18-village-fpv.png",
+          "bytes": 81138,
+          "sha256": "ece74444a71f6437701337512c6f93d7f36f221ff41f450d38d5f58a7d5da553"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-18-village-paused.txt",
+          "bytes": 2729,
+          "sha256": "91325b70c4122590a8f6b40937480f55634c51decd65563a2b7347500b3ea274"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-18-village-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-woodland-camp",
+      "title": [
+        "Woodland Camp",
+        "Лісовий табір"
+      ],
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-woodland-camp/cc0-woodland-camp.r1.rlpack",
+      "sha256": "a7b0f6d52411131f6e03d25f5db1ef25209be2875422e0aad8fd0f155735b93c",
+      "bytes": 310434,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/0c05c638bad38a3ae62c4c0a911919bc54f1eb11/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-woodland-camp/cc0-woodland-camp.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "5fe300d18743660d48a4a614ce5081f9b6a9d996",
+        "bytes": 310434,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 20,
+        "name": "Woodland Camp",
+        "kind": "worldpack",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ],
+        "preparedStatus": "Ready"
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-19-woodland-active.txt",
+          "bytes": 1152,
+          "sha256": "3b26092fed9a88eacda66449edc8e4be30d510a44d043b276fd50c0901008763"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-19-woodland-fpv.png",
+          "bytes": 82887,
+          "sha256": "f9ced7b610ae28129ae7bec2c7417cd83de7f9c1fe6dd0e23c8050bcd7414b23"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-19-woodland-paused.txt",
+          "bytes": 2729,
+          "sha256": "ec7bcf8eb5b2db77c97041c779d31f5ef187106a670d77c67bc293ead1cd788e"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-19-woodland-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    },
+    {
+      "id": "cc0-coaster-park",
+      "title": [
+        "Coaster Practice Park",
+        "Тренувальний парк атракціонів"
+      ],
+      "revision": "r1",
+      "commit": "f1b6373996a53c84bca77b485e73630ffe6b00c7",
+      "path": "authoring/fpv-worlds/free-worlds/distribution/r1/cc0-coaster-park/cc0-coaster-park.r1.rlpack",
+      "sha256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "bytes": 1201279,
+      "courses": 1,
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/f1b6373996a53c84bca77b485e73630ffe6b00c7/authoring/fpv-worlds/free-worlds/distribution/r1/cc0-coaster-park/cc0-coaster-park.r1.rlpack",
+      "sourceAdmission": "Default ordinary World catalogue offer; import/install required on Play",
+      "playerPath": "Explore worlds or World library → More worlds to fly → Play",
+      "headHTTPStatus": 200,
+      "mainTreeAsset": {
+        "gitBlob": "49cefeb30f30f6e6c8a00d02eea0ac8fba94d4ab",
+        "bytes": 1201279,
+        "sizeMatches": true
+      },
+      "contentSHA256ReverifiedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicPackBytesExact": true,
+      "productionCoursesValidated": 1,
+      "publicStatus": "normal-download-and-one-bounded-native-launch-passed",
+      "allCoursesFlightTested": true,
+      "courseCompletionClaimed": false,
+      "nativeCase": {
+        "launchRecordIndex": 21,
+        "name": "Coaster Practice Park",
+        "kind": "worldpack",
+        "download": true,
+        "preparedDisarmed": true,
+        "armPause": true,
+        "cameras": [
+          "FPV"
+        ],
+        "preparedStatus": "Ready"
+      },
+      "nativeEvidence": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-20-coaster-active.txt",
+          "bytes": 1152,
+          "sha256": "3b26092fed9a88eacda66449edc8e4be30d510a44d043b276fd50c0901008763"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-20-coaster-fpv.png",
+          "bytes": 76924,
+          "sha256": "f05767fb41a2616fc3d123428a1a7e4e6f025a0d526af7a8936fcfca74fa0db8"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-20-coaster-paused.txt",
+          "bytes": 2737,
+          "sha256": "2b556dcf62c714c20cec88b3dbf659dfd540f2ce28e232b6cb3c2d6d5ad69297"
+        },
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-sim-player-20261015/world-20-coaster-ready.txt",
+          "bytes": 1371,
+          "sha256": "e992ee0708f0b4cc0e0a465317e2d6962f1c3fa7c6c7c925f6e40f21934d5ab6"
+        }
+      ]
+    }
+  ],
+  "builtins": [
+    {
+      "id": "coast",
+      "theme": "ukrainian",
+      "title": {
+        "en": "Coastal airfield",
+        "uk": "Прибережний аеродром"
+      },
+      "subtitle": {
+        "en": "Sea light, piers and a lighthouse approach",
+        "uk": "Морське світло, причали й підхід до маяка"
+      },
+      "style": "coast",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 34,
+        "name": "Coastal airfield",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "quarry",
+      "theme": "operations",
+      "title": {
+        "en": "Amber quarry",
+        "uk": "Бурштиновий кар’єр"
+      },
+      "subtitle": {
+        "en": "Rock terraces, haul traffic and a deep slalom",
+        "uk": "Скельні тераси, транспорт і слалом у кар’єрі"
+      },
+      "style": "quarry",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 35,
+        "name": "Amber quarry",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "rooftops",
+      "theme": "pixel",
+      "title": {
+        "en": "Skyline campus",
+        "uk": "Кампус на дахах"
+      },
+      "subtitle": {
+        "en": "Skybridges, couriers and three landing heights",
+        "uk": "Повітряні мости, кур’єри й посадки на різних висотах"
+      },
+      "style": "rooftops",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 36,
+        "name": "Skyline campus",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "orchard",
+      "theme": "ukrainian",
+      "title": {
+        "en": "Harvest orchard",
+        "uk": "Осінній сад"
+      },
+      "subtitle": {
+        "en": "Tree avenues, a walking guide and a quiet barn",
+        "uk": "Алеї дерев, піший провідник і тихий амбар"
+      },
+      "style": "orchard",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 37,
+        "name": "Harvest orchard",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "solar-farm",
+      "theme": "operations",
+      "title": {
+        "en": "Solar research park",
+        "uk": "Сонячний дослідний парк"
+      },
+      "subtitle": {
+        "en": "Tilted panels, service rovers and open flight lanes",
+        "uk": "Похилі панелі, сервісні ровери й відкриті коридори"
+      },
+      "style": "solar-farm",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 38,
+        "name": "Solar research park",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "rail-depot",
+      "theme": "operations",
+      "title": {
+        "en": "Railworks",
+        "uk": "Залізничне депо"
+      },
+      "subtitle": {
+        "en": "Long sight lines, parked wagons and gantry gaps",
+        "uk": "Довгі прямі, вагони й отвори між кранами"
+      },
+      "style": "rail-depot",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 39,
+        "name": "Railworks",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "gym",
+      "theme": "academy",
+      "title": {
+        "en": "Training hangar",
+        "uk": "Навчальний ангар"
+      },
+      "subtitle": {
+        "en": "Find your balance",
+        "uk": "Відчуйте рівновагу"
+      },
+      "style": "hangar",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 40,
+        "name": "Training hangar",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "field",
+      "theme": "academy",
+      "title": {
+        "en": "Open meadow",
+        "uk": "Відкрита лука"
+      },
+      "subtitle": {
+        "en": "Space to learn",
+        "uk": "Простір для навчання"
+      },
+      "style": "meadow",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 41,
+        "name": "Open meadow",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "woodland",
+      "theme": "ukrainian",
+      "title": {
+        "en": "Woodland park",
+        "uk": "Лісопарк"
+      },
+      "subtitle": {
+        "en": "Clearings, timber and quiet trails",
+        "uk": "Галявини, дерева та тихі стежки"
+      },
+      "style": "woodland",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 42,
+        "name": "Woodland park",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "courtyard",
+      "theme": "ukrainian",
+      "title": {
+        "en": "Ukrainian courtyard",
+        "uk": "Українське подвір’я"
+      },
+      "subtitle": {
+        "en": "Warm walls and winding lanes",
+        "uk": "Теплі стіни та звивисті провулки"
+      },
+      "style": "courtyard",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 43,
+        "name": "Ukrainian courtyard",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "warehouse",
+      "theme": "pixel",
+      "title": {
+        "en": "Pixel warehouse",
+        "uk": "Піксельний склад"
+      },
+      "subtitle": {
+        "en": "Strong lines. Small gaps.",
+        "uk": "Чіткі лінії. Вузькі отвори."
+      },
+      "style": "warehouse",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 31,
+        "name": "Pixel warehouse",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "stadium",
+      "theme": "pixel",
+      "title": {
+        "en": "Circuit stadium",
+        "uk": "Гоночний стадіон"
+      },
+      "subtitle": {
+        "en": "Find a faster line",
+        "uk": "Знайдіть швидшу траєкторію"
+      },
+      "style": "stadium",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 30,
+        "name": "Circuit stadium",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "container-yard",
+      "theme": "operations",
+      "title": {
+        "en": "Container yard",
+        "uk": "Контейнерний двір"
+      },
+      "subtitle": {
+        "en": "Cover, movement and precision",
+        "uk": "Укриття, рух і точність"
+      },
+      "style": "industrial",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 33,
+        "name": "Container yard",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    },
+    {
+      "id": "garage",
+      "theme": "operations",
+      "title": {
+        "en": "Parking garage",
+        "uk": "Паркінг"
+      },
+      "subtitle": {
+        "en": "Columns and close encounters",
+        "uk": "Колони та близькі зустрічі"
+      },
+      "style": "garage",
+      "sourceAdmission": "Built-in environment referenced by the ordinary mission/lesson catalogue",
+      "playerPath": "Explore worlds / mission catalogue; Academy environments also appear in Flight School",
+      "sourceURL": "https://raw.githubusercontent.com/mekhovov/revealline/206ccd8b53180c061d394069037678de1b33761b/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sourceModuleSHA256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "individualGeneratedCourseHashComputedHere": false,
+      "publicLaunchVerification": "Not performed by this source/API audit; root owns actual Pages renderer",
+      "publicOffer": true,
+      "publicStatus": "bounded-active-fpv-launch-and-pause-passed",
+      "nativeCase": {
+        "launchRecordIndex": 32,
+        "name": "Parking garage",
+        "kind": "builtin",
+        "launch": true,
+        "active": true,
+        "pause": true,
+        "initialSelectionStartsFlight": true,
+        "cameras": [
+          "FPV"
+        ]
+      },
+      "initialSelectionStartsFlight": true
+    }
+  ],
+  "notClaimed": [
+    "All 23 regional installations/flights",
+    "All starting points or every worldpack challenge flown/completed",
+    "Mission acceptance, full map clearance, route or whole-map art acceptance",
+    "Physical controllers/devices or their FPS",
+    "Full-network offline, app restart or data backup identity continuity",
+    "Elapsed endurance or final representative art",
+    "All optional immutable releases promoted"
+  ],
+  "scope": "Read-only synthesis of exact public HTTP source/payload verification and root-owned bounded native observations. No browser, renderer, storage mutation, new asset downloads, deletion or budget change by this audit."
+}

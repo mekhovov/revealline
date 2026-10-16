@@ -1,0 +1,31 @@
+{
+  "format": "FPVWorkerCapacityQualification.v1",
+  "sourceRevision": "b452a0cac273ed290ac7ee14609dde4f87984df3",
+  "baseline": "f3764070e22f0b33b63fd0f7434690fa7455dc64",
+  "validation": {
+    "command": "PATH=<Node 22.22.2>/bin:$PATH GIT_NO_LAZY_FETCH=1 npm --logs-max=0 run validate",
+    "exitCode": 0,
+    "node": "22.22.2",
+    "warnings": "Seven existing navigation warnings, preserved in full-validation.txt."
+  },
+  "existingChecks": {
+    "command": "node --test --test-name-pattern='generic optional worker cleanup|edition indentation' scripts/test-optional-fpv-package.mjs scripts/test-edition-code-indentation.mjs",
+    "passed": 4,
+    "failed": 0,
+    "filtered": 8
+  },
+  "admission": {
+    "command": "GIT_NO_LAZY_FETCH=1 node scripts/bundle-optional-practice.mjs --out dist/fpv-generated-worker-candidate-b452a0cac --packages civilian-flight,civilian-fpv,fpv-worlds",
+    "exitCode": 0,
+    "sourceBound": true,
+    "identicalBuilds": 2,
+    "committedInputs": true,
+    "zipMembers": true
+  },
+  "review": "Independent read-only review found no blocker in generator/projection/identity guard.",
+  "browser": {
+    "status": "passed",
+    "receipt": "offline-smoke.json",
+    "scope": "Actual native offline preparation, stopped-local-origin reload, Worlds/Academy practice entry and pause; not new Library transport."
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "campaigns": [],
+  "courses": [
+    {
+      "actors": [],
+      "bounds": {
+        "max": {
+          "x": 38000,
+          "y": 16000,
+          "z": 38000
+        },
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        }
+      },
+      "conditions": {
+        "profile": "clear",
+        "revision": "r1"
+      },
+      "environment": "woodland",
+      "format": "FlightCourse.v2",
+      "id": "warm-frame-diagnostic-route",
+      "locales": {
+        "en": {
+          "brief": "Fixture only: arm with neutral controls to record a genuine short grounded practice attempt.",
+          "lesson": "No flight skill or mastery claim.",
+          "title": "Diagnostic grounded recording"
+        },
+        "uk": {
+          "brief": "Лише перевірка: увімкніть із нейтральним керуванням для короткого справжнього наземного запису.",
+          "lesson": "Без оцінки льотної майстерності.",
+          "title": "Діагностичний наземний запис"
+        }
+      },
+      "obstacles": [],
+      "revision": "r1",
+      "rules": {
+        "collisionDamage": 0,
+        "droneRadius": 220,
+        "fireCooldown": 8,
+        "maxTicks": 36000,
+        "playerDamage": 25,
+        "playerHealth": 100,
+        "projectileSpeed": 20000,
+        "projectileTicks": 150,
+        "seed": 1
+      },
+      "spawn": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "steps": {
+        "acro": [
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 2000,
+              "y": 1000,
+              "z": 2000
+            },
+            "maxSpeed": 1300,
+            "maxTilt": 4000,
+            "min": {
+              "x": -2000,
+              "y": 0,
+              "z": -2000
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 2000,
+              "y": 1000,
+              "z": 2000
+            },
+            "maxSpeed": 1300,
+            "maxTilt": 4000,
+            "min": {
+              "x": -2000,
+              "y": 0,
+              "z": -2000
+            },
+            "minTilt": 0,
+            "surface": "$floor",
+            "ticks": 30,
+            "type": "land"
+          }
+        ],
+        "self-level": [
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 2000,
+              "y": 1000,
+              "z": 2000
+            },
+            "maxSpeed": 1300,
+            "maxTilt": 4000,
+            "min": {
+              "x": -2000,
+              "y": 0,
+              "z": -2000
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 2000,
+              "y": 1000,
+              "z": 2000
+            },
+            "maxSpeed": 1300,
+            "maxTilt": 4000,
+            "min": {
+              "x": -2000,
+              "y": 0,
+              "z": -2000
+            },
+            "minTilt": 0,
+            "surface": "$floor",
+            "ticks": 30,
+            "type": "land"
+          }
+        ]
+      },
+      "world": {
+        "id": "warm-frame-diagnostic",
+        "style": "woodland",
+        "theme": "ukrainian",
+        "themeProfile": {
+          "assets": {
+            "enemy": "builtin:practice-drone",
+            "gate": "builtin:timber-gate",
+            "marker": "builtin:ceramic-beacon",
+            "vehicle": "builtin:utility-van"
+          },
+          "audio": {
+            "ambience": "woodland",
+            "gate": "bell",
+            "motor": "quad"
+          },
+          "characters": "civilian",
+          "drone": "racer",
+          "format": "ThemeProfile.v1",
+          "id": "ukrainian",
+          "palette": {
+            "accent": 7322847,
+            "fog": 13097428,
+            "ground": 7242589,
+            "sky": 12244968,
+            "wall": 14996918,
+            "warm": 15847270
+          },
+          "revision": "r1",
+          "textureFilter": "linear",
+          "title": {
+            "en": "Ukrainian Horizons",
+            "uk": "Українські обрії"
+          },
+          "ui": {
+            "accent": "#e5c36e",
+            "borderRadius": 12,
+            "font": "system-ui"
+          }
+        }
+      }
+    }
+  ],
+  "format": "FPVWorldProject.v1",
+  "id": "warm-frame-diagnostic",
+  "overrides": {},
+  "playlists": [],
+  "provenance": [],
+  "source": {
+    "anchors": [],
+    "colliders": [],
+    "hash": null
+  },
+  "themes": [],
+  "title": "Warm frame lifecycle diagnostic",
+  "world": {
+    "id": "warm-frame-diagnostic",
+    "title": "Grounded recording fixture"
+  }
+}

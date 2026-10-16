@@ -1,0 +1,113 @@
+{
+  "format": "revealline-unlicensed-soundtrack-source-check.v1",
+  "checkedAt": "2026-09-30T22:58:12.593Z",
+  "baseRevision": "7e252ba98388ed8be9a7f50efb15ed036a7862d2",
+  "scope": "Game canonical public-catalogue licence exclusion and stale remote-queue prevention. No audio rendering, trusted catalogue admission, local MP3 restriction, or production approval.",
+  "runtimeFiles": [
+    {
+      "path": "game/online-soundtrack-catalogue.mjs",
+      "baseSha256": "11d7fe13b71a9400f4f89b4deec16e2cbf39700fc30b598745565142d74bcda9",
+      "sha256": "7c470d9c08c3e9f67dee55ca24839312f8ca31bd1b8c043008a4bbf49ba96e64"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "baseSha256": "a015dc2c6e60a964fedbfd4e996a803f35fb114c57966d16f670575e63f8fe57",
+      "sha256": "561251cddbd260b3a05e13f3d1e4556c497d4bc1d6819e271e510cc1f6d83c15"
+    }
+  ],
+  "catalogue": {
+    "canonicalInputRows": 261,
+    "unknownLicenceRows": 73,
+    "reviewOnlyRows": 65,
+    "licensedPublicResolved": 123,
+    "trustedTracks": 77,
+    "trustedArchives": 2,
+    "trustedCollections": 18,
+    "trustedMetadataUnchanged": true
+  },
+  "checks": [
+    {
+      "command": "node --test game/test/online-soundtrack-catalogue.test.mjs game/test/soundtrack-player.test.mjs game/test/soundtrack-saved-styles.test.mjs game/test/soundtrack-panel.test.mjs",
+      "passed": 258,
+      "failed": 0
+    },
+    {
+      "command": "node scripts/produce-field-kit-theme.mjs --check",
+      "exitCode": 1,
+      "output": "Stale production revision ledger. Run --write to append compatible revisions."
+    },
+    {
+      "command": "node --test scripts/test-field-kit-recipe-sources.mjs scripts/test-reviewed-soundtrack-batches.mjs game/test/soundtrack-rights.test.mjs game/test/soundtrack-style-selection.test.mjs",
+      "passed": 97,
+      "failed": 1,
+      "failure": "scoped current Team and equipment approval retains every semantic guard: team.enemy.drifter actual source, expected reviewed (scripts/test-field-kit-recipe-sources.mjs:252)."
+    },
+    {
+      "command": "node --test scripts/test-reviewed-soundtrack-batches.mjs game/test/soundtrack-rights.test.mjs game/test/soundtrack-style-selection.test.mjs",
+      "passed": 77,
+      "failed": 0
+    },
+    {
+      "command": "node scripts/check-presentation-metadata.mjs",
+      "exitCode": 0,
+      "scope": "Integrity of existing compiled revision104 only; not equivalence to the changed runtime sources.",
+      "sourceRevision": 104,
+      "bytes": 4729041,
+      "sha256": "c905cab9ce4519379d57bdecf3ef02146b44d5a2ad82430a3939b2d2fc00f617"
+    },
+    {
+      "command": "node node_modules/eslint/bin/eslint.js game/online-soundtrack-catalogue.mjs game/ui/soundtrack-player.mjs game/test/online-soundtrack-catalogue.test.mjs game/test/soundtrack-player.test.mjs game/test/soundtrack-saved-styles.test.mjs game/test/soundtrack-panel.test.mjs --max-warnings 0",
+      "exitCode": 0
+    },
+    {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check game/online-soundtrack-catalogue.mjs game/ui/soundtrack-player.mjs game/test/online-soundtrack-catalogue.test.mjs game/test/soundtrack-player.test.mjs game/test/soundtrack-saved-styles.test.mjs game/test/soundtrack-panel.test.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "production": {
+    "completeGatePassed": false,
+    "ledgerWritten": false,
+    "compiledArtifactsWritten": false,
+    "currentHistoryRevision": 104,
+    "dryNextRevision": 105,
+    "dryAddedRevisionCounts": {
+      "ui": 24,
+      "screen": 7,
+      "player": 7,
+      "team": 42,
+      "trail": 3,
+      "effect": 7,
+      "audio": 8
+    },
+    "dryPreservesAllHistoricalAssets": true,
+    "reasonNotWritten": "The existing producer would append unrelated UI, screen, motion, Team/equipment and effects successors as well as eight audio source successors. This aggregate drift requires production-owner reconciliation; no fingerprint or approval was bypassed.",
+    "audioFingerprint": {
+      "baseline": "07a0b150c21bc4a25cb360683508700e834b5ac65a1b5693b9cd7d7671b713fc",
+      "current": "5e56d9863c627e85490fff20b0d252a50a726604204622348bf4ed24a4c43e2f"
+    },
+    "baselineTeamFailure": {
+      "independentlyVerified": true,
+      "method": "Independent read-only createFieldKitProduction comparison with fs.readFile temporarily overlaid in memory to supply git-show HEAD bytes for exactly the two changed runtime files. Both overlay hits were confirmed; fs.readFile was restored. No files or ledgers were changed.",
+      "baselineAndCurrentTeamStages": "All 37 Team slots returned source, including team.enemy.drifter.",
+      "changedTeamInputs": 0,
+      "totalTeamInputs": 35,
+      "actualTeamFingerprint": "d117d023b097472e8975a7fa6e0384ba72bcc194ee84405e7afbe3753df14605",
+      "reviewedTeamFingerprint": "c162660dcc177f6d975704920513d8171a9190ea708c61b1a5189adbb3b67980",
+      "baselineTeamSourceEqualsCurrent": true
+    }
+  },
+  "limits": [
+    "Already-playing audio is not interrupted merely by a catalogue refresh; fresh queue starts, loads, Next/repeat and resumed Play recheck the fetched recording against the latest successful canonical catalogue.",
+    "A failed refresh preserves the last successful canonical membership. Independent parsing does not revoke fetched tracks.",
+    "This is public archive availability policy, not removal of user-owned local MP3s or remote-media DRM. No physical-device or listening approval is claimed."
+  ],
+  "independentCodeReview": {
+    "result": "No actionable blockers",
+    "scope": "Parser, player and four test files; static source inspection and diff check. Focused tests were not rerun by the independent reviewer.",
+    "productionBaselineComparedIndependently": true
+  }
+}

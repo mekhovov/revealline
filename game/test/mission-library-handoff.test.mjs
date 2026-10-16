@@ -4,6 +4,7 @@ import { AUTHORED_JOURNEY_ROUTE_IDS } from '../content-design/mode-href.mjs';
 import {
   missionLibraryHref,
   readMissionLibraryHandoff,
+  readMissionLibraryIntent,
   createMissionLibrarySessionState,
   MISSION_LIBRARY_STATE_PREFIX,
 } from '../mission-library/handoff.mjs';
@@ -26,7 +27,7 @@ test('fixed destinations preserve release prefix across every current/destinatio
   const destination = { solo: '', versus: 'couch/', team: 'couch/relay-rescue.html' };
   for (const [currentMode, from] of Object.entries(current))
     for (const [mode, to] of Object.entries(destination)) {
-      const journey = mode === 'team' ? 'team-spatial-originals-1' : 'whole-spatial-v5';
+      const journey = mode === 'team' ? 'team-cultural-specialist-originals-2' : 'whole-spatial-v5';
       const actual = new URL(href({ baseURL: new URL(from, baseURL), currentMode, mode, journey }));
       assert.equal(actual.origin, 'https://example.test');
       assert.equal(actual.pathname, `/releases/v0.83.0/site/game/${to}`);
@@ -190,6 +191,23 @@ test('failed storage retains an in-memory copy and malformed data never deletes 
   assert.throws(() => createMissionLibrarySessionState({ mode: 'online' }), /mode/);
 });
 
+test('Archive browsing survives a page return without rewriting legacy session records or progress', () => {
+  const storage = memoryStorage();
+  storage.values.set('revealline.profile', 'saved historical flight');
+  const session = createMissionLibrarySessionState({ mode: 'solo', storage });
+  for (const lifecycle of ['current', 'archive', '']) {
+    assert.equal(session.write(state({ lifecycle })), true);
+    assert.deepEqual(
+      createMissionLibrarySessionState({ mode: 'solo', storage }).read(),
+      state({ lifecycle }),
+    );
+  }
+  assert.throws(() => session.write(state({ lifecycle: 'removed' })), /state/);
+  storage.values.set(session.key, JSON.stringify(state()));
+  assert.deepEqual(createMissionLibrarySessionState({ mode: 'solo', storage }).read(), state());
+  assert.equal(storage.values.get('revealline.profile'), 'saved historical flight');
+});
+
 test('a failed newer write cannot be replaced by older readable storage', () => {
   const storage = memoryStorage();
   const session = createMissionLibrarySessionState({ mode: 'solo', storage });
@@ -204,4 +222,25 @@ test('a failed newer write cannot be replaced by older readable storage', () => 
   storage.setItem = originalSet;
   assert.equal(session.write(session.read()), true);
   assert.equal(JSON.parse(storage.values.get(session.key)).search, 'new');
+});
+
+test('select-only Versus mode links keep exact identity without upgrading malformed intent to Play', () => {
+  const target = new URL(href({ mode: 'versus', intent: 'select', journey: 'legacy' }));
+  assert.equal(readMissionLibraryHandoff(target.searchParams), opaque);
+  assert.equal(readMissionLibraryIntent(target.searchParams), 'select');
+  assert.equal(readMissionLibraryIntent(new URL(href()).searchParams), 'play');
+  for (const mode of ['solo', 'team'])
+    assert.throws(() => href({ mode, journey: 'legacy', intent: 'select' }), /Versus/);
+  assert.throws(() => href({ mode: 'versus', intent: 'unknown' }), /handoff/);
+  for (const value of ['', 'SELECT', 'launch', 'select&library-intent=play']) {
+    const params = new URLSearchParams({ 'library-mission': opaque, 'library-intent': value });
+    assert.throws(() => readMissionLibraryIntent(params), /intent/);
+  }
+  const duplicate = new URLSearchParams(target.searchParams);
+  duplicate.append('library-intent', 'play');
+  assert.throws(() => readMissionLibraryIntent(duplicate), /intent/);
+  assert.throws(
+    () => readMissionLibraryIntent(new URLSearchParams('library-intent=select')),
+    /identity/,
+  );
 });

@@ -12,6 +12,12 @@ import { waitFor } from './helpers/wait-for.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
+import { SOUNDTRACK_CATALOGUE } from '../content/soundtrack-catalogue.mjs';
+import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
+import { createSoundtrackStore } from '../soundtrack-store.mjs';
+import { emptySoundtrackLibrary, setCatalogueTracks } from '../soundtrack.mjs';
+import { structuralProbe } from './helpers/soundtrack-fixtures.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const compiled = JSON.parse(
   await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url), 'utf8'),
@@ -125,12 +131,29 @@ async function fixture(
     failDecode = false,
     audio,
     storage,
+    musicMode,
     pads = [],
   } = {},
 ) {
   const media = mediaBoundary(),
     memory = managedIndexedDB(),
     reads = [];
+  if (musicMode) {
+    const store = createSoundtrackStore({
+      indexedDB: memory.indexedDB,
+      soundtrackCatalogue: true,
+    });
+    const base = setCatalogueTracks(emptySoundtrackLibrary(), SOUNDTRACK_CATALOGUE.tracks);
+    const prepared = await prepareSoundtrackLibrary(
+      { ...base, listening: { ...base.listening, mode: musicMode } },
+      [],
+      { catalogue: SOUNDTRACK_CATALOGUE, probeMedia: structuralProbe },
+    );
+    await store.commit(prepared, { expectedGeneration: 0 });
+    store.close();
+    memory.puts.length = 0;
+    memory.allPuts.length = 0;
+  }
   const snapshot = { resolved: compiled.resolved, images: new Map(), canvas: {} };
   if (failDecode) media.fail();
   let lease,
@@ -411,7 +434,10 @@ test('whole optional snapshot failure retains explicit authored fallback with a 
   assert.deepEqual(f.memory.allPuts, []);
 });
 
-test('Back cancels a pending required picture and late completion cannot resume or replace the accepted attempt', async (t) => {
+test('Back cancels a pending setup replacement and preserves the accepted attempt', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
   const gate = deferred();
   let delay = false,
     started;
@@ -430,16 +456,25 @@ test('Back cancels a pending required picture and late completion cannot resume 
   for (let i = 0; i < 100 && !started; i++) await new Promise((resolve) => setTimeout(resolve, 1));
   assert.ok(started, 'The selected required picture read started.');
   p.frame();
-  const checkpoint = p.checkpoint();
+  const checkpoint = p.checkpoint(),
+    accepted = p.drawOptions[0].backdrop;
   p.$('race-setup-back').click();
   assert.equal(started.aborted, true);
   gate.resolve();
   await loading;
-  assert.equal(p.$('race-start').disabled, true);
-  assert.match(p.$('race-message').textContent, /cancelled/i);
+  assert.equal(p.$('race-start').disabled, false);
+  assert.equal(
+    p.$('race-message').textContent,
+    'Rematch picture loading cancelled. Results are kept. Choose Rematch when you are ready.',
+  );
+  setLocale('uk', { persist: false });
+  assert.equal(
+    p.$('race-message').textContent,
+    'Завантаження зображення для дії «Реванш» скасовано. Результати збережено. Оберіть «Реванш», коли будете готові.',
+  );
   assert.deepEqual(p.checkpoint(), checkpoint);
-  assert.equal(p.drawOptions[0].backdrop, null);
-  assert.equal(p.drawOptions[1].backdrop, null);
+  assert.equal(p.drawOptions[0].backdrop, accepted);
+  assert.equal(p.drawOptions[1].backdrop, accepted);
   assert.deepEqual(f.memory.allPuts, []);
 });
 
@@ -481,11 +516,15 @@ test('initial required-picture loading leaves the actual lobby Cancel keyboard r
   assert.equal(document.getElementById('race-start').disabled, true);
   const first = document.getElementById('race-coop');
   first.focus();
-  first.emit('keydown', { key: 'Tab' });
+  for (let steps = 0; document.activeElement !== cancel && steps < 30; steps++) {
+    document.activeElement.emit('keydown', { key: 'Tab' });
+    assert.notEqual(document.activeElement.disabled, true, 'Tab skips disabled controls.');
+    assert.equal(document.activeElement.closest('[hidden],[inert]'), null);
+  }
   assert.equal(
     document.activeElement === cancel,
     true,
-    'The actual navigation skips disabled Start.',
+    'The actual navigation reaches Cancel through the expanded visible lobby controls.',
   );
   cancel.click();
   assert.equal(signal.aborted, true);
@@ -601,7 +640,7 @@ test('failed Next original read keeps Results and keyboard View, then retry adop
   retainedResult(p, before);
   assert.equal(
     p.$('race-message').textContent,
-    'The rematch picture could not be prepared. Results are kept. Choose Rematch to retry.',
+    'The rematch picture or actors could not be prepared. Both boards are kept. Choose Rematch to retry.',
   );
   assert.doesNotMatch(p.$('race-message').textContent, /assets\/|[a-f0-9]{64}/);
   assert.deepEqual(diagnostics, [['Next picture preparation failed.', readError]]);
@@ -759,7 +798,7 @@ test('completed match wins reset only when an explicitly retried Next commits', 
         retainedResult(p, before);
         assert.equal(
           p.$('race-message').textContent,
-          'The next round picture could not be prepared. Results are kept. Choose Next round to retry.',
+          'The next round picture or actors could not be prepared. Both boards are kept. Choose Next round to retry.',
         );
       }
       p.frames(5, 200);
@@ -799,11 +838,21 @@ async function chooseFormat(p, value) {
 
 function completeRound(p, outcome) {
   assert.equal(p.state(), 'running');
-  // Same shipped map and legal directional/timeout route as the retained
-  // threshold test. No duel status, winner or player coordinates are injected.
-  if (outcome === 'win') p.key('KeyS');
+  // Current Standard pressure requires waiting until the bouncer passes the
+  // opening line, then seat 0 closes the authored board without losing a life.
+  // Seat 1 stays idle; no game state or result is injected.
+  if (outcome === 'win') {
+    p.frames(13, 100);
+    p.key('KeyS');
+  }
   p.frames(151, 200);
-  if (outcome === 'win') p.key('KeyS', false);
+  if (outcome === 'win') {
+    p.key('KeyS', false);
+    assert.equal(p.renders[0].status, 'won');
+    assert.equal(p.renders[0].lives, 3);
+    assert.equal(p.renders[0].coverage, 0.5);
+    assert.equal(p.renders[1].coverage, 0);
+  }
   assert.equal(p.state(), 'finished');
 }
 
@@ -857,7 +906,7 @@ for (const outcome of ['win', 'draw'])
       retainedResult(p, before);
       assert.equal(
         p.$('race-message').textContent,
-        'The rematch picture could not be prepared. Results are kept. Choose Rematch to retry.',
+        'The rematch picture or actors could not be prepared. Both boards are kept. Choose Rematch to retry.',
       );
       const entered = deferred(),
         gate = deferred();
@@ -934,6 +983,9 @@ test('controller format draft can cancel or commit while preserving selector foc
   const f = await fixture(t, { pads: [controller] }),
     p = f.page;
   p.join(0);
+  p.focus('race-optional-setup-toggle');
+  p.pulse(0, 0);
+  assert.equal(p.$('race-optional-setup').open, true);
   p.focus('race-focus');
   p.pulse(0, 0);
   assert.equal(p.$('race-setup').hidden, false);
@@ -1081,7 +1133,7 @@ test('confirmed new setup owns a fresh race after a cancelled Next decoder settl
 
 for (const outcome of ['cancel', 'decode refusal'])
   test(`muted music and completed Results survive Next ${outcome}, Help reading and a fresh retry`, async (t) => {
-    // Keep the fresh 90s Synth queue deterministic. The exact transport state,
+    // Keep the persisted 90s Synth queue deterministic. The exact transport state,
     // cursor and enable count below expose any second owner even when the
     // map-authored track is also the first retro selection.
     t.mock.method(Math, 'random', () => 0);
@@ -1127,6 +1179,7 @@ for (const outcome of ['cancel', 'decode refusal'])
             saved.set(name, value);
           },
         },
+        musicMode: 'synth90s',
       }),
       p = f.page;
     const key = (value) => {
@@ -1156,7 +1209,7 @@ for (const outcome of ['cancel', 'decode refusal'])
     assert.equal(
       sound.musicState().track.id,
       'signal-afterglow',
-      'Fresh v3 libraries start with the map-compatible 90s Synth selection.',
+      'A persisted 90s Synth choice remains map-compatible after the opening-theme default changes.',
     );
     p.frames(151, 200);
     const result = completedResult(p);
@@ -1212,7 +1265,7 @@ for (const outcome of ['cancel', 'decode refusal'])
     } else {
       gate.reject(failure);
       await next;
-      assert.match(p.$('race-message').textContent, /Results are kept/);
+      assert.match(p.$('race-message').textContent, /Both boards are kept/);
       assert.deepEqual(diagnostics, [['Next picture preparation failed.', failure]]);
     }
     retainedResult(p, result);

@@ -1,0 +1,74 @@
+{
+  "format": "FPVCurrentMainBoundedQualification.v1",
+  "date": "2026-10-13",
+  "sourceRevision": "45e943bd40831e21fa9b55cb712725e49a901e13",
+  "cloudRun": "https://github.com/mekhovov/revealline/actions/runs/38467392436",
+  "cloudJobs": {
+    "optional-practice": "success",
+    "candidate-fpv-learning": "success"
+  },
+  "artifact": {
+    "id": 11849182201,
+    "name": "optional-flight-candidate-45e943bd40831e21fa9b55cb712725e49a901e13",
+    "bytes": 22381196,
+    "sha256": "4e75f031b99c5815f898b5e7c6aa4af481e1cd1d7c9d512ae25c6041402b948f"
+  },
+  "publicCreator": {
+    "observedDeployment": "6514e5c3ab8171bc75af287e08262977db88e2b3",
+    "originalPackSha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+    "course": "mountain-reservoir-02",
+    "mode": "acro",
+    "actions": [
+      "Move first hold X from -10 to -9.9 m",
+      "Undo returns -10; Redo returns -9.9",
+      "Export editable project through native download",
+      "Self-level remains -10; Acro retains -9.9",
+      "Switch to course 03 then back to 02; edit retained",
+      "Restore X to -10 without installing over the original pack"
+    ],
+    "allOriginalAssetsUnchanged": true,
+    "otherSevenCoursesUnchanged": true,
+    "exportCheckedByNativeParser": true,
+    "nativeReimportNotPerformed": true
+  },
+  "admittedOriginJourney": {
+    "origin": "http://127.0.0.1:8996",
+    "entry": "/optional-practice/fpv-worlds/index.html",
+    "distributionOverlay": false,
+    "verifiedMemberCount": 122,
+    "stageChecks": 263,
+    "stageChecksPassed": 263,
+    "actions": [
+      "Open actual native player with initially empty installed-world list",
+      "Browse real catalogue and download Reservoir r16",
+      "Prepare simulator offline through Settings > Content & Offline",
+      "Observe Offline runtime preparation completed in Library",
+      "Stop only dedicated origin server",
+      "Reload same native entry successfully",
+      "Open installed Reservoir in Creator; all eight courses available",
+      "Choose course 02 and Acro route editor",
+      "Launch Test flight; Arm / resume remains explicit",
+      "Deliberately arm neutral flight; elapsed time observed at 0.2 then 19.0 seconds",
+      "Pause; objective HUD absent from pause menu",
+      "Restart same dedicated server after observation"
+    ],
+    "flightMode": "Self-level (unchanged global preference; Acro was the editor route selection)",
+    "flightInput": "neutral, zero throttle",
+    "course": "mountain-reservoir-02",
+    "observedWarningsAndErrors": [],
+    "networkBoundary": "Origin server stopped; whole-device networking was not disabled."
+  },
+  "remaining": [
+    "Full cohesive interrupted-install/export/reimport/rollback and record/playlist journey on this candidate",
+    "Longer representative rendering and resource-disposal measurements on named devices",
+    "Physical controller/radio and novice-player acceptance",
+    "Canals production after the shared quality/delivery gate",
+    "D6 final regression and additional unit coverage"
+  ],
+  "limitations": [
+    "Cloud artifact admission retains publicEligible=false and pending review gates.",
+    "No new runtime, physics, scoring, source art, course identities or package limits changed.",
+    "This is bounded functional verification, not complete offline disaster recovery or FPS qualification.",
+    "Historical qualification counts and scripts were not relabelled as current results."
+  ]
+}

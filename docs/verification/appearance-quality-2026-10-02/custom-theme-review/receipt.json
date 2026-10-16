@@ -1,0 +1,145 @@
+{
+  "capturedAt": "2026-10-02T15:51:58.646546+00:00",
+  "baselineHead": "f4545d68a9be0ada4b7a8ad1327c9c02e25214a1",
+  "node": "v20.19.5",
+  "command": "node --test --test-concurrency=1 game/test/curated-community-theme.test.mjs game/test/curated-community-theme-host.test.mjs game/test/edition-appearance-host.test.mjs game/test/fpv-appearance.test.mjs game/test/fpv-theme-family-controls.test.mjs game/test/optional-installation.test.mjs game/test/theme-bootstrap.test.mjs",
+  "exitCode": 0,
+  "tests": 45,
+  "pass": 45,
+  "fail": 0,
+  "skipped": 0,
+  "physicalDeviceQualification": false,
+  "auxiliaryFirstPaintScan": {
+    "marked": [
+      "game/downloads.html",
+      "game/creator/team.html",
+      "game/creator/index.html",
+      "game/creator/player.html",
+      "game/studio/index.html",
+      "game/communities/index.html",
+      "game/replay-theater/index.html",
+      "game/community/index.html",
+      "game/community/moderation.html",
+      "game/community/store.html",
+      "game/communities/ukraine-culture/index.html",
+      "game/communities/droneaid-community/index.html",
+      "game/communities/social-drone-ua/index.html",
+      "game/communities/victory-drones/index.html",
+      "game/communities/droneaid/index.html",
+      "game/communities/fpv-learning/index.html",
+      "game/communities/coupa/index.html",
+      "authoring/demo-recording-variants.html",
+      "authoring/company-studio/index.html",
+      "authoring/company-studio/playtest.html",
+      "authoring/playable-benchmark/index.html",
+      "authoring/game-feel-lab/index.html",
+      "authoring/design-atlas/index.html",
+      "authoring/design-atlas/reveal-audit.html",
+      "authoring/community/index.html",
+      "site/index.html"
+    ],
+    "missing": []
+  },
+  "sources": [
+    {
+      "path": "game/test/curated-community-theme.test.mjs",
+      "sha256": "85aa389f2ebc570a8b3d5128cce90e04c466bd79f5cbed4a16d862475cc25d04"
+    },
+    {
+      "path": "game/test/curated-community-theme-host.test.mjs",
+      "sha256": "5365f703ca584ad2de4469ad6e9264531c96b47985b1ed05f6f28445981f42d2"
+    },
+    {
+      "path": "game/test/edition-appearance-host.test.mjs",
+      "sha256": "b1340f3a82041f8cccc23539c440a5e12a3a3481393d69cb3f6b1e9351ed2288"
+    },
+    {
+      "path": "game/test/fpv-appearance.test.mjs",
+      "sha256": "d6342a7960a24a6835405446f8273d3b577d36b9a2df6ed499272e19bcfb6f67"
+    },
+    {
+      "path": "game/test/fpv-theme-family-controls.test.mjs",
+      "sha256": "8e417d04aff7a5f49492a31b1d2727b158db82a6dc76f2fbec285bf1e964740c"
+    },
+    {
+      "path": "game/test/optional-installation.test.mjs",
+      "sha256": "f0da2b5366dd17be92368daec62e1a2f565318c99c163564480cbfbe0b390b1c"
+    },
+    {
+      "path": "game/test/theme-bootstrap.test.mjs",
+      "sha256": "6eb3ba731b7cdd5b436f73fd0e5c4f068cc59389f65e30fbd4f79220a49952fb"
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "sha256": "6b8ac8069e5250da52f1dd6ab0cda889ac123e12941bb92f58f701343ef8282c"
+    },
+    {
+      "path": "game/presentation/theme-host.mjs",
+      "sha256": "11046f162e16c1d56a5790c984501e799544716f072a5fcff299343a336d930a"
+    },
+    {
+      "path": "game/presentation/theme-entry.mjs",
+      "sha256": "b0286a411581dabbdc40cb50a51a0ab00ce549f2e693d47b89bb4edf5510179c"
+    },
+    {
+      "path": "game/presentation/theme-bootstrap.mjs",
+      "sha256": "3ad0570d1df96093c8b75c20967f427b93cfaa7e7b2a189211604d4d55a0e0ef"
+    },
+    {
+      "path": "game/presentation/theme-preview.mjs",
+      "sha256": "61da5a54f72b93d83314875f8455bb471fae457bf879497fc5c9884e3d91a867"
+    },
+    {
+      "path": "game/presentation/theme-candidate.mjs",
+      "sha256": "bfe81f8ea158c37c110cf0100018e6319f251de5cfb1fca08fa8f21713e4f0f8"
+    },
+    {
+      "path": "game/fpv-entry.mjs",
+      "sha256": "77a9e382ae9acd3d4e2d0af08cdbb8359fbe20a2261c640fe58ea43c72763ab6"
+    },
+    {
+      "path": "game/ui/optional-practice-panel.mjs",
+      "sha256": "dca123e8b07b9565d97fc2d67d698da94d9ec4aacef1a0691a43885c4ea494b7"
+    },
+    {
+      "path": "game/company-player.mjs",
+      "sha256": "f874e9483d8123d71d395e015c79c4c1cab99eed82c43752344abf829d1848bb"
+    },
+    {
+      "path": "game/runtime-content-provider.mjs",
+      "sha256": "e2643f3c0c1e06dee19dbbcd17b85daf179c3b2f32bb35547f0be8940ee66e15"
+    },
+    {
+      "path": "game/editions/model.mjs",
+      "sha256": "e7882e2791f6287034e882e15fc37568f76d99a84167fd0e7bd8ac0192c08618"
+    },
+    {
+      "path": "game/editions/retained-presentation.mjs",
+      "sha256": "b103f453f23f8418892ec5f5d9b0b47f541555729d130bb93ac110e3ad7671b9"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "sha256": "30e236e3b57ac21681ff24ee5745ac6f4c0efeb7446bb28ec2c065da431adf8b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-themes.mjs",
+      "sha256": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549"
+    },
+    {
+      "path": "publishing/edition-admission.mjs",
+      "sha256": "363d4cd7dca5e824128280bb3164cdba0c9d4c9610550485022d1d389f76f070"
+    },
+    {
+      "path": "scripts/compile-edition.mjs",
+      "sha256": "af6c852ed6cca816e10c7b6186074ad830ed0a1369dfb2814fdfbd690bf18b33"
+    },
+    {
+      "path": "scripts/refresh-theme-bootstrap.mjs",
+      "sha256": "9a3a6b3a5c66af494a05463ce7e792a845665db336183691f6b47bbb4dde74a3"
+    },
+    {
+      "path": "authoring/company-studio/model.mjs",
+      "sha256": "e0ab5c52de216f7834ea52ecbadcbcb4e86dd365d3d2ee68131b988a6ce8cf7a"
+    }
+  ]
+}

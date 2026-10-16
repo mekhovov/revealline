@@ -1,0 +1,28 @@
+{
+  "sourceRevision": "a1d9bfd86a7b27f6517dc92d8788c355a5d544f0",
+  "method": "buildProject; every expanded and archived file verified against manifest",
+  "expandedDistributionWritten": true,
+  "zipWritten": true,
+  "files": 3085,
+  "archiveEntries": 3086,
+  "payloadBytesIncludingManifest": 1004044075,
+  "manifest": {
+    "path": "manifest.json",
+    "bytes": 458784,
+    "sha256": "8687a89f6b890f1857e5b4f740be5dd78d9821195008d34b2aa8e25af5615ee6"
+  },
+  "zip": {
+    "bytes": 1004568445,
+    "sha256": "b90f12d2f45ba523047b5b4ea3a999bfd5ab8eff74bcc6b1fbd37067432e81d5",
+    "allMemberChecksumsMatch": true
+  },
+  "allExpandedFileChecksumsMatch": true,
+  "temporaryOutputRemovedAfterVerification": true,
+  "cleanup": {
+    "removed": "/private/tmp/revealline-coverage-a1d9bfd-build",
+    "sourceRevision": "a1d9bfd86a7b27f6517dc92d8788c355a5d544f0",
+    "method": "Remove only exact task-created distribution inventory after expanded and ZIP checksum verification",
+    "files": 3089,
+    "sourceAndGitPreserved": true
+  }
+}

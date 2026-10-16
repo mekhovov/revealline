@@ -1,0 +1,64 @@
+{
+  "format": "revealline-scoped-integrated-presentation-review.v1",
+  "status": "bounded functional source review; frozen, public, physical-device and human acceptance pending",
+  "candidateBase": "c46ac3c2725912a4a3de22e2af6335a3a36bf174",
+  "scope": "Continue the required screen, motion and effects recipe approvals after reconciling the Journey pressure, cultural mission, Team specialist, actor-size and two-skin feature stacks. No subjective art, whole-library balance or release approval.",
+  "groups": {
+    "screens": {
+      "priorFingerprintSHA256": "1800d7c4754f88e2ec36b104ab9e502cd5ba55ed2e12653609bd52e246548845",
+      "currentFingerprintSHA256": "ceefa6797f3d66c628c5710008a20d68fd1e4afd4baba69b7655cdcdcb8d8996",
+      "changedInput": {
+        "path": "game/ui/field-kit-surfaces.css",
+        "priorSHA256": "43ebeb2288a7e2e3e153fbfc3c7c84e719fe2fb62e694cbce01ad0fb6c228624",
+        "currentSHA256": "1f8a5e4fd5ecc24d797dbdb0c1b8b1f952e4b49505af3485e85483c312b28814",
+        "assessment": "Maps the two registered menu palettes onto existing supporting-page semantic tokens. It does not change board geometry, input hit targets, runtime state, asset payloads or content ownership."
+      },
+      "continuedSlots": 7
+    },
+    "motion": {
+      "priorFingerprintSHA256": "ef5ede43180597ba413e26f2042d9f99a06c2f70a224b0d8d5543d384688ea76",
+      "currentFingerprintSHA256": "c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9",
+      "changedInput": {
+        "path": "game/ui/actor-presentation.mjs",
+        "priorSHA256": "c08e21ef55704c10c3ba107323c650c184a257fc6d7080f5f5c40ef2440e701a",
+        "currentSHA256": "8ed0b1a7335b15c05e76f6230b78ebeea18c232c2bb76ea560f9ecab4be9ef23",
+        "assessment": "Fits prepared image geometry to the intended visible actor size, including rotor sweep, and raises the compact visual minimum. It changes paint dimensions only; simulation position, radius, collision, clocks and authoritative state remain unchanged."
+      },
+      "continuedSlots": 7
+    },
+    "effects": {
+      "priorFingerprintSHA256": "832e6fbcb3da51dff0ef5a07f60221e4dbba25256af1d32d1800ed1b21500f9f",
+      "currentFingerprintSHA256": "475fea962731c07024adacf4e8df7692db23bff218d13768dff50971752a0ed5",
+      "changedInput": {
+        "path": "game/ui/render.mjs",
+        "priorSHA256": "15210cf2f07a15fb85097aef2bd3ccb5457a1d2ec726d933a7fd791fb265191e",
+        "currentSHA256": "b6a224bfa4700abe985a06512a52423b5124e26bc732181522127d7b1a204dfa",
+        "assessment": "Passes authenticated prepared actor geometry into the cosmetic player paint-size calculation. Trail, impact, capture, failure, victory, pickup, shield, respawn and pressure painters are unchanged; collision and gameplay state remain authoritative elsewhere."
+      },
+      "continuedSlots": 10
+    }
+  },
+  "qualification": {
+    "focusedAutomated": [
+      "The reconciled Team/menu/picture/actor/trail/terrain cohort passed 121 of 121 checks.",
+      "Targeted Journey pressure, cultural, erosion, default-entry and Team specialist content checks passed on the reconciled source.",
+      "Visible-bound tests cover rectangular and transparent frames, rotor sweep, compact and desktop minima, unchanged collision footprints, reduced motion and prepared-image fallback.",
+      "Menu-style host tests cover Solo, Team and Versus persistence, keyboard/controller focus, paused checkpoints and supporting-page token switching."
+    ],
+    "hostedPredecessor": "The exact predecessor production review cd6208997a12310816066c4309818e13ff616ece passed hosted source validation, lint, formatting, native formatting, production reproduction and reviewed-slot gates in run 36006349732. That run does not qualify this successor source.",
+    "longSuite": "Waived under the active user exception and not represented as passed."
+  },
+  "preservation": [
+    "All original image, audio and font payload bytes remain unchanged.",
+    "Historical production revisions remain retained and selectable.",
+    "The presentation changes do not alter collision footprints, mission runtime identities, progress, uploaded media or custom content."
+  ],
+  "excluded": [
+    "No subjective visual-quality or enjoyment claim.",
+    "No complete keyboard, controller, touch, screen-reader, forced-colour or physical-device qualification.",
+    "No complete whole-Journey balance or all-mission playthrough.",
+    "No frozen-build, offline, public Pages or release acceptance.",
+    "No human validation; automated checks are technical evidence only."
+  ],
+  "decision": "Continue only the 24 required screen, motion and effects recipes when the exact fingerprints and this review record match. Any input or review-byte change reopens the affected group."
+}

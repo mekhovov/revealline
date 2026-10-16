@@ -1,0 +1,431 @@
+{
+  "retrieval": {
+    "sourceRevision": "856fefeabee5ea5cf2d9953151a9c7b72245bd19",
+    "sourceTree": "60fd8212c61ef2adeb72ebee39062c036d37b245",
+    "version": "v0.151.1",
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "revision": "55af0535144f8b9abd8afb898be52af3ba2a4caadb2f7aa5258e6e2825afd959",
+    "cloudRun": 38714621234,
+    "githubArtifactId": 11962905765,
+    "topLevelChecksumsVerified": 15,
+    "worldsMembersVerified": 161,
+    "worldsBytes": 17459608,
+    "browserOfflineVerified": false,
+    "files": {
+      "github-artifact.zip": {
+        "bytes": 23102439,
+        "sha256": "0bf9532538280825eca89f3174c5abc7f4313081bb0d31572c6fdbbed3e4600a"
+      },
+      "distribution-optional-fpv-worlds.zip": {
+        "bytes": 17515792,
+        "sha256": "0e17be3c11f6baef43630ac3e979d019bef0082becbd5929338b2e8bd2b716d8"
+      },
+      "manifest-optional-fpv-worlds.json": {
+        "bytes": 29756,
+        "sha256": "0c697955a000153854cd48392f7acab579ea4c9c6c3fc4c2af032124c886e3c4"
+      }
+    }
+  },
+  "archives": {
+    "sourceRevision": "856fefeabee5ea5cf2d9953151a9c7b72245bd19",
+    "sourceTree": "60fd8212c61ef2adeb72ebee39062c036d37b245",
+    "version": "v0.151.1",
+    "scope": "Every archive member length/hash and exact inventory verified; not native/browser qualification",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "kind": "distribution",
+        "verifiedMembers": 94,
+        "uncompressedBytes": 3741611,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3755295,
+        "archiveSHA256": "a86428a4736243210d5a95cbaf1cba62e2692a04359cc80b85bfb740c1d120b4"
+      },
+      {
+        "id": "civilian-flight",
+        "kind": "source",
+        "verifiedMembers": 96,
+        "uncompressedBytes": 3775165,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3789185,
+        "archiveSHA256": "dff1b15f3beaa4a7ac8710773c5d2c908c7ff925bee3e531d295cdad45706730"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "distribution",
+        "verifiedMembers": 101,
+        "uncompressedBytes": 6754958,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6769976,
+        "archiveSHA256": "603116577c572e4420cd0728b112ddb6f5cc17ee56dac455e5d6e985e5338d12"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "source",
+        "verifiedMembers": 103,
+        "uncompressedBytes": 6790022,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6805344,
+        "archiveSHA256": "2facb7837948a4776596612c28571ceda3234d3f62e622b9a767a32b16118175"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "distribution",
+        "verifiedMembers": 162,
+        "uncompressedBytes": 17489364,
+        "limits": {
+          "files": 164,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17515792,
+        "archiveSHA256": "0e17be3c11f6baef43630ac3e979d019bef0082becbd5929338b2e8bd2b716d8"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "source",
+        "verifiedMembers": 164,
+        "uncompressedBytes": 17532975,
+        "limits": {
+          "files": 164,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17559707,
+        "archiveSHA256": "a0fe04952ea3a7ca78b1e1b3672cf9cf33edb5f25194ee3dded6d7e5e572c33c"
+      }
+    ]
+  },
+  "imports": {
+    "scope": "Finished archive transitive import graph; no source-file fallback or execution",
+    "validatorSource": "3ccc72b25a29d5cd93b1bd4ecc4dd09d9b1e5207",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "modules": 68,
+        "imports": 96
+      },
+      {
+        "id": "civilian-fpv",
+        "modules": 81,
+        "imports": 152
+      },
+      {
+        "id": "fpv-worlds",
+        "modules": 134,
+        "imports": 338
+      }
+    ]
+  },
+  "functional": {
+    "passed": true,
+    "pin": {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/2afed8a0fb8e847e2965424ee2363488cca85e27/authoring/fpv-worlds/regions/coaster-park/delivery-review-r2/delivery.json",
+      "bytes": 32824,
+      "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a"
+    },
+    "bytes": 34214390,
+    "actualHTTPSResponses": 203,
+    "downloadMs": 17102.561625000002,
+    "cases": [
+      {
+        "quality": "low",
+        "mode": "self-level",
+        "spawnId": "arrival-gardens",
+        "ticks": 100,
+        "geometrySHA256": "f084e63d835a5d2aeec7db1bec15f62578b1085737745a7768922e7fff59e42d"
+      },
+      {
+        "quality": "low",
+        "mode": "self-level",
+        "spawnId": "loop-meadow",
+        "ticks": 100,
+        "geometrySHA256": "abaeeabfe8d84bd2b04f63c1c3eaf8686282306100318865f6c0161991d4fac0"
+      },
+      {
+        "quality": "low",
+        "mode": "self-level",
+        "spawnId": "ridge-station",
+        "ticks": 100,
+        "geometrySHA256": "9e8637053988e1ae35382faf27de6c8d76f2c32d5f5061634dea8583d8ab8a75"
+      },
+      {
+        "quality": "low",
+        "mode": "self-level",
+        "spawnId": "service-courts",
+        "ticks": 100,
+        "geometrySHA256": "438225acb5a377c4227986caf70098b8d80ad0c60ec5e84c26c771004f9d3613"
+      },
+      {
+        "quality": "low",
+        "mode": "self-level",
+        "spawnId": "woodland-promenade",
+        "ticks": 100,
+        "geometrySHA256": "89bde1a1a5c8cd0ce80ea5b626592070d81cd0e554f53206586a8c11454b462a"
+      },
+      {
+        "quality": "low",
+        "mode": "self-level",
+        "spawnId": "river-gardens",
+        "ticks": 100,
+        "geometrySHA256": "c428e0520a5071209d6f07ef54fd14f631469aa08f139a1987a9b594e1e9c3df"
+      },
+      {
+        "quality": "low",
+        "mode": "acro",
+        "spawnId": "arrival-gardens",
+        "ticks": 100,
+        "geometrySHA256": "f084e63d835a5d2aeec7db1bec15f62578b1085737745a7768922e7fff59e42d"
+      },
+      {
+        "quality": "low",
+        "mode": "acro",
+        "spawnId": "loop-meadow",
+        "ticks": 100,
+        "geometrySHA256": "abaeeabfe8d84bd2b04f63c1c3eaf8686282306100318865f6c0161991d4fac0"
+      },
+      {
+        "quality": "low",
+        "mode": "acro",
+        "spawnId": "ridge-station",
+        "ticks": 100,
+        "geometrySHA256": "9e8637053988e1ae35382faf27de6c8d76f2c32d5f5061634dea8583d8ab8a75"
+      },
+      {
+        "quality": "low",
+        "mode": "acro",
+        "spawnId": "service-courts",
+        "ticks": 100,
+        "geometrySHA256": "438225acb5a377c4227986caf70098b8d80ad0c60ec5e84c26c771004f9d3613"
+      },
+      {
+        "quality": "low",
+        "mode": "acro",
+        "spawnId": "woodland-promenade",
+        "ticks": 100,
+        "geometrySHA256": "89bde1a1a5c8cd0ce80ea5b626592070d81cd0e554f53206586a8c11454b462a"
+      },
+      {
+        "quality": "low",
+        "mode": "acro",
+        "spawnId": "river-gardens",
+        "ticks": 100,
+        "geometrySHA256": "c428e0520a5071209d6f07ef54fd14f631469aa08f139a1987a9b594e1e9c3df"
+      },
+      {
+        "quality": "balanced",
+        "mode": "self-level",
+        "spawnId": "arrival-gardens",
+        "ticks": 100,
+        "geometrySHA256": "f084e63d835a5d2aeec7db1bec15f62578b1085737745a7768922e7fff59e42d"
+      },
+      {
+        "quality": "balanced",
+        "mode": "self-level",
+        "spawnId": "loop-meadow",
+        "ticks": 100,
+        "geometrySHA256": "abaeeabfe8d84bd2b04f63c1c3eaf8686282306100318865f6c0161991d4fac0"
+      },
+      {
+        "quality": "balanced",
+        "mode": "self-level",
+        "spawnId": "ridge-station",
+        "ticks": 100,
+        "geometrySHA256": "9e8637053988e1ae35382faf27de6c8d76f2c32d5f5061634dea8583d8ab8a75"
+      },
+      {
+        "quality": "balanced",
+        "mode": "self-level",
+        "spawnId": "service-courts",
+        "ticks": 100,
+        "geometrySHA256": "438225acb5a377c4227986caf70098b8d80ad0c60ec5e84c26c771004f9d3613"
+      },
+      {
+        "quality": "balanced",
+        "mode": "self-level",
+        "spawnId": "woodland-promenade",
+        "ticks": 100,
+        "geometrySHA256": "89bde1a1a5c8cd0ce80ea5b626592070d81cd0e554f53206586a8c11454b462a"
+      },
+      {
+        "quality": "balanced",
+        "mode": "self-level",
+        "spawnId": "river-gardens",
+        "ticks": 100,
+        "geometrySHA256": "c428e0520a5071209d6f07ef54fd14f631469aa08f139a1987a9b594e1e9c3df"
+      },
+      {
+        "quality": "balanced",
+        "mode": "acro",
+        "spawnId": "arrival-gardens",
+        "ticks": 100,
+        "geometrySHA256": "f084e63d835a5d2aeec7db1bec15f62578b1085737745a7768922e7fff59e42d"
+      },
+      {
+        "quality": "balanced",
+        "mode": "acro",
+        "spawnId": "loop-meadow",
+        "ticks": 100,
+        "geometrySHA256": "abaeeabfe8d84bd2b04f63c1c3eaf8686282306100318865f6c0161991d4fac0"
+      },
+      {
+        "quality": "balanced",
+        "mode": "acro",
+        "spawnId": "ridge-station",
+        "ticks": 100,
+        "geometrySHA256": "9e8637053988e1ae35382faf27de6c8d76f2c32d5f5061634dea8583d8ab8a75"
+      },
+      {
+        "quality": "balanced",
+        "mode": "acro",
+        "spawnId": "service-courts",
+        "ticks": 100,
+        "geometrySHA256": "438225acb5a377c4227986caf70098b8d80ad0c60ec5e84c26c771004f9d3613"
+      },
+      {
+        "quality": "balanced",
+        "mode": "acro",
+        "spawnId": "woodland-promenade",
+        "ticks": 100,
+        "geometrySHA256": "89bde1a1a5c8cd0ce80ea5b626592070d81cd0e554f53206586a8c11454b462a"
+      },
+      {
+        "quality": "balanced",
+        "mode": "acro",
+        "spawnId": "river-gardens",
+        "ticks": 100,
+        "geometrySHA256": "c428e0520a5071209d6f07ef54fd14f631469aa08f139a1987a9b594e1e9c3df"
+      },
+      {
+        "quality": "high",
+        "mode": "self-level",
+        "spawnId": "arrival-gardens",
+        "ticks": 100,
+        "geometrySHA256": "f084e63d835a5d2aeec7db1bec15f62578b1085737745a7768922e7fff59e42d"
+      },
+      {
+        "quality": "high",
+        "mode": "self-level",
+        "spawnId": "loop-meadow",
+        "ticks": 100,
+        "geometrySHA256": "abaeeabfe8d84bd2b04f63c1c3eaf8686282306100318865f6c0161991d4fac0"
+      },
+      {
+        "quality": "high",
+        "mode": "self-level",
+        "spawnId": "ridge-station",
+        "ticks": 100,
+        "geometrySHA256": "9e8637053988e1ae35382faf27de6c8d76f2c32d5f5061634dea8583d8ab8a75"
+      },
+      {
+        "quality": "high",
+        "mode": "self-level",
+        "spawnId": "service-courts",
+        "ticks": 100,
+        "geometrySHA256": "438225acb5a377c4227986caf70098b8d80ad0c60ec5e84c26c771004f9d3613"
+      },
+      {
+        "quality": "high",
+        "mode": "self-level",
+        "spawnId": "woodland-promenade",
+        "ticks": 100,
+        "geometrySHA256": "89bde1a1a5c8cd0ce80ea5b626592070d81cd0e554f53206586a8c11454b462a"
+      },
+      {
+        "quality": "high",
+        "mode": "self-level",
+        "spawnId": "river-gardens",
+        "ticks": 100,
+        "geometrySHA256": "c428e0520a5071209d6f07ef54fd14f631469aa08f139a1987a9b594e1e9c3df"
+      },
+      {
+        "quality": "high",
+        "mode": "acro",
+        "spawnId": "arrival-gardens",
+        "ticks": 100,
+        "geometrySHA256": "f084e63d835a5d2aeec7db1bec15f62578b1085737745a7768922e7fff59e42d"
+      },
+      {
+        "quality": "high",
+        "mode": "acro",
+        "spawnId": "loop-meadow",
+        "ticks": 100,
+        "geometrySHA256": "abaeeabfe8d84bd2b04f63c1c3eaf8686282306100318865f6c0161991d4fac0"
+      },
+      {
+        "quality": "high",
+        "mode": "acro",
+        "spawnId": "ridge-station",
+        "ticks": 100,
+        "geometrySHA256": "9e8637053988e1ae35382faf27de6c8d76f2c32d5f5061634dea8583d8ab8a75"
+      },
+      {
+        "quality": "high",
+        "mode": "acro",
+        "spawnId": "service-courts",
+        "ticks": 100,
+        "geometrySHA256": "438225acb5a377c4227986caf70098b8d80ad0c60ec5e84c26c771004f9d3613"
+      },
+      {
+        "quality": "high",
+        "mode": "acro",
+        "spawnId": "woodland-promenade",
+        "ticks": 100,
+        "geometrySHA256": "89bde1a1a5c8cd0ce80ea5b626592070d81cd0e554f53206586a8c11454b462a"
+      },
+      {
+        "quality": "high",
+        "mode": "acro",
+        "spawnId": "river-gardens",
+        "ticks": 100,
+        "geometrySHA256": "c428e0520a5071209d6f07ef54fd14f631469aa08f139a1987a9b594e1e9c3df"
+      }
+    ],
+    "disposalZero": true,
+    "limitsChanged": false,
+    "retainedOriginalRevision": {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/3b6edef381a917e7ce0b6a37054fcfc3ee7188cd/authoring/fpv-worlds/regions/coaster-park/delivery-review-r1/delivery.json",
+      "bytes": 29654,
+      "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5"
+    },
+    "limitations": [
+      "No native renderer, device, IndexedDB installation or offline admission claim",
+      "Three material tiers preserve geometry; no GPU performance claim",
+      "Supported source correction has bounded native structural review; representative art and normal Library player acceptance remain separate"
+    ]
+  },
+  "cloudRun": {
+    "id": 38714621234,
+    "head": "856fefeabee5ea5cf2d9953151a9c7b72245bd19",
+    "conclusion": "success",
+    "optionalPractice": "success",
+    "companyCandidate": "success"
+  },
+  "native": {
+    "status": "pending",
+    "origin": "http://127.0.0.1:9112",
+    "scope": "Normal player journey not inferred from Node/session tests"
+  },
+  "nativeReview": {
+    "origin": "http://127.0.0.1:9112",
+    "sourceRevision": "856fefeabee5ea5cf2d9953151a9c7b72245bd19",
+    "downloadAndSavedRevision": true,
+    "explicitArmPauseCameraModeRestart": true,
+    "reloadRetainedRevision": true,
+    "overviewVisualGate": "failed: broad triangular interference across solid paving/terrain at distant Overview",
+    "offlineFlightVerified": false,
+    "titleMismatch": "Curated card says connected park study; saved immutable descriptor says six connected park districts. No pin changed."
+  }
+}

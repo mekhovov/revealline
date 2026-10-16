@@ -1,0 +1,23 @@
+{
+  "base": "fab00f38a0aa72f6afb5e1b7a4283799c842538f",
+  "unchangedTiles": [
+    "powder",
+    "brush",
+    "timber",
+    "stone",
+    "fiber",
+    "machining",
+    "edge-wear",
+    "vent",
+    "bulkhead"
+  ],
+  "changedTiles": [
+    "thread"
+  ],
+  "addedTiles": [
+    "glaze"
+  ],
+  "sourceCSSBytes": 104931,
+  "cssByteDelta": 3238,
+  "scope": "Shared material recipes; immutable theme documents, palette revisions, source models, physics and gameplay unchanged."
+}

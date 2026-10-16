@@ -4,6 +4,7 @@ import { createMissionLibrary, LIBRARY_MODES } from './library.mjs';
 import { classicLibrarySources } from './classic-source.mjs';
 import { customLibrarySources } from './custom-source.mjs';
 import { preparedPackIdentity, verifyIndexedInstalledPack } from './pack-identity.mjs';
+import { isIncludedBundledMission } from './included-bundled-pack.mjs';
 
 /** Shared installed-content registry. Metadata never installs, fetches or decodes
  * anything. Host adapters still own runtime validation and atomic picture adoption.
@@ -22,9 +23,12 @@ export async function createInstalledMissionLibrary({
   launchClassic,
   launchCustom,
   progressClassic,
+  progressStateClassic,
   progressCustom,
+  progressStateCustom,
   availabilityExternal,
   unavailableClassic,
+  getProjectSources = async () => [],
 }) {
   if (
     !LIBRARY_MODES.includes(mode) ||
@@ -32,9 +36,14 @@ export async function createInstalledMissionLibrary({
     [getPacks, compatibility, describe, prepareClassic, launchClassic, launchCustom].some(
       (fn) => typeof fn !== 'function',
     ) ||
-    [progressClassic, progressCustom, availabilityExternal, unavailableClassic].some(
-      (fn) => fn !== undefined && typeof fn !== 'function',
-    )
+    [
+      progressClassic,
+      progressStateClassic,
+      progressCustom,
+      progressStateCustom,
+      availabilityExternal,
+      unavailableClassic,
+    ].some((fn) => fn !== undefined && typeof fn !== 'function')
   )
     throw new TypeError(
       'Installed mission browsing needs explicit host adapters and a valid mode.',
@@ -92,6 +101,7 @@ export async function createInstalledMissionLibrary({
       levelId: row.levelId,
       levelRevision: row.levelRevision,
       levelIndex: row.levelIndex,
+      rulesEdition: row.rulesEdition,
     });
   function classicAvailability(row, selectedMode = mode) {
     if (row.source === 'base')
@@ -130,7 +140,11 @@ export async function createInstalledMissionLibrary({
     }
     return pack
       ? { state: 'ready' }
-      : { state: 'download', bytes: row.download?.bytes ?? row.sourceFile.bytes };
+      : {
+          state: 'download',
+          bytes: row.download?.bytes ?? row.sourceFile.bytes,
+          ...(isIncludedBundledMission(row) ? { included: true } : {}),
+        };
   }
   const classicSources = classicLibrarySources(index, {
     availability: classicAvailability,
@@ -165,6 +179,7 @@ export async function createInstalledMissionLibrary({
       return launchClassic(row, { ...context, pack, selection: selection(row) });
     },
     progress: progressClassic,
+    progressState: progressStateClassic,
   });
   const classicRows = classicSources.flatMap((source) => source.entries);
   const library = createMissionLibrary([...journeySources, ...classicSources]);
@@ -204,6 +219,7 @@ export async function createInstalledMissionLibrary({
               return launchCustom(binding, context);
             },
             progress: progressCustom,
+            progressState: progressStateCustom,
           },
         );
         customCache.set(pack, pending);
@@ -213,6 +229,11 @@ export async function createInstalledMissionLibrary({
       }
       nextCustom.push(...(await customCache.get(pack)));
     }
+    current(packs);
+    const projects = await getProjectSources();
+    if (!Array.isArray(projects) || projects.some((source) => source.collection !== 'Custom'))
+      throw new TypeError('Installed project sources must belong to Custom.');
+    nextCustom.push(...projects);
     current(packs);
     if (ticket !== generation)
       throw new Error('Installed content refresh was superseded. Try again.');

@@ -1,3 +1,4 @@
+import { readOfficialOriginal } from './official-downloads.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from './data-json.mjs';
 import { campaignKey } from './library.mjs';
 import { createExecutionCatalog } from './campaign-contexts.mjs';
@@ -15,6 +16,7 @@ import { prepareStillAsset } from './media-still.mjs';
 
 export const STILL_STORAGE_FORMAT = 'revealline-still-storage.v1';
 const prepared = new WeakSet();
+const preparedTransitions = new WeakMap();
 const nativeSize = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
 const hashValid = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
 const abort = (signal) => {
@@ -142,14 +144,25 @@ export function storedStillHashes(value) {
 }
 
 /** Recheck against the actual row in the final write transaction, not a caller's
- * alleged previous generation. Rich history and retained v2 bytes cannot drop.
+ * alleged previous generation. Rich history cannot drop; retained bytes may be
+ * detached only through an exact prepared removal inventory.
  */
-export function assertStoredStillTransition(current, next) {
+export function assertStoredStillTransition(current, next, removedLegacy = new Map()) {
   const old = hydrateStoredStillMedia(current);
   const retained = new Map(next.legacy.items.map((item) => [item.id, item.sha256]));
   required(
-    old.legacy.items.every((item) => retained.get(item.id) === item.sha256),
+    old.legacy.items.every(
+      (item) => retained.get(item.id) === item.sha256 || removedLegacy.get(item.id) === item.sha256,
+    ),
     'Retained legacy media references cannot change or be removed.',
+  );
+  required(
+    [...removedLegacy].every(
+      ([id, sha256]) =>
+        old.legacy.items.some((item) => item.id === id && item.sha256 === sha256) &&
+        !retained.has(id),
+    ),
+    'Detached legacy media references differ from the reviewed generation.',
   );
   for (const owner of old.owners) {
     const found = next.owners.find(
@@ -166,6 +179,18 @@ export function assertStoredStillTransition(current, next) {
     identityCatalog: contextForOwners(next.owners),
     previous: old.library,
   });
+}
+
+/** Recheck a prepared rich-media transition with its private, exact removal
+ * inventory. Callers cannot turn an ordinary prepared append into a detach by
+ * changing the public document. */
+export function assertPreparedStoredStillTransition(current, value) {
+  required(prepared.has(value), 'Still storage transition was not prepared.');
+  assertStoredStillTransition(
+    current,
+    value.library,
+    preparedTransitions.get(value)?.removedLegacy ?? new Map(),
+  );
 }
 
 function ownAssets(source) {
@@ -213,7 +238,7 @@ function ownAssets(source) {
       'Invalid still storage hash/byte bound.',
     );
     total += bytes;
-    required(total <= 256 * 1024 * 1024, 'Still storage assets exceed the shared managed budget.');
+    required(total <= 512 * 1024 * 1024, 'Still storage assets exceed the shared managed budget.');
     seen.add(hash);
     result.push(Object.freeze({ sha256: hash, blob: Blob.prototype.slice.call(blob, 0, bytes) }));
   }
@@ -228,6 +253,18 @@ export async function verifyStoredStillAssets(document, assets, { decodeImage, s
     wanted.size === owned.length && owned.every((a) => wanted.has(a.sha256)),
     'Still storage needs every referenced original and no extras.',
   );
+  if (owned.reduce((sum, item) => sum + nativeSize.call(item.blob), 0) > 256 * 1024 * 1024) {
+    let importedBytes = 0;
+    for (const item of owned) {
+      const original = await readOfficialOriginal(item.sha256);
+      if (!original || original.size !== item.blob.size) importedBytes += item.blob.size;
+      abort(signal);
+    }
+    required(
+      importedBytes <= 256 * 1024 * 1024,
+      'Still storage assets exceed the shared managed budget.',
+    );
+  }
   for (const item of owned) {
     abort(signal);
     const expected = safe.library.assets.find((a) => a.sha256 === item.sha256);
@@ -321,8 +358,96 @@ export async function prepareStoredStillMedia(
   const owned = await verifyStoredStillAssets(document, assets, { decodeImage, signal });
   const result = Object.freeze({ library: document, assets: owned });
   prepared.add(result);
+  preparedTransitions.set(result, Object.freeze({ removedLegacy: new Map() }));
   return result;
 }
 export function isPreparedStoredStillMedia(value) {
   return prepared.has(value);
+}
+
+/** Append content-addressed retained files without changing image assignments,
+ * historical owners or any other domain. The caller's final transaction still
+ * checks the real previous row and generation before making the index visible. */
+export async function prepareRetainedStillBytes(
+  previous,
+  references,
+  assets,
+  { signal, decodeImage } = {},
+) {
+  abort(signal);
+  const old = hydrateStoredStillMedia(previous);
+  const additions = validateGenericMediaLibrary({
+    format: 'revealline-managed-bytes.v1',
+    items: references,
+  });
+  const merged = new Map(old.legacy.items.map((item) => [item.id, item]));
+  for (const item of additions.items) {
+    const existing = merged.get(item.id);
+    required(
+      !existing || existing.sha256 === item.sha256,
+      'An immutable retained file cannot change.',
+    );
+    merged.set(item.id, item);
+  }
+  const document = validateStoredStillMedia({
+    ...old,
+    legacy: { ...old.legacy, items: [...merged.values()] },
+  });
+  assertStoredStillTransition(old, document);
+  const owned = await verifyStoredStillAssets(document, assets, { signal, decodeImage });
+  abort(signal);
+  const result = Object.freeze({ library: document, assets: owned });
+  prepared.add(result);
+  preparedTransitions.set(result, Object.freeze({ removedLegacy: new Map() }));
+  return result;
+}
+
+/** Prepare an exact edit to retained creator bytes. Removals name both the
+ * immutable reference id and its reviewed hash; the final transaction checks
+ * that same pair against the current generation before deleting anything. */
+export async function prepareRetainedStillByteEdit(
+  previous,
+  { add = [], remove = [] },
+  assets,
+  { signal, decodeImage } = {},
+) {
+  abort(signal);
+  const old = hydrateStoredStillMedia(previous);
+  const additions = validateGenericMediaLibrary({
+    format: 'revealline-managed-bytes.v1',
+    items: add,
+  });
+  const removals = validateGenericMediaLibrary({
+    format: 'revealline-managed-bytes.v1',
+    items: remove,
+  });
+  const removedLegacy = new Map(removals.items.map((item) => [item.id, item.sha256]));
+  const merged = new Map(old.legacy.items.map((item) => [item.id, item]));
+  for (const item of removals.items) {
+    const existing = merged.get(item.id);
+    required(
+      existing?.sha256 === item.sha256,
+      'Detached retained file differs from the reviewed generation.',
+    );
+    merged.delete(item.id);
+  }
+  for (const item of additions.items) {
+    const existing = merged.get(item.id);
+    required(
+      !existing || existing.sha256 === item.sha256,
+      'An immutable retained file cannot change.',
+    );
+    merged.set(item.id, item);
+  }
+  const document = validateStoredStillMedia({
+    ...old,
+    legacy: { ...old.legacy, items: [...merged.values()] },
+  });
+  assertStoredStillTransition(old, document, removedLegacy);
+  const owned = await verifyStoredStillAssets(document, assets, { signal, decodeImage });
+  abort(signal);
+  const result = Object.freeze({ library: document, assets: owned });
+  prepared.add(result);
+  preparedTransitions.set(result, Object.freeze({ removedLegacy }));
+  return result;
 }

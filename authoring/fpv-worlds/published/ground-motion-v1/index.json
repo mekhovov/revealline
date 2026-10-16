@@ -1,0 +1,35 @@
+{
+  "format": "FPVWorldLibrary.v1",
+  "worlds": [
+    {
+      "id": "mountain-reservoir",
+      "title": ["Mountain Reservoir", "Гірське водосховище"],
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "path": "authoring/fpv-worlds/mountain-reservoir/distribution/r16/mountain-reservoir.r16.rlpack",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "bytes": 1379988,
+      "courses": 8
+    },
+    {
+      "id": "festival-grounds",
+      "title": ["Festival Grounds", "Фестивальний майданчик"],
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "path": "authoring/fpv-worlds/festival-grounds/distribution/r5/festival-grounds.r5.rlpack",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "bytes": 1256875,
+      "courses": 8
+    },
+    {
+      "id": "harbor-docks",
+      "title": ["Harbor Docks", "Портові доки"],
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "path": "authoring/fpv-worlds/harbor-docks/distribution/r4/harbor-docks.r4.rlpack",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "bytes": 879213,
+      "courses": 8
+    }
+  ]
+}

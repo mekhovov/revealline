@@ -219,6 +219,31 @@ for (const policy of ['immediate', 'grid-center']) {
     near(events(a, 'lineImpact.arrived')[0].time, 17 / 7);
     replay(a);
   });
+  test(`${policy}: enemy freeze prevents a new trail-impact seed for its complete active window`, () => {
+    const level = source();
+    level.classic.powerups = [{ id: 'freeze', kind: 'enemy-freeze', x: 36.5, y: 2.5 }];
+    Object.assign(level.enemies[0], { x: 36.5, y: 8.5, vx: 0, vy: 0 });
+    const a = attempt(level, policy);
+    advance(a, 'down', 300);
+    assert.ok(events(a, 'powerup.collected').some((event) => event.id === 'freeze'));
+    assert.equal(events(a, 'lineImpact.seeded').length, 0);
+    assert.equal(events(a, 'player.failed').length, 0);
+    assert.equal(a.run.lives, 3);
+    replay(a);
+  });
+  test(`${policy}: enemy slow changes actor motion but never changes an existing front's speed`, () => {
+    const level = source();
+    level.classic.powerups = [{ id: 'slow', kind: 'enemy-slow', x: 36.5, y: 18.5 }];
+    const a = attempt(level, policy);
+    advance(a, 'down', 220);
+    assert.ok(events(a, 'powerup.collected').some((event) => event.id === 'slow'));
+    const actorX = a.run.enemies[0].x,
+      distance = forward(a).distance;
+    advance(a, 'down', 20);
+    near(forward(a).distance - distance, 4);
+    near(Math.abs(a.run.enemies[0].x - actorX), 1 / 6);
+    replay(a);
+  });
   test(`${policy}: public session/replay restore preserves active fronts and resumed outcome without advancing paused state`, async () => {
     const level = source(),
       a = attempt(level, policy);

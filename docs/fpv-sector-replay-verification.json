@@ -1,0 +1,2136 @@
+{
+  "format": "FPVSectorReplayVerification.v1",
+  "createdAt": "2026-09-30T22:24:16.089Z",
+  "baseCommit": "3ce3b98ef9b150fde0f7211a0251bb09259b5b8f",
+  "scope": "Focused command-recording replay and recovery qualification. Existing frozen recordings exercised with no unit coverage added or run. Browser HUD verification is recorded separately.",
+  "node": "v20.19.5",
+  "sourceHashes": [
+    {
+      "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "sha256": "c8c562a61ecab4c1d6fdc60ec3ddc72a011b8a9a0c4c629450095103b0a976af"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "sha256": "348642a47e43f1cb621858d87d1584a7546c301230b4ac8ebf0707f29cc8b49a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-progress.mjs",
+      "sha256": "a5ddc1a77f0f65f60298b7dcde615e161768efaf624e3a726fa4393dffaddf6d"
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "sha256": "a12a1cf489a14d2a383fdc87f18a9a0c79d77572fc000339eceb4d880079d8e7"
+    },
+    {
+      "path": "game/build-config.json",
+      "sha256": "0b512dcd3a33876cc95447adfb0ef364856fabf0a3ca61c5b78989c844768b8c"
+    }
+  ],
+  "recordings": [
+    {
+      "course": "flight-01",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "3ed2a52b4a597da21de599fe5989a8a3434749fd6754336503ea9619efff383b",
+      "ticks": 239,
+      "sectorCount": 2,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 90,
+          "endTick": 90
+        },
+        {
+          "index": 1,
+          "ticks": 149,
+          "endTick": 239
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-01",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "cbe339c8db849d584a6bcc18ef2997c247d640b84cb9595dd6b6506d2bb1de43",
+      "ticks": 239,
+      "sectorCount": 2,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 90,
+          "endTick": 90
+        },
+        {
+          "index": 1,
+          "ticks": 149,
+          "endTick": 239
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-02",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "38bc8d1d2b52ea573fa262131b13ff721ea4011f878674cd7023c7c5cb1dbedf",
+      "ticks": 383,
+      "sectorCount": 2,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 220,
+          "endTick": 220
+        },
+        {
+          "index": 1,
+          "ticks": 163,
+          "endTick": 383
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-02",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "0d47f0994382504aa8463afba49f3d93d69468e679050721c361f046eddd82e3",
+      "ticks": 383,
+      "sectorCount": 2,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 220,
+          "endTick": 220
+        },
+        {
+          "index": 1,
+          "ticks": 163,
+          "endTick": 383
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-03",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "ab58017440d3a6b74785c46a327d9b6e0e69821a1872538231eb1e7685b236ca",
+      "ticks": 433,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 90,
+          "endTick": 90
+        },
+        {
+          "index": 1,
+          "ticks": 101,
+          "endTick": 191
+        },
+        {
+          "index": 2,
+          "ticks": 97,
+          "endTick": 288
+        },
+        {
+          "index": 3,
+          "ticks": 145,
+          "endTick": 433
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-03",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "2ad55ff9b561850b4d9eb2e5f07ab2f2c73ff5ac8c7b79f6135c9b345f4e120b",
+      "ticks": 433,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 90,
+          "endTick": 90
+        },
+        {
+          "index": 1,
+          "ticks": 101,
+          "endTick": 191
+        },
+        {
+          "index": 2,
+          "ticks": 97,
+          "endTick": 288
+        },
+        {
+          "index": 3,
+          "ticks": 145,
+          "endTick": 433
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-04",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "58745a84bb3cac5a4cb520edd2d24525807d5ae4c936f8a5e6926453108b55ea",
+      "ticks": 433,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 90,
+          "endTick": 90
+        },
+        {
+          "index": 1,
+          "ticks": 101,
+          "endTick": 191
+        },
+        {
+          "index": 2,
+          "ticks": 97,
+          "endTick": 288
+        },
+        {
+          "index": 3,
+          "ticks": 145,
+          "endTick": 433
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-04",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "aaabff64302f5a2ffa3c4e017c97de4292593b8c05ad22ff69e6230f339f40cc",
+      "ticks": 433,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 90,
+          "endTick": 90
+        },
+        {
+          "index": 1,
+          "ticks": 101,
+          "endTick": 191
+        },
+        {
+          "index": 2,
+          "ticks": 97,
+          "endTick": 288
+        },
+        {
+          "index": 3,
+          "ticks": 145,
+          "endTick": 433
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-05",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "808797f792da7abb84faedf5f4406fbf520460bf0077988dfa81e23809e90daf",
+      "ticks": 435,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 90,
+          "endTick": 90
+        },
+        {
+          "index": 1,
+          "ticks": 119,
+          "endTick": 209
+        },
+        {
+          "index": 2,
+          "ticks": 73,
+          "endTick": 282
+        },
+        {
+          "index": 3,
+          "ticks": 153,
+          "endTick": 435
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-05",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "df9dd5fe940ca175de4e4d334e258ec45fb1e4b71577ca459cc69b2ec9e8674f",
+      "ticks": 435,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 90,
+          "endTick": 90
+        },
+        {
+          "index": 1,
+          "ticks": 119,
+          "endTick": 209
+        },
+        {
+          "index": 2,
+          "ticks": 73,
+          "endTick": 282
+        },
+        {
+          "index": 3,
+          "ticks": 153,
+          "endTick": 435
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-06",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "fb7422e1b0e37f6e22f23a63433b07c5bb9d10819b28f82c2cdf0047632f6de2",
+      "ticks": 899,
+      "sectorCount": 6,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 139,
+          "endTick": 239
+        },
+        {
+          "index": 2,
+          "ticks": 137,
+          "endTick": 376
+        },
+        {
+          "index": 3,
+          "ticks": 139,
+          "endTick": 515
+        },
+        {
+          "index": 4,
+          "ticks": 137,
+          "endTick": 652
+        },
+        {
+          "index": 5,
+          "ticks": 247,
+          "endTick": 899
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-06",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "4713720d38fbfde2caea5e489a82b3d740cb22b8e1f4788dde375d7fe742d0ac",
+      "ticks": 900,
+      "sectorCount": 6,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 139,
+          "endTick": 239
+        },
+        {
+          "index": 2,
+          "ticks": 137,
+          "endTick": 376
+        },
+        {
+          "index": 3,
+          "ticks": 139,
+          "endTick": 515
+        },
+        {
+          "index": 4,
+          "ticks": 137,
+          "endTick": 652
+        },
+        {
+          "index": 5,
+          "ticks": 248,
+          "endTick": 900
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-07",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "4c5afc4a064aad27e051d4bb744bf6e6ec2fad25636cfdb5c38dde0f89ccf37a",
+      "ticks": 498,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 21,
+          "endTick": 121
+        },
+        {
+          "index": 2,
+          "ticks": 18,
+          "endTick": 139
+        },
+        {
+          "index": 3,
+          "ticks": 359,
+          "endTick": 498
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-07",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "8423183c303621a51876807179f3e4c34a307b61f7976f66338e1b029b02aa81",
+      "ticks": 488,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 21,
+          "endTick": 121
+        },
+        {
+          "index": 2,
+          "ticks": 10,
+          "endTick": 131
+        },
+        {
+          "index": 3,
+          "ticks": 357,
+          "endTick": 488
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-08",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "f04990c0921182c0f11f5a62445fec4759158a3a7082dcd065b5c828b376cdc1",
+      "ticks": 491,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 139,
+          "endTick": 239
+        },
+        {
+          "index": 2,
+          "ticks": 98,
+          "endTick": 337
+        },
+        {
+          "index": 3,
+          "ticks": 154,
+          "endTick": 491
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-08",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "ff8b31e6f4e81a363eb0630a776e50166babbd26f1199c4d0553972766f44f52",
+      "ticks": 491,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 139,
+          "endTick": 239
+        },
+        {
+          "index": 2,
+          "ticks": 98,
+          "endTick": 337
+        },
+        {
+          "index": 3,
+          "ticks": 154,
+          "endTick": 491
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-09",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "42fdc87542197925b83474d031e44677314d32c5d7b784e24250b7553977036d",
+      "ticks": 638,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 139,
+          "endTick": 239
+        },
+        {
+          "index": 2,
+          "ticks": 157,
+          "endTick": 396
+        },
+        {
+          "index": 3,
+          "ticks": 72,
+          "endTick": 468
+        },
+        {
+          "index": 4,
+          "ticks": 170,
+          "endTick": 638
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-09",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "3658dd25e8c77c7826f74bb568db55db5929bfb50e135911c080073de02ab20d",
+      "ticks": 638,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 139,
+          "endTick": 239
+        },
+        {
+          "index": 2,
+          "ticks": 157,
+          "endTick": 396
+        },
+        {
+          "index": 3,
+          "ticks": 72,
+          "endTick": 468
+        },
+        {
+          "index": 4,
+          "ticks": 170,
+          "endTick": 638
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-10",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "bfc18214357db7d50aaf4795e62c0e8ee21b6e6a482b5d49cf8b93bc0808fcc3",
+      "ticks": 610,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 102,
+          "endTick": 202
+        },
+        {
+          "index": 2,
+          "ticks": 98,
+          "endTick": 300
+        },
+        {
+          "index": 3,
+          "ticks": 98,
+          "endTick": 398
+        },
+        {
+          "index": 4,
+          "ticks": 212,
+          "endTick": 610
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-10",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "d4509e72e983fc3946ffd98b1d3d819369488531739d7083c2993274b0747e5b",
+      "ticks": 610,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 102,
+          "endTick": 202
+        },
+        {
+          "index": 2,
+          "ticks": 98,
+          "endTick": 300
+        },
+        {
+          "index": 3,
+          "ticks": 98,
+          "endTick": 398
+        },
+        {
+          "index": 4,
+          "ticks": 212,
+          "endTick": 610
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-11",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "123fff0f89dedd2f683234cc6657a8a517726bab73df1e14aa484f2815b0a4e2",
+      "ticks": 1243,
+      "sectorCount": 8,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 140,
+          "endTick": 240
+        },
+        {
+          "index": 2,
+          "ticks": 119,
+          "endTick": 359
+        },
+        {
+          "index": 3,
+          "ticks": 101,
+          "endTick": 460
+        },
+        {
+          "index": 4,
+          "ticks": 227,
+          "endTick": 687
+        },
+        {
+          "index": 5,
+          "ticks": 120,
+          "endTick": 807
+        },
+        {
+          "index": 6,
+          "ticks": 101,
+          "endTick": 908
+        },
+        {
+          "index": 7,
+          "ticks": 335,
+          "endTick": 1243
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-11",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "a04fddcc2757fcd1f62925b8cd3553ce0e577ea142d931386771e5f5020cdddf",
+      "ticks": 1243,
+      "sectorCount": 8,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 140,
+          "endTick": 240
+        },
+        {
+          "index": 2,
+          "ticks": 119,
+          "endTick": 359
+        },
+        {
+          "index": 3,
+          "ticks": 101,
+          "endTick": 460
+        },
+        {
+          "index": 4,
+          "ticks": 227,
+          "endTick": 687
+        },
+        {
+          "index": 5,
+          "ticks": 120,
+          "endTick": 807
+        },
+        {
+          "index": 6,
+          "ticks": 101,
+          "endTick": 908
+        },
+        {
+          "index": 7,
+          "ticks": 335,
+          "endTick": 1243
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-12",
+      "mode": "self-level",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "37617055d8c2d4179037fe3c5f3028a4aca627c5d86ced76898d615b92342c15",
+      "ticks": 1126,
+      "sectorCount": 7,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 139,
+          "endTick": 239
+        },
+        {
+          "index": 2,
+          "ticks": 172,
+          "endTick": 411
+        },
+        {
+          "index": 3,
+          "ticks": 196,
+          "endTick": 607
+        },
+        {
+          "index": 4,
+          "ticks": 214,
+          "endTick": 821
+        },
+        {
+          "index": 5,
+          "ticks": 168,
+          "endTick": 989
+        },
+        {
+          "index": 6,
+          "ticks": 137,
+          "endTick": 1126
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "flight-12",
+      "mode": "acro",
+      "format": "FlightAttempt.v1",
+      "proofSha256": "5010a05b8f23be9f2ea28897069f42b4d83dbca796373a4afac5eb0f13ca3d95",
+      "ticks": 1126,
+      "sectorCount": 7,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 100,
+          "endTick": 100
+        },
+        {
+          "index": 1,
+          "ticks": 139,
+          "endTick": 239
+        },
+        {
+          "index": 2,
+          "ticks": 172,
+          "endTick": 411
+        },
+        {
+          "index": 3,
+          "ticks": 196,
+          "endTick": 607
+        },
+        {
+          "index": 4,
+          "ticks": 214,
+          "endTick": 821
+        },
+        {
+          "index": 5,
+          "ticks": 168,
+          "endTick": 989
+        },
+        {
+          "index": 6,
+          "ticks": 137,
+          "endTick": 1126
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-01",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "e3fa8c00f009b61cb147c6dcd12e60c837525c9d961da5b2cc8e21b985be7f85",
+      "ticks": 1184,
+      "sectorCount": 3,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 210,
+          "endTick": 210
+        },
+        {
+          "index": 1,
+          "ticks": 184,
+          "endTick": 394
+        },
+        {
+          "index": 2,
+          "ticks": 790,
+          "endTick": 1184
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-01",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "aa3abe1af6bebaf9804c860548dc14ee695da46b80d7e80ad400a72e0549b90e",
+      "ticks": 1186,
+      "sectorCount": 3,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 209,
+          "endTick": 209
+        },
+        {
+          "index": 1,
+          "ticks": 184,
+          "endTick": 393
+        },
+        {
+          "index": 2,
+          "ticks": 793,
+          "endTick": 1186
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-02",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "a4e32f962ab214f0f5cdb1d22ce09b4145c76d27c9c4ebb12efe9aff40848276",
+      "ticks": 2020,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 288,
+          "endTick": 288
+        },
+        {
+          "index": 1,
+          "ticks": 412,
+          "endTick": 700
+        },
+        {
+          "index": 2,
+          "ticks": 337,
+          "endTick": 1037
+        },
+        {
+          "index": 3,
+          "ticks": 983,
+          "endTick": 2020
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-02",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "cc1e2565485f770f6d010ebe172f0d92ab58e03b37911b956c32656b60bccc28",
+      "ticks": 2018,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 287,
+          "endTick": 287
+        },
+        {
+          "index": 1,
+          "ticks": 411,
+          "endTick": 698
+        },
+        {
+          "index": 2,
+          "ticks": 335,
+          "endTick": 1033
+        },
+        {
+          "index": 3,
+          "ticks": 985,
+          "endTick": 2018
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-03",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "791388ea478f7b838cc3e92800f41bbc6964153ab841c495f38796361a552067",
+      "ticks": 2271,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 278,
+          "endTick": 278
+        },
+        {
+          "index": 1,
+          "ticks": 451,
+          "endTick": 729
+        },
+        {
+          "index": 2,
+          "ticks": 398,
+          "endTick": 1127
+        },
+        {
+          "index": 3,
+          "ticks": 445,
+          "endTick": 1572
+        },
+        {
+          "index": 4,
+          "ticks": 699,
+          "endTick": 2271
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-03",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "444ca01b2c66cb5211b231c26c91ec73c176025545965ee38c92be1eb6c4335a",
+      "ticks": 2274,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 278,
+          "endTick": 278
+        },
+        {
+          "index": 1,
+          "ticks": 452,
+          "endTick": 730
+        },
+        {
+          "index": 2,
+          "ticks": 398,
+          "endTick": 1128
+        },
+        {
+          "index": 3,
+          "ticks": 445,
+          "endTick": 1573
+        },
+        {
+          "index": 4,
+          "ticks": 701,
+          "endTick": 2274
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-04",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "f8eb42ff4135deabee9ceb087a4a409dc1414d1bbacbabd23f2f0b5e359f680b",
+      "ticks": 1732,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 352,
+          "endTick": 352
+        },
+        {
+          "index": 1,
+          "ticks": 339,
+          "endTick": 691
+        },
+        {
+          "index": 2,
+          "ticks": 331,
+          "endTick": 1022
+        },
+        {
+          "index": 3,
+          "ticks": 710,
+          "endTick": 1732
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-04",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "6a880dd931888d1cf71808253f9834d4304417e98b160cd9cba3295ab1ebb06b",
+      "ticks": 1738,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 352,
+          "endTick": 352
+        },
+        {
+          "index": 1,
+          "ticks": 340,
+          "endTick": 692
+        },
+        {
+          "index": 2,
+          "ticks": 333,
+          "endTick": 1025
+        },
+        {
+          "index": 3,
+          "ticks": 713,
+          "endTick": 1738
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-05",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "1b0d263fa89832916bf5b5c474f2b118a670d5060afbfee20ada9a70b171bc32",
+      "ticks": 2582,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 575,
+          "endTick": 575
+        },
+        {
+          "index": 1,
+          "ticks": 282,
+          "endTick": 857
+        },
+        {
+          "index": 2,
+          "ticks": 461,
+          "endTick": 1318
+        },
+        {
+          "index": 3,
+          "ticks": 1264,
+          "endTick": 2582
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-05",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "7c94bb9b2138517985a882a62ed8c104029b7ff4cd2f4dfa4cc0aaa7599e9ad6",
+      "ticks": 2586,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 575,
+          "endTick": 575
+        },
+        {
+          "index": 1,
+          "ticks": 282,
+          "endTick": 857
+        },
+        {
+          "index": 2,
+          "ticks": 462,
+          "endTick": 1319
+        },
+        {
+          "index": 3,
+          "ticks": 1267,
+          "endTick": 2586
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-06",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "132827a969119239ede2338cff07ef25a759ac273ba059d5767a8b7f664cae97",
+      "ticks": 2468,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 229,
+          "endTick": 229
+        },
+        {
+          "index": 1,
+          "ticks": 335,
+          "endTick": 564
+        },
+        {
+          "index": 2,
+          "ticks": 375,
+          "endTick": 939
+        },
+        {
+          "index": 3,
+          "ticks": 1529,
+          "endTick": 2468
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-06",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "4bc4d8b1922ef51752c4fa801e043ea3122c93fc6918f7a465efe0128dc4af6b",
+      "ticks": 2469,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 228,
+          "endTick": 228
+        },
+        {
+          "index": 1,
+          "ticks": 334,
+          "endTick": 562
+        },
+        {
+          "index": 2,
+          "ticks": 376,
+          "endTick": 938
+        },
+        {
+          "index": 3,
+          "ticks": 1531,
+          "endTick": 2469
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-07",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "f2309bb8af886aeb4a0f3825b4d40e5bcde315f5195b83e450f76664c5f0ab6d",
+      "ticks": 2178,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 309,
+          "endTick": 309
+        },
+        {
+          "index": 1,
+          "ticks": 472,
+          "endTick": 781
+        },
+        {
+          "index": 2,
+          "ticks": 474,
+          "endTick": 1255
+        },
+        {
+          "index": 3,
+          "ticks": 923,
+          "endTick": 2178
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-07",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "8b8280184ad51c6a77fdaf718352f87b5a5f464089ee7bbe6b30883b43f04f05",
+      "ticks": 2183,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 308,
+          "endTick": 308
+        },
+        {
+          "index": 1,
+          "ticks": 473,
+          "endTick": 781
+        },
+        {
+          "index": 2,
+          "ticks": 477,
+          "endTick": 1258
+        },
+        {
+          "index": 3,
+          "ticks": 925,
+          "endTick": 2183
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-08",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "4d204e25158e9a0ab981485c812d097cf580ec3b56f4fe3bfa84f646ead027bb",
+      "ticks": 2230,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 274,
+          "endTick": 274
+        },
+        {
+          "index": 1,
+          "ticks": 500,
+          "endTick": 774
+        },
+        {
+          "index": 2,
+          "ticks": 343,
+          "endTick": 1117
+        },
+        {
+          "index": 3,
+          "ticks": 394,
+          "endTick": 1511
+        },
+        {
+          "index": 4,
+          "ticks": 719,
+          "endTick": 2230
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "woodland-08",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "a1e9d6d71d560cdf515182c4220522b1a9d27e1b872845ba87ec18e7723e581f",
+      "ticks": 2233,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 272,
+          "endTick": 272
+        },
+        {
+          "index": 1,
+          "ticks": 500,
+          "endTick": 772
+        },
+        {
+          "index": 2,
+          "ticks": 343,
+          "endTick": 1115
+        },
+        {
+          "index": 3,
+          "ticks": 396,
+          "endTick": 1511
+        },
+        {
+          "index": 4,
+          "ticks": 722,
+          "endTick": 2233
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-01",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "804ccc00c49d11a91cd4d2bb452c5aa512f4c26f3a564d2a92aeaea84582fbb3",
+      "ticks": 1207,
+      "sectorCount": 3,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 229,
+          "endTick": 229
+        },
+        {
+          "index": 1,
+          "ticks": 188,
+          "endTick": 417
+        },
+        {
+          "index": 2,
+          "ticks": 790,
+          "endTick": 1207
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-01",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "b0a1e1443300bcf3141f9c80417de5572a9ad21c85aa1bffec1faae619afa1fc",
+      "ticks": 1207,
+      "sectorCount": 3,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 228,
+          "endTick": 228
+        },
+        {
+          "index": 1,
+          "ticks": 187,
+          "endTick": 415
+        },
+        {
+          "index": 2,
+          "ticks": 792,
+          "endTick": 1207
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-02",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "30ab5704b1730fe39bbfb1f5546ad1a81a19a0f35fecef9f0710c0535a03b5d3",
+      "ticks": 2238,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 274,
+          "endTick": 274
+        },
+        {
+          "index": 1,
+          "ticks": 525,
+          "endTick": 799
+        },
+        {
+          "index": 2,
+          "ticks": 458,
+          "endTick": 1257
+        },
+        {
+          "index": 3,
+          "ticks": 981,
+          "endTick": 2238
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-02",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "3bb23e05442c0fa5634c670a37bb334cae7ce1fca8f3151038c35edd6950ec16",
+      "ticks": 2238,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 272,
+          "endTick": 272
+        },
+        {
+          "index": 1,
+          "ticks": 526,
+          "endTick": 798
+        },
+        {
+          "index": 2,
+          "ticks": 458,
+          "endTick": 1256
+        },
+        {
+          "index": 3,
+          "ticks": 982,
+          "endTick": 2238
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-03",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "cec8f6de42f1ed8371810eb43cc4a262b009449768f523be8b87abd64140de2d",
+      "ticks": 2528,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 330,
+          "endTick": 330
+        },
+        {
+          "index": 1,
+          "ticks": 520,
+          "endTick": 850
+        },
+        {
+          "index": 2,
+          "ticks": 600,
+          "endTick": 1450
+        },
+        {
+          "index": 3,
+          "ticks": 434,
+          "endTick": 1884
+        },
+        {
+          "index": 4,
+          "ticks": 644,
+          "endTick": 2528
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-03",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "fa5d3291399f9cf4cef8715bdd8ed6535965ff941b16ef1e367bfca246ae700f",
+      "ticks": 2519,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 328,
+          "endTick": 328
+        },
+        {
+          "index": 1,
+          "ticks": 519,
+          "endTick": 847
+        },
+        {
+          "index": 2,
+          "ticks": 593,
+          "endTick": 1440
+        },
+        {
+          "index": 3,
+          "ticks": 434,
+          "endTick": 1874
+        },
+        {
+          "index": 4,
+          "ticks": 645,
+          "endTick": 2519
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-04",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "780eff5f9aaaa1806919578a80ab4f0635bdbeccbd3d83a9d38f7b954c6ff770",
+      "ticks": 1891,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 316,
+          "endTick": 316
+        },
+        {
+          "index": 1,
+          "ticks": 279,
+          "endTick": 595
+        },
+        {
+          "index": 2,
+          "ticks": 445,
+          "endTick": 1040
+        },
+        {
+          "index": 3,
+          "ticks": 851,
+          "endTick": 1891
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-04",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "1281af3d54e3393948e4dba4f2061a7af5d028bc9b8f8ac1747df99177c64eff",
+      "ticks": 1895,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 317,
+          "endTick": 317
+        },
+        {
+          "index": 1,
+          "ticks": 278,
+          "endTick": 595
+        },
+        {
+          "index": 2,
+          "ticks": 446,
+          "endTick": 1041
+        },
+        {
+          "index": 3,
+          "ticks": 854,
+          "endTick": 1895
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-05",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "521930d222deb4ff1898d8110b0ececd1d4459e158ce0d3b1aff6f7a948b1e9d",
+      "ticks": 2482,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 465,
+          "endTick": 465
+        },
+        {
+          "index": 1,
+          "ticks": 385,
+          "endTick": 850
+        },
+        {
+          "index": 2,
+          "ticks": 376,
+          "endTick": 1226
+        },
+        {
+          "index": 3,
+          "ticks": 1256,
+          "endTick": 2482
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-05",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "1c2d4fd9dba7361d9de4cbe256b69d9bc51dea93697b5e6dfef808f514bf4194",
+      "ticks": 2480,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 465,
+          "endTick": 465
+        },
+        {
+          "index": 1,
+          "ticks": 386,
+          "endTick": 851
+        },
+        {
+          "index": 2,
+          "ticks": 376,
+          "endTick": 1227
+        },
+        {
+          "index": 3,
+          "ticks": 1253,
+          "endTick": 2480
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-06",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "5d898b91ef6ae2bec17dc6c445d3ae17b4ca01947616a0898bf309843d0ed30f",
+      "ticks": 2832,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 227,
+          "endTick": 227
+        },
+        {
+          "index": 1,
+          "ticks": 397,
+          "endTick": 624
+        },
+        {
+          "index": 2,
+          "ticks": 647,
+          "endTick": 1271
+        },
+        {
+          "index": 3,
+          "ticks": 1561,
+          "endTick": 2832
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-06",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "6bd3f3b0d931f34ba62e1645c27017ea4c2e896af60ed24bd24144177ee0a15d",
+      "ticks": 2849,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 225,
+          "endTick": 225
+        },
+        {
+          "index": 1,
+          "ticks": 399,
+          "endTick": 624
+        },
+        {
+          "index": 2,
+          "ticks": 653,
+          "endTick": 1277
+        },
+        {
+          "index": 3,
+          "ticks": 1572,
+          "endTick": 2849
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-07",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "b642c1457100cfae8f42e6adce232e77e22edda19caf780a5a9207573bf60cd7",
+      "ticks": 2397,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 259,
+          "endTick": 259
+        },
+        {
+          "index": 1,
+          "ticks": 547,
+          "endTick": 806
+        },
+        {
+          "index": 2,
+          "ticks": 555,
+          "endTick": 1361
+        },
+        {
+          "index": 3,
+          "ticks": 1036,
+          "endTick": 2397
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-07",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "6afd5ea8f56d22efde2ad94b03df8d778441fd0bddffdaaaa688b0aded6f15ed",
+      "ticks": 2400,
+      "sectorCount": 4,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 259,
+          "endTick": 259
+        },
+        {
+          "index": 1,
+          "ticks": 549,
+          "endTick": 808
+        },
+        {
+          "index": 2,
+          "ticks": 558,
+          "endTick": 1366
+        },
+        {
+          "index": 3,
+          "ticks": 1034,
+          "endTick": 2400
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-08",
+      "mode": "self-level",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "462a9e5ca8fe561b7892d4462dedb67593bfce8104bb50560ca890215ec87b83",
+      "ticks": 2095,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 311,
+          "endTick": 311
+        },
+        {
+          "index": 1,
+          "ticks": 482,
+          "endTick": 793
+        },
+        {
+          "index": 2,
+          "ticks": 375,
+          "endTick": 1168
+        },
+        {
+          "index": 3,
+          "ticks": 375,
+          "endTick": 1543
+        },
+        {
+          "index": 4,
+          "ticks": 552,
+          "endTick": 2095
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    },
+    {
+      "course": "courtyard-08",
+      "mode": "acro",
+      "format": "FlightAttempt.v2",
+      "proofSha256": "49f581cba7bfcc37420177214aeabfc4eb39a37c2ff69184be78a9a2179d1e8a",
+      "ticks": 2095,
+      "sectorCount": 5,
+      "sectors": [
+        {
+          "index": 0,
+          "ticks": 309,
+          "endTick": 309
+        },
+        {
+          "index": 1,
+          "ticks": 482,
+          "endTick": 791
+        },
+        {
+          "index": 2,
+          "ticks": 375,
+          "endTick": 1166
+        },
+        {
+          "index": 3,
+          "ticks": 373,
+          "endTick": 1539
+        },
+        {
+          "index": 4,
+          "ticks": 556,
+          "endTick": 2095
+        }
+      ],
+      "unchangedState": true,
+      "unchangedIdentity": true,
+      "defaultSectorsAbsent": true,
+      "sampledPathPoints": 0
+    }
+  ],
+  "recovery": {
+    "course": "courtyard-06",
+    "mode": "self-level",
+    "prefixTicks": 724,
+    "prefixSectors": [
+      {
+        "index": 0,
+        "ticks": 227,
+        "endTick": 227
+      },
+      {
+        "index": 1,
+        "ticks": 397,
+        "endTick": 624
+      }
+    ],
+    "resumedSectors": [
+      {
+        "index": 0,
+        "ticks": 227,
+        "endTick": 227
+      },
+      {
+        "index": 1,
+        "ticks": 397,
+        "endTick": 624
+      },
+      {
+        "index": 2,
+        "ticks": 647,
+        "endTick": 1271
+      },
+      {
+        "index": 3,
+        "ticks": 1561,
+        "endTick": 2832
+      }
+    ],
+    "fullReplaySectorsMatch": true,
+    "finalStateIdentity": "6bbdd386e3d6ded3",
+    "unchangedFinalStateIdentity": true,
+    "latest": {
+      "index": 3,
+      "ticks": 1561,
+      "endTick": 2832,
+      "referenceTicks": 1561,
+      "referenceEndTick": 2832,
+      "sectorDelta": 0,
+      "cumulativeDelta": 0
+    }
+  },
+  "boundaryObservations": {
+    "malformedReferenceInputs": 6,
+    "malformedReferencesFailClosed": true,
+    "invalidResetsPreserveHistory": true,
+    "missingProofRejected": true,
+    "sameTickSectors": [
+      {
+        "index": 0,
+        "ticks": 125,
+        "endTick": 125
+      },
+      {
+        "index": 1,
+        "ticks": 0,
+        "endTick": 125
+      },
+      {
+        "index": 2,
+        "ticks": 0,
+        "endTick": 125
+      }
+    ],
+    "sameTickDurationSum": 125
+  },
+  "summary": {
+    "recordings": 56,
+    "v1": 24,
+    "v2": 32,
+    "allFinalStatesAndIdentitiesUnchanged": true,
+    "sectorPathPoints": 0,
+    "recoveryVerified": true,
+    "unitTests": "deferred",
+    "releaseQualified": false
+  },
+  "staticChecks": {
+    "formatter": "Prettier passed for six backend and closure files",
+    "lint": "ESLint passed for backend modules and package policy with zero warnings"
+  },
+  "packageClosure": {
+    "scope": "Build admission and dependency closure at backend handoff; UI work was still in progress. These are not release artifact hashes.",
+    "packages": [
+      {
+        "packageId": "civilian-fpv",
+        "files": 53,
+        "bytes": 3133507,
+        "sectorModuleBytes": 2673
+      },
+      {
+        "packageId": "fpv-worlds",
+        "files": 75,
+        "bytes": 10172415,
+        "sectorModuleBytes": 2673
+      }
+    ],
+    "withinBudgets": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "canonicalGLBs": 18,
+  "byteIdenticalTerrainAssets": 0,
+  "requalifiedRelief": true,
+  "routeSweeps": 2247,
+  "rockHits": 27,
+  "grounded": 27,
+  "spawnClear": true,
+  "sharedFlightTicks": 100,
+  "geometryBytes": 673464,
+  "disposed": true,
+  "sourceUnchanged": true,
+  "flightReady": false
+}

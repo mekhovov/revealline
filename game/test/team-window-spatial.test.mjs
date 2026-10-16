@@ -7,6 +7,10 @@ import { compileContentProject, resolveMission } from '../content-design/project
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { assessTeamTimedRoute } from './helpers/team-timed-route.mjs';
 import { page } from './helpers/coop-host.mjs';
+import {
+  playSpecializedTeamRoute,
+  playSpecializedTeamBonusRoute,
+} from './helpers/team-specialized-host-route.mjs';
 import { prepareContentPreview } from '../content-design/preview.mjs';
 import { createContentDraftSession } from '../content-design/session.mjs';
 import { TEAM_TIMED_ART_CANDIDATES } from '../content-design/team-timed-art.mjs';
@@ -254,48 +258,16 @@ for (const row of evidence.rows) {
     assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(2);
-    const expected = row.checks.find((c) => !c.options.swapped && c.options.jointCuts).result;
-    const keys = [
-      { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-      { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-    ];
-    let previous = [null, null],
-      frames = 1,
-      firstEffect = null;
-    const transitions = [];
-    for (const segment of row.log) {
-      for (const [seat, direction] of [segment.a, segment.b].entries())
-        if (direction && direction !== previous[seat]) f.tap(keys[seat][direction]);
-      previous = [segment.a, segment.b];
-      for (let n = 0; n < segment.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-        const live = f.$('coop-bonus-live').textContent,
-          phase = /^Enemies slow \d+s$/.test(live) ? 'effect' : live;
-        if (transitions.at(-1)?.phase !== phase) transitions.push({ frame: frames, phase });
-        if (firstEffect === null && phase === 'effect') firstEffect = frames;
-        assert.equal(
-          f.$('coop-reserves').textContent,
-          `${expected.initialReserves} reserve${expected.initialReserves === 1 ? '' : 's'}`,
-        );
-      }
-      if (!f.$('coop-overlay').hidden) break;
+    if (row.kind === 'pickup-free') {
+      playSpecializedTeamRoute(f, source, 'window-exchange', row.difficulty, 'window-pickup-free');
+      return;
     }
-    t.diagnostic(JSON.stringify({ frames, firstEffect, transitions }));
-    assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.equal(frames, expected.tick);
-    assert.equal(f.$('coop-coverage').textContent, `${(expected.coverage * 100).toFixed(1)}%`);
-    assert.equal(firstEffect, expected.collected[0]?.activationTick ?? null);
-    if (row.kind === 'relocation')
-      assert.deepEqual(transitions.slice(0, 6), [
-        { frame: 2, phase: '' },
-        { frame: 240, phase: 'Pickup incoming' },
-        { frame: 360, phase: '1 timed pickup available' },
-        { frame: 1560, phase: '' },
-        { frame: 2520, phase: 'Pickup incoming' },
-        { frame: 2640, phase: '1 timed pickup available' },
-      ]);
-    assert.deepEqual(f.visits, []);
+    playSpecializedTeamBonusRoute(
+      f,
+      source,
+      'window-exchange',
+      row.difficulty,
+      `window-${row.kind}`,
+    );
   });
 }

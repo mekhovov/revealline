@@ -1,0 +1,14 @@
+{
+  "format": "FPVCoastSourcePackageClosure.v1",
+  "sourceFixture": "dist/fpv-coast-lighthouse-verification-source-v2-main",
+  "packageFixture": "dist/fpv-coast-lighthouse-verification-package-1949ff56f",
+  "sourceRevision": "1949ff56fa46727deb04b88ecc86a2e237e22f98",
+  "modules": 31,
+  "packagePlayerModulesExact": true,
+  "harnessSha256": "d8290929d990b53de2e08c84920bd7e4c57c6c427f5f5270756867976006c309",
+  "differences": [
+    "game/i18n/catalogs.mjs",
+    "optional-practice/civilian-fpv/world-assets.mjs"
+  ],
+  "explanation": "Only selectedlocaleprojection and already-audited inactiveWarehouse world-assets integration differ. Lighthouseworldvisuals/renderer/replayinputsand actualGLBcontrols are exact."
+}

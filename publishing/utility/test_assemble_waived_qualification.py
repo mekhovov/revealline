@@ -5,6 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
+import zipfile
 
 import assemble_waived_qualification as adapter
 import test_waived_qualification as waived
@@ -17,6 +18,7 @@ class AdapterTests(unittest.TestCase):
         self.root = Path(self.temporary.name).resolve()
         value, _, _, self.policy, self.manual, jobs = waived.fixture()
         self.source, self.artifact = value['source'], value['artifact']
+        self.automation_commit = 'c' * 40
         self.manual['updated_at'] = '2026-09-22T00:00:00Z'
         extra = ['Record source identity', 'Require reviewed production slots in the committed ledger',
                  'Verify qualified tracked source is unchanged']
@@ -26,7 +28,9 @@ class AdapterTests(unittest.TestCase):
         self.jobs = jobs
         self.pr_run = dict(self.manual, id=20, event='pull_request', path='.github/workflows/deploy-pages.yml')
         build = dict(jobs['jobs'][0], id=201, run_id=20, name='build', steps=[self.step(n, i + 1) for i, n in enumerate(
-            ['Verify exact tracked source before commands', 'Build pull-request artifact', 'Verify tracked source after build'])])
+            ['Verify exact tracked source before commands', 'Validate release-critical source',
+             'Defer full artifact build to merged-source qualification',
+             'Verify tracked source after fast release gate'])])
         self.pr_jobs = {'total_count': 2, 'jobs': [build, dict(build, name='preflight', id=202)]}
         self.inspection_run = dict(self.manual, id=21)
         inspection_jobs = {'total_count': 1, 'jobs': [dict(build, id=301, run_id=21, name='inspect-artifact')]}
@@ -55,7 +59,9 @@ class AdapterTests(unittest.TestCase):
         return {'name': name, 'number': number, 'status': 'completed', 'conclusion': 'success'}
 
     def blob(self, repo, revision, name):
-        self.assertEqual(revision, self.source['commit'])
+        self.assertIn(revision, (self.source['commit'], self.automation_commit))
+        if revision == self.automation_commit:
+            return (self.helper_root / Path(name).name).read_bytes()
         if name == adapter.POLICY:
             return adapter.encoded(self.policy)
         if name in ('package.json', 'package-lock.json'):
@@ -124,13 +130,198 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(len(list(output.iterdir())), 7)
         self.assertEqual(len(result['artifacts']), 9)
         self.assertTrue(result['consumer']['allQualificationPinsResolved'])
+        self.assertEqual(result['consumerAuthority']['commit'], self.source['commit'])
+        self.assertTrue(result['consumerAuthority']['helpers'])
         q = json.loads((output / 'source-qualification.json').read_bytes())
         self.assertEqual(q['tests'], {'status': 'waived', 'counts': None})
         self.assertNotIn('passed', q)
-        self.assertEqual(len(q['gates']), 5)
+        self.assertEqual(len(q['gates']), len(adapter.GATES))
         self.assertFalse((output / 'source.tar').exists())
+        pin = next(row for row in q['evidencePins']
+                   if row['path'] == adapter.HISTORICAL_AUDIO_EVIDENCE_ARCHIVE)
+        self.assertEqual(pin['sha256'], adapter.HISTORICAL_AUDIO_EVIDENCE_SHA256)
+        with zipfile.ZipFile(output / 'source-qualification-evidence.zip') as archive:
+            retained = archive.read(adapter.HISTORICAL_AUDIO_EVIDENCE_ARCHIVE)
+        self.assertEqual(adapter.sha(retained), adapter.HISTORICAL_AUDIO_EVIDENCE_SHA256)
         with self.assertRaisesRegex(ValueError, 'Fresh ordinary output'):
             adapter.assemble(self.config, output)
+
+    def test_changed_historical_audio_evidence_refuses_assembly(self):
+        original = self.blob
+
+        def changed(repo, revision, name):
+            if name == adapter.HISTORICAL_AUDIO_EVIDENCE_SOURCE:
+                return b'changed audit\n'
+            return original(repo, revision, name)
+
+        with patch.object(adapter, 'blob', side_effect=changed), \
+                self.assertRaisesRegex(ValueError, 'Historical audio retention evidence differs'):
+            adapter.assemble(self.config, self.root / 'out')
+
+    def test_manifest_contract_runs_fresh_consumer_without_legacy_tar(self):
+        name = 'qualified-artifact-verified/inspection.json'
+        inspection = json.loads(self.originals[name])
+        source = inspection.pop('sourceTar')
+        source.pop('paxCommitPresent')
+        source.update(outerMember='v1.2.3/source-manifest.json', allGitBlobContentsAndModesVerified=True)
+        inspection['sourceManifest'] = source
+        self.originals[name] = adapter.encoded(inspection)
+        review_name = 'frozen-offline-review/review.json'
+        review = json.loads(self.originals[review_name])
+        review['inspectionPin'] = adapter.pin('inspection.json', self.originals[name])
+        self.originals[review_name] = adapter.encoded(review)
+        self.write_inspection()
+        output = self.root / 'manifest-out'
+        result = adapter.assemble(self.config, output)
+        self.assertEqual(len(result['artifacts']), 9)
+        self.assertEqual(len(list(output.iterdir())), 7)
+        self.assertTrue(result['consumer']['allQualificationPinsResolved'])
+        q = json.loads((output / 'source-qualification.json').read_bytes())
+        frozen = q['frozenArtifactCorroboration']
+        self.assertEqual(frozen['sourceContract'], 'manifest-v1')
+        self.assertTrue(frozen['sourceManifestGitContentsAndModesVerified'])
+        self.assertNotIn('sourceTarGitContentsVerified', frozen)
+
+    def test_fastline_manual_jobs_are_canonicalized(self):
+        run = copy.deepcopy(self.manual)
+        run['path'] = adapter.FASTLINE_WORKFLOW
+        jobs = copy.deepcopy(self.jobs)
+        for job in jobs['jobs']:
+            job['name'] = 'qualify / ' + job['name']
+        rows = adapter.family(
+            run,
+            jobs,
+            adapter.QUALIFICATION_WORKFLOWS,
+            'workflow_dispatch',
+            self.source['commit'],
+        )
+        self.assertIn('qualify', {job['name'] for job in rows})
+        self.assertIn('freeze', {job['name'] for job in rows})
+
+    def test_fastline_inspection_keeps_skipped_reusable_alternate_distinct(self):
+        run = copy.deepcopy(self.manual)
+        run['path'] = adapter.FASTLINE_WORKFLOW
+        jobs = copy.deepcopy(self.jobs)
+        for job in jobs['jobs']:
+            job['name'] = 'qualify / ' + job['name']
+        alternate = dict(jobs['jobs'][0], id=901, name='qualify / inspect-artifact',
+                         conclusion='skipped', steps=[])
+        inspection = dict(jobs['jobs'][0], id=902, name='inspect-artifact',
+                          conclusion='success', steps=[])
+        jobs['jobs'].extend([alternate, inspection])
+        jobs['total_count'] = len(jobs['jobs'])
+
+        rows = adapter.family(run, jobs, adapter.QUALIFICATION_WORKFLOWS,
+                              'workflow_dispatch', self.source['commit'])
+        self.assertEqual(adapter.named(rows, 'inspect-artifact')['id'], inspection['id'])
+        self.assertEqual([job['name'] for job in rows].count('qualify / inspect-artifact'), 1)
+
+        inspection['conclusion'] = 'skipped'
+        with self.assertRaisesRegex(ValueError, 'Successful job missing: inspect-artifact'):
+            rows = adapter.family(run, jobs, adapter.QUALIFICATION_WORKFLOWS,
+                                  'workflow_dispatch', self.source['commit'])
+            adapter.named(rows, 'inspect-artifact')
+
+    def test_consumer_helpers_are_loaded_from_reviewed_automation_commit(self):
+        helpers = adapter.consumer_helpers(self.root, self.automation_commit)
+        self.assertIn('publishing/utility/release_artifact.py', helpers)
+        self.assertEqual(
+            adapter.sha(helpers['publishing/utility/release_artifact.py']),
+            adapter.sha((self.helper_root / 'release_artifact.py').read_bytes()),
+        )
+
+    def test_fastline_can_resume_when_only_post_freeze_inspection_failed(self):
+        run = {**self.manual, 'path': adapter.FASTLINE_WORKFLOW, 'conclusion': 'failure'}
+        jobs = copy.deepcopy(self.jobs)
+        for job in jobs['jobs']:
+            job['name'] = 'qualify / ' + job['name']
+        jobs['jobs'].extend([
+            {'id': 901, 'run_id': run['id'], 'name': 'admission', 'head_sha': self.source['commit'],
+             'status': 'completed', 'conclusion': 'success'},
+            {'id': 902, 'run_id': run['id'], 'name': 'inspect-artifact', 'head_sha': self.source['commit'],
+             'status': 'completed', 'conclusion': 'failure'},
+        ])
+        jobs['total_count'] = len(jobs['jobs'])
+        rows = adapter.family(run, jobs, adapter.QUALIFICATION_WORKFLOWS,
+                              'workflow_dispatch', self.source['commit'])
+        self.assertEqual([job['name'] for job in rows if job['conclusion'] == 'failure'], ['inspect-artifact'])
+        jobs['jobs'][-1]['name'] = 'publication'
+        with self.assertRaisesRegex(ValueError, 'Run identity/result differs'):
+            adapter.family(run, jobs, adapter.QUALIFICATION_WORKFLOWS,
+                           'workflow_dispatch', self.source['commit'])
+
+    def test_previous_successful_pr_build_generation_is_retained_truthfully(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'] = [self.step(n, i + 1) for i, n in enumerate([
+            'Verify exact tracked source before commands', 'Validate release-critical source',
+            'Build pull-request artifact',
+            'Verify tracked source after build'])]
+        for name in ('Defer full artifact build to merged-source qualification',
+                     'Verify tracked source after fast release gate'):
+            skipped = self.step(name, len(jobs['jobs'][0]['steps']) + 1)
+            skipped['conclusion'] = 'skipped'
+            jobs['jobs'][0]['steps'].append(skipped)
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        output = self.root / 'out'
+        adapter.assemble(self.config, output)
+        qualification = json.loads((output / 'source-qualification.json').read_bytes())
+        self.assertNotIn('preMergeValidationCorroboration', qualification)
+        self.assertEqual(qualification['ordinaryBuildCorroboration']['command'], 'npm run build')
+        self.assertEqual(qualification['ordinaryBuildCorroboration']['step']['name'],
+                         'Build pull-request artifact')
+
+    def test_current_fast_generation_allows_skipped_historical_steps(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        for name in ('Build pull-request artifact', 'Verify tracked source after build'):
+            skipped = self.step(name, len(jobs['jobs'][0]['steps']) + 1)
+            skipped['conclusion'] = 'skipped'
+            jobs['jobs'][0]['steps'].append(skipped)
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        output = self.root / 'out'
+        adapter.assemble(self.config, output)
+        qualification = json.loads((output / 'source-qualification.json').read_bytes())
+        self.assertNotIn('ordinaryBuildCorroboration', qualification)
+        self.assertEqual(qualification['preMergeValidationCorroboration']['command'], 'npm run validate')
+
+    def test_current_focused_gate_generation_requires_successful_aggregate_and_skipped_long_jobs(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['conclusion'] = 'skipped'
+        focused = dict(jobs['jobs'][0], id=203, name='focused', conclusion='success', steps=[
+            self.step('Capture the reviewed changed-path set', 1),
+            self.step('Select the fail-closed focused gate', 2),
+        ])
+        release_ready = dict(focused, id=204, name='release-ready', steps=[])
+        test_job = dict(focused, id=205, name='test', conclusion='skipped', steps=[])
+        jobs['jobs'].extend([focused, release_ready, test_job])
+        jobs['total_count'] = len(jobs['jobs'])
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        output = self.root / 'out'
+        adapter.assemble(self.config, output)
+        qualification = json.loads((output / 'source-qualification.json').read_bytes())
+        focused_evidence = qualification['focusedAdmissionCorroboration']
+        self.assertEqual(focused_evidence['genericBuild']['status'], 'skipped-by-fast-release-policy')
+        self.assertEqual(focused_evidence['fullTests']['status'], 'waived-and-skipped')
+        self.assertNotIn('preMergeValidationCorroboration', qualification)
+
+        for job_name in ('focused', 'release-ready'):
+            bad = copy.deepcopy(jobs)
+            next(job for job in bad['jobs'] if job['name'] == job_name)['conclusion'] = 'skipped'
+            Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(bad))
+            with self.subTest(job=job_name), self.assertRaisesRegex(ValueError, 'Successful job missing'):
+                adapter.assemble(self.config, self.root / ('out-' + job_name))
+
+    def test_pr_build_modes_cannot_be_partial_or_both_successful(self):
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'].append(self.step('Build pull-request artifact', 99))
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        with self.assertRaisesRegex(ValueError, 'Incomplete historical PR build corroboration'):
+            adapter.assemble(self.config, self.root / 'out-partial')
+        jobs = copy.deepcopy(self.pr_jobs)
+        jobs['jobs'][0]['steps'].extend([self.step('Build pull-request artifact', 98),
+                                        self.step('Verify tracked source after build', 99)])
+        Path(self.config['pr']['jobs']).write_bytes(adapter.encoded(jobs))
+        with self.assertRaisesRegex(ValueError, 'Exactly one successful PR build corroboration mode required'):
+            adapter.assemble(self.config, self.root / 'out-both')
 
     def test_missing_failed_cancelled_or_success_instead_of_skipped_test_refused(self):
         for conclusion in ('failure', 'cancelled', 'success'):
@@ -141,7 +332,7 @@ class AdapterTests(unittest.TestCase):
                 adapter.assemble(self.config, self.root / 'out')
             self.assertFalse((self.root / 'out').exists())
 
-    def test_gate_and_build_must_be_actual_successful_steps(self):
+    def test_gate_and_pr_validation_must_be_actual_successful_steps(self):
         for role, raw, job_index, step_index in [('manual', self.jobs, 0, 0), ('pr', self.pr_jobs, 0, 1)]:
             bad = copy.deepcopy(raw)
             bad['jobs'][job_index]['steps'][step_index]['conclusion'] = 'skipped'

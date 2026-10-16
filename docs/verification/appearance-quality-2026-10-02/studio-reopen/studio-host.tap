@@ -1,0 +1,41 @@
+TAP version 13
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+    # Subtest: actual rotor controls preserve inherited motion while editing one existing hub
+    ok 1 - actual rotor controls preserve inherited motion while editing one existing hub
+      ---
+      duration_ms: 1721.272334
+      ...
+    # Subtest: actual rotor handlers reject invalid fields and unapplied advanced geometry without replacing the preview
+    ok 2 - actual rotor handlers reject invalid fields and unapplied advanced geometry without replacing the preview
+      ---
+      duration_ms: 865.459917
+      ...
+    # Subtest: actual rotor controls translate EN/UK labels without rewriting a prepared draft
+    ok 3 - actual rotor controls translate EN/UK labels without rewriting a prepared draft
+      ---
+      duration_ms: 152.253709
+      ...
+    # Subtest: staging and saving rotor geometry retain the reviewed original and exact source bytes
+    ok 4 - staging and saving rotor geometry retain the reviewed original and exact source bytes
+      ---
+      duration_ms: 3816.321583
+      ...
+    # Subtest: actual rotor Apply rejects a changed crop and disables unavailable hub controls
+    ok 5 - actual rotor Apply rejects a changed crop and disables unavailable hub controls
+      ---
+      duration_ms: 716.891625
+      ...
+    1..5
+ok 1 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 16876.975167
+  ...
+1..1
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 25602.26775

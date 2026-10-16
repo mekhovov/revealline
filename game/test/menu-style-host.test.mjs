@@ -1,16 +1,21 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { modelTeamDialogs } from './helpers/coop-host.mjs';
 import {
   installCoopPresentation,
   waitFor as waitForTeamPicture,
 } from './helpers/coop-presentation-fixture.mjs';
+import { installActorAppearanceTransport } from './helpers/actor-appearance-transport.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { MENU_STYLE_PREFERENCES_KEY } from '../menu-style-preferences.mjs';
+import { THEME_PREFERENCES_KEY, DEFAULT_THEME_PREFERENCES } from '../presentation/theme-system.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { ENEMY_STATS_KEY } from '../enemy-stats.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
@@ -19,13 +24,16 @@ const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', i
 const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
 const profileKey = 'revealline.library.dev.v1';
 const sessionKey = 'revealline.suspended.dev.v1';
-const raw = (store) => JSON.parse(store.getItem(MENU_STYLE_PREFERENCES_KEY));
-const unrelated = (store) =>
-  new Map([...store.map].filter(([key]) => key !== MENU_STYLE_PREFERENCES_KEY));
+const simAppearanceKey = 'revealline.fpv.appearance.v1';
+const enemyStatsWriterKey = `${ENEMY_STATS_KEY}:writer`;
+const raw = (store) => JSON.parse(store.getItem(THEME_PREFERENCES_KEY));
+const appearanceKeys = new Set([THEME_PREFERENCES_KEY, simAppearanceKey]);
+const unrelated = (store) => new Map([...store.map].filter(([key]) => !appearanceKeys.has(key)));
 let sequence = 0;
 function change(page, id, value) {
   const control = page.$(id);
   assert.equal(control.disabled, false, `${id} remains usable`);
+  assert.equal(control.closest('[hidden],[inert]'), null, `${id} must be a visible control`);
   control.value = value;
   control.emit('change');
 }
@@ -50,10 +58,29 @@ function reaches(page, id) {
   }
   assert.fail(`Actual navigation must reach ${id}`);
 }
-function reflects(page, prefix, palette, ornaments) {
-  assert.equal(page.$(`${prefix}menu-palette`).value, palette);
-  assert.equal(page.$(`${prefix}menu-ornaments`).value, ornaments);
-  assert.equal(page.doc.body.dataset.menuOrnaments, ornaments);
+function chooseTheme(page, prefix, familyId) {
+  const card = page.$(`${prefix}theme-card-${familyId}`);
+  assert.equal(card.disabled, false, `${card.id} remains usable`);
+  assert.equal(card.closest('[hidden],[inert]'), null, `${card.id} must be a visible control`);
+  card.click();
+  return card;
+}
+function reflects(page, prefix, familyId, ornaments) {
+  assert.equal(page.$(`${prefix}theme-familyId`), null);
+  assert.equal(page.$(`${prefix}theme-card-${familyId}`).getAttribute('aria-pressed'), 'true');
+  assert.equal(page.$(`${prefix}theme-ornaments`).value, ornaments);
+  assert.equal(page.doc.body.dataset.menuOrnaments, ornaments === 'theme' ? 'subtle' : ornaments);
+  for (const key of ['palette', 'ornaments'])
+    assert.equal(
+      page.$(`${prefix}menu-${key}`).closest('label').hidden,
+      true,
+      'legacy selectors are no longer navigation targets',
+    );
+}
+function customize(page, prefix = '') {
+  const summary = page.$(`${prefix}theme-customize`);
+  if (!summary.parentElement.open) summary.click();
+  assert.equal(summary.parentElement.open, true);
 }
 
 // Real Team markup, host, core and painter; only Canvas and browser/frame boundaries are finite.
@@ -123,6 +150,13 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
       Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
     },
   });
+  installActorAppearanceTransport({
+    baseURL: new URL('../presentation/compiled/', globals.location.href),
+    install(key, descriptor) {
+      originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+      Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
+    },
+  });
   await import(`../couch/relay-rescue.mjs?menu-style-host=${++sequence}`);
   await waitForTeamPicture(
     () => $('coop-picture-status').dataset.state === 'ready',
@@ -149,21 +183,22 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
 }
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
-  test(`${turnPolicy}: menu edits preserve the actual paused Solo cut, saved slot and replay`, async (t) => {
+  test(`${turnPolicy}: staged appearance preserves the actual paused Solo cut, saved slot and replay`, async (t) => {
     const store = memoryStorage();
     saveLibrary(
       store,
       profileKey,
       updatePreferences(emptyLibrary(), { turnPolicy, textSize: 'large' }),
     );
-    const page = await soloPage(t, { campaign, storage: store });
+    const page = await soloPage(t, { campaign, storage: store, waitForPictures: false });
     assert.equal(
-      store.getItem(MENU_STYLE_PREFERENCES_KEY),
+      store.getItem(THEME_PREFERENCES_KEY),
       null,
-      'Opening a host does not create a menu preference.',
+      'Opening a host does not create appearance preferences.',
     );
-    page.$('start-button').click();
-    await settle(() => page.doc.body.dataset.flightState === 'running');
+    assert.equal(page.$('game-overlay').hidden, false);
+    await activateHostAction(page.$('start-button'));
+    assert.equal(page.doc.body.dataset.flightState, 'running');
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let n = 0; n < 13; n++) page.frame();
@@ -176,13 +211,27 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       records = unrelated(store),
       backdrop = page.rendered.backdrop;
     page.$('text-size').focus();
-    reaches(page, 'menu-palette');
-    change(page, 'menu-palette', 'ukrainian');
-    reaches(page, 'menu-ornaments');
-    change(page, 'menu-ornaments', 'rich');
+    reaches(page, 'theme-card-vyshyvanka');
+    const beforeWrites = store.writes.length;
+    chooseTheme(page, '', 'vyshyvanka');
+    assert.ok(store.writes.length > beforeWrites, 'Selecting a family saves it immediately.');
+    assert.equal(raw(store).familyId, 'vyshyvanka');
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    reaches(page, 'theme-customize');
+    customize(page);
+    reaches(page, 'theme-ornaments');
+    change(page, 'theme-ornaments', 'rich');
     page.frame(0);
-    assert.deepEqual(raw(store), { palette: 'ukrainian', ornaments: 'rich' });
-    assert.equal(page.doc.body.dataset.menuPalette, 'ukrainian');
+    assert.deepEqual(raw(store), {
+      ...DEFAULT_THEME_PREFERENCES,
+      familyId: 'vyshyvanka',
+      ornaments: 'rich',
+    });
+    assert.deepEqual(JSON.parse(store.getItem(simAppearanceKey)), {
+      format: 'SimAppearancePreferences.v1',
+      interface: 'follow-game',
+      world: 'follow-game',
+    });
     assert.equal(page.doc.body.dataset.textSize, 'large');
     assert.strictEqual(page.rendered.run, run);
     assert.strictEqual(page.rendered.backdrop, backdrop);
@@ -190,7 +239,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.deepEqual(
       unrelated(store),
       records,
-      'No profile, display, audio or suspended-slot writer is invoked.',
+      'No legacy menu, profile, display, audio or suspended-slot writer is invoked.',
     );
     page.doc.querySelector('button[data-close="settings-dialog"]').click();
     page.frame(0);
@@ -200,12 +249,15 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     for (let n = 0; n < 12; n++) page.frame();
     page.$('pause-button').click();
     page.frame(0);
-    assert.equal(verifyReplay(JSON.parse(store.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeSession(JSON.parse(store.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });
 }
 
-test('one separate menu record survives Solo, Team, Versus and Solo return without altering display or progress', async (t) => {
+test('unified appearance survives Solo, Team, Versus and Solo return without altering display or progress', async (t) => {
   const store = memoryStorage();
   saveLibrary(
     store,
@@ -216,46 +268,63 @@ test('one separate menu record survives Solo, Team, Versus and Solo return witho
     DISPLAY_PREFERENCES_KEY,
     JSON.stringify({ textFace: 'plain', textSize: 'large', reducedEffects: true }),
   );
-  await t.test('Solo opts into Ukrainian rich menus from the real Settings', async (t) => {
-    const page = await soloPage(t, { campaign, storage: store, titleScreen: true });
+  await t.test('Solo immediately applies its complete family from real Settings', async (t) => {
+    // Title Settings are usable while optional flight pictures are preparing.
+    const page = await soloPage(t, {
+      campaign,
+      storage: store,
+      titleScreen: true,
+      waitForPictures: false,
+    });
     page.$('shell-options').click();
     page.$('settings-tab-display').click();
-    const records = unrelated(store);
-    change(page, 'menu-palette', 'ukrainian');
-    change(page, 'menu-ornaments', 'rich');
+    const records = unrelated(store),
+      writes = store.writes.length;
+    chooseTheme(page, '', 'vyshyvanka');
+    assert.ok(store.writes.length > writes);
+    assert.equal(raw(store).familyId, 'vyshyvanka');
+    customize(page);
+    change(page, 'theme-ornaments', 'rich');
     assert.deepEqual(unrelated(store), records);
   });
-  const records = unrelated(store);
+  let records = unrelated(store);
   await t.test(
-    'Team changes menu styling from paused Options without changing a single painter command',
+    'Team applies chrome from paused Options without changing a single painter command',
     async (t) => {
       const before = store.writes.length,
         page = await teamPage(t, store);
-      assert.equal(store.writes.length, before);
-      reflects(page, 'coop-', 'ukrainian', 'rich');
+      assert.deepEqual(store.writes.slice(before).map(([key]) => key), [enemyStatsWriterKey]);
+      reflects(page, 'coop-', 'vyshyvanka', 'rich');
       page.$('coop-start').click();
       page.tick(10);
       page.$('coop-pause').click();
       page.tick();
+      records = unrelated(store);
       const geometry = page.geometry(),
         clock = page.$('coop-clock').textContent,
         fonts = page.fonts();
       page.$('coop-settings-open').click();
       page.$('coop-settings-tab-display').focus();
-      reaches(page, 'coop-menu-palette');
-      change(page, 'coop-menu-palette', 'auto');
-      reaches(page, 'coop-menu-ornaments');
+      reaches(page, 'coop-theme-card-dnipro-porcelain');
+      const writes = store.writes.length;
+      chooseTheme(page, 'coop-', 'dnipro-porcelain');
+      assert.ok(store.writes.length > writes);
+      assert.equal(raw(store).familyId, 'dnipro-porcelain');
+      assert.deepEqual(page.geometry(), geometry);
+      reaches(page, 'coop-theme-customize');
+      customize(page, 'coop-');
+      reaches(page, 'coop-theme-ornaments');
       for (const ornaments of ['off', 'rich', 'subtle', 'off']) {
-        change(page, 'coop-menu-ornaments', ornaments);
+        change(page, 'coop-theme-ornaments', ornaments);
         page.tick();
-        assert.equal(page.doc.activeElement.id, 'coop-menu-ornaments');
+        assert.equal(page.doc.activeElement.id, 'coop-theme-ornaments');
         assert.deepEqual(page.geometry(), geometry);
       }
       page.tick(120);
       assert.deepEqual(page.geometry(), geometry);
       assert.deepEqual(page.fonts(), fonts);
       assert.equal(page.$('coop-clock').textContent, clock);
-      assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+      assert.equal(page.$('coop-overlay-title').textContent, 'PAUSED');
       assert.equal(page.doc.body.dataset.textFace, 'plain');
       assert.equal(page.doc.body.dataset.textSize, 'large');
       assert.equal(page.doc.body.dataset.effects, 'reduced');
@@ -263,29 +332,37 @@ test('one separate menu record survives Solo, Team, Versus and Solo return witho
     },
   );
   await t.test(
-    'Versus Settings opens Appearance category, paused checkpoint and exact Back opener',
+    'Versus preserves Appearance category, paused checkpoint and exact Back opener',
     async (t) => {
       const before = store.writes.length,
         page = await couchPage(t, { storage: store });
       assert.equal(store.writes.length, before);
-      reflects(page, 'race-', 'auto', 'off');
+      reflects(page, 'race-', 'dnipro-porcelain', 'off');
       page.$('race-start').click();
       page.frame();
       page.frames(8);
       page.$('race-pause').click();
       page.frame(0);
+      // Starting a distinct game creates its statistics session. Appearance
+      // edits below must preserve that session and every other unrelated record.
+      records = unrelated(store);
       const checkpoint = page.checkpoint(),
         pictures = page.drawOptions.map((options) => options.backdrop);
       page.$('race-options').focus();
       page.$('race-options').click();
       assert.equal(page.doc.activeElement.id, 'race-settings-tab-display');
-      reaches(page, 'race-menu-palette');
-      change(page, 'race-menu-palette', 'ukrainian');
-      reaches(page, 'race-menu-ornaments');
+      reaches(page, 'race-theme-card-tryzub');
+      const writes = store.writes.length;
+      chooseTheme(page, 'race-', 'tryzub');
+      assert.ok(store.writes.length > writes);
+      assert.equal(raw(store).familyId, 'tryzub');
+      reaches(page, 'race-theme-customize');
+      customize(page, 'race-');
+      reaches(page, 'race-theme-ornaments');
       for (const ornaments of ['rich', 'subtle']) {
-        change(page, 'race-menu-ornaments', ornaments);
+        change(page, 'race-theme-ornaments', ornaments);
         page.frame(0);
-        assert.equal(page.doc.activeElement.id, 'race-menu-ornaments');
+        assert.equal(page.doc.activeElement.id, 'race-theme-ornaments');
         assert.deepEqual(page.checkpoint(), checkpoint);
       }
       page.frames(30);
@@ -304,20 +381,26 @@ test('one separate menu record survives Solo, Team, Versus and Solo return witho
     },
   );
   await t.test('fresh Solo adopts without an implicit save or start', async (t) => {
+    // This adoption stays on Home and must not depend on board-image readiness.
     const before = store.writes.length,
-      page = await soloPage(t, { campaign, storage: store, titleScreen: true });
-    reflects(page, '', 'ukrainian', 'subtle');
+      page = await soloPage(t, {
+        campaign,
+        storage: store,
+        titleScreen: true,
+        waitForPictures: false,
+      });
+    reflects(page, '', 'tryzub', 'subtle');
     assert.equal(store.writes.length, before);
     assert.deepEqual(unrelated(store), records);
     assert.equal(page.$('shell-home').open, true);
   });
 });
 
-test('controller editing the new native selectors changes only menu style and preserves Ready', async (t) => {
+test('controller immediately applies a family card without changing Ready', async (t) => {
   const store = memoryStorage(),
     pad = {
       index: 0,
-      id: 'Menu style pad',
+      id: 'Unified appearance pad',
       connected: true,
       mapping: 'standard',
       axes: [0, 0, 0, 0],
@@ -325,54 +408,70 @@ test('controller editing the new native selectors changes only menu style and pr
     };
   const page = await couchPage(t, { storage: store, pads: [pad] });
   page.join(0);
-  page.$('race-options').click();
+  page.focus('race-options');
+  page.pulse(0, 0);
   page.frame();
   const before = page.checkpoint(),
-    records = unrelated(store);
-  for (const [id, expected] of [
-    ['race-menu-palette', 'ukrainian'],
-    ['race-menu-ornaments', 'rich'],
-  ]) {
-    page.focus(id);
-    page.pulse(0, 0);
-    assert.equal(page.editors().length, 1);
-    page.pulse(0, 13);
-    page.pulse(0, 0);
-    assert.equal(page.editors().length, 0);
-    assert.equal(page.$(id).value, expected);
-    assert.equal(page.doc.activeElement.id, id);
-  }
-  assert.deepEqual(raw(store), { palette: 'ukrainian', ornaments: 'rich' });
+    records = unrelated(store),
+    writes = store.writes.length;
+  page.focus('race-theme-card-industrial-workshop');
+  page.pulse(0, 0);
+  assert.equal(page.editors().length, 0);
+  assert.equal(page.$('race-theme-card-industrial-workshop').getAttribute('aria-pressed'), 'true');
+  assert.equal(page.doc.activeElement.id, 'race-theme-card-industrial-workshop');
+  assert.ok(store.writes.length > writes, 'Controller card activation applies immediately.');
+  assert.equal(page.$('race-theme-apply'), null);
+  assert.equal(raw(store).familyId, 'industrial-workshop');
+  page.focus('race-theme-customize');
+  page.pulse(0, 0);
+  assert.equal(page.$('race-theme-customize').parentElement.open, true);
+  page.focus('race-theme-ornaments');
+  page.pulse(0, 0);
+  assert.equal(page.editors().length, 1);
+  page.pulse(0, 13);
+  page.pulse(0, 0);
+  assert.equal(page.editors().length, 0);
+  assert.equal(page.$('race-theme-ornaments').value, 'off');
+  assert.equal(page.doc.activeElement.id, 'race-theme-ornaments');
+  assert.deepEqual(raw(store), {
+    ...DEFAULT_THEME_PREFERENCES,
+    familyId: 'industrial-workshop',
+    ornaments: 'off',
+  });
   assert.equal(page.state(), 'ready');
   assert.deepEqual(page.checkpoint(), before);
   assert.deepEqual(unrelated(store), records);
+  assert.ok(store.writes.slice(writes).every(([key]) => appearanceKeys.has(key)));
 });
 
-test('denied menu saving leaves Team local choice usable and does not replace the existing shared record', async (t) => {
+test('denied appearance saving leaves Team local choice usable without replacing shared records', async (t) => {
   const store = memoryStorage();
   store.setItem(
-    MENU_STYLE_PREFERENCES_KEY,
-    JSON.stringify({ palette: 'auto', ornaments: 'subtle' }),
+    THEME_PREFERENCES_KEY,
+    JSON.stringify({ ...DEFAULT_THEME_PREFERENCES, familyId: 'tryzub' }),
   );
   const page = await teamPage(t, store),
     before = new Map(store.map);
   store.setItem = () => {
     throw new DOMException('Full storage', 'QuotaExceededError');
   };
-  change(page, 'coop-menu-palette', 'ukrainian');
-  change(page, 'coop-menu-ornaments', 'off');
-  reflects(page, 'coop-', 'ukrainian', 'off');
-  assert.match(page.$('coop-menu-style-status').textContent, /session|save/i);
+  page.$('coop-settings-open').click();
+  chooseTheme(page, 'coop-', 'vyshyvanka');
+  customize(page, 'coop-');
+  change(page, 'coop-theme-ornaments', 'off');
+  reflects(page, 'coop-', 'vyshyvanka', 'off');
+  const status = page.doc.querySelector('[data-theme-controls] > [role="status"]');
+  assert.match(status.textContent, /session|save/i);
   assert.deepEqual(store.map, before);
   page.win.emit('storage', {
-    key: MENU_STYLE_PREFERENCES_KEY,
+    key: THEME_PREFERENCES_KEY,
     storageArea: store,
-    newValue: store.getItem(MENU_STYLE_PREFERENCES_KEY),
+    newValue: store.getItem(THEME_PREFERENCES_KEY),
   });
-  reflects(page, 'coop-', 'ukrainian', 'off');
+  reflects(page, 'coop-', 'vyshyvanka', 'off');
 });
 
-test('a real host storage notification updates menus without moving focus, resuming or accepting stale records', async (t) => {
+test('actual host storage notifications preserve focus, pause and latest accepted appearance', async (t) => {
   const store = memoryStorage(),
     page = await couchPage(t, { storage: store });
   page.$('race-start').click();
@@ -381,35 +480,32 @@ test('a real host storage notification updates menus without moving focus, resum
   page.$('race-pause').click();
   page.frame(0);
   page.$('race-options').click();
-  page.$('race-menu-ornaments').focus();
+  customize(page, 'race-');
+  page.$('race-theme-ornaments').focus();
   const checkpoint = page.checkpoint(),
     records = unrelated(store),
     focus = page.doc.activeElement;
-  const latest = JSON.stringify({ palette: 'ukrainian', ornaments: 'rich' });
-  store.setItem(MENU_STYLE_PREFERENCES_KEY, latest);
-  page.win.emit('storage', {
-    key: MENU_STYLE_PREFERENCES_KEY,
-    storageArea: store,
-    newValue: latest,
+  const latest = JSON.stringify({
+    ...DEFAULT_THEME_PREFERENCES,
+    familyId: 'vyshyvanka',
+    ornaments: 'rich',
   });
-  reflects(page, 'race-', 'ukrainian', 'rich');
+  store.setItem(THEME_PREFERENCES_KEY, latest);
+  page.win.emit('storage', { key: THEME_PREFERENCES_KEY, storageArea: store, newValue: latest });
+  reflects(page, 'race-', 'vyshyvanka', 'rich');
   page.win.emit('storage', {
-    key: MENU_STYLE_PREFERENCES_KEY,
+    key: THEME_PREFERENCES_KEY,
     storageArea: store,
-    newValue: JSON.stringify({ palette: 'auto', ornaments: 'off' }),
+    newValue: JSON.stringify({ ...DEFAULT_THEME_PREFERENCES, familyId: 'tryzub' }),
   });
-  reflects(page, 'race-', 'ukrainian', 'rich');
+  reflects(page, 'race-', 'vyshyvanka', 'rich');
   page.frames(10);
-  assert.equal(page.doc.activeElement === focus, true);
+  assert.equal(page.doc.activeElement, focus);
   assert.equal(page.state(), 'paused');
   assert.deepEqual(page.checkpoint(), checkpoint);
   assert.deepEqual(unrelated(store), records);
   page.win.emit('pagehide', { persisted: false });
-  assert.equal(page.doc.querySelectorAll('.menu-ornament').length, 0);
-  page.win.emit('storage', {
-    key: MENU_STYLE_PREFERENCES_KEY,
-    storageArea: store,
-    newValue: latest,
-  });
+  assert.equal(page.doc.querySelectorAll('[data-theme-controls]').length, 0);
+  page.win.emit('storage', { key: THEME_PREFERENCES_KEY, storageArea: store, newValue: latest });
   assert.equal(page.doc.body.dataset.menuPalette, undefined);
 });

@@ -1,0 +1,281 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Woodland canopy batching qualification</title>
+<style>
+  body {
+    background: #101b28;
+    color: #eee;
+    font: 16px system-ui;
+    margin: 20px;
+  }
+  canvas {
+    width: 48%;
+    max-width: 640px;
+  }
+  pre {
+    white-space: pre-wrap;
+  }
+</style>
+<h1>Woodland canopy batching</h1>
+<p>
+  Original / batched. Geometry equivalence, rendered views and resource disposal. No hardware FPS
+  claim.
+</p>
+<button id="run">Run verification</button
+><a id="download" download="woodland-canopy-browser.json" hidden>Download evidence</a>
+<div id="views"></div>
+<pre id="result">Ready</pre>
+<script type="module">
+  import * as THREE from '../../optional-practice/civilian-fpv/vendor/three.module.js';
+  import * as after from '../../optional-practice/civilian-fpv/world-visuals.mjs';
+  import * as before from '../../dist/fpv-woodland-canopy-verification/before.mjs';
+  import {
+    WORLD_CATALOGUE,
+    BEGINNER_CATALOGUE,
+  } from '../../optional-practice/civilian-fpv/world-catalogue.mjs';
+  const result = document.querySelector('#result');
+  function build(api, course, quality) {
+    const world = new THREE.Group();
+    const material = (color, extras = {}) =>
+      new THREE.MeshStandardMaterial({ color, roughness: 0.8, ...extras });
+    const mesh = (shape, paint, parent = world) => {
+      const m = new THREE.Mesh(shape, paint);
+      parent.add(m);
+      return m;
+    };
+    const box = (size, at, color, parent = world) => {
+      const m = mesh(new THREE.BoxGeometry(...size), material(color), parent);
+      m.position.set(...at);
+      return m;
+    };
+    const visual = api.buildWorldVisuals({ course, world, material, mesh, box, quality });
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xb6d5e2);
+    scene.add(world, new THREE.HemisphereLight(0xe6f3ff, 0x69644d, 2));
+    const light = new THREE.DirectionalLight(0xffefcd, 2);
+    light.position.set(15, 40, 20);
+    scene.add(light);
+    const paints = new Set();
+    world.traverse((m) => {
+      if (m.material) paints.add(m.material);
+    });
+    api.setSurfaceQuality(paints, quality);
+    light.castShadow = quality !== 'low';
+    light.shadow.mapSize.setScalar(quality === 'high' ? 2048 : 1024);
+    Object.assign(light.shadow.camera, {
+      left: -120,
+      right: 120,
+      top: 120,
+      bottom: -120,
+      near: 0.1,
+      far: 300,
+    });
+    light.shadow.camera.updateProjectionMatrix();
+    world.updateMatrixWorld(true);
+    return { world, visual, scene };
+  }
+  function vertices(root) {
+    const rows = [];
+    const transform = new THREE.Matrix4(),
+      p = new THREE.Vector3();
+    root.traverse((m) => {
+      if (!m.isMesh) return;
+      const positions = m.geometry.attributes.position;
+      for (let i = 0; i < (m.isInstancedMesh ? m.count : 1); i++) {
+        if (m.isInstancedMesh) {
+          m.getMatrixAt(i, transform);
+          transform.premultiply(m.matrixWorld);
+        } else transform.copy(m.matrixWorld);
+        const points = [];
+        for (let j = 0; j < positions.count; j++) {
+          p.fromBufferAttribute(positions, j).applyMatrix4(transform);
+          points.push(p.x, p.y, p.z);
+        }
+        rows.push({
+          color: m.material.color.getHex(),
+          points,
+          center: new THREE.Vector3().setFromMatrixPosition(transform).toArray(),
+        });
+      }
+    });
+    return rows.sort(
+      (a, b) =>
+        a.color - b.color ||
+        a.center[0] - b.center[0] ||
+        a.center[2] - b.center[2] ||
+        a.points.length - b.points.length,
+    );
+  }
+  function assert(ok, message) {
+    if (!ok) throw Error(message);
+  }
+  document.querySelector('#run').onclick = async () => {
+    const report = {
+      baseline: '1aef4d70fa37c8911dbb47b4b128c253178c8b60',
+      userAgent: navigator.userAgent,
+      cases: [],
+      views: [],
+    };
+    try {
+      const courses = [...WORLD_CATALOGUE, ...BEGINNER_CATALOGUE].map((x) => x.course);
+      const woodland = [
+        ...new Map(
+          courses
+            .filter((c) => c.environment === 'woodland')
+            .map((c) => [JSON.stringify(c.bounds), c]),
+        ).values(),
+      ];
+      woodland.push({
+        ...woodland[0],
+        theme: 'pixel',
+        themeProfile: undefined,
+        id: 'woodland-pixel-check',
+      });
+      const meadow = courses.find((c) => c.environment === 'field');
+      const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+      renderer.setSize(640, 360);
+      renderer.setPixelRatio(1);
+      report.renderer = renderer.getContext().getParameter(renderer.getContext().RENDERER);
+      document.querySelector('#views').replaceChildren(renderer.domElement);
+      for (const course of [...woodland, meadow])
+        for (const quality of ['low', 'balanced', 'high']) {
+          renderer.shadowMap.enabled = quality !== 'low';
+          renderer.shadowMap.type = THREE.PCFShadowMap;
+          const pair = [before, after].map((api) => build(api, course, quality));
+          const [a, b] = pair.map((x) => vertices(x.world));
+          assert(a.length === b.length, 'Logical mesh count');
+          let maxError = 0;
+          a.forEach((row, i) => {
+            assert(
+              row.color === b[i].color && row.points.length === b[i].points.length,
+              'Material/geometry identity',
+            );
+            row.points.forEach(
+              (v, j) => (maxError = Math.max(maxError, Math.abs(v - b[i].points[j]))),
+            );
+          });
+          assert(maxError < 0.00002, 'World geometry drift ' + maxError);
+          const canopies = [];
+          pair[1].world.traverse((x) => {
+            if (x.name === 'woodland-canopy-sector') canopies.push(x);
+          });
+          assert(
+            course.environment !== 'woodland' || canopies.length === 24,
+            '24 sector/material batches',
+          );
+          assert(
+            canopies.every((x) => x.castShadow && !x.receiveShadow && x.boundingSphere),
+            'Shadows and culling bounds',
+          );
+          const shapes = pair.map((x) => {
+            const s = new Set();
+            x.world.traverse((m) => {
+              if (m.geometry) s.add(m.geometry);
+            });
+            return s.size;
+          });
+          report.cases.push({
+            id: course.id,
+            environment: course.environment,
+            quality,
+            maxVertexErrorMetres: maxError,
+            logicalMeshes: a.length,
+            geometries: shapes,
+            batches: canopies.length,
+          });
+          const cx = (course.bounds.min.x + course.bounds.max.x) / 2000,
+            cz = (course.bounds.min.z + course.bounds.max.z) / 2000;
+          const camera = new THREE.PerspectiveCamera(80, 640 / 360, 0.1, 1000);
+          for (let view = 0; view < 5; view++) {
+            if (view === 4) {
+              camera.position.set(cx, 80, cz + 100);
+              camera.lookAt(cx, 0, cz);
+            } else {
+              camera.position.set(cx, 3, cz);
+              camera.lookAt(
+                cx + Math.sin((view * Math.PI) / 2) * 80,
+                8,
+                cz - Math.cos((view * Math.PI) / 2) * 80,
+              );
+            }
+            const readings = [],
+              pixels = [];
+            for (const owner of pair) {
+              renderer.render(owner.scene, camera);
+              readings.push({
+                calls: renderer.info.render.calls,
+                triangles: renderer.info.render.triangles,
+                geometries: renderer.info.memory.geometries,
+              });
+              const px = new Uint8Array(640 * 360 * 4);
+              renderer
+                .getContext()
+                .readPixels(
+                  0,
+                  0,
+                  640,
+                  360,
+                  renderer.getContext().RGBA,
+                  renderer.getContext().UNSIGNED_BYTE,
+                  px,
+                );
+              pixels.push(px);
+            }
+            let changed = 0,
+              total = 0;
+            for (let i = 0; i < pixels[0].length; i++) {
+              const d = Math.abs(pixels[0][i] - pixels[1][i]);
+              if (d > 2) changed++;
+              total += d;
+            }
+            const changedRatio = changed / pixels[0].length;
+            assert(changedRatio < 0.002, 'Render mismatch ' + changedRatio);
+            report.views.push({
+              id: course.id,
+              quality,
+              view,
+              before: readings[0],
+              after: readings[1],
+              changedChannelsRatio: changedRatio,
+              meanChannelError: total / pixels[0].length,
+            });
+          }
+          let expected = 0,
+            disposed = 0;
+          for (const owner of pair) {
+            owner.world.traverse((m) => {
+              if (m.geometry) {
+                expected++;
+                m.geometry.addEventListener('dispose', () => disposed++);
+              }
+            });
+            after.disposeSimVisualGroup(owner.world);
+            owner.scene.traverse((o) => {
+              if (o.shadow) o.shadow.dispose();
+            });
+          }
+          renderer.render(new THREE.Scene(), camera);
+          assert(disposed >= expected, 'All referenced geometry disposed');
+          assert(renderer.info.memory.geometries === 0, 'GPU geometry released');
+          report.cleanup ??= [];
+          report.cleanup.push({ ...renderer.info.memory });
+          if (report.cleanup.length > 1)
+            assert(
+              renderer.info.memory.textures === report.cleanup[0].textures,
+              'Texture allocation grows across reloads',
+            );
+          await new Promise(requestAnimationFrame);
+        }
+      report.passed = true;
+      renderer.dispose();
+      result.textContent = JSON.stringify(report, null, 2);
+      const link = document.querySelector('#download');
+      link.href = URL.createObjectURL(new Blob([result.textContent], { type: 'application/json' }));
+      link.hidden = false;
+    } catch (error) {
+      report.passed = false;
+      report.error = error.stack;
+      result.textContent = JSON.stringify(report, null, 2);
+    }
+  };
+</script>

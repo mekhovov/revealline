@@ -1,3 +1,4 @@
+import { localizedMessage } from '../i18n/index.mjs';
 import { createPresentationHost } from './host.mjs';
 
 // One cosmetic release loader per document, regardless of board or module count.
@@ -22,7 +23,7 @@ export function mountPresentationPage({
         status: 'preparing',
         stage: 'reading',
         progress: null,
-        message: 'Loading release artwork and fonts…',
+        message: localizedMessage('interface:presentation.loadingRelease'),
       },
       closed: false,
       leases: new Set(),
@@ -91,7 +92,7 @@ export function mountPresentationPage({
             status: 'ready',
             stage: 'ready',
             progress: null,
-            message: 'Release artwork and fonts are ready.',
+            message: localizedMessage('interface:presentation.releaseReady'),
           });
           return page.closed ? null : snapshot;
         })
@@ -112,7 +113,9 @@ export function mountPresentationPage({
             status: 'error',
             stage: 'error',
             progress: null,
-            message: `Release artwork unavailable: ${error.message}`,
+            message: localizedMessage('interface:presentation.releaseUnavailable', {
+              error: error.message,
+            }),
           });
           for (const lease of page.leases) {
             if (page.ready !== ready || page.closed) break;
@@ -128,7 +131,7 @@ export function mountPresentationPage({
         status: 'preparing',
         stage: 'reading',
         progress: null,
-        message: 'Loading release artwork and fonts…',
+        message: localizedMessage('interface:presentation.loadingRelease'),
       });
       return ready;
     };

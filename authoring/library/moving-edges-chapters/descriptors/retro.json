@@ -1,0 +1,55 @@
+{
+  "format": "revealline-external-chapter.v1",
+  "id": "moving-edges-retro",
+  "revision": 1,
+  "source": {
+    "id": "moving-edges",
+    "bytes": 9227,
+    "sha256": "048100f48c2406949639b86b540d17e26e5660e59879707dc913f52ac74fc33c"
+  },
+  "pack": {
+    "bytes": 8610,
+    "sha256": "410504415811c14093980d2eff8d5219489dbf82bfb116dd05c1c846495544d2"
+  },
+  "media": {
+    "bytes": 8234354,
+    "sha256": "0c62b2b05048632596891a5d9cd5dc7d4cce069856df2060dc0910cab9fa1f9f"
+  },
+  "campaignKey": "moving-edges-retro/1/dee99b5b383bcb5f",
+  "themeId": "retro",
+  "originals": [
+    {
+      "assetId": "moving-edges-retro-poster-1",
+      "presentationId": "moving-edges-retro-poster-1-presentation",
+      "levelId": "moving-edges-terrace-stitch",
+      "levelRevision": "1",
+      "sha256": "209f3c08bb7df5d3fd3d450dd38a5854923083033150772265896c0f60552bdb",
+      "bytes": 2883767,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "moving-edges-retro-poster-2",
+      "presentationId": "moving-edges-retro-poster-2-presentation",
+      "levelId": "moving-edges-survey-wheel",
+      "levelRevision": "1",
+      "sha256": "8f479806a4bb953f592d6c2eec6a601bce429584ea132e99bcab09290144a2bc",
+      "bytes": 2696356,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "moving-edges-retro-poster-3",
+      "presentationId": "moving-edges-retro-poster-3-presentation",
+      "levelId": "moving-edges-breakwater-return",
+      "levelRevision": "1",
+      "sha256": "1a6cf10c89c674a52093390f798ab981a51023a5af772036ffd88c3ba6b99d96",
+      "bytes": 2642886,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    }
+  ]
+}

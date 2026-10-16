@@ -1,6 +1,7 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from './data-json.mjs';
 import { PACK_LIMITS } from './packs.mjs';
 import { abortExternalChapter } from './external-chapter.mjs';
+import { parseEditionChannel } from './edition-context.mjs';
 
 export const EXTERNAL_BACKUP_JOURNAL_FORMAT = 'xonix-backup-journal.v2';
 const own = (value) =>
@@ -28,11 +29,14 @@ export function createExternalBackupAssets({
   writer,
   timeoutMs = 15000,
 } = {}) {
+  const channel =
+    typeof profileKey === 'string' && /^revealline\.library\.(.+)\.v1$/.exec(profileKey)?.[1];
   required(
     typeof profileKey === 'string' &&
-      /^revealline\.library\.(?:dev|release|release-v?(?:0|[1-9]\d{0,4})\.(?:0|[1-9]\d{0,4})\.(?:0|[1-9]\d{0,4}))\.v1$/.test(
-        profileKey,
-      ),
+      (parseEditionChannel(channel) ||
+        /^revealline\.library\.(?:dev|release|release-v?(?:0|[1-9]\d{0,4})\.(?:0|[1-9]\d{0,4})\.(?:0|[1-9]\d{0,4}))\.v1$/.test(
+          profileKey,
+        )),
     'Use an exact supported backup profile channel.',
   );
   required(

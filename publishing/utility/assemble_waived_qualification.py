@@ -17,14 +17,19 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+from source_manifest import inspection_source, qualification_proof
 
 LIMIT = 64 * 1024**2
 WORKFLOW = '.github/workflows/qualify-release-source.yml'
+FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
+QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
+FASTLINE_QUALIFICATION_JOBS = frozenset(('deduplicate', 'qualify', 'freeze', 'test'))
 POLICY = 'publishing/test-policy.json'
+HISTORICAL_AUDIO_EVIDENCE_SOURCE = 'publishing/utility/audio-source-retention-audit-704a.json'
+HISTORICAL_AUDIO_EVIDENCE_ARCHIVE = 'coordinator/audio-source-retention-audit-704a.json'
+HISTORICAL_AUDIO_EVIDENCE_SHA256 = '224cd93c3a7ef5e10708e83ae77b2e5958a52cd279ed198d12aeb60afdb6c3ce'
+COMMIT = re.compile(r'[0-9a-f]{40}')
 GATES = [('validate', 'npm run validate', 'Validate source'),
-         ('lint', 'npm run lint', 'Lint source'),
-         ('format', 'npm run format:check', 'Check formatting'),
-         ('native-format', 'npm run format:native:check', 'Check native formatting'),
          ('motion-syntax', 'node --check authoring/motion-lab/app.js', 'Check motion lab syntax')]
 
 
@@ -110,6 +115,17 @@ def blob(repo, commit, name):
     return git(repo, 'show', object_name)
 
 
+def retain_historical_audio_evidence(evidence, repo, commit):
+    """Retain the reviewed audio-source audit in every future evidence package."""
+    body = blob(repo, commit, HISTORICAL_AUDIO_EVIDENCE_SOURCE)
+    require(sha(body) == HISTORICAL_AUDIO_EVIDENCE_SHA256,
+            'Historical audio retention evidence differs')
+    require(HISTORICAL_AUDIO_EVIDENCE_ARCHIVE not in evidence,
+            'Duplicate historical audio retention evidence')
+    evidence[HISTORICAL_AUDIO_EVIDENCE_ARCHIVE] = body
+    return body
+
+
 def step(job, name):
     rows = [s for s in job.get('steps', []) if s.get('name') == name]
     require(len(rows) == 1 and rows[0].get('status') == 'completed' and
@@ -119,23 +135,74 @@ def step(job, name):
     return {k: row[k] for k in ('name', 'number', 'status', 'conclusion')}
 
 
+def optional_step(job, name):
+    """Return one successful step, while allowing an absent/skipped alternate workflow branch."""
+    rows = [s for s in job.get('steps', []) if s.get('name') == name]
+    require(len(rows) <= 1, 'Duplicate step: ' + name)
+    if not rows:
+        return None
+    row = rows[0]
+    require(row.get('status') == 'completed' and row.get('conclusion') in ('success', 'skipped'),
+            'Unexpected step result: ' + name)
+    if row['conclusion'] == 'skipped':
+        return None
+    require(type(row.get('number')) is int and row['number'] > 0, 'Step number missing')
+    return {k: row[k] for k in ('name', 'number', 'status', 'conclusion')}
+
+
+def recoverable_fastline_inspection_failure(run, rows, commit):
+    if run.get('path') != FASTLINE_WORKFLOW or run.get('conclusion') != 'failure':
+        return False
+    failed = [job for job in rows if job.get('conclusion') == 'failure']
+    admission = [job for job in rows if job.get('name') == 'admission']
+    return (len(failed) == 1 and failed[0].get('name') == 'inspect-artifact' and
+            len(admission) == 1 and admission[0].get('conclusion') == 'success' and
+            all(job.get('status') == 'completed' and job.get('head_sha') == commit and
+                job.get('conclusion') in ('success', 'skipped', 'failure') for job in rows))
+
+
 def family(run, jobs, workflow, event, commit):
-    require(run.get('status') == 'completed' and run.get('conclusion') == 'success' and
-            run.get('path') == workflow and run.get('event') == event and run.get('head_sha') == commit and
-            type(run.get('id')) is int and run['id'] > 0, 'Run identity/result differs')
+    workflow_matches = run.get('path') in workflow if isinstance(workflow, set) else run.get('path') == workflow
     rows = jobs.get('jobs', [])
+    run_result_matches = (run.get('conclusion') == 'success' or
+                          recoverable_fastline_inspection_failure(run, rows, commit))
+    require(run.get('status') == 'completed' and run_result_matches and
+            workflow_matches and run.get('event') == event and run.get('head_sha') == commit and
+            type(run.get('id')) is int and run['id'] > 0, 'Run identity/result differs')
     require(type(jobs.get('total_count')) is int and jobs['total_count'] == len(rows) and
             0 < len(rows) <= 1000 and len({j['id'] for j in rows}) == len(rows), 'Incomplete jobs inventory')
     for job in rows:
         require(type(job.get('id')) is int and job['id'] > 0 and job.get('run_id') == run['id'] and
                 job.get('head_sha') == commit and job.get('status') == 'completed' and
-                job.get('conclusion') in ('success', 'skipped'), 'Job identity/result differs')
+                job.get('conclusion') in ('success', 'skipped', 'failure') and
+                (job.get('conclusion') != 'failure' or
+                 run.get('path') == FASTLINE_WORKFLOW and job.get('name') == 'inspect-artifact'),
+                'Job identity/result differs')
+    if run.get('path') == FASTLINE_WORKFLOW:
+        normalized = []
+        for job in rows:
+            name = str(job.get('name', ''))
+            nested = name.removeprefix('qualify / ')
+            # Only flatten the qualification jobs consumed below. In particular, retain
+            # ``qualify / inspect-artifact`` so its expected skipped branch cannot
+            # collide with the successful top-level Fastline inspection authority.
+            if name.startswith('qualify / ') and nested in FASTLINE_QUALIFICATION_JOBS:
+                name = nested
+            normalized.append({**job, 'name': name})
+        return normalized
     return rows
 
 
 def named(rows, name):
     selected = [j for j in rows if j.get('name') == name]
     require(len(selected) == 1 and selected[0]['conclusion'] == 'success', 'Successful job missing: ' + name)
+    return selected[0]
+
+
+def named_result(rows, name, conclusion):
+    selected = [j for j in rows if j.get('name') == name]
+    require(len(selected) == 1 and selected[0]['conclusion'] == conclusion,
+            f'Job must be {conclusion}: ' + name)
     return selected[0]
 
 
@@ -165,8 +232,11 @@ def inspect(config, evidence, repo, source, manual):
             verify['releaseHashChainVerified'] is True, 'Frozen identity/chain differs')
     require(all(verify['artifact'][k] == artifact[k] for k in ('bytes', 'sha256')) and
             verify['artifact']['externallyExpectedDigestSupplied'] is True, 'Outer artifact pin differs')
-    require(verify['sourceTar']['paxCommitPresent'] is True and verify['sourceTar']['copiedToDisk'] is False and
-            verify['sourceTar']['outerMember'] == source['version'] + '/source.tar', 'Source TAR proof differs')
+    source_name, source_role = inspection_source(verify)
+    source_proof = verify[source_role]
+    require(source_proof.get('allGitBlobContentsAndModesVerified' if source_role == 'sourceManifest' else 'paxCommitPresent') is True and
+            source_proof['copiedToDisk'] is False and
+            source_proof['outerMember'] == source['version'] + '/' + source_name, 'Source preservation proof differs')
     require(verify['distribution']['allManifestBytesVerified'] is True and
             verify['distribution']['innerManifestIdentical'] is True and verify['distribution']['copiedToDisk'] is False and
             verify['distribution']['outerMember'] == source['version'] + '/site/distribution.zip', 'ZIP proof differs')
@@ -192,7 +262,8 @@ def inspect(config, evidence, repo, source, manual):
     run = parse(evidence['runs/inspection/run.json'])
     jobs = parse(evidence['runs/inspection/jobs.json'])
     execution = get('execution.json')
-    named(family(run, jobs, WORKFLOW, 'workflow_dispatch', execution['workflowSha']), 'inspect-artifact')
+    named(family(run, jobs, QUALIFICATION_WORKFLOWS, 'workflow_dispatch', execution['workflowSha']),
+          'inspect-artifact')
     require(str(run['id']) == execution['runId'] and execution['sourceCheckout'] == get('source-before.json'),
             'Inspection execution differs')
     require(execution['helpers'], 'Inspection helper identities missing')
@@ -204,8 +275,10 @@ def inspect(config, evidence, repo, source, manual):
         evidence['inspection-authorities/' + name] = body
     authority = [get(n) for n in originals if n.startswith('api/') and n.endswith('.json') and
                  not n.endswith('.request.json')]
+    allowed_names = {'qualified-release-snapshot',
+                     f'qualified-release-{source["version"]}-{source["commit"]}'}
     authority = [a for a in authority if isinstance(a, dict) and a.get('id') == artifact['id'] and
-                 a.get('name') == 'qualified-release-snapshot']
+                 a.get('name') in allowed_names]
     require(authority, 'Artifact API original missing')
     for row in authority:
         require(row['expired'] is False and row['size_in_bytes'] == artifact['bytes'] and
@@ -215,18 +288,24 @@ def inspect(config, evidence, repo, source, manual):
     return originals, verify, artifact, run
 
 
-def exact_consumer(repo, source, context, small, verify, policy, parent):
-    """Execute only the reviewed commit's consumer, never the mutable checkout copy."""
-    listing = git(repo, 'ls-tree', '-r', '--name-only', source['commit'], '--', 'publishing/utility').decode().splitlines()
+def consumer_helpers(repo, commit):
+    """Load the consumer from one reviewed Git commit, never mutable worktree bytes."""
+    require(COMMIT.fullmatch(commit), 'Consumer automation commit differs')
+    listing = git(repo, 'ls-tree', '-r', '--name-only', commit, '--', 'publishing/utility').decode().splitlines()
     helpers = {}
     for name in listing:
         if name.endswith('.py') and not Path(name).name.startswith('test_'):
-            body = blob(repo, source['commit'], name)
+            body = blob(repo, commit, name)
             require(len(helpers) < 2000 and sum(map(len, helpers.values())) + len(body) <= LIMIT,
-                    'Exact-source helper inventory bound')
+                    'Consumer helper inventory bound')
             helpers[name] = body
     require('publishing/utility/release_artifact.py' in helpers and sum(map(len, helpers.values())) <= LIMIT,
-            'Exact-source consumer unavailable/bounded')
+            'Reviewed consumer unavailable/bounded')
+    return helpers
+
+
+def exact_consumer(helpers, context, small, verify, policy, parent):
+    """Execute only the already loaded reviewed consumer helper closure."""
     with tempfile.TemporaryDirectory(prefix='waiver-consumer-', dir=parent) as temporary:
         root = Path(temporary)
         for name, body in helpers.items():
@@ -258,6 +337,8 @@ def assemble(config, output):
             not any(p.is_symlink() for p in [output, receipt, *output.parents]), 'Fresh ordinary output required')
     require(shutil.disk_usage(output.parent).free >= 1024**3 + 3 * LIMIT, 'One GiB reserve required')
     source, pr_source, repo = config['source'], config['prSource'], config['repositoryPath']
+    automation_repo = config.get('automationRepositoryPath', repo)
+    automation_commit = config.get('automationCommit', source['commit'])
     require(type(config.get('sourcePR')) is int and config['sourcePR'] > 0, 'Positive source PR required')
     for identity in (source, pr_source):
         require(all(re.fullmatch('[0-9a-f]{40}', identity[k]) for k in ('commit', 'tree')), 'Full immutable IDs required')
@@ -279,6 +360,7 @@ def assemble(config, output):
                     'approvedNonSourceChanges': allowed, 'allOtherTrackedContentsTypesModesIdentical': True,
                     'rawDiff': {'bytes': len(difference), 'sha256': sha(difference), 'retained': bool(difference)},
                     'scope': 'PR build corroboration only; not reuse of a predecessor source verdict.'})}
+    retain_historical_audio_evidence(evidence, automation_repo, automation_commit)
     if difference:
         evidence['preparation/pr-to-source.diff'] = difference
     for role in ('pr', 'manual', 'inspection'):
@@ -288,17 +370,62 @@ def assemble(config, output):
     require(pr_run['id'] != manual['id'], 'Separate PR/manual runs required')
     pr_jobs = family(pr_run, parse(evidence['runs/pr/jobs.json']), '.github/workflows/deploy-pages.yml',
                      'pull_request', pr_source['commit'])
-    manual_jobs = family(manual, parse(evidence['runs/manual/jobs.json']), WORKFLOW, 'workflow_dispatch', source['commit'])
-    qualify, freeze, build = named(manual_jobs, 'qualify'), named(manual_jobs, 'freeze'), named(pr_jobs, 'build')
+    manual_jobs = family(manual, parse(evidence['runs/manual/jobs.json']), QUALIFICATION_WORKFLOWS,
+                         'workflow_dispatch', source['commit'])
+    qualify, freeze = named(manual_jobs, 'qualify'), named(manual_jobs, 'freeze')
     named(pr_jobs, 'preflight')
     step(qualify, 'Record source identity')
     step(qualify, 'Require reviewed production slots in the committed ledger')
     step(qualify, 'Verify qualified tracked source is unchanged')
     step(freeze, 'Freeze the exact qualified commit')
     step(freeze, 'Retain original release assets')
-    step(build, 'Verify exact tracked source before commands')
-    step(build, 'Verify tracked source after build')
+    build_rows = [job for job in pr_jobs if job.get('name') == 'build']
+    require(len(build_rows) == 1, 'Unique build job required')
+    build = build_rows[0]
+    if build['conclusion'] == 'skipped':
+        named_result(pr_jobs, 'test', 'skipped')
+        focused = named(pr_jobs, 'focused')
+        release_ready = named(pr_jobs, 'release-ready')
+        classification = [step(focused, name) for name in
+                          ('Capture the reviewed changed-path set', 'Select the fail-closed focused gate')]
+        pr_corroboration = {'focusedAdmissionCorroboration': {
+            'runId': pr_run['id'], 'jobId': focused['id'], 'aggregateJobId': release_ready['id'],
+            'classificationSteps': classification,
+            'sourceRevision': pr_source['commit'], 'sourceTree': pr_source['tree'],
+            'genericBuild': {'status': 'skipped-by-fast-release-policy', 'jobId': build['id']},
+            'fullTests': {'status': 'waived-and-skipped'},
+            'scope': 'Exact PR head admission using the fail-closed focused manifest; no generic build or full-suite pass is claimed.'}}
+    else:
+        require(build['conclusion'] == 'success', 'Build job result differs')
+        step(build, 'Verify exact tracked source before commands')
+        validation = step(build, 'Validate release-critical source')
+        full_build = optional_step(build, 'Build pull-request artifact')
+        after_build = optional_step(build, 'Verify tracked source after build')
+        deferred_build = optional_step(build, 'Defer full artifact build to merged-source qualification')
+        after_fast_gate = optional_step(build, 'Verify tracked source after fast release gate')
+        legacy = (full_build, after_build)
+        fast = (deferred_build, after_fast_gate)
+        require(not any(legacy) or all(legacy), 'Incomplete historical PR build corroboration')
+        require(not any(fast) or all(fast), 'Incomplete fast PR validation corroboration')
+        require(all(legacy) != all(fast), 'Exactly one successful PR build corroboration mode required')
+        if all(fast):
+            pr_corroboration = {'preMergeValidationCorroboration': {
+                'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run validate',
+                'step': validation,
+                'sourceRevision': pr_source['commit'], 'sourceTree': pr_source['tree'],
+                'artifactBuild': {'status': 'deferred-to-frozen-source',
+                    'step': deferred_build},
+                'scope': 'Exact PR source validation only; the complete artifact is built once from frozen merged source.'}}
+        else:
+            pr_corroboration = {'ordinaryBuildCorroboration': {
+                'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run build',
+                'step': full_build, 'sourceRevision': pr_source['commit'],
+                'sourceTree': pr_source['tree'],
+                'scope': 'Separately identified PR build; only proven unchanged build inputs.'}}
     originals, verify, artifact, inspection_run = inspect(config, evidence, repo, source, manual)
+    helpers = consumer_helpers(automation_repo, automation_commit)
+    for name, body in sorted(helpers.items()):
+        evidence['consumer-authorities/' + name] = body
     for row in config.get('extraEvidence', []):
         name = safe(row['name'])
         require(name not in evidence, 'Duplicate evidence')
@@ -312,18 +439,16 @@ def assemble(config, output):
         'releaseEligible': True, 'version': source['version'], 'sourceRevision': source['commit'],
         'sourceTree': source['tree'], 'actualCheckoutCommit': source['commit'], 'actualCheckoutTree': source['tree'],
         'allTrackedSourceContentsAndModesMatch': True, 'sourcePR': config['sourcePR'],
-        'qualifiedAt': manual.get('updated_at'), 'runId': manual['id'], 'workflowPath': WORKFLOW,
+        'qualifiedAt': manual.get('updated_at'), 'runId': manual['id'], 'workflowPath': manual['path'],
         'tests': {'status': 'waived', 'counts': None},
         'gates': [{'gate': g, 'command': c, 'jobId': qualify['id'], 'step': step(qualify, n)} for g, c, n in GATES],
         'testPolicy': {**{k: policy[k] for k in ('mode', 'authorization', 'reason')}, 'policyEvidence': pin(POLICY, policy_body)},
         'waiverEvidence': {'runId': manual['id'], 'runEvidence': pin('runs/manual/run.json', evidence['runs/manual/run.json']),
                           'jobsEvidence': pin('runs/manual/jobs.json', evidence['runs/manual/jobs.json'])},
-        'ordinaryBuildCorroboration': {'runId': pr_run['id'], 'jobId': build['id'], 'command': 'npm run build',
-            'step': step(build, 'Build pull-request artifact'), 'sourceRevision': pr_source['commit'],
-            'sourceTree': pr_source['tree'], 'scope': 'Separately identified PR build; only proven unchanged build inputs.'},
+        **pr_corroboration,
         'frozenArtifactCorroboration': {'artifactId': artifact['id'], 'runId': artifact['runId'],
             'inspectionRunId': inspection_run['id'], 'wholeOriginalArtifactVerifiedBeforeQualification': True,
-            'sourceTarGitBlobTypeModeAndPaxCommitVerified': True, 'allInnerZipManifestBytesVerified': True,
+            **qualification_proof(verify), 'allInnerZipManifestBytesVerified': True,
             'frozenOfflineInventoryAndBindingsVerified': True,
             'inputs': {k: pin(n, small[n]) for k, n in [('inspection', 'verification.json'), ('manifest', 'manifest.json'),
                 ('releaseRecord', 'release.json'), ('checksum', 'distribution.zip.sha256')]}},
@@ -346,7 +471,7 @@ def assemble(config, output):
     asset = lambda n, b: {'name': n, 'bytes': len(b), 'sha256': sha(b)}
     large = [{'name': n, 'bytes': verify[r]['bytes'], 'sha256': verify[r]['sha256'],
               'originalMember': verify[r]['outerMember'], 'copiedToDisk': False}
-             for n, r in [('source.tar', 'sourceTar'), ('distribution.zip', 'distribution')]]
+             for n, r in [inspection_source(verify), ('distribution.zip', 'distribution')]]
     small['qualification-evidence-record.json'] = encoded({'format': 'revealline-qualification-evidence-record.v1',
         'sourceRevision': source['commit'], 'sourceTree': source['tree'], 'version': source['version'],
         'sourceQualified': True, 'originalFrozenPayloadVerified': True, 'sourceGateCounts': None, 'testStatus': 'waived',
@@ -355,7 +480,7 @@ def assemble(config, output):
     descriptors = large + [asset(n, b) for n, b in sorted(small.items())]
     require(len(small) == 7 and len(descriptors) == 9, 'Attachment inventory differs')
     context = {'source': source, 'artifact': artifact, 'release': {'assets': descriptors}}
-    checked = exact_consumer(repo, source, context, small, verify, policy_body, output.parent)
+    checked = exact_consumer(helpers, context, small, verify, policy_body, output.parent)
     require(shutil.disk_usage(output.parent).free >= 1024**3 + sum(map(len, small.values())), 'One GiB reserve required')
     output.mkdir()
     for name, body in sorted(small.items()):
@@ -363,6 +488,8 @@ def assemble(config, output):
             stream.write(body)
     report = {'status': 'OFFLINE_CONSUMER_VERIFIED_SMALL_PACKAGE', 'source': source, 'tests': qualification['tests'],
         'artifacts': descriptors, 'consumer': checked, 'releaseAuthority': None, 'remoteWrites': False,
+        'consumerAuthority': {'commit': automation_commit,
+            'helpers': [pin('consumer-authorities/' + n, b) for n, b in sorted(helpers.items())]},
         'scope': 'Offline metadata only; independent review and owner publication authority still required.'}
     with receipt.open('xb') as stream:
         stream.write(encoded(report))

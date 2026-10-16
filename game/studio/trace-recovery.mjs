@@ -1,3 +1,6 @@
+import { localizedMessage, localizedText, t } from '../i18n/index.mjs';
+import { editorMessageError, editorErrorText } from './editor-copy.mjs';
+import { platformExportText } from '../ui/export-copy.mjs';
 import { createImageTraceBackend } from '../content-design/image-trace-storage.mjs';
 import { createImageTraceSession } from '../content-design/image-trace-session.mjs';
 import { readImageTraceFile } from '../content-design/image-trace.mjs';
@@ -16,13 +19,13 @@ export function createTraceRecovery({
     importTicket = 0,
     ownerKey = null;
   const message = (text) => {
-    $('trace-status').textContent = text;
+    localizedText($('trace-status'), text);
   };
   const guard = (action) => async () => {
     try {
       await action();
     } catch (error) {
-      message(error.message);
+      message(() => editorErrorText(error));
     }
   };
   const session = createImageTraceSession({
@@ -33,24 +36,29 @@ export function createTraceRecovery({
       $('trace-replace').disabled = !state?.needsChoice || !!state.error || state.saving;
       $('trace-export-saved').disabled = !state?.saved;
       $('trace-session-restore').disabled = !state?.dirty || !session.pending() || state.saving;
-      if (!state) return message('Choose a mission to open tracing recovery.');
+      if (!state) return message(localizedMessage('tools:studio.trace.chooseMission'));
       if (state.error)
-        return message(
-          `Tracing is session-only: ${state.error.message} Export a tracing backup, then Read saved tracing to retry. Your project saves separately.`,
+        return message(() =>
+          t('tools:studio.trace.sessionOnly', { message: editorErrorText(state.error) }),
         );
-      if (!state.loaded) return message('Reading this mission’s local tracing draft…');
-      if (state.saving) return message('Saving reference, accepted crop and queue locally…');
+      if (!state.loaded) return message(localizedMessage('tools:studio.trace.reading'));
+      if (state.saving) return message(localizedMessage('tools:studio.trace.saving'));
       if (state.needsChoice)
-        return message(
-          `Current tracing is unsaved. Saved revision ${state.revision ?? 'none'} has ${state.saved?.rectangles.length ?? 0} rectangle(s). Export either draft, Restore saved, or explicitly Replace saved with current.`,
+        return message(() =>
+          t('tools:studio.trace.unsaved', {
+            revision: state.revision ?? t('tools:studio.capture.none'),
+            count: state.saved?.rectangles.length ?? 0,
+          }),
         );
       if (state.saved)
         return message(
-          `Local tracing revision ${state.revision} · ${state.saved.reference.name} · ${state.saved.rectangles.length} rectangle(s). Restore saved tracing after reopening. Geometry still requires Inspect and Apply. Project backups do not contain this picture.`,
+          localizedMessage('tools:studio.trace.saved', {
+            revision: state.revision,
+            name: state.saved.reference.name,
+            count: state.saved.rectangles.length,
+          }),
         );
-      message(
-        'No saved tracing for this mission. New references and accepted crop/queue edits save locally, separately from project checkpoints.',
-      );
+      message(localizedMessage('tools:studio.trace.empty'));
     },
   });
   $('trace-read').onclick = guard(() => session.reload());
@@ -58,11 +66,9 @@ export function createTraceRecovery({
   $('trace-session-restore').onclick = guard(() => session.restore(session.pending()));
   $('trace-replace').onclick = guard(() => session.replace());
   async function exportTrace(trace, suffix) {
-    if (!trace) throw new Error('No tracing draft to export.');
+    if (!trace) throw editorMessageError('errors:studio.trace.noExport');
     const result = await exportFile(trace, `${trace.projectId}-${trace.missionId}-${suffix}.json`);
-    message(
-      `${result.message} Keep the matching project backup too; neither file publishes content.`,
-    );
+    message(() => t('tools:studio.trace.exported', { message: platformExportText(result) }));
   }
   $('trace-export').onclick = guard(() =>
     exportTrace(workbench.snapshot() ?? session.pending(), 'tracing'),
@@ -81,11 +87,16 @@ export function createTraceRecovery({
     imported = candidate;
     $('trace-import-restore').disabled = false;
     message(
-      `Inspected backup: ${candidate.projectId} / ${candidate.missionId}, ${candidate.reference.name}, ${candidate.rectangles.length} rectangle(s). Restore backup tracing explicitly; the exact matching map is required. No geometry has changed.`,
+      localizedMessage('tools:studio.trace.imported', {
+        project: candidate.projectId,
+        mission: candidate.missionId,
+        name: candidate.reference.name,
+        count: candidate.rectangles.length,
+      }),
     );
   });
   $('trace-import-restore').onclick = guard(async () => {
-    if (!imported) throw new Error('Inspect a tracing backup first.');
+    if (!imported) throw editorMessageError('errors:studio.trace.inspectBackup');
     await session.restore(imported);
     imported = null;
     $('trace-import-restore').disabled = true;

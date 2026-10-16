@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 // Actual solo entry, stored library, native-select adapter and picture handlers.
 // Browser focus/default events and canvas painting are modeled boundaries.
 import test from 'node:test';
@@ -17,6 +18,7 @@ import { createRun, stepRun, getSummary, FIXED_DT } from '../core/index.mjs';
 import { emptyLibrary, recordLibraryCompletion, saveLibrary } from '../library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const profileKey = 'revealline.library.dev.v1';
 const source = JSON.parse(
@@ -113,9 +115,16 @@ async function setup(t, modes = ['standard', 'gentle'], { installed = true } = {
     // gallery can deliberately focus its newly populated originating card.
     queueMicrotask(() => this.emit('close'));
   });
-  t.mock.method(SoloElement.prototype, 'getContext', () => ({ drawImage() {} }));
+  // Keep the shared complete inert Canvas boundary: the live field guide also
+  // paints during startup. Only gallery rendering is modeled below.
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
-  const page = await soloPage(t, { storage, assetIndexedDB: assets.indexedDB });
+  const page = await soloPage(t, {
+    storage,
+    assetIndexedDB: assets.indexedDB,
+    // The focused CI gate validates the full repository immediately before
+    // this real host boots, so artwork selection can exceed the 5 s default.
+    initialReadyTimeoutMs: 15_000,
+  });
   return {
     ...page,
     get rendered() {
@@ -158,10 +167,68 @@ function padFor(page, t) {
     pad.buttons[index] = { pressed: false, value: 0 };
     frame();
   };
+  pulse.advance = (milliseconds) => {
+    now += milliseconds;
+    page.frame(milliseconds);
+  };
   frame();
   // A neutral sample connects automatically; Confirm is now a real menu action.
   return pulse;
 }
+
+test('open Collection translates earned rewards while retaining its context, nodes, focus and progress', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const page = await setup(t);
+  open(page);
+  const select = page.$('collection-context');
+  select.focus();
+  const selection = select.value;
+  const rows = [...page.$('appearance-rewards').children];
+  const badges = [...page.$('achievements').children];
+  const galleryCopy = page.$('gallery-grid').querySelector('button').children[2];
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  const saved = [...page.storage.map];
+  const writes = page.storage.writes.length;
+  const assetWrites = page.assets.allPuts.length;
+  for (const language of ['uk', 'en', 'uk']) {
+    setLocale(language, { persist: false });
+    assert.equal(
+      rows[0].querySelector('h4').textContent,
+      language === 'uk' ? 'Перша перемога' : 'First clear',
+    );
+    assert.equal(
+      rows[1].querySelector('h4').textContent,
+      language === 'uk' ? 'Дослідник розділу' : 'Chapter explorer',
+    );
+    assert.match(
+      rows[1].querySelector('.reward-detail').textContent,
+      language === 'uk' ? /ще 2 місії/ : /2 more missions/,
+    );
+    assert.match(
+      [...badges[2].children].find((node) => node.tagName === 'SPAN').textContent,
+      language === 'uk' ? /Пройдіть 3 різні місії/ : /Complete 3 different missions/,
+    );
+    assert.match(galleryCopy.textContent, language === 'uk' ? /Також здобуто:/ : /Also earned:/);
+    assert.match(
+      page.$('appearance-campaign').textContent,
+      /Earned chapter/,
+      'Imported chapter names retain their authored text.',
+    );
+    assert.deepEqual([...page.$('appearance-rewards').children], rows);
+    assert.deepEqual([...page.$('achievements').children], badges);
+    assert.equal(page.$('gallery-grid').querySelector('button').children[2], galleryCopy);
+    assert.equal(select.value, selection);
+    assert.equal(page.doc.activeElement, select);
+    assert.equal(page.$('collection-dialog').open, true);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.deepEqual([...page.storage.map], saved);
+    assert.equal(page.storage.writes.length, writes);
+    assert.equal(page.assets.allPuts.length, assetWrites);
+  }
+  assert.deepEqual(page.errors, []);
+});
 
 for (const modes of [['standard'], ['gentle'], ['standard', 'gentle']])
   test(`Collection card labels each earned mode once: ${modes.join(' + ')}`, async (t) => {
@@ -200,8 +267,8 @@ test('global Collection inspects earned chapter progress independently of the pa
   page.frame(0);
   await settle(
     () =>
-      JSON.parse(page.storage.getItem('revealline.suspended.dev.v1') ?? 'null')?.replay?.ticks ===
-      20,
+      nativeSession(JSON.parse(page.storage.getItem('revealline.suspended.dev.v1') ?? 'null'))
+        ?.replay?.ticks === 20,
     'The existing Pause autosave must finish before taking the no-write baseline.',
   );
   const checkpoint = authoritativeCheckpoint(page.rendered.run),
@@ -285,23 +352,29 @@ test('existing controller select draft, cancel and confirm preserve context and 
   const select = page.$('collection-context');
   assert.ok(select);
   const initial = select.value,
-    title = page.$('achievement-campaign').textContent;
+    title = page.$('achievement-campaign').textContent,
+    move = select.selectedIndex > 0 ? 12 : 13;
   const before = [...page.storage.map],
     checkpoint = authoritativeCheckpoint(page.rendered.run);
   select.focus();
   page.frame(0);
   pulse(0);
-  pulse(12);
+  pulse(move);
   pulse(1);
   assert.equal(page.$('collection-dialog').open, true, 'Back cancels only the select draft.');
   assert.equal(select.value, initial);
   assert.equal(page.$('achievement-campaign').textContent, title);
   assert.equal(page.doc.activeElement?.id, select.id);
   pulse(0);
-  pulse(12);
+  pulse(move);
+  pulse.advance(200);
   pulse(0);
   assert.notEqual(select.value, initial);
   assert.notEqual(page.$('achievement-campaign').textContent, title);
+  // The next input is a native click. Let the controller-confirm echo guard
+  // expire so the fixture does not model the same physical press twice.
+  pulse.advance(130);
+  pulse.advance(1250);
   const selected = select.value,
     card = page.$('gallery-grid').querySelectorAll('button')[0];
   card.focus();

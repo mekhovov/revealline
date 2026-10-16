@@ -1,0 +1,72 @@
+{
+  "format": "revealline-scoped-team-recipe-review-successor.v1",
+  "status": "bounded functional source and browser review; balance and physical-device review pending",
+  "candidateBase": "b56fc7e6fd4ebc15d2651749ba9ab93b1b15694d",
+  "scope": "Continue the prior functional Team recipe review and five-image equipment review for unchanged recipe payloads, equipment bytes and inherited image identities after reviewing the exact three changed renderer inputs. Admit independent FPV actor selection, impact-runtime bonus rendering and specialist Support role cues only.",
+  "priorReview": {
+    "path": "docs/verification/team37/review.json",
+    "sha256": "7ecaeb6dc9c2fcf1804ed364ef1b818e3323f4a390629fd4575c0772cf4df45b",
+    "fingerprintSHA256": "ec823086350e8289217e5d987cb77c4172c00cf20b14afcd52bc07183bf8ab6a"
+  },
+  "priorEquipmentReview": {
+    "path": "docs/verification/team-equipment-five-review/review.json",
+    "sha256": "a5aa095805b39c8a716d5427c54ad594f9261b53adeaf9752b3260ae752024b3",
+    "priorFingerprintSHA256": "b9cbf2db6fe094564a15743c72c45049bf9ee776a22b2599469e0ee1bdc03037",
+    "currentFingerprintSHA256": "162d4c737c11d34f8e7e3ed6e76ca5a34fcf06d5fb97303d53eba857feaaf530"
+  },
+  "fingerprint": {
+    "group": "team",
+    "paths": "game/couch/coop-view.mjs; game/couch/coop-actor-presentation.mjs; game/couch/coop-anchor-presentation.mjs; game/couch/coop-core-presentation.mjs; game/couch/coop-support-presentation.mjs; game/couch/coop-emitter-presentation.mjs; game/couch/coop-rescue-presentation.mjs; game/couch/coop-pilot-slots.mjs; game/couch/coop-enemy-slots.mjs; game/couch/coop-outcome-presentation.mjs; game/presentation/team-runtime-slots.mjs; game/ui/actor-presentation.mjs; game/presentation/catalog.mjs; game/couch/coop-actor-layout.mjs; game/couch/coop-terrain-trail.mjs; game/couch/coop-bonus-view.mjs; game/couch/candidate-team-pictures.mjs; game/content-design/material-markers.mjs; game/presentation/journey-actor-materials.mjs; authoring/motion-lab/render-character.mjs; game/ui/classic-view.mjs; game/ui/presentation-draw-image.mjs; game/ui/enemy-body-motion.mjs; authoring/motion-lab/animation.mjs; game/content-design/actor-marker.mjs; game/enemy-catalog.mjs",
+    "sha256": "557c00b3bc31e8efbc5fbb96dec3b5b7c87afa19bc7325025974be216972ff75",
+    "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInputs": [
+    {
+      "path": "game/couch/coop-view.mjs",
+      "priorSHA256": "488d960661f4948340a9c0c932c09e07941282f9f74f16a8eb8cc7853a44e566",
+      "currentSHA256": "591cb13012309cff082069815c0cb30ae9299a56360007f22a8e783489b9a353",
+      "assessment": "Adds a fail-closed independently pinned actor snapshot and authenticated authored-picture source while retaining the existing Team state recipes, collision geometry and authoritative clocks. The fresh-origin host displayed the FPV pilot and enemy frames in Twin depots."
+    },
+    {
+      "path": "game/couch/coop-bonus-view.mjs",
+      "priorSHA256": "24f62457633411690e16572b3646a090b38a2f39711c220f1962c76ca2098030",
+      "currentSHA256": "0acbe7208645290c9b3b4a5429a24fb0e9784583bc3ea2ad721018d3abcafaff",
+      "assessment": "Admits the already versioned owned-impact Team runtime to the existing bonus renderer. Bonus validation, state matching and drawClassicPickups remain unchanged."
+    },
+    {
+      "path": "game/couch/coop-support-presentation.mjs",
+      "priorSHA256": "ad88b255255ade91db8c0d5b330218283c3314533c2adfefaa5a23c5e771e146",
+      "currentSHA256": "fa15bcfc3ad0268815f30c93521af8c165997f94eef271f53ac8555c08004335",
+      "assessment": "Adds textual I/D role markers and distinct long/short dash inner rings without changing Support radius, timing or collision. Unknown and historical roles retain the hybrid cue. The geometry remains present when reduced effects are selected."
+    }
+  ],
+  "qualification": {
+    "focusedAutomated": [
+      "PR355: 63 Team runtime tests and 45 route, Studio and handoff tests passed.",
+      "PR356: 49 focused Team gameplay and presentation tests passed.",
+      "PR359 candidate-host correction: 20 specialist, content and Team navigation tests passed."
+    ],
+    "hosted": "The provenance-only exact-head qualification passed source validation, lint, formatting, native formatting, syntax and production reproduction before stopping at the intentionally reopened review gate.",
+    "nativeBrowser": {
+      "origin": "fresh local origin http://127.0.0.1:8779",
+      "route": "/game/couch/relay-rescue.html?journey=team-specialist-originals-1",
+      "observed": [
+        "The repaired candidate host loaded twelve Journey missions and retained two Classic Team arenas in the unified selector.",
+        "Twin depots launched directly from the selector with FPV actors and the expected original picture.",
+        "HUD exposed Interceptor and Disruptor as text rather than colour alone.",
+        "Q displayed the Interceptor long-dash ring and I marker; Enter displayed the Disruptor short-dash ring and D marker.",
+        "The accepted 8779 load introduced no console error; two older 8778 mixed-edition errors remained only in the browser log history and motivated PR359."
+      ],
+      "screenshots": "Inspected inline and not persisted as release evidence."
+    }
+  },
+  "unchangedBindings": "All 37 recipe payload hashes, default-record hashes, 29 inherited image identities and five equipment PNG identities remain bound by the immutable prior reviews. This successor changes no sprite bytes and grants no new artwork approval.",
+  "excluded": [
+    "No subjective balance, fun or whole-Journey approval.",
+    "No physical keyboard, touch or controller-device qualification.",
+    "No complete two-player clear, rescue, disconnect or final victory observation on the native page.",
+    "No blanket UI, trail/effects, audio, offline, frozen-build, public Pages or release approval.",
+    "No human validation; browser observations and automated tests are technical evidence only."
+  ],
+  "decision": "Approve a bounded functional Team recipe successor only when the exact prior review bytes, current fingerprint, unchanged recipe/default/image records and this exact successor review all match. Any Team recipe input change reopens the group."
+}

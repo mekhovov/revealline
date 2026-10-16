@@ -8,6 +8,7 @@ import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { playTeamFoundationRoute } from './helpers/team-foundation-route.mjs';
 import { inspectTeamRoamerGoal } from './helpers/team-roamer-goal.mjs';
 import { page } from './helpers/coop-host.mjs';
+import { playSpecializedTeamRoute } from './helpers/team-specialized-host-route.mjs';
 const evidence = JSON.parse(
   await readFile(new URL('./fixtures/team-partner-return-routes.json', import.meta.url)),
 );
@@ -150,43 +151,7 @@ for (const row of full.rows) {
     assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
     f.$('coop-start').focus();
     f.tap('Enter');
-    f.tick(2);
-    assert.deepEqual(row.log[0], { a: null, b: null, ticks: 1 });
-    const keys = [
-      { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' },
-      { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' },
-    ];
-    let previous = [null, null],
-      frames = 1;
-    for (const s of row.log.slice(1)) {
-      for (const [seat, d] of [s.a, s.b].entries())
-        if (d && d !== previous[seat]) f.tap(keys[seat][d]);
-      previous = [s.a, s.b];
-      for (let n = 0; n < s.ticks && f.$('coop-overlay').hidden; n++) {
-        f.tick();
-        frames++;
-        const reserves = row.outcomes[0].reserves;
-        assert.equal(
-          f.$('coop-reserves').textContent,
-          `${reserves} reserve${reserves === 1 ? '' : 's'}`,
-        );
-        assert.doesNotMatch(f.$('coop-message').textContent, /needs a rescue|reserve used/);
-        if (frames === (row.difficulty === 'expert' ? 691 : 547))
-          assert.equal(
-            f.$('coop-coverage').textContent,
-            row.difficulty === 'expert' ? '8.4%' : '5.0%',
-          );
-      }
-      if (!f.$('coop-overlay').hidden) break;
-    }
-    // Driven host frames are separately observed; not a core replay tick/hash.
-    assert.equal(frames, { gentle: 3646, standard: 3095, expert: 4045 }[row.difficulty]);
-    assert.equal(
-      f.$('coop-coverage').textContent,
-      `${(row.outcomes[0].coverage * 100).toFixed(1)}%`,
-    );
-    assert.equal(f.$('coop-overlay-kicker').textContent, 'A WORLD YOU REVEALED TOGETHER');
-    assert.deepEqual(f.visits, []);
+    playSpecializedTeamRoute(f, project.source, full.missionId, row.difficulty, 'partner-full');
   });
 }
 for (const [i, row] of full.negative.entries())

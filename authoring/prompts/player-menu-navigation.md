@@ -45,3 +45,53 @@ Team has no Boost input. Preserve archived untuned proofs. Historical mastery mu
 be exercised through a genuine restored historical attempt, not awarded to a new
 tuned run. A partial presentation fixture advertises only assets it prepares;
 full production bindings still require real decoded frames and strict validation.
+Join the real Missions activation operation and assert immediate loading separately
+from readiness. When the path is a controller edge or an image-release callback,
+observe the existing DOM handler's returned operation without replacing the real
+input gesture or forcing focus. Restore fixture observers in finally, use a bounded
+case deadline, and reproduce suspected polling races with controlled catalogue
+delay before changing synchronization. Do not increase the global polling timeout.
+For result actions, propagate the promise of the existing owned preparation
+through Next and appearance-to-Missions handlers. Do not add a second operation,
+defer activation with a new await, alter cancellation/focus leases or change an
+otherwise synchronous branch. Tests should observe the actual South/Enter gesture,
+check immediate named status, and join that operation. Retain tick-zero adoption,
+held Confirm, explicit Resume, accepted originals and native editing assertions.
+Reproduce bitmap and catalogue delays independently before classifying a timeout.
+A fulfilled handler is not proof of successful adoption: assert the final state
+and preserve failure/cancellation checks.
+
+Diagnose platform-specific fixture differences against full states.
+A test-only portable golden must bound only witnessed per-route scalar differences
+and retain exact remaining state, host/reference and public replay checks. Never
+apply its tolerance to runtime saves, recordings or earned originals.
+
+Separate retained historical component tests from current player journeys. An
+injected unregistered campaign may test its original chooser/profile authority at
+an explicitly named native-dialog boundary; that is not public-catalogue evidence.
+Current selection must activate the visible Missions action, await its operation
+and match the full source/edition/campaign/runtime identity. Preserve historical
+routes while independently resolving the fresh host's approved tuning. A route
+fixture must use legal host inputs, never neutral braking or injected outcomes.
+Use decoded background identity, not the last actor draw call, for picture checks.
+
+For UX1 rewards, follow `docs/ux1-a1-journey-rewards.md`. Preserve the historical
+Journey progress reader and the companion ledger's atomic commit. A real accepted
+win may retain its exact decoded original; viewing, filtering or opening Details
+must never create a reward. Test actual mode-specific wins, receipt identity,
+storage rollback, missing-byte Retry, late decode cancellation and exact return
+focus. Do not turn an ambiguous older clear into today's picture. Keep backup
+reference scope explicit and qualify Versus/Team admission separately from Solo.
+
+For UX1-A2, complete a real authored Versus race and a real Team mission through
+their public host inputs. Admit a picture only when the current terminal owner can
+authenticate its live accepted decoded original against the exact owned recipe.
+Assert exact mode, edition, mission, campaign execution, level revision, run,
+gameplay identity, difficulty, theme and asset descriptor. Prove that Versus never
+mints Solo/Team rewards and Team never mints Solo/Versus rewards. Reject imported,
+procedural, unowned, stale and invalid presentation without erasing a legal clear.
+Do not add persistent Team session state. Open each mode's Journey Pictures surface
+with keyboard and modeled controller, verify exact-edition filtering and missing-art
+recovery, close to the exact opener, and prove viewing/Retry/Next cannot award or
+replace a board. Record physical device, reload, offline and public Pages evidence
+separately from focused source tests.

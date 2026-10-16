@@ -1,0 +1,662 @@
+{
+  "passed": true,
+  "sourcePins": {
+    "terrain": "71f1330ce107aecd34adef19041c6f48c5492bb0ea1b668d147e4a148f108b69",
+    "scenery": "b94730367c57670d8844007bff2953c05e282f5ac29352cf7914d25041bfe642"
+  },
+  "records": [
+    {
+      "quality": "plain",
+      "spawn": "freight-hall",
+      "geometryDigest": "6cc19004cdca8e90441a8f44415a65a5130170d1b998ba427282c47a5d948d06",
+      "geometryBytes": 676872,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-2",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-2",
+        "fraction": 0.08478264510631561,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "spawn": "viaduct-river-gap",
+      "geometryDigest": "067238970ea46feeb9967b49ca85c711003ac19a6ddd2e84e2f33d61d7937769",
+      "geometryBytes": 590328,
+      "textureBytes": 0,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-7-7",
+        "heightMm": 13250.001907348633,
+        "normal": {
+          "x": -0.005364937242120504,
+          "y": 0.9981227517127991,
+          "z": -0.061010293662548065
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-7-8",
+        "fraction": 0.4026688039302826,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "spawn": "quarry-under-conveyor",
+      "geometryDigest": "b80a57949f31f7a790cdb4b93912bbfb1c0b5e72f6c1391025bd88df342a804d",
+      "geometryBytes": 597264,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-2",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-2",
+        "fraction": 0.11368424445390701,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "spawn": "station-canopy",
+      "geometryDigest": "54ad4caee283e0625fb968eca8fa761b55a189c1412847794c0424533e90bf40",
+      "geometryBytes": 597216,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-12",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-12",
+        "fraction": 0.07472530752420425,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "spawn": "foundry-gantries",
+      "geometryDigest": "1dcd2f62712c97f20ff3e0741883e0123f8e7453dff4af1a118ab53ba5d5ffd5",
+      "geometryBytes": 709584,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-8-12",
+        "heightMm": 64400.001525878906,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-8-12",
+        "fraction": 0.11875001341104507,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "plain",
+      "spawn": "timber-crane-line",
+      "geometryDigest": "3014a6ead81be6cd0673a2b7d33659f4c80734da1c22430f048139651633e670",
+      "geometryBytes": 599376,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-12",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-12",
+        "fraction": 0.08478264510631561,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "freight-hall",
+      "geometryDigest": "6cc19004cdca8e90441a8f44415a65a5130170d1b998ba427282c47a5d948d06",
+      "geometryBytes": 676872,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-2",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-2",
+        "fraction": 0.08478264510631561,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "viaduct-river-gap",
+      "geometryDigest": "067238970ea46feeb9967b49ca85c711003ac19a6ddd2e84e2f33d61d7937769",
+      "geometryBytes": 590328,
+      "textureBytes": 0,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-7-7",
+        "heightMm": 13250.001907348633,
+        "normal": {
+          "x": -0.005364937242120504,
+          "y": 0.9981227517127991,
+          "z": -0.061010293662548065
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-7-8",
+        "fraction": 0.4026688039302826,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "quarry-under-conveyor",
+      "geometryDigest": "b80a57949f31f7a790cdb4b93912bbfb1c0b5e72f6c1391025bd88df342a804d",
+      "geometryBytes": 597264,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-2",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-2",
+        "fraction": 0.11368424445390701,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "station-canopy",
+      "geometryDigest": "54ad4caee283e0625fb968eca8fa761b55a189c1412847794c0424533e90bf40",
+      "geometryBytes": 597216,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-12",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-12",
+        "fraction": 0.07472530752420425,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "foundry-gantries",
+      "geometryDigest": "1dcd2f62712c97f20ff3e0741883e0123f8e7453dff4af1a118ab53ba5d5ffd5",
+      "geometryBytes": 709584,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-8-12",
+        "heightMm": 64400.001525878906,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-8-12",
+        "fraction": 0.11875001341104507,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "performance",
+      "spawn": "timber-crane-line",
+      "geometryDigest": "3014a6ead81be6cd0673a2b7d33659f4c80734da1c22430f048139651633e670",
+      "geometryBytes": 599376,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-12",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-12",
+        "fraction": 0.08478264510631561,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "freight-hall",
+      "geometryDigest": "6cc19004cdca8e90441a8f44415a65a5130170d1b998ba427282c47a5d948d06",
+      "geometryBytes": 676872,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-2",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-2",
+        "fraction": 0.08478264510631561,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "viaduct-river-gap",
+      "geometryDigest": "067238970ea46feeb9967b49ca85c711003ac19a6ddd2e84e2f33d61d7937769",
+      "geometryBytes": 590328,
+      "textureBytes": 0,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-7-7",
+        "heightMm": 13250.001907348633,
+        "normal": {
+          "x": -0.005364937242120504,
+          "y": 0.9981227517127991,
+          "z": -0.061010293662548065
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-7-8",
+        "fraction": 0.4026688039302826,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "quarry-under-conveyor",
+      "geometryDigest": "b80a57949f31f7a790cdb4b93912bbfb1c0b5e72f6c1391025bd88df342a804d",
+      "geometryBytes": 597264,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-2",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-2",
+        "fraction": 0.11368424445390701,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "station-canopy",
+      "geometryDigest": "54ad4caee283e0625fb968eca8fa761b55a189c1412847794c0424533e90bf40",
+      "geometryBytes": 597216,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-12",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-12",
+        "fraction": 0.07472530752420425,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "foundry-gantries",
+      "geometryDigest": "1dcd2f62712c97f20ff3e0741883e0123f8e7453dff4af1a118ab53ba5d5ffd5",
+      "geometryBytes": 709584,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-8-12",
+        "heightMm": 64400.001525878906,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-8-12",
+        "fraction": 0.11875001341104507,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "balanced",
+      "spawn": "timber-crane-line",
+      "geometryDigest": "3014a6ead81be6cd0673a2b7d33659f4c80734da1c22430f048139651633e670",
+      "geometryBytes": 599376,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-12",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-12",
+        "fraction": 0.08478264510631561,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "freight-hall",
+      "geometryDigest": "6cc19004cdca8e90441a8f44415a65a5130170d1b998ba427282c47a5d948d06",
+      "geometryBytes": 676872,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-2",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-2",
+        "fraction": 0.08478264510631561,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "viaduct-river-gap",
+      "geometryDigest": "067238970ea46feeb9967b49ca85c711003ac19a6ddd2e84e2f33d61d7937769",
+      "geometryBytes": 590328,
+      "textureBytes": 0,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-7-7",
+        "heightMm": 13250.001907348633,
+        "normal": {
+          "x": -0.005364937242120504,
+          "y": 0.9981227517127991,
+          "z": -0.061010293662548065
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-7-8",
+        "fraction": 0.4026688039302826,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "quarry-under-conveyor",
+      "geometryDigest": "b80a57949f31f7a790cdb4b93912bbfb1c0b5e72f6c1391025bd88df342a804d",
+      "geometryBytes": 597264,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-2",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-2",
+        "fraction": 0.11368424445390701,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "station-canopy",
+      "geometryDigest": "54ad4caee283e0625fb968eca8fa761b55a189c1412847794c0424533e90bf40",
+      "geometryBytes": 597216,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-12",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-2-12",
+        "fraction": 0.07472530752420425,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "foundry-gantries",
+      "geometryDigest": "1dcd2f62712c97f20ff3e0741883e0123f8e7453dff4af1a118ab53ba5d5ffd5",
+      "geometryBytes": 709584,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-8-12",
+        "heightMm": 64400.001525878906,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "scenery"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-8-12",
+        "fraction": 0.11875001341104507,
+        "layer": "scenery"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    },
+    {
+      "quality": "quality",
+      "spawn": "timber-crane-line",
+      "geometryDigest": "3014a6ead81be6cd0673a2b7d33659f4c80734da1c22430f048139651633e670",
+      "geometryBytes": 599376,
+      "textureBytes": 2446676,
+      "support": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-12",
+        "heightMm": 64000,
+        "normal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "layer": "terrain"
+      },
+      "groundStrike": {
+        "status": "terrain-hit",
+        "chunkId": "valley-13-12",
+        "fraction": 0.08478264510631561,
+        "layer": "terrain"
+      },
+      "clearApproach": {
+        "status": "terrain-clear"
+      }
+    }
+  ],
+  "scope": "24 exact-source material/window comparisons; native shader and appearance review remain required",
+  "geometryChanged": false,
+  "collisionChanged": false,
+  "texturesAdded": 0,
+  "disposalZero": true
+}

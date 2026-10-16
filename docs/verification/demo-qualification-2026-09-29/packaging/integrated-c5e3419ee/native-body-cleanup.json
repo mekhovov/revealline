@@ -1,0 +1,12 @@
+[
+  {
+    "path": "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/desktop",
+    "at": "2026-09-29T02:42:31.101828+00:00",
+    "reason": "Exact native static verification and manifest retention completed; root-authorized disk cleanup"
+  },
+  {
+    "path": "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/ios",
+    "at": "2026-09-29T02:42:35.949726+00:00",
+    "reason": "Exact native static verification and manifest retention completed; root-authorized disk cleanup"
+  }
+]

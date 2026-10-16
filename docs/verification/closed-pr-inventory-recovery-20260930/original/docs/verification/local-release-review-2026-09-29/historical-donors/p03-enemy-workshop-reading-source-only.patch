@@ -1,0 +1,339 @@
+diff --git a/authoring/enemy-catalog/index.html b/authoring/enemy-catalog/index.html
+index d5751e85e..86e6a1bdd 100644
+--- a/authoring/enemy-catalog/index.html
++++ b/authoring/enemy-catalog/index.html
+@@ -10,9 +10,25 @@
+     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
+     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
+     <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
++    <script type="module" src="../../game/ui/tool-display-entry.mjs"></script>
+     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
+     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
+     <style>
++      .catalog-host-actions {
++        display: flex;
++        flex-wrap: wrap;
++        align-items: center;
++        gap: 16px;
++      }
++      .catalog-host-actions > :is(button, a) {
++        box-sizing: border-box;
++        display: inline-flex;
++        align-items: center;
++        min-block-size: 44px;
++        min-inline-size: 44px;
++        max-inline-size: 100%;
++        white-space: normal;
++      }
+       #catalog-host-status + .button {
+         box-sizing: border-box;
+         padding-block: 0;
+@@ -30,19 +46,11 @@
+       Preview every registered role, prepare future generator choices and try a separate practice
+       map.
+     </p>
+-    <button id="open-catalog" disabled type="button">Open workshop</button>
+-    <a
+-      href="../../game/playground/"
+-      style="display: inline-flex; align-items: center; min-height: 44px"
+-      >Level playground</a
+-    >
+-    <a
+-      id="return-game"
+-      class="button"
+-      href="../../game/"
+-      style="display: inline-flex; align-items: center; min-height: 44px"
+-      >Return to game</a
+-    >
++    <div class="catalog-host-actions">
++      <button id="open-catalog" disabled type="button">Open workshop</button>
++      <a href="../../game/playground/">Level playground</a>
++      <a id="return-game" class="button" href="../../game/">Return to game</a>
++    </div>
+     <p id="catalog-host-status" class="operation-status" data-state="busy">
+       <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
+       ><span class="operation-status-label" role="status">Loading registered themes…</span>
+diff --git a/authoring/enemy-catalog/workshop.mjs b/authoring/enemy-catalog/workshop.mjs
+index 00bbfee65..8931877bc 100644
+--- a/authoring/enemy-catalog/workshop.mjs
++++ b/authoring/enemy-catalog/workshop.mjs
+@@ -193,7 +193,9 @@ async function start() {
+     const ownsInput = menuInput.poll(now);
+     panel.update(elapsed, {
+       paused: !ownsInput,
+-      reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
++      reduced:
++        document.body.dataset.effects === 'reduced' ||
++        matchMedia('(prefers-reduced-motion: reduce)').matches,
+     });
+ 
+     raf = requestAnimationFrame(loop);
+diff --git a/game/test/enemy-workshop-host.test.mjs b/game/test/enemy-workshop-host.test.mjs
+index 8d216bc73..c52ac6e05 100644
+--- a/game/test/enemy-workshop-host.test.mjs
++++ b/game/test/enemy-workshop-host.test.mjs
+@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
+ import { readFile } from 'node:fs/promises';
+ import { Document, Element, Events } from './helpers/couch-dom.mjs';
+ import { waitFor } from './helpers/wait-for.mjs';
++import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+ 
+ const html = await readFile(
+   new URL('../../authoring/enemy-catalog/index.html', import.meta.url),
+@@ -51,13 +52,14 @@ function mount(doc) {
+ async function workshop(
+   t,
+   url = 'https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/',
++  context = null,
+ ) {
+   const doc = new Document(),
+     win = new Events(),
+     callbacks = new Map();
+   class HostElement extends Element {
+     getContext() {
+-      return null;
++      return context;
+     }
+     prepend(child) {
+       this.append(child);
+@@ -97,6 +99,8 @@ async function workshop(
+       writes = [];
+     return {
+       writes,
++      entries: () => [...values],
++      seed: (key, value) => values.set(key, String(value)),
+       getItem: (key) => values.get(key) ?? null,
+       setItem(key, value) {
+         writes.push([key, value]);
+@@ -575,3 +579,217 @@ test('terminal departure during theme body decoding prevents late owner initiali
+   assert.equal(h.pendingFrames(), 0);
+   assert.equal(h.message(), message);
+ });
++
++// The HTML-selected shared owner runs alongside the real catalog host. These
++// modeled storage, media and cached-page events do not claim native font/layout
++// or BFCache coverage; canvas commands only prove the real reduction consumer.
++async function readingWorkshop(
++  t,
++  initial = { textFace: 'plain', textSize: 'large', reducedEffects: true },
++) {
++  const paints = [],
++    context = { globalAlpha: 1 };
++  for (const method of [
++    'clearRect',
++    'save',
++    'restore',
++    'translate',
++    'rotate',
++    'scale',
++    'fillRect',
++    'beginPath',
++    'arc',
++    'stroke',
++    'moveTo',
++    'lineTo',
++    'drawImage',
++  ])
++    context[method] = (...args) => paints.push([method, ...args]);
++  const h = await workshop(t, undefined, context),
++    media = Object.assign(new Events(), { matches: false }),
++    timers = new Map();
++  let timerSerial = 0;
++  h.local.seed(DISPLAY_PREFERENCES_KEY, JSON.stringify(initial));
++  h.win.localStorage = h.local;
++  h.win.matchMedia = () => media;
++  h.win.setTimeout = (fn, ms) => {
++    assert.equal(ms, 0);
++    timers.set(++timerSerial, fn);
++    return timerSerial;
++  };
++  h.win.clearTimeout = (id) => timers.delete(id);
++  h.doc.defaultView = h.win;
++  const htmlURL = new URL('../../authoring/enemy-catalog/index.html', import.meta.url),
++    entries = [...html.matchAll(/<script\s+type="module"\s+src="([^"]+)"/g)]
++      .map((match) => new URL(match[1], htmlURL))
++      .filter((url) => url.pathname.endsWith('/tool-display-entry.mjs'));
++  for (const url of entries) {
++    url.searchParams.set('enemy-reading-host', String(++instance));
++    await import(url.href);
++  }
++  return {
++    ...h,
++    entries,
++    media,
++    timers,
++    paints,
++    external(value, notify = true) {
++      const raw = JSON.stringify(value);
++      h.local.seed(DISPLAY_PREFERENCES_KEY, raw);
++      if (notify)
++        h.win.emit('storage', {
++          key: DISPLAY_PREFERENCES_KEY,
++          newValue: raw,
++          storageArea: h.local,
++        });
++    },
++    flush() {
++      for (const [id, fn] of [...timers]) {
++        timers.delete(id);
++        fn();
++      }
++    },
++  };
++}
++function readingState(h) {
++  const { textFace, textSize, effects } = h.doc.body.dataset;
++  return { textFace, textSize, effects };
++}
++const largePlainReduced = { textFace: 'plain', textSize: 'large', effects: 'reduced' };
++
++test('Enemy reading entry adopts shared Large/Plain before catalog readiness without writes or focus', async (t) => {
++  const h = await readingWorkshop(t);
++  assert.deepEqual(readingState(h), largePlainReduced);
++  assert.equal(h.entries.length, 1);
++  assert.equal(h.doc.activeElement, h.doc.body);
++  assert.equal(h.$('open-catalog').disabled, true);
++  assert.equal(h.$('enemy-catalog-dialog'), null);
++  assert.equal(h.requests.length, 0);
++  const before = h.local.entries();
++  h.back.focus();
++  await h.start();
++  assert.deepEqual(readingState(h), largePlainReduced);
++  assert.equal(h.doc.activeElement, h.back);
++  h.resolve();
++  await until(() => !h.$('open-catalog').disabled);
++  assert.equal(h.$('enemy-catalog-dialog').open, false);
++  assert.equal(h.doc.activeElement, h.back);
++  assert.deepEqual(h.local.entries(), before);
++  assert.deepEqual(h.local.writes, []);
++  assert.deepEqual(h.session.writes, []);
++});
++
++test('Enemy reading updates preserve the actual catalog draft, stored choices and focused editor', async (t) => {
++  const h = await readingWorkshop(t);
++  await h.ready();
++  await h.$('enemy-catalog-apply').onclick();
++  const stored = h.local.entries().filter(([key]) => key !== DISPLAY_PREFERENCES_KEY),
++    writes = [...h.local.writes],
++    dialog = h.$('enemy-catalog-dialog'),
++    preview = dialog.querySelector('canvas'),
++    requests = [...h.requests];
++  h.$('enemy-catalog-skin').value = 'ukraine';
++  h.$('enemy-catalog-skin').onchange();
++  h.$('enemy-catalog-enabled').checked = false;
++  h.$('enemy-catalog-enabled').onchange();
++  h.$('enemy-catalog-skin').focus();
++  const detail = h.$('enemy-catalog-details').textContent;
++  h.external({ textFace: 'pixel', textSize: 'standard', reducedEffects: false });
++  assert.deepEqual(readingState(h), { textFace: 'pixel', textSize: 'standard', effects: 'full' });
++  h.external({ textFace: 'plain', textSize: 'large', reducedEffects: false });
++  h.media.matches = true;
++  h.media.emit('change');
++  assert.deepEqual(readingState(h), largePlainReduced);
++  assert.equal(h.doc.activeElement, h.$('enemy-catalog-skin'));
++  assert.equal(h.$('enemy-catalog-skin').value, 'ukraine');
++  assert.equal(h.$('enemy-catalog-enabled').checked, false);
++  assert.equal(h.$('enemy-catalog-details').textContent, detail);
++  assert.equal(h.$('enemy-catalog-dialog'), dialog);
++  assert.equal(dialog.open, true);
++  assert.equal(dialog.querySelector('canvas'), preview);
++  assert.deepEqual(
++    h.local.entries().filter(([key]) => key !== DISPLAY_PREFERENCES_KEY),
++    stored,
++  );
++  assert.deepEqual(h.local.writes, writes);
++  assert.deepEqual(h.session.writes, []);
++  assert.deepEqual(h.requests, requests);
++});
++
++test('Enemy preview consumes explicit and system reduction through the shared reading owner', async (t) => {
++  const h = await readingWorkshop(t, {
++    textFace: 'pixel',
++    textSize: 'standard',
++    reducedEffects: false,
++  });
++  await h.ready();
++  function bank() {
++    h.paints.length = 0;
++    h.frame();
++    return h.paints.find(([method]) => method === 'scale')?.slice(1);
++  }
++  bank();
++  assert.notDeepEqual(bank(), [1, 1], 'Ordinary moving preview has cosmetic bank.');
++  h.external({ textFace: 'pixel', textSize: 'standard', reducedEffects: true });
++  assert.deepEqual(bank(), [1, 1], 'Explicit reduction removes bank in the real panel painter.');
++  h.external({ textFace: 'pixel', textSize: 'standard', reducedEffects: false });
++  assert.notDeepEqual(bank(), [1, 1]);
++  h.media.matches = true;
++  h.media.emit('change');
++  assert.deepEqual(bank(), [1, 1], 'System reduction reaches the same painter.');
++  assert.deepEqual(h.local.writes, []);
++  assert.deepEqual(h.session.writes, []);
++});
++
++test('Enemy reading return refreshes missed preferences without replacing draft or focus', async (t) => {
++  const h = await readingWorkshop(t);
++  await h.ready();
++  h.$('enemy-catalog-skin').value = 'retro';
++  h.$('enemy-catalog-skin').onchange();
++  h.$('enemy-catalog-skin').focus();
++  const dialog = h.$('enemy-catalog-dialog'),
++    focus = h.doc.activeElement,
++    requests = [...h.requests];
++  h.win.emit('pagehide', { persisted: true });
++  assert.equal(h.pendingFrames(), 0);
++  h.external({ textFace: 'pixel', textSize: 'standard', reducedEffects: false }, false);
++  h.win.emit('pageshow', { persisted: true });
++  h.flush();
++  assert.deepEqual(readingState(h), { textFace: 'pixel', textSize: 'standard', effects: 'full' });
++  assert.equal(h.$('enemy-catalog-dialog'), dialog);
++  assert.equal(dialog.open, true);
++  assert.equal(h.doc.activeElement, focus);
++  assert.equal(h.$('enemy-catalog-skin').value, 'retro');
++  assert.equal(h.pendingFrames(), 1);
++  assert.deepEqual(h.requests, requests);
++  assert.deepEqual(h.local.writes, []);
++  assert.deepEqual(h.session.writes, []);
++});
++
++test('Enemy reading departure retires subscriptions and retained reading callbacks', async (t) => {
++  const h = await readingWorkshop(t);
++  h.back.focus();
++  h.win.emit('pageshow', { persisted: false });
++  const pending = [...h.timers.values()],
++    storage = [...(h.win.listeners.get('storage') || [])],
++    shows = [...(h.win.listeners.get('pageshow') || [])],
++    motion = [...(h.media.listeners.get('change') || [])];
++  assert.equal(storage.length, 1);
++  h.win.emit('pagehide', { persisted: false });
++  const state = readingState(h);
++  assert.equal(h.timers.size, 0);
++  assert.equal(h.win.listeners.get('storage')?.size ?? 0, 0);
++  assert.equal(h.media.listeners.get('change')?.size ?? 0, 0);
++  h.external({ textFace: 'pixel', textSize: 'standard', reducedEffects: false });
++  h.media.matches = true;
++  for (const callback of pending) callback();
++  for (const callback of storage) callback({ key: DISPLAY_PREFERENCES_KEY });
++  for (const callback of shows) callback({ persisted: true });
++  for (const callback of motion) callback();
++  assert.deepEqual(readingState(h), state);
++  assert.equal(h.doc.activeElement, h.back);
++  assert.equal(h.timers.size, 0);
++  assert.equal(h.requests.length, 0);
++  assert.deepEqual(h.local.writes, []);
++  assert.deepEqual(h.session.writes, []);
++});
+diff --git a/game/ui/enemy-catalog-panel.css b/game/ui/enemy-catalog-panel.css
+index ff91723b7..9081116a1 100644
+--- a/game/ui/enemy-catalog-panel.css
++++ b/game/ui/enemy-catalog-panel.css
+@@ -6,7 +6,8 @@
+   border: 2px solid #81c6d2;
+   background: #101526;
+   color: #e5e9e2;
+-  font: 18px/1.5 var(--pixel-font, monospace);
++  font: var(--fk-text-body, 18px) / var(--fk-leading-body, 1.5)
++    var(--fk-font-ui, var(--pixel-font, monospace));
+   color-scheme: dark;
+   overflow: auto;
+ }

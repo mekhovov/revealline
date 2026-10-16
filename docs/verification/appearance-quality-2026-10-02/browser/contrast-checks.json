@@ -1,0 +1,55 @@
+{
+  "method": "Read-only computed foreground against nearest opaque ancestor background; excludes hidden/inert elements. Sampled rendered text, not image/alpha/texture extrema or full release coverage.",
+  "checks": [
+    {
+      "scenario": "Industrial mission library",
+      "failures": [],
+      "theme": "industrial-workshop"
+    },
+    {
+      "scenario": "Industrial music library",
+      "failures": [],
+      "theme": "industrial-workshop"
+    },
+    {
+      "scenario": "Dnipro music library",
+      "failures": [],
+      "theme": "dnipro-porcelain"
+    },
+    {
+      "scenario": "Dnipro high-contrast appearance, 390px",
+      "examined": 34,
+      "failures": [],
+      "highContrast": true,
+      "theme": "dnipro-porcelain"
+    },
+    {
+      "scenario": "Industrial paused race",
+      "examined": 11,
+      "failures": [],
+      "highContrast": false,
+      "theme": "industrial-workshop"
+    },
+    {
+      "scenario": "Industrial replay ready",
+      "examined": 50,
+      "failures": [],
+      "highContrast": false,
+      "theme": "industrial-workshop"
+    },
+    {
+      "scenario": "Industrial filtered uninstalled mission actions",
+      "examined": 43,
+      "failures": [],
+      "highContrast": false,
+      "theme": "industrial-workshop"
+    },
+    {
+      "scenario": "Rebuilt package Industrial music dialog",
+      "examined": 108,
+      "failures": [],
+      "highContrast": false,
+      "theme": "industrial-workshop"
+    }
+  ]
+}

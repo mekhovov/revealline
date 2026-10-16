@@ -1,0 +1,787 @@
+TAP version 13
+# Subtest: Team pilot 1 paints spinning blades and freezes them when paused, downed or reduced
+ok 1 - Team pilot 1 paints spinning blades and freezes them when paused, downed or reduced
+  ---
+  duration_ms: 112.136792
+  ...
+# Subtest: Team pilot 2 paints spinning blades and freezes them when paused, downed or reduced
+ok 2 - Team pilot 2 paints spinning blades and freezes them when paused, downed or reduced
+  ---
+  duration_ms: 22.492084
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 4FPS
+ok 3 - Team rendered 2-blade hubs keep a forward bounded phase at 4FPS
+  ---
+  duration_ms: 19.000959
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 30FPS
+ok 4 - Team rendered 2-blade hubs keep a forward bounded phase at 30FPS
+  ---
+  duration_ms: 19.780667
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 60FPS
+ok 5 - Team rendered 2-blade hubs keep a forward bounded phase at 60FPS
+  ---
+  duration_ms: 18.032
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 120FPS
+ok 6 - Team rendered 2-blade hubs keep a forward bounded phase at 120FPS
+  ---
+  duration_ms: 53.589083
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 4FPS
+ok 7 - Team rendered 3-blade hubs keep a forward bounded phase at 4FPS
+  ---
+  duration_ms: 2.090875
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 30FPS
+ok 8 - Team rendered 3-blade hubs keep a forward bounded phase at 30FPS
+  ---
+  duration_ms: 9.922333
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 60FPS
+ok 9 - Team rendered 3-blade hubs keep a forward bounded phase at 60FPS
+  ---
+  duration_ms: 56.225875
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 120FPS
+ok 10 - Team rendered 3-blade hubs keep a forward bounded phase at 120FPS
+  ---
+  duration_ms: 107.057583
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 4FPS
+ok 11 - Team rendered 4-blade hubs keep a forward bounded phase at 4FPS
+  ---
+  duration_ms: 11.163708
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 30FPS
+ok 12 - Team rendered 4-blade hubs keep a forward bounded phase at 30FPS
+  ---
+  duration_ms: 26.889375
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 60FPS
+ok 13 - Team rendered 4-blade hubs keep a forward bounded phase at 60FPS
+  ---
+  duration_ms: 23.421
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 120FPS
+ok 14 - Team rendered 4-blade hubs keep a forward bounded phase at 120FPS
+  ---
+  duration_ms: 32.832416
+  ...
+# Subtest: tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+ok 15 - tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+  ---
+  duration_ms: 57.661958
+  ...
+# Subtest: six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+ok 16 - six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+  ---
+  duration_ms: 67.522292
+  ...
+# Subtest: explicit Team roles reuse prepared slots without changing actual types or run state
+ok 17 - explicit Team roles reuse prepared slots without changing actual types or run state
+  ---
+  duration_ms: 7.260625
+  ...
+# Subtest: Team prepared enemies reuse catalog surface motion without loading another body image
+ok 18 - Team prepared enemies reuse catalog surface motion without loading another body image
+  ---
+  duration_ms: 3.78125
+  ...
+# Subtest: qualified Team roamers borrow the tracked body and its bounded motion treatment
+ok 19 - qualified Team roamers borrow the tracked body and its bounded motion treatment
+  ---
+  duration_ms: 120.45025
+  ...
+# Subtest: Team 240px hybrid source detail and CSS body size stay separate from contact radii
+ok 20 - Team 240px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 4.557459
+  ...
+# Subtest: Team 200px props source detail and CSS body size stay separate from contact radii
+ok 21 - Team 200px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 7.019959
+  ...
+# Subtest: Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+ok 22 - Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.984167
+  ...
+# Subtest: Team 479px hybrid source detail and CSS body size stay separate from contact radii
+ok 23 - Team 479px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 16.716583
+  ...
+# Subtest: Team 1152px microtile source detail and CSS body size stay separate from contact radii
+ok 24 - Team 1152px microtile source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 3.702208
+  ...
+# Subtest: Team 640px props source detail and CSS body size stay separate from contact radii
+ok 25 - Team 640px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 8.893625
+  ...
+# Subtest: real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+ok 26 - real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+  ---
+  duration_ms: 6.41
+  ...
+# Subtest: heading follows observed movement even when stale enemy velocity points elsewhere
+ok 27 - heading follows observed movement even when stale enemy velocity points elsewhere
+  ---
+  duration_ms: 2.504791
+  ...
+# Subtest: reduced motion and zero motion scale keep poses static while real movement still advances
+ok 28 - reduced motion and zero motion scale keep poses static while real movement still advances
+  ---
+  duration_ms: 80.801
+  ...
+# Subtest: downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+ok 29 - downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+  ---
+  duration_ms: 13.619625
+  ...
+# Subtest: prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+ok 30 - prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+  ---
+  duration_ms: 5.72925
+  ...
+# Subtest: absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+ok 31 - absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+  ---
+  duration_ms: 4.481042
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+ok 32 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+  ---
+  duration_ms: 23.134833
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+ok 33 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+  ---
+  duration_ms: 12.489959
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+ok 34 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+  ---
+  duration_ms: 3.727792
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+ok 35 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+  ---
+  duration_ms: 11.703166
+  ...
+# Subtest: bright required picture stays exact beneath actors while painting and body detail never change gameplay
+ok 36 - bright required picture stays exact beneath actors while painting and body detail never change gameplay
+  ---
+  duration_ms: 126.192875
+  ...
+# Subtest: overlapping actor images cannot cover the final real enemy contact rings
+ok 37 - overlapping actor images cannot cover the final real enemy contact rings
+  ---
+  duration_ms: 2.675208
+  ...
+# Subtest: charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+ok 38 - charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+  ---
+  duration_ms: 6.0165
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+ok 39 - exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+  ---
+  duration_ms: 13.755167
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+ok 40 - exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+  ---
+  duration_ms: 4.710334
+  ...
+# Subtest: minimum authored Team radius stays exact in the sampled frame and final footprint
+ok 41 - minimum authored Team radius stays exact in the sampled frame and final footprint
+  ---
+  duration_ms: 3.102458
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (current progress)
+ok 42 - actual rescue of player 1 has one legible cue (current progress)
+  ---
+  duration_ms: 258.508792
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (legacy static role)
+ok 43 - actual rescue of player 1 has one legible cue (legacy static role)
+  ---
+  duration_ms: 241.335791
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (current progress)
+ok 44 - actual rescue of player 2 has one legible cue (current progress)
+  ---
+  duration_ms: 190.292625
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (legacy static role)
+ok 45 - actual rescue of player 2 has one legible cue (legacy static role)
+  ---
+  duration_ms: 209.130334
+  ...
+# Subtest: prepared pilot keeps an unfilled physical contact at 240px for \#ffda77
+ok 46 - prepared pilot keeps an unfilled physical contact at 240px for \#ffda77
+  ---
+  duration_ms: 1.005375
+  ...
+# Subtest: prepared pilot keeps an unfilled physical contact at 240px for \#8be0ed
+ok 47 - prepared pilot keeps an unfilled physical contact at 240px for \#8be0ed
+  ---
+  duration_ms: 0.084083
+  ...
+# Subtest: prepared pilot keeps an unfilled physical contact at 390px for \#ffda77
+ok 48 - prepared pilot keeps an unfilled physical contact at 390px for \#ffda77
+  ---
+  duration_ms: 0.11525
+  ...
+# Subtest: prepared pilot keeps an unfilled physical contact at 390px for \#8be0ed
+ok 49 - prepared pilot keeps an unfilled physical contact at 390px for \#8be0ed
+  ---
+  duration_ms: 0.457542
+  ...
+# Subtest: prepared pilot keeps an unfilled physical contact at 844px for \#ffda77
+ok 50 - prepared pilot keeps an unfilled physical contact at 844px for \#ffda77
+  ---
+  duration_ms: 0.17525
+  ...
+# Subtest: prepared pilot keeps an unfilled physical contact at 844px for \#8be0ed
+ok 51 - prepared pilot keeps an unfilled physical contact at 844px for \#8be0ed
+  ---
+  duration_ms: 0.058417
+  ...
+# Subtest: prepared pilot keeps an unfilled physical contact at 1152px for \#ffda77
+ok 52 - prepared pilot keeps an unfilled physical contact at 1152px for \#ffda77
+  ---
+  duration_ms: 0.050792
+  ...
+# Subtest: prepared pilot keeps an unfilled physical contact at 1152px for \#8be0ed
+ok 53 - prepared pilot keeps an unfilled physical contact at 1152px for \#8be0ed
+  ---
+  duration_ms: 0.097958
+  ...
+# Subtest: Motion HTML adopts reading policy before held app startup with one explicit size writer
+ok 54 - Motion HTML adopts reading policy before held app startup with one explicit size writer
+  ---
+  duration_ms: 578.121709
+  ...
+# Subtest: Motion failed app startup retains independent size controls and failed-save intent
+ok 55 - Motion failed app startup retains independent size controls and failed-save intent
+  ---
+  duration_ms: 126.118041
+  ...
+# Subtest: Motion saved and system reduction cap local choice without changing live run or authored values
+ok 56 - Motion saved and system reduction cap local choice without changing live run or authored values
+  ---
+  duration_ms: 277.864167
+  ...
+# Subtest: Motion local reduced choice survives shared caps and paused preference edits do not resume
+ok 57 - Motion local reduced choice survives shared caps and paused preference edits do not resume
+  ---
+  duration_ms: 189.948708
+  ...
+# Subtest: Motion loaded body and local background survive reading changes and cached return
+ok 58 - Motion loaded body and local background survive reading changes and cached return
+  ---
+  duration_ms: 298.141667
+  ...
+# Subtest: Motion interruption before pending startup prevents automatic start and stale frames cannot return
+ok 59 - Motion interruption before pending startup prevents automatic start and stale frames cannot return
+  ---
+  duration_ms: 247.385459
+  ...
+# Subtest: Motion terminal departure fences held initialization and leaves no authority or app listeners
+ok 60 - Motion terminal departure fences held initialization and leaves no authority or app listeners
+  ---
+  duration_ms: 69.326208
+  ...
+# Subtest: Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+ok 61 - Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer
+  ---
+  duration_ms: 132.234542
+  ...
+# Subtest: Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+ok 62 - Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only
+  ---
+  duration_ms: 270.566667
+  ...
+# Subtest: Motion application graph completing after terminal departure cannot remount or fetch
+ok 63 - Motion application graph completing after terminal departure cannot remount or fetch
+  ---
+  duration_ms: 17.777916
+  ...
+# Subtest: Motion graph first arriving in an unfocused document starts paused until explicit Play
+ok 64 - Motion graph first arriving in an unfocused document starts paused until explicit Play
+  ---
+  duration_ms: 98.280125
+  ...
+# Subtest: Motion cached interruption before first application delivery cannot autoplay before or after return
+ok 65 - Motion cached interruption before first application delivery cannot autoplay before or after return
+  ---
+  duration_ms: 105.42825
+  ...
+# (node:5486) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+ok 66 - Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)
+  ---
+  duration_ms: 187.955417
+  ...
+# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+ok 67 - Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)
+  ---
+  duration_ms: 118.418834
+  ...
+# Subtest: Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+ok 68 - Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer
+  ---
+  duration_ms: 45.603
+  ...
+# Subtest: Motion network failure after actual delivery provides retry without taking current focus
+ok 69 - Motion network failure after actual delivery provides retry without taking current focus
+  ---
+  duration_ms: 40.359
+  ...
+# Subtest: Motion validation failure after actual delivery provides retry without taking current focus
+ok 70 - Motion validation failure after actual delivery provides retry without taking current focus
+  ---
+  duration_ms: 84.898709
+  ...
+# Subtest: Motion terminal departure ignores a late failed preset read without exposing retry
+ok 71 - Motion terminal departure ignores a late failed preset read without exposing retry
+  ---
+  duration_ms: 75.81475
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an hidden document or defer it until return
+ok 72 - Motion real launcher does not take Reload focus in an hidden document or defer it until return
+  ---
+  duration_ms: 113.379708
+  ...
+# Subtest: Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+ok 73 - Motion real launcher does not take Reload focus in an unfocused document or defer it until return
+  ---
+  duration_ms: 138.873417
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired before attachment
+ok 74 - Motion actual Reload retirement preserves navigation focus acquired before attachment
+  ---
+  duration_ms: 61.124333
+  ...
+# Subtest: Motion actual Reload retirement preserves navigation focus acquired during attachment
+ok 75 - Motion actual Reload retirement preserves navigation focus acquired during attachment
+  ---
+  duration_ms: 94.991292
+  ...
+# Subtest: Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+ok 76 - Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership
+  ---
+  duration_ms: 133.479417
+  ...
+# Subtest: Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+ok 77 - Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study
+  ---
+  duration_ms: 40.248208
+  ...
+# Subtest: Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+ok 78 - Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows
+  ---
+  duration_ms: 82.94325
+  ...
+# Subtest: Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+ok 79 - Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh
+  ---
+  duration_ms: 117.399958
+  ...
+# Subtest: Motion APNG upload derives exact static PNG bytes while retaining the original File
+ok 80 - Motion APNG upload derives exact static PNG bytes while retaining the original File
+  ---
+  duration_ms: 89.861584
+  ...
+# Subtest: Motion GIF and WebP keep the original File source and native-image path
+ok 81 - Motion GIF and WebP keep the original File source and native-image path
+  ---
+  duration_ms: 101.957041
+  ...
+# Subtest: Motion superseded PNG byte read cannot allocate a URL or replace the newer preview
+ok 82 - Motion superseded PNG byte read cannot allocate a URL or replace the newer preview
+  ---
+  duration_ms: 114.093625
+  ...
+# Subtest: Motion Clear while reading PNG bytes prevents late URL, image and status resurrection
+ok 83 - Motion Clear while reading PNG bytes prevents late URL, image and status resurrection
+  ---
+  duration_ms: 59.233709
+  ...
+# Subtest: Motion cached departure invalidates the pending PNG byte read
+ok 84 - Motion cached departure invalidates the pending PNG byte read
+  ---
+  duration_ms: 54.7825
+  ...
+# Subtest: Motion terminal departure invalidates the pending PNG byte read
+ok 85 - Motion terminal departure invalidates the pending PNG byte read
+  ---
+  duration_ms: 66.439708
+  ...
+# Subtest: Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear
+ok 86 - Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear
+  ---
+  duration_ms: 75.913709
+  ...
+# Subtest: Motion prepared replacement native decode failure preserves prior image and retires derivative URL
+ok 87 - Motion prepared replacement native decode failure preserves prior image and retires derivative URL
+  ---
+  duration_ms: 180.162458
+  ...
+# Subtest: Motion late PNG preparation rejection after a new image cannot overwrite current success
+ok 88 - Motion late PNG preparation rejection after a new image cannot overwrite current success
+  ---
+  duration_ms: 106.48625
+  ...
+# Subtest: Motion sliders keep stable visible labels while the actual study startup is held
+ok 89 - Motion sliders keep stable visible labels while the actual study startup is held
+  ---
+  duration_ms: 102.853208
+  ...
+# Subtest: Motion slider input updates current units without changing its name, focus or paused intent
+ok 90 - Motion slider input updates current units without changing its name, focus or paused intent
+  ---
+  duration_ms: 183.086166
+  ...
+# Subtest: Motion recipe replacement refreshes the rotor value text after a manual radius override
+ok 91 - Motion recipe replacement refreshes the rotor value text after a manual radius override
+  ---
+  duration_ms: 89.586167
+  ...
+# Subtest: Motion hub edits and JSON round trip preserve paused clocks and reduced=false
+ok 92 - Motion hub edits and JSON round trip preserve paused clocks and reduced=false
+  ---
+  duration_ms: 110.094042
+  ...
+# Subtest: Motion hub edits and JSON round trip preserve paused clocks and reduced=true
+ok 93 - Motion hub edits and JSON round trip preserve paused clocks and reduced=true
+  ---
+  duration_ms: 366.24175
+  ...
+# Subtest: Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated
+ok 94 - Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated
+  ---
+  duration_ms: 323.217625
+  ...
+# Subtest: Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host
+ok 95 - Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host
+  ---
+  duration_ms: 589.507292
+  ...
+# Subtest: Motion rotation reveals the currently focused rotor field without changing its paused study
+ok 96 - Motion rotation reveals the currently focused rotor field without changing its paused study
+  ---
+  duration_ms: 101.141333
+  ...
+# Subtest: Motion rotation accounts for the settings clip even while a focused slider is inside the viewport
+ok 97 - Motion rotation accounts for the settings clip even while a focused slider is inside the viewport
+  ---
+  duration_ms: 251.969917
+  ...
+# Subtest: Motion rotation reveals the rotor when its entire settings panel moves above the viewport
+ok 98 - Motion rotation reveals the rotor when its entire settings panel moves above the viewport
+  ---
+  duration_ms: 110.034833
+  ...
+# Subtest: Motion rotation cannot reveal an hidden current control
+ok 99 - Motion rotation cannot reveal an hidden current control
+  ---
+  duration_ms: 124.014041
+  ...
+# Subtest: Motion rotation cannot reveal an inert current control
+ok 100 - Motion rotation cannot reveal an inert current control
+  ---
+  duration_ms: 120.741292
+  ...
+# Subtest: Motion rotation cannot reveal an disabled current control
+ok 101 - Motion rotation cannot reveal an disabled current control
+  ---
+  duration_ms: 47.604166
+  ...
+# Subtest: Motion rotation cannot reveal an fieldset current control
+ok 102 - Motion rotation cannot reveal an fieldset current control
+  ---
+  duration_ms: 83.972
+  ...
+# Subtest: Motion rotation cannot reveal an background current control
+ok 103 - Motion rotation cannot reveal an background current control
+  ---
+  duration_ms: 64.336833
+  ...
+# Subtest: Motion rotation cannot reveal an away current control
+ok 104 - Motion rotation cannot reveal an away current control
+  ---
+  duration_ms: 94.810166
+  ...
+# Subtest: Motion rotation cannot reveal an disposed current control
+ok 105 - Motion rotation cannot reveal an disposed current control
+  ---
+  duration_ms: 58.455834
+  ...
+# Subtest: Motion resize cannot scroll after measurement changes the focused owner or loses foreground
+ok 106 - Motion resize cannot scroll after measurement changes the focused owner or loses foreground
+  ---
+  duration_ms: 57.40225
+  ...
+# Subtest: Motion resize reveals the control when its labeled field is taller than the visible settings area
+ok 107 - Motion resize reveals the control when its labeled field is taller than the visible settings area
+  ---
+  duration_ms: 69.340542
+  ...
+# Subtest: Motion locale changes preserve paused movement, live controls and image ownership
+ok 108 - Motion locale changes preserve paused movement, live controls and image ownership
+  ---
+  duration_ms: 660.771792
+  ...
+# Subtest: Motion locked collection groups preserve authored alternatives and focused selection across locales
+ok 109 - Motion locked collection groups preserve authored alternatives and focused selection across locales
+  ---
+  duration_ms: 383.360917
+  ...
+# Subtest: Motion accepted collection notices translate without repeating mutations or saving game progress
+ok 110 - Motion accepted collection notices translate without repeating mutations or saving game progress
+  ---
+  duration_ms: 2391.8075
+  ...
+# Subtest: every historical Motion rig round-trips through the existing rotors array without rewriting defaults
+ok 111 - every historical Motion rig round-trips through the existing rotors array without rewriting defaults
+  ---
+  duration_ms: 9.655416
+  ...
+# Subtest: editing one tuple preserves its index direction, phase, anchors and radius and leaves other records verbatim
+ok 112 - editing one tuple preserves its index direction, phase, anchors and radius and leaves other records verbatim
+  ---
+  duration_ms: 1.229208
+  ...
+# Subtest: review composes actual recipe signs, offsets and per-hub blade counts without signing phase twice
+ok 113 - review composes actual recipe signs, offsets and per-hub blade counts without signing phase twice
+  ---
+  duration_ms: 2.843
+  ...
+# Subtest: malformed, unknown and out-of-bounds rotor edits fail before any accepted rig changes
+ok 114 - malformed, unknown and out-of-bounds rotor edits fail before any accepted rig changes
+  ---
+  duration_ms: 0.537583
+  ...
+# Subtest: stale body or rig drafts cannot overwrite a newer accepted rig
+ok 115 - stale body or rig drafts cannot overwrite a newer accepted rig
+  ---
+  duration_ms: 0.182042
+  ...
+# Subtest: mixed imported blade counts constrain phase sampling without rewriting rendered fallback counts
+ok 116 - mixed imported blade counts constrain phase sampling without rewriting rendered fallback counts
+  ---
+  duration_ms: 0.224583
+  ...
+# Subtest: editor applies and exports the accepted rig, preserves an unsubmitted draft during refresh, and restores source
+ok 117 - editor applies and exports the accepted rig, preserves an unsubmitted draft during refresh, and restores source
+  ---
+  duration_ms: 3.138417
+  ...
+# Subtest: editor rejects a stale selection and hides rotor-only controls for non-rotor recipes
+ok 118 - editor rejects a stale selection and hides rotor-only controls for non-rotor recipes
+  ---
+  duration_ms: 0.492
+  ...
+# Subtest: 294px carrier bolt respects readable body scaling and the unchanged contact radius
+ok 119 - 294px carrier bolt respects readable body scaling and the unchanged contact radius
+  ---
+  duration_ms: 1.133541
+  ...
+# Subtest: 1152px carrier bolt respects readable body scaling and the unchanged contact radius
+ok 120 - 1152px carrier bolt respects readable body scaling and the unchanged contact radius
+  ---
+  duration_ms: 0.100667
+  ...
+# Subtest: R4 dark palette: 294px arena keeps light cut core and bounded readable width
+ok 121 - R4 dark palette: 294px arena keeps light cut core and bounded readable width
+  ---
+  duration_ms: 1.876291
+  ...
+# Subtest: R4 dark palette: 390px arena keeps light cut core and bounded readable width
+ok 122 - R4 dark palette: 390px arena keeps light cut core and bounded readable width
+  ---
+  duration_ms: 0.096292
+  ...
+# Subtest: R4 dark palette: 600px arena keeps light cut core and bounded readable width
+ok 123 - R4 dark palette: 600px arena keeps light cut core and bounded readable width
+  ---
+  duration_ms: 0.137209
+  ...
+# Subtest: R4 dark palette: 1152px arena keeps light cut core and bounded readable width
+ok 124 - R4 dark palette: 1152px arena keeps light cut core and bounded readable width
+  ---
+  duration_ms: 0.065792
+  ...
+# Subtest: dark picture: 240px cutting head has a plate, bright core and directional nose
+ok 125 - dark picture: 240px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.118875
+  ...
+# Subtest: dark picture: 390px cutting head has a plate, bright core and directional nose
+ok 126 - dark picture: 390px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 1.309125
+  ...
+# Subtest: dark picture: 1152px cutting head has a plate, bright core and directional nose
+ok 127 - dark picture: 1152px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.471667
+  ...
+# Subtest: light picture: 240px cutting head has a plate, bright core and directional nose
+ok 128 - light picture: 240px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.151458
+  ...
+# Subtest: light picture: 390px cutting head has a plate, bright core and directional nose
+ok 129 - light picture: 390px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.202
+  ...
+# Subtest: light picture: 1152px cutting head has a plate, bright core and directional nose
+ok 130 - light picture: 1152px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.056583
+  ...
+# Subtest: 240px travelling fronts remain distinct and readable with reduced effects
+ok 131 - 240px travelling fronts remain distinct and readable with reduced effects
+  ---
+  duration_ms: 0.1835
+  ...
+# Subtest: 390px travelling fronts remain distinct and readable with reduced effects
+ok 132 - 390px travelling fronts remain distinct and readable with reduced effects
+  ---
+  duration_ms: 0.097667
+  ...
+# Subtest: 1152px travelling fronts remain distinct and readable with reduced effects
+ok 133 - 1152px travelling fronts remain distinct and readable with reduced effects
+  ---
+  duration_ms: 0.046833
+  ...
+# Subtest: travelling-front motion adds only a bounded pulse and never shifts the authoritative point
+ok 134 - travelling-front motion adds only a bounded pulse and never shifts the authoritative point
+  ---
+  duration_ms: 0.154708
+  ...
+# Subtest: 240px larger actor body leaves real contact and active-cut world coordinates unchanged
+ok 135 - 240px larger actor body leaves real contact and active-cut world coordinates unchanged
+  ---
+  duration_ms: 1.1955
+  ...
+# Subtest: fpv: actual observed movement animates microtile bodies; Pause holds the exact pose
+ok 136 - fpv: actual observed movement animates microtile bodies; Pause holds the exact pose
+  ---
+  duration_ms: 0.593584
+  ...
+# Subtest: ukraine: actual observed movement animates microtile bodies; Pause holds the exact pose
+ok 137 - ukraine: actual observed movement animates microtile bodies; Pause holds the exact pose
+  ---
+  duration_ms: 0.309625
+  ...
+# Subtest: retro: actual observed movement animates microtile bodies; Pause holds the exact pose
+ok 138 - retro: actual observed movement animates microtile bodies; Pause holds the exact pose
+  ---
+  duration_ms: 8.6585
+  ...
+# Subtest: coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
+ok 139 - coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
+  ---
+  duration_ms: 1.0735
+  ...
+# Subtest: uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion
+ok 140 - uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion
+  ---
+  duration_ms: 0.511083
+  ...
+# Subtest: Classic dormant/warning brackets enclose the cosmetic body while contact size stays unchanged
+ok 141 - Classic dormant/warning brackets enclose the cosmetic body while contact size stays unchanged
+  ---
+  duration_ms: 3.195708
+  ...
+# Subtest: immediate: real painter places capture pulse below actors/live line and preserves authority
+ok 142 - immediate: real painter places capture pulse below actors/live line and preserves authority
+  ---
+  duration_ms: 129.879167
+  ...
+# Subtest: grid-center: real painter places capture pulse below actors/live line and preserves authority
+ok 143 - grid-center: real painter places capture pulse below actors/live line and preserves authority
+  ---
+  duration_ms: 7.117209
+  ...
+# Subtest: real optional pressure warning, commit and cooldown render distinct cues from owned targets
+ok 144 - real optional pressure warning, commit and cooldown render distinct cues from owned targets
+  ---
+  duration_ms: 103.7685
+  ...
+# Subtest: actual classic freeze retains the locked warning target and actor-clock countdown
+ok 145 - actual classic freeze retains the locked warning target and actor-clock countdown
+  ---
+  duration_ms: 47.335791
+  ...
+# Subtest: pursuit and interception stay text-distinct even in patrol, without changing authority
+ok 146 - pursuit and interception stay text-distinct even in patrol, without changing authority
+  ---
+  duration_ms: 121.787625
+  ...
+# Subtest: legacy actors acquire no pressure display and malformed getters are not executed
+ok 147 - legacy actors acquire no pressure display and malformed getters are not executed
+  ---
+  duration_ms: 6.488458
+  ...
+# Subtest: a host-owned contact cue keeps prepared pilot equipment clear without changing its paint transform
+ok 148 - a host-owned contact cue keeps prepared pilot equipment clear without changing its paint transform
+  ---
+  duration_ms: 1.199791
+  ...
+# Subtest: every current authored actor joins one exact owner and one distinct appearance binding
+ok 149 - every current authored actor joins one exact owner and one distinct appearance binding
+  ---
+  duration_ms: 2.058083
+  ...
+# Subtest: all compiled categories and exact assets are retained without claiming mission selection
+ok 150 - all compiled categories and exact assets are retained without claiming mission selection
+  ---
+  duration_ms: 1.425667
+  ...
+# Subtest: mission artwork ownership remains exact and separate from compiled picture capabilities
+ok 151 - mission artwork ownership remains exact and separate from compiled picture capabilities
+  ---
+  duration_ms: 0.264042
+  ...
+# Subtest: missing bindings and unknown categories cannot appear fully covered
+ok 152 - missing bindings and unknown categories cannot appear fully covered
+  ---
+  duration_ms: 122.132042
+  ...
+# Subtest: repair rules are bounded to identified prepared art and validate rig metadata
+ok 153 - repair rules are bounded to identified prepared art and validate rig metadata
+  ---
+  duration_ms: 0.5445
+  ...
+# Subtest: C4 distinguishes existing capabilities and greyboxes from default placements and acceptance
+ok 154 - C4 distinguishes existing capabilities and greyboxes from default placements and acceptance
+  ---
+  duration_ms: 0.113833
+  ...
+# Subtest: regeneration is deterministic and does not mutate supplied metadata
+ok 155 - regeneration is deterministic and does not mutate supplied metadata
+  ---
+  duration_ms: 110.566834
+  ...
+1..155
+# tests 155
+# suites 0
+# pass 155
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11651.215625

@@ -1,0 +1,84 @@
+{
+  "format": "revealline-source-check.v1",
+  "feature": "M2 exact Shchedryk opening-theme game admission",
+  "revision": 7,
+  "checkedAt": "2026-09-25T00:00:00.000Z",
+  "candidateBaseRevision": "b24470a6b2b22fcaecfd642e70e4636d9e059643",
+  "supersedes": "source-infrastructure-r6.json",
+  "scope": "Admit one exact code-owned recording, preserve persisted player choices and transport ownership, and prevent the core bytes from being duplicated in installed media. Field Kit revision 77 retains the reopened audio recipes at source stage; revision 78 applies the bounded source review.",
+  "reviewRecord": {
+    "path": "docs/verification/shchedryk-opening-2026-09-24/audio-admission-review-r2.json",
+    "bytes": 4182,
+    "sha256": "b4aeb17a4d1fa7bce8a3a35cb27d0187e9929f35a58ddd3da2d1badadb786be8"
+  },
+  "producer": {
+    "path": "scripts/produce-field-kit-theme.mjs",
+    "bytes": 30682,
+    "sha256": "580c6a5f0e3b932467b0a48709784bb35794f61dd99c07161da671146a461fe3"
+  },
+  "audioFingerprintSHA256": "f6125c55cee6b87ded6b3620cde6cd5710661a0a03d9ae0b756bd1b1348efbc6",
+  "fieldKit": {
+    "sourceRevision": 77,
+    "parentRevision": 77,
+    "revision": 78,
+    "bundle": {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 7239981,
+      "sha256": "87fa0c521e6d411c952104eba08fed5ccb28594239d7961d79c69d5fcec9da87"
+    },
+    "compiled": [
+      {
+        "path": "game/presentation/compiled/manifest.json",
+        "bytes": 29118,
+        "sha256": "a655cbf0dab39696f09987e1b77f16318ff03c247ccc28849b78e2c3a3fa11ec"
+      },
+      {
+        "path": "game/presentation/compiled/runtime.json",
+        "bytes": 1095321,
+        "sha256": "a6b48fe819af8df932288186ceb576a65d1d5f0bcb259abfdba9cfee07f2d990"
+      },
+      {
+        "path": "game/presentation/compiled/studio.json",
+        "bytes": 4075915,
+        "sha256": "14b9e0682004975cf2f456b8b42db8f562cd4c2e47d1ce018f9ab538fe379af7"
+      }
+    ],
+    "result": {
+      "slots": 335,
+      "files": 140,
+      "assetBytes": 4009342,
+      "coverage": {
+        "missing": 0,
+        "source": 99,
+        "produced": 0,
+        "reviewed": 236
+      }
+    },
+    "reviewBoundary": "Runtime source, exact-byte identity, rights enforcement, fresh-profile selection and duplicate-storage prevention only. Full-track, repeated-session, transition, warning-audibility, Ukrainian cultural, physical-device, cold-offline, frozen-build and public release acceptance remain open."
+  },
+  "checks": {
+    "focusedAdmissionSuite": {
+      "tests": 182,
+      "pass": 182,
+      "fail": 0,
+      "skip": 0,
+      "outputSha256": "233cf420662f8e41ea05cdddeda8d55c56252588c0bc2a3dad02771096fa9fc7"
+    },
+    "focusedPrettier": "pass",
+    "diffCheck": "pass",
+    "productionReproducibility": "pass",
+    "productionHistory": "5/5 pass (complete team-production-history plus recipe-source dependency files)",
+    "readinessExpectedAfterCommit": true,
+    "hostedQualification": "Pending stacked-base release sequencing and a fresh exact-head run."
+  },
+  "admission": {
+    "recordingsAdded": 1,
+    "bundledRegistrationsActivated": 1,
+    "mp3Added": true,
+    "defaultChangedForFreshProfiles": true,
+    "persistedExplicitChoicesPreserved": true,
+    "listeningApprovalClaimed": false,
+    "culturalApprovalClaimed": false,
+    "deviceApprovalClaimed": false
+  }
+}

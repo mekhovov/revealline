@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { TEAM_SUPPORT_SLOTS, prepareTeamSupport } from '../couch/coop-support-presentation.mjs';
+import {
+  TEAM_SUPPORT_SLOTS,
+  prepareTeamSupport,
+  drawTeamSupportPulse,
+} from '../couch/coop-support-presentation.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
 import { createStudioTeamFixture } from '../../authoring/asset-studio/team-preview-fixture.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
@@ -76,6 +80,27 @@ function surface() {
   );
   return { calls, canvas: { width: 1152, height: 576, clientWidth: 1152, getContext: () => ctx } };
 }
+
+test('specialist pulses retain distinct non-colour role glyphs with reduced effects', () => {
+  const { canvas, calls } = surface(),
+    ctx = canvas.getContext('2d');
+  drawTeamSupportPulse(ctx, {}, { player: 0, role: 'interceptor', x: 4, y: 5 }, ['#fff'], true);
+  drawTeamSupportPulse(ctx, {}, { player: 0, role: 'disruptor', x: 8, y: 9 }, ['#fff'], true);
+  assert.deepEqual(
+    calls.filter(({ method }) => method === 'fillText').map(({ args }) => args[0]),
+    ['I', 'D'],
+  );
+  assert(
+    calls.some(
+      ({ method, args }) => method === 'setLineDash' && args[0][0] === 0.25 && args[0][1] === 0.12,
+    ),
+  );
+  assert(
+    calls.some(
+      ({ method, args }) => method === 'setLineDash' && args[0][0] === 0.08 && args[0][1] === 0.13,
+    ),
+  );
+});
 
 for (const arena of ['first-connection', 'relay-yard']) {
   test(`Team Support ${arena} draws two registered pulses and slowed decorations without mutating simulation`, () => {
