@@ -85,20 +85,20 @@ test('prospective manifest cannot launch before reviewed first-eight proof', () 
     assert.throws(() => bindAuxiliaryJob(m, 'speech-chromium'));
   }
 });
-test('four fixed jobs retain six audio/main-recovery commands and all original arm bounds', () => {
+test('six fixed jobs retain original six commands and append four WebKit audio arms', () => {
   const jobs = Object.keys(AUXILIARY_JOBS).map(plan);
-  assert.equal(jobs.length, 4);
+  assert.equal(jobs.length, 6);
   assert.equal(
     jobs.reduce((n, p) => n + p.rows.length, 0),
-    6,
+    10,
   );
   assert.deepEqual(
     jobs.map((p) => p.rows.map((r) => r.timeoutMs)),
-    [[540000, 540000], [600000, 600000], [420000], [420000]],
+    [[540000, 540000], [600000, 600000], [420000], [420000], [540000, 540000], [600000, 600000]],
   );
   assert(jobs.every((p) => p.performanceExclusion && p.cpu === 1));
 });
-test('workflow matrix binds the four fixed jobs and preserves disjoint helper shutdown margins', () => {
+test('workflow matrix binds the six fixed jobs and preserves disjoint helper shutdown margins', () => {
   assert.throws(() => auxiliaryMatrix(manifest));
   const matrix = auxiliaryMatrix(admitted());
   assert.deepEqual(
@@ -314,5 +314,45 @@ test('bounded report read refuses oversized and aliased input', async () => {
     await assert.rejects(readAuxiliaryJSON(alias, 64));
   } finally {
     await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('WebKit audio keeps exact original fixtures and rejects context, replay, and cleanup failures', () => {
+  for (const recipe of ['speech', 'music']) {
+    const chromium = plan(`${recipe}-chromium`);
+    const webkit = plan(`${recipe}-webkit`);
+    assert.deepEqual(webkit.recipes[recipe], chromium.recipes[recipe]);
+    assert.deepEqual(webkit.uploads, chromium.uploads);
+    assert.deepEqual(webkit.musicBundle, chromium.musicBundle);
+    assert.deepEqual(
+      webkit.rows.map((row) => row.timeoutMs),
+      chromium.rows.map((row) => row.timeoutMs),
+    );
+    assert.equal(webkit.maxParallel, 2);
+    for (const row of webkit.rows) {
+      const actual = raw(webkit, row);
+      assert.equal(auxiliaryAssessment(webkit, row, actual, closed, '123.4').status, 'passed');
+      for (const mutate of [
+        (value) => {
+          value.environment.contextMode = 'ephemeral';
+        },
+        (value) => {
+          value.replay.nativeVerification.engine = 'chromium';
+        },
+        (value) => {
+          value.replay.nativeVerification.browserVersion = 'other';
+        },
+        (value) => {
+          value.contextCleanupFailure = 'persistent profile did not close';
+        },
+        (value) => {
+          value.audioIdentity.pending = 1;
+        },
+      ]) {
+        const invalid = clone(actual);
+        mutate(invalid);
+        assert.equal(auxiliaryAssessment(webkit, row, invalid, closed, '123.4').status, 'failed');
+      }
+    }
   }
 });

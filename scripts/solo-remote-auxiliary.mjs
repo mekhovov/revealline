@@ -44,6 +44,22 @@ export const AUXILIARY_JOBS = Object.freeze({
     helperMinutes: 60,
     jobMinutes: 105,
   },
+  'speech-webkit': {
+    recipe: 'speech',
+    engine: 'webkit',
+    roles: ['baseline', 'candidate'],
+    timeoutMs: 540000,
+    helperMinutes: 75,
+    jobMinutes: 120,
+  },
+  'music-webkit': {
+    recipe: 'music',
+    engine: 'webkit',
+    roles: ['baseline', 'candidate'],
+    timeoutMs: 600000,
+    helperMinutes: 75,
+    jobMinutes: 120,
+  },
 });
 const HASHES = {
   speech: '235350a6011bd9ebcfa73aa815b6a4c616f945ca67278c64b93a906e8388411d',
