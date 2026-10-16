@@ -9,7 +9,213 @@ import {
   assertMigrationWorldRetention,
   openHistoricalMigrationSurface,
   seedHistoricalMigrationWorld,
+  assertMigrationLauncherReady,
+  readMigrationLauncherState,
+  waitForMigrationLauncher,
 } from './optional-installation-migration.mjs';
+import { installPracticeWorker as installFPV } from '../optional-practice/worker-template.mjs';
+import { installPracticeWorker as installGym } from '../optional-practice/civilian-flight/worker-template.mjs';
+
+const launcherScope = 'http://127.0.0.1:123/practice/civilian-fpv/app/';
+const launcherCache = (revision) =>
+  `revealline.optional.package.v1:/practice/civilian-fpv/app/:${revision}`;
+function launcherFixture() {
+  const expected = {
+    scope: launcherScope,
+    revision: 'b'.repeat(64),
+    legacyStatus: false,
+    cacheNames: [launcherCache('a'.repeat(64)), launcherCache('b'.repeat(64))],
+  };
+  const state = {
+    caches: [...expected.cacheNames],
+    registrations: 1,
+    active: { state: 'activated', scriptURL: launcherScope + 'worker.js' },
+    installing: null,
+    waiting: null,
+    sameActive: true,
+    reply: {
+      type: 'practice-status',
+      scope: launcherScope,
+      revision: expected.revision,
+      ready: true,
+      statusPresent: true,
+      status: 'ready',
+    },
+  };
+  return { expected, state };
+}
+test('launcher readiness binds actual owner revision and exact retained caches, not just active state', () => {
+  const { expected, state } = launcherFixture();
+  assertMigrationLauncherReady(state, expected);
+  for (const defect of [
+    'old-owner',
+    'installing',
+    'waiting',
+    'missing-old',
+    'missing-new',
+    'orphan',
+    'wrong-script',
+    'unknown',
+    'unready',
+    'changed-owner',
+    'wrong-scope',
+  ]) {
+    const bad = structuredClone(state);
+    if (defect === 'old-owner') bad.reply.revision = 'a'.repeat(64);
+    if (defect === 'installing') bad.installing = { state: 'installing' };
+    if (defect === 'waiting') bad.waiting = { state: 'installed' };
+    if (defect === 'missing-old') bad.caches.shift();
+    if (defect === 'missing-new') bad.caches.pop();
+    if (defect === 'orphan') bad.caches.push(launcherCache('c'.repeat(64)));
+    if (defect === 'wrong-script') bad.active.scriptURL += '?other';
+    if (defect === 'unknown') bad.reply.status = 'unknown';
+    if (defect === 'unready') bad.reply.ready = false;
+    if (defect === 'changed-owner') bad.sameActive = false;
+    if (defect === 'wrong-scope') bad.reply.scope += 'other/';
+    assert.throws(() => assertMigrationLauncherReady(bad, expected), defect);
+  }
+});
+test('exact historical worker supports its absent status field, never explicit unknown or false readiness', () => {
+  const { expected, state } = launcherFixture();
+  state.reply.status = null;
+  assert.throws(() => assertMigrationLauncherReady(state, expected));
+  expected.legacyStatus = true;
+  state.reply.statusPresent = false;
+  assertMigrationLauncherReady(state, expected);
+  state.reply.statusPresent = true;
+  state.reply.status = 'unknown';
+  assert.throws(() => assertMigrationLauncherReady(state, expected));
+  state.reply.status = null;
+  state.reply.ready = false;
+  assert.throws(() => assertMigrationLauncherReady(state, expected));
+});
+test('launcher waiter retains transition states and rejects timeout without creating or repairing caches', async () => {
+  const { expected, state } = launcherFixture();
+  let calls = 0;
+  const previous = structuredClone(state);
+  previous.reply.revision = 'a'.repeat(64);
+  previous.waiting = { state: 'installed' };
+  const receipt = {};
+  await waitForMigrationLauncher(
+    { evaluate: async () => (++calls === 1 ? previous : state) },
+    expected,
+    receipt,
+    { timeoutMs: 1000 },
+  );
+  assert.equal(receipt.ready, true);
+  assert.deepEqual(receipt.snapshots, [previous, state]);
+  const failed = {};
+  await assert.rejects(
+    waitForMigrationLauncher({ evaluate: async () => previous }, expected, failed, {
+      timeoutMs: 5,
+    }),
+    /exact revision-bound/,
+  );
+  assert.equal(failed.ready, undefined);
+  assert.deepEqual(failed.snapshots, [previous]);
+  await assert.rejects(
+    waitForMigrationLauncher(
+      { evaluate: async () => state },
+      { ...expected, scope: 'https://other.test/practice/civilian-fpv/app/' },
+      {},
+    ),
+  );
+});
+for (const [name, installer, namespace] of [
+  ['Academy/Worlds', installFPV, 'package'],
+  ['Gym', installGym, 'civilian-flight'],
+])
+  test(`${name} actual worker activation preserves exactly one prior stable shell and unrelated runtime`, async () => {
+    const base = `http://127.0.0.1:123/practice/${namespace === 'package' ? 'civilian-fpv' : 'civilian-flight'}/app/`;
+    const prefix = `revealline.optional.${namespace}.v1:${new URL(base).pathname}:`;
+    const names = new Set([
+      prefix + 'obsolete',
+      prefix + 'previous',
+      prefix + 'current',
+      'unrelated-runtime',
+    ]);
+    const events = {};
+    installer(
+      {
+        registration: { scope: base },
+        addEventListener: (name, callback) => {
+          events[name] = callback;
+        },
+        caches: { keys: async () => [...names], delete: async (name) => names.delete(name) },
+      },
+      [],
+      'current',
+    );
+    let pending;
+    events.activate({
+      waitUntil(value) {
+        pending = value;
+      },
+    });
+    await pending;
+    assert.deepEqual([...names], [prefix + 'previous', prefix + 'current', 'unrelated-runtime']);
+  });
+for (const mode of ['reply', 'legacy', 'null', 'false', 'garbage', 'throw', 'timeout'])
+  test(`read-only launcher status closes both owned ports after ${mode}`, async (t) => {
+    const { state, expected } = launcherFixture();
+    const incoming = { ...state.reply };
+    if (mode === 'legacy') delete incoming.status;
+    if (mode === 'null') incoming.status = null;
+    if (mode === 'false') incoming.status = false;
+    if (mode === 'garbage') incoming.status = 'garbage';
+    const original = new Map(
+      ['caches', 'navigator', 'MessageChannel'].map((key) => [
+        key,
+        Object.getOwnPropertyDescriptor(globalThis, key),
+      ]),
+    );
+    const closed = [];
+    let port;
+    const worker = {
+      ...state.active,
+      postMessage(data, [value]) {
+        assert.deepEqual(data, { type: 'practice-status' });
+        assert.equal(value, port.port2);
+        if (mode === 'throw') throw new Error('closed');
+        if (!['throw', 'timeout'].includes(mode))
+          queueMicrotask(() => port.port1.onmessage({ data: incoming }));
+      },
+    };
+    const registration = { scope: launcherScope, active: worker };
+    for (const [key, value] of Object.entries({
+      caches: { keys: async () => state.caches },
+      navigator: { serviceWorker: { getRegistrations: async () => [registration] } },
+      MessageChannel: class {
+        constructor() {
+          port = this;
+          this.port1 = { close: () => closed.push(1) };
+          this.port2 = { close: () => closed.push(2) };
+        }
+      },
+    }))
+      Object.defineProperty(globalThis, key, { configurable: true, value });
+    try {
+      if (mode === 'timeout') t.mock.timers.enable({ apis: ['setTimeout'] });
+      const pending = readMigrationLauncherState({ scope: launcherScope });
+      if (mode === 'timeout') {
+        await new Promise((resolve) => setImmediate(resolve));
+        t.mock.timers.tick(1000);
+      }
+      const observed = await pending;
+      assert.deepEqual(closed, [1, 2]);
+      assert.equal(port.port1.onmessage, null);
+      if (['throw', 'timeout'].includes(mode)) assert.equal(observed.reply, null);
+      else {
+        expected.legacyStatus = true;
+        if (mode === 'reply' || mode === 'legacy') assertMigrationLauncherReady(observed, expected);
+        else assert.throws(() => assertMigrationLauncherReady(observed, expected));
+        assert.equal(observed.reply.statusPresent, mode !== 'legacy');
+      }
+    } finally {
+      for (const [key, descriptor] of original)
+        descriptor ? Object.defineProperty(globalThis, key, descriptor) : delete globalThis[key];
+    }
+  });
 
 const options = { historical: true, worldSeed: true };
 test('strict opt-in preserves omitted/default selection and rejects combined lanes', () => {
@@ -99,6 +305,27 @@ test('unrelated packages remain exact during selected update/removal', () => {
   assertMigrationUnrelated(state, after, MIGRATION_IDS[0], keyFor);
   after.caches.pop();
   assert.throws(() => assertMigrationUnrelated(state, after, MIGRATION_IDS[0], keyFor));
+});
+test('retained stable launcher has both exact admitted shell caches but only one worker', () => {
+  const { references, state } = ownership();
+  const { expected } = launcherFixture();
+  const launcher = {
+    workerScope: launcherScope,
+    cacheName: expected.cacheNames[1],
+    cacheNames: expected.cacheNames,
+  };
+  state.caches.push(...expected.cacheNames);
+  state.workers.push({ scope: launcherScope, active: 'activated' });
+  assertMigrationOwnership(state, references, keyFor, [launcher]);
+  for (const fault of ['missing-old', 'orphan', 'duplicate-worker']) {
+    const bad = structuredClone(state);
+    if (fault === 'missing-old')
+      bad.caches = bad.caches.filter((name) => name !== expected.cacheNames[0]);
+    if (fault === 'orphan') bad.caches.push(launcherCache('d'.repeat(64)));
+    if (fault === 'duplicate-worker')
+      bad.workers.push({ scope: launcherScope, active: 'activated' });
+    assert.throws(() => assertMigrationOwnership(bad, references, keyFor, [launcher]), fault);
+  }
 });
 function worldReceipt() {
   const row = { key: 'a'.repeat(64), sha256: 'b'.repeat(64) };
