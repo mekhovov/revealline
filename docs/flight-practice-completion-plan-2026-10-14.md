@@ -2,6 +2,17 @@
 
 ## 16 October research and execution update
 
+Current checkpoint: fresh `b8aec0821` packages pass all three real five-minute
+timeouts with explicit reasons, retained records and public retry/removal.
+The full current practice suite passes 388/388. Production run 2 verifies all
+original build bytes before and after, but all six Home-startup cases fail at
+the unchanged ten-second action deadline; delivery latency versus app startup
+is unresolved. Do not turn that failure into a pass by changing startup limits.
+Native 200% browser zoom capability is now proved in a disposable profile,
+not yet on the packages. Next source-bound run adds Gym/Academy offline flights
+to the already passing restarted Worlds routes. The next installed-PWA probe
+uses actual activation/blur/focus observations, not the failed minimization path.
+
 Fresh audited software progress: observer `8e29a04c3` passes real imported-model
 offline flight through both restarted Worlds routes, all-three final verification
 response cancellation, and historical Academy ordinary-browser update continuity

@@ -1,6 +1,7 @@
 /** Synthetic public UI adapter fixtures only, not browser acceptance. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { performance } from 'node:perf_hooks';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { PACK, expectedC4AssetFingerprint } from './practice-imported-world-check.mjs';
@@ -14,7 +15,12 @@ import {
   flyRetainedC4WorldOffline,
 } from './optional-installation-imported-world.mjs';
 const digest = (v) => createHash('sha256').update(JSON.stringify(v)).digest('hex');
-const store = (name, rows) => ({ name, rows, count: rows.length, sha256: digest(rows) });
+const store = (name, rows) => ({
+  name,
+  rows,
+  count: rows.length,
+  sha256: digest(rows),
+});
 const row = (n) => ({ key: digest(n), sha256: digest({ n }) });
 const database = () => ({
   name: 'revealline-fpv-worlds-v1',
@@ -26,7 +32,11 @@ const database = () => ({
   ],
 });
 const baseline = () => ({
-  card: { id: PACK.id, title: PACK.title, digestPrefix: PACK.sha256.slice(0, 12) },
+  card: {
+    id: PACK.id,
+    title: PACK.title,
+    digestPrefix: PACK.sha256.slice(0, 12),
+  },
   database: database(),
 });
 const URL =
@@ -76,6 +86,9 @@ function fixture({
   delayed = false,
   failUpload = false,
   wrongGauge = false,
+  failAfterDown = false,
+  cleanupStall = 0,
+  failFirstUp = false,
   initialHash = '',
   navigationHash = '#packs',
   backSteps = 2,
@@ -110,6 +123,10 @@ function fixture({
       },
       up: async (key) => {
         calls.push(['up', key]);
+        if (failFirstUp && calls.filter((c) => c[0] === 'up').length === 1)
+          throw Error('Initial native key release failed.');
+        const until = performance.now() + cleanupStall;
+        while (performance.now() < until) {}
         down = false;
       },
     },
@@ -117,9 +134,24 @@ function fixture({
       await new Promise((resolve) => setTimeout(resolve, ms));
       if (down && phase === 'active') height = 0.2;
     },
-    evaluate: async () => ({ ...hud(height, phase), ...(wrongGauge ? { gauge: 'Speed' } : {}) }),
+    evaluate: async () => ({
+      ...hud(height, phase),
+      ...(wrongGauge || (failAfterDown && down) ? { gauge: 'Speed' } : {}),
+    }),
     locator(selector) {
       return {
+        scrollIntoViewIfNeeded: async () => {
+          calls.push(['scroll', selector]);
+        },
+        evaluate: async () => ({
+          x: 10,
+          y: 10,
+          width: 600,
+          height: 130,
+          viewportWidth: 1280,
+          viewportHeight: 900,
+          visible: true,
+        }),
         waitFor: async () => {
           calls.push(['visible', selector]);
           if (delayed) await new Promise((resolve) => setTimeout(resolve, 40));
@@ -180,7 +212,11 @@ function options(extra = {}) {
     receipt: {},
     readDatabase: async () => database(),
     baseline: baseline(),
-    capture: async (step) => ({ path: `test-only-${step}.png`, bytes: 10, sha256: 'a'.repeat(64) }),
+    capture: async (step) => ({
+      path: `test-only-${step}.png`,
+      bytes: 10,
+      sha256: 'a'.repeat(64),
+    }),
     ...extra,
   };
 }
@@ -196,7 +232,10 @@ test('strict separate opt-in and exact authority paths', () => {
   assert.throws(() => selectImportedWorldMode('all', { worldSeed: true }));
   for (const verificationCancel of ['', '0', 'all'])
     assert.throws(() =>
-      selectImportedWorldMode('roadworks-offline-flight', { worldSeed: true, verificationCancel }),
+      selectImportedWorldMode('roadworks-offline-flight', {
+        worldSeed: true,
+        verificationCancel,
+      }),
     );
 });
 test('actual committed bytes import through public chooser and visible card', async () => {
@@ -224,6 +263,40 @@ test('actual committed bytes import through public chooser and visible card', as
   );
   assert(calls.some((r) => r[0] === 'click' && r[1] === 'label:has(#import-pack)'));
   assert.throws(() => importedWorldAuthority(new Map(), bytes));
+});
+test('capture follows ordinary card scrolling; out-of-viewport card cannot pass', async () => {
+  const bytes = await readFile(PACK.path),
+    f = fixture({ imported: false });
+  const opts = options({
+    packBytes: bytes,
+    capture: async () => {
+      assert(f.calls.some((c) => c[0] === 'scroll'));
+      return { sha256: 'a'.repeat(64) };
+    },
+  });
+  await importRetainedC4World(f.page, opts);
+  assert(opts.receipt.cardFrame.visible);
+  const bad = fixture({ imported: false }),
+    original = bad.page.locator;
+  bad.page.locator = (selector) => {
+    const n = original(selector);
+    n.evaluate = async () => ({
+      x: 10,
+      y: 899,
+      width: 600,
+      height: 130,
+      viewportWidth: 1280,
+      viewportHeight: 900,
+      visible: true,
+    });
+    return n;
+  };
+  const failed = options({
+    packBytes: bytes,
+    capture: async () => assert.fail('Do not capture an unframed card'),
+  });
+  await assert.rejects(importRetainedC4World(bad.page, failed), /fully framed/);
+  assert(!failed.receipt.imported);
 });
 test('upload failure and pre-abort do not claim imported state', async () => {
   const bytes = await readFile(PACK.path),
@@ -333,4 +406,12 @@ test('wrong public gauge stops before throttle and preserves failed receipt', as
     false,
   );
   assert(!opts.receipt.passed && opts.receipt.cleanup.completed);
+});
+test('imported-world cleanup rejects timer-delayed key release beyond its absolute limit', async () => {
+  const f = fixture({ failAfterDown: true, failFirstUp: true, cleanupStall: 20 }),
+    opts = options({ restartConfirmed: true, networkProbeFailed: true, cleanupMs: 5 });
+  await assert.rejects(flyRetainedC4WorldOffline(f.page, opts));
+  assert(f.calls.some((c) => c[0] === 'up'));
+  assert.equal(opts.receipt.cleanup.completed, false);
+  assert(opts.receipt.cleanup.errors.some((e) => /absolute deadline/.test(e)));
 });
