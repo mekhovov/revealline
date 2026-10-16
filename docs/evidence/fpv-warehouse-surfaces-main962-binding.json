@@ -1,0 +1,41 @@
+{
+  "format": "FPVWarehouseMain962Binding.v1",
+  "packages": [
+    {
+      "package": "civilian-flight",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "optional-package.json",
+        "optional-practice/civilian-flight/worker.js"
+      ],
+      "identicalMembers": 33,
+      "beforeZipSHA256": "b2238a2e2940a973297160b60c1a8a9a8c816b08dc1ab3066ecc40afb56cf880",
+      "afterZipSHA256": "f3f51ab8f706273bc018fbb8820e052881a09b4a09b42634eb561539ae506b4e"
+    },
+    {
+      "package": "civilian-fpv",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "optional-package.json",
+        "optional-practice/civilian-fpv/worker.js"
+      ],
+      "identicalMembers": 66,
+      "beforeZipSHA256": "373e8cf92d4d2172417bb962169d1f769d9f35ba1fa5cab4b115b8b7c7b59f7e",
+      "afterZipSHA256": "d8c4b903bbd4dc4d1387fa18b995b1aefb8708ad8ed8abf5e943c8fca11a936e"
+    },
+    {
+      "package": "fpv-worlds",
+      "added": [],
+      "removed": [],
+      "changed": [
+        "optional-package.json",
+        "optional-practice/fpv-worlds/worker.js"
+      ],
+      "identicalMembers": 98,
+      "beforeZipSHA256": "a7a35406ac68e0f0a5c63856972f193188b6d1a076dbf1b45668dbfd949c7a7d",
+      "afterZipSHA256": "97b8ac23e206351af66709927665daf5a4a8904ef2e6e38e599b588c6c02b642"
+    }
+  ]
+}

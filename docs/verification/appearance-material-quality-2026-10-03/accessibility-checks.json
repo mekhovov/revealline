@@ -1,0 +1,75 @@
+{
+  "controls": [
+    {
+      "animation": "none",
+      "font": "18px",
+      "hasGrain": true,
+      "height": 44,
+      "role": "player-default",
+      "transition": "0s"
+    },
+    {
+      "animation": "none",
+      "font": "18px",
+      "hasGrain": true,
+      "height": 44,
+      "role": "player-primary",
+      "transition": "0s"
+    },
+    {
+      "animation": "none",
+      "font": "18px",
+      "hasGrain": true,
+      "height": 44,
+      "role": "studio-input",
+      "transition": "0s"
+    },
+    {
+      "animation": "none",
+      "font": "18px",
+      "hasGrain": true,
+      "height": 44,
+      "role": "studio-default",
+      "transition": "0s"
+    },
+    {
+      "animation": "none",
+      "font": "18px",
+      "hasGrain": true,
+      "height": 44,
+      "role": "studio-primary",
+      "transition": "0s"
+    },
+    {
+      "animation": "none",
+      "font": "18px",
+      "hasGrain": false,
+      "height": 44,
+      "role": "studio-disabled",
+      "transition": "0s"
+    },
+    {
+      "animation": "none",
+      "font": "18px",
+      "hasGrain": true,
+      "height": 202.2734375,
+      "role": "default-card",
+      "transition": "0s"
+    },
+    {
+      "animation": "none",
+      "font": "18px",
+      "hasGrain": true,
+      "height": 202.2734375,
+      "role": "selected-card",
+      "transition": "0s"
+    }
+  ],
+  "inner": "steel",
+  "outer": "terminal",
+  "viewport": {
+    "dpr": 2,
+    "height": 1316,
+    "width": 926
+  }
+}

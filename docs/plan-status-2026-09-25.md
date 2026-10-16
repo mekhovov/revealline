@@ -1,155 +1,203 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+# Reveal Line delivery status — 26 September 2026
 
-# Reveal Line — current delivery status and remaining plan
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
 
-Status checked **25 September 2026**. This document supersedes the execution
-status in `plan-status-2026-09-23.md`; it does not replace gameplay contracts,
-research evidence, release receipts, or the player-feedback register.
+> **Historical register.** Current status as of 26 September 2026: stable
+> [v0.141.2](https://github.com/mekhovov/revealline/releases/tag/v0.141.2) is selected on Pages from
+> exact source `12978e5fd3fe0ce70bbee96aa543f569f64622d4`. Selector PR #677 merged as
+> `34f45503c32479591dcdc36e7236aaa2eb348a2f`; run `36252239829` / deployment `6680716352`
+> audited 1,888 files and 630,471,797 bytes in 1,888 attempts with zero retries or failures.
+> Immutable v0.141.1 is an intermediate GitHub-only release, and Archive95 preserves v0.141.0.
+> The boundaries, queue and version allocations below describe the 25 September cutoff and are no
+> longer live. Future work requires fresh allocation after checking open v0.142.0 through v0.149.x
+> ranges.
 
-Effort ranges are engineering estimates from the moment an item becomes the sole
-release candidate. Hosted queues, failed reruns, archive preservation, and human
-or physical-device availability can extend them. A prepared branch, reviewed PR,
-immutable GitHub release, Pages selection, and public acceptance are separate
-states. Skipped suites are never counted as passes.
+At its 25 September cutoff, this register was the source of truth for the player-first delivery programme. It separates
+publicly verified releases, accepted source prerequisites, qualification evidence that cannot be
+published as-is, and draft work. A merge or successful workflow is not a delivered feature until
+its exact cumulative source is frozen, published, admitted to the Pages selector and exercised on
+the public site.
 
-## 1. Current release state
+## Current boundaries
 
-- **Public Pages selects v0.111.1.** Public Home, the 91-mission New Journey
-  gallery, prepared Solo play, Versus play, and the 12-mission Team Journey were
-  checked through the ordinary release URLs.
-- **v0.111.0 and v0.111.1 are immutable published releases.** v0.111.1 fixes
-  Steam Deck/Chrome confirmation echoes and is now the public Pages default.
-- **Archive76 now preserves v0.111.0.** Its public deployment passed an exact audit
-  of 1,146 files and 595,553,722 bytes with zero failures. Fresh browser checks
-  launched the 91-mission Solo and Versus Journeys and the 12-mission Team Journey.
-- **PR476 is merged and Pages workflow run 36095346816 passed.** Its exact archive
-  preview covered 76 admitted releases with zero observations; focused evidence
-  included 63 controller tests and five archive-extraction tests.
-- PR477 advanced protected main from
-  `08a79df2f2a32265e228004c26f11a236b207a16` to
-  `dfd837da1611a54cbaec88b4fc2fa642d102fd86`. Release qualification must use a
-  fresh protected-main authority rather than treating either recorded commit as
-  permanently current. Publication remains serialized through one publisher.
+| Boundary                | Exact state                                                                                                             | Meaning                                                                                                                                                                                                                                                                           |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Public player release   | **v0.132.0** — [playable release](https://mekhovov.github.io/revealline/releases/v0.132.0/site/game/)                   | Current Pages selector. It names exact source `109631e70dc3343a5d0f4338616c2bc95b042f6f`; the immutable route and stable `/app/` launcher return 200. Physical cold-install certification remains separate.                                                                       |
+| Accepted product source | `109631e70dc3343a5d0f4338616c2bc95b042f6f`                                                                              | Immutable v0.132.0 source and tag. Qualification, asset inspection, publication, archive admission, Pages deployment and public selector identity are complete.                                                                                                                   |
+| Accepted `main`         | `c45cd78bdc522bf95c267615fe3ad93dd77dff98`                                                                              | Contains PR #594 plus merged PR #600 provenance-ledger correction on public v0.132 history. v0.132.1 remains in publisher qualification and is not public until freeze, publication, archive admission, Pages and public verification complete.                                   |
+| Next release allocation | **v0.132.1** — Steam Deck Confirm PR [#594](https://github.com/mekhovov/revealline/pull/594), then **v0.133.0** gallery | PR #594 passed exact fast-policy gates and merged via `2f2c90f`; PR #600 provenance correction merged via `c45cd78`. v0.132.1 publisher qualification is active. Draft PR #590 is rebased at `a1d7f215e31c148085143ecf0ff64fb4d7fe3f8f` and waits behind public patch acceptance. |
+| Test policy             | Long automated suites are temporarily **waived** by committed policy                                                    | They were skipped, not passed. Focused regression, source, lint/format, build, provenance, frozen-asset, archive and public checks remain blocking.                                                                                                                               |
 
-## 2. Completed and publicly delivered
+## Completed and public
 
-| Area                  | Public result                                                                                                     | Boundary                                                 |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| Default content       | New Journey is the normal Solo/Versus/Team entry; Classic, installed, Custom, and legacy content remain reachable | v0.83.0 onward                                           |
-| Content selection     | Unified owner-aware mission library and direct compatible launches                                                | v0.84.0 onward                                           |
-| Difficulty            | Gentle, Standard, and Expert influence authored pressure, speed, counts, and lives                                | v0.86.0 onward; whole-game balance remains open          |
-| Progression           | Next crosses campaign, pack, and collection boundaries in all three modes                                         | v0.90.0 onward                                           |
-| Movement              | Field actors travel straight between physical impacts; route changes happen at collisions                         | v0.91.0 onward                                           |
-| Player input          | Shared keyboard/controller navigation foundations and initial player-first input corrections                      | v0.98.0                                                  |
-| Classic compatibility | Compatible Classic missions can launch with current rules while Original editions remain available                | v0.101.0/v0.104.0                                        |
-| Main actor            | Corner-bracket visual clutter was removed and the readable FPV craft restored                                     | v0.103.0                                                 |
-| Home and Pause        | Compact Home, global More menu, focused Pause hierarchy, and controller menu repairs                              | v0.105.0–v0.108.0; cross-mode consolidation remains open |
-| Team presentation     | Original pictures, readable actors, and corrected picture authority                                               | v0.109.0/v0.110.1                                        |
-| Release safety        | Immutable releases, protected main, exact-source qualification, archives, and reviewed selector                   | v0.111.1 publicly selected; discipline remains active    |
+- **Default Journey and shared player entry:** ordinary Solo and Versus expose 91 Journey missions;
+  Team exposes 12 missions. Explicit Legacy access remains available.
+- **Public player shell:** compact Home and Pause, direct mode entry, loading feedback, quick sound,
+  global appearance foundations and direct Settings/Help access are present through v0.132.0.
+- **Controller/input corrections:** public releases through v0.116.1 removed duplicate controller
+  activation in the qualified paths and v0.112.0 removed the unwanted white FPV corner marks.
+  This is automated and browser evidence, not physical Steam Deck certification.
+- **Rewards and pictures:** v0.116.0 retains the accepted Journey picture and makes earned Solo
+  rewards visible in Collection. Team artwork and exact revision-84 picture authority are public
+  through v0.131.0.
+- **Presentation and content consolidation:** v0.130.0 contains the accepted Ukrainian ornament,
+  soundtrack, Journey spatial/pressure and creator-framework work that accumulated after v0.116.1.
+  The selector, archive preservation, deployed bytes and ordinary cross-mode entry were verified.
+- **Localized cumulative player release:** v0.131.0 is public from immutable product source
+  `a63ad4cc`. PR #566 aligns current Team FPV bindings with revision 84 while retaining historical
+  revisions 58–83 and keeps Couch continuation cancellation localized and live-switchable. Archive87,
+  Pages run 36207322888 and independent public English/Ukrainian Solo, Versus, Team and Legacy Team
+  entry checks are complete.
+- **Offline/localized cumulative release:** v0.132.0 is publicly selected from exact source
+  `109631e70`. Pages run [36214429148](https://github.com/mekhovov/revealline/actions/runs/36214429148)
+  passed, the selector names v0.132.0, and both the immutable game route and stable `/app/` launcher
+  return 200. Long suites were waived, and physical cold-install/device coverage remains open.
 
-The Xposed-led programme is not complete. Public releases provide the foundation,
-but consistent cross-mode player flows, rewards, gallery behavior, failure/retry,
-HUD qualification, theme coverage, campaign production, and final device testing
-remain open.
+## Latest accepted source and release evidence
 
-## 3. Prepared work that is not public
+| Item                                   | Exact accepted evidence                                                                                                                                                                                                                                                                                                                                                                                                                           | Result                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v0.131 localization product root       | PRs [#506](https://github.com/mekhovov/revealline/pull/506) and [#566](https://github.com/mekhovov/revealline/pull/566); source `a63ad4cc32fb14c53fa126d69df42e2e53d1477d`; immutable [v0.131.0 release](https://github.com/mekhovov/revealline/releases/tag/v0.131.0)                                                                                                                                                                            | Qualification/freeze [36204532882](https://github.com/mekhovov/revealline/actions/runs/36204532882), artifact inspection [36205038007](https://github.com/mekhovov/revealline/actions/runs/36205038007), evidence assembly [36205454953](https://github.com/mekhovov/revealline/actions/runs/36205454953), Archive87 admission and Pages [36207322888](https://github.com/mekhovov/revealline/actions/runs/36207322888) passed. All nine release assets are published. Long suites were skipped under policy.                                                                                                                                                   |
+| v0.132 offline/localized product root  | PRs [#536](https://github.com/mekhovov/revealline/pull/536), [#573](https://github.com/mekhovov/revealline/pull/573), [#576](https://github.com/mekhovov/revealline/pull/576) and release-controller/evidence follow-ups through [#586](https://github.com/mekhovov/revealline/pull/586); exact source/tag `109631e70dc3343a5d0f4338616c2bc95b042f6f`; immutable [v0.132.0 release](https://github.com/mekhovov/revealline/releases/tag/v0.132.0) | Exact qualification/freeze [36212273558](https://github.com/mekhovov/revealline/actions/runs/36212273558), artifact inspection [36212787799](https://github.com/mekhovov/revealline/actions/runs/36212787799), original upload [36213144451](https://github.com/mekhovov/revealline/actions/runs/36213144451), release gate [36213375672](https://github.com/mekhovov/revealline/actions/runs/36213375672) and Pages [36214429148](https://github.com/mekhovov/revealline/actions/runs/36214429148) passed. The public selector and immutable route resolve v0.132.0. Long suites were skipped under policy. Physical cold-install/device coverage is separate. |
+| v0.132 frozen bytes                    | `release.json` and `verification.json` published with v0.132.0                                                                                                                                                                                                                                                                                                                                                                                    | Distribution ZIP is 611,637,915 bytes (`sha256:1eaf41d2…`), manifest total is 611,187,354 bytes across 1,298 files, and source archive is 1,711,790,080 bytes (`sha256:489d96f7…`). The offline inspection passed its Git/mode/hash chain.                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Team FPV revision-84 picture authority | PR [#566](https://github.com/mekhovov/revealline/pull/566), included since `a63ad4cc`                                                                                                                                                                                                                                                                                                                                                             | Current starter and historical-import bindings match FPV revision 84 while retaining 58–83. Binding contracts passed 94/94; public EN/UA Team and Legacy Team entry were independently verified in v0.131.0.                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| Public selector boundary               | selector/archive merge `d38624a594751bd304779cd25f0225c96413ff02`; Pages run [36214429148](https://github.com/mekhovov/revealline/actions/runs/36214429148)                                                                                                                                                                                                                                                                                       | Public `releases/index.json` selects v0.132.0 and exact source `109631e70`; the immutable game path and stable `/app/` launcher return 200. Public byte/source identity is complete. Physical cold-install and real-device play remain separate qualification work.                                                                                                                                                                                                                                                                                                                                                                                             |
 
-| Candidate                      | Current evidence                                                                                                                                 | Required before release                                                                                                                        |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Complete creator framework     | PR465 is the reserved v0.112.0 aggregate; its release owner is still reconciling the exact terminal head and it is not yet a qualified candidate | Finish the aggregate, reconcile protected main, set all version identities, complete focused/build/visual review, release, and verify publicly |
-| Couch quick start              | Draft PR478 is the reserved v0.113.0 aggregate and is behind protected main; an earlier candidate's extended Couch suite passed 201/201          | Reconcile the exact aggregate on accepted v0.112.0, then finish focused/static/build and visual review, release, and verify publicly           |
-| Character trail/impact cleanup | Allocated to the same v0.113.0 aggregate; removes distracting corner-like artifacts and sharpens readable impact feedback                        | Verify the exact final aggregate preserves the clean craft silhouette, then qualify and release                                                |
-| Shared Home/lobbies/Pause      | Clean unversioned candidate covers compact Home, collapsed Couch setup, More/Releases, Sound and shared Pause; final focused cohorts are running | Reconcile on the accepted release, finish keyboard/controller/touch and responsive review, then release                                        |
-| Gameplay HUD/layout            | Clean 15-path candidate; 324/324 responsive/controller/touch checks passed                                                                       | Rebase on accepted release source, production build, visual/browser checks, release                                                            |
-| Deliberate terminal failure    | Clean 17-path candidate; 51 focused terminal/recovery/Team checks passed                                                                         | Rebase, build, browser checks, release; no automatic terminal restart may return                                                               |
-| Settings/Help return           | Clean candidate; 30 focused and 102 history checks passed                                                                                        | Rebase, cross-mode opener/focus review, release                                                                                                |
-| Journey rewards                | Solo and Couch exact-picture candidates exist with focused evidence                                                                              | Consolidate mode-scoped completion, exact artwork retention, Collection visibility, migration/history checks, release                          |
-| Compact mission gallery        | Earlier UX1-B candidate exists                                                                                                                   | Restack after rewards; finish complete-gallery selection, previews, one-action play, lazy resource handling, and responsive spatial navigation |
-| Reviewed Team library          | PR475 exposes 12 opt-in specialist candidates                                                                                                    | Reconcile dependency stack, clear production-ledger debt, human balance, device checks, and explicit adoption decision                         |
-| Appearance/theme surfaces      | PR408/414/417/418 form a proposed aggregate                                                                                                      | Restack, remove overlap, prove accessibility and all affected surfaces, then release                                                           |
+## Qualified evidence only
 
-Candidate tests prove deterministic behavior in the tested scope. They do not prove
-physical controller/touch behavior, offline readiness, whole-campaign balance, or
-that a level is enjoyable.
+The compact-gallery merge source `54fbbe52c1622d0e3b0a6a148508b6ea507bdec5` completed exact-source
+qualification in run [36187128651](https://github.com/mekhovov/revealline/actions/runs/36187128651).
+That result is **evidence only**:
 
-## 4. Updated release order and ETA
+- PR [#535](https://github.com/mekhovov/revealline/pull/535) had merged v0.133.0 before the then-open
+  v0.131 and offline product roots.
+- PR #544 reverted that merge while preserving all commits and review history.
+- The frozen/qualified `54fbbe52` source must not be tagged, selected or published because it
+  does not contain the accepted v0.131 root or the now-published cumulative v0.132 root.
+- PR [#590](https://github.com/mekhovov/revealline/pull/590) is the corrected draft v0.133.0 candidate at exact head `db44806c2ec4d16873e295a91e87f52b1e3f483a`; both duplicate Couch `activateControl` deltas were removed.
+- Its focused/build jobs were cancelled when the higher-priority v0.132.1 fix became active, and release-ready failed as expected for the non-promotable draft. It must rebase after v0.132.1 and run a fresh exact-head gate. The historical `54fbbe52` qualification cannot transfer to a newer head.
 
-Release publication remains sequential. Implementation, review, and focused tests
-continue in parallel so the next feature is ready when the publisher becomes free.
+## In progress and draft queue
 
-| Order     | Deliverable                                                                   |   ETA after its release slot opens | Blocking acceptance                                                                                                                                              |
-| --------- | ----------------------------------------------------------------------------- | ---------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **R0**    | Preserve v0.111.0 and make v0.111.1 the public Pages default                  |                       **Complete** | PR476 merged; archive exact-byte audit passed; Pages deployed; public marker and ordinary Solo/Versus/Team entry passed                                          |
-| **R1**    | Complete creator campaign framework; reserved v0.112.0                        |              **owner in progress** | One terminal aggregate, current-main ancestry, all version identities, focused/build/visual review, immutable release and public proof                           |
-| **R2**    | Couch quick start plus canonical trail/impact cleanup; reserved v0.113.0      |                     **6–12 hours** | Reconcile on accepted v0.112.0; one Start with valid defaults, Cancel cannot steal controller Confirm, clean actor silhouette, responsive evidence, public proof |
-| **R3**    | Shared appearance surfaces; tentative v0.114.0                                |                     **8–16 hours** | Exact aggregate on accepted main, accessibility/contrast/reduced-effects checks, no presentation-history regression, public evidence                             |
-| **R4**    | Reviewed Team specialist library; tentative v0.115.0                          |               **1–2 working days** | All 12 entries explicitly reachable, Original editions preserved, picture/Next/Continue correctness, human cooperative review                                    |
-| **R5**    | Journey rewards and working Collection; tentative v0.116.0                    |                     **8–16 hours** | Mode-scoped completion, exact earned pictures, Retry retention, correct Collection entries and return focus                                                      |
-| **UX1-B** | Compact complete mission gallery                                              |               **1–2 working days** | Complete campaign-grouped gallery, current selection restoration, one-action ready/download-and-play, keyboard/D-pad/touch spatial navigation                    |
-| **UX2**   | Shared Home, lobbies, Pause, More, Releases, Settings, Help, and Sound        |               **1–2 working days** | Same player-facing structure in Solo/Versus/Team; direct Start/Continue; optional setup collapsed; exact opener restoration                                      |
-| **UX3**   | Gameplay HUD, touch layout, and contextual teaching                           |                     **8–16 hours** | Whole boards, critical HUD, and controls fit desktop, handheld, portrait, and short landscape; reduced-effects parity                                            |
-| **UX4**   | Countdown, deliberate failure/Retry, named Next, campaign endings             |                     **6–12 hours** | No pre-Go simulation, automatic terminal restart, accidental held-input Retry, duplicate award, or stale successor launch                                        |
-| **UX5**   | Settings, difficulty, Help, replay/Collection navigation, and recovery states |                     **6–12 hours** | Complete focus/input/loading coverage; ordinary play never needs Workshop or a file picker                                                                       |
-| **UX6**   | Whole player-experience qualification                                         | **2–4 working days** after UX1–UX5 | Required end-to-end journeys pass; physical-device and offline limits recorded separately                                                                        |
+| Planned release / phase                       | Current work                                                                                                                                                                                                 | Status and dependency                                                                                                                                                                                                                                                                                                                                                                      |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **v0.132.1 — Steam Deck Confirm lifecycle**   | PR [#594](https://github.com/mekhovov/revealline/pull/594) merged via `2f2c90f`; provenance PR [#600](https://github.com/mekhovov/revealline/pull/600) merged via `c45cd78bdc522bf95c267615fe3ad93dd77dff98` | PR #594 exact head `9ab20a966e1493143347601aff991f9fb821c3ac` passed preflight, focused, build and release-ready in run 36216983990; long suite skipped under policy. PR #600 corrected the provenance ledger required for publication. Cumulative source `c45cd78` is in publisher qualification; freeze, immutable publication, archive admission, Pages and public verification remain. |
+| **v0.133.0 — compact mission gallery**        | draft PR [#590](https://github.com/mekhovov/revealline/pull/590), exact head `a1d7f215e31c148085143ecf0ff64fb4d7fe3f8f`                                                                                      | Rebased onto current main as an exact 14-path v0.133.0 candidate. Focused controller and Versus optional-case evidence passes 8/8. It awaits fresh exact-head CI and public v0.132.1 acceptance; historical qualifications and pre-rebase runs do not transfer.                                                                                                                            |
+| **UX2 — Team quick start**                    | draft PR [#549](https://github.com/mekhovov/revealline/pull/549), head `59d40ae82b38d124830ba6119a036423483930a4`                                                                                            | Stable patch identity and focused evidence remain useful, but the branch now conflicts with cumulative `main`. Reconcile only after gallery ownership; rerun quick-start parity, keyboard, modeled-controller and touch/browser checks.                                                                                                                                                    |
+| **UX2 — Couch secondary navigation**          | draft PR [#539](https://github.com/mekhovov/revealline/pull/539); preserved stacked safety patch                                                                                                             | Reconcile after gallery and PR #549, remove duplicate overlap and close the controller lifecycle case. Earlier focused work stopped under disk pressure and is evidence only.                                                                                                                                                                                                              |
+| **UX4 — deliberate terminal retry**           | draft PR [#545](https://github.com/mekhovov/revealline/pull/545), remote head `459c1acb`                                                                                                                     | A local safety rehearsal preserved stable patch ID `1a63b1d5…` without conflict on the cumulative offline runtime. Team recovery 3/3, Team Skip 1/1 and Solo terminal self-contact 1/1 plus scoped static checks pass. Final reconciliation still follows gallery/input ownership and physical-controller review.                                                                          |
+| **UX3 — contextual Team teaching**            | draft PR [#543](https://github.com/mekhovov/revealline/pull/543)                                                                                                                                             | Focused 5/5 evidence for cut, Support and rescue cues. Reconcile after preceding cumulative UX owners and complete real-event browser review in portrait and short landscape.                                                                                                                                                                                                              |
+| **UX4 — Versus start countdown**              | draft PR [#552](https://github.com/mekhovov/revealline/pull/552)                                                                                                                                             | Focused cue and continuous-Next evidence passes 15/15; localization and scoped static checks passed on its old base. Reconcile and qualify the future cumulative source from scratch.                                                                                                                                                                                                      |
+| **UX4 — named result destinations**           | draft PR [#557](https://github.com/mekhovov/revealline/pull/557)                                                                                                                                             | Result policy 2/2, Solo 3/3 and Versus 1/1 passed on its old base. Reconcile after countdown ownership, then add campaign-ending and duplicate-award proof.                                                                                                                                                                                                                                |
+| **UX5 — Pause Settings/Help return**          | draft PR [#542](https://github.com/mekhovov/revealline/pull/542)                                                                                                                                             | Focused pause/modal return evidence passed 20/20 on its old base. Carry after UX2–UX4 while preserving exact opener/checkpoint behavior.                                                                                                                                                                                                                                                   |
+| **Test prerequisite — Collection disclosure** | draft PR [#548](https://github.com/mekhovov/revealline/pull/548)                                                                                                                                             | Focused Collection disclosure/appearance/return checks passed 7/7. It changes no runtime behavior and should travel with PR #542 instead of consuming a player release slot.                                                                                                                                                                                                               |
 
-The R3–R5 version numbers are tentative until each aggregate is rebuilt on the
-accepted public source and the next unused version is rechecked.
+Drafts are implementation inputs. Their green focused checks do not authorize merge or public claims
+until they are rebased onto the accepted predecessor and pass the exact-head release gates.
 
-## 5. Remaining original programme after player-first UX
+## Remaining player-first programme and elapsed ETA
 
-These items continue after the player-critical sequence unless they can be safely
-prepared without delaying it.
+Ranges begin when the item becomes the sole active release candidate. They include ordinary review,
+focused correction and one clean release cycle. GitHub runner, large-asset upload and archive delays
+can extend them. Hardware-dependent acceptance is called out separately.
 
-| Programme                         | Remaining scope                                                                                                           |                                                               Planning range |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------: |
-| P08-A map/presentation parity     | All built-in Versus maps, Team arenas, installed and imported paths, complete objective roles                             |                                                                     1–3 days |
-| P04/P05 Studio and themes         | Exact theme restoration, cross-mode previews, uploads/edit/history/export/import, FPV and Ukrainian benchmark collections |                                                                     2–5 days |
-| P06/P07 catalogue/offline journey | Campaign-specific downloads, repair/cancel behavior, offline dependencies, endings and continuation                       |                                                                     2–4 days |
-| P08-B/P02-B motion/audio          | Countdown, loss, capture, rescue, results, reduced-effects variants, soundtrack parity and listening checks               |                                        1–3 days plus listening/device access |
-| P09/P10 encounters/difficulty     | Deterministic optional encounters, Gentle/Standard/Hard fairness, Team encounter matrix                                   |                                                                     3–6 days |
-| P16 supporting workflows          | Records, learning, replay, recovery, legacy curation, remaining supporting pages                                          |                                                                     2–4 days |
-| P17 community guide               | Independently reproduced create/install/play/recover workflow                                                             |                                                                     1–2 days |
-| P18 final qualification           | Accessibility, performance, storage, offline, recovery, physical devices, and public regression                           |                                        3–5 days after feature blockers close |
+| Order | Item                                   | Blocking acceptance                                                                                                                                                   |                                      Working elapsed ETA |
+| ----: | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------: |
+|     1 | **v0.132.1 Steam Deck Confirm**        | Qualify/freeze cumulative `c45cd78`, publish immutable assets, archive-admit, deploy Pages and verify public short-tap/provenance behavior; long suite remains waived |     **2–6 hours**, plus physical Steam Deck confirmation |
+|     2 | **v0.133 compact mission gallery**     | After public v0.132.1, pass fresh exact-head CI for the 14-path rebased candidate, responsive browser and modeled-controller checks, then complete the release cycle  | **4–12 hours**, plus physical controller/touch follow-up |
+|     3 | **UX2 Team quick start**               | Reconcile PR #549 first; valid defaults start directly, optional tuning remains available and preparation/cancel has one input owner                                  |                                           **6–12 hours** |
+|     4 | **UX2 Couch secondary navigation**     | Reconcile PR #539 after quick-start ownership, preserve its safety fix, collapse overlap and rerun interrupted checks                                                 |                                           **6–12 hours** |
+|     5 | **UX4 terminal retry safety slice**    | Reconcile PR #545; no auto-restart, held-input carry-through, stale result loss or picture/setup mutation                                                             |    **4–8 hours**; physical-controller follow-up separate |
+|     6 | **UX3 gameplay layout and teaching**   | Reconcile PR #543; board/HUD/touch coexistence, contextual cut/Support/rescue teaching and reduced-effects parity                                                     |                         **1–2 days**, plus hardware play |
+|     7 | **UX4 continuation remainder**         | Reconcile PR #552 countdown/Retry cue, then PR #557 named successors; add campaign endings and duplicate-award proof                                                  |                                             **1–2 days** |
+|     8 | **UX5 player screens**                 | Carry PRs #542/#548; finish difficulty, Collection/Records/replay, recovery and exact return focus                                                                    |                                             **1–2 days** |
+|     9 | **UX6 whole-player qualification**     | End-to-end Solo/Versus/Team journeys, accessibility, performance, storage, offline, lifecycle and mixed-input coverage                                                |                   **2–4 days**, plus device availability |
+|    10 | **P08 map/actor/action closure**       | All 15 Versus maps, both Team arenas/imports, full role/effect inventory and reduced-effects readability                                                              |                             **2–4 days**, plus playtests |
+|    11 | **P02/P05 audio and themes**           | One audio authority, complete theme compatibility/restoration, transfer/offline behavior and actual listening review                                                  |                                             **2–4 days** |
+|    12 | **P04/P17 Studio/community authoring** | Cross-mode previews, upload/edit/history/bundle round trips and an independent create/install/play/recover trial                                                      |                                             **4–7 days** |
+|    13 | **P09/P10 encounters and difficulty**  | Gentle/Standard/Hard, deterministic optional encounters, readable counterplay and 36-case Team matrix                                                                 |               **3–6 days**, plus human balance playtests |
 
-Online multiplayer, Deathmatch, full Ukrainian translation, hosted administration,
-and persistent co-op saves remain deferred.
+The ETA is not a promise that all work can proceed concurrently. Feature preparation may run in
+isolated branches, but tags, frozen assets, archive admission and Pages deployment must remain
+serialized under one publisher.
 
-## 6. Blockers and concerns
+## Dependency order and release-slot correction
 
-1. **Serialized publishing:** only one task may merge, tag, archive, or deploy a
-   release. Parallel work shortens preparation time but cannot make publication
-   concurrent.
-2. **Moving main:** both reserved release aggregates are still draft work. PR465
-   must become the exact v0.112.0 candidate first; PR478 is behind protected main
-   and must later be rebuilt on accepted v0.112.0 before its required checks can
-   count.
-3. **Temporary suite waiver:** long automated suites are skipped by committed
-   policy. Focused tests, lint/format/validation, build/provenance, exact hashes,
-   archives, and public checks remain mandatory. Skipped suites are not passes.
-4. **Hardware evidence:** modeled controller tests and browser clicks are not
-   physical Steam Deck/controller or touch certification. Those remain explicit
-   acceptance limits.
-5. **Disk and worktree pressure:** parallel hydrated worktrees filled the shared
-   volume, and one focused Couch run lost its temporary worktree during execution.
-   Release evidence requires a clean, coordinated, retained worktree and a
-   maintained disk reserve.
-6. **Large draft queue:** many open PRs are stacked studies or superseded
-   candidates. Terminal aggregates must be rebuilt and predecessors closed only
-   after public acceptance; merging every draft independently would duplicate or
-   regress behavior.
-7. **Human quality:** deterministic tests cannot establish fun, fairness,
-   understandable failure, or willingness to retry. Campaign and Team adoption
-   require human play review.
-8. **Reference limits:** Xposed screenshots prove visible structure and art cues,
-   not hidden timing, collision, or enemy rules. Reveal Line adaptations remain
-   original and governed by explicit contracts.
+1. v0.132.0 is immutable and publicly selected from exact source `109631e70`. Keep physical
+   cold-install and real-device evidence open without reopening immutable publication.
+2. PR #594 exact head `9ab20a966e1493143347601aff991f9fb821c3ac` passed the required
+   fast-policy gates and merged via `2f2c90f`; the long suite was skipped, not passed. Publication
+   required provenance-ledger PR #600, now merged as `c45cd78bdc522bf95c267615fe3ad93dd77dff98`.
+   Complete cumulative publisher qualification, freeze, immutable publication, archive admission,
+   Pages and public verification before the gallery advances.
+3. Draft PR #590 is rebased onto current main at exact head
+   `a1d7f215e31c148085143ecf0ff64fb4d7fe3f8f`: 14 paths, v0.133.0, focused controller and Versus
+   optional-case evidence 8/8. Wait for public v0.132.1, then require fresh exact-head CI and its own
+   immutable release cycle; historical `54fbbe52` qualification does not transfer.
+4. Reconcile PR #549 on top of the publicly accepted gallery so Team quick-start establishes final
+   Start/preparation ownership before secondary navigation edits the same host.
+5. Reconcile PR #539 on top of quick-start, preserve its safety fix, collapse `relay-rescue.mjs`
+   overlap and rerun the interrupted focused checks.
+6. Reconcile PR #545 deliberate terminal retry after PR #539; preserve the proven safety patch and
+   repeat exact-head Team recovery, Team Skip, Solo self-contact and held-input checks.
+7. Reconcile PR #543 contextual Team teaching after terminal-retry ownership; complete real-event
+   portrait, short-landscape and reduced-effects browser review.
+8. Reconcile PR #552 start/countdown before PR #557 named destinations. Qualify each cumulative
+   head from scratch and add campaign-ending plus duplicate-award proof.
+9. Carry PRs #542/#548 together in UX5; the test-only fixture must not consume a release slot.
+10. Allocate later versions only when each cumulative predecessor is publicly accepted. Do not
+    promote by an old draft title or historical version number.
+11. Keep creator/admin, bulk campaign and unrelated visual work draft until the player-critical chain
+    is accepted. Do not combine unrelated drafts to fill a release.
 
-## 7. Advancement rule
+## Blockers and concerns
 
-Every player-facing feature follows:
+1. **Disk pressure:** free space briefly recovered to roughly 6.3 GiB, then fell back to about
+   0.6 GiB during parallel release work. Worktree/build expansion is unsafe. Continue exact-path
+   plumbing, avoid duplicate builds/artifacts and retire only proven disposable caches.
+2. **Temporary long-suite waiver:** full automated matrices are skipped by policy, not green. This
+   increases integration risk in the broad localization/offline roots. Restore full CI before UX6
+   final qualification.
+3. **Physical hardware is not certified:** modeled controller checks and browser pointer clicks do
+   not prove Steam Deck, DualSense, iPhone, iPad or tablet behavior. The same applies to 200% zoom,
+   safe areas, rotation and reconnect under real device timing.
+4. **Human review remains open:** mission fairness, addictive pacing, cultural accuracy, actor
+   readability and soundtrack quality require play/listening review and cannot be inferred from
+   deterministic tests.
+5. **Large cumulative roots:** v0.132 is qualified, immutable and publicly routed, but offline
+   installation changes content ownership, storage and lifecycle behavior. Physical cold-install
+   coverage remains necessary; a successful public route alone does not certify installed play.
+6. **v0.132.1 publisher qualification:** PR #594 passed exact fast-policy gates and merged, but
+   publication required the PR #600 provenance-ledger correction. Cumulative source `c45cd78` is now
+   in publisher qualification. Long suites remain waived. Corrected gallery PR #590 is rebased but
+   cannot promote until v0.132.1 is public and a fresh exact-head gate passes; PRs #549, #539, #545,
+   #543, #552/#557 and #542/#548 follow in order.
+7. **Release serialization:** only one publisher may own version metadata, tags, frozen assets,
+   archive slots and Pages. Parallel implementation cannot make public releases parallel.
+8. **Offline footprint:** v0.132 emits 1,298 manifest files / 611,187,354 bytes and a
+   611,637,915-byte ZIP. Storage, quota, update peak and optional soundtrack behavior still need
+   public and physical-device measurement; retain exact-byte checks for every successor.
+9. **Evidence boundary:** the compact-gallery `54fbbe52` qualification is valid historical evidence,
+   not a substitute for qualifying the post-v0.132.1 PR #590 cumulative head.
+10. **v0.132 public closure:** exact source `109631e70` passed qualification/freeze, independent
+    artifact inspection, original upload, immutable publication, archive admission and Pages run
+    [36214429148](https://github.com/mekhovov/revealline/actions/runs/36214429148). The selector and
+    immutable/stable routes now resolve successfully. Physical cold-install/device coverage remains
+    open under the broader hardware caveat and does not change the immutable release record.
+11. **v0.131 closure is complete:** the corrected `a63ad4cc` product source passed qualification,
+    freeze, artifact inspection and evidence assembly; Archive87 admission, selector merge
+    `23e61297`, Pages run 36207322888 and independent public EN/UA cross-mode entry checks passed.
+    Physical-device bilingual review remains part of the broader hardware caveat.
 
-**Implement → review → focused test/fix → version → PR checks → protected merge →
-exact-source qualification → immutable release → archive admission → Pages deploy
-→ public version/bytes/play verification → next feature.**
+## Completion rule
 
-A prepared branch, merged PR, or published tag alone is not public completion.
+Every player-facing release follows:
+
+**rebase latest publicly accepted predecessor → implement/reconcile related hunks → focused tests and
+browser proof → versioned PR → protected merge → exact-source qualification → immutable
+freeze/release → predecessor archive → Pages selector/deploy → public byte and scoped-play
+verification → status update.**
+
+A branch, passing focused test, merged PR, workflow, tag or deployment is intermediate. “Complete”
+means the public version was verified, with waived suites, physical-device limits and human-review
+limits stated explicitly.

@@ -1,0 +1,50 @@
+{
+  "format": "FPVLifecyclePassedEvidence.v1",
+  "completeReceipt": true,
+  "sourceRevision": "2f9a7a87876a4ee64eb5b7c581b3ea339aaba146",
+  "files": [
+    {
+      "source": "/tmp/fpv-warm-lifecycle-8944-passed.json",
+      "bytes": 415850,
+      "sha256": "894d7c5496ec3ee87a4a362591e1901d3b02c99932d0b0abd259baeb49bd3b98",
+      "gzip": "fpv-warm-lifecycle-8944-passed.json.gz",
+      "gzipBytes": 28052,
+      "gzipSha256": "3fa08df7b9fbfd0189a5a28b7a7dfc4da73caedcbd3d2ea0a351dedd8b46a342"
+    },
+    {
+      "source": "/tmp/fpv-warm-lifecycle-8944-summary.json",
+      "bytes": 74616,
+      "sha256": "203934f027ef2cdba83c3a06a745b20352d4a5272d2d183d7b0cd77488288a5a",
+      "gzip": "fpv-warm-lifecycle-8944-summary.json.gz",
+      "gzipBytes": 7379,
+      "gzipSha256": "e53edf7e617b600768cf75b1d63ac8560645bbfda669dc1a799e93829a80cf69"
+    },
+    {
+      "source": "/tmp/fpv-warm-lifecycle-8944-analysis.json",
+      "bytes": 8979,
+      "sha256": "2bb37f943ddd6cdeb78e27557d93dfdcb9867b0fe25f2a0ecf5ea53a2f38e5d7",
+      "gzip": "fpv-warm-lifecycle-8944-analysis.json.gz",
+      "gzipBytes": 1611,
+      "gzipSha256": "55729d99419de03e3107ef539e0ee0891b4d99c18164b62b690ce1d2c137e35a"
+    },
+    {
+      "source": "/private/tmp/fpv-pre-ready-lifecycle-2f9-r5/fixture.json",
+      "bytes": 45646,
+      "sha256": "608f329f541b853d3228e0aa0727fc9f8c1df9066822e08ec92e0330760c02b7",
+      "gzip": "r5-fixture.json.gz",
+      "gzipBytes": 7855,
+      "gzipSha256": "9abebe29f6de68526e551a34729c1229f88917c43605693c35daa51066a30ef2"
+    }
+  ],
+  "priorFailures": [
+    "/private/tmp/fpv-pre-ready-lifecycle-r1-incomplete/manifest.json",
+    "/private/tmp/fpv-pre-ready-lifecycle-r3-complete-failure/manifest.json",
+    "/private/tmp/fpv-pre-ready-lifecycle-r4-storage-failure/manifest.json"
+  ],
+  "analysisScope": [
+    "No native forced close, versionchange or transaction failure occurred in this captured run. This does not establish the cause or repair of r4 connection-closing failure.",
+    "Replacement disposal recorded no pending prepare/load operation, so it proves disposal immediately after a replacement request, not cancellation of an observed pending compiler.",
+    "Ghost load used its existing hidden DOM handler, then actual public camera controls; it does not establish end-to-end public ghost-toggle access.",
+    "No total-load, FPS, sustained-hardware, offline or post-disposal later-event claim."
+  ]
+}

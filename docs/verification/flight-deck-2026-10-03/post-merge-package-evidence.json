@@ -1,0 +1,101 @@
+{
+  "format": "FlightDeckPostMergeOptionalPackageEvidence.v1",
+  "command": "node scripts/bundle-optional-practice.mjs --out /private/tmp/flight-deck-post-merge-20261003-optional --packages civilian-flight,civilian-fpv,fpv-worlds",
+  "bundle": {
+    "output": "/private/tmp/flight-deck-post-merge-20261003-optional",
+    "version": "v0.142.4",
+    "sourceRevision": "d0ab8421c0064fd5024ae593e2f8a08c4b794b29",
+    "sourceTree": "6cb42345e1e37740e4b8e209c7f2fd0f1f1090c2",
+    "packageIds": ["civilian-flight", "civilian-fpv", "fpv-worlds"],
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "zipMembersVerified": true,
+    "publicEligible": false
+  },
+  "verification": {
+    "admission": {
+      "format": "revealline-optional-package-admission.v1",
+      "packages": [
+        {
+          "bytes": 546048,
+          "files": 35,
+          "id": "civilian-flight",
+          "revision": "55885f45cd46e106ff5af36bb64dd008b76619ca18922f98ff3e9c29b05c9a48"
+        },
+        {
+          "bytes": 4188523,
+          "files": 67,
+          "id": "civilian-fpv",
+          "revision": "f30ebc6686a4b9271fbc4b917679fbcbca2e1b2b02e0032ab0528015f00e65e4"
+        },
+        {
+          "bytes": 14523229,
+          "files": 102,
+          "id": "fpv-worlds",
+          "revision": "92213187a284728875f666de865a8fcc5250f8d3d0b0e431bd46c894f5bbdf91"
+        }
+      ],
+      "publicEligible": false,
+      "sourceRevision": "d0ab8421c0064fd5024ae593e2f8a08c4b794b29",
+      "sourceTree": "6cb42345e1e37740e4b8e209c7f2fd0f1f1090c2",
+      "version": "v0.142.4",
+      "zipMembersVerified": true
+    },
+    "committedInputsVerified": true,
+    "envelopeSha256": "d52e2c2daaa6a99296da31ad8396219836a00124cacf14aab53d6633de649d8a",
+    "format": "revealline-optional-package-candidate-verification.v1",
+    "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "sourceRevision": "d0ab8421c0064fd5024ae593e2f8a08c4b794b29",
+    "sourceTree": "6cb42345e1e37740e4b8e209c7f2fd0f1f1090c2",
+    "version": "v0.142.4"
+  },
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "runtimeFiles": 35,
+      "runtimeBytes": 546048,
+      "sourceFiles": 37,
+      "sourceBytes": 569611,
+      "limits": {
+        "files": 64,
+        "bytes": 8388608
+      },
+      "runtimeSpareFiles": 29,
+      "sourceSpareFiles": 27,
+      "runtimeSpareBytes": 7842560,
+      "sourceSpareBytes": 7818997
+    },
+    {
+      "id": "civilian-fpv",
+      "runtimeFiles": 67,
+      "runtimeBytes": 4188523,
+      "sourceFiles": 69,
+      "sourceBytes": 4216780,
+      "limits": {
+        "files": 72,
+        "bytes": 8388608
+      },
+      "runtimeSpareFiles": 5,
+      "sourceSpareFiles": 3,
+      "runtimeSpareBytes": 4200085,
+      "sourceSpareBytes": 4171828
+    },
+    {
+      "id": "fpv-worlds",
+      "runtimeFiles": 102,
+      "runtimeBytes": 14523229,
+      "sourceFiles": 104,
+      "sourceBytes": 14556664,
+      "limits": {
+        "files": 104,
+        "bytes": 16777216
+      },
+      "runtimeSpareFiles": 2,
+      "sourceSpareFiles": 0,
+      "runtimeSpareBytes": 2253987,
+      "sourceSpareBytes": 2220552
+    }
+  ]
+}

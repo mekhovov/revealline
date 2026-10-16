@@ -23,6 +23,8 @@ function needsSlots(source, ids) {
   const resolved = resolvePresentation(source);
   return ids.some((id) => !source.slots.some((slot) => slot.id === id) || !resolved.assets[id]);
 }
+// The same append-only admission also serves later shared presentation slots.
+export { needsSlots as needsPresentationSlots, addSlots as addPresentationSlots };
 export const needsTeamPresentationSlots = (source) => needsSlots(source, TEAM_PRESENTATION_SLOTS);
 export const addTeamPresentationSlots = (source) =>
   addSlots(source, TEAM_PRESENTATION_SLOTS, 'Team presentation');

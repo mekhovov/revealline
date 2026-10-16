@@ -1,4 +1,4 @@
-/** Historical bridges use authenticated metadata; original payloads stay at admitted archives. */
+/** Historical routes use authenticated metadata and original main-repository release downloads. */
 import { createHash } from 'node:crypto';
 import { archiveRedirect, archiveRetirementWorker } from '../../scripts/pages-archive.mjs';
 
@@ -15,6 +15,44 @@ function versionParts(version) {
 
 export function validReleaseRetention(value) {
   return value === 'all' || (Number.isSafeInteger(value) && value >= 1 && value <= 100);
+}
+
+export function validRetentionConfiguration(configuration) {
+  const global = Object.hasOwn(configuration, 'retainedReleaseCount');
+  const perMajor = Object.hasOwn(configuration, 'retainedReleasesPerMajor');
+  if (global === perMajor) return false;
+  return global
+    ? Number.isSafeInteger(configuration.retainedReleaseCount) &&
+        configuration.retainedReleaseCount >= 1 &&
+        configuration.retainedReleaseCount <= 100
+    : validReleaseRetention(configuration.retainedReleasesPerMajor);
+}
+
+/** Global stable selection includes an explicitly selected rollback release. */
+export function selectReleaseMetadata(metadata, configuration) {
+  if (!(metadata instanceof Map) || !validRetentionConfiguration(configuration))
+    throw new Error('Invalid release retention policy.');
+  if (!Object.hasOwn(configuration, 'retainedReleaseCount'))
+    return retainRecentMetadata(metadata, configuration.retainedReleasesPerMajor);
+  if (!metadata.has(configuration.currentVersion))
+    throw new Error('Current release is not in the stable catalog.');
+  const versions = [...metadata.keys()];
+  for (const version of versions) versionParts(version);
+  versions.sort((a, b) => {
+    const left = a.slice(1).split('.').map(BigInt),
+      right = b.slice(1).split('.').map(BigInt);
+    for (let index = 0; index < 3; index++) {
+      if (left[index] !== right[index]) return left[index] > right[index] ? -1 : 1;
+    }
+    return a.localeCompare(b);
+  });
+  const retained = new Set([
+    configuration.currentVersion,
+    ...versions
+      .filter((v) => v !== configuration.currentVersion)
+      .slice(0, configuration.retainedReleaseCount - 1),
+  ]);
+  return new Map([...metadata].filter(([version]) => retained.has(version)));
 }
 
 /** Keep all validated history, or a bounded recent set for every semantic major. */
@@ -95,17 +133,24 @@ export function validateMetadata({ recordBytes, manifestBytes, checksumBytes, pi
       'formatVersion',
       'version',
       'sourceRevision',
-      'sourceArchiveSha256',
+      ...(record.formatVersion === 2
+        ? ['sourceTree', 'sourceUrl', 'sourceManifestSha256']
+        : ['sourceArchiveSha256']),
       'distributionSha256',
       'manifestSha256',
       'play',
       'download',
     ]) ||
-    record.formatVersion !== 1 ||
+    ![1, 2].includes(record.formatVersion) ||
     record.version !== pin.version ||
     record.sourceRevision !== pin.sourceRevision ||
     record.manifestSha256 !== pin.manifestSha256 ||
-    !SHA.test(record.sourceArchiveSha256) ||
+    (record.formatVersion === 2
+      ? !COMMIT.test(record.sourceTree) ||
+        !SHA.test(record.sourceManifestSha256) ||
+        record.sourceUrl !==
+          `https://github.com/mekhovov/revealline/archive/${record.sourceRevision}.tar.gz`
+      : !SHA.test(record.sourceArchiveSha256)) ||
     !SHA.test(record.distributionSha256) ||
     record.play !== `${pin.version}/site/game/` ||
     record.download !== `${pin.version}/site/distribution.zip`
@@ -177,6 +222,23 @@ export function validateMetadata({ recordBytes, manifestBytes, checksumBytes, pi
 /** No historical asset reads or network requests. Canonical URLs come from validated allocation. */
 export function metadataBridges(metadata, canonicalSite) {
   const { record, manifest, manifestBytes, checksumBytes } = metadata;
+  if (canonicalSite === undefined) {
+    if (!VERSION.test(record.version)) throw new Error('Invalid historical download version.');
+    const releaseURL = `https://github.com/mekhovov/revealline/releases/tag/${record.version}`;
+    const downloadURL = `https://github.com/mekhovov/revealline/releases/download/${record.version}/distribution.zip`;
+    const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reveal Line ${record.version} download</title></head><body><main><h1>Reveal Line ${record.version}</h1><p>This historical edition is available as its original ZIP. It is not hosted as a separate website.</p><p><a href="${downloadURL}">Download original ZIP</a> · <a href="${releaseURL}">Release details and checksums</a> · <a href="https://mekhovov.github.io/revealline/releases/">Release history</a></p><p>Your existing saved data and offline installation are not cleared or migrated.</p></main></body></html>\n`;
+    // Normal activation only: never claim clients, delete caches, force navigation or alter saved data.
+    const worker = "self.addEventListener('activate', event => { event.waitUntil(self.registration.unregister()); });\n";
+    const files = new Map([
+      ['manifest.json', Buffer.from(manifestBytes)],
+      ['distribution.zip.sha256', Buffer.from(checksumBytes)],
+    ]);
+    for (const row of manifest.files) {
+      if (row.path.endsWith('.html')) files.set(row.path, Buffer.from(html));
+      else if (row.path === 'service-worker.js') files.set(row.path, Buffer.from(worker));
+    }
+    return files;
+  }
   const url = new URL(canonicalSite);
   if (
     url.protocol !== 'https:' ||

@@ -1,0 +1,69 @@
+{
+  "acceptedAt": "2026-09-26T16:24:49.673666Z",
+  "archiveId": "archive-96",
+  "browserEvidence": "browser-admission.json",
+  "deployment": {
+    "environmentUrl": "https://mekhovov.github.io/revealline-archive-96/",
+    "id": 6681224868,
+    "sha": "63b6d2f4e3fa1b8a5726e0d13ebc6425a26c5b64",
+    "state": "success",
+    "statusId": 18880461115
+  },
+  "inventory": {
+    "bytes": 612079761,
+    "expectedInventorySha256": "4f630cd0adb85b9ee5e4c84ca7a1f615d4bb5bfe3c1ba1b7f43976c0d3cb8e92",
+    "files": 1316
+  },
+  "publicAudit": {
+    "bodyHashesMatch": true,
+    "bytes": 612079761,
+    "errors": 0,
+    "files": 1316,
+    "headFinalUrlsExact": true
+  },
+  "pullRequest": {
+    "head": "98ee2a0e42bce96c5b135713c13cbea80a4ae0ed",
+    "mergeCommit": "63b6d2f4e3fa1b8a5726e0d13ebc6425a26c5b64",
+    "merged": true,
+    "number": 1,
+    "url": "https://github.com/mekhovov/revealline-archive-96/pull/1"
+  },
+  "receiptArtifact": {
+    "digest": "sha256:169743f23fe9517e0eadc2bee59b67a76843e06b73c567408820af93f87b03e4",
+    "expired": false,
+    "id": 10910122859,
+    "name": "archive96-verification-receipts",
+    "size": 69359
+  },
+  "releaseMutation": {
+    "v0.141.2": false,
+    "v0.141.3": false
+  },
+  "repository": "mekhovov/revealline-archive-96",
+  "selectorMutation": false,
+  "source": {
+    "commit": "63b6d2f4e3fa1b8a5726e0d13ebc6425a26c5b64",
+    "tree": "41c5029ab4309831191c461c450546dee8876495"
+  },
+  "status": "PASS",
+  "testPolicy": "The committed temporary policy waives automated long game source suites for this release; archive corruption, extractor, configuration, capacity, inventory, release identity, deployment, streamed public byte/hash, exact final-URL, and bounded browser checks passed. No waived suite is claimed as passed.",
+  "version": "v0.141.2",
+  "workflow": {
+    "conclusion": "success",
+    "headSha": "63b6d2f4e3fa1b8a5726e0d13ebc6425a26c5b64",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "id": 108440118058,
+        "name": "build"
+      },
+      {
+        "conclusion": "success",
+        "id": 108440222344,
+        "name": "deploy"
+      }
+    ],
+    "runId": 36255047538,
+    "url": "https://github.com/mekhovov/revealline-archive-96/actions/runs/36255047538"
+  }
+}

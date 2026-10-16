@@ -1,9 +1,11 @@
+import { t } from '../i18n/index.mjs';
 import { assetStudioHref, studioReturnLinks, isAssetStudioReturn } from './asset-studio-return.mjs';
 
 /** Fixed standalone tools only. Child practice/session protocols have other owners. */
 export const WORKSHOP_TOOLS = Object.freeze(
   [
     ['asset-studio', 'authoring/asset-studio/', 'shell-asset-studio'],
+    ['theme-studio', 'authoring/asset-studio/', 'shell-theme-studio', 'themes'],
     ['playground', 'game/playground/', 'shell-playground'],
     ['enemy-catalog', 'authoring/enemy-catalog/', 'shell-enemy-catalog'],
     ['motion-lab', 'authoring/motion-lab/', 'shell-motion-lab'],
@@ -12,21 +14,40 @@ export const WORKSHOP_TOOLS = Object.freeze(
     ['design-atlas', 'authoring/design-atlas/', 'shell-design-atlas'],
     ['replay-theater', 'game/replay-theater/', 'shell-replay-theater'],
     ['controller-lab', 'game/controller-lab/', 'shell-controller-lab'],
-  ].map(([id, path, opener]) => Object.freeze({ id, path, opener })),
+  ].map(([id, path, opener, studio]) =>
+    Object.freeze({ id, path, opener, ...(studio ? { studio } : {}) }),
+  ),
 );
 const tool = (id) => WORKSHOP_TOOLS.find((entry) => entry.id === id);
 
 export function workshopToolHref(gameHref, id) {
   const entry = tool(id);
-  if (!entry) throw new TypeError('Unknown Workshop tool.');
+  if (!entry) throw new TypeError(t('interface:unknownWorkshopTool'));
   const studio = new URL(assetStudioHref(gameHref));
   const target = new URL(`../../${entry.path}`, studio);
   target.search = studio.search;
+  if (entry.studio) target.searchParams.set('studio', entry.studio);
   return target.href;
 }
 
+/** A fixed authoring view shares the Asset Studio editor and storage. Only the
+ * exact route hint changes its entry point; other query data has no authority. */
+export function workshopPageTool(href, fallback) {
+  if (fallback !== 'asset-studio') return fallback;
+  try {
+    const page = new URL(href);
+    return /\/authoring\/asset-studio\/(?:index\.html)?$/.test(page.pathname) &&
+      page.searchParams.getAll('studio').length === 1 &&
+      page.searchParams.get('studio') === 'themes'
+      ? 'theme-studio'
+      : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 export function workshopReturnLinks(toolHref, id) {
-  if (!tool(id)) throw new TypeError('Unknown Workshop tool.');
+  if (!tool(id)) throw new TypeError(t('interface:unknownWorkshopTool'));
   const links = studioReturnLinks(toolHref);
   const workshop = new URL(links.workshop);
   workshop.searchParams.set('workshop', id);

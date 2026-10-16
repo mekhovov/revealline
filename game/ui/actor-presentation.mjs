@@ -1,5 +1,10 @@
+import { sampleActorAnimation } from '../presentation/actor-animation.mjs';
+import { aliasSafePhase } from '../../authoring/motion-lab/animation.mjs';
+import { paintRotor } from './rotor-presentation.mjs';
 import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
-import { drawEnemyBodyMotion } from './enemy-body-motion.mjs';
+import { advanceEnemySurfacePhase, drawEnemyBodyMotion } from './enemy-body-motion.mjs';
+import { drawActorRecipe, resolveActorRecipe } from './actor-recipes.mjs';
+import { drawMilitaryVehicleMotion } from '../presentation/military-field-art.mjs';
 import {
   journeyActorThemeMaterial,
   drawJourneyActorMaterial,
@@ -33,6 +38,26 @@ export const ACTOR_PRESENTATION_LIMITS = Object.freeze({
 });
 const ROTOR_SWEEP_FACTOR = Math.sqrt(32) / 5;
 const imagePaintMetrics = new WeakMap();
+
+/** Native visual projections own these states. Missing phases never imply a
+ * shot, defeat or vulnerability change; ordinary motion keeps the idle/move fallback. */
+export function nativeActorAnimationClip(actor, detail, speed = 0) {
+  if (detail?.stunned) return 'idle';
+  const phase =
+    actor.type === 'bouncer'
+      ? detail?.pressure?.phase
+      : actor.type === 'hunter'
+        ? detail?.phase
+        : null;
+  if (phase === 'warning') return 'anticipation';
+  if (phase === 'cooldown' || phase === 'recovery') return 'recovery';
+  if (phase === 'committed' || phase === 'commit') return 'move';
+  if (actor.type === 'claimed-rover' && detail?.mode === 'dormant') return 'idle';
+  if (['claimed-rover', 'eroder'].includes(actor.type) && detail?.mode === 'warning')
+    return 'anticipation';
+  if (actor.type === 'contour-patrol' && detail?.mode === 'idle') return 'blocked';
+  return speed > 0.05 ? 'move' : 'idle';
+}
 
 // Presentation scale is bounded independently of simulation/world geometry.
 export const actorScreenScale = (value) => clamp(finite(value, 1), 0.1, 4);
@@ -185,6 +210,7 @@ export function createActorPresentation() {
         canvasCSSWidth = 1152,
         scale = 1,
         actorSkins = {},
+        bodyRecipes = {},
       } = {},
     ) {
       const next = new Map(),
@@ -220,8 +246,23 @@ export function createActorPresentation() {
           heading = reduced ? target : heading + clamp(delta, -elapsed * 12, elapsed * 12);
         const phase =
           (old?.phase ?? 0) + (locked || reduced ? 0 : elapsed * (1 + Math.min(speed, 12) * 0.13));
+        // Separate from idle/tread clocks. Four blades bound the densest
+        // supported repeating pattern, including mixed-anchor sprite rigs.
+        const rotorPhase =
+          locked || reduced
+            ? (old?.rotorPhase ?? 0)
+            : aliasSafePhase(old?.rotorPhase ?? 0, 1.1 + Math.min(speed, 12) * 0.1, elapsed, 4)
+                .phase;
         const travelPhase =
           (old?.travelPhase ?? 0) + (locked || reduced ? 0 : elapsed * Math.min(speed, 12) * 0.45);
+        const surfacePhase = advanceEnemySurfacePhase(
+          old?.surfacePhase ?? 0,
+          locked || reduced ? 0 : elapsed * (1 + Math.min(speed, 12) * 0.13),
+        );
+        const surfaceTravelPhase = advanceEnemySurfacePhase(
+          old?.surfaceTravelPhase ?? 0,
+          locked || reduced ? 0 : elapsed * Math.min(speed, 12) * 0.45,
+        );
         const tail = old?.tail ? [...old.tail] : [];
         if (
           !locked &&
@@ -236,6 +277,14 @@ export function createActorPresentation() {
             ? []
             : tail.filter((p) => Math.hypot(p.x - actor.x, p.y - actor.y) < 1.15).slice(0, 3);
         const bank = reduced ? 0 : locked ? (old?.bank ?? 0) : clamp(delta * 0.12, -0.15, 0.15);
+        const animationState = nativeActorAnimationClip(actor, detail, stunned ? 0 : speed);
+        // A named clip begins at its first pose instead of inheriting the tread
+        // clock. Pause/freeze retain its exact sample; reduced effects uses pose 0.
+        const animationTimeMs =
+          old?.animationState !== animationState
+            ? 0
+            : (old.animationTimeMs ?? 0) +
+              (paused || detail?.frozen || stunned || reduced ? 0 : elapsed * 1000);
         const record = {
           x: actor.x,
           y: actor.y,
@@ -243,11 +292,16 @@ export function createActorPresentation() {
           time,
           phase,
           travelPhase,
+          surfacePhase,
+          surfaceTravelPhase,
+          rotorPhase,
           heading,
           target,
           speed,
           tail: keptTail,
           bank,
+          animationState,
+          animationTimeMs,
         };
         next.set(actor.id, record);
         frames.set(
@@ -258,6 +312,9 @@ export function createActorPresentation() {
             y: actor.y * CELL,
             role,
             type: actor.type,
+            ...(resolveActorRecipe(bodyRecipes[actor.type])
+              ? { bodyRecipe: bodyRecipes[actor.type] }
+              : {}),
             themeId:
               resolveEnemySkin(actor.type, actorSkins[actor.type]) ?? family(themeId, themeFamily),
             ...(journeyMaterial && !resolveEnemySkin(actor.type, actorSkins[actor.type])
@@ -267,8 +324,13 @@ export function createActorPresentation() {
             heading,
             phase,
             travelPhase,
+            surfacePhase,
+            surfaceTravelPhase,
+            rotorPhase,
             speed: locked ? 0 : speed,
             bank,
+            animationState,
+            animationTimeMs,
             locked,
             reduced,
             stunned,
@@ -289,18 +351,18 @@ const rect = (c, color, x, y, w, h) => {
   c.fillStyle = color;
   c.fillRect(Math.round(x), Math.round(y), w, h);
 };
-function rotor(c, x, y, phase, colors, compact, blades = 3) {
-  rect(c, colors.dark, x - 4, y - 4, 8, 8);
+function rotor(c, x, y, phase, colors, compact, blades = 3, direction = 1) {
   c.save();
   c.translate(x, y);
-  c.rotate(phase % TAU);
-  for (let i = 0; i < blades; i++) {
-    c.rotate(TAU / blades);
-    rect(c, colors.light, -1, -5, 2, compact ? 3 : 4);
-    rect(c, colors.body, -1, -5, 1, 2);
-  }
+  paintRotor(c, {
+    radius: 5,
+    phase,
+    direction,
+    bladeCount: blades,
+    bladeWidth: compact ? 0.4 : 0.34,
+    blurOpacity: 0,
+  });
   c.restore();
-  rect(c, colors.light, x - 1, y - 1, 2, 2);
 }
 function treads(c, colors, phase, compact) {
   for (const x of [-13, 9]) {
@@ -318,7 +380,8 @@ function fpv(c, f, colors) {
     for (const x of [-7, 7])
       for (const y of [-7, 7]) {
         rect(c, colors.body, Math.min(0, x), Math.min(0, y), Math.abs(x) + 1, 2);
-        rotor(c, x, y, phase * 7 * (x * y > 0 ? 1 : -1), colors, compact);
+        const direction = x * y > 0 ? 1 : -1;
+        rotor(c, x, y, (f.rotorPhase ?? 0) * direction, colors, compact, 3, direction);
       }
     rect(c, colors.dark, -4, -7, 8, 14);
     rect(c, colors.body, -3, -6, 6, 12);
@@ -487,8 +550,8 @@ function distinctBody(c, f, k) {
       rect(c, k.dark, -4, -13, 8, 25);
       rect(c, k.body, -3, -12, 6, 23);
       rect(c, k.trim, -10, -2, 20, 3);
-      rotor(c, -8, 0, f.phase * 8, k, f.style === 'microtile');
-      rotor(c, 8, 0, -f.phase * 8, k, f.style === 'microtile');
+      rotor(c, -8, 0, f.rotorPhase ?? 0, k, f.style === 'microtile', 3, 1);
+      rotor(c, 8, 0, -(f.rotorPhase ?? 0), k, f.style === 'microtile', 3, -1);
       rect(c, k.light, -2, -11, 4, 3);
       rect(c, k.body, -6, 9, 12, 3);
     } else if (f.themeId === 'ukraine') {
@@ -638,6 +701,7 @@ function distinctBody(c, f, k) {
 
 /** Original body-only skin; caller owns placement/size and functional badges. */
 export function drawEnemySilhouette(ctx, frame, colors) {
+  if (drawActorRecipe(ctx, frame, colors)) return;
   if (drawJourneyActorMaterial(ctx, frame, colors)) return;
   if (!distinctBody(ctx, frame, colors))
     (({fpv,
@@ -653,7 +717,7 @@ export function drawPresentedActor(
   image = null,
   geometry = null,
   bodyRecord = null,
-  { bodyOffset = null } = {},
+  { bodyOffset = null, showRotors = true, showBodyCues = true } = {},
 ) {
   if (!frame) return;
   const colors = {
@@ -694,23 +758,44 @@ export function drawPresentedActor(
     bodyPaintDiameter = Math.max(width, height);
     // The release host already cropped the declared source frame. Pivot and
     // motor anchors remain normalized to that entire frame, including alpha.
-    ctx.drawImage(image, -geometry.pivot.x * width, -geometry.pivot.y * height, width, height);
-    for (const anchor of geometry.rotors) {
+    if (
+      geometry.material === 'military-vehicle' &&
+      geometry.machineryRevision === 'industrial-roster-v3'
+    ) {
+      // This revision paints its complete sampled silhouette below. A static
+      // bitmap underneath would leave stale pixels when the radar folds.
+    } else if (geometry.animation) {
+      const region = sampleActorAnimation(geometry.animation, {
+        clip: frame.animationState ?? (frame.dormant || frame.stunned ? 'idle' : 'move'),
+        timeMs: frame.animationTimeMs ?? (frame.phase ?? 0) * 1000,
+        reducedEffects: frame.reduced,
+      }).region;
+      ctx.drawImage(
+        image,
+        region.x,
+        region.y,
+        region.width,
+        region.height,
+        -geometry.pivot.x * width,
+        -geometry.pivot.y * height,
+        width,
+        height,
+      );
+    } else
+      ctx.drawImage(image, -geometry.pivot.x * width, -geometry.pivot.y * height, width, height);
+    for (const anchor of showRotors ? geometry.rotors : []) {
       ctx.save();
       ctx.translate(anchor.x * width, anchor.y * height);
-      const scale = (0.16 * anchor.radiusScale * width) / 5;
-      ctx.scale(scale, scale);
-      rotor(
-        ctx,
-        0,
-        0,
-        frame.reduced
-          ? 0
-          : frame.phase * 7 * anchor.direction + (anchor.phaseDegrees * Math.PI) / 180,
-        colors,
-        frame.style === 'microtile',
-        anchor.bladeCount,
-      );
+      paintRotor(ctx, {
+        radius: 0.16 * anchor.radiusScale * width,
+        phase:
+          (frame.reduced ? 0 : (frame.rotorPhase ?? 0)) * anchor.direction +
+          (anchor.phaseDegrees * Math.PI) / 180,
+        direction: anchor.direction,
+        bladeCount: anchor.bladeCount,
+        pixel: Math.max(width / 64, 0.1),
+        blurOpacity: frame.reduced || !frame.rotorPhase ? 0 : 0.08,
+      });
       ctx.restore();
     }
   } else if (image) ctx.drawImage(image, -d / 2, -d / 2, d, d);
@@ -718,11 +803,20 @@ export function drawPresentedActor(
     ctx.scale(d / 28, d / 28);
     drawEnemySilhouette(ctx, frame, colors);
   }
-  if (image && bodyRecord) drawEnemyBodyMotion(ctx, frame, bodyRecord, bodyPaintDiameter);
+  if (image && geometry?.material === 'military-vehicle')
+    drawMilitaryVehicleMotion(
+      ctx,
+      frame,
+      geometry.vehicleRole,
+      bodyPaintDiameter,
+      geometry.machineryRevision,
+    );
+  else if (image && bodyRecord && !geometry?.animation)
+    drawEnemyBodyMotion(ctx, frame, bodyRecord, bodyPaintDiameter);
   if (image) ctx.scale(d / 28, d / 28);
   // Two small nose pixels give rounded/compact and uploaded bodies a stable
   // heading cue. They remain within the body envelope, never a targeting ray.
-  if (frame.role !== 'boss') {
+  if (showBodyCues && frame.role !== 'boss') {
     rect(ctx, colors.dark, -4, -13, 8, 4);
     rect(ctx, colors.light, -3, -12, 2, 2);
     rect(ctx, colors.light, 1, -12, 2, 2);
@@ -730,18 +824,22 @@ export function drawPresentedActor(
   ctx.restore();
   drawRoleBadge(ctx, frame, colors);
   if (offset) ctx.restore();
-  // The luminous center is the contact footprint; larger body art is cosmetic.
-  ctx.globalAlpha = 0.8;
-  ctx.strokeStyle = colors.dark;
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(0, 0, frame.radius, 0, TAU);
-  ctx.stroke();
-  ctx.strokeStyle = colors.light;
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  rect(ctx, colors.dark, -2, -2, 4, 4);
-  rect(ctx, colors.light, -1, -1, 2, 2);
+  // Ordinary callers retain the complete heading/contact treatment. A host may
+  // own these cues itself (Team pilots), avoiding duplicate ink over equipment.
+  // That host must keep its true contact position/radius and player identity.
+  if (showBodyCues) {
+    ctx.globalAlpha = 0.8;
+    ctx.strokeStyle = colors.dark;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(0, 0, frame.radius, 0, TAU);
+    ctx.stroke();
+    ctx.strokeStyle = colors.light;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    rect(ctx, colors.dark, -2, -2, 4, 4);
+    rect(ctx, colors.light, -1, -1, 2, 2);
+  }
   ctx.restore();
 }
 
@@ -757,7 +855,10 @@ export function drawActiveTrail(
     accent = clamp(3 / s, 3, 12),
     outline = accent + clamp(2 / s, 2, 8),
     core = clamp(1 / s, 1, 4),
-    head = clamp(5 / s, 8, 24);
+    head = clamp(5 / s, 8, 24),
+    headPlate = head + clamp(4 / s, 4, 10),
+    packet = clamp(3 / s, 3, 10),
+    packetPlate = packet + clamp(2 / s, 2, 6);
   ctx.save();
   ctx.lineCap = 'square';
   ctx.lineJoin = 'miter';
@@ -781,6 +882,17 @@ export function drawActiveTrail(
   for (const p of points) ctx.fillRect(Math.floor(p.x) * CELL, Math.floor(p.y) * CELL, CELL, CELL);
   if (segments.length) {
     ctx.globalAlpha = 1;
+    // This plate and nose mark the authoritative cutting head. They are
+    // cosmetic only: the player coordinate and contact footprint stay owned by
+    // the simulation, even when compact screens need a larger visible marker.
+    rect(
+      ctx,
+      PRESENTATION_PLATE,
+      player.x * CELL - headPlate / 2,
+      player.y * CELL - headPlate / 2,
+      headPlate,
+      headPlate,
+    );
     rect(ctx, palette.accent, player.x * CELL - head / 2, player.y * CELL - head / 2, head, head);
     rect(
       ctx,
@@ -790,6 +902,30 @@ export function drawActiveTrail(
       head / 2,
       head / 2,
     );
+    const direction = [...segments]
+      .reverse()
+      .map((segment) => ({ x: segment.x2 - segment.x1, y: segment.y2 - segment.y1 }))
+      .find((vector) => Math.hypot(vector.x, vector.y) > 0.00001);
+    if (direction) {
+      const length = Math.hypot(direction.x, direction.y),
+        x = direction.x / length,
+        y = direction.y / length,
+        nose = clamp(4 / s, 4, 10),
+        cross = clamp(2 / s, 2, 6),
+        centerX = player.x * CELL + x * (head / 2 + nose / 2),
+        centerY = player.y * CELL + y * (head / 2 + nose / 2),
+        width = Math.abs(x) > Math.abs(y) ? nose : cross,
+        height = Math.abs(y) > Math.abs(x) ? nose : cross;
+      rect(
+        ctx,
+        PRESENTATION_PLATE,
+        centerX - width / 2 - 1,
+        centerY - height / 2 - 1,
+        width + 2,
+        height + 2,
+      );
+      rect(ctx, PRESENTATION_INK, centerX - width / 2, centerY - height / 2, width, height);
+    }
     if (!reduced) {
       let remaining = 0.3 + ((time * 3) % 1) * 0.65;
       for (let i = segments.length - 1; i >= 0; i--) {
@@ -799,11 +935,19 @@ export function drawActiveTrail(
           const a = remaining / Math.max(length, 0.00001);
           rect(
             ctx,
+            PRESENTATION_PLATE,
+            (s.x2 + (s.x1 - s.x2) * a) * CELL - packetPlate / 2,
+            (s.y2 + (s.y1 - s.y2) * a) * CELL - packetPlate / 2,
+            packetPlate,
+            packetPlate,
+          );
+          rect(
+            ctx,
             PRESENTATION_INK,
-            (s.x2 + (s.x1 - s.x2) * a) * CELL - 1,
-            (s.y2 + (s.y1 - s.y2) * a) * CELL - 1,
-            3,
-            3,
+            (s.x2 + (s.x1 - s.x2) * a) * CELL - packet / 2,
+            (s.y2 + (s.y1 - s.y2) * a) * CELL - packet / 2,
+            packet,
+            packet,
           );
           break;
         }
@@ -814,22 +958,94 @@ export function drawActiveTrail(
   ctx.restore();
 }
 
-export function drawCapturePulse(ctx, effect, columns, cells, palette, reduced = false) {
-  if (reduced || effect.age < 0 || effect.age >= 0.65 || !Array.isArray(effect.indices)) return;
+/** Paint one authoritative travelling-front coordinate. Shape and colour both
+ * distinguish the front moving toward the exposed craft from the harmlessly
+ * expiring departure-bound front. Reduced effects removes only the pulse; the
+ * essential marker stays present. */
+export function drawTrailImpactFront(
+  ctx,
+  front,
+  { time = 0, reduced = false, screenScale = 1, cellSize = CELL } = {},
+) {
+  if (!Number.isFinite(front?.x) || !Number.isFinite(front?.y)) return;
+  const s = clamp(finite(screenScale, 1), 0.1, 4),
+    unit = clamp(1 / s, 1, 4),
+    playerBound = front.direction !== -1,
+    color = playerBound ? '#ff815c' : '#ffc56d';
   ctx.save();
-  const age = effect.age / 0.65;
+  ctx.translate(front.x * cellSize, front.y * cellSize);
+  ctx.scale(unit, unit);
+  if (!reduced) {
+    const pulse = 7 + Math.floor((((finite(time) * 8) % 2) + 2) % 2);
+    ctx.globalAlpha = 0.5;
+    ctx.strokeStyle = PRESENTATION_PLATE;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-pulse, -pulse, pulse * 2, pulse * 2);
+    ctx.globalAlpha = 1;
+  }
+  if (playerBound) {
+    ctx.fillStyle = PRESENTATION_PLATE;
+    ctx.beginPath();
+    ctx.moveTo(0, -7);
+    ctx.lineTo(7, 0);
+    ctx.lineTo(0, 7);
+    ctx.lineTo(-7, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(0, -5);
+    ctx.lineTo(5, 0);
+    ctx.lineTo(0, 5);
+    ctx.lineTo(-5, 0);
+    ctx.closePath();
+    ctx.fill();
+    rect(ctx, PRESENTATION_INK, -2, -2, 4, 4);
+  } else {
+    rect(ctx, PRESENTATION_PLATE, -6, -6, 12, 12);
+    rect(ctx, color, -4, -4, 8, 8);
+    rect(ctx, PRESENTATION_INK, -4, -1, 8, 2);
+    rect(ctx, PRESENTATION_INK, -1, -4, 2, 8);
+  }
+  ctx.restore();
+}
+
+export function drawCapturePulse(
+  ctx,
+  effect,
+  columns,
+  cells,
+  palette,
+  reduced = false,
+  family = 'fpv',
+) {
+  const duration = effect.revealDuration ?? 0.65;
+  if (reduced || effect.age < 0 || effect.age >= duration || !Array.isArray(effect.indices)) return;
+  ctx.save();
+  const age = effect.age / duration;
   const claimed = new Set(effect.indices.slice(0, 2592));
+  const xs = [...claimed].map((index) => index % columns);
+  const ys = [...claimed].map((index) => Math.floor(index / columns));
+  const minX = Math.min(...xs),
+    minY = Math.min(...ys);
+  const spanX = Math.max(1, Math.max(...xs) - minX),
+    spanY = Math.max(1, Math.max(...ys) - minY);
   for (const index of claimed) {
     if (!Number.isInteger(index) || index < 0 || index >= cells.length || cells[index] !== 1)
       continue;
     const x = index % columns,
       y = Math.floor(index / columns),
-      phase = (x / columns + y / (cells.length / columns)) / 2;
-    const alpha = Math.max(0, 1 - Math.abs(age - phase) * 5) * (1 - age) * 0.2;
+      phase = claimed.size === 1 ? 0.35 : 0.15 + ((x - minX) / spanX + (y - minY) / spanY) * 0.25;
+    const alpha = Math.max(0, 1 - Math.abs(age - phase) * 2.5) * (1 - age) * 0.2;
     if (alpha < 0.015) continue;
     ctx.globalAlpha = alpha;
     ctx.fillStyle = palette.accent;
-    ctx.fillRect(x * CELL, y * CELL, CELL, CELL);
+    if (family === 'atlas') {
+      ctx.fillRect(x * CELL + 3, y * CELL + 7, CELL - 6, 2);
+      ctx.fillRect(x * CELL + 7, y * CELL + 3, 2, CELL - 6);
+    } else if (family === 'retro') {
+      ctx.fillRect(x * CELL + 3, y * CELL + 3, CELL - 6, CELL - 6);
+    } else ctx.fillRect(x * CELL, y * CELL, CELL, CELL);
     // A crisp edge gives the short reveal a readable perimeter. Every pixel
     // remains inside a newly claimed, still-safe cell; no arena-wide flash.
     ctx.fillStyle = PRESENTATION_INK;

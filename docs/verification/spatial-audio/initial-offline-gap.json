@@ -1,0 +1,10 @@
+{
+  "scope": "Development build before final lifecycle refinements; not an immutable release certificate",
+  "files": [
+    {
+      "path": "game/audio/effects/bank.mjs",
+      "bytes": 6894,
+      "sha256": "5feee09ad948e1c4f561f29ec31f46f7beeb28f23c7fb367f7f58700d84df16f"
+    }
+  ]
+}

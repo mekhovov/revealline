@@ -1,0 +1,333 @@
+{
+  "format": "revealline.team-hud-wrap-evidence.v1",
+  "sourceBase": "0a9be382d03bf7288fc20942f9938ce96563264f",
+  "integratedMain": "64c8b9d81604984363666abadae236d9f2f76f7f",
+  "sourceState": "working-tree follow-up; source hashes below; no publication approval",
+  "sources": [
+    {
+      "path": "game/ui/handheld-play.css",
+      "bytes": 58927,
+      "sha256": "24bf4adf19801869a43865d3ca8990a3509049ba63c5f92119b9af39a7b53018",
+      "baseSha256": "d0f702e642ad842b9dc4d61b27b66dc4a141f037610baa89f87c48a72a4f0054",
+      "baseBytes": 59473
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 229638,
+      "sha256": "7e7f993c33dfad0bac2684ccd871edcaa6f3744c0d2e5792ff5c34e0e6e8fdfc",
+      "baseSha256": "9d27e7a0d73c4b1798a9f1f018716f00b132fe40ec6120bb7922ae60f1a44005",
+      "baseBytes": 229644
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 999435,
+      "sha256": "b7606e81511409440ae2ff0845e00f215a16ab3d99efff984522017ba31f730a",
+      "baseSha256": "21fd4cb83f4e05176966df7329e1a51b8a860c315d6f1c8d9e9838344f345e38",
+      "baseBytes": 999443
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "bytes": 726801,
+      "sha256": "e46e9270e6304f4433b690b3961d85ce6d6110ccc3940fa6ebd3e7139307600a",
+      "baseSha256": "9f8a2c80b75c0733921ec548a1c7ff3ab80e2b07197d08b9392820c5f737e558",
+      "baseBytes": 726839
+    },
+    {
+      "path": "game/test/coop-terminal-player-hud.test.mjs",
+      "bytes": 16891,
+      "sha256": "27d4b9a3c152ee84ea9fbfb3da879b81786817521941a1548f541b01c8f16b89",
+      "baseSha256": "86606006d3af249f508e8b40364ada61ee85054a4fb2988675b64a4e92eca01e",
+      "baseBytes": 14303
+    },
+    {
+      "path": "game/test/coop-departure-locale.test.mjs",
+      "bytes": 4211,
+      "sha256": "bb39ac2be171e77574e845bb69d1210246badc3d7c31baf03df2935106035aa9",
+      "baseSha256": null,
+      "baseBytes": null
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "bytes": 6757,
+      "sha256": "1d75db581fc026cf4f25a6b6505e5d3ae1959850eea26e81b53e6d0d0e6eed5d"
+    },
+    {
+      "path": "catalog-verification.json",
+      "bytes": 578,
+      "sha256": "fd67b3f275bfc49c2c429c58d723c730da485f169ae0216714680e702def9f3a"
+    },
+    {
+      "path": "connection-both-568-en-standard.json",
+      "bytes": 8832,
+      "sha256": "b34370be556bf99c13302413ee3c0296066e4a07e8ca6a1f8729a1afbab1f995"
+    },
+    {
+      "path": "connection-both-568-en-standard.png",
+      "bytes": 21230,
+      "sha256": "c571de2469de23de86ac233925e4eaa88ea0d1f699a37082369a600c3c894c16"
+    },
+    {
+      "path": "css-isolation.json",
+      "bytes": 1473,
+      "sha256": "328526d0d610e7cae16e158bf93fb63f03f7f8ae18a1392e4fb5bd6c3c62a4ce"
+    },
+    {
+      "path": "departure-cancel-focus-after.txt",
+      "bytes": 4144,
+      "sha256": "5ef68b416224cd2134aaf2c8d53e05905765db9c149c7a75bbf016ab9f4f3359"
+    },
+    {
+      "path": "departure-live-uk-after.png",
+      "bytes": 29671,
+      "sha256": "a97be71923230a93d81cf744d05ab3b4e566c4e79c2cbdeb02c4b1cd1b7e61a4"
+    },
+    {
+      "path": "departure-live-uk-after.txt",
+      "bytes": 1337,
+      "sha256": "78f4e64d1fccbc9df5916639fc2c1885cdb4c350671c5e9a47b0369193963624"
+    },
+    {
+      "path": "evidence.tar.gz",
+      "bytes": 21527,
+      "sha256": "ef71f7b3476038d5642b721b4c1b69f49270ac50f48575ba7b210fc87f2a8346"
+    },
+    {
+      "path": "final-browser-scale.json",
+      "bytes": 276,
+      "sha256": "231e1e394b65754cd4df26f5bf412dd356b065539cf409ecc6b295cdaeca1c4d"
+    },
+    {
+      "path": "relay-1280-uk-large.json",
+      "bytes": 10651,
+      "sha256": "c675112c7012f8006b11f9b9335aee66b77a9f43c991b4ba7a6d2d04f7c2a493"
+    },
+    {
+      "path": "relay-1280-uk-large.png",
+      "bytes": 90261,
+      "sha256": "f793ede2cb7724b2562a8874083e0a6ae9722cca2d413743183af977a2da92c4"
+    },
+    {
+      "path": "relay-390-uk-large.json",
+      "bytes": 10504,
+      "sha256": "1e02561efc334dfc434f825c22b52eaf98caaf82617bf641c1ad8a70f9d17e71"
+    },
+    {
+      "path": "relay-390-uk-large.png",
+      "bytes": 45300,
+      "sha256": "a96943e259b5f4a59df06466516056c36650ed22f15fa87cddc3cbb9a7659218"
+    },
+    {
+      "path": "relay-844-uk-large.json",
+      "bytes": 10514,
+      "sha256": "2bea4a54a5841a5ec0cab548f5cd70456a18c3357c7c082d82a723916e83c593"
+    },
+    {
+      "path": "relay-844-uk-large.png",
+      "bytes": 51345,
+      "sha256": "f4b9db142cfc65ebcd1e2ebf046a1af5b7ea7098d2994cd676060e1fc15f8df9"
+    },
+    {
+      "path": "relay-downed-568-en-large.json",
+      "bytes": 9601,
+      "sha256": "619927813558056529a146fbc4a079b97337b6ad312b047d703c7b6abfacac05"
+    },
+    {
+      "path": "relay-downed-568-en-large.png",
+      "bytes": 35903,
+      "sha256": "2c094ee02ca2f4bc61b58fa03e3f14ddf5b14b4d0974ed2769dbb44cc11f93f6"
+    },
+    {
+      "path": "relay-downed-568-uk-large.json",
+      "bytes": 10620,
+      "sha256": "72f9ef37843cce1446419eef02f464c343e95e9a6776f47ce6aa8314b8214c23"
+    },
+    {
+      "path": "relay-downed-568-uk-large.png",
+      "bytes": 37855,
+      "sha256": "2c39011438e97d196023c96383f15c6dd5650fb01709ee5aaf0ddc63589bb1e5"
+    },
+    {
+      "path": "relay-downed-before-568-uk-large.json",
+      "bytes": 10697,
+      "sha256": "2f537452a8d03a3f155d25a57180c085b47327728738823f137730137162ed54"
+    },
+    {
+      "path": "relay-downed-before-568-uk-large.png",
+      "bytes": 29817,
+      "sha256": "9ef2b1f0151586b548d2e9653f71f798657a8e36b1f21a54bc79f44c4dd63ceb"
+    },
+    {
+      "path": "relay-recovery-568-uk-large.json",
+      "bytes": 10516,
+      "sha256": "d945c891830150f923d20906b9b92a1f80c6a0ce7ce9d60b011a0d767347bf53"
+    },
+    {
+      "path": "relay-recovery-568-uk-large.png",
+      "bytes": 38469,
+      "sha256": "4d81919abda586b719f4489249bf5c78d95752c5d51b31fc6a631d4db103f1fc"
+    }
+  ],
+  "archive": {
+    "path": "evidence.tar.gz",
+    "members": [
+      {
+        "path": "catalog-verification.json",
+        "bytes": 578,
+        "sha256": "fd67b3f275bfc49c2c429c58d723c730da485f169ae0216714680e702def9f3a"
+      },
+      {
+        "path": "connection-568-en-standard.json",
+        "bytes": 2826,
+        "sha256": "a8f8682ec07799409533c7b859e37e89f66af64fa8f99c75f953b87468808714"
+      },
+      {
+        "path": "connection-both-568-en-standard.json",
+        "bytes": 8832,
+        "sha256": "b34370be556bf99c13302413ee3c0296066e4a07e8ca6a1f8729a1afbab1f995"
+      },
+      {
+        "path": "css-isolation.json",
+        "bytes": 1473,
+        "sha256": "328526d0d610e7cae16e158bf93fb63f03f7f8ae18a1392e4fb5bd6c3c62a4ce"
+      },
+      {
+        "path": "departure-cancel-focus-after.txt",
+        "bytes": 4144,
+        "sha256": "5ef68b416224cd2134aaf2c8d53e05905765db9c149c7a75bbf016ab9f4f3359"
+      },
+      {
+        "path": "departure-existing-guards.tap",
+        "bytes": 4910,
+        "sha256": "5582df03ef60c28fe23683f96c9f029bc966a334a5ea10ce6913953936c05ebb"
+      },
+      {
+        "path": "departure-live-uk-after.txt",
+        "bytes": 1337,
+        "sha256": "78f4e64d1fccbc9df5916639fc2c1885cdb4c350671c5e9a47b0369193963624"
+      },
+      {
+        "path": "departure-locale-after.tap",
+        "bytes": 1655,
+        "sha256": "11cb7767873e91cc155de5bef8bdd9990793ea9f8a25c863ea5f08b7503d7eaf"
+      },
+      {
+        "path": "departure-locale-before.tap",
+        "bytes": 1339,
+        "sha256": "ab8eee6982c3178ad92fcbdda81c1b5f55fb3da10071b021bac25cebc630e784"
+      },
+      {
+        "path": "final-browser-scale.json",
+        "bytes": 276,
+        "sha256": "231e1e394b65754cd4df26f5bf412dd356b065539cf409ecc6b295cdaeca1c4d"
+      },
+      {
+        "path": "final-host-cohort.tap",
+        "bytes": 24702,
+        "sha256": "f1d168376e85461073c6420b66414d913b023edcdfbe42e0ec001265ece47a8b"
+      },
+      {
+        "path": "host.tap",
+        "bytes": 23358,
+        "sha256": "a888aef918c2abfc3edc94785911580eb6d5432d05f514bd7f3c6c26750db7b2"
+      },
+      {
+        "path": "old-teaching-gate-loader.mjs",
+        "bytes": 5298,
+        "sha256": "16be2d8be0da7fbbb103a22d64b687fe19ac442ad107e7d8574d0face32098fc"
+      },
+      {
+        "path": "presentation-metadata.log",
+        "bytes": 161,
+        "sha256": "fe891b5949feec25294bba8096a17c05295205f23250e9ad40c7aa9e5ec0db93"
+      },
+      {
+        "path": "relay-1280-uk-large.json",
+        "bytes": 10651,
+        "sha256": "c675112c7012f8006b11f9b9335aee66b77a9f43c991b4ba7a6d2d04f7c2a493"
+      },
+      {
+        "path": "relay-390-uk-large.json",
+        "bytes": 10504,
+        "sha256": "1e02561efc334dfc434f825c22b52eaf98caaf82617bf641c1ad8a70f9d17e71"
+      },
+      {
+        "path": "relay-844-uk-large.json",
+        "bytes": 10514,
+        "sha256": "2bea4a54a5841a5ec0cab548f5cd70456a18c3357c7c082d82a723916e83c593"
+      },
+      {
+        "path": "relay-downed-568-en-large.json",
+        "bytes": 9601,
+        "sha256": "619927813558056529a146fbc4a079b97337b6ad312b047d703c7b6abfacac05"
+      },
+      {
+        "path": "relay-downed-568-uk-large.json",
+        "bytes": 10620,
+        "sha256": "72f9ef37843cce1446419eef02f464c343e95e9a6776f47ce6aa8314b8214c23"
+      },
+      {
+        "path": "relay-downed-before-568-uk-large.json",
+        "bytes": 10697,
+        "sha256": "2f537452a8d03a3f155d25a57180c085b47327728738823f137730137162ed54"
+      },
+      {
+        "path": "relay-recovery-568-uk-large.json",
+        "bytes": 10516,
+        "sha256": "d945c891830150f923d20906b9b92a1f80c6a0ce7ce9d60b011a0d767347bf53"
+      },
+      {
+        "path": "terminal-corrected-fixture.tap",
+        "bytes": 2819,
+        "sha256": "17e50a30510c3b726784850c9eedba4a07cdc9b1ddfc3698ab2fa4ddc2a691ea"
+      },
+      {
+        "path": "terminal-current-gate-original-fixture.tap",
+        "bytes": 1061,
+        "sha256": "04cf46a4ade82141a186cae4c578f13c9703026e10088c7eae86f6346a42a64f"
+      },
+      {
+        "path": "terminal-old-gate.tap",
+        "bytes": 748,
+        "sha256": "38896aa816e429bd6b47022333c3f92ff8deb66478ffc32db2c22ef19da52ccd"
+      },
+      {
+        "path": "terminal-uk-compact.tap",
+        "bytes": 2818,
+        "sha256": "762fca43a466f28a2a5f57d38698a87984c96b9a57574741f159ba46b26e893e"
+      },
+      {
+        "path": "viewport-complete.tap",
+        "bytes": 3286,
+        "sha256": "f8fc74aeacc7dbd7e79169e74218c4b603c6863237e7f901ff10259d019fc9e2"
+      },
+      {
+        "path": "viewport.tap",
+        "bytes": 8006,
+        "sha256": "043b8632088c346df8f6cb9d5005f6c0c87c762a13907d2573b104dd399dc406"
+      }
+    ],
+    "imagesIncluded": false,
+    "purpose": "Raw non-image logs/proofs, including failures and intermediate diagnostics."
+  },
+  "hashPolicy": "SHA-256 of exact file bytes. Manifest does not hash itself; no circular evidence references.",
+  "limitations": [
+    "Source-only, public qualification pending.",
+    "Historical captures have no recorded DPR/zoom; final-browser-scale.json has its own narrowly stated scope.",
+    "Native keyboard/click browser review is not hardware touch/controller certification.",
+    "Focused suite counts overlap; full i18n extraction was unavailable in sparse checkout."
+  ],
+  "checkTiming": {
+    "final-host-cohort.tap": "99/99 at the checkpoint before the isolated departure-caption fix.",
+    "departure-locale-after.tap": "6/6 after the isolated departure-caption fix.",
+    "departure-existing-guards.tap": "20/20 after the isolated departure-caption fix.",
+    "counting": "Overlapping checks at different checkpoints; not 125 unique tests."
+  },
+  "reportedStaticChecks": {
+    "checks": ["scoped lint", "formatting", "native syntax"],
+    "result": "pass",
+    "evidenceType": "coordinating publisher witnessed-command report",
+    "fullLogsRetained": false
+  }
+}

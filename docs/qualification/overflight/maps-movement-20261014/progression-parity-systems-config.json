@@ -1,0 +1,26 @@
+{
+  "schema": "OverflightSystemsAirframesConfigV1",
+  "expectedRuntimeCommit": "e708ce99f0fc930406c15233d89d5598360b366d",
+  "sourceProvenance": "progression-parity-provenance.json",
+  "originalConfig": "progression-parity-config.json",
+  "originalEvidence": "progression-parity-aggregate.json.gz",
+  "maxSimulationSeconds": 720,
+  "traceEverySeconds": 1,
+  "wallBudgetSeconds": 900,
+  "cases": [
+    {
+      "id": "survivor-systems-default-airframes",
+      "originalIndex": 4,
+      "route": "systems",
+      "focusPolicy": "normal",
+      "airframes": 3
+    },
+    {
+      "id": "riy-systems-default-airframes",
+      "originalIndex": 3,
+      "route": "systems",
+      "focusPolicy": "normal",
+      "airframes": 3
+    }
+  ]
+}

@@ -1,0 +1,461 @@
+{
+  "passed": true,
+  "actualCommandedRoutes": 24,
+  "records": [
+    {
+      "mode": "self-level",
+      "route": "freight-hall",
+      "ticks": 2105,
+      "position": {
+        "x": 588000,
+        "y": 71875,
+        "z": 706693
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "freight-apron",
+      "ticks": 4220,
+      "position": {
+        "x": 780686,
+        "y": 71875,
+        "z": 550000
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-river-gap",
+      "ticks": 2048,
+      "position": {
+        "x": 2112690,
+        "y": 35875,
+        "z": 2048000
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-above-deck",
+      "ticks": 8448,
+      "position": {
+        "x": 2048000,
+        "y": 71875,
+        "z": 2336690
+      },
+      "contacts": 0,
+      "recentres": 4,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "quarry-under-conveyor",
+      "ticks": 2676,
+      "position": {
+        "x": 3456000,
+        "y": 74875,
+        "z": 726699
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "quarry-low-transfer",
+      "ticks": 2419,
+      "position": {
+        "x": 3490700,
+        "y": 71875,
+        "z": 560000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "station-canopy",
+      "ticks": 2276,
+      "position": {
+        "x": 640000,
+        "y": 70875,
+        "z": 3272699
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "station-street",
+      "ticks": 3191,
+      "position": {
+        "x": 608000,
+        "y": 69875,
+        "z": 3304688
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "foundry-gantries",
+      "ticks": 2962,
+      "position": {
+        "x": 2048000,
+        "y": 75875,
+        "z": 3296693
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "foundry-hall",
+      "ticks": 2848,
+      "position": {
+        "x": 2110000,
+        "y": 74875,
+        "z": 3292690
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "timber-crane-line",
+      "ticks": 2962,
+      "position": {
+        "x": 3456000,
+        "y": 71875,
+        "z": 3296693
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "timber-side-aisle",
+      "ticks": 2962,
+      "position": {
+        "x": 3427000,
+        "y": 71875,
+        "z": 3296693
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "freight-hall",
+      "ticks": 2105,
+      "position": {
+        "x": 588000,
+        "y": 71875,
+        "z": 706692
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "freight-apron",
+      "ticks": 4220,
+      "position": {
+        "x": 780686,
+        "y": 71875,
+        "z": 550000
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-river-gap",
+      "ticks": 2048,
+      "position": {
+        "x": 2112687,
+        "y": 35875,
+        "z": 2048000
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-above-deck",
+      "ticks": 8448,
+      "position": {
+        "x": 2048000,
+        "y": 71875,
+        "z": 2336689
+      },
+      "contacts": 0,
+      "recentres": 4,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "quarry-under-conveyor",
+      "ticks": 2677,
+      "position": {
+        "x": 3456000,
+        "y": 74875,
+        "z": 726686
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "quarry-low-transfer",
+      "ticks": 2419,
+      "position": {
+        "x": 3490700,
+        "y": 71875,
+        "z": 560000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "station-canopy",
+      "ticks": 2276,
+      "position": {
+        "x": 640000,
+        "y": 70875,
+        "z": 3272700
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "station-street",
+      "ticks": 3191,
+      "position": {
+        "x": 608000,
+        "y": 69875,
+        "z": 3304688
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "foundry-gantries",
+      "ticks": 2962,
+      "position": {
+        "x": 2048000,
+        "y": 75875,
+        "z": 3296695
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "foundry-hall",
+      "ticks": 2848,
+      "position": {
+        "x": 2110000,
+        "y": 74875,
+        "z": 3292689
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "timber-crane-line",
+      "ticks": 2962,
+      "position": {
+        "x": 3456000,
+        "y": 71875,
+        "z": 3296695
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "timber-side-aisle",
+      "ticks": 2962,
+      "position": {
+        "x": 3427000,
+        "y": 71875,
+        "z": 3296695
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    }
+  ],
+  "authoredStarts": 12,
+  "actualWallContacts": [
+    {
+      "probe": "freight-wall",
+      "mode": "self-level",
+      "ticks": 111,
+      "position": {
+        "x": 573428,
+        "y": 71875,
+        "z": 620000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "quarry-terrace",
+      "mode": "self-level",
+      "ticks": 223,
+      "position": {
+        "x": 3516778,
+        "y": 67875,
+        "z": 640000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "station-home",
+      "mode": "self-level",
+      "ticks": 237,
+      "position": {
+        "x": 563778,
+        "y": 68875,
+        "z": 3200000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "foundry-stack",
+      "mode": "self-level",
+      "ticks": 194,
+      "position": {
+        "x": 1978778,
+        "y": 89875,
+        "z": 3145000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "timber-stack",
+      "mode": "self-level",
+      "ticks": 134,
+      "position": {
+        "x": 3514778,
+        "y": 66875,
+        "z": 3200000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "freight-wall",
+      "mode": "acro",
+      "ticks": 111,
+      "position": {
+        "x": 573428,
+        "y": 71875,
+        "z": 620000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "quarry-terrace",
+      "mode": "acro",
+      "ticks": 223,
+      "position": {
+        "x": 3516778,
+        "y": 67875,
+        "z": 640000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "station-home",
+      "mode": "acro",
+      "ticks": 237,
+      "position": {
+        "x": 563778,
+        "y": 68875,
+        "z": 3200000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "foundry-stack",
+      "mode": "acro",
+      "ticks": 194,
+      "position": {
+        "x": 1978778,
+        "y": 89875,
+        "z": 3145000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "timber-stack",
+      "mode": "acro",
+      "ticks": 134,
+      "position": {
+        "x": 3514778,
+        "y": 66875,
+        "z": 3200000
+      },
+      "contacts": 1
+    }
+  ],
+  "sourcePins": {
+    "terrain": "71f1330ce107aecd34adef19041c6f48c5492bb0ea1b668d147e4a148f108b69",
+    "scenery": "b94730367c57670d8844007bff2953c05e282f5ac29352cf7914d25041bfe642"
+  },
+  "playerReady": false,
+  "claim": "Production regional-session controlled command evidence; not native player/device FPS evidence."
+}

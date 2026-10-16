@@ -7,6 +7,7 @@ import { createJourneyBackend } from '../journey/profile.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { workshopReturnLinks } from '../ui/workshop-return.mjs';
 import { openMissionLibrary } from './helpers/library-selection.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 // Browser decoder boundary only. The host still reads, hashes and verifies the
 // registered originals; these dimensions match the two real fixture families
@@ -65,10 +66,16 @@ async function page(t, options = {}) {
   });
 }
 async function running(p, levelId) {
-  await settle(() => {
-    p.frame(0);
-    return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
-  });
+  // A cold authored route verifies and compiles all 91 active mission records
+  // before the selected flight becomes observable. Keep this integration
+  // boundary longer than the ordinary five-second DOM-action wait.
+  await waitFor(
+    () => {
+      p.frame(0);
+      return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
+    },
+    { message: 'Selected Solo mission did not start.', timeoutMs: 15000 },
+  );
 }
 async function missions(p, opener = 'shell-play') {
   if (opener === 'shell-catalogue' && !p.$('shell-workshop-dialog').open)
@@ -80,19 +87,24 @@ function collection(p, value) {
   p.$('journey-collection').emit('change');
   return [...p.$('journey-cards').children];
 }
+function lifecycle(p, value) {
+  p.$('journey-lifecycle').value = value;
+  p.$('journey-lifecycle').emit('change');
+  return collection(p, '');
+}
 
-test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct Start, Retry and Next', async (t) => {
+test('ordinary Solo entry separates 186 current and 141 archived missions without changing exact owners or Start, Retry and Next', async (t) => {
   const p = await page(t);
   assert.equal(p.$('shell-featured').hidden, false);
   assert.equal(p.$('shell-continue').hidden, true);
   assert.equal(p.$('shell-title-edition').textContent, 'NEW JOURNEY / 91 MISSIONS');
   assert.match(p.$('shell-destination').textContent, /Start · First return/);
-  assert.equal(new URL(p.$('shell-playground').href).search, '?journey=whole-spatial-v9');
+  assert.equal(new URL(p.$('shell-playground').href).search, '?journey=whole-spatial-v25');
   assert.equal(p.$('shell-catalogue').textContent, 'All missions');
   assert.equal(p.$('shell-catalogue').getAttribute('href'), './?journey=legacy');
   assert.equal(
     p.$('shell-title-versus').getAttribute('href'),
-    'couch/?journey=whole-spatial-v9&return=solo',
+    'couch/?journey=whole-spatial-v25&return=solo',
   );
   assert.equal(
     p.$('shell-title-team').querySelector('.game-mode-description').textContent,
@@ -104,17 +116,95 @@ test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct 
   );
   await missions(p);
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 201);
+  assert.equal(p.$('journey-lifecycle').value, 'current');
+  assert.equal(p.$('journey-cards').children.length, 186);
   assert.equal(p.$('journey-chooser').contains(p.$('missions-catalogue')), false);
-  assert.equal(collection(p, 'Classic').length, 110);
+  assert.equal(collection(p, 'Classic').length, 95);
+  assert.equal(collection(p, 'Journey').length, 91);
+  const archived = lifecycle(p, 'archive');
+  assert.equal(archived.length, 141);
+  assert.equal(collection(p, 'Classic').length, 93);
+  assert.equal(collection(p, 'Journey').length, 48);
+  const all = lifecycle(p, '');
+  assert.equal(all.length, 327);
+  assert.ok(
+    archived.every((old) => all.some((card) => card.dataset.missionId === old.dataset.missionId)),
+  );
+  assert.equal(collection(p, 'Classic').length, 188);
   const journeyCards = collection(p, 'Journey');
-  assert.equal(journeyCards.length, 91);
+  assert.equal(journeyCards.length, 139);
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v9')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v10')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v11')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v12')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v13')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v25')
+      .length,
+    91,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v22')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v21')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v20')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v19')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v18')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v17')
+      .length,
+    3,
+  );
+  assert.equal(
+    journeyCards.filter((card) => JSON.parse(card.dataset.missionId)[1] === 'whole-spatial-v16')
+      .length,
+    3,
+  );
   const ids = journeyCards.map((card) => JSON.parse(card.dataset.missionId)[3]);
   for (const id of ['sorting-yard', 'home-signal', 'cross-stitch-crossings', 'four-motor-landings'])
     assert(
       ids.some((candidate) => candidate.endsWith(`/${id}`)),
       id,
     );
+  lifecycle(p, 'current');
   p.$('journey-back').click();
   p.$('shell-featured').click();
   await running(p, 'first-return');
@@ -126,6 +216,9 @@ test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct 
     p.key('ArrowDown', false);
     p.frame(0);
     assert.equal(p.rendered.run.status, 'won');
+    assert.equal(p.$('game-overlay').hidden, true);
+    if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+    p.$('show-result').click();
   };
   complete();
   assert.match(p.$('overlay-copy').textContent, /Journey mission complete/);
@@ -143,7 +236,7 @@ test('ordinary Solo entry offers 91 Journey and 110 Classic missions and direct 
 
 test('ordinary Solo Continue uses its current Journey bookmark without converting old records', async (t) => {
   const memory = managedIndexedDB();
-  const current = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v9' });
+  const current = createJourneyBackend({ ...memory, profileKey: 'journey-whole-spatial-v25' });
   const previous = createJourneyBackend(memory);
   await previous.commit([{ type: 'select', mode: 'solo', missionId: 'official/old/mission' }]);
   const old = await previous.read();
@@ -172,7 +265,10 @@ test('Legacy is explicitly accessible and its unified selector opens an exact Ne
     assert.match(p.$(id).getAttribute('href'), /journey=legacy/);
   await missions(p, 'shell-catalogue');
   assert.equal(p.$('journey-collection').value, '');
-  assert.equal(p.$('journey-cards').children.length, 201);
+  assert.equal(p.$('journey-cards').children.length, 186);
+  assert.equal(lifecycle(p, 'archive').length, 141);
+  assert.equal(lifecycle(p, '').length, 327);
+  lifecycle(p, 'current');
   const card = collection(p, 'Journey').find((candidate) =>
     JSON.parse(candidate.dataset.missionId)[3].endsWith('/choose-your-share'),
   );
@@ -181,7 +277,7 @@ test('Legacy is explicitly accessible and its unified selector opens an exact Ne
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const target = new URL(globalThis.location.href);
   assert.equal(target.origin + target.pathname, 'http://localhost/game/');
-  assert.equal(target.searchParams.get('journey'), 'whole-spatial-v9');
+  assert.equal(target.searchParams.get('journey'), 'whole-spatial-v25');
   assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
   assert.deepEqual(p.errors, []);
 });
@@ -224,7 +320,7 @@ test('switching from a running default Journey to Legacy has an explicit Stay or
   assert.equal(target.origin + target.pathname, 'http://localhost/game/');
   assert.equal(target.searchParams.get('journey'), 'legacy');
   assert.equal(target.searchParams.get('library-mission'), card.dataset.missionId);
-  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v9'));
+  assert(storage.getItem('revealline.suspended.journey-whole-spatial.v25'));
   assert.deepEqual(p.errors, []);
 });
 
@@ -234,7 +330,9 @@ for (const search of ['?journey=', '?journey=unknown', '?mode-return=unknown'])
     assert.equal(p.doc.body.classList.contains('journey-preview'), false);
     assert.equal(p.$('shell-catalogue').textContent, 'All missions');
     await missions(p);
-    assert.equal(p.$('journey-cards').children.length, 201);
+    assert.equal(p.$('journey-cards').children.length, 186);
+    assert.equal(lifecycle(p, 'archive').length, 141);
+    assert.equal(lifecycle(p, '').length, 327);
     assert.deepEqual(p.errors, []);
   });
 

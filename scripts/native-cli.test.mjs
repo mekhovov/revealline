@@ -8,6 +8,8 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { stageNative, verifySite, NATIVE_MARKER, IOS_CSP, iosHTMLPolicy } from './native-cli.mjs';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
+import { loadNativeSite, MAX_SITE_BYTES } from '../platforms/desktop/resources.mjs';
+import { MAX_NATIVE_FILES, MAX_NATIVE_SITE_BYTES } from './native-cli.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
@@ -104,6 +106,100 @@ test('desktop staging preserves verified asset/manifest bytes and never rewrites
   assert.deepEqual(await snapshot(f.site), before);
   assert.equal((await verifySite(f.out, { native: true })).marker.platform, 'desktop');
 });
+
+test('public community routes and shared loader retain exact native inventory ownership under the existing CSP', async (t) => {
+  const f = await fixture(t);
+  const names = [
+    'game/communities/index.html',
+    'game/communities/droneaid/index.html',
+    'game/communities/droneaid-community/index.html',
+    'game/communities/social-drone-ua/index.html',
+    'game/communities/victory-drones/index.html',
+    'game/communities/ukraine-culture/index.html',
+    'game/communities/fpv-learning/index.html',
+    'game/communities/entry.mjs',
+    'game/communities/directory.css',
+    'game/community-routes.mjs',
+    'game/edition-context.mjs',
+    'game/community/index.html',
+    'game/community/redirect.mjs',
+  ];
+  for (const name of names) {
+    const bytes = await fs.readFile(new URL(`../${name}`, import.meta.url));
+    if (name.endsWith('.html')) assert.doesNotMatch(bytes.toString(), /<base\b/i, name);
+    f.files.set(name, bytes);
+    await fs.mkdir(path.dirname(path.join(f.site, name)), { recursive: true });
+    await fs.writeFile(path.join(f.site, name), bytes);
+    f.manifest.files.push({ path: name, bytes: bytes.length, sha256: hash(bytes) });
+    f.manifest.totalBytes += bytes.length;
+  }
+  await f.writeManifest();
+  const before = await snapshot(f.site);
+  for (const platform of ['desktop', 'ios']) {
+    const out = path.join(f.root, `community-${platform}`);
+    await stageNative({ site: f.site, out, platform, bridge: f.bridge });
+    const verified = await verifySite(out, { native: true });
+    for (const name of names) {
+      const bytes = await fs.readFile(path.join(out, name));
+      const expected =
+        platform === 'ios' && name.endsWith('.html')
+          ? iosHTMLPolicy(f.files.get(name), name)
+          : f.files.get(name);
+      assert.deepEqual(bytes, expected, `${platform}: ${name}`);
+      assert.deepEqual(
+        verified.manifest.files.find((entry) => entry.path === name),
+        {
+          path: name,
+          bytes: bytes.length,
+          sha256: hash(bytes),
+        },
+      );
+    }
+    if (platform === 'desktop') {
+      const native = await loadNativeSite(out);
+      for (const name of names.filter((name) => name.endsWith('/index.html'))) {
+        const url = `revealline://app/${name.slice(0, -'index.html'.length)}?campaign=retained#saved`;
+        assert.equal(native.isNavigationAllowed(url), true, name);
+        const response = await native.handle(new Request(url));
+        assert.equal(response.status, 200, name);
+        assert.equal(await response.text(), f.files.get(name).toString(), name);
+        assert.match(response.headers.get('Content-Security-Policy'), /base-uri 'none'/);
+      }
+    }
+  }
+  assert.deepEqual(await snapshot(f.site), before);
+});
+
+test('current-sized native inventories stage and load without dropping localization files', async (t) => {
+  const f = await fixture(t);
+  const additional = new Map(
+    Array.from({ length: 1100 }, (_, index) => [`game/item-${index}.json`, Buffer.from('{}')]),
+  );
+  additional.set(
+    'game/i18n/catalogs.mjs',
+    Buffer.from('globalThis.RevealLineTranslations={en:{},uk:{}};'),
+  );
+  for (const [name, bytes] of additional) {
+    await fs.mkdir(path.dirname(path.join(f.site, name)), { recursive: true });
+    await fs.writeFile(path.join(f.site, name), bytes);
+    f.manifest.files.push({ path: name, bytes: bytes.length, sha256: hash(bytes) });
+    f.manifest.totalBytes += bytes.length;
+  }
+  await f.writeManifest();
+  await stageNative({ site: f.site, out: f.out, platform: 'desktop' });
+  const site = await loadNativeSite(f.out);
+  assert.equal(site.fileCount, f.manifest.files.length);
+  assert.equal(
+    (await site.handle(new Request('revealline://app/game/i18n/catalogs.mjs'))).status,
+    200,
+  );
+  assert.equal(MAX_NATIVE_SITE_BYTES, MAX_SITE_BYTES);
+  await f.writeManifest({
+    ...f.manifest,
+    files: Array(MAX_NATIVE_FILES + 1).fill(f.manifest.files[0]),
+  });
+  await assert.rejects(verifySite(f.site), /Invalid native file inventory/);
+});
 test('iOS adds the explicit bridge and records both source and resulting inventory identities', async (t) => {
   const f = await fixture(t),
     before = await snapshot(f.site);
@@ -147,8 +243,8 @@ test('iOS policy derives from public headers, excludes unsupported meta directiv
       .join('; '),
   );
   assert.ok(!IOS_CSP.includes('frame-ancestors'));
-  assert.ok(!IOS_CSP.includes('unsafe-eval'));
-  assert.ok(IOS_CSP.includes("script-src 'self';"));
+  assert.ok(!IOS_CSP.includes("'unsafe-eval'"));
+  assert.ok(IOS_CSP.includes("script-src 'self' 'wasm-unsafe-eval';"));
   assert.ok(IOS_CSP.includes("connect-src 'self';"));
   assert.ok(IOS_CSP.includes("img-src 'self' data: blob:;"));
   assert.ok(IOS_CSP.includes("base-uri 'none'; form-action 'none'"));
@@ -163,7 +259,7 @@ test('iOS policy derives from public headers, excludes unsupported meta directiv
 });
 test('compatible existing policy is preserved and relocated once; conflicts, duplicates and malformed heads reject', () => {
   const policy =
-    "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'";
+    "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'";
   const meta = `<meta content="${policy}" http-equiv="Content-Security-Policy">`;
   const source = `<html><head><meta charset="utf-8">${meta}<script src="page.js"></script></head></html>`;
   const result = iosHTMLPolicy(Buffer.from(source));

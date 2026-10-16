@@ -1,0 +1,113 @@
+TAP version 13
+# Subtest: Help before board admission stays empty and preserves the existing loading or failure owner
+ok 1 - Help before board admission stays empty and preserves the existing loading or failure owner
+  ---
+  duration_ms: 16.644458
+  type: 'test'
+  ...
+# Subtest: Versus Help reads actual optional board rules without advancing either paused run
+ok 2 - Versus Help reads actual optional board rules without advancing either paused run
+  ---
+  duration_ms: 1972.45425
+  type: 'test'
+  ...
+# Subtest: combined mission Help localizes its existing reader and preserves paused boards with staged setup values
+ok 3 - combined mission Help localizes its existing reader and preserves paused boards with staged setup values
+  ---
+  duration_ms: 1096.989667
+  type: 'test'
+  ...
+# Subtest: absent and disabled patrol rules add no Help section or actions
+    # Subtest: false
+    ok 1 - false
+      ---
+      duration_ms: 633.569333
+      type: 'test'
+      ...
+    # Subtest: null
+    ok 2 - null
+      ---
+      duration_ms: 635.579916
+      type: 'test'
+      ...
+    1..2
+ok 4 - absent and disabled patrol rules add no Help section or actions
+  ---
+  duration_ms: 1269.480292
+  type: 'test'
+  ...
+# Subtest: reading encounter guidance after the real time limit retains both result boards
+ok 5 - reading encounter guidance after the real time limit retains both result boards
+  ---
+  duration_ms: 1378.714833
+  type: 'test'
+  ...
+# Subtest: controller reading uses the existing end-only Help return and survives cached page restore
+ok 6 - controller reading uses the existing end-only Help return and survives cached page restore
+  ---
+  duration_ms: 3631.607459
+  type: 'test'
+  ...
+# Subtest: empty and valid boards without enabled encounter roles have no extra Help
+ok 7 - empty and valid boards without enabled encounter roles have no extra Help
+  ---
+  duration_ms: 26.434291
+  type: 'test'
+  ...
+# Subtest: optional scouts and sentries remain distinct and repeated actors do not duplicate advice
+ok 8 - optional scouts and sentries remain distinct and repeated actors do not duplicate advice
+  ---
+  duration_ms: 15.108083
+  type: 'test'
+  ...
+# Subtest: trail-pursuer: combined authored roles are independent of the optional patrol switch
+ok 9 - trail-pursuer: combined authored roles are independent of the optional patrol switch
+  ---
+  duration_ms: 111.5515
+  type: 'test'
+  ...
+# Subtest: heading-interceptor: combined authored roles are independent of the optional patrol switch
+ok 10 - heading-interceptor: combined authored roles are independent of the optional patrol switch
+  ---
+  duration_ms: 77.705042
+  type: 'test'
+  ...
+# Subtest: different boards preserve each player’s applicability in canonical topic order
+ok 11 - different boards preserve each player’s applicability in canonical topic order
+  ---
+  duration_ms: 146.728209
+  type: 'test'
+  ...
+# Subtest: only a dense array of zero to two actual levels is accepted
+ok 12 - only a dense array of zero to two actual levels is accepted
+  ---
+  duration_ms: 0.260584
+  type: 'test'
+  ...
+# Subtest: one invalid board suppresses all advice, including valid roles on the other board
+ok 13 - one invalid board suppresses all advice, including valid roles on the other board
+  ---
+  duration_ms: 78.321125
+  type: 'test'
+  ...
+# Subtest: accessor-bearing levels and board arrays are rejected without executing getters
+ok 14 - accessor-bearing levels and board arrays are rejected without executing getters
+  ---
+  duration_ms: 0.398042
+  type: 'test'
+  ...
+# Subtest: models own their immutable rows and a later refresh reflects replacement rules
+ok 15 - models own their immutable rows and a later refresh reflects replacement rules
+  ---
+  duration_ms: 6.119833
+  type: 'test'
+  ...
+1..15
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9620.4015

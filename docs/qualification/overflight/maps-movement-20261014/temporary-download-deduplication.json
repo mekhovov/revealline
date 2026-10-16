@@ -1,0 +1,207 @@
+{
+  "time": "2026-10-14T18:05:12.694211+00:00",
+  "preservedRemoteRevision": "08f5e6e0ee93ae13955321c6a187e5f1148eef84",
+  "reason": "Disk full. Removed only task-generated duplicate downloads after byte-equivalent SHA-256 verification against already-pushed Git artifacts. Gzip files preserve the complete original JSON bytes.",
+  "removedBytes": 138761812,
+  "removedDuplicates": [
+    {
+      "temporaryDownload": "overflight-reference-17031991 (12).json",
+      "bytes": 3812927,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/reference-repeat-1.json.gz",
+      "rawSha256": "b7df9e22a3c72dd8523779638e565689e5965ec1b55ec9e11efb1fc38fbb8124"
+    },
+    {
+      "temporaryDownload": "overflight-sortie-17031991 (7).json",
+      "bytes": 4038958,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/full-riy-trial-3.json.gz",
+      "rawSha256": "9db6fa13d6cb5afe8f07de2c53ac63742768282fad4c5a1ac21b2b4be30ed4c9"
+    },
+    {
+      "temporaryDownload": "overflight-reference-17031991 (7).json",
+      "bytes": 592427,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/context-recovery.json.gz",
+      "rawSha256": "1ceeee7a48c1589230d44925f2e303fbe9c1dffa03a2f3bae326c6c55a9da198"
+    },
+    {
+      "temporaryDownload": "overflight-echo-17031991-battlefield-only.webm",
+      "bytes": 4893160,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/depot-riy-echo.webm",
+      "rawSha256": "eac9ebc30ee2998de69c125ebb105824c0f5301655152b31236d69399124a5f3"
+    },
+    {
+      "temporaryDownload": "overflight-sortie-17031991 (5).json",
+      "bytes": 4047691,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/full-riy-trial-1.json.gz",
+      "rawSha256": "700fbee6168590eed86b4733cab0570107f808dd2d98aff61be06f2df51d8a2b"
+    },
+    {
+      "temporaryDownload": "overflight-reference-17031991 (10).json",
+      "bytes": 2797020,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/reference-trial-3.json.gz",
+      "rawSha256": "b79b622ed1cf0121b25b4fe7127a84cba8f951b9fc310b9ec84b84b223c75558"
+    },
+    {
+      "temporaryDownload": "overflight-sortie-17031991 (1).json",
+      "bytes": 3815717,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/full-survivor-draft-interruption.json.gz",
+      "rawSha256": "8efc7ad59f89e2452490563ab710d4f1ae1c389aa1745bc1d5cc5a8f973275a1"
+    },
+    {
+      "temporaryDownload": "overflight-reference-17031991 (14).json",
+      "bytes": 3802931,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/reference-repeat-3.json.gz",
+      "rawSha256": "f9c4d30b991fbf611c1329470769ce3c878ab596cc807eef9a1762a5def30a36"
+    },
+    {
+      "temporaryDownload": "overflight-fan-shield-17031991-battlefield-only (13).webm",
+      "bytes": 4720231,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/quarry-fan-dense-audio.webm",
+      "rawSha256": "ed7bc307a986d3fcecc359705fc147380b0bb3afff7d78259aa28ce13b583331"
+    },
+    {
+      "temporaryDownload": "overflight-fan-shield-17031991-battlefield-only (11).webm",
+      "bytes": 4097393,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/quarry-fan-mid-normal.webm",
+      "rawSha256": "96a7840918f5bc8bc70aef35639719aaa7e418e6d62a9c721cf5afac8fff5463"
+    },
+    {
+      "temporaryDownload": "overflight-sortie-17031991 (3).json",
+      "bytes": 4042041,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/full-survivor-trial-2.json.gz",
+      "rawSha256": "f93fdcf88a6b4485eb74978acb9eab444a8b760826d7890e62614cbf8af64f22"
+    },
+    {
+      "temporaryDownload": "overflight-reference-17031991 (11).json",
+      "bytes": 17815247,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/reference-soak.json.gz",
+      "rawSha256": "b9547ec71e4f6a77be7b82bd5c78045cfc1e1ce14964e5769085a8e5e06a7db6"
+    },
+    {
+      "temporaryDownload": "overflight-sortie-17031991 (4).json",
+      "bytes": 4046249,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/full-survivor-trial-3.json.gz",
+      "rawSha256": "228349a77f983f372420f48e105103fdcdfdc386722abcfd2b425f6ce4b45d7b"
+    },
+    {
+      "temporaryDownload": "overflight-sortie-17031991 (6).json",
+      "bytes": 4041320,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/full-riy-trial-2.json.gz",
+      "rawSha256": "99de2d7b778ff0746ccb6691279c764ed1d3dbeaeebf3b8b2d35820da3fa5255"
+    },
+    {
+      "temporaryDownload": "overflight-reference-17031991 (13).json",
+      "bytes": 3810557,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/reference-repeat-2.json.gz",
+      "rawSha256": "47deac86c5de86d2b21eeb6ea540ec838d03b99d7b1af0d439b6edda39526b17"
+    },
+    {
+      "temporaryDownload": "overflight-fan-shield-17031991-battlefield-only (10).webm",
+      "bytes": 1795353,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/quarry-fan-final.webm",
+      "rawSha256": "253dc11ccaa748a510df66887db196d8b1ffbc7396597c296de52ad6c43d8a4a"
+    },
+    {
+      "temporaryDownload": "overflight-sortie-17031991 (2).json",
+      "bytes": 4053978,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/full-survivor-trial-1.json.gz",
+      "rawSha256": "c3d3800b06429e64620c2b512ecfe77d5dffcd4c6581a71c290c551927c1b764"
+    },
+    {
+      "temporaryDownload": "overflight-fan-shield-17031991-battlefield-only (12).webm",
+      "bytes": 4493773,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/quarry-fan-mid-reduced.webm",
+      "rawSha256": "589316dbdcc06b4459fdeb8acc00819d38ddc736443f03e2806475a157f7a728"
+    },
+    {
+      "temporaryDownload": "overflight-stress-17031991 (2).json",
+      "bytes": 4066482,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/stress-trial-3.json.gz",
+      "rawSha256": "f0a87ad3349b53cfa74f8d943f5331e38976e0b73c42c2456c373c15fdea81d9"
+    },
+    {
+      "temporaryDownload": "overflight-systems-17031991-battlefield-only.webm",
+      "bytes": 4162567,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/river-port-systems.webm",
+      "rawSha256": "3b04b2be593fc04d0076d2ef897f65522a2fbcd1d4f48e5c2e6a29e3deb5f7eb"
+    },
+    {
+      "temporaryDownload": "overflight-raid-reference-17031991 (1).json",
+      "bytes": 4129781,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/raid-workload-trial-2.json.gz",
+      "rawSha256": "e2753d6985e945aeb624c299ab6cd3d61dd115cf10f25478866b4389b4ae31d2"
+    },
+    {
+      "temporaryDownload": "overflight-echo-17031991-battlefield-only (2).webm",
+      "bytes": 4643914,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/quarry-echo-late.webm",
+      "rawSha256": "cd96119d44cd6d65e1238d76105b56beb8873cc7af932e3390df3de653496fa0"
+    },
+    {
+      "temporaryDownload": "overflight-reference-17031991 (8).json",
+      "bytes": 3119418,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/reference-trial-1.json.gz",
+      "rawSha256": "598d73fcf5f5b9f564969748341853b650ef571006b895ea9006a078faef5308"
+    },
+    {
+      "temporaryDownload": "overflight-systems-17031991-battlefield-only (3).webm",
+      "bytes": 4557261,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/quarry-systems-late.webm",
+      "rawSha256": "806538b395941eb1326fb14967b26e10d3728adf5f62a8c9592e3f46d0f86db5"
+    },
+    {
+      "temporaryDownload": "overflight-fan-shield-17031991-battlefield-only (9).webm",
+      "bytes": 4318858,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/quarry-active-fan-4dab.webm",
+      "rawSha256": "8a1f9394795fca23f5b18e2236161682fb9f200c6e6c4ab48e41e470b95ad31c"
+    },
+    {
+      "temporaryDownload": "overflight-stress-17031991 (1).json",
+      "bytes": 4083644,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/stress-trial-2.json.gz",
+      "rawSha256": "06190f91a5afd352aa5a2c2deb82cd4652583a7090f8ec76d624ee13a65033dd"
+    },
+    {
+      "temporaryDownload": "overflight-echo-17031991-battlefield-only (1).webm",
+      "bytes": 2011919,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/depot-riy-echo-unattended.webm",
+      "rawSha256": "89fc89f57d1fb704cd24191f6bfe36e106daed98274d8d4c31c9f9cecfa941b1"
+    },
+    {
+      "temporaryDownload": "overflight-raid-reference-17031991 (2).json",
+      "bytes": 4129948,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/raid-workload-trial-3.json.gz",
+      "rawSha256": "87e621bc2f7b7a3cbd8fbfd73704090fa72b1456b6a98be9878b9f143cfd62b7"
+    },
+    {
+      "temporaryDownload": "overflight-stress-17031991 (3).json",
+      "bytes": 4104315,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/stress-trial-3-retry.json.gz",
+      "rawSha256": "bc32e1a65c9437152e2c92c303e3b053a48dd38517f3a593ed5d9656e24b85f4"
+    },
+    {
+      "temporaryDownload": "overflight-fan-shield-17031991-battlefield-only (8).webm",
+      "bytes": 4277994,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/quarry-fan-audio.webm",
+      "rawSha256": "22481f9ef1f3c0ce5213e859d7879ab28ba7493cf7c7afa8ff30398c21cb6552"
+    },
+    {
+      "temporaryDownload": "overflight-raid-reference-17031991.json",
+      "bytes": 4149315,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/raid-workload-trial-1.json.gz",
+      "rawSha256": "40f105fb9978d9ed24a9b747fc66a7e7767e49add92e49be0e67a27150408338"
+    },
+    {
+      "temporaryDownload": "overflight-stress-17031991.json",
+      "bytes": 3220826,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/stress-trial-1.json.gz",
+      "rawSha256": "8b8e302d6a9f001f5b754684675488ab1100aa0ddcb1800a6330e54651628d53"
+    },
+    {
+      "temporaryDownload": "overflight-reference-17031991 (9).json",
+      "bytes": 3068597,
+      "preservedFile": "docs/qualification/overflight/maps-movement-20261014/native/reference-trial-2.json.gz",
+      "rawSha256": "60573dab5f63b1db49e174908f867ab8725626b15f1d6ba5f09b18a09a48d695"
+    }
+  ],
+  "sourceOrUniqueEvidenceRemoved": false
+}

@@ -1,89 +1,63 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  verifyNextReleaseTitle,
   verifyPublicBoundary,
   verifySourceVersion,
 } from './release-train-boundary.mjs';
 
-const release = (tag) => ({ draft: false, prerelease: false, tag_name: tag });
-
-test('release source title, package, lock and build versions must match exactly', () => {
-  const valid = {
-    title: 'Release v0.111.1 — correction',
-    packageVersion: '0.111.1',
-    lockVersion: '0.111.1',
-    rootVersion: '0.111.1',
-    buildVersion: '0.111.1',
-  };
-  assert.equal(verifySourceVersion(valid), 'v0.111.1');
-  for (const field of ['lockVersion', 'rootVersion', 'buildVersion'])
-    assert.throws(() => verifySourceVersion({ ...valid, [field]: '0.111.0' }), /does not match/);
-  assert.throws(() => verifySourceVersion({ ...valid, title: 'Fix v0.111.1' }), /exact Release/);
-  assert.throws(
-    () => verifySourceVersion({ ...valid, title: 'Release v0.111.2 — wrong slot' }),
-    /does not match/,
-  );
+test('source version metadata is informational', () => {
+  assert.equal(verifySourceVersion({ packageVersion: '0.111.1' }), '0.111.1');
+  assert.equal(verifySourceVersion({ packageVersion: 'custom-build' }), 'custom-build');
+  assert.equal(verifySourceVersion({ packageVersion: null }), null);
 });
 
-test('next release waits until the previous stable selector and public bytes agree', () => {
-  const configuration = { deploymentEnabled: true, currentVersion: 'v0.111.0' };
-  const pages = [[release('v0.110.1'), release('v0.111.0')]];
-  const rootRelease = {
-    version: 'v0.111.0',
+test('Pages requires the exact protected main bytes, not version equality', () => {
+  const deployment = {
+    format: 'revealline-main-deployment.v1',
+    channel: 'main',
     sourceRevision: 'a'.repeat(40),
-    play: 'releases/v0.111.0/site/game/',
+    buildVersion: `main-${'a'.repeat(12)}`,
+    play: 'game/',
   };
   const buildInfo = {
-    version: 'v0.111.0',
+    version: '0.111.1',
     sourceRevision: 'a'.repeat(40),
     entry: 'game/index.html',
   };
-  assert.deepEqual(verifyPublicBoundary({ configuration, pages, rootRelease, buildInfo }), {
-    latest: 'v0.111.0',
-    sourceRevision: 'a'.repeat(40),
-  });
-  assert.throws(
-    () =>
-      verifyPublicBoundary({
-        configuration: { ...configuration, currentVersion: 'v0.110.1' },
-        pages,
-        rootRelease: { ...rootRelease, version: 'v0.110.1' },
-        buildInfo: { ...buildInfo, version: 'v0.110.1' },
-      }),
-    /not the latest/,
+  assert.deepEqual(
+    verifyPublicBoundary({
+      deployment,
+      buildInfo,
+      expectedMainSha: 'a'.repeat(40),
+    }),
+    {
+      sourceRevision: 'a'.repeat(40),
+      buildVersion: `main-${'a'.repeat(12)}`,
+    },
   );
   assert.throws(
     () =>
       verifyPublicBoundary({
-        configuration,
-        pages,
-        rootRelease: { ...rootRelease, version: 'v0.110.1' },
+        deployment: { ...deployment, channel: 'stable' },
         buildInfo,
       }),
-    /Public root/,
+    /continuous-main deployment/,
   );
   assert.throws(
     () =>
       verifyPublicBoundary({
-        configuration,
-        pages,
-        rootRelease,
+        deployment,
         buildInfo: { ...buildInfo, sourceRevision: 'b'.repeat(40) },
       }),
-    /Public game bytes/,
-  );
-});
-
-test('a release title must allocate a version newer than the accepted stable release', () => {
-  assert.equal(verifyNextReleaseTitle('Release v0.111.1 — patch', 'v0.111.0'), 'v0.111.1');
-  assert.equal(verifyNextReleaseTitle('Release v0.112.0 — feature', 'v0.111.1'), 'v0.112.0');
-  assert.throws(
-    () => verifyNextReleaseTitle('Release v0.111.0 — duplicate', 'v0.111.0'),
-    /must be newer/,
+    /continuous-main deployment marker/,
   );
   assert.throws(
-    () => verifyNextReleaseTitle('Release v0.110.9 — rollback', 'v0.111.0'),
-    /must be newer/,
+    () =>
+      verifyPublicBoundary({
+        deployment,
+        buildInfo,
+        expectedMainSha: 'b'.repeat(40),
+      }),
+    /does not match protected base/,
   );
 });

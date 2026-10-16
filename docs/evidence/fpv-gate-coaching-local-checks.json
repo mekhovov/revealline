@@ -1,0 +1,26 @@
+{
+  "format": "FPVGateCoachingLocalChecks.v1",
+  "candidate": "f6c7f7b141ef7171c3ead0e27b7ea4f195fae0a2",
+  "node": "v22.22.2",
+  "checks": [
+    {
+      "name": "npm run validate",
+      "passed": true,
+      "logBytes": 3146,
+      "logSHA256": "809453b8233b472764abaa0727340097d88e03c1c6071b46564235c565278677"
+    },
+    {
+      "name": "Focused ESLint and Prettier of production host and manual fixture scripts",
+      "passed": true
+    },
+    {
+      "name": "Manual proof qualification11 checks/15778 new replay ticks, unchanged model/source inputs",
+      "passed": true
+    },
+    {
+      "name": "All-three source-bound admission/two identical builds, committed input and ZIP members verified",
+      "passed": true
+    }
+  ],
+  "unitCoverage": "No additional unit coverage; broad suites remain deferred under repository policy."
+}

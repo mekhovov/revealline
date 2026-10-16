@@ -1,0 +1,251 @@
+{
+  "passed": true,
+  "priorRowsPreserved": 20,
+  "descriptor": {
+    "url": "https://lunar.invalid/delivery.json",
+    "bytes": 14759,
+    "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65"
+  },
+  "files": 116,
+  "verifiedResponses": 117,
+  "totalBytes": 2079110,
+  "totalWithDescriptor": 2093869,
+  "originalSourceUnchanged": true,
+  "sourceRevision": "084564ca1a39d06bb077cae34fb2bdc1c3afbaee",
+  "starts": [
+    {
+      "mode": "self-level",
+      "id": "mare-apron",
+      "preparedResources": 255684,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "ejecta-fan",
+      "preparedResources": 323088,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "sinuous-rille",
+      "preparedResources": 311580,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "terraced-crater",
+      "preparedResources": 318468,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "fractured-highland",
+      "preparedResources": 493116,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "self-level",
+      "id": "observatory-ridge",
+      "preparedResources": 574512,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "mare-apron",
+      "preparedResources": 255684,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "ejecta-fan",
+      "preparedResources": 323088,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "sinuous-rille",
+      "preparedResources": 311580,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "terraced-crater",
+      "preparedResources": 318468,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "fractured-highland",
+      "preparedResources": 493116,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    },
+    {
+      "mode": "acro",
+      "id": "observatory-ridge",
+      "preparedResources": 574512,
+      "ticks": 200,
+      "contacts": 0,
+      "pausedBeforeArm": true,
+      "pausedInputIgnored": true
+    }
+  ],
+  "tierStarts": [
+    {
+      "id": "mare-apron",
+      "tier": "performance",
+      "heading": 14799,
+      "resourceBytes": 255684
+    },
+    {
+      "id": "mare-apron",
+      "tier": "balanced",
+      "heading": 14799,
+      "resourceBytes": 255684
+    },
+    {
+      "id": "mare-apron",
+      "tier": "quality",
+      "heading": 14799,
+      "resourceBytes": 255684
+    },
+    {
+      "id": "ejecta-fan",
+      "tier": "performance",
+      "heading": 13685,
+      "resourceBytes": 323088
+    },
+    {
+      "id": "ejecta-fan",
+      "tier": "balanced",
+      "heading": 13685,
+      "resourceBytes": 323088
+    },
+    {
+      "id": "ejecta-fan",
+      "tier": "quality",
+      "heading": 13685,
+      "resourceBytes": 323088
+    },
+    {
+      "id": "sinuous-rille",
+      "tier": "performance",
+      "heading": 14974,
+      "resourceBytes": 311580
+    },
+    {
+      "id": "sinuous-rille",
+      "tier": "balanced",
+      "heading": 14974,
+      "resourceBytes": 311580
+    },
+    {
+      "id": "sinuous-rille",
+      "tier": "quality",
+      "heading": 14974,
+      "resourceBytes": 311580
+    },
+    {
+      "id": "terraced-crater",
+      "tier": "performance",
+      "heading": 15193,
+      "resourceBytes": 318468
+    },
+    {
+      "id": "terraced-crater",
+      "tier": "balanced",
+      "heading": 15193,
+      "resourceBytes": 318468
+    },
+    {
+      "id": "terraced-crater",
+      "tier": "quality",
+      "heading": 15193,
+      "resourceBytes": 318468
+    },
+    {
+      "id": "fractured-highland",
+      "tier": "performance",
+      "heading": 14799,
+      "resourceBytes": 493116
+    },
+    {
+      "id": "fractured-highland",
+      "tier": "balanced",
+      "heading": 14799,
+      "resourceBytes": 493116
+    },
+    {
+      "id": "fractured-highland",
+      "tier": "quality",
+      "heading": 14799,
+      "resourceBytes": 493116
+    },
+    {
+      "id": "observatory-ridge",
+      "tier": "performance",
+      "heading": 14974,
+      "resourceBytes": 574512
+    },
+    {
+      "id": "observatory-ridge",
+      "tier": "balanced",
+      "heading": 14974,
+      "resourceBytes": 574512
+    },
+    {
+      "id": "observatory-ridge",
+      "tier": "quality",
+      "heading": 14974,
+      "resourceBytes": 574512
+    }
+  ],
+  "savedHeadingsPreserved": true,
+  "unknownPinsClearHints": true,
+  "liveCollision": {
+    "worlds": 2,
+    "colliders": 60,
+    "rigidBodies": 0
+  },
+  "disposedCollision": {
+    "worlds": 0,
+    "colliders": 0,
+    "rigidBodies": 0
+  },
+  "allResourcesDisposed": true,
+  "nativeStorageVerified": false,
+  "playerAdmission": false,
+  "scope": "Exact immutable pin, both appearance layers at all three tiers, six landmark-facing starts, saved heading preservation and real production flights. Native Library, exact new package, offline and sustained device flight remain separate gates."
+}

@@ -1,0 +1,359 @@
+{
+  "format": "FPVUrbanMixedPreparation.v1",
+  "id": "urban-earthworks-study",
+  "revision": "mixed-r2",
+  "actualSizeM": [
+    384,
+    384
+  ],
+  "sourceManifestSHA256": "2ec9d40b89d8514de57fc85aa32ff59e3955c2a90e488a4b02782d60440b307e",
+  "sourceProvenanceSHA256": "27562e2c7d4a85127b56cd2eb6bb10540e2915e03d106236001c69222b87d0f3",
+  "sourceSceneSHA256": "33f3f260df3e0f6b87f204728152d281ef9cbe3f44b51209dc73f8114bf7dbb9",
+  "licenseReceipt": "authoring/fpv-worlds/assets/kenney/city-industrial/provenance.json",
+  "licenseReceiptSHA256": "68ec564541de04d76afd571df44cd7e90557cdb351feebc97ac6be5b57b78373",
+  "bundledLicense": "License.txt",
+  "bundledLicenseSHA256": "60a8c5c31191256ec9779dc18745dea6d69c46f4b29703459ce064c1765a59ea",
+  "terrainManifestSHA256": "7f402a29d4adbd1d684694c1d0976ae2d4159ca96e32bc32399ed2f9a6797e33",
+  "sceneryManifestSHA256": "694bb4e034f332b159864538f98215d4fa4e878e9b0ed50f257ade564b0f37b1",
+  "cellsPerProfile": 9,
+  "assets": 36,
+  "sourceBytes": 2027827,
+  "removedGroundTriangles": 76,
+  "retainedArchitectureTriangles": 6998,
+  "terrainTriangles": 18432,
+  "maximumTerrainHeightMm": 6000,
+  "earthworks": [
+    {
+      "id": "mill-ridge",
+      "centre": [
+        80,
+        140
+      ],
+      "radii": [
+        36,
+        20
+      ],
+      "heightM": 6
+    },
+    {
+      "id": "yard-ridge",
+      "centre": [
+        290,
+        140
+      ],
+      "radii": [
+        48,
+        24
+      ],
+      "heightM": 4
+    },
+    {
+      "id": "service-berm",
+      "centre": [
+        170,
+        200
+      ],
+      "radii": [
+        36,
+        14
+      ],
+      "heightM": 2.5
+    }
+  ],
+  "routes": [
+    {
+      "id": "service-road",
+      "title": {
+        "en": "Open service road",
+        "uk": "Відкрита службова дорога"
+      },
+      "halfWidthM": 2,
+      "points": [
+        [
+          120,
+          4,
+          180
+        ],
+        [
+          270,
+          4,
+          180
+        ]
+      ]
+    },
+    {
+      "id": "ridge-loading-hall",
+      "title": {
+        "en": "Ridge to loading hall",
+        "uk": "Від пагорба до вантажного залу"
+      },
+      "halfWidthM": 2,
+      "points": [
+        [
+          290,
+          10,
+          180
+        ],
+        [
+          290,
+          10,
+          140
+        ],
+        [
+          190,
+          12,
+          140
+        ],
+        [
+          190,
+          4,
+          108
+        ],
+        [
+          190,
+          4,
+          20
+        ]
+      ]
+    },
+    {
+      "id": "mill-ridge-approach",
+      "title": {
+        "en": "Mill ridge approach",
+        "uk": "Підхід до цеху через пагорб"
+      },
+      "halfWidthM": 2,
+      "points": [
+        [
+          64,
+          10,
+          180
+        ],
+        [
+          80,
+          10,
+          140
+        ],
+        [
+          64,
+          12,
+          110
+        ],
+        [
+          64,
+          12,
+          64
+        ]
+      ]
+    },
+    {
+      "id": "loading-court-line",
+      "title": {
+        "en": "Loading courts and hall",
+        "uk": "Вантажні двори та зал"
+      },
+      "halfWidthM": 2,
+      "points": [
+        [
+          190,
+          2,
+          176
+        ],
+        [
+          189,
+          2,
+          160
+        ],
+        [
+          191,
+          2,
+          140
+        ],
+        [
+          190,
+          4,
+          108
+        ],
+        [
+          190,
+          4,
+          20
+        ]
+      ]
+    }
+  ],
+  "flightReady": false,
+  "limitations": [
+    "Bounded geometry/material study, not a default player region",
+    "Route sweeps are geometry checks, not recorded or scored demonstrations",
+    "Combined-owner flight, recovery and package/device qualification remain required"
+  ],
+  "parentTerrainManifestSHA256": "d0ec271c419a4b2032e359e5e8106e8089a10f26dd5e0251536629e3fa35f25f",
+  "parentSceneryManifestSHA256": "d0794c442362dcf95885ef7db417e8d3480db179a2dce2d0f026b65cf075de17",
+  "parentArchitectureTriangles": 4345,
+  "addedArchitectureTriangles": 2653,
+  "containerAdaptation": {
+    "sourceSurface": "surface-71",
+    "sourceSceneSHA256": "33f3f260df3e0f6b87f204728152d281ef9cbe3f44b51209dc73f8114bf7dbb9",
+    "scale": [
+      0.45,
+      0.51,
+      1
+    ],
+    "approximateSizeM": [
+      2.446,
+      2.59,
+      12
+    ],
+    "containers": [
+      {
+        "id": "north-left",
+        "centre": [
+          174,
+          0,
+          14
+        ],
+        "yaw": 0,
+        "color": [
+          0.12,
+          0.25,
+          0.42
+        ],
+        "chunkId": "urban-1-0",
+        "triangles": 379,
+        "adaptedSizeM": [
+          2.446,
+          2.59,
+          12
+        ]
+      },
+      {
+        "id": "north-left-upper",
+        "centre": [
+          174,
+          2.59,
+          14
+        ],
+        "yaw": 0,
+        "color": [
+          0.16,
+          0.3,
+          0.46
+        ],
+        "chunkId": "urban-1-0",
+        "triangles": 379,
+        "adaptedSizeM": [
+          2.446,
+          2.59,
+          12
+        ]
+      },
+      {
+        "id": "north-right",
+        "centre": [
+          206,
+          0,
+          14
+        ],
+        "yaw": 0,
+        "color": [
+          0.12,
+          0.25,
+          0.42
+        ],
+        "chunkId": "urban-1-0",
+        "triangles": 379,
+        "adaptedSizeM": [
+          2.446,
+          2.59,
+          12
+        ]
+      },
+      {
+        "id": "south-left",
+        "centre": [
+          174,
+          0,
+          115
+        ],
+        "yaw": 0,
+        "color": [
+          0.58,
+          0.32,
+          0.1
+        ],
+        "chunkId": "urban-1-0",
+        "triangles": 379,
+        "adaptedSizeM": [
+          2.446,
+          2.59,
+          12
+        ]
+      },
+      {
+        "id": "south-right",
+        "centre": [
+          206,
+          0,
+          115
+        ],
+        "yaw": 0,
+        "color": [
+          0.58,
+          0.32,
+          0.1
+        ],
+        "chunkId": "urban-1-0",
+        "triangles": 379,
+        "adaptedSizeM": [
+          2.446,
+          2.59,
+          12
+        ]
+      },
+      {
+        "id": "approach-left",
+        "centre": [
+          180,
+          0,
+          140
+        ],
+        "yaw": 90,
+        "color": [
+          0.22,
+          0.34,
+          0.35
+        ],
+        "chunkId": "urban-1-1",
+        "triangles": 379,
+        "adaptedSizeM": [
+          2.446,
+          2.59,
+          12
+        ]
+      },
+      {
+        "id": "approach-right",
+        "centre": [
+          200,
+          0,
+          160
+        ],
+        "yaw": 90,
+        "color": [
+          0.58,
+          0.32,
+          0.1
+        ],
+        "chunkId": "urban-1-1",
+        "triangles": 379,
+        "adaptedSizeM": [
+          2.446,
+          2.59,
+          12
+        ]
+      }
+    ],
+    "oldGeometryUnchanged": true
+  }
+}

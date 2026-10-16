@@ -84,7 +84,9 @@ test('additional styles have distinct queues and mixes preserve explicit former 
   assert.deepEqual(explicit.listening.genres, previousChoices);
   assert.deepEqual(
     resolveSoundtrackSelection(explicit).playlist.trackIds,
-    recordings.slice(0, 3).map((t) => t.id),
+    previousChoices.map(
+      (genre) => recordings.find((track) => track.tags.genres.includes(genre)).id,
+    ),
   );
   assert.deepEqual(
     resolveSoundtrackSelection({ ...library, listening: { ...library.listening, mode: 'mix' } })

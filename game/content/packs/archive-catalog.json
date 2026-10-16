@@ -4,12 +4,12 @@
     {
       "id": "fpv-arcade-r4",
       "path": "fpv-arcade-r4.json",
-      "name": "FPV Front · First Light Arcade R4",
+      "name": "FPV Front \u00b7 First Light Arcade R4",
       "campaigns": [
         {
           "id": "fpv-first-light-r4",
           "revision": "4",
-          "title": "FPV Front · First Light Arcade R4",
+          "title": "FPV Front \u00b7 First Light Arcade R4",
           "levels": [
             {
               "id": "orchard-window",
@@ -30,12 +30,12 @@
     {
       "id": "fpv-arcade-r3",
       "path": "fpv-arcade-r3.json",
-      "name": "FPV Front · First Light R3",
+      "name": "FPV Front \u00b7 First Light R3",
       "campaigns": [
         {
           "id": "fpv-first-light-r3",
           "revision": "3",
-          "title": "FPV Front · First Light R3",
+          "title": "FPV Front \u00b7 First Light R3",
           "levels": [
             {
               "id": "orchard-window",
@@ -56,12 +56,12 @@
     {
       "id": "fpv-arcade-r2",
       "path": "fpv-arcade-r2.json",
-      "name": "FPV Front · First Light R2",
+      "name": "FPV Front \u00b7 First Light R2",
       "campaigns": [
         {
           "id": "fpv-first-light-r2",
           "revision": "2",
-          "title": "FPV Front · First Light R2",
+          "title": "FPV Front \u00b7 First Light R2",
           "levels": [
             {
               "id": "orchard-window",
@@ -82,12 +82,12 @@
     {
       "id": "fpv-arcade",
       "path": "fpv-arcade.json",
-      "name": "FPV Front · First Light",
+      "name": "FPV Front \u00b7 First Light",
       "campaigns": [
         {
           "id": "fpv-first-light",
           "revision": "1",
-          "title": "FPV Front · First Light",
+          "title": "FPV Front \u00b7 First Light",
           "levels": [
             {
               "id": "orchard-window",

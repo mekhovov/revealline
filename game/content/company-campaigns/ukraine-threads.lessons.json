@@ -1,0 +1,403 @@
+[
+  {
+    "brief": "Read an example label, then decide which statements can come from a photograph and which need the museum record.",
+    "campaignId": "ukraine-threads",
+    "fields": [
+      {
+        "expected": "record",
+        "explanation": "The date belongs to the catalogue attribution. A photograph alone does not measure the object’s age.",
+        "id": "date",
+        "label": "Evidence for the date",
+        "options": [
+          { "label": "The colours look old", "value": "look" },
+          { "label": "The museum’s individual object record", "value": "record" }
+        ]
+      },
+      {
+        "expected": "uncertain",
+        "explanation": "Do not upgrade a resemblance into an identification. The supplied record does not establish the exact technique.",
+        "id": "technique",
+        "label": "Technique label",
+        "options": [
+          { "label": "Name a precise stitch from resemblance alone", "value": "certain" },
+          { "label": "Exact technique not established by this fixture", "value": "uncertain" }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "ukraine-threads-02-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Прочитайте приклад підпису, а потім визначте, які твердження походять із фотографії, а які потребують музейного запису.",
+        "fields": [
+          {
+            "explanation": "Дата належить до каталожної атрибуції. Сама фотографія не вимірює віку предмета.",
+            "id": "date",
+            "label": "Доказ датування",
+            "options": [
+              { "label": "Кольори виглядають старими", "value": "look" },
+              { "label": "Окремий музейний запис предмета", "value": "record" }
+            ]
+          },
+          {
+            "explanation": "Не перетворюйте схожість на визначення. Наданий запис не встановлює точної техніки.",
+            "id": "technique",
+            "label": "Підпис техніки",
+            "options": [
+              { "label": "Назвати точний стібок лише за схожістю", "value": "certain" },
+              { "label": "Точної техніки цей приклад не встановлює", "value": "uncertain" }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "example",
+            "lines": [
+              "Для предмета Метрополітен 157573 «ряд дрібних мотивів» описує видиму рису. Датування XVIII століттям і матеріали — льон, шовк, метал — походять із музейного запису."
+            ],
+            "title": "Приклад підпису"
+          },
+          {
+            "id": "limits",
+            "lines": [
+              "У цьому прикладі немає імені майстра, точної місцевості чи перевіреного визначення техніки стібка. Подібні на вигляд деталі фотографії не додають відсутніх фактів."
+            ],
+            "title": "Чого цей запис не встановлює"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Підпис розрізняє спостереження, каталожну атрибуцію й відсутні відомості. Корисний підпис може відкрито зберігати невизначеність.",
+        "title": "Відокремте побачене від відомого"
+      }
+    },
+    "missionId": "ukraine-threads-02",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "example",
+        "lines": [
+          "For Met object 157573, “a row of small motifs” describes a visible feature. Its eighteenth-century date and linen/silk/metal materials come from the museum record."
+        ],
+        "title": "Label example"
+      },
+      {
+        "id": "limits",
+        "lines": [
+          "This fixture supplies no named maker, precise locality or verified stitch-technique identification. Similar-looking marks in a photograph do not supply those missing facts."
+        ],
+        "title": "What this record does not establish"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "The Met — Ukrainian shirt fragment, object 157573",
+        "url": "https://www.metmuseum.org/art/collection/search/157573"
+      }
+    ],
+    "success": "The label now distinguishes observation, catalogue attribution and missing information. A useful label can keep uncertainty visible.",
+    "title": "Separate seeing from knowing"
+  },
+  {
+    "brief": "Use the newly revealed second museum fragment. Compare the two exact records without turning either object into a rule for all Ukrainian clothing.",
+    "campaignId": "ukraine-threads",
+    "fields": [
+      {
+        "expected": "two",
+        "explanation": "Separate accession numbers identify two records. A shared date range does not make their photographs interchangeable.",
+        "id": "identity",
+        "label": "Collection identity",
+        "options": [
+          { "label": "Two views of the same accession", "value": "one" },
+          { "label": "Two separately recorded fragments", "value": "two" }
+        ]
+      },
+      {
+        "expected": "materials",
+        "explanation": "Both records name silk, linen and metal. The order of that list is not a claim about quantity.",
+        "id": "shared",
+        "label": "Supported shared detail",
+        "options": [
+          { "label": "The same named maker", "value": "maker" },
+          { "label": "The same listed material types", "value": "materials" }
+        ]
+      },
+      {
+        "expected": "individual",
+        "explanation": "These individual records support a comparison of these objects. They do not establish one maker, a precise shared locality or a universal meaning for the motifs.",
+        "id": "scope",
+        "label": "Exhibition conclusion",
+        "options": [
+          { "label": "Every region used these motifs with one meaning", "value": "universal" },
+          {
+            "label": "Compare these two objects; keep unrecorded details open",
+            "value": "individual"
+          }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "ukraine-threads-04-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "Використайте щойно відкритий другий музейний фрагмент. Порівняйте два точні записи, не перетворюючи жоден предмет на правило для всього українського вбрання.",
+        "fields": [
+          {
+            "explanation": "Окремі облікові номери позначають два записи. Спільний період не робить фотографії взаємозамінними.",
+            "id": "identity",
+            "label": "Ідентичність у колекції",
+            "options": [
+              { "label": "Два види того самого предмета", "value": "one" },
+              { "label": "Два окремо обліковані фрагменти", "value": "two" }
+            ]
+          },
+          {
+            "explanation": "Обидва записи називають шовк, льон і метал. Порядок переліку не визначає їхньої кількості.",
+            "id": "shared",
+            "label": "Підтверджена спільна деталь",
+            "options": [
+              { "label": "Той самий відомий майстер", "value": "maker" },
+              { "label": "Ті самі названі типи матеріалів", "value": "materials" }
+            ]
+          },
+          {
+            "explanation": "Окремі записи дають підставу порівняти ці предмети. Вони не встановлюють одного майстра, точної спільної місцевості чи універсального значення мотивів.",
+            "id": "scope",
+            "label": "Висновок виставки",
+            "options": [
+              {
+                "label": "Кожен регіон використовував ці мотиви з одним значенням",
+                "value": "universal"
+              },
+              {
+                "label": "Порівнювати ці два предмети; не домислювати незаписане",
+                "value": "individual"
+              }
+            ]
+          }
+        ],
+        "notice": "Оригінальна навчальна вправа без таймера. Джерела пояснюють поняття; це не звіт про справжній захід спільноти й не підтвердження практичної кваліфікації.",
+        "records": [
+          {
+            "id": "first",
+            "lines": [
+              "Предмет Метрополітен 157573 — фрагмент української сорочки останньої чверті XVIII століття; записані матеріали — льон, шовк і метал."
+            ],
+            "title": "Попередній предмет · 2009.300.2715"
+          },
+          {
+            "id": "second",
+            "lines": [
+              "Предмет Метрополітен 157571 — інший фрагмент української сорочки. Запис містить той самий період та шовк, льон і метал. На фото видно червоні розгалужені квіткові форми й повторювані дрібні мотиви облямівки; це окремий обліковий номер."
+            ],
+            "title": "Новий предмет · 2009.300.2713"
+          }
+        ],
+        "role": "Учасник виставки",
+        "success": "Порівняння зберігає обидва облікові номери й спільні записані матеріали, не вигадуючи деталей походження чи символічних значень.",
+        "title": "Порівняйте два окремі предмети"
+      }
+    },
+    "missionId": "ukraine-threads-04",
+    "notice": "An original untimed learning fixture. Sources explain the concepts; this is not an account of a real community event or a practical qualification.",
+    "records": [
+      {
+        "id": "first",
+        "lines": [
+          "Met object 157573 is a Ukrainian shirt fragment, dated to the fourth quarter of the eighteenth century, with linen, silk and metal recorded as materials."
+        ],
+        "title": "Earlier object · 2009.300.2715"
+      },
+      {
+        "id": "second",
+        "lines": [
+          "Met object 157571 is another Ukrainian shirt fragment. Its record gives the same date range and silk, linen and metal. The photograph shows red branching floral forms and repeated small border motifs; this is a separate accession."
+        ],
+        "title": "New object · 2009.300.2713"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibit participant",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "The Met — Ukrainian shirt fragment, object 157573",
+        "url": "https://www.metmuseum.org/art/collection/search/157573"
+      },
+      {
+        "title": "The Met — Ukrainian shirt fragment, object 157571",
+        "url": "https://www.metmuseum.org/art/collection/search/157571"
+      }
+    ],
+    "success": "The comparison keeps both accession numbers and their shared recorded materials, while leaving origin details and symbolic meanings unclaimed.",
+    "title": "Compare two individual objects"
+  },
+  {
+    "brief": "The fictional gallery has two images and a proposed regional claim. Inspect each source record, classify the images and choose what the evidence can support.",
+    "campaignId": "ukraine-threads",
+    "fields": [
+      {
+        "expected": "artwork",
+        "explanation": "Keep the recorded artist, date and object number. A pastel is an artwork; calling it a photograph of a catalogued garment adds evidence the record does not contain.",
+        "id": "museum-label",
+        "label": "Label for Image A",
+        "options": [
+          { "label": "Degas artwork · 1899 · Met object 29.100.556", "value": "artwork" },
+          {
+            "label": "Photograph of a garment documenting every regional detail",
+            "value": "garment-photo"
+          }
+        ]
+      },
+      {
+        "expected": "original-illustration",
+        "explanation": "The production record identifies an original generated game illustration. A convincing texture does not turn it into a historical object or a photograph of an actual event.",
+        "id": "game-label",
+        "label": "Label for Image B",
+        "options": [
+          {
+            "label": "Historical festival photograph with proven regional garments",
+            "value": "historical-photo"
+          },
+          {
+            "label": "Original generated game illustration · fictional festival plaza",
+            "value": "original-illustration"
+          }
+        ]
+      },
+      {
+        "expected": "bounded",
+        "explanation": "These records support two different, attributed image types. They do not establish what everyone in a region wore or what every motif means. A more specific garment claim needs corresponding evidence.",
+        "id": "claim",
+        "label": "Gallery conclusion supported by these records",
+        "options": [
+          {
+            "label": "Both images prove a single dress tradition for every Ukrainian region",
+            "value": "universal"
+          },
+          {
+            "label": "Compare artistic choices; keep source, purpose and unknowns visible",
+            "value": "bounded"
+          }
+        ]
+      }
+    ],
+    "fixtureRevision": "1",
+    "format": "revealline-learning-lesson.v1",
+    "id": "ukraine-threads-06-lesson",
+    "kind": "practice",
+    "locales": {
+      "uk": {
+        "brief": "У вигаданій галереї є два зображення й запропоноване твердження про регіони. Перегляньте записи джерел, визначте типи зображень і виберіть висновок, який підтверджують відомості.",
+        "fields": [
+          {
+            "explanation": "Збережіть зазначені ім’я митця, дату й обліковий номер. Пастель — твір мистецтва; назвати її фотографією каталогізованого одягу означає додати свідчення, яких запис не містить.",
+            "id": "museum-label",
+            "label": "Підпис до зображення A",
+            "options": [
+              {
+                "label": "Твір Дега · 1899 рік · предмет Метрополітен-музею 29.100.556",
+                "value": "artwork"
+              },
+              {
+                "label": "Фотографія одягу, що документує всі регіональні деталі",
+                "value": "garment-photo"
+              }
+            ]
+          },
+          {
+            "explanation": "Запис створення визначає оригінальну згенеровану ігрову ілюстрацію. Переконлива фактура не робить її історичним предметом або фотографією справжньої події.",
+            "id": "game-label",
+            "label": "Підпис до зображення B",
+            "options": [
+              {
+                "label": "Історична фотографія фестивалю з підтвердженим регіональним одягом",
+                "value": "historical-photo"
+              },
+              {
+                "label": "Оригінальна згенерована ігрова ілюстрація · вигадана фестивальна площа",
+                "value": "original-illustration"
+              }
+            ]
+          },
+          {
+            "explanation": "Записи підтверджують два різні типи зображень із зазначеним походженням. Вони не доводять, що носили всі мешканці регіону чи що означає кожен мотив. Конкретніше твердження про одяг потребує відповідних свідчень.",
+            "id": "claim",
+            "label": "Висновок галереї, підтверджений цими записами",
+            "options": [
+              {
+                "label": "Обидва зображення доводять єдину традицію вбрання для всіх регіонів України",
+                "value": "universal"
+              },
+              {
+                "label": "Порівняти творчі рішення; зберегти джерело, мету й невідомі відомості",
+                "value": "bounded"
+              }
+            ]
+          }
+        ],
+        "notice": "Вправа з читання джерел без обмеження часу. Вона перевіряє підписи до свідчень, а не культурну ідентичність чи належність. Ігрова сцена — оригінальна згенерована ілюстрація; жодне зображення не є універсальним довідником українського вбрання.",
+        "records": [
+          {
+            "id": "museum-record",
+            "lines": [
+              "Метрополітен-музей зазначає: «Танцівниця в українському вбранні», Едгар Дега, 1899 рік, предмет 29.100.556. Матеріал — пастель поверх вугілля на кальці; зображення позначене як суспільне надбання.",
+              "Цей запис визначає твір мистецтва. У вправі немає обмірного опису одягу, інтерв’ю з носієм або свідчення про єдине правило для всіх регіонів."
+            ],
+            "title": "Зображення A · музейний запис твору"
+          },
+          {
+            "id": "game-record",
+            "lines": [
+              "Фестивальну площу рівня «Носіть сьогодні» згенеровано як оригінальну ілюстрацію для цієї гри. Її вигадані полотнища й виставкові простори — сучасна творча сцена.",
+              "Вона не відтворює документований історичний одяг, музейний предмет чи реальний фестиваль. Для неї не заявлено історичного автора, регіонального походження або універсального значення символів."
+            ],
+            "title": "Зображення B · запис створення гри"
+          }
+        ],
+        "role": "Куратор виставки",
+        "success": "Обидва підписи тепер відрізняють документований твір мистецтва від оригінальної ігрової ілюстрації. Галерея порівнює їх, не вигадуючи універсального твердження про регіони.",
+        "title": "Підготуйте два точні підписи"
+      }
+    },
+    "missionId": "ukraine-threads-06",
+    "notice": "An untimed source-reading exercise. It checks evidence labels, not cultural identity or belonging. The game illustration is original generated artwork; neither image is a universal guide to Ukrainian dress.",
+    "records": [
+      {
+        "id": "museum-record",
+        "lines": [
+          "The Metropolitan Museum of Art records Dancer in Ukrainian Dress by Edgar Degas, 1899, object 29.100.556. The medium is pastel over charcoal on tracing paper; the image is marked Public Domain.",
+          "This record identifies an artwork. The exercise supplies no measured garment record, wearer interview or evidence establishing a rule for every region."
+        ],
+        "title": "Image A · museum artwork record"
+      },
+      {
+        "id": "game-record",
+        "lines": [
+          "The Wear It Today festival plaza was generated as an original illustration for this game. Its fictional banners and display spaces are contemporary creative scenery.",
+          "It does not reproduce a documented historical garment, museum object or real festival. No historical maker, regional origin or universal symbolic meaning is claimed."
+        ],
+        "title": "Image B · game production record"
+      }
+    ],
+    "revision": "1",
+    "role": "Exhibition curator",
+    "sourceReviewedAt": "2026-09-28",
+    "sources": [
+      {
+        "title": "The Met — Dancer in Ukrainian Dress, object 436157",
+        "url": "https://www.metmuseum.org/art/collection/search/436157"
+      },
+      { "title": "The Met — Open Access", "url": "https://www.metmuseum.org/hubs/open-access" }
+    ],
+    "success": "Both labels now distinguish a documented artwork from an original game illustration. The gallery compares them without inventing a universal regional claim.",
+    "title": "Curate two honest labels"
+  }
+]

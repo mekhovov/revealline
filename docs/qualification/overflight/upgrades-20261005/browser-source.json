@@ -1,0 +1,39 @@
+{
+  "recordedAt": "2026-10-05T11:06:27.171Z",
+  "parentRevision": "13241b30a2e9da7656f0278f7ffd4f3a6c78e432",
+  "scope": "Current working-tree hashes for native draft/run and shared card review captures; final commit follows evidence creation.",
+  "sources": [
+    {
+      "path": "game/overflight/app.mjs",
+      "sha256": "87a8ee739bdfabf32b3655e3b75648f3a05c7772b01aadde80b4155fc166e710"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "b8b8563073c0480a9ca613b90e6a93b309da5e585030e7c67477bb7792f3337e"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "064ac8894ef56734a96b690b0c6237e2c6e359b4dba475fb81e04b52b3d7d715"
+    },
+    {
+      "path": "game/overflight/upgrade-preview.mjs",
+      "sha256": "120cb740c32c0fbb3ff8aa3cc88787aa3b03fc267abf68ac24ae3880252b70af"
+    },
+    {
+      "path": "game/overflight/upgrade-card.mjs",
+      "sha256": "779f5c8f2b8e56927c2d771fa0d9132eb6683eb95e40d373a7ae669a18ea6a72"
+    },
+    {
+      "path": "game/overflight/copy.mjs",
+      "sha256": "df9eb57b20d6f118d459128f8fc8d591063c6737763de7f7c02103f70acc4c50"
+    },
+    {
+      "path": "game/overflight/style.css",
+      "sha256": "b219ad370db92b86ddfa715097d538118cbd8389b8372be4bd50b68cddcd0456"
+    },
+    {
+      "path": "docs/qualification/overflight/upgrades-20261005/review.html",
+      "sha256": "fdd3f573e307cd6f93dcc94b0c5c0e0ba719bd5ce61e1cd34df773e1bacfeefa"
+    }
+  ]
+}

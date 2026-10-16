@@ -21,6 +21,11 @@ test('controller catalog supplies the stylesheet requested by its copied page ho
   // Host behavior is outside this packaging test; no compiled art is duplicated.
   const files = new Map([
     ['game/presentation/page-entry.mjs', entry],
+    // The real page entry now imports this adapter; this fixture remains a queryless catalog.
+    [
+      'game/ui/edition-tool-provider.mjs',
+      Buffer.from('export const hasEditionToolRequest = () => false; export function editionToolPresentation() { throw new Error("Unexpected edition request in the catalog fixture"); }'),
+    ],
     [
       'game/presentation/page.mjs',
       Buffer.from('export function mountPresentationPage() { return { close() {} }; }\n'),

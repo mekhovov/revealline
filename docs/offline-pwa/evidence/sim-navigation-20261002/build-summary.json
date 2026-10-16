@@ -1,0 +1,54 @@
+{
+  "format": "revealline-default-build-inspection.v1",
+  "version": "0.142.4",
+  "sourceRevision": null,
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "publicationAssessment": "not-performed",
+  "payloadBytesIncludingManifest": 958837352,
+  "manifestDescriptor": {
+    "path": "manifest.json",
+    "bytes": 407190,
+    "sha256": "6cb0defaa6784d64e3769f2986948855c8b7074937d41e35a19dc26509154b67"
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "manifestFileCount": 2724,
+  "validation": "PASS: full in-memory default package build; not a publication qualification",
+  "changedRuntimeAssets": [
+    {
+      "path": "game/fpv-entry.mjs",
+      "bytes": 2823,
+      "sha256": "7676e3c7e05dfb960201468a89534410d3313badd5d49001d333bf945e6772ac"
+    },
+    {
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 3041,
+      "sha256": "2b854f39f1a284631d734498e2086d3ce26243ca3ee56bc8822dae7c0a30ee21"
+    },
+    {
+      "path": "game/ui/optional-practice-panel.mjs",
+      "bytes": 10046,
+      "sha256": "1a5fd0165fde02c423bd6abef057a8f1afe5c7290d96d8c77641ad4d34491f06"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 180917,
+      "sha256": "dfaeeb6bbd8e0903adb7b34203b4978afc70c04f09e63eb16c6220b0be68b3f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "bytes": 98943,
+      "sha256": "bea955b7bc44043e9c820342757171dd473f6dbf7cf58c8bedbb52d2a2cc0881"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/index.html",
+      "bytes": 32811,
+      "sha256": "8152a1cc78f06ac63674f7ce7c14e9e717623c00dee9fe901a7202d52c5e89e6"
+    }
+  ]
+}

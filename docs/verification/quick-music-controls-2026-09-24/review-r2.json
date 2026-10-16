@@ -1,0 +1,71 @@
+{
+  "format": "revealline-source-check.v1",
+  "feature": "M3 quick music controls",
+  "revision": 2,
+  "checkedAt": "2026-09-24T03:45:21.091445+00:00",
+  "sourceBase": "a4b4de89065b519bca13bb991319f2daee0fa73d",
+  "previousHead": "d34659f95a5a89a9227c17fbd35649e8a4c23521",
+  "reviewCorrection": "Solo lifecycle capture yields to quick controls and eligible B/N before retrying blocked playback.",
+  "reviewer": "/root/opening_theme_implementation",
+  "independentReReview": "pending",
+  "checks": {
+    "node": "20.19.5",
+    "affectedTests": 40,
+    "pass": 40,
+    "fail": 0,
+    "skip": 0,
+    "method": "In-memory Git source loader with candidate overlay; no working-tree write or production build",
+    "prettier": "3.6.2; repository options; modified JavaScript syntax checked",
+    "eslint": "not run locally; dependency unavailable",
+    "hostedGates": "pending",
+    "browserDeviceAcceptance": "pending"
+  },
+  "sourceFiles": [
+    {
+      "path": "game/ui/quick-music-controls.mjs",
+      "bytes": 7835,
+      "sha256": "91e41346b0956a7ae20174dbf7b9bfe327c69f9f9347f5fb5e0f816fc1e71074"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 397022,
+      "sha256": "325f1e3ad0890551875985d1100ed5e4e58a6766d1f184f883091a05fc76195a"
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "bytes": 14384,
+      "sha256": "515b8f549f4cd65f2e7f48cc806fb5af027c91b0087085fe746345383729be7f"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 130793,
+      "sha256": "8c85771ded9bfcc675e50ca907f392b7bbc64f46c97429e863611b9b12317b9c"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 179336,
+      "sha256": "0193197ad8f8da144b987b3df14b5c95088b1f0b4970a93720030f4d95bdb203"
+    },
+    {
+      "path": "game/test/quick-music-controls.test.mjs",
+      "bytes": 8905,
+      "sha256": "dd83b805af5916904fdd2fabcaba339fd9ea8b3d1c1876deb2ddbc9908859e5e"
+    },
+    {
+      "path": "game/test/couch-menu-music.test.mjs",
+      "bytes": 9637,
+      "sha256": "9746ecb4cef06ba72ba21a134a1788df14e0b6aff04e58de18579059d9967ed0"
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "bytes": 29014,
+      "sha256": "45e340fc015350890996b0a388b9b3516ebbedb80ffeeafaf4e6bd3949998fb6"
+    }
+  ],
+  "testOutput": {
+    "path": "docs/verification/quick-music-controls-2026-09-24/affected-tests-r2.txt",
+    "sha256": "093388182b855a22dc8c9f2f0527781466783ef59c127aec64a2e8e1dc6ea553"
+  },
+  "priorRun": "https://github.com/mekhovov/revealline/actions/runs/35952421357",
+  "released": false
+}

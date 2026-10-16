@@ -1,0 +1,210 @@
+TAP version 13
+# Subtest: native Team and FPV families use their immutable launch and recovery paths
+ok 1 - native Team and FPV families use their immutable launch and recovery paths
+  ---
+  duration_ms: 3319.354292
+  ...
+# Subtest: FPV exact revision offload preserves other installed revisions and rejects stale review
+ok 2 - FPV exact revision offload preserves other installed revisions and rejects stale review
+  ---
+  duration_ms: 5.832
+  ...
+# Subtest: Team exact offload retains edition-owned progress bytes
+ok 3 - Team exact offload retains edition-owned progress bytes
+  ---
+  duration_ms: 224.829208
+  ...
+# Subtest: family admission rejects unsupported flight rules before installation
+ok 4 - family admission rejects unsupported flight rules before installation
+  ---
+  duration_ms: 1.278959
+  ...
+# Subtest: pursuit Team packages pin editable source and reject altered runtime or self-attested clears
+ok 5 - pursuit Team packages pin editable source and reject altered runtime or self-attested clears
+  ---
+  duration_ms: 154.363458
+  ...
+# Subtest: catalog outage is surfaced while the injected client remains account-free
+ok 6 - catalog outage is surfaced while the injected client remains account-free
+  ---
+  duration_ms: 0.881709
+  ...
+# Subtest: catalog search, pagination, preview, reporting and unlisting use explicit service adapters
+ok 7 - catalog search, pagination, preview, reporting and unlisting use explicit service adapters
+  ---
+  duration_ms: 15.991083
+  ...
+# Subtest: corrupt catalog download cannot create an installed index
+ok 8 - corrupt catalog download cannot create an installed index
+  ---
+  duration_ms: 582.038458
+  ...
+# Subtest: immutable update installs beside the old edition and exposes offline play links
+ok 9 - immutable update installs beside the old edition and exposes offline play links
+  ---
+  duration_ms: 1542.858584
+  ...
+# Subtest: retained exact bytes reinstall offline into an empty runtime store
+ok 10 - retained exact bytes reinstall offline into an empty runtime store
+  ---
+  duration_ms: 903.804292
+  ...
+# Subtest: removing a recovery download preserves manifest ownership and exact offline recovery
+ok 11 - removing a recovery download preserves manifest ownership and exact offline recovery
+  ---
+  duration_ms: 2359.724125
+  ...
+# Subtest: download removal rejects a stale review and keeps the changed recovery bytes
+ok 12 - download removal rejects a stale review and keeps the changed recovery bytes
+  ---
+  duration_ms: 1460.587292
+  ...
+# Subtest: exact-edition offload keeps its manifest and ownership keys, then reinstalls offline
+ok 13 - exact-edition offload keeps its manifest and ownership keys, then reinstalls offline
+  ---
+  duration_ms: 2402.153708
+  ...
+# Subtest: offload keeps a shared asset until every active edition relinquishes it
+ok 14 - offload keeps a shared asset until every active edition relinquishes it
+  ---
+  duration_ms: 3537.635208
+  ...
+# Subtest: offload requires unchanged exact recovery and rejects a concurrent media generation
+ok 15 - offload requires unchanged exact recovery and rejects a concurrent media generation
+  ---
+  duration_ms: 3854.792459
+  ...
+# Subtest: an interrupted offload journal remains recoverable from its exact retained package
+ok 16 - an interrupted offload journal remains recoverable from its exact retained package
+  ---
+  duration_ms: 1924.88525
+  ...
+# Subtest: staged association recovers a committed install when the final journal write fails
+ok 17 - staged association recovers a committed install when the final journal write fails
+  ---
+  duration_ms: 618.640083
+  ...
+# Subtest: two injected creator accounts publish independently and track queued status
+ok 18 - two injected creator accounts publish independently and track queued status
+  ---
+  duration_ms: 919.9115
+  ...
+# Subtest: catalog page renders remote metadata only with safe localized text bindings
+ok 19 - catalog page renders remote metadata only with safe localized text bindings
+  ---
+  duration_ms: 1.097042
+  ...
+# Subtest: publisher retries the same immutable submission after an interrupted resumable upload
+ok 20 - publisher retries the same immutable submission after an interrupted resumable upload
+  ---
+  duration_ms: 555.303875
+  ...
+# Subtest: global family and publisher admission preserve Overflight bytes and reject resource closure changes
+ok 21 - global family and publisher admission preserve Overflight bytes and reject resource closure changes
+  ---
+  duration_ms: 34.653375
+  ...
+# Subtest: global install, exact recovery, offload and reinstall use the native Overflight library
+ok 22 - global install, exact recovery, offload and reinstall use the native Overflight library
+  ---
+  duration_ms: 193.426667
+  ...
+# Subtest: atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions
+ok 23 - atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions
+  ---
+  duration_ms: 148.503041
+  ...
+# Subtest: existing Studio v1 installations migrate as local owners without altering their content
+ok 24 - existing Studio v1 installations migrate as local owners without altering their content
+  ---
+  duration_ms: 28.58175
+  ...
+# Subtest: failed profile transactions roll back edition installation and offload without losing a local owner
+ok 25 - failed profile transactions roll back edition installation and offload without losing a local owner
+  ---
+  duration_ms: 87.904792
+  ...
+# Subtest: global family and publisher admission preserve Riy bytes and reject resource closure changes
+ok 26 - global family and publisher admission preserve Riy bytes and reject resource closure changes
+  ---
+  duration_ms: 57.18575
+  ...
+# Subtest: global install, exact recovery, offload and reinstall use the native Riy library
+ok 27 - global install, exact recovery, offload and reinstall use the native Riy library
+  ---
+  duration_ms: 286.522166
+  ...
+# Subtest: Riy compiles shared Survivor rules and resources with distinct authored identity
+ok 28 - Riy compiles shared Survivor rules and resources with distinct authored identity
+  ---
+  duration_ms: 18.896583
+  ...
+# Subtest: Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters
+ok 29 - Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters
+  ---
+  duration_ms: 8.488625
+  ...
+# Subtest: Riy package fresh-library round trip preserves source and native compiled identity
+ok 30 - Riy package fresh-library round trip preserves source and native compiled identity
+  ---
+  duration_ms: 25.240875
+  ...
+# Subtest: updating a legacy Riy copy preserves escort authoring without rewriting source
+ok 31 - updating a legacy Riy copy preserves escort authoring without rewriting source
+  ---
+  duration_ms: 1.699167
+  ...
+# Subtest: shared Studio escort controls edit the same validated config used by native play
+ok 32 - shared Studio escort controls edit the same validated config used by native play
+  ---
+  duration_ms: 3.10725
+  ...
+# Subtest: Community admission and publisher identify Raid separately and preserve exact UTF-8 bytes
+ok 33 - Community admission and publisher identify Raid separately and preserve exact UTF-8 bytes
+  ---
+  duration_ms: 64.714333
+  ...
+# Subtest: global install → launch → exact recovery → offload → reinstall retains Raid identity and independent Survivor data
+ok 34 - global install → launch → exact recovery → offload → reinstall retains Raid identity and independent Survivor data
+  ---
+  duration_ms: 334.37575
+  ...
+# Subtest: Raid Studio ownership survives Community offload and stale reviews cannot remove a new owner
+ok 35 - Raid Studio ownership survives Community offload and stale reviews cannot remove a new owner
+  ---
+  duration_ms: 256.812
+  ...
+# Subtest: service admits exact Overflight closure as compiled content without claiming play qualification
+ok 36 - service admits exact Overflight closure as compiled content without claiming play qualification
+  ---
+  duration_ms: 10.769291
+  ...
+# Subtest: service rejects unknown or incomplete Overflight dependencies even when submitted bytes match their hash
+ok 37 - service rejects unknown or incomplete Overflight dependencies even when submitted bytes match their hash
+  ---
+  duration_ms: 15.211709
+  ...
+# Subtest: existing native families retain their catalogue preview capability
+ok 38 - existing native families retain their catalogue preview capability
+  ---
+  duration_ms: 0.110583
+  ...
+# Subtest: service preserves overflight-riy admission and public family without claiming a fabricated preview
+ok 39 - service preserves overflight-riy admission and public family without claiming a fabricated preview
+  ---
+  duration_ms: 15.905875
+  ...
+# Subtest: service preserves overflight-hunt admission and public family without claiming a fabricated preview
+ok 40 - service preserves overflight-hunt admission and public family without claiming a fabricated preview
+  ---
+  duration_ms: 17.794334
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21042.56425

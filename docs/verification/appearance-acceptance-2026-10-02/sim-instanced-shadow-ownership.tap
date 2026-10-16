@@ -1,0 +1,205 @@
+TAP version 13
+# Subtest: fixed acceptance routes cover every current environment without changing course data
+ok 1 - fixed acceptance routes cover every current environment without changing course data
+  ---
+  duration_ms: 62.933292
+  ...
+# Subtest: paired comparison rejects changed conditions or incomplete runs and retains both directional results
+ok 2 - paired comparison rejects changed conditions or incomplete runs and retains both directional results
+  ---
+  duration_ms: 0.543916
+  ...
+# Subtest: percentiles use bounded actual samples and reject missing timing data
+ok 3 - percentiles use bounded actual samples and reject missing timing data
+  ---
+  duration_ms: 0.169458
+  ...
+# Subtest: snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+ok 4 - snapshot closure discovers loader imports and styles but refuses external or escaping dependencies
+  ---
+  duration_ms: 619.213125
+  ...
+# Subtest: authoring controls cannot bypass pending or failed source verification
+ok 5 - authoring controls cannot bypass pending or failed source verification
+  ---
+  duration_ms: 9.311417
+  ...
+# Subtest: failed scene changes block mislabeled reviews and recover only after a successful install
+ok 6 - failed scene changes block mislabeled reviews and recover only after a successful install
+  ---
+  duration_ms: 9.898292
+  ...
+# Subtest: closing the page while source verification waits never installs into a disposed renderer
+ok 7 - closing the page while source verification waits never installs into a disposed renderer
+  ---
+  duration_ms: 6.508625
+  ...
+# Subtest: measurement hashing failures release controls and disposal cannot reactivate them
+ok 8 - measurement hashing failures release controls and disposal cannot reactivate them
+  ---
+  duration_ms: 9.988167
+  ...
+# Subtest: optional SIM re-exports the same shared offline collection authority
+ok 9 - optional SIM re-exports the same shared offline collection authority
+  ---
+  duration_ms: 0.80475
+  ...
+# Subtest: versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+ok 10 - versioned SIM collection descriptors are bounded immutable role-complete data with safe fallback
+  ---
+  duration_ms: 11.970292
+  ...
+# Subtest: collection effect palettes are immutable semantic cues with exact-revision fallback
+ok 11 - collection effect palettes are immutable semantic cues with exact-revision fallback
+  ---
+  duration_ms: 1.6355
+  ...
+# Subtest: SIM appearance resolution preserves authored profiles and never mutates course data
+ok 12 - SIM appearance resolution preserves authored profiles and never mutates course data
+  ---
+  duration_ms: 14.235542
+  ...
+# Subtest: industrial textures are deterministic local sRGB art with quality-capped world filtering
+ok 13 - industrial textures are deterministic local sRGB art with quality-capped world filtering
+  ---
+  duration_ms: 5.124792
+  ...
+# Subtest: bevel calibration normals are bounded deterministic linear tangent-space data
+ok 14 - bevel calibration normals are bounded deterministic linear tangent-space data
+  ---
+  duration_ms: 18.217875
+  ...
+# Subtest: all built-in environments have industrial materials without moving world geometry
+ok 15 - all built-in environments have industrial materials without moving world geometry
+  ---
+  duration_ms: 852.325333
+  ...
+# Subtest: flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+ok 16 - flight and hangar share industrial models, preserving explicit drone kind and exterior bounds
+  ---
+  duration_ms: 77.998625
+  ...
+# Subtest: container detail batches retain all fittings outside flight bounds without per-container draws
+ok 17 - container detail batches retain all fittings outside flight bounds without per-container draws
+  ---
+  duration_ms: 7.730792
+  ...
+# Subtest: instanced replacements retain and release registered shadow owners without a later world traversal
+ok 18 - instanced replacements retain and release registered shadow owners without a later world traversal
+  ---
+  duration_ms: 320.33725
+  ...
+# Subtest: specimen collections bind the same model roles and geometry to distinct material palettes
+ok 19 - specimen collections bind the same model roles and geometry to distinct material palettes
+  ---
+  duration_ms: 132.616
+  ...
+# Subtest: calibration disposal releases shared resources exactly once
+ok 20 - calibration disposal releases shared resources exactly once
+  ---
+  duration_ms: 10.596875
+  ...
+# Subtest: imported mesh material bindings are opt-in, bounded and revision-specific
+ok 21 - imported mesh material bindings are opt-in, bounded and revision-specific
+  ---
+  duration_ms: 3.343916
+  ...
+# Subtest: transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+ok 22 - transparent imports require explicit replacement approval and non-mesh bindings do not inherit
+  ---
+  duration_ms: 1.432375
+  ...
+# Subtest: a glTF mesh-node binding covers only its own loader-identified primitives
+ok 23 - a glTF mesh-node binding covers only its own loader-identified primitives
+  ---
+  duration_ms: 1.352833
+  ...
+# Subtest: eight collections cover every environment with protected course data and exterior dressing
+ok 24 - eight collections cover every environment with protected course data and exterior dressing
+  ---
+  duration_ms: 867.841375
+  ...
+# Subtest: family surface recipes provide distinct luminance structure beyond a global tint
+ok 25 - family surface recipes provide distinct luminance structure beyond a global tint
+  ---
+  duration_ms: 33.058209
+  ...
+# Subtest: world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+ok 26 - world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+  ---
+  duration_ms: 5.214
+  ...
+# Subtest: static sphere sweep cannot tunnel through a thin wall or rotated box
+ok 27 - static sphere sweep cannot tunnel through a thin wall or rotated box
+  ---
+  duration_ms: 66.936084
+  ...
+# Subtest: drone takes off from support and refuses a solid-overlap spawn
+ok 28 - drone takes off from support and refuses a solid-overlap spawn
+  ---
+  duration_ms: 14.586292
+  ...
+# Subtest: elevated triangle platform supports a landing objective with exact surface identity
+ok 29 - elevated triangle platform supports a landing objective with exact surface identity
+  ---
+  duration_ms: 964.328125
+  ...
+# Subtest: moving actor relative sweep catches crossing trajectories between endpoints
+ok 30 - moving actor relative sweep catches crossing trajectories between endpoints
+  ---
+  duration_ms: 2.672
+  ...
+# Subtest: a moving hazard contacts a resting drone after its floor movement is resolved
+ok 31 - a moving hazard contacts a resting drone after its floor movement is resolved
+  ---
+  duration_ms: 1.580167
+  ...
+# Subtest: fictional pulses damage targets, obey cooldown and complete verified combat
+ok 32 - fictional pulses damage targets, obey cooldown and complete verified combat
+  ---
+  duration_ms: 31.889709
+  ...
+# Subtest: enemy pulses can defeat the drone, while intervening geometry blocks both sides
+ok 33 - enemy pulses can defeat the drone, while intervening geometry blocks both sides
+  ---
+  duration_ms: 32.117375
+  ...
+# Subtest: authored ground and vehicle patrols stop at solid map obstacles
+ok 34 - authored ground and vehicle patrols stop at solid map obstacles
+  ---
+  duration_ms: 101.965875
+  ...
+# Subtest: ground patrols climb authored 0.15 m steps and supported slopes
+ok 35 - ground patrols climb authored 0.15 m steps and supported slopes
+  ---
+  duration_ms: 56.621625
+  ...
+# Subtest: projectile admission remains bounded while firing continuously
+ok 36 - projectile admission remains bounded while firing continuously
+  ---
+  duration_ms: 139.004625
+  ...
+# Subtest: pause freezes every subsystem; recovered command prefix resumes with the same final hash
+ok 37 - pause freezes every subsystem; recovered command prefix resumes with the same final hash
+  ---
+  duration_ms: 37.301416
+  ...
+# Subtest: reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+ok 38 - reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+  ---
+  duration_ms: 27.408917
+  ...
+# Subtest: recorder requires the consumed command and rejects skipped ticks
+ok 39 - recorder requires the consumed command and rejects skipped ticks
+  ---
+  duration_ms: 2.723708
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2767.009

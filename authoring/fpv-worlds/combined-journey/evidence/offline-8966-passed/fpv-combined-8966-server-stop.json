@@ -1,0 +1,23 @@
+{
+  "scope": "Only the owned localhost origin stopped; not whole-browser offline or eviction.",
+  "pid": 86615,
+  "command": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -m http.server 8966 --bind 127.0.0.1 --directory /private/tmp/fpv-combined-journey-admitted-0b54f-r4",
+  "stopRequestedAt": "2026-10-04T21:59:07.758625+00:00",
+  "refusalObservedAt": "2026-10-04T21:59:07.974537+00:00",
+  "curlExit": 7,
+  "curlStderr": "curl: (7) Failed to connect to 127.0.0.1 port 8966 after 0 ms: Couldn't connect to server\n",
+  "serverRestarted": true,
+  "postQualificationRefusal": {
+    "observedAt": "2026-10-04T22:02:01.741209+00:00",
+    "curlExit": 7,
+    "curlStderr": "curl: (7) Failed to connect to 127.0.0.1 port 8966 after 0 ms: Couldn't connect to server\n"
+  },
+  "restart": {
+    "observedAt": "2026-10-04T22:02:20.146995+00:00",
+    "pid": 12594,
+    "execSession": 77974,
+    "command": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -m http.server 8966 --bind 127.0.0.1 --directory /private/tmp/fpv-combined-journey-admitted-0b54f-r4",
+    "curlExit": 0,
+    "httpStatus": "200"
+  }
+}

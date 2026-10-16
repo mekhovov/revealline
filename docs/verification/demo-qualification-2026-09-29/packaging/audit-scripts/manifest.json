@@ -1,0 +1,128 @@
+{
+  "format": "qualification-audit-script-archive.v1",
+  "sourceRevision": "c5e3419eecd564621470a654ce071f0f83d5984f",
+  "archivalOnly": true,
+  "checksRerun": false,
+  "originalReceiptsModified": false,
+  "rawCompressedInventoriesRestored": false,
+  "files": [
+    {
+      "path": "initial/snapshot.mjs",
+      "bytes": 1427,
+      "sha256": "4958137cce527b321094c5b64e472764cb216d090b8c6c6083e679233ad6b136",
+      "originalPath": "/private/tmp/revealline-demo-editions-qualification-20260929-3vaq5o0d/snapshot.mjs",
+      "scope": "initial failed-budget candidate",
+      "execution": "Executed for the retained 1068-input before/after snapshots.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "initial/audit-partial.py",
+      "bytes": 4042,
+      "sha256": "281059dc634dd31eeba2e9f555db74b7bfc10d99556d204084ff21d647850500",
+      "originalPath": "/private/tmp/revealline-demo-editions-qualification-20260929-3vaq5o0d/audit-partial.py",
+      "scope": "initial failed-budget candidate",
+      "execution": "Executed after the normal checker failed on edition eight; asserts seven successful editions, 252 exact readbacks, and source equality.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "initial/diagnose.mjs",
+      "bytes": 2256,
+      "sha256": "bbbd2698c41f2962a326055090fb3f8e68e0a149660815c979d001bf648f0d6a",
+      "originalPath": "/private/tmp/revealline-demo-editions-qualification-20260929-3vaq5o0d/diagnose.mjs",
+      "scope": "initial failed-budget candidate",
+      "execution": "Executed to enrich the thrown budget Error in memory with the computed inventory. The production cap remains enforced.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "before-confirm/snapshot-final.mjs",
+      "bytes": 1589,
+      "sha256": "38b23c671a609a47ce6cced5beb1cf25410bd0883de1c4d0ea44d5be71a3cbc2",
+      "originalPath": "/private/tmp/revealline-demo-editions-qualification-20260929-3vaq5o0d/snapshot-final.mjs",
+      "scope": "lossless repair before Confirm integration",
+      "execution": "Executed for the retained 1071-input before/after snapshots.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "before-confirm/audit-final.py",
+      "bytes": 4082,
+      "sha256": "4ed213b488c6e1f52bdf825a00a2e887e4f173f3c186acf6de9800decbf54b99",
+      "originalPath": "/private/tmp/revealline-demo-editions-qualification-20260929-3vaq5o0d/audit-final.py",
+      "scope": "lossless repair before Confirm integration",
+      "execution": "Executed for the retained 14-edition, 506-readback audit and source equality.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "before-confirm/audit-native.mjs",
+      "bytes": 5323,
+      "sha256": "23b35ef0c65906419719bf822d26910c3bfa4a6a5a66cc5035f947de653080d4",
+      "originalPath": "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/audit-native.mjs",
+      "scope": "lossless repair before Confirm integration",
+      "execution": "Executed for the retained pre-Confirm web/native static audit.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "integrated/snapshot-integrated.mjs",
+      "bytes": 2172,
+      "sha256": "ff86f3f519c2586b56f746e7a227e3d725f87856273967af9e9bc8ebfb24a988",
+      "originalPath": "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/snapshot-integrated.mjs",
+      "scope": "c5e3419eecd564621470a654ce071f0f83d5984f",
+      "execution": "Executed for the retained 1985-input before/after snapshots.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "integrated/audit-integrated.py",
+      "bytes": 4097,
+      "sha256": "e642a97fabac897f1946228e5e251f5fc94283039040e4a224c4c48e936f4254",
+      "originalPath": "/private/tmp/revealline-demo-editions-qualification-20260929-3vaq5o0d/audit-integrated.py",
+      "scope": "c5e3419eecd564621470a654ce071f0f83d5984f",
+      "execution": "Executed for the retained 14-edition, 506-readback audit. The first statement computes before/after differences and asserts none.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "integrated/audit-integrated-desktop.mjs",
+      "bytes": 2300,
+      "sha256": "991a15c4bcea7d8d3c49abe72b42e2adecf0bae72d10df0ec5b89843fe4a2804",
+      "originalPath": "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/audit-integrated-desktop.mjs",
+      "scope": "c5e3419eecd564621470a654ce071f0f83d5984f",
+      "execution": "Executed command recorded in integrated-c5e3419ee/native-command-results.json; production loader, 38 exact protocol responses and navigation/404 checks.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "integrated/audit-integrated-native.mjs",
+      "bytes": 4694,
+      "sha256": "ee97f7e1926743d9907f0ba1ad1e11c998f1ee3200506557340965400a5ee940",
+      "originalPath": "/private/tmp/revealline-demo-native-qualification-20260929-ktn679r_/audit-integrated-native.mjs",
+      "scope": "c5e3419eecd564621470a654ce071f0f83d5984f",
+      "execution": "Current bytes copied exactly from the executed temporary path, but one output-label literal changed around completion. Exact label variant read by that process is uncertain; assertion code is identical. See README and label diff.",
+      "retention": "Byte-for-byte copy of retained temporary helper"
+    },
+    {
+      "path": "integrated/audit-integrated-native.before-label-fix.mjs",
+      "bytes": 4704,
+      "sha256": "89f62df687d2e5861fedfdde021414e5d6611449507dc60e3c9673043ab0ac55",
+      "scope": "c5e3419eecd564621470a654ce071f0f83d5984f",
+      "retention": "Reconstructed preceding helper variant: exactly one known report metadata literal restored; not an independently retained execution-time copy",
+      "execution": "Either this label variant or the current variant was read by the successful process. Assertions and inputs are byte-identical."
+    },
+    {
+      "path": "integrated/native-helper-label.diff",
+      "bytes": 2645,
+      "sha256": "af1dd9a8a70228c9e62d7e82e3a97ae36b109385dc3eaef6d925f96c3ce04076",
+      "retention": "Exact textual diff between retained current helper and reconstructed preceding label variant"
+    },
+    {
+      "path": "integrated/assert-desktop-mime.py",
+      "bytes": 543,
+      "sha256": "fc9cd889cfc98aa42fb32ab85020363a631eeea5c121cc9d1823baa970d7baf5",
+      "scope": "c5e3419eecd564621470a654ce071f0f83d5984f",
+      "retention": "Exact transcription of executed Python stdin; this named file did not exist during execution",
+      "execution": "Executed after desktop protocol audit. All 38 MIME assertions passed. No check rerun during archival."
+    },
+    {
+      "path": "native-label-history.json",
+      "bytes": 3911,
+      "sha256": "fa455f4f312ef20269a9b960c4892a933d076eceb7673908705c8fa446163b39",
+      "retention": "New explicit record of the earlier report-only normalization, not an original execution receipt"
+    }
+  ]
+}

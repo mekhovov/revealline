@@ -1,0 +1,14 @@
+
+> revealline@0.141.7 i18n:check
+> node scripts/localization.mjs check
+
+{
+  "localization": {
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "messages": 10560,
+    "references": 8335
+  }
+}

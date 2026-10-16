@@ -1,0 +1,22 @@
+{
+  "format": "FPVGarageFinalPackageByteAudit.v1",
+  "sourceRevision": "866b0f9d93416603d95b2f8329d7a6484b861a43",
+  "sourceTree": "43a66b2f6234c4cdeb84878d4ffef23657b84f65",
+  "checksums": 15,
+  "committedInputCounts": {
+    "civilian-flight": 41,
+    "civilian-fpv": 62,
+    "fpv-worlds": 95
+  },
+  "uniqueCommittedInputs": 128,
+  "playerZipMembers": 94,
+  "playerPayloadEntries": 93,
+  "fixtureCandidateModules": 32,
+  "fixtureMatchesPlayerAndAdmittedZIP": true,
+  "fixtureManifestSha256": "1270b61f4da22758e2e9941267d07ee1411d699c830905ddaf19b3a01f38051b",
+  "admissionReceiptSha256": "dc6ee65fe3ac8f4a9b601f91839c653073b91c5bea3881e5add6c0ff8ac2dd41",
+  "limitations": [
+    "Byte audit, not browser or device qualification.",
+    "Player manifest development identity is null; admitted bundle binds commit/tree."
+  ]
+}

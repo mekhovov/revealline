@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-10-13T20:24:49.185Z",
+  "scope": "Native visual smoke and 29 passing presentation/renderer tests; not target-device timing.",
+  "files": [
+    {
+      "path": "game/overflight/renderer.mjs",
+      "sha256": "7f52fa5307ac4eccde89c7a1f05fb3e67a249b0d5595e540109c78edead9edfd"
+    },
+    {
+      "path": "game/overflight/tactical-view.mjs",
+      "sha256": "5c75f4bc74666bff0f29f6a2931ea9a4675b5c7a38accb0fcd665f6c46160a50"
+    },
+    {
+      "path": "game/overflight/copy.mjs",
+      "sha256": "136e59d1be774ebd4975d074fae2c0c0f0c836f9630d7429d63493bab76ee84b"
+    },
+    {
+      "path": "game/studio/raid.mjs",
+      "sha256": "2c65ad8015c6ab5dc94ad4a8ad7fae4a4e1dd18a452bcdf09191235a4d92b1d5"
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "sha256": "0c4adb477c8c4ae61d99ee75046e7b36b8685e582c3c957fe8b99392120ad209"
+    },
+    {
+      "path": "game/overflight/raid-project.mjs",
+      "sha256": "43f5abd2d946953bcabcecc8b88ae4d3bd71c1ff32a083cfcffee53357057ca4"
+    },
+    {
+      "path": "game/overflight/raid-community.mjs",
+      "sha256": "c03108195d5031cc3d7ed1b473b6091ca8bdb54ec0c9b4c3efdbf6815db7e7fc"
+    },
+    {
+      "path": "game/test/overflight-renderer.test.mjs",
+      "sha256": "6160d45693fbe3637f9904ad74215296cb40749b1baf5062e0c0f7048cd34549"
+    },
+    {
+      "path": "game/test/overflight-variety-presentation.test.mjs",
+      "sha256": "bc00da0bf4ee9296cc905214c052f55e2c959f932414ee319aa0c88896d38101"
+    }
+  ]
+}

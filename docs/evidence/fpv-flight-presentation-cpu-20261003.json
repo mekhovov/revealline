@@ -1,0 +1,927 @@
+{
+  "kind": "manual-functional-cpu-qualification",
+  "source": {
+    "base": "cf0b62e53d352c620f1793a3539c251e8932674b",
+    "candidateRef": "604e2d57951388ff989d5ae7af8ddab7eca3e71e",
+    "worldVisuals": "ed102bc426eca18307b89d5ba862254edeafa63ea22c98433b9432d80eba7fa3",
+    "renderer": "0949fde59ee6fd5331940c167d5eef23ff2396fdd66cf79ae610ac863d252a97",
+    "supportingDependencyMode": "Both visual sources import the selected source-root shared modules; the separate browser fixture freezes complete before/after trees."
+  },
+  "checks": [
+    {
+      "title": "authored / racer / low: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / low: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / low: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / low: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / low: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / low: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.21896722212532485,
+        "allAnglesUpperBound": 0.21896780712378358
+      }
+    },
+    {
+      "title": "authored / racer / balanced: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / balanced: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / balanced: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / balanced: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / balanced: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / balanced: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.21896722212532485,
+        "allAnglesUpperBound": 0.21896780712378358
+      }
+    },
+    {
+      "title": "authored / racer / high: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / high: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / high: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / high: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / high: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "authored / racer / high: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.21896722212532485,
+        "allAnglesUpperBound": 0.21896780712378358
+      }
+    },
+    {
+      "title": "authored / pixel / low: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "authored / pixel / low: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "authored / pixel / low: exact Pixel visual geometry/material/transform bytes",
+      "pass": true
+    },
+    {
+      "title": "authored / pixel / balanced: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "authored / pixel / balanced: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "authored / pixel / balanced: exact Pixel visual geometry/material/transform bytes",
+      "pass": true
+    },
+    {
+      "title": "authored / pixel / high: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "authored / pixel / high: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "authored / pixel / high: exact Pixel visual geometry/material/transform bytes",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / low: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / low: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / low: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / low: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / low: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / low: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.2082163745792694,
+        "allAnglesUpperBound": 0.20821689311127597
+      }
+    },
+    {
+      "title": "authored / utility / low: prop stays inside existing guard",
+      "pass": true,
+      "detail": {
+        "maxRadius": 0.05870574268666426
+      }
+    },
+    {
+      "title": "authored / utility / balanced: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / balanced: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / balanced: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / balanced: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / balanced: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / balanced: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.2082163745792694,
+        "allAnglesUpperBound": 0.20821689311127597
+      }
+    },
+    {
+      "title": "authored / utility / balanced: prop stays inside existing guard",
+      "pass": true,
+      "detail": {
+        "maxRadius": 0.05870574268666426
+      }
+    },
+    {
+      "title": "authored / utility / high: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / high: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / high: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / high: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / high: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "authored / utility / high: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.2082163745792694,
+        "allAnglesUpperBound": 0.20821689311127597
+      }
+    },
+    {
+      "title": "authored / utility / high: prop stays inside existing guard",
+      "pass": true,
+      "detail": {
+        "maxRadius": 0.05870574268666426
+      }
+    },
+    {
+      "title": "industrial-workshop / racer / low: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / low: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / low: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / low: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / low: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / low: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.21896722212532485,
+        "allAnglesUpperBound": 0.21896780712378358
+      }
+    },
+    {
+      "title": "industrial-workshop / racer / balanced: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / balanced: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / balanced: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / balanced: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / balanced: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / balanced: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.21896722212532485,
+        "allAnglesUpperBound": 0.21896780712378358
+      }
+    },
+    {
+      "title": "industrial-workshop / racer / high: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / high: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / high: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / high: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / high: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / racer / high: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.21896722212532485,
+        "allAnglesUpperBound": 0.21896780712378358
+      }
+    },
+    {
+      "title": "industrial-workshop / pixel / low: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / pixel / low: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / pixel / low: exact Pixel visual geometry/material/transform bytes",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / pixel / balanced: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / pixel / balanced: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / pixel / balanced: exact Pixel visual geometry/material/transform bytes",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / pixel / high: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / pixel / high: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / pixel / high: exact Pixel visual geometry/material/transform bytes",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / low: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / low: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / low: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / low: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / low: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / low: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.2082163745792694,
+        "allAnglesUpperBound": 0.20821689311127597
+      }
+    },
+    {
+      "title": "industrial-workshop / utility / low: prop stays inside existing guard",
+      "pass": true,
+      "detail": {
+        "maxRadius": 0.05870574268666426
+      }
+    },
+    {
+      "title": "industrial-workshop / utility / balanced: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / balanced: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / balanced: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / balanced: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / balanced: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / balanced: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.2082163745792694,
+        "allAnglesUpperBound": 0.20821689311127597
+      }
+    },
+    {
+      "title": "industrial-workshop / utility / balanced: prop stays inside existing guard",
+      "pass": true,
+      "detail": {
+        "maxRadius": 0.05870574268666426
+      }
+    },
+    {
+      "title": "industrial-workshop / utility / high: four unchanged motor/rotor centres",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / high: mesh and material/texture counts do not increase",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / high: narrow battery seated above frame and both straps aligned",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / high: four short TPU pads meet lower frame at existing corners",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / high: convex nonmetal glass and two camera cheeks",
+      "pass": true
+    },
+    {
+      "title": "industrial-workshop / utility / high: all-angle prop stays inside unchanged collision sphere",
+      "pass": true,
+      "detail": {
+        "maxSampledRadius": 0.2082163745792694,
+        "allAnglesUpperBound": 0.20821689311127597
+      }
+    },
+    {
+      "title": "industrial-workshop / utility / high: prop stays inside existing guard",
+      "pass": true,
+      "detail": {
+        "maxRadius": 0.05870574268666426
+      }
+    },
+    {
+      "title": "World visual composition/generators unchanged apart from lazy existing-finish accessor",
+      "pass": true
+    },
+    {
+      "title": "5×2.6×12 shell: finite vertices within unchanged AABB",
+      "pass": true
+    },
+    {
+      "title": "5×2.6×12 hardware: finite vertices within unchanged AABB",
+      "pass": true
+    },
+    {
+      "title": "5×2.6×12: all 150 outside rays meet closed outward-facing shell",
+      "pass": true,
+      "detail": {
+        "hits": 150,
+        "maxInset": 0.06199979782104492
+      }
+    },
+    {
+      "title": "5×5.2×12 shell: finite vertices within unchanged AABB",
+      "pass": true
+    },
+    {
+      "title": "5×5.2×12 hardware: finite vertices within unchanged AABB",
+      "pass": true
+    },
+    {
+      "title": "5×5.2×12: all 150 outside rays meet closed outward-facing shell",
+      "pass": true,
+      "detail": {
+        "hits": 150,
+        "maxInset": 0.06199979782104492
+      }
+    },
+    {
+      "title": "authored/low: fittings reuse existing world finish without new material/map",
+      "pass": true,
+      "detail": {
+        "materials": 18,
+        "textures": 9,
+        "roughness": 0.48,
+        "metalness": 0.7,
+        "collectionId": null
+      }
+    },
+    {
+      "title": "authored/balanced: fittings reuse existing world finish without new material/map",
+      "pass": true,
+      "detail": {
+        "materials": 18,
+        "textures": 9,
+        "roughness": 0.48,
+        "metalness": 0.7,
+        "collectionId": null
+      }
+    },
+    {
+      "title": "authored/high: fittings reuse existing world finish without new material/map",
+      "pass": true,
+      "detail": {
+        "materials": 18,
+        "textures": 9,
+        "roughness": 0.48,
+        "metalness": 0.7,
+        "collectionId": null
+      }
+    },
+    {
+      "title": "industrial-workshop/low: fittings reuse existing world finish without new material/map",
+      "pass": true,
+      "detail": {
+        "materials": 19,
+        "textures": 4,
+        "roughness": 0.76,
+        "metalness": 0.45,
+        "collectionId": "industrial-workshop"
+      }
+    },
+    {
+      "title": "industrial-workshop/balanced: fittings reuse existing world finish without new material/map",
+      "pass": true,
+      "detail": {
+        "materials": 19,
+        "textures": 4,
+        "roughness": 0.76,
+        "metalness": 0.45,
+        "collectionId": "industrial-workshop"
+      }
+    },
+    {
+      "title": "industrial-workshop/high: fittings reuse existing world finish without new material/map",
+      "pass": true,
+      "detail": {
+        "materials": 19,
+        "textures": 4,
+        "roughness": 0.76,
+        "metalness": 0.45,
+        "collectionId": "industrial-workshop"
+      }
+    }
+  ],
+  "droneModels": [
+    {
+      "collectionId": null,
+      "kind": "racer",
+      "quality": "low",
+      "before": {
+        "meshes": 49,
+        "triangles": 1252,
+        "geometry": 49,
+        "materials": 10,
+        "textures": 0
+      },
+      "after": {
+        "meshes": 44,
+        "triangles": 2448,
+        "geometry": 35,
+        "materials": 10,
+        "textures": 0
+      }
+    },
+    {
+      "collectionId": null,
+      "kind": "racer",
+      "quality": "balanced",
+      "before": {
+        "meshes": 49,
+        "triangles": 1316,
+        "geometry": 49,
+        "materials": 10,
+        "textures": 3
+      },
+      "after": {
+        "meshes": 44,
+        "triangles": 2512,
+        "geometry": 35,
+        "materials": 10,
+        "textures": 3
+      }
+    },
+    {
+      "collectionId": null,
+      "kind": "racer",
+      "quality": "high",
+      "before": {
+        "meshes": 91,
+        "triangles": 2416,
+        "geometry": 91,
+        "materials": 13,
+        "textures": 3
+      },
+      "after": {
+        "meshes": 55,
+        "triangles": 4180,
+        "geometry": 46,
+        "materials": 13,
+        "textures": 3
+      }
+    },
+    {
+      "collectionId": null,
+      "kind": "pixel",
+      "quality": "low",
+      "before": {
+        "meshes": 48,
+        "triangles": 900,
+        "geometry": 48,
+        "materials": 10,
+        "textures": 0
+      },
+      "after": {
+        "meshes": 48,
+        "triangles": 900,
+        "geometry": 48,
+        "materials": 10,
+        "textures": 0
+      }
+    },
+    {
+      "collectionId": null,
+      "kind": "pixel",
+      "quality": "balanced",
+      "before": {
+        "meshes": 48,
+        "triangles": 900,
+        "geometry": 48,
+        "materials": 10,
+        "textures": 0
+      },
+      "after": {
+        "meshes": 48,
+        "triangles": 900,
+        "geometry": 48,
+        "materials": 10,
+        "textures": 0
+      }
+    },
+    {
+      "collectionId": null,
+      "kind": "pixel",
+      "quality": "high",
+      "before": {
+        "meshes": 48,
+        "triangles": 900,
+        "geometry": 48,
+        "materials": 10,
+        "textures": 0
+      },
+      "after": {
+        "meshes": 48,
+        "triangles": 900,
+        "geometry": 48,
+        "materials": 10,
+        "textures": 0
+      }
+    },
+    {
+      "collectionId": null,
+      "kind": "utility",
+      "quality": "low",
+      "before": {
+        "meshes": 53,
+        "triangles": 2404,
+        "geometry": 53,
+        "materials": 10,
+        "textures": 0
+      },
+      "after": {
+        "meshes": 48,
+        "triangles": 3600,
+        "geometry": 39,
+        "materials": 10,
+        "textures": 0
+      }
+    },
+    {
+      "collectionId": null,
+      "kind": "utility",
+      "quality": "balanced",
+      "before": {
+        "meshes": 53,
+        "triangles": 2468,
+        "geometry": 53,
+        "materials": 10,
+        "textures": 3
+      },
+      "after": {
+        "meshes": 48,
+        "triangles": 3664,
+        "geometry": 39,
+        "materials": 10,
+        "textures": 3
+      }
+    },
+    {
+      "collectionId": null,
+      "kind": "utility",
+      "quality": "high",
+      "before": {
+        "meshes": 95,
+        "triangles": 3568,
+        "geometry": 95,
+        "materials": 13,
+        "textures": 3
+      },
+      "after": {
+        "meshes": 59,
+        "triangles": 5332,
+        "geometry": 50,
+        "materials": 13,
+        "textures": 3
+      }
+    },
+    {
+      "collectionId": "industrial-workshop",
+      "kind": "racer",
+      "quality": "low",
+      "before": {
+        "meshes": 51,
+        "triangles": 1360,
+        "geometry": 51,
+        "materials": 10,
+        "textures": 4
+      },
+      "after": {
+        "meshes": 46,
+        "triangles": 2556,
+        "geometry": 37,
+        "materials": 10,
+        "textures": 4
+      }
+    },
+    {
+      "collectionId": "industrial-workshop",
+      "kind": "racer",
+      "quality": "balanced",
+      "before": {
+        "meshes": 51,
+        "triangles": 1424,
+        "geometry": 51,
+        "materials": 10,
+        "textures": 4
+      },
+      "after": {
+        "meshes": 46,
+        "triangles": 2620,
+        "geometry": 37,
+        "materials": 10,
+        "textures": 4
+      }
+    },
+    {
+      "collectionId": "industrial-workshop",
+      "kind": "racer",
+      "quality": "high",
+      "before": {
+        "meshes": 93,
+        "triangles": 2524,
+        "geometry": 93,
+        "materials": 12,
+        "textures": 4
+      },
+      "after": {
+        "meshes": 57,
+        "triangles": 4288,
+        "geometry": 48,
+        "materials": 12,
+        "textures": 4
+      }
+    },
+    {
+      "collectionId": "industrial-workshop",
+      "kind": "pixel",
+      "quality": "low",
+      "before": {
+        "meshes": 50,
+        "triangles": 1008,
+        "geometry": 50,
+        "materials": 10,
+        "textures": 4
+      },
+      "after": {
+        "meshes": 50,
+        "triangles": 1008,
+        "geometry": 50,
+        "materials": 10,
+        "textures": 4
+      }
+    },
+    {
+      "collectionId": "industrial-workshop",
+      "kind": "pixel",
+      "quality": "balanced",
+      "before": {
+        "meshes": 50,
+        "triangles": 1008,
+        "geometry": 50,
+        "materials": 10,
+        "textures": 4
+      },
+      "after": {
+        "meshes": 50,
+        "triangles": 1008,
+        "geometry": 50,
+        "materials": 10,
+        "textures": 4
+      }
+    },
+    {
+      "collectionId": "industrial-workshop",
+      "kind": "pixel",
+      "quality": "high",
+      "before": {
+        "meshes": 50,
+        "triangles": 1008,
+        "geometry": 50,
+        "materials": 10,
+        "textures": 4
+      },
+      "after": {
+        "meshes": 50,
+        "triangles": 1008,
+        "geometry": 50,
+        "materials": 10,
+        "textures": 4
+      }
+    },
+    {
+      "collectionId": "industrial-workshop",
+      "kind": "utility",
+      "quality": "low",
+      "before": {
+        "meshes": 55,
+        "triangles": 2512,
+        "geometry": 55,
+        "materials": 10,
+        "textures": 4
+      },
+      "after": {
+        "meshes": 50,
+        "triangles": 3708,
+        "geometry": 41,
+        "materials": 10,
+        "textures": 4
+      }
+    },
+    {
+      "collectionId": "industrial-workshop",
+      "kind": "utility",
+      "quality": "balanced",
+      "before": {
+        "meshes": 55,
+        "triangles": 2576,
+        "geometry": 55,
+        "materials": 10,
+        "textures": 4
+      },
+      "after": {
+        "meshes": 50,
+        "triangles": 3772,
+        "geometry": 41,
+        "materials": 10,
+        "textures": 4
+      }
+    },
+    {
+      "collectionId": "industrial-workshop",
+      "kind": "utility",
+      "quality": "high",
+      "before": {
+        "meshes": 97,
+        "triangles": 3676,
+        "geometry": 97,
+        "materials": 12,
+        "textures": 4
+      },
+      "after": {
+        "meshes": 61,
+        "triangles": 5440,
+        "geometry": 52,
+        "materials": 12,
+        "textures": 4
+      }
+    }
+  ],
+  "containers": [
+    {
+      "size": [5, 2.6, 12],
+      "shellTriangles": 1132,
+      "hardwareTriangles": 336,
+      "maxInset": 0.06199979782104492
+    },
+    {
+      "size": [5, 5.2, 12],
+      "shellTriangles": 2264,
+      "hardwareTriangles": 672,
+      "maxInset": 0.06199979782104492
+    }
+  ],
+  "limitations": [
+    "No actual WebGL screenshot or frame-time measurement in this CPU qualification.",
+    "No physical device, real radio or novice acceptance claim.",
+    "Simulation and course files are unchanged; this is not a new proof replay claim."
+  ]
+}

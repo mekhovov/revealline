@@ -1,0 +1,43 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-81",
+  "infrastructureCommit": "67b6f98b06e51433bebc6c621cd061efdcbadc4f",
+  "deploymentId": 6660441741,
+  "deploymentStatusId": 18833647683,
+  "versions": [
+    "v0.114.0"
+  ],
+  "surface": "agent-browser Chromium automation",
+  "sequence": [
+    "Opened https://mekhovov.github.io/revealline-archive-81/ and observed RevealLine archive 81 with Play v0.114.0.",
+    "Activated Play v0.114.0 and observed https://mekhovov.github.io/revealline-archive-81/releases/v0.114.0/site/game/, title Reveal / Line, and the REVEAL / LINE title screen.",
+    "Opened More, then About Credits and current build, and observed START PLAYING V0.114.0 plus v0.114.0 as current in the preserved-build selector.",
+    "Opened RELEASE HISTORY and observed v0.114.0 marked Current on the public release-history surface.",
+    "Used browser Back to return to About and the game, then activated the in-game Back control to restore the REVEAL / LINE title screen.",
+    "Inspected console messages and page errors at the completed title state; both were empty."
+  ],
+  "observed": {
+    "archiveIndexTitle": "RevealLine archive 81",
+    "playLabel": "Play v0.114.0",
+    "gameDocumentTitle": "Reveal / Line",
+    "titleHeading": "REVEAL / LINE",
+    "aboutVersionLabel": "START PLAYING V0.114.0",
+    "historyCurrentLabel": "v0.114.0 · Current",
+    "consoleMessages": 0,
+    "pageErrors": 0,
+    "reloads": 0,
+    "retries": 0
+  },
+  "scope": "Historical online preservation: complete exact-byte public audit plus fresh bounded index, title, About, release-history and Back navigation through the archived UI. This does not claim physical-device/controller, comprehensive offline, every gameplay mode, or balance acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-81-v01140/public-acceptance.json",
+      "sha256": "e80a2e00e8ce3bf0bbe24aac22489e67f57f36d05c597f3fe252b9d86e87fc19"
+    }
+  ],
+  "limitations": [
+    "No renewed physical touch/controller or comprehensive offline acceptance is claimed.",
+    "This admission preserves v0.114.0; v0.114.1 is the separate immutable release selected by this controller change."
+  ]
+}

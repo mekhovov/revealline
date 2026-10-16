@@ -1,0 +1,61 @@
+{
+  "scope": "Observer navigation only: eight bearings, vertical/inverted/unknown, exact revision, global recentre invariance and 500-command production parity in both modes",
+  "cases": [
+    {
+      "sector": 0,
+      "horizontalMm": 10000,
+      "recentreInvariant": true
+    },
+    {
+      "sector": 1,
+      "horizontalMm": 14142.135623730952,
+      "recentreInvariant": true
+    },
+    {
+      "sector": 2,
+      "horizontalMm": 10000,
+      "recentreInvariant": true
+    },
+    {
+      "sector": 3,
+      "horizontalMm": 14142.135623730952,
+      "recentreInvariant": true
+    },
+    {
+      "sector": 4,
+      "horizontalMm": 10000,
+      "recentreInvariant": true
+    },
+    {
+      "sector": 5,
+      "horizontalMm": 14142.135623730952,
+      "recentreInvariant": true
+    },
+    {
+      "sector": 6,
+      "horizontalMm": 10000,
+      "recentreInvariant": true
+    },
+    {
+      "sector": 7,
+      "horizontalMm": 14142.135623730952,
+      "recentreInvariant": true
+    }
+  ],
+  "flights": [
+    {
+      "mode": "self-level",
+      "ticks": 500,
+      "observerMatchesBaseline": true,
+      "paused": true
+    },
+    {
+      "mode": "acro",
+      "ticks": 500,
+      "observerMatchesBaseline": true,
+      "paused": true
+    }
+  ],
+  "completionOrRouteClaim": false,
+  "storageMutated": false
+}

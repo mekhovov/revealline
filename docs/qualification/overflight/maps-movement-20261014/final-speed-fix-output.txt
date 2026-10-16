@@ -1,0 +1,10 @@
+{"layout":"freight-depot-loading-loop","mode":"riy","policy":"active","phase":"playing","time":240,"longestSafeFarming":{"seconds":68.36666666666667,"kills":412,"collected":639}}
+{"layout":"freight-depot-loading-loop","mode":"riy","policy":"park","phase":"lost","time":142.05,"longestSafeFarming":{"seconds":4.833333333333314,"kills":10,"collected":2}}
+{"layout":"freight-depot-loading-loop","mode":"riy","policy":"wall","phase":"lost","time":154.21666666666667,"longestSafeFarming":{"seconds":8,"kills":29,"collected":7}}
+{"layout":"freight-depot-loading-loop","mode":"riy","policy":"heading-2","phase":"lost","time":150.56666666666666,"longestSafeFarming":{"seconds":8.583333333333343,"kills":14,"collected":11}}
+{"layout":"field-crossing-broken-crossroads","mode":"survivor","policy":"active","phase":"playing","time":240,"longestSafeFarming":{"seconds":66,"kills":521,"collected":749}}
+{"layout":"field-crossing-broken-crossroads","mode":"survivor","policy":"park","phase":"lost","time":151.8,"longestSafeFarming":{"seconds":7.01666666666668,"kills":12,"collected":4}}
+{"layout":"relay-ruins-antenna-court","mode":"survivor","policy":"active","phase":"playing","time":240,"longestSafeFarming":{"seconds":54.21666666666667,"kills":441,"collected":421}}
+{"layout":"relay-ruins-antenna-court","mode":"survivor","policy":"tiny-circle","phase":"lost","time":133.7,"longestSafeFarming":{"seconds":2.666666666666657,"kills":6,"collected":0}}
+{"layout":"river-port-pump-apron","mode":"riy","policy":"active","phase":"playing","time":240,"longestSafeFarming":{"seconds":70.5,"kills":509,"collected":776}}
+{"layout":"river-port-pump-apron","mode":"riy","policy":"straight-shuttle","phase":"lost","time":141.26666666666668,"longestSafeFarming":{"seconds":4.8500000000000085,"kills":19,"collected":2}}

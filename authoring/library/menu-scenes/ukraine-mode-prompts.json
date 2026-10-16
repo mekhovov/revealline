@@ -1,0 +1,60 @@
+{
+  "format": "revealline-menu-scene-prompts.v1",
+  "created": "2026-09-29",
+  "generator": "OpenAI built-in image_gen",
+  "rights": "Original project artwork generated for the user; no third-party stock assets. Approved Ukraine artwork used as style/world reference.",
+  "images": [
+    {
+      "id": "ukraine-versus",
+      "file": "ukraine-versus-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: Ukraine Atlas VERSUS game landing background for FPV / LINE, landscape 3:2.\nInput reference: the attached approved Ukraine Solo image defines the same river village at sunrise, navy timber lookout, embroidered geometric railing, distant hills/church, wildflowers and warm blue/gold pixel-art palette. Preserve this recognizable world identity while making a new composition.\nPrimary subject: TWO clearly readable stylized Ukrainian folk-art birds with natural bird anatomy, one predominantly deep blue with gold chest, the other predominantly warm gold with blue wing detail. They perch on TWO SEPARATE wooden railing posts in the middle-right foreground, facing inward toward one another like friendly rivals. Separate posts and opposing silhouettes must make the Versus arrangement obvious. They are not fighting; no weapons, modern machinery or humans.\nComposition: leftmost45% quiet very dark navy shelter wall/foliage for menu text. Show both complete birds in the right half, with space between them and a clear dawn river panorama beyond. Lower-right meadow wildflowers; upper-right softly lit cloud wisps; a warm hanging lantern on the shelter edge. Make birds large enough to read as the two game actors, but retain scenic depth.\nStyle: crisp deliberate pixel clusters and stepped silhouettes, same refined 16-bit painterly pixel-art finish as reference; no smooth photorealism or blur.\nNo letters, words, numbers, flags, logos, UI, buttons, borders or watermark. Opaque complete artwork.",
+      "references": ["game/ui/art/menu-scenes/ukraine.webp"],
+      "referenceRole": "Pixel-art world identity and mode composition reference; originals preserved unchanged.",
+      "referenceSha256": {
+        "game/ui/art/menu-scenes/ukraine.webp": "7db1eeb0dffc03405a013a810aabcb4e31e099c06b1a739e3f801acac3a615d2"
+      },
+      "sourceSha256": "3ff0666fbc05848665a55b658cb55a266b7f0db907cbc9f5cc5d0274d75e2f7b"
+    },
+    {
+      "id": "ukraine-versus-portrait",
+      "file": "ukraine-versus-portrait-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: Ukraine Atlas VERSUS game landing background, a separately designed tall9:16 portrait.\nInput images: image1 is the approved Versus landscape and defines the two rival blue/gold bird characters, separate posts and geometric feather details; image2 is the original Ukraine landscape and defines the warm village/river world. Recompose rather than cropping.\nTop45%: quiet dark navy timber shelter and shaded foliage, mostly low-contrast blank darkness for a vertical menu. A narrow right-side opening shows golden dawn sky and painted cloud wisps. Below: TWO complete opposing birds on TWO separate wooden railing posts, facing inward toward one another. Put the blue bird around x34%, y64% and the golden bird around x67%, y70%, modestly staggered. Keep every beak, body, wing and tail comfortably inside the central70% of the canvas; leave at least15% horizontal margin at both edges for phone cropping. Both birds and both posts must read in a narrow portrait. Friendly rivalry, no combat.\nThe river village, church and misty hills remain visible behind the birds in the lower-right distance; wildflowers frame the posts. A small hanging warm lantern near midheight, clouds, a clear river patch and a few leaves provide scenery for later animation. Crisp authored pixel clusters, navy/sky-blue shadows, amber sunrise, same identity as reference.\nNo words, letters, numbers, flags, logos, UI, buttons, frame or watermark. Opaque full artwork.",
+      "references": [
+        "authoring/library/menu-scenes/ukraine-versus-v1.png",
+        "game/ui/art/menu-scenes/ukraine.webp"
+      ],
+      "referenceRole": "Pixel-art world identity and mode composition reference; originals preserved unchanged.",
+      "referenceSha256": {
+        "authoring/library/menu-scenes/ukraine-versus-v1.png": "3ff0666fbc05848665a55b658cb55a266b7f0db907cbc9f5cc5d0274d75e2f7b",
+        "game/ui/art/menu-scenes/ukraine.webp": "7db1eeb0dffc03405a013a810aabcb4e31e099c06b1a739e3f801acac3a615d2"
+      },
+      "sourceSha256": "0c20833b5d6009ad380e8976be60cd2f2f59514d25aa1908320f5081b847b114"
+    },
+    {
+      "id": "ukraine-team",
+      "file": "ukraine-team-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: Ukraine Atlas TEAM game landing background for FPV / LINE, landscape 3:2.\nInput reference: preserve the approved Ukraine Solo river-village sunrise world, navy timber lookout and geometric woven railing, hills/church, wildflowers and refined pixel-art palette. Make a new Team composition.\nPrimary subject: TWO stylized Ukrainian folk-art birds with natural anatomy, one deep blue/gold and one gold/blue, sitting close together on ONE shared wooden railing/perch, both oriented toward the same sunrise view. They cooperatively hold the ends of ONE short blue-and-gold woven strand, gently draped between them. The common perch, aligned silhouettes and shared strand make a linked team recognizable. The same bird identity as Ukraine's game player; no drones, machinery, weapons, people or fighting.\nComposition: left45% very dark quiet shelter interior for menu. Coordinated bird pair together in the middle-right foreground, with breathing room around their complete bodies and tails. Large scenic river bend and sunlit village on right, clear cloud wisps upper right, warm hanging lantern at shelter edge, wildflowers along the lower right. Strong depth and welcoming calm.\nStyle: deliberate crisp pixel clusters and stepped silhouettes, painterly 16-bit pixel art matching reference, no photo smoothness or blur.\nNo lettering, words, numbers, flags, logos, UI, buttons, frames or watermark. Opaque complete illustration.",
+      "references": ["game/ui/art/menu-scenes/ukraine.webp"],
+      "referenceRole": "Pixel-art world identity and mode composition reference; originals preserved unchanged.",
+      "referenceSha256": {
+        "game/ui/art/menu-scenes/ukraine.webp": "7db1eeb0dffc03405a013a810aabcb4e31e099c06b1a739e3f801acac3a615d2"
+      },
+      "sourceSha256": "2f21239117ce2e51dfc2a91ebaa3eb1d1bc89b2cd071412490e7bea7681e8ff9"
+    },
+    {
+      "id": "ukraine-team-portrait",
+      "file": "ukraine-team-portrait-v1.png",
+      "prompt": "Use case: stylized-concept.\nAsset type: Ukraine Atlas TEAM game landing background, separately composed tall9:16 portrait.\nInput images: image1 is the approved Team landscape and defines the linked blue/gold folk-art bird pair, ONE shared railing and ONE woven strand between them. Image2 is the Ukraine Solo original and defines the village/river/sunrise/pixel-art identity.\nRedesign for a phone portrait rather than cropping. Upper40%: very dark quiet navy timber shelter and shaded canopy, low contrast for menu text, narrow dawn opening on the right. Middle-right: warm sky with readable cloud wisps, misty hills and distant Ukrainian river village/church. Small glowing hanging lantern near left-center.\nLower half: both COMPLETE birds together on ONE continuous wooden railing, close side by side and gently turned toward the same sunrise view. One blue/gold and one gold/blue, jointly holding ends of a short woven blue-gold strand that drapes between their beaks. Show one shared perch and visibly linked partnership, unlike opposing rivals on separate posts. Keep beaks, bodies and long tails well within the central70% of the canvas; leave15% horizontal margins for phone cropping. Their bodies should be near x38% and x64%, around y64%, tails below; enough space to read both complete silhouettes.\nWildflowers frame the railing and a river patch remains visible behind/beside them for later subtle ripple animation. Warm amber light, sky-blue mist, deep navy shelter, crisp deliberate pixel clusters and stepped silhouettes matching the references.\nNo text, letters, numbers, flags, logos, UI, controls, frames or watermark. No drones, weapons or humans. Opaque full-frame artwork.",
+      "references": [
+        "authoring/library/menu-scenes/ukraine-team-v1.png",
+        "game/ui/art/menu-scenes/ukraine.webp"
+      ],
+      "referenceRole": "Pixel-art world identity and mode composition reference; originals preserved unchanged.",
+      "referenceSha256": {
+        "authoring/library/menu-scenes/ukraine-team-v1.png": "2f21239117ce2e51dfc2a91ebaa3eb1d1bc89b2cd071412490e7bea7681e8ff9",
+        "game/ui/art/menu-scenes/ukraine.webp": "7db1eeb0dffc03405a013a810aabcb4e31e099c06b1a739e3f801acac3a615d2"
+      },
+      "sourceSha256": "416174ec98d813ef2a65e495d46f724477d213225c288b12471058ad56c5fa67"
+    }
+  ]
+}

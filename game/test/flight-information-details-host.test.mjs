@@ -1,3 +1,5 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -6,6 +8,9 @@ import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { readFlightInformation } from '../ui/flight-information-host.mjs';
 import { Soundscape } from '../ui/audio.mjs';
+import { setLocale, t as translate } from '../i18n/index.mjs';
+import { bindingLabels, resolveKeyBindings } from '../key-bindings.mjs';
+import { controllerBindingLabels } from '../controller-bindings.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { createApexSpatialCandidates } from '../content-design/apex-spatial-candidates.mjs';
@@ -56,6 +61,8 @@ function open(p) {
 }
 for (const turnPolicy of ['immediate', 'grid-center'])
   test(`mounted ${turnPolicy}: Details reading and Back preserve flight; only Resume moves`, async (t) => {
+    setLocale('en', { persist: false });
+    t.after(() => setLocale('en', { persist: false }));
     const storage = memoryStorage();
     saveLibrary(
       storage,
@@ -90,6 +97,30 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.equal(p.doc.activeElement, p.$('flight-details-reading-done'));
     assert.equal(p.$('flight-details-read').getAttribute('aria-pressed'), 'true');
     assert.equal(p.$('flight-details-reading-done').disabled, false);
+    const readingText = p.$('flight-details-content').textContent;
+    p.$('flight-details-dialog').scrollTop = 84;
+    p.$('flight-details-reading').clientHeight = 100;
+    p.$('flight-details-reading').scrollHeight = 500;
+    p.$('flight-details-reading').scrollTop = 36;
+    for (const language of ['uk', 'en']) {
+      setLocale(language, { persist: false });
+      assert.equal(p.$('flight-details-dialog').open, true);
+      assert.equal(p.doc.activeElement, p.$('flight-details-reading-done'));
+      assert.equal(p.$('flight-details-read').getAttribute('aria-pressed'), 'true');
+      assert.equal(p.$('flight-details-reading-done').disabled, false);
+      assert.equal(p.$('flight-details-dialog').scrollTop, 84);
+      assert.equal(p.$('flight-details-reading').scrollTop, 36);
+      const translated = p.$('flight-details-content').textContent;
+      assert.ok(translated.includes(translate('interface:controlsAfterResume')));
+      assert.ok(translated.includes(bindingLabels(resolveKeyBindings()).boost));
+      assert.ok(translated.includes(controllerBindingLabels().flight.boost));
+      assert.doesNotMatch(translated, /flightDetails\.|undefined|NaN/);
+      if (language === 'en') assert.equal(translated, readingText);
+      else assert.notEqual(translated, readingText);
+      ticks(p, 8);
+      assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+      assert.deepEqual(info(p).owner, owner);
+    }
     p.doc.activeElement.emit('keydown', { code: 'ShiftLeft', key: 'Shift', shiftKey: true });
     assert.equal(keyboard(p, 'Tab', 'Tab', { shiftKey: true }).defaultPrevented, true);
     p.doc.activeElement.emit('keyup', { code: 'ShiftLeft', key: 'Shift', shiftKey: false });
@@ -116,10 +147,10 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
     assert.deepEqual(info(p).owner, owner);
     const saved = JSON.parse(storage.getItem('revealline.suspended.dev.v1'));
-    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
     await start(p);
     ticks(p, 8);
-    assert.ok(p.rendered.run.tick > saved.replay.ticks);
+    assert.ok(p.rendered.run.tick > nativeSession(saved).replay.ticks);
     assert.deepEqual(p.errors, []);
   });
 test('actual notices survive later empty fixed-step batches and same-ID restore resets the history', async (t) => {
@@ -141,8 +172,11 @@ test('actual notices survive later empty fixed-step batches and same-ID restore 
   p.$('flight-details-back').click();
   await Promise.resolve();
   const owner = info(p).owner;
-  p.$('continue-saved').click();
-  await settle(() => !p.$('continue-saved').disabled);
+  const saved = p.storage.getItem('revealline.suspended.dev.v1');
+  p.$('library-button').click();
+  p.$('save-json').value = saved;
+  await activateHostAction(p.$('import-save'));
+  assert.equal(p.$('library-dialog').open, false);
   assert.equal(info(p).owner.attempt, owner.attempt);
   assert.ok(info(p).owner.generation > owner.generation);
   assert.deepEqual(
@@ -383,7 +417,8 @@ test('mounted controller navigates Pause to Details and reading; held Back canno
     buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
   };
   const p = await soloPage(t, { campaign, readPads: () => [pad] });
-  let now = 1000;
+  // Continue from the host's sampled clock; a backwards fixture clock stalls rearming.
+  let now = performance.now();
   t.mock.method(performance, 'now', () => now);
   const frame = () => {
     now += 30;
@@ -394,7 +429,8 @@ test('mounted controller navigates Pause to Details and reading; held Back canno
     set(n, true);
     frame();
     set(n, false);
-    frame();
+    // A second Confirm is a fresh gesture only after the 120 ms neutral gate.
+    for (let neutral = 0; neutral < 5; neutral++) frame();
   };
   frame();
   await start(p);
@@ -410,6 +446,10 @@ test('mounted controller navigates Pause to Details and reading; held Back canno
   assert.equal(p.doc.activeElement, p.$('overlay-field-details'));
   pulse(0);
   assert.equal(p.$('flight-details-dialog').open, true);
+  pulse(5);
+  assert.equal(p.doc.activeElement, p.$('flight-details-back'));
+  pulse(4);
+  assert.equal(p.doc.activeElement, p.$('flight-details-read'));
   pulse(0);
   assert.equal(p.doc.activeElement, p.$('flight-details-reading'));
   pulse(1);
