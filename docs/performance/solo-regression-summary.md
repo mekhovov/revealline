@@ -1,9 +1,21 @@
 # Solo regression evidence snapshot
 
-The original repository inventory has completed **1,233 of 1,948 files**. It is
-paused with **715 files remaining**. This is not a complete-suite pass. The
-[machine-readable ledger](solo-regression-audit.json) binds the inventory,
-individual comparisons, later retests, and raw logs to their SHA-256 hashes.
+As of **2026-10-16 09:10 UTC**, **1,514 of the original 1,948 files** have complete
+observations at their recorded source revisions; **434 remain unobserved**. This
+combines the historical local 1,233-file snapshot with 281 disjoint remote files.
+It is not a complete-suite pass or a single-revision result. Remote failures still
+include unresolved groups. The [machine-readable ledger](solo-regression-audit.json)
+binds each source, comparison and retained result to SHA-256 evidence.
+
+The original 715-file continuation at `90f4d1a0` / runtime `49c0b6c1` has retained
+250 complete files: 183 passed and 67 failed. Its separate 70-file recovery queue
+at `845e2a1e` / runtime `e0252ff8` has retained 31: 21 passed and 10 failed. One
+resource-aborted recovery file remains incomplete. The two retained sets have no
+overlap. All 119 referenced artifact archives passed digest, ZIP, source and test
+identity checks. These figures are a frozen checkpoint, not live run totals.
+
+The table below preserves the **earlier local snapshot**, without adding later
+retests or remote results twice.
 
 | Evidence                           | Recorded result                                                                                                |
 | ---------------------------------- | -------------------------------------------------------------------------------------------------------------- |
@@ -15,10 +27,11 @@ individual comparisons, later retests, and raw logs to their SHA-256 hashes.
 | Later-added CPU-profile test       | Three cases within the separately recorded 37/37 qualification group                                           |
 | Later-added startup-evidence test  | 4/4                                                                                                            |
 
-The baseline is `b11745223861c3973ad4bf440cc536198b8e0371`. The frozen game runtime
-is `49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b`. Original file results span their
+The baseline is `b11745223861c3973ad4bf440cc536198b8e0371`. The local snapshot froze game runtime
+`49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b`; later remote recovery uses
+`e0252ff8f6b7f5ac84721fd5994c74e8469fb271`. Original file results span their
 recorded source revisions; later runtime-boundary retests are separate evidence.
-The latest qualification-tooling proof is at
+The local snapshot's qualification-tooling proof is at
 `4f9db963b0966f98a707f130363247a222c9e861` and does not change the game runtime.
 
 Baseline reproduction applies to the named diagnostics and executed assertions.
@@ -50,9 +63,11 @@ seconds before the first timing pair. This establishes the owned test boundary;
 it does not establish absence of unrelated system load.
 
 After the interrupted timing batch, the five authorized baseline comparisons
-finished at **06:24:49.335452 UTC**. All local test lanes remained paused afterward.
-No test, build, bulk archive, or continuation run is authorized during the current
-timing window.
+finished at **06:24:49.335452 UTC**. That receipt applies to the first calibration window only. Later authorized
+fixture checks and remote artifact retention have separate timestamps. The
+08:31:25–08:31:33 retention overlap is preserved in its receipt; the parent excluded
+that first cold pair and collected a separate replacement. No timing acceptance
+is inferred from regression progress.
 
 ## Reproduction and continuation
 
@@ -92,8 +107,10 @@ The pending continuation set is exactly the immutable 1,948-file list minus the
 1,233 unique completed file entries, including failed completed files. Its 715
 entries have no overlap with completed files and retain their original indexes
 and current test-byte hashes. The three later additions and eleven changed-test
-retests remain explicit supplementary evidence. A separate remote continuation is
-being prepared for review; no remote result is claimed here.
+retests remain explicit supplementary evidence. The remote continuation and guarded recovery now run with immutable dispatch
+commits and manifests. Their retained checkpoint and supplementary baseline /
+canonical fixture runs are listed in the ledger; incomplete or resource-aborted
+files receive no complete-file credit.
 
 The local two-worker successor passed 11 isolated control checks but has never
 run the real inventory. It requires the five unit files to finish, a globally
@@ -101,4 +118,4 @@ paused natural boundary, verified termination of only the idle owned runner, and
 validation of all prior result/log hashes. It rejects duplicates and unaccounted
 pending logs. Build, copy, and CLI fixtures stay exclusive; other host files may
 use at most two distinct processes. It remains unused while remote continuation
-is considered.
+and recovery run.

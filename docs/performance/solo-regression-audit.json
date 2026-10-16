@@ -1,8 +1,8 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-16T06:33:32.218828+00:00",
-  "status": "Incomplete repository regression inventory; all currently observed failure groups classified. No full-suite success claim.",
-  "scope": "Separate original inventory, added tooling files, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures and cancellations remain visible.",
+  "updatedAt": "2026-10-16T09:10:45.334614+00:00",
+  "status": "Incomplete repository regression inventory. Historical local failure groups are classified; remote continuation includes unresolved failures. No full-suite success claim.",
+  "scope": "Separate historical local inventory, mixed-source remote continuation/recovery, added tooling, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures, cancellations and unobserved work remain visible.",
   "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
   "frozenRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
   "currentHeadContext": "4f9db963b0966f98a707f130363247a222c9e861",
@@ -21,7 +21,7 @@
         "unit": 1192
       }
     },
-    "status": "Globally paused with no active tests; continuation has not launched.",
+    "status": "Historical local runner stopped at1233 complete files. Its715-file remainder continues remotely under separate immutable source and workflow authorities.",
     "lastProgressSnapshot": {
       "at": "2026-10-16T06:31:41.776980+00:00",
       "totalFiles": 1948,
@@ -2671,5 +2671,81 @@
     "Unrelated Team golden, registry, access-page, and decoder fixture failures remain visible. Production validation and deadlines were not weakened.",
     "The repaired actor-appearance Solo file remains15/16, with its selector timeout retained and paired. Candidate-solo remains16/18 on both revisions because nested-envelope assertions stop two cases early.",
     "No physical iPhone17Pro Safari or SteamDeckOLED qualification is implied."
-  ]
+  ],
+  "remoteContinuation": {
+    "checkpointAt": "2026-10-16T09:10:45.334614+00:00",
+    "currentRuntimeContext": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+    "originalInventoryFiles": 1948,
+    "historicalLocalCompleteFiles": 1233,
+    "remoteUniqueCompleteFiles": 281,
+    "totalUniqueOriginalFilesObserved": 1514,
+    "originalFilesStillUnobserved": 434,
+    "overlap": [],
+    "original715": {
+      "runId": 38865274741,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38865274741",
+      "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
+      "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
+      "completedFiles": 250,
+      "passedFiles": 183,
+      "failedFiles": 67,
+      "retainedArtifacts": 80,
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/retained-artifacts-0857.json",
+        "bytes": 280564,
+        "sha256": "a4a0d1316b50e5ed7271d83b9db4add93f182f283838d9f43dbed678d85bcbe4"
+      },
+      "failureDetails": {
+        "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/failed-groups-202610160857242445530000.json",
+        "bytes": 260251,
+        "sha256": "3093a14c4d7b6c27e21652cb9a46a3bd8796936825813a4f037e98fc83470c77"
+      }
+    },
+    "recovery70": {
+      "runId": 38873117238,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/38873117238",
+      "workflowSourceRevision": "db28973bdce5d1d49bb46bdf8c73d5925d9438a9",
+      "sourceRevision": "845e2a1e1c72ee0d2900b2974589efbf7bb35273",
+      "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+      "completedFiles": 31,
+      "passedFiles": 21,
+      "failedFiles": 10,
+      "incompleteFiles": 1,
+      "retainedArtifacts": 39,
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38873117238/retained-recovery-0859.json",
+        "bytes": 87923,
+        "sha256": "925a72daa69647a2802bf76143938122ba845fc6b86c1b311e405540a4209100"
+      }
+    },
+    "classificationStatus": "Incomplete. Failed complete files remain failures. Exact-baseline receipts are assertion-specific; later assertions after early failure receive no coverage. Canonical fixture retests pending in38877133338 are separate from prior copies or interrupted originals.",
+    "boundedIdentityPair": {
+      "path": ".cache/solo-followup/regression-audit/remote-memory-38873458942/bounded-identity-classification-final.json",
+      "bytes": 24352,
+      "sha256": "fbfc572119e0565fff4552d8deaa4292acf009cc786d05e8845bbf53d6496bd2"
+    },
+    "initialTenBaselineProof": {
+      "path": ".cache/solo-followup/regression-audit/remote-baseline-38875817263/classification-first-two.json",
+      "bytes": 20710,
+      "sha256": "47cee21701e28a95741f5fb62efee4072e0e020b4bacb9450b53ee93677ca016"
+    },
+    "activeSupplementaryRuns": [
+      {
+        "runId": 38875817263,
+        "workflowSourceRevision": "8258ae0813e4cbb57d8875ec868c386e15e689db",
+        "purpose": "Ten exact original-main full files; first two retained; remainder pending."
+      },
+      {
+        "runId": 38877133338,
+        "workflowSourceRevision": "7b29a828339579b3c61edbd7f6991b506d04d5f3",
+        "purpose": "Three canonical fixtures at9768/e025 plus five exact original-main host comparisons; pending retained results."
+      },
+      {
+        "runId": 38877911109,
+        "workflowSourceRevision": "9bf8d29ab0e9785ae3bf19af4f0f5a0ed3630696",
+        "purpose": "Original-main image ownership, company PNG fixture and selection-bookmark comparison; pending."
+      }
+    ],
+    "scope": "Unique-file progress across explicitly recorded sources, not an aggregate one-revision suite pass or final device/release acceptance. Historical frozenRuntimeRevision/currentHeadContext fields above belong to the06:33 local snapshot. Later copies/diagnostics are not counted twice. Remote artifacts retained with size,digest,ZIP CRC,source,test andTAP checks; resource-aborted files remain unobserved."
+  }
 }
