@@ -51,7 +51,7 @@ test('unavailable worker defers fallback until a safe phase and respects cancell
     createWorker() {
       throw new Error('CSP blocked');
     },
-    inspect: async () => ++scans,
+    inspect: async (_source, { scheduleScan }) => scheduleScan(() => ++scans),
   });
   t.after(() => inspector.close());
   const controller = new AbortController();
@@ -66,6 +66,60 @@ test('unavailable worker defers fallback until a safe phase and respects cancell
   assert.equal(scans, 0);
   preparation.setPhase('paused');
   assert.equal(await waiting, 1);
+});
+
+test('fallback rechecks its safe phase after Blob materialization and before hashing', async (t) => {
+  const blob = new Blob([silenceBytes]);
+  const expected = await inspectMP3(blob);
+  const preparation = createMediaPreparation();
+  preparation.setPhase('preparing');
+  let releaseRead, readStarted;
+  const ready = new Promise((resolve) => (readStarted = resolve));
+  const blocked = new Promise((resolve) => (releaseRead = resolve));
+  const originalRead = Blob.prototype.arrayBuffer;
+  t.mock.method(Blob.prototype, 'arrayBuffer', async function () {
+    readStarted();
+    await blocked;
+    return originalRead.call(this);
+  });
+  const stages = [];
+  const inspector = createMP3Inspector({
+    preparation,
+    createWorker() {
+      throw new Error('CSP blocked');
+    },
+    inspect: (source, options) =>
+      inspectMP3(source, {
+        ...options,
+        scheduleScan: (work) =>
+          options
+            .scheduleScan(() => {
+              stages.push(preparation.snapshot().phase);
+              return work();
+            })
+            .then((value) => {
+              if (stages.length === 2) preparation.setPhase('playing');
+              return value;
+            }),
+      }),
+  });
+  t.after(() => inspector.close());
+  const result = inspector.inspect(blob);
+  await ready;
+  preparation.setPhase('playing');
+  releaseRead();
+  await tick();
+  assert.deepEqual(stages, ['preparing']);
+  assert.equal(preparation.snapshot().queued, 1);
+  assert.equal(preparation.snapshot().active.main, 0);
+  preparation.setPhase('paused');
+  await tick();
+  assert.deepEqual(stages, ['preparing', 'paused']);
+  assert.equal(preparation.snapshot().queued, 1);
+  assert.equal(preparation.snapshot().active.main, 0);
+  preparation.setPhase('paused');
+  assert.deepEqual(await result, expected);
+  assert.deepEqual(stages, ['preparing', 'paused', 'paused']);
 });
 
 test('cancelling an active worker terminates its work and a later request creates a fresh worker', async (t) => {

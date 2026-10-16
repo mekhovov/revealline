@@ -48,7 +48,7 @@ const sourceHashes={
 '34900da2d7a4782f0ee0d0da4eb483dc29724f757bdc73bac50e135422405e6d',
 'game/journey/reaction-voice-cache.mjs':
 '4c04fb38aa55822d3f09a8acfe49a6ae7579ac2a24a14d3c507269f861172de7',
-'game/ui/media-preparation.mjs':'77e64c25207831fe0ee35f66cbb70225c628247a5b463656d7b7b457a0cf1748',
+'game/ui/media-preparation.mjs':'70cb3507090962cac6e8e97e86f65f43565f2273e436e31cf2832c2a2e6395c7',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
 'game/journey/reactions.mjs':'5a467624ad95e59b30f6a339bfa7f66f82a3060356925adb5c85f9c7db7c459d',
@@ -4300,6 +4300,7 @@ queue.splice(queue.indexOf(task),1);
 task.signal?.removeEventListener('abort',task.cancel);
 active[task.kind]++;
 if(task.kind==='decode')reservedBytes+=task.bytes;
+let deferred=false;
 Promise.resolve()
 .then(()=>{
 if(
@@ -4310,9 +4311,19 @@ task.signal?.aborted||
 (phase==='playing'&&task.priority==='background')
 )
 throw aborted();
+// Phase can change after admission but before this microtask runs.
+// Keep required fallback work pending until a safe phase instead of
+// starting a scan during gameplay or rejecting its playback request.
+if(task.kind==='main'&&phase==='playing'){
+deferred=true;
+queue.push(task);
+task.signal?.addEventListener('abort',task.cancel,{once:true});
+return;
+}
 return task.work();
 })
 .then((value)=>{
+if(deferred)return;
 if(closed||task.signal?.aborted|| !task.eligible())task.reject(aborted());
 else task.resolve(value);
 },task.reject)

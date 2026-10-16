@@ -100,9 +100,13 @@ export function createMP3Inspector({
               return await inspectWorker(blob, signal);
             } catch (error) {
               if (!error.workerUnavailable) throw error;
-              return preparation.run('main', () => inspect(blob, { signal }), {
+              return inspect(blob, {
                 signal,
-                eligible: () => !closed,
+                scheduleScan: (work) =>
+                  preparation.run('main', work, {
+                    signal,
+                    eligible: () => !closed,
+                  }),
               });
             }
           },

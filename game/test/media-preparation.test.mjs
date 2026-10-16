@@ -225,6 +225,37 @@ test('main-thread fallback waits through active play and cancels without running
   assert.equal(await waiting, 1);
 });
 
+test('main-thread work admitted just before play stays pending until a safe phase', async () => {
+  const queue = createMediaPreparation(),
+    controller = new AbortController(),
+    scans = [];
+  queue.setPhase('preparing');
+  const waiting = queue.run('main', () => scans.push('required'), { priority: 'required' });
+  const cancelled = queue.run('main', () => scans.push('cancelled'), {
+    signal: controller.signal,
+  });
+  const rejected = assert.rejects(cancelled, { name: 'AbortError' });
+  let settled = false;
+  waiting.then(() => (settled = true));
+  // Admission happened synchronously; the actual work has not entered its
+  // microtask yet when the prepared board releases gameplay.
+  queue.setPhase('playing');
+  await tick();
+  assert.deepEqual(scans, []);
+  assert.equal(settled, false, 'The original playback request remains pending.');
+  assert.equal(queue.snapshot().active.main, 0);
+  assert.equal(queue.snapshot().queued, 2);
+  controller.abort();
+  await rejected;
+  queue.setPhase('paused');
+  assert.equal(await waiting, 1);
+  await tick();
+  assert.deepEqual(scans, ['required']);
+  assert.equal(queue.snapshot().queued, 0);
+  assert.equal(queue.snapshot().active.main, 0);
+  queue.close();
+});
+
 test('audio activation stays in the gesture and muted preparation starts no downloads', async (t) => {
   const h = audioHarness();
   t.after(() => h.soundscape.dispose());
