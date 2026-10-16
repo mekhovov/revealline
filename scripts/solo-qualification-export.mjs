@@ -49,6 +49,14 @@ export function installQualificationUploadWitness(element, now = () => performan
   };
 }
 
+export async function beginQualificationUploadWitness(page, selector) {
+  // Playwright evaluates string expressions without invoking returned functions.
+  // Invoke explicitly so this executes in the same world as the public control.
+  await page.evaluate(
+    `void (window.soloQualificationUploadWitness = (${installQualificationUploadWitness.toString()})(document.querySelector(${JSON.stringify(selector)})))`,
+  );
+}
+
 // Read an ordinary public export only after gameplay has stopped. Do not inspect
 // or mutate application state, and never make an unavailable control available.
 export async function readPublicQualificationReplay(page, timeoutMs = 10000) {

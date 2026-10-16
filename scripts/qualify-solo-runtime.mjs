@@ -10,7 +10,7 @@ import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import { installAudioProof, evaluateAudioProof } from './solo-qualification-audio.mjs';
 import { verifyNativeQualificationReplay } from './solo-qualification-native-replay.mjs';
 import {
-  installQualificationUploadWitness,
+  beginQualificationUploadWitness,
   readPublicQualificationReplay,
   waitQualificationControl,
 } from './solo-qualification-export.mjs';
@@ -776,9 +776,7 @@ try {
             publicStatus:
               control.ownerDocument.getElementById('editor-status')?.textContent ?? null,
           }));
-          await locator.evaluate(
-            `(control) => { window.soloQualificationUploadWitness = (${installQualificationUploadWitness.toString()})(control); }`,
-          );
+          await beginQualificationUploadWitness(page, action.selector);
           try {
             await locator.setInputFiles(file, { timeout });
           } finally {

@@ -10,7 +10,7 @@ The prepared cases cover:
 
 - `first-return`: a real capture and win.
 - `long-rail`: a longer authored cut/capture route with patrols.
-- `first-fracture`: earned erosion and recapture on the existing Fractured Grid definition.
+- `first-fracture`: version 2 makes one real capture, waits for earned erosion on the unchanged Fractured Grid definition, then explicitly pauses and exports. It requires both mechanics, not victory or recapture. The earlier native victory attempts remain failed; their corrective input sequence is not reused. Bounded model variants at 1.4–1.8 seconds of held input retain the required mechanics, but do not replace native acceptance.
 - `sentry-detour`: the existing Standard, seed 1, grid-centred route, including an actual fired projectile. The immediate-turn route currently produces no projectile and is deliberately excluded from that claim.
 - `signal-07`: thirty seconds of the shipped lane-boss mission. Its warning/active phases activate the same jammer-picture filter used by reception interference.
 - `original-art-opening`: the public opening Journey and its registered originals, with a real long cut and large capture. Its recording must confirm at least twenty trail cells and five hundred claimed cells.
