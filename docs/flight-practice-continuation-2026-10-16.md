@@ -5,6 +5,80 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+### Production journey and fresh-candidate offline/update checks pass
+
+Observer `88867270621a9d59f8041056e2653d21421ad374`, tree
+`d1d45065e06931a8bf724b8510a53625d4444160`, uses the original onboarding
+candidate `1b339bfe6` / envelope `f559fdd7…`, not relabelled b8 outputs.
+
+- The **complete original-production journey passes all six EN/UK cases** with
+  one Play each, no optional runtime before Play, disarmed start screens,
+  Tryzub appearance parity, guides and return navigation. Every original build
+  member is verified both before and after: 3,493 files / 1,072,077,940 bytes;
+  integrity phases take 335,248 / 204,463 ms and settle without outstanding work.
+  The explicit memory policy retains 2,737 original members / 116,052,929 bytes
+  below 128 MiB, serves 9,262 memory / 72 original-file requests, then clears its
+  private cache with zero pending reads. Original build source stays `3a1b5e3c3`.
+  [Original receipts, authority, manifest and 24 PNGs](flight-practice-continuation-20261016/production-memory-passed-originals.tgz)
+  SHA-256: `854e1bb901692c3ee4da56eb54ccf4f2ebaeca904cba474b89e29fbe063ae91d`.
+  The [independent audit](flight-practice-continuation-20261016/production-memory-independent-audit.json)
+  matches all manifest pins, deterministic selection, delivery/source/artifact
+  identities and cleanup; it reviews the pinned full verifier but does not
+  reread the entire gigabyte again. Directory PNGs show a scrolled viewport,
+  not every card simultaneously; Ukrainian guides contain older English preview
+  imagery, not a freshly translated visual walkthrough. This is an exact local
+  production-build functional pass, not latest-main output, hosted capacity,
+  measured performance, human review or public release. Earlier failures stay failed.
+- The new candidate's **six restarted-offline flights** pass nine checkpoints
+  and five exact imported-model/content witnesses. Gym launcher rises to 0.25 m;
+  the other five rise to 0.2 m; paused samples stay exact over 639–644 ms.
+  [Original evidence](flight-practice-continuation-20261016/onboarding-six-offline-originals.tgz)
+  SHA-256: `b90b038b4ca266ad8357d1d0fba679a3a98a1419d8754b015b46976bb23abbcc`.
+  The [independent audit](flight-practice-continuation-20261016/onboarding-six-offline-independent-audit.json)
+  rechecks all artifacts, original model-derived assets, seven PNGs, source and
+  owned cleanup. Scope remains English short lift/pause, not completed lessons,
+  physical devices, machine-wide outage or Academy distinct-release migration.
+- Its **installed historical Academy update continuity** also passes again:
+  trusted focus-loss pause in 35 ms, native unfocused→focused return in 56 ms,
+  genuine changed-package preparation, retained document and explicit resumed
+  lift within 7,200 ms. Nine checkpoints and clean teardown pass.
+  [Original evidence](flight-practice-continuation-20261016/onboarding-pwa-continuity-originals.tgz)
+  SHA-256: `8006ed47155f08605906cf6e134e5276d3ef0ab9b0e039e7ae9af5d4934e45ac`.
+  The [independent audit](flight-practice-continuation-20261016/onboarding-pwa-continuity-independent-audit.json)
+  confirms 54 changed historical/current members. Cache names/scopes and archived
+  equality assertions are not raw post-update backups or fresh member hashes;
+  World content witnesses precede the active update. No all-app flight or
+  physical-switching claim is made.
+
+### Native zoom diagnosis and main-entry language correction
+
+The [first C9 attempt](flight-practice-continuation-20261016/native-c9-first-failed-originals.tgz)
+remains failed: Academy/Worlds pass the English software route, Gym fails a strict
+clipping assertion whose old reader did not retain the failing rectangle, and
+three Ukrainian cases incorrectly assume query-only language selection in a
+shared English profile. A [temporary diagnostic](flight-practice-continuation-20261016/native-c9-temp-diagnostic-failed-originals.tgz)
+also remains failed: its uncommitted observer hash `0831c9fd…` incorrectly uses a
+static Home language mount that maintained menus move into Settings. It is not
+assigned to Git `888672706`. Neither failure proves a simulator rendering defect.
+
+The corrected observer preserves failed focus geometry before asserting and
+uses the actual Settings → Display visible language select when needed, with at
+most two public Back presses and actual modal closure. Matching actual document
+language is a no-op. Focus bounds, deadlines and native inputs are unchanged;
+twenty focused observer tests pass. A fresh native result is still required.
+
+Separately, a real return-link bug is corrected in the main app only: one exact
+supported `?lang=en` or `?lang=uk` initializes that main-app visit through
+`setLocale(..., { persist: false })`, before other app UI dependencies initialize.
+Missing, invalid or duplicate parameters keep the saved/browser default. The
+saved preference is unchanged; ordinary Settings language selection still saves
+normally. Seven actual directory/bootstrap/control tests and independent review
+pass. Shared bootstrap, package code and worker policies are unchanged, and all
+three package input revisions still match preflight. Classic boot/access/recovery
+may retain the saved/detected language until the app imports; existing cross-tab
+preference events remain unchanged. A fresh source-shell browser observation is
+needed; the older production build above does not contain this main-only fix.
+
 Current expanded regression after delivery/C9 integration: **390/390 practice
 tests**, **357 observer tests passed with one explicit historical-fixture skip**.
 The fourteen C9 focused tests also pass after adding exact descriptor-copy and
