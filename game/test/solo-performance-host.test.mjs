@@ -4,7 +4,7 @@ import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { readFile } from 'node:fs/promises';
 import { PNGImage } from './helpers/png-image.mjs';
-import { authoritativeCheckpoint } from '../replay.mjs';
+import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { FIXED_DT, stepRun } from '../core/index.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
@@ -128,6 +128,56 @@ test('raw scene interruptions preserve exact 250ms boundary and never catch up h
   await start(page);
   page.frame(100);
   assert.equal(page.doc.body.dataset.flightState, 'running');
+});
+
+test('changing 30/40/45/60/90/120/144 Hz callbacks preserve fixed ticks and the exported replay', async (t) => {
+  const page = await soloPage(t, {
+    pictures,
+    fetchResponse,
+    search: '?journey=opening',
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+  });
+  await start(page);
+  const reference = structuredClone(page.rendered.run);
+  for (const hz of [30, 40, 45, 60, 90, 120, 144]) {
+    const before = page.rendered.run.tick;
+    // More than the former 120-callback smoothing cooldown at every cadence.
+    for (let frame = 0; frame < hz * 5; frame++) page.frame(1000 / hz);
+    for (let tick = 0; tick < 120 * 5; tick++) stepRun(reference, {}, FIXED_DT);
+    assert.equal(page.rendered.run.tick - before, 600, `${hz} Hz keeps all real elapsed time`);
+    assert.deepEqual(
+      authoritativeCheckpoint(page.rendered.run),
+      authoritativeCheckpoint(reference),
+    );
+  }
+  const timers = [],
+    urls = [];
+  const timeout = globalThis.setTimeout;
+  const createURL = URL.createObjectURL.bind(URL);
+  t.mock.method(globalThis, 'setTimeout', (callback, delay, ...args) => {
+    const timer = timeout(callback, delay, ...args);
+    if (delay === 60000) {
+      timer.unref();
+      timers.push(timer);
+    }
+    return timer;
+  });
+  t.mock.method(URL, 'createObjectURL', (blob) => {
+    const url = createURL(blob);
+    urls.push(url);
+    return url;
+  });
+  t.after(() => {
+    timers.forEach(clearTimeout);
+    urls.forEach((url) => URL.revokeObjectURL(url));
+  });
+  await page.$('export-replay').onclick();
+  assert.equal(page.$('replay-dialog').open, true);
+  const output = JSON.parse(page.$('replay-json').value);
+  const replay = output.replay ?? output;
+  assert.equal(verifyReplay(replay).match, true);
+  assert.deepEqual(replay.checkpoint, authoritativeCheckpoint(reference));
+  assert.deepEqual(page.errors, []);
 });
 
 test('canvas loss and restoration preserve the run until explicit Resume and fresh input', async (t) => {
