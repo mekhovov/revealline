@@ -1,5 +1,6 @@
 import {
   createRegionMotionQuery,
+  createRegionMotionCoverageQuery,
   createRegionFlightSupportQuery,
 } from "./region-motion-query.mjs";
 import * as THREE from "../vendor/three.module.js";
@@ -177,6 +178,7 @@ export async function prepareTerrainWindow(
     return true;
   }
   return Object.freeze({
+    motionCoverage: createRegionMotionCoverageQuery({ covers, live }),
     flightSupport: createRegionFlightSupportQuery({
       world,
       local,

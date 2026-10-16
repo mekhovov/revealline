@@ -318,6 +318,107 @@ test('actual FPV application, native notebook and installation launcher close in
   assert.ok(
     [...source.values()].reduce((total, bytes) => total + bytes.length, 0) <= 12 * 1024 * 1024,
   );
+  const policy = OPTIONAL_PACKAGE_POLICIES['civilian-fpv'];
+  const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
+  const sum = (rows) => rows.reduce((total, row) => total + row.bytes, 0);
+  assert.equal(policy.limits.bytes, 12 * 1024 * 1024);
+  assert.equal(policy.sourceInputBytes, policy.limits.bytes + 128 * 1024);
+  assert.ok(sum(inventory.inputs) <= policy.sourceInputBytes);
+  assert.equal(OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.bytes, 20 * 1024 * 1024);
+  assert.equal(OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].sourceInputBytes, undefined);
+  assert.equal(OPTIONAL_PACKAGE_POLICIES['civilian-flight'].sourceInputBytes, undefined);
+
+  const replace = (target, role, bytes) => {
+    const name = target.package[role].path;
+    target.files.set(name, bytes);
+    target.package[role] = editionDescriptor(name, bytes);
+    target.envelope.packages[0] = target.package;
+  };
+  const changeInventory = (target, edit) => {
+    const next = JSON.parse(target.files.get(target.package.sourceInventory.path));
+    edit(next);
+    const bytes = editionJSON(next);
+    replace(target, 'sourceInventory', bytes);
+    const archive = readEditionZip(target.files.get(target.package.sourceArchive.path));
+    archive.set('source-inventory.json', bytes);
+    replace(target, 'sourceArchive', createEditionZip(archive));
+  };
+  const tooManyInputs = candidate(first);
+  changeInventory(tooManyInputs, (next) => {
+    next.inputs.find((row) => row.path === 'game/locales/uk/interface.json').bytes +=
+      policy.sourceInputBytes - sum(next.inputs) + 1;
+  });
+  await assert.rejects(
+    validateOptionalPackageAdmission(tooManyInputs.envelope, tooManyInputs),
+    /Optional source input inventory exceeds its byte budget/,
+  );
+  const oversizedBuildInputs = new Map(first.inputs);
+  const localePath = 'game/locales/uk/interface.json';
+  oversizedBuildInputs.set(
+    localePath,
+    Buffer.alloc(
+      first.inputs.get(localePath).length + policy.sourceInputBytes - sum(inventory.inputs) + 1,
+    ),
+  );
+  assert.throws(
+    () => candidate({ ...first, inputs: oversizedBuildInputs }),
+    /Optional source input inventory exceeds its byte budget/,
+  );
+
+  const oversizedRuntime = candidate(first);
+  const runtimeManifest = JSON.parse(
+    oversizedRuntime.files.get(oversizedRuntime.package.manifest.path),
+  );
+  runtimeManifest.files[0].bytes += policy.limits.bytes - sum(runtimeManifest.files) + 1;
+  replace(oversizedRuntime, 'manifest', editionJSON(runtimeManifest));
+  await assert.rejects(
+    validateOptionalPackageAdmission(oversizedRuntime.envelope, oversizedRuntime),
+    /Optional package exceeds its byte budget/,
+  );
+
+  const changedInputHash = candidate(first);
+  changeInventory(changedInputHash, (next) => {
+    next.inputs.find((row) => row.path.endsWith('/app.mjs')).sha256 = '0'.repeat(64);
+  });
+  await assert.rejects(
+    validateOptionalPackageAdmission(changedInputHash.envelope, changedInputHash),
+    /artifact bytes differ/,
+  );
+  const changedInputClosure = candidate(first);
+  changeInventory(changedInputClosure, (next) => {
+    next.inputs[0].path = 'game/not-admitted.mjs';
+  });
+  await assert.rejects(
+    validateOptionalPackageAdmission(changedInputClosure.envelope, changedInputClosure),
+    /undeclared dependency/,
+  );
+
+  const oversizedSource = candidate(first);
+  const oversizedArchive = readEditionZip(
+    oversizedSource.files.get(oversizedSource.package.sourceArchive.path),
+  );
+  const sourceTotal = [...oversizedArchive.values()].reduce(
+    (total, bytes) => total + bytes.length,
+    0,
+  );
+  const sourcePath = 'optional-practice/civilian-fpv/README.md';
+  const paddedSource = Buffer.concat([
+    oversizedArchive.get(sourcePath),
+    Buffer.alloc(policy.limits.bytes - sourceTotal + 1, 32),
+  ]);
+  oversizedArchive.set(sourcePath, paddedSource);
+  const sourceInventory = JSON.parse(oversizedArchive.get('source-inventory.json'));
+  sourceInventory.files = sourceInventory.files.map((row) =>
+    row.path === sourcePath ? editionDescriptor(sourcePath, paddedSource) : row,
+  );
+  const sourceInventoryBytes = editionJSON(sourceInventory);
+  oversizedArchive.set('source-inventory.json', sourceInventoryBytes);
+  replace(oversizedSource, 'sourceInventory', sourceInventoryBytes);
+  replace(oversizedSource, 'sourceArchive', createEditionZip(oversizedArchive));
+  await assert.rejects(
+    validateOptionalPackageAdmission(oversizedSource.envelope, oversizedSource),
+    /Complete optional source output exceeds package limits/,
+  );
 });
 
 test('explicit FPV package remains independently reproducible with complete pinned runtime and source closures', async (t) => {

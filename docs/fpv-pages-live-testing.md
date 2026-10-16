@@ -21,14 +21,35 @@ review and product-release policies still apply.
 
 Use the Pages workflow's Node **22.22.2**. Build into a new directory with enough
 space for both the expanded site and its download ZIP. The complete build is
-large; do not delete other work to make room.
+large; do not delete other work to make room. Use a canonical output parent:
+on macOS, `/tmp` is a symlink, so an absolute `/private/tmp/...` path satisfies
+the normal builder's no-symlink staging rule.
 
 ```sh
 node scripts/game-cli.mjs build --out NEW_SITE --publication-profile main-pages
 node scripts/smoke-fpv-pages.mjs NEW_SITE PLAYWRIGHT_MODULE REPORT.json
 ```
 
-The local evidence for this change uses the unchanged production
+The [current continuation check](fpv-pages-continuation-live-testing-evidence.json)
+uses a successful, unmodified normal CLI build at
+`/private/tmp/fpv-rates-completion-20261016-pages`, version `0.151.1`. Both packages
+pass online and in isolated offline contexts, including saved rates, keyboard
+installer activation, Advanced start/restart/export and worker disposal. The
+site has 3,432 publication files / 963,601,242 bytes; its conservative archive
+forecast is 972,215,808 bytes, leaving 7,784,192 bytes below the unchanged cap.
+The distribution ZIP digest is
+`74dc9e80f48a9b517860e6d606fb8a33db8524780b4c535f3babf0398506c59f`.
+This is a local working-tree build, not a deployed or committed CI artifact.
+
+The first continuation build rejected the `/tmp` symlink before staging; using
+the canonical parent completed normally. The first browser check then found an
+outdated test locator expecting diagnostics to begin with “Raw input” instead of
+the new “Input source” heading. Its [failure report](fpv-pages-continuation-selector-failure.json)
+is preserved. Updating only the locator and explicitly checking the raw-input
+field produced the passing run against the same unchanged generated site. No
+runtime or gate was altered to obtain that pass.
+
+The earlier [baseline evidence](fpv-pages-live-testing-evidence.json) used the unchanged production
 `prepareBuildProject` and `writeBuildEntry` functions. The normal CLI run was
 stopped during slow serial staging on a network volume. An equivalent local
 harness staged the exact prepared entries with bounded concurrency, omitting
@@ -55,8 +76,14 @@ verified package preparation. Each simulator uses an isolated browser context so
 offline cache cannot supply missing files. This does not test browser-process
 restart or storage eviction.
 
-Offline preparation in this probe invokes the production installation API;
-installer button accessibility and the real password form remain manual checks.
+The current probe navigates to each visible installer: Academy Settings → Help &
+Extras → Help → Workshop & offline, and World Settings → Content & Offline.
+It traverses keyboard focus to the enabled installation button, activates it with
+Enter/Space, and checks the trusted activation, accessible name and visible
+completion status. Screen-reader behavior, browser application-install prompts
+and the real password form remain separate checks. The earlier baseline probe
+called the production installation API directly and did not establish this UI
+behavior.
 The probe records every served file's manifest hash and rechecks those bytes at
 the end. A local working-tree build deliberately has no committed source
 revision; the final committed CI artifact remains a separate check.
@@ -121,5 +148,6 @@ does not waive them.
 
 Physical flight fidelity, the device performance matrix, public HTTPS behavior,
 real radio sampling and scored competition eligibility are not established by
-this Pages delivery check. The recorded Regional capacity failure under host
-contention remains evidence; it is not converted into a pass by deployment.
+this Pages delivery check. The historical Regional capacity failure under host contention remains evidence.
+The separate [final bounded capacity run](fpv-regional-contact-capacity-2026-10-16-final.json)
+passes on its pinned sources; neither result is changed by deployment.

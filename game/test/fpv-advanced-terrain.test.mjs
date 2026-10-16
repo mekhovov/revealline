@@ -12,6 +12,7 @@ import {
   ADVANCED_TERRAIN_FORMAT,
 } from '../../optional-practice/civilian-fpv/advanced-terrain.mjs';
 import {
+  advancedComparisonEligibility,
   createAdvancedSimulation,
   initAdvancedRuntime,
   replayAdvancedRecording,
@@ -269,5 +270,45 @@ test('recording rejects reordered, missing, unused and tampered frame histories'
     assert.equal((await replayAdvancedRecording(record)).verified, true);
   } finally {
     sim.dispose();
+  }
+});
+
+test('Regional comparison binds terrain history and preserves metadata-free recovery and replay', async () => {
+  const sim = createAdvancedSimulation(regionalQualificationOptions()),
+    arena = createAdvancedSimulation(),
+    frames = regionalQualificationFrames();
+  try {
+    install(sim, frames[0]);
+    sim.stepMission();
+    const before = sim.snapshot(),
+      first = sim.recording();
+    assert.equal(first.comparison.simulationIdentity, first.simulationIdentity);
+    assert.equal(first.comparison.terrainIdentity, first.terrainIdentity);
+    assert.notEqual(first.comparison.comparisonClass, arena.comparison().comparisonClass);
+    const oldRecord = structuredClone(first);
+    delete oldRecord.comparison;
+    assert.deepEqual((await replayAdvancedRecording(oldRecord)).comparison, first.comparison);
+    const oldSnapshot = structuredClone(before);
+    delete oldSnapshot.recording.comparison;
+    sim.restore(oldSnapshot);
+    assert.deepEqual(sim.recording(), first);
+    install(sim, frames[1]);
+    const changed = sim.recording();
+    assert.notEqual(changed.comparison.comparisonClass, first.comparison.comparisonClass);
+    assert.equal(
+      advancedComparisonEligibility(
+        await replayAdvancedRecording(first),
+        await replayAdvancedRecording(changed),
+      ).reason,
+      'comparison-class-mismatch',
+    );
+    const tampered = structuredClone(sim.snapshot());
+    tampered.recording.comparison = first.comparison;
+    const hash = sim.stateHash();
+    assert.throws(() => sim.restore(tampered), /comparison metadata/);
+    assert.equal(sim.stateHash(), hash);
+  } finally {
+    sim.dispose();
+    arena.dispose();
   }
 });

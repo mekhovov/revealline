@@ -4,7 +4,9 @@ import { createAdvancedController } from '../../optional-practice/civilian-fpv/a
 import {
   ADVANCED_AIRCRAFT_TEMPLATES,
   ADVANCED_QUALIFICATION,
+  advancedComparisonEligibility,
   advancedFlightIdentities,
+  createAdvancedAircraftTune,
   createAdvancedSimulation,
   initAdvancedRuntime,
   replayAdvancedRecording,
@@ -214,20 +216,158 @@ test('templates are independent physical data; comparison permits rates but keep
       sim.dispose();
     }
   }
-  const first = advancedFlightIdentities({ rates: { roll: 400 }, throttle: { limitPercent: 100 } });
-  const otherRates = advancedFlightIdentities({
-    rates: { roll: 800 },
-    throttle: { limitPercent: 100 },
-  });
-  const limited = advancedFlightIdentities({
-    rates: { roll: 400 },
-    throttle: { limitPercent: 75 },
-  });
+  const identityFor = (rateProfile) => {
+    const sim = createAdvancedSimulation({ rateProfile });
+    try {
+      return advancedFlightIdentities(sim.configuration());
+    } finally {
+      sim.dispose();
+    }
+  };
+  const first = identityFor(createRateProfile());
+  const otherRates = identityFor(createRateProfile({ axes: { roll: { rate: 80 } } }));
+  const limited = identityFor(createRateProfile({ throttle: { limitPercent: 75 } }));
   assert.notEqual(first.simulationIdentity, otherRates.simulationIdentity);
   assert.equal(first.comparisonClass, otherRates.comparisonClass);
   assert.notEqual(first.comparisonClass, limited.comparisonClass);
   assert.equal(ADVANCED_QUALIFICATION.defaultEligible, false);
   assert.equal(ADVANCED_QUALIFICATION.scored, false);
+});
+
+test('emitted comparison classes bind the frozen physical configuration and nested throttle', () => {
+  const identities = (options = {}) => {
+    const sim = createAdvancedSimulation({ rateProfile: createRateProfile(), ...options });
+    try {
+      const record = sim.recording();
+      assert.deepEqual(record.comparison, sim.comparison());
+      assert.deepEqual(record.comparison, sim.snapshot().recording.comparison);
+      assert.equal(record.comparison.simulationIdentity, record.identity);
+      assert.equal(record.comparison.scored, false);
+      return record.comparison;
+    } finally {
+      sim.dispose();
+    }
+  };
+  const baseline = identities();
+  for (const rateProfile of [
+    createRateProfile({ axes: { roll: { rate: 90 }, yaw: { expo: 30 } } }),
+    createRateProfile({ algorithm: 'betaflight' }),
+  ]) {
+    const other = identities({ rateProfile });
+    assert.equal(other.comparisonClass, baseline.comparisonClass);
+    assert.notEqual(other.simulationIdentity, baseline.simulationIdentity);
+  }
+  const customConfig = {
+    rates: { roll: 400, throttle: { limitPercent: 100 } },
+    rules: { mode: 'practice' },
+  };
+  const custom = identities({ configuration: customConfig });
+  assert.equal(
+    identities({
+      configuration: {
+        ...customConfig,
+        camera: { tilt: 60, fov: 120 },
+        profileId: 'another',
+        setupId: 'drone-two',
+      },
+    }).comparisonClass,
+    custom.comparisonClass,
+  );
+  assert.notEqual(
+    identities({
+      configuration: { ...customConfig, rates: { roll: 400, throttle: { limitPercent: 75 } } },
+    }).comparisonClass,
+    custom.comparisonClass,
+  );
+  const aircraft = validateAdvancedAircraft();
+  aircraft.motorOutputLimit = 0.8;
+  const controller = createAdvancedAircraftTune();
+  controller.inputSmoothingHz = 20;
+  for (const options of [
+    { frequency: 500 },
+    { aircraft },
+    { controller },
+    { floor: false },
+    { gravity: { x: 0, y: -8, z: 0 } },
+    { spawn: { x: 0, y: 3, z: 0 } },
+    { initialVelocity: { x: 1, y: 0, z: 0 } },
+    { obstacles: [{ id: 'wall', min: { x: 2, y: 0, z: 0 }, max: { x: 3, y: 2, z: 1 } }] },
+    { rateProfile: createRateProfile({ throttle: { limitType: 'scale', limitPercent: 75 } }) },
+    { rateProfile: createRateProfile({ throttle: { expo: 20 } }) },
+    { configuration: { assists: { level: true } } },
+    { configuration: { rules: { maxSeconds: 30 } } },
+    { configuration: { conditions: { wind: 2 } } },
+    { configuration: { environment: { world: 'other-course' } } },
+  ])
+    assert.notEqual(identities(options).comparisonClass, baseline.comparisonClass);
+  for (const configuration of [false, { route: Array(600).fill(0) }]) {
+    const legacy = createAdvancedSimulation({ configuration });
+    try {
+      assert.equal(legacy.recording().comparison.scored, false);
+    } finally {
+      legacy.dispose();
+    }
+  }
+});
+
+test('comparison requires genuine complete replay and legacy metadata remains optional', async () => {
+  const sim = createAdvancedSimulation({ rateProfile: createRateProfile(), floor: false });
+  try {
+    for (let tick = 0; tick < 3; tick++) {
+      sim.enqueueInput(sample(tick));
+      sim.stepMission();
+    }
+    const record = sim.recording();
+    const legacy = structuredClone(record);
+    delete legacy.comparison;
+    const first = await replayAdvancedRecording(record);
+    const second = await replayAdvancedRecording(legacy);
+    assert.equal(Object.isFrozen(first.comparison), true);
+    assert.equal(advancedComparisonEligibility(first, second).eligible, true);
+    assert.equal(advancedComparisonEligibility(first, second).scored, false);
+    assert.equal(
+      advancedComparisonEligibility(first, structuredClone(second)).reason,
+      'unverified-recording',
+    );
+    assert.equal(
+      advancedComparisonEligibility(first, { verified: true, comparison: first.comparison })
+        .eligible,
+      false,
+    );
+    const partial = await replayAdvancedRecording(record, { throughMission: 1 });
+    assert.equal(advancedComparisonEligibility(first, partial).reason, 'partial-replay');
+    const custom = await replayAdvancedRecording(record, {
+      rateEvaluator: (input) => ({ roll: 0, pitch: 0, yaw: 0, throttle: input.throttle }),
+    });
+    assert.equal(advancedComparisonEligibility(first, custom).reason, 'custom-rate-evaluator');
+    const before = sim.stateHash();
+    for (const change of [
+      (comparison) => {
+        comparison.comparisonClass = '0000000000000000';
+      },
+      (comparison) => {
+        comparison.scored = true;
+      },
+      (comparison) => {
+        comparison.terrainIdentity = '0000000000000000';
+      },
+    ]) {
+      const invalid = structuredClone(record);
+      change(invalid.comparison);
+      await assert.rejects(replayAdvancedRecording(invalid), /comparison metadata/);
+      const saved = structuredClone(sim.snapshot());
+      change(saved.recording.comparison);
+      assert.throws(() => sim.restore(saved), /comparison metadata/);
+      assert.equal(sim.stateHash(), before);
+    }
+    const oldSnapshot = sim.snapshot();
+    delete oldSnapshot.recording.comparison;
+    sim.restore(oldSnapshot);
+    assert.equal(sim.stateHash(), before);
+    assert.deepEqual(sim.recording().comparison, record.comparison);
+  } finally {
+    sim.dispose();
+  }
 });
 
 test('snapshot restore rejects another configuration without changing live state', () => {

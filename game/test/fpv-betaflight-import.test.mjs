@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { canonicalJSON } from '../data-json.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
 import {
   BETAFLIGHT_IMPORT_VERSIONS,
@@ -11,6 +13,10 @@ import {
   exportNativeRateProfile,
   importNativeRateProfile,
   resolveBetaflightPresetBundle,
+  previewBetaflightImport,
+  previewNativeRateImport,
+  validateRateImportReceipt,
+  RATE_IMPORT_RECEIPT_BYTES,
 } from '../../optional-practice/civilian-fpv/betaflight-import.mjs';
 
 const fixture = JSON.parse(
@@ -364,4 +370,158 @@ test('preset includes reject missing, cyclic, escaping and unsupported nested de
       }),
     'include-cycle',
   );
+});
+
+const sha = (text) => createHash('sha256').update(text, 'utf8').digest('hex');
+test('import receipts pin exact UTF-8 source, firmware choice, source profile and interpreted review', async () => {
+  const source =
+    '\uFEFF# Betaflight 2026.6.2\r\nrateprofile 1\r\nset rates_type = KISS\r\nset roll_srate = 200\r\nset p_roll = 80\r\n';
+  const result = await previewBetaflightImport(source, { kind: 'diff' });
+  const receipt = result.provenance;
+  assert.equal(receipt.source.sha256, sha(source));
+  assert.equal(receipt.source.bytes, Buffer.byteLength(source));
+  assert.notEqual(receipt.source.sha256, sha(source.replace(/\r/gu, '').slice(1)));
+  assert.deepEqual(receipt.firmware, { version: '2026.6.2', origin: 'header' });
+  assert.equal(receipt.sourceProfile, 1);
+  assert.equal(receipt.operation, 'diff');
+  assert.equal(receipt.baseline.kind, 'firmware-defaults');
+  assert.equal(receipt.resultSha256, sha(canonicalJSON(result.profile)));
+  assert.ok(
+    receipt.review.applied.entries.some(
+      (item) => item.includes('roll_srate') && item.includes('99'),
+    ),
+  );
+  assert.ok(
+    receipt.review.normalizations.entries.some(
+      (item) => item.includes('200') && item.includes('99'),
+    ),
+  );
+  assert.ok(receipt.review.ignored.entries.some((item) => item.includes('p_roll')));
+  assert.ok(receipt.review.inferred.total > 0);
+  assert.equal(
+    (
+      await previewBetaflightImport('set roll_srate = 80', {
+        kind: 'complete',
+        sourceVersion: '4.5.5',
+      })
+    ).provenance.firmware.origin,
+    'manual',
+  );
+});
+
+test('headerless patch receipts retain the exact baseline and do not invent source firmware', async () => {
+  const baseline = createRateProfile({ axes: { pitch: { expo: 25 } } });
+  const original = structuredClone(baseline);
+  const options = {
+    kind: 'patch',
+    baseline,
+    baselineKind: 'draft',
+    baselineIdentity: { profileId: 'pilot', revision: 3 },
+  };
+  const pending = previewBetaflightImport('set yaw_srate = 88', options);
+  baseline.axes.pitch.expo = 50;
+  options.baselineIdentity.revision = 4;
+  const { provenance, profile } = await pending;
+  assert.deepEqual(provenance.firmware, { version: null, origin: 'unspecified' });
+  assert.deepEqual(provenance.baseline, {
+    kind: 'draft',
+    sha256: sha(canonicalJSON(original)),
+    profileId: 'pilot',
+    revision: 3,
+  });
+  assert.equal(profile.axes.pitch.expo, 25);
+  assert.equal(provenance.review.inferred.total, 0);
+});
+
+test('preset receipts pin every original file and preserve ordered inactive includes and option choices', async () => {
+  const files = {
+    'rates/main.txt':
+      '#$ DESCRIPTION: <script>inert()</script>\r\n#$ INCLUDE: base.txt\r\n#$ OPTION BEGIN (UNCHECKED): Fast\r\n#$ INCLUDE: fast.txt\r\n#$ OPTION END\r\n#$ INCLUDE: base.txt',
+    'rates/base.txt': '\uFEFFset yaw_srate = 80\r\n',
+    'rates/fast.txt': 'set yaw_srate = 90\n',
+  };
+  const bundle = { files, entry: 'rates/main.txt', options: { Fast: false } };
+  const resolved = resolveBetaflightPresetBundle(bundle);
+  const pending = previewBetaflightImport(resolved.text, {
+    kind: 'patch',
+    baseline: createRateProfile(),
+    presetBundle: bundle,
+  });
+  const original = structuredClone(bundle);
+  files['rates/fast.txt'] = 'set yaw_srate = 99';
+  bundle.options.Fast = true;
+  const { provenance } = await pending;
+  assert.equal(provenance.source.kind, 'preset');
+  assert.equal(provenance.source.sha256, sha(resolved.text));
+  for (const [path, source] of Object.entries(original.files))
+    assert.ok(
+      provenance.preset.files.entries.includes(
+        `${sha(source)} ${Buffer.byteLength(source)} ${path}`,
+      ),
+    );
+  assert.equal(provenance.preset.includes.total, 4);
+  assert.match(provenance.preset.includes.entries[2], /"active":false/);
+  assert.match(provenance.preset.options.entries[0], /"checked":false/);
+  assert.ok(provenance.preset.metadata.entries.some((item) => item.includes('<script>')));
+  assert.match(provenance.preset.resolutionSha256, /^[a-f0-9]{64}$/u);
+  await assert.rejects(
+    previewBetaflightImport(resolved.text, {
+      kind: 'patch',
+      baseline: createRateProfile(),
+      presetBundle: bundle,
+    }),
+    /Resolve the selected preset/,
+  );
+});
+
+test('large inert import reviews are bounded and disclose shortened metadata without losing exact source identity', async () => {
+  const source = Array.from(
+    { length: 1000 },
+    (_, i) => `set hardware_${i} = ${'я'.repeat(1000)}`,
+  ).join('\n');
+  // Stay within the existing 1 MiB CLI cap while exercising large UTF-8 values.
+  const bounded = source.slice(0, source.indexOf('\n', 400000));
+  const { provenance } = await previewBetaflightImport(bounded, {
+    kind: 'diff',
+    sourceVersion: '2026.6.2',
+  });
+  assert.equal(provenance.source.sha256, sha(bounded));
+  assert.ok(provenance.review.ignored.total > 100);
+  assert.equal(provenance.review.ignored.entries.length, 12);
+  assert.equal(provenance.review.ignored.shortened, true);
+  assert.ok(Buffer.byteLength(JSON.stringify(provenance)) < RATE_IMPORT_RECEIPT_BYTES);
+  assert.deepEqual(validateRateImportReceipt(provenance), provenance);
+  for (const mutate of [
+    (value) => {
+      value.format = 'FpvRateImportReceipt.v2';
+    },
+    (value) => {
+      value.futureHardwareAdapter = true;
+    },
+    (value) => {
+      value.review.ignored.entries[0] = '\u0000active';
+    },
+    (value) => {
+      value.source.sha256 = 'invalid';
+    },
+    (value) => {
+      value.review.ignored.shortened = false;
+    },
+  ]) {
+    const invalid = structuredClone(provenance);
+    mutate(invalid);
+    assert.throws(() => validateRateImportReceipt(invalid));
+  }
+});
+
+test('native imports produce a receipt while portable curve exports remain free of provenance', async () => {
+  const source = `\uFEFF${exportNativeRateProfile(createRateProfile())}`;
+  const result = await previewNativeRateImport(source);
+  assert.equal(result.provenance.source.sha256, sha(source));
+  assert.equal(result.provenance.operation, 'native');
+  assert.equal(result.provenance.baseline, null);
+  assert.deepEqual(Object.keys(JSON.parse(exportNativeRateProfile(result.profile))).sort(), [
+    'format',
+    'profile',
+  ]);
 });
