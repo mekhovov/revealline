@@ -1,0 +1,215 @@
+name: Measure one exact Pages candidate (diagnostic only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Same-repository open PR based directly on main
+        required: true
+        type: string
+      main_sha:
+        description: Exact current main and workflow-controller SHA
+        required: true
+        type: string
+      head_sha:
+        description: Exact candidate PR head SHA
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: pages-candidate-diagnostic
+  cancel-in-progress: false
+
+env:
+  MAX_PUBLISHED_BYTES: 980000000
+
+jobs:
+  preflight:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      preflight_sha256: ${{ steps.freeze.outputs.preflight_sha256 }}
+      source_sha: ${{ steps.freeze.outputs.source_sha }}
+      artifact_id: ${{ steps.packet.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          package-manager-cache: false
+      - name: Install only trusted controller dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - name: Freeze source, synthetic tree and external overlay bytes using trusted code
+        id: freeze
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_PR: ${{ inputs.pr_number }}
+          EXPECTED_MAIN: ${{ inputs.main_sha }}
+          EXPECTED_HEAD: ${{ inputs.head_sha }}
+        run: node scripts/pages-candidate-measurement.mjs prepare
+      - name: Preserve trusted preflight evidence separately from candidate output
+        id: packet
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: candidate-preflight
+          path: ${{ runner.temp }}/candidate-preflight
+          include-hidden-files: true
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 7
+
+  candidate:
+    needs: preflight
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    outputs:
+      artifact_id: ${{ steps.archive.outputs.artifact_id }}
+      receipt_id: ${{ steps.receipts.outputs.artifact-id }}
+    env:
+      PREFLIGHT_SHA256: ${{ needs.preflight.outputs.preflight_sha256 }}
+      SOURCE_SHA: ${{ needs.preflight.outputs.source_sha }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          path: controller
+          persist-credentials: false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          path: candidate
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          package-manager-cache: false
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          artifact-ids: ${{ needs.preflight.outputs.artifact_id }}
+          merge-multiple: true
+          path: ${{ runner.temp }}/candidate-preflight
+      - name: Install trusted helper dependencies without lifecycle scripts
+        working-directory: controller
+        run: npm ci --ignore-scripts
+      - name: Reconstruct exact synthetic source without API credentials
+        run: node controller/scripts/pages-candidate-measurement.mjs reconstruct
+      - name: Install locked candidate dependencies without API credentials
+        working-directory: candidate
+        run: npm ci --prefer-offline
+      - name: Verify source and build the complete production profile without API credentials
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          node scripts/check-source-identity.mjs --root .
+          game_version="$(node -e "const c=require('./game/build-config.json'); if(!/^(0|[1-9][0-9]{0,4})\\.(0|[1-9][0-9]{0,4})\\.(0|[1-9][0-9]{0,4})$/.test(c.version)) process.exit(1); process.stdout.write(c.version)")"
+          node scripts/game-cli.mjs build --out "$RUNNER_TEMP/main-pages" --version "$game_version" --revision "$SOURCE_SHA" --publication-profile main-pages
+          rm "$RUNNER_TEMP/main-pages/distribution.zip" "$RUNNER_TEMP/main-pages/distribution.zip.sha256"
+      - name: Add frozen overlay and byte-identical rolling metadata without API credentials
+        run: node controller/scripts/pages-candidate-measurement.mjs stage
+      - name: Inventory final staging with unchanged production capacity gate
+        id: inventory
+        run: python3 controller/scripts/pages-capacity-evidence.py
+      - name: Verify exact tracked source after build
+        working-directory: candidate
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          node scripts/check-source-identity.mjs --root .
+      - name: Upload exact diagnostic archive, never a deployment artifact
+        id: archive
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          name: candidate-pages
+          path: ${{ runner.temp }}/main-pages
+          include-hidden-files: true
+          retention-days: 7
+      - name: Verify actual pinned-action archive on candidate runner
+        env:
+          PAGES_ARTIFACT_ID: ${{ steps.archive.outputs.artifact_id }}
+        run: python3 controller/scripts/pages-archive-evidence.py
+      - name: Preserve candidate receipts after acceptance or rejection
+        id: receipts
+        if: ${{ !cancelled() && (steps.inventory.outcome == 'success' || steps.inventory.outcome == 'failure') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: candidate-receipts
+          path: |
+            ${{ runner.temp }}/main-pages-inventory.json
+            ${{ runner.temp }}/main-pages-receipt.json
+            ${{ runner.temp }}/main-pages-archive-receipt.json
+          if-no-files-found: error
+          retention-days: 7
+
+  verify:
+    needs: [preflight, candidate]
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' && needs.preflight.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PREFLIGHT_SHA256: ${{ needs.preflight.outputs.preflight_sha256 }}
+      PREFLIGHT_ARTIFACT_ID: ${{ needs.preflight.outputs.artifact_id }}
+      CANDIDATE_ARTIFACT_ID: ${{ needs.candidate.outputs.artifact_id }}
+      RECEIPT_ARTIFACT_ID: ${{ needs.candidate.outputs.receipt_id }}
+    steps:
+      - name: Fresh trusted verifier checkout; never check out candidate code here
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          artifact-ids: ${{ needs.preflight.outputs.artifact_id }}
+          merge-multiple: true
+          path: ${{ runner.temp }}/candidate-preflight
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        if: needs.candidate.result == 'success'
+        with:
+          artifact-ids: ${{ needs.candidate.outputs.artifact_id }}
+          merge-multiple: true
+          path: ${{ runner.temp }}/candidate-bundle
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        if: needs.candidate.result == 'success'
+        with:
+          artifact-ids: ${{ needs.candidate.outputs.receipt_id }}
+          merge-multiple: true
+          path: ${{ runner.temp }}/candidate-bundle
+      - name: Independently verify actual bytes, provenance, metadata, external inputs and freshness
+        if: needs.candidate.result == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/pages-candidate-measurement.mjs verify
+      - name: Record incomplete build without claiming an archive measurement
+        if: needs.candidate.result != 'success'
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          fs.writeFileSync(process.env.RUNNER_TEMP + '/candidate-measurement.json', JSON.stringify({
+            format: 'revealline-pages-candidate-measurement.v1', measurementComplete: false,
+            currentQueueEligible: false, mergeAuthorized: false, qualificationPerformed: false,
+            productionDeploymentPerformed: false, reason: 'Candidate build did not complete successfully; no accepted actual-archive measurement.'
+          }, null, 2) + '\n', {flag: 'wx'});
+          NODE
+      - name: Preserve diagnostic result, never merge or deployment authorization
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: candidate-measurement
+          path: ${{ runner.temp }}/candidate-measurement.json
+          if-no-files-found: error
+          retention-days: 30

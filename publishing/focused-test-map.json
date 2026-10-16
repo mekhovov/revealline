@@ -228,6 +228,12 @@
       "pathPatterns": [
         "^publishing/",
         "^scripts/(build-pages|pages-archive|pages-current-entry)\\.mjs$",
+        "^scripts/test-pages-(?:capacity|archive)-evidence\\.mjs$",
+        "^scripts/pages-(?:capacity|archive)-evidence\\.py$",
+        "^scripts/(pages-recovery\\.py|test-pages-recovery\\.mjs)$",
+        "^scripts/(?:test-)?pages-capacity-report\\.mjs$",
+        "^scripts/(?:write-main-pages-metadata|test-main-pages-metadata)\\.mjs$",
+        "^scripts/(?:test-)?pages-candidate-[a-z-]+\\.(?:mjs|py)$",
         "^\\.github/workflows/"
       ],
       "commands": [
@@ -242,6 +248,15 @@
             "publishing/fastline-release-objects.test.mjs",
             "publishing/fastline-release-publisher.test.mjs",
             "publishing/source-workflow.test.mjs",
+            "scripts/test-pages-capacity-evidence.mjs",
+            "scripts/test-pages-archive-evidence.mjs",
+            "scripts/test-pages-recovery.mjs",
+            "scripts/test-pages-capacity-report.mjs",
+            "scripts/test-main-pages-metadata.mjs",
+            "scripts/test-pages-candidate-contract.mjs",
+            "scripts/test-pages-candidate-overlay.mjs",
+            "scripts/test-pages-candidate-archive.mjs",
+            "scripts/test-pages-candidate-measurement.mjs",
             "publishing/test-policy.test.mjs"
           ]
         }
