@@ -112,6 +112,17 @@
       ]
     },
     {
+      "id": "native-gameplay-audio-observer",
+      "pathPatterns": ["^docs/verification/team-duel-desktop-audio/gameplay.*\\.(?:mjs|html)$"],
+      "commands": [
+        {
+          "id": "native-gameplay-audio-observer",
+          "command": "node",
+          "args": ["--test", "docs/verification/team-duel-desktop-audio/gameplay-observer.test.mjs"]
+        }
+      ]
+    },
+    {
       "id": "restored-studio-audio-observer",
       "pathPatterns": ["^docs/verification/team-duel-desktop-audio/studio.*\\.(?:mjs|html)$"],
       "commands": [

@@ -368,7 +368,7 @@ function selfCross(h) {
   }
 }
 
-async function duel(t, { coverage = 0.95, enemies = true, ...options } = {}) {
+async function duel(t, { coverage = 0.95, enemies = true, lineImpact = false, ...options } = {}) {
   const h = await boundary(t, options),
     campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
   campaign.id = 'studio-gameplay';
@@ -379,6 +379,24 @@ async function duel(t, { coverage = 0.95, enemies = true, ...options } = {}) {
   campaign.levels[0].enemies = enemies
     ? [{ ...campaign.levels[0].enemies[0], x: 40.5, y: 28.5, vx: 0, vy: 0 }]
     : [];
+  if (lineImpact) {
+    // An explicitly authored candidate uses the real opt-in mechanic. The
+    // ordinary moving enemy strikes the keyboard-grown trail; no event or
+    // front position is inserted into the host.
+    Object.assign(campaign.levels[0], {
+      version: 'xonix-level.v4',
+      width: 72,
+      spawn: { x: 36.5, y: 0.5 },
+      encounter: null,
+      classic: {
+        version: 'classic.v1',
+        terrain: [],
+        powerups: [],
+        lineImpact: { version: 'line-impact.v1', speed: 24 },
+      },
+      enemies: [{ ...campaign.levels[0].enemies[0], x: 56.5, y: 5.5, vx: -2, vy: 0 }],
+    });
+  }
   let lease;
   const f = await couchPage(t, {
     campaign,
@@ -529,6 +547,51 @@ test('actual Duel self-crossings preserve two failure owners and one terminal re
   assert.equal(result[0].sources[0].buffer, h.decoded.get(h.hashes.failure));
   h.tick(30);
   assert.equal(h.deliveries.filter((row) => row.board === 'duel-result').length, 1);
+});
+
+test('actual Duel arriving trail impacts cannot suppress ready custom failure on either board', async (t) => {
+  const h = await duel(t, { lineImpact: true });
+  await startDuel(h);
+  const failures = () =>
+    h.deliveries.filter((row) => row.events.some((event) => event.type === 'player.failed'));
+  h.move('KeyS', 'ArrowDown', 210);
+  assert.equal(
+    failures().length,
+    2,
+    JSON.stringify({
+      events: h.deliveries.map((row) => row.events.map((event) => event.type)),
+      boards: h.f.renders.map((run) => ({
+        tick: run.tick,
+        status: run.status,
+        player: run.player,
+        lives: run.lives,
+        fronts: run.classic?.lineImpact?.fronts,
+        enemies: run.enemies,
+      })),
+    }),
+  );
+  for (const row of failures()) {
+    assert.ok(row.events.some((event) => event.type === 'lineImpact.arrived'));
+    assert.ok(row.events.some((event) => event.type === 'lineImpact.cleared'));
+  }
+  await waitFor(() => h.decoded.has(h.hashes.failure));
+  assert.equal(h.custom('failure').length, 0, 'Cold decoding cannot replay an earlier impact.');
+  const previous = h.f.renders[0];
+  h.f.$('race-pause').click();
+  h.f.$('race-retry').click();
+  await waitFor(() => {
+    h.tick();
+    return h.f.renders[0] !== previous && h.f.renders[0].status === 'running';
+  });
+  h.move('KeyS', 'ArrowDown', 210);
+  assert.equal(failures().length, 4);
+  assert.equal(h.custom('failure').length, 2);
+  for (const row of failures().slice(-2)) {
+    const voice = row.voices.find((value) => value.name === 'failure');
+    assert.ok(voice, `Board ${row.board} owns the ready semantic failure.`);
+    assert.equal(voice.board, row.board);
+    assert.equal(voice.source.buffer, h.decoded.get(h.hashes.failure));
+  }
 });
 
 test('Team Originals twin-landings admits restored fpv105 and plays custom captures and one victory through its legal route', async (t) => {
