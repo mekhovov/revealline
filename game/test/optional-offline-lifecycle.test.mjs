@@ -15,6 +15,40 @@ import { installPracticeWorker as installFPV } from '../../optional-practice/wor
 import { waitFor } from './helpers/wait-for.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
+for (const kind of ['idle-timeout', 'overall-timeout'])
+  test(`offline feedback adds ${kind} code without changing legacy deadline/reason`, async (t) => {
+    const f = fixture();
+    let progress;
+    const original = f.worker.postMessage.bind(f.worker);
+    f.worker.postMessage = (data, ports) => {
+      original(data, ports);
+      if (data.type === 'practice-progress') progress = ports[0];
+    };
+    t.mock.timers.enable({ apis: ['setTimeout'] });
+    const pending = prepareOptionalOffline(f.options);
+    const rejection = assert.rejects(pending, (error) => {
+      assert.equal(error.offlineCode, kind);
+      assert.equal(
+        error.message,
+        kind === 'idle-timeout'
+          ? 'Download stalled for 30 seconds. Retry online.'
+          : 'Download exceeded five minutes. Retry on a faster connection.',
+      );
+      return true;
+    });
+    await waitFor(() => progress);
+    if (kind === 'overall-timeout') {
+      for (let i = 0; i < 14; i++) {
+        t.mock.timers.tick(20000);
+        progress.postMessage({ type: 'practice-progress', downloaded: i + 1, total: 100 });
+        await new Promise((resolve) => setImmediate(resolve));
+      }
+      t.mock.timers.tick(20000);
+    } else t.mock.timers.tick(30000);
+    await rejection;
+    progress.close();
+  });
+
 const deferred = () => {
   let resolve;
   const promise = new Promise((done) => {
