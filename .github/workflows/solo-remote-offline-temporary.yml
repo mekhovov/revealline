@@ -142,30 +142,3 @@ jobs:
           if-no-files-found: warn
           compression-level: 6
           retention-days: 14
-      - name: Admit the independently verified normal baseline upload
-        id: baseline-upload
-        if: ${{ always() }}
-        timeout-minutes: 2
-        working-directory: tools
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ ! -f "$RUNNER_TEMP/solo-linux-offline/work/baseline-build/normal-baseline-proof/ready.json" ]; then
-            printf '%s\n' 'Verified normal baseline is not ready; no package will be published.'
-            exit 0
-          fi
-          node scripts/solo-remote-baseline.mjs admit-upload "$RUNNER_TEMP/solo-linux-offline/work/baseline-build"
-          printf '%s\n' 'ready=true' >> "$GITHUB_OUTPUT"
-      - name: Retain the verified normal baseline for prospective exact reuse
-        if: ${{ always() && steps.baseline-upload.outputs.ready == 'true' }}
-        timeout-minutes: 10
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
-        with:
-          name: solo-normal-baseline-b1174522-${{ github.run_id }}-${{ github.run_attempt }}
-          path: |
-            ${{ runner.temp }}/solo-linux-offline/work/baseline-build/distribution.zip
-            ${{ runner.temp }}/solo-linux-offline/work/baseline-build/manifest.json
-            ${{ runner.temp }}/solo-linux-offline/work/baseline-build/normal-baseline-proof/
-          if-no-files-found: error
-          compression-level: 0
-          retention-days: 14
