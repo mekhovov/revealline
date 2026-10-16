@@ -199,5 +199,288 @@
     "redReceiptSHA256": "cecc01aff2d938e9e32932736ab8fa7e38eba3a9919127bb28cf3dbbcec1101c",
     "greenReceiptSHA256": "853ab04314e677c7ccaa4c5e930485c6b56ff4a76d6f25fd9db4717b08c59f65",
     "cadenceReceiptSHA256": "778268698783737a157c2b41a80f33a70945051bfcad4f194a487abda9318140"
+  },
+  "closedEnemyGuide": {
+    "status": "complete-source-scoped-correctness-pass",
+    "runtimeCommit": "d49c2b4658e983c1e4c7f267ee6eb55e9094cda3",
+    "baseSourceRevision": "d1fa4cb62b076ec03386ececf207fa876ec5773e",
+    "sourceFinding": "Every closed foreground callback redundantly clears the released guide preview; document-hidden/unfocused callbacks already return before the guide update.",
+    "change": "One release-state flag in enemy-guide; first release/cancellation preserved and visible actor sample re-arms before admission. Shared asset implementation unchanged.",
+    "fixtureCorrection": {
+      "change": "Two idempotence regressions with real pool/assetforwarding; default-preserving fixture option tests never-opened callbacks. Existing child practice now waits public running after its singleStart/Retry and zero-time anchor; original loss/ticks/checkpoint/save/focus assertions preserved.",
+      "baselineScope": "Original test bytes match b117 and d1fa, but no exact b117 complete-file execution is asserted.",
+      "unintendedControl": "27/28; original child-practice running!=lost. Wrong snapshot pathname aborted test application but chained runner started; retained explicitly, not new-regression red."
+    },
+    "committedSourceMatchesTestedFiles": [
+      {
+        "path": "game/app.mjs",
+        "bytes": 586196,
+        "sha256": "1ae6d9c0555bdec7fb26d8c65f919c88f7ebc5cedcb5a87cc7de4672cfc27dd5"
+      },
+      {
+        "path": "game/ui/enemy-guide.mjs",
+        "bytes": 26100,
+        "sha256": "1ad00fbd0fb6b05b8487efe08427a5612c1d97e8ad22e4c8db86d90af8acd715"
+      },
+      {
+        "path": "game/ui/enemy-body-assets.mjs",
+        "bytes": 13279,
+        "sha256": "6ceee4e3f253cf9702fc40f1e4e05f86ce7c5b1befb7d8492da60bd16a215ff0"
+      },
+      {
+        "path": "game/ui/actor-presentation.mjs",
+        "bytes": 39456,
+        "sha256": "c573620d2abf38c415951573c65ba28aa029291207d3c7fa3f573a8319220cd0"
+      },
+      {
+        "path": "game/i18n/bootstrap.mjs",
+        "bytes": 13699,
+        "sha256": "f7757adb8ee1f9c53fc0f249bbed6bc9377ff175453543198d3561338fcfc3af"
+      },
+      {
+        "path": "game/test/helpers/solo-dom.mjs",
+        "bytes": 23490,
+        "sha256": "fc4646d46da205d0f649f349dd3510d80406c4e50d69b2c3e0f426ff0ccb48b7"
+      },
+      {
+        "path": "game/test/helpers/couch-dom.mjs",
+        "bytes": 18572,
+        "sha256": "145f0d3010e26c3cc4be105050c8e344808983907d3121741c9ae6a8bc382001"
+      },
+      {
+        "path": "game/test/enemy-guide-panel.test.mjs",
+        "bytes": 42753,
+        "sha256": "bfba4f42969c51611a61daafddbb9dced023087bab31c3cd630d31093efea1ae"
+      },
+      {
+        "path": "game/test/enemy-body-assets.test.mjs",
+        "bytes": 11138,
+        "sha256": "dc1b36e22696c3d60d99966c88e18c5a9fe84cc59fd240eb3048ffad0664a3dc"
+      }
+    ],
+    "attempts": [
+      {
+        "id": "red-old-guide-01",
+        "scope": "unintended-original-source-control",
+        "status": "failed",
+        "receipt": {
+          "path": ".cache/solo-followup/closed-guide-idempotence-01/red-old-guide-01/receipt.json",
+          "sha256": "a4601b5dabc26e62d92093b66a78fa9c05eebfdefa5957b0c2b3dc5a7e0b0b2c"
+        },
+        "sourceHead": "d1fa4cb62b076ec03386ececf207fa876ec5773e",
+        "sourceStable": true,
+        "files": [
+          {
+            "path": "game/test/enemy-guide-panel.test.mjs",
+            "footer": {
+              "tests": 28,
+              "suites": 0,
+              "pass": 27,
+              "fail": 1,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "exitCode": 1,
+            "timedOut": false,
+            "resourceExceeded": false,
+            "tap": {
+              "path": ".cache/solo-followup/closed-guide-idempotence-01/red-old-guide-01/enemy-guide-panel.test.tap",
+              "bytes": 7803,
+              "sha256": "9d9622e66a096793b801edc442edb7fce4e4fc0cc7b787bd2e7d664cadff5d76"
+            },
+            "leftoverCleanup": {
+              "before": [],
+              "after": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "red-old-guide-02",
+        "scope": "expanded-regressions-old-runtime",
+        "status": "failed",
+        "receipt": {
+          "path": ".cache/solo-followup/closed-guide-idempotence-01/red-old-guide-02/receipt.json",
+          "sha256": "c7ae6fa788da239600c40a7556f78794f5bc04749812451cc5dbf6cc89c17687"
+        },
+        "sourceHead": "d1fa4cb62b076ec03386ececf207fa876ec5773e",
+        "sourceStable": true,
+        "files": [
+          {
+            "path": "game/test/enemy-guide-panel.test.mjs",
+            "footer": {
+              "tests": 30,
+              "suites": 0,
+              "pass": 27,
+              "fail": 3,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "exitCode": 1,
+            "timedOut": false,
+            "resourceExceeded": false,
+            "tap": {
+              "path": ".cache/solo-followup/closed-guide-idempotence-01/red-old-guide-02/enemy-guide-panel.test.tap",
+              "bytes": 9780,
+              "sha256": "25465e37fae8b3ba60bca9f1d243bef885d440f07a0480c9bb6a5352a288b1f8"
+            },
+            "leftoverCleanup": {
+              "before": [],
+              "after": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "green-guide-01",
+        "scope": "guide-fix-before-child-fixture-correction",
+        "status": "failed",
+        "receipt": {
+          "path": ".cache/solo-followup/closed-guide-idempotence-01/green-guide-01/receipt.json",
+          "sha256": "7972607c93cc32566fb7a9122095221890db09462398ba21ef9b1e12081974c5"
+        },
+        "sourceHead": "d1fa4cb62b076ec03386ececf207fa876ec5773e",
+        "sourceStable": true,
+        "files": [
+          {
+            "path": "game/test/enemy-guide-panel.test.mjs",
+            "footer": {
+              "tests": 30,
+              "suites": 0,
+              "pass": 29,
+              "fail": 1,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "exitCode": 1,
+            "timedOut": false,
+            "resourceExceeded": false,
+            "tap": {
+              "path": ".cache/solo-followup/closed-guide-idempotence-01/green-guide-01/enemy-guide-panel.test.tap",
+              "bytes": 8248,
+              "sha256": "752d48b725bec271389e526b5b5086d10d7becfaa4d65e0e8c948d13e8394e43"
+            },
+            "leftoverCleanup": {
+              "before": [],
+              "after": []
+            }
+          },
+          {
+            "path": "game/test/enemy-body-assets.test.mjs",
+            "footer": {
+              "tests": 8,
+              "suites": 0,
+              "pass": 8,
+              "fail": 0,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "exitCode": 0,
+            "timedOut": false,
+            "resourceExceeded": false,
+            "tap": {
+              "path": ".cache/solo-followup/closed-guide-idempotence-01/green-guide-01/enemy-body-assets.test.tap",
+              "bytes": 1985,
+              "sha256": "ce2f5b7378e5c8fb4bbd615f1862a63914da2ed5f121117cdbd1120d095157ce"
+            },
+            "leftoverCleanup": {
+              "before": [],
+              "after": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "green-guide-02",
+        "scope": "final-corrected-complete-files",
+        "status": "passed",
+        "receipt": {
+          "path": ".cache/solo-followup/closed-guide-idempotence-01/green-guide-02/receipt.json",
+          "sha256": "93533756f32d50a990e90362e7f9086b2ccb1584704b6c74ca3d8d144f203f85"
+        },
+        "sourceHead": "d1fa4cb62b076ec03386ececf207fa876ec5773e",
+        "sourceStable": true,
+        "files": [
+          {
+            "path": "game/test/enemy-guide-panel.test.mjs",
+            "footer": {
+              "tests": 30,
+              "suites": 0,
+              "pass": 30,
+              "fail": 0,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "exitCode": 0,
+            "timedOut": false,
+            "resourceExceeded": false,
+            "tap": {
+              "path": ".cache/solo-followup/closed-guide-idempotence-01/green-guide-02/enemy-guide-panel.test.tap",
+              "bytes": 7583,
+              "sha256": "da6b21820121892ee5bdb0cc0688d6696a1782965170ee327769f93afb8d21bb"
+            },
+            "leftoverCleanup": {
+              "before": [],
+              "after": []
+            }
+          },
+          {
+            "path": "game/test/enemy-body-assets.test.mjs",
+            "footer": {
+              "tests": 8,
+              "suites": 0,
+              "pass": 8,
+              "fail": 0,
+              "cancelled": 0,
+              "skipped": 0,
+              "todo": 0
+            },
+            "exitCode": 0,
+            "timedOut": false,
+            "resourceExceeded": false,
+            "tap": {
+              "path": ".cache/solo-followup/closed-guide-idempotence-01/green-guide-02/enemy-body-assets.test.tap",
+              "bytes": 1985,
+              "sha256": "a98bec963bc0343ae2bcf20adfe2a23b0fb1a508ab4373d6d97d4bc01b7918eb"
+            },
+            "leftoverCleanup": {
+              "before": [],
+              "after": []
+            }
+          }
+        ]
+      }
+    ],
+    "finalEvidence": {
+      "path": ".cache/solo-followup/closed-guide-idempotence-01/final-evidence.json",
+      "sha256": "232bffc1eb6d39fd5fff7f0e42794af8d0b73482edc322e631a8a4e1c1105c63"
+    },
+    "scopedChecks": {
+      "path": ".cache/solo-followup/closed-guide-idempotence-01/scoped-checks-02/receipt.json",
+      "bytes": 3024,
+      "sha256": "bcce9ab4127438b560b865ab19e62b005accb21381cb75e31683004375f743b4"
+    },
+    "workflow": {
+      "path": ".github/workflows/appearance-preview.yml",
+      "priorCompleteFileCount": 61,
+      "completeFileCount": 63,
+      "addedCompleteFiles": [
+        "game/test/enemy-guide-panel.test.mjs",
+        "game/test/enemy-body-assets.test.mjs"
+      ],
+      "bodyOwnerRationale": "Absent from the previous cohort; preserves cancellation and late-release contracts consumed by the guide."
+    },
+    "qualification": {
+      "prior245Proof": "Unchanged: preceding policy/audio/cadence source only; not requalified by the guide group.",
+      "guideCorrectness": "38/38 complete tests across two files; no skips/cancellations/guard stops/survivors.",
+      "native": "pending-successor-package-and-affected-observations",
+      "thermal": "unqualified",
+      "measuredCostReduction": false
+    }
   }
 }
