@@ -123,7 +123,13 @@ test('owned layers paint once, invalidate dependencies, keep alpha outside cache
   painter.paintLayer('huge', target, 4096, 4096, [], paint);
   assert.equal(f.surfaces.length, 2, 'oversized caches retain the direct renderer');
   assert.equal(painter.cacheStats.pixels, 8000);
+  const resources = painter.resourceSnapshot().ownedCanvases;
+  assert.equal(resources.canvases, 1);
+  assert.equal(resources.rgbaBytesEstimate, 8000 * 4);
+  assert.equal(resources.categories.staticLayers.pixels, 8000);
+  assert.deepEqual(painter.resourceSnapshot().ownedCanvases, resources);
   painter.dispose();
+  assert.equal(painter.resourceSnapshot().ownedCanvases.rgbaBytesEstimate, 0);
   assert.equal(layer.canvas.width, 0);
   assert.equal(layer.listeners.size, 0);
 });
@@ -137,6 +143,8 @@ test('prepared reception and jammer frames never read source pixels or regenerat
     f.surfaces.flatMap((surface) => surface.calls).filter((call) => call.op === 'putImageData')
       .length;
   assert.equal(writes(), 4);
+  assert.equal(atlas.resourceSnapshot().pixels, 64 * 64 * 4);
+  assert.equal(atlas.resourceSnapshot().rgbaBytesEstimate, 64 * 64 * 4 * 4);
   for (let frame = 0; frame < 60; frame++) atlas.draw(target, 960, 480, frame, 0.7);
   assert.equal(writes(), 4);
   const reception = createSignalReception({ canvasFactory: f.create });
@@ -155,6 +163,16 @@ test('prepared reception and jammer frames never read source pixels or regenerat
   const output = filter.select(image, { strength: 0.8, time: 1, animate: true });
   assert.notEqual(output, image);
   assert.ok(output.width <= 512 && output.height <= 512);
+  assert.equal(
+    filter.resourceSnapshot().surface.rgbaBytesEstimate,
+    output.width * output.height * 4,
+  );
+  assert.deepEqual(filter.resourceSnapshot().noise, atlas.resourceSnapshot());
+  assert.deepEqual(reception.resourceSnapshot(), atlas.resourceSnapshot());
+  const surfacesBeforeExport = f.surfaces.length;
+  filter.resourceSnapshot();
+  reception.resourceSnapshot();
+  assert.equal(f.surfaces.length, surfacesBeforeExport, 'Diagnostics do not prepare more surfaces');
   const prepared = writes();
   for (let frame = 0; frame < 60; frame++)
     filter.select(image, { strength: 0.8, time: frame / 12, animate: true });
@@ -171,6 +189,10 @@ test('prepared reception and jammer frames never read source pixels or regenerat
   reception.dispose();
   filter.clear();
   atlas.clear();
+  assert.equal(reception.resourceSnapshot().canvases, 0);
+  assert.equal(filter.resourceSnapshot().surface.pixels, 0);
+  assert.equal(filter.resourceSnapshot().noise.pixels, 0);
+  assert.equal(atlas.resourceSnapshot().pixels, 0);
 });
 
 test('look readiness waits for decode and retired non-cancelable decodes keep the reservation', async (t) => {
@@ -290,6 +312,10 @@ test('procedural picture and ground sources rebuild lost pixels and retire lost 
     return f.create(384, 288);
   };
   painter.setBackgroundArt({ id: 'fixture' });
+  assert.equal(
+    painter.resourceSnapshot().ownedCanvases.categories.sourceArt.rgbaBytesEstimate,
+    384 * 288 * 4,
+  );
   const art = f.surfaces.at(-1),
     first = painter.background;
   art.listeners.get('contextlost')();
@@ -301,6 +327,7 @@ test('procedural picture and ground sources rebuild lost pixels and retire lost 
   assert.equal(first.width, 0);
   const ground = createBattlefieldGroundSurface({ canvasFactory: f.create, ...callbacks });
   const initial = ground.prepare('field-crossing', 1152, 576);
+  assert.equal(ground.resourceSnapshot().rgbaBytesEstimate, 1024 * 512 * 4);
   const source = f.surfaces.at(-1);
   source.listeners.get('contextlost')();
   assert.equal(ground.prepare('field-crossing', 1152, 576), null);
@@ -309,6 +336,7 @@ test('procedural picture and ground sources rebuild lost pixels and retire lost 
   assert.equal(owners.size, 0);
   f.surfaces.at(-1).listeners.get('contextlost')();
   ground.clear();
+  assert.equal(ground.resourceSnapshot().pixels, 0);
   assert.equal(owners.size, 0);
   f.surfaces
     .find((surface) => surface.canvas === painter.background)

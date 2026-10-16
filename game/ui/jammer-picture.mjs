@@ -92,6 +92,13 @@ export function createJammerPictureFilter({
     noise.clear();
   }
   return Object.freeze({
+    resourceSnapshot() {
+      const pixels = (canvas?.width ?? 0) * (canvas?.height ?? 0);
+      return {
+        surface: { canvases: Number(pixels > 0), pixels, rgbaBytesEstimate: pixels * 4, lost },
+        noise: noise.resourceSnapshot(),
+      };
+    },
     clear,
     prepare(image) {
       noise.prepare();

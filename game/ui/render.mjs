@@ -250,6 +250,10 @@ export class BoardPainter {
     this.presets = presets;
     this.onContextLoss = onContextLoss;
     this.onContextRestored = onContextRestored;
+    const contextCallbacks = {
+      onContextLoss: (event) => this.onContextLoss(event),
+      onContextRestored: (event) => this.onContextRestored(event),
+    };
     this.layerCanvasFactory = layerCanvasFactory;
     this.layers = new Map();
     this.preparationGeneration = 0;
@@ -283,15 +287,17 @@ export class BoardPainter {
     this._celebrationPrepared = false;
     this.presentation = null;
     this.artRevision = runtimeActorArtRevision();
-    this.arcadeAdapter = createArcadeAdapter({ reviewRevision: this.artRevision });
+    this.arcadeAdapter = createArcadeAdapter({
+      reviewRevision: this.artRevision,
+      ...contextCallbacks,
+    });
     this.arcadeProvider = () => null;
     this.interfaceProvider = () => null;
     this.arcadeCollection = null;
-    this.pictureFilter = createDemoPictureFilter({ canvasFactory: pictureCanvasFactory });
-    const contextCallbacks = {
-      onContextLoss: (event) => this.onContextLoss(event),
-      onContextRestored: (event) => this.onContextRestored(event),
-    };
+    this.pictureFilter = createDemoPictureFilter({
+      canvasFactory: pictureCanvasFactory,
+      ...contextCallbacks,
+    });
     this.jammerPictureFilter = createJammerPictureFilter({
       canvasFactory: jammerCanvasFactory,
       ...contextCallbacks,
@@ -302,6 +308,8 @@ export class BoardPainter {
     });
   }
   dispose() {
+    if (this.disposed) return;
+    this.disposed = true;
     this.invalidate();
     ++this.preparationGeneration;
     this.battlefieldGround.clear();
@@ -480,14 +488,56 @@ export class BoardPainter {
     this.cellSnapshot = null;
     this.cellRuns = null;
     this.preparedPicture = null;
+    this.arcadeAdapter?.clear();
     this.battlefieldGround?.clear();
     this.pictureFilter?.clear();
     this.jammerPictureFilter?.clear();
     this.signalReception?.invalidate();
   }
   resourceSnapshot() {
+    const layers = this.cacheStats,
+      sourcePixels =
+        (this.backgroundArt?.canvas.width ?? 0) * (this.backgroundArt?.canvas.height ?? 0),
+      jammer = this.jammerPictureFilter.resourceSnapshot(),
+      demo = this.pictureFilter.resourceSnapshot();
+    const categories = {
+      staticLayers: {
+        canvases: [...this.layers.values()].filter(
+          (layer) => layer.canvas?.width && layer.canvas?.height,
+        ).length,
+        pixels: layers.pixels,
+        rgbaBytesEstimate: layers.pixels * 4,
+      },
+      sourceArt: {
+        canvases: Number(sourcePixels > 0),
+        pixels: sourcePixels,
+        rgbaBytesEstimate: sourcePixels * 4,
+      },
+      battlefieldGround: this.battlefieldGround.resourceSnapshot(),
+      adaptedSprites: this.arcadeAdapter.resourceSnapshot(),
+      signalNoise: this.signalReception.resourceSnapshot(),
+      jammerSurface: jammer.surface,
+      jammerNoise: jammer.noise,
+      demoConcealment: demo,
+    };
+    const ownedCanvases = {
+      scope: 'Unique canvases owned by this painter; excludes Phaser and shared source images.',
+      categories,
+      canvases: 0,
+      pixels: 0,
+      rgbaBytesEstimate: 0,
+      retainedPixelBufferBytes: demo.pixelBufferBytes,
+      estimate:
+        'RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable.',
+    };
+    for (const category of Object.values(categories)) {
+      ownedCanvases.canvases += category.canvases;
+      ownedCanvases.pixels += category.pixels;
+      ownedCanvases.rgbaBytesEstimate += category.rgbaBytesEstimate;
+    }
     return {
-      layers: this.cacheStats,
+      layers,
+      ownedCanvases,
       enemyImages: this.enemyBodies.resourceSnapshot(),
       legacyImages: {
         scope: 'page',

@@ -2679,7 +2679,7 @@ try {
   });
   window.addEventListener('pagehide', (event) => {
     if (event.persisted) return;
-    painter.setPresentation(null);
+    painter.dispose();
     publishedAudio.close();
     presentationHost?.close();
   });
@@ -3081,6 +3081,58 @@ try {
       longTask: supported.includes('longtask'),
       longAnimationFrame: supported.includes('long-animation-frame'),
     });
+    function sharedImageResources() {
+      const unique = new Set(),
+        categories = {};
+      let unavailableSnapshots = 0;
+      const summarize = (images) => {
+        let pixels = 0,
+          unknownDimensions = 0;
+        for (const image of images) {
+          const width = image.naturalWidth || image.width || 0,
+            height = image.naturalHeight || image.height || 0;
+          if (width > 0 && height > 0) pixels += width * height;
+          else unknownDimensions++;
+        }
+        return { images: images.size, pixels, rgbaBytesEstimate: pixels * 4, unknownDimensions };
+      };
+      for (const [name, snapshot] of [
+        ['pagePresentation', pagePresentationSnapshot],
+        ['activePresentation', presentationSnapshot],
+        ['actorAppearance', flightActorLease?.snapshot],
+      ]) {
+        const images = new Set();
+        // These base release snapshots are read-only lookups. Never query the
+        // painter's adapter here: that could create a derived sprite on export.
+        try {
+          for (const slot of Object.keys(snapshot?.resolved?.assets ?? {})) {
+            const image = snapshot.image?.(slot)?.image;
+            if (image) images.add(image);
+          }
+        } catch {
+          unavailableSnapshots++;
+        }
+        for (const image of images) unique.add(image);
+        categories[name] = summarize(images);
+      }
+      const backdrop = flightPictures?.current()?.image;
+      const images = new Set(backdrop ? [backdrop] : []);
+      for (const image of images) unique.add(image);
+      categories.activeBackdrop = summarize(images);
+      return {
+        scope:
+          'Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.',
+        categories,
+        uniqueObserved: summarize(unique),
+        sharedCategoryReferences:
+          Object.values(categories).reduce((sum, value) => sum + value.images, 0) - unique.size,
+        unavailableSnapshots,
+        accounting:
+          'Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.',
+        estimate:
+          'RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable.',
+      };
+    }
     window.RevealLineSoloPerformance = Object.freeze({
       export() {
         return {
@@ -3089,6 +3141,7 @@ try {
           }),
           droppedInputObservations,
           buildVersion,
+          sourceRevision: buildSourceRevision,
           userAgent: navigator.userAgent,
           viewport: { width: innerWidth, height: innerHeight },
           cadenceCalibration: {
@@ -3100,6 +3153,8 @@ try {
           audio: audioMaster.snapshot(),
           resources: {
             renderer: painter.resourceSnapshot(),
+            phaser: fieldScene?.resourceSnapshot() ?? null,
+            sharedPresentationImages: sharedImageResources(),
             media: sound.mediaPreparation.snapshot(),
             soundtrack: soundtrackPlayer?.preparationDiagnostics(),
           },
@@ -10093,7 +10148,11 @@ try {
     refreshHUD();
     return true;
   }
-  function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
+  function resume({
+    alignCourseBoard = true,
+    contentSwitchTicket = null,
+    resumeCue = runMessageCue,
+  } = {}) {
     if (practiceRenderFailure.failed) return;
     if (rendererLost.size) return;
     // A queued activation may arrive after blur even when the picture is cached.
@@ -10259,7 +10318,7 @@ try {
           feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
           pictureResume = null;
           pictureVisualController = null;
-          resume({ alignCourseBoard, contentSwitchTicket });
+          resume({ alignCourseBoard, contentSwitchTicket, resumeCue });
         })
         .catch((error) => {
           if (pictureResume === ticket) {
@@ -10304,7 +10363,7 @@ try {
     sound.setPreparationPhase('playing');
     performanceSession?.setPhase('playing');
     qualityPolicy.safeTransition(performance.now());
-    if (['restored', 'paused-resume'].includes(runMessageCue))
+    if (['restored', 'paused-resume'].includes(resumeCue))
       warning(
         run.player.cutting
           ? localizedMessage('interface:flightResumedYourUnfinishedLineIsStillExposed')
@@ -12266,6 +12325,8 @@ try {
       this.revision = 0;
       this.preparedState = null;
       this.lastPaint = null;
+      this.displayedBoardValid = false;
+      this.renderSuppressed = false;
       this.readyFrames = new Float64Array(30);
       this.readyCount = 0;
       this.lastInterfaceAt = -Infinity;
@@ -12280,6 +12341,7 @@ try {
       const retireFrameHooks = () => {
         if (hooksRetired) return;
         hooksRetired = true;
+        this.restoreDisplayRender();
         this.game.events.off(Phaser.Core.Events.PRE_STEP, preStep);
         this.game.events.off(Phaser.Core.Events.POST_RENDER, postRender);
         this.preparedCancel?.();
@@ -12325,7 +12387,78 @@ try {
       });
       this.resizeBoard();
     }
+    resourceSnapshot() {
+      const displayed = this.game.canvas,
+        detachedBoard = this.boardTexture.canvas ?? this.boardTexture.context.canvas;
+      const dimensions = (canvas) => {
+        const width = canvas?.width ?? 0,
+          height = canvas?.height ?? 0,
+          pixels = width * height;
+        return {
+          canvases: Number(pixels > 0),
+          width,
+          height,
+          pixels,
+          rgbaBytesEstimate: pixels * 4,
+        };
+      };
+      const unique = new Set([displayed, detachedBoard].filter(Boolean));
+      let pixels = 0;
+      for (const canvas of unique) pixels += dimensions(canvas).pixels;
+      return {
+        scope:
+          'Phaser-owned displayed canvas and detached board texture; separate from painter caches.',
+        displayed: dimensions(displayed),
+        detachedBoard: dimensions(detachedBoard),
+        uniqueCanvases: unique.size,
+        pixels,
+        rgbaBytesEstimate: pixels * 4,
+        estimate:
+          'RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable.',
+      };
+    }
+    restoreDisplayRender() {
+      if (!this.renderSuppressed) return false;
+      this.renderSuppressed = false;
+      this.suppressedRenderer.config.clearBeforeRender = this.savedClearBeforeRender;
+      this.suppressedCamera.visible = this.savedCameraVisible;
+      this.suppressedRenderer = this.suppressedCamera = null;
+      return true;
+    }
+    retainUnchangedDisplay() {
+      const renderer = this.game.renderer,
+        camera = this.cameras.main;
+      // Retaining pixels is safe only for this single Canvas board. A later
+      // scene/camera/object addition automatically restores ordinary rendering.
+      if (
+        !this.displayedBoardValid ||
+        !this.lastPaint ||
+        this.preparedFrame ||
+        this.pendingSubmission ||
+        demoHost?.active ||
+        rendererLost.size ||
+        renderer?.type !== Phaser.CANVAS ||
+        renderer.config?.clearBeforeRender !== true ||
+        !camera?.visible ||
+        camera.alpha !== 1 ||
+        this.game.scene?.scenes?.length !== 1 ||
+        this.cameras.cameras?.length !== 1 ||
+        this.sys.displayList?.list?.length !== 1 ||
+        this.sys.displayList.list[0] !== this.boardImage
+      )
+        return;
+      this.suppressedRenderer = renderer;
+      this.suppressedCamera = camera;
+      this.savedClearBeforeRender = renderer.config.clearBeforeRender;
+      this.savedCameraVisible = camera.visible;
+      this.renderSuppressed = true;
+      // Pair these flags: hiding the camera alone would clear the retained board.
+      renderer.config.clearBeforeRender = false;
+      camera.visible = false;
+    }
     beginFrame() {
+      // A failed/aborted renderer may not emit POST_RENDER.
+      this.restoreDisplayRender();
       this.frameStartedAt = performance.now();
       this.framePending = false;
       this.pendingSubmission = false;
@@ -12333,6 +12466,7 @@ try {
       this.submittedPreparation = null;
     }
     finishFrame(renderer) {
+      const retained = this.restoreDisplayRender();
       if (!this.framePending) return;
       this.framePending = false;
       const submittedAt = performance.now();
@@ -12344,16 +12478,17 @@ try {
       // Game POST_RENDER follows every camera and CanvasRenderer.postRender.
       // This is render submission, not browser compositing or physical scanout.
       const foreground = !document.hidden && document.hasFocus();
-      const visibleBoard =
+      const boardSubmitted =
+        !retained &&
         renderer &&
-        foreground &&
         !rendererLost.size &&
-        !demoHost?.active &&
-        !dialogOpen() &&
         this.sys.isVisible() &&
         this.cameras.main.visible &&
         this.cameras.main.alpha > 0 &&
         this.boardImage.willRender(this.cameras.main);
+      if (boardSubmitted && this.pendingSubmission && this.submittedRun === run)
+        this.displayedBoardValid = true;
+      const visibleBoard = boardSubmitted && foreground && !demoHost?.active && !dialogOpen();
       if (
         timed &&
         !started &&
@@ -12401,6 +12536,7 @@ try {
       ++this.revision;
       this.preparedState = null;
       this.lastPaint = null;
+      this.displayedBoardValid = false;
     }
     prepared() {
       const state = this.preparedState;
@@ -12543,6 +12679,7 @@ try {
       try {
         update(dt);
         updateMs = performance.now() - workStart;
+        if (!foreground) this.retainUnchangedDisplay();
         if (demoHost?.active || !foreground || rendererLost.size) return;
         if (now - this.lastInterfaceAt >= 100) {
           editionUI?.refresh();
@@ -12590,6 +12727,7 @@ try {
           this.submittedPreparation = this.preparedFrame;
         }
         advanceDefeatPresentation(Math.min(dt, 0.1));
+        if (!animated && !this.pendingSubmission) this.retainUnchangedDisplay();
       } catch (error) {
         this.pendingSubmission = false;
         performanceSession?.reportFailure(`Scene: ${error.message ?? String(error)}`);
