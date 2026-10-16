@@ -43,6 +43,36 @@ function hashes(values) {
   assert.equal(new Set(values).size, values.length, 'Duplicate recording hashes');
 }
 
+/** Responsive/raster stress options, never a physical device identity. */
+export function qualificationDisplayOptions(flags) {
+  const value = (name, fallback) => {
+    const matches = flags.filter((flag) => flag === `--${name}` || flag.startsWith(`--${name}=`));
+    assert(matches.length <= 1, `Duplicate ${name}`);
+    if (!matches.length) return fallback;
+    assert(matches[0].includes('='), `Missing ${name} value`);
+    return matches[0].slice(name.length + 3);
+  };
+  const dimensions = value('viewport', '1280x800');
+  assert(/^\d+x\d+$/.test(dimensions), 'Viewport must be WIDTHxHEIGHT');
+  const [width, height] = dimensions.split('x').map(Number);
+  integer(width, 240, 3840, 'viewport width');
+  integer(height, 240, 3840, 'viewport height');
+  const scale = value('dpr', '1');
+  assert(/^(?:\d+(?:\.\d+)?|\.\d+)$/.test(scale), 'Invalid DPR');
+  const deviceScaleFactor = Number(scale);
+  assert(deviceScaleFactor >= 0.5 && deviceScaleFactor <= 4, 'DPR outside bounded 0.5–4 range');
+  assert(
+    width * height * deviceScaleFactor ** 2 <= 16 * 1024 * 1024,
+    'Requested display exceeds 16-Mipixel harness bound',
+  );
+  assert(
+    !flags.some((flag) => flag.startsWith('--mobile-context=')),
+    'Mobile context is a Boolean flag',
+  );
+  const isMobile = flags.includes('--mobile-context');
+  return { viewport: { width, height }, deviceScaleFactor, isMobile, hasTouch: isMobile };
+}
+
 export function validateQualification(scenario) {
   assert.equal(scenario.format, QUALIFICATION_FORMAT);
   string(scenario.id, 'scenario id');
