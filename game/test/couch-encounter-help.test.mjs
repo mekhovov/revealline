@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { couchPage } from './helpers/couch-host.mjs';
 import { combatLevel } from './helpers/combat-fixture.mjs';
 import { memoryStorage } from './helpers/solo-dom.mjs';
@@ -178,7 +202,7 @@ test('combined mission Help localizes its existing reader and preserves paused b
   key(p, 'Escape');
   assert.equal(p.doc.activeElement, p.$('race-help-read'));
   p.$('race-help-back').click();
-  assert.equal(p.doc.activeElement, p.$('race-help'));
+  boundedIdentity(p.doc.activeElement, p.$('race-help'));
   assert.equal(p.doc.body.dataset.couchStatus, 'paused');
   assert.deepEqual(p.checkpoint(), checkpoint);
 });
@@ -222,7 +246,7 @@ test('reading encounter guidance after the real time limit retains both result b
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.deepEqual(p.renders, boards);
   assert.equal(p.storage.writes.length, writes);
-  assert.equal(p.doc.activeElement, p.$('race-help'));
+  boundedIdentity(p.doc.activeElement, p.$('race-help'));
 });
 
 test('controller reading uses the existing end-only Help return and survives cached page restore', async (t) => {
