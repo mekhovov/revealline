@@ -1,24 +1,46 @@
 # Solo regression evidence snapshot
 
-As of **2026-10-16 12:16 UTC**, **1,758 of the original 1,948 files** have complete
-observations at their recorded source revisions; **190 remain unobserved**. This
-combines the historical local 1,233-file snapshot with 525 disjoint remote files.
+As of **2026-10-16 13:35 UTC**, **1,805 of the original 1,948 files** have complete
+observations at their recorded source revisions; **143 remain unobserved**. This
+combines the historical local 1,233-file snapshot with 572 disjoint later files.
 It is not a complete-suite pass or a single-revision result. The
 [machine-readable ledger](solo-regression-audit.json) binds sources, comparisons
 and retained results to SHA-256 evidence.
 
-The original 715-file continuation at `90f4d1a0` / runtime `49c0b6c1` has retained
-456 complete files: 324 passed and 132 failed. Its separate 70-file recovery queue
+The original 715-file continuation at `90f4d1a0` / runtime `49c0b6c1` finished with
+458 complete files: 326 passed and 132 failed. Its separate 70-file recovery queue
 at `845e2a1e` / runtime `e0252ff8` completed 67: 40 passed and 27 failed; three
 remain incomplete in that attempt. Two of those three later completed under
 canonical bounded-identity fixtures, with their existing baseline failures
-retained. These disjoint observations produce the 525-file total. Source, test,
-TAP, resource and archive integrity checks passed for the cited receipts.
+retained. Source, test, TAP, resource and archive integrity checks passed for the
+cited receipts.
 
-A new missing-only queue selects **179 files** at `d56bc4c4` / runtime `a159dd2e`,
-in 36 batches with at most two runners. It excludes all 525 completed files and
-11 still-withheld files: ten in the original active batch and one historical
-candidate device-controls diagnostic. This is dispatch evidence, not completion.
+The missing-only 179-file queue at `d56bc4c4` / runtime `a159dd2e` has retained
+**41 complete files: 27 passed and 14 failed**, plus seven resource-incomplete
+files. Its remaining jobs are not credited. Current live-file metadata identifies
+Couch static-picture and Gallery return; an earlier mistaken Still media-panel
+mapping is explicitly corrected in the ledger without changing retained proofs.
+The historical candidate device-controls observer remains separate and active.
+
+The exact `8c727777` CI package also retains **54 focused files, 535/535 tests**,
+with no skips or cancellations, on Node **22.13.1**. Fifty overlap existing
+observations. Four add unique original coverage: Story dialog, curated appearance
+packaging, optional FPV packaging and world-texture acceptance. The producer list,
+source hashes and full TAP are bound in the ledger; this is focused CI evidence.
+
+Ten newly complete failing groups still need exact baseline classification:
+Display preferences, Enemy guide editions, Enemy guide, External chapter app,
+Flight pictures, Flight preparation status, Fracture spatial candidates, Gentle
+routes, HUD numeric values and HUD status cues. Their original test bytes match
+`b1174522`, but byte equality alone does not classify the failures. All raw
+failures and resource-incomplete attempts remain retained.
+
+A prepared, not-yet-dispatched 33-job continuation includes three canonical
+fixture repairs, six never-launched original files, five paired identity-format
+diagnostics and fourteen exact-baseline classifications. It keeps at most two
+runners and the existing time/memory guards. The verified Story-dialog CI result
+removes that file from the earlier seven-file queue. Diagnostic copies never
+receive canonical inventory credit, and active files are excluded.
 
 A further 31 exact-baseline comparisons are retained. Twenty-six have identical
 named diagnostic fields; two more reproduce the same failures with only a
@@ -102,6 +124,13 @@ The unchanged device-controls diagnostic passes **15/15** on exact baseline.
 Its historical candidate run is still active and receives no completion credit;
 the earlier 145-minute timeout remains incomplete. Retained handle observations
 are diagnostic evidence, with observer overhead and bounded attribution explicit.
+A static audit found exactly three custom fixtures—Device controls, Settings
+assists and Text size—that retained only the final cleanup callback, although
+the shared host now registers three. Commit `aa88d829` repairs those collectors
+with ordered, awaited cleanup and repairs the isolated Still Workshop dependency
+copier. Every assertion and deadline remains unchanged; complete canonical
+results are still pending. The device repair is not run alongside its active
+historical observer, and no exact lingering handle is inferred from this audit.
 
 The live inventory contains **1,959 files**, including **11 added after** the
 original launch: three archive/profile/startup tooling tests, four Solo

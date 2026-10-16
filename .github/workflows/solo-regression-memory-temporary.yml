@@ -1,4 +1,4 @@
-name: Temporary Solo Ukraine clock fixture
+name: Temporary Solo guarded remaining files and classifications
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -29,8 +29,104 @@ jobs:
       matrix:
         include:
           - label: candidate
-            case: ukraine-role-host
+            case: still-workshop-build
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
+          - label: candidate
+            case: settings-assists-host
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
+          - label: candidate
+            case: text-size-host
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
+          - label: candidate
+            case: team-pressure-opening-routes
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
+          - label: candidate
+            case: versus-continuous-next-host
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
+          - label: candidate
+            case: native-cli
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
+          - label: candidate
+            case: fpv-content
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
+          - label: candidate
+            case: practice-capacity
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
+          - label: candidate
+            case: whole-spatial-snapshot
+            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
+          - label: baseline
+            case: controller-practice-pause-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: controller-practice-pause-host
             source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: coop-shared-settings
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: coop-shared-settings
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: coop-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: coop-host
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: couch-encounter-help
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: couch-encounter-help
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: couch-gameplay-pressure-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: couch-gameplay-pressure-host
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: content-studio-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: coop-entry-memory
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: coop-import-next
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: couch-encounter
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: display-preferences-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: enemy-guide-edition-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: enemy-guide-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: external-chapter-app
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: flight-pictures-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: flight-preparation-status-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: fracture-spatial-candidates
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: gentle-routes
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: hud-numeric-values
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: hud-status-cues
+            source: b11745223861c3973ad4bf440cc536198b8e0371
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
@@ -90,7 +186,28 @@ jobs:
           selected_path = entry['file']
           selected_bytes = original
           observer = None
-          if entry['mode'] == 'bounded-object-identity':
+          if entry['mode'] == 'selected-object-identity':
+              declaration = entry['selectedIdentityOverlay']
+              lines = original.decode().splitlines(keepends=True)
+              replacements = declaration['selectedCallReplacements']
+              assert len({row['line'] for row in replacements}) == len(replacements)
+              for row in replacements:
+                  offset = row['line'] - 1
+                  assert offset >= 0 and lines[offset] == row['before']
+                  assert row['after'] == row['before'].replace('assert.equal(', 'boundedIdentity(', 1)
+                  lines[offset] = row['after']
+              selected_text = ''.join(lines)
+              insertion = declaration['helperInsertion']
+              assert selected_text.count(insertion['after']) == 1
+              selected_text = selected_text.replace(insertion['after'], insertion['after'] + insertion['source'])
+              selected_bytes = selected_text.encode()
+              assert digest(selected_bytes) == declaration['diagnosticSHA256']
+              selected_path = 'game/test/.solo-memory-diagnostic-' + entry['case'] + '.test.mjs'
+              copy = root / selected_path
+              assert not copy.exists()
+              copy.write_bytes(selected_bytes)
+              (out / 'diagnostic-test.mjs').write_bytes(selected_bytes)
+          elif entry['mode'] == 'bounded-object-identity':
               old = "import assert from 'node:assert/strict';"
               assert original.decode().count(old) == 1
               replacement = """import nativeAssert from 'node:assert/strict';
