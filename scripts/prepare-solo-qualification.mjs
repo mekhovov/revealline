@@ -899,9 +899,14 @@ if (audioDirectory) {
         // stay disabled until public import has completed media admission.
         { type: 'select', selector: '#soundtrack-selection', value: AUDIO_PLAYLIST_ID },
         { type: 'click', selector: '#soundtrack-use-selection', timeoutMs: 60000 },
+        // Saving can finish outside the original user gesture. The public
+        // transport supplies the documented fresh activation when necessary.
+        { type: 'click', selector: '#soundtrack-play' },
         { type: 'wait', ms: 5000 },
+        { type: 'expect', selector: '#soundtrack-now', contains: 'Party Sector' },
         { type: 'click', selector: '#soundtrack-next' },
         { type: 'wait', ms: 5000 },
+        { type: 'expect', selector: '#soundtrack-now', contains: 'Bossa Nova' },
         { type: 'click', selector: '#soundtrack-close' },
         ...closeAudioSettings,
         { type: 'snapshot', group: 'recorded-music-ready' },
