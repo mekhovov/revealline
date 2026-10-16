@@ -589,18 +589,23 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 }
 
 test('Right hand survives actual app reload while Auto still hides keyboard controls', async (t) => {
-  const storage = storageWith(handPreferences('left')),
-    lifetime = { after: (callback) => (dispose = callback) };
-  let dispose;
-  t.after(async () => dispose?.());
+  const storage = storageWith(handPreferences('left'));
+  const disposals = [];
+  const lifetime = {
+    after(callback) {
+      disposals.push(callback);
+    },
+  };
+  const dispose = async () => {
+    while (disposals.length) await disposals.shift()();
+  };
+  t.after(dispose);
   const page = await soloPage(lifetime, { campaign, storage });
   pauseForHand(page);
   page.change('touch-side', 'right');
   steeringHand(page, 'right');
   controls(page, 'hidden');
-  const close = dispose;
-  dispose = null;
-  await close();
+  await dispose();
   const before = new Map(storage.map),
     writes = storage.writes.length;
   const reloaded = await soloPage(lifetime, { campaign, storage });
