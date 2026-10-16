@@ -1,5 +1,11 @@
-import { boundedJSON, canonicalJSON } from '../../game/data-json.mjs';
-import { createRateProfile, validateRateProfile } from './rates.mjs';
+import {
+  boundedJSON,
+  canonicalJSON,
+  exactKeys,
+  required,
+  stableId,
+} from '../../game/data-json.mjs';
+import { createRateProfile, validateRateProfile, rateProfileIdentity } from './rates.mjs';
 
 // Only these tagged schemas have been checked. A family name is deliberately not
 // enough to reconstruct a sparse diff, since omitted values are meaningful.
@@ -11,6 +17,8 @@ export const BETAFLIGHT_IMPORT_VERSIONS = Object.freeze([
   '2026.6.2',
 ]);
 export const RATE_TRANSFER_FORMAT = 'FpvRateTransfer.v1';
+export const RATE_IMPORT_RECEIPT_FORMAT = 'FpvRateImportReceipt.v1';
+export const RATE_IMPORT_RECEIPT_BYTES = 24 * 1024;
 const AXES = ['roll', 'pitch', 'yaw'];
 const ALGORITHMS = ['betaflight', 'raceflight', 'kiss', 'actual', 'quick'];
 const LIMITS = {
@@ -398,6 +406,7 @@ export function parseBetaflightConfiguration(
     format: 'BetaflightRateImport.v1',
     kind,
     sourceVersion,
+    sourceVersionOrigin: header ? 'header' : sourceVersion ? 'manual' : 'unspecified',
     selectedProfile: rateIndex,
     profile: selected.profile,
     name: selected.name,
@@ -411,11 +420,334 @@ export function parseBetaflightConfiguration(
   };
 }
 
+const receiptHash = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value);
+const receiptText = (value) =>
+  typeof value === 'string' && value.length <= 512 && !/[\u0000-\u001f\u007f]/u.test(value);
+const reviewSections = ['applied', 'changed', 'inferred', 'normalizations', 'ignored', 'warnings'];
+const presetSections = ['files', 'includes', 'options', 'metadata'];
+
+/** Receipts are bounded, inert audit notes. They never supply executable settings,
+ * firmware adapters, aircraft parameters, or a simulation identity. */
+export function validateRateImportReceipt(input) {
+  const value = boundedJSON(input, {
+    maxBytes: RATE_IMPORT_RECEIPT_BYTES,
+    maxNodes: 1200,
+    maxArray: 32,
+    maxDepth: 7,
+    maxString: 512,
+  });
+  exactKeys(
+    value,
+    [
+      'format',
+      'source',
+      'firmware',
+      'operation',
+      'sourceProfile',
+      'baseline',
+      'resultSha256',
+      'rateIdentity',
+      'review',
+      'preset',
+    ],
+    'import receipt',
+  );
+  required(value.format === RATE_IMPORT_RECEIPT_FORMAT, 'Unsupported import receipt format');
+  exactKeys(value.source, ['kind', 'sha256', 'bytes', 'encoding'], 'import source');
+  required(
+    ['cli', 'preset', 'native'].includes(value.source.kind) &&
+      receiptHash(value.source.sha256) &&
+      Number.isSafeInteger(value.source.bytes) &&
+      value.source.bytes >= 0 &&
+      value.source.bytes <= MAX_TEXT_BYTES &&
+      value.source.encoding === 'utf-8',
+    'Invalid import source',
+  );
+  exactKeys(value.firmware, ['version', 'origin'], 'import firmware');
+  required(
+    ['header', 'manual', 'unspecified', 'native'].includes(value.firmware.origin) &&
+      (value.firmware.version === null ||
+        BETAFLIGHT_IMPORT_VERSIONS.includes(value.firmware.version)) &&
+      ['header', 'manual'].includes(value.firmware.origin) === (value.firmware.version !== null),
+    'Invalid import firmware choice',
+  );
+  required(
+    ['complete', 'diff', 'patch', 'native'].includes(value.operation),
+    'Invalid import operation',
+  );
+  required(
+    value.sourceProfile === null ||
+      (Number.isInteger(value.sourceProfile) &&
+        value.sourceProfile >= 0 &&
+        value.sourceProfile < 4),
+    'Invalid import source profile',
+  );
+  required(
+    receiptHash(value.resultSha256) && /^[a-f0-9]{16}$/u.test(value.rateIdentity),
+    'Invalid imported rate identity',
+  );
+  if (value.baseline !== null) {
+    exactKeys(value.baseline, ['kind', 'sha256', 'profileId', 'revision'], 'import baseline');
+    required(
+      ['provided', 'draft', 'firmware-defaults'].includes(value.baseline.kind) &&
+        receiptHash(value.baseline.sha256) &&
+        (value.baseline.profileId === null || stableId(value.baseline.profileId)) &&
+        (value.baseline.revision === null ||
+          (Number.isSafeInteger(value.baseline.revision) &&
+            value.baseline.revision >= 0 &&
+            value.baseline.revision < 1e9)) &&
+        (value.baseline.profileId === null) === (value.baseline.revision === null),
+      'Invalid import baseline',
+    );
+  }
+  const sections = (record, keys, label) => {
+    exactKeys(record, keys, label);
+    for (const key of keys) {
+      const section = record[key];
+      exactKeys(section, ['total', 'entries', 'shortened'], `${label}.${key}`);
+      required(
+        Number.isSafeInteger(section.total) &&
+          section.total >= 0 &&
+          section.total <= 20000 &&
+          Array.isArray(section.entries) &&
+          section.entries.length <= 32 &&
+          section.entries.length <= section.total &&
+          section.entries.every(receiptText) &&
+          typeof section.shortened === 'boolean' &&
+          (section.shortened || section.entries.length === section.total),
+        'Invalid import receipt summary',
+      );
+    }
+  };
+  sections(value.review, reviewSections, 'import review');
+  if (value.preset !== null) {
+    exactKeys(
+      value.preset,
+      ['entry', 'bundleSha256', 'resolutionSha256', 'files', 'includes', 'options', 'metadata'],
+      'preset receipt',
+    );
+    required(
+      receiptText(value.preset.entry) &&
+        value.preset.entry.length > 0 &&
+        receiptHash(value.preset.bundleSha256) &&
+        receiptHash(value.preset.resolutionSha256),
+      'Invalid preset receipt',
+    );
+    sections(
+      Object.fromEntries(presetSections.map((key) => [key, value.preset[key]])),
+      presetSections,
+      'preset review',
+    );
+  }
+  required(
+    (value.source.kind === 'preset') === (value.preset !== null),
+    'Preset receipt does not match source',
+  );
+  required(
+    (value.operation === 'native') === (value.source.kind === 'native') &&
+      (value.source.kind === 'native') === (value.firmware.origin === 'native') &&
+      (value.source.kind === 'native') === (value.sourceProfile === null) &&
+      (value.source.kind === 'native') === (value.baseline === null),
+    'Inconsistent import receipt',
+  );
+  return value;
+}
+
+async function sha256(text) {
+  need(
+    globalThis.crypto?.subtle,
+    'hash-unavailable',
+    'Source verification needs secure-context SHA-256 support.',
+  );
+  const digest = await globalThis.crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(digest)].map((value) => value.toString(16).padStart(2, '0')).join('');
+}
+
+function summary(items, limit = 32, width = 256) {
+  let shortened = items.length > limit;
+  const entries = items.slice(0, limit).map((item) => {
+    const original = typeof item === 'string' ? item : canonicalJSON(item);
+    let clean = original.replace(/[\u0000-\u001f\u007f]/gu, ' ');
+    if (clean !== original) shortened = true;
+    if (new TextEncoder().encode(clean).length > width) {
+      shortened = true;
+      let clipped = '',
+        bytes = 0;
+      for (const character of clean) {
+        bytes += new TextEncoder().encode(character).length;
+        if (bytes > width - 3) break;
+        clipped += character;
+      }
+      clean = `${clipped}…`;
+    }
+    return clean;
+  });
+  return { total: items.length, entries, shortened };
+}
+
+/** Hash the exact supplied UTF-8 text before any BOM/newline normalization. A
+ * preset receipt also pins every supplied file, including inactive dependencies.
+ * Capture all caller-owned values before yielding to WebCrypto. */
+export async function previewBetaflightImport(text, options = {}) {
+  const {
+    baselineIdentity = null,
+    baselineKind = null,
+    presetBundle = null,
+    ...parseOptions
+  } = options;
+  const result = parseBetaflightConfiguration(text, parseOptions);
+  const baseline = validateRateProfile(
+    parseOptions.baseline ?? betaflightDefaultRateProfile(result.sourceVersion),
+  );
+  const identity =
+    baselineIdentity === null
+      ? null
+      : boundedJSON(baselineIdentity, { maxBytes: 512, maxNodes: 4, maxDepth: 1 });
+  if (identity !== null) {
+    exactKeys(identity, ['profileId', 'revision'], 'baseline identity');
+    required(
+      stableId(identity.profileId) &&
+        Number.isSafeInteger(identity.revision) &&
+        identity.revision >= 0 &&
+        identity.revision < 1e9,
+      'Invalid baseline identity',
+    );
+  }
+  let preset = null;
+  if (presetBundle !== null) {
+    const bundle = boundedJSON(presetBundle, {
+      maxBytes: MAX_TEXT_BYTES + 65536,
+      maxNodes: 1000,
+      maxDepth: 3,
+      maxString: MAX_TEXT_BYTES,
+    });
+    exactKeys(bundle, ['files', 'entry', 'options'], 'preset source bundle');
+    const resolution = resolveBetaflightPresetBundle(bundle);
+    need(
+      result.kind === 'patch' && resolution.text === text,
+      'preset-source-mismatch',
+      'Resolve the selected preset options again before previewing.',
+    );
+    const files = await Promise.all(
+      Object.entries(bundle.files).map(async ([path, contents]) => ({
+        path: bundlePath(path),
+        bytes: new TextEncoder().encode(contents).length,
+        sha256: await sha256(contents),
+      })),
+    );
+    files.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+    preset = {
+      entry: resolution.entry,
+      bundleSha256: await sha256(canonicalJSON({ entry: resolution.entry, files })),
+      resolutionSha256: await sha256(
+        canonicalJSON({
+          identity: resolution.identity,
+          dependencies: resolution.dependencies,
+          groups: resolution.groups,
+        }),
+      ),
+      files: summary(
+        files.map(({ path, bytes, sha256 }) => `${sha256} ${bytes} ${path}`),
+        16,
+        256,
+      ),
+      includes: summary(resolution.dependencies, 16, 192),
+      options: summary(resolution.options, 16, 192),
+      metadata: summary(
+        [
+          { field: 'FORCE_OPTIONS_REVIEW', value: resolution.forceOptionsReview },
+          ...resolution.metadata,
+          ...resolution.warnings.map((text) => ({ field: 'WARNING', text })),
+        ],
+        8,
+        256,
+      ),
+    };
+  }
+  const chosen = result.profiles.find((profile) => profile.index === result.selectedProfile);
+  const values = flat(result.profile);
+  const receipt = {
+    format: RATE_IMPORT_RECEIPT_FORMAT,
+    source: {
+      kind: preset ? 'preset' : 'cli',
+      sha256: await sha256(text),
+      bytes: new TextEncoder().encode(text).length,
+      encoding: 'utf-8',
+    },
+    firmware: { version: result.sourceVersion ?? null, origin: result.sourceVersionOrigin },
+    operation: result.kind,
+    sourceProfile: result.selectedProfile,
+    baseline: {
+      kind: baselineKind ?? (parseOptions.baseline ? 'provided' : 'firmware-defaults'),
+      sha256: await sha256(canonicalJSON(baseline)),
+      profileId: identity?.profileId ?? null,
+      revision: identity?.revision ?? null,
+    },
+    resultSha256: await sha256(canonicalJSON(result.profile)),
+    rateIdentity: rateProfileIdentity(result.profile),
+    review: {
+      applied: summary(
+        chosen.assignedFields.map((field) => ({
+          field,
+          value: field === 'rateprofile_name' ? chosen.name : values[field],
+        })),
+      ),
+      changed: summary(result.changedFields),
+      inferred: summary(
+        result.inferredDefaults.filter((item) => item.profile === result.selectedProfile),
+      ),
+      normalizations: summary(
+        result.normalizations.filter((item) => item.profile === result.selectedProfile),
+      ),
+      ignored: summary(result.unapplied, 12, 256),
+      warnings: summary(result.warnings),
+    },
+    preset,
+  };
+  return { ...result, provenance: validateRateImportReceipt(receipt) };
+}
+
+export async function previewNativeRateImport(text) {
+  const profile = importNativeRateProfile(text);
+  const provenance = validateRateImportReceipt({
+    format: RATE_IMPORT_RECEIPT_FORMAT,
+    source: {
+      kind: 'native',
+      sha256: await sha256(text),
+      bytes: new TextEncoder().encode(text).length,
+      encoding: 'utf-8',
+    },
+    firmware: { version: null, origin: 'native' },
+    operation: 'native',
+    sourceProfile: null,
+    baseline: null,
+    resultSha256: await sha256(canonicalJSON(profile)),
+    rateIdentity: rateProfileIdentity(profile),
+    review: Object.fromEntries(
+      reviewSections.map((key) => [
+        key,
+        summary(
+          key === 'applied'
+            ? Object.entries(flat(profile)).map(([field, value]) => ({ field, value }))
+            : [],
+        ),
+      ]),
+    ),
+    preset: null,
+  });
+  return { profile, warnings: [], unapplied: [], provenance };
+}
+
 export function exportNativeRateProfile(profile) {
   return `${JSON.stringify({ format: RATE_TRANSFER_FORMAT, profile: validateRateProfile(profile) }, null, 2)}\n`;
 }
 export function importNativeRateProfile(text) {
-  const data = boundedJSON(text, { maxBytes: 16384, maxNodes: 200, maxArray: 16, maxDepth: 8 });
+  const data = boundedJSON(typeof text === 'string' ? text.replace(/^\uFEFF/u, '') : text, {
+    maxBytes: 16384,
+    maxNodes: 200,
+    maxArray: 16,
+    maxDepth: 8,
+  });
   need(
     data?.format === RATE_TRANSFER_FORMAT &&
       Object.keys(data).length === 2 &&

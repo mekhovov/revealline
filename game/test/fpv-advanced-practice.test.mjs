@@ -4,6 +4,8 @@ import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { mountAdvancedPractice } from '../../optional-practice/civilian-fpv/advanced-practice.mjs';
 import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
+import { createAdvancedSimulation } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
+import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
 
 class LocalWorker extends Events {
   static instances = [];
@@ -366,4 +368,170 @@ test('practice retains its host-scoped module worker entry through restart', asy
   assert.equal(restarted.url.href, workerURL.href);
   assert.equal(restarted.options.type, 'module');
   assert.equal(f.session.getTelemetry().missionTick, 0);
+});
+
+function comparisonRecording(options) {
+  const simulation = createAdvancedSimulation(options),
+    path = [simulation.telemetry()];
+  try {
+    for (let tick = 0; tick < 4; tick++) {
+      simulation.enqueueInput({
+        sequence: tick,
+        timestampUs: tick * 20000,
+        controls: { roll: 0.5, pitch: 0, yaw: 0, throttle: 0.1 },
+      });
+      path.push(simulation.stepMission().telemetry);
+    }
+    return { recording: simulation.recording(), path };
+  } finally {
+    simulation.dispose();
+  }
+}
+function importComparison(f, source, fileOptions = {}) {
+  const text = typeof source === 'string' ? source : JSON.stringify(source);
+  const input = f.container.querySelector('input[type="file"]');
+  input.files = [
+    { size: new TextEncoder().encode(text).byteLength, text: async () => text, ...fileOptions },
+  ];
+  input.emit('change');
+}
+function renderComparison(f) {
+  const [id, callback] = f.frames.entries().next().value;
+  f.frames.delete(id);
+  callback(1000);
+}
+
+test('arena imports a different-rate verified ghost, renders its own timeline and hides incompatible restarted setups', async (t) => {
+  const workerURL = new URL(
+    'https://example.test/revealline/optional-practice/fpv-worlds/advanced-worker.mjs',
+  );
+  const f = await fixture(t, { workerURL });
+  const flightWorker = LocalWorker.instances.at(-1);
+  const { recording, path } = comparisonRecording({
+    ...flightWorker.messages[0].options,
+    rateProfile: createRateProfile({ axes: { roll: { rate: 80 } } }),
+  });
+  importComparison(f, recording);
+  await waitFor(() => f.session.getComparison()?.verified);
+  const verifier = LocalWorker.instances.at(-1);
+  assert.notEqual(verifier, flightWorker);
+  assert.equal(verifier.url.href, workerURL.href);
+  await waitFor(() => verifier.terminated);
+  assert.equal(flightWorker.terminated, false);
+  assert.equal(f.session.getTelemetry().missionTick, 0);
+  assert.equal(f.session.getComparison().scored, false);
+  assert.equal(f.session.getComparison().samples, 5);
+  assert.equal(f.session.getComparison().visible, true);
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry().missionTick === 1);
+  f.button('Pause').click();
+  renderComparison(f);
+  assert.deepEqual(f.session.getComparison().position, path[1].position);
+  const checkbox = f.container.querySelector('input[type="checkbox"]');
+  checkbox.checked = false;
+  checkbox.emit('change');
+  assert.equal(f.session.getComparison().visible, false);
+  checkbox.checked = true;
+  const mass = f.container
+    .querySelectorAll('label')
+    .find((node) => node.textContent.startsWith('Mass (kg)'))
+    .querySelector('input');
+  mass.value = '0.8';
+  mass.emit('input');
+  f.button('Restart practice').click();
+  await waitFor(() => !f.button('Start practice').disabled);
+  assert.equal(f.session.getComparison().visible, false);
+  assert.match(f.container.textContent, /different comparison class/);
+  f.button('Revert aircraft draft').click();
+  assert.equal(mass.value, '0.65');
+  f.button('Restart practice').click();
+  await waitFor(() => !f.button('Start practice').disabled);
+  assert.equal(f.session.getComparison().visible, true);
+});
+
+test('comparison import is bounded and atomic; failed or cancelled files preserve the previous reference', async (t) => {
+  const f = await fixture(t);
+  const { recording } = comparisonRecording(LocalWorker.instances.at(-1).messages[0].options);
+  importComparison(f, recording);
+  await waitFor(() => f.session.getComparison()?.verified);
+  const reference = f.session.getComparison();
+  let reads = 0;
+  importComparison(f, recording, {
+    size: 8 * 1024 * 1024 + 1,
+    text: async () => {
+      reads++;
+      return '';
+    },
+  });
+  await waitFor(() => f.container.textContent.includes('8 MiB import limit'));
+  assert.equal(reads, 0);
+  importComparison(f, { ...recording, finalHash: '00000000' });
+  await waitFor(() => f.container.textContent.includes('final replay verification failed'));
+  assert.deepEqual(f.session.getComparison(), reference);
+  let release;
+  importComparison(f, recording, {
+    text: () =>
+      new Promise((resolve) => {
+        release = resolve;
+      }),
+  });
+  f.button('Cancel verification').click();
+  release(JSON.stringify(recording));
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(f.session.getComparison(), reference);
+  assert.equal(f.button('Start practice').disabled, false);
+  assert.match(f.container.textContent, /Verification cancelled/);
+});
+
+test('cancelling or closing comparison verification terminates its dedicated worker without stopping the flight worker', async (t) => {
+  class PendingVerificationWorker extends LocalWorker {
+    postMessage(message) {
+      if (message.type === 'verify-recording') {
+        this.messages.push(message);
+        return;
+      }
+      super.postMessage(message);
+    }
+  }
+  for (const close of [false, true]) {
+    const f = await fixture(t, { Worker: PendingVerificationWorker });
+    const flightWorker = LocalWorker.instances.at(-1);
+    const { recording } = comparisonRecording(flightWorker.messages[0].options);
+    importComparison(f, recording);
+    await waitFor(() =>
+      LocalWorker.instances.at(-1).messages.some((message) => message.type === 'verify-recording'),
+    );
+    const verifier = LocalWorker.instances.at(-1);
+    if (close) f.session.dispose();
+    else f.button('Cancel verification').click();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(verifier.terminated, true);
+    assert.equal(flightWorker.terminated, close);
+    assert.equal(f.session.getComparison(), null);
+  }
+});
+
+test('repeatable maneuver cues use simulation time and a kept reference survives restart without saving a draft', async (t) => {
+  const f = await fixture(t);
+  const maneuver = f.container
+    .querySelectorAll('label')
+    .find((node) => node.textContent.startsWith('Repeatable practice'))
+    .querySelector('select');
+  maneuver.value = 'hover';
+  maneuver.emit('change');
+  assert.match(f.container.textContent, /Raise throttle gently/);
+  f.advanceClock(30000);
+  renderComparison(f);
+  assert.match(f.container.textContent, /0.0 s · Raise throttle/);
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry().missionTick === 1);
+  f.button('Keep this practice as reference').click();
+  await waitFor(() => f.session.getComparison()?.verified);
+  assert.equal(f.session.getComparison().missionTicks, 1);
+  assert.equal(f.timers.size, 0);
+  f.button('Restart practice').click();
+  await waitFor(() => !f.button('Start practice').disabled);
+  assert.equal(f.session.getTelemetry().missionTick, 0);
+  assert.equal(f.session.getComparison().visible, true);
+  assert.match(f.container.textContent, /0.0 s · Raise throttle/);
 });

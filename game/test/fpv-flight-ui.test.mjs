@@ -5,7 +5,11 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'parse5';
 import { mountFlightApp } from '../../optional-practice/civilian-fpv/app.mjs';
-import { createFlightInput } from '../../optional-practice/civilian-fpv/input.mjs';
+import {
+  createFlightInput,
+  createFlightGamepad,
+  createFlightInputDiagnostics,
+} from '../../optional-practice/civilian-fpv/input.mjs';
 import { createFlightRenderer } from '../../optional-practice/civilian-fpv/renderer.mjs';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from '../../optional-practice/civilian-fpv/demonstrations.mjs';
@@ -759,6 +763,82 @@ test('touch release holds throttle, centers yaw, and cancellation clears all inp
       (set) => set.size === 0,
     ),
   );
+});
+
+test('input diagnostics retain raw touch and controller values separately from shaping and never invent hardware cadence', () => {
+  const doc = new Document(),
+    win = new Events(),
+    node = doc.createElement('div');
+  doc.body.append(node);
+  node._rect = { x: 0, y: 0, width: 100, height: 100 };
+  const input = createFlightInput({ document: doc, window: win });
+  input.bindStick(node, 'right');
+  input.select('touch');
+  input.enable(true);
+  node.emit('pointerdown', { pointerId: 1, clientX: 50, clientY: 50 });
+  node.emit('pointermove', { pointerId: 1, clientX: 67, clientY: 50 });
+  const command = input.sample(0.02);
+  assert.equal(input.diagnostics().raw.roll, 0.5);
+  assert.ok(command.roll < 0.3, 'the legacy touch shaping is visible separately');
+  assert.equal(input.diagnostics().calibrated.roll, command.roll);
+  assert.equal(input.diagnostics().sampleAgeMs, null);
+  assert.equal(input.diagnostics().cadenceHz, null);
+  input.dispose();
+
+  const gamepad = createFlightGamepad({ document: doc, window: win });
+  const pad = {
+    id: 'diagnostic pad',
+    index: 0,
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 16 }, () => ({ value: 0 })),
+    timestamp: 100,
+  };
+  gamepad.poll({ gamepads: [pad], now: 105, scope: 'flight' });
+  pad.axes[2] = 0.56;
+  pad.timestamp = 110;
+  gamepad.poll({ gamepads: [pad], now: 115, scope: 'flight' });
+  assert.ok(Math.abs(gamepad.sample(0.02).roll - 0.5) < 1e-12);
+  assert.equal(gamepad.diagnostics().raw.axes[2], 0.56);
+  assert.equal(gamepad.diagnostics().sampleAgeMs, 5);
+  assert.equal(gamepad.diagnostics().cadenceHz, 100);
+  pad.timestamp = 0;
+  gamepad.poll({ gamepads: [pad], now: 125, scope: 'flight' });
+  assert.equal(gamepad.diagnostics().sampleAgeMs, null);
+  assert.equal(gamepad.diagnostics().cadenceHz, null);
+  gamepad.dispose();
+});
+
+test('committed diagnostics separate input owners, new attempts and a live radio preview from achieved flight response', () => {
+  let now = 100;
+  const diagnostics = createFlightInputDiagnostics({ now: () => now });
+  const flight = {},
+    controls = { roll: 0.5, pitch: 0, yaw: 0, throttle: 0.4 };
+  diagnostics.record(
+    flight,
+    'controller',
+    controls,
+    { raw: { axes: [0, 0, 0.56, 0] }, sampleAgeMs: 10, sampledAtMs: 90, cadenceHz: 100 },
+    { ticks: 3, angular: { roll: 12300, pitch: 0, yaw: 0 } },
+  );
+  now = 150;
+  const captured = diagnostics.read(flight, 'controller');
+  assert.equal(captured.sampleAgeMs, 70);
+  assert.equal(captured.achieved.roll, 123);
+  assert.deepEqual(captured.calibrated, controls);
+  assert.equal(captured.context, 'last-flight-sample');
+  assert.equal(diagnostics.read(flight, 'keyboard').calibrated, null);
+  assert.equal(diagnostics.read({}, 'controller').achieved, null);
+  const preview = diagnostics.read(flight, 'radio', {
+    raw: { roll: -1 },
+    calibrated: { ...controls, roll: -1 },
+    sampleAgeMs: 5,
+    cadenceHz: null,
+  });
+  assert.equal(preview.context, 'live-preview');
+  assert.equal(preview.calibrated.roll, -1);
+  assert.equal(preview.achieved, null, 'a different input owner cannot borrow achieved rotation');
 });
 
 test('full-length replay admission yields through the shared verifier and cannot earn a practice receipt', async (t) => {
@@ -1769,6 +1849,71 @@ async function openAcademyTuning(h) {
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
 }
+
+for (const source of ['keyboard', 'touch', 'controller', 'radio'])
+  test(`Academy tuning diagnostics follow ${source} ownership with a different calibrated radio connected`, async (t) => {
+    const h = await fixture(t);
+    const radioPad = {
+      id: 'Diagnostic USB radio',
+      index: 1,
+      connected: true,
+      mapping: '',
+      axes: [0, 0, 0, -1],
+      buttons: [],
+    };
+    const controllerPad = {
+      id: 'Diagnostic controller',
+      index: 0,
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 16 }, () => ({ value: 0 })),
+    };
+    h.setPads([controllerPad, radioPad]);
+    h.view.radio.select(1);
+    h.view.radio.setProfile(radioProfile(radioPad));
+    h.view.radio.verify();
+    h.$('input-source').value = source;
+    h.$('input-source').emit('change');
+    await h.view.settled();
+    assert.equal(h.view.arm(), true);
+    h.tick(2);
+    if (source === 'keyboard') h.key('ArrowRight');
+    else if (source === 'touch') {
+      h.$('touch-throttle').value = '60';
+      h.$('touch-throttle').emit('input');
+    } else if (source === 'controller') controllerPad.axes[2] = 0.56;
+    else radioPad.axes[0] = 0.4;
+    h.tick(4);
+    const committed = h.view.snapshot();
+    assert.ok(committed.ticks > 0);
+    radioPad.axes[0] = -0.9;
+    await openAcademyTuning(h);
+    h.tick(40);
+    const text = h.doc.querySelector('[aria-label="Input diagnostics"]').textContent;
+    assert.match(
+      text,
+      new RegExp(
+        `Input source: ${{ keyboard: 'Keyboard', touch: 'Touch', controller: 'Game controller', radio: 'Calibrated radio' }[source]}`,
+      ),
+    );
+    assert.match(
+      text,
+      source === 'radio'
+        ? /Live input preview; flight is paused/
+        : /Last committed flight input; flight is paused/,
+    );
+    assert.match(text, new RegExp(`Flight tick: ${committed.ticks}`));
+    assert.match(text, /Achieved rotation \(last committed flight °\/s\): \{/);
+    if (source === 'keyboard') assert.match(text, /Raw input: \{"keys":\["ArrowRight"\]\}/);
+    if (source === 'touch')
+      assert.match(text, /Calibrated: \{"roll":0,"pitch":0,"yaw":0,"throttle":0.6\}/);
+    if (source === 'controller') assert.match(text, /Raw input: \{"axes":\[0,0,0.56,0\]/);
+    if (source !== 'radio') assert.doesNotMatch(text, /"roll":-0.9/);
+    else assert.match(text, /"roll":-0.9/);
+    assert.match(text, /Browser sample age \(ms\): unavailable/);
+    assert.match(text, /cadence \(Hz\): unavailable/);
+  });
 
 test('Academy tuning saves new rates for reset while the active recording retains its frozen legacy configuration', async (t) => {
   const data = new Map();

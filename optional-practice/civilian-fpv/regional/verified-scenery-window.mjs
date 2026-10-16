@@ -336,6 +336,10 @@ export function createVerifiedSceneryWindow(
       if (disposed) throw new Error('Verified geometry is disposed');
       return queryReady() ? committed.flightSupport(...args) : { status: 'not-ready' };
     },
+    motionCoverage(...args) {
+      if (disposed) throw new Error('Verified geometry is disposed');
+      return queryReady() ? committed.motionCoverage(...args) : { status: 'not-ready' };
+    },
     castMotion(...args) {
       if (disposed) throw new Error('Verified geometry is disposed');
       return queryReady() ? committed.castMotion(...args) : { status: 'not-ready' };

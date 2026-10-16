@@ -407,6 +407,15 @@ export function createVerifiedMixedWindow(
         ? scenery
         : terrain;
     },
+    motionCoverage(...args) {
+      if (disposed) throw new Error("Mixed window is disposed");
+      if (!queryReady()) return { status: "not-ready" };
+      const terrain = committed.terrain.motionCoverage(...args),
+        scenery = committed.scenery.motionCoverage(...args);
+      return [terrain, scenery].every((result) => result.status === "motion-covered")
+        ? { status: "motion-covered" }
+        : { status: "unknown-cell" };
+    },
     castMotion(...args) {
       if (disposed) throw new Error("Mixed window is disposed");
       if (!queryReady()) return { status: "not-ready" };

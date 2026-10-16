@@ -38,6 +38,7 @@ import {
 import { mountBeginnerCoach, learningObjectiveFeedback } from './beginner-coach.mjs';
 import {
   createFlightInput,
+  createFlightInputDiagnostics,
   createFlightMenuNavigation,
   createFlightGamepad,
   keyboardFlightPreset,
@@ -1990,6 +1991,7 @@ export function mountWorldApp({
     },
   });
   const input = createFlightInput({ window: win, document: doc, onPause: () => pauseFlight() });
+  const inputDiagnostics = createFlightInputDiagnostics({ now: () => win.performance.now() });
   input.touchResponse($('flight-touch-response').value);
   input.keyboardPreset($('flight-keyboard-preset').value);
   const gamepad = createFlightGamepad({ window: win, document: doc });
@@ -2072,6 +2074,7 @@ export function mountWorldApp({
   input.bindStick($('world-left-stick'), 'left');
   input.bindStick($('world-right-stick'), 'right');
   const radio = createRadioRuntime({
+    now: () => win.performance.now(),
     getGamepads: () => win.navigator.getGamepads?.() ?? [],
     onCamera: () => cameraControls?.cycle(),
     onFreeze: () => {
@@ -5965,6 +5968,9 @@ export function mountWorldApp({
         }
         const before = flight.snapshot().ticks;
         const selectedFlight = flight;
+        const inputSource = replayProof ? 'recording' : $('flight-source').value;
+        const sampledDiagnostics = inputSource === 'radio' ? radio.diagnostics({ refresh: false })
+          : inputSource === 'controller' ? gamepad.diagnostics() : input.diagnostics();
         const result = flight.step(
           current.legacy
             ? controls
@@ -5982,7 +5988,10 @@ export function mountWorldApp({
           // their last committed state until full terrain admission completes.
           void result.then((state) => {
             if (disposed || flight !== selectedFlight) return;
-            if (state.ticks > before) renderer?.observePresentation?.(state);
+            if (state.ticks > before) {
+              inputDiagnostics.record(selectedFlight, inputSource, controls, sampledDiagnostics, state);
+              renderer?.observePresentation?.(state);
+            }
             if (state.reason === 'terrain-required') void prepareRegionalFlight().catch(reportError);
             else if (['region-edge', 'worker-error'].includes(state.reason)) pauseFlight();
             updateHUD(state);
@@ -6007,6 +6016,7 @@ export function mountWorldApp({
           break;
         }
         if (flight.snapshot().ticks > before) {
+          if (!replayProof) inputDiagnostics.record(flight, inputSource, controls, sampledDiagnostics);
           renderer?.observePresentation?.(flight.snapshot());
           audio.update(flight.snapshot(), {
             active: !replayProof && flight.snapshot().status === 'active',
@@ -8789,14 +8799,11 @@ export function mountWorldApp({
         { preview: true, tuningDraft: configuration },
       ).catch(reportError);
     },
-    getDiagnostics: () => ({
-      ...radio.diagnostics(),
-      achieved: flight
-        ? Object.fromEntries(
-            Object.entries(flight.snapshot().angular).map(([axis, value]) => [axis, value / 100]),
-          )
-        : null,
-    }),
+    getDiagnostics: () => inputDiagnostics.read(
+      flight,
+      replayProof ? 'recording' : $('flight-source').value,
+      !replayProof && $('flight-source').value === 'radio' ? radio.diagnostics() : null,
+    ),
     onAdvanced(configuration) {
       pauseFlight();
       const container = doc.createElement('dialog');

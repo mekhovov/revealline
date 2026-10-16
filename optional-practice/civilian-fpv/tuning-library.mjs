@@ -8,6 +8,8 @@ import {
 } from '../../game/data-json.mjs';
 import { DEFAULT_RESPONSE, validateFlightResponse } from './radio-profile.mjs';
 import { createTunedResponse } from './flight-response.mjs';
+import { rateProfileIdentity } from './rates.mjs';
+import { validateRateImportReceipt } from './betaflight-import.mjs';
 import { validateAdvancedAircraft } from './advanced-simulation.mjs';
 import { validateAdvancedTune } from './advanced-controller.mjs';
 
@@ -25,7 +27,16 @@ const text = (input) =>
     maxDepth: 16,
   });
 const submitted = (input) =>
-  boundedJSON(input, { maxBytes: 32768, maxNodes: 1000, maxArray: 64, maxDepth: 10 });
+  boundedJSON(input, { maxBytes: 32768, maxNodes: 2000, maxArray: 64, maxDepth: 10 });
+function validateProvenance(profile) {
+  if (profile.provenance === undefined) return;
+  profile.provenance = validateRateImportReceipt(profile.provenance);
+  required(
+    profile.response.rates &&
+      profile.provenance.rateIdentity === rateProfileIdentity(profile.response.rates),
+    'Import receipt does not describe these rates',
+  );
+}
 
 export function validateDroneCamera(input) {
   exactKeys(input, ['tilt', 'verticalFov'], 'drone camera');
@@ -61,7 +72,11 @@ export function validateTuningLibrary(input) {
   const profiles = new Set(),
     setups = new Set();
   for (const profile of value.profiles) {
-    exactKeys(profile, ['id', 'name', 'revision', 'response', 'history'], 'saved rate profile');
+    exactKeys(
+      profile,
+      ['id', 'name', 'revision', 'response', 'history', 'provenance'],
+      'saved rate profile',
+    );
     required(
       stableId(profile.id) &&
         !profiles.has(profile.id) &&
@@ -71,13 +86,14 @@ export function validateTuningLibrary(input) {
     );
     profiles.add(profile.id);
     profile.response = validateFlightResponse(profile.response);
+    validateProvenance(profile);
     required(
       Array.isArray(profile.history) && profile.history.length <= 24,
       'Too many profile revisions',
     );
     let previous = -1;
     for (const item of profile.history) {
-      exactKeys(item, ['revision', 'name', 'response'], 'rate revision');
+      exactKeys(item, ['revision', 'name', 'response', 'provenance'], 'rate revision');
       required(
         revision(item.revision) &&
           item.revision > previous &&
@@ -87,6 +103,7 @@ export function validateTuningLibrary(input) {
       );
       previous = item.revision;
       item.response = validateFlightResponse(item.response);
+      validateProvenance(item);
     }
   }
   required(
@@ -240,11 +257,28 @@ export function createTuningLibraryStore({
     const profile = find(value, id);
     profile.history = [
       ...profile.history,
-      { revision: profile.revision, name: profile.name, response: copy(profile.response) },
+      {
+        revision: profile.revision,
+        name: profile.name,
+        response: copy(profile.response),
+        ...(profile.provenance ? { provenance: copy(profile.provenance) } : {}),
+      },
     ].slice(-24);
     profile.revision++;
     if (changes.name !== undefined) profile.name = changes.name;
     if (changes.response !== undefined) profile.response = validateFlightResponse(changes.response);
+    if (Object.hasOwn(changes, 'provenance')) {
+      if (changes.provenance === null) delete profile.provenance;
+      else profile.provenance = validateRateImportReceipt(changes.provenance);
+    } else if (
+      profile.provenance &&
+      (!profile.response.rates ||
+        profile.provenance.rateIdentity !== rateProfileIdentity(profile.response.rates))
+    ) {
+      // The old revision retains its receipt; edited rates cannot claim to be
+      // the unchanged output of the original import.
+      delete profile.provenance;
+    }
   }
   return Object.freeze({
     snapshot: () => copy(current),
@@ -261,13 +295,13 @@ export function createTuningLibraryStore({
     // A later editor change must never become part of an already-submitted save.
     saveProfile: async (id, changes, expected = current.revision) => {
       const patch = submitted(changes);
-      exactKeys(patch, ['name', 'response'], 'profile edit');
+      exactKeys(patch, ['name', 'response', 'provenance'], 'profile edit');
       return transaction(expected, (value) => updateProfile(value, id, patch));
     },
     saveEditing: async (id, changes, setup, expected = current.revision) => {
       const patch = submitted(changes),
         drone = submitted(setup);
-      exactKeys(patch, ['name', 'response'], 'profile edit');
+      exactKeys(patch, ['name', 'response', 'provenance'], 'profile edit');
       return transaction(expected, (value) => {
         updateProfile(value, id, patch);
         const index = value.setups.findIndex((item) => item.id === drone.id);
@@ -277,10 +311,17 @@ export function createTuningLibraryStore({
     },
     createProfile: async (input, expected = current.revision) => {
       const profile = submitted(input);
-      exactKeys(profile, ['id', 'name', 'response'], 'new profile');
-      const { id, name: label, response = createTunedResponse() } = profile;
+      exactKeys(profile, ['id', 'name', 'response', 'provenance'], 'new profile');
+      const { id, name: label, response = createTunedResponse(), provenance } = profile;
       return transaction(expected, (value) => {
-        value.profiles.push({ id, name: label, response, revision: 0, history: [] });
+        value.profiles.push({
+          id,
+          name: label,
+          response,
+          revision: 0,
+          history: [],
+          ...(provenance === undefined ? {} : { provenance }),
+        });
       });
     },
     duplicateProfile: (sourceId, id, label, expected = current.revision) =>
@@ -297,7 +338,7 @@ export function createTuningLibraryStore({
       transaction(expected, (value) => {
         const previous = find(value, id).history.find((item) => item.revision === targetRevision);
         required(previous, 'That revision is no longer in the local history');
-        updateProfile(value, id, previous);
+        updateProfile(value, id, { ...previous, provenance: previous.provenance ?? null });
       }),
     removeProfile: (id, replacementId, expected = current.revision) =>
       transaction(expected, (value) => {

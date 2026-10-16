@@ -11,11 +11,101 @@ import { createEnduranceFixture } from '../../authoring/fpv-worlds/regions/endur
 import * as THREE from '../../optional-practice/civilian-fpv/vendor/three.module.js';
 import { createVerifiedFlightGeometry } from '../../optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs';
 import { createRegionPlanner } from '../../optional-practice/civilian-fpv/regional/region-manifest.mjs';
+import {
+  createRegionMotionCoverageQuery,
+  createRegionMotionQuery,
+} from '../../optional-practice/civilian-fpv/regional/region-motion-query.mjs';
 
 await initAdvancedRuntime();
 const terrainFixture = await createEnduranceFixture();
 const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
 const command = { roll: 0.08, pitch: -0.05, yaw: 0.12, throttle: 0.4 };
+
+test('motion coverage preserves collision-query validation without performing collision work', () => {
+  let live = true,
+    casts = 0,
+    covered = true;
+  const queries = [];
+  const shared = {
+    live() {
+      if (!live) throw new Error('Disposed owner');
+    },
+    covers(...args) {
+      queries.push(args);
+      return covered;
+    },
+  };
+  const coverage = createRegionMotionCoverageQuery(shared);
+  const collision = createRegionMotionQuery({
+    ...shared,
+    world: { castShape: () => (casts++, null) },
+    local: (point) => point,
+    colliderIds: new Map(),
+    layer: 'terrain',
+  });
+  const from = { x: 120.5, y: 240, z: 360 },
+    delta = { x: 1000, y: -20, z: 4 };
+  assert.equal(coverage(from, delta, 220).status, 'motion-covered');
+  assert.equal(casts, 0);
+  assert.equal(collision(from, delta, 220).status, 'motion-clear');
+  assert.equal(casts, 1);
+  assert.deepEqual(queries[0], queries[1], 'Both use the exact same swept endpoints and radius');
+  covered = false;
+  assert.equal(coverage(from, delta, 220).status, 'unknown-cell');
+  assert.equal(collision(from, delta, 220).status, 'unknown-cell');
+  assert.equal(casts, 1, 'Missing coverage never runs a collision query');
+  for (const query of [coverage, collision]) {
+    for (const args of [
+      [from, { ...delta, x: NaN }, 220],
+      [from, delta, 0],
+      [from, delta, 2001],
+      [from, delta, 2.5],
+      [{ ...from, x: 100000000 }, delta, 220],
+    ])
+      assert.throws(() => query(...args), /regional motion|coordinate limits/);
+  }
+  live = false;
+  assert.throws(() => coverage(from, delta, 220), /Disposed owner/);
+  assert.throws(() => collision(from, delta, 220), /Disposed owner/);
+});
+
+test('verified motion coverage matches complete swept-cell readiness for every geometry profile', async (t) => {
+  for (const profile of ['terrain-v1', 'scenery-v1', 'terrain-scenery-v1']) {
+    const sceneryOnly = profile === 'scenery-v1';
+    const owner = createVerifiedFlightGeometry(
+      sceneryOnly ? terrainFixture.scenery.manifest : terrainFixture.terrain.manifest,
+      {
+        profile,
+        source: sceneryOnly ? terrainFixture.scenery.source : terrainFixture.terrain.source,
+        ...(profile === 'terrain-scenery-v1' ? { scenery: terrainFixture.scenery } : {}),
+      },
+    );
+    t.after(() => owner.dispose());
+    const point = terrainFixture.terrain.manifest.spawns[0].position;
+    assert.equal(owner.motionCoverage(point, neutral, 220).status, 'not-ready');
+    await owner.transition(point);
+    for (const [from, delta, expected] of [
+      [point, { x: 0, y: 0, z: 0 }, true],
+      [{ x: 99000, y: 10000, z: 20000 }, { x: 2000, y: 0, z: 0 }, true],
+      [{ x: 64000, y: 1000, z: 6000 }, { x: 0, y: -2000, z: 0 }, true],
+      [point, { x: 300000, y: 0, z: 0 }, false],
+      [{ x: 100, y: 10000, z: 6000 }, { x: 0, y: 0, z: 0 }, false],
+    ]) {
+      const coverage = owner.motionCoverage(from, delta, 220);
+      const collision = owner.castMotion(from, delta, 220);
+      assert.equal(coverage.status === 'motion-covered', expected, profile);
+      assert.equal(
+        coverage.status === 'motion-covered',
+        ['motion-clear', 'motion-hit'].includes(collision.status),
+        'A collision is covered geometry, not missing space',
+      );
+    }
+    owner.cancel();
+    assert.equal(owner.motionCoverage(point, { x: 0, y: 0, z: 0 }, 220).status, 'not-ready');
+    await owner.dispose();
+    assert.throws(() => owner.motionCoverage(point, neutral, 220), /disposed/i);
+  }
+});
 
 async function fixture(
   t,
@@ -103,6 +193,37 @@ async function fixture(
   await session.prepare();
   return { session, client, options: () => initialOptions, simulation: () => simulation };
 }
+
+test('Advanced admits every substep with coverage only and rolls back coverage failures', async (t) => {
+  let checks = 0,
+    failCoverage = false;
+  const h = await fixture(t, {
+    mixed: true,
+    createGeometry(...args) {
+      const owner = createVerifiedFlightGeometry(...args);
+      return {
+        ...owner,
+        castMotion() {
+          throw new Error('Advanced repeated a worker collision query');
+        },
+        motionCoverage(...query) {
+          checks++;
+          if (failCoverage) throw new Error('Coverage unavailable');
+          return owner.motionCoverage(...query);
+        },
+      };
+    },
+  });
+  h.session.arm();
+  await h.session.step(command);
+  assert.equal(checks, h.simulation().configuration().frequency / 50);
+  const before = await h.session.recording();
+  failCoverage = true;
+  await assert.rejects(h.session.step(command), /Coverage unavailable/);
+  assert.equal(h.session.snapshot().status, 'paused');
+  assert.equal(h.session.snapshot().ticks, 1);
+  assert.equal((await h.session.recording()).finalHash, before.finalHash);
+});
 
 test('Regional Advanced uses verified terrain and frozen portable rates while presenting an unscored 50 Hz flight', async (t) => {
   const profile = createRateProfile();
@@ -331,7 +452,7 @@ test('streamed terrain adoption waits for the whole in-flight mission and reads 
     },
     createGeometry: () => ({
       snapshot: () => ({ terrainReady: true, provenance: { originMm: origin, chunks: [] } }),
-      castMotion: () => ({ status: 'motion-clear' }),
+      motionCoverage: () => ({ status: 'motion-covered' }),
       async transition(_target, _support, transaction) {
         const group = new THREE.Group();
         await transaction.prepare({

@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
-import { arch, cpus, platform, release } from 'node:os';
+import { arch, cpus, freemem, loadavg, platform, release, totalmem } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Worker as ThreadWorker } from 'node:worker_threads';
@@ -63,6 +63,27 @@ class WorkerBridge {
     return this.worker.terminate();
   }
 }
+function hostObservation() {
+  return {
+    at: new Date().toISOString(),
+    monotonicMs: performance.now(),
+    loadAverages: loadavg(),
+    freeBytes: freemem(),
+    totalBytes: totalmem(),
+    cpuTimes: cpus().map((cpu) => cpu.times),
+    processMemory: process.memoryUsage(),
+  };
+}
+function cpuBusyPercent(before, after) {
+  assert.equal(after.length, before.length, 'Processor inventory changed during measurement');
+  return after.map((times, index) => {
+    const elapsed = Object.keys(times).reduce(
+      (sum, key) => sum + times[key] - before[index][key],
+      0,
+    );
+    return elapsed > 0 ? (100 * (elapsed - (times.idle - before[index].idle))) / elapsed : null;
+  });
+}
 const sources = await sourceHashes();
 const source = await createEnduranceFixture();
 const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
@@ -81,12 +102,23 @@ for (const mixed of [false, true]) {
     await session.prepare();
     const preparationMs = performance.now() - preparationStart;
     assert.equal(session.arm(), true);
+    const hostBefore = hostObservation(),
+      cpuBefore = process.cpuUsage(),
+      eventLoopBefore = performance.eventLoopUtilization(),
+      intervals = [];
     const start = performance.now();
     for (let tick = 0; tick < 500; tick++) {
+      const tickStart = performance.now();
       const state = await session.step(neutral);
+      intervals.push(performance.now() - tickStart);
       assert.equal(state.status, 'active', `Flight stopped: ${state.reason}`);
     }
     const elapsedMs = performance.now() - start;
+    const processCpu = process.cpuUsage(cpuBefore),
+      mainEventLoop = performance.eventLoopUtilization(eventLoopBefore),
+      hostAfter = hostObservation(),
+      busy = cpuBusyPercent(hostBefore.cpuTimes, hostAfter.cpuTimes);
+    intervals.sort((a, b) => a - b);
     session.pause();
     const recovery = await session.captureRecovery(),
       recording = await session.recording();
@@ -100,6 +132,32 @@ for (const mixed of [false, true]) {
       elapsedMs,
       realTimeCapacity,
       passesCapacityGate: realTimeCapacity >= 2,
+      observation: {
+        timing:
+          'CPU counter snapshots bracket this measured loop; initialization, export and recovery are outside it. Process CPU includes all process threads. Event-loop utilization describes the main thread only.',
+        startedAt: hostBefore.at,
+        endedAt: hostAfter.at,
+        hostSampleElapsedMs: hostAfter.monotonicMs - hostBefore.monotonicMs,
+        loadAveragesBefore: hostBefore.loadAverages,
+        loadAveragesAfter: hostAfter.loadAverages,
+        hostCpuBusyPercent: busy,
+        meanHostCpuBusyPercent: busy.every((value) => value !== null)
+          ? busy.reduce((sum, value) => sum + value, 0) / busy.length
+          : null,
+        processCpuMicroseconds: processCpu,
+        processCpuToWallRatio: (processCpu.user + processCpu.system) / (elapsedMs * 1000),
+        mainEventLoop,
+        freeBytesBefore: hostBefore.freeBytes,
+        freeBytesAfter: hostAfter.freeBytes,
+        totalBytes: hostAfter.totalBytes,
+        processMemoryBefore: hostBefore.processMemory,
+        processMemoryAfter: hostAfter.processMemory,
+        missionIntervalMs: {
+          median: intervals[Math.floor(intervals.length / 2)],
+          p95: intervals[Math.ceil(intervals.length * 0.95) - 1],
+          maximum: intervals.at(-1),
+        },
+      },
       preparationMs,
       grounded: session.snapshot().grounded,
       contacts: session.snapshot().contacts,

@@ -56,6 +56,9 @@ export function createVerifiedFlightGeometry(
     flightSupport(...args) {
       return owner.flightSupport(...args);
     },
+    motionCoverage(...args) {
+      return owner.motionCoverage(...args);
+    },
     castMotion(...args) {
       return owner.castMotion(...args);
     },

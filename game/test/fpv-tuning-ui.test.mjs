@@ -69,6 +69,20 @@ function fixture(t, { locale = 'en', getDiagnostics, locks, platformOptions } = 
     assert.ok(button, `Missing button: ${label}`);
     button.emit('click');
     await settle();
+    if (label === 'Preview import') {
+      for (
+        let attempt = 0;
+        attempt < 100 &&
+        /Checking import source/.test(ui.root.querySelector('[role="status"]').textContent);
+        attempt++
+      )
+        await new Promise((resolve) => setTimeout(resolve, 5));
+      assert.doesNotMatch(
+        ui.root.querySelector('[role="status"]').textContent,
+        /Checking import source/,
+        'Import hashing must finish before using the preview.',
+      );
+    }
   };
   const edit = (label, value, { tag = 'input', event = 'input', scope = ui.root, type } = {}) => {
     const node = find(label, tag, scope, type);
@@ -726,3 +740,100 @@ test('closing a draft comparison retains the unscored return affordance until a 
   f.ui.endDraftTest();
   assert.equal(f.ui.returnButton.hidden, true);
 });
+
+test('import receipt stays visible through save, duplicate, manual edit and revision restoration', async (t) => {
+  const f = fixture(t);
+  f.edit(
+    'Paste CLI or a SIM rate profile',
+    exportNativeRateProfile(createRateProfile({ axes: { roll: { rate: 83 } } })),
+    { tag: 'textarea' },
+  );
+  await f.click('Preview import');
+  f.edit('Profile name', 'Receipt rates');
+  await f.click('Save import as new profile');
+  const original = f.store.snapshot().profiles.find((p) => p.name === 'Receipt rates');
+  assert.ok(original.provenance);
+  assert.match(f.ui.root.textContent, new RegExp(original.provenance.source.sha256));
+  await f.click('Duplicate');
+  const duplicate = f.store.snapshot().profiles.find((p) => p.name === 'Receipt rates copy');
+  assert.deepEqual(duplicate.provenance, original.provenance);
+  f.edit('Maximum rate (°/s)', 900, { scope: f.axis('Roll') });
+  await f.click('Save for next flight');
+  const edited = f.store.snapshot().profiles.find((p) => p.id === duplicate.id);
+  assert.equal(edited.provenance, undefined);
+  assert.deepEqual(edited.history[0].provenance, original.provenance);
+  assert.match(f.ui.root.textContent, /No import receipt for these draft rates/);
+  await f.click('Restore revision to draft');
+  assert.match(f.ui.root.textContent, new RegExp(original.provenance.source.sha256));
+  await f.click('Save for next flight');
+  assert.deepEqual(
+    f.store.snapshot().profiles.find((p) => p.id === duplicate.id).provenance,
+    original.provenance,
+  );
+});
+
+test('uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization', async (t) => {
+  const { createHash } = await import('node:crypto');
+  const f = fixture(t),
+    source = '\uFEFF# Betaflight 2026.6.2\r\nset yaw_srate = 92\r\n';
+  const bytes = new TextEncoder().encode(source),
+    upload = f.find('Upload text / JSON');
+  upload.files = [
+    {
+      size: bytes.length,
+      arrayBuffer: async () => bytes.buffer,
+      text: () => {
+        throw new Error('Do not normalize source bytes');
+      },
+    },
+  ];
+  upload.emit('change');
+  await settle();
+  // HTML textarea.value normalizes line endings; uploaded source remains exact.
+  f.find('Paste CLI or a SIM rate profile', 'textarea').value = source.replace(/\r/gu, '');
+  f.edit('Operation', 'diff', { tag: 'select', event: 'change' });
+  await f.click('Preview import');
+  await f.click('Save import as new profile');
+  const receipt = f.store.snapshot().profiles.at(-1).provenance;
+  assert.equal(receipt.source.sha256, createHash('sha256').update(bytes).digest('hex'));
+  assert.equal(receipt.source.bytes, bytes.length);
+  assert.equal(receipt.firmware.origin, 'header');
+});
+
+for (const interruption of ['edit', 'reopen'])
+  test(`a delayed import source hash cannot publish after ${interruption}`, async (t) => {
+    const f = fixture(t);
+    const realDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
+    let release,
+      first = true;
+    t.mock.method(globalThis.crypto.subtle, 'digest', (...args) => {
+      if (!first) return realDigest(...args);
+      first = false;
+      return new Promise((resolve, reject) => {
+        release = () => realDigest(...args).then(resolve, reject);
+      });
+    });
+    f.edit('Paste CLI or a SIM rate profile', exportNativeRateProfile(createRateProfile()), {
+      tag: 'textarea',
+    });
+    f.ui.root
+      .querySelectorAll('button')
+      .find((node) => node.textContent === 'Preview import')
+      .emit('click');
+    await settle();
+    assert.equal(typeof release, 'function');
+    if (interruption === 'edit')
+      f.edit('Paste CLI or a SIM rate profile', 'changed while hashing', { tag: 'textarea' });
+    else {
+      f.ui.close();
+      f.ui.open();
+    }
+    await release();
+    for (let turn = 0; turn < 8; turn++) await settle();
+    await f.click('Save import as new profile');
+    assert.equal(f.store.snapshot().profiles.length, 1);
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      /Preview the import first/,
+    );
+  });
