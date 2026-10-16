@@ -13,6 +13,7 @@ import {
   validateBuildReferences,
 } from './game-cli.mjs';
 import { validateDownloadCatalogue } from '../game/download-catalogue.mjs';
+import { projectDefaultRuntimeMetadata } from './default-runtime-metadata.mjs';
 
 // Read-only with respect to both source and artifact; only the report is written.
 // This checks an existing build, not publication admission or physical-device
@@ -53,6 +54,7 @@ const report = {
   status: 'failed',
   failures: [],
   transformedSourcesSkipped: [],
+  supportedSourceProjections: [],
 };
 const check = (condition, reason, detail = {}) => {
   if (!condition) report.failures.push({ reason, ...detail });
@@ -184,21 +186,27 @@ try {
       report.transformedSourcesSkipped.push(name);
       continue;
     }
-    let current;
+    let sourceBytes;
     try {
-      current = await digest(resolve(sourceRoot, name));
+      sourceBytes = await readFile(resolve(sourceRoot, name));
     } catch (error) {
       if (error.code !== 'ENOENT') throw error;
       if (changed.has(name))
         check(!byPath.has(name), 'Deleted source remains packaged.', { path: name });
       continue; // Generated modules can exist only in the artifact.
     }
+    const current = { bytes: sourceBytes.length, sha256: hash(sourceBytes) };
     sourceDigests.set(name, current);
+    const projected = { name, bytes: sourceBytes };
+    await projectDefaultRuntimeMetadata(sourceRoot, [projected]);
+    const expected = { bytes: projected.bytes.length, sha256: hash(projected.bytes) };
+    if (current.sha256 !== expected.sha256)
+      report.supportedSourceProjections.push({ path: name, source: current, expected });
     const packaged = byPath.get(name);
     check(
-      packaged?.bytes === current.bytes && packaged?.sha256 === current.sha256,
-      'Packaged runtime differs from current source.',
-      { path: name, source: current, packaged: packaged ?? null },
+      packaged?.bytes === expected.bytes && packaged?.sha256 === expected.sha256,
+      'Packaged runtime differs from its supported current-source projection.',
+      { path: name, source: current, expected, packaged: packaged ?? null },
     );
   }
   report.runtimeSourcesCompared = sourceDigests.size;
