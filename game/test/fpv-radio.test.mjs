@@ -125,6 +125,40 @@ function runtime(p, config = profile(p)) {
   radio.poll();
   return { radio, freezes, replace: (value) => (devices = value) };
 }
+
+test('diagnostics discard invalid samples and cadence restarts after missing input', () => {
+  const p = pad();
+  let connected = true;
+  const radio = createRadioRuntime({ getGamepads: () => (connected ? [p] : []), now: () => 150 });
+  radio.select(p.index);
+  radio.setProfile(profile(p));
+  p.timestamp = 100;
+  assert.equal(radio.diagnostics().sampleAgeMs, 50);
+  p.timestamp = 110;
+  assert.equal(radio.diagnostics().cadenceHz, 100);
+  p.axes[6] = Number.NaN;
+  const unavailable = { raw: null, calibrated: null, sampleAgeMs: null, cadenceHz: null };
+  assert.deepEqual(radio.diagnostics(), unavailable);
+  assert.equal(radio.status().verified, false);
+  p.axes[6] = 0.25;
+  p.timestamp = 120;
+  let fresh = radio.diagnostics();
+  assert.equal(fresh.raw.roll, 0.25);
+  assert.equal(fresh.sampleAgeMs, 30);
+  assert.equal(fresh.cadenceHz, null);
+  p.timestamp = 130;
+  assert.equal(radio.diagnostics().cadenceHz, 100);
+  p.timestamp = 0;
+  assert.equal(radio.diagnostics().sampleAgeMs, null);
+  assert.equal(radio.diagnostics().cadenceHz, null);
+  connected = false;
+  assert.deepEqual(radio.diagnostics(), unavailable);
+  connected = true;
+  p.timestamp = 150;
+  fresh = radio.diagnostics();
+  assert.equal(fresh.sampleAgeMs, 0);
+  assert.equal(fresh.cadenceHz, null);
+});
 test('arming explains high throttle and neutral attitude requirements; held timestamps remain valid', () => {
   const p = pad(),
     { radio } = runtime(p);

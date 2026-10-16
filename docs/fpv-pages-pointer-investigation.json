@@ -1,0 +1,152 @@
+{
+  "format": "FPVPagesPointerInvestigation.v1",
+  "generatedAt": "2026-10-16T00:33:37.380Z",
+  "manifestSha256": "17e23309b28c8755235c2d5437394afd06d1b328c76bfd30ac2c117c958c6af8",
+  "runnerSha256": "1ca80667e4d5f838d0163df5b9ee11f65c6f99183975866592911aaa8b1edf69",
+  "stage": "Academy offline re-entry after successful online save, worker flight, export and offline preparation",
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.fpv-advanced-practice').getByRole('button', { name: 'Start practice', exact: true })\u001b[22m\n\n    at advanced (/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-pages.mjs:255:79)\n    at async smokeFPVPages (/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-pages.mjs:378:24)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-pages.mjs:434:18",
+  "clicks": [
+    {
+      "text": "Settings",
+      "tag": "BUTTON",
+      "busy": null
+    },
+    {
+      "text": "Controls",
+      "tag": "BUTTON",
+      "busy": null
+    },
+    {
+      "text": "Rates & throttle",
+      "tag": "BUTTON",
+      "busy": null
+    },
+    {
+      "text": "Apply & restart assigns the selected profile to this drone. Saved changes are used only by new flights. Portable rates use direct touch input; Legacy ",
+      "tag": "DIV",
+      "busy": null
+    },
+    {
+      "text": "Back",
+      "tag": "BUTTON",
+      "busy": null
+    }
+  ],
+  "activeElement": "<button class=\"button secondary\" type=\"button\" id=\"academy-shell-action-settings\" data-mode-action=\"settings\" data-sim-icon=\"settings\" data-menu-icon=\"settings\" data-menu-navigation-scope=\"academy-shell-home-dialog\" data-menu-up=\"academy-shell-action-missions academy-shell-action-home-results academy-shell-action-primary\" data-menu-down=\"academy-shell-action-sound academy-shell-action-fullscreen\" style=\"--native-menu-icon: url(&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M6%200h4v3h3V6h3v4h-3v3h-3v3H6v-3H3v-3H0V6h3V3h3zm0%205v1H5v4h1v1h4v-1h1V6h-1V5z%22%2F%3E%3C%2Fsvg%3E&quot;);\">Settings</button>",
+  "consoleErrors": [
+    "Failed to load resource: net::ERR_INTERNET_DISCONNECTED"
+  ],
+  "disposition": "Fixed in both SIM hosts by preserving the tuning menu hint during focus transitions. Final generated Pages probe repeated the normal physical Save and Advanced clicks successfully, online and offline.",
+  "confirmedReproduction": {
+    "generatedAt": "2026-10-16T00:37:55.027Z",
+    "runnerSha256": "f3744fbbdb5192779f4e7be68d5d21efc5f19e242eca5db3fb9ba5fe615d7b8c",
+    "readiness": "Document fonts ready and nonempty input diagnostics before editor interaction",
+    "failure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('status').filter({ hasText: 'Saved for the next flight' }) to be visible\u001b[22m\n\n    at smokeFPVPages (/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-pages.mjs:353:89)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-pages.mjs:458:18",
+    "pointers": [
+      {
+        "type": "pointerdown",
+        "text": "New Actual profile",
+        "y": 339,
+        "top": 296,
+        "scrollTop": 0,
+        "scrollHeight": 2944,
+        "hint": "Keyboard: Tab/arrows, Enter, Esc. Controller: release, then press/release A to connect; D-pad/stick moves, A confirms, B goes back. Radio sticks belong to setup here.",
+        "hintHidden": false
+      },
+      {
+        "type": "pointerup",
+        "text": "New Actual profile",
+        "y": 339,
+        "top": 296,
+        "scrollTop": 0,
+        "scrollHeight": 2902,
+        "hint": "",
+        "hintHidden": false
+      },
+      {
+        "type": "pointerdown",
+        "text": "Save for next flight",
+        "y": 825.22998046875,
+        "top": 804.234375,
+        "scrollTop": 2833,
+        "scrollHeight": 3797,
+        "hint": "Keyboard: Tab/arrows, Enter, Esc. Controller: release, then press/release A to connect; D-pad/stick moves, A confirms, B goes back. Radio sticks belong to setup here.",
+        "hintHidden": false
+      },
+      {
+        "type": "pointerup",
+        "text": "Apply & restart assigns the selected profile to this drone. Saved changes are used only by new fligh",
+        "y": 825.22998046875,
+        "top": 758.234375,
+        "scrollTop": 2791,
+        "scrollHeight": 3755,
+        "hint": "",
+        "hintHidden": false
+      }
+    ],
+    "clicks": [
+      {
+        "text": "Settings",
+        "tag": "BUTTON",
+        "busy": null
+      },
+      {
+        "text": "Controls",
+        "tag": "BUTTON",
+        "busy": null
+      },
+      {
+        "text": "Rates & throttle",
+        "tag": "BUTTON",
+        "busy": null
+      },
+      {
+        "text": "New Actual profile",
+        "tag": "BUTTON",
+        "busy": null
+      },
+      {
+        "text": "Apply & restart assigns the selected profile to this drone. Saved changes are used only by new flights. Portable rates use direct touch input; Legacy ",
+        "tag": "DIV",
+        "busy": null
+      }
+    ],
+    "requestFailures": []
+  },
+  "resolution": {
+    "verifiedAt": "2026-10-16T01:09:43.147Z",
+    "evidence": "docs/fpv-pages-live-testing-evidence.json",
+    "manifestSha256": "8d95e2bb366fef294bbf2b788d36bd47aaa5c148df2ab20cf0f3039954510c9d",
+    "runnerSha256": "e6bacfae6628e6012d726033020bbb9902863d88812e91ef50e61325de121298",
+    "sourceSha256": {
+      "academy": "7bc6fe57c5a95cdd8f633ffca73112764b27062e905a2b08a53468ef033820ad",
+      "world": "e4bb41954da38d97770239942bb11a9b9d301e035a9183fbfef8bff45b38ce91"
+    },
+    "savedRateDegreesPerSecond": 900,
+    "savePointerEvents": [
+      {
+        "type": "pointerdown",
+        "tag": "BUTTON",
+        "text": "Save for next flight",
+        "y": 825.22998046875,
+        "top": 804.234375,
+        "scrollTop": 2833,
+        "scrollHeight": 3797,
+        "hint": "Keyboard: Tab/arrows, Enter, Esc. Controller: release, then press/release A to connect; D-pad/stick moves, A confirms, B goes back. Radio sticks belong to setup here.",
+        "hintHidden": false
+      },
+      {
+        "type": "pointerup",
+        "tag": "BUTTON",
+        "text": "Save for next flight",
+        "y": 825.22998046875,
+        "top": 804.234375,
+        "scrollTop": 2833,
+        "scrollHeight": 3797,
+        "hint": "Keyboard: Tab/arrows, Enter, Esc. Controller: release, then press/release A to connect; D-pad/stick moves, A confirms, B goes back. Radio sticks belong to setup here.",
+        "hintHidden": false
+      }
+    ],
+    "passed": true
+  }
+}

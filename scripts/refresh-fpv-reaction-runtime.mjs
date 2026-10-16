@@ -1,4 +1,4 @@
-/** Deterministic, checked source projection for the unchanged 104-file FPV pack.
+/** Deterministic, checked source projection for the bounded FPV packages.
  * Shared services keep their canonical source; this generated module merely
  * co-locates their isolated module scopes, as SIM already does for shared art. */
 import { readFile, writeFile, rename, rm } from 'node:fs/promises';
