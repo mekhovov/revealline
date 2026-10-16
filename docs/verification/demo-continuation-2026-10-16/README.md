@@ -46,3 +46,7 @@ The optional generated shell uses its declared edition-indentation projection af
 Three negative TAP producer logs contain significant verbatim whitespace. Their [lossless archive manifest](producer-log-archives.json) binds both original and compressed bytes; no failure output was reformatted or removed.
 
 The finite continuation uses [this handoff](browser-observation-handoff.md). The prior `f0136c2` observation, deadline failures and skipped follow-up stay historical; none counts as a pass on the new source.
+
+## First production-budget outcome on the frozen source
+
+The first [base report](base-final.json) and [exact log](base-final.log) verify **45/46** source/selection cases. All **15/15** base + Pressure Lines maps have complete usable playback under both selections, but **Orchard Crossing live seed 3 / immediate fails during admission** with `Live performance cannot reach a complete result.` (1,801 ms elapsed). The generic admission error does not preserve the underlying cause; do not infer a watchdog, routing or host-load cause from elapsed time alone. This is a live qualification blocker, regardless of focused tests or later browser rotation. No source/content changes, top-level errors, retained Worker owners or listeners are reported. The remaining community batch continues sequentially; no case is retried.
