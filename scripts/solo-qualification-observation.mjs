@@ -124,3 +124,46 @@ export function externalQualificationBudgets(probe) {
       'Same external Phaser PRE_STEP→POST_RENDER observer on both builds, plus rAF cadence. Includes observer overhead and render submission, not GPU completion. External success never establishes missing internal checks.',
   };
 }
+
+/** Preserve unresolved independent measurements in the headline; source rows
+ * remain explicit because a single severity label cannot express every gap. */
+export function aggregateQualificationGates({
+  application,
+  external,
+  workProbe = false,
+  baselineRuntime = false,
+  applicationAvailable = !baselineRuntime,
+}) {
+  const components = [
+    {
+      source: 'application',
+      status:
+        baselineRuntime && !applicationAvailable
+          ? 'partial-baseline-internal-unknown'
+          : (application?.status ?? 'unobserved'),
+    },
+  ];
+  if (workProbe)
+    components.push({ source: 'external-work-probe', status: external?.status ?? 'unobserved' });
+  const passes = new Set(['pass-observed-window', 'pass-observed-external-window']);
+  const unresolved = components.filter(({ status }) => !passes.has(status));
+  const has = (status) => components.some((row) => row.status === status);
+  const status = has('invalid-evidence')
+    ? 'invalid-evidence'
+    : has('fail')
+      ? 'fail'
+      : has('review-required')
+        ? 'review-required'
+        : unresolved.some((row) => row.status !== 'partial-baseline-internal-unknown')
+          ? 'inconclusive'
+          : unresolved.length
+            ? 'partial-baseline-internal-unknown'
+            : 'pass-observed-window';
+  return {
+    status,
+    components,
+    unresolved,
+    scope:
+      'All requested independent components must resolve before a combined observed-window pass; baseline internal observations remain unknown.',
+  };
+}

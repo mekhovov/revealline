@@ -2,14 +2,20 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { webcrypto } from 'node:crypto';
-import { installAudioProof, evaluateAudioProof } from './solo-qualification-audio.mjs';
+import {
+  installAudioProof,
+  evaluateAudioProof,
+  observedMediaAdvancement,
+} from './solo-qualification-audio.mjs';
 import {
   calibrateReadyCadence,
   externalQualificationBudgets,
+  aggregateQualificationGates,
 } from './solo-qualification-observation.mjs';
 import {
   validateQualification,
   qualificationDisplayOptions,
+  qualificationCacheMode,
   resourceStability,
   quantileBound,
   mirroredRequest,
@@ -309,9 +315,14 @@ test('offline native-recording inspection verifies actual captures and rejects a
       stepRun(run, input, FIXED_DT);
     }
   const replay = exportReplay(recorder, run);
-  const inspected = inspectQualificationReplay({ replay }, { closures: 1, maximumTrailCells: 20 });
+  const inspected = inspectQualificationReplay(
+    { replay },
+    { closures: 1, maximumTrailCells: 20, movingTicks: 20 },
+  );
   assert.equal(inspected.status, 'pass');
   assert.equal(inspected.outcome, 'won');
+  assert(inspected.features.movingTicks >= 20);
+  assert.equal(inspectQualificationReplay(replay, { movingTicks: 100000 }).status, 'fail');
   assert.equal(inspectQualificationReplay(replay, { eroded: 1 }).status, 'fail');
   const tampered = structuredClone(replay);
   tampered.segments[0].ticks++;
@@ -571,4 +582,143 @@ test('display arguments preserve defaults and label bounded desktop mobile-layou
     ['--mobile-context=false'],
   ])
     assert.throws(() => qualificationDisplayOptions(flags));
+});
+
+test('combined gates retain every unresolved requested component and never hide an external review', () => {
+  const application = { status: 'pass-observed-window' },
+    external = { status: 'pass-observed-external-window' };
+  assert.equal(
+    aggregateQualificationGates({ application, external, workProbe: true }).status,
+    'pass-observed-window',
+  );
+  for (const status of [
+    'inconclusive',
+    'unobserved',
+    'review-required',
+    'fail',
+    'invalid-evidence',
+  ]) {
+    const result = aggregateQualificationGates({
+      application,
+      external: { status },
+      workProbe: true,
+    });
+    assert.equal(
+      result.status,
+      ['unobserved', 'inconclusive'].includes(status) ? 'inconclusive' : status,
+    );
+    assert.deepEqual(result.unresolved, [{ source: 'external-work-probe', status }]);
+  }
+  const both = aggregateQualificationGates({
+    application: { status: 'inconclusive' },
+    external: { status: 'review-required' },
+    workProbe: true,
+  });
+  assert.equal(both.status, 'review-required');
+  assert.equal(both.unresolved.length, 2);
+  assert.equal(
+    aggregateQualificationGates({ application, external, workProbe: true, baselineRuntime: true })
+      .status,
+    'partial-baseline-internal-unknown',
+  );
+  assert.equal(
+    aggregateQualificationGates({
+      application,
+      external: { status: 'inconclusive' },
+      workProbe: true,
+      baselineRuntime: true,
+    }).status,
+    'inconclusive',
+  );
+  assert.equal(
+    aggregateQualificationGates({ application, workProbe: true }).status,
+    'inconclusive',
+  );
+  assert.equal(aggregateQualificationGates({ application }).status, 'pass-observed-window');
+  assert.equal(
+    aggregateQualificationGates({
+      application: { status: 'fail' },
+      applicationAvailable: true,
+      baselineRuntime: true,
+      external,
+      workProbe: true,
+    }).status,
+    'fail',
+  );
+});
+
+test('stream progress rejects backward resets and seeks while retaining a chronological native-play witness', () => {
+  const event = (event, atMs, currentTime) => ({
+    event,
+    atMs,
+    currentTime,
+    sourceId: 0,
+    element: 0,
+    playbackRate: 1,
+  });
+  assert.equal(
+    observedMediaAdvancement([
+      event('playing', 0, 50),
+      event('timeupdate', 1000, 50),
+      event('pause', 2000, 0),
+    ]).seconds,
+    0,
+  );
+  assert.equal(
+    observedMediaAdvancement([
+      event('playing', 0, 0),
+      event('seeking', 100, 40),
+      event('seeked', 200, 40),
+      event('timeupdate', 2000, 40),
+    ]).seconds,
+    0,
+  );
+  assert.equal(
+    observedMediaAdvancement([event('playing', 0, 0), event('timeupdate', 100, 40)]).seconds,
+    0,
+  );
+  const observed = observedMediaAdvancement([
+    event('play-request', 0, 0),
+    event('playing', 100, 50),
+    event('play-resolved', 100, 50),
+    event('timeupdate', 600, 50.5),
+    event('timeupdate', 1600, 51.5),
+    event('pause', 1700, 0),
+  ]);
+  assert.equal(observed.seconds, 1.5);
+  assert.deepEqual(observed.witness.from, { atMs: 100, currentTime: 50, event: 'playing' });
+  assert.deepEqual(observed.witness.to, { atMs: 1600, currentTime: 51.5, event: 'timeupdate' });
+  assert.equal(
+    observedMediaAdvancement([
+      event('playing', 0, 50),
+      event('playing', 1000, 0),
+      event('timeupdate', 2000, 1),
+    ]).seconds,
+    1,
+  );
+  const sha256 = 'a'.repeat(64);
+  const falseRange = {
+    sources: [{ id: 0, status: 'resolved', sha256 }],
+    starts: [],
+    mediaEvents: [event('playing', 0, 50), event('timeupdate', 1000, 50), event('pause', 2000, 0)],
+  };
+  assert.equal(
+    evaluateAudioProof(falseRange, { streamedHashes: [sha256], minimumAdvanceSeconds: 1 }).status,
+    'unobserved',
+  );
+});
+
+test('warm reload scenario is explicit and unknown cache labels cannot masquerade as qualification', () => {
+  assert.doesNotThrow(() =>
+    validateQualification(scenario([{ type: 'reload' }], { cacheMode: 'warm-http-reload' })),
+  );
+  assert.throws(() =>
+    validateQualification(scenario([{ type: 'reload' }], { cacheMode: 'cache-proven' })),
+  );
+  const warm = { cacheMode: 'warm-http-reload' };
+  assert.equal(qualificationCacheMode(warm, { workProbe: true }), 'warm-http-reload');
+  assert.throws(() => qualificationCacheMode(warm));
+  assert.throws(() => qualificationCacheMode(warm, { workProbe: true, fixtureAccess: true }));
+  assert.throws(() => qualificationCacheMode(warm, { workProbe: true, mirrored: true }));
+  assert.equal(qualificationCacheMode({}), 'fresh-context');
 });

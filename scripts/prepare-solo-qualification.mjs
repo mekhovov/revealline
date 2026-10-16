@@ -303,6 +303,34 @@ await put(
     ],
   }),
 );
+await put(
+  'original-art-opening-warm.qualification.json',
+  validateQualification({
+    format: 'SoloQualificationV1',
+    id: 'original-art-opening-warm-reload-capture',
+    kind: 'performance',
+    timeoutMs: 360000,
+    query: { journey: 'opening' },
+    cacheMode: 'warm-http-reload',
+    coverage: [
+      'same-context public reload before Direct Start',
+      'HTTP cache remains eligible without browser routing; hits are separately unobserved',
+      'public opening Journey with original art and earned capture',
+    ],
+    replayRequirements: { closures: 1, maximumTrailCells: 20, maximumClaimedCells: 500 },
+    actions: [
+      { type: 'snapshot', group: 'warm-primer-ready' },
+      { type: 'reload', timeoutMs: 120000 },
+      { type: 'snapshot', group: 'warm-reloaded-ready' },
+      { type: 'click', selector: '#shell-featured', timeoutMs: 60000 },
+      { type: 'wait', phase: 'running', timeoutMs: 60000 },
+      ...play(opening.nativeSegments),
+      ...finish,
+      { type: 'snapshot', group: 'warm-original-art-captured' },
+      { type: 'exportReplay' },
+    ],
+  }),
+);
 const sentinel = await json('../game/content/packs/sentinel-relay.json');
 const sentinelLevel = sentinel.campaigns[0].levels[0];
 assert.equal(sentinelLevel.id, 'sentinel-relay-01');
@@ -311,6 +339,50 @@ assert(
     (row) => row.levelId === sentinelLevel.id && row.visualOverrides.background,
   ),
 );
+// A declared real movement route on the safe border, rather than repeated
+// outward inputs against a wall. Native replay must independently prove motion.
+const sentinelSegments = Array.from({ length: 15 }, () => [
+  ['up', 120],
+  ['down', 120],
+]).flat();
+const sentinelOptions = { seed: 1, classId: 'scout' };
+const sentinelRun = createRun(sentinelLevel, sentinelOptions);
+const sentinelRecorder = createRecorder(sentinelLevel, sentinelOptions);
+const sentinelProof = {
+  movingTicks: 0,
+  jammerTicks: 0,
+  minimumY: sentinelRun.player.y,
+  maximumY: sentinelRun.player.y,
+};
+for (const [direction, ticks] of sentinelSegments)
+  for (let i = 0; i < ticks; i++) {
+    const x = sentinelRun.player.x,
+      y = sentinelRun.player.y;
+    recordInput(sentinelRecorder, { direction });
+    stepRun(sentinelRun, { direction }, FIXED_DT);
+    if (sentinelRun.player.x !== x || sentinelRun.player.y !== y) sentinelProof.movingTicks++;
+    if (jammerPictureStrength(sentinelRun) > 0) sentinelProof.jammerTicks++;
+    sentinelProof.minimumY = Math.min(sentinelProof.minimumY, sentinelRun.player.y);
+    sentinelProof.maximumY = Math.max(sentinelProof.maximumY, sentinelRun.player.y);
+    assert.equal(sentinelRun.player.x, sentinelLevel.spawn.x);
+  }
+assert.equal(sentinelRun.status, 'running');
+assert.equal(sentinelRun.lives, sentinelLevel.rules.lives);
+assert.equal(sentinelProof.movingTicks, 3600);
+assert(sentinelProof.jammerTicks > 0);
+assert.equal(verifyReplay(exportReplay(sentinelRecorder, sentinelRun)).match, true);
+await put('original-art-sentinel.model.json', {
+  kind: 'model-correctness',
+  levelId: sentinelLevel.id,
+  options: sentinelOptions,
+  segments: sentinelSegments,
+  ...sentinelProof,
+  outcome: sentinelRun.status,
+  lives: sentinelRun.lives,
+  publicReplayVerified: true,
+  scope:
+    'Safe movement workload discovery only; native recording must separately prove movement and jamming.',
+});
 await put(
   'original-art-sentinel.qualification.json',
   validateQualification({
@@ -324,23 +396,14 @@ await put(
       'embedded original JPEG background',
       'sentinel warning/active phases',
       'jammer-picture',
-      '30 public border key gestures',
+      '30 real up/down border movement gestures',
     ],
-    replayRequirements: { jammerTicks: 1 },
+    replayRequirements: { jammerTicks: 1, movingTicks: 2400 },
     actions: [
       { type: 'snapshot', group: 'original-art-ready' },
       { type: 'click', selector: '#shell-featured', timeoutMs: 60000 },
       { type: 'wait', phase: 'running', timeoutMs: 60000 },
-      {
-        type: 'repeat',
-        count: 30,
-        actions: [
-          // The shipped spawn is at x=.5 on the left border. These gestures observe
-          // keyboard submission without changing the encounter or seeding progress.
-          { type: 'key', key: 'ArrowLeft', ms: 50 },
-          { type: 'wait', ms: 950 },
-        ],
-      },
+      ...play(sentinelSegments),
       { type: 'wait', phase: 'running' },
       { type: 'click', selector: '#pause-button' },
       { type: 'wait', phase: 'paused' },
