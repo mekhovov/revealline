@@ -29,10 +29,34 @@ jobs:
       matrix:
         include:
           - label: candidate
-            case: couch-static-picture-host-finite-owner
-            source: 6b9dadba4fab8717681f320e0495e1dd63e6d1b5
+            case: couch-encounter-proven-identities
+            source: 087d067b03881bbb15f4b91f8f61c2fe235e414c
+          - label: candidate
+            case: soundtrack-distribution-closed-fixture
+            source: 087d067b03881bbb15f4b91f8f61c2fe235e414c
           - label: baseline
-            case: couch-static-picture-host-finite-owner
+            case: couch-encounter-proven-identities
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: external-distribution
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: hosted-soundtrack-publication
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: pack-indexes
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: pages-current-entry
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: production-countercurrent
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: release-catalog
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: soundtrack-distribution
             source: b11745223861c3973ad4bf440cc536198b8e0371
     env:
       CI: '1'
