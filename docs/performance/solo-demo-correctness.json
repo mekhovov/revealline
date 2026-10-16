@@ -42,10 +42,19 @@
   },
   "environment": {
     "node": "22.22.2",
-    "CI": "1",
     "testConcurrency": 1,
-    "reporter": "tap",
-    "durationMeaning": "Elapsed Node correctness test execution, not a browser performance measurement."
+    "outputFormat": "TAP",
+    "durationMeaning": "Elapsed Node correctness test execution, not a browser performance measurement.",
+    "commandsByOwner": {
+      "demoHostAndTransition": {
+        "CI": "1",
+        "flags": ["--test", "--test-concurrency=1", "--test-reporter=tap"]
+      },
+      "coveredParentAndResize": {
+        "CI": "not explicitly set; inherited environment was not retained",
+        "flags": ["--max-old-space-size=2048", "--test", "--test-concurrency=1"]
+      }
+    }
   },
   "commands": {
     "completeDemoGroup": [
@@ -69,9 +78,9 @@
     ],
     "coveredParentGroup": [
       "node",
+      "--max-old-space-size=2048",
       "--test",
       "--test-concurrency=1",
-      "--test-reporter=tap",
       "game/test/solo-demo-covered-render-host.test.mjs",
       "game/test/solo-render-submission.test.mjs"
     ]
@@ -88,7 +97,8 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "duration_ms": 13546.989958
+      "duration_ms": 13546.989958,
+      "environmentOwner": "demoHostAndTransition"
     },
     {
       "path": ".cache/solo-followup/demo-performance-audit-01/scene-transition-before.tap",
@@ -101,7 +111,8 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "duration_ms": 42.492292
+      "duration_ms": 42.492292,
+      "environmentOwner": "demoHostAndTransition"
     },
     {
       "path": ".cache/solo-followup/demo-performance-audit-01/retained-host-after-01.tap",
@@ -114,7 +125,8 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "duration_ms": 21326.225333
+      "duration_ms": 21326.225333,
+      "environmentOwner": "demoHostAndTransition"
     },
     {
       "path": ".cache/solo-followup/demo-performance-audit-01/covered-host-before.tap",
@@ -127,7 +139,8 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "duration_ms": 9381.870208
+      "duration_ms": 9381.870208,
+      "environmentOwner": "coveredParentAndResize"
     },
     {
       "path": ".cache/solo-followup/demo-performance-audit-01/covered-host-after.tap",
@@ -140,7 +153,8 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "duration_ms": 26939.578583
+      "duration_ms": 26939.578583,
+      "environmentOwner": "coveredParentAndResize"
     },
     {
       "path": ".cache/solo-followup/demo-performance-audit-01/demo-focused-after-02.tap",
@@ -153,7 +167,8 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "duration_ms": 64306.022791
+      "duration_ms": 64306.022791,
+      "environmentOwner": "demoHostAndTransition"
     },
     {
       "path": ".cache/solo-followup/demo-performance-audit-01/retained-host-after-final.tap",
@@ -166,7 +181,8 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "duration_ms": 11506.838333
+      "duration_ms": 11506.838333,
+      "environmentOwner": "demoHostAndTransition"
     },
     {
       "path": ".cache/solo-followup/demo-performance-audit-01/covered-resize-before.tap",
@@ -179,7 +195,8 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "duration_ms": 9364.625958
+      "duration_ms": 9364.625958,
+      "environmentOwner": "coveredParentAndResize"
     },
     {
       "path": ".cache/solo-followup/demo-performance-audit-01/covered-resize-after.tap",
@@ -192,7 +209,8 @@
       "cancelled": 0,
       "skipped": 0,
       "todo": 0,
-      "duration_ms": 27335.571792
+      "duration_ms": 27335.571792,
+      "environmentOwner": "coveredParentAndResize"
     }
   ],
   "changes": [
@@ -225,5 +243,57 @@
       "url": "https://webkit.org/blog/8993/cpu-timeline-in-web-inspector/",
       "scope": "Use sustained CPU timeline windows and thread-level attribution when assessing energy-related work."
     }
-  ]
+  ],
+  "committedSourceFollowup": {
+    "commit": "cfa7541e233fdce766e0993efdf2ad962a1a1903",
+    "files": [
+      {
+        "path": "game/ui/demo-host.mjs",
+        "sha256": "4624ef1132bc98944ee59dcb0d25cff0c3422b91e86688305042923e99b90667",
+        "matchesReviewedSnapshot": true
+      },
+      {
+        "path": "game/ui/demo-scene-transition.mjs",
+        "sha256": "fbf7f20391cdd7df35bd3eac800e0b81fff67e352f2a084cc03d82cc7018801f",
+        "matchesReviewedSnapshot": true
+      },
+      {
+        "path": "game/ui/demo-clock.mjs",
+        "sha256": "10a516cc6ba8b99cf6ba27ec3f5d3b9a7a66781e0effe17d2940cadf32c6da87",
+        "matchesReviewedSnapshot": true
+      },
+      {
+        "path": "game/test/demo-retained-presentation-host.test.mjs",
+        "sha256": "dd3253c941d37bb5290973eb6d2e743a2632c7a22d50b995076209fd87997664",
+        "matchesReviewedSnapshot": true
+      },
+      {
+        "path": "game/test/demo-scene-transition.test.mjs",
+        "sha256": "65d42abd5b695c2a647ecfe9f6ea706e79349a0ee57a6437531124c2ecbb4829",
+        "matchesReviewedSnapshot": true
+      },
+      {
+        "path": "game/app.mjs",
+        "sha256": "aec7cc0c088593769c493d02e400bafb7a713c9aceebb410a8fe347bbd8a5c59",
+        "matchesReviewedSnapshot": true
+      },
+      {
+        "path": "game/test/helpers/demo-host-fixture.mjs",
+        "sha256": "1ba2ea57f04eee6bd3e9dd216a9302f02f03393e93b670afea7f62676f8603f9",
+        "matchesReviewedSnapshot": true
+      },
+      {
+        "path": "game/test/solo-demo-covered-render-host.test.mjs",
+        "sha256": "3a644607b840368bc69d0753e6276c7bd29246929f24b85486d04bddce2ce97c",
+        "matchesReviewedSnapshot": false
+      }
+    ],
+    "changedFile": {
+      "path": "game/test/solo-demo-covered-render-host.test.mjs",
+      "reviewedTestedSha256": "34052bef89c36a50765d8a6ef25db8dbb24b447d36f3d12d2433e89030afa94f",
+      "committedSha256": "3a644607b840368bc69d0753e6276c7bd29246929f24b85486d04bddce2ce97c",
+      "change": "Prettier wrapped the existing resize assertion over multiple lines after its test run; no assertion, control flow or runtime source changed. The original tested source hash remains in sourceSnapshot."
+    },
+    "scope": "This maps the reviewed working-tree source to committed bytes; it does not claim another test execution or a production artifact."
+  }
 }
