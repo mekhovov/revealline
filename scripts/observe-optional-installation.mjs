@@ -9,6 +9,12 @@ import { readEditionZip } from '../publishing/edition-zip.mjs';
 import { validateOptionalPackageAdmission } from '../publishing/optional-package-admission.mjs';
 import { startServer } from './game-cli.mjs';
 import { installOptionalStatusDiagnostics } from './optional-installation-diagnostics.mjs';
+import {
+  VERIFICATION_CANCEL_IDS,
+  selectFinalVerificationCancel,
+  observeFinalVerificationCancel,
+  assertVerificationOwnership,
+} from './optional-installation-verification-cancel.mjs';
 import { withOptionalQuotaDeny } from './optional-installation-quota-probe.mjs';
 import { practiceWorkerCacheInventory } from './practice-worker-cache-inventory.mjs';
 import {
@@ -17,6 +23,7 @@ import {
   disposeHistoricalOrdinaryWindow,
 } from './optional-installation-ordinary-window.mjs';
 import {
+  validateImportedWorldEntryURL,
   selectImportedWorldMode,
   importedWorldAuthority,
   importRetainedC4World,
@@ -170,6 +177,7 @@ const importedWorldEnabled = selectImportedWorldMode(
     activeSession: process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION,
     quota: process.env.OPTIONAL_INSTALLATION_QUOTA_PROBE,
     download: process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
+    verificationCancel: process.env.OPTIONAL_INSTALLATION_VERIFICATION_CANCEL,
   },
 );
 assert(
@@ -314,6 +322,55 @@ const ordinaryWindow = ordinaryWindowEnabled
       sourceSha256: sha(await readFile(ordinaryWindowURL)),
       created: false,
       standaloneQualified: false,
+    }
+  : null;
+const verificationCancelEnabled = selectFinalVerificationCancel(
+  process.env.OPTIONAL_INSTALLATION_VERIFICATION_CANCEL,
+  {
+    worldSeed: worldSeedEnabled,
+    download: process.env.OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS,
+    quota: process.env.OPTIONAL_INSTALLATION_QUOTA_PROBE,
+    quotaPackages: process.env.OPTIONAL_INSTALLATION_QUOTA_PACKAGES,
+    migration: process.env.OPTIONAL_INSTALLATION_MIGRATION,
+    activeSession: activeSessionMode,
+    activeWindow: activeWindowMode,
+    importedWorld: process.env.OPTIONAL_INSTALLATION_IMPORTED_WORLD,
+  },
+);
+const verificationCancelURL = new URL(
+  './optional-installation-verification-cancel.mjs',
+  import.meta.url,
+);
+const verificationCancelAuthority = verificationCancelEnabled
+  ? await Promise.all(
+      [
+        'optional-installation-download-check.mjs',
+        'practice-worker-cache-inventory.mjs',
+        'practice-download-fault.mjs',
+      ].map(async (name) => ({
+        path: name,
+        sha256: sha(await readFile(new URL(name, import.meta.url))),
+      })),
+    )
+  : [];
+const verificationCancel = verificationCancelEnabled
+  ? {
+      format: 'OptionalFinalVerificationCancellation.v1',
+      protocol: 'optional-final-verification-response-latency.v1',
+      controlledReplyLatency: true,
+      nativeHashInterruption: false,
+      publicEligible: false,
+      replyDeliveryAfterCancellationVerified: false,
+      sourceSha256: sha(await readFile(verificationCancelURL)),
+      authority: verificationCancelAuthority,
+      cases: [],
+      retries: [],
+      limitations: [
+        'One native ready reply is delayed after real cached-dependency hashing, while the page still awaits final verification. Not per-file digest interruption or natural device latency.',
+        'Original admitted bytes at synthetic v0.0.1 paths; page messaging instrumentation only. No crypto/cache/fetch substitution or authentication/timer bypass.',
+        'Fully prepared but unrecorded target cache may remain after cancellation; exact hashes and owning worker are required before public retry/removal.',
+        'Academy proof/profile are synthetic fixtures; World project/revisions are populated via UI; Gym records remain unpopulated. No physical-device, human-review or publication qualification.',
+      ],
     }
   : null;
 assert(
@@ -551,7 +608,7 @@ try {
       await stage(fpv, priorVersion, priorEntries);
       await stageLauncher(fpv, priorEntries);
       await stage(fpv, failedFixture);
-      if (downloadFaultsEnabled)
+      if (downloadFaultsEnabled || verificationCancelEnabled)
         for (const id of packageIds) if (id !== fpv) await stage(id, failedFixture);
       if (quotaProbeEnabled)
         for (const id of quotaPackageIds) if (id !== fpv) await stage(id, failedFixture);
@@ -808,15 +865,20 @@ try {
           const receipt = { label };
           importedWorld.checks.push(receipt);
           await verifyRetainedC4World(target, {
-            ...importedWorldOptions(target, receipt),
+            ...importedWorldOptions(target, receipt, true),
             libraryAlreadyOpen: true,
           });
         }
       }
-      function importedWorldOptions(target, receipt) {
-        assert(matchesLaunchedAppURL(target.url(), url(entry(worlds, version)), 'en'));
+      function importedWorldOptions(target, receipt, libraryAlreadyOpen = false) {
+        const observed = new URL(target.url());
+        if (libraryAlreadyOpen) {
+          assert.equal(observed.hash, '#packs', 'Require the owned Library navigation route.');
+          observed.hash = '';
+        }
+        validateImportedWorldEntryURL(observed.href, url(entry(worlds, version)));
         return {
-          expectedURL: target.url(),
+          expectedURL: observed.href,
           deadlineAt: observationDeadline,
           requireActive: requireObservationTime,
           readDatabase: readWorldDatabase,
@@ -1387,8 +1449,12 @@ try {
       });
       await inspect('all-three-offline-after-browser-process-restart');
       await context.setOffline(false);
-      if (downloadFaultsEnabled) {
-        const baseline = await inspect('download-fault-baseline');
+      if (downloadFaultsEnabled || verificationCancelEnabled) {
+        const baseline = await inspect(
+          verificationCancelEnabled
+            ? 'final-verification-cancel-baseline'
+            : 'download-fault-baseline',
+        );
         const cacheInventories = packageIds.flatMap((id) => {
           const selected = id === fpv ? priorVersion : version,
             files = id === fpv ? priorEntries : entries.get(id);
@@ -1422,6 +1488,8 @@ try {
           'Every prepared runtime/launcher cache must match an original admitted worker inventory.',
         );
         downloadFaults.preparedCaches = await readPreparedCacheFingerprints(page, cacheInventories);
+        if (verificationCancelEnabled)
+          verificationCancel.preparedCaches = downloadFaults.preparedCaches;
         async function retainedDownloadRecords() {
           await open(fpv, priorVersion);
           assert.equal(await exportedProof(), savedProof);
@@ -1445,11 +1513,58 @@ try {
               ),
             );
         }
-        for (const id of downloadMatrix.ids) {
+        for (const id of verificationCancelEnabled ? VERIFICATION_CANCEL_IDS : downloadMatrix.ids) {
+          if (verificationCancelEnabled) {
+            const item = envelope.packages.find((row) => row.id === id);
+            const scope = url(site(id, failedFixture) + `optional-practice/${id}/`);
+            const cacheName = `revealline.optional.${id === gym ? 'civilian-flight' : 'package'}.v1:${new URL(scope).pathname}:${item.revision}`;
+            const inventory = practiceWorkerCacheInventory({
+              workerBytes: entries.get(id).get(`optional-practice/${id}/worker.js`),
+              baseURL: scope,
+              cacheName,
+            });
+            const expectedWorker = {
+              id,
+              scope,
+              scriptURL: new URL('worker.js', scope).href,
+              revision: item.revision,
+            };
+            await open(id, failedFixture);
+            await revealOfflineUI(id);
+            const before = await inspect(`final-verification-target-absent:${id}`);
+            assertVerificationOwnership(before, baseline, expectedWorker);
+            currentStep = `controlled final verification response cancellation: ${id}`;
+            const observed = { id, passed: false };
+            verificationCancel.cases.push(observed);
+            await observeFinalVerificationCancel({
+              page,
+              expectedWorker,
+              receipt: observed,
+              requireActive: requireObservationTime,
+              capture: async () => {
+                const bytes = await page.screenshot({ timeout: 2000 });
+                const imagePath = `${output}.final-verifying-${id}.png`;
+                await writeFile(imagePath, bytes, { flag: 'wx' });
+                return { path: imagePath, bytes: bytes.length, sha256: sha(bytes) };
+              },
+            });
+            assert.equal(observed.passed, true);
+            const after = await inspect(`final-verification-cancel-before-pointer:${id}`);
+            assertVerificationOwnership(after, baseline, expectedWorker, true);
+            assert.deepEqual(
+              await readPreparedCacheFingerprints(page, cacheInventories),
+              downloadFaults.preparedCaches,
+            );
+            observed.completeUnrecordedCache = await readPreparedCacheFingerprints(page, [
+              inventory,
+            ]);
+            observed.world = await retainedDownloadRecords();
+            observed.recordsPreserved = true;
+          }
           const member = `optional-practice/${id}/README.md`,
             body = entries.get(id).get(member);
           assert(body, 'The exact admitted README dependency is required.');
-          for (const mode of downloadMatrix.modes) {
+          for (const mode of downloadMatrix?.modes ?? []) {
             requireInstallationDownloadFaultBudget(
               downloadMatrix,
               observationDeadline - Date.now(),
@@ -1492,22 +1607,43 @@ try {
           // The fault wrapper is closed before retry; no file is altered.
           await open(id, failedFixture);
           await prepare(id);
-          const ready = await inspect(`download-fault-pristine-retry:${id}`);
+          const ready = await inspect(
+            `${verificationCancelEnabled ? 'final-verification-cancel' : 'download-fault'}-pristine-retry:${id}`,
+          );
           assert.equal(installed(ready, id).active.version, failedFixture);
+          if (verificationCancelEnabled) {
+            assert.deepEqual(installed(ready, id), {
+              active: {
+                id,
+                version: failedFixture,
+                scope: url(site(id, failedFixture)),
+                entry: `optional-practice/${id}/index.html`,
+              },
+              previous: installed(baseline, id).active,
+            });
+            for (const sibling of packageIds.filter((other) => other !== id))
+              assert.equal(ready.keys[keyFor(sibling)], baseline.keys[keyFor(sibling)]);
+          }
           const remove = await revealOfflineRemoval(id);
           await activateOfflineAction(page, {
             button: remove,
             status: OBSERVED_PACKAGES[id].status,
             expected: /removed/i,
           });
-          const restored = await inspect(`download-fault-retry-removal-restores-baseline:${id}`);
+          const restored = await inspect(
+            `${verificationCancelEnabled ? 'final-verification-cancel' : 'download-fault'}-retry-removal-restores-baseline:${id}`,
+          );
           retainedDownloadOwnership(restored, id);
+          if (verificationCancelEnabled) {
+            assert.deepEqual(restored.caches, baseline.caches);
+            assert.deepEqual(restored.workers, baseline.workers);
+          }
           assert.deepEqual(
             await readPreparedCacheFingerprints(page, cacheInventories),
             downloadFaults.preparedCaches,
           );
           const retained = await retainedDownloadRecords();
-          downloadFaults.retries.push({
+          (verificationCancelEnabled ? verificationCancel : downloadFaults).retries.push({
             id,
             preparedAndRemoved: true,
             recordsPreserved: true,
@@ -2072,6 +2208,36 @@ try {
       ' Owned loopback only; no virtual clocks, runtime modifications, real eviction or physical hardware. Gym records are unpopulated; Academy synthetic proof/profile and populated World fingerprints are retained.';
     report.downloadFaults = downloadFaults;
     report.passed &&= downloadFaults.passed;
+  }
+  if (verificationCancelEnabled) {
+    verificationCancel.sourceStable =
+      verificationCancel.sourceSha256 === sha(await readFile(verificationCancelURL)) &&
+      (
+        await Promise.all(
+          verificationCancelAuthority.map(
+            async (row) => row.sha256 === sha(await readFile(new URL(row.path, import.meta.url))),
+          ),
+        )
+      ).every(Boolean);
+    verificationCancel.passed =
+      verificationCancel.sourceStable &&
+      verificationCancel.cases.length === 3 &&
+      verificationCancel.retries.length === 3 &&
+      verificationCancel.cases.every(
+        (row, index) =>
+          row.id === VERIFICATION_CANCEL_IDS[index] &&
+          row.passed &&
+          row.recordsPreserved &&
+          row.completeUnrecordedCache?.length === 1,
+      ) &&
+      verificationCancel.retries.every(
+        (row, index) =>
+          row.id === VERIFICATION_CANCEL_IDS[index] &&
+          row.preparedAndRemoved &&
+          row.recordsPreserved,
+      );
+    report.finalVerificationCancellation = verificationCancel;
+    report.passed &&= verificationCancel.passed;
   }
   if (activeSessionEnabled) {
     if (ordinaryWindowEnabled) {

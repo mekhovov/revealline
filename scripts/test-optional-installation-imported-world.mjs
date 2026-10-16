@@ -5,6 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { PACK, expectedC4AssetFingerprint } from './practice-imported-world-check.mjs';
 import {
+  validateImportedWorldEntryURL,
   selectImportedWorldMode,
   importedWorldAuthority,
   importRetainedC4World,
@@ -29,7 +30,35 @@ const baseline = () => ({
   database: database(),
 });
 const URL =
-  'http://127.0.0.1:3210/practice/fpv-worlds/releases/v0.160.0/site/optional-practice/fpv-worlds/index.html?lang=en';
+  'http://127.0.0.1:3210/revealline/practice/fpv-worlds/releases/v0.160.0/site/optional-practice/fpv-worlds/index.html?lang=en';
+test('entry identity accepts only canonical direct and exact English launcher forms', () => {
+  const entry = URL.replace('?lang=en', '');
+  for (const value of [entry, URL])
+    assert.equal(validateImportedWorldEntryURL(value, entry), value);
+  for (const value of [
+    entry + '?',
+    entry + '#',
+    entry + '#x',
+    entry + '?lang=uk',
+    entry + '?lang=en&lang=en',
+    entry + '?lang=en&x=1',
+    entry + '?lang=%65n',
+    entry + '?LANG=en',
+    entry.replace(':3210', ':3211'),
+    entry.replace('v0.160.0', 'v0.160.1'),
+    entry.replace('127.0.0.1', 'u:p@127.0.0.1'),
+    entry.replace('/site/', '/x/../site/'),
+    ' '.repeat(2049),
+  ])
+    assert.throws(() => validateImportedWorldEntryURL(value, entry), value);
+  assert.throws(() => validateImportedWorldEntryURL(URL, URL));
+  assert.throws(() =>
+    validateImportedWorldEntryURL(
+      entry.replace('/revealline', ''),
+      entry.replace('/revealline', ''),
+    ),
+  );
+});
 const hud = (height = 0, phase = 'paused') => ({
   locale: 'en',
   source: 'keyboard',
@@ -47,13 +76,19 @@ function fixture({
   delayed = false,
   failUpload = false,
   wrongGauge = false,
+  initialHash = '',
+  navigationHash = '#packs',
+  backSteps = 2,
 } = {}) {
   const calls = [];
   let phase = 'paused',
     height = 0,
-    down = false;
+    down = false,
+    currentURL = URL + initialHash,
+    settingsOpen = false,
+    backs = 0;
   const page = {
-    url: () => URL,
+    url: () => currentURL,
     waitForEvent: async (event) => {
       assert.equal(event, 'filechooser');
       return {
@@ -92,6 +127,15 @@ function fixture({
         isEnabled: async () => true,
         press: async (value) => {
           calls.push(['press', selector, value]);
+          if (selector === '#worlds-shell-action-settings') {
+            settingsOpen = true;
+            backs = 0;
+          }
+          if (selector === '#close-sim-settings' && ++backs >= backSteps) settingsOpen = false;
+          if (selector === '[data-tab="packs"]') {
+            currentURL = URL + navigationHash;
+            settingsOpen = false;
+          }
         },
         selectOption: async (value) => {
           calls.push(['select', selector, value]);
@@ -105,7 +149,12 @@ function fixture({
           calls.push(['click', selector]);
         },
         count: async () => (imported ? 1 : 0),
-        getAttribute: async (name) => (name === 'data-pack-id' ? PACK.id : null),
+        getAttribute: async (name) =>
+          name === 'data-pack-id'
+            ? PACK.id
+            : name === 'open' && selector === '#sim-settings' && settingsOpen
+              ? ''
+              : null,
         innerText: async () =>
           selector.endsWith('strong')
             ? PACK.title
@@ -145,6 +194,10 @@ test('strict separate opt-in and exact authority paths', () => {
   ])
     assert.throws(() => selectImportedWorldMode('roadworks-offline-flight', input));
   assert.throws(() => selectImportedWorldMode('all', { worldSeed: true }));
+  for (const verificationCancel of ['', '0', 'all'])
+    assert.throws(() =>
+      selectImportedWorldMode('roadworks-offline-flight', { worldSeed: true, verificationCancel }),
+    );
 });
 test('actual committed bytes import through public chooser and visible card', async () => {
   const bytes = await readFile(PACK.path),
@@ -197,7 +250,7 @@ test('rechecks shared deadline after visibility, no late activation', async () =
   assert.equal(opts.receipt.cleanup.completed, false);
 });
 test('retention uses existing Library without duplicate navigation when requested', async () => {
-  const { page, calls } = fixture(),
+  const { page, calls } = fixture({ initialHash: '#packs' }),
     opts = options({ libraryAlreadyOpen: true });
   await verifyRetainedC4World(page, opts);
   assert(opts.receipt.passed && opts.receipt.cleanup.completed);
@@ -205,6 +258,42 @@ test('retention uses existing Library without duplicate navigation when requeste
     calls.some((r) => r[0] === 'press'),
     false,
   );
+});
+test('initial fragment fails closed; only owned Library navigation authorizes exact packs fragment', async () => {
+  for (const change of [{ initialHash: '#packs' }, { navigationHash: '#creator' }]) {
+    const { page } = fixture(change),
+      opts = options();
+    await assert.rejects(verifyRetainedC4World(page, opts), /navigated away/);
+    assert(!opts.receipt.passed);
+  }
+  const { page } = fixture(),
+    opts = options();
+  await verifyRetainedC4World(page, opts);
+  assert.equal(opts.receipt.libraryURL, URL + '#packs');
+  await assert.rejects(
+    verifyRetainedC4World(
+      fixture({ initialHash: '#creator' }).page,
+      options({ libraryAlreadyOpen: true }),
+    ),
+    /navigated away/,
+  );
+});
+test('Settings Back follows actual open state and refuses an unclosed dialog after five actions', async () => {
+  const good = fixture(),
+    opts = options({ restartConfirmed: true, networkProbeFailed: true });
+  await flyRetainedC4WorldOffline(good.page, opts);
+  assert.equal(
+    good.calls.filter((r) => r[0] === 'press' && r[1] === '#close-sim-settings').length,
+    2,
+  );
+  const bad = fixture({ backSteps: 6 }),
+    failed = options({ restartConfirmed: true, networkProbeFailed: true });
+  await assert.rejects(flyRetainedC4WorldOffline(bad.page, failed));
+  assert.equal(
+    bad.calls.filter((r) => r[0] === 'press' && r[1] === '#close-sim-settings').length,
+    5,
+  );
+  assert(!failed.receipt.passed);
 });
 test('maintained height parser rejects hidden, wrong-course, mode, focus or overshoot', () => {
   assert.equal(parseImportedWorldHUD(hud(0.2, 'active')).height, 0.2);

@@ -9,14 +9,45 @@ import {
   assertC4OfflineFlight,
 } from './practice-imported-world-check.mjs';
 export const IMPORTED_WORLD_MODE = 'roadworks-offline-flight';
+export function validateImportedWorldEntryURL(observed, admittedEntry) {
+  for (const value of [observed, admittedEntry]) {
+    assert(typeof value === 'string' && value.length > 0 && value.length <= 2048);
+    const parsed = new URL(value);
+    assert.equal(parsed.href, value, 'Require a canonical URL.');
+    assert(parsed.protocol === 'http:' && parsed.hostname === '127.0.0.1');
+    assert(!parsed.username && !parsed.password && !parsed.hash);
+  }
+  const actual = new URL(observed),
+    expected = new URL(admittedEntry);
+  assert.equal(expected.search, '', 'Admitted entry must not contain a query.');
+  assert.equal(admittedEntry, `${expected.origin}${expected.pathname}`);
+  assert(
+    /^\/revealline\/practice\/fpv-worlds\/releases\/[A-Za-z0-9._-]+\/site\/optional-practice\/fpv-worlds\/index\.html$/.test(
+      expected.pathname,
+    ),
+  );
+  assert.equal(actual.origin, expected.origin);
+  assert.equal(actual.pathname, expected.pathname);
+  assert(
+    actual.search === '' || actual.search === '?lang=en',
+    'Only the direct entry or exact English launcher query is allowed.',
+  );
+  assert(observed === admittedEntry || observed === `${admittedEntry}?lang=en`);
+  return observed;
+}
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export function selectImportedWorldMode(
   value,
-  { worldSeed, historical, migration, activeSession, quota, download } = {},
+  { worldSeed, historical, migration, activeSession, quota, download, verificationCancel } = {},
 ) {
   if (value === undefined) return false;
   assert.equal(value, IMPORTED_WORLD_MODE);
   assert.equal(worldSeed, true, 'Imported-world lane requires the existing public template seed.');
+  assert.equal(
+    verificationCancel,
+    undefined,
+    'Imported-world lane must run separately from final verification cancellation.',
+  );
   assert(
     !historical && !migration && !activeSession && !quota && !download,
     'Imported-world lane must run separately from historical migration and fault lanes.',
@@ -58,6 +89,8 @@ function scope(page, options, report) {
     ),
   );
   assert(parsed.search === '' || parsed.search === '?lang=en');
+  validateImportedWorldEntryURL(expectedURL, `${parsed.origin}${parsed.pathname}`);
+  let packsAuthorized = options.libraryAlreadyOpen === true;
   const end = performance.now() + Math.min(30000, deadlineAt - Date.now());
   let stopped = false,
     pending = 0,
@@ -73,7 +106,11 @@ function scope(page, options, report) {
       Date.now() < deadlineAt && performance.now() < end,
       'Imported-world shared deadline exceeded.',
     );
-    assert.equal(page.url(), expectedURL, 'Imported-world page navigated away.');
+    const actualURL = page.url();
+    assert(
+      actualURL === expectedURL || (packsAuthorized && actualURL === `${expectedURL}#packs`),
+      'Imported-world page navigated away.',
+    );
   };
   async function run(action, { cleanup = false } = {}) {
     if (!cleanup) check();
@@ -150,15 +187,20 @@ function scope(page, options, report) {
     }
     report.cleanup.completed = !uncertain && !inFlight && !pending && !report.cleanup.errors.length;
   }
-  return { check, run, control, down, up, finish, report };
+  async function openPacks() {
+    check();
+    // Authorize only the exact fragment written by this ordinary Library action.
+    packsAuthorized = true;
+    await control('[data-tab="packs"]');
+    assert.equal(page.url(), `${expectedURL}#packs`, 'Require the native Library route.');
+    report.libraryURL = page.url();
+  }
+  return { check, run, control, down, up, finish, report, openPacks };
 }
 async function library(g, page) {
-  for (const selector of [
-    '#worlds-shell-action-settings',
-    '#worlds-settings-tab-content',
-    '[data-tab="packs"]',
-  ])
+  for (const selector of ['#worlds-shell-action-settings', '#worlds-settings-tab-content'])
     await g.control(selector);
+  await g.openPacks();
   await g.run(() => page.locator('#packs').waitFor({ state: 'visible', timeout: 8000 }));
 }
 async function cardState(g, page, readDatabase) {
@@ -322,7 +364,10 @@ export async function flyRetainedC4WorldOffline(page, options) {
       await g.control(`#worlds-settings-tab-${tab}`);
       for (const [selector, value] of selections) await g.control(selector, 'selectOption', value);
     }
-    await g.control('#close-sim-settings');
+    for (let step = 0; step < 5; step++) {
+      if ((await g.run(() => page.locator('#sim-settings').getAttribute('open'))) === null) break;
+      await g.control('#close-sim-settings');
+    }
     assert.equal(await g.run(() => page.locator('#sim-settings').getAttribute('open')), null);
     await library(g, page);
     const state = await cardState(g, page, readDatabase);
