@@ -8,10 +8,15 @@ all six restarted-offline short flights and installed Academy activation/update
 continuity. Every original 3,493-file build member is checked before/after; all
 three results have independent audits in the [continuation](flight-practice-continuation-2026-10-16.md).
 These do not qualify every active app, performance, physical input, screenshots
-at native zoom or publication. Current expanded suites pass 397/397 practice and
-363 observer tests with one explicit historical-fixture skip. The main-only
-session language handoff correction and mounted-language observer repair still
-need their fresh source-shell browser result.
+at native zoom or publication. The main-only session language handoff and mounted
+language setup now pass all six actual EN/UK source-shell return routes at
+`8c93b49ee`. Its independently audited C9 v3 software matrix passes 66 focus
+witnesses, native 200% zoom/reset and complete cleanup. One control has the
+explicit 0.390625-device-pixel residual; no zero-clipping/painted-outline/visual
+or spoken assistive claim is made. Current observer tests pass 367 with one
+explicit historical-fixture skip. Guide-only origin-eviction warnings and four
+deterministic outstanding-digest cancellation regressions are the next source
+follow-up; none relabel the original package receipts.
 
 **Latest 16 October checkpoint:** the [integrated continuation](flight-practice-continuation-2026-10-16.md)
 records independently audited six-route EN restarted-offline flight/pause and
@@ -22,8 +27,8 @@ The full practice suite passes 388/388 and that observer suite passes 317 plus
 one explicit fixture skip. The later paragraphs below are historical checkpoints,
 not assertions that these scoped results are still absent.
 
-The production build still lacks its complete six-case player journey. Its latest
-identical-byte diagnostic isolates sensitivity to request-time file delivery, not
+Historical pre-pass production diagnostic: its identical-byte comparison isolates
+sensitivity to request-time file delivery, not
 a simulator startup fix: original-file reads miss ten seconds, verified memory
 reaches Home in 7.47 seconds. No public host, deadline or app bytes were changed.
 Native zoom control/geometry passes do not qualify cropped screenshots, package
@@ -511,6 +516,10 @@ deadline increase solely to turn a failure green.
 
 ### C9 — Physical inputs, assistive behavior and native zoom
 
+**Current scope:** physical controller/radio/touch checks are owner-deferred.
+The source-shell software subset passes all six routes under explicit C9 v3,
+not the full physical/visual/spoken gate. See the newest source-bound continuation.
+
 1. Use named physical keyboard/controller/radio and touch-device setups matching
    each package's advertised support. Calibrate through normal UI; record hardware,
    connection, mapping, firmware where relevant and tested operating mode.
@@ -585,6 +594,14 @@ pending gate, wrong envelope, missing/changed evidence or invented approval.
   and any reason evidence is inapplicable to a later candidate.
 
 ## Recommended next order (hosting remains deferred)
+
+Use the [current detailed priority table](flight-practice-completion-plan-2026-10-14.md)
+for the remaining cases. Original-production journeys and the narrow software
+native-zoom matrix now pass; do not treat historical “next” notes as missing proof.
+Hardware remains owner-deferred alongside hosting. Controlled quota denial,
+manual cache/worker damage, a delayed digest promise and final-ready-response
+cancellation remain distinct from genuine browser eviction, backup restoration
+and actual native hashing-in-progress timing.
 
 1. **P0: C1–C7 on the frozen real three-app candidate.** These establish executable
    completeness, honest offline readiness and data preservation. Missing this

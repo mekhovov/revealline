@@ -5,6 +5,54 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+### Native software matrix passes; hardware still deferred
+
+At clean observer `8c93b49ee7a18d01aadbe4b9d5ccf481addcfa74`, tree
+`06e9faf7b167a9ba547bfe610920a02d60a925d0`, C9 protocol v3 passes all six
+EN/UK source-shell directory, launcher, guide and return journeys on the original
+`1b339bfe6` / `f559fdd7…` packages. All 66 sampled focus witnesses pass the
+explicit approximate geometry contract below. One English Gym control uses
+0.390625 device px tolerance; its old integer decision remains false. Actual
+return-document languages, native 100→200→100 zoom, source/overlay checks,
+cleanup, zero pending operations and removed owned profile all pass.
+
+[Original report, plan, authority, log and 18 PNGs](flight-practice-continuation-20261016/native-c9-8c93-passed-originals.tgz)
+SHA-256: `75292e0d0a848f50eb4f3ed674dbda3e2394fed0e5646486a304aa4ec8db023d`.
+The [independent audit](flight-practice-continuation-20261016/native-c9-independent-audit.json)
+passes nine groups: 10 authority entries, 825 served source files / 21,144,330
+bytes, all three original admissions, all 394 generated overlay members, exact
+focus recomputation, zoom, return languages and cleanup. It preserves all 13
+raw source-preview probes (12 generated build identity, one default icon) with
+zero unexpected requests. PNG hashes/dimensions are checked, but every image
+remains visually unqualified because native captures can be cropped/blank.
+This is not app flight, a production-distribution zoom test, full outline
+visibility, spoken assistive behavior, human readability or physical input.
+Earlier failed attempts below remain unchanged and failed.
+
+Four new deterministic lifecycle regressions cover both worker families while a
+real WebCrypto digest's returned result is held, including delayed rejection.
+Cancellation removes partial new staging, never announces ready or writes the
+second dependency, and retains exact previous-owned and unrelated cache bytes,
+response metadata and names after settlement. Removing the post-digest guard
+makes the valid-completion tests fail. This is unresolved-promise unit coverage,
+not native browser hashing-in-progress/UI timing qualification; runtime bytes do
+not change. The full lifecycle/guide focused suite passes 52/52.
+[Original proposal, passing lifecycle log and failing guard-removal control](flight-practice-continuation-20261016/worker-digest-cancel-originals.tgz)
+SHA-256: `9abe6f6f09540193e8ceda12fcb436dd822c253b72a03349305d3af9e7ee4155`.
+The complete follow-up suite passes **402/402 practice tests**, no failures or
+skips, and **367 observer tests** with one explicit historical-fixture skip.
+Scoped lint, formatting and whitespace checks pass. The
+[repeatable C9 audit originals](flight-practice-continuation-20261016/native-c9-independent-audit-originals.tgz)
+have SHA-256 `1ed661ade225ef249d082b3fbadd11bdf71f433a89180b34e17ad8a7731c924d`.
+
+Both repository player guides and all three packaged HTML guides now explicitly
+warn that browser-managed origin eviction can remove records/imported worlds,
+unlike the launcher's scoped removal. Recovery requires previously exported
+backups outside browser storage; re-downloading cannot recreate lost records.
+Six guide-copy tests bind both languages. This guide-only follow-up changes
+package inputs, so the `1b339bfe6` receipts above remain tied to their original
+bytes; a fresh reproduced/admitted candidate and affected-guide checks are next.
+
 ### Hardware deferred; fractional native focus geometry follow-up
 
 The owner explicitly defers real controller/radio/touch hardware checks; they
@@ -785,14 +833,15 @@ still required and is not implied by build success. Hosting/capacity remain sepa
 
 ## Still open
 
-The acceptance checklist remains authoritative. Next software priorities are the
-full original-production directory journey with reliable bounded delivery,
-package-bound native zoom/keyboard/reduced-motion checks, and remaining recovery
-subcases (hash-in-progress cancellation and real eviction on an approved disposable
-setup). All-three genuine migrations, imported-model offline flights and the
-specific Academy PWA activation update now have the scoped passes above; all-app
-active-flight protection is still separate. Measured performance needs an accepted
-budget; spoken assistive behavior and participant/package approvals require actual
-reviewers. World Studio's descriptor also needs its old menu wording synchronized
-in the next exact candidate. Hardware and hosting are deferred, not passed. No local
+The acceptance checklist and the current-priority table at the top of the
+[completion plan](flight-practice-completion-plan-2026-10-14.md) remain authoritative.
+Original-production journeys, descriptor synchronization and the software native
+zoom/keyboard/reduced-motion matrix now have the scoped passes above; they are
+not still missing. Next: freeze the guide-only warning follow-up, extend active
+update continuity beyond Academy, and distinguish genuine origin eviction/backup
+recovery and native outstanding-hash cancellation from their existing controlled
+and unit coverage. The current-main generated build also needs its own affected
+checks; old `3a1b5e3c3` output is not relabelled. Measured performance needs an
+accepted budget; visual/spoken assistive behavior and participant/package approvals
+require actual reviewers. Hardware and hosting are deferred, not passed. No local
 test or PR populates the public catalogue.
