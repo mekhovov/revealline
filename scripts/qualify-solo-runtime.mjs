@@ -16,13 +16,17 @@ import {
   quantileBound,
   FRAME_BOUNDS,
 } from './solo-qualification.mjs';
+import {
+  calibrateReadyCadence,
+  externalQualificationBudgets,
+} from './solo-qualification-observation.mjs';
 
 // Public UI only. Never write application storage, run state, clocks or caches.
 // Recovery injection is a separately labeled scenario, not native device loss.
 const [address, scenarioPath, output, ...flags] = process.argv.slice(2);
 if (!address || !scenarioPath || !output || !process.env.PLAYWRIGHT_MODULE)
   throw new Error(
-    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile]',
+    'Usage: PLAYWRIGHT_MODULE=<path> node scripts/qualify-solo-runtime.mjs <Solo URL> <scenario.json> <new-report.json> [--browser=webkit] [--source-revision=<sha>] [--server-fixture-access|--fixture-access] [--public-url=<original production URL> --manifest=<frozen manifest>] [--headed] [--cpu=4] [--memory-profile] [--work-probe] [--baseline-runtime]',
   );
 const option = (key, fallback) =>
   flags.find((flag) => flag.startsWith(`--${key}=`))?.slice(key.length + 3) ?? fallback;
@@ -31,6 +35,12 @@ const bytes = await readFile(resolve(scenarioPath)),
 const engine = option('browser', 'chromium'),
   cpu = Number(option('cpu', '1'));
 const memoryProfile = flags.includes('--memory-profile');
+const baselineRuntime = flags.includes('--baseline-runtime'),
+  workProbe = flags.includes('--work-probe');
+assert(
+  !baselineRuntime || (workProbe && /^[0-9a-f]{40}$/.test(option('source-revision', ''))),
+  'Baseline mode requires the same --work-probe as candidate and a full --source-revision',
+);
 assert(['chromium', 'webkit'].includes(engine) && Number.isFinite(cpu) && cpu >= 1 && cpu <= 20);
 assert(engine === 'chromium' || cpu === 1, 'CPU throttling is Chromium-only');
 assert(!memoryProfile || engine === 'chromium', 'Heap/DOM profiling is Chromium-only');
@@ -76,6 +86,8 @@ const report = {
   scenario: scenario.id,
   kind: memoryProfile ? 'memory-profile' : scenario.kind,
   scenarioKind: scenario.kind,
+  baselineRuntime,
+  workProbe,
   sourceRevision: option('source-revision', null),
   scenarioSHA256: createHash('sha256').update(bytes).digest('hex'),
   requestedCoverage: scenario.coverage,
@@ -107,6 +119,16 @@ const report = {
     'Resource export happens only at explicit paused/result checkpoints. Owned categories may overlap; no total memory or leak-free claim.',
     'Audio source starts/play-promise fulfillment demonstrate API activity, not audible output or complete speech/music coverage.',
     'This harness adds phase/rAF and audio-API observers. Its timing is not a measurement of ordinary diagnostics overhead.',
+    ...(workProbe
+      ? [
+          'Independent PRE_STEP→POST_RENDER work instrumentation and an explicit30-frame ready-phase calibration are enabled. Use identical flags on compared builds; no physical/GPU or overhead-free claim.',
+        ]
+      : []),
+    ...(baselineRuntime
+      ? [
+          'Baseline application diagnostics may be absent. Missing internal latency, safety and owned-resource counters remain unobserved, not zero or passing. Generated build-info source revision is verified before actions.',
+        ]
+      : []),
     ...(memoryProfile
       ? [
           'Forced GC and heap/DOM observations perturb the browser. This whole run is excluded from timing qualification. No Memory.prepareForLeakDetection, worker termination or cache retirement is used.',
@@ -133,6 +155,7 @@ const report = {
   uploads: [],
   pageErrors: [],
   failedResponses: [],
+  prePlayCalibrations: [],
   failure: null,
 };
 await mkdir(dirname(resolve(output)), { recursive: true });
@@ -239,12 +262,55 @@ try {
       await route.fulfill({ response, body });
     });
   await page.addInitScript(
-    ({ bounds }) => {
+    ({ bounds, workProbe }) => {
       const phases = ['boot', 'briefing', 'running', 'paused', 'result', 'picture', 'other'];
       const counts = phases.map(() => new Float64Array(bounds.length));
       const totals = new Float64Array(phases.length * 5),
         tail = new Float64Array(256 * 4);
       let observedGame, phaser;
+      const workBounds = [
+        0.25,
+        0.5,
+        1,
+        2,
+        4,
+        6,
+        8.34,
+        10,
+        12,
+        16.67,
+        20,
+        25,
+        33.34,
+        50,
+        100,
+        250,
+        null,
+      ];
+      const workWidth = workBounds.length + 3;
+      const workTotals = new Float64Array(phases.length * workWidth),
+        workRecent = new Float64Array(5000 * 2);
+      const missed = new Float64Array(phases.length * 3),
+        calibrationSamples = new Float64Array(30);
+      let workStarted,
+        workCount = 0,
+        workSubscribed = false,
+        calibrating = false,
+        calibrationCount = 0,
+        calibration = null,
+        frameBudget = null;
+      const readyState = () => ({
+        ready:
+          document.documentElement.dataset.bootState === 'ready' &&
+          document.body?.dataset.flightState !== 'running' &&
+          !['pending', 'loading', 'preparing'].includes(document.body?.dataset.pictureState) &&
+          !document.querySelector('#start-button')?.disabled &&
+          !document.hidden,
+        boot: document.documentElement.dataset.bootState,
+        phase: document.body?.dataset.flightState,
+        picture: document.body?.dataset.pictureState ?? null,
+        visibility: document.visibilityState,
+      });
       // Capture the constructed owner once. Never wrap update/draw, evaluate
       // drawOptions, or recompute presentation ownership during active play.
       Object.defineProperty(window, 'Phaser', {
@@ -328,6 +394,18 @@ try {
         totals[offset]++;
         totals[offset + 1] += dt;
         totals[offset + 2] = Math.max(totals[offset + 2], dt);
+        if (frameBudget !== null) {
+          const missedOffset = previousPhase * 3;
+          const gaps = Math.max(0, Math.round(dt / frameBudget) - 1);
+          missed[missedOffset] += gaps;
+          missed[missedOffset + 2] = gaps ? missed[missedOffset + 2] + gaps : 0;
+          missed[missedOffset + 1] = Math.max(missed[missedOffset + 1], missed[missedOffset + 2]);
+        }
+        if (calibrating && calibrationCount < 30) {
+          if (readyState().ready && dt > 0 && Number.isFinite(dt))
+            calibrationSamples[calibrationCount++] = dt;
+          else calibrationCount = 0;
+        }
         if (dt >= 50) totals[offset + 3]++;
         if (dt >= 100) totals[offset + 4]++;
         if (dt >= 50) {
@@ -343,6 +421,42 @@ try {
       }
       requestAnimationFrame(frame);
       window.soloQualificationProbe = {
+        startApplicationProbe() {
+          if (!workProbe || workSubscribed) return;
+          if (!observedGame)
+            throw new Error('Phaser owner unavailable for independent observation');
+          workSubscribed = true;
+          observedGame.events.on(window.Phaser.Core.Events.PRE_STEP, () => {
+            workStarted = performance.now();
+          });
+          observedGame.events.on(window.Phaser.Core.Events.POST_RENDER, () => {
+            if (workStarted === undefined) return;
+            const elapsed = performance.now() - workStarted;
+            workStarted = undefined;
+            const offset = phase * workWidth;
+            workTotals[offset]++;
+            workTotals[offset + 1] += elapsed;
+            workTotals[offset + 2] = Math.max(workTotals[offset + 2], elapsed);
+            let bucket = 0;
+            while (workBounds[bucket] !== null && elapsed > workBounds[bucket]) bucket++;
+            workTotals[offset + 3 + bucket]++;
+            const sample = (workCount++ % 5000) * 2;
+            workRecent[sample] = elapsed;
+            workRecent[sample + 1] = phase;
+          });
+          calibrating = true;
+        },
+        calibrationProgress: () => ({
+          count: calibrationCount,
+          samples: Array.from(calibrationSamples.subarray(0, calibrationCount)),
+          state: readyState(),
+        }),
+        finishCalibration(value) {
+          if (calibration) throw new Error('A document may only accept one pre-play calibration');
+          calibrating = false;
+          calibration = value;
+          if (value.status === 'measured-before-play') frameBudget = value.baselineMs;
+        },
         presentation: () => ({
           atMs: performance.now(),
           phase: document.body?.dataset.flightState,
@@ -360,11 +474,24 @@ try {
           tailCount,
           tail: Array.from(tail.subarray(0, Math.min(256, tailCount) * 4)),
           audio: { ...audio },
+          calibration,
+          missed: Array.from(missed),
+          work: workProbe
+            ? {
+                bounds: workBounds,
+                width: workWidth,
+                totals: Array.from(workTotals),
+                count: workCount,
+                retainedCount: Math.min(5000, workCount),
+                omittedCount: Math.max(0, workCount - 5000),
+                recent: Array.from(workRecent.subarray(0, Math.min(5000, workCount) * 2)),
+              }
+            : null,
           now: performance.now(),
         }),
       };
     },
-    { bounds: FRAME_BOUNDS },
+    { bounds: FRAME_BOUNDS, workProbe },
   );
   if (cpu !== 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
   const entryURL = scenario.entryPath ? new URL(scenario.entryPath, url) : url;
@@ -391,6 +518,57 @@ try {
     await page.waitForFunction(() => document.documentElement.dataset.bootState === 'ready', null, {
       timeout: 120000,
     });
+  if (report.sourceRevision) {
+    const identityURL = new URL('build-info.json', url).href;
+    const identity = await page.evaluate(async (address) => {
+      const response = await fetch(address, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Generated build identity unavailable: ${response.status}`);
+      return response.text();
+    }, identityURL);
+    assert(
+      Buffer.byteLength(identity) <= 65536,
+      'Build identity exceeds its bounded metadata size',
+    );
+    const parsed = JSON.parse(identity);
+    report.buildIdentity = {
+      url: identityURL,
+      sourceRevision: parsed.sourceRevision,
+      version: parsed.version,
+      sha256: createHash('sha256').update(identity).digest('hex'),
+    };
+    assert.equal(
+      parsed.sourceRevision,
+      report.sourceRevision,
+      'Generated build identity does not match requested revision',
+    );
+  }
+  async function prepareObservation(label) {
+    if (!workProbe) return;
+    await page.waitForFunction(
+      () => window.soloQualificationProbe?.calibrationProgress().state.ready,
+      null,
+      { timeout: 60000 },
+    );
+    await page.evaluate(() => window.soloQualificationProbe.startApplicationProbe());
+    let deadlineFailure = null;
+    try {
+      await page.waitForFunction(
+        () => window.soloQualificationProbe.calibrationProgress().count === 30,
+        null,
+        { timeout: 5000 },
+      );
+    } catch (error) {
+      deadlineFailure = String(error.message);
+    }
+    const progress = await page.evaluate(() => window.soloQualificationProbe.calibrationProgress());
+    const calibration = calibrateReadyCadence(progress.samples, progress.state);
+    await page.evaluate(
+      (value) => window.soloQualificationProbe.finishCalibration(value),
+      calibration,
+    );
+    report.prePlayCalibrations.push({ label, url: page.url(), ...calibration, deadlineFailure });
+  }
+  if (!scenario.readySelector) await prepareObservation('initial-ready');
   report.readyAt = new Date().toISOString();
   report.environment.userAgent = await page.evaluate(() => navigator.userAgent);
   deadline = Date.now() + scenario.timeoutMs;
@@ -447,6 +625,7 @@ try {
             null,
             { timeout },
           );
+          await prepareObservation(`reload-${path}`);
         } else if (action.type === 'follow') {
           const href = await locator.getAttribute('href');
           assert(href, 'Missing prepared UI link');
@@ -470,6 +649,7 @@ try {
             null,
             { timeout },
           );
+          await prepareObservation(`follow-${path}`);
         } else if (action.type === 'select') await locator.selectOption(action.value, { timeout });
         else if (action.type === 'check') await locator.setChecked(action.value, { timeout });
         else if (action.type === 'fill') await locator.fill(action.value, { timeout });
@@ -572,8 +752,11 @@ try {
               ),
             };
           });
-          assert(snapshot.application, 'Required application diagnostics unavailable');
-          if (report.sourceRevision)
+          assert(
+            snapshot.application || baselineRuntime,
+            'Required application diagnostics unavailable',
+          );
+          if (report.sourceRevision && snapshot.application)
             assert.equal(
               snapshot.application.sourceRevision,
               report.sourceRevision,
@@ -583,7 +766,8 @@ try {
             group: action.group,
             action: path,
             ...snapshot,
-            qualityPolicy: snapshot.application.quality ?? null,
+            qualityPolicy: snapshot.application?.quality ?? null,
+            internalDiagnosticStatus: snapshot.application ? 'observed' : 'unavailable-baseline',
           };
           report.snapshots.push(row);
           row.memory = await profileMemory();
@@ -609,8 +793,14 @@ try {
     const probe = await page.evaluate(() => window.soloQualificationProbe.export());
     const audio = report.snapshots.at(-1)?.application?.audio;
     report.audioCheck = { observed: probe.audio, master: audio, requirement: scenario.expectAudio };
-    assert.equal(audio?.muted, false, 'Expected an unmuted master at the final paused checkpoint');
-    assert(audio.volume > 0, 'Expected nonzero master volume');
+    if (audio || !baselineRuntime) {
+      assert.equal(
+        audio?.muted,
+        false,
+        'Expected an unmuted master at the final paused checkpoint',
+      );
+      assert(audio.volume > 0, 'Expected nonzero master volume');
+    } else report.audioCheck.internalMasterState = 'unobserved-baseline';
     assert(
       probe.audio.sourceStarts + probe.audio.oscillatorStarts + probe.audio.mediaPlayResolved >=
         scenario.expectAudio.nativeStartsAtLeast,
@@ -619,7 +809,9 @@ try {
   }
   report.resources = resourceStability(report.snapshots, scenario.resourceRules);
   assert(
-    !report.resources.some((row) => row.status !== 'pass'),
+    !report.resources.some(
+      (row) => row.status === 'fail' || (!baselineRuntime && row.status !== 'pass'),
+    ),
     'Resource stability rule failed or was unobserved',
   );
   assert.equal(report.pageErrors.length, 0, 'Uncaught page errors were observed');
@@ -698,7 +890,14 @@ try {
   } else if (scenario.kind !== 'recovery') {
     try {
       report.performanceGates = evaluateQualificationBudgets(report.snapshots.at(-1)?.application);
-      report.performanceGateStatus = report.performanceGates.status;
+      report.performanceGateStatus = baselineRuntime
+        ? 'partial-baseline-internal-unknown'
+        : report.performanceGates.status;
+      if (workProbe) {
+        report.externalPerformanceGates = externalQualificationBudgets(report.finalState?.probe);
+        if (report.externalPerformanceGates.status === 'fail')
+          report.performanceGateStatus = 'fail';
+      }
     } catch (error) {
       report.performanceGateStatus = 'invalid-evidence';
       report.performanceGateFailure = String(error.stack ?? error);
