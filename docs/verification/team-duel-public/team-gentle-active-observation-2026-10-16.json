@@ -1,0 +1,3409 @@
+[
+  {
+    "action": "Navigation timing",
+    "mode": "team",
+    "outcome": "browser entries; no device qualification",
+    "browserAtFrameLoad": {
+      "navigation": {
+        "responseStartMs": 11.899999999906868,
+        "domInteractiveMs": 26.200000000186265,
+        "domContentLoadedMs": 159.60000000009313,
+        "loadEventEndMs": 179.60000000009313
+      },
+      "paint": {
+        "firstPaintMs": null,
+        "firstContentfulPaintMs": null
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 10966480,
+        "totalBytes": 14070608,
+        "limitBytes": 4395630592
+      }
+    },
+    "resourcesAtFrameLoad": 32
+  },
+  {
+    "action": "Load to playable menu",
+    "mode": "team",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 13604.899999999907,
+    "mission": "team-harbor-handoff",
+    "trustedActivation": null,
+    "resourcesAtReady": 250,
+    "transferBytesAtReady": 6671359,
+    "jsDecodedBytesAtReady": 5634279,
+    "cssDecodedBytesAtReady": 400212,
+    "zeroTransferEntries": 0,
+    "viewport": {
+      "width": 1280,
+      "height": 561,
+      "dpr": 2
+    },
+    "browserAtReady": {
+      "navigation": {
+        "responseStartMs": 11.899999999906868,
+        "domInteractiveMs": 26.200000000186265,
+        "domContentLoadedMs": 159.60000000009313,
+        "loadEventEndMs": 179.60000000009313
+      },
+      "paint": {
+        "firstPaintMs": 188,
+        "firstContentfulPaintMs": 188
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 65746964,
+        "totalBytes": 156612488,
+        "limitBytes": 4395630592
+      }
+    },
+    "mediaAtReady": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "coop-preview-canvas",
+          "width": 576,
+          "height": 288,
+          "rgbaBackingEstimateBytes": 663552
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "coop-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-discovery-preview-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-earned-picture-canvas",
+          "width": 0,
+          "height": 0,
+          "rgbaBackingEstimateBytes": 0
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        }
+      ],
+      "canvasRGBAEstimateBytes": 12851804,
+      "domImageCount": 3,
+      "domImageRGBAEstimateBytes": 18871680,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    }
+  },
+  {
+    "action": "Choose mission",
+    "mode": "team",
+    "outcome": "timeout; not a passing sample",
+    "ms": null,
+    "mission": "team-harbor-handoff",
+    "trustedActivation": true,
+    "focusAtActivation": {
+      "atMs": 109946.1000000001,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": null,
+          "tag": "BUTTON"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 139962.6000000001,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": null,
+          "tag": "BUTTON"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    }
+  },
+  {
+    "action": "Choose mission",
+    "mode": "team",
+    "outcome": "timeout; not a passing sample",
+    "ms": null,
+    "mission": "team-expedition-homecoming",
+    "trustedActivation": true,
+    "focusAtActivation": {
+      "atMs": 144199.7000000002,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": null,
+          "tag": "BUTTON"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 174199.1000000001,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "coop-canvas",
+          "tag": "CANVAS"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    }
+  },
+  {
+    "action": "Retry",
+    "mode": "team",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 7698.200000000186,
+    "mission": "team-expedition-homecoming",
+    "trustedActivation": true
+  },
+  {
+    "action": "Resume",
+    "mode": "team",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 20.899999999906868,
+    "mission": "team-expedition-homecoming",
+    "trustedActivation": true
+  },
+  {
+    "action": "Retry",
+    "mode": "team",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 5074.799999999814,
+    "mission": "team-expedition-homecoming",
+    "trustedActivation": true
+  },
+  {
+    "action": "Resume",
+    "mode": "team",
+    "outcome": "timeout; not a passing sample",
+    "ms": null,
+    "mission": "team-expedition-homecoming",
+    "trustedActivation": true,
+    "focusAtActivation": {
+      "atMs": 416483.8000000003,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": null,
+          "tag": "BODY"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": false,
+        "activeControl": {
+          "id": null,
+          "tag": "BODY"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 446485.1000000001,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "multiplayer-target",
+          "tag": "SELECT"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": false,
+        "activeControl": {
+          "id": null,
+          "tag": "BODY"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    }
+  },
+  {
+    "action": "Resume",
+    "mode": "team",
+    "outcome": "two consecutive animation-frame readiness observations",
+    "ms": 22.59999999962747,
+    "mission": "team-expedition-homecoming",
+    "trustedActivation": true
+  },
+  {
+    "action": "Frame sample",
+    "mode": "team",
+    "edition": "",
+    "mission": "team-expedition-homecoming",
+    "requestedMission": null,
+    "scope": "active",
+    "requestedDurationMs": 120000,
+    "outcome": "passive desktop sample; compare equivalent baseline before qualification",
+    "durationMs": 120003.5,
+    "frameIntervals": {
+      "count": 14387,
+      "medianMs": 8.299999999813735,
+      "p95Ms": 10.099999999627471,
+      "p99Ms": 11.200000000186265,
+      "maxMs": 37,
+      "over33ms": 2,
+      "over50ms": 0
+    },
+    "longTasks": {
+      "supported": true,
+      "count": 0,
+      "over50Ms": 0,
+      "maxMs": 0,
+      "omittedCount": 0
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 561,
+      "dpr": 2
+    },
+    "environment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "hardwareConcurrency": 14,
+      "pageUrl": "http://127.0.0.1:8931/game/couch/relay-rescue.html?journey=team-expedition-v1",
+      "buildVersion": "__REVEALLINE_VERSION__"
+    },
+    "inputs": {
+      "player1Keydowns": 15,
+      "player2Keydowns": 15,
+      "trustedKeydowns": 30,
+      "untrustedKeydowns": 0
+    },
+    "focusAtArm": {
+      "atMs": 402864.2000000002,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "sample",
+          "tag": "BUTTON"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": false,
+        "activeControl": {
+          "id": null,
+          "tag": "BODY"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    },
+    "focusAtFinish": {
+      "atMs": 581151.8000000003,
+      "outer": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "game",
+          "tag": "IFRAME"
+        }
+      },
+      "game": {
+        "hidden": false,
+        "visibility": "visible",
+        "focused": true,
+        "activeControl": {
+          "id": "coop-canvas",
+          "tag": "CANVAS"
+        }
+      },
+      "accessState": "unlocked",
+      "toolState": "ready",
+      "controls": {
+        "coop-start": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-resume": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-play": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-canvas": {
+          "shown": true,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-overlay": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-picture-status": {
+          "shown": false,
+          "disabled": false,
+          "state": "ready",
+          "open": null
+        },
+        "coop-selection-status": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": null
+        },
+        "coop-options": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discovery-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-discard-dialog": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        },
+        "coop-earned-picture": {
+          "shown": false,
+          "disabled": false,
+          "state": null,
+          "open": false
+        }
+      }
+    },
+    "activity": [
+      {
+        "atMs": 0.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:00",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 1007.9000000003725,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:01",
+          "coop-coverage": "0.0%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 2008.9000000003725,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:02",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 3015.4000000003725,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:03",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 4023.8000000002794,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:04",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 5033.700000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:05",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 6033.700000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:06",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 7041.800000000279,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:07",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 8042.100000000093,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:08",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 9050.200000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:09",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 10058.100000000093,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:10",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 11066.700000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:11",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 12066.900000000373,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:12",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 13073.700000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:13",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 14083.200000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:14",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 15090.30000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:15",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 16091.30000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:16",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 17098.600000000093,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:17",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 18108.700000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:18",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 19117.200000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:19",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 20124.900000000373,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:20",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 21125,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:21",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 22133.200000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:22",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 23142,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:23",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 24142.400000000373,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:24",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 25149.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:25",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 26158.200000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:26",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 27158.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:27",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 28158.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:28",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 29165.200000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:29",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 30165.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:30",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 31167,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:31",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 32173.900000000373,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:32",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 33176.200000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:33",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 34182.30000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:34",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 35183.700000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:35",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 36184.10000000009,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:36",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 37192.10000000009,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:37",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 38192.200000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:38",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 39200.40000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:39",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 40208.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:40",
+          "coop-coverage": "0.7%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 41209,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:41",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 42215.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:42",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 43223.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:43",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 44225,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:44",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 45233.10000000009,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:45",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 46241.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:46",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 47242,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:47",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 48250.30000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:48",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 49258.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:49",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 50258.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:50",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 51258.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:51",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 52265.90000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:52",
+          "coop-coverage": "1.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 53266.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:53",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 54274.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:54",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 55282.30000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:55",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 56283.40000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:56",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 57290.700000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:57",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 58299.200000000186,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:58",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 59305.60000000009,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "0:59",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 60307.30000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:00",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 61307.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:01",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 62308.60000000009,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:02",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 63316.40000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:03",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 64317,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:04",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 65318,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:05",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 66324.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:06",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 67324.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:07",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 68332.30000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:08",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 69333.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:09",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 70341.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:10",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 71348.6000000001,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:11",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 72350.1000000001,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:12",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 73358.1000000001,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:13",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 74358.70000000019,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:14",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 75367.20000000019,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:15",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 76367.30000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:16",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 77375.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:17",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 78383.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:18",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 79383.70000000019,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:19",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 80391.70000000019,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:20",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 81400.30000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:21",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 82408.80000000028,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:22",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 83409.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:23",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 84415.70000000019,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:24",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 85416.1000000001,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:25",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 86416.6000000001,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:26",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 87425,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:27",
+          "coop-coverage": "1.8%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 88433.10000000056,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:28",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 89433.90000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:29",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 90434,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:30",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 91442.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:31",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 92443,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:32",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 93449.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:33",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 94450.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:34",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 95458.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:35",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 96458.70000000019,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:36",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 97459.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:37",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 98466.60000000056,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:38",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 99467,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:39",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 100467.60000000056,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:40",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 101467.60000000056,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:41",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 102474.20000000019,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:42",
+          "coop-coverage": "3.1%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "Line exposed",
+          "coop-state-1": "Line exposed",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 103475,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:43",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 104475.40000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:44",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 105482.90000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:45",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 106492,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:46",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 107492,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:47",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 108492.29999999981,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:48",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 109500.90000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:49",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 110501.29999999981,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:50",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 111508.10000000056,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:51",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 112508.20000000019,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:52",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 113516.29999999981,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:53",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 114516.79999999981,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:54",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 115523.90000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:55",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 116525.29999999981,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:56",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 117533.60000000056,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:57",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 118542.40000000037,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:58",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      },
+      {
+        "atMs": 119550.5,
+        "hud": {
+          "coop-stage": "EXPEDITION HOMECOMING",
+          "coop-clock": "1:59",
+          "coop-coverage": "4.9%",
+          "coop-reserves": "4 reserves",
+          "coop-state-0": "On reclaimed ground",
+          "coop-state-1": "On reclaimed ground",
+          "coop-charge-0": "Interceptor ready",
+          "coop-charge-1": "Disruptor ready"
+        },
+        "encounter": {
+          "supported": false,
+          "reason": "Independent encounter cards are observed only in Duel."
+        }
+      }
+    ],
+    "hudBefore": {
+      "coop-stage": "EXPEDITION HOMECOMING",
+      "coop-clock": "0:00",
+      "coop-coverage": "0.0%",
+      "coop-reserves": "4 reserves",
+      "coop-state-0": "On reclaimed ground",
+      "coop-state-1": "On reclaimed ground",
+      "coop-charge-0": "Interceptor ready",
+      "coop-charge-1": "Disruptor ready"
+    },
+    "hudAfter": {
+      "coop-stage": "EXPEDITION HOMECOMING",
+      "coop-clock": "2:00",
+      "coop-coverage": "4.9%",
+      "coop-reserves": "4 reserves",
+      "coop-state-0": "On reclaimed ground",
+      "coop-state-1": "On reclaimed ground",
+      "coop-charge-0": "Interceptor ready",
+      "coop-charge-1": "Disruptor ready"
+    },
+    "encounterObservationVersion": 1,
+    "encounterBefore": {
+      "supported": false,
+      "reason": "Independent encounter cards are observed only in Duel."
+    },
+    "encounterAfter": {
+      "supported": false,
+      "reason": "Independent encounter cards are observed only in Duel."
+    },
+    "browserBefore": {
+      "navigation": {
+        "responseStartMs": 11.899999999906868,
+        "domInteractiveMs": 26.200000000186265,
+        "domContentLoadedMs": 159.60000000009313,
+        "loadEventEndMs": 179.60000000009313
+      },
+      "paint": {
+        "firstPaintMs": 188,
+        "firstContentfulPaintMs": 188
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 48626526,
+        "totalBytes": 54291754,
+        "limitBytes": 4395630592
+      }
+    },
+    "browserAfter": {
+      "navigation": {
+        "responseStartMs": 11.899999999906868,
+        "domInteractiveMs": 26.200000000186265,
+        "domContentLoadedMs": 159.60000000009313,
+        "loadEventEndMs": 179.60000000009313
+      },
+      "paint": {
+        "firstPaintMs": 188,
+        "firstContentfulPaintMs": 188
+      },
+      "jsHeap": {
+        "supported": true,
+        "usedBytes": 60312974,
+        "totalBytes": 81418054,
+        "limitBytes": 4395630592
+      }
+    },
+    "jsHeapTimeline": {
+      "supported": true,
+      "intervalMs": 5000,
+      "maxSnapshots": 62,
+      "samples": [
+        {
+          "atMs": 0,
+          "usedBytes": 48626526,
+          "totalBytes": 54291754,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 5000.200000000186,
+          "usedBytes": 50244190,
+          "totalBytes": 58048106,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 10006.80000000028,
+          "usedBytes": 49361716,
+          "totalBytes": 58312204,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 15008.600000000093,
+          "usedBytes": 49975262,
+          "totalBytes": 58305014,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 20016.30000000028,
+          "usedBytes": 54491395,
+          "totalBytes": 64073767,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 25016.700000000186,
+          "usedBytes": 51783672,
+          "totalBytes": 64337252,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 30023.600000000093,
+          "usedBytes": 49894955,
+          "totalBytes": 64338719,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 35025,
+          "usedBytes": 54675064,
+          "totalBytes": 64864652,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 40033.80000000028,
+          "usedBytes": 50763952,
+          "totalBytes": 64865932,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 45042.30000000028,
+          "usedBytes": 52243463,
+          "totalBytes": 65916487,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 50050.60000000009,
+          "usedBytes": 52581903,
+          "totalBytes": 77967087,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 55057.5,
+          "usedBytes": 59723097,
+          "totalBytes": 79280069,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 60058.5,
+          "usedBytes": 50619065,
+          "totalBytes": 79019469,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 65058.90000000037,
+          "usedBytes": 52929574,
+          "totalBytes": 79282250,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 70065.5,
+          "usedBytes": 54753707,
+          "totalBytes": 79282759,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 75067,
+          "usedBytes": 57662917,
+          "totalBytes": 79021609,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 80067.70000000019,
+          "usedBytes": 60161243,
+          "totalBytes": 79546727,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 85075.20000000019,
+          "usedBytes": 69132175,
+          "totalBytes": 88728403,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 90075.5,
+          "usedBytes": 50244912,
+          "totalBytes": 80069472,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 95083.29999999981,
+          "usedBytes": 58019642,
+          "totalBytes": 80346962,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 100083.79999999981,
+          "usedBytes": 56959312,
+          "totalBytes": 80614176,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 105091.10000000056,
+          "usedBytes": 52431043,
+          "totalBytes": 80867715,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 110092.20000000019,
+          "usedBytes": 62185844,
+          "totalBytes": 80923008,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 115099.40000000037,
+          "usedBytes": 56129446,
+          "totalBytes": 81164362,
+          "limitBytes": 4395630592
+        },
+        {
+          "atMs": 120003.5,
+          "usedBytes": 60312974,
+          "totalBytes": 81418054,
+          "limitBytes": 4395630592
+        }
+      ],
+      "peakObservedUsedBytes": 69132175,
+      "limits": "Sampled non-standard JS heap counters can miss peaks and include shared heaps. No forced GC, retention attribution, complete media/GPU memory, or leak conclusion."
+    },
+    "mediaBefore": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 256,
+          "height": 170,
+          "rgbaBackingEstimateBytes": 174080
+        },
+        {
+          "id": "coop-preview-canvas",
+          "width": 576,
+          "height": 288,
+          "rgbaBackingEstimateBytes": 663552
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "coop-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-earned-picture-canvas",
+          "width": 0,
+          "height": 0,
+          "rgbaBackingEstimateBytes": 0
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        },
+        {
+          "id": "coop-discovery-preview-canvas",
+          "width": 0,
+          "height": 0,
+          "rgbaBackingEstimateBytes": 0
+        }
+      ],
+      "canvasRGBAEstimateBytes": 10191676,
+      "domImageCount": 4,
+      "domImageRGBAEstimateBytes": 18961680,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    },
+    "mediaAfter": {
+      "canvases": [
+        {
+          "id": "",
+          "width": 1469,
+          "height": 979,
+          "rgbaBackingEstimateBytes": 5752604
+        },
+        {
+          "id": "",
+          "width": 256,
+          "height": 170,
+          "rgbaBackingEstimateBytes": 174080
+        },
+        {
+          "id": "coop-preview-canvas",
+          "width": 576,
+          "height": 288,
+          "rgbaBackingEstimateBytes": 663552
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "coop-canvas",
+          "width": 1152,
+          "height": 576,
+          "rgbaBackingEstimateBytes": 2654208
+        },
+        {
+          "id": "coop-earned-picture-canvas",
+          "width": 0,
+          "height": 0,
+          "rgbaBackingEstimateBytes": 0
+        },
+        {
+          "id": "",
+          "width": 320,
+          "height": 120,
+          "rgbaBackingEstimateBytes": 153600
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 56,
+          "height": 56,
+          "rgbaBackingEstimateBytes": 12544
+        },
+        {
+          "id": "",
+          "width": 300,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 180000
+        },
+        {
+          "id": "",
+          "width": 960,
+          "height": 150,
+          "rgbaBackingEstimateBytes": 576000
+        },
+        {
+          "id": "coop-discovery-preview-canvas",
+          "width": 0,
+          "height": 0,
+          "rgbaBackingEstimateBytes": 0
+        }
+      ],
+      "canvasRGBAEstimateBytes": 10191676,
+      "domImageCount": 4,
+      "domImageRGBAEstimateBytes": 18961680,
+      "imageResourceBodyBytes": 485216,
+      "decodedMediaMemory": {
+        "supported": false,
+        "reason": "Browser exposes no complete decoded image, audio or GPU allocation counter here. Pixel estimates exclude off-DOM textures, copies and drivers; resource body bytes are compressed media, not decoded pixel memory."
+      }
+    },
+    "newResourceEntries": 0
+  }
+]
