@@ -34,9 +34,32 @@ python3 restore.py \
 
 The cache may reuse an existing asset only after its entire size and hash match. Restoration refuses an existing output directory and symlinks in cache/output ancestors. Every restored logical file is checked while writing and fully rehashed afterward. Original modes and modification times are applied after byte verification.
 
+Before creating the destination or downloading payloads, restoration measures free space on the chosen cache and output filesystems. Its conservative estimate includes compressed assets, all extracted CAS members, logical copies, Git dependency caches and copies, metadata allowance and a 2 GiB free-space reserve. It refuses insufficient space without clearing the runner or changing disks. A fresh cloud runner's measured capacity must pass this gate before a full restore is attempted.
+
+`portable_restore_check.py` is the full qualification entry point. It refuses a partial or unconfirmed index, checks the entire path/type/link graph before downloading, then actually restores every file and reviewed Git dependency in one fresh tree. It verifies applied modes and timestamps and resolves every created link to the exact reviewed within-root terminal. Its receipt separates inventoried-payload restoration from the overall source/dependency/disconnect decision:
+
+```sh
+python3 portable_restore_check.py --index /chosen/backup/preservation-index.json \
+  --work /chosen/disk/fresh-full-restore --receipt /chosen/backup/full-portable-restore.json
+```
+
+The scoped `FPV preservation portable restore` cloud workflow runs only after a root-confirmed complete final index is committed under the final-index receipt directory. Its standard runner uses the same pre-download space gate and GET-only draft-release access on this repository's exact preservation branch and PR #1552. It uploads only a small verification summary, without payloads or the old absolute external target.
+
+If a full restore does not fit, `bounded_restore.py` creates an exact deterministic path partition plan from the same index. Each fresh runner downloads only the parts or direct assets required by its assigned paths and applies the same byte, mode and timestamp checks. Its plan covers each logical path exactly once and checks the complete path/type/link graph; its collection refuses missing, duplicate or mismatched receipts. A separate empty-marker layout probe recreates and resolves every relative link under one chosen root, explicitly without claiming to have materialized payload bytes there. Partition receipts disclose that no one-shot payload materialization occurred and cannot establish overall disconnect safety. Choose a fresh path for each plan, work directory and receipt:
+
+```sh
+python3 bounded_restore.py --index /chosen/backup/preservation-index.json \
+  --create-plan --plan /chosen/backup/restore-partitions.json
+python3 bounded_restore.py --index /chosen/backup/preservation-index.json \
+  --plan /chosen/backup/restore-partitions.json --partition partition-0000 \
+  --work /chosen/disk/fresh-partition-0000 --receipt /chosen/backup/partition-0000.json
+python3 bounded_restore.py --index /chosen/backup/preservation-index.json \
+  --probe-links --work /chosen/disk/fresh-link-layout --receipt /chosen/backup/link-layout.json
+```
+
 Within-root absolute symlinks are rewritten to relative links under the selected restore root. Relative links escaping that root and absolute targets outside the historical source root are reported and not recreated. Dangling or looping internal links are also reported. `--defer-external-dependencies` permits a reviewed partial restoration to exit successfully, but never changes a false completion field into a true one. Source Git checkouts must be recovered through the separate source preservation manifest and Git bundles/branches; this tool never claims overall disconnect safety.
 
-A separately reviewed GitHub subtree can close an exact outside-root link without recreating its old absolute target. Supply its matching `--github-link-mapping` and `--github-link-coverage` receipts when creating the index. The importer requires the exact captured link, a fully tracked clean file manifest, matching counts and the reviewed Git tree identity. Restoration confirms the subtree against the pinned commit, downloads every Git blob, checks its Git identity, byte length and SHA-256, then exclusively copies and rehashes it under the reviewed relative dependency destination. The leaf link becomes relative only after all dependency files verify. Unknown links continue to be reported and held open.
+A separately reviewed GitHub subtree can close an exact outside-root link without recreating its old absolute target. Supply its matching `--github-link-mapping` and `--github-link-coverage` receipts when creating the index. The importer requires both reviewed receipts to bind the SHA-256 of the exact captured link target, a fully tracked clean file manifest, matching counts and the reviewed Git tree identity. The pinned commit and subtree must also have an exact published binding in the coverage receipt. Restoration confirms the subtree against the pinned commit, downloads every Git blob, checks its Git identity, byte length and SHA-256, then exclusively copies and rehashes it under the reviewed relative dependency destination. The leaf link becomes relative only after all dependency files verify. Unknown links continue to be reported and held open.
 
 Reproducible excluded package-manager dependencies should be installed using the corresponding recovered lockfile and pinned version. The root audit's local dependency repair receipt records the `gltf-validator` dependency and its verified internal replacement. No restored app should depend on the historical external share path; unresolved link/dependency records must be closed by the overall audit before disconnect is declared safe.
 

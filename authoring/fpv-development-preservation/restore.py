@@ -6,12 +6,38 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import posixpath
+import shutil
 import subprocess
 import time
 from pack import digest, safe_relative
 from verify_upload import restore_part, validate_header
 from restore_paths import mkdir_safe, real_directory
 from github_dependencies import restore_dependencies, validate_dependency
+
+
+def disk_preflight(index, cache, target, reserve=2 * 1024 ** 3):
+    """Conservative fresh-space gate; never clear a runner to make the restore fit."""
+    def ancestor(path):
+        while not path.exists():
+            path = path.parent
+        return path
+    parts, direct = list(index.get('parts', {}).values()), list(index.get('directAssets', {}).values())
+    objects = [row for part in parts for row in part['partManifest']['objects']]
+    dependencies = [row for dep in index.get('githubLinkDependencies', []) for row in dep['files']]
+    cache_bytes = sum(p['bytes'] for p in parts + direct) + sum(r['bytes'] for r in objects + dependencies)
+    logical_bytes = sum(r['bytes'] for r in index['files'] + dependencies)
+    allowance = 256 * 1024 ** 2 + 8192 * (len(index['files']) + len(objects) + len(dependencies) * 2)
+    cache_parent, target_parent = ancestor(cache), ancestor(target.parent)
+    cache_free, target_free = shutil.disk_usage(cache_parent).free, shutil.disk_usage(target_parent).free
+    same_disk = cache_parent.stat().st_dev == target_parent.stat().st_dev
+    if (same_disk and cache_bytes + logical_bytes + allowance + reserve > min(cache_free, target_free)
+            or not same_disk and (cache_bytes + allowance + reserve > cache_free
+                                  or logical_bytes + allowance + reserve > target_free)):
+        raise ValueError('Insufficient free disk before restoration; use bounded partitions on fresh runners')
+    return {'cacheEstimatedBytes': cache_bytes, 'logicalCopyEstimatedBytes': logical_bytes,
+            'metadataAllowanceBytes': allowance, 'estimatedPeakBytes': cache_bytes + logical_bytes + allowance,
+            'freeDiskReserveBytes': reserve, 'cacheFreeBytesBeforeRestore': cache_free,
+            'targetFreeBytesBeforeRestore': target_free, 'cacheAndTargetOnSameFilesystem': same_disk}
 
 
 def obtain_asset(repo, asset, cache):
@@ -60,6 +86,9 @@ def restore(index, cache, target, receipt_path, defer_external=False):
         if dep['linkPath'] not in link_rows or link_rows[dep['linkPath']]['target'] != dep['originalTargetExact']:
             raise ValueError('Reviewed mapping does not match the exact captured link')
     cache, target = real_directory(cache), real_directory(target)
+    if target.exists():
+        raise FileExistsError('Restore destination must be fresh')
+    disk = disk_preflight(index, cache, target)
     target.mkdir()  # Existing destinations are never merged, cleared or overwritten.
     cache.mkdir(parents=True, exist_ok=True)
     if cache.is_symlink() or target.is_symlink():
@@ -109,6 +138,9 @@ def restore(index, cache, target, receipt_path, defer_external=False):
             raise ValueError('Restored file hash/size differs: ' + row['path'])
         os.chmod(path, row['mode'] & 0o777)
         os.utime(path, ns=(row['mtime_ns'], row['mtime_ns']))
+        restored_stat = path.stat()
+        if restored_stat.st_mode & 0o777 != row['mode'] & 0o777 or restored_stat.st_mtime_ns != row['mtime_ns']:
+            raise ValueError('Restored file metadata differs: ' + row['path'])
         restored_files.append({'path': row['path'], 'bytes': n, 'sha256': row['sha256']})
         logical_bytes += n
         if len(restored_files) % 1000 == 0:
@@ -140,12 +172,14 @@ def restore(index, cache, target, receipt_path, defer_external=False):
             unresolved_links.append(link)
     receipt = {'format': 'FPVPortableRestoreReceipt.v1', 'files': len(restored_files),
                'logicalBytes': logical_bytes, 'allFileHashesMatch': True,
+               'allFileModesAndTimesMatch': True,
                'symlinksRecreated': links, 'externalDependenciesNotCreated': external,
                'unresolvedInternalLinks': unresolved_links,
                'githubDependencyFiles': dependency_files, 'reviewedExternalLinkMappings': list(mappings.values()),
                'githubDependencyFileCount': len(dependency_files),
                'githubDependencyBytes': sum(r['bytes'] for r in dependency_files),
                'allGitHubDependencyFileHashesMatch': True,
+               'diskPreflight': disk,
                'complete': index.get('coverageComplete') is True and not external
                            and not index.get('held') and not index.get('uncovered')
                            and not index.get('inventoryConflicts') and not index.get('inventoryErrorsOrUnstable')
