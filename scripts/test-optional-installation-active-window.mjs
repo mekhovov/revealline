@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { performance } from 'node:perf_hooks';
 import { setTimeout as pause } from 'node:timers/promises';
 import {
   ACTIVE_WINDOW_MODE,
@@ -254,6 +255,35 @@ test('unsupported restore fails both verification and cleanup but never skips de
   assert.equal((await disposeHistoricalSessionWindow(g)).completed, false);
   assert.deepEqual(f.focus, [true, true]);
   assert.deepEqual(f.detached, [true, true]);
+});
+
+test('a valid bounds result delivered after event-loop blocking cannot beat the monotonic deadline', async () => {
+  const f = fixture(),
+    g = await configureHistoricalSessionWindow({ ...f.options, timeoutMs: 20 });
+  const original = f.sessions[0].send;
+  let blocked = false;
+  f.sessions[0].send = async (method, params) => {
+    if (method === 'Browser.getWindowBounds' && !blocked) {
+      blocked = true;
+      // Unit-only synchronous stall deliberately prevents timeout callbacks from
+      // firing first. The returned native state is correct but too late.
+      const until = performance.now() + 45;
+      while (performance.now() < until) {
+        /* block the test event loop */
+      }
+    }
+    return original(method, params);
+  };
+  try {
+    await assert.rejects(minimizeHistoricalSessionWindow(g));
+    assert.equal(f.receipt.windowTransitions[0].passed, false);
+    assert.equal(f.receipt.windowTransitions[0].samples.length, 0);
+    assert.notEqual(f.receipt.minimized, true);
+  } finally {
+    assert.equal((await disposeHistoricalSessionWindow(g)).completed, true);
+  }
+  assert.deepEqual(f.detached, [true, true]);
+  assert.deepEqual(f.focus, [true, true]);
 });
 
 test('a stalled bounds read is bounded and leaves cleanup unverified', async () => {
