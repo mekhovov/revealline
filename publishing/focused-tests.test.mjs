@@ -16,6 +16,24 @@ import {
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const manifest = JSON.parse(await readFile(path.join(directory, 'focused-test-map.json'), 'utf8'));
 
+test('bounded stack tooling selects every stack regression without hiding test registration', () => {
+  for (const changed of [
+    ...['contract', 'source', 'packet', 'measurement', 'artifacts', 'e2e'].flatMap((kind) => [
+      `scripts/pages-stack-${kind}.mjs`,
+      `scripts/test-pages-stack-${kind}.mjs`,
+    ]),
+    '.github/workflows/measure-pages-stack.yml',
+    'scripts/pages-stack-artifact.py',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command, 'Stack tooling must select publishing verification');
+    for (const kind of ['contract', 'source', 'packet', 'measurement', 'artifacts', 'e2e'])
+      assert.ok(command.args.includes(`scripts/test-pages-stack-${kind}.mjs`));
+  }
+});
+
 test('candidate measurement tooling always selects its security and archive regressions', () => {
   for (const changed of [
     'scripts/pages-candidate-measurement.mjs',
