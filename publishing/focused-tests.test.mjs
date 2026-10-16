@@ -25,6 +25,15 @@ test('capacity comparison tooling selects its regression suite without broad run
   }
 });
 
+test('shared Pages evidence scripts retain their publishing regression gates', () => {
+  for (const kind of ['capacity', 'archive']) {
+    const plan = focusedTestPlan([`scripts/pages-${kind}-evidence.py`], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'publishing-controller');
+    assert.ok(command.args.includes(`scripts/test-pages-${kind}-evidence.mjs`));
+  }
+});
+
 test('the real company package script exposes all tests to exact focused deduplication', async () => {
   const { scripts } = JSON.parse(await readFile(path.join(directory, '../package.json'), 'utf8'));
   const prefix = 'node --test ';
