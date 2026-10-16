@@ -17,6 +17,11 @@ on:
       - 'game/ui/story-dialog.mjs'
       - 'game/ui/operation-status.mjs'
       - 'game/ui/visual-quality-policy.mjs'
+      - 'game/ui/menu-scenes.mjs'
+      - 'game/ui/menu-scene-motion.mjs'
+      - 'game/ui/native-menus.mjs'
+      - 'game/ui/field-kit-surfaces.mjs'
+      - 'game/ui/game-shell.mjs'
       - 'game/ui/demo-audio.mjs'
       - 'game/ui/demo-host.mjs'
       - 'game/ui/soundtrack-panel.mjs'
@@ -55,6 +60,10 @@ on:
       - 'game/test/win-picture-host.test.mjs'
       - 'game/test/demo-reward.test.mjs'
       - 'game/test/visual-quality-policy.test.mjs'
+      - 'game/test/title-visual-quality-host.test.mjs'
+      - 'game/test/menu-scenes.test.mjs'
+      - 'game/test/field-kit-surfaces.test.mjs'
+      - 'game/test/menu-scene-motion.test.mjs'
       - 'game/test/solo-render-submission.test.mjs'
       - 'game/test/demo-audio.test.mjs'
       - 'game/test/demo-audio-host.test.mjs'
@@ -153,6 +162,10 @@ jobs:
         game/test/demo-reward.test.mjs
         game/test/solo-demo-media-admission-host.test.mjs
         game/test/visual-quality-policy.test.mjs
+        game/test/title-visual-quality-host.test.mjs
+        game/test/menu-scenes.test.mjs
+        game/test/field-kit-surfaces.test.mjs
+        game/test/menu-scene-motion.test.mjs
         game/test/solo-render-submission.test.mjs
         game/test/demo-audio.test.mjs
         game/test/demo-audio-host.test.mjs
