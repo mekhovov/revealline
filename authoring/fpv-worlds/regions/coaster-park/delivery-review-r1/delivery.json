@@ -1,0 +1,932 @@
+{
+  "format": "FPVRegionalDelivery.v2",
+  "id": "coaster-gardens-study",
+  "revision": "review-r1",
+  "title": {
+    "en": "Coaster Gardens — six connected park districts",
+    "uk": "Сади атракціонів — шість поєднаних паркових районів"
+  },
+  "terrain": {
+    "path": "terrain/region.json",
+    "bytes": 27053,
+    "sha256": "e8b0d7ebd1d3e0501d07eea8c4f7f61700da28667afee6e7d95f84ee101e6f36"
+  },
+  "scenery": {
+    "path": "scenery/region.json",
+    "bytes": 13262,
+    "sha256": "be355ce2f5233691763b9afc9b474c9a9fa1bbae756363327ef4b3c678644cc7"
+  },
+  "files": [
+    {
+      "path": "scenery/gardens-0-0.glb",
+      "bytes": 430068,
+      "sha256": "7f6528fd527bbfd4a64894221902f802cd085f537428f683983b91b3f0b07a06"
+    },
+    {
+      "path": "scenery/gardens-0-0.json",
+      "bytes": 753022,
+      "sha256": "43639a6b1c11c0349b71615be807accf098f2d1c77178bf35c64e77cee082f15"
+    },
+    {
+      "path": "scenery/gardens-0-3.glb",
+      "bytes": 430068,
+      "sha256": "4a94d399f3cfafbe9286195d7455fed9410655d3547861e7aa961b97e63a05cd"
+    },
+    {
+      "path": "scenery/gardens-0-3.json",
+      "bytes": 753022,
+      "sha256": "21a27d5136baff5d5e9164677ba584282a77eeb4c4921aaeb10e4f47fca16726"
+    },
+    {
+      "path": "scenery/gardens-0-6.glb",
+      "bytes": 430068,
+      "sha256": "fee39c07f31bcac8941f8e92aa0a30b37af0e3277ed191bce2b27052a6e48d3b"
+    },
+    {
+      "path": "scenery/gardens-0-6.json",
+      "bytes": 753022,
+      "sha256": "5752d27a2534107056f9ded7775a8814d5ef22eb3b1ced13f2b14907b4d8d238"
+    },
+    {
+      "path": "scenery/gardens-1-1.glb",
+      "bytes": 503736,
+      "sha256": "f5a5cad3eb60404cba0ada9ed2b8b910b39521fb118562fcdf901a669e77df62"
+    },
+    {
+      "path": "scenery/gardens-1-1.json",
+      "bytes": 843337,
+      "sha256": "bfc2b82d805989efb1f4bc60b50998d286aa724ab3c01b133c65a7430fc37ec1"
+    },
+    {
+      "path": "scenery/gardens-1-2.glb",
+      "bytes": 509208,
+      "sha256": "c03a2208aea6c2af0c8ab0a22765ec61f83920d4419dd8672d5f44928f4cf9ae"
+    },
+    {
+      "path": "scenery/gardens-1-2.json",
+      "bytes": 927692,
+      "sha256": "65556290c36d46d1a92aebead34c4cf27b401ae8d4123e6bdd35fa473b8acc50"
+    },
+    {
+      "path": "scenery/gardens-1-4.glb",
+      "bytes": 521808,
+      "sha256": "c9e12f08ffa244094231ec9571a07076bf0df63ab7f174e383f096c610f2466a"
+    },
+    {
+      "path": "scenery/gardens-1-4.json",
+      "bytes": 903452,
+      "sha256": "388883f7d7c3f55ef2b4fcc3c0dd9ddc497465c82367995722f049408f085b63"
+    },
+    {
+      "path": "scenery/gardens-1-5.glb",
+      "bytes": 509196,
+      "sha256": "e1aa95f9cf2a82b48f224ec9f51f162ee257f9721d9a8e2594d548d968dc643e"
+    },
+    {
+      "path": "scenery/gardens-1-5.json",
+      "bytes": 927668,
+      "sha256": "2089626ce3438ba28bb61e3ecb9609d8be7e85bf7e68b35da10c755df9a25945"
+    },
+    {
+      "path": "scenery/gardens-2-1.glb",
+      "bytes": 471468,
+      "sha256": "61fcc185b8f91019185fe1d4ca4d1ce6cf7fd7290fd969984cfeaec88ff4daa8"
+    },
+    {
+      "path": "scenery/gardens-2-1.json",
+      "bytes": 947724,
+      "sha256": "1055d6ecdec8f17e4bd48c5ce4e12cc995187530bd1818133b248ae0535466c8"
+    },
+    {
+      "path": "scenery/gardens-2-4.glb",
+      "bytes": 336076,
+      "sha256": "159e4570eb949d0d41525a703d3deb11a19ada14b62560ff5adf33a1374c5874"
+    },
+    {
+      "path": "scenery/gardens-2-4.json",
+      "bytes": 514698,
+      "sha256": "0dec215e0231add1cce7e14a7e2295d8e53733346984ea5b3ca19099dc75fc85"
+    },
+    {
+      "path": "scenery/gardens-2-6.glb",
+      "bytes": 440492,
+      "sha256": "dc929f4ad3f0563d8cb6a0448af858d6f83ab22096005fcf71bbb24855c29fd2"
+    },
+    {
+      "path": "scenery/gardens-2-6.json",
+      "bytes": 763946,
+      "sha256": "0cfc220894f77fcfc8c196fb23d2a3ae029b57bcb04d22900bbad45f79dd17c7"
+    },
+    {
+      "path": "scenery/gardens-2-7.glb",
+      "bytes": 509224,
+      "sha256": "f083c095adc0038ec915006e86f28262922a9e8cdc42cbb303b132db971f1efd"
+    },
+    {
+      "path": "scenery/gardens-2-7.json",
+      "bytes": 927728,
+      "sha256": "8eca365c78058cbde8a3ca0ea5b4ca3c610d6fa53f8a3991795ccfb28ff57d3c"
+    },
+    {
+      "path": "scenery/gardens-3-0.glb",
+      "bytes": 430068,
+      "sha256": "f8975196d013561d03891048c99af4be7682af47a542c962f4acb6d100dddc6a"
+    },
+    {
+      "path": "scenery/gardens-3-0.json",
+      "bytes": 753022,
+      "sha256": "d61448cf29215c00206048f63c5fd11f9976a57181b67950ca72244d9be0810a"
+    },
+    {
+      "path": "scenery/gardens-3-6.glb",
+      "bytes": 305580,
+      "sha256": "d1e18802e1ec024c89a0cdba1f51640eb72eb9e389e403c63a3a532a88581dd4"
+    },
+    {
+      "path": "scenery/gardens-3-6.json",
+      "bytes": 453886,
+      "sha256": "32572155db0d855cb5e1bd0e401cd4ac20a611ac3373901ea035dfde75d9acb5"
+    },
+    {
+      "path": "scenery/gardens-3-7.glb",
+      "bytes": 430068,
+      "sha256": "c357dfa43800df371575a3cec65117d6aa110944e2f5bc861023b80d2c7f53ea"
+    },
+    {
+      "path": "scenery/gardens-3-7.json",
+      "bytes": 753022,
+      "sha256": "96e54f4c1f28cdbc69d9b3fb1fedcc06b4b9711342fcb8c61549fca1a178d77c"
+    },
+    {
+      "path": "scenery/gardens-4-1.glb",
+      "bytes": 373140,
+      "sha256": "6724de717c326dce2fd71d4ac8fdb7accbed639447ff266b687e8a17b93ccbad"
+    },
+    {
+      "path": "scenery/gardens-4-1.json",
+      "bytes": 587568,
+      "sha256": "90722ac088c82a7d037ab034ba8337d248e2c058444949914385d6e1ad097ead"
+    },
+    {
+      "path": "scenery/gardens-4-2.glb",
+      "bytes": 509184,
+      "sha256": "5e1b731ab696c48a9f3bffb2993acbe13d987efa2d124fc1c1c678f452946788"
+    },
+    {
+      "path": "scenery/gardens-4-2.json",
+      "bytes": 927644,
+      "sha256": "7304018198a52547b5a3750f763162502f4add1aa231d6f036e8b7f2e9252da1"
+    },
+    {
+      "path": "scenery/gardens-5-1.glb",
+      "bytes": 471464,
+      "sha256": "5cf8666f1f879e0107b45e653055e7745488e63b419aada678a0fe528d0c5ae0"
+    },
+    {
+      "path": "scenery/gardens-5-1.json",
+      "bytes": 947716,
+      "sha256": "2b305471cada9945c0784a0e6b4c0dd1580eebc5da8b2b507ee7c3d51f30f918"
+    },
+    {
+      "path": "scenery/gardens-5-5.glb",
+      "bytes": 338480,
+      "sha256": "11e5c89954f8998017781d780f1afbb8c0719b6ebaa4377c20308414b2cf4d6c"
+    },
+    {
+      "path": "scenery/gardens-5-5.json",
+      "bytes": 474420,
+      "sha256": "0ba188599fe6da5bc351757bdb71ca9dcc69fb06648ebdb3c162a3222a1552a0"
+    },
+    {
+      "path": "scenery/gardens-5-6.glb",
+      "bytes": 509200,
+      "sha256": "07b6c434755569642516965b00c06ce0b87be5d9b761f6acd22ed0a6e802e0f0"
+    },
+    {
+      "path": "scenery/gardens-5-6.json",
+      "bytes": 927680,
+      "sha256": "b0acd3a31540801f9c1dda2e3d48d71e201d2df657669f4b2116f8e8a839318e"
+    },
+    {
+      "path": "scenery/gardens-6-0.glb",
+      "bytes": 430068,
+      "sha256": "e4cb80b811691595c5c18162b5fb65fcfa2cc98b6520996eb880942457cedc99"
+    },
+    {
+      "path": "scenery/gardens-6-0.json",
+      "bytes": 753022,
+      "sha256": "16587829b6e96512cbf48df956cdb220bddff325316f6d6ef64ed9c479d1a6a1"
+    },
+    {
+      "path": "scenery/gardens-6-2.glb",
+      "bytes": 384540,
+      "sha256": "12193575b41143b63d49bbd219d6825cd2616c8e62d54e9045beab3a22c0c8b8"
+    },
+    {
+      "path": "scenery/gardens-6-2.json",
+      "bytes": 609589,
+      "sha256": "c8ddc1e305850ab1ed9b6bd8a204dd04d455e9207c878b940c3a5af2de49da99"
+    },
+    {
+      "path": "scenery/gardens-6-3.glb",
+      "bytes": 509196,
+      "sha256": "1786f41c9a783d71df6c8fef9bf333d8eb5403a13fa2f78cd41be88bae17013f"
+    },
+    {
+      "path": "scenery/gardens-6-3.json",
+      "bytes": 927668,
+      "sha256": "15c9effd6655198072c2f078d4f796febf7d635b80108feb28cbc64d31d01772"
+    },
+    {
+      "path": "scenery/gardens-6-5.glb",
+      "bytes": 336076,
+      "sha256": "e40b6228e3e7b30da0ed83eae4d2fe8b5bea73bf7518763d990a112de10cde3c"
+    },
+    {
+      "path": "scenery/gardens-6-5.json",
+      "bytes": 514700,
+      "sha256": "e7812d19db704de3ced7638b27cd328bbee3bad79886df3a7d285890e678e8d1"
+    },
+    {
+      "path": "scenery/gardens-6-7.glb",
+      "bytes": 430068,
+      "sha256": "ef3042dbc555876459f4f8ff56f7072f398e7ea8ed4206d58346b2f823a096d4"
+    },
+    {
+      "path": "scenery/gardens-6-7.json",
+      "bytes": 753022,
+      "sha256": "ae3889f620a44fa9cdada4764d84e9a4524430e5c4f1b7998d676810f0580398"
+    },
+    {
+      "path": "scenery/gardens-7-2.glb",
+      "bytes": 336076,
+      "sha256": "74379c32a9029e62bd894343f55125c40e6cfd7c1afee2f590cc869650a8245f"
+    },
+    {
+      "path": "scenery/gardens-7-2.json",
+      "bytes": 514698,
+      "sha256": "00f0e54b8e3d9faea547d4a7644d6b2de2fe707951bf5bc6c9748e0cfceba8c6"
+    },
+    {
+      "path": "scenery/gardens-7-3.glb",
+      "bytes": 430068,
+      "sha256": "d645674ced1139c305f35b1294e31b196deb3efb4f3b51808232fedc5d56ccf7"
+    },
+    {
+      "path": "scenery/gardens-7-3.json",
+      "bytes": 753022,
+      "sha256": "8c2ea5ade59d344651036b68e745ce8a11884dc894acf51c2d5e3612ef752cb4"
+    },
+    {
+      "path": "scenery/region.json",
+      "bytes": 13262,
+      "sha256": "be355ce2f5233691763b9afc9b474c9a9fa1bbae756363327ef4b3c678644cc7"
+    },
+    {
+      "path": "terrain/gardens-0-0.glb",
+      "bytes": 38404,
+      "sha256": "3347e7d423e32a80219a480321d608134b4baaa267ae378a2e712ecf9130b362"
+    },
+    {
+      "path": "terrain/gardens-0-0.json",
+      "bytes": 6040,
+      "sha256": "c81531f4f78185b9bfce27c42e733844ebb4be3515e311e7e0771c7e39e8ee3e"
+    },
+    {
+      "path": "terrain/gardens-0-1.glb",
+      "bytes": 38404,
+      "sha256": "5480c86e1a42c948f370b9daf4a6d6fddb3a7a4e214babe7eb43731bd5520c9a"
+    },
+    {
+      "path": "terrain/gardens-0-1.json",
+      "bytes": 6586,
+      "sha256": "0445f8773e658741cb3c21cc3b5ddd55f8d67f05b21c7c417fd20cc9c3152d12"
+    },
+    {
+      "path": "terrain/gardens-0-2.glb",
+      "bytes": 38424,
+      "sha256": "bdf616f670e8e28eb0e2c191187cf0342f8ba21291885c64a91409ea8955af76"
+    },
+    {
+      "path": "terrain/gardens-0-2.json",
+      "bytes": 6652,
+      "sha256": "ee01f283c5c82267d711f3d8a3fdcb950e16f21886f0521847a137eff3133683"
+    },
+    {
+      "path": "terrain/gardens-0-3.glb",
+      "bytes": 38404,
+      "sha256": "e7afed1a291ab89e03caff0f89dd533a1f27289fef6b765707f3ddf0debd5419"
+    },
+    {
+      "path": "terrain/gardens-0-3.json",
+      "bytes": 6058,
+      "sha256": "7692465a66195bc81ea8e8ec2b3970e33fb8c71fb301655828bf634591d5ad28"
+    },
+    {
+      "path": "terrain/gardens-0-4.glb",
+      "bytes": 38404,
+      "sha256": "90ba1746cf2010e09033e47adbdfd0aed2cbe966ecf3805a29656a966fc7ac37"
+    },
+    {
+      "path": "terrain/gardens-0-4.json",
+      "bytes": 6556,
+      "sha256": "ee8bb45e9f37d6dc519760114b113c1c0186e087d0d6a8d16e5f52d3aacd2c61"
+    },
+    {
+      "path": "terrain/gardens-0-5.glb",
+      "bytes": 38420,
+      "sha256": "7275448e9e6bbec4fdbfffe5bbc551e221594b4d58137ad65468ec217d4f6405"
+    },
+    {
+      "path": "terrain/gardens-0-5.json",
+      "bytes": 6576,
+      "sha256": "20fbd236497e98f8c148b76903753d8bb6d3f47be5ba48faa2978fd7bc008ccc"
+    },
+    {
+      "path": "terrain/gardens-0-6.glb",
+      "bytes": 38404,
+      "sha256": "a6cc4473a99b7e213191e77de983d5d572512147cdc68bbeb40b56c13a11639e"
+    },
+    {
+      "path": "terrain/gardens-0-6.json",
+      "bytes": 5815,
+      "sha256": "64ec138fae36bcb62350c6c7c3d900d8719c4b2f6eeb0d0af6141cc3636cfe52"
+    },
+    {
+      "path": "terrain/gardens-0-7.glb",
+      "bytes": 38424,
+      "sha256": "5cb8a5ade60b5197bf6d42fae73b659feab53c4a6fc4a97bfa79d529c91369f4"
+    },
+    {
+      "path": "terrain/gardens-0-7.json",
+      "bytes": 6652,
+      "sha256": "7da66bcab99a84150b900e0fbd9c972a1eadebc3ebc404a8757aead4e28247ee"
+    },
+    {
+      "path": "terrain/gardens-1-0.glb",
+      "bytes": 38404,
+      "sha256": "3bdc221b8589bfce2a3a8e7809ba1756e105c2d4cbc4acd5669f5918d405eed7"
+    },
+    {
+      "path": "terrain/gardens-1-0.json",
+      "bytes": 6584,
+      "sha256": "07e2145de13c66a090b68f8747a2681aaa5bf2b01d1b9b6111086e544b5df39e"
+    },
+    {
+      "path": "terrain/gardens-1-1.glb",
+      "bytes": 38404,
+      "sha256": "3c4cd52178df9992ef6235ededfe75177cbfe707efc28556fdbcd113cb9f4894"
+    },
+    {
+      "path": "terrain/gardens-1-1.json",
+      "bytes": 5623,
+      "sha256": "8b6d1ac0da7d20b9b2a944aabc78d2e3d3f18a88f61d5514feb9d51bc10e1d27"
+    },
+    {
+      "path": "terrain/gardens-1-2.glb",
+      "bytes": 38404,
+      "sha256": "326b2cb2e94da2621a3ab435ba2dc121cb8ceb33a05d3240eeb252a8fb3234e8"
+    },
+    {
+      "path": "terrain/gardens-1-2.json",
+      "bytes": 5880,
+      "sha256": "55df1412f789036b1600518460af595f85192f96373cc8b6b87f0a16c1272d09"
+    },
+    {
+      "path": "terrain/gardens-1-3.glb",
+      "bytes": 38404,
+      "sha256": "9d2898cb025babd201bc1799cf6465b7a259f93db710cc827f69221cf51ad31c"
+    },
+    {
+      "path": "terrain/gardens-1-3.json",
+      "bytes": 6247,
+      "sha256": "86d7028fb7abd3bceb7b687eb84d707fd77e8869d242d7848f5cfe1920b632df"
+    },
+    {
+      "path": "terrain/gardens-1-4.glb",
+      "bytes": 38404,
+      "sha256": "85f02d8a80501a1cc44fd8662960a2736e2ea19abf635bc20754c6afd46d5917"
+    },
+    {
+      "path": "terrain/gardens-1-4.json",
+      "bytes": 5586,
+      "sha256": "362d6478753a0e4acc0ea020c3dc150ecc68f789efef0c1c730ce9e8073842ea"
+    },
+    {
+      "path": "terrain/gardens-1-5.glb",
+      "bytes": 38404,
+      "sha256": "859773266316d560c96f050d7a81655978d493328464523f48e9b42a7ec53dff"
+    },
+    {
+      "path": "terrain/gardens-1-5.json",
+      "bytes": 5615,
+      "sha256": "53fabac342853ae5b326781fadd38f40e25fec27074ab16829f160c6ef45896d"
+    },
+    {
+      "path": "terrain/gardens-1-6.glb",
+      "bytes": 38404,
+      "sha256": "97c2d4e46f4572050fa9ed0bfea145b4c03cfcd33713c1c428cc472784fc35d0"
+    },
+    {
+      "path": "terrain/gardens-1-6.json",
+      "bytes": 5587,
+      "sha256": "3d7bf792bd0cd9dbb70b299bae569bc1b9ab9ce2b4c5a5580fc2627de6e681a7"
+    },
+    {
+      "path": "terrain/gardens-1-7.glb",
+      "bytes": 38420,
+      "sha256": "896f90cdf32bec88262e1ed6f234a205d6a8e2b479f82bc4b2d928c5c386a8d9"
+    },
+    {
+      "path": "terrain/gardens-1-7.json",
+      "bytes": 6496,
+      "sha256": "90bddb61d63b5201373faa02799d9fe8b3756cfc4afe91b0f447602a24785359"
+    },
+    {
+      "path": "terrain/gardens-2-0.glb",
+      "bytes": 38424,
+      "sha256": "f993448fb704f09cd4ba6a1a3cb6ef652fd04ed11406bcdb138640c58211af4c"
+    },
+    {
+      "path": "terrain/gardens-2-0.json",
+      "bytes": 6652,
+      "sha256": "5003bbf9f93e762ddc1606c8c1567f73c3fc8107beeeddb9326cce0267ef504c"
+    },
+    {
+      "path": "terrain/gardens-2-1.glb",
+      "bytes": 38404,
+      "sha256": "396d9cfe13ee86e92fec69e545895ff5186cc6db6334a32f63e489e2bf11904d"
+    },
+    {
+      "path": "terrain/gardens-2-1.json",
+      "bytes": 6174,
+      "sha256": "d3b83f83bd55ba84c25a77123284c710b820226feb5d7272427a0ba19f7b1557"
+    },
+    {
+      "path": "terrain/gardens-2-2.glb",
+      "bytes": 38424,
+      "sha256": "9bf192922443a96c56894479ae0594f04513ac71bec71e5bb448423856468434"
+    },
+    {
+      "path": "terrain/gardens-2-2.json",
+      "bytes": 6652,
+      "sha256": "84b1dad3e53098c2dfedb0cc688d8f4c8cd3ca757716161eb627104125cee531"
+    },
+    {
+      "path": "terrain/gardens-2-3.glb",
+      "bytes": 38420,
+      "sha256": "14a726e452a6c6be8bfdab44f9ebf7790f937e5f3e3b40df86a355df2dd64732"
+    },
+    {
+      "path": "terrain/gardens-2-3.json",
+      "bytes": 6652,
+      "sha256": "1ee2e711ef60167ed261850fad11ca8cac06180620670b37c64c11ec8d9a03f8"
+    },
+    {
+      "path": "terrain/gardens-2-4.glb",
+      "bytes": 38404,
+      "sha256": "77090f1c7a699a8c38ebcfacfded2e744c85f1a13a9fcf6c33d97eab7d82ee4a"
+    },
+    {
+      "path": "terrain/gardens-2-4.json",
+      "bytes": 6256,
+      "sha256": "25fac8226c16145662a9c925dd0a906567336d2223f714c2ff65c0ce0c77f1c5"
+    },
+    {
+      "path": "terrain/gardens-2-5.glb",
+      "bytes": 38404,
+      "sha256": "525306e9e848a13d9f152bb42b46769c0e77d04c624305f8442c16adb251ac69"
+    },
+    {
+      "path": "terrain/gardens-2-5.json",
+      "bytes": 5967,
+      "sha256": "8491c6c0de9e5a82a9dce369832660cb4912592a468e6db0be942aa8e696b501"
+    },
+    {
+      "path": "terrain/gardens-2-6.glb",
+      "bytes": 38404,
+      "sha256": "debd94e5f4106e95575ac5d0a982bda12428043fef901922b85c94426be223a6"
+    },
+    {
+      "path": "terrain/gardens-2-6.json",
+      "bytes": 5569,
+      "sha256": "1b7a34ff00728c812cd61abd8cd37febbdb54d8aa642e595dd3a73f3ac49d60f"
+    },
+    {
+      "path": "terrain/gardens-2-7.glb",
+      "bytes": 38404,
+      "sha256": "5b9746f21b19957eb516d037dedf68c43db88edaf1a98a262fdf1308d552d97e"
+    },
+    {
+      "path": "terrain/gardens-2-7.json",
+      "bytes": 5662,
+      "sha256": "c25934d68c81929aa61d6e2585bb32651f4dd763d5ea672d951bcddc22a97726"
+    },
+    {
+      "path": "terrain/gardens-3-0.glb",
+      "bytes": 38404,
+      "sha256": "db5f971bb1f8937c1a839bea15b06febb502c7c768662b381d9798a7767afde8"
+    },
+    {
+      "path": "terrain/gardens-3-0.json",
+      "bytes": 6033,
+      "sha256": "5dbd518d3bd29a05e0b71f94eba7afdfc3151fb9b296382da59dbb2976dcf1a0"
+    },
+    {
+      "path": "terrain/gardens-3-1.glb",
+      "bytes": 38404,
+      "sha256": "0b020a01fa2b347d9410202b101eb04af00186294c24d0d126dcfacc3f35ccda"
+    },
+    {
+      "path": "terrain/gardens-3-1.json",
+      "bytes": 6268,
+      "sha256": "92b311ff8e294c41f8294dfa67e7597391ce652cdbb02b5e5fdd881dfc70b523"
+    },
+    {
+      "path": "terrain/gardens-3-2.glb",
+      "bytes": 38420,
+      "sha256": "661e6bdb1b38c0d6843a710ef068ca339f0f4331d337bb722ad70e811cc35089"
+    },
+    {
+      "path": "terrain/gardens-3-2.json",
+      "bytes": 6589,
+      "sha256": "608fde1d352a9fad340a705d04ba77de0d99a386b57ed9376a62ce02dc322c9c"
+    },
+    {
+      "path": "terrain/gardens-3-3.glb",
+      "bytes": 38420,
+      "sha256": "d6bd5967d75b3b2f194ebd7392b86579b6b00a05c24f1f3f23d572433054b628"
+    },
+    {
+      "path": "terrain/gardens-3-3.json",
+      "bytes": 6647,
+      "sha256": "a15646d715e300ae5c9ec30289ed5b421c7dfc202ae775b4c59745252dafa55d"
+    },
+    {
+      "path": "terrain/gardens-3-4.glb",
+      "bytes": 38420,
+      "sha256": "19aefb51a469ea222243069e15b3e086cd215b26d8f906829ebb665c28b71828"
+    },
+    {
+      "path": "terrain/gardens-3-4.json",
+      "bytes": 6652,
+      "sha256": "cd3423b2785c62a1b32e1a871088de594150403630e640cef7288584490c653c"
+    },
+    {
+      "path": "terrain/gardens-3-5.glb",
+      "bytes": 38404,
+      "sha256": "114670f620a9d29c7298459ccf53569a8d37ccc0f0741a8fb7f384c2062b2c9a"
+    },
+    {
+      "path": "terrain/gardens-3-5.json",
+      "bytes": 6332,
+      "sha256": "2f9434feefa70f3a6ba36c41a971b616b5265ae4d22c00d28e8437b258a50fe4"
+    },
+    {
+      "path": "terrain/gardens-3-6.glb",
+      "bytes": 38404,
+      "sha256": "7f85737bca1888103321f8c28ea20aa1bf6f1dd8f8d8bef09c34b674e58c237f"
+    },
+    {
+      "path": "terrain/gardens-3-6.json",
+      "bytes": 6294,
+      "sha256": "0143e292dae6a3513502b22828eb029f20352832af7d537e48c29de659e3bc0c"
+    },
+    {
+      "path": "terrain/gardens-3-7.glb",
+      "bytes": 38404,
+      "sha256": "3b0983d407cfb7d895c8c52928e62aeda7a2a2f1bed24c939b910855f04e6d1f"
+    },
+    {
+      "path": "terrain/gardens-3-7.json",
+      "bytes": 5928,
+      "sha256": "21eb46f9555035edc751472436ddfe0dd177a7aee22d541f79f1cfaedffa2125"
+    },
+    {
+      "path": "terrain/gardens-4-0.glb",
+      "bytes": 38404,
+      "sha256": "6de4a55cadf0ef2a4f1913f3e53ba37d5aed6225635a33756b9854d7a7229774"
+    },
+    {
+      "path": "terrain/gardens-4-0.json",
+      "bytes": 6552,
+      "sha256": "9aaf621efb56b496ae80ce9f29ca827fb904fe372f75c438e57732963b82ccac"
+    },
+    {
+      "path": "terrain/gardens-4-1.glb",
+      "bytes": 38404,
+      "sha256": "1fd82758091e5de7791e26d41ffbda78082266b8ec2ae668ea95a81c13dcaf32"
+    },
+    {
+      "path": "terrain/gardens-4-1.json",
+      "bytes": 5576,
+      "sha256": "eaa5592831b93bdfc578052fd3da45f2631f3e2ae74ee7e4292a5db1770926af"
+    },
+    {
+      "path": "terrain/gardens-4-2.glb",
+      "bytes": 38404,
+      "sha256": "a0067e34aa4735c3d86361beaff91e2b80f18be10a574fc292bfecc384a6a746"
+    },
+    {
+      "path": "terrain/gardens-4-2.json",
+      "bytes": 5614,
+      "sha256": "6e1a3772a1f9782fbb35e174a1735455082d991dfdb935626aaf3b4a00995c36"
+    },
+    {
+      "path": "terrain/gardens-4-3.glb",
+      "bytes": 38404,
+      "sha256": "1e2923f626e26309f14e1f6c8335aa5afa051a75e3d3f8ef0b4247452028d096"
+    },
+    {
+      "path": "terrain/gardens-4-3.json",
+      "bytes": 6442,
+      "sha256": "94d87d693302f835ba2654b5ce089761b536ac85ac8181c88cec9f83e4ee77f2"
+    },
+    {
+      "path": "terrain/gardens-4-4.glb",
+      "bytes": 38420,
+      "sha256": "de62da17176d37ede686e4d9dc7767f2e7a370ef3e2f30834c55072c15fed8d0"
+    },
+    {
+      "path": "terrain/gardens-4-4.json",
+      "bytes": 6652,
+      "sha256": "642d45cb63a5d16a02de1b0c046253b8b703e4d3216d27688663a1238ed95b49"
+    },
+    {
+      "path": "terrain/gardens-4-5.glb",
+      "bytes": 38404,
+      "sha256": "c4ff383a3b9f885a79b64c4fec3b16380123d5bdcdcf029120de6d4e3882614e"
+    },
+    {
+      "path": "terrain/gardens-4-5.json",
+      "bytes": 6309,
+      "sha256": "880bd1f25b0beeee6aa88f6d46f5c8dad054e32d09ef328299adb1bb902a4e07"
+    },
+    {
+      "path": "terrain/gardens-4-6.glb",
+      "bytes": 38420,
+      "sha256": "3ab6adac4a95cdc62b3d925e0e4edcd7f527c6a722cba8ab4a5c99e0eb867bab"
+    },
+    {
+      "path": "terrain/gardens-4-6.json",
+      "bytes": 6638,
+      "sha256": "936999b3eba7374c6197406a1906738f476a804db6f03231d061e1596b3fae5d"
+    },
+    {
+      "path": "terrain/gardens-4-7.glb",
+      "bytes": 38424,
+      "sha256": "aef90aca223c3d269b9a32b56ec0d3304a69b8118e7703b5286cdcb258ba596f"
+    },
+    {
+      "path": "terrain/gardens-4-7.json",
+      "bytes": 6652,
+      "sha256": "5ab4f90e02abe7f18602952e57fc73531156027ef8c9d4b57b1fc7582d6bf198"
+    },
+    {
+      "path": "terrain/gardens-5-0.glb",
+      "bytes": 38420,
+      "sha256": "ffb373b4ef0448597542adbcd551742a62960d0ca5a350b756bdf1310b66d4f1"
+    },
+    {
+      "path": "terrain/gardens-5-0.json",
+      "bytes": 6652,
+      "sha256": "ff3e87262e3b399103f1432ac7fee2cce00fa308e4cb34760fbcc582c2903351"
+    },
+    {
+      "path": "terrain/gardens-5-1.glb",
+      "bytes": 38404,
+      "sha256": "8799e3a0ef91919c888bcc71f9bda390be026b315d0a077c82996c861804d8f5"
+    },
+    {
+      "path": "terrain/gardens-5-1.json",
+      "bytes": 6057,
+      "sha256": "dac836688f27a524dcfef07f3190f2504b2af104ee8d31e433c0b09d670f6c2a"
+    },
+    {
+      "path": "terrain/gardens-5-2.glb",
+      "bytes": 38404,
+      "sha256": "86195462f7129598d9fabf9603849b199ffe546429b5730581b882d946169b7c"
+    },
+    {
+      "path": "terrain/gardens-5-2.json",
+      "bytes": 6161,
+      "sha256": "64a396f8704d8ba81d3f522f0f6dc4fd8834a38ac93d01c3868db7a752199c8f"
+    },
+    {
+      "path": "terrain/gardens-5-3.glb",
+      "bytes": 38404,
+      "sha256": "c4b41133fa68bc3d04a5ddf075ae41fe01505c0ae279751fd35d29927e52432d"
+    },
+    {
+      "path": "terrain/gardens-5-3.json",
+      "bytes": 6179,
+      "sha256": "2cb867bdc5fc3e208fb3bf4e8c39bf379f56eb0291b589cd14bd516d0845d908"
+    },
+    {
+      "path": "terrain/gardens-5-4.glb",
+      "bytes": 38404,
+      "sha256": "2af476616f387a8b49f4cc962a71345f1201896eb396e2c54395f6b7b4226e2e"
+    },
+    {
+      "path": "terrain/gardens-5-4.json",
+      "bytes": 6201,
+      "sha256": "bf06000bb4be4076833dffa67bfdd3dc3bea7b3a96ef1a7218765ed2a84e3835"
+    },
+    {
+      "path": "terrain/gardens-5-5.glb",
+      "bytes": 38404,
+      "sha256": "5b99f7791fef92542a6df0d9b8fed372abc15845d8dc6d0f326badfea68d068e"
+    },
+    {
+      "path": "terrain/gardens-5-5.json",
+      "bytes": 5585,
+      "sha256": "48ed9ae73c831a7355a1f239d223f345c16cd244ec23d1b8849a82e0042df2ee"
+    },
+    {
+      "path": "terrain/gardens-5-6.glb",
+      "bytes": 38404,
+      "sha256": "5d9cbf92652e62fac0a0bc834576330cdb2db77ce4a00213b88974e83717016f"
+    },
+    {
+      "path": "terrain/gardens-5-6.json",
+      "bytes": 5829,
+      "sha256": "52bc7366291ec863d44442816b824cc0ec2c8213b77e06b043b345ac764c8ade"
+    },
+    {
+      "path": "terrain/gardens-5-7.glb",
+      "bytes": 38404,
+      "sha256": "1e71734db8593c6c0ff9478830f50cbc37d21d5ab27a45510d09737afa038fd5"
+    },
+    {
+      "path": "terrain/gardens-5-7.json",
+      "bytes": 6547,
+      "sha256": "0c35a870c472851298f2ca001b8f93b048a9efe9e3371651a9f61ee37e15e881"
+    },
+    {
+      "path": "terrain/gardens-6-0.glb",
+      "bytes": 38404,
+      "sha256": "c2c5c6145be8fd565e83a0b778139caa1159889c3090df63c81afd450e895cc3"
+    },
+    {
+      "path": "terrain/gardens-6-0.json",
+      "bytes": 6007,
+      "sha256": "b0df1adf7d55e515ac612b368b08686a66938c8eb0ef1a06e9c9c5831a5b8a97"
+    },
+    {
+      "path": "terrain/gardens-6-1.glb",
+      "bytes": 38404,
+      "sha256": "3efbafcdf343e364697a986d14d75ff5ddf2f434442386d71bdafc670c5987f4"
+    },
+    {
+      "path": "terrain/gardens-6-1.json",
+      "bytes": 6314,
+      "sha256": "e4d2d1a8acc151318d51f3d54966df610d724606ee566c97946dbb8466c3715e"
+    },
+    {
+      "path": "terrain/gardens-6-2.glb",
+      "bytes": 38404,
+      "sha256": "0315565cd19315335bdacd995c2a2306e35a0d751163d76874bbf40c2dab73f4"
+    },
+    {
+      "path": "terrain/gardens-6-2.json",
+      "bytes": 5596,
+      "sha256": "32fd5afb19cd441ac9e639c48623a7e70041db6f93b022ed37607aea802ba3de"
+    },
+    {
+      "path": "terrain/gardens-6-3.glb",
+      "bytes": 38404,
+      "sha256": "b36c36c3078b7ff6bd833952ef8e8026f639a3a760ee4ec3f8eb96dd8948b3d3"
+    },
+    {
+      "path": "terrain/gardens-6-3.json",
+      "bytes": 5788,
+      "sha256": "faf185c98fdf6c7defd4519563dba887456c004815b4dfecc4a44029c4152dce"
+    },
+    {
+      "path": "terrain/gardens-6-4.glb",
+      "bytes": 38404,
+      "sha256": "c08c85f58c97e51498805c77e3e366073b6cf16ea9c38c13a11c54b2298757ba"
+    },
+    {
+      "path": "terrain/gardens-6-4.json",
+      "bytes": 6472,
+      "sha256": "06ba40ec37f770e14d284e5515605844697b43eee21c97d935a8c014951a8ed9"
+    },
+    {
+      "path": "terrain/gardens-6-5.glb",
+      "bytes": 38404,
+      "sha256": "3f7ba5514d5688a36ec940fea82fdb16c317e9db69b35fccb51f76b3800c9177"
+    },
+    {
+      "path": "terrain/gardens-6-5.json",
+      "bytes": 6144,
+      "sha256": "94423cf4da24b5aa25e83a81a2a8ce8cc8ae4ad4d086a52895a89d88c3ccefee"
+    },
+    {
+      "path": "terrain/gardens-6-6.glb",
+      "bytes": 38420,
+      "sha256": "6bbbecc9427bdf7ae2fc3d63a466613ec4ebaae49e5a89d1d93aab1e90065446"
+    },
+    {
+      "path": "terrain/gardens-6-6.json",
+      "bytes": 6631,
+      "sha256": "3dbac920eb6ef70ca5b6107a910eaefe1281d3e4aa5efde3d1b52756c659ef4c"
+    },
+    {
+      "path": "terrain/gardens-6-7.glb",
+      "bytes": 38404,
+      "sha256": "d21e02aa09552f3596273d6542df699a38b07f71258d1dd504c9da366ee99b24"
+    },
+    {
+      "path": "terrain/gardens-6-7.json",
+      "bytes": 6036,
+      "sha256": "6cabfe86fa5729c852b70b06c1a5b89ddb91970fff5efb233ac9e1fb38cf9de7"
+    },
+    {
+      "path": "terrain/gardens-7-0.glb",
+      "bytes": 38424,
+      "sha256": "a99d904ca7673fddf4f857741f409c0016c0b634aecaa96fc83295c57217a269"
+    },
+    {
+      "path": "terrain/gardens-7-0.json",
+      "bytes": 6652,
+      "sha256": "d64dc14ee69de7dfd1696ce88139c4663e8c8a18a0b9a6d7fa3b7f2acbea93b3"
+    },
+    {
+      "path": "terrain/gardens-7-1.glb",
+      "bytes": 38424,
+      "sha256": "e87e7cde424c703b5bec213f000922bf986742b82c5120bcda5d5dae62d833c5"
+    },
+    {
+      "path": "terrain/gardens-7-1.json",
+      "bytes": 6652,
+      "sha256": "eda99a1fb6c7fae9df040c2344fc092527d7e4f7e0ec84fcbefc3fdd4c3376bc"
+    },
+    {
+      "path": "terrain/gardens-7-2.glb",
+      "bytes": 38404,
+      "sha256": "2cc60603302fdc5648090f0b7e961bda29fe4f7b17b49ac9bc038d0046da46ba"
+    },
+    {
+      "path": "terrain/gardens-7-2.json",
+      "bytes": 6333,
+      "sha256": "4c667d4b7a409a4bc87328a530c476e72e6d3a894f10d795b2970e6539cfe7df"
+    },
+    {
+      "path": "terrain/gardens-7-3.glb",
+      "bytes": 38404,
+      "sha256": "f83338651a1a963fd1a67b29c9f000400a021ae86dcf8118522eaed58ebf6c2a"
+    },
+    {
+      "path": "terrain/gardens-7-3.json",
+      "bytes": 5955,
+      "sha256": "985fdf2b73acddea832a586a742ab25d050409540c1422ce230a7fe54535d110"
+    },
+    {
+      "path": "terrain/gardens-7-4.glb",
+      "bytes": 38424,
+      "sha256": "4e6000631c17851194ecc57b455273a91ebb595f0a929a5420746a816c44216d"
+    },
+    {
+      "path": "terrain/gardens-7-4.json",
+      "bytes": 6652,
+      "sha256": "e30f4693f4d3a6749c5ad221e290e4f29d17d6b270ee2c8694b5c04768a4b377"
+    },
+    {
+      "path": "terrain/gardens-7-5.glb",
+      "bytes": 38424,
+      "sha256": "ae88fe7847130f154f3a07499296b62a6ecba567bd2ccacb656ab10eb1e8171c"
+    },
+    {
+      "path": "terrain/gardens-7-5.json",
+      "bytes": 6652,
+      "sha256": "9a49920b650d3465938b220f37e272a7ef37aee53ab4168400103695ab501a77"
+    },
+    {
+      "path": "terrain/gardens-7-6.glb",
+      "bytes": 38424,
+      "sha256": "d3d9fd99f3841ff8f6135f463818bb2c38327d14a9b8133f806ffc68682816b0"
+    },
+    {
+      "path": "terrain/gardens-7-6.json",
+      "bytes": 6652,
+      "sha256": "6f3a5f394da83f21362699675b815dd6c0919c48215fa0673349eadc3f5ca75c"
+    },
+    {
+      "path": "terrain/gardens-7-7.glb",
+      "bytes": 38424,
+      "sha256": "a5d2a5978dc09a3e7efc461f1a4e6a716094e572a29a777ffd4e26d0bb870901"
+    },
+    {
+      "path": "terrain/gardens-7-7.json",
+      "bytes": 6652,
+      "sha256": "737afce85d5e70332c8f6ac05552d2d64cf120b1d2db0b597cebb02258b66788"
+    },
+    {
+      "path": "terrain/region.json",
+      "bytes": 27053,
+      "sha256": "e8b0d7ebd1d3e0501d07eea8c4f7f61700da28667afee6e7d95f84ee101e6f36"
+    }
+  ],
+  "totalBytes": 33878943
+}

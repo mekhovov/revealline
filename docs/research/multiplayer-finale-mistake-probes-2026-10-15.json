@@ -1,0 +1,1454 @@
+{
+  "kind": "bounded-finale-mistake-probes-not-human-review",
+  "rows": [],
+  "probes": [
+    {
+      "missionId": "team-highland-reunion",
+      "attempts": [
+        {
+          "index": 1,
+          "pauseTicks": 240,
+          "status": "running",
+          "tick": 1995,
+          "closed": [
+            1,
+            1
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 817,
+              "time": 6.8033945020481745,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 895,
+              "time": 7.453394502048175,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 9.453394502048175
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "pauseTicks": 240,
+          "status": "running",
+          "tick": 1995,
+          "closed": [
+            0,
+            1
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 583,
+              "time": 4.853237873321231,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 661,
+              "time": 5.503237873321232,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 7.503237873321232
+            },
+            {
+              "type": "player.downed",
+              "tick": 1264,
+              "time": 10.531693936833749,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 1342,
+              "time": 11.18169393683375,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 13.18169393683375
+            },
+            {
+              "type": "player.downed",
+              "tick": 1845,
+              "time": 15.371211285050617,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 2235,
+          "closed": [
+            1,
+            1
+          ],
+          "risk": []
+        },
+        {
+          "index": 2,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 2235,
+          "closed": [
+            1,
+            1
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 583,
+              "time": 4.853237873321231,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 661,
+              "time": 5.503237873321232,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 7.503237873321232
+            },
+            {
+              "type": "player.downed",
+              "tick": 1236,
+              "time": 10.292881114544205,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 1314,
+              "time": 10.942881114544205,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 12.942881114544205
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "pauseTicks": 960,
+          "status": "running",
+          "tick": 2715,
+          "closed": [
+            1,
+            1
+          ],
+          "risk": []
+        },
+        {
+          "index": 2,
+          "pauseTicks": 960,
+          "status": "running",
+          "tick": 2715,
+          "closed": [
+            0,
+            1
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 583,
+              "time": 4.853237873321231,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 661,
+              "time": 5.503237873321232,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 7.503237873321232
+            },
+            {
+              "type": "player.downed",
+              "tick": 1645,
+              "time": 13.70522388689915,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 1723,
+              "time": 14.35522388689915,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 16.35522388689915
+            },
+            {
+              "type": "player.downed",
+              "tick": 2069,
+              "time": 17.236544354850032,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "missionId": "team-expedition-homecoming",
+      "attempts": [
+        {
+          "index": 1,
+          "pauseTicks": 240,
+          "status": "won",
+          "tick": 3808,
+          "closed": [
+            6,
+            5
+          ],
+          "risk": []
+        },
+        {
+          "index": 2,
+          "pauseTicks": 240,
+          "status": "won",
+          "tick": 3808,
+          "closed": [
+            6,
+            5
+          ],
+          "risk": []
+        },
+        {
+          "index": 3,
+          "pauseTicks": 240,
+          "status": "won",
+          "tick": 3808,
+          "closed": [
+            6,
+            5
+          ],
+          "risk": []
+        },
+        {
+          "index": 4,
+          "pauseTicks": 240,
+          "status": "won",
+          "tick": 3808,
+          "closed": [
+            6,
+            5
+          ],
+          "risk": []
+        },
+        {
+          "index": 5,
+          "pauseTicks": 240,
+          "status": "won",
+          "tick": 3808,
+          "closed": [
+            6,
+            5
+          ],
+          "risk": []
+        },
+        {
+          "index": 6,
+          "pauseTicks": 240,
+          "status": "running",
+          "tick": 10944,
+          "closed": [
+            5,
+            6
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 1948,
+              "time": 16.229045945809954,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "lane-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 2026,
+              "time": 16.879045945809953,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 18.879045945809953
+            },
+            {
+              "type": "player.downed",
+              "tick": 5709,
+              "time": 47.56950059283823,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 5787,
+              "time": 48.21950059283823,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 50.21950059283823
+            },
+            {
+              "type": "player.downed",
+              "tick": 6902,
+              "time": 57.50966354086629,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "lane-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 9835,
+              "time": 81.95784313725497,
+              "player": 1,
+              "reason": "capture",
+              "graceUntil": 83.95784313725497
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "pauseTicks": 240,
+          "status": "won",
+          "tick": 3808,
+          "closed": [
+            6,
+            5
+          ],
+          "risk": []
+        },
+        {
+          "index": 9,
+          "pauseTicks": 240,
+          "status": "won",
+          "tick": 3808,
+          "closed": [
+            6,
+            5
+          ],
+          "risk": []
+        },
+        {
+          "index": 1,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 11184,
+          "closed": [
+            12,
+            7
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 5566,
+              "time": 46.37707390648558,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 5644,
+              "time": 47.027073906485576,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 49.027073906485576
+            },
+            {
+              "type": "player.downed",
+              "tick": 6059,
+              "time": 50.485105580693805,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 6137,
+              "time": 51.1351055806938,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 53.1351055806938
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 11184,
+          "closed": [
+            12,
+            7
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 5566,
+              "time": 46.37707390648557,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 5644,
+              "time": 47.02707390648557,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 49.02707390648557
+            },
+            {
+              "type": "player.downed",
+              "tick": 6059,
+              "time": 50.485105580693805,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 6137,
+              "time": 51.1351055806938,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 53.1351055806938
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 11184,
+          "closed": [
+            12,
+            7
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 5566,
+              "time": 46.37707390648556,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 5644,
+              "time": 47.02707390648556,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 49.02707390648556
+            },
+            {
+              "type": "player.downed",
+              "tick": 6059,
+              "time": 50.48510558069381,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 6137,
+              "time": 51.13510558069381,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 53.13510558069381
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 11184,
+          "closed": [
+            12,
+            7
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 5566,
+              "time": 46.37707390648556,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 5644,
+              "time": 47.02707390648556,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 49.02707390648556
+            },
+            {
+              "type": "player.downed",
+              "tick": 6059,
+              "time": 50.48510558069381,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 6137,
+              "time": 51.13510558069381,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 53.13510558069381
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 11184,
+          "closed": [
+            12,
+            7
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 5566,
+              "time": 46.37707390648557,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 5644,
+              "time": 47.02707390648557,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 49.02707390648557
+            },
+            {
+              "type": "player.downed",
+              "tick": 6059,
+              "time": 50.485105580693805,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 6137,
+              "time": 51.1351055806938,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 53.1351055806938
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 11184,
+          "closed": [
+            5,
+            6
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 1937,
+              "time": 16.135472355769956,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "lane-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 2015,
+              "time": 16.785472355769954,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 18.785472355769954
+            },
+            {
+              "type": "player.downed",
+              "tick": 2369,
+              "time": 19.73367269984917,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 2447,
+              "time": 20.383672699849168,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 22.383672699849168
+            },
+            {
+              "type": "player.downed",
+              "tick": 9134,
+              "time": 76.11040723981891,
+              "player": 0,
+              "cause": "self-trail"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 11184,
+          "closed": [
+            12,
+            7
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 5566,
+              "time": 46.37707390648557,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 5644,
+              "time": 47.02707390648557,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 49.02707390648557
+            },
+            {
+              "type": "player.downed",
+              "tick": 6059,
+              "time": 50.485105580693805,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 6137,
+              "time": 51.1351055806938,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 53.1351055806938
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 11184,
+          "closed": [
+            12,
+            7
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 5566,
+              "time": 46.37707390648556,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 5644,
+              "time": 47.02707390648556,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 49.02707390648556
+            },
+            {
+              "type": "player.downed",
+              "tick": 6059,
+              "time": 50.48510558069381,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 6137,
+              "time": 51.13510558069381,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 53.13510558069381
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "pauseTicks": 960,
+          "status": "lost",
+          "tick": 6046,
+          "closed": [
+            6,
+            0
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 1008,
+              "time": 8.393513888888897,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "lane-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 1086,
+              "time": 9.043513888888898,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 11.043513888888898
+            },
+            {
+              "type": "player.downed",
+              "tick": 1313,
+              "time": 10.935972850678723,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 1391,
+              "time": 11.585972850678724,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 13.585972850678724
+            },
+            {
+              "type": "player.downed",
+              "tick": 4073,
+              "time": 33.93989441930618,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.downed",
+              "tick": 6046,
+              "time": 50.377073906485556,
+              "player": 0,
+              "cause": "self-trail"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "pauseTicks": 960,
+          "status": "lost",
+          "tick": 6046,
+          "closed": [
+            6,
+            2
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 3844,
+              "time": 32.03155380336704,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 3922,
+              "time": 32.68155380336704,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 34.68155380336704
+            },
+            {
+              "type": "player.downed",
+              "tick": 4074,
+              "time": 33.94325037707388,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 4152,
+              "time": 34.59325037707388,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 36.59325037707388
+            },
+            {
+              "type": "player.downed",
+              "tick": 4877,
+              "time": 40.640384615384534,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.downed",
+              "tick": 6046,
+              "time": 50.377073906485556,
+              "player": 0,
+              "cause": "self-trail"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "pauseTicks": 960,
+          "status": "lost",
+          "tick": 6046,
+          "closed": [
+            1,
+            2
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 1996,
+              "time": 16.629947229551444,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "lane-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 2074,
+              "time": 17.279947229551443,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 19.279947229551443
+            },
+            {
+              "type": "player.downed",
+              "tick": 2861,
+              "time": 23.837348225265302,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 2939,
+              "time": 24.4873482252653,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 26.4873482252653
+            },
+            {
+              "type": "player.downed",
+              "tick": 3844,
+              "time": 32.03155380336679,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.downed",
+              "tick": 6046,
+              "time": 50.37707390648556,
+              "player": 0,
+              "cause": "self-trail"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "pauseTicks": 960,
+          "status": "lost",
+          "tick": 6046,
+          "closed": [
+            6,
+            2
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 3844,
+              "time": 32.03155380336683,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 3922,
+              "time": 32.68155380336683,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 34.68155380336683
+            },
+            {
+              "type": "player.downed",
+              "tick": 4074,
+              "time": 33.94325037707388,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 4152,
+              "time": 34.59325037707388,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 36.59325037707388
+            },
+            {
+              "type": "player.downed",
+              "tick": 4877,
+              "time": 40.640384615384555,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.downed",
+              "tick": 6046,
+              "time": 50.377073906485556,
+              "player": 0,
+              "cause": "self-trail"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "pauseTicks": 960,
+          "status": "lost",
+          "tick": 6046,
+          "closed": [
+            6,
+            2
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 3844,
+              "time": 32.031553803366585,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 3922,
+              "time": 32.68155380336658,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 34.68155380336658
+            },
+            {
+              "type": "player.downed",
+              "tick": 4074,
+              "time": 33.94325037707388,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 4152,
+              "time": 34.59325037707388,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 36.59325037707388
+            },
+            {
+              "type": "player.downed",
+              "tick": 4877,
+              "time": 40.64038461538454,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.downed",
+              "tick": 6046,
+              "time": 50.377073906485556,
+              "player": 0,
+              "cause": "self-trail"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "pauseTicks": 960,
+          "status": "lost",
+          "tick": 9614,
+          "closed": [
+            5,
+            2
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 1937,
+              "time": 16.135472355769956,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "lane-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 2015,
+              "time": 16.785472355769954,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 18.785472355769954
+            },
+            {
+              "type": "player.downed",
+              "tick": 2849,
+              "time": 23.73367269984917,
+              "player": 0,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 2927,
+              "time": 24.383672699849168,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 26.383672699849168
+            },
+            {
+              "type": "player.downed",
+              "tick": 3844,
+              "time": 32.03155380336652,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 6987,
+              "time": 58.22450980392164,
+              "player": 1,
+              "reason": "capture",
+              "graceUntil": 60.22450980392164
+            },
+            {
+              "type": "player.downed",
+              "tick": 7551,
+              "time": 62.91837281941526,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "lane-1"
+            },
+            {
+              "type": "player.downed",
+              "tick": 9614,
+              "time": 80.1104072398189,
+              "player": 0,
+              "cause": "self-trail"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "pauseTicks": 960,
+          "status": "lost",
+          "tick": 6046,
+          "closed": [
+            6,
+            2
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 3844,
+              "time": 32.03155380336674,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 3922,
+              "time": 32.68155380336674,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 34.68155380336674
+            },
+            {
+              "type": "player.downed",
+              "tick": 4074,
+              "time": 33.94325037707388,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.revived",
+              "tick": 4152,
+              "time": 34.59325037707388,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 36.59325037707388
+            },
+            {
+              "type": "player.downed",
+              "tick": 4877,
+              "time": 40.64038461538455,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.downed",
+              "tick": 6046,
+              "time": 50.377073906485556,
+              "player": 0,
+              "cause": "self-trail"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "pauseTicks": 960,
+          "status": "lost",
+          "tick": 6046,
+          "closed": [
+            5,
+            2
+          ],
+          "risk": [
+            {
+              "type": "player.downed",
+              "tick": 2932,
+              "time": 24.42580828379041,
+              "player": 0,
+              "cause": "line-impact",
+              "enemy": "lane-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 3010,
+              "time": 25.07580828379041,
+              "player": 0,
+              "reason": "reserve",
+              "graceUntil": 27.07580828379041
+            },
+            {
+              "type": "player.downed",
+              "tick": 3844,
+              "time": 32.031553803366755,
+              "player": 1,
+              "cause": "line-impact",
+              "enemy": "keeper-1"
+            },
+            {
+              "type": "player.revived",
+              "tick": 3922,
+              "time": 32.681553803366754,
+              "player": 1,
+              "reason": "reserve",
+              "graceUntil": 34.681553803366754
+            },
+            {
+              "type": "player.downed",
+              "tick": 4074,
+              "time": 33.94325037707388,
+              "player": 1,
+              "cause": "self-trail"
+            },
+            {
+              "type": "player.downed",
+              "tick": 6046,
+              "time": 50.37707390648556,
+              "player": 0,
+              "cause": "self-trail"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "missionId": "versus-archive-decider",
+      "attempts": [
+        {
+          "index": 0,
+          "pauseTicks": 240,
+          "status": "running",
+          "tick": 2094,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": [
+            {
+              "type": "player.failed",
+              "tick": 611,
+              "time": 5.089713820781416,
+              "cause": "enemy-trail",
+              "actorId": "keeper-1",
+              "lives": 2
+            },
+            {
+              "type": "player.failed",
+              "tick": 859,
+              "time": 7.150000000000145,
+              "cause": "self-contact",
+              "actorId": "player",
+              "lives": 1
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "pauseTicks": 240,
+          "status": "running",
+          "tick": 2094,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": [
+            {
+              "type": "player.failed",
+              "tick": 614,
+              "time": 5.113184215511261,
+              "cause": "enemy-trail",
+              "actorId": "keeper-1",
+              "lives": 2
+            },
+            {
+              "type": "player.failed",
+              "tick": 859,
+              "time": 7.150000000000145,
+              "cause": "self-contact",
+              "actorId": "player",
+              "lives": 1
+            }
+          ]
+        },
+        {
+          "index": 0,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 2334,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": []
+        },
+        {
+          "index": 1,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 2334,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": [
+            {
+              "type": "player.failed",
+              "tick": 614,
+              "time": 5.113184215511261,
+              "cause": "enemy-trail",
+              "actorId": "keeper-1",
+              "lives": 2
+            },
+            {
+              "type": "player.failed",
+              "tick": 1099,
+              "time": 9.150000000000121,
+              "cause": "self-contact",
+              "actorId": "player",
+              "lives": 1
+            }
+          ]
+        },
+        {
+          "index": 0,
+          "pauseTicks": 960,
+          "status": "running",
+          "tick": 2814,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": []
+        },
+        {
+          "index": 1,
+          "pauseTicks": 960,
+          "status": "running",
+          "tick": 2814,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": [
+            {
+              "type": "player.failed",
+              "tick": 614,
+              "time": 5.113184215511261,
+              "cause": "enemy-trail",
+              "actorId": "keeper-1",
+              "lives": 2
+            },
+            {
+              "type": "player.failed",
+              "tick": 1579,
+              "time": 13.149999999999894,
+              "cause": "self-contact",
+              "actorId": "player",
+              "lives": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "missionId": "versus-highland-finish",
+      "attempts": [
+        {
+          "index": 0,
+          "pauseTicks": 240,
+          "status": "running",
+          "tick": 2094,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": [
+            {
+              "type": "player.failed",
+              "tick": 611,
+              "time": 5.089713820781416,
+              "cause": "enemy-trail",
+              "actorId": "keeper-1",
+              "lives": 2
+            },
+            {
+              "type": "player.failed",
+              "tick": 859,
+              "time": 7.150000000000145,
+              "cause": "self-contact",
+              "actorId": "player",
+              "lives": 1
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "pauseTicks": 240,
+          "status": "running",
+          "tick": 2094,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": [
+            {
+              "type": "player.failed",
+              "tick": 614,
+              "time": 5.113184215511261,
+              "cause": "enemy-trail",
+              "actorId": "keeper-1",
+              "lives": 2
+            },
+            {
+              "type": "player.failed",
+              "tick": 859,
+              "time": 7.150000000000145,
+              "cause": "self-contact",
+              "actorId": "player",
+              "lives": 1
+            }
+          ]
+        },
+        {
+          "index": 0,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 2334,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": []
+        },
+        {
+          "index": 1,
+          "pauseTicks": 480,
+          "status": "running",
+          "tick": 2334,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": [
+            {
+              "type": "player.failed",
+              "tick": 614,
+              "time": 5.113184215511261,
+              "cause": "enemy-trail",
+              "actorId": "keeper-1",
+              "lives": 2
+            },
+            {
+              "type": "player.failed",
+              "tick": 1099,
+              "time": 9.150000000000121,
+              "cause": "self-contact",
+              "actorId": "player",
+              "lives": 1
+            }
+          ]
+        },
+        {
+          "index": 0,
+          "pauseTicks": 960,
+          "status": "running",
+          "tick": 2814,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": []
+        },
+        {
+          "index": 1,
+          "pauseTicks": 960,
+          "status": "running",
+          "tick": 2814,
+          "closed": [
+            2,
+            0
+          ],
+          "risk": [
+            {
+              "type": "player.failed",
+              "tick": 614,
+              "time": 5.113184215511261,
+              "cause": "enemy-trail",
+              "actorId": "keeper-1",
+              "lives": 2
+            },
+            {
+              "type": "player.failed",
+              "tick": 1579,
+              "time": 13.149999999999894,
+              "cause": "self-contact",
+              "actorId": "player",
+              "lives": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sourceBase": "da0b0108206a0270b4b870e747f2d1bc0e6695cb",
+  "runtime": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "scope": "42 bounded neutral-input-omission probes; no full same-attempt recovery win found. Four separately retained partial traces prove actual failures and post-failure captures, not restored victory."
+}

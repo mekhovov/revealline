@@ -1,0 +1,12 @@
+{
+  "format": "FPVPublishedHeadInputBridge.v1",
+  "pr": 1080,
+  "head": "2cfc2405078c3b384d8147af5b8ec44f9f357263",
+  "admittedSource": "216b36ce15df84f5148d9d16e92c5defdee0da09",
+  "method": "Read exact Git blob bytes for all95 original inputs with GIT_NO_LAZY_FETCH=1",
+  "inputs": 95,
+  "inputBytes": 16776664,
+  "reserveBytes": 552,
+  "mismatches": [],
+  "scope": "All admitted original input bytes match historical combined216; this is an input identity bridge, not a new whole-head build or public deployment claim."
+}

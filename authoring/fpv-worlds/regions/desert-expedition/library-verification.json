@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "baseMain": "7de653d8dee104a9cf04c88efab355a9301eebab",
+  "descriptorSHA256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+  "wholeDeliveryBytes": 47883876,
+  "mainRuntime": {
+    "cell512Supported": false,
+    "advertised": false,
+    "verifiedResponsesBeforeUnsupportedCellRejection": 3
+  },
+  "composedSourceCheck": {
+    "notAnExactPackage": true,
+    "capabilityCommit": "cf9d2b3a9170ad6e240b1d29a486b7ef4afcd965",
+    "capabilityModule": "optional-practice/civilian-fpv/regional/region-manifest.mjs",
+    "capabilityModuleGitBlob": "ba7fc056d507cb4c8ea631a24914e97649a6be0d",
+    "capabilityModuleSHA256": "c07631c6661450b7a59e1ce069e2ce100064327c1e76c2e422f3ff29eea1cc68",
+    "cell512Supported": true,
+    "advertised": true,
+    "verifiedResponses": 2051
+  },
+  "existingMainPinIdentitiesPreserved": 6,
+  "appearance": "desert",
+  "nativeVerified": false,
+  "packageVerified": false,
+  "releaseReady": false,
+  "coherentMainCheck": {
+    "main": "39b2eeee74f0ca3332fa2f8b047aba55e64c1382",
+    "cell512Supported": true,
+    "advertised": true,
+    "verifiedResponses": 2051,
+    "appearance": "plain",
+    "notAnExactPackage": true
+  },
+  "integratedAppearanceCheck": {
+    "main": "740116d53ada0fecfd5398357e1df19801edf274",
+    "cell512Supported": true,
+    "advertised": true,
+    "verifiedResponses": 2051,
+    "appearance": "desert",
+    "unknownIdentityAppearance": "plain",
+    "qualityTiers": 3,
+    "existingMainPinIdentitiesPreserved": 6,
+    "notAnExactPackage": true
+  }
+}

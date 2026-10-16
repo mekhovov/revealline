@@ -323,3 +323,27 @@ for (const [name, create] of [
       setLocale(previous, { persist: false });
     }
   });
+
+test('optional Solo preview advertises practice scope in either locale without claiming Team support', () => {
+  const previous = getLocale();
+  const project = createCombatCandidates(),
+    mission = project.missions[0];
+  const preview = prepareContentPreview(project, mission.id);
+  const document = board();
+  try {
+    for (const locale of ['en', 'uk']) {
+      setLocale(locale, { persist: false });
+      bindStudioPreviewCopy(document, project, mission, preview);
+      const tooltip = document.getElementById('play').getAttribute('title');
+      assert.match(tooltip, locale === 'uk' ? /одиночній практиці/ : /Solo practice/);
+      assert.doesNotMatch(tooltip, /awaits|tools:/);
+      bindStudioPreviewCopy(document, project, { ...mission, modes: ['team'] }, preview);
+      assert.match(
+        document.getElementById('play').getAttribute('title'),
+        locale === 'uk' ? /Solo|одиночн/i : /Solo/,
+      );
+    }
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+});

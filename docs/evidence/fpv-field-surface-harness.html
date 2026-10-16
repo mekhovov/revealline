@@ -1,0 +1,75 @@
+<!doctype html><meta charset="utf-8" /><title>Field equipment surface verification</title>
+<style>
+  body {
+    background: #111c29;
+    color: #eee;
+    font: 18px system-ui;
+    padding: 24px;
+  }
+  #views {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  canvas {
+    width: 256px;
+    height: 256px;
+    image-rendering: pixelated;
+  }
+  pre {
+    white-space: pre-wrap;
+  }
+</style>
+<h1>Field equipment surface: before / after</h1>
+<button id="run">Verify surfaces</button>
+<div id="views"></div>
+<pre id="result">Ready</pre>
+<script type="module">
+  import * as before from '../../dist/fpv-field-surface-verification/before.mjs';
+  import * as after from '../../optional-practice/civilian-fpv/world-visuals.mjs';
+  function assert(value, label) {
+    if (!value) throw Error(label);
+  }
+  document.querySelector('#run').onclick = () => {
+    const report = {
+      baseline: 'b43b0ce12d97475a2fbdc9e43b9a53af5d6ff9a0',
+      userAgent: navigator.userAgent,
+      unchanged: 0,
+      changed: [],
+    };
+    try {
+      for (const id of Object.keys(after.SIM_VISUAL_COLLECTIONS))
+        for (const role of Object.keys(after.SIM_VISUAL_COLLECTIONS[id].materials)) {
+          const a = before.createWorkshopTexture(role, { collectionId: id }),
+            b = after.createWorkshopTexture(role, { collectionId: id });
+          const equal = a.image.data.every((v, i) => v === b.image.data[i]);
+          if (id !== 'military-field') {
+            assert(equal, 'Unchanged ' + id + '/' + role);
+            report.unchanged++;
+          } else if (!equal) report.changed.push(role);
+          if (id === 'military-field' && role === 'enamel')
+            for (const [index, t] of [a, b].entries()) {
+              const section = document.createElement('section'),
+                label = document.createElement('h2'),
+                c = document.createElement('canvas');
+              label.textContent = index ? 'After: field panels' : 'Before: shared foundry';
+              c.width = c.height = 128;
+              c.getContext('2d').putImageData(
+                new ImageData(new Uint8ClampedArray(t.image.data), 128, 128),
+                0,
+                0,
+              );
+              section.append(label, c);
+              document.querySelector('#views').append(section);
+            }
+          a.dispose();
+          b.dispose();
+        }
+      report.passed = true;
+    } catch (e) {
+      report.passed = false;
+      report.error = e.message;
+    }
+    document.querySelector('#result').textContent = JSON.stringify(report, null, 2);
+  };
+</script>

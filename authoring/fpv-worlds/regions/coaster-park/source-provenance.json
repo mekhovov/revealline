@@ -1,0 +1,71 @@
+{
+  "format": "FPVCoasterSourceProvenance.v1",
+  "sourceURL": "https://kenney.nl/assets/coaster-kit",
+  "downloadURL": "https://kenney.nl/media/pages/assets/coaster-kit/546fdc554f-1731487890/kenney_coaster-kit.zip",
+  "archiveBytes": 6697401,
+  "archiveSHA256": "7723d02e3ea822371e12e14722e72d572fdb0384c1379c1469e0598a371f5c7a",
+  "license": "CC0-1.0",
+  "files": [
+    {
+      "path": "License.txt",
+      "bytes": 714,
+      "sha256": "d762110e094924c157772570d034e6dc57d0cebf24663458dbb74e8c9958241a"
+    },
+    {
+      "path": "Textures/colormap.png",
+      "bytes": 8706,
+      "sha256": "0d4947d34ff32acf4a359c7f22ca784e057e7e72f622170a9a77b6fc88fdb70e"
+    },
+    {
+      "path": "park-entrance.glb",
+      "bytes": 85968,
+      "sha256": "bddb62f3de0368312809b9351764dc22c963ee4797b15a89a3e16005077eef37"
+    },
+    {
+      "path": "station.glb",
+      "bytes": 7660,
+      "sha256": "da4664334a6fe7b0c693621debf48412f4caf66ad38d12db8d840db6e6894d26"
+    },
+    {
+      "path": "stall-food.glb",
+      "bytes": 36308,
+      "sha256": "c2598eaec07802394740e77b1248066522caf678e8306cf7ab7c53e7b22e4e43"
+    },
+    {
+      "path": "stall-drinks.glb",
+      "bytes": 26052,
+      "sha256": "8027c20449276162a78ae0288130b5cae113009f7fddcd45712b90b6fb3f769c"
+    },
+    {
+      "path": "coaster-steel-looping.glb",
+      "bytes": 137072,
+      "sha256": "7ed4f314f52667281882727553e775e57def1281e8c5746c121ff6f88c7daad0"
+    },
+    {
+      "path": "coaster-wood-straight-hill-complete.glb",
+      "bytes": 78132,
+      "sha256": "92077da1ee2c51042ec0789390cddc811347fab94674b432fae4752ef5ce64c5"
+    },
+    {
+      "path": "coaster-hanging-corner-large.glb",
+      "bytes": 57432,
+      "sha256": "47114947a91143549446824ac89ebb9135dc5c4f1dc8abecba557e171a13b65f"
+    },
+    {
+      "path": "coaster-steel-straight.glb",
+      "bytes": 48484,
+      "sha256": "1da423a1a4de2c271cd00352476defc421f2f78c592995ee4394132e44c6c92d"
+    },
+    {
+      "path": "tree-large.glb",
+      "bytes": 28824,
+      "sha256": "e6572eb6e14b404da88909b854734d991878ef278cead6ffd0afa852a4a6d59e"
+    },
+    {
+      "path": "support-large.glb",
+      "bytes": 5692,
+      "sha256": "41288a2ca007ac6f9f7a45b77463b3d3256acac151c42aca5a777feeff0da4ff"
+    }
+  ],
+  "scope": "Original regional composition using unchanged selected source models and palette; no competitor map copied."
+}

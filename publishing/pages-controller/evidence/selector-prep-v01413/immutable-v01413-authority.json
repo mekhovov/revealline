@@ -1,0 +1,111 @@
+{
+  "format": "revealline-immutable-release-authority.v1",
+  "version": "v0.141.3",
+  "releaseId": 397302619,
+  "releaseUrl": "https://github.com/mekhovov/revealline/releases/tag/v0.141.3",
+  "publishedAt": "2026-09-26T16:13:58Z",
+  "tagObject": "f321a2eb5a9c63e039fdc52e55693c85f8724252",
+  "sourceRevision": "7509d790dadb6194d70a5bc1efafee40fbb0b3b7",
+  "sourceTree": "cc672a2d349e17f899047538a489ca0d34bf77fd",
+  "assets": [
+    {
+      "id": 590981721,
+      "name": "distribution.zip",
+      "size": 612278671,
+      "content_type": "application/zip",
+      "state": "uploaded",
+      "digest": "sha256:4ad0ac9ecb1e91e0f36067e47a29177a14a9592b53217f2af17204a5c8a4a90f",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.141.3/distribution.zip",
+      "created_at": "2026-09-26T16:12:04Z",
+      "updated_at": "2026-09-26T16:12:36Z"
+    },
+    {
+      "id": 590982560,
+      "name": "distribution.zip.sha256",
+      "size": 83,
+      "content_type": "application/octet-stream",
+      "state": "uploaded",
+      "digest": "sha256:2947eaf9ecc1b670b1eee7a08958e2e1119729a6961d714667825f72b0e656b9",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.141.3/distribution.zip.sha256",
+      "created_at": "2026-09-26T16:12:37Z",
+      "updated_at": "2026-09-26T16:12:38Z"
+    },
+    {
+      "id": 590982592,
+      "name": "manifest.json",
+      "size": 236360,
+      "content_type": "application/json",
+      "state": "uploaded",
+      "digest": "sha256:b8f0cbf3c404210617021e9a7a91f6239fc1b40eeee0adba1774da04e5516238",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.141.3/manifest.json",
+      "created_at": "2026-09-26T16:12:38Z",
+      "updated_at": "2026-09-26T16:12:39Z"
+    },
+    {
+      "id": 590982639,
+      "name": "qualification-evidence-record.json",
+      "size": 1989,
+      "content_type": "application/json",
+      "state": "uploaded",
+      "digest": "sha256:4d8c390cb6da13e1a986ecfd7f96d3f98485cae49e9de1b81d5e82fa340d2e95",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.141.3/qualification-evidence-record.json",
+      "created_at": "2026-09-26T16:12:40Z",
+      "updated_at": "2026-09-26T16:12:40Z"
+    },
+    {
+      "id": 590982670,
+      "name": "release.json",
+      "size": 468,
+      "content_type": "application/json",
+      "state": "uploaded",
+      "digest": "sha256:342838929d88da0ce17e2210ffa828e679b7a8f3703528ad0bbce7bd8f60aaa4",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.141.3/release.json",
+      "created_at": "2026-09-26T16:12:41Z",
+      "updated_at": "2026-09-26T16:12:41Z"
+    },
+    {
+      "id": 590982699,
+      "name": "source-qualification-evidence.zip",
+      "size": 454319,
+      "content_type": "application/zip",
+      "state": "uploaded",
+      "digest": "sha256:ddb76f1361dc2f05db3d05115d7a61659ac997697a12a85e0b37b059ce5df2f5",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.141.3/source-qualification-evidence.zip",
+      "created_at": "2026-09-26T16:12:42Z",
+      "updated_at": "2026-09-26T16:12:42Z"
+    },
+    {
+      "id": 590982732,
+      "name": "source-qualification.json",
+      "size": 16320,
+      "content_type": "application/json",
+      "state": "uploaded",
+      "digest": "sha256:aa75ccca903ddf8da17ba89623eb04ce4a0ce217960c6be840fe9b8671304bac",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.141.3/source-qualification.json",
+      "created_at": "2026-09-26T16:12:43Z",
+      "updated_at": "2026-09-26T16:12:43Z"
+    },
+    {
+      "id": 590982750,
+      "name": "source.tar",
+      "size": 1717524480,
+      "content_type": "application/x-tar",
+      "state": "uploaded",
+      "digest": "sha256:10a49207961da6f37fba6e44d3dd546a22a5919f606cfb07577bf98dba555f49",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.141.3/source.tar",
+      "created_at": "2026-09-26T16:12:44Z",
+      "updated_at": "2026-09-26T16:13:52Z"
+    },
+    {
+      "id": 590984429,
+      "name": "verification.json",
+      "size": 1919,
+      "content_type": "application/json",
+      "state": "uploaded",
+      "digest": "sha256:b7bc85909f7bdf0df30badf53ed95f92dc015bca8546665f438078860c87bca8",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.141.3/verification.json",
+      "created_at": "2026-09-26T16:13:53Z",
+      "updated_at": "2026-09-26T16:13:53Z"
+    }
+  ]
+}

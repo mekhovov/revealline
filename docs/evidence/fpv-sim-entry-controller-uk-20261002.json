@@ -1,0 +1,50 @@
+{
+  "complete": true,
+  "pass": true,
+  "virtualController": true,
+  "width": 390,
+  "expected": "http://127.0.0.1:8796/optional-practice/fpv-worlds/index.html?lang=uk#learn",
+  "actual": "http://127.0.0.1:8796/optional-practice/fpv-worlds/index.html?lang=uk#learn",
+  "expectedLocale": "uk",
+  "actualLocale": "uk",
+  "schoolHeading": "Тут починається ваш політ.",
+  "schoolVisible": true,
+  "schoolCards": 58,
+  "trajectory": [
+    {
+      "input": "up",
+      "from": "shell-featured",
+      "to": "shell-title-team",
+      "homeOpen": true,
+      "dialogs": ["shell-home"]
+    },
+    {
+      "input": "right",
+      "from": "shell-title-team",
+      "to": "solo-fpv-sim",
+      "homeOpen": true,
+      "dialogs": ["shell-home"]
+    },
+    {
+      "input": "confirm",
+      "from": "solo-fpv-sim",
+      "to": "solo-fpv-sim-close",
+      "homeOpen": true,
+      "dialogs": ["shell-home", "solo-fpv-sim-dialog"]
+    },
+    {
+      "input": "down",
+      "from": "solo-fpv-sim-close",
+      "to": "",
+      "homeOpen": true,
+      "dialogs": ["shell-home", "solo-fpv-sim-dialog"]
+    },
+    {
+      "input": "confirm",
+      "from": "",
+      "to": "",
+      "homeOpen": true,
+      "dialogs": ["shell-home"]
+    }
+  ]
+}

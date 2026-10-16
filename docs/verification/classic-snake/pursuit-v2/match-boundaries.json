@@ -1,0 +1,119 @@
+{
+  "scope": "Direct production clock/journal observations. Public inputs and match advance only. No state mutation or test runner.",
+  "sourceHashes": {
+    "game/snake/classic-core.mjs": "f9a4361b85bfc8d4cba8e8889109b893bbca8de65e91863b93c7d5ddc0435f74",
+    "game/snake/classic-core-v2.mjs": "79d8da0cb894def4d09b5e664f8a28ec6bf18cac1b8fd4c7d43c16b74decd92f",
+    "game/snake/classic-match.mjs": "02d904912c0df723bbe7ec760c07c489939298f109817d6542bfd38e1d287d77",
+    "game/snake/classic-catalogue-v2.mjs": "7da35f440d8b9ca30345f468844142e00517c0fbfaa9501b068a95b48c073531"
+  },
+  "rows": [
+    {
+      "id": "match-score-boundary",
+      "elapsedMs": 180000,
+      "status": "finished",
+      "result": "draw",
+      "catches": [
+        0,
+        0
+      ],
+      "ticks": [
+        19,
+        904
+      ],
+      "boardResults": [
+        {
+          "atMs": 3781,
+          "status": "lost",
+          "cause": "wall"
+        },
+        {
+          "atMs": 180000,
+          "status": "survived",
+          "cause": "time"
+        }
+      ],
+      "lastCatchAt": [
+        0,
+        0
+      ],
+      "exactRestore": true
+    },
+    {
+      "id": "match-survival-boundary",
+      "elapsedMs": 30000,
+      "status": "finished",
+      "result": "draw",
+      "catches": [
+        0,
+        0
+      ],
+      "ticks": [
+        150,
+        150
+      ],
+      "boardResults": [
+        {
+          "atMs": 30000,
+          "status": "lost",
+          "cause": "catch-deadline"
+        },
+        {
+          "atMs": 30000,
+          "status": "lost",
+          "cause": "catch-deadline"
+        }
+      ],
+      "lastCatchAt": [
+        0,
+        0
+      ],
+      "exactRestore": true
+    },
+    {
+      "id": "match-survival-exact-catch",
+      "elapsedMs": 30000,
+      "status": "running",
+      "result": null,
+      "catches": [
+        1,
+        1
+      ],
+      "ticks": [
+        125,
+        125
+      ],
+      "boardResults": [
+        null,
+        null
+      ],
+      "lastCatchAt": [
+        30000,
+        30000
+      ],
+      "exactRestore": true
+    },
+    {
+      "id": "legacy-migrated-match",
+      "elapsedMs": 517.25,
+      "status": "running",
+      "result": null,
+      "catches": [
+        0,
+        0
+      ],
+      "ticks": [
+        2,
+        2
+      ],
+      "boardResults": [
+        null,
+        null
+      ],
+      "lastCatchAt": [
+        0,
+        0
+      ],
+      "exactRestore": true
+    }
+  ]
+}

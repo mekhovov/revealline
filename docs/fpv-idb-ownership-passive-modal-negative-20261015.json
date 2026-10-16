@@ -1,0 +1,35 @@
+{
+  "receiptUTC": "2026-10-15T20:50:56.064931+00:00",
+  "toolRevision": "0e02cf6f0dc56c60fa186ef38be29f332c064f76",
+  "productionRevision": "e27e6e5d9deab1a6488e55729d275816d2d98a0d",
+  "packageRevision": "bffea641cb1ff497ece02f4e3489cfe62bdc068adb393783a4ed4a052e8296b1",
+  "origin": "http://127.0.0.1:9205",
+  "identitySHA256": "2e6090a66ea85cdf69808001fcaf5ec28ab26c92cf85b1dbb3e313b47a8f9df6",
+  "mode": "passive; explicit-close interception OFF",
+  "nativeAccepted": false,
+  "observations": [
+    "Normal Roadworks Play before other UI succeeds Ready/Motors off,0m,Arm available. No explicit arm or player-store injection.",
+    "Connection diagnostic body button click has no effect while flight-dialog is a native :modal. DOM diagnostic.open=false and pre.textContent empty, activeElement world-viewport.",
+    "Normal Menu opens second native modal worlds-shell-home-dialog while flight-dialog remains modal; body tool is still inaccessible. No forced focus, DOM mutation or alternative runtime invocation attempted.",
+    "No captured-events report was read/exported; actual native capture contents remain unknown. This is an authoring-host access failure, not an observed abnormal database close or causal reproduction of9196.",
+    "Original fixture untouched. Tab37 closed, no elapsed run or other renderer active."
+  ],
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-0e02-passive-modal-negative-native-20261015.txt",
+      "bytes": 1402,
+      "sha256": "a7da03c5870baca1fb6b88b07e5745dbf846e183e234251db2e2483033ff5061"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-0e02-passive-modal-negative-native-20261015.png",
+      "bytes": 51722,
+      "sha256": "69747aae801a68091a504f4af7b61e3a3f6a63e63343218fd8291da6153a0482"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-0e02-passive-home-modal-negative-native-20261015.txt",
+      "bytes": 1372,
+      "sha256": "f2dcd39d4c001450b59e4be03a0925cd39cae3810327ec9682c71f5338e57211"
+    }
+  ],
+  "next": "Separate host-only event-driven modal-owned access correction, meaningful boundary test and fresh9206 native fixture; preserve9205 as negative."
+}

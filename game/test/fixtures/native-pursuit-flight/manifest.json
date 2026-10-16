@@ -1,0 +1,523 @@
+{
+  "format": "generated-native-pursuit-flight-routes.v1",
+  "provenance": "Software-generated legal native controls. Exact completion existence only; human play, device accessibility, artwork approval and public release remain unqualified.",
+  "generatorSha256": "332fb8babebd537cfad66c5b283456220bb882b612af4418f37e48c27998238c",
+  "playlist": {
+    "format": "FPVPlaylist.v1",
+    "id": "native-pursuit",
+    "revision": "r2",
+    "title": {
+      "en": "Native Pursuit · Ground intentions",
+      "uk": "Наземне переслідування · Наміри цілей"
+    },
+    "entries": [
+      {
+        "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+        "levelId": "native-pursuit-runner-court"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+        "levelId": "native-pursuit-burst-lanes"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:0233a9dda4d96084",
+        "levelId": "native-pursuit-refuge-return"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+        "levelId": "native-pursuit-switchback-crossing"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:0233a9dda4d96084",
+        "levelId": "native-pursuit-meeting-yard"
+      },
+      {
+        "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+        "levelId": "native-pursuit-armor-windows"
+      }
+    ]
+  },
+  "columns": ["repeat", "roll", "pitch", "yaw", "throttle", "actions"],
+  "courses": [
+    {
+      "id": "native-pursuit-runner-court",
+      "revision": "r1",
+      "seed": 9801,
+      "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+      "recipeIdentity": "484df2945f021257",
+      "recipeSha256": "790e40661c4e8a8f434292f7d0da9f355934f6506277e9d4becd762d0c267a3b",
+      "routes": [
+        {
+          "mode": "self-level",
+          "file": "native-pursuit-runner-court-self-level.csv",
+          "bytes": 4774,
+          "sha256": "f84ad52ad9c0e5f36b83d38822c69b36f04cf03e3a8a9287ea9d9ccd55562b17",
+          "inputIdentity": "a80aff6dbec75a09",
+          "ticks": 326,
+          "caught": ["pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v1",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-runner-court",
+            "courseIdentity": "e498cea230650845",
+            "worldIdentity": "aef16c73b66d0475",
+            "mode": "self-level",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afb17d2d9aa14459",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "8d0f1ba1d4f4345f"
+          }
+        },
+        {
+          "mode": "acro",
+          "file": "native-pursuit-runner-court-acro.csv",
+          "bytes": 4363,
+          "sha256": "3e81a1fa330f0478d61c6dd7acd80c2019feec66fe4977fb1ef5be24c239b6bb",
+          "inputIdentity": "1e4a75b8347fea8e",
+          "ticks": 326,
+          "caught": ["pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v1",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-runner-court",
+            "courseIdentity": "e498cea230650845",
+            "worldIdentity": "aef16c73b66d0475",
+            "mode": "acro",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afb17d2d9aa14459",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "22b8c5821aec2ba3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "native-pursuit-burst-lanes",
+      "revision": "r1",
+      "seed": 9802,
+      "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+      "recipeIdentity": "e257ae97626d27e4",
+      "recipeSha256": "ce9ea7de61654681a109ae14765f8970eb18bd580665a568e38817d4be3db0ba",
+      "routes": [
+        {
+          "mode": "self-level",
+          "file": "native-pursuit-burst-lanes-self-level.csv",
+          "bytes": 6915,
+          "sha256": "21dafb078fced5f666d3c59814665dd8ab3239e7744d1429a3e6b59590355610",
+          "inputIdentity": "8df361c813d86ff5",
+          "ticks": 416,
+          "caught": ["pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v1",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-burst-lanes",
+            "courseIdentity": "31e56ffcc92b07f6",
+            "worldIdentity": "8a34be53d787c63d",
+            "mode": "self-level",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afae7d2d9a9f0e82",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "976728c14cbc818a"
+          }
+        },
+        {
+          "mode": "acro",
+          "file": "native-pursuit-burst-lanes-acro.csv",
+          "bytes": 6413,
+          "sha256": "44c0c4aa6afc1bb255833be40300e79f99814b5e15d98b0c70f36afe970cf274",
+          "inputIdentity": "b2a8b26a8ca097b9",
+          "ticks": 416,
+          "caught": ["pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v1",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-burst-lanes",
+            "courseIdentity": "31e56ffcc92b07f6",
+            "worldIdentity": "8a34be53d787c63d",
+            "mode": "acro",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afae7d2d9a9f0e82",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "5d4740b17828430a"
+          }
+        }
+      ]
+    },
+    {
+      "id": "native-pursuit-refuge-return",
+      "revision": "r2",
+      "seed": 9803,
+      "packIdentity": "fpv-native-pursuit:0233a9dda4d96084",
+      "recipeIdentity": "e66c91aea780e7b8",
+      "recipeSha256": "71489cbe7d3a7e6a98122c137922bbbfbfbc85e1c3b7248678541b22d5ccd175",
+      "routes": [
+        {
+          "mode": "self-level",
+          "file": "native-pursuit-refuge-return-self-level.csv",
+          "bytes": 9775,
+          "sha256": "4634cacca9a41c5d0691cd0a1333a41656a955d111b6834188a6ffd948d6bb15",
+          "inputIdentity": "7d8c028387aeec0e",
+          "ticks": 983,
+          "caught": ["pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v2",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-refuge-return",
+            "courseIdentity": "52b994833254a11e",
+            "worldIdentity": "0961d50abf122bb5",
+            "mode": "self-level",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afaa792d9a9b1edf",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "7e3221c9f048618c"
+          }
+        },
+        {
+          "mode": "acro",
+          "file": "native-pursuit-refuge-return-acro.csv",
+          "bytes": 9530,
+          "sha256": "f042753638ff29c6b892ea6004df3368544845b1b1233fcfe4c645047430deb0",
+          "inputIdentity": "b0373e196fd9644c",
+          "ticks": 983,
+          "caught": ["pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v2",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-refuge-return",
+            "courseIdentity": "52b994833254a11e",
+            "worldIdentity": "0961d50abf122bb5",
+            "mode": "acro",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afaa792d9a9b1edf",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "9375bca239cd04d8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "native-pursuit-switchback-crossing",
+      "revision": "r1",
+      "seed": 9804,
+      "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+      "recipeIdentity": "1dd4152e93458c4b",
+      "recipeSha256": "75233566e0edbc04d9166c296e918af121f4fb2bf876ceb4c05b2c82d5f39c61",
+      "routes": [
+        {
+          "mode": "self-level",
+          "file": "native-pursuit-switchback-crossing-self-level.csv",
+          "bytes": 15502,
+          "sha256": "bceff6b16ebbebc842be12dc31112ef9ad8c2b4aebe6729ed1d4843e96d73d84",
+          "inputIdentity": "18a78bb3f2dba39e",
+          "ticks": 1061,
+          "caught": ["pursuit-2", "pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v1",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-switchback-crossing",
+            "courseIdentity": "6f94db4ddde4db77",
+            "worldIdentity": "e5411a917f106d88",
+            "mode": "self-level",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afc2792d9aafb0c0",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "cb5289e9866d1a94"
+          }
+        },
+        {
+          "mode": "acro",
+          "file": "native-pursuit-switchback-crossing-acro.csv",
+          "bytes": 14086,
+          "sha256": "541a4b4914e966f22629c2d60b9573f71bcfb1de566cbe98cd9321dcb8f35c73",
+          "inputIdentity": "291cd9c5b862a0a2",
+          "ticks": 1061,
+          "caught": ["pursuit-2", "pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v1",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-switchback-crossing",
+            "courseIdentity": "6f94db4ddde4db77",
+            "worldIdentity": "e5411a917f106d88",
+            "mode": "acro",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afc2792d9aafb0c0",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "1b994660107950ec"
+          }
+        }
+      ]
+    },
+    {
+      "id": "native-pursuit-meeting-yard",
+      "revision": "r2",
+      "seed": 9805,
+      "packIdentity": "fpv-native-pursuit:0233a9dda4d96084",
+      "recipeIdentity": "f641492c6b8c33df",
+      "recipeSha256": "c1ca8c919fb6986cf1e31a7a8aa322910eefa2adef756c05ce39d1a306e5ce70",
+      "routes": [
+        {
+          "mode": "self-level",
+          "file": "native-pursuit-meeting-yard-self-level.csv",
+          "bytes": 12068,
+          "sha256": "dae4a79b103ea5ef46d9e92ebf284daa8781af3b21c31fc05a90c49516e17489",
+          "inputIdentity": "0216c644809595b3",
+          "ticks": 812,
+          "caught": ["pursuit-1", "pursuit-2"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v2",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-meeting-yard",
+            "courseIdentity": "bc5b1fbf5f0ea130",
+            "worldIdentity": "e58fb0d301083b68",
+            "mode": "self-level",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afbf7d2d9aad81b5",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "8f0143ba2ef9bb60"
+          }
+        },
+        {
+          "mode": "acro",
+          "file": "native-pursuit-meeting-yard-acro.csv",
+          "bytes": 11260,
+          "sha256": "fdda5b1a408d21b174446f5b5cdb03ceb4d726f0caf037867e9f50428fd80fd6",
+          "inputIdentity": "c0d7f72a9f829eb2",
+          "ticks": 812,
+          "caught": ["pursuit-1", "pursuit-2"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v2",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-meeting-yard",
+            "courseIdentity": "bc5b1fbf5f0ea130",
+            "worldIdentity": "e58fb0d301083b68",
+            "mode": "acro",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afbf7d2d9aad81b5",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "ef11449420b7c5ab"
+          }
+        }
+      ]
+    },
+    {
+      "id": "native-pursuit-armor-windows",
+      "revision": "r1",
+      "seed": 9806,
+      "packIdentity": "fpv-native-pursuit:49a87f729321e198",
+      "recipeIdentity": "7cf2ba7dc8c08ee2",
+      "recipeSha256": "d57262f7b8485f582433ce94fd7999a360657abfd1ef30f134eeef281e7e81ce",
+      "routes": [
+        {
+          "mode": "self-level",
+          "file": "native-pursuit-armor-windows-self-level.csv",
+          "bytes": 36927,
+          "sha256": "a0421a7d7bc168630da5b98359998149408c1ef3cf9d35e846c4f27822a665d5",
+          "inputIdentity": "bb69f901609d306b",
+          "ticks": 2230,
+          "caught": ["pursuit-2", "pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v1",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-armor-windows",
+            "courseIdentity": "89d7eda8f49e58ec",
+            "worldIdentity": "46ab8f8de952ac12",
+            "mode": "self-level",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afbb7d2d9aa998de",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "0869cbdb8dc4a309"
+          }
+        },
+        {
+          "mode": "acro",
+          "file": "native-pursuit-armor-windows-acro.csv",
+          "bytes": 33360,
+          "sha256": "b26e4927252779ddd5efde5472d2708fb0f674aba9cee54b86eff4a013bd3d95",
+          "inputIdentity": "30dc38bd5f6fb773",
+          "ticks": 2230,
+          "caught": ["pursuit-2", "pursuit-1"],
+          "health": 100,
+          "contacts": 0,
+          "shots": 0,
+          "proof": {
+            "format": "FlightAttempt.v3",
+            "session": "practice",
+            "model": "civilian-world-pursuit.v1",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "native-pursuit-armor-windows",
+            "courseIdentity": "89d7eda8f49e58ec",
+            "worldIdentity": "46ab8f8de952ac12",
+            "mode": "acro",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "afbb7d2d9aa998de",
+            "conditionsIdentity": "030d08b3879ad283",
+            "response": {
+              "format": "FlightResponseProfile.v1",
+              "id": "gentle-v1",
+              "name": "Gentle",
+              "maxRate": 240,
+              "maxTilt": 30,
+              "expo": 30,
+              "responseTicks": 8
+            },
+            "finalStateIdentity": "696186fe40fea06b"
+          }
+        }
+      ]
+    }
+  ]
+}

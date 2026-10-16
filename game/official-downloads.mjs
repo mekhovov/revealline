@@ -4,7 +4,8 @@ export const DOWNLOAD_STATE_CACHE = 'revealline-official-downloads-v1';
 export const OFFICIAL_ORIGINAL_INDEX = 'revealline-official-original-index-v1';
 export const OFFICIAL_REFERENCE_MIME = 'application/x-revealline-official-reference';
 const hashPattern = /^[a-f0-9]{64}$/;
-const limit = 32 * 1024 * 1024;
+export const MAX_OFFICIAL_FILE_BYTES = 32 * 1024 * 1024;
+const limit = MAX_OFFICIAL_FILE_BYTES;
 export const officialAssetURL = (hash, origin = globalThis.location?.origin) => {
   if (!hashPattern.test(hash)) throw new Error('Invalid official asset identity.');
   return new URL(`/.revealline-official/sha256/${hash}`, origin).href;
@@ -14,7 +15,7 @@ export async function assetDigest(bytes, cryptoRef = globalThis.crypto) {
     .map((byte) => byte.toString(16).padStart(2, '0'))
     .join('');
 }
-function checkFile(file) {
+export function validateOfficialDownloadFile(file) {
   if (
     !hashPattern.test(file?.sha256) ||
     !Number.isSafeInteger(file.bytes) ||
@@ -24,6 +25,7 @@ function checkFile(file) {
     throw new Error('Invalid official download descriptor.');
   return file;
 }
+const checkFile = validateOfficialDownloadFile;
 function aborted(signal) {
   signal?.throwIfAborted();
 }
@@ -88,17 +90,38 @@ export function createOfficialDownloads({
       return null;
     return blob;
   }
-  async function states() {
+  async function checkpoints({ strict = false } = {}) {
     const cache = await cacheStorage.open(DOWNLOAD_STATE_CACHE);
     const result = [];
     for (const entry of await cache.keys()) {
       try {
-        result.push(await (await cache.match(entry)).json());
+        const state = await (await cache.match(entry)).json();
+        if (
+          !state ||
+          typeof state.edition !== 'string' ||
+          typeof state.group !== 'string' ||
+          typeof state.complete !== 'boolean' ||
+          !Array.isArray(state.hashes) ||
+          state.hashes.some((hash) => typeof hash !== 'string' || !hashPattern.test(hash))
+        )
+          throw new Error('Invalid ownership checkpoint.');
+        result.push({ url: entry.url, state });
       } catch {
-        /* An incomplete checkpoint is not readiness evidence. */
+        // An unreadable owner may still protect saves, another edition or music.
+        // Browsing can omit it, but reclamation must stop before changing anything.
+        if (strict)
+          throw Object.assign(
+            new Error(
+              'Download ownership could not be read. Nothing was removed; existing game files and saves are kept.',
+            ),
+            { localization: { key: 'interface:downloads.ownershipUnreadable' } },
+          );
       }
     }
     return result;
+  }
+  async function states() {
+    return (await checkpoints()).map(({ state }) => state);
   }
   async function inspect(files, { verify = false, signal } = {}) {
     const cache = await cacheStorage.open(OFFICIAL_CACHE);
@@ -156,6 +179,7 @@ export function createOfficialDownloads({
     acquire,
     readExisting,
     selection,
+    allGameplay,
     onProgress = () => {},
   }) {
     const unique = [...new Map(files.map((file) => [checkFile(file).sha256, file])).values()];
@@ -169,6 +193,7 @@ export function createOfficialDownloads({
         hashes: unique.map((file) => file.sha256),
         complete: false,
         ...(selection ? { selection } : {}),
+        ...(typeof allGameplay === 'boolean' ? { allGameplay } : {}),
       };
       await metadata.put(stateKey(edition, group), new Response(JSON.stringify(checkpoint)));
       let report = await inspect(unique, { verify: true, signal });
@@ -246,9 +271,14 @@ export function createOfficialDownloads({
       const metadata = await cacheStorage.open(DOWNLOAD_STATE_CACHE);
       const previous = await metadata.match(stateKey(edition, group));
       if (!previous) return;
-      const removed = await previous.json();
-      await metadata.delete(stateKey(edition, group));
-      const used = new Set((await states()).flatMap((state) => state.hashes || []));
+      const owners = await checkpoints({ strict: true });
+      const target = stateKey(edition, group);
+      const removed = owners.find(({ url }) => url === target)?.state;
+      if (!removed) return;
+      const used = new Set(
+        owners.filter(({ url }) => url !== target).flatMap(({ state }) => state.hashes),
+      );
+      if (!(await metadata.delete(target))) return;
       const data = await cacheStorage.open(OFFICIAL_CACHE);
       for (const hash of removed.hashes) if (!used.has(hash)) await data.delete(key(hash));
     });
@@ -258,19 +288,78 @@ export function createOfficialDownloads({
       const metadata = await cacheStorage.open(DOWNLOAD_STATE_CACHE);
       const previous = await metadata.match(stateKey(edition, group));
       if (!previous) return;
-      const old = await previous.json();
+      const owners = await checkpoints({ strict: true });
+      const target = stateKey(edition, group);
+      const old = owners.find(({ url }) => url === target)?.state;
+      if (!old) return;
       const hashes = [...new Set(files.map((file) => checkFile(file).sha256))];
       const health = await inspect(files, { verify: true });
+      const used = new Set([
+        ...hashes,
+        ...owners.filter(({ url }) => url !== target).flatMap(({ state }) => state.hashes),
+      ]);
       await metadata.put(
         stateKey(edition, group),
         new Response(JSON.stringify({ edition, group, selection, hashes, complete: health.ready })),
       );
-      const used = new Set((await states()).flatMap((state) => state.hashes || []));
       const data = await cacheStorage.open(OFFICIAL_CACHE);
       for (const hash of old.hashes) if (!used.has(hash)) await data.delete(key(hash));
     });
   }
-  return Object.freeze({ read, inspect, estimate, download, remove, retain, states });
+  /** Prepared gameplay can create saves synchronously after admission. Keep its
+   * complete verified package until a future save-aware reclamation pass can
+   * prove that no flight, replay or collected original still needs it. */
+  async function pin({ edition, group, files, signal }) {
+    if (
+      typeof edition !== 'string' ||
+      !edition.length ||
+      edition.length > 2048 ||
+      typeof group !== 'string' ||
+      !group.length ||
+      group.length > 200 ||
+      !Array.isArray(files) ||
+      files.some((file) => file.kind !== 'gameplay')
+    )
+      throw new Error('Gameplay retention needs an exact edition and package.');
+    aborted(signal);
+    return locked(async () => {
+      aborted(signal);
+      const report = await inspect(files, { verify: true, signal });
+      aborted(signal);
+      if (!report.ready)
+        throw new Error(
+          'Verify this complete chapter before keeping its saved-flight dependencies.',
+        );
+      const owner = JSON.stringify([edition, group]);
+      const url = new URL(
+        `/.revealline-official/owners/played/${encodeURIComponent(owner)}`,
+        origin,
+      ).href;
+      const metadata = await cacheStorage.open(DOWNLOAD_STATE_CACHE);
+      const previous = await metadata.match(url);
+      const retained = previous ? await previous.json() : null;
+      const hashes = [
+        ...new Set([...(retained?.hashes || []), ...files.map((file) => checkFile(file).sha256)]),
+      ];
+      aborted(signal);
+      await metadata.put(
+        url,
+        new Response(
+          JSON.stringify({
+            edition: 'played-dependencies',
+            group: owner,
+            scope: edition,
+            package: group,
+            hashes,
+            complete: true,
+          }),
+        ),
+      );
+      aborted(signal);
+      return { hashes, complete: true };
+    }, signal);
+  }
+  return Object.freeze({ read, inspect, estimate, download, remove, retain, pin, states });
 }
 
 /** Fail closed if browser storage is unavailable; never turn a local miss into a request. */

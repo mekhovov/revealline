@@ -1,0 +1,290 @@
+TAP version 13
+# Subtest: native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+ok 1 - native Return remains available before loading and after theme failure: http://localhost:8000/authoring/enemy-catalog/
+  ---
+  duration_ms: 69.457041
+  ...
+# Subtest: native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+ok 2 - native Return remains available before loading and after theme failure: https://example.test/revealline/releases/v0.60.8/site/authoring/enemy-catalog/
+  ---
+  duration_ms: 8.205875
+  ...
+# Subtest: workshop modal Back keeps its draft before a separate keyboard Return to Workshop
+ok 3 - workshop modal Back keeps its draft before a separate keyboard Return to Workshop
+  ---
+  duration_ms: 14.20625
+  ...
+# Subtest: ready controller navigation keeps modal ownership then activates the page Return link explicitly
+ok 4 - ready controller navigation keeps modal ownership then activates the page Return link explicitly
+  ---
+  duration_ms: 37.737542
+  ...
+# Subtest: focused practice keeps parent controls idle and authenticated return restores the draft
+ok 5 - focused practice keeps parent controls idle and authenticated return restores the draft
+  ---
+  duration_ms: 22.147875
+  ...
+# Subtest: ordinary foreground startup still opens the panel once and retires loading listeners
+ok 6 - ordinary foreground startup still opens the panel once and retires loading listeners
+  ---
+  duration_ms: 10.237708
+  ...
+# Subtest: startup catalog Escape returns to Open workshop before forward Tab
+ok 7 - startup catalog Escape returns to Open workshop before forward Tab
+  ---
+  duration_ms: 16.381084
+  ...
+# Subtest: startup catalog Back returns to Open workshop before forward Tab
+ok 8 - startup catalog Back returns to Open workshop before forward Tab
+  ---
+  duration_ms: 13.543708
+  ...
+# Subtest: successful readiness preserves Return focus chosen before module
+ok 9 - successful readiness preserves Return focus chosen before module
+  ---
+  duration_ms: 10.365542
+  ...
+# Subtest: successful readiness preserves Return focus chosen during loading
+ok 10 - successful readiness preserves Return focus chosen during loading
+  ---
+  duration_ms: 11.57375
+  ...
+# Subtest: late readiness cannot revive retired opening after focus then return to body
+ok 11 - late readiness cannot revive retired opening after focus then return to body
+  ---
+  duration_ms: 10.568917
+  ...
+# Subtest: late readiness cannot revive retired opening after keyboard intent
+ok 12 - late readiness cannot revive retired opening after keyboard intent
+  ---
+  duration_ms: 9.104875
+  ...
+# Subtest: late readiness cannot revive retired opening after pointer intent
+ok 13 - late readiness cannot revive retired opening after pointer intent
+  ---
+  duration_ms: 8.728083
+  ...
+# Subtest: late readiness cannot revive retired opening after blur and refocus
+ok 14 - late readiness cannot revive retired opening after blur and refocus
+  ---
+  duration_ms: 9.190208
+  ...
+# Subtest: late readiness cannot revive retired opening after hide and show
+ok 15 - late readiness cannot revive retired opening after hide and show
+  ---
+  duration_ms: 9.4725
+  ...
+# Subtest: late readiness cannot revive retired opening after pagehide and pageshow
+ok 16 - late readiness cannot revive retired opening after pagehide and pageshow
+  ---
+  duration_ms: 10.260542
+  ...
+# Subtest: theme failure retires the startup lease and retains the existing reload/Return recovery
+ok 17 - theme failure retires the startup lease and retains the existing reload/Return recovery
+  ---
+  duration_ms: 7.852958
+  ...
+# Subtest: terminal departure prevents late startup and feedback after theme status 200
+ok 18 - terminal departure prevents late startup and feedback after theme status 200
+  ---
+  duration_ms: 2.092875
+  ...
+# Subtest: terminal departure prevents late startup and feedback after theme status 503
+ok 19 - terminal departure prevents late startup and feedback after theme status 503
+  ---
+  duration_ms: 3.603458
+  ...
+# Subtest: persisted departure defers theme status 200 until restoration without auto-open
+ok 20 - persisted departure defers theme status 200 until restoration without auto-open
+  ---
+  duration_ms: 8.59425
+  ...
+# Subtest: persisted departure defers theme status 503 until restoration without auto-open
+ok 21 - persisted departure defers theme status 503 until restoration without auto-open
+  ---
+  duration_ms: 8.9595
+  ...
+# Subtest: terminal departure during theme body decoding prevents late owner initialization
+ok 22 - terminal departure during theme body decoding prevents late owner initialization
+  ---
+  duration_ms: 8.606125
+  ...
+# Subtest: music yields before fetching when another window is already playing
+ok 23 - music yields before fetching when another window is already playing
+  ---
+  duration_ms: 103.28275
+  ...
+# Subtest: connection loss preserves committed files and a new downloader resumes only the missing file
+ok 24 - connection loss preserves committed files and a new downloader resumes only the missing file
+  ---
+  duration_ms: 18.309458
+  ...
+# Subtest: pause preserves the completed file and cancellation never marks the group complete
+ok 25 - pause preserves the completed file and cancellation never marks the group complete
+  ---
+  duration_ms: 6.111333
+  ...
+# Subtest: quota failure preserves existing files and a retry resumes atomically
+ok 26 - quota failure preserves existing files and a retry resumes atomically
+  ---
+  duration_ms: 3.973708
+  ...
+# Subtest: same-sized corruption is detected and only the damaged file is repaired
+ok 27 - same-sized corruption is detected and only the damaged file is repaired
+  ---
+  duration_ms: 6.96775
+  ...
+# Subtest: updates reuse hashes across editions and removal retains shared references and user caches
+ok 28 - updates reuse hashes across editions and removal retains shared references and user caches
+  ---
+  duration_ms: 2.33275
+  ...
+# Subtest: remove preserves all files and checkpoints when another owner's metadata is unreadable
+ok 29 - remove preserves all files and checkpoints when another owner's metadata is unreadable
+  ---
+  duration_ms: 12.793667
+  ...
+# Subtest: remove preserves data when its ownership mutation fails
+ok 30 - remove preserves data when its ownership mutation fails
+  ---
+  duration_ms: 2.437625
+  ...
+# Subtest: retain preserves all files and checkpoints when another owner's metadata is unreadable
+ok 31 - retain preserves all files and checkpoints when another owner's metadata is unreadable
+  ---
+  duration_ms: 18.829708
+  ...
+# Subtest: retain preserves data when its ownership mutation fails
+ok 32 - retain preserves data when its ownership mutation fails
+  ---
+  duration_ms: 3.486083
+  ...
+# Subtest: failed music leaves game readiness intact and imported bytes avoid a network request
+ok 33 - failed music leaves game readiness intact and imported bytes avoid a network request
+  ---
+  duration_ms: 2.190166
+  ...
+# Subtest: partial, truncated, oversized, corrupt and redirected downloads cannot be committed
+ok 34 - partial, truncated, oversized, corrupt and redirected downloads cannot be committed
+  ---
+  duration_ms: 0.470375
+  ...
+# Subtest: game closure includes shared artwork without including or depending on soundtracks
+ok 35 - game closure includes shared artwork without including or depending on soundtracks
+  ---
+  duration_ms: 0.208042
+  ...
+# Subtest: played chapter retains its complete runtime and artwork after deselection while unplayed bytes are freed
+ok 36 - played chapter retains its complete runtime and artwork after deselection while unplayed bytes are freed
+  ---
+  duration_ms: 8.028167
+  ...
+# Subtest: missing, corrupt, aborted and soundtrack files cannot acquire a played chapter owner
+ok 37 - missing, corrupt, aborted and soundtrack files cannot acquire a played chapter owner
+  ---
+  duration_ms: 2.575917
+  ...
+# Subtest: damaged download ownership keeps its recovery message live in English and Ukrainian
+ok 38 - damaged download ownership keeps its recovery message live in English and Ukrainian
+  ---
+  duration_ms: 4.865208
+  ...
+# Subtest: Recovery adopts saved reading settings and system reduction before held release information
+ok 39 - Recovery adopts saved reading settings and system reduction before held release information
+  ---
+  duration_ms: 74.815125
+  ...
+# Subtest: Recovery reading policy survives application loading failure and the existing Back remains usable
+ok 40 - Recovery reading policy survives application loading failure and the existing Back remains usable
+  ---
+  duration_ms: 19.379084
+  ...
+# Subtest: Recovery display entry works independently of an unavailable application graph and never writes denied storage
+ok 41 - Recovery display entry works independently of an unavailable application graph and never writes denied storage
+  ---
+  duration_ms: 4.633583
+  ...
+# Subtest: shared updates preserve Recovery selection, prepared original bytes, live reads and focused actions
+ok 42 - shared updates preserve Recovery selection, prepared original bytes, live reads and focused actions
+  ---
+  duration_ms: 10.491042
+  ...
+# Subtest: Recovery display lifecycle rereads missed settings once and terminal exit retires the owner
+ok 43 - Recovery display lifecycle rereads missed settings once and terminal exit retires the owner
+  ---
+  duration_ms: 8.889458
+  ...
+# Subtest: edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+ok 44 - edition theater boots from selected presentation, imports raw replays, and never requests historical examples
+  ---
+  duration_ms: 165.768292
+  ...
+# Subtest: edition theater reports unavailable catalog through its ordinary boot status
+ok 45 - edition theater reports unavailable catalog through its ordinary boot status
+  ---
+  duration_ms: 26.43275
+  ...
+# Subtest: real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+ok 46 - real theater adopts shared text/cap before boot and changes presentation without changing verified playback
+  ---
+  duration_ms: 43.864709
+  ...
+# Subtest: real theater preserves denied-save intent and its recording across a persisted return
+ok 47 - real theater preserves denied-save intent and its recording across a persisted return
+  ---
+  duration_ms: 18.050917
+  ...
+# Subtest: real theater boot failure retains usable shared reading controls without playback
+ok 48 - real theater boot failure retains usable shared reading controls without playback
+  ---
+  duration_ms: 5.459792
+  ...
+# Subtest: terminal exit during delayed boot retires authority and fences late replay startup
+ok 49 - terminal exit during delayed boot retires authority and fences late replay startup
+  ---
+  duration_ms: 6.853584
+  ...
+# Subtest: history-restored replay controls follow unchanged saved intent without touching playback
+ok 50 - history-restored replay controls follow unchanged saved intent without touching playback
+  ---
+  duration_ms: 22.939833
+  ...
+# Subtest: history-restored replay controls follow unchanged session-only intent without touching playback
+ok 51 - history-restored replay controls follow unchanged session-only intent without touching playback
+  ---
+  duration_ms: 22.882875
+  ...
+# Subtest: recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+ok 52 - recorded company receipt restores selected actors and rejects changed artwork while retaining playback
+  ---
+  duration_ms: 181.658208
+  ...
+# Subtest: Still Media actual entry adopts shared Large/Plain before local media is opened
+ok 53 - Still Media actual entry adopts shared Large/Plain before local media is opened
+  ---
+  duration_ms: 42.383042
+  ...
+# Subtest: shared reading updates preserve the open Still Media draft, original, preview and focus
+ok 54 - shared reading updates preserve the open Still Media draft, original, preview and focus
+  ---
+  duration_ms: 50.823292
+  ...
+# Subtest: Still Media cached return refreshes missed reading changes without reopening media
+ok 55 - Still Media cached return refreshes missed reading changes without reopening media
+  ---
+  duration_ms: 23.286834
+  ...
+# Subtest: terminal Still Media departure releases reading listeners and ignores retained callbacks
+ok 56 - terminal Still Media departure releases reading listeners and ignores retained callbacks
+  ---
+  duration_ms: 14.882959
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 780.367542

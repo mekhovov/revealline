@@ -1,0 +1,149 @@
+{
+  "sourceCommit": "5a1f3a0c4",
+  "manualResume": true,
+  "pausedHud": "\n          \n          \n            Hull 100/100 · Airframes 300:10Level 1\n          \n          Automated review · Fan build\n          \n            Overflight payload 1Boost Ready\n          \n        ",
+  "diagnostics": {
+    "phase": "playing",
+    "time": 51.17,
+    "renderer": "Phaser 4.2.1 WebGL",
+    "logicalWidth": 960,
+    "logicalHeight": 540,
+    "backingWidth": 960,
+    "backingHeight": 540,
+    "atlas": {
+      "width": 1020,
+      "height": 1292,
+      "textures": 2,
+      "baseRGBABytes": 5533504,
+      "retainedCanvasBytes": 5533504,
+      "soldierFrames": 216,
+      "machineryFrames": 36,
+      "heroFrames": 4,
+      "equipmentFrames": 13,
+      "frameCount": 276
+    },
+    "heroArtwork": {
+      "assetId": "player.scout.detailed.field-kit",
+      "rotorCount": 4,
+      "visibleDiameter": 32,
+      "bakedFrameSize": 48,
+      "paintedWidth": 41.47608169635396,
+      "paintedHeight": 41.47608169635396
+    },
+    "counts": {
+      "alive": 51,
+      "visible": 29,
+      "rendered": 36,
+      "effects": 11,
+      "pickups": 2,
+      "warnings": 2,
+      "behaviorCues": 0,
+      "quads": 56
+    },
+    "allocatedSprites": 1839,
+    "fixture": null,
+    "reducedEffects": false,
+    "preparationMs": 28.399999976158142,
+    "contextLosses": 1,
+    "contextRestores": 1,
+    "contextRecoveryTests": 1,
+    "lost": false,
+    "failed": false,
+    "cadenceMs": {
+      "samples": 6232,
+      "p50": 8.300000011920929,
+      "p95": 10,
+      "p99": 10.399999976158142,
+      "worst": 34.799999952316284
+    },
+    "submissionMs": {
+      "samples": 6237,
+      "p50": 0.30000001192092896,
+      "p95": 0.40000003576278687,
+      "p99": 0.5,
+      "worst": 0.8000000715255737
+    },
+    "cadenceHz": 119.807216500846,
+    "measuredIntervals": 6232,
+    "measuredSeconds": 52.01689999997616,
+    "retainedIntervals": 6232,
+    "sampleCapacity": 120000,
+    "submissionTotalMs": 1953.5999999642372,
+    "over33Ms": 1,
+    "over50Ms": 0,
+    "over100Ms": 0,
+    "exclusions": {
+      "context-lost": 1,
+      "context-restored": 1
+    },
+    "highWater": {
+      "alive": 53,
+      "visible": 39,
+      "rendered": 42,
+      "effects": 24,
+      "pickups": 7
+    },
+    "protocol": {
+      "arrangement": "One warm-up followed by consecutive windows of the same fixture; not separate restarted trials.",
+      "warmupSeconds": 30,
+      "measurementSeconds": 120,
+      "repetitions": 3,
+      "windows": [
+        {
+          "index": 1,
+          "complete": false,
+          "measuredSeconds": 22.009499999940395,
+          "cadenceMs": {
+            "samples": 2641,
+            "p50": 8.300000011920929,
+            "p95": 10,
+            "p99": 10.300000011920929,
+            "worst": 12.5
+          },
+          "cadenceHz": 119.99363911070911,
+          "slowFraction": 0,
+          "passes": null
+        },
+        {
+          "index": 2,
+          "complete": false,
+          "measuredSeconds": 0,
+          "cadenceMs": {
+            "samples": 0,
+            "p50": null,
+            "p95": null,
+            "p99": null,
+            "worst": null
+          },
+          "cadenceHz": null,
+          "slowFraction": null,
+          "passes": null
+        },
+        {
+          "index": 3,
+          "complete": false,
+          "measuredSeconds": 0,
+          "cadenceMs": {
+            "samples": 0,
+            "p50": null,
+            "p95": null,
+            "p99": null,
+            "worst": null
+          },
+          "cadenceHz": null,
+          "slowFraction": null,
+          "passes": null
+        }
+      ],
+      "acceptance": null,
+      "scope": "This browser run only; target hardware acceptance requires recorded device runs."
+    },
+    "clock": {
+      "steps": 3070,
+      "droppedSeconds": 0,
+      "accumulator": 0.0011499999761583023
+    },
+    "longFrames": 0,
+    "trialValid": true
+  }
+}

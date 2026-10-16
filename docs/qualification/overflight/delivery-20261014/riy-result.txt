@@ -1,0 +1,70 @@
+- main:
+  - button "Menu"
+  - generic: Riy · escorts
+  - button "Pause" [disabled]
+  - region "Survive battlefield":
+    - complementary:
+      - 'generic "Now playing: Carol of the Bells (Metal Version) · Alexander Nakarada"'
+      - 'generic "File: Carol of the Bells (Metal Version).mp3"'
+      - link "Visit Alexander Nakarada — opens in a new tab":
+        - /url: https://creatorchords.com/music/carol-of-the-bells-metal-version/
+        - text: Creator source ↗
+    - generic: Hull 80 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 1
+    - generic: Sortie
+    - strong: 05:23
+    - generic: Level 11
+    - generic: 2,923 Cleared
+    - paragraph: Automated review · Systems build
+    - 'status "Open cache: fly out, then choose one reward. +30 hull or +1 reroll and boost ready."': Cache open · choose one reward
+    - generic: Double Pulse 2
+    - generic: Proximity pulse 3
+    - progressbar "Pulse flight charge"
+    - generic: Side burst 3
+    - generic: Salvage scanner 3
+    - generic: Boost Ready
+    - generic "Diagnostics"
+    - complementary:
+      - strong: Riy · escorts
+      - generic: Sweeper · wide cover / Breaker · concentrated hits
+      - generic: Focusing priority target
+      - button "F · Focus target" [disabled]
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+  - dialog "Results":
+    - heading "Results" [level=1]
+    - generic: ✦
+    - paragraph: Field cleared
+    - heading "Sortie complete" [level=2]
+    - paragraph: Final target down. This battlefield tells your story.
+    - paragraph: Automated review · Systems build
+    - term: Cleared
+    - definition: 2,923
+    - term: Time
+    - definition: 05:23
+    - term: Salvage
+    - definition: 4,579
+    - term: Upgrades earned
+    - definition: "10"
+    - term: Focus commands
+    - definition: "32"
+    - term: Escort attacks
+    - definition: "407"
+    - generic: ✓ Elite defeated
+    - generic: ✓ Final tank defeated
+    - heading "Your build" [level=3]
+    - strong: Double Pulse
+    - generic: Level 2
+    - strong: Proximity pulse
+    - generic: Level 3
+    - strong: Side burst
+    - generic: Level 3
+    - strong: Salvage scanner
+    - generic: Level 3
+    - generic: Engineer — A fine route through a complicated place.
+    - button "Retry same seed"
+    - button "New sortie"
+    - paragraph: Try another combination on the same battlefield.
+    - button "Back"
+    - button "Retry" [active]
+- text: + + + + + + + + + +

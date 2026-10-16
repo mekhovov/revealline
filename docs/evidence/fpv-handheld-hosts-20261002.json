@@ -1,0 +1,174 @@
+{
+  "format": "FPVControllerHostEvidence.v1",
+  "createdAt": "2026-10-02T03:59:34.993Z",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Academy held A at connection does not arm; a fresh release selects controller",
+      "passed": true,
+      "status": "active",
+      "source": "controller",
+      "deviceShape": "Steam Deck Controller (controlled standard sample)"
+    },
+    {
+      "name": "Academy UI Arm checks current axes and buttons after prior neutral readiness",
+      "passed": true,
+      "guardedInputs": [
+        "left vertical",
+        "X / Square"
+      ]
+    },
+    {
+      "name": "Academy immediate post-Arm throttle is accepted without another neutral pickup",
+      "passed": true,
+      "immediateThrottle": 50
+    },
+    {
+      "name": "Academy left vertical adjusts throttle at fixed ticks and centre holds",
+      "passed": true,
+      "throttle": 690,
+      "heightMm": 373,
+      "ticks": 91
+    },
+    {
+      "name": "Academy both sticks command correct yaw roll and pitch and live displays",
+      "passed": true,
+      "lastInput": {
+        "roll": 318,
+        "pitch": 261,
+        "yaw": 375,
+        "throttle": 690
+      }
+    },
+    {
+      "name": "Academy Start pauses into menu and leaves physics stopped",
+      "passed": true,
+      "pausedTicks": 100
+    },
+    {
+      "name": "Academy menu-owned stick movement cannot resume or move real flight",
+      "passed": true,
+      "resumedThrottle": 0
+    },
+    {
+      "name": "Academy Y reset releases flight and cannot auto-arm",
+      "passed": true,
+      "freshArm": "active"
+    },
+    {
+      "name": "Academy D-pad, bumpers and triggers supply complete flight fallback",
+      "passed": true,
+      "lastInput": {
+        "roll": 500,
+        "pitch": 0,
+        "yaw": 500,
+        "throttle": 60
+      }
+    },
+    {
+      "name": "Academy B pauses; disconnect and reconnect cannot rearm",
+      "passed": true,
+      "explicitResumeAfterReconnect": "active"
+    },
+    {
+      "name": "Academy focused-page blur cannot rearm from held controls",
+      "passed": true,
+      "explicitResume": "active"
+    },
+    {
+      "name": "Academy P opens pause menu and returning to flight does not arm",
+      "passed": true,
+      "pausedTicks": 49,
+      "afterReturn": "paused"
+    },
+    {
+      "name": "World Studio held A at connection does not arm; a fresh release selects controller",
+      "passed": true,
+      "status": "active",
+      "source": "controller",
+      "deviceShape": "Steam Deck Controller (controlled standard sample)"
+    },
+    {
+      "name": "World Studio UI Arm checks current axes and buttons after prior neutral readiness",
+      "passed": true,
+      "guardedInputs": [
+        "left vertical",
+        "X / Square"
+      ]
+    },
+    {
+      "name": "World Studio immediate post-Arm throttle is accepted without another neutral pickup",
+      "passed": true,
+      "immediateThrottle": 50
+    },
+    {
+      "name": "World Studio left vertical adjusts throttle at fixed ticks and centre holds",
+      "passed": true,
+      "throttle": 690,
+      "heightMm": 386,
+      "ticks": 91
+    },
+    {
+      "name": "World Studio both sticks command correct yaw roll and pitch and live displays",
+      "passed": true,
+      "lastInput": {
+        "roll": 318,
+        "pitch": 261,
+        "yaw": 375,
+        "throttle": 690,
+        "actions": 0
+      }
+    },
+    {
+      "name": "World Studio Start pauses into menu and leaves physics stopped",
+      "passed": true,
+      "pausedTicks": 100
+    },
+    {
+      "name": "World Studio menu-owned stick movement cannot resume or move real flight",
+      "passed": true,
+      "resumedThrottle": 0
+    },
+    {
+      "name": "World Studio Y reset releases flight and cannot auto-arm",
+      "passed": true,
+      "freshArm": "active"
+    },
+    {
+      "name": "World Studio D-pad, bumpers and triggers supply complete flight fallback",
+      "passed": true,
+      "lastInput": {
+        "roll": 500,
+        "pitch": 0,
+        "yaw": 500,
+        "throttle": 50,
+        "actions": 0
+      }
+    },
+    {
+      "name": "World Studio B pauses; disconnect and reconnect cannot rearm",
+      "passed": true,
+      "explicitResumeAfterReconnect": "active"
+    },
+    {
+      "name": "World Studio focused-page blur cannot rearm from held controls",
+      "passed": true,
+      "explicitResume": "active"
+    },
+    {
+      "name": "World Studio P opens pause menu and returning to flight does not arm",
+      "passed": true,
+      "pausedTicks": 50,
+      "afterReturn": "paused"
+    }
+  ],
+  "inputs": {
+    "Academy index.html": "2be1b614e049a7c59696db9d18cc2697a2cda99c40aa9be24751308665cab0ff",
+    "World Studio index.html": "56da2c8a764ecf0a7b437a31bdaa89805fcbe272bfae12d232d7d35f5e083681",
+    "input.mjs": "d23195a04aad25ba9a45e62d5b69e0aeb9650c24724c1e1e0132cec2f828f277",
+    "app.mjs": "c06ae3fa70d08ecfca77cf4dc8541cb3bdd7b0e1572e2cdf3b4854a28f237bcf",
+    "world-app.mjs": "ba44d42728c2715dbaba77cc4eb7afc0ea929dc2ef3dc7f26aa514ce02d03bd3",
+    "beginner-coach.mjs": "5c078ab1bb114ef7a63d9435c2c33f3adf40896bf5ef03333958ba9f845b3a5c"
+  },
+  "scope": "Actual Academy and World Studio source pages, real WebGL prepare/render and fixed-step physics, controlled standard browser Gamepad samples and isolated in-memory preferences. No physical Steam Deck/Xbox/DualSense/radio acceptance, measured hardware performance or new unit coverage claim."
+}

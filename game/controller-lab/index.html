@@ -1,29 +1,98 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <title data-i18n="interface:revealLineControllerPractice">
-      Reveal / Line — Controller practice
+      FPV / LINE — Controller practice
     </title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../ui/control-lab.css" />
+    <link rel="stylesheet" href="../ui/optional-practice-panel.css" />
     <link rel="stylesheet" href="../ui/pixel-theme.css" />
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
-    <script type="module" src="../ui/tool-display-entry.mjs"></script>
-    <script type="module" src="../presentation/page-entry.mjs"></script>
+    <script
+      src="../ui/tool-display-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../presentation/page-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
-    <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
+    <script
+      src="../ui/field-kit-surfaces.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
-    <script type="module" src="../ui/workshop-return-entry.mjs"></script>
+    <script
+      src="../ui/workshop-return-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../ui/support-input-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/workshop-return.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body
     data-workshop-tool="controller-lab"
@@ -33,14 +102,23 @@
     <div data-language-control></div>
 
     <header>
-      <a href="../" data-workshop-return="game" data-i18n="interface:revealLine">◩ REVEAL / LINE</a>
+      <a
+        class="fpv-line-brand fpv-line-brand--compact"
+        href="../"
+        data-workshop-return="game"
+        data-support-return
+        ><img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+      /></a>
       <a
         data-workshop-return="workshop"
         inert
         aria-disabled="true"
         href="../?workshop=controller-lab"
-        data-i18n="common:navigation.returnToWorkshop"
-        >Return to Workshop</a
+        data-i18n="interface:backToSettings"
+        >Back to Settings</a
       >
       <span data-i18n="interface:controllerPractice">CONTROLLER PRACTICE</span>
       <a href="../playground/" data-workshop-tool="playground" data-i18n="interface:openPlayground"
@@ -69,6 +147,15 @@
           scores or unlocks. The three First Flight choices teach the capture loop with Scout and
           leave your Playground configuration intact. This lab does not verify physical controller
           support.
+        </p>
+      </section>
+      <section class="control-concepts-entry">
+        <div id="control-practice-packages"></div>
+        <button id="control-concepts-open" type="button" data-i18n="interface:controlLab.open">
+          Explore four controls
+        </button>
+        <p data-i18n="interface:controlLab.entry">
+          Untimed control diagrams · no flight simulation or progress awards
         </p>
       </section>
       <p
@@ -109,6 +196,13 @@
           ><span data-i18n="interface:startingClass">Starting class</span
           ><select id="craft" disabled></select
         ></label>
+        <label id="practice-difficulty-field" hidden>
+          <span data-i18n="interface:campaignDifficulty">Campaign difficulty</span>
+          <select id="practice-difficulty">
+            <option value="standard" data-i18n="interface:standard">Standard</option>
+            <option value="gentle" data-i18n="interface:gentle">Gentle</option>
+          </select>
+        </label>
         <label
           ><span data-i18n="interface:steering">Steering</span
           ><select id="steering">
@@ -435,7 +529,7 @@
             <iframe
               id="game-frame"
               name="revealline-controller-practice"
-              title="Reveal Line practice game controlled by the virtual pad"
+              title="FPV / LINE practice game controlled by the virtual pad"
               tabindex="0"
               allow="gamepad; fullscreen"
               allowfullscreen
@@ -458,6 +552,8 @@
       src="../ui/direct-tool-launch.js"
       data-module="lab.mjs"
       data-status="load-status"
+      type="application/x-revealline-locked"
+      data-access-type=""
     ></script>
   </body>
 </html>

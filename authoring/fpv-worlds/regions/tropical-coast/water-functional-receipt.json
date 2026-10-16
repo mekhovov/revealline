@@ -1,0 +1,267 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "quality": "plain",
+      "geometryDigest": "d6e8b588bc82fcd1f5fca6183673ef1c0ad19e5c5e8dfc4ef3896eb9b5d7bb7f",
+      "snapshot": {
+        "sceneryPrepared": true,
+        "flightReady": false,
+        "disposed": false,
+        "cells": 9,
+        "geometryBytes": 969240,
+        "textureBytes": 2599580,
+        "resourceBytes": 3568820,
+        "textures": 18,
+        "meshes": 105,
+        "colliders": 58,
+        "materials": 20
+      },
+      "collision": {
+        "worlds": 1,
+        "colliders": 58,
+        "rigidBodies": 0
+      },
+      "probes": [
+        {
+          "id": "harbour-open-bay",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "harbour-below-deck",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "harbour-roof",
+          "status": "scenery-hit",
+          "chunkId": "coast-0-0",
+          "fraction": 0.646167516708374
+        },
+        {
+          "id": "palm-trunk",
+          "status": "scenery-hit",
+          "chunkId": "coast-0-1",
+          "fraction": 0.4465552568435669
+        },
+        {
+          "id": "palm-leaves",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "hut-roof",
+          "status": "scenery-hit",
+          "chunkId": "coast-1-1",
+          "fraction": 0.5427663326263428
+        },
+        {
+          "id": "cargo-box",
+          "status": "scenery-hit",
+          "chunkId": "coast-1-2",
+          "fraction": 0.32573413848876953
+        },
+        {
+          "id": "sea-visual-only",
+          "status": "scenery-clear"
+        }
+      ]
+    },
+    {
+      "quality": "performance",
+      "geometryDigest": "d6e8b588bc82fcd1f5fca6183673ef1c0ad19e5c5e8dfc4ef3896eb9b5d7bb7f",
+      "snapshot": {
+        "sceneryPrepared": true,
+        "flightReady": false,
+        "disposed": false,
+        "cells": 9,
+        "geometryBytes": 969240,
+        "textureBytes": 2599580,
+        "resourceBytes": 3568820,
+        "textures": 18,
+        "meshes": 105,
+        "colliders": 58,
+        "materials": 20
+      },
+      "collision": {
+        "worlds": 1,
+        "colliders": 58,
+        "rigidBodies": 0
+      },
+      "probes": [
+        {
+          "id": "harbour-open-bay",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "harbour-below-deck",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "harbour-roof",
+          "status": "scenery-hit",
+          "chunkId": "coast-0-0",
+          "fraction": 0.646167516708374
+        },
+        {
+          "id": "palm-trunk",
+          "status": "scenery-hit",
+          "chunkId": "coast-0-1",
+          "fraction": 0.4465552568435669
+        },
+        {
+          "id": "palm-leaves",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "hut-roof",
+          "status": "scenery-hit",
+          "chunkId": "coast-1-1",
+          "fraction": 0.5427663326263428
+        },
+        {
+          "id": "cargo-box",
+          "status": "scenery-hit",
+          "chunkId": "coast-1-2",
+          "fraction": 0.32573413848876953
+        },
+        {
+          "id": "sea-visual-only",
+          "status": "scenery-clear"
+        }
+      ]
+    },
+    {
+      "quality": "balanced",
+      "geometryDigest": "d6e8b588bc82fcd1f5fca6183673ef1c0ad19e5c5e8dfc4ef3896eb9b5d7bb7f",
+      "snapshot": {
+        "sceneryPrepared": true,
+        "flightReady": false,
+        "disposed": false,
+        "cells": 9,
+        "geometryBytes": 969240,
+        "textureBytes": 2599580,
+        "resourceBytes": 3568820,
+        "textures": 18,
+        "meshes": 105,
+        "colliders": 58,
+        "materials": 20
+      },
+      "collision": {
+        "worlds": 1,
+        "colliders": 58,
+        "rigidBodies": 0
+      },
+      "probes": [
+        {
+          "id": "harbour-open-bay",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "harbour-below-deck",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "harbour-roof",
+          "status": "scenery-hit",
+          "chunkId": "coast-0-0",
+          "fraction": 0.646167516708374
+        },
+        {
+          "id": "palm-trunk",
+          "status": "scenery-hit",
+          "chunkId": "coast-0-1",
+          "fraction": 0.4465552568435669
+        },
+        {
+          "id": "palm-leaves",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "hut-roof",
+          "status": "scenery-hit",
+          "chunkId": "coast-1-1",
+          "fraction": 0.5427663326263428
+        },
+        {
+          "id": "cargo-box",
+          "status": "scenery-hit",
+          "chunkId": "coast-1-2",
+          "fraction": 0.32573413848876953
+        },
+        {
+          "id": "sea-visual-only",
+          "status": "scenery-clear"
+        }
+      ]
+    },
+    {
+      "quality": "quality",
+      "geometryDigest": "d6e8b588bc82fcd1f5fca6183673ef1c0ad19e5c5e8dfc4ef3896eb9b5d7bb7f",
+      "snapshot": {
+        "sceneryPrepared": true,
+        "flightReady": false,
+        "disposed": false,
+        "cells": 9,
+        "geometryBytes": 969240,
+        "textureBytes": 2599580,
+        "resourceBytes": 3568820,
+        "textures": 18,
+        "meshes": 105,
+        "colliders": 58,
+        "materials": 20
+      },
+      "collision": {
+        "worlds": 1,
+        "colliders": 58,
+        "rigidBodies": 0
+      },
+      "probes": [
+        {
+          "id": "harbour-open-bay",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "harbour-below-deck",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "harbour-roof",
+          "status": "scenery-hit",
+          "chunkId": "coast-0-0",
+          "fraction": 0.646167516708374
+        },
+        {
+          "id": "palm-trunk",
+          "status": "scenery-hit",
+          "chunkId": "coast-0-1",
+          "fraction": 0.4465552568435669
+        },
+        {
+          "id": "palm-leaves",
+          "status": "scenery-clear"
+        },
+        {
+          "id": "hut-roof",
+          "status": "scenery-hit",
+          "chunkId": "coast-1-1",
+          "fraction": 0.5427663326263428
+        },
+        {
+          "id": "cargo-box",
+          "status": "scenery-hit",
+          "chunkId": "coast-1-2",
+          "fraction": 0.32573413848876953
+        },
+        {
+          "id": "sea-visual-only",
+          "status": "scenery-clear"
+        }
+      ]
+    }
+  ],
+  "unknownSurfaceRejected": true,
+  "sourceUnchanged": true,
+  "preparedDisarmed": true,
+  "nativeVisualReview": false,
+  "animated": false,
+  "physicsChanged": false
+}

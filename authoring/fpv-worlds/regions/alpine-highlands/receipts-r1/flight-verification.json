@@ -1,0 +1,3671 @@
+{
+  "passed": true,
+  "actualCommandedRoutes": 258,
+  "records": [
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-1",
+      "ticks": 1302,
+      "position": {
+        "x": 716399,
+        "y": 127875,
+        "z": 692754
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0780394442927244,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-2",
+      "ticks": 1302,
+      "position": {
+        "x": 792117,
+        "y": 133930,
+        "z": 685608
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0776681063288818,
+      "maxHeightErrorM": 0.23399999999998045
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-3",
+      "ticks": 1301,
+      "position": {
+        "x": 867833,
+        "y": 159477,
+        "z": 678494
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07814985820996566,
+      "maxHeightErrorM": 0.9695831923789626
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-4",
+      "ticks": 1302,
+      "position": {
+        "x": 943548,
+        "y": 170533,
+        "z": 671369
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07732597160175156,
+      "maxHeightErrorM": 0.3429884275551274
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-5",
+      "ticks": 1302,
+      "position": {
+        "x": 1019265,
+        "y": 181248,
+        "z": 664225
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0.0775867827348415,
+      "maxHeightErrorM": 0.3428227599211766
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-6",
+      "ticks": 1302,
+      "position": {
+        "x": 1094973,
+        "y": 191961,
+        "z": 657069
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07742270583327843,
+      "maxHeightErrorM": 0.3431582168207967
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-7",
+      "ticks": 1302,
+      "position": {
+        "x": 1170694,
+        "y": 202676,
+        "z": 649939
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0775867827348334,
+      "maxHeightErrorM": 0.3428227599211766
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-8",
+      "ticks": 1302,
+      "position": {
+        "x": 1246408,
+        "y": 213391,
+        "z": 642796
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0775867827348547,
+      "maxHeightErrorM": 0.3428227599211766
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-9",
+      "ticks": 1302,
+      "position": {
+        "x": 1322116,
+        "y": 224104,
+        "z": 635640
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0774227058332828,
+      "maxHeightErrorM": 0.3431582168207683
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-10",
+      "ticks": 1302,
+      "position": {
+        "x": 1397837,
+        "y": 234819,
+        "z": 628510
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07758678273472015,
+      "maxHeightErrorM": 0.34282275992120503
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-11",
+      "ticks": 1302,
+      "position": {
+        "x": 1473548,
+        "y": 245533,
+        "z": 621369
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07732597160174072,
+      "maxHeightErrorM": 0.3429884275551274
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-12",
+      "ticks": 1301,
+      "position": {
+        "x": 1549262,
+        "y": 271132,
+        "z": 614206
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07786855715819677,
+      "maxHeightErrorM": 0.965721225786524
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-13",
+      "ticks": 1302,
+      "position": {
+        "x": 1624972,
+        "y": 277766,
+        "z": 607038
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0780435902572544,
+      "maxHeightErrorM": 0.23399999999998045
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-valley-link-14",
+      "ticks": 1302,
+      "position": {
+        "x": 1700685,
+        "y": 277875,
+        "z": 599897
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07803944429272713,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-1",
+      "ticks": 1314,
+      "position": {
+        "x": 1777156,
+        "y": 277875,
+        "z": 611876
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0776480769767756,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-2",
+      "ticks": 1314,
+      "position": {
+        "x": 1853619,
+        "y": 283862,
+        "z": 623642
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07807442735972642,
+      "maxHeightErrorM": 0.2319999999999709
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-3",
+      "ticks": 1313,
+      "position": {
+        "x": 1930095,
+        "y": 305666,
+        "z": 635428
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06529156872799823,
+      "maxHeightErrorM": 0.7953844655987155
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-4",
+      "ticks": 1314,
+      "position": {
+        "x": 2006562,
+        "y": 315348,
+        "z": 647194
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07439142565156377,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-5",
+      "ticks": 1314,
+      "position": {
+        "x": 2083035,
+        "y": 324760,
+        "z": 658954
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06653128827521741,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-6",
+      "ticks": 1314,
+      "position": {
+        "x": 2159503,
+        "y": 334171,
+        "z": 670718
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06767054720961153,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-7",
+      "ticks": 1314,
+      "position": {
+        "x": 2235976,
+        "y": 343584,
+        "z": 682484
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07522876855761662,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-8",
+      "ticks": 1314,
+      "position": {
+        "x": 2312446,
+        "y": 352995,
+        "z": 694251
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06637903430560402,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-9",
+      "ticks": 1314,
+      "position": {
+        "x": 2388916,
+        "y": 362407,
+        "z": 706008
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06496237554527885,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-10",
+      "ticks": 1314,
+      "position": {
+        "x": 2465387,
+        "y": 371818,
+        "z": 717780
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06637903430560402,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-11",
+      "ticks": 1314,
+      "position": {
+        "x": 2541858,
+        "y": 381231,
+        "z": 729543
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07522876855772977,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-12",
+      "ticks": 1314,
+      "position": {
+        "x": 2618326,
+        "y": 390642,
+        "z": 741306
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06767054720972321,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-13",
+      "ticks": 1314,
+      "position": {
+        "x": 2694800,
+        "y": 400054,
+        "z": 753071
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06653128827521741,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-14",
+      "ticks": 1314,
+      "position": {
+        "x": 2771268,
+        "y": 409465,
+        "z": 764841
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07439142565154004,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-15",
+      "ticks": 1313,
+      "position": {
+        "x": 2847740,
+        "y": 431361,
+        "z": 776608
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0.06529156872796296,
+      "maxHeightErrorM": 0.7966069559145694
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-16",
+      "ticks": 1314,
+      "position": {
+        "x": 2924207,
+        "y": 437768,
+        "z": 788348
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07807442735970901,
+      "maxHeightErrorM": 0.23200000000002774
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-pass-link-17",
+      "ticks": 1314,
+      "position": {
+        "x": 3000685,
+        "y": 437875,
+        "z": 800111
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0776480769767756,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-1",
+      "ticks": 1354,
+      "position": {
+        "x": 3009765,
+        "y": 437875,
+        "z": 879993
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05573027934632078,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-2",
+      "ticks": 1354,
+      "position": {
+        "x": 3019423,
+        "y": 441611,
+        "z": 959305
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.054260086109490555,
+      "maxHeightErrorM": 0.17799999999999727
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-3",
+      "ticks": 1354,
+      "position": {
+        "x": 3029085,
+        "y": 452164,
+        "z": 1038616
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05402672302109486,
+      "maxHeightErrorM": 0.3203971501027354
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-4",
+      "ticks": 1353,
+      "position": {
+        "x": 3038710,
+        "y": 457107,
+        "z": 1117935
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.053821536678957546,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-5",
+      "ticks": 1353,
+      "position": {
+        "x": 3048367,
+        "y": 461935,
+        "z": 1197242
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0537847462512195,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-6",
+      "ticks": 1354,
+      "position": {
+        "x": 3058047,
+        "y": 466763,
+        "z": 1276541
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05468485160032893,
+      "maxHeightErrorM": 0.20300000000003138
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-7",
+      "ticks": 1353,
+      "position": {
+        "x": 3067675,
+        "y": 471590,
+        "z": 1355866
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.053821536679143266,
+      "maxHeightErrorM": 0.20300000000003138
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-8",
+      "ticks": 1353,
+      "position": {
+        "x": 3077332,
+        "y": 476418,
+        "z": 1435173
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05378474625148626,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-9",
+      "ticks": 1354,
+      "position": {
+        "x": 3087015,
+        "y": 481245,
+        "z": 1514473
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0543609840346788,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-10",
+      "ticks": 1354,
+      "position": {
+        "x": 3096668,
+        "y": 486073,
+        "z": 1593782
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05468485160032893,
+      "maxHeightErrorM": 0.20300000000003138
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-11",
+      "ticks": 1353,
+      "position": {
+        "x": 3106298,
+        "y": 490901,
+        "z": 1673104
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0537847462512195,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-12",
+      "ticks": 1353,
+      "position": {
+        "x": 3115951,
+        "y": 495728,
+        "z": 1752418
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.053821536678957546,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-13",
+      "ticks": 1354,
+      "position": {
+        "x": 3125633,
+        "y": 500556,
+        "z": 1831713
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0546848516000643,
+      "maxHeightErrorM": 0.20300000000003138
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-14",
+      "ticks": 1353,
+      "position": {
+        "x": 3135263,
+        "y": 505384,
+        "z": 1911035
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05378474625148626,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-15",
+      "ticks": 1354,
+      "position": {
+        "x": 3144946,
+        "y": 510211,
+        "z": 1990335
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05436098403470655,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-16",
+      "ticks": 1354,
+      "position": {
+        "x": 3154600,
+        "y": 515038,
+        "z": 2069647
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.054347198790707665,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-17",
+      "ticks": 1354,
+      "position": {
+        "x": 3164254,
+        "y": 519866,
+        "z": 2148955
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05468485160002462,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-18",
+      "ticks": 1354,
+      "position": {
+        "x": 3173909,
+        "y": 524694,
+        "z": 2228265
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05468485160029068,
+      "maxHeightErrorM": 0.20300000000008822
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-19",
+      "ticks": 1354,
+      "position": {
+        "x": 3183565,
+        "y": 529521,
+        "z": 2307578
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05434719879104479,
+      "maxHeightErrorM": 0.20300000000008822
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-20",
+      "ticks": 1354,
+      "position": {
+        "x": 3193219,
+        "y": 534349,
+        "z": 2386886
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05468485160029068,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-21",
+      "ticks": 1354,
+      "position": {
+        "x": 3202877,
+        "y": 539176,
+        "z": 2466197
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05436098403465177,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-22",
+      "ticks": 1353,
+      "position": {
+        "x": 3212505,
+        "y": 544004,
+        "z": 2545518
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.053784746251045706,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-23",
+      "ticks": 1353,
+      "position": {
+        "x": 3222158,
+        "y": 548831,
+        "z": 2624832
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05382153667869148,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-24",
+      "ticks": 1354,
+      "position": {
+        "x": 3231840,
+        "y": 553659,
+        "z": 2704127
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05468485160029068,
+      "maxHeightErrorM": 0.20299999999997453
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-25",
+      "ticks": 1353,
+      "position": {
+        "x": 3241470,
+        "y": 558487,
+        "z": 2783449
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05378474625123074,
+      "maxHeightErrorM": 0.20300000000008822
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-26",
+      "ticks": 1353,
+      "position": {
+        "x": 3251123,
+        "y": 563314,
+        "z": 2862763
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.053821536678957546,
+      "maxHeightErrorM": 0.20300000000008822
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-27",
+      "ticks": 1354,
+      "position": {
+        "x": 3260803,
+        "y": 568342,
+        "z": 2942056
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05443147598507358,
+      "maxHeightErrorM": 0.20799999999997
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-28",
+      "ticks": 1354,
+      "position": {
+        "x": 3270464,
+        "y": 576352,
+        "z": 3021374
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05402702213852871,
+      "maxHeightErrorM": 0.26300000000003365
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-saddle-link-29",
+      "ticks": 1354,
+      "position": {
+        "x": 3280108,
+        "y": 577868,
+        "z": 3100684
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.056239569439171924,
+      "maxHeightErrorM": 0.1309999999999718
+    },
+    {
+      "mode": "self-level",
+      "route": "station-approach-link-1",
+      "ticks": 1076,
+      "position": {
+        "x": 3340699,
+        "y": 577874,
+        "z": 3100000
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.12599999999997635
+    },
+    {
+      "mode": "self-level",
+      "route": "station-approach-link-2",
+      "ticks": 1076,
+      "position": {
+        "x": 3400699,
+        "y": 577875,
+        "z": 3100000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-1",
+      "ticks": 1319,
+      "position": {
+        "x": 3322388,
+        "y": 577875,
+        "z": 3092244
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06481990101479265,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-2",
+      "ticks": 1320,
+      "position": {
+        "x": 3245467,
+        "y": 560909,
+        "z": 3084545
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06384612483724872,
+      "maxHeightErrorM": 0.8585097593197588
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-3",
+      "ticks": 2641,
+      "position": {
+        "x": 3169068,
+        "y": 497063,
+        "z": 3076908
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.026960003862427508,
+      "maxHeightErrorM": 1.1518964419200302
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-4",
+      "ticks": 1321,
+      "position": {
+        "x": 3091628,
+        "y": 470726,
+        "z": 3069122
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06402207809463434,
+      "maxHeightErrorM": 1.273709323809726
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-5",
+      "ticks": 1320,
+      "position": {
+        "x": 3014692,
+        "y": 443802,
+        "z": 3061466
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06375322218571924,
+      "maxHeightErrorM": 1.2737103009080215
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-6",
+      "ticks": 1320,
+      "position": {
+        "x": 2937770,
+        "y": 416878,
+        "z": 3053761
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06392257821795573,
+      "maxHeightErrorM": 1.2740219486364026
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-7",
+      "ticks": 1320,
+      "position": {
+        "x": 2860846,
+        "y": 389955,
+        "z": 3046069
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06400264011033766,
+      "maxHeightErrorM": 1.273721098759097
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-8",
+      "ticks": 1321,
+      "position": {
+        "x": 2783935,
+        "y": 363033,
+        "z": 3038353
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06402207809472274,
+      "maxHeightErrorM": 1.273709323809726
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-9",
+      "ticks": 1320,
+      "position": {
+        "x": 2706999,
+        "y": 336109,
+        "z": 3030697
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06375322218567366,
+      "maxHeightErrorM": 1.273710300908192
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-10",
+      "ticks": 1321,
+      "position": {
+        "x": 2630089,
+        "y": 309187,
+        "z": 3022968
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06402207809463434,
+      "maxHeightErrorM": 1.273709323809726
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-11",
+      "ticks": 2640,
+      "position": {
+        "x": 2553697,
+        "y": 245135,
+        "z": 3015372
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.026363004602140895,
+      "maxHeightErrorM": 1.1494894400521503
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-12",
+      "ticks": 1320,
+      "position": {
+        "x": 2476236,
+        "y": 228237,
+        "z": 3007624
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06533990168084068,
+      "maxHeightErrorM": 0.8565447292423869
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-link-13",
+      "ticks": 1319,
+      "position": {
+        "x": 2399311,
+        "y": 227875,
+        "z": 2999936
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06481990101474726,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-1",
+      "ticks": 1309,
+      "position": {
+        "x": 2323120,
+        "y": 227875,
+        "z": 2990383
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05337561998114264,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-2",
+      "ticks": 1309,
+      "position": {
+        "x": 2246928,
+        "y": 226745,
+        "z": 2980864
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.053913128617790226,
+      "maxHeightErrorM": 0.17269050662883956
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-3",
+      "ticks": 1310,
+      "position": {
+        "x": 2170749,
+        "y": 222279,
+        "z": 2971337
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.053959261113076085,
+      "maxHeightErrorM": 0.3169999421597538
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-4",
+      "ticks": 1310,
+      "position": {
+        "x": 2094557,
+        "y": 220309,
+        "z": 2961809
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0536651992019435,
+      "maxHeightErrorM": 0.20305555258943286
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-5",
+      "ticks": 1310,
+      "position": {
+        "x": 2018368,
+        "y": 218404,
+        "z": 2952285
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05362335724496976,
+      "maxHeightErrorM": 0.20305422051336564
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-6",
+      "ticks": 1310,
+      "position": {
+        "x": 1942176,
+        "y": 216499,
+        "z": 2942761
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05366519920196216,
+      "maxHeightErrorM": 0.20305555258943286
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-7",
+      "ticks": 1310,
+      "position": {
+        "x": 1865987,
+        "y": 214595,
+        "z": 2933237
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05362335724510364,
+      "maxHeightErrorM": 0.2031082602926233
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-8",
+      "ticks": 1310,
+      "position": {
+        "x": 1789795,
+        "y": 212690,
+        "z": 2923717
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05399992667335007,
+      "maxHeightErrorM": 0.20305539998850008
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-9",
+      "ticks": 1310,
+      "position": {
+        "x": 1713606,
+        "y": 210785,
+        "z": 2914190
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05362335724507551,
+      "maxHeightErrorM": 0.20305422051336564
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-10",
+      "ticks": 1310,
+      "position": {
+        "x": 1637414,
+        "y": 208880,
+        "z": 2904666
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05366519920193402,
+      "maxHeightErrorM": 0.20305555258943286
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-11",
+      "ticks": 1310,
+      "position": {
+        "x": 1561225,
+        "y": 206976,
+        "z": 2895142
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05362335724495148,
+      "maxHeightErrorM": 0.2031082602926233
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-12",
+      "ticks": 1310,
+      "position": {
+        "x": 1485033,
+        "y": 205071,
+        "z": 2885618
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.053665199201510944,
+      "maxHeightErrorM": 0.20305555258943286
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-13",
+      "ticks": 1310,
+      "position": {
+        "x": 1408844,
+        "y": 203166,
+        "z": 2876094
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05362335724510364,
+      "maxHeightErrorM": 0.20305422051336564
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-14",
+      "ticks": 1310,
+      "position": {
+        "x": 1332652,
+        "y": 201261,
+        "z": 2866574
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05399992667335007,
+      "maxHeightErrorM": 0.20305539998850008
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-15",
+      "ticks": 1310,
+      "position": {
+        "x": 1256463,
+        "y": 199357,
+        "z": 2857047
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05362335724507551,
+      "maxHeightErrorM": 0.2031082602926233
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-16",
+      "ticks": 1310,
+      "position": {
+        "x": 1180271,
+        "y": 197452,
+        "z": 2847523
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05366519920196216,
+      "maxHeightErrorM": 0.20305555258943286
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-17",
+      "ticks": 1310,
+      "position": {
+        "x": 1104082,
+        "y": 195547,
+        "z": 2837999
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05362335724495148,
+      "maxHeightErrorM": 0.20305422051336564
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-18",
+      "ticks": 1310,
+      "position": {
+        "x": 1027890,
+        "y": 193642,
+        "z": 2828475
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0.053665199201510944,
+      "maxHeightErrorM": 0.20305555258943286
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-19",
+      "ticks": 1310,
+      "position": {
+        "x": 951701,
+        "y": 189161,
+        "z": 2818956
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0539592611126342,
+      "maxHeightErrorM": 0.31699994215981064
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-20",
+      "ticks": 1309,
+      "position": {
+        "x": 875499,
+        "y": 187913,
+        "z": 2809436
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05391312861734374,
+      "maxHeightErrorM": 0.17269050662883956
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-gorge-link-21",
+      "ticks": 1309,
+      "position": {
+        "x": 799310,
+        "y": 187875,
+        "z": 2799907
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.053375619980663286,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-1",
+      "ticks": 1331,
+      "position": {
+        "x": 794013,
+        "y": 187875,
+        "z": 2721532
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06734414298465166,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-2",
+      "ticks": 1331,
+      "position": {
+        "x": 788109,
+        "y": 186391,
+        "z": 2643750
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06743724145737737,
+      "maxHeightErrorM": 0.18543892698741615
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-3",
+      "ticks": 1331,
+      "position": {
+        "x": 782160,
+        "y": 181330,
+        "z": 2565972
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06760180353863522,
+      "maxHeightErrorM": 0.3315858104145093
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-4",
+      "ticks": 1332,
+      "position": {
+        "x": 776233,
+        "y": 179048,
+        "z": 2488204
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06736311650980875,
+      "maxHeightErrorM": 0.22172424371851207
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-5",
+      "ticks": 1332,
+      "position": {
+        "x": 770307,
+        "y": 176826,
+        "z": 2410426
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650986374,
+      "maxHeightErrorM": 0.22172424371848365
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-6",
+      "ticks": 1332,
+      "position": {
+        "x": 764381,
+        "y": 174604,
+        "z": 2332648
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06736311650972567,
+      "maxHeightErrorM": 0.2217242437185405
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-7",
+      "ticks": 1332,
+      "position": {
+        "x": 758458,
+        "y": 172381,
+        "z": 2254872
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06770285350600927,
+      "maxHeightErrorM": 0.2216295051141799
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-8",
+      "ticks": 1332,
+      "position": {
+        "x": 752530,
+        "y": 170159,
+        "z": 2177093
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650975078,
+      "maxHeightErrorM": 0.22172424371851207
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-9",
+      "ticks": 1332,
+      "position": {
+        "x": 746604,
+        "y": 167937,
+        "z": 2099315
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.067363116509843,
+      "maxHeightErrorM": 0.2217242437185405
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-10",
+      "ticks": 1332,
+      "position": {
+        "x": 740678,
+        "y": 165715,
+        "z": 2021537
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650985155,
+      "maxHeightErrorM": 0.22172424371851207
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-11",
+      "ticks": 1332,
+      "position": {
+        "x": 734752,
+        "y": 163492,
+        "z": 1943759
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650982095,
+      "maxHeightErrorM": 0.22163231043484188
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-12",
+      "ticks": 1332,
+      "position": {
+        "x": 728825,
+        "y": 161271,
+        "z": 1865983
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0676402382383185,
+      "maxHeightErrorM": 0.22081356640131844
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-13",
+      "ticks": 1332,
+      "position": {
+        "x": 722900,
+        "y": 159048,
+        "z": 1788204
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650975535,
+      "maxHeightErrorM": 0.2216323104348703
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-14",
+      "ticks": 1332,
+      "position": {
+        "x": 716974,
+        "y": 156826,
+        "z": 1710426
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650982552,
+      "maxHeightErrorM": 0.22172424371851207
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-15",
+      "ticks": 1332,
+      "position": {
+        "x": 711048,
+        "y": 154604,
+        "z": 1632648
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650985155,
+      "maxHeightErrorM": 0.22172424371851207
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-16",
+      "ticks": 1332,
+      "position": {
+        "x": 705121,
+        "y": 152381,
+        "z": 1554872
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06764023823818806,
+      "maxHeightErrorM": 0.221629697483138
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-17",
+      "ticks": 1332,
+      "position": {
+        "x": 699196,
+        "y": 150159,
+        "z": 1477093
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06736311650982095,
+      "maxHeightErrorM": 0.22172424371851207
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-18",
+      "ticks": 1332,
+      "position": {
+        "x": 693270,
+        "y": 147937,
+        "z": 1399315
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650973786,
+      "maxHeightErrorM": 0.22172424371851207
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-19",
+      "ticks": 1332,
+      "position": {
+        "x": 687344,
+        "y": 145715,
+        "z": 1321537
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650982095,
+      "maxHeightErrorM": 0.22172424371851207
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-20",
+      "ticks": 1332,
+      "position": {
+        "x": 681418,
+        "y": 143492,
+        "z": 1243759
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06736311650985155,
+      "maxHeightErrorM": 0.22163231043484188
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-21",
+      "ticks": 1332,
+      "position": {
+        "x": 675495,
+        "y": 141271,
+        "z": 1165983
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06770285350602676,
+      "maxHeightErrorM": 0.22081337420542013
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-22",
+      "ticks": 1332,
+      "position": {
+        "x": 669567,
+        "y": 139048,
+        "z": 1088204
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650986904,
+      "maxHeightErrorM": 0.2216323104348703
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-23",
+      "ticks": 1332,
+      "position": {
+        "x": 663641,
+        "y": 136826,
+        "z": 1010426
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0673631165097489,
+      "maxHeightErrorM": 0.22172424371851207
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-24",
+      "ticks": 1332,
+      "position": {
+        "x": 657715,
+        "y": 134604,
+        "z": 932648
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06736311650982969,
+      "maxHeightErrorM": 0.2217242437185405
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-25",
+      "ticks": 1331,
+      "position": {
+        "x": 651790,
+        "y": 129507,
+        "z": 854861
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06760180353862001,
+      "maxHeightErrorM": 0.33228247414240286
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-26",
+      "ticks": 1331,
+      "position": {
+        "x": 645887,
+        "y": 127907,
+        "z": 777084
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06764625791275242,
+      "maxHeightErrorM": 0.18567465682784245
+    },
+    {
+      "mode": "self-level",
+      "route": "reservoir-dam-link-27",
+      "ticks": 1331,
+      "position": {
+        "x": 639939,
+        "y": 127875,
+        "z": 699310
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06734414298464782,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "glacial-erratic-slalom",
+      "ticks": 1933,
+      "position": {
+        "x": 700699,
+        "y": 121875,
+        "z": 700000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "switchback-terrace",
+      "ticks": 2220,
+      "position": {
+        "x": 1770686,
+        "y": 271875,
+        "z": 600000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "snow-pinnacle-gap",
+      "ticks": 2505,
+      "position": {
+        "x": 3000000,
+        "y": 431875,
+        "z": 880693
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "summit-station-concourse",
+      "ticks": 2505,
+      "position": {
+        "x": 3480693,
+        "y": 571875,
+        "z": 3100000
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "viaduct-underpass",
+      "ticks": 1291,
+      "position": {
+        "x": 2400000,
+        "y": 217875,
+        "z": 3110688
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "self-level",
+      "route": "dam-spillway",
+      "ticks": 2505,
+      "position": {
+        "x": 800000,
+        "y": 181875,
+        "z": 2880693
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-1",
+      "ticks": 1302,
+      "position": {
+        "x": 716400,
+        "y": 127875,
+        "z": 692774
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08609476874621882,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-2",
+      "ticks": 1302,
+      "position": {
+        "x": 792115,
+        "y": 133930,
+        "z": 685605
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.08079452678908143,
+      "maxHeightErrorM": 0.23399999999998045
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-3",
+      "ticks": 1289,
+      "position": {
+        "x": 867832,
+        "y": 159474,
+        "z": 678476
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07947466742648973,
+      "maxHeightErrorM": 0.9692430991775609
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-4",
+      "ticks": 1302,
+      "position": {
+        "x": 943546,
+        "y": 170534,
+        "z": 671334
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08102192984402233,
+      "maxHeightErrorM": 0.3435676529803118
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-5",
+      "ticks": 1302,
+      "position": {
+        "x": 1019262,
+        "y": 181250,
+        "z": 664192
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0.0812882722303616,
+      "maxHeightErrorM": 0.3435422180486398
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-6",
+      "ticks": 1302,
+      "position": {
+        "x": 1094975,
+        "y": 191962,
+        "z": 657035
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.08126314535333357,
+      "maxHeightErrorM": 0.34259724508274303
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-7",
+      "ticks": 1302,
+      "position": {
+        "x": 1170691,
+        "y": 202678,
+        "z": 649906
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08128827223024064,
+      "maxHeightErrorM": 0.3435422180486398
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-8",
+      "ticks": 1302,
+      "position": {
+        "x": 1246405,
+        "y": 213393,
+        "z": 642763
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08128827223024064,
+      "maxHeightErrorM": 0.3435422180486398
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-9",
+      "ticks": 1302,
+      "position": {
+        "x": 1322118,
+        "y": 224105,
+        "z": 635606
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0812631453533413,
+      "maxHeightErrorM": 0.34259724508274303
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-10",
+      "ticks": 1302,
+      "position": {
+        "x": 1397834,
+        "y": 234821,
+        "z": 628477
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08128827223024064,
+      "maxHeightErrorM": 0.3435422180486398
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-11",
+      "ticks": 1302,
+      "position": {
+        "x": 1473546,
+        "y": 245534,
+        "z": 621334
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08102192984402233,
+      "maxHeightErrorM": 0.3435676529803118
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-12",
+      "ticks": 1289,
+      "position": {
+        "x": 1549260,
+        "y": 271128,
+        "z": 614186
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.08322467750736175,
+      "maxHeightErrorM": 0.9653816431373059
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-13",
+      "ticks": 1302,
+      "position": {
+        "x": 1624969,
+        "y": 277767,
+        "z": 607040
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08086952890170743,
+      "maxHeightErrorM": 0.2330000000000041
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-valley-link-14",
+      "ticks": 1302,
+      "position": {
+        "x": 1700686,
+        "y": 277875,
+        "z": 599917
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08609476874611356,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-1",
+      "ticks": 1314,
+      "position": {
+        "x": 1777151,
+        "y": 277874,
+        "z": 611882
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08138225421901617,
+      "maxHeightErrorM": 0.12599999999997635
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-2",
+      "ticks": 1314,
+      "position": {
+        "x": 1853622,
+        "y": 283862,
+        "z": 623651
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.08148173530785181,
+      "maxHeightErrorM": 0.2319999999999709
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-3",
+      "ticks": 1313,
+      "position": {
+        "x": 1930093,
+        "y": 305667,
+        "z": 635412
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07651288016749117,
+      "maxHeightErrorM": 0.794101612927534
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-4",
+      "ticks": 1314,
+      "position": {
+        "x": 2006561,
+        "y": 315348,
+        "z": 647182
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08182902368509493,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-5",
+      "ticks": 1314,
+      "position": {
+        "x": 2083031,
+        "y": 324760,
+        "z": 658947
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0817897080725373,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-6",
+      "ticks": 1314,
+      "position": {
+        "x": 2159502,
+        "y": 334171,
+        "z": 670714
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0822937554773649,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-7",
+      "ticks": 1314,
+      "position": {
+        "x": 2235971,
+        "y": 343584,
+        "z": 682479
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08213347088980148,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-8",
+      "ticks": 1314,
+      "position": {
+        "x": 2312443,
+        "y": 352995,
+        "z": 694241
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.08178970807260084,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-9",
+      "ticks": 1314,
+      "position": {
+        "x": 2388914,
+        "y": 362407,
+        "z": 706008
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08233320685808528,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-10",
+      "ticks": 1314,
+      "position": {
+        "x": 2465384,
+        "y": 371818,
+        "z": 717770
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08178970807253177,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-11",
+      "ticks": 1314,
+      "position": {
+        "x": 2541853,
+        "y": 381231,
+        "z": 729538
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08213347088973205,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-12",
+      "ticks": 1314,
+      "position": {
+        "x": 2618325,
+        "y": 390642,
+        "z": 741302
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.08229375547743432,
+      "maxHeightErrorM": 0.29899999999997817
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-13",
+      "ticks": 1314,
+      "position": {
+        "x": 2694796,
+        "y": 400054,
+        "z": 753064
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08178970807268388,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-14",
+      "ticks": 1314,
+      "position": {
+        "x": 2771267,
+        "y": 409465,
+        "z": 764829
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0818290236851204,
+      "maxHeightErrorM": 0.299000000000035
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-15",
+      "ticks": 1313,
+      "position": {
+        "x": 2847740,
+        "y": 431363,
+        "z": 776589
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0.07651288016749117,
+      "maxHeightErrorM": 0.7953237583320742
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-16",
+      "ticks": 1314,
+      "position": {
+        "x": 2924208,
+        "y": 437767,
+        "z": 788357
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08087405464961046,
+      "maxHeightErrorM": 0.2330000000000041
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-pass-link-17",
+      "ticks": 1314,
+      "position": {
+        "x": 3000680,
+        "y": 437874,
+        "z": 800117
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08138225421904996,
+      "maxHeightErrorM": 0.12599999999997635
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-1",
+      "ticks": 1354,
+      "position": {
+        "x": 3009725,
+        "y": 437875,
+        "z": 879995
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.061924743827719175,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-2",
+      "ticks": 1353,
+      "position": {
+        "x": 3019391,
+        "y": 441611,
+        "z": 959314
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06158642532213687,
+      "maxHeightErrorM": 0.17799999999999727
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-3",
+      "ticks": 1354,
+      "position": {
+        "x": 3029047,
+        "y": 452165,
+        "z": 1038620
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06034984596852491,
+      "maxHeightErrorM": 0.3203971501027354
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-4",
+      "ticks": 1353,
+      "position": {
+        "x": 3038700,
+        "y": 457109,
+        "z": 1117933
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05722998784709743,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-5",
+      "ticks": 1353,
+      "position": {
+        "x": 3048357,
+        "y": 461937,
+        "z": 1197245
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05728426041734744,
+      "maxHeightErrorM": 0.20099999999996498
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-6",
+      "ticks": 1353,
+      "position": {
+        "x": 3058010,
+        "y": 466765,
+        "z": 1276554
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0.05722998784709157,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-7",
+      "ticks": 1353,
+      "position": {
+        "x": 3067665,
+        "y": 471592,
+        "z": 1355864
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05722998784746031,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-8",
+      "ticks": 1353,
+      "position": {
+        "x": 3077322,
+        "y": 476420,
+        "z": 1435176
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05728426041743704,
+      "maxHeightErrorM": 0.20099999999996498
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-9",
+      "ticks": 1353,
+      "position": {
+        "x": 3086976,
+        "y": 481247,
+        "z": 1514485
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.060495936530818153,
+      "maxHeightErrorM": 0.20099999999996498
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-10",
+      "ticks": 1353,
+      "position": {
+        "x": 3096631,
+        "y": 486075,
+        "z": 1593795
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05722998784709157,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-11",
+      "ticks": 1353,
+      "position": {
+        "x": 3106288,
+        "y": 490903,
+        "z": 1673107
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05728426041734744,
+      "maxHeightErrorM": 0.20099999999996498
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-12",
+      "ticks": 1353,
+      "position": {
+        "x": 3115941,
+        "y": 495730,
+        "z": 1752416
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05722998784709743,
+      "maxHeightErrorM": 0.20099999999996498
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-13",
+      "ticks": 1353,
+      "position": {
+        "x": 3125596,
+        "y": 500558,
+        "z": 1831726
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05722998784745446,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-14",
+      "ticks": 1353,
+      "position": {
+        "x": 3135253,
+        "y": 505386,
+        "z": 1911038
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05728426041746408,
+      "maxHeightErrorM": 0.20099999999996498
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-15",
+      "ticks": 1353,
+      "position": {
+        "x": 3144907,
+        "y": 510213,
+        "z": 1990347
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0604959365308459,
+      "maxHeightErrorM": 0.20099999999996498
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-16",
+      "ticks": 1353,
+      "position": {
+        "x": 3154564,
+        "y": 515040,
+        "z": 2069659
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.057284260416957514,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-17",
+      "ticks": 1353,
+      "position": {
+        "x": 3164217,
+        "y": 519868,
+        "z": 2148968
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05722998784743328,
+      "maxHeightErrorM": 0.20099999999990814
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-18",
+      "ticks": 1353,
+      "position": {
+        "x": 3173872,
+        "y": 524696,
+        "z": 2228278
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.057229987847070396,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-19",
+      "ticks": 1353,
+      "position": {
+        "x": 3183529,
+        "y": 529523,
+        "z": 2307590
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05728426041737005,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-20",
+      "ticks": 1353,
+      "position": {
+        "x": 3193182,
+        "y": 534351,
+        "z": 2386899
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.057229987847070396,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-21",
+      "ticks": 1353,
+      "position": {
+        "x": 3202838,
+        "y": 539178,
+        "z": 2466209
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06049593653039412,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-22",
+      "ticks": 1353,
+      "position": {
+        "x": 3212495,
+        "y": 544006,
+        "z": 2545521
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.057284260417007155,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-23",
+      "ticks": 1353,
+      "position": {
+        "x": 3222148,
+        "y": 548833,
+        "z": 2624830
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.05722998784698078,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-24",
+      "ticks": 1353,
+      "position": {
+        "x": 3231803,
+        "y": 553661,
+        "z": 2704140
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.057229987847070396,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-25",
+      "ticks": 1353,
+      "position": {
+        "x": 3241460,
+        "y": 558489,
+        "z": 2783452
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05728426041737005,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-26",
+      "ticks": 1353,
+      "position": {
+        "x": 3251113,
+        "y": 563316,
+        "z": 2862761
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.057229987847070396,
+      "maxHeightErrorM": 0.20100000000002183
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-27",
+      "ticks": 1353,
+      "position": {
+        "x": 3260768,
+        "y": 568343,
+        "z": 2942072
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.060477637661105525,
+      "maxHeightErrorM": 0.20699999999999363
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-28",
+      "ticks": 1354,
+      "position": {
+        "x": 3270424,
+        "y": 576353,
+        "z": 3021376
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.05712873424240409,
+      "maxHeightErrorM": 0.2620000000000573
+    },
+    {
+      "mode": "acro",
+      "route": "snow-saddle-link-29",
+      "ticks": 1353,
+      "position": {
+        "x": 3280082,
+        "y": 577868,
+        "z": 3100695
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0573821866067909,
+      "maxHeightErrorM": 0.1309999999999718
+    },
+    {
+      "mode": "acro",
+      "route": "station-approach-link-1",
+      "ticks": 1076,
+      "position": {
+        "x": 3340699,
+        "y": 577874,
+        "z": 3100000
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.12599999999997635
+    },
+    {
+      "mode": "acro",
+      "route": "station-approach-link-2",
+      "ticks": 1076,
+      "position": {
+        "x": 3400699,
+        "y": 577875,
+        "z": 3100000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-1",
+      "ticks": 1320,
+      "position": {
+        "x": 3322402,
+        "y": 577875,
+        "z": 3092178
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06760519904787561,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-2",
+      "ticks": 1321,
+      "position": {
+        "x": 3245480,
+        "y": 560910,
+        "z": 3084486
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07300618139721186,
+      "maxHeightErrorM": 0.8585097593197588
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-3",
+      "ticks": 2640,
+      "position": {
+        "x": 3169080,
+        "y": 497061,
+        "z": 3076907
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.026164354106647553,
+      "maxHeightErrorM": 1.1499218849951376
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-4",
+      "ticks": 1320,
+      "position": {
+        "x": 3091618,
+        "y": 470726,
+        "z": 3069116
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07548218207837222,
+      "maxHeightErrorM": 1.273709323809726
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-5",
+      "ticks": 1320,
+      "position": {
+        "x": 3014693,
+        "y": 443804,
+        "z": 3061437
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07679327739701454,
+      "maxHeightErrorM": 1.2737103009080215
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-6",
+      "ticks": 1321,
+      "position": {
+        "x": 2937780,
+        "y": 416879,
+        "z": 3053755
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07488572610904166,
+      "maxHeightErrorM": 1.2740219486364026
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-7",
+      "ticks": 1320,
+      "position": {
+        "x": 2860848,
+        "y": 389956,
+        "z": 3046039
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07543530303288956,
+      "maxHeightErrorM": 1.273721098759097
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-8",
+      "ticks": 1320,
+      "position": {
+        "x": 2783925,
+        "y": 363033,
+        "z": 3038347
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07548218207858542,
+      "maxHeightErrorM": 1.273709323809726
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-9",
+      "ticks": 1320,
+      "position": {
+        "x": 2707000,
+        "y": 336111,
+        "z": 3030668
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07679327739742153,
+      "maxHeightErrorM": 1.273710300908192
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-10",
+      "ticks": 1320,
+      "position": {
+        "x": 2630079,
+        "y": 309187,
+        "z": 3022962
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07548218207837222,
+      "maxHeightErrorM": 1.273709323809726
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-11",
+      "ticks": 2640,
+      "position": {
+        "x": 2553695,
+        "y": 245135,
+        "z": 3015369
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.026164354107100496,
+      "maxHeightErrorM": 1.1494894400521503
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-12",
+      "ticks": 1321,
+      "position": {
+        "x": 2476249,
+        "y": 228239,
+        "z": 3007564
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07250861797572654,
+      "maxHeightErrorM": 0.8565447292423869
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-link-13",
+      "ticks": 1320,
+      "position": {
+        "x": 2399325,
+        "y": 227875,
+        "z": 2999870
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0676051990478304,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-1",
+      "ticks": 1309,
+      "position": {
+        "x": 2323122,
+        "y": 227875,
+        "z": 2990401
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06354100065777313,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-2",
+      "ticks": 1309,
+      "position": {
+        "x": 2246927,
+        "y": 226746,
+        "z": 2980882
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0634615172466801,
+      "maxHeightErrorM": 0.1726961669696152
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-3",
+      "ticks": 1310,
+      "position": {
+        "x": 2170747,
+        "y": 222279,
+        "z": 2971354
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06278286090536886,
+      "maxHeightErrorM": 0.31745143170155643
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-4",
+      "ticks": 1309,
+      "position": {
+        "x": 2094545,
+        "y": 220309,
+        "z": 2961831
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06321313200624228,
+      "maxHeightErrorM": 0.20305247526374615
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-5",
+      "ticks": 1309,
+      "position": {
+        "x": 2018354,
+        "y": 218404,
+        "z": 2952306
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0631685482199431,
+      "maxHeightErrorM": 0.20305114310815497
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-6",
+      "ticks": 1309,
+      "position": {
+        "x": 1942164,
+        "y": 216499,
+        "z": 2942783
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06321313200626022,
+      "maxHeightErrorM": 0.20305247526374615
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-7",
+      "ticks": 1309,
+      "position": {
+        "x": 1865974,
+        "y": 214595,
+        "z": 2933258
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06304451027921056,
+      "maxHeightErrorM": 0.20310518450284576
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-8",
+      "ticks": 1309,
+      "position": {
+        "x": 1789782,
+        "y": 212690,
+        "z": 2923737
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06356979357895508,
+      "maxHeightErrorM": 0.20305232297599218
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-9",
+      "ticks": 1309,
+      "position": {
+        "x": 1713592,
+        "y": 210785,
+        "z": 2914211
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06316854821960759,
+      "maxHeightErrorM": 0.20305114310812655
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-10",
+      "ticks": 1309,
+      "position": {
+        "x": 1637402,
+        "y": 208880,
+        "z": 2904688
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06321313200623209,
+      "maxHeightErrorM": 0.20305247526374615
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-11",
+      "ticks": 1309,
+      "position": {
+        "x": 1561212,
+        "y": 206976,
+        "z": 2895163
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06304451027947186,
+      "maxHeightErrorM": 0.20310518450284576
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-12",
+      "ticks": 1309,
+      "position": {
+        "x": 1485021,
+        "y": 205071,
+        "z": 2885640
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06321313200626022,
+      "maxHeightErrorM": 0.20305247526374615
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-13",
+      "ticks": 1309,
+      "position": {
+        "x": 1408830,
+        "y": 203166,
+        "z": 2876115
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06316854821963572,
+      "maxHeightErrorM": 0.20305114310815497
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-14",
+      "ticks": 1309,
+      "position": {
+        "x": 1332639,
+        "y": 201261,
+        "z": 2866594
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06356979357895508,
+      "maxHeightErrorM": 0.20305232297599218
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-15",
+      "ticks": 1309,
+      "position": {
+        "x": 1256450,
+        "y": 199357,
+        "z": 2857068
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06304451027918243,
+      "maxHeightErrorM": 0.20310518450284576
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-16",
+      "ticks": 1309,
+      "position": {
+        "x": 1180259,
+        "y": 197452,
+        "z": 2847545
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06321313200626022,
+      "maxHeightErrorM": 0.20305247526374615
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-17",
+      "ticks": 1309,
+      "position": {
+        "x": 1104068,
+        "y": 195547,
+        "z": 2838020
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.06316854821992515,
+      "maxHeightErrorM": 0.20305114310812655
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-18",
+      "ticks": 1309,
+      "position": {
+        "x": 1027878,
+        "y": 193642,
+        "z": 2828497
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0.06321313200626022,
+      "maxHeightErrorM": 0.20305247526374615
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-19",
+      "ticks": 1310,
+      "position": {
+        "x": 951699,
+        "y": 189161,
+        "z": 2818973
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06278286090540597,
+      "maxHeightErrorM": 0.31745143170155643
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-20",
+      "ticks": 1309,
+      "position": {
+        "x": 875498,
+        "y": 187914,
+        "z": 2809454
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.06346151724665706,
+      "maxHeightErrorM": 0.1726961669696152
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-gorge-link-21",
+      "ticks": 1309,
+      "position": {
+        "x": 799312,
+        "y": 187875,
+        "z": 2799925
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0635410006577872,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-1",
+      "ticks": 1331,
+      "position": {
+        "x": 794026,
+        "y": 187875,
+        "z": 2721532
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.08294943153648505,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-2",
+      "ticks": 1331,
+      "position": {
+        "x": 788100,
+        "y": 186392,
+        "z": 2643748
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0792053396682891,
+      "maxHeightErrorM": 0.18541954811084338
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-3",
+      "ticks": 1331,
+      "position": {
+        "x": 782174,
+        "y": 181330,
+        "z": 2565972
+      },
+      "contacts": 0,
+      "recentres": 3,
+      "maxCrossTrackM": 0.07497927875793065,
+      "maxHeightErrorM": 0.33258581041451407
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-4",
+      "ticks": 1331,
+      "position": {
+        "x": 776250,
+        "y": 179048,
+        "z": 2488194
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0792338768756993,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-5",
+      "ticks": 1331,
+      "position": {
+        "x": 770324,
+        "y": 176826,
+        "z": 2410416
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07923387687564272,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-6",
+      "ticks": 1331,
+      "position": {
+        "x": 764398,
+        "y": 174604,
+        "z": 2332638
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07923387687561767,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-7",
+      "ticks": 1331,
+      "position": {
+        "x": 758471,
+        "y": 172381,
+        "z": 2254863
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07491548191267923,
+      "maxHeightErrorM": 0.22157267140266868
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-8",
+      "ticks": 1331,
+      "position": {
+        "x": 752547,
+        "y": 170159,
+        "z": 2177083
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07923387687564272,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-9",
+      "ticks": 1331,
+      "position": {
+        "x": 746621,
+        "y": 167937,
+        "z": 2099305
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0792338768756993,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-10",
+      "ticks": 1331,
+      "position": {
+        "x": 740695,
+        "y": 165715,
+        "z": 2021527
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07923387687563056,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-11",
+      "ticks": 1331,
+      "position": {
+        "x": 734769,
+        "y": 163492,
+        "z": 1943749
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07923387687571219,
+      "maxHeightErrorM": 0.22157550518159042
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-12",
+      "ticks": 1331,
+      "position": {
+        "x": 728845,
+        "y": 161271,
+        "z": 1865974
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0791790453138563,
+      "maxHeightErrorM": 0.221758585369912
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-13",
+      "ticks": 1331,
+      "position": {
+        "x": 722917,
+        "y": 159048,
+        "z": 1788194
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07923387687563056,
+      "maxHeightErrorM": 0.22157550518159042
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-14",
+      "ticks": 1331,
+      "position": {
+        "x": 716991,
+        "y": 156826,
+        "z": 1710416
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.0792338768756993,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-15",
+      "ticks": 1331,
+      "position": {
+        "x": 711065,
+        "y": 154604,
+        "z": 1632638
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07923387687561306,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-16",
+      "ticks": 1331,
+      "position": {
+        "x": 705141,
+        "y": 152381,
+        "z": 1554863
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07917904531372513,
+      "maxHeightErrorM": 0.22157286595108872
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-17",
+      "ticks": 1331,
+      "position": {
+        "x": 699213,
+        "y": 150159,
+        "z": 1477083
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07923387687569469,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-18",
+      "ticks": 1331,
+      "position": {
+        "x": 693287,
+        "y": 147937,
+        "z": 1399305
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07923387687561306,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-19",
+      "ticks": 1331,
+      "position": {
+        "x": 687361,
+        "y": 145715,
+        "z": 1321527
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07923387687571219,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-20",
+      "ticks": 1331,
+      "position": {
+        "x": 681435,
+        "y": 143492,
+        "z": 1243749
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07923387687563056,
+      "maxHeightErrorM": 0.22157550518159042
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-21",
+      "ticks": 1331,
+      "position": {
+        "x": 675508,
+        "y": 141271,
+        "z": 1165974
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07491548191267923,
+      "maxHeightErrorM": 0.22175839099654127
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-22",
+      "ticks": 1331,
+      "position": {
+        "x": 669584,
+        "y": 139048,
+        "z": 1088194
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07923387687563056,
+      "maxHeightErrorM": 0.22157550518159042
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-23",
+      "ticks": 1331,
+      "position": {
+        "x": 663658,
+        "y": 136826,
+        "z": 1010416
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.07923387687562411,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-24",
+      "ticks": 1331,
+      "position": {
+        "x": 657732,
+        "y": 134604,
+        "z": 932638
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07923387687570345,
+      "maxHeightErrorM": 0.2216683637037704
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-25",
+      "ticks": 1331,
+      "position": {
+        "x": 651804,
+        "y": 129507,
+        "z": 854861
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07497927875791836,
+      "maxHeightErrorM": 0.33228247414240286
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-26",
+      "ticks": 1331,
+      "position": {
+        "x": 645878,
+        "y": 127907,
+        "z": 777085
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0.07920533966828569,
+      "maxHeightErrorM": 0.18565535464867366
+    },
+    {
+      "mode": "acro",
+      "route": "reservoir-dam-link-27",
+      "ticks": 1331,
+      "position": {
+        "x": 639952,
+        "y": 127875,
+        "z": 699310
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0.0829494315366189,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "glacial-erratic-slalom",
+      "ticks": 1934,
+      "position": {
+        "x": 700687,
+        "y": 121875,
+        "z": 700000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "switchback-terrace",
+      "ticks": 2220,
+      "position": {
+        "x": 1770686,
+        "y": 271875,
+        "z": 600000
+      },
+      "contacts": 0,
+      "recentres": 1,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "snow-pinnacle-gap",
+      "ticks": 2505,
+      "position": {
+        "x": 3000000,
+        "y": 431875,
+        "z": 880692
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "summit-station-concourse",
+      "ticks": 2505,
+      "position": {
+        "x": 3480693,
+        "y": 571875,
+        "z": 3100000
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "viaduct-underpass",
+      "ticks": 1291,
+      "position": {
+        "x": 2400000,
+        "y": 217875,
+        "z": 3110688
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    },
+    {
+      "mode": "acro",
+      "route": "dam-spillway",
+      "ticks": 2505,
+      "position": {
+        "x": 800000,
+        "y": 181875,
+        "z": 2880692
+      },
+      "contacts": 0,
+      "recentres": 2,
+      "maxCrossTrackM": 0,
+      "maxHeightErrorM": 0.125
+    }
+  ],
+  "authoredStarts": 12,
+  "actualWallContacts": [
+    {
+      "probe": "station-wall",
+      "mode": "self-level",
+      "ticks": 164,
+      "position": {
+        "x": 3352778,
+        "y": 566875,
+        "z": 3068000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "dam-face",
+      "mode": "self-level",
+      "ticks": 551,
+      "position": {
+        "x": 730000,
+        "y": 183875,
+        "z": 2833778
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "station-wall",
+      "mode": "acro",
+      "ticks": 164,
+      "position": {
+        "x": 3352778,
+        "y": 566875,
+        "z": 3068000
+      },
+      "contacts": 1
+    },
+    {
+      "probe": "dam-face",
+      "mode": "acro",
+      "ticks": 551,
+      "position": {
+        "x": 730000,
+        "y": 183875,
+        "z": 2833778
+      },
+      "contacts": 1
+    }
+  ],
+  "sourcePins": {
+    "terrain": "ce45cfcfc2f5ae829c863a926e8b7aa8133bedb404ceff3df4e4ed9a5dfd93a3",
+    "scenery": "692d5727473f4c99ec43e66fda667fe24112d174d89080409858a53d9a031fb7"
+  },
+  "playerReady": false,
+  "claim": "Production regional-session controlled command evidence; not native player/device FPS evidence."
+}

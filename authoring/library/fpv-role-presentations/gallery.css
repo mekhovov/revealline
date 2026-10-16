@@ -1,0 +1,227 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #101b28;
+  color: #f2f1e8;
+}
+body {
+  margin: clamp(12px, 3vw, 24px);
+}
+h1 {
+  font-size: 27px;
+}
+p {
+  max-width: 980px;
+  line-height: 1.5;
+}
+.controls,
+.load-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+button,
+select {
+  font: inherit;
+  min-height: 44px;
+  padding: 8px;
+  max-width: 100%;
+}
+label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  min-width: 0;
+}
+input {
+  width: 20px;
+  height: 20px;
+}
+#cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 390px), 1fr));
+  gap: 16px;
+}
+article {
+  border: 1px solid #567;
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 0;
+}
+h2 {
+  font-size: 19px;
+  margin: 4px 0;
+  overflow-wrap: anywhere;
+}
+.role-canvas-region {
+  width: 100%;
+  max-height: 210px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid #567;
+  margin-top: 8px;
+}
+canvas {
+  display: block;
+  width: 360px;
+  height: 190px;
+  max-width: none !important;
+  image-rendering: pixelated;
+}
+.role-canvas-region[data-fpv-role-reading] {
+  outline: 3px solid #ffd65a;
+  outline-offset: 2px;
+}
+small {
+  display: block;
+  margin: 6px 0;
+  color: #c1d1df;
+  overflow-wrap: anywhere;
+}
+a {
+  color: #9bd9ff;
+}
+#status {
+  min-height: 24px;
+}
+.role-read-help {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 6px 0;
+}
+footer a {
+  display: inline-block;
+  min-height: 44px;
+  padding: 8px 0;
+}
+.reveal-source-dialog {
+  box-sizing: border-box;
+  width: min(1100px, calc(100vw - 24px));
+  max-height: calc(100svh - 24px);
+  padding: clamp(12px, 3vw, 28px);
+  overflow: auto;
+  color: #f3f0db;
+  background: #101923;
+  border: 2px solid #78dce8;
+}
+.reveal-source-dialog::backdrop {
+  background: rgb(0 0 0 / 75%);
+}
+.reveal-source-dialog h2 {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 4vw, 32px);
+}
+.reveal-source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+#reveal-source-region {
+  max-height: min(60svh, 640px);
+  min-height: 44px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #070b12;
+  border: 1px solid #425563;
+}
+#reveal-source-region pre {
+  padding: 12px;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    16px/1.6 'Field Kit Mono',
+    monospace;
+}
+#reveal-source-region img {
+  display: block;
+  max-width: 100%;
+  max-height: min(calc(60svh - 2px), 638px);
+  height: auto;
+  margin-inline: auto;
+  image-rendering: pixelated;
+}
+#reveal-source-region img[data-size='actual'] {
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+}
+#reveal-source-status {
+  overflow-wrap: anywhere;
+}
+#reveal-source-region:focus-visible {
+  outline: 3px solid #78dce8;
+  outline-offset: 2px;
+}
+@media (forced-colors: active) {
+  .reveal-source-dialog,
+  #reveal-source-region {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
+  }
+  #reveal-source-region:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+header {
+  scroll-margin-top: 5rem;
+}
+label {
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+select,
+button,
+.source-link {
+  min-height: 44px;
+}
+a.source-link {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+}
+a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--field-kit-focus, #ffd659);
+  outline-offset: 4px;
+}
+.grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 285px), 1fr));
+}
+.samples {
+  gap: 16px;
+}
+#status {
+  overflow-wrap: anywhere;
+}
+.loading-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+@media (max-width: 420px) {
+  body {
+    margin: 12px auto;
+    padding: 0 12px;
+  }
+  article {
+    padding: 10px;
+  }
+  .samples {
+    gap: 12px;
+    padding: 14px 6px;
+  }
+}

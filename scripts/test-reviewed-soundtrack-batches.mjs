@@ -39,14 +39,52 @@ async function fixture(t) {
     'synthetic-evidence.txt',
     'Synthetic fixture evidence, never a real listening approval.',
   );
-  const track = structuredClone(SOUNDTRACK_CATALOGUE.tracks[0]);
-  track.id = 'builtin.catalog.synthetic-fixture';
-  track.asset.sha256 = digest('distinct synthetic recording');
-  track.archiveId = 'reviewed-fixture';
-  track.path = `objects/${track.asset.sha256}.mp3`;
-  track.policy.id = track.id;
-  track.policy.sha256 = track.asset.sha256;
-  track.tags = { genres: ['synth90s'], role: 'gameplay', energy: 4, themes: ['retro'] };
+  const trackId = 'builtin.catalog.synthetic-fixture',
+    sha256 = digest('distinct synthetic recording'),
+    sourceURL = 'https://example.test/synthetic-recording',
+    licenseURL = 'https://creativecommons.org/publicdomain/zero/1.0/';
+  const track = {
+    format: 'revealline-audio-track.v1',
+    id: trackId,
+    kind: 'mp3',
+    title: 'Synthetic recording',
+    artist: 'Synthetic fixture artist',
+    fileName: 'synthetic.mp3',
+    edition: 'originals-1',
+    archiveId: 'reviewed-fixture',
+    path: `objects/${sha256}.mp3`,
+    asset: {
+      sha256,
+      bytes: 4000,
+      mime: 'audio/mpeg',
+      durationSeconds: (100 * 1152) / 48000,
+      sampleRate: 48000,
+      channels: 2,
+      mpegVersion: '1',
+      frames: 100,
+    },
+    rights: {
+      kind: 'licensed',
+      credit: 'Synthetic fixture attribution',
+      license: 'CC0 1.0 Universal',
+      source: sourceURL,
+    },
+    websites: [
+      { label: 'Synthetic source', url: sourceURL },
+      { label: 'Synthetic licence', url: licenseURL },
+    ],
+    policy: {
+      id: trackId,
+      sha256,
+      webPlayback: 'allowed',
+      offlineCache: 'allowed',
+      redistribute: 'allowed',
+      modify: 'allowed',
+      gameplayVideo: 'allowed',
+      contentId: 'unknown',
+    },
+    tags: { genres: ['synth90s'], role: 'gameplay', energy: 4, themes: ['retro'] },
+  };
   const identity = { id: track.id, sha256: track.asset.sha256, bytes: track.asset.bytes };
   const row = { path: track.path, bytes: track.asset.bytes, sha256: track.asset.sha256 };
   const docs = {
@@ -161,6 +199,37 @@ async function fixture(t) {
   await save();
   return { root, docs, entry, manifest, save, evidence, write, track };
 }
+async function ownerFixture(t) {
+  const f = await fixture(t);
+  f.entry.status = 'owner-approved';
+  f.track.policy.gameplayVideo = 'unknown';
+  f.docs.technical.tracks[0].evidence = await f.write(
+    'synthetic-technical.txt',
+    'Synthetic technical evidence; no real decoder or measurement claim.',
+  );
+  f.docs.review = {
+    format: 'revealline-soundtrack-batch-owner-review.v1',
+    batchId: f.entry.id,
+    authorization: {
+      kind: 'explicit-project-owner-request',
+      approvedBy: 'Synthetic owner',
+      approvedAt: '2026-09-30T00:00:00Z',
+      request: 'Synthetic owner approves this fixture; no real recording or listening claim.',
+    },
+    pendingChecks: [
+      'fullTrack',
+      'repeatedSession',
+      'inGameTransition',
+      'warningAudibility',
+      'mono',
+      'smallSpeakers',
+      'physicalDevice',
+    ],
+    tracks: [{ id: f.track.id, sha256: f.track.asset.sha256, bytes: f.track.asset.bytes }],
+  };
+  await f.save();
+  return f;
+}
 test('missing, empty and pending manifests admit no recordings or audio', async (t) => {
   const root = await temporary(t);
   assert.deepEqual(await compileReviewedSoundtrackBatches(root, 'originals-1'), empty);
@@ -221,6 +290,137 @@ test('approved status cannot bypass the required listening document pin', async 
   const f = await fixture(t);
   delete f.entry.review;
   await writeFile(path.join(f.root, manifestPath), JSON.stringify(f.manifest));
+  await assert.rejects(compileReviewedSoundtrackBatches(f.root, 'originals-1'), /missing fields/);
+});
+test('owner approval binds the exact recording with deferred checks and no listening assertions', async (t) => {
+  const f = await ownerFixture(t);
+  const before = structuredClone(f.docs.review);
+  const compiled = await compileReviewedSoundtrackBatches(f.root, 'originals-1');
+  assert.deepEqual(compiled.tracks, [f.track]);
+  assert.equal(compiled.tracks[0].policy.gameplayVideo, 'unknown');
+  assert.equal(compiled.tracks[0].policy.contentId, 'unknown');
+  assert.equal(Object.hasOwn(compiled, 'files'), false);
+  assert.deepEqual(f.docs.review, before);
+  assert.deepEqual(await compileReviewedSoundtrackBatches(f.root, 'originals-1'), compiled);
+  f.entry.status = 'approved';
+  await f.save();
+  await assert.rejects(compileReviewedSoundtrackBatches(f.root, 'originals-1'), /review evidence/);
+});
+for (const [label, mutate, error] of [
+  [
+    'missing owner identity',
+    (f) => (f.docs.review.authorization.approvedBy = ''),
+    /owner approval/i,
+  ],
+  ['missing owner request', (f) => (f.docs.review.authorization.request = ''), /owner approval/i],
+  ['missing owner date', (f) => (f.docs.review.authorization.approvedAt = ''), /owner approval/i],
+  [
+    'imported authority',
+    (f) => (f.docs.review.authorization.kind = 'public-archive'),
+    /owner approval/i,
+  ],
+  ['omitted pending check', (f) => f.docs.review.pendingChecks.pop(), /owner approval/i],
+  ['completed listening claim', (f) => (f.docs.review.tracks[0].fullTrack = true), /identity/],
+  [
+    'unknown recording ID',
+    (f) => (f.docs.review.tracks[0].id = 'builtin.catalog.other'),
+    /exact recording/,
+  ],
+  [
+    'substituted recording hash',
+    (f) => (f.docs.review.tracks[0].sha256 = 'a'.repeat(64)),
+    /exact recording/,
+  ],
+  ['substituted recording bytes', (f) => f.docs.review.tracks[0].bytes++, /exact recording/],
+  ['omitted recording', (f) => (f.docs.review.tracks = []), /inventory/],
+  [
+    'duplicated owner identity',
+    (f) => f.docs.review.tracks.push({ ...f.docs.review.tracks[0] }),
+    /inventory/,
+  ],
+  ['Ukrainian review bypass', (f) => (f.track.tags.genres = ['ukrainian']), /owner approval/i],
+  [
+    'missing full decode',
+    (f) => (f.docs.technical.tracks[0].fullFileDecoded = false),
+    /full native decode/,
+  ],
+  ['too-loud encode', (f) => (f.docs.technical.tracks[0].integratedLUFS = -14), /loudness/],
+  ['too-quiet encode', (f) => (f.docs.technical.tracks[0].integratedLUFS = -18), /loudness/],
+  ['excessive true peak', (f) => (f.docs.technical.tracks[0].truePeakDbTP = -0.1), /true peaks/],
+  ['widened video permission', (f) => (f.track.policy.gameplayVideo = 'allowed'), /rights/],
+  ['widened Content ID clearance', (f) => (f.track.policy.contentId = 'not-registered'), /rights/],
+  ['restricted redistribution', (f) => (f.track.policy.redistribute = 'denied'), /rights/],
+  ['changed licence', (f) => (f.track.rights.license = 'CC BY 4.0 International'), /rights/],
+  ['changed attribution', (f) => (f.track.rights.credit = 'Changed credit'), /rights/],
+  ['unverified public delivery', (f) => (f.docs.delivery.verified = false), /delivery/],
+])
+  test(`owner approval rejects ${label} after refreshing document pins`, async (t) => {
+    const f = await ownerFixture(t);
+    mutate(f);
+    await f.save();
+    await assert.rejects(compileReviewedSoundtrackBatches(f.root, 'originals-1'), error);
+  });
+test('owner approval cannot admit duplicate hashes under different IDs or replace existing bytes', async (t) => {
+  const f = await ownerFixture(t);
+  await assert.rejects(
+    compileReviewedSoundtrackBatches(f.root, 'originals-1', { ...empty, tracks: [f.track] }),
+    /duplicate.*hash/,
+  );
+  const alias = structuredClone(f.track);
+  alias.id = 'builtin.catalog.synthetic-alias';
+  alias.policy.id = alias.id;
+  f.docs.metadata.catalogue.tracks.push(alias);
+  await f.save();
+  await assert.rejects(compileReviewedSoundtrackBatches(f.root, 'originals-1'), /duplicate.*hash/);
+});
+test('owner approval and its technical evidence remain hash-pinned', async (t) => {
+  const f = await ownerFixture(t);
+  await writeFile(
+    path.join(f.root, f.entry.review.path),
+    JSON.stringify({ ...f.docs.review, batchId: 'changed' }),
+  );
+  await assert.rejects(compileReviewedSoundtrackBatches(f.root, 'originals-1'), /pin differs/);
+  await f.save();
+  await writeFile(
+    path.join(f.root, f.docs.technical.tracks[0].evidence.path),
+    'altered technical evidence',
+  );
+  await assert.rejects(compileReviewedSoundtrackBatches(f.root, 'originals-1'), /pin differs/);
+});
+test('canonical archive accepts separate pinned inventories while rejecting identity and inventory URL replacements', async (t) => {
+  const f = await ownerFixture(t);
+  const baseURL = 'https://mekhovov.github.io/revealline-soundtracks/';
+  const inventoryPath = 'admissions/synthetic-fixture.json';
+  Object.assign(f.docs.metadata.archive, { baseURL, inventoryPath });
+  Object.assign(f.docs.delivery, {
+    baseURL,
+    inventoryPath,
+    deployRunURL: 'https://github.com/mekhovov/revealline-soundtracks/actions/runs/123456',
+  });
+  f.docs.delivery.files[0].url = new URL(f.track.path, baseURL).href;
+  await f.save();
+  const prior = { id: 'previous-fixture', baseURL, inventorySha256: 'f'.repeat(64) };
+  for (const inventoryPath of [undefined, 'admissions/previous-fixture.json']) {
+    const archive = { ...prior, ...(inventoryPath ? { inventoryPath } : {}) };
+    const result = await compileReviewedSoundtrackBatches(f.root, 'originals-1', {
+      ...empty,
+      archives: [archive],
+    });
+    assert.deepEqual(result.archives, [f.docs.metadata.archive]);
+  }
+  for (const archive of [
+    { ...prior, id: f.track.archiveId },
+    { ...prior, inventoryPath },
+  ])
+    await assert.rejects(
+      compileReviewedSoundtrackBatches(f.root, 'originals-1', { ...empty, archives: [archive] }),
+      /existing archive/,
+    );
+  f.docs.delivery.inventoryPath = 'admissions/wrong.json';
+  await f.save();
+  await assert.rejects(compileReviewedSoundtrackBatches(f.root, 'originals-1'), /delivery/);
+  delete f.docs.delivery.inventoryPath;
+  await f.save();
   await assert.rejects(compileReviewedSoundtrackBatches(f.root, 'originals-1'), /missing fields/);
 });
 for (const [label, mutate] of [
@@ -445,19 +645,22 @@ test('combined validation refuses existing identities, hash aliases, archives an
     /catalogue/,
   );
 });
-test('existing 70 recordings and15 albums compile byte-for-value unchanged without new approvals', async () => {
+test('existing shipped recordings and albums compile byte-for-value unchanged without new approvals', async () => {
   const compiled = await compilePublishedSoundtracks(source);
   assert.deepEqual(compiled.catalogue, SOUNDTRACK_CATALOGUE);
   assert.deepEqual(compiled.archives, SOUNDTRACK_ARCHIVES);
   assert.deepEqual(compiled.collections, SOUNDTRACK_COLLECTIONS);
-  assert.equal(compiled.catalogue.tracks.length, 70);
+  assert.equal(compiled.catalogue.tracks.length, SOUNDTRACK_CATALOGUE.tracks.length);
   assert.equal(compiled.files.length, 0);
   const local = await compilePublishedSoundtracks(source, { delivery: 'source' });
-  assert.equal(local.catalogue.tracks.length, 0);
+  assert.deepEqual(
+    local.catalogue.tracks.map((track) => track.id),
+    compiled.bundled.map((track) => track.id),
+  );
   assert.equal(local.files.length, 0);
   assert.equal(
     JSON.parse(await readFile(path.join(source, 'game/content/soundtrack-catalogue.json'))).tracks
       .length,
-    70,
+    SOUNDTRACK_CATALOGUE.tracks.length,
   );
 });

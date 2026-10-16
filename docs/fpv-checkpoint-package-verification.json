@@ -1,0 +1,199 @@
+{
+  "admission": {
+    "format": "revealline-optional-package-admission.v1",
+    "packages": [
+      {
+        "bytes": 404315,
+        "files": 29,
+        "id": "civilian-flight",
+        "revision": "8f735501c862b995f7a9a9a111b1d7a8680a86308e5123cfa24d5648afa510b5"
+      },
+      {
+        "bytes": 3550467,
+        "files": 62,
+        "id": "civilian-fpv",
+        "revision": "94c2ff20da1d54cdb9d8dddaca6d531f9b19c1fba5e870a701d0514b088863ec"
+      },
+      {
+        "bytes": 13557964,
+        "files": 94,
+        "id": "fpv-worlds",
+        "revision": "2b2e07ec457cdbe979294ccb8d358e3ed2c906ce3653c996a4f5f2d9ae1d0d22"
+      }
+    ],
+    "publicEligible": false,
+    "sourceRevision": "9a13a9b1ce9316d19c3ac1f572f1bc0bfc21fcbc",
+    "sourceTree": "b8c1ada791f6fa2b14eccc4d3b1a177d01daf7f2",
+    "version": "v0.142.4",
+    "zipMembersVerified": true
+  },
+  "committedInputsVerified": true,
+  "envelopeSha256": "43758a3c301aad2380c709cd5e9faaa60d4453920d9f7850fb72fe442e3d6eb3",
+  "format": "revealline-optional-package-candidate-verification.v1",
+  "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+  "publicEligible": false,
+  "reproducibleBuilds": 2,
+  "sourceRevision": "9a13a9b1ce9316d19c3ac1f572f1bc0bfc21fcbc",
+  "sourceTree": "b8c1ada791f6fa2b14eccc4d3b1a177d01daf7f2",
+  "version": "v0.142.4",
+  "runtimePlaytest": {
+    "format": "FPVPlaytestBuild.v1",
+    "entry": "optional-practice/fpv-worlds/index.html",
+    "files": 87,
+    "bytes": 13423493,
+    "zipSha256": "a72309c609044ed6969dab13d3bd9769a88d2ba752e4a11f182fb60ee10bf4e3",
+    "qualification": "development-playtest",
+    "unitTests": "deferred-to-final-phase",
+    "releaseQualified": false
+  },
+  "legacyReplay": {
+    "format": "FPVLegacyReplayVerification.v1",
+    "passed": 24,
+    "results": [
+      {
+        "course": "flight-01",
+        "mode": "self-level",
+        "ticks": 239,
+        "status": "complete"
+      },
+      {
+        "course": "flight-01",
+        "mode": "acro",
+        "ticks": 239,
+        "status": "complete"
+      },
+      {
+        "course": "flight-02",
+        "mode": "self-level",
+        "ticks": 383,
+        "status": "complete"
+      },
+      {
+        "course": "flight-02",
+        "mode": "acro",
+        "ticks": 383,
+        "status": "complete"
+      },
+      {
+        "course": "flight-03",
+        "mode": "self-level",
+        "ticks": 433,
+        "status": "complete"
+      },
+      {
+        "course": "flight-03",
+        "mode": "acro",
+        "ticks": 433,
+        "status": "complete"
+      },
+      {
+        "course": "flight-04",
+        "mode": "self-level",
+        "ticks": 433,
+        "status": "complete"
+      },
+      {
+        "course": "flight-04",
+        "mode": "acro",
+        "ticks": 433,
+        "status": "complete"
+      },
+      {
+        "course": "flight-05",
+        "mode": "self-level",
+        "ticks": 435,
+        "status": "complete"
+      },
+      {
+        "course": "flight-05",
+        "mode": "acro",
+        "ticks": 435,
+        "status": "complete"
+      },
+      {
+        "course": "flight-06",
+        "mode": "self-level",
+        "ticks": 899,
+        "status": "complete"
+      },
+      {
+        "course": "flight-06",
+        "mode": "acro",
+        "ticks": 900,
+        "status": "complete"
+      },
+      {
+        "course": "flight-07",
+        "mode": "self-level",
+        "ticks": 498,
+        "status": "complete"
+      },
+      {
+        "course": "flight-07",
+        "mode": "acro",
+        "ticks": 488,
+        "status": "complete"
+      },
+      {
+        "course": "flight-08",
+        "mode": "self-level",
+        "ticks": 491,
+        "status": "complete"
+      },
+      {
+        "course": "flight-08",
+        "mode": "acro",
+        "ticks": 491,
+        "status": "complete"
+      },
+      {
+        "course": "flight-09",
+        "mode": "self-level",
+        "ticks": 638,
+        "status": "complete"
+      },
+      {
+        "course": "flight-09",
+        "mode": "acro",
+        "ticks": 638,
+        "status": "complete"
+      },
+      {
+        "course": "flight-10",
+        "mode": "self-level",
+        "ticks": 610,
+        "status": "complete"
+      },
+      {
+        "course": "flight-10",
+        "mode": "acro",
+        "ticks": 610,
+        "status": "complete"
+      },
+      {
+        "course": "flight-11",
+        "mode": "self-level",
+        "ticks": 1243,
+        "status": "complete"
+      },
+      {
+        "course": "flight-11",
+        "mode": "acro",
+        "ticks": 1243,
+        "status": "complete"
+      },
+      {
+        "course": "flight-12",
+        "mode": "self-level",
+        "ticks": 1126,
+        "status": "complete"
+      },
+      {
+        "course": "flight-12",
+        "mode": "acro",
+        "ticks": 1126,
+        "status": "complete"
+      }
+    ]
+  }
+}

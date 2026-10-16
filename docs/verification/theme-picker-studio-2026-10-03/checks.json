@@ -1,0 +1,50 @@
+{
+  "runtimeRevision": "5a529f5aa",
+  "sources": {
+    "game/ui/theme-material-preview.mjs": {
+      "bytes": 3462,
+      "sha256": "fb38de2dbd69df3426b4eb4a9c41d1e2e9c08a25547adc646aa0f3eef1db8873"
+    },
+    "game/ui/theme-family-controls.mjs": {
+      "bytes": 8994,
+      "sha256": "f86d7ca108a8017ef5711b3355e02bc069f56f8c7a1a2f4f0b5c2d0d7a27bdcf"
+    },
+    "game/presentation/theme-host.mjs": {
+      "bytes": 16050,
+      "sha256": "6dfd483de01edd16144df0a9537efd305b63576d06097abd9315a8df48efe890"
+    },
+    "game/presentation/industrial-workshop.css": {
+      "bytes": 101351,
+      "sha256": "8de9d6cd7f30e9cdabc210a434cb318c1e82d55280732cdfd8cec3695fc6f1aa"
+    },
+    "authoring/asset-studio/theme-workbench.mjs": {
+      "bytes": 24507,
+      "sha256": "ca4a1fbf7ed5ca7e135169ea716c11666194115b12bfee53c9a4581e4f64a4d0"
+    },
+    "game/ui/workshop-return.mjs": {
+      "bytes": 4384,
+      "sha256": "100d3106dc05868e71a1abeb788ed90e2d6646bd34164d40f56e51ca4eb34552"
+    },
+    "game/ui/workshop-return-entry.mjs": {
+      "bytes": 313,
+      "sha256": "a980fe0636a7ed40768d8a426ea805743f46495e23863472d773d6666365e6e1"
+    }
+  },
+  "commands": {
+    "focused": "node --test game/test/theme-picker-materials.test.mjs game/test/theme-family-host.test.mjs game/test/unified-appearance.test.mjs game/test/studio-appearance-basis.test.mjs game/test/studio-workspaces.test.mjs game/test/theme-preview.test.mjs game/test/asset-studio-host-loading.test.mjs game/test/theme-system.test.mjs scripts/test-curated-appearance-package.mjs",
+    "bootstrap": "node --test game/test/theme-bootstrap.test.mjs",
+    "localization": "node scripts/localization.mjs check",
+    "generatedSim": "node scripts/refresh-fpv-presentation-assets.mjs --check",
+    "generatedBootstrap": "node scripts/refresh-theme-bootstrap.mjs --check"
+  },
+  "passed": {
+    "focusedTests": 73,
+    "bootstrapTests": 8,
+    "localization": true,
+    "eslint": true,
+    "prettier": true,
+    "generatedSim": true,
+    "generatedBootstrap": true
+  },
+  "knownBaseline": "Controller-lab Workshop return focuses shell-guide; reproduced at4186a320c; navigation49/50."
+}

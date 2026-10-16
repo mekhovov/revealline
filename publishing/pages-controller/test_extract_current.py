@@ -33,6 +33,14 @@ class ExtractCurrentTests(unittest.TestCase):
         args = self.fixture(); output = self.root / 'current'
         receipt = extractor.extract_current(args[0], output, *args[1:])
         self.assertEqual(receipt['membersVerified'], 4)
+        self.assertEqual(receipt['format'], 'revealline-current-extraction.v1')
+        self.assertEqual(
+            [row['path'] for row in receipt['files']],
+            ['.xonix-build.json', 'distribution.zip.sha256', 'game/index.html', 'index.html', 'manifest.json', 'service-worker.js'],
+        )
+        for row in receipt['files']:
+            body = (output / row['path']).read_bytes()
+            self.assertEqual((len(body), hashlib.sha256(body).hexdigest()), (row['bytes'], row['sha256']))
         self.assertEqual((output / 'service-worker.js').read_bytes(), b'original worker')
         self.assertEqual((output / 'manifest.json').read_bytes(), args[2])
         self.assertEqual((output / '.xonix-build.json').read_bytes(), extractor.MARKER)

@@ -1,0 +1,25 @@
+TAP version 13
+# (node:20048) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/tmp/encounter-guide-baseline-loader.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 1 - immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+  ---
+  duration_ms: 7127.949375
+  type: 'test'
+  ...
+# Subtest: grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 2 - grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+  ---
+  duration_ms: 5598.904375
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13227.291917

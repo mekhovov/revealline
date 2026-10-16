@@ -119,7 +119,7 @@ const chapter = (library) =>
 test('remote installed Classic remains exact, validates raw snapshot at handoff, and never decodes while browsing', async (t) => {
   const f = await fixture(t, [recipe]);
   assert.equal(f.owner.state().ready, true);
-  assert.equal(f.library.missions.length, 201);
+  assert.equal(f.library.missions.length, 435);
   assert.equal(f.reads.length, 5);
   const row = chapter(f.library).at(-1);
   assert.ok(row);
@@ -169,7 +169,7 @@ test('modified same-ID artwork is Custom, has distinct exact IDs, and refreshed 
     fit: 'contain',
   };
   const f = await fixture(t, [modified]);
-  assert.equal(f.library.missions.length, 204);
+  assert.equal(f.library.missions.length, 438);
   const original = chapter(f.library)[0];
   assert.match(f.library.availability(original).reason, /different edition/);
   const custom = f.library.missions.filter((row) => row.collection === 'Custom');
@@ -199,6 +199,7 @@ test('trusted inline bundled Download becomes Play on the same Classic row witho
   const f = await fixture(t);
   const row = chapter(f.library).at(-1);
   assert.equal(f.library.availability(row, 'solo').state, 'download');
+  assert.equal(f.library.availability(row, 'solo').included, true);
   f.values.set('revealline.library.dev.v1', 'existing progress');
   assert.deepEqual(await f.library.prepare(row, { mode: 'solo' }), { state: 'ready' });
   assert.equal(f.library.find(row.id), row);

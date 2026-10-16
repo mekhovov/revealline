@@ -1,0 +1,85 @@
+TAP version 13
+# Subtest: runtime indentation preserves executable tokens, comments, line breaks and literal values
+ok 1 - runtime indentation preserves executable tokens, comments, line breaks and literal values
+  ---
+  duration_ms: 21.127125
+  ...
+# Subtest: all admitted engine JavaScript retains lexical and line-termination parity when compacted
+ok 2 - all admitted engine JavaScript retains lexical and line-termination parity when compacted
+  ---
+  duration_ms: 9927.379583
+  ...
+# Subtest: standalone branding projects only the image fallback to an approved selected logo
+ok 3 - standalone branding projects only the image fallback to an approved selected logo
+  ---
+  duration_ms: 13.553458
+  ...
+# Subtest: support page closure retains navigation without authoring sample media or manual fixtures
+ok 4 - support page closure retains navigation without authoring sample media or manual fixtures
+  ---
+  duration_ms: 2716.462042
+  ...
+# Subtest: edition recording inventory follows validated catalogue additions and runtime variants
+ok 5 - edition recording inventory follows validated catalogue additions and runtime variants
+  ---
+  duration_ms: 7.763708
+  ...
+# Subtest: standalone and public offline menus retain every dynamically attached panel stylesheet
+ok 6 - standalone and public offline menus retain every dynamically attached panel stylesheet
+  ---
+  duration_ms: 859.494625
+  ...
+# Subtest: actual company host closure retains explicit Demo dependencies and preserves optional artwork
+ok 7 - actual company host closure retains explicit Demo dependencies and preserves optional artwork
+  ---
+  duration_ms: 7793.656375
+  ...
+# Subtest: standalone menu projection preserves selected profile data and fallback without unrelated images
+ok 8 - standalone menu projection preserves selected profile data and fallback without unrelated images
+  ---
+  duration_ms: 92.68
+  ...
+# Subtest: multi-edition menu builds retain their neutral FPV fallback and every selected scene
+ok 9 - multi-edition menu builds retain their neutral FPV fallback and every selected scene
+  ---
+  duration_ms: 8.451208
+  ...
+# Subtest: DroneAid aggregate uses only its lossless derivative while retaining original source files
+ok 10 - DroneAid aggregate uses only its lossless derivative while retaining original source files
+  ---
+  duration_ms: 10.290666
+  ...
+# Subtest: shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+ok 11 - shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+  ---
+  duration_ms: 6.003875
+  ...
+# Subtest: common host import projection closes over committed adapters without visiting historical registries
+ok 12 - common host import projection closes over committed adapters without visiting historical registries
+  ---
+  duration_ms: 27.302959
+  ...
+# Subtest: dynamic boot entry is explicit and unknown host JSON requests fail closed
+ok 13 - dynamic boot entry is explicit and unknown host JSON requests fail closed
+  ---
+  duration_ms: 1.107875
+  ...
+# Subtest: declared canonical navigation and data requests must exist in the artifact
+ok 14 - declared canonical navigation and data requests must exist in the artifact
+  ---
+  duration_ms: 0.60175
+  ...
+# Subtest: shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+ok 15 - shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+  ---
+  duration_ms: 74.587708
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 22124.173458

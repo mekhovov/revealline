@@ -60,7 +60,9 @@ export function attachTeamLibraryPreview({
     if (owner && owner.row !== selected?.row) close();
     button.disabled = !selected || Boolean(pending);
     localizedText(button, () =>
-      selected ? `Preview ${selected.row.title}` : t('interface:selectAMissionToPreview'),
+      selected
+        ? t('interface:team.previewPictureButton', { mission: selected.row.title })
+        : t('interface:selectAMissionToPreview'),
     );
   };
   async function show() {
@@ -86,7 +88,9 @@ export function attachTeamLibraryPreview({
       !ticket.controller.signal.aborted &&
       selection()?.row === ticket.row;
     panel.hidden = false;
-    localizedText(title, () => `${ticket.row.title} · Picture preview`);
+    localizedText(title, () =>
+      t('interface:team.picturePreviewTitle', { mission: ticket.row.title }),
+    );
     localizedText(status, () =>
       t('interface:preparingTheSelectedPictureYourCurrentAttemptIsUnchanged'),
     );

@@ -1,0 +1,63 @@
+{
+  "format": "FPVFilteredRandomFlightNativeReview.v1",
+  "date": "2026-10-05",
+  "sourceHeadBeforeDocsRebase": "a72ab6f3da079a63df4cbe113d4d749c179a63c1",
+  "sourceHeadAfterDocsRebase": "66253b0da6305ac51454e865b5dc9ca807daf540",
+  "parent": "b0f8555a45a41a829e2d81230a0608c72acb6c89",
+  "sourceEquivalence": "Only the child delta was rebased onto the final HUD documentation head; the changed host module and UI checks remain byte-exact across the rebase.",
+  "fixture": {
+    "format": "FilteredRandomFlightSourcePreview.v1",
+    "sourceHead": "a72ab6f3da079a63df4cbe113d4d749c179a63c1",
+    "basePlayerSource": "614adef75a6e1cc28ea1d04acf26fa69b507c551",
+    "basePlayerZIP": "286e891978b48c8b8a007803cf3f00c491520b10c53da57a9a9060e1950e9e41",
+    "basePlayerManifest": "9cea7dc1fa5b8ef9cc275e24b272ab8ad5f3734b1e46bfb3d8ebe5bbb5e5b4f7",
+    "overlay": {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 281111,
+      "sha256": "5d8144d8adba8dd8d1c7f3723b98e81c78a0b0f24a31ec315f35515b4aab255d"
+    },
+    "scope": "One committed host-module overlay. HTML, CSS, models, assets and workers read through the exact admitted 614adef ZIP. No network, profile, clock or simulator overrides. Native functional source preview only; not package admission or offline qualification."
+  },
+  "observations": [
+    {
+      "locale": "en",
+      "check": "Empty search result offers no eligible random flight",
+      "passed": true
+    },
+    {
+      "locale": "en",
+      "check": "A single filtered candidate remains selectable",
+      "passed": true
+    },
+    {
+      "locale": "en",
+      "check": "Native Enter activation starts Wide oval through the normal preparation flow; visible Ready state, throttle 0 and elapsed time 0 s",
+      "passed": true
+    },
+    {
+      "locale": "en",
+      "check": "Opening Menu retains the exact selected flight title and suppresses the flight HUD",
+      "passed": true
+    },
+    {
+      "locale": "uk",
+      "check": "Long world name Сонячний дослідний парк and random button fit and wrap cleanly inside the native mission modal at 1280 by 720; no horizontal overflow",
+      "passed": true
+    },
+    {
+      "locale": "uk",
+      "check": "Browser warning and error logs empty",
+      "passed": true
+    }
+  ],
+  "screenshot": {
+    "path": "docs/evidence/fpv-filtered-random-flight-browser-review/native-uk-1280x720.png",
+    "bytes": 84458,
+    "sha256": "e6d098bb821a460dd744b54a7613c043d10c7a53d9c684f7938455dd581b64d0"
+  },
+  "limitations": [
+    "Native source preview with one committed host-module overlay on the exact admitted HUD player, not admission of a random-flight package.",
+    "19 mounted UI fixture checks cover no-repeat, manual previous choice, active versus archived installed revisions, playlist preservation and random-next suppression; these are separate from native browser observations.",
+    "No phone viewport, physical controller, random-next native result, offline or public delivery claim. Package qualification and protected stack delivery remain outstanding."
+  ]
+}

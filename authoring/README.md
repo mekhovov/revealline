@@ -7,6 +7,8 @@ Choose a territory or stronghold template per level, then author its routes and 
 The builder emits a dedicated co-op pack that can be opened directly in the co-op lobby. Existing
 solo and Race content retain their own formats and rules.
 
+For the proposed multiplayer expansion, see the [14 October Team and Duel plan](../docs/team-duel-expansion-plan-2026-10-14.md): current-mode inventory, Solo-to-multiplayer design lessons, twelve chapter families, studio/media compatibility and phased delivery of 96 new Team levels and 72 new Duel races. These are planned additions, not delivered content.
+
 For new community candidates, follow [Create and recover a community game](community/README.md): a reproducible project, separate theme bundle, recovery steps, tested Team export, and explicit production/release gates. The [community prompts](prompts/community-creation.md) follow these current contracts.
 
 ## Retained v0.21 authoring checkpoint
@@ -183,3 +185,5 @@ The [ability definitions](motion-lab/ability-presets.json) and [ability evaluato
 ## Enemy workshop
 
 Open [`/authoring/enemy-catalog/`](enemy-catalog/index.html) for the seven-role catalog, four theme families, saved authoring choices and real practice studies. See [enemy catalog](../docs/enemy-catalog.md), [line impacts](library/fpv-arcade-r3/README.md) and [feature delivery](../docs/feature-delivery-workflow.md).
+
+- [Team and Duel expeditions: editing, media and portable chapters](multiplayer-expeditions.md)
