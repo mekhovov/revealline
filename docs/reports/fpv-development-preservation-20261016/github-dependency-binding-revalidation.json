@@ -1,0 +1,14 @@
+{
+  "format": "FPVReviewedLinkBindingRevalidation.v1",
+  "reviewedRecipeCommit": "ad67f680b48d2c4899a1726b2a9f54fbe625a7f5",
+  "recipeSHA256": "42b2178f390294a0534e38a0ca1180150f433cce2d08fbb635a9c8a5261a4bdb",
+  "coverageSHA256": "42682f2a37bf7ea1858d474c724f256e11eba0201cae12408f157a88b4a5fdd8",
+  "originalTargetSHA256": "b01face14009c2f3263d6f014d5f45acf3c2e84e3616e2da2b371a3889ed9cc0",
+  "pinnedPayloadCommit": "0959055975afe3a929c8f2c8602a6ab77488277c",
+  "treeGitSHA1": "032814d85295c4bc54652eeb5e62e0001e1914b5",
+  "strictlyImportedDependencyEqualsActual39FileRestoreDependency": true,
+  "originalActualRestoreReceiptSHA256": "38d499827226926ca9292fba44fa62e2fef8c82a36a22d41eb93d67e28e8bfae",
+  "actualThroughLinkReceiptSHA256": "b16f0051387f6d4807f90aa9642d976ddd5c12142114064e013d937b31759f9a",
+  "newPayloadReadsRequired": false,
+  "overallCoverageClaimed": false
+}

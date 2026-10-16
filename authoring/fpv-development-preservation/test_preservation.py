@@ -213,6 +213,8 @@ class PreservationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'manifest'):
                 build([inventory], state, [], [], catalogue, '/old/root', inventory_set_final=True)
         inventory.write_text(valid + '\n')
+        # SMB may publish a write's fresh timestamp after close; freeze immutable fixture metadata.
+        os.utime(inventory, ns=(1_500_000_000_000_000_000, 1_500_000_000_000_000_000))
         result = build([inventory], state, [], [], catalogue, '/old/root', inventory_set_final=True)
         self.assertTrue(result['coverageComplete'])
 

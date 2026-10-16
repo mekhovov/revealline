@@ -68,9 +68,19 @@ def from_reviewed_recipe(recipe, coverage, symlinks):
     mapping = recipe['mapping']
     source = mapping['payloadSource']
     selected = [r for r in symlinks if r['path'] == mapping['linkPathRelativeToNewRestoreRoot']]
+    target_sha = hashlib.sha256(selected[0]['target'].encode()).hexdigest() if len(selected) == 1 else None
+    bindings = [{'commit': coverage.get('sourceCommit'), 'subtree': coverage.get('sourceSubtree'),
+                 'treeGitSHA1': coverage.get('sourceTreeGitSHA1'), 'exactTreeMatch': True}]
+    bindings += coverage.get('additionalPublishedExactTreeBindings', [])
+    commit_bound = any(r.get('commit') == source['commit'] and r.get('subtree') == source['subtree']
+                       and r.get('treeGitSHA1') == source['treeGitSHA1'] and r.get('exactTreeMatch') is True
+                       for r in bindings)
     if (len(selected) != 1 or not coverage.get('allFilesTrackedAndMatchPublishedGitHubTree')
+            or not target_sha or mapping.get('originalTargetSHA256') != target_sha
+            or coverage.get('originalTargetSHA256') != target_sha or not commit_bound
             or coverage.get('uniqueUntrackedOrModifiedPayloads') or coverage.get('symlinksInsideTarget')
             or coverage['sourceRepository'] != source['repository']
+            or coverage.get('sourceSubtree') != source['subtree']
             or coverage['sourceTreeGitSHA1'] != source['treeGitSHA1']
             or coverage['targetFiles'] != source['files'] or len(coverage['files']) != source['files']
             or sum(r['bytes'] for r in coverage['files']) != source['bytes']):
