@@ -1,0 +1,148 @@
+{
+  "capturedAt": "2026-10-16T02:28:23.472509+00:00",
+  "sourceRevision": "81c0d6587cdb582835a64e3d69c4c130460fb11a",
+  "url": "http://127.0.0.1:9213/index.html",
+  "fixtureIdentitySHA256": "25567b2acf5bdb8eae689a493a3341ea84c284a435b1fedc6cbb126acddc1a37",
+  "nativeOperator": "root agent using CUA; child did not open browser",
+  "negative": {
+    "deferredReopenFocusRestorationAccepted": false,
+    "reproducedViewports": [
+      [
+        390,
+        844
+      ],
+      [
+        1280,
+        800
+      ]
+    ],
+    "observed": "With no intervening input, current primary changed from old6ecb9197 to newfed1f7d1 while actual DOM focus remained BODY and Versions stayed closed. Unconditional open() subtree reinsertion precedes focus capture; child regression and guard are separate follow-up, not acceptance of this source."
+  },
+  "boundedPositiveScope": {
+    "noDocumentHorizontalOverflow": {
+      "EN": [
+        [
+          390,
+          844
+        ],
+        [
+          844,
+          390
+        ]
+      ],
+      "UK": [
+        [
+          844,
+          390
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          390,
+          844
+        ]
+      ]
+    },
+    "visibleComponentControlsAtLeast44px": true,
+    "emptyAndAllSyntheticModes": {
+      "offers": 24,
+      "families": 10
+    },
+    "retainedSyntheticMode": {
+      "rows": 26,
+      "families": 11,
+      "unknownRows": 2
+    },
+    "nativeKeyboard": "Enter/Space Versions; exact old Fly callback6ecb; ArrowDown summary to Alpine r6 Fly then Remove-review"
+  },
+  "limits": "Synthetic in-memory metadata/callbacks only; no default DB, scenery/WebGL, real flight/player data/persistence, physical hardware, full-host/theme, offline/restart/endurance or public acceptance. Native waitFor5s request exceeded the CUA3s tool cap; that tool error is distinct from the reproduced focus failure. Original package/fixture/raw evidence preserved unchanged.",
+  "files": [
+    {
+      "path": "native-root/console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "native-root/deferred-preserve-negative.json",
+      "bytes": 511,
+      "sha256": "7b63468e0bf76d58e28f7986482f06ad24eb6693c35e35b5a1a187cf69d0864c"
+    },
+    {
+      "path": "native-root/deferred-preserve-negative.png",
+      "bytes": 61292,
+      "sha256": "3400b72291c57a054dce5a91c3d0c670d5cbd7656a4828c5ea5a8b4271da7535"
+    },
+    {
+      "path": "native-root/deferred-preserve-repeat-handheld.json",
+      "bytes": 384,
+      "sha256": "a8490b3a1cbc37b4e100306883dece9c6a48577447ba0e66baed97e11e887390"
+    },
+    {
+      "path": "native-root/deferred-preserve-repeat-handheld.png",
+      "bytes": 118530,
+      "sha256": "b8b4d3dc378a2ed58eb7815bd48f44882f2b3ff0df26cffc86533df69b5325e8"
+    },
+    {
+      "path": "native-root/handheld-all-uk.json",
+      "bytes": 9496,
+      "sha256": "3b777ff301c9b311a9bb3614c0ee429191bd78fcc098beac38b32337db0852e0"
+    },
+    {
+      "path": "native-root/handheld-all-uk.png",
+      "bytes": 100662,
+      "sha256": "06ede27848bae21e6ce2b624f23ee288a4ac80cbf123ccd34ff02297f2b65ae6"
+    },
+    {
+      "path": "native-root/handheld-empty-uk.json",
+      "bytes": 4956,
+      "sha256": "e5c1070426a365573f57f7ca2e6bcc632fbe16d40742a5f20f698bf86b4e1124"
+    },
+    {
+      "path": "native-root/landscape-empty-uk.json",
+      "bytes": 4885,
+      "sha256": "1f191cdf000578bab0b63a0a7699c0b4d05cd110427fe00ab10c016f27b40fd6"
+    },
+    {
+      "path": "native-root/landscape-empty-uk.png",
+      "bytes": 51012,
+      "sha256": "d1f1074f14bec5998e41fec050a8ca7228a781418c621439bd24559e6d995772"
+    },
+    {
+      "path": "native-root/landscape-retained-en.json",
+      "bytes": 5287,
+      "sha256": "b2572e085199e6df46f88c2a7b5dfb7172c46f780b52097253d80277c44cd69b"
+    },
+    {
+      "path": "native-root/native-observations.json",
+      "bytes": 49795,
+      "sha256": "2a285485cf2ad7871f8f3166a63b38254415b520e60a60b2e5d4b980006994ae"
+    },
+    {
+      "path": "native-root/native-receipt.json",
+      "bytes": 6463,
+      "sha256": "e86aa7c0f7b5a15db65d3bc3cc88ab8f78014647d858a51fb08575eb7dd8b5e4"
+    },
+    {
+      "path": "native-root/portrait-all-uk.json",
+      "bytes": 9359,
+      "sha256": "7bbf1e0066f236d9038cd003d09b9f71a069d631dacdd5f803ef3db736ba98d3"
+    },
+    {
+      "path": "native-root/portrait-all-uk.png",
+      "bytes": 57067,
+      "sha256": "0f72e8a95901cb03bd627c6cc9f12b18d2221e2c7b23dc65a6d217332597422d"
+    },
+    {
+      "path": "native-root/portrait-retained-en.json",
+      "bytes": 4197,
+      "sha256": "b2d0acf2e8c6a24c113bd2f7627c8d086466c64f720419444cfe23c085513f15"
+    },
+    {
+      "path": "native-root/portrait-versions-en.png",
+      "bytes": 55136,
+      "sha256": "c233a54c74e6d0e41d673f278640937888e57995b0976f8e252e8375e86c06a9"
+    }
+  ]
+}
