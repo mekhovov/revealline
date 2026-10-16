@@ -2,6 +2,8 @@ The executable harness separates three kinds of evidence: native performance obs
 
 Create a new fixture directory with `node scripts/prepare-solo-qualification.mjs <new-directory>`. The preparer replays existing legal routes, verifies their public replay, and rejects missing required mechanics. It writes validated Playground imports and runnable `.qualification.json` cases. It does not edit a player profile, gameplay definition, archive or runtime.
 
+Native replay correctness is checked after the gameplay browser and context close. A fresh instance of the same engine must report exactly the same full `browser.version()`. It visits only the observed build's `build-info.json`, requires identical metadata bytes/source revision and production CSP, then imports that artifact's strict replay, core and mechanic-view modules. A dependency-free shared inspector verifies the unchanged checkpoints before reconstructing mechanic counts. Module hashes and every failure are retained; no reviewed-demo exception or rewritten enemy checkpoint is allowed. This separate verification is excluded from gameplay timing. Node reconstruction remains a separately labeled portability result: native trigonometry can produce a different enemy checkpoint across engines, so a Node mismatch cannot replace the strict same-engine result. Missing identity, changed browser version, native mismatch or missing required mechanics fails the scenario. Old failed reports are never relabeled after a supplementary diagnostic succeeds.
+
 The prepared cases cover:
 
 - `first-return`: a real capture and win.
