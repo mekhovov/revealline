@@ -9,11 +9,16 @@ import { PNGImage } from './helpers/png-image.mjs';
 async function fixture(t, mode = 'stick') {
   const page = await soloPage(t, {
     pictures: { Image: PNGImage },
-    fetchResponse: async (path) => String(path).includes('/content-design/assets/')
-      ? new Response(await readFile(path)) : undefined,
+    fetchResponse: async (path) =>
+      String(path).includes('/content-design/assets/')
+        ? new Response(await readFile(path))
+        : undefined,
     search: '?journey=opening&performance=1',
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    browserSetup({ globals }) { globals.innerWidth = 1280; globals.innerHeight = 720; },
+    browserSetup({ globals }) {
+      globals.innerWidth = 1280;
+      globals.innerHeight = 720;
+    },
   });
   page.change('touch-mode', mode);
   page.change('screen-controls', 'always');
@@ -22,17 +27,28 @@ async function fixture(t, mode = 'stick') {
   surface._rect = pad._rect = { x: 0, y: 0, width: 156, height: 156 };
   const start = async () => {
     page.$('start-button').click();
-    await settle(() => page.doc.body.dataset.flightState === 'running', 'Prepared public Start', { timeoutMs: 20000 });
+    await settle(() => page.doc.body.dataset.flightState === 'running', 'Prepared public Start', {
+      timeoutMs: 20000,
+    });
     page.frame(0);
   };
-  const pause = () => { page.$('pause-button').click(); return page.win.RevealLineSoloPerformance.export(); };
+  const pause = () => {
+    page.$('pause-button').click();
+    return page.win.RevealLineSoloPerformance.export();
+  };
   await start();
   return { page, surface, pad, start, pause };
 }
-const pointer = (element, type, overrides = {}) => element.emit(type, {
-  pointerId: 7, pointerType: 'touch', button: 0, buttons: 1,
-  clientX: 78, clientY: 78, ...overrides,
-});
+const pointer = (element, type, overrides = {}) =>
+  element.emit(type, {
+    pointerId: 7,
+    pointerType: 'touch',
+    button: 0,
+    buttons: 1,
+    clientX: 78,
+    clientY: 78,
+    ...overrides,
+  });
 
 for (const mode of ['stick', 'swipe']) {
   test(`${mode}: accepted surface descendant events reach tick and visible submission`, async (t) => {
@@ -66,7 +82,10 @@ test('captured D-pad container motion is counted, ignored modality/hover/UI is n
   pointer(surface, 'pointerdown');
   pointer(surface, 'pointermove', { clientX: 120 });
   page.frame(100);
-  assert.equal(page.win.RevealLineSoloPerformance.export().inputLatency.byKind.touch.toRender.count, 2);
+  assert.equal(
+    page.win.RevealLineSoloPerformance.export().inputLatency.byKind.touch.toRender.count,
+    2,
+  );
   assert.deepEqual(page.errors, []);
 });
 
@@ -83,7 +102,11 @@ test('new surface targets require acceptance, keep mouse kind, and retire unsubm
   page.frame(100, { dispatchRender: false });
   const retired = pause();
   assert.equal(retired.inputLatency.byKind.touch.toTick.count, 2);
-  assert.equal(retired.inputLatency.byKind.touch.toRender.count, 0, 'No display submission occurred');
+  assert.equal(
+    retired.inputLatency.byKind.touch.toRender.count,
+    0,
+    'No display submission occurred',
+  );
   assert.equal(retired.inputLatency.cancelled, 2);
   await start();
   pointer(surface, 'pointerdown', { pointerType: 'mouse', pointerId: 8 });
@@ -91,7 +114,11 @@ test('new surface targets require acceptance, keep mouse kind, and retire unsubm
   page.frame(100);
   pointer(surface, 'pointerup', { pointerType: 'mouse', pointerId: 8, buttons: 0 });
   const result = pause();
-  assert.equal(result.inputLatency.byKind.touch.toRender.count, 0, 'Canceled tokens never publish later');
+  assert.equal(
+    result.inputLatency.byKind.touch.toRender.count,
+    0,
+    'Canceled tokens never publish later',
+  );
   assert.equal(result.inputLatency.byKind.pointer.toRender.count, 2);
   assert.deepEqual(page.errors, []);
 });
