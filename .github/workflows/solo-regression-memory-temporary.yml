@@ -1,4 +1,4 @@
-name: Temporary Solo missing baselines and device fixture
+name: Temporary Solo missing files and scoped diagnostics
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -29,26 +29,224 @@ jobs:
       matrix:
         include:
           - label: candidate
-            case: device-controls-host
-            source: aa88d829b5f0aa1d06ee93c5e05752fba8c0f544
-          - label: baseline
-            case: journey-owned-controls
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: key-capture-navigation-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
+            case: controller-practice-pause-host
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: coop-shared-settings
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: coop-host
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: couch-gameplay-pressure-host
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: field-kit-retained-runtime
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: couch-installed-chapters
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: touchscreen-controller-host
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
             case: mission-library-solo-host
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: baseline
+            case: couch-encounter-help-case3-comparison
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: couch-encounter-help-case3-comparison
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: shared-settings-reading-identity-diagnostic
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: shared-settings-reading-identity-diagnostic
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: storage-retention-host-identity-diagnostic
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: storage-retention-host-identity-diagnostic
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: optional-chapters-navigation-host-withheld-stage
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: optional-chapters-navigation-host-withheld-stage
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: settings-panels-locale-host-withheld-stage
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: settings-panels-locale-host-withheld-stage
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: settings-restoration-host-withheld-stage
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: settings-restoration-host-withheld-stage
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: couch-static-picture-host-withheld-stage
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: couch-static-picture-host-withheld-stage
+            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
+          - label: baseline
+            case: story-flight-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: mission-library-team-return-host
+            case: team-inner-landing-continuations
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: mission-library-versus-host
+            case: team-journey-difficulty-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
           - label: baseline
-            case: team-pressure-opening-routes
+            case: team-journey-search-host
             source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-pressure-foundation-routes
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-pressure-originals
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-production-review
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: team-window-spatial
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: touchscreen-controller-host
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: ukrainian-ornament-clear-routes
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: baseline
+            case: versus-default-entry
+            source: b11745223861c3973ad4bf440cc536198b8e0371
+          - label: candidate
+            case: creator-guide-host
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: timed-bonus-host
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: video-poster-workshop
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: viewport-startup-host
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: visual-theme-lease
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: whole-timed-host
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: wide-content
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: workshop-art-integration
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: package-security
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: policy
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: bridge
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: brand-icons
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: source-manifest-snapshot
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-actor-coverage
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-analyze-discovery-heap
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-analyze-fpv-heap
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-build-workshop-pack
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-company-artwork-screening
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-demo-authoring
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-edition-code-indentation
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-external-distribution
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-fpv-observation-artifact
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-frozen-source
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-hosted-soundtrack-publication
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-industrial-verifier
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-observe-discovery-runtime
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-offline-destinations
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-optional-artwork
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-optional-installation-observer
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-pack-indexes
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-pages-current-entry
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-practice-directory-accessibility
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-production-countercurrent
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-production-input
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-release-catalog
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-reviewed-soundtrack-batches
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-snake-rating-publication
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-soundtrack-distribution
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-source-identity
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
+          - label: candidate
+            case: test-ua-fpv-publication
+            source: b2a6aadfd68357c6b4090f1d9debf249f0b97f6d
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
@@ -108,6 +306,7 @@ jobs:
           selected_path = entry['file']
           selected_bytes = original
           observer = None
+          diagnostic_dependencies = []
           if entry['mode'] in ['selected-object-identity', 'selected-deep-bytes']:
               byte_mode = entry['mode'] == 'selected-deep-bytes'
               declaration = entry['selectedBytesOverlay' if byte_mode else 'selectedIdentityOverlay']
@@ -127,6 +326,70 @@ jobs:
               selected_text = selected_text.replace(insertion['after'], insertion['after'] + insertion['source'])
               selected_bytes = selected_text.encode()
               assert digest(selected_bytes) == declaration['diagnosticSHA256']
+              selected_path = 'game/test/.solo-memory-diagnostic-' + entry['case'] + '.test.mjs'
+              copy = root / selected_path
+              assert not copy.exists()
+              copy.write_bytes(selected_bytes)
+              (out / 'diagnostic-test.mjs').write_bytes(selected_bytes)
+          elif entry['mode'] == 'selected-comparison-stages':
+              declaration = entry['selectedComparisonOverlay']
+              lines = original.decode().splitlines(keepends=True)
+              replacements = declaration['selectedCallReplacements']
+              assert len({row['line'] for row in replacements}) == len(replacements)
+              for row in replacements:
+                  offset = row['line'] - 1
+                  assert offset >= 0 and lines[offset] == row['before']
+                  if 'assert.deepEqual(' in row['before']:
+                      before, after = 'assert.deepEqual(', 'boundedDOMArrayEqual('
+                  else:
+                      before, after = 'assert.equal(', 'boundedIdentity('
+                  assert row['before'].count(before) == 1
+                  assert row['after'] == row['before'].replace(before, after, 1)
+                  lines[offset] = row['after']
+              selected_text = ''.join(lines)
+              insertion = declaration['helperInsertion']
+              assert selected_text.count(insertion['after']) == 1
+              selected_text = selected_text.replace(insertion['after'], insertion['after'] + insertion['source'], 1)
+              stages = declaration['caseStageInsertions']
+              assert stages and selected_text.count(stages[0]['before']) == 1
+              case_start = selected_text.index(stages[0]['before'])
+              case_end = selected_text.index('\ntest(', case_start + 1)
+              case_text = selected_text[case_start:case_end]
+              for stage in stages:
+                  assert case_text.count(stage['before']) == 1
+                  case_text = case_text.replace(stage['before'], stage['after'], 1)
+              selected_text = selected_text[:case_start] + case_text + selected_text[case_end:]
+              selected_bytes = selected_text.encode()
+              assert digest(selected_bytes) == declaration['diagnosticSHA256']
+              selected_path = 'game/test/.solo-memory-diagnostic-' + entry['case'] + '.test.mjs'
+              copy = root / selected_path
+              assert not copy.exists()
+              copy.write_bytes(selected_bytes)
+              (out / 'diagnostic-test.mjs').write_bytes(selected_bytes)
+          elif entry['mode'] == 'declared-source-diagnostic':
+              declaration = entry['declaredSourceDiagnostic']
+              dependency = root / declaration['sourcePath']
+              assert dependency.parent == root / 'game/test'
+              assert digest(dependency.read_bytes()) == declaration['sourceSHA256']
+              supplied = declaration['diagnosticSource'].encode()
+              assert digest(supplied) == declaration['diagnosticSHA256']
+              diagnostic_dependencies = [{'path': declaration['sourcePath'], 'sha256': declaration['sourceSHA256']}]
+              if declaration['sourcePath'] != entry['file']:
+                  helper_name = '.solo-memory-helper-' + entry['case'] + '.mjs'
+                  helper_path = root / 'game/test' / helper_name
+                  assert not helper_path.exists()
+                  helper_path.write_bytes(supplied)
+                  diagnostic_dependencies.append({'path': 'game/test/' + helper_name, 'sha256': digest(supplied)})
+                  replacement = declaration['wrapperImport']
+                  assert replacement['before'] == "'./optional-chapters-scenarios.mjs'"
+                  assert replacement['after'] == "'./" + helper_name + "'"
+                  selected_text = original.decode()
+                  assert selected_text.count(replacement['before']) == 1
+                  selected_bytes = selected_text.replace(replacement['before'], replacement['after'], 1).encode()
+                  assert digest(selected_bytes) == replacement['sha256']
+                  (out / 'diagnostic-helper.mjs').write_bytes(supplied)
+              else:
+                  selected_bytes = supplied
               selected_path = 'game/test/.solo-memory-diagnostic-' + entry['case'] + '.test.mjs'
               copy = root / selected_path
               assert not copy.exists()
@@ -177,6 +440,11 @@ jobs:
               observer = {'path': declaration['path'], 'sha256': digest(helper), 'scope': declaration['scope']}
           else:
               assert entry['mode'] == 'original'
+          if entry.get('testNamePattern'):
+              assert entry['mode'] == 'declared-source-diagnostic' and entry['role'] == 'diagnostic-only'
+              assert not entry['originalInventoryCoverageEligible']
+              assert entry['file'] == 'game/test/couch-static-picture-host.test.mjs'
+              assert entry['testNamePattern'] == '^required decode failure blocks Start; Retry retains the same attempt and chosen original$'
           receipt = {'format': 'SoloBoundedMemorySelectionV1', 'sourceRevision': head,
                      'sourceTree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
                      'workflowSourceRevision': workflow_head, 'workflowSHA256': digest(wp.read_bytes()),
@@ -184,7 +452,9 @@ jobs:
                      'batch': 1, 'selected': [{'path': selected_path, 'sha256': digest(selected_bytes)}],
                      'originalTest': {'path': entry['file'], 'sha256': entry['testSHA256']},
                      'diagnosticMode': entry['mode'], 'case': entry['case'], 'activeHandleObserver': observer,
-                     'diagnosticOverlay': entry.get('selectedBytesOverlay', entry.get('selectedIdentityOverlay')),
+                     'diagnosticOverlay': entry.get('declaredSourceDiagnostic', entry.get('selectedComparisonOverlay', entry.get('selectedBytesOverlay', entry.get('selectedIdentityOverlay')))),
+                     'diagnosticDependencies': diagnostic_dependencies, 'testNamePattern': entry.get('testNamePattern'),
+                     'role': entry['role'], 'originalInventoryCoverageEligible': entry['originalInventoryCoverageEligible'],
                      'nodeVersion': 'v22.22.2', 'CI': '1', 'platform': 'ubuntu-latest',
                      'runId': os.environ['GITHUB_RUN_ID'], 'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'],
                      'dependencyHashes': {name: digest((root / name).read_bytes()) for name in [
@@ -309,7 +579,13 @@ jobs:
                       assert digest(root / observer['path']) == observer['sha256']
                       command.extend(['--import', str(root / observer['path'])])
                       child_env.update({'SOLO_HANDLE_TEST': str(root / name), 'SOLO_HANDLE_REPORT': str(out / 'active-handles.json')})
-                  command.extend(['--test', '--test-concurrency=1', '--test-reporter=tap', name])
+                  dependencies_before = {item['path']: digest(root / item['path']) for item in selection.get('diagnosticDependencies', [])}
+                  assert all(dependencies_before[item['path']] == item['sha256'] for item in selection.get('diagnosticDependencies', []))
+                  command.extend(['--test', '--test-concurrency=1', '--test-reporter=tap'])
+                  if selection.get('testNamePattern'):
+                      assert selection['role'] == 'diagnostic-only' and not selection['originalInventoryCoverageEligible']
+                      command.append('--test-name-pattern=' + selection['testNamePattern'])
+                  command.append(name)
                   row = {'file': name, 'startedAt': now(), 'command': command,
                          'sourceRevision': selection['sourceRevision'], 'testSHA256Before': entry['sha256'],
                          'log': log.name, 'timedOut': False, 'resourceExhausted': None, 'resourcesBefore': resources(),
@@ -379,6 +655,11 @@ jobs:
                               'resources': {'file': resource_log.name, 'sha256': digest(resource_log),
                                             'sampledGroupPeakRSSBytes': peak},
                               'gnuTime': {'file': usage.name, 'sha256': digest(usage)} if usage.is_file() else None})
+                  dependencies_after = {item['path']: digest(root / item['path']) for item in selection.get('diagnosticDependencies', [])}
+                  row['diagnosticDependencies'] = {'before': dependencies_before, 'after': dependencies_after, 'unchanged': dependencies_before == dependencies_after}
+                  row['role'] = selection['role']
+                  row['originalInventoryCoverageEligible'] = selection['originalInventoryCoverageEligible']
+                  row['testNamePattern'] = selection.get('testNamePattern')
                   row['activeHandleObserver'] = None
                   if observer:
                       observer_after = digest(root / observer['path'])
@@ -392,6 +673,7 @@ jobs:
                                    and counts.get('fail') == 0 and counts.get('cancelled', 0) == 0
                                    and row['testSHA256After'] == entry['sha256']
                                    and row['sourceRevisionAfter'] == selection['sourceRevision']
+                                   and row['diagnosticDependencies']['unchanged']
                                    and (not observer or row['activeHandleObserver']['unchanged']))
                   if row['ownedProcessCleanup'] and row['ownedProcessCleanup']['remainingLive']:
                       fatal.append('Owned descendants survived cleanup; no later file may start')
@@ -419,7 +701,7 @@ jobs:
               observed = {row['file'] for row in rows}
               unobserved = [entry for entry in selected if entry['path'] not in observed]
               complete = not unobserved and not fatal and not interrupted and all(row['completeTap'] and not row['resourceExhausted'] and not row['timedOut'] and not row['interrupted'] for row in rows)
-              verified = source_code == 0
+              verified = source_code == 0 and all(row['testSHA256Before'] == row['testSHA256After'] and row['sourceRevisionAfter'] == selection['sourceRevision'] and row['diagnosticDependencies']['unchanged'] for row in rows)
               passed = complete and verified and all(row['passed'] for row in rows)
               summary = {'format': 'SoloRemoteRemainingCheckpointV2', 'startedAt': started, 'finishedAt': now(),
                          'sourceRevision': selection['sourceRevision'], 'manifestSHA256': selection['manifestSHA256'],

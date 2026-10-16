@@ -1,8 +1,9 @@
 # Solo regression evidence snapshot
 
-As of **2026-10-16 15:15 UTC**, **1,870 of the original 1,948 files** have complete
-observations at their recorded source revisions; **78 remain unobserved**. This
-combines the historical local 1,233-file snapshot with 637 disjoint later files.
+As of **2026-10-16 16:20 UTC**, **1,895 of the original 1,948 files** have complete
+observations at their recorded source revisions; **53 remain unobserved**. This
+combines the historical local 1,233-file snapshot, 659 disjoint later remote files,
+and three complete local tooling files at frozen source `dbf61c518`.
 It is not a complete-suite pass or a single-revision result. The
 [machine-readable ledger](solo-regression-audit.json) binds sources, comparisons
 and retained results to SHA-256 evidence.
@@ -15,12 +16,14 @@ canonical bounded-identity fixtures, with their existing baseline failures
 retained. Source, test, TAP, resource and archive integrity checks passed for the
 cited receipts.
 
-The missing-only 179-file queue at `d56bc4c4` / runtime `a159dd2e` has retained
-**98 complete files: 64 passed and 34 failed**. Thirteen incomplete records include
-12 distinct files and one uncorroborated partial artifact; none receives coverage.
-Fifteen newly complete failing groups still require classification where no earlier
-proof applies. Live jobs and the known obsolete queued Text-size fixture are kept
-separate from this retained checkpoint. No active job was canceled or duplicated.
+The missing-only 179-file queue at `d56bc4c4` / runtime `a159dd2e` is now closed.
+All 160 artifacts are retained: **119 complete files, 74 passed and 45 failed**.
+Fourteen incomplete records include 13 distinct files and one uncorroborated
+partial artifact; none receives coverage. The approved normal cancellation
+superseded a known obsolete Text-size non-exit. All 36 jobs closed without a
+force-cancel; available partial logs remain retained and uncredited. Corrected
+Text size and Device controls subsequently completed in separate canonical runs.
+Eleven newly complete failing groups still need their exact baseline comparison.
 
 The exact `8c727777` CI package also retains **54 focused files, 535/535 tests**,
 with no skips or cancellations, on Node **22.13.1**. Fifty overlap existing
@@ -60,11 +63,36 @@ original output amplification without changing equality truth. Those copies
 still receive no canonical inventory credit, and original incomplete attempts
 remain retained.
 
-A seven-job successor is prepared but not yet dispatched at this checkpoint:
-six missing exact-baseline comparisons plus the corrected Device-controls
-canonical file, now that its historical observer has closed. It retains two
-runners and all existing resource/deadline guards. Source/workflow identities and
-no-overlap checks are in the ledger.
+The seven-job successor completed, with all 14 artifacts retained and no integrity
+errors. Corrected Device controls is **15/15** at `aa88d829` / runtime `8c727777`,
+adding one original file. Four exact baseline comparisons reproduce every named
+error and expected/actual field: key capture **2/2 failures**, Team return **7/7**,
+Versus library **11/11**, and Team pressure opening **36/36**. Journey reproduces
+the same saved-envelope timestamp mismatch after mapping only generated run IDs
+and the distinct earlier expected/later actual timestamps; all other fields match.
+
+Solo library matches **10 of 13** candidate error diagnostics exactly. Three
+candidate timeouts reach the requested mission's ready, paused briefing; their
+baseline counterparts fail earlier. The helper incorrectly expected automatic
+Start despite the existing explicit-Start contract on both revisions. These
+boundaries are not labeled equivalent or passed. The baseline-only newer-input
+failure remains retained. Its reviewed fixture now presses Start once after the
+exact ready briefing, within the unchanged existing wait.
+
+Frozen `dbf61c518` checks complete **22 full files, 212/212**, plus two full tooling
+files, **5/5**, with stable source hashes and clean exit. The qualification,
+audio-fixture and calibration files add three original observations; overlapping
+files and later additions are not counted again.
+
+Eight fixture-only changes at `b2a6aadfd` await complete canonical execution: six
+bounded identity/byte-array mismatch messages, the Solo-library explicit Start,
+and touchscreen Resume readiness. Equality truth, checkpoint/input assertions
+and deadlines remain unchanged. The next reviewed queue has **73 observations**
+with at most two runners: 46 candidate original files, two additional canonical
+fixture retests, 11 exact baselines and 14 diagnostic copies. Seven known
+pathological originals remain explicitly withheld. Two Couch owner diagnostics
+select one case and receive no full-file credit. No prior failure is erased and
+no diagnostic copy grants canonical coverage.
 
 A further 31 exact-baseline comparisons are retained. Twenty-six have identical
 named diagnostic fields; two more reproduce the same failures with only a
@@ -153,14 +181,13 @@ A static audit found exactly three custom fixtures—Device controls, Settings
 assists and Text size—that retained only the final cleanup callback, although
 the shared host now registers three. Commit `aa88d829` repairs those collectors
 with ordered, awaited cleanup and repairs the isolated Still Workshop dependency
-copier. Assertions and deadlines remain unchanged. Settings and Text size now
-complete as recorded above; corrected Device-controls is only queued.
+copier. Assertions and deadlines remain unchanged. All three corrected collectors now
+complete as recorded above; the original non-exit attempts remain incomplete.
 
-The known post-launch inventory contains **13 additional files**, making **1,961
-paths** when combined with the original list. Eleven were already recorded; the
-two new working-tree terminal-work regressions cover mission-list admission and
-transition performance. Their source hashes/tracked state are separate from the
-original 1,948-file partition. New paths and historical source observations do
+The known post-launch inventory contains **14 additional files**, making **1,962
+paths** when combined with the original list. The latest additions include
+mission-list admission, transition performance and persistent browser-context
+qualification. Their source hashes are separate from the original 1,948-file partition. New paths and historical source observations do
 not establish final-runtime coverage. Root owns the final exact-source focused
 checks and subsequent artifact qualification.
 
