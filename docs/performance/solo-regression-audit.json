@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-16T10:43:15.950144+00:00",
+  "updatedAt": "2026-10-16T12:16:24.163601+00:00",
   "status": "Incomplete repository regression inventory. Historical local failure groups are classified; remote continuation includes unresolved failures. No full-suite success claim.",
   "scope": "Separate historical local inventory, mixed-source remote continuation/recovery, added tooling, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures, cancellations and unobserved work remain visible.",
   "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
@@ -2673,27 +2673,27 @@
     "No physical iPhone17Pro Safari or SteamDeckOLED qualification is implied."
   ],
   "remoteContinuation": {
-    "checkpointAt": "2026-10-16T10:43:15.950144+00:00",
-    "currentRuntimeContext": "f7b665906270f26c73f7e419a7258191532e3118",
+    "checkpointAt": "2026-10-16T12:16:24.163601+00:00",
+    "currentRuntimeContext": "2990a7d013b3ba2657de2482f326a51209769b9c",
     "originalInventoryFiles": 1948,
     "historicalLocalCompleteFiles": 1233,
-    "remoteUniqueCompleteFiles": 488,
-    "totalUniqueOriginalFilesObserved": 1721,
-    "originalFilesStillUnobserved": 227,
+    "remoteUniqueCompleteFiles": 525,
+    "totalUniqueOriginalFilesObserved": 1758,
+    "originalFilesStillUnobserved": 190,
     "overlap": [],
     "original715": {
       "runId": 38865274741,
       "url": "https://github.com/mekhovov/revealline/actions/runs/38865274741",
       "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
       "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "completedFiles": 423,
-      "passedFiles": 301,
-      "failedFiles": 122,
-      "retainedArtifacts": 144,
+      "completedFiles": 456,
+      "passedFiles": 324,
+      "failedFiles": 132,
+      "retainedArtifacts": 154,
       "proof": {
-        "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/retained-artifacts-1031.json",
-        "bytes": 498829,
-        "sha256": "29b319bd205d35a7b4a132a6a4af17c5b06df319c4b13ad31912499e6d9f4c3e"
+        "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/retained-artifacts-1147.json",
+        "bytes": 535715,
+        "sha256": "f0c0567c5f98473d28ba8db39034f65c7fbc8ac98b0f94a53dd0a03542fa3174"
       },
       "failureDetails": {
         "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/failed-groups-202610160857242445530000.json",
@@ -2708,18 +2708,18 @@
       "workflowSourceRevision": "db28973bdce5d1d49bb46bdf8c73d5925d9438a9",
       "sourceRevision": "845e2a1e1c72ee0d2900b2974589efbf7bb35273",
       "runtimeRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
-      "completedFiles": 65,
-      "passedFiles": 39,
-      "failedFiles": 26,
-      "incompleteFiles": 2,
-      "retainedArtifacts": 81,
+      "completedFiles": 67,
+      "passedFiles": 40,
+      "failedFiles": 27,
+      "incompleteFiles": 3,
+      "retainedArtifacts": 84,
       "proof": {
-        "path": ".cache/solo-followup/regression-audit/remote-recovery-38873117238/retained-recovery-1020.json",
-        "bytes": 196068,
-        "sha256": "9682ddd5f827f80549d716568064fa23cc9010eb15db8f7b90ce97576141fbd4"
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38873117238/retained-recovery-final.json",
+        "bytes": 203059,
+        "sha256": "5e4a5d97303970d636d475598930545a5f40ecf99c1cedbb5bf16b6c325db1d0"
       }
     },
-    "classificationStatus": "Incomplete.23 supplementary baseline files are retained;21 reproduce all65 named candidate failure diagnostics (seven storage diagnostics differ only in random writer UUIDs, with raw evidence retained). Soundtrack, bookmark and role-corrected Team fixture results are retained. Other remote failure groups remain unclassified;46 exact baseline comparisons are queued separately.",
+    "classificationStatus": "Incomplete overall. Earlier23 baseline-file comparisons remain retained; latest31 add28 matched named failure groups and3 candidate fixture differences, now corrected and fully reobserved (setup26/26, history5/6baseline-only, Ukraine8/9baseline-only). Other pending comparisons and source-specific failures remain explicit.",
     "boundedIdentityPair": {
       "path": ".cache/solo-followup/regression-audit/remote-memory-38873458942/bounded-identity-classification-final.json",
       "bytes": 24352,
@@ -2775,7 +2775,7 @@
       }
     ],
     "scope": "Unique-file progress across explicitly recorded sources, not an aggregate one-revision suite pass or final device/release acceptance. Historical frozenRuntimeRevision/currentHeadContext fields above belong to the06:33 local snapshot. Later copies/diagnostics are not counted twice. Remote artifacts retained with size,digest,ZIP CRC,source,test andTAP checks; resource-aborted files remain unobserved.",
-    "classificationUpdatedAt": "2026-10-16T10:43:15.950144+00:00",
+    "classificationUpdatedAt": "2026-10-16T12:16:24.163601+00:00",
     "retainedClassifications": {
       "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
       "baselineFiles": 23,
@@ -4020,6 +4020,190 @@
         }
       ],
       "scope": "Supplementary complete files; failed touch-red and original cadence remain failed. These sources precede the later Demo power work and are not relabeled as final-runtime or native-performance acceptance."
+    },
+    "additionalUniqueCanonicalFiles": {
+      "count": 2,
+      "files": [
+        "game/test/team-default-entry-host.test.mjs",
+        "game/test/coop-picture-recovery-focus.test.mjs"
+      ],
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-canonical-baseline-38877133338/canonical-fixtures-qualified.json",
+        "bytes": 20589,
+        "sha256": "b2198ac2b21ac1b7061463b1b527036a6ea270168f647e0c08e1196a11b648c3"
+      },
+      "scope": "Previously incomplete recovery files now have complete canonical observations with unchanged named baseline failures; not passing files and not credited to the interrupted attempts."
+    },
+    "newBaselineClassifications": {
+      "observedFiles": 31,
+      "sameNamedDiagnosticGroups": 28,
+      "candidateFixtureDifferences": 3,
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-cadence-baseline-38888826217/classification-reviewed-1218.json",
+        "bytes": 39934,
+        "sha256": "fd51210bd2897a957d8fc338e486d2459ff50d7ce9abbf23afe732f16f26682b"
+      },
+      "rawProof": {
+        "path": ".cache/solo-followup/regression-audit/remote-cadence-baseline-38888826217/classification-1145.json",
+        "bytes": 314028,
+        "sha256": "84a14fcfc8c5053094cc9b903ddac4a726dfb84829955aee63a7e47aec2e4929"
+      },
+      "scope": "Separate from prior23 baseline comparisons; exact source and raw failure fields retained. Three fixture differences have canonical follow-ups below."
+    },
+    "canonicalResumeAndCadence": {
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-resume-handles-38895477339/verified-results-1212.json",
+        "bytes": 28805,
+        "sha256": "16cc311025799cf83ba2329f97ade2d3fff0704d21047375446eeacf35e05dc1"
+      },
+      "targets": [
+        {
+          "label": "candidate",
+          "case": "solo-cadence-input-host",
+          "sourceRevision": "8a670281368a58726fe75a7cf9a0c37c921d9849",
+          "runtimeRevision": "14ac29e27df9d78283a1d93b5a16a23121212371",
+          "counts": {
+            "tests": 4,
+            "suites": 0,
+            "pass": 4,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 274817.808845
+          },
+          "complete": true,
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-resume-handles-38895477339/candidate-solo-cadence-input-host.tap",
+            "sha256": "d358743f28daa3f3ce3bbbec0dd9c95a4c6c76d241620f185d1ff16ddc0df4bd"
+          }
+        },
+        {
+          "label": "candidate",
+          "case": "history-picture-host",
+          "sourceRevision": "f48f25092a027a1d745a5c96e6c9d62e36aa50de",
+          "runtimeRevision": "14ac29e27df9d78283a1d93b5a16a23121212371",
+          "counts": {
+            "tests": 6,
+            "suites": 0,
+            "pass": 5,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 89815.78927
+          },
+          "complete": true,
+          "passed": false,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-resume-handles-38895477339/candidate-history-picture-host.tap",
+            "sha256": "066a5f1eeacecc4187488ff0d5dc7fa1399228e0b6475f93ee50bdba46a1d392"
+          }
+        },
+        {
+          "label": "candidate",
+          "case": "starting-setup-host",
+          "sourceRevision": "f48f25092a027a1d745a5c96e6c9d62e36aa50de",
+          "runtimeRevision": "14ac29e27df9d78283a1d93b5a16a23121212371",
+          "counts": {
+            "tests": 26,
+            "suites": 0,
+            "pass": 26,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 244078.146122
+          },
+          "complete": true,
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-resume-handles-38895477339/candidate-starting-setup-host.tap",
+            "sha256": "a71b2073da5b7afb488e2ce963d331eddab8e3e750d3888d60404e312743020e"
+          }
+        },
+        {
+          "label": "baseline",
+          "case": "device-controls-host",
+          "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+          "counts": {
+            "tests": 15,
+            "suites": 0,
+            "pass": 15,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 157188.107856
+          },
+          "complete": true,
+          "passed": true,
+          "tap": {
+            "path": ".cache/solo-followup/regression-audit/remote-resume-handles-38895477339/baseline-device-controls-host.tap",
+            "sha256": "631e5fdc389b7cde099ddd00a746beaa525c0794928bbf2a5f2bf450eb8f3b25"
+          }
+        }
+      ],
+      "pending": [
+        {
+          "label": "historical-candidate",
+          "case": "device-controls-host",
+          "reason": "Selection or result artifact not retained yet"
+        }
+      ],
+      "scope": "Baseline observer15/15 is diagnostic-only; candidate observer remains pending and receives no complete-file credit. Corrected cadence4/4 and starting26/26 are complete canonical passes. History5/6 retains only exact baseline dimension failure."
+    },
+    "canonicalUkraine": {
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-ukraine-38898131452/verified-results-final.json",
+        "bytes": 7452,
+        "sha256": "9c09aa695bb8897dcd0576ee16b017a35e3bf9af81c1188153e8f23a1ea229b9"
+      },
+      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 8,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 19006.993248
+      },
+      "scope": "8/9 complete: both save/reload subtests pass; exact baseline Couch storage-write2!=0 failure retained. No full-file pass."
+    },
+    "missingOnly179Dispatch": {
+      "runId": 38898131413,
+      "workflowSourceRevision": "b010df818d9c76e67afd071846e8454b07c262b6",
+      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+      "queuedFiles": 179,
+      "previouslyComplete": 525,
+      "withheldActive": {
+        "originalRunFiles": 10,
+        "deviceObserverFiles": 1
+      },
+      "batchCount": 36,
+      "maxParallel": 2,
+      "manifestAtWorkflowRevision": "docs/performance/solo-regression-recovery.json",
+      "proposal": {
+        "path": ".cache/solo-followup/regression-audit/missing-only-continuation-02/proposal.json",
+        "bytes": 55736,
+        "sha256": "2361138ffc2982d29ae2270afc0fb1d1b102bd7b6c690ba157b04be2684e5abf"
+      },
+      "scope": "Exact disjoint179+525+11 partition of original715. Dispatch is not passing or completion evidence. No duplicate coverage for earlier failures or supplementary files."
+    },
+    "currentAdditionsInventory": {
+      "path": ".cache/solo-followup/regression-audit/inventory-additions-1218.json",
+      "bytes": 2392,
+      "sha256": "09e7b0dd737ae4dd9f45e5d3c595d3ae0f4fa61ad192bcba8759c0c590e1e008"
+    },
+    "latestSourceBoundary": {
+      "revision": "2990a7d013b3ba2657de2482f326a51209769b9c",
+      "scope": "Preparation-invalidation app fix and new host test are later than the queued d56/a159 remote targets. Their targeted10/10 correctness result is separately owned and is not attributed to those historical sources."
     }
   }
 }
