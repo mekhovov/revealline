@@ -72,7 +72,8 @@ export function importedWorldAuthority(files, packBytes) {
   };
 }
 function scope(page, options, report) {
-  const { deadlineAt, signal, requireActive, expectedURL } = options;
+  const { deadlineAt, signal, requireActive, expectedURL, cleanupMs = 1500 } = options;
+  assert(Number.isInteger(cleanupMs) && cleanupMs > 0 && cleanupMs <= 1500);
   assert(Number.isFinite(deadlineAt) && deadlineAt > Date.now());
   assert.equal(typeof requireActive, 'function');
   const parsed = new URL(expectedURL);
@@ -114,8 +115,11 @@ function scope(page, options, report) {
   };
   async function run(action, { cleanup = false } = {}) {
     if (!cleanup) check();
-    const limit = cleanup ? 1500 : Math.min(8000, end - performance.now(), deadlineAt - Date.now());
+    const limit = cleanup
+      ? cleanupMs
+      : Math.min(8000, end - performance.now(), deadlineAt - Date.now());
     assert(limit > 0);
+    const operationEnd = performance.now() + limit;
     let timer, listener;
     pending++;
     const task = Promise.resolve()
@@ -143,6 +147,10 @@ function scope(page, options, report) {
           }
         }),
       ]);
+      if (performance.now() >= operationEnd) {
+        uncertain = true;
+        throw Error('Imported-world operation exceeded its absolute deadline.');
+      }
       if (!cleanup) check();
       return result;
     } finally {
@@ -256,6 +264,44 @@ export async function importRetainedC4World(page, options) {
     });
     receipt.baseline = await cardState(g, page, readDatabase);
     assertC4ImportedWorld(receipt.baseline);
+    const importedCard = page.locator('#installed-packs [data-pack-id="cc0-road-lab"]');
+    await g.run(() => importedCard.scrollIntoViewIfNeeded({ timeout: 8000 }));
+    receipt.cardFrame = await g.run(() =>
+      importedCard.evaluate((node) => {
+        const r = node.getBoundingClientRect(),
+          s = globalThis.getComputedStyle(node);
+        return {
+          x: r.x,
+          y: r.y,
+          width: r.width,
+          height: r.height,
+          viewportWidth: globalThis.innerWidth,
+          viewportHeight: globalThis.innerHeight,
+          visible: s.display !== 'none' && s.visibility !== 'hidden' && Number(s.opacity) !== 0,
+        };
+      }),
+    );
+    const frame = receipt.cardFrame;
+    assert(
+      frame.visible &&
+        [
+          frame.x,
+          frame.y,
+          frame.width,
+          frame.height,
+          frame.viewportWidth,
+          frame.viewportHeight,
+        ].every(Number.isFinite),
+    );
+    assert(
+      frame.width > 0 &&
+        frame.height > 0 &&
+        frame.x >= 0 &&
+        frame.y >= 0 &&
+        frame.x + frame.width <= frame.viewportWidth &&
+        frame.y + frame.height <= frame.viewportHeight,
+      'Imported card must be fully framed before capture.',
+    );
     receipt.screenshot = await g.run(() => options.capture('import-ready'));
     receipt.imported = true;
   } finally {
@@ -334,7 +380,13 @@ export function parseImportedWorldHUD(raw) {
   const height = Number(matched[1]);
   assert(height >= 0 && height < 1, 'Imported-world smoke exceeded sub-metre envelope.');
   assert(['active', 'paused', 'disarmed', 'ready'].includes(raw.phase));
-  return { height, phase: raw.phase, visible: true, gauge: 'Height', at: performance.now() };
+  return {
+    height,
+    phase: raw.phase,
+    visible: true,
+    gauge: 'Height',
+    at: performance.now(),
+  };
 }
 export async function flyRetainedC4WorldOffline(page, options) {
   const { receipt, restartConfirmed, networkProbeFailed, readDatabase, baseline } = options,

@@ -187,7 +187,28 @@ machine-wide outage, OS reboot, physical input or human-learning review.
 All existing admission, cache/worker ownership, record retention and cleanup
 checks remain required.
 
-## Production directory observation with separate observer identity
+## Six deliberate restarted-offline flight routes
+
+Add `OPTIONAL_INSTALLATION_OFFLINE_FLIGHT=all-three-en` to the imported-world
+and saved-world flags above. No previous bundle, historical, migration, fault,
+active-session/window or diagnostic flag may be present. The previous imported
+mode remains unchanged when this flag is omitted.
+
+After process restart, each stable launcher and installed window explicitly
+starts a bounded flight: assisted Gym, Academy Self-level and imported Roadworks
+Worlds Self-level. New Gym/Academy adapters read only visible maintained
+measurements and UI identity, not hidden FPV telemetry. They require first-course
+ground start, positive lift below the first completion target, explicit pause,
+four stable paused samples over 600 ms, screenshot, owned-key cleanup and an
+immediate uncached offline probe. The existing World model/content fingerprints
+and proof/profile equality checks remain required. A six-route matrix must pass
+in exact order under the existing overall deadline.
+
+This is English software-input flight/pause, not Acro, a completed exercise,
+physical input, machine-wide outage, OS reboot or human learning. A browser run
+and independent receipt review are required; unit fixtures do not close C4.
+
+## Production directory source and delivery binding
 
 The explicit `practice-directory-production-personal-appearance.v2` protocol
 adds exactly `observerRevision` and `observerTree` to the v1 plan. The actual
