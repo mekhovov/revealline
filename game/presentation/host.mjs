@@ -621,6 +621,8 @@ export function createPresentationHost({
           cancelled(controller.signal);
           const file = asset.file,
             hash = file.sha256;
+          if (asset.kind === 'font' && fonts.some((entry) => entry.family === `RLAsset-${hash}`))
+            continue;
           let blob = sourceBlobs.get(hash);
           if (!blob) {
             report('downloading', localizedMessage('interface:presentation.loadingRelease'));
@@ -636,30 +638,34 @@ export function createPresentationHost({
               'Presentation asset hash mismatch.',
             );
             cancelled(controller.signal);
-            blob = new Blob([content], { type: file.mime });
-            sourceBlobs.set(hash, blob);
-          }
-          if (asset.kind === 'font') {
-            if (fonts.some((entry) => entry.family === `RLAsset-${hash}`)) continue;
-            report('decoding', localizedMessage('interface:presentation.openingFonts'));
-            const face = fontFactory(
-              `RLAsset-${hash}`,
-              await blob.arrayBuffer(),
-              presentationFontDescriptors(manifest.resolved, hash),
-            );
-            await face.load();
-            cancelled(controller.signal);
-            fonts.push(face);
-            continue;
-          }
-          let original = decoded.get(hash);
-          if (!original) {
-            report('decoding', localizedMessage('interface:presentation.openingArtwork'));
-            const header = inspectImageBytes(new Uint8Array(await blob.arrayBuffer()), file.mime);
+            // The verified response already owns exact bytes. Reading them back
+            // from a Blob adds a copy and, in WebKit, another asynchronous load
+            // that can outlive its document during navigation.
+            if (asset.kind === 'font') {
+              report('decoding', localizedMessage('interface:presentation.openingFonts'));
+              cancelled(controller.signal);
+              const face = fontFactory(
+                `RLAsset-${hash}`,
+                content.buffer,
+                presentationFontDescriptors(manifest.resolved, hash),
+              );
+              await face.load();
+              cancelled(controller.signal);
+              fonts.push(face);
+              continue;
+            }
+            const header = inspectImageBytes(content, file.mime);
             required(
               header.valid && header.width === file.width && header.height === file.height,
               'Presentation image header disagrees with its dimensions.',
             );
+            blob = new Blob([content], { type: file.mime });
+            sourceBlobs.set(hash, blob);
+          }
+          let original = decoded.get(hash);
+          if (!original) {
+            report('decoding', localizedMessage('interface:presentation.openingArtwork'));
+            cancelled(controller.signal);
             if (actorHashes.has(hash)) {
               const lease = await actorPool.acquire({
                 key: hash,
