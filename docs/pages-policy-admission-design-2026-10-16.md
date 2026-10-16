@@ -15,8 +15,12 @@ repository, PR number, exact head, reported base, exact changed-path inventory,
 the complete trusted policy blob inventory and the exact approved replacement
 blob inventory. Unknown fields, malformed hashes, duplicate paths/records,
 missing objects or any unapproved difference fail closed. Approval data in the
-candidate cannot authorize itself. Existing admission receipts must still match
-the trusted-main policy digest; an approval is not a replacement receipt.
+candidate cannot authorize itself. Ordinary receipts must still match the
+trusted-main policy digest. For an exact approved exception, the record also pins
+the expected receipt-policy digest independently derived from every reviewed
+candidate policy file. The receipt cannot supply its own accepted digest, and
+the actual main-policy inventory and digest must match the approved baseline.
+An approval is not a replacement receipt.
 
 The initial record is limited to PR 1553 at head
 717f2ba6fec280d8bbf9ff3ac495648b95c5e4f2 and reported base
@@ -82,3 +86,13 @@ found an absent unchanged sparse-checkout fixture, not a failing assertion; afte
 materializing that exact main fixture, the full scoped run passed. Original
 failure output was not accepted as a pass. Hosted exact-head gates, bootstrap
 merge/production and PR 1553 admission remain subsequent verification checkpoints.
+
+Live receipt replay additionally exposed that the workflow uses the reviewed
+candidate map in its policy digest. Its receipt digest is
+533b2fbc30efdf12a2d5ea578a4360239e284ff8200107f1f7765b9f6210489b;
+current main's digest is
+730c6d2aff774640f4275ee7f24cf1bee46d0f9d5a130e91f075c162890a0e22.
+Both were independently recomputed from every exact-source policy file, rather
+than trusting the receipt. The first live replay correctly rejected the old
+main-digest-only implementation. The corrected record pins both digests and
+still rejects any different main-policy inventory or unapproved receipt digest.
