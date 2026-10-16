@@ -1,0 +1,35 @@
+TAP version 13
+# Subtest: practice remains affect only painter options through a real combat route and Retry
+    # Subtest: hide
+    ok 1 - hide
+      ---
+      duration_ms: 10156.481083
+      type: 'test'
+      ...
+    # Subtest: show
+    ok 2 - show
+      ---
+      duration_ms: 9661.399708
+      type: 'test'
+      ...
+    1..2
+ok 1 - practice remains affect only painter options through a real combat route and Retry
+  ---
+  duration_ms: 19818.699917
+  type: 'test'
+  ...
+# Subtest: ordinary game ignores preview-remains even when a practice scenario remains in tab storage
+ok 2 - ordinary game ignores preview-remains even when a practice scenario remains in tab storage
+  ---
+  duration_ms: 1151.778917
+  type: 'test'
+  ...
+1..2
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21292.782333

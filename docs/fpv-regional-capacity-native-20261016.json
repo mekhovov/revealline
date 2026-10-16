@@ -1,0 +1,152 @@
+{
+  "format": "RegionalCapacityNativeAcceptance.v1",
+  "observedAt": "2026-10-15T23:40:01.983977+00:00",
+  "sourceHead": "fac28c1d6149ee4801b9b5353c1084c5ff295576",
+  "packageSha256": "cd37317e3aa01f6d64cf67c14abc2931c27d47dab59292a67de66b0ae833b2bc",
+  "runtimeZipSha256": "f82b9db3719af9e5e0cf44522fa53a08f442c69901073c277407cf1372e687c3",
+  "origin": "http://127.0.0.1:9210",
+  "result": "accepted-bounded-capacity-feature-integration",
+  "normalDownloads": [
+    "station-r5",
+    "station-r4",
+    "review-r2"
+  ],
+  "normalCloseReopens": 2,
+  "threeRetainedAfterFlightAndModeInput": true,
+  "threeCachedVersionsPreparedDisarmed": true,
+  "explicitArmPauseObservedInThreeVersions": true,
+  "r2Cameras": [
+    "FPV",
+    "Chase",
+    "Overview"
+  ],
+  "modeChange": "Self-level to Acro settled Loading -> Ready to arm, disarmed",
+  "inputChange": "Touch selected while paused; retained actual pose, no auto-arm",
+  "readOnlyObservation": {
+    "database": "revealline-fpv-regions-v1",
+    "version": 2,
+    "stores": {
+      "assets": 723,
+      "meta": 1,
+      "projects": 1,
+      "revisions": 3
+    },
+    "noPlayerWritesByObserver": true
+  },
+  "warningsAndErrors": 0,
+  "limits": [
+    "Fresh isolated review origin, not actual public Pages.",
+    "Three editions total roughly64MiB; this native sample does not exercise more than256MiB retention.512 logical boundary is covered separately by nine packaged storage tests and exact404703892-byte all23 catalogue accounting.",
+    "No all23 native coexistence, exact before/after entire-store equality, actual application restart, whole-network offline, physical controls, device FPS or endurance claim.",
+    "Separate public closing-database and zero-visible-saved negatives are NOT reproduced or fixed here.",
+    "No existing older origins, player stores, packages or source files were removed or overwritten.",
+    "Mode change legitimately closed the pause menu during new area preparation; an attempted Controls selector during Loading found no match, then the settled state was inspected before continuing. Not classified as a product failure."
+  ],
+  "files": [
+    {
+      "file": "cached-r4-arm-pause.txt",
+      "bytes": 3254,
+      "sha256": "2ee6c919435e25ff49cd2d5ab4ef5d73bbf58c174b76cfeb4646b542e5563da4"
+    },
+    {
+      "file": "cached-r4-ready.png",
+      "bytes": 27810,
+      "sha256": "7dbd7644ae0e1fa196a480e487a1cec9fc59f3d961b011f459ab3df27d4ee1dd"
+    },
+    {
+      "file": "cached-r4-ready.txt",
+      "bytes": 824,
+      "sha256": "590af9392faefdefb424d3b95ac27cdc61e57761484233c97f2488d2cc81a39f"
+    },
+    {
+      "file": "cached-r5-ready.png",
+      "bytes": 27810,
+      "sha256": "7dbd7644ae0e1fa196a480e487a1cec9fc59f3d961b011f459ab3df27d4ee1dd"
+    },
+    {
+      "file": "cached-r5-ready.txt",
+      "bytes": 824,
+      "sha256": "590af9392faefdefb424d3b95ac27cdc61e57761484233c97f2488d2cc81a39f"
+    },
+    {
+      "file": "console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "file": "initial-library.txt",
+      "bytes": 18632,
+      "sha256": "53e7c81ff6207dba40fc9a0b1dc500018076206270698841adda7239b9ddffc6"
+    },
+    {
+      "file": "r2-chase.png",
+      "bytes": 26278,
+      "sha256": "2492cf519eb132fb27c4f2c415a432cb2a97b38a0f6a7454cc64650bb582d7ec"
+    },
+    {
+      "file": "r2-explicit-arm.txt",
+      "bytes": 646,
+      "sha256": "f188d9e8f0c67fd75c6a732f053f4800abb4f90fc64c755e0e6aff50556a580f"
+    },
+    {
+      "file": "r2-fpv.png",
+      "bytes": 25159,
+      "sha256": "6c00cab4764c746f2be274003c965702d29f69cc7bffc59301baf852b74a2960"
+    },
+    {
+      "file": "r2-mode-ready-disarmed.txt",
+      "bytes": 741,
+      "sha256": "e68cd41f9909e67f34765cc35aa37df0154fe110fda40642765d50acbce37c64"
+    },
+    {
+      "file": "r2-overview.png",
+      "bytes": 28703,
+      "sha256": "da2def27b7425344d1d829cda8a252af6dac35007cda158520462989df5be4ef"
+    },
+    {
+      "file": "r2-pause-menu.txt",
+      "bytes": 3254,
+      "sha256": "20adbe90bf58065fe688fec6dc38b1d3ef1f0154632d169dc5e364960591183b"
+    },
+    {
+      "file": "r2-paused-touch.txt",
+      "bytes": 3254,
+      "sha256": "20adbe90bf58065fe688fec6dc38b1d3ef1f0154632d169dc5e364960591183b"
+    },
+    {
+      "file": "r2-ready.txt",
+      "bytes": 741,
+      "sha256": "e68cd41f9909e67f34765cc35aa37df0154fe110fda40642765d50acbce37c64"
+    },
+    {
+      "file": "r5-r4-coexist.txt",
+      "bytes": 19079,
+      "sha256": "b801dc556f622eae94d76fe7dffdfba08f672d63cd358303ef247ba79709409b"
+    },
+    {
+      "file": "r5-saved.txt",
+      "bytes": 18836,
+      "sha256": "85375cec5be8bc59fef91d407b814597d7f4a099f6083fd040a78fa9a4b03da0"
+    },
+    {
+      "file": "stored-three-editions-observation.json",
+      "bytes": 161307,
+      "sha256": "bbdc555e2377c9f4dc1a8d8c634680b5f8a423f7b9aa3c90fdf72181a7c214c2"
+    },
+    {
+      "file": "three-editions-reopened.txt",
+      "bytes": 19226,
+      "sha256": "d33c6969cd3f66bed5e07dedcad0ad83c8c9870aa93fae6ddf1dbfcbab10e16a"
+    },
+    {
+      "file": "three-editions-saved.txt",
+      "bytes": 19272,
+      "sha256": "df9044a880927d90c8535ad9557c0b59c16392ec3c8f37f0ef1d23a73f575bbc"
+    },
+    {
+      "file": "three-retained-after-flight.txt",
+      "bytes": 19226,
+      "sha256": "d33c6969cd3f66bed5e07dedcad0ad83c8c9870aa93fae6ddf1dbfcbab10e16a"
+    }
+  ]
+}

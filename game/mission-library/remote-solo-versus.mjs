@@ -1,3 +1,4 @@
+import { loadBaseArtwork } from '../base-artwork.mjs';
 import { loadAuthoredJourneyRoute } from '../content-design/route-loader.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
@@ -20,6 +21,9 @@ import { createExternalChapterInventoryReader } from '../external-chapter-pointe
 import { inspectPackLibraryMetadata, PACK_LIBRARY_VERSION } from '../packs.mjs';
 import { createCouchChapterInstaller } from '../couch/couch-chapter-install.mjs';
 import { loadOptionalCatalog } from '../optional-chapters.mjs';
+import { createSpatialNextEditionSources } from './spatial-next-editions.mjs';
+import { duelExpeditionLibrarySources } from './multiplayer-expeditions.mjs';
+import { isIncludedBundledMission } from './included-bundled-pack.mjs';
 
 /** Read-only remote browsing, with deliberate verified chapter preparation.
  * Compiler-qualified Journey and inspected installed metadata grant an exact
@@ -59,7 +63,11 @@ export async function createRemoteSoloVersusLibrarySources({
     return { text, value };
   }
   const [route, indexFile, themeFile, campaignFile, classesFile] = await Promise.all([
-    loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo),
+    loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo, {
+      fullSource: true,
+      signal,
+      fetchAsset: (path, options) => request(new URL(`content-design/${path}`, root), options),
+    }),
     read('content/mission-library-index.json'),
     read('content-design/themes.json'),
     read('content/campaign.json'),
@@ -78,7 +86,14 @@ export async function createRemoteSoloVersusLibrarySources({
     optionalCampaignIds: route.optionalCampaignIds,
   };
   const solo = createCandidateSoloHost(route.source, options);
+  let spatialEditions;
   try {
+    spatialEditions = await createSpatialNextEditionSources({
+      activeRouteId: route.id,
+      originalThemes: themeFile.value.themes,
+      difficulty,
+      launch,
+    });
     const versus = createCandidateVersusHost(route.source, options);
     const sourceFor = (host, manifest) => ({
       ...journeyLibrarySource({
@@ -136,12 +151,19 @@ export async function createRemoteSoloVersusLibrarySources({
       // metadata or Journey materials. No pictures are decoded by this read.
       const owner = await installedSources({
         index,
-        journey,
+        journeySources: [
+          journey,
+          ...spatialEditions.sources,
+          ...duelExpeditionLibrarySources({ themes: themeFile.value.themes, launch, difficulty }),
+        ],
         baseEntry: {
           campaign: baseCampaign,
           classRecipes: classesFile.value,
-          visualOverrides: {},
-          levelVisuals: [],
+          ...(await loadBaseArtwork(baseCampaign, {
+            fetch: request,
+            signal,
+            url: new URL('content/base-artwork.json', root),
+          })),
           music: [],
           sourcePackId: null,
         },
@@ -160,6 +182,7 @@ export async function createRemoteSoloVersusLibrarySources({
         state: owner.state,
         dispose() {
           owner.dispose();
+          spatialEditions.dispose();
           solo.preparer.dispose();
         },
       });
@@ -177,12 +200,16 @@ export async function createRemoteSoloVersusLibrarySources({
       progress: () => '',
     });
     return Object.freeze({
-      sources: Object.freeze([journey, ...retained]),
+      sources: Object.freeze([journey, ...spatialEditions.sources, ...retained]),
       refresh: async () => {},
       state: () => ({ ready: false, reason: 'Installed chapters have not been checked.' }),
-      dispose: () => solo.preparer.dispose(),
+      dispose() {
+        spatialEditions.dispose();
+        solo.preparer.dispose();
+      },
     });
   } catch (error) {
+    spatialEditions?.dispose();
     solo.preparer.dispose();
     throw error;
   }
@@ -192,7 +219,7 @@ export async function createRemoteSoloVersusLibrarySources({
  * stays with the receiving host; this owner never treats a DTO as a runtime. */
 async function installedSources({
   index,
-  journey,
+  journeySources,
   baseEntry,
   installed,
   loadBaseThemes,
@@ -296,7 +323,7 @@ async function installedSources({
     await refresh();
     factory = await createMetadataInstalledMissionLibrary({
       index,
-      journeySources: [journey],
+      journeySources,
       getInventory: currentInventory,
       baseEntry,
       compatibility({ entry, level }) {
@@ -331,7 +358,11 @@ async function installedSources({
               };
         return pack
           ? { state: 'ready' }
-          : { state: 'download', bytes: row.download?.bytes ?? row.sourceFile.bytes };
+          : {
+              state: 'download',
+              bytes: row.download?.bytes ?? row.sourceFile.bytes,
+              ...(isIncludedBundledMission(row) ? { included: true } : {}),
+            };
       },
       availabilityCustom() {
         return state().ready

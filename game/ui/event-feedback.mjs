@@ -1,3 +1,5 @@
+import { captureRecipe } from './feedback-cues.mjs';
+import { t } from '../i18n/index.mjs';
 import { PICKUP_COLORS, drawPickupIcon } from './classic-view.mjs';
 
 const finitePoint = (value) => Number.isFinite(value?.x) && Number.isFinite(value?.y);
@@ -6,6 +8,7 @@ export function presentationEvent(event, run = null) {
   const known = [
     'cut.closed',
     'cells.claimed',
+    'relay.opened',
     'player.failed',
     'run.completed',
     'craft.redeployed',
@@ -28,6 +31,10 @@ export function presentationEvent(event, run = null) {
   return {
     type: event.type,
     age: 0,
+    ...(event.type === 'relay.opened' ? { revealDuration: 0.4 } : {}),
+    ...(event.type === 'cells.claimed'
+      ? { revealDuration: captureRecipe(event, run).duration }
+      : {}),
     tick: event.tick,
     ...(point ? { x: point.x, y: point.y } : {}),
     ...(PICKUP_COLORS[event.kind] ? { kind: event.kind } : {}),
@@ -43,6 +50,7 @@ export function drawEventFeedback(
   palette,
   {
     themeId = 'fpv',
+    themeFamily = null,
     reduced = false,
     screenScale = 1,
     width = 1152,
@@ -51,7 +59,13 @@ export function drawEventFeedback(
   } = {},
 ) {
   if (!finitePoint(event) || event.age >= 0.7) return;
-  const pickup = event.type === 'powerup.collected' && PICKUP_COLORS[event.kind],
+  const feedbackTheme =
+      themeFamily === 'fpv'
+        ? 'fpv'
+        : themeFamily === 'atlas'
+          ? 'ukraine'
+          : themeId,
+    pickup = event.type === 'powerup.collected' && PICKUP_COLORS[event.kind],
     failed = event.type === 'player.failed',
     lineHit = event.type === 'lineImpact.seeded',
     recovered = ['player.respawned', 'shield.absorbed'].includes(event.type);
@@ -90,7 +104,9 @@ export function drawEventFeedback(
   } else if (failed) {
     // Small themed debris stays local to the failed craft, never follows respawn.
     const offset = reduced ? 5 : 4 + Math.min(event.age, 0.35) * 15;
-    if (themeId === 'fpv') {
+    if (feedbackTheme === 'fpv') {
+      // Four solid rotor fragments communicate the broken FPV frame without
+      // putting bright square brackets around the craft silhouette.
       for (const [x, y] of [
         [-1, -1],
         [1, -1],
@@ -98,10 +114,10 @@ export function drawEventFeedback(
         [1, 1],
       ]) {
         ctx.fillRect(x * offset - 2, y * offset - 1, 4, 2);
-        ctx.strokeRect(x * offset - 3, y * offset - 3, 6, 6);
+        ctx.fillRect(x * (offset + 2) - 1, y * (offset + 2) - 1, 2, 2);
       }
       ctx.fillRect(-2, -4, 4, 8);
-    } else if (themeId === 'ukraine') {
+    } else if (feedbackTheme === 'ukraine') {
       for (let i = 0; i < 6; i++) {
         ctx.save();
         ctx.rotate((i * Math.PI) / 3);
@@ -123,16 +139,21 @@ export function drawEventFeedback(
   if (lineHit) return;
   const label = pickup
     ? {
-        'extra-life': event.gain === 0 ? 'LIFE FULL' : '+1 LIFE',
-        'player-speed': 'SPEED +25%',
-        'enemy-slow': 'ENEMIES SLOW',
-        'enemy-freeze': 'ENEMIES FROZEN',
+        'extra-life': event.gain === 0 ? t('interface:lifeFull') : '+1 LIFE',
+        'player-speed': t('interface:speed25'),
+        'enemy-slow': t('interface:enemiesSlow2'),
+        'enemy-freeze': t('interface:enemiesFrozen2'),
       }[event.kind]
     : failed
-      ? `${themeId === 'fpv' ? 'CRAFT LOST' : 'LIFE LOST'} · -1 LIFE`
+      ? t('gameplay:1Life', {
+          value1:
+            feedbackTheme === 'fpv'
+              ? t('interface:craftLost')
+              : t('interface:lifeLost'),
+        })
       : event.type === 'shield.absorbed'
-        ? 'SHIELD USED'
-        : 'READY';
+        ? t('interface:shieldUsed')
+        : t('interface:ready2');
   const textWidth = Math.min(width - 16, label.length * 8.4 * unit + 12 * unit),
     x = Math.max(8, Math.min(width - textWidth - 8, event.x * 16 - textWidth / 2)),
     y = Math.max(18 * unit, Math.min(height - 18 * unit, event.y * 16 - 24 * unit));
@@ -166,6 +187,6 @@ export function drawRecoveryCue(
   ctx.fillStyle = '#0c1423';
   ctx.fillRect(width / 2 - 106 * unit, 18 * unit, 212 * unit, 26 * unit);
   ctx.fillStyle = palette.accent;
-  ctx.fillText(`RECOVERY ${seconds.toFixed(1)}s`, width / 2, 21 * unit);
+  ctx.fillText(t('gameplay:recoveryS', { value1: seconds.toFixed(1) }), width / 2, 21 * unit);
   ctx.restore();
 }

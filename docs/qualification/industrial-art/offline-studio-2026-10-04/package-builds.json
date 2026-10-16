@@ -1,0 +1,44 @@
+{
+  "purpose": "LOCAL MANUAL QUALIFICATION ONLY; not public publication or release qualification",
+  "storage": "In-memory package and HTTP response bodies; no ZIP or staging files written",
+  "sourceRevision": "e74542650523e7d5d297aaf59abd813d8001fa32",
+  "sourceTree": "bd7641b5102e2ca4df3adbb6168e6a35be2de833",
+  "delayMs": 100,
+  "automatedSuites": "waived; not run",
+  "packages": [
+    {
+      "id": "civilian-fpv",
+      "archiveSha256": "0a10cca0ae637e67b9f374ab5d2b30f2d96742691dee52d14900d5db4812b4b7",
+      "archiveBytes": 4396590,
+      "engineCommit": "e74542650523e7d5d297aaf59abd813d8001fa32",
+      "engineTree": "bd7641b5102e2ca4df3adbb6168e6a35be2de833",
+      "revision": "df1b46f54120261db7f2770d42cef36882aad3a085f447a64d24f0e0fda554db",
+      "files": 70,
+      "bytes": 4386216,
+      "inputs": 63,
+      "inputIdentity": "all original inputs match committed Git blobs",
+      "reproducible": true,
+      "independentZipInspection": "passed",
+      "productionAdmission": "passed",
+      "launcher": "http://127.0.0.1:8792/practice/civilian-fpv/app/?lang=en",
+      "runtime": "http://127.0.0.1:8792/practice/civilian-fpv/releases/v0.142.4/site/optional-practice/civilian-fpv/index.html?lang=en"
+    },
+    {
+      "id": "fpv-worlds",
+      "archiveSha256": "877ec1460748b18eea7dd11f9ab54a5e9b961d3417af1ca49a81193bde91586e",
+      "archiveBytes": 15700700,
+      "engineCommit": "e74542650523e7d5d297aaf59abd813d8001fa32",
+      "engineTree": "bd7641b5102e2ca4df3adbb6168e6a35be2de833",
+      "revision": "b5090e051510d59cbc38e3507d56476d332ef96ef515718eb525ec7607147457",
+      "files": 106,
+      "bytes": 15683922,
+      "inputs": 99,
+      "inputIdentity": "all original inputs match committed Git blobs",
+      "reproducible": true,
+      "independentZipInspection": "passed",
+      "productionAdmission": "passed",
+      "launcher": "http://127.0.0.1:8792/practice/fpv-worlds/app/?lang=en",
+      "runtime": "http://127.0.0.1:8792/practice/fpv-worlds/releases/v0.142.4/site/optional-practice/fpv-worlds/index.html?lang=en"
+    }
+  ]
+}

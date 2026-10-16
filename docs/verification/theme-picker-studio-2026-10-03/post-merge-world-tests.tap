@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 1 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 507.70175
+  ...
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 2 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 82.45775
+  ...
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 3 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 268.964917
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 4 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 221.160875
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 5 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 224.317792
+  ...
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 6 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 281.901917
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2496.614083

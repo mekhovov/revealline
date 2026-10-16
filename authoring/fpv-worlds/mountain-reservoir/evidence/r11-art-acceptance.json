@@ -1,0 +1,32 @@
+{
+  "format": "FPVReservoirMaterialArtReview.v1",
+  "candidate": "d7a8e044d03859b59212fdfdcde3d25af8c7e75a",
+  "revision": "r11",
+  "status": "accepted-bounded-material-pass",
+  "method": "Root actual unchanged admitted renderer review; exact full eight-observation and disposal receipt retained separately.",
+  "observations": [
+    "Close grass removes the rejected blotched rows and previous cracked-rock appearance.",
+    "Gravel reads as aggregate.",
+    "Approach, chase Low/High, Pixel, shared Industrial and overview preserve route visibility.",
+    "Owned resources dispose successfully."
+  ],
+  "remaining": "Representative Reservoir art is not finished: generic terrace composition, vegetation rooting and maintenance identity remain.",
+  "screenshots": [
+    {
+      "path": "r11-grass-accepted.png",
+      "bytes": 93818,
+      "sha256": "b448f26ad96e60bba67ab43d2d0dbdc6d8506efbb9929cb8e2c57af0a8636310"
+    },
+    {
+      "path": "r11-approach-accepted.png",
+      "bytes": 99925,
+      "sha256": "ba04f6de71a8af4a571484c1c97b72a06f350c9b0146793fc47a7a157713383a"
+    },
+    {
+      "path": "r11-overview-accepted.png",
+      "bytes": 102638,
+      "sha256": "d800e0869193b06db9b80bf789a2b49c229bb872676cd2c7d26d51861cdc7e23"
+    }
+  ],
+  "scope": "Static art/resource acceptance only; no FPS/hardware or new native import/offline claim."
+}

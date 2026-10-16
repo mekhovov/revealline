@@ -1,0 +1,744 @@
+{
+  "format": "revealline.rotor-body-detail-candidates.v1",
+  "status": "source-candidate-not-runtime-default",
+  "construction": "reference-v3",
+  "referenceConcept": "authoring/library/fpv-proportion-candidates/roster-concept-v1.png",
+  "referenceReview": "docs/drone-reference-review.md",
+  "referenceUse": "Visual construction reference only; no pixels copied, resized or quantized.",
+  "sources": {
+    "game/presentation/rotor-body-detail-art.mjs": "6600a1df792142f8f046e75af7b069401f3af4b3351ad931ec64491331723338",
+    "game/presentation/rotor-candidate-art.mjs": "d43339132bbb0e16ff5f33af444decec62d7e9fb11f17de23e784d16904c756e",
+    "game/presentation/pixel-art.mjs": "544c975f88686455607dbed2f4babb472dc1ad5d9992d878c8c91dc2b123e582"
+  },
+  "preserves": [
+    "Existing production sprites and registries",
+    "Reference-v2 source and PNGs",
+    "Exact reference-v2 rotor geometry",
+    "Simulation, saves and replays"
+  ],
+  "assets": [
+    {
+      "id": "candidate.reference-v3.scout.compact",
+      "slot": "player.scout.compact",
+      "treatment": "compact",
+      "path": "authoring/library/fpv-body-detail-candidates/scout.compact.png",
+      "bytes": 292,
+      "sha256": "4ac554d9d481c56ad12fc839d62188f89b4ca23fd430f0dc19921de268f450fb",
+      "width": 32,
+      "height": 32,
+      "inspection": {
+        "opaquePixels": 150,
+        "transparentPixels": 874,
+        "colors": [
+          "#070b12",
+          "#101923",
+          "#182531",
+          "#425563",
+          "#647786",
+          "#687c55",
+          "#78dce8",
+          "#f4bf62"
+        ],
+        "occupiedBounds": {
+          "x": 0.21875,
+          "y": 0.15625,
+          "width": 0.59375,
+          "height": 0.71875
+        }
+      },
+      "geometry": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        },
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "occupiedBounds": {
+          "x": 0.21875,
+          "y": 0.15625,
+          "width": 0.59375,
+          "height": 0.71875
+        },
+        "rotorAnchors": [
+          {
+            "x": 0.25,
+            "y": 0.25,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.75,
+            "y": 0.25,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": 0.25,
+            "y": 0.75,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": -1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.75,
+            "y": 0.75,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": 1,
+            "phaseDegrees": 69
+          }
+        ],
+        "nineSlice": null
+      },
+      "assetRevision": {
+        "format": "revealline-asset-revision.v1",
+        "id": "candidate.reference-v3.scout.compact",
+        "revision": 1,
+        "kind": "image",
+        "description": "Original native scout body-detail candidate with a north-facing camera, equipment faces, restrained strap buckles and small static motors.",
+        "file": {
+          "sha256": "4ac554d9d481c56ad12fc839d62188f89b4ca23fd430f0dc19921de268f450fb",
+          "bytes": 292,
+          "mime": "image/png",
+          "width": 32,
+          "height": 32
+        },
+        "geometry": {
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "occupiedBounds": {
+            "x": 0.21875,
+            "y": 0.15625,
+            "width": 0.59375,
+            "height": 0.71875
+          },
+          "rotorAnchors": [
+            {
+              "x": 0.25,
+              "y": 0.25,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": 1,
+              "phaseDegrees": 0
+            },
+            {
+              "x": 0.75,
+              "y": 0.25,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": -1,
+              "phaseDegrees": 23
+            },
+            {
+              "x": 0.25,
+              "y": 0.75,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": -1,
+              "phaseDegrees": 46
+            },
+            {
+              "x": 0.75,
+              "y": 0.75,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": 1,
+              "phaseDegrees": 69
+            }
+          ],
+          "nineSlice": null
+        },
+        "recipe": null,
+        "provenance": {
+          "creator": "Reveal Line original native pixel drawings, authored with Codex",
+          "source": "game/presentation/rotor-body-detail-art.mjs reference-v3",
+          "license": "Original project artwork; no reference-image pixels incorporated.",
+          "prompt": "Draw an original north-facing scout body directly on a 32 by 32 pixel grid. Match the approved roster concept through slim carbon arms, a visible front camera, a rear antenna and an equipment pack with shaded faces and separate restrained straps. Use only the existing twelve Field Kit colours and binary alpha. Preserve the exact reference-v2 pivot and rotor anchors, radii, blade counts, phases and handedness. Leave blades to the shared renderer; no reticles, baked blur or lettering. Keep equipment outside the full rotor sweeps. Compare against v2 at 20/24/32 CSS pixels, both render paths, bright/dark artwork and four headings.",
+          "parent": null
+        },
+        "quality": {
+          "stage": "produced",
+          "evidence": [
+            "Source candidate only. Native pixels, geometry and reproduction checks do not establish production adoption or full-board readability."
+          ]
+        }
+      }
+    },
+    {
+      "id": "candidate.reference-v3.scout.detailed",
+      "slot": "player.scout.detailed",
+      "treatment": "detailed",
+      "path": "authoring/library/fpv-body-detail-candidates/scout.detailed.png",
+      "bytes": 563,
+      "sha256": "31de37c929886b60580a1f38b166bebd3da6cc1ebbab68b786cbf2a41fd0c72a",
+      "width": 64,
+      "height": 64,
+      "inspection": {
+        "opaquePixels": 622,
+        "transparentPixels": 3474,
+        "colors": [
+          "#070b12",
+          "#101923",
+          "#182531",
+          "#425563",
+          "#647786",
+          "#78dce8",
+          "#a5b2bb",
+          "#f4bf62"
+        ],
+        "occupiedBounds": {
+          "x": 0.21875,
+          "y": 0.15625,
+          "width": 0.578125,
+          "height": 0.71875
+        }
+      },
+      "geometry": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64
+        },
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "occupiedBounds": {
+          "x": 0.21875,
+          "y": 0.15625,
+          "width": 0.578125,
+          "height": 0.71875
+        },
+        "rotorAnchors": [
+          {
+            "x": 0.25,
+            "y": 0.25,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.75,
+            "y": 0.25,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": 0.25,
+            "y": 0.75,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": -1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.75,
+            "y": 0.75,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": 1,
+            "phaseDegrees": 69
+          }
+        ],
+        "nineSlice": null
+      },
+      "assetRevision": {
+        "format": "revealline-asset-revision.v1",
+        "id": "candidate.reference-v3.scout.detailed",
+        "revision": 1,
+        "kind": "image",
+        "description": "Original native scout body-detail candidate with a north-facing camera, equipment faces, restrained strap buckles and small static motors.",
+        "file": {
+          "sha256": "31de37c929886b60580a1f38b166bebd3da6cc1ebbab68b786cbf2a41fd0c72a",
+          "bytes": 563,
+          "mime": "image/png",
+          "width": 64,
+          "height": 64
+        },
+        "geometry": {
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 64,
+            "height": 64
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "occupiedBounds": {
+            "x": 0.21875,
+            "y": 0.15625,
+            "width": 0.578125,
+            "height": 0.71875
+          },
+          "rotorAnchors": [
+            {
+              "x": 0.25,
+              "y": 0.25,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": 1,
+              "phaseDegrees": 0
+            },
+            {
+              "x": 0.75,
+              "y": 0.25,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": -1,
+              "phaseDegrees": 23
+            },
+            {
+              "x": 0.25,
+              "y": 0.75,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": -1,
+              "phaseDegrees": 46
+            },
+            {
+              "x": 0.75,
+              "y": 0.75,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": 1,
+              "phaseDegrees": 69
+            }
+          ],
+          "nineSlice": null
+        },
+        "recipe": null,
+        "provenance": {
+          "creator": "Reveal Line original native pixel drawings, authored with Codex",
+          "source": "game/presentation/rotor-body-detail-art.mjs reference-v3",
+          "license": "Original project artwork; no reference-image pixels incorporated.",
+          "prompt": "Draw an original north-facing scout body directly on a 64 by 64 pixel grid. Match the approved roster concept through slim carbon arms, a visible front camera, a rear antenna and an equipment pack with shaded faces and separate restrained straps. Use only the existing twelve Field Kit colours and binary alpha. Preserve the exact reference-v2 pivot and rotor anchors, radii, blade counts, phases and handedness. Leave blades to the shared renderer; no reticles, baked blur or lettering. Keep equipment outside the full rotor sweeps. Compare against v2 at 20/24/32 CSS pixels, both render paths, bright/dark artwork and four headings.",
+          "parent": null
+        },
+        "quality": {
+          "stage": "produced",
+          "evidence": [
+            "Source candidate only. Native pixels, geometry and reproduction checks do not establish production adoption or full-board readability."
+          ]
+        }
+      }
+    },
+    {
+      "id": "candidate.reference-v3.carrier.compact",
+      "slot": "player.carrier.compact",
+      "treatment": "compact",
+      "path": "authoring/library/fpv-body-detail-candidates/carrier.compact.png",
+      "bytes": 331,
+      "sha256": "26fd5de1b8f90d406dec5299a0b3822a337bb9e9b50bba203f7e46ee509704ed",
+      "width": 32,
+      "height": 32,
+      "inspection": {
+        "opaquePixels": 224,
+        "transparentPixels": 800,
+        "colors": [
+          "#070b12",
+          "#101923",
+          "#182531",
+          "#425563",
+          "#647786",
+          "#687c55",
+          "#78dce8",
+          "#9dbb7a",
+          "#f4bf62"
+        ],
+        "occupiedBounds": {
+          "x": 0.15625,
+          "y": 0.15625,
+          "width": 0.71875,
+          "height": 0.71875
+        }
+      },
+      "geometry": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        },
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "occupiedBounds": {
+          "x": 0.15625,
+          "y": 0.15625,
+          "width": 0.71875,
+          "height": 0.71875
+        },
+        "rotorAnchors": [
+          {
+            "x": 0.28125,
+            "y": 0.1875,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.71875,
+            "y": 0.1875,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": 0.1875,
+            "y": 0.5,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": -1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.8125,
+            "y": 0.5,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": 1,
+            "phaseDegrees": 69
+          },
+          {
+            "x": 0.28125,
+            "y": 0.8125,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": 1,
+            "phaseDegrees": 92
+          },
+          {
+            "x": 0.71875,
+            "y": 0.8125,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": -1,
+            "phaseDegrees": 115
+          }
+        ],
+        "nineSlice": null
+      },
+      "assetRevision": {
+        "format": "revealline-asset-revision.v1",
+        "id": "candidate.reference-v3.carrier.compact",
+        "revision": 1,
+        "kind": "image",
+        "description": "Original native carrier body-detail candidate with a north-facing camera, equipment faces, restrained strap buckles and small static motors.",
+        "file": {
+          "sha256": "26fd5de1b8f90d406dec5299a0b3822a337bb9e9b50bba203f7e46ee509704ed",
+          "bytes": 331,
+          "mime": "image/png",
+          "width": 32,
+          "height": 32
+        },
+        "geometry": {
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "occupiedBounds": {
+            "x": 0.15625,
+            "y": 0.15625,
+            "width": 0.71875,
+            "height": 0.71875
+          },
+          "rotorAnchors": [
+            {
+              "x": 0.28125,
+              "y": 0.1875,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": 1,
+              "phaseDegrees": 0
+            },
+            {
+              "x": 0.71875,
+              "y": 0.1875,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": -1,
+              "phaseDegrees": 23
+            },
+            {
+              "x": 0.1875,
+              "y": 0.5,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": -1,
+              "phaseDegrees": 46
+            },
+            {
+              "x": 0.8125,
+              "y": 0.5,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": 1,
+              "phaseDegrees": 69
+            },
+            {
+              "x": 0.28125,
+              "y": 0.8125,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": 1,
+              "phaseDegrees": 92
+            },
+            {
+              "x": 0.71875,
+              "y": 0.8125,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": -1,
+              "phaseDegrees": 115
+            }
+          ],
+          "nineSlice": null
+        },
+        "recipe": null,
+        "provenance": {
+          "creator": "Reveal Line original native pixel drawings, authored with Codex",
+          "source": "game/presentation/rotor-body-detail-art.mjs reference-v3",
+          "license": "Original project artwork; no reference-image pixels incorporated.",
+          "prompt": "Draw an original north-facing carrier body directly on a 32 by 32 pixel grid. Match the approved roster concept through slim carbon arms, a visible front camera, a rear antenna and an equipment pack with shaded faces and separate restrained straps. Use only the existing twelve Field Kit colours and binary alpha. Preserve the exact reference-v2 pivot and rotor anchors, radii, blade counts, phases and handedness. Leave blades to the shared renderer; no reticles, baked blur or lettering. Keep equipment outside the full rotor sweeps. Compare against v2 at 20/24/32 CSS pixels, both render paths, bright/dark artwork and four headings.",
+          "parent": null
+        },
+        "quality": {
+          "stage": "produced",
+          "evidence": [
+            "Source candidate only. Native pixels, geometry and reproduction checks do not establish production adoption or full-board readability."
+          ]
+        }
+      }
+    },
+    {
+      "id": "candidate.reference-v3.carrier.detailed",
+      "slot": "player.carrier.detailed",
+      "treatment": "detailed",
+      "path": "authoring/library/fpv-body-detail-candidates/carrier.detailed.png",
+      "bytes": 643,
+      "sha256": "fc93e01606d8f48caefcc054a914a1b74bd339ef8612c0229f4260a1744dddf4",
+      "width": 64,
+      "height": 64,
+      "inspection": {
+        "opaquePixels": 908,
+        "transparentPixels": 3188,
+        "colors": [
+          "#070b12",
+          "#101923",
+          "#182531",
+          "#425563",
+          "#647786",
+          "#687c55",
+          "#78dce8",
+          "#9dbb7a",
+          "#a5b2bb",
+          "#f4bf62"
+        ],
+        "occupiedBounds": {
+          "x": 0.15625,
+          "y": 0.15625,
+          "width": 0.703125,
+          "height": 0.71875
+        }
+      },
+      "geometry": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64
+        },
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "occupiedBounds": {
+          "x": 0.15625,
+          "y": 0.15625,
+          "width": 0.703125,
+          "height": 0.71875
+        },
+        "rotorAnchors": [
+          {
+            "x": 0.28125,
+            "y": 0.1875,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.71875,
+            "y": 0.1875,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": 0.1875,
+            "y": 0.5,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": -1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.8125,
+            "y": 0.5,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": 1,
+            "phaseDegrees": 69
+          },
+          {
+            "x": 0.28125,
+            "y": 0.8125,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": 1,
+            "phaseDegrees": 92
+          },
+          {
+            "x": 0.71875,
+            "y": 0.8125,
+            "radius": 0.15,
+            "blades": 2,
+            "direction": -1,
+            "phaseDegrees": 115
+          }
+        ],
+        "nineSlice": null
+      },
+      "assetRevision": {
+        "format": "revealline-asset-revision.v1",
+        "id": "candidate.reference-v3.carrier.detailed",
+        "revision": 1,
+        "kind": "image",
+        "description": "Original native carrier body-detail candidate with a north-facing camera, equipment faces, restrained strap buckles and small static motors.",
+        "file": {
+          "sha256": "fc93e01606d8f48caefcc054a914a1b74bd339ef8612c0229f4260a1744dddf4",
+          "bytes": 643,
+          "mime": "image/png",
+          "width": 64,
+          "height": 64
+        },
+        "geometry": {
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 64,
+            "height": 64
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "occupiedBounds": {
+            "x": 0.15625,
+            "y": 0.15625,
+            "width": 0.703125,
+            "height": 0.71875
+          },
+          "rotorAnchors": [
+            {
+              "x": 0.28125,
+              "y": 0.1875,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": 1,
+              "phaseDegrees": 0
+            },
+            {
+              "x": 0.71875,
+              "y": 0.1875,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": -1,
+              "phaseDegrees": 23
+            },
+            {
+              "x": 0.1875,
+              "y": 0.5,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": -1,
+              "phaseDegrees": 46
+            },
+            {
+              "x": 0.8125,
+              "y": 0.5,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": 1,
+              "phaseDegrees": 69
+            },
+            {
+              "x": 0.28125,
+              "y": 0.8125,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": 1,
+              "phaseDegrees": 92
+            },
+            {
+              "x": 0.71875,
+              "y": 0.8125,
+              "radius": 0.15,
+              "blades": 2,
+              "direction": -1,
+              "phaseDegrees": 115
+            }
+          ],
+          "nineSlice": null
+        },
+        "recipe": null,
+        "provenance": {
+          "creator": "Reveal Line original native pixel drawings, authored with Codex",
+          "source": "game/presentation/rotor-body-detail-art.mjs reference-v3",
+          "license": "Original project artwork; no reference-image pixels incorporated.",
+          "prompt": "Draw an original north-facing carrier body directly on a 64 by 64 pixel grid. Match the approved roster concept through slim carbon arms, a visible front camera, a rear antenna and an equipment pack with shaded faces and separate restrained straps. Use only the existing twelve Field Kit colours and binary alpha. Preserve the exact reference-v2 pivot and rotor anchors, radii, blade counts, phases and handedness. Leave blades to the shared renderer; no reticles, baked blur or lettering. Keep equipment outside the full rotor sweeps. Compare against v2 at 20/24/32 CSS pixels, both render paths, bright/dark artwork and four headings.",
+          "parent": null
+        },
+        "quality": {
+          "stage": "produced",
+          "evidence": [
+            "Source candidate only. Native pixels, geometry and reproduction checks do not establish production adoption or full-board readability."
+          ]
+        }
+      }
+    }
+  ]
+}

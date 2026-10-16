@@ -1,0 +1,79 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-77",
+    "repository": "mekhovov/revealline-archive-77",
+    "url": "https://mekhovov.github.io/revealline-archive-77/"
+  },
+  "preservedRelease": {
+    "version": "v0.111.1",
+    "sourceRevision": "cd9565357add4d1521faae76e6d029446b6d8503",
+    "sourceTree": "48f4fb7fbfd8355771eafbe2bd8db80f0a2840b6",
+    "tagObject": "f352058fa29245e0da52784600f0f71582f2e5f2",
+    "releaseId": 396292011,
+    "distributionSha256": "2672bc9e2fc38c6597a5d1bcad29639e67a0d6de6647d431f346a763ab6daac4"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "065bdcd45ef343546e0c75fe2dbdbc043ffa19cb",
+    "mergeCommit": "22865e8c736ef25f611ceed09fcd06e5e80a4730",
+    "mergeTree": "c390b9520dfc69cbfebf81a29246e13551aaa159",
+    "review": "SAFE",
+    "reviewedExactHead": "065bdcd45ef343546e0c75fe2dbdbc043ffa19cb"
+  },
+  "hosted": {
+    "exactHeadPrRun": 36104481288,
+    "exactMainRun": 36104542612,
+    "buildJob": 107974043457,
+    "deployJob": 107974243998,
+    "receiptsArtifact": {
+      "id": 10850373640,
+      "name": "archive77-verification-receipts",
+      "size_in_bytes": 60623,
+      "digest": "sha256:cd6a1cc2456fd82e48ba86ef643a84b6f28c7f59db6ff1c64bb667109b010ae3"
+    },
+    "pagesArtifact": {
+      "id": 10850192751,
+      "name": "github-pages",
+      "size_in_bytes": 534686827,
+      "digest": "sha256:62d2986b546ef1417e803fabbee5548eb31eebefa2c53d5b67684bce644ae6d6"
+    },
+    "deployment": {
+      "id": 6655347572,
+      "statusId": 18821950467,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-77/",
+      "createdAt": "2026-09-25T06:49:12Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "f8978b264ee075e402c42a7bae8b17a8827c70c1deb6e345a4104e1df459ddd7",
+      "receiptSha256": "4170aa574ef7179e77a6b91f5e1414f133e8982c29e4a0b1d8ae2381a687da39",
+      "zipReceiptSha256": "5c98b0c408f919066d8a103654838f63ad63a2e130333fda7e5fc6efe0e61ab9",
+      "files": 1146,
+      "bytes": 595553898,
+      "toolingCommit": "b13089b702391c275f2505d1a76c87eebb9dcce0",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1146,
+    "bytes": 595553898,
+    "failures": 0,
+    "transportRetries": 0,
+    "verifiedAt": "2026-09-25T06:51:45Z"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app browser",
+    "base": "https://mekhovov.github.io/revealline-archive-77/releases/v0.111.1/site/game/",
+    "observations": [
+      "The archive root opened the preserved v0.111.1 title and Play reached New Journey with 91 missions.",
+      "The native More panel reported VERSION V0.111.1.",
+      "About reported START PLAYING V0.111.1 and RETURN TO GAME at the exact Archive77 origin."
+    ],
+    "scope": "Fresh browser navigation admission only; does not claim physical touch/controller devices, comprehensive offline use, all modes, or mission balance."
+  },
+  "accepted": true
+}

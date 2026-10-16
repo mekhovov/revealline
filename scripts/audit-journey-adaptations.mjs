@@ -4,32 +4,33 @@ import path from 'node:path';
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import { createWholeJourneyChapterSources } from '../game/content-design/whole-journey-candidates.mjs';
 import { createAuthoredJourneyRoute } from '../game/content-design/route.mjs';
+import { AUTHORED_JOURNEY_ROUTE_IDS } from '../game/content-design/mode-href.mjs';
 
 const root = new URL('../', import.meta.url);
 const json = async (relative) => JSON.parse(await readFile(new URL(relative, root), 'utf8'));
+const historicalEditions = [
+  'greybox',
+  'originals',
+  'teaching-originals',
+  'campaign-originals',
+  'actor-originals',
+];
+const spatialEditions = AUTHORED_JOURNEY_ROUTE_IDS.filter((id) => {
+  const match = /^whole-spatial-v([1-9]\d*)$/.exec(id);
+  return match !== null && Number(match[1]) >= 5;
+});
 
 /** Existing declarations only: no second mission registry, inferred matching by
  * name, edited historical observation, asset loading or publication. */
 export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) {
-  if (
-    ![
-      'greybox',
-      'originals',
-      'teaching-originals',
-      'campaign-originals',
-      'actor-originals',
-      'whole-spatial-v5',
-      'whole-spatial-v6',
-    ].includes(edition)
-  )
+  const selectedEdition = spatialEditions.includes(edition);
+  if (!historicalEditions.includes(edition) && !selectedEdition)
     throw new Error('Unknown adaptation content edition.');
   const ledger = await json('docs/research/xposed-journey-ledger.json');
   const chapters = [];
   // Keep declaration-era pins on their original source. Selecting a newer
   // execution edition does not renew the old design rationale or route evidence.
-  const declarationEdition = ['whole-spatial-v5', 'whole-spatial-v6'].includes(edition)
-    ? 'actor-originals'
-    : edition;
+  const declarationEdition = selectedEdition ? 'actor-originals' : edition;
   const selected = createWholeJourneyChapterSources({
     artwork: declarationEdition !== 'greybox',
     roverTeaching: ['teaching-originals', 'campaign-originals', 'actor-originals'].includes(
@@ -71,9 +72,7 @@ export async function loadJourneyAdaptationInputs({ edition = 'greybox' } = {}) 
     ledger,
     chapters,
     contentEdition: edition,
-    ...(['whole-spatial-v5', 'whole-spatial-v6'].includes(edition)
-      ? { selectedSource: createAuthoredJourneyRoute(edition).source }
-      : {}),
+    ...(selectedEdition ? { selectedSource: createAuthoredJourneyRoute(edition).source } : {}),
   };
 }
 
@@ -245,7 +244,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const args = process.argv.slice(2);
     if (args.length && (args.length !== 2 || args[0] !== '--edition'))
       throw new Error(
-        'Usage: node scripts/audit-journey-adaptations.mjs [--edition greybox|originals|teaching-originals|campaign-originals|actor-originals|whole-spatial-v5|whole-spatial-v6]',
+        'Usage: node scripts/audit-journey-adaptations.mjs [--edition greybox|originals|teaching-originals|campaign-originals|actor-originals|whole-spatial-vN] (spatial editions require a registered route with N >= 5; no latest alias)',
       );
     const report = await auditJourneyAdaptations(args.length ? { edition: args[1] } : undefined);
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);

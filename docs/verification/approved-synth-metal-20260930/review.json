@@ -1,0 +1,149 @@
+{
+  "format": "revealline-soundtrack-admission-source-review.v1",
+  "status": "blocked-source-continuation",
+  "scope": "Independent software/source and generated catalogue inspection only. No production approval, listening claim, or release qualification.",
+  "source": {
+    "acceptedMain": "451b82dc13dc8a8545ff964ffb724d3d756ac62a",
+    "inspectedHead": "07b705538dc29b7c0df39c124511e5d169e5648a"
+  },
+  "priorReview": {
+    "path": "docs/verification/native-menu-ui-audio-20260930/review.json",
+    "sha256": "950d4dc78138e5c4ac9c9b529fcc11b0e0b3e631975f0cc44fe3b5ceef2d59c0"
+  },
+  "audioFingerprint": {
+    "orderedInputs": 50,
+    "inputOrder": "Unchanged from priorReview.fingerprints.audio.inputs.",
+    "lastReviewedSHA256": "b3ab688c9818ac2d35aff830a0700b0869c8065c08ebd49c0316cefe3faa7e2d",
+    "baselineBeforeCatalogueGenerationSHA256": "8539c082f9aa6b0b93b0daa00a43f7c3bda15ad8f7c3e1ca575f429a0d1c5e6e",
+    "currentSHA256": "cd9fec42b34c012ed1112d5b73737fed5f7f2eff70b717dc2ea8b61bf39e33d2",
+    "changedSinceLastReview": [
+      {
+        "path": "game/app.mjs",
+        "bytes": 491638,
+        "sha256": "be64dd328c3dbc374cee34d941ff0d4ae019a192e1d134c1b8cb1e97a7156149"
+      },
+      {
+        "path": "game/content/soundtrack-catalogue.mjs",
+        "bytes": 148255,
+        "sha256": "5fa28b6718f0b1963a4b45ca7cb476b077d617a4e891297516538d9e91c3bcb6"
+      }
+    ],
+    "changedByThisAdmission": ["game/content/soundtrack-catalogue.mjs"],
+    "unchangedSinceLastReview": 48,
+    "preexistingApp": {
+      "priorBytes": 473562,
+      "priorSHA256": "b0d71a2b8f5520471daed6559320f99a4c9ae45c1f44f7e1a0df80bf263ca6c5",
+      "priorGitBlob": "0919593152c234f1fe2129071d0b202686e3fd50",
+      "currentGitBlob": "b12818db739c5fa1bb9b96d0b2f4317ca6ad9376",
+      "currentEqualsHEAD": true,
+      "addedLines": 544,
+      "deletedLines": 69,
+      "finding": "Existing Demo/practice changes include audio ownership, cancellation, play/pause/next, style preparation and atomic saving, context switching, update/events routing, and pagehide suspension. They exceed a catalogue-only continuation and remain unqualified here."
+    }
+  },
+  "catalogue": {
+    "previousTracks": 71,
+    "currentTracks": 77,
+    "previousArchives": 1,
+    "currentArchives": 2,
+    "previousCollections": 16,
+    "currentCollections": 18,
+    "previous71TracksExact": true,
+    "previousArchiveExact": true,
+    "previous16CollectionsExact": true,
+    "bundledOpeningMetadataExact": true,
+    "previousTracksCanonicalSHA256": "2cd4f323e5b024f487a23656e5f7825d6ebcbcd33035a0905ca18796c914295d",
+    "previousModule": {
+      "bytes": 135438,
+      "sha256": "b712a11fa82bbd4b2c380a8ed7d50abb14b78642585c1a34f54450f9630f5ed2"
+    },
+    "currentModule": {
+      "bytes": 148255,
+      "sha256": "5fa28b6718f0b1963a4b45ca7cb476b077d617a4e891297516538d9e91c3bcb6"
+    },
+    "additions": [
+      {
+        "id": "builtin.catalog.bogart-vgm.retroracing-nightlife",
+        "sha256": "24bfa4c75bcf80b3a81c3329a414221eebb8db650309aeb14935104d7ad36f70",
+        "bytes": 5199456
+      },
+      {
+        "id": "builtin.catalog.davidkbd.agony-space-deep",
+        "sha256": "991084035ebf50e3a27833148f57de8db7930e54b6ab549162f825efcfeae94d",
+        "bytes": 9048860
+      },
+      {
+        "id": "builtin.catalog.davidkbd.god-of-darkness",
+        "sha256": "ccd3b29e315ca6db5871f709baeea9b9a08bc1d5915382f44338d592402e32c0",
+        "bytes": 6281970
+      },
+      {
+        "id": "builtin.catalog.davidkbd.suffocation",
+        "sha256": "c3efaac83f71f4fcd9d2e5d3a752507893c1950ac5db6be7bced5e1bb71e2fae",
+        "bytes": 6880488
+      },
+      {
+        "id": "builtin.catalog.yannz.pixel-damnation",
+        "sha256": "a4f87f13d432a75d9bd852f88ab575ad1b0bec050e23650cef1c817ad4328bde",
+        "bytes": 4302515
+      },
+      {
+        "id": "builtin.catalog.yannz.revenges-waiting",
+        "sha256": "a5d0198843a7cef37f1919a094e99dc7b33c5fcac799f265eeaac647db9effec",
+        "bytes": 1538133
+      }
+    ],
+    "finding": "Six distinct optional remote additions: one Synth and five Metal. Gameplay-video permission and Content ID remain unknown. Existing opening/default implementation and bundled registration are unchanged. runner2088 is absent from these additions."
+  },
+  "baselineProduction": {
+    "revision": 104,
+    "audioRevision": 56,
+    "assets": 2686,
+    "themes": 105,
+    "slots": 335,
+    "payloads": 132,
+    "path": "authoring/library/fpv-field-kit/production.rltheme",
+    "gitBlob": "d0a9dafe4908c577e0a8e4ad71eb6e2c2b2844d4",
+    "bytes": 8738394,
+    "sha256": "4261eeef1c68f604ceff393968ea4fc98345fa5847e0acbeb813c472ab2fcff1",
+    "fingerprintMatchesCurrentSources": false
+  },
+  "inMemorySuccessor": {
+    "persisted": false,
+    "method": "createFieldKitProduction plus retainFieldKitProductionHistory; inspection in memory only, without compiler, full build, or ledger writes.",
+    "revision": 105,
+    "appendedAssets": 67,
+    "groups": {
+      "motion": {
+        "assets": 7,
+        "stage": "source"
+      },
+      "team": {
+        "assets": 37,
+        "stage": "source"
+      },
+      "equipment": {
+        "assets": 5,
+        "stage": "produced"
+      },
+      "effects": {
+        "assets": 10,
+        "stage": "source"
+      },
+      "audio": {
+        "assets": 8,
+        "stage": "source",
+        "revision": 57
+      }
+    },
+    "preexistingNonAudioChanges": 59,
+    "finding": "The eight procedural audio recipe IDs remain unchanged, but their source provenance requires new review. The 59 non-audio successors arise from pre-existing source drift; this soundtrack branch does not change their inputs. This is not an eight-asset-only production continuation."
+  },
+  "decision": "Keep the admission PR draft. Preserve the old reviewed fingerprint, production ledger, review records, and predecessor oracles. Do not mark the current audio closure reviewed or regenerate unrelated production successors as part of this metadata admission.",
+  "limitations": [
+    "The parent reported a stale-ledger failure before catalogue generation; independent source hashing confirms that baseline mismatch.",
+    "No new full-player, Demo audio ownership, full-track, repeated-session, warning-audibility, physical-device, or public game-release acceptance.",
+    "No producer approval digest, previous review, oracle, production ledger, or compiled presentation was changed by this review.",
+    "Exact source changes reopen these findings."
+  ]
+}

@@ -1,0 +1,150 @@
+TAP version 13
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 1 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.756083
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 2 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.068334
+  ...
+# Subtest: modal and controller inputs stay blocked until a physical neutral observation
+ok 3 - modal and controller inputs stay blocked until a physical neutral observation
+  ---
+  duration_ms: 0.294584
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 4 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.09075
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 5 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 2.447083
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 6 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 0.317333
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 7 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.116458
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 8 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.24625
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 9 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 9.091666
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 10 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 3.464875
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 11 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 0.537333
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 12 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.253583
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 13 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 0.352041
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 14 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.4985
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 15 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.355667
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 16 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.200834
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 17 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.055583
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 18 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 0.637291
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 19 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 2.073541
+  ...
+# Subtest: audio tap branches after shared master and only disconnects its owned destination
+ok 20 - audio tap branches after shared master and only disconnects its owned destination
+  ---
+  duration_ms: 0.798209
+  ...
+# Subtest: unavailable audio capture releases its destination without touching normal playback
+ok 21 - unavailable audio capture releases its destination without touching normal playback
+  ---
+  duration_ms: 0.068791
+  ...
+# Subtest: review capture clones game audio, keeps its limit and releases clones and tap once on completion
+ok 22 - review capture clones game audio, keeps its limit and releases clones and tap once on completion
+  ---
+  duration_ms: 0.571041
+  ...
+# Subtest: review audio is owned and released after cancel
+ok 23 - review audio is owned and released after cancel
+  ---
+  duration_ms: 0.664667
+  ...
+# Subtest: review audio is owned and released after error
+ok 24 - review audio is owned and released after error
+  ---
+  duration_ms: 0.135125
+  ...
+# Subtest: review audio is owned and released after oversize
+ok 25 - review audio is owned and released after oversize
+  ---
+  duration_ms: 2.182667
+  ...
+# Subtest: review audio is owned and released after constructor
+ok 26 - review audio is owned and released after constructor
+  ---
+  duration_ms: 0.082041
+  ...
+# Subtest: review audio is owned and released after start
+ok 27 - review audio is owned and released after start
+  ---
+  duration_ms: 0.138083
+  ...
+# Subtest: review audio is owned and released after attach
+ok 28 - review audio is owned and released after attach
+  ---
+  duration_ms: 0.169542
+  ...
+1..28
+# tests 28
+# suites 0
+# pass 28
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 207.009333

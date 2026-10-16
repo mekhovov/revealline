@@ -1,0 +1,70 @@
+{
+  "format": "snake-final-acceptance-validation.v1",
+  "checkedAt": "2026-10-14T04:36:35.688117+00:00",
+  "sourceRevision": "e80c772b6263180eede1b563ca3c47a08a07c65a",
+  "sourceCleanAtBuild": true,
+  "build": {
+    "publicationProfile": "main-pages",
+    "version": "0.151.1",
+    "files": 3193,
+    "distributionSha256": "8cf763329515b6d5e77dd97b875a6a2d7b3ff6b30362fafa7b09bcb08984a8e5",
+    "archiveIntegrity": "passed",
+    "disposableOutputRemoved": true
+  },
+  "combinedRegression": {
+    "tests": 390,
+    "passed": 390,
+    "failed": 0,
+    "sourceRevision": "186c7a1ea5f13965f72078b3bc2cd01352c8b532"
+  },
+  "finalHostRegression": {
+    "tests": 98,
+    "passed": 98,
+    "failed": 0,
+    "sourceRevision": "e80c772b6263180eede1b563ca3c47a08a07c65a"
+  },
+  "optionalPackageTests": {
+    "tests": 16,
+    "passed": 16,
+    "failed": 0
+  },
+  "checks": [
+    "source lint and formatting",
+    "git diff whitespace",
+    "game validation",
+    "English/Ukrainian localization",
+    "canonical reaction runtime",
+    "canonical play shell",
+    "canonical optional worker",
+    "canonical FPV world visuals",
+    "presentation metadata"
+  ],
+  "browser": {
+    "livelyStartingBoards": 240,
+    "toyboxWorldChapters": 6,
+    "viewportWidths": [1200, 320],
+    "mobileHorizontalOverflow": false,
+    "consoleErrors": 0,
+    "physicalDeviceTesting": false
+  },
+  "grading": {
+    "gradedSetups": 375,
+    "completionOnlySetups": 1065,
+    "newBudgets": 0,
+    "independentPilotCandidates": 5,
+    "differentJournals": 0
+  },
+  "disk": {
+    "fullArchiveInclusiveBuild": "failed-ENOSPC; staging automatically removed",
+    "validatedProductionProfile": "main-pages",
+    "verifiedDisposableBuildCopiesRemovedBytes": 1003166747,
+    "preserved": "source, Git objects/refs/commits, unmanifested files and build manifests"
+  },
+  "deferredByUser": ["physical phones/controllers and thermal qualification", "player feedback"],
+  "limits": [
+    "No enjoyment claim from screenshots or proofs",
+    "Not all 960 board/look combinations individually inspected",
+    "Archive-inclusive full distribution was not freshly completed; Main Pages and optional packages are verified",
+    "Additional higher grades intentionally require further evidence"
+  ]
+}

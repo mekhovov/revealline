@@ -26,7 +26,16 @@ export function resolveSoundtrackArchives(value) {
   );
   const ids = new Set();
   for (const archive of entries) {
-    exactKeys(archive, ['id', 'baseURL', 'inventorySha256'], 'soundtrack archive admission');
+    exactKeys(
+      archive,
+      [
+        'id',
+        'baseURL',
+        'inventorySha256',
+        ...(Object.hasOwn(archive, 'inventoryPath') ? ['inventoryPath'] : []),
+      ],
+      'soundtrack archive admission',
+    );
     required(
       stableId(archive.id) && !ids.has(archive.id) && hashValid(archive.inventorySha256),
       'Invalid soundtrack archive identity or inventory pin.',
@@ -34,8 +43,16 @@ export function resolveSoundtrackArchives(value) {
     ids.add(archive.id);
     required(
       typeof archive.baseURL === 'string' &&
-        /^https:\/\/mekhovov\.github\.io\/revealline-soundtracks-[0-9]+\/$/.test(archive.baseURL),
-      'Soundtrack archive must use its admitted GitHub Pages owner and path.',
+        /^https:\/\/mekhovov\.github\.io\/revealline-soundtracks(?:-[0-9]+)?\/(?:batches\/[a-z0-9][a-z0-9-]{0,63}\/)?$/.test(
+          archive.baseURL,
+        ) &&
+        archive.baseURL === new URL(archive.baseURL).href,
+      'Soundtrack archive must use its admitted canonical GitHub Pages owner and path.',
+    );
+    required(
+      archive.inventoryPath === undefined ||
+        /^admissions\/[a-z0-9][a-z0-9-]{0,63}\.json$/.test(archive.inventoryPath),
+      'Soundtrack archive inventory path is invalid.',
     );
   }
   return freezeSoundtrack(entries);
@@ -93,7 +110,7 @@ export function createSoundtrackArchiveResolver({
       let inventory = verified.get(archive.id);
       if (!inventory) {
         const blob = await readSoundtrackDownload(
-          soundtrackDownloadURL('inventory.json', archive.baseURL),
+          soundtrackDownloadURL(archive.inventoryPath ?? 'inventory.json', archive.baseURL),
           {
             fetch: request,
             signal,

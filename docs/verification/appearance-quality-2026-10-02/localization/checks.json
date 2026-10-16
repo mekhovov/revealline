@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-02",
+  "checks": {
+    "companyCommunityLocalization": {
+      "passed": 66,
+      "failed": 0
+    },
+    "actualVersusControllerLabels": {
+      "passed": 1,
+      "failed": 0
+    },
+    "i18nCheck": {
+      "result": "passed",
+      "messages": 12148,
+      "references": 8877
+    },
+    "syntax": "passed",
+    "eslint": "passed",
+    "format": "passed",
+    "runtimeNoticeLocalization": {
+      "passed": 6,
+      "failed": 0,
+      "scope": "Missing exact family, stylesheet failure, session-only/read-only storage, main/SIM storage failure, live EN/UK status, stable snapshot/preferences/writes, disposal cleanup, exact unknown diagnostics."
+    },
+    "noticeHostRegression": {
+      "passed": 28,
+      "failed": 0,
+      "skipped": 0,
+      "includesRuntimeNoticeLocalization": true,
+      "evidence": "notice-host-regression.tap"
+    },
+    "finalNoticeSyntax": "passed",
+    "finalNoticeEslint": "passed",
+    "finalNoticeFormat": "passed"
+  },
+  "scope": "Production-entry finite DOM and emulated controller host; no physical device or pixel-layout claim.",
+  "sourceSha256": {
+    "authoring/company-studio/studio.mjs": "b0bc3c06b6c289e456388c5d2e65317df088a839f9c7f6bdf785a8f53266888e",
+    "game/ui/theme-family-controls.mjs": "f2d9c687d02f8dc8f8bd57bc10bc66515851552929a3602f8abaa243db603d8e",
+    "game/test/company-studio-host.test.mjs": "2929875fc6189210385f3376f72d4839ae93f140a6e23625dbda8dba625b3448",
+    "game/test/theme-family-host.test.mjs": "ed0991dc391dd58a170611f30b99ba24bf56421daddc28faec9f34a93b594e9a",
+    "game/locales/en/tools.json": "45572db327e6b727951cf75e46fb581fe50de5ad988b29098aa4ce7ea0484aa7",
+    "game/locales/uk/tools.json": "4584b7843d098b0635c59767904d76bf96b695d307dcb8797fa56294825858cd",
+    "game/i18n/catalogs.mjs": "757e40d006b846399ad9fe6b5b3705ce7d10d352bf73889bcc93ff376abfa4e3"
+  },
+  "finalNoticeSourceSha256": {
+    "game/presentation/theme-host.mjs": "f6a591589131d4b7d6f6a78fd6a6e2082f985d0864772680b355e9c5acb0e7f3",
+    "game/test/theme-notices.test.mjs": "c90cd6f497ac21db720b4c8c6527b1b6ba89cfb42f316b08bfd19d9a069f2425",
+    "game/locales/en/interface.json": "f14071df66af211de105aca7cf67995baa62fae3dfb5a39d3595fce18b42332a",
+    "game/locales/uk/interface.json": "9434c14bad0276b05eae049c3e93ac202ab4e9a80b7b221aff036b551be6f181",
+    "game/i18n/catalogs.mjs": "439c29f863f4f22ce9d44cc1c4a382e2d53f5395ff7f0a5f57c54d1e822fc2dd"
+  },
+  "finalSourceReview": "No unresolved critical localization/accessibility regression found in newly introduced appearance controls, scope labels and host notices. This is a focused source and modeled-host audit, not all-screen physical-device qualification."
+}

@@ -379,6 +379,25 @@ test('rVFC captures inside callback with observed time distinct from requested/c
   source.dispose();
 });
 
+test('a stalled rVFC falls back to the decoded seeked frame without playing video', async () => {
+  const h = harness(),
+    source = await h.open(),
+    { promise, video } = await h.capturing(source, 2.1);
+  video.finishSeek(2.09);
+  const fallback = [...h.pendingTimers.values()].at(-1);
+  assert.equal(typeof fallback, 'function');
+  fallback();
+  const result = await promise;
+  assert.equal(result.capture.requestedTime, 2.1);
+  assert.equal(result.capture.observedMediaTime, null);
+  assert.equal(result.capture.playheadTime, 2.09);
+  assert.equal(result.capture.decodedFrame, null);
+  assert.equal(result.capture.timingEvidence, 'playhead-estimate');
+  assert.equal(h.canvases[0].calls[0].inFrame, false);
+  h.clean();
+  source.dispose();
+});
+
 test('initial frame at zero can arrive before metadata promise resumes without seeking or play', async () => {
   const h = harness(),
     source = await h.open(),

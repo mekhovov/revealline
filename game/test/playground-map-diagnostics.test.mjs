@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { mapDiagnosticDescriptions, renderMapDiagnostics } from '../playground/map-diagnostics.mjs';
 
 const level = (overrides = {}) => ({
@@ -48,12 +49,20 @@ test('map inspection exposes every zone and authored hangar with their independe
   assert.deepEqual(source, before, 'Reading diagnostics cannot alter the working level.');
   assert.deepEqual(
     mapDiagnosticDescriptions(source, { locale: 'uk-UA' }),
-    mapDiagnosticDescriptions(source),
-    'Untranslated locales keep the same complete English information.',
+    [
+      'Зона сигналу orchard: x 2, y 4; 8 × 6 клітинок; швидкість 40%; прискорення дозволено; здібність дозволено.',
+      'Зона сигналу relay: x 9, y 3; 0,5 × 2 клітинок; швидкість 100%; прискорення заблоковано; здібність заблоковано.',
+      'Ангар yard: x 10,5, y 20,5; радіус 2 клітинок.',
+      'Ангар gate: x 18,5, y 4,5; радіус 0,25 клітинок.',
+    ],
+    'Ukrainian keeps each authored ID, mechanic and exact coordinate.',
   );
 });
 
-test('diagnostic renderer creates text-only rows in the existing host list', () => {
+test('diagnostic renderer creates text-only rows in the existing host list', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
   const created = [];
   const doc = {
     createElement(tag) {
@@ -79,4 +88,27 @@ test('diagnostic renderer creates text-only rows in the existing host list', () 
     list.children.map((row) => row.textContent),
     ['No signal zones.', 'No hangars; class switching is disabled.'],
   );
+});
+
+test('map diagnostic language changes preserve row identity and the unsaved working level', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const source = level({ hangars: [{ id: 'my-yard', x: 10.5, y: 20.5 }] });
+  const before = JSON.stringify(source);
+  const list = {
+    ownerDocument: { createElement: () => ({ textContent: '' }) },
+    replaceChildren(...children) {
+      this.children = children;
+    },
+  };
+  renderMapDiagnostics(list, source);
+  const rows = [...list.children];
+  setLocale('uk', { persist: false });
+  assert.equal(list.children[0].textContent, 'Немає зон сигналу.');
+  assert.equal(list.children[1].textContent, 'Ангар my-yard: x 10,5, y 20,5; радіус 2 клітинок.');
+  assert.deepEqual(list.children, rows);
+  assert.equal(JSON.stringify(source), before);
+  setLocale('en', { persist: false });
+  assert.equal(list.children[0].textContent, 'No signal zones.');
 });

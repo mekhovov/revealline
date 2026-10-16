@@ -1,3 +1,5 @@
+import { t } from '../../game/i18n/index.mjs';
+import { motionText, motionTargetText } from './copy.mjs';
 const WIDTH = 48;
 const HEIGHT = 36;
 const INSET = 0.2;
@@ -13,8 +15,8 @@ export function describeAbilityLabels(state, config, family) {
       kind: 'haze',
       x: area.x + area.width / 2,
       y: area.y + 0.8,
-      canvasText: vocabulary.hazeLabel,
-      text: vocabulary.hazeLabel,
+      canvasText: motionText(config, vocabulary, 'hazeLabel'),
+      text: motionText(config, vocabulary, 'hazeLabel'),
       concealed: false,
       status: null,
     })),
@@ -23,13 +25,14 @@ export function describeAbilityLabels(state, config, family) {
       kind: 'pad',
       x: pad.x,
       y: pad.y + pad.radius + 0.65,
-      canvasText: `${vocabulary.supplyLabel} · R`,
-      text: vocabulary.supplyLabel,
+      canvasText: `${motionText(config, vocabulary, 'supplyLabel')} · R`,
+      text: motionText(config, vocabulary, 'supplyLabel'),
       concealed: false,
       status: null,
     })),
     ...state.targets.map((target) => {
       const concealed = target.kind === 'note' && !(target.revealedUntil > state.time);
+      const text = concealed ? t('common:preview.concealedNote') : motionTargetText(config, target);
       return {
         key: `target:${target.id}`,
         kind: target.kind,
@@ -37,10 +40,10 @@ export function describeAbilityLabels(state, config, family) {
         y: target.y + (concealed ? 0.16 : 1.1),
         canvasText: concealed
           ? '?'
-          : target.kind === 'ground'
+          : target.kind === 'ground' && text === target.label
             ? target.label.replace('Tile ', '')
-            : target.label,
-        text: concealed ? 'Concealed note' : target.label,
+            : text,
+        text,
         concealed,
         status: target.status,
       };

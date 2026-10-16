@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "c8ba03a56b77e04d64b376db7c8242bebb2d1ba0",
+  "id": "desert-expedition-study",
+  "revision": "landmarks-r1",
+  "format": "FPVRegionalDelivery.v2",
+  "pin": {
+    "bytes": 329271,
+    "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7"
+  },
+  "files": 2062,
+  "payloadBytes": 47835247,
+  "totalBytes": 48164518,
+  "limitBytes": 67108864,
+  "playerAdmission": false,
+  "terrainManifest": {
+    "path": "terrain/region.json",
+    "bytes": 424747,
+    "sha256": "e2e67f498c6b4e64d70e550952ebd9a13dd657488dad3e6c2fb545892023925e"
+  },
+  "sceneryManifest": {
+    "path": "scenery/region.json",
+    "bytes": 50892,
+    "sha256": "29a7d69d580ba363901c84c356f5f3166f0d94b43150d9352bd49429ffbbd2fc"
+  }
+}

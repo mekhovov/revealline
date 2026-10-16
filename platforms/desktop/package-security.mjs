@@ -72,9 +72,9 @@ export const PACKAGED_FUSES = Object.freeze({
 });
 
 export function packagedExecutable(directory, platform = process.platform) {
-  if (platform === 'darwin') return path.join(directory, 'Reveal Line.app');
-  if (platform === 'win32') return path.join(directory, 'Reveal Line.exe');
-  if (platform === 'linux') return path.join(directory, 'Reveal Line');
+  if (platform === 'darwin') return path.join(directory, 'FPV LINE.app');
+  if (platform === 'win32') return path.join(directory, 'FPV LINE.exe');
+  if (platform === 'linux') return path.join(directory, 'FPV LINE');
   throw new Error(`Unsupported desktop packaging platform: ${platform}`);
 }
 

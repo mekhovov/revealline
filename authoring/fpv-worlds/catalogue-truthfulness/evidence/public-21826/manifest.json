@@ -1,0 +1,48 @@
+{
+  "format": "FPVPublicEntryEvidence.v1",
+  "sourceRevision": "21826c460e80fa4e7fa47ec8e6ba9f98f75beea4",
+  "observedBy": "Parent agent using native browser controls",
+  "scope": "Matching deployment/build markers; briefing to deliberate zero-throttle Arm, active2.4s, paused2.5s and Continue. Normal public entry only; not a published Reservoir row, new component matrix, hardware or offline qualification.",
+  "files": [
+    {
+      "path": "fpv-public-current-deployment.json.gz",
+      "sourcePath": "/tmp/fpv-public-current-deployment.json",
+      "bytes": 308,
+      "sha256": "c2a79c54f9986c8436291d5422ed96da599e7f02232c050e18d6c78e4938170f",
+      "storedBytes": 226,
+      "storedSHA256": "2e11dca89d3ee3b5a47748ab4cb6a957119bbeab9a6333027fb5f8951926040c"
+    },
+    {
+      "path": "fpv-public-current-build.json.gz",
+      "sourcePath": "/tmp/fpv-public-current-build.json",
+      "bytes": 143,
+      "sha256": "4ed20d89dea6bc3dfd23ab9c90f072c38e606f23e32147ca8fe8a35a2461d798",
+      "storedBytes": 133,
+      "storedSHA256": "31e7debe3a497ff01f156ae64d88cfbe74d2a7f7092109ec49dd7cc6492bde79"
+    },
+    {
+      "path": "fpv-public-21826-active.txt.gz",
+      "sourcePath": "/tmp/fpv-public-21826-active.txt",
+      "bytes": 647,
+      "sha256": "5df1fe2a7324e909c6b6dc7eb68a721922c66027e4bd0fb6c8fbcc75bf03fc49",
+      "storedBytes": 364,
+      "storedSHA256": "87b3ed0c8cfd7ebba861148f695029ddfbbd09ca167e8bd8457800ddf72cf988"
+    },
+    {
+      "path": "fpv-public-21826-active.png",
+      "sourcePath": "/tmp/fpv-public-21826-active.png",
+      "bytes": 86165,
+      "sha256": "c290a59d7da01768eca13ac942e2d8e2389ea85a5c4b90c505b171447106d84c",
+      "storedBytes": 86165,
+      "storedSHA256": "c290a59d7da01768eca13ac942e2d8e2389ea85a5c4b90c505b171447106d84c"
+    },
+    {
+      "path": "fpv-public-21826-paused.txt.gz",
+      "sourcePath": "/tmp/fpv-public-21826-paused.txt",
+      "bytes": 1797,
+      "sha256": "04c734d5d0636cd4698123422091dcaa639d89a9d699e717d6f986d863f1f1d8",
+      "storedBytes": 767,
+      "storedSHA256": "e5ac0ad45cd18417ea34d050b655d7caeba75b7605aca0fd8704a432e1f0f3e7"
+    }
+  ]
+}

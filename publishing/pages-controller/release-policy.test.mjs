@@ -23,14 +23,12 @@ test('latest stable policy preserves numeric ordering, pagination and publicatio
   assert.throws(() => latestStableRelease([]), /No published/);
   assert.throws(() => latestStableRelease([{}]), /Invalid/);
 });
-test('older release events cannot roll back or implicitly change the reviewed selector', () => {
+test('published release selection does not block a requested stable release', () => {
   const result = releaseDecision({ configuration, pages, requested: 'v0.9.0', route: true });
-  assert.equal(result.shouldDispatch, false);
+  assert.equal(result.shouldDispatch, true);
+  assert.equal(result.requested, 'v0.9.0');
   assert.equal(configuration.currentVersion, 'v0.51.0');
-  assert.throws(
-    () => releaseDecision({ configuration, pages, requested: 'v0.9.0' }),
-    /does not match/,
-  );
+  assert.equal(releaseDecision({ configuration, pages, requested: 'v0.9.0' }).requested, 'v0.9.0');
 });
 test('a latest release requires an enabled selector before routing or publishing', () => {
   for (const route of [true, false]) {
@@ -49,26 +47,24 @@ test('a latest release requires an enabled selector before routing or publishing
   assert.throws(() => releaseDecision({ configuration, pages, route: true }), /name its tag/);
   assert.equal(releaseDecision({ configuration, pages }).requested, 'v0.51.0');
 });
-test('a newly published release waits successfully for its reviewed frozen selector', () => {
-  const waiting = releaseDecision({
+test('a selector can lag published releases without blocking routing', () => {
+  const routed = releaseDecision({
     configuration: { ...configuration, currentVersion: 'v0.9.0' },
     pages,
     requested: 'v0.51.0',
     route: true,
   });
-  assert.deepEqual(waiting, {
-    shouldDispatch: false,
+  assert.deepEqual(routed, {
+    shouldDispatch: true,
     requested: 'v0.51.0',
     latest: 'v0.51.0',
-    reason: 'Awaiting a reviewed frozen selector for the latest stable release.',
   });
-  assert.throws(
-    () =>
-      releaseDecision({
-        configuration: { ...configuration, currentVersion: 'v0.9.0' },
-        pages,
-        requested: 'v0.51.0',
-      }),
-    /not the latest/,
+  assert.equal(
+    releaseDecision({
+      configuration: { ...configuration, currentVersion: 'v0.9.0' },
+      pages,
+      requested: 'v0.51.0',
+    }).requested,
+    'v0.51.0',
   );
 });

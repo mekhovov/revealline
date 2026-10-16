@@ -1,3 +1,5 @@
+import { createControllerSession } from '../couch/controller-session.mjs';
+import { tx15StickProfile } from '../couch/tx15-presets.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachCouchInput } from '../couch/couch-input.mjs';
@@ -80,7 +82,10 @@ const makePad = (index) => ({
   axes: [0, 0],
   buttons: Array.from({ length: 16 }, () => ({ pressed: false })),
 });
-function fixture(t, { tap = false, onStop = () => {}, onPause = () => {}, initialSlots } = {}) {
+function fixture(
+  t,
+  { tap = false, onStop = () => {}, onPause = () => {}, initialSlots, controllerSession } = {},
+) {
   const win = new Target(),
     doc = new Target(win),
     arena = new Target(win),
@@ -110,6 +115,7 @@ function fixture(t, { tap = false, onStop = () => {}, onPause = () => {}, initia
     slots = [];
   const input = attachCouchInput({
     initialSlots,
+    controllerSession,
     window: win,
     document: doc,
     arena,
@@ -555,4 +561,31 @@ test('real core gets one scan per held keyboard press and a fresh scan after rel
   f.input.poll();
   stepDuel(match, f.input.consume());
   assert.equal(match.runs[0].events.filter((e) => e.type === 'ability.used').length, 1);
+});
+
+test('shared-radio seats reach both couch gameplay commands without cross-control', (t) => {
+  const pad = {
+    index: 0,
+    id: 'TX15 Joystick (Vendor: 1209 Product: 4f54)',
+    mapping: '',
+    connected: true,
+    axes: Array(8).fill(0),
+    buttons: Array.from({ length: 24 }, () => ({ value: 0 })),
+  };
+  const session = createControllerSession({ eventTarget: null });
+  t.after(() => session.dispose());
+  session.sample([pad]);
+  session.split(0, [tx15StickProfile(pad), tx15StickProfile(pad, 'left')]);
+  const f = fixture(t, { controllerSession: session });
+  session.sample([pad], { active: true });
+  f.input.poll();
+  pad.axes[0] = 1;
+  session.sample([pad], { active: true });
+  let commands = f.input.poll();
+  assert.equal(commands[0].direction, 'right');
+  assert.equal(commands[1].direction, null);
+  pad.axes[2] = 1;
+  session.sample([pad], { active: true });
+  commands = f.input.poll();
+  assert.equal(commands[1].direction, 'up');
 });

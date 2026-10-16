@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { attachCouchMusicHost } from '../couch/couch-music-host.mjs';
+import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
@@ -9,7 +10,17 @@ import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
 import { fixture, structuralProbe, memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 
 const recording = await fixture('menu-gesture');
-async function setup(t, { prefix = 'coop', muted = false, volume = 0.65, ready = true } = {}) {
+async function setup(
+  t,
+  {
+    prefix = 'coop',
+    muted = false,
+    volume = 0.65,
+    ready = true,
+    twoTracks = false,
+    creatorSource,
+  } = {},
+) {
   const doc = new Document(),
     audio = audioHarness(),
     memory = memoryIndexedDB(),
@@ -20,11 +31,19 @@ async function setup(t, { prefix = 'coop', muted = false, volume = 0.65, ready =
   });
   const library = {
     ...recording.library,
+    tracks: recording.library.tracks.map((track) =>
+      creatorSource === undefined
+        ? track
+        : {
+            ...track,
+            rights: { ...track.rights, source: creatorSource },
+          },
+    ),
     playlists: [
       {
         id: 'menu.test',
         title: 'Menu recording',
-        trackIds: [recording.track.id],
+        trackIds: [recording.track.id, ...(twoTracks ? [BUILTIN_SOUNDTRACK_TRACKS[0].id] : [])],
         order: 'ordered',
         repeat: 'all',
       },
@@ -53,11 +72,23 @@ async function setup(t, { prefix = 'coop', muted = false, volume = 0.65, ready =
   const pause = doc.createElement('button');
   pause.id = `${prefix}-pause`;
   pause.textContent = 'Pause';
-  doc.body.append(pause);
+  const start = doc.createElement('button'),
+    resume = doc.createElement('button');
+  start.id = `${prefix}-start`;
+  resume.id = `${prefix}-resume`;
+  doc.body.append(start, resume, pause);
+  if (creatorSource) {
+    const landing = doc.createElement('span');
+    landing.id = `${prefix}-landing-credit`;
+    landing.setAttribute('data-landing-song', '');
+    doc.body.append(landing);
+  }
   const host = attachCouchMusicHost({
+    onlineCatalogueDownload: { fetch: async () => new Response(null, { status: 503 }) },
     document: doc,
     root: doc.body,
     prefix,
+    quickAfter: [`${prefix}-start`, `${prefix}-resume`],
     soundscape: audio.soundscape,
     audioMaster: master,
   });
@@ -80,6 +111,21 @@ async function setup(t, { prefix = 'coop', muted = false, volume = 0.65, ready =
     gesture: (type = 'pointerdown', extra = {}) =>
       doc.body.emit(type, { isTrusted: true, ...extra }),
   };
+}
+
+for (const prefix of ['race', 'coop']) {
+  test(`${prefix}: effects fader controls the existing soundscape without changing shared master sound`, async (t) => {
+    const f = await setup(t, { prefix });
+    const master = f.master.snapshot(),
+      beforeMusic = f.audio.soundscape.settings.music,
+      effects = f.doc.getElementById(`${prefix}-music-effects-volume`);
+    assert.equal(effects.value, String(f.audio.soundscape.settings.sfx));
+    effects.value = '0.23';
+    effects.emit('input');
+    assert.equal(f.audio.soundscape.settings.sfx, 0.23);
+    assert.equal(f.audio.soundscape.settings.music, beforeMusic);
+    assert.deepEqual(f.master.snapshot(), master);
+  });
 }
 
 for (const prefix of ['race', 'coop'])
@@ -128,6 +174,43 @@ test('menu activation respects mute, zero volume, hidden pages, music controls a
   assert.equal(await f.host.session.start(), false);
   assert.equal(await f.host.session.play(), true);
 });
+
+for (const prefix of ['race', 'coop'])
+  test(`${prefix}: trusted creator-link gestures do not start or retry remembered music`, async (t) => {
+    const f = await setup(t, { prefix, creatorSource: 'https://composer.example/trusted-gesture' });
+    const before = f.master.snapshot(),
+      writes = f.memory.allPuts.length;
+    const creatorGestures = () => {
+      const landing = f.doc.getElementById(`${prefix}-landing-credit`);
+      const link = landing.querySelector('a');
+      assert.ok(link?.closest('.music-creator-links'));
+      assert.equal(
+        landing.parentNode,
+        f.doc.body,
+        'landing credit is outside all audio-control scopes',
+      );
+      const nested = f.doc.createElement('span');
+      link.append(nested);
+      link.focus();
+      for (const type of ['pointerdown', 'keydown', 'click'])
+        nested.emit(type, { isTrusted: true, key: 'Enter', code: 'Enter' });
+    };
+    creatorGestures();
+    assert.equal(f.audio.media.plays, 0);
+    f.audio.media.rejectPlay = new DOMException('Gesture refused', 'NotAllowedError');
+    f.gesture();
+    await settleUntil(() => f.host.session.snapshot().needsPlayGesture);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(f.audio.media.plays, 1);
+    f.audio.media.rejectPlay = null;
+    creatorGestures();
+    assert.equal(f.audio.media.plays, 1, 'creator links cannot retry blocked playback');
+    f.gesture();
+    await settleUntil(() => f.host.player.snapshot().playing);
+    assert.equal(f.audio.media.plays, 2, 'ordinary menu gestures still start playback');
+    assert.deepEqual(f.master.snapshot(), before);
+    assert.equal(f.memory.allPuts.length, writes);
+  });
 
 test('denied menu permission retries only on another trusted gesture and cannot change master intent', async (t) => {
   const f = await setup(t),
@@ -185,3 +268,67 @@ for (const prefix of ['race', 'coop'])
     assert.equal(pause.getAttribute('data-track-caption'), `Paused: ${recording.track.title}`);
     assert.equal(f.doc.activeElement, pause);
   });
+
+for (const prefix of ['race', 'coop']) {
+  test(`${prefix}: quick buttons and B/N preserve music-only Pause through session Start and focus`, async (t) => {
+    const f = await setup(t, { prefix, twoTracks: true });
+    const toggle = f.doc.getElementById(`${prefix}-quick-music-0-toggle`);
+    const master = f.master.snapshot(),
+      writes = f.memory.allPuts.length;
+    const resume = f.doc.getElementById(`${prefix}-resume`);
+    resume.focus();
+    assert(f.host.contains(toggle), 'Versus controller acceptance includes the quick row');
+    toggle.emit('pointerdown', { isTrusted: true });
+    assert.equal(f.audio.media.plays, 0, 'Pointer capture must not autoplay before the control');
+    toggle.click();
+    assert.equal(f.audio.media.plays, 1, 'Direct activation reaches media before awaiting');
+    await settleUntil(() => f.host.player.snapshot().playing);
+    toggle.click();
+    assert.equal(f.host.session.snapshot().transportChoice, 'pause');
+    assert.equal(await f.host.session.start(), false);
+    const plays = f.audio.media.plays;
+    f.doc.body.emit('keydown', { code: 'KeyN', key: 'n' });
+    await settleUntil(() => f.host.player.snapshot().track?.id === BUILTIN_SOUNDTRACK_TRACKS[0].id);
+    assert.equal(f.host.player.snapshot().desired, false);
+    assert.equal(f.host.player.snapshot().playing, false);
+    assert.equal(f.audio.media.plays, plays);
+    f.host.suspend();
+    await f.host.resume();
+    assert.equal(f.host.player.snapshot().desired, false);
+    assert.equal(f.doc.activeElement, resume);
+    assert.deepEqual(f.master.snapshot(), master);
+    assert.equal(f.memory.allPuts.length, writes);
+    f.doc.body.emit('keydown', { code: 'KeyB', key: 'b' });
+    await settleUntil(() => f.host.player.snapshot().playing);
+    assert.equal(f.host.session.snapshot().transportChoice, 'play');
+  });
+}
+
+test('language changes preserve the remembered music session, volume focus and library writes', async (context) => {
+  const { getLocale, setLocale } = await import('../i18n/index.mjs');
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const f = await setup(context, { prefix: 'race' });
+  const volume = f.doc.getElementById('race-music-volume');
+  volume.focus();
+  volume.value = '0.37';
+  const session = f.host.session.snapshot();
+  const playback = f.host.player.snapshot();
+  const writes = f.memory.allPuts.length;
+  const plays = f.audio.media.plays;
+  const title = f.doc.getElementById('race-music-title');
+  const button = f.doc.getElementById('race-music-play');
+  setLocale('uk', { persist: false });
+  assert.equal(title.textContent, 'Музика');
+  assert.notEqual(button.textContent, 'Play music');
+  assert.equal(volume.value, '0.37');
+  assert.equal(f.doc.activeElement, volume);
+  assert.deepEqual(f.host.session.snapshot(), session);
+  assert.deepEqual(f.host.player.snapshot(), playback);
+  assert.equal(f.memory.allPuts.length, writes);
+  assert.equal(f.audio.media.plays, plays);
+  setLocale('en', { persist: false });
+  assert.equal(title.textContent, 'Music');
+  assert.equal(f.doc.activeElement, volume);
+});

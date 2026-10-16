@@ -1,0 +1,211 @@
+{
+  "format": "FPVGroundP1AdmissionEvidence.v1",
+  "sourceRevision": "328f4c5373a89342aca2063134c0bc2823ecbb07",
+  "sourceTree": "53162a0ca416c53534042233dfa99e0568c9b846",
+  "runtimeReference": "c888632ecefe7b3846ef19d16a693eb060a91fc3",
+  "base": "00770c96eb8eab8d0aedda433d115f86188d5a75",
+  "archives": [
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-row-bridge-328f.json",
+      "storedPath": "row-source-bridge.json.gz",
+      "rawBytes": 19064,
+      "rawSHA256": "a0928147c56a6dfb3b93842bd80511ca4387d3fb0b6dfd1fd0abf48646ad945a",
+      "storedBytes": 6175,
+      "storedSHA256": "e0d74595b32bd90e978d275d8d46cad34cd42184be6af3ab5f7a1c8aeec71df0"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-materialize-validation-328f.mjs",
+      "storedPath": "materializer-r1.mjs.gz",
+      "rawBytes": 3726,
+      "rawSHA256": "aeaad8ab9fe184888fb2e9ac82e927bcea81696a36653d8dc34697dd20776c78",
+      "storedBytes": 1742,
+      "storedSHA256": "11de3e80eaf4cf7f07a36fd860379fe9da82d1be0e427811dc30f72b71d7ca14"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-materialize-validation-328f-r1.json",
+      "storedPath": "materialization-r1.json.gz",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-materialize-validation-328f-r1.err",
+      "storedPath": "materialization-r1.err.gz",
+      "rawBytes": 647,
+      "rawSHA256": "b289d8b1d8a8a57ef3b435f1fab1f26607c4b8bafba249e387d1f032e6865cb9",
+      "storedBytes": 349,
+      "storedSHA256": "5285dacefcb891a3f5c8235f229b0a3f0daf0cd5995d926b04eb92650110a1c4"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-materialize-validation-328f-r2.mjs",
+      "storedPath": "materializer-r2.mjs.gz",
+      "rawBytes": 3795,
+      "rawSHA256": "03a9feb37b38f1aa6470775ceca903b8dde958757bf6b3586e298f91395a6c2d",
+      "storedBytes": 1763,
+      "storedSHA256": "293ecbb59b7f780b2a8bf5533ffed7031255747b5e5154c03d3d30091896e0ce"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-materialize-validation-328f-r2.json",
+      "storedPath": "materialization-r2.json.gz",
+      "rawBytes": 318,
+      "rawSHA256": "b6811dc159823670c6c2027ba76622b6fe53f11fac5824207c7d4a924846e426",
+      "storedBytes": 237,
+      "storedSHA256": "8fad93c3920fa7ccf565c8092203d94ab15de58e12c4cbd35347d54cdeaa4660"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-materialize-validation-328f-r2.err",
+      "storedPath": "materialization-r2.err.gz",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-validate-328f-r1.log",
+      "storedPath": "full-validation.log.gz",
+      "rawBytes": 3676,
+      "rawSHA256": "f436ea3d90b66a34a331007a2b1361a4cecdf1f417d00ee23f06157a779593e1",
+      "storedBytes": 1534,
+      "storedSHA256": "44c1fc2a92184e0cab9e3acc0dfc2b8ed3d59abafbdf835d0890a73a8b7ab582"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-validate-328f-r1.json",
+      "storedPath": "full-validation-status.json.gz",
+      "rawBytes": 332,
+      "rawSHA256": "b52b4f42c32b61b4d0c151a7715222f623b187b209a193f7f7d0469c2066e77d",
+      "storedBytes": 249,
+      "storedSHA256": "9f417f358c170b6bfd0c7aaa0d6efe77a9ea7acd2c52fc2cb60150f09ecc7e8f"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f-r1.log",
+      "storedPath": "admission.log.gz",
+      "rawBytes": 419,
+      "rawSHA256": "6dfbad62c141b3c8f1f5efe3b9408675966d243676b0f61e4b32ae92279e8b4e",
+      "storedBytes": 290,
+      "storedSHA256": "59fb4d33a8d6090e55c84e1139597d10a6340f238548fb16980481276a61eda2"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f-r1.json",
+      "storedPath": "admission-status.json.gz",
+      "rawBytes": 530,
+      "rawSHA256": "ecf31e947685e2d893e7dbf0a4db9c67cde59fcb8cb0c0a54f5924d17e9bd185",
+      "storedBytes": 329,
+      "storedSHA256": "f127aba7aab70c64854ef8c96a737cafbd9dda0328301bab41618e0607b1954c"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admitted-player-328f4c537.json",
+      "storedPath": "worlds-player.json.gz",
+      "rawBytes": 46987,
+      "rawSHA256": "9175e23b83972251dd50cf97daf49b25281fe1f8b9d28112a3432f9504c44008",
+      "storedBytes": 8002,
+      "storedSHA256": "2686446bad0e6f2c623646e4b0a25ff7cf3e92e7faf5103533598ddad660fa35"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-stage-328f-r1.json",
+      "storedPath": "worlds-stage-output.json.gz",
+      "rawBytes": 233,
+      "rawSHA256": "c9d090bfbdeb5047cd9c0f866efb572c9ffce6e2e4dd3e45b48a735bb42bdce2",
+      "storedBytes": 168,
+      "storedSHA256": "d6d0c270b11eaeab36317867613d6a8a987455b0e61f14964821e7b9c821dbd4"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-stage-328f-r1.err",
+      "storedPath": "worlds-stage-error.txt.gz",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "sourcePath": "/private/tmp/stage-fpv-ground-motion-admitted-player.mjs",
+      "storedPath": "stage-player.mjs.gz",
+      "rawBytes": 4723,
+      "rawSHA256": "05d05dd711aaa87d16179dfbad45d8a6df006372050bf4285ccf89fa36bae301",
+      "storedBytes": 1877,
+      "storedSHA256": "bba6da4b9960a5d158bd8e2c885ab92c88a7fd20911d935e2851fedb55d9d252"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/manifest-optional-civilian-flight.json",
+      "storedPath": "manifest-optional-civilian-flight.json.gz",
+      "rawBytes": 8846,
+      "rawSHA256": "1c1ac9c11582e75e9ae257c066c400a51c8dce3351c8a9b5f3ed213531ed6f36",
+      "storedBytes": 2850,
+      "storedSHA256": "698b1a17009098b4d9071c5ee3731e50bada0ae885321cacffbbca9e92236e48"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/manifest-optional-civilian-fpv.json",
+      "storedPath": "manifest-optional-civilian-fpv.json.gz",
+      "rawBytes": 13816,
+      "rawSHA256": "d4a614aada42e69661b28c5c058584414532282b6ba625142f744a6729f8bb85",
+      "storedBytes": 4405,
+      "storedSHA256": "7d2b690bd034a6f0d40934ec8066dff63502e97ef45e947bed5a67d3a8b34650"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/manifest-optional-fpv-worlds.json",
+      "storedPath": "manifest-optional-fpv-worlds.json.gz",
+      "rawBytes": 20541,
+      "rawSHA256": "2b17062a3beade8b0b8b4ed52ea28ada56be0554631d6b33d2f0e7f8e8318457",
+      "storedBytes": 6421,
+      "storedSHA256": "59e1dc0ffffd8c0dececf90e35dc65b9c856f058b454d96cd43436d8880359c3"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/optional-candidate-verification.json",
+      "storedPath": "optional-candidate-verification.json.gz",
+      "rawBytes": 1142,
+      "rawSHA256": "650a911ced3a86bdd2d6afbabeb3eb34acdb21e49431216a83485f31d9c56675",
+      "storedBytes": 614,
+      "storedSHA256": "f01c237d81784cd124bc2883628be2cab6395afd01acef46cbbe380f84c813f8"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/optional-checksums.json",
+      "storedPath": "optional-checksums.json.gz",
+      "rawBytes": 2136,
+      "rawSHA256": "bf59581d8c360dc467583e3daa70f7c5ad0ff10bcfc3c371f10ea51cc8aac915",
+      "storedBytes": 921,
+      "storedSHA256": "9e3a88e398139340d3c8d7a89549f9053c45c37f6c846862ad8c39a79c634ece"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/optional-package-review.json",
+      "storedPath": "optional-package-review.json.gz",
+      "rawBytes": 2838,
+      "rawSHA256": "906aece3a99147c405de2a7b7269d22cc0631da5593731d305e76f82c1855e81",
+      "storedBytes": 460,
+      "storedSHA256": "170a8efc7956182b18535534b92e4263da104661b35afaa69c2a5262bac2288e"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/optional-packages.json",
+      "storedPath": "optional-packages.json.gz",
+      "rawBytes": 2633,
+      "rawSHA256": "470afbc5656c2f77f687399b70684ffd5dc5a59cce48726d7c5191c71c01a295",
+      "storedBytes": 1077,
+      "storedSHA256": "ad3c77ce766375190797560c70addaf41b4b51bbbd4af3c7d3f903036e5e56f3"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/source-inventory-optional-civilian-flight.json",
+      "storedPath": "source-inventory-optional-civilian-flight.json.gz",
+      "rawBytes": 14050,
+      "rawSHA256": "4a3950a26fa63c70f29de6c554d3e73309acd030919ab5995e638cf4192634b5",
+      "storedBytes": 3444,
+      "storedSHA256": "aceefd45f0c8a27577515556080485217c95838ec90adf63fbeaf147c1c0fbcb"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/source-inventory-optional-civilian-fpv.json",
+      "storedPath": "source-inventory-optional-civilian-fpv.json.gz",
+      "rawBytes": 23050,
+      "rawSHA256": "9fcd0fd8f69a9bc9d69a46b63379c62d5ce9bf37ff5fdb832828db49666f7a5d",
+      "storedBytes": 5392,
+      "storedSHA256": "998a114fce3207d6afc82677bacc9516d2745f0f024c695e0a53c681b8724b95"
+    },
+    {
+      "sourcePath": "/private/tmp/fpv-ground-p1-admission-328f4c537-r1/source-inventory-optional-fpv-worlds.json",
+      "storedPath": "source-inventory-optional-fpv-worlds.json.gz",
+      "rawBytes": 35076,
+      "rawSHA256": "a842cc13d9c12987af0060e7c3ea6c24dff54f36cc12cf50c2d640737c9931d8",
+      "storedBytes": 7781,
+      "storedSHA256": "48f7018c1a3c603bed09593d8bee46a33e6bf7da6bf113f508ecbef8a7949cea"
+    }
+  ],
+  "losslessReadbackVerified": true,
+  "nativeCurrentAdmissionPending": true
+}

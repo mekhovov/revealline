@@ -5,6 +5,7 @@ import { preparePack, resolvePackCampaign } from '../packs.mjs';
 import { customLibrarySources } from '../mission-library/custom-source.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { createDifficultyContext } from '../campaign-difficulty.mjs';
+import { inspectImageDataUrl } from '../content.mjs';
 
 const recipe = JSON.parse(
   await readFile(new URL('../content/packs/night-shift.json', import.meta.url), 'utf8'),
@@ -13,7 +14,12 @@ const makeOwner = async (mutate = () => {}) => {
   const source = structuredClone(recipe);
   mutate(source);
   const { pack } = await preparePack(source, {
-    decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),
+    // Native decoding is modeled; validate the actual current raster header.
+    decodeImage: async (dataUrl) => {
+      const image = inspectImageDataUrl(dataUrl);
+      assert.equal(image.valid, true);
+      return { naturalWidth: image.width, naturalHeight: image.height };
+    },
   });
   return {
     pack,
@@ -324,7 +330,6 @@ test('artwork-bearing pack identities stay bounded and fingerprints include exac
   const source = JSON.parse(
     await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url), 'utf8'),
   );
-  const { inspectImageDataUrl } = await import('../content.mjs');
   const { pack } = await preparePack(source, {
     decodeImage: async (dataUrl) => {
       const image = inspectImageDataUrl(dataUrl);

@@ -4,7 +4,9 @@ export const PRESENTATION_METADATA_FORMAT = 'revealline-presentation-metadata.v1
 export const PRESENTATION_METADATA_LIMITS = Object.freeze({
   encodedBytes: 5 * 1024 * 1024,
   logicalBytes: 8 * 1024 * 1024,
-  nodes: 100000,
+  nodes: 125000,
+  legacyNodes: 100000,
+  legacyEnvelopeNodes: 110000,
   records: 4096,
   depth: 18,
   string: 8192,
@@ -22,7 +24,14 @@ const logicalOptions = options(
   PRESENTATION_METADATA_LIMITS.logicalBytes,
   PRESENTATION_METADATA_LIMITS.records,
 );
-const rawOptions = options(PRESENTATION_METADATA_LIMITS.encodedBytes, 2048);
+const legacyLogicalOptions = {
+  ...logicalOptions,
+  maxNodes: PRESENTATION_METADATA_LIMITS.legacyNodes,
+};
+const rawOptions = {
+  ...options(PRESENTATION_METADATA_LIMITS.encodedBytes, 2048),
+  maxNodes: PRESENTATION_METADATA_LIMITS.legacyNodes,
+};
 const MAX_DICTIONARY_ENTRIES = PRESENTATION_METADATA_LIMITS.records;
 const envelopeOptions = {
   ...options(
@@ -38,7 +47,7 @@ const envelopeOptions = {
 function documentAssets(document) {
   required(plainObject(document) && Array.isArray(document.assets), 'Invalid metadata document.');
   required(
-    document.format === 'revealline-theme-bundle.v1',
+    ['revealline-theme-bundle.v1', 'revealline-theme-bundle.v2'].includes(document.format),
     'Unsupported metadata document format.',
   );
   required(
@@ -56,6 +65,12 @@ function requireStrings(document) {
 }
 function fitsRaw(value, bytes) {
   if (bytes > PRESENTATION_METADATA_LIMITS.encodedBytes) return false;
+  try {
+    ownLegacyPresentationDocument(value);
+  } catch (error) {
+    if (!(error instanceof TypeError)) throw error;
+    return false;
+  }
   const pending = [value];
   while (pending.length) {
     const next = pending.pop();
@@ -71,6 +86,15 @@ function fitsRaw(value, bytes) {
 export function ownPresentationDocument(source) {
   required(plainObject(source), 'Logical metadata must be an owned document object.');
   const document = boundedJSON(source, logicalOptions);
+  requireStrings(document);
+  return document;
+}
+
+/** Preserve the exact pre-v3 logical ownership boundary for RLTHM1/2 imports.
+ * Their outer transfer wrapper has separate historical overhead capacity. */
+export function ownLegacyPresentationDocument(source) {
+  required(plainObject(source), 'Legacy metadata must be an owned document object.');
+  const document = boundedJSON(source, legacyLogicalOptions);
   requireStrings(document);
   return document;
 }

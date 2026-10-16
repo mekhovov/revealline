@@ -1,0 +1,193 @@
+diff --git a/game/app.mjs b/game/app.mjs
+index e0f6c5bb8..216b2fa60 100644
+--- a/game/app.mjs
++++ b/game/app.mjs
+@@ -6,6 +6,7 @@ import {
+ } from './presentation/release-pictures.mjs';
+ import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
+ import { drawResultPicture } from './ui/result-picture.mjs';
++import { soloScoreLabel } from './ui/hud-values.mjs';
+ import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
+ import { createExternalChapterHost } from './external-chapter-host.mjs';
+ import { createExternalChapterBackup } from './external-chapter-backup.mjs';
+@@ -5788,7 +5789,7 @@ try {
+       run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—';
+     $('lives').setAttribute('aria-label', `${run.lives} lives`);
+     $('time').textContent = timeLabel(run.time);
+-    $('score').textContent = String(run.score).padStart(5, '0');
++    $('score').textContent = soloScoreLabel(run.score);
+     const required = run.objectives.filter((o) => o.required),
+       done = required.filter((o) => o.captured);
+     $('objective-state').textContent = campaignOverview
+diff --git a/game/couch/couch.css b/game/couch/couch.css
+index 8f4618ecb..d4a2e3996 100644
+--- a/game/couch/couch.css
++++ b/game/couch/couch.css
+@@ -418,6 +418,30 @@ body.race-focus #couch-app {
+     font-size: 23px;
+   }
+ }
++/* Reflow the HUD before its intrinsic width can widen both fitted arenas.
++   Pause, series score and clock keep their DOM order and existing type sizes. */
++@media (max-width: 320px) {
++  body.race-focus #couch-app {
++    grid-template-columns: minmax(0, 1fr);
++  }
++  .race-hud {
++    display: grid;
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++    row-gap: 6px;
++  }
++  #race-pause {
++    grid-column: 1 / -1;
++    justify-self: start;
++    white-space: nowrap;
++  }
++  .race-score {
++    min-width: 0;
++    justify-self: start;
++  }
++  #race-clock {
++    justify-self: end;
++  }
++}
+ @media (max-height: 500px) and (min-width: 701px) {
+   .race-hud {
+     min-height: 50px;
+diff --git a/game/ui/field-kit-compiled.css b/game/ui/field-kit-compiled.css
+index 3b198e87d..81d87b567 100644
+--- a/game/ui/field-kit-compiled.css
++++ b/game/ui/field-kit-compiled.css
+@@ -580,6 +580,25 @@
+     padding-left: 8px;
+   }
+ }
++/* Keep Large values and their glyphs intact on the smallest portrait boards.
++   Lives and time wrap at their intrinsic widths, retaining their DOM order. */
++@media (max-width: 320px) and (orientation: portrait) {
++  .field-kit.game-shell .telemetry {
++    display: flex;
++    flex-wrap: wrap;
++  }
++  .field-kit.game-shell .telemetry > div {
++    flex: 1 1 max-content;
++    min-width: max-content;
++    border-left: 0;
++    padding-left: 0;
++  }
++  .field-kit.game-shell .telemetry > .coverage,
++  .field-kit.game-shell .telemetry > :has(> #score) {
++    flex-basis: 100%;
++    min-width: 0;
++  }
++}
+ /* Keep the starting border and actors clear of the HUD in short landscape. */
+ @media (orientation: landscape) and (max-height: 600px),
+   (orientation: landscape) and (any-pointer: coarse) {
+@@ -651,3 +670,10 @@
+     );
+   }
+ }
++
++/* Solo Pause can sit 4px from the viewport edge. Keep both native keyboard
++   and controller focus fully inside its existing 44px target. */
++.field-kit.game-shell #pause-button:is(:focus-visible, .controller-focus) {
++  outline-offset: -3px;
++  box-shadow: inset 0 0 0 6px var(--fk-bg);
++}
+diff --git a/game/ui/hud-values.mjs b/game/ui/hud-values.mjs
+new file mode 100644
+--- /dev/null
++++ b/game/ui/hud-values.mjs
+@@ -0,0 +1,9 @@
++/** Presentation only: never write the formatted label back into run data. */
++export function soloScoreLabel(score) {
++  // Match result-number precision, omitting grouping in the compact HUD.
++  const label = score.toLocaleString(undefined, {
++    useGrouping: false,
++    maximumFractionDigits: 3,
++  });
++  return Number.isInteger(score) ? label.padStart(5, '0') : label;
++}
+diff --git a/game/test/hud-numeric-values.test.mjs b/game/test/hud-numeric-values.test.mjs
+new file mode 100644
+--- /dev/null
++++ b/game/test/hud-numeric-values.test.mjs
+@@ -0,0 +1,77 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { readFileSync } from 'node:fs';
++import { soloScoreLabel } from '../ui/hud-values.mjs';
++import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
++import { soloPage, SoloElement } from './helpers/solo-dom.mjs';
++import { retryFixture } from './fixtures/retry-scenarios.mjs';
++
++test('Solo integer HUD scores keep five-place padding without grouping or truncation', () => {
++  for (const [score, expected] of [
++    [0, '00000'],
++    [42, '00042'],
++    [2780000, '2780000'],
++    [1000000000, '1000000000'],
++  ]) {
++    assert.equal(soloScoreLabel(score), expected);
++  }
++});
++
++test('fractional HUD labels use result precision without integer padding', () => {
++  const decimal = (1.1).toLocaleString().replace(/\p{Number}/gu, '');
++  for (const [score, expected] of [
++    [0.1 + 0.2, `0${decimal}3`],
++    [1.2344, `1${decimal}234`],
++    [1.2346, `1${decimal}235`],
++    [0.0004, '0'],
++    [9.9999, '10'],
++  ]) {
++    assert.equal(soloScoreLabel(score), expected);
++  }
++  // As with results, nearby raw fractional scores can share a display label.
++  assert.equal(soloScoreLabel(0.3), soloScoreLabel(0.1 + 0.2));
++  assert.notEqual(0.3, 0.1 + 0.2);
++});
++
++test('a real fractional capture displays a short label while save and replay retain raw score', async (t) => {
++  t.mock.method(SoloElement.prototype, 'getContext', () => null);
++  const level = retryFixture('self-contact').level;
++  level.rules = { lives: 3, pointsPerCell: 0.1 };
++  const campaign = {
++    version: 'xonix-campaign.v1',
++    id: 'hud-fractional-capture',
++    revision: '1',
++    title: 'Fractional capture presentation',
++    classRecipes: JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url))),
++    levels: [level],
++  };
++  const page = await soloPage(t, { campaign });
++  assert.equal(page.$('score').textContent, '00000');
++  page.$('start-button').click();
++  page.key('ArrowDown');
++  for (let n = 0; n < 10; n++) page.frame();
++  page.key('ArrowDown', false);
++  page.key('ArrowLeft');
++  for (let n = 0; n < 180 && page.rendered.run.score === 0; n++) page.frame();
++  page.key('ArrowLeft', false);
++  page.$('pause-button').click();
++  page.frame(0);
++
++  const run = page.rendered.run;
++  assert.equal(run.claimedCount, 6, 'Normal fixed-step input closes the six-cell cut');
++  assert.equal(run.score, 0.6000000000000001);
++  assert.equal(page.$('score').textContent, (0.6).toLocaleString());
++  const checkpoint = authoritativeCheckpoint(run);
++  const stored = page.storage.getItem('revealline.suspended.dev.v1');
++  const saved = JSON.parse(stored);
++  const replay = verifyReplay(saved.replay);
++  assert.equal(replay.match, true);
++  assert.equal(replay.state.score, run.score);
++  const writes = page.storage.writes.length;
++  page.frame(0);
++  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
++  assert.equal(run.score, 0.6000000000000001);
++  assert.equal(page.storage.getItem('revealline.suspended.dev.v1'), stored);
++  assert.equal(page.storage.writes.length, writes);
++  assert.deepEqual(page.errors, []);
++});

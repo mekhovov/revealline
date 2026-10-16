@@ -1,3 +1,5 @@
+import { t } from '../i18n/index.mjs';
+import { localOfficialChapter } from '../official-chapter-source.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
@@ -7,6 +9,10 @@ import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { installPack, preparePack, PACK_LIMITS } from '../packs.mjs';
 import { prepareMissionLibraryIndex } from '../mission-library/classic-source.mjs';
 import { verifyIndexedInstalledPack } from '../mission-library/pack-identity.mjs';
+import {
+  CLASSIC_RULES_CURRENT,
+  CLASSIC_RULES_ORIGINAL,
+} from '../mission-library/classic-current-rules.mjs';
 import { externalChapterHash } from '../external-chapter.mjs';
 import {
   OPTIONAL_CATALOG_FORMAT,
@@ -15,7 +21,18 @@ import {
   verifyOptionalInstalled,
 } from '../optional-chapters.mjs';
 
-const cancelled = () => new DOMException('Chapter installation cancelled.', 'AbortError');
+const cancelled = () => new DOMException(t('interface:chapterInstallationCancelled'), 'AbortError');
+
+function indexedSourceRow(row) {
+  const { rulesEdition, ...source } = row ?? {};
+  required(
+    rulesEdition === undefined ||
+      rulesEdition === CLASSIC_RULES_ORIGINAL ||
+      rulesEdition === CLASSIC_RULES_CURRENT,
+    t('errors:chapters.unsupportedClassicRules'),
+  );
+  return source;
+}
 
 /** Explicit chapter installation only. Browsing and racing retain their
  * separate read-only owner; this service never writes Solo progress or silently
@@ -35,9 +52,9 @@ export function createCouchChapterInstaller({
 } = {}) {
   required(
     typeof channel === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,150}$/.test(channel),
-    'Use the exact current Couch profile channel.',
+    t('interface:useTheExactCurrentCouchProfileChannel'),
   );
-  required(Array.isArray(registeredEntries), 'Provide the registered authored entries.');
+  required(Array.isArray(registeredEntries), t('interface:provideTheRegisteredAuthoredEntries'));
   const entries = structuredClone(registeredEntries),
     profileKey = `revealline.library.${channel}.v1`,
     packsKey = `revealline.packs.${channel}.v1`,
@@ -49,7 +66,8 @@ export function createCouchChapterInstaller({
 
   function operation(work, { signal, onStatus = () => {} } = {}) {
     if (disposed || signal?.aborted) return Promise.reject(cancelled());
-    if (active) return Promise.reject(new Error('Another chapter operation is still finishing.'));
+    if (active)
+      return Promise.reject(new Error(t('interface:anotherChapterOperationIsStillFinishing')));
     const controller = new AbortController(),
       item = { controller, hosts: new Set(), writer: null };
     active = item;
@@ -73,7 +91,10 @@ export function createCouchChapterInstaller({
     };
     const decode = (source) => {
       check();
-      required(typeof ImageClass === 'function', 'Browser picture decoding is unavailable.');
+      required(
+        typeof ImageClass === 'function',
+        t('interface:browserPictureDecodingIsUnavailable'),
+      );
       return new Promise((resolve, reject) => {
         const image = new ImageClass();
         let settled = false;
@@ -89,14 +110,17 @@ export function createCouchChapterInstaller({
           } else resolve(image);
         };
         const stop = () => finish(cancelled()),
-          timer = setTimeout(() => finish(new Error('Chapter picture decode timed out.')), 15000);
+          timer = setTimeout(
+            () => finish(new Error(t('interface:chapterPictureDecodeTimedOut'))),
+            15000,
+          );
         controller.signal.addEventListener('abort', stop, { once: true });
-        image.onerror = () => finish(new Error('The chapter picture could not decode.'));
+        image.onerror = () => finish(new Error(t('interface:theChapterPictureCouldNotDecode')));
         image.onload = async () => {
           try {
             required(
               typeof image.decode === 'function',
-              'Complete picture decoding is unavailable.',
+              t('interface:completePictureDecodingIsUnavailable'),
             );
             await image.decode();
             check();
@@ -120,7 +144,7 @@ export function createCouchChapterInstaller({
         url = null;
       try {
         check();
-        report('Checking complete chapter pictures…', 'decoding');
+        report(t('interface:checkingCompleteChapterPictures'), 'decoding');
         check();
         if (typeof source !== 'string') {
           url = URLImpl.createObjectURL(source);
@@ -184,7 +208,7 @@ export function createCouchChapterInstaller({
   function installVerified({ id, name, verify, download }, options) {
     return operation(async ({ item, signal, report, check, host, inspect, decodeImage }) => {
       const reader = host(Object.freeze({ writable: false }));
-      report('Checking the installed chapter…', 'verifying');
+      report(t('interface:checkingTheInstalledChapter'), 'verifying');
       const before = await inspect(reader);
       const reuse = async (snapshot) => {
         const pack = snapshot.packs.packs.find((value) => value.id === id);
@@ -203,16 +227,21 @@ export function createCouchChapterInstaller({
       if (existing) return existing;
       report(`Downloading and verifying ${name}…`, 'downloading');
       check();
-      const pack = await download({ library: before.packs, decodeImage, signal, check });
+      const pack =
+        (await localOfficialChapter(id, {
+          baseURL: distributionRoot,
+          decodeImage,
+          fetch: request,
+        })) || (await download({ library: before.packs, decodeImage, signal, check }));
       check();
       reader.close();
-      report('Reserving safe chapter installation…', 'verifying');
+      report(t('interface:reservingSafeChapterInstallation'), 'verifying');
       check();
       item.writer = await claimProfileWriter(lockManager, `${profileKey}.writer`);
       check();
       required(
         item.writer.writable,
-        'Chapter installation cannot reserve this profile. Close the other saving tab or restore Web Locks, then retry. Your Couch match is kept.',
+        t('interface:chapterInstallationCannotReserveThisProfileCloseTheOtherSaving'),
       );
       const writer = host(item.writer),
         fresh = await inspect(writer),
@@ -228,7 +257,7 @@ export function createCouchChapterInstaller({
       const result = await writer.commitMutation(review, { signal });
       // Cancellation after durable publication cannot truthfully undo storage.
       const accepted = result.packs.packs.find((value) => value.id === id);
-      report('Chapter installed.', 'ready');
+      report(t('interface:chapterInstalled'), 'ready');
       return Object.freeze({
         pack: accepted,
         library: result.packs,
@@ -254,7 +283,7 @@ export function createCouchChapterInstaller({
         base.pathname.endsWith('/') &&
         url.origin === base.origin &&
         url.href.startsWith(base.href),
-      'Indexed downloads require this game’s same-origin HTTP release directory.',
+      t('interface:indexedDownloadsRequireThisGameSSameOriginHttpRelease'),
     );
     const response = await request(url.href, {
       signal,
@@ -268,17 +297,17 @@ export function createCouchChapterInstaller({
     );
     required(
       !response.redirected && (!response.url || response.url === url.href),
-      'Indexed chapter download left its exact release URL.',
+      t('interface:indexedChapterDownloadLeftItsExactReleaseUrl'),
     );
     const maximum = row.sourceFile.bytes,
       length = response.headers.get('content-length');
     required(
       length === null || (/^\d+$/.test(length) && Number(length) <= maximum),
-      'Chapter response exceeds its published byte budget.',
+      t('interface:chapterResponseExceedsItsPublishedByteBudget'),
     );
     required(
       response.body?.getReader,
-      'Bounded chapter downloads are unavailable in this browser.',
+      t('interface:boundedChapterDownloadsAreUnavailableInThisBrowser'),
     );
     const reader = response.body.getReader(),
       parts = [];
@@ -298,7 +327,7 @@ export function createCouchChapterInstaller({
           break;
         }
         total += result.value.byteLength;
-        required(total <= maximum, 'Chapter response exceeds its published byte budget.');
+        required(total <= maximum, t('interface:chapterResponseExceedsItsPublishedByteBudget'));
         parts.push(result.value);
       }
     } finally {
@@ -306,7 +335,7 @@ export function createCouchChapterInstaller({
       if (!finished) await reader.cancel().catch(() => {});
       reader.releaseLock();
     }
-    required(total === maximum, 'Chapter download is incomplete. Nothing was installed.');
+    required(total === maximum, t('interface:chapterDownloadIsIncompleteNothingWasInstalled'));
     const bytes = new Uint8Array(total);
     let offset = 0;
     for (const part of parts) {
@@ -315,7 +344,7 @@ export function createCouchChapterInstaller({
     }
     required(
       (await externalChapterHash(bytes)) === row.sourceFile.sha256,
-      'Chapter checksum differs. Nothing was installed; retry from the matching release.',
+      t('interface:chapterChecksumDiffersNothingWasInstalledRetryFromTheMatching'),
     );
     check();
     return bytes;
@@ -326,17 +355,20 @@ export function createCouchChapterInstaller({
     // Neither an index nor an uploaded descriptor can add paired authority.
     const supplied = prepareMissionLibraryIndex({
       format: 'revealline-mission-library-index.v1',
-      missions: [row],
+      missions: [indexedSourceRow(row)],
     }).missions[0];
     const checked = indexedMissions?.missions.find((item) => item.id === supplied.id);
     required(
       checked && canonicalJSON(checked) === canonicalJSON(supplied),
-      'Choose an exact mission from this release’s trusted index.',
+      t('interface:chooseAnExactMissionFromThisReleaseSTrustedIndex'),
     );
-    required(checked.source === 'external', 'Choose a paired external-original chapter.');
+    required(checked.source === 'external', t('interface:chooseAPairedExternalOriginalChapter'));
     const descriptor = SOURCE_EXTERNAL_CHAPTERS.find((item) => item.id === checked.packId);
     const download = EXTERNAL_CATALOG.chapters.find((item) => item.id === checked.packId);
-    required(descriptor && download, 'This external edition is not registered by this release.');
+    required(
+      descriptor && download,
+      t('interface:thisExternalEditionIsNotRegisteredByThisRelease'),
+    );
     const peers = indexedMissions.missions.filter((item) => item.packId === checked.packId);
     required(
       peers.length === descriptor.originals.length &&
@@ -360,7 +392,7 @@ export function createCouchChapterInstaller({
           );
         }) &&
         new Set(peers.map((item) => item.levelIndex)).size === peers.length,
-      'The indexed chapter differs from its code-owned gameplay and original-picture pair.',
+      t('interface:theIndexedChapterDiffersFromItsCodeOwnedGameplayAnd'),
     );
     return { row: checked, descriptor, peers };
   }
@@ -374,7 +406,7 @@ export function createCouchChapterInstaller({
       exact.every(Boolean) &&
         pack.campaigns.reduce((n, campaign) => n + campaign.levels.length, 0) ===
           target.peers.length,
-      'A different edition of this chapter is installed or downloaded. Existing content was not replaced.',
+      t('interface:aDifferentEditionOfThisChapterIsInstalledOrDownloaded'),
     );
   }
 
@@ -382,7 +414,7 @@ export function createCouchChapterInstaller({
     const pack = snapshot.packs.packs.find((item) => item.id === target.descriptor.id);
     if (!pack) return null;
     await verifyExternalPack(pack, target, check);
-    report('Checking the complete installed originals…', 'verifying');
+    report(t('interface:checkingTheCompleteInstalledOriginals'), 'verifying');
     check();
     // The host binds descriptor, retained owner, actual original bytes/decode,
     // pointer snapshot and final media generation. Metadata alone is not ready.
@@ -418,7 +450,7 @@ export function createCouchChapterInstaller({
           Object.freeze({
             status: 'absent',
             ready: false,
-            reason: 'Download the gameplay and original pictures together.',
+            reason: t('interface:downloadTheGameplayAndOriginalPicturesTogether'),
             descriptor: target.descriptor,
             bytes: target.row.download.bytes,
           })
@@ -431,7 +463,7 @@ export function createCouchChapterInstaller({
       return operation(async (context) => {
         const { item, signal, report, check, host, inspect, decodeImage } = context;
         const reader = host(Object.freeze({ writable: false }));
-        report('Checking the installed chapter and originals…', 'verifying');
+        report(t('interface:checkingTheInstalledChapterAndOriginals'), 'verifying');
         const before = await inspect(reader);
         const existing = await externalReady(reader, before, target, context);
         check();
@@ -450,13 +482,13 @@ export function createCouchChapterInstaller({
         check();
         await verifyExternalPack(prepared.pack, target, check);
         reader.close();
-        report('Reserving safe chapter installation…', 'verifying');
+        report(t('interface:reservingSafeChapterInstallation'), 'verifying');
         check();
         item.writer = await claimProfileWriter(lockManager, `${profileKey}.writer`);
         check();
         required(
           item.writer.writable,
-          'Chapter installation cannot reserve this profile. Close the other saving tab or restore Web Locks, then retry. Your Couch match is kept.',
+          t('interface:chapterInstallationCannotReserveThisProfileCloseTheOtherSaving'),
         );
         const writer = host(item.writer),
           fresh = await inspect(writer);
@@ -470,12 +502,12 @@ export function createCouchChapterInstaller({
         // retained assignments and owns all journal/recovery/DB4 publication.
         await writer.install(prepared, { signal, pictureReview });
         try {
-          report('Chapter installed. Verifying saved originals…', 'verifying');
+          report(t('interface:chapterInstalledVerifyingSavedOriginals'), 'verifying');
           check();
           const next = await inspect(writer);
           const ready = await externalReady(writer, next, target, context);
-          required(ready, 'The committed chapter needs a fresh readiness check.');
-          report('Chapter and originals installed.', 'ready');
+          required(ready, t('interface:theCommittedChapterNeedsAFreshReadinessCheck'));
+          report(t('interface:chapterAndOriginalsInstalled'), 'ready');
           check();
           return Object.freeze({ ...ready, committed: true, reused: false });
         } catch (error) {
@@ -497,7 +529,7 @@ export function createCouchChapterInstaller({
     },
     inspect(options) {
       return operation(async ({ host, inspect, report, check }) => {
-        report('Checking installed chapters…', 'verifying');
+        report(t('interface:checkingInstalledChapters'), 'verifying');
         const snapshot = await inspect(host(Object.freeze({ writable: false })));
         check();
         return Object.freeze({ library: snapshot.packs, usage: snapshot.usage });
@@ -529,23 +561,23 @@ export function createCouchChapterInstaller({
       // Capture and compare before any asynchronous boundary.
       const supplied = prepareMissionLibraryIndex({
         format: 'revealline-mission-library-index.v1',
-        missions: [row],
+        missions: [indexedSourceRow(row)],
       }).missions[0];
       const checked = indexedMissions?.missions.find((item) => item.id === supplied.id);
       required(
         checked && canonicalJSON(checked) === canonicalJSON(supplied),
-        'Choose an exact mission from this release’s trusted index.',
+        t('interface:chooseAnExactMissionFromThisReleaseSTrustedIndex'),
       );
       required(
         ['bundled', 'archived'].includes(checked.source),
-        'This indexed installer supports only bundled and archived chapters.',
+        t('interface:thisIndexedInstallerSupportsOnlyBundledAndArchivedChapters'),
       );
       required(
         /^[a-z0-9][a-z0-9-]{0,95}$/.test(checked.packId) &&
           checked.sourceFile.path === `game/content/packs/${checked.packId}.json` &&
           checked.sourceFile.bytes <= PACK_LIMITS.maxBytes &&
           checked.packIdentity.bytes <= PACK_LIMITS.maxBytes,
-        'Indexed chapter must name its exact bounded distribution file.',
+        t('interface:indexedChapterMustNameItsExactBoundedDistributionFile'),
       );
       const peers = indexedMissions.missions.filter((item) => item.packId === checked.packId);
       required(
@@ -556,7 +588,7 @@ export function createCouchChapterInstaller({
             canonicalJSON(item.packIdentity) === canonicalJSON(checked.packIdentity) &&
             item.packVersion === checked.packVersion,
         ),
-        'The indexed chapter contains conflicting published identities.',
+        t('interface:theIndexedChapterContainsConflictingPublishedIdentities'),
       );
       const verify = async (pack, { signal }) => {
         if (signal.aborted) throw cancelled();
@@ -570,7 +602,7 @@ export function createCouchChapterInstaller({
               peers.length &&
             new Set(peers.map((item) => JSON.stringify([item.campaignId, item.levelIndex])))
               .size === peers.length,
-          'A different edition of this chapter is installed or downloaded. Existing content was not replaced.',
+          t('interface:aDifferentEditionOfThisChapterIsInstalledOrDownloaded'),
         );
         return pack;
       };
