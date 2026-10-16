@@ -1,0 +1,9 @@
+{
+  "createdUTC": "2026-10-16T07:41:01.879817+00:00",
+  "nativeFilteredRevListTimedOutSeconds": 600,
+  "partialOutputBytes": 24576,
+  "partialOutputSHA256": "81c69bf124bd1b836d904fab601771825e0af5159aaf5af7a47e3d9296a87dcd",
+  "partialNotAcceptedAsIdentityProof": true,
+  "originalFailureLogSHA256": "3631500a0717f02756663bc1b1ec42aeafbaabf21c897b36fc043104e53429ff",
+  "replacement": "Raw SHA1-verified public commit/tree metadata traversal only from the already GitHub-fetched recovery repository; no original store or source-blob body reads."
+}
