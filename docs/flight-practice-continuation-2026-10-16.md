@@ -5,6 +5,21 @@ qualification without selecting a public release or approving human review gates
 
 ## Follow-up after the first batch merged
 
+### Player wording correction: new candidate required
+
+World Studio's descriptor now points to its maintained Home actions: **Learn to
+fly / Explore worlds**, **Навчитися літати / Дослідити світи**. It retains explicit
+start and explains that `.rlpack` adds World content, not executable directory
+apps. The new source-bound regression reads the actual mounted labels without
+executing simulator code; the original descriptor fails and the corrected guide
+suite passes 5/5. The full current practice suite passes **389/389**, no skips,
+and all three packages pass preflight within their existing limits.
+
+This changes metadata/package identity. A fresh committed-source three-app build,
+reproduction/admission and affected launcher/guide check are required. The b8
+candidate and all native receipts below remain unchanged; neither this wording
+correction nor newer accepted main runtime bytes inherit their qualification.
+
 ### Latest verified checkpoint: all six offline flights and installed-PWA continuity
 
 Frozen observer `57d3b748cf83e21513ae40a4df18eb5b2bc00e7b`, tree
