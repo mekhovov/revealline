@@ -1659,7 +1659,19 @@ export async function replayAdvancedRecording(
         );
         if (item.length === 7)
           controls = { roll: item[3], pitch: item[4], yaw: item[5], throttle: item[6] };
-        // Consumption time is authoritative; available timestamps can precede it.
+        // Inputs can arrive late, but new arrivals are admitted only between
+        // complete synchronous missions. Within a mission, each frozen frequency
+        // divides one million microseconds exactly, so timestamp rounding fixes
+        // the first eligible substep. Bind the declared consumption time to that
+        // schedule; physics hashes alone cannot detect a changed event index.
+        required(
+          item[0] ===
+            Math.max(
+              (mission * record.config.frequency) / ADVANCED_MISSION_HZ,
+              Math.ceil((item[2] * record.config.frequency) / 1e6),
+            ),
+          'Recorded input consumption time changed',
+        );
         sim.enqueueInput({ sequence: item[1], timestampUs: item[2], controls });
         sequence = item[1];
         step = item[0];
