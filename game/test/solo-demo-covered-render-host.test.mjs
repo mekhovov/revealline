@@ -27,6 +27,15 @@ test('Demo retains the covered Solo canvas while continuing controller polls and
   assert.ok(demo.tick > tick, 'The visible spectator continues playing');
   assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
 
+  page.win.emit('resize');
+  for (let index = 0; index < 12; index++) page.frame(1000 / 60);
+  assert.equal(
+    page.displayRender.draws,
+    before.draws,
+    'Resizing a covered board defers its redraw',
+  );
+  assert.equal(page.displayRender.clears, before.clears);
+
   // Model an aborted submission before closing the covering dialog. The next
   // callback must restore the renderer before the main canvas becomes visible.
   page.frame(0, { dispatchRender: false });

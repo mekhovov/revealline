@@ -12559,9 +12559,9 @@ try {
         camera = this.cameras.main;
       // Retaining pixels is safe only for this single Canvas board. A later
       // scene/camera/object addition automatically restores ordinary rendering.
+      // A covering Demo can defer an invalidated board until it is visible again.
       if (
-        !this.displayedBoardValid ||
-        !this.lastPaint ||
+        ((!this.displayedBoardValid || !this.lastPaint) && !demoHost?.active) ||
         this.preparedFrame ||
         this.pendingSubmission ||
         rendererLost.size ||
