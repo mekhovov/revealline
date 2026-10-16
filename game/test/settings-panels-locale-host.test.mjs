@@ -1,5 +1,30 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  const same = Object.is(actual, expected);
+  if (same) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((x) => typeof x === 'string')
+        .map((x) => x.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { readFileSync } from 'node:fs';
 import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 
@@ -15,7 +40,7 @@ function ticks(page, count) {
   for (let i = 0; i < count; i++) page.frame();
 }
 function assertSelection(page, selected) {
-  assert.equal(page.doc.activeElement, page.$(`settings-tab-${selected}`));
+  boundedIdentity(page.doc.activeElement, page.$(`settings-tab-${selected}`));
   for (const name of ['controls', 'audio', 'display', 'data']) {
     const tab = page.$(`settings-tab-${name}`),
       panel = page.$(`settings-panel-${name}`),

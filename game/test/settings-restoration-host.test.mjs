@@ -1,5 +1,30 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  const same = Object.is(actual, expected);
+  if (same) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((x) => typeof x === 'string')
+        .map((x) => x.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { setTimeout as nextTask } from 'node:timers/promises';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
@@ -74,7 +99,7 @@ async function host(t, mode) {
   f.$(`${prefix}settings-tab-accessibility`).click();
   advance();
   controls.face.focus();
-  assert.equal(f.doc.activeElement, controls.face);
+  boundedIdentity(f.doc.activeElement, controls.face);
   // A retained history page first suspends its writer and gameplay owner.
   // Keep that boundary real so a later view repair cannot inherit a live writer.
   f.win.emit('pagehide', { persisted: true });
@@ -136,11 +161,11 @@ async function host(t, mode) {
         tab = f.$(`${prefix}settings-tab-${category}`);
       tab.click();
       assert.equal(tab.getAttribute('aria-selected'), 'true');
-      assert.equal(control.closest('[hidden],[inert]'), null);
+      boundedIdentity(control.closest('[hidden],[inert]'), null);
       assert.ok(control.getClientRects().length);
       assert.equal(control.disabled, false);
       control.focus();
-      assert.equal(f.doc.activeElement, control);
+      boundedIdentity(f.doc.activeElement, control);
       control[key === 'reduced' ? 'checked' : 'value'] = value;
       control.emit('change');
     },
@@ -148,7 +173,7 @@ async function host(t, mode) {
       if (advanceFrame) advance();
       if (solo) assert.strictEqual(f.rendered.run, run);
       assert.deepEqual(state(!presentationChanged), presentationChanged ? gameplayBefore : before);
-      assert.equal(f.doc.activeElement, expectedFocus);
+      boundedIdentity(f.doc.activeElement, expectedFocus);
     },
   };
 }

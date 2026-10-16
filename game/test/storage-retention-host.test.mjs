@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { readFileSync } from 'node:fs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
@@ -55,7 +79,7 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
   assert.equal(h.$('storage-retention-button').getClientRects().length, 0);
   h.$('settings-tab-audio').focus();
   h.$('settings-tab-audio').emit('keydown', { key: 'End', code: 'End' });
-  assert.equal(h.doc.activeElement, h.$('settings-tab-data'));
+  boundedIdentity(h.doc.activeElement, h.$('settings-tab-data'));
   assert.equal(h.$('settings-tab-data').getAttribute('aria-selected'), 'true');
   assert.equal(h.$('settings-panel-data').hidden, false);
   assert.ok(h.$('storage-retention-button').getClientRects().length);
@@ -66,7 +90,7 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
   assert.equal(downloads.getAttribute('href'), 'downloads.html');
   assert.equal(downloads.textContent, 'Install app · Game and soundtrack downloads');
   downloads.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' });
-  assert.equal(h.doc.activeElement, h.$('storage-retention-button'));
+  boundedIdentity(h.doc.activeElement, h.$('storage-retention-button'));
   assert.ok(
     h
       .$('storage-retention-button')
@@ -94,10 +118,10 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
   assert.equal(requests, 0);
   pulse(13);
   pulse(12); // Move away and back through the actual menu adapter.
-  assert.equal(h.doc.activeElement, h.$('storage-retention-button'));
+  boundedIdentity(h.doc.activeElement, h.$('storage-retention-button'));
   pulse(0);
   assert.equal(requests, 1);
-  assert.equal(h.doc.activeElement, h.$('storage-retention-button'));
+  boundedIdentity(h.doc.activeElement, h.$('storage-retention-button'));
   pulse(0);
   assert.equal(requests, 1, 'A second activation joins the pending request.');
   pulse(1);
@@ -125,16 +149,16 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
   assert.equal(h.$('settings-panel-data').hidden, false);
   summary.focus();
   summary.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' });
-  assert.equal(h.doc.activeElement, downloads);
+  boundedIdentity(h.doc.activeElement, downloads);
   downloads.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' });
-  assert.equal(h.doc.activeElement, h.$('storage-retention-button'));
+  boundedIdentity(h.doc.activeElement, h.$('storage-retention-button'));
   h.frame();
   pulse(0);
   assert.equal(requests, 2);
   retained = true;
   answer(true);
   await settle(() => h.$('storage-retention-status').textContent.includes('Retention granted'));
-  assert.equal(h.doc.activeElement, h.$('storage-retention-button'));
+  boundedIdentity(h.doc.activeElement, h.$('storage-retention-button'));
   assert.equal(h.$('offline-status').textContent, offline);
   assert.equal(h.$('offline-details').textContent, details);
   assert.equal(h.storage.getItem('revealline.suspended.dev.v1'), reopenedSave);
