@@ -6,6 +6,8 @@ const TIERS = Object.freeze([
 
 // Presentation only. No device identification or simulation/input rate changes.
 export function createVisualQualityPolicy() {
+  // One bounded histogram per policy; active observations never allocate.
+  const intervalBuckets = new Uint32Array(128);
   let level = 0,
     reducedPreference = false,
     baselineMs = 1000 / 60,
@@ -21,6 +23,7 @@ export function createVisualQualityPolicy() {
   const resetWindow = (nowMs) => {
     windowStart = nowMs;
     count = missed = work = expensive = 0;
+    intervalBuckets.fill(0);
   };
   return {
     snapshot,
@@ -54,12 +57,32 @@ export function createVisualQualityPolicy() {
       work += workMs;
       if (frameMs > baselineMs * 1.5) missed++;
       if (workMs > baselineMs * 0.6) expensive++;
+      // B >= 4 ms and admitted intervals <= 250 ms fit within these 128 bins.
+      intervalBuckets[Math.floor((2 * frameMs) / baselineMs)]++;
       if (nowMs - windowStart < 1000) return snapshot();
       const average = work / count;
       // Cadence alone cannot distinguish OS power throttling from overload.
       // Cheap, regular 30 Hz callbacks must not progressively erase decoration.
+      // Stable delivery with bounded jitter occupies one or two adjacent bins.
+      // Substantial separated populations indicate irregular presentation, not
+      // its GPU, compositor, browser or device cause. Scan only once per window.
+      let irregular = false;
+      if (missed / count > 0.1) {
+        const minimumPopulation = Math.max(4, count * 0.2);
+        let firstPopulated = -1;
+        for (let i = 0; i < intervalBuckets.length; i++) {
+          if (intervalBuckets[i] < minimumPopulation) continue;
+          if (firstPopulated < 0) firstPopulated = i;
+          else if (i - firstPopulated >= 2) {
+            irregular = true;
+            break;
+          }
+        }
+      }
       const overloaded =
-        average > baselineMs * 0.6 || (missed / count > 0.1 && expensive / count > 0.2);
+        average > baselineMs * 0.6 ||
+        (missed / count > 0.1 && expensive / count > 0.2) ||
+        irregular;
       overloadWindows = overloaded ? overloadWindows + 1 : 0;
       headroomWindows =
         !overloaded && average < baselineMs * 0.35 && missed / count <= 0.02
