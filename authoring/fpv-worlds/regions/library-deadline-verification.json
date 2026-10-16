@@ -1,0 +1,14 @@
+{
+  "format": "FPVRegionalLibraryDeadlineReview.v1",
+  "passed": true,
+  "cases": [
+    "Five minutes of forward progress survive; a subsequent two-minute stall expires",
+    "Continued trickle cannot exceed the ten-minute total ceiling",
+    "Repeated, decreasing and invalid byte reports do not renew inactivity",
+    "Other actions retain their original two-minute deadline",
+    "Atomic commit and cleanup own their outcome; no late deadline fires",
+    "Explicit cancellation keeps its reason and clears all timers",
+    "Real inventory verifies all 39 responses after 195 virtual seconds; no network-speed claim",
+    "Both streaming descriptor passes and exact payloads survive 430 virtual seconds"
+  ]
+}

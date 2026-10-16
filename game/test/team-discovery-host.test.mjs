@@ -87,6 +87,9 @@ test('Team discovery opens through keyboard and Back restores the exact lobby op
 
 test('a Team mission card starts the exact arena with one activation', async (t) => {
   const f = await page(t, options);
+  const actions = f.$('coop-menu').querySelector('.native-menu-actions');
+  assert.equal(f.$('coop-discovery-cancel').parentNode, actions);
+  assert.equal(status(f).parentNode, actions);
   await open(f);
   enter(f, card(f, 'Relay Yard'));
   await prepared(f, 'Relay Yard');
@@ -101,6 +104,32 @@ test('a Team mission card starts the exact arena with one activation', async (t)
   assert.equal(currentImage(f), picture, 'Direct play retains the admitted picture.');
   assert.notEqual(f.$('coop-clock').textContent, '0:00');
 });
+
+for (const [title, journey] of [
+  ['Harbor Handoff', 'team-expedition-v1'],
+  ['Expedition Homecoming', 'team-expedition-v1'],
+  ['First contact', 'humanoid-hunt-v1'],
+])
+  test(`Team discovery hands ${title} to its exact remote campaign`, async (t) => {
+    const f = await page(t, options);
+    await open(f);
+    const button = card(f, title);
+    const missionId = button.dataset.missionId;
+    enter(f, button);
+    await waitFor(
+      () => f.visits.length > 0 || /Could not open/.test(f.$('journey-chooser-status').textContent),
+      () => f.$('journey-chooser-status').textContent,
+    );
+    assert.equal(f.visits.length, 1, f.$('journey-chooser-status').textContent);
+    const destination = new URL(f.visits[0]);
+    assert.equal(destination.pathname, '/game/couch/relay-rescue.html');
+    assert.equal(destination.searchParams.get('journey'), journey);
+    assert.equal(destination.searchParams.get('library-mission'), missionId);
+    // A same-mode handoff changes the owning campaign without a cross-mode return.
+    assert.equal(destination.searchParams.get('return'), null);
+    assert.equal(destination.searchParams.get('journey-return'), null);
+    assert.equal(destination.searchParams.size, 2);
+  });
 
 test('a newer Back focus during Play admission prevents preparation and keeps the current setup', async (t) => {
   const f = await page(t, options);
@@ -208,6 +237,8 @@ test('cancelling held preparation keeps the paused attempt and exact picture ava
     },
   });
   pause(f);
+  assert.equal(f.$('coop-discovery-cancel').parentNode, f.$('coop-tools'));
+  assert.equal(status(f).parentNode, f.$('coop-tools'));
   const image = currentImage(f);
   const coverage = f.$('coop-coverage').textContent;
   await open(f, true);
@@ -287,12 +318,12 @@ test('an opened local Team pack stays discoverable after playing a built-in aren
   });
   await f.selectFile(JSON.stringify(pack));
   await open(f);
-  assert.equal(cards(f).length, 16);
+  assert.equal(cards(f).length, 118, '116 current missions and two local routes');
   enter(f, card(f, 'First Connection'));
   await started(f, 'First Connection');
   f.tap('Escape');
   await open(f, true);
-  assert.equal(cards(f).length, 16);
+  assert.equal(cards(f).length, 118, 'Playing a built-in arena retains both local routes');
   enter(f, card(f, 'Local route 2'));
   await waitFor(() => f.$('coop-discard-dialog').open);
   enter(f, f.$('coop-discard-confirm'));

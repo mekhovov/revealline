@@ -18,14 +18,24 @@ const encode = (value) => new TextEncoder().encode(JSON.stringify(value)),
       new URL('../authoring/fpv-worlds/published/free-worlds-v2/index.json', import.meta.url),
     ),
   ),
+  legacyFixture = JSON.parse(
+    await readFile(
+      new URL('../authoring/fpv-worlds/published/free-worlds-v1/index.json', import.meta.url),
+    ),
+  ),
   checks = [];
 function check(name, verify) {
   verify();
   checks.push(name);
 }
-check('published v2 page preserves nineteen admitted rows', () => {
-  assert.equal(worldLibraryPage(encode(fixture)).worlds.length, 19);
-  assert.equal(worldLibraryPage(encode(fixture)).next, null);
+check('published v2 page preserves legacy admitted asset identities', () => {
+  const page = worldLibraryPage(encode(fixture));
+  const byId = new Map(page.worlds.map((world) => [world.id, world]));
+  for (const world of worldLibraryIndex(encode(legacyFixture))) {
+    assert.deepEqual(byId.get(world.id), world);
+  }
+  assert.equal(page.worlds.length, fixture.worlds.length);
+  assert.equal(page.next, null);
 });
 check('v1 parser and page adapter preserve exact asset identities', () => {
   const bytes = encode({ format: 'FPVWorldLibrary.v1', worlds: fixture.worlds });

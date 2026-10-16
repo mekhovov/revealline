@@ -161,3 +161,67 @@ test('shared Studio escort controls edit the same validated config used by nativ
   });
   assert.match(uk.textContent, /Стрій/);
 });
+
+for (const rulesVersion of [3, 4]) {
+  test(`Riy rules ${rulesVersion} exposes current escort ranges, arcs and introduction controls`, () => {
+    const project = createOverflightRiyProject({ rulesVersion });
+    let edits = 0;
+    const editor = overflightRiyEditor({
+      document: new Document(),
+      project,
+      locale: 'en',
+      onChange: () => edits++,
+    });
+    const labels = editor.querySelectorAll('label');
+    const controls = (text) =>
+      labels
+        .filter((label) => label.textContent === text)
+        .map((label) => label.querySelector('input'));
+    assert.equal(editor.querySelectorAll('input').length, 27);
+    assert.equal(controls('Follow-mode targeting range').length, 0);
+    const set = (input, value) => {
+      assert.ok(input);
+      input.value = String(value);
+      input.dispatchEvent({ type: 'input' });
+    };
+    set(controls('Maximum focus approach (seconds)')[0], 1.5);
+    set(controls('Follow firing arc (degrees)')[0], 150);
+    set(controls('Attack range')[1], 200);
+    set(controls('Infantry in this pack')[0], 20);
+    const compiled = compileOverflightRiyProject(project);
+    assert.equal(edits, 4);
+    assert.equal(compiled.riy.approachSeconds, 1.5);
+    assert.equal(compiled.riy.escorts[0].followArc, 150);
+    assert.equal(compiled.riy.escorts[1].attackRange, 200);
+    assert.equal(compiled.riy.intro[0].count, 20);
+    assert.equal(Object.hasOwn(project.riy, 'attackRange'), false);
+    assert.equal(Object.hasOwn(project.riy, 'defendRange'), false);
+  });
+}
+
+test('legacy Riy editor retains shared ranges without adding modern fields', () => {
+  for (const options of [{ legacy: true }, { rulesVersion: 2 }]) {
+    const project = createOverflightRiyProject(options);
+    const editor = overflightRiyEditor({
+      document: new Document(),
+      project,
+      locale: 'en',
+      onChange() {},
+    });
+    assert.equal(editor.querySelectorAll('input').length, 18);
+    const labels = editor.querySelectorAll('label');
+    assert.ok(labels.some((label) => label.textContent === 'Follow-mode targeting range'));
+    assert.equal(
+      labels.some((label) => label.textContent === 'Maximum focus approach (seconds)'),
+      false,
+    );
+    const input = labels
+      .find((label) => label.textContent === 'Attack range')
+      .querySelector('input');
+    input.value = '140';
+    input.dispatchEvent({ type: 'input' });
+    assert.equal(compileOverflightRiyProject(project).riy.attackRange, 140);
+    assert.equal(Object.hasOwn(project.riy, 'approachSeconds'), false);
+    assert.equal(Object.hasOwn(project.riy, 'intro'), false);
+  }
+});

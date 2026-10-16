@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "canonicalGLBs": 72,
+  "retainedAssets": 36,
+  "seams": 60,
+  "actualExtentM": [
+    768,
+    768
+  ],
+  "transitions": 200,
+  "peakGeometryBytes": 673464,
+  "routeSweeps": 9888,
+  "rockHits": 54,
+  "grounded": 54,
+  "spawnClear": true,
+  "sharedFlightTicks": 100,
+  "geometryBytes": 673464,
+  "disposed": true,
+  "sourceUnchanged": true,
+  "flightReady": false
+}

@@ -647,3 +647,57 @@ test('Riy operation keeps its dynamic runtime and authored package graph in offl
     );
   assert.equal(core.references.get('game/overflight/riy-mode.mjs'), 'game/overflight/app.mjs');
 });
+
+test('six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure', async () => {
+  const player = (await readdir(new URL('../game/overflight/', import.meta.url)))
+      .filter((name) => /\.(?:mjs|css|html)$/.test(name))
+      .map((name) => `game/overflight/${name}`),
+    shared = [
+      'game/presentation/overflight-world-art.mjs',
+      'game/presentation/overflight-world-art-v2.mjs',
+      'game/presentation/overflight-world-slots.mjs',
+      'game/presentation/industrial-materials.mjs',
+      'game/snake/classic-structure-art.mjs',
+    ],
+    optional = [
+      'game/studio/overflight.html',
+      'game/studio/overflight-world-editor.mjs',
+      'game/studio/overflight-battlefield-editor.mjs',
+    ],
+    files = await Promise.all(
+      [...player, ...shared, ...optional].map(async (name) => ({
+        name,
+        bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+      })),
+    ),
+    core = selectOfflineCore(files, new Set());
+  for (const name of [
+    'game/overflight/motion.mjs',
+    'game/overflight/coordinated-movement.mjs',
+    'game/overflight/battlefields.mjs',
+    'game/overflight/world-layout-presentation.mjs',
+    'game/overflight/survival-hud.mjs',
+    'game/overflight/world-audio.mjs',
+    'game/overflight/upgrade-preview.mjs',
+    'game/overflight/terrain.mjs',
+    'game/overflight/raid-mode.mjs',
+    'game/overflight/riy-mode.mjs',
+    'game/overflight/raid-variants.mjs',
+    ...shared,
+  ]) {
+    assert.ok(core.retained.has(name), `${name} must be available on the first offline sortie`);
+    assert.notEqual(
+      core.references.get(name),
+      '<entry>',
+      `${name} must have a real source dependency edge`,
+    );
+  }
+  for (const name of ['raid-mode', 'riy-mode', 'raid-variants'])
+    assert.equal(
+      core.references.get(`game/overflight/${name}.mjs`),
+      'game/overflight/app.mjs',
+      'conditional operation imports are included without prewarming',
+    );
+  for (const name of optional)
+    assert.equal(core.retained.has(name), false, 'authoring remains an optional tools package');
+});

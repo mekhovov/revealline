@@ -677,6 +677,7 @@ export function mountFlightComfort({
   }
   function refresh() {
     if (disposed) return;
+    if (best) best.root.hidden = comparison.visible?.() === false;
     const uk = locale() === 'uk';
     const enabled = canChange();
     const selected =
@@ -853,13 +854,18 @@ export function mountFlightPractice({
       state.section,
       state.fullPractice,
       state.checkpoint,
+      state.regional,
       state.rate,
     ]);
     if (key !== last) {
       last = key;
-      title.textContent = uk ? 'Дивіться → спробуйте → повторіть' : 'Watch → Try → Repeat';
+      title.textContent = state.regional
+        ? uk ? 'Вільний політ у регіоні' : 'Regional free flight'
+        : uk ? 'Дивіться → спробуйте → повторіть' : 'Watch → Try → Repeat';
       description.textContent = state.title;
-      note.textContent = state.replay
+      note.textContent = state.regional
+        ? uk ? 'Повторіть завантаження недоступної ділянки або поверніться на старт. Політ залишиться на паузі до ввімкнення керування.' : 'Retry an unavailable area or return to launch. Flight stays paused until you arm.'
+        : state.replay
         ? uk
           ? 'Записані стіки показують приклад. Спроба почнеться з вимкненими двигунами; увімкніть їх, коли будете готові.'
           : 'Recorded sticks show the example. Trying starts disarmed; Arm when you are ready.'
@@ -8119,6 +8125,8 @@ host,
 prefix='',
 legacyPalette,
 legacyOrnaments,
+mountBattlefieldGroundControls,
+mountEnemyAppearance=mountEnemyAppearanceControls,
 }){
 if(!root|| !host)return{dispose(){}};
 const group=doc.createElement('section');
@@ -8132,7 +8140,7 @@ const text=(node,key)=>localizedText(node,()=>t(`interface:workshop.${key}`));
 const heading=doc.createElement('h3');
 text(heading,'appearance');
 group.append(heading);
-const enemyAppearance=mountEnemyAppearanceControls({
+const enemyAppearance=mountEnemyAppearance({
 document:doc,
 container:group,
 locale:getLocale,
@@ -8140,6 +8148,14 @@ applyMilitary:()=>host.applyComplete('military-field'),
 applyAuthored:()=>host.set({arcadeArt:'authored'}),
 });
 release.push(enemyAppearance.dispose,onLocaleChange(enemyAppearance.refresh));
+if(mountBattlefieldGroundControls){
+const battlefield=mountBattlefieldGroundControls({
+document:doc,
+container:group,
+locale:getLocale,
+});
+release.push(battlefield.dispose,onLocaleChange(battlefield.refresh));
+}
 const row=(key,parent=group)=>{
 const label=doc.createElement('label'),
 title=doc.createElement('span');
@@ -8920,7 +8936,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: b08fd0c6130ef3d998490e62dceb04c30797fe763cbf28cb9677c9634786d08d
+// Canonical source sha256: 0a1b36e832eec686895fdb10f4b43e32c451c7c1b7469f3bd53cddd6ea7b2705
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -8937,7 +8953,7 @@ solo:'Solo',
 team:'Team',
 versus:'Duel',
 snake:'Snake',
-overflight:'Survive',
+overflight:'FPV Survivals',
 simulator:'SIM',
 mode:'Game mode',
 more:'More',
@@ -8948,7 +8964,7 @@ solo:'Соло',
 team:'Разом',
 versus:'Дуель',
 snake:'Змійка',
-overflight:'Вижити',
+overflight:'FPV Survivals',
 simulator:'SIM',
 mode:'Режим гри',
 more:'Ще',
@@ -9782,6 +9798,10 @@ actions.pause?.();
 open('results');
 return;
 }
+if(state.pauseOpensMenu&&['playing','paused','disarmed'].includes(state.phase)){
+open('pause');
+return;
+}
 if(!['playing','paused'].includes(state.phase))return;
 if(phase==='playing')open('pause');
 else if(phase==='paused'&&state.phase==='paused')activate('resume');
@@ -10057,7 +10077,14 @@ else if(node===extraHomeAction)value=text(homeAction.label);
 else if(node===buttons.start)
 value=COPY[language][state.phase==='paused'?'resume':'start'];
 else if(node===buttons.pause)
-value=COPY[language][state.phase==='paused'?'resume':'pause'];
+value=
+COPY[language][
+state.pauseOpensMenu&&state.phase!=='playing'
+?'menu'
+:state.phase==='paused'
+?'resume'
+:'pause'
+];
 else if(node===buttons.sound||node===buttons['pause-sound'])
 value=`${COPY[language].sound}: ${COPY[language][state.muted?'off':'on']}`;
 else if(node===briefingTitle)value=text(state.missionName)||value;
@@ -10078,6 +10105,7 @@ put(
 buttons.pause,
 'disabled',
 !['playing','paused'].includes(state.phase)&&
+!(state.pauseOpensMenu&&state.phase==='disarmed')&&
 !(state.phase==='results'&&state.transitionActive),
 );
 attribute(buttons.sound,'aria-pressed',String(!state.muted));

@@ -1,5 +1,7 @@
+import { overflightTerrainClear, overflightTerrainWaypoint } from './terrain.mjs';
+import { overflightHarmfulBody, overflightMotionLeg } from './motion.mjs';
 import { visitOverflightGrid } from './grid.mjs';
-import { OVERFLIGHT_FLIGHT_PROFILES } from './flight-profile.mjs';
+import { OVERFLIGHT_FLIGHT_PROFILES, OVERFLIGHT_PLAYER_RADIUS } from './flight-profile.mjs';
 const slowestEscapeSpeed =
   Math.min(...Object.values(OVERFLIGHT_FLIGHT_PROFILES).map((profile) => profile.speed)) * 0.9;
 /** Shared, deterministic combat rules for Overflight V2. No renderer or clock owner. */
@@ -92,89 +94,205 @@ export function overflightAttackContains(attack, x, y, radius = 9) {
   const dx = x - attack.originX,
     dy = y - attack.originY;
   const angles = attack.kind === 'fan' ? [-attack.spread, 0, attack.spread] : [0];
-  return angles.some((offset) => {
+  return angles.some((offset, index) => {
     const angle = attack.heading + offset;
     const along = dx * Math.cos(angle) + dy * Math.sin(angle);
     return (
       along >= -radius &&
-      along <= attack.length + radius &&
+      along <= (attack.rayLengths?.[index] ?? attack.length) + radius &&
       Math.abs(-dx * Math.sin(angle) + dy * Math.cos(angle)) <= attack.radius + radius
     );
   });
 }
-/** Admit only if a baseline-speed straight escape remains inside the arena.
- * Existing committed geometry participates; boost availability never matters. */
-function bodyClearPath(run, endX, endY, seconds) {
-  const dx = endX - run.player.x,
-    dy = endY - run.player.y;
+/** Relative sweeps include Raid's actual velocity and harmful contact rules.
+ * A committed leg may stop, so sweep its moving and settled portions separately. */
+function bodyClearPath(run, from, to, seconds, startTime = 0) {
+  // Match physical cover clearance: an inflated radius makes every direction
+  // start inside cover when the real hull legitimately rests against a wall.
+  if (!overflightTerrainClear(run.terrain, from.x, from.y, to.x, to.y, run.player.radius))
+    return false;
+  const dx = to.x - from.x,
+    dy = to.y - from.y;
   let clear = true;
   visitOverflightGrid(
     run._grid,
-    (run.player.x + endX) / 2,
-    (run.player.y + endY) / 2,
-    Math.hypot(dx, dy) / 2 + 160 * seconds + run._maxEnemyRadius + run.player.radius,
+    (from.x + to.x) / 2,
+    (from.y + to.y) / 2,
+    Math.hypot(dx, dy) / 2 + 360 * (startTime + seconds) + run._maxEnemyRadius + run.player.radius,
     (enemy) => {
-      if (!clear || enemy.warning > seconds) return;
-      // Conservative relative sweep against the currently committed motion.
-      const factor = (enemy.behaviorPhase === 'burst' ? 2 : 1) * enemy.speed;
-      const vx = (enemy.behaviorPhase === 'burst' ? enemy._burstX : enemy.steeringX) * factor;
-      const vy = (enemy.behaviorPhase === 'burst' ? enemy._burstY : enemy.steeringY) * factor;
-      const rx = run.player.x - enemy.x,
-        ry = run.player.y - enemy.y;
-      const sx = dx - vx * seconds,
-        sy = dy - vy * seconds;
-      const t = Math.max(0, Math.min(1, -(rx * sx + ry * sy) / (sx * sx + sy * sy || 1)));
-      if ((rx + sx * t) ** 2 + (ry + sy * t) ** 2 < (enemy.radius + run.player.radius + 2) ** 2)
-        clear = false;
+      if (!clear || enemy.warning > startTime + seconds) return;
+      const override = run._motionOverride?.enemy === enemy ? run._motionOverride.velocity : null;
+      const leg = overflightMotionLeg(enemy, startTime + seconds, override);
+      const cuts = [
+        startTime,
+        Math.max(startTime, Math.min(startTime + seconds, leg.duration)),
+        startTime + seconds,
+      ];
+      for (let i = 0; i < 2 && clear; i++) {
+        const begin = cuts[i],
+          end = cuts[i + 1];
+        if (end <= begin) continue;
+        const pa = (begin - startTime) / (seconds || 1),
+          pb = (end - startTime) / (seconds || 1);
+        const ex = enemy.x + leg.x * Math.min(begin, leg.duration);
+        const ey = enemy.y + leg.y * Math.min(begin, leg.duration);
+        const px = from.x + dx * pa,
+          py = from.y + dy * pa;
+        const sx =
+          dx * (pb - pa) - leg.x * (Math.min(end, leg.duration) - Math.min(begin, leg.duration));
+        const sy =
+          dy * (pb - pa) - leg.y * (Math.min(end, leg.duration) - Math.min(begin, leg.duration));
+        const rx = px - ex,
+          ry = py - ey;
+        const radius = enemy.radius + run.player.radius + 2;
+        const a = sx * sx + sy * sy;
+        const b = rx * sx + ry * sy;
+        const c = rx * rx + ry * ry - radius * radius;
+        // Facing matters at first contact. Testing the closest point could put
+        // a sweep at the body's centre and incorrectly call its front exposed.
+        const discriminant = b * b - a * c;
+        if (c > 0 && (a === 0 || discriminant < 0)) continue;
+        const t = c <= 0 ? 0 : (-b - Math.sqrt(discriminant)) / a;
+        if (
+          t >= 0 &&
+          t <= 1 &&
+          overflightHarmfulBody(
+            enemy,
+            px + dx * (pb - pa) * t,
+            py + dy * (pb - pa) * t,
+            ex + leg.x * (Math.min(end, leg.duration) - Math.min(begin, leg.duration)) * t,
+            ey + leg.y * (Math.min(end, leg.duration) - Math.min(begin, leg.duration)) * t,
+          )
+        )
+          clear = false;
+      }
     },
   );
   return clear;
 }
 
-export function hasOverflightEscape(run, candidate) {
-  const attacks = run.priorityAttacks.filter((a) => a.active).concat(candidate);
-  for (let i = 0; i < 24; i++) {
-    const angle = (i * Math.PI) / 12;
-    // Test each impact at its own time: the earliest warning must not mask a
-    // later fan, and a new warning must never retarget after admission.
-    const safe = attacks.every((attack) => {
-      const speed = run.rulesVersion >= 3 ? slowestEscapeSpeed : 160;
-      const travelSeconds =
-        attack.stage === 'active'
-          ? Math.min(candidate.remaining, attack.remaining)
-          : Math.max(0, attack.remaining);
-      const distance = Math.min(180, travelSeconds * speed);
-      const x = run.player.x + Math.cos(angle) * distance;
-      const y = run.player.y + Math.sin(angle) * distance;
+function escapeAlong(run, attacks, points) {
+  const speed = run.rulesVersion >= 3 ? slowestEscapeSpeed : 160;
+  return attacks.every((attack) => {
+    const seconds = Math.max(0, attack.remaining);
+    let remaining = Math.min(180, seconds * speed),
+      elapsed = 0;
+    let from = { x: run.player.x, y: run.player.y };
+    for (const point of points) {
+      const length = Math.hypot(point.x - from.x, point.y - from.y);
+      const distance = Math.min(remaining, length);
+      const to = length
+        ? {
+            x: from.x + ((point.x - from.x) * distance) / length,
+            y: from.y + ((point.y - from.y) * distance) / length,
+          }
+        : from;
+      const duration = distance / speed;
       if (
-        x < 18 ||
-        y < 18 ||
-        x > run.compiled.arena.width - 18 ||
-        y > run.compiled.arena.height - 18
+        to.x < 18 ||
+        to.y < 18 ||
+        to.x > run.compiled.arena.width - 18 ||
+        to.y > run.compiled.arena.height - 18
       )
         return false;
-      if (overflightAttackContains(attack, x, y, run.player.radius + 8)) return false;
-      if (run.rulesVersion >= 3) {
-        if (!bodyClearPath(run, x, y, travelSeconds)) return false;
-        if (attack.stage === 'active') {
-          for (let sample = 0; sample <= 8; sample++)
-            if (
-              overflightAttackContains(
-                attack,
-                run.player.x + ((x - run.player.x) * sample) / 8,
-                run.player.y + ((y - run.player.y) * sample) / 8,
-                run.player.radius + 8,
-              )
+      if (run.rulesVersion >= 3 && !bodyClearPath(run, from, to, duration, elapsed)) return false;
+      if (attack.stage === 'active') {
+        for (let sample = 0; sample <= 8; sample++)
+          if (
+            overflightAttackContains(
+              attack,
+              from.x + ((to.x - from.x) * sample) / 8,
+              from.y + ((to.y - from.y) * sample) / 8,
+              run.player.radius + 8,
             )
-              return false;
-        }
+          )
+            return false;
       }
-      return true;
-    });
-    if (safe) return true;
+      elapsed += duration;
+      remaining -= distance;
+      from = to;
+      if (remaining <= 1e-9) break;
+    }
+    if (overflightAttackContains(attack, from.x, from.y, run.player.radius + 8)) return false;
+    // An escape may reach its endpoint before a later impact. Bodies still move
+    // during that wait; stopping at a safe point must not mask a later crossing.
+    return (
+      run.rulesVersion < 3 ||
+      seconds <= elapsed ||
+      bodyClearPath(run, from, from, seconds - elapsed, elapsed)
+    );
+  });
+}
+
+/** No-boost admission shares committed motion with runtime. For V4 cover,
+ * a bounded two-leg navigation route supplements the 24 direct escape rays. */
+export function hasOverflightEscape(run, candidate = null, stopOwner = null) {
+  if (stopOwner) {
+    const previous = run._motionOverride;
+    run._motionOverride = { enemy: stopOwner, velocity: { x: 0, y: 0 } };
+    try {
+      return hasOverflightEscape(run, candidate);
+    } finally {
+      run._motionOverride = previous;
+    }
+  }
+  const attacks = run.priorityAttacks.filter((a) => a.active);
+  if (candidate) attacks.push(candidate);
+  if (!attacks.length) return true;
+  const origin = {
+    x: run.player.x,
+    y: run.player.y,
+    radius: run.player.radius,
+  };
+  for (let i = 0; i < 24; i++) {
+    const angle = (i * Math.PI) / 12;
+    const goal = {
+      x: origin.x + Math.cos(angle) * 180,
+      y: origin.y + Math.sin(angle) * 180,
+    };
+    if (escapeAlong(run, attacks, [goal])) return true;
+  }
+  if (run.rulesVersion >= 4 && run.terrain) {
+    for (let i = 0; i < 8; i++) {
+      const angle = (i * Math.PI) / 4;
+      const goal = {
+        x: Math.max(18, Math.min(run.compiled.arena.width - 18, origin.x + Math.cos(angle) * 180)),
+        y: Math.max(18, Math.min(run.compiled.arena.height - 18, origin.y + Math.sin(angle) * 180)),
+      };
+      const via = overflightTerrainWaypoint(run.terrain, origin, goal, run.compiled.arena);
+      if (via !== goal && escapeAlong(run, attacks, [via, goal])) return true;
+    }
   }
   return false;
 }
+
+/** A new coordinated leg may not silently invalidate a live warned escape. */
+export function admitOverflightMotion(run, enemy, velocity) {
+  if (run.rulesVersion < 4 || !run.priorityAttacks.some((attack) => attack.active)) return true;
+  const previous = run._motionOverride;
+  run._motionOverride = { enemy, velocity };
+  try {
+    const admitted = hasOverflightEscape(run);
+    if (!admitted) run.stats.motionDeferrals = (run.stats.motionDeferrals ?? 0) + 1;
+    return admitted;
+  } finally {
+    run._motionOverride = previous;
+  }
+}
+/** Facing/exposure changes alter Raid's harmful body shape too. */
+export function admitOverflightBodyState(run, enemy, changes) {
+  if (run.rulesVersion < 4 || !run.priorityAttacks.some((attack) => attack.active)) return true;
+  const before = Object.fromEntries(Object.keys(changes).map((key) => [key, enemy[key]]));
+  Object.assign(enemy, changes);
+  try {
+    const admitted = hasOverflightEscape(run);
+    if (!admitted) run.stats.motionDeferrals = (run.stats.motionDeferrals ?? 0) + 1;
+    return admitted;
+  } finally {
+    Object.assign(enemy, before);
+  }
+}
+
 export function createOverflightCaches(compiled) {
   if (compiled.rulesVersion < 2 || !compiled.combat?.supplies.enabled) return [];
   return compiled.props.slice(0, 2).map((prop, index) => ({
@@ -216,15 +334,48 @@ export function createOverflightCaches(compiled) {
     ],
   }));
 }
+
+/** Authoring must not promise supplies hidden inside solid experimental cover.
+ * Reuse native cache positions, including all available reward offsets. */
+export function validateOverflightSupplyTerrain(project) {
+  if (!project.terrain) return;
+  const caches = createOverflightCaches({
+    ...project,
+    rulesVersion: 3,
+    sourceFormat: project.format,
+  });
+  for (const cache of caches)
+    for (const point of [cache, ...cache.rewards])
+      if (
+        !overflightTerrainClear(
+          project.terrain,
+          point.x,
+          point.y,
+          point.x,
+          point.y,
+          OVERFLIGHT_PLAYER_RADIUS,
+        )
+      )
+        throw new TypeError(
+          `Supply case ${cache.id} and every reward need drone clearance from experimental terrain.`,
+        );
+}
 /** Finite physical rewards: no magnet, clock, modal or input binding. */
 export function updateOverflightCaches(run, spawn, notify) {
   if (run.fixture || run.rulesVersion < 2 || run.phase !== 'playing') return;
   for (const cache of run.caches) {
     const due = run.hunt ? run.hunt.sector >= cache.sector : run.time >= cache.trigger;
-    if (cache.state === 'dormant' && due) cache.state = 'locked';
+    if (
+      cache.state === 'dormant' &&
+      due &&
+      (run.rulesVersion < 3 ||
+        !run.caches.some((other) => other !== cache && other.state === 'locked'))
+    )
+      cache.state = 'locked';
     if (cache.state === 'locked') {
-      // An authored finite ordinary pack stays finite and does not reserve scarce
-      // specialist slots or prevent the other independent cache appearing.
+      // A finite ordinary guard pack does not reserve scarce specialist slots.
+      // Current rules admit the next opportunity only after this pack is cleared;
+      // opened rewards can remain available without delaying the next encounter.
       while (cache.guardIds.length < cache.guardTarget) {
         const i = cache.guardIds.length,
           angle = (i * Math.PI * 2) / cache.guardTarget;

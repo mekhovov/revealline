@@ -3192,5 +3192,12 @@
   "motionLab.sharedActor.recovery": "Recovery",
   "motionLab.sharedActor.caught": "Caught",
   "motionLab.sharedActor.aim": "Aim",
-  "motionLab.sharedActor.fire": "Fire"
+  "motionLab.sharedActor.fire": "Fire",
+  "studio.geometry.teamEnvironment": "Team environment: {{relays}} relay gates, {{stages}} numbered targets, {{currents}} current zones, {{emitters}} warning emitters, {{patrols}} perimeter patrols and {{erosion}} erosion sources. Capture each relay to open its matching gate. Complete numbered targets in order. Arrows slow cuts against the current; dashed lines warn before an attack. Use Edit Team environment to change and validate this recipe.",
+  "studio.teamEnvironment.title": "Edit Team environment",
+  "studio.teamEnvironment.source": "Environment recipe",
+  "studio.teamEnvironment.apply": "Validate & apply environment",
+  "studio.teamEnvironment.help": "Edit relay objectives, current zones, warning emitters, perimeter patrols, erosion sources and ordered targets. Gates must fit existing wall cells; change the map geometry first when moving a gate. The complete recipe is validated before applying. Undo restores the previous environment.",
+  "studio.teamEnvironment.unavailable": "Select a Team expedition mission with environmental mechanics. Other editions keep their own editors and rules.",
+  "studio.teamEnvironment.applied": "Team environment applied. The map preview and local checkpoint use the updated recipe."
 }

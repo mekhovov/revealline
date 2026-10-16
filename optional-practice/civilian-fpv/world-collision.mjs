@@ -1,3 +1,5 @@
+import { flightSupportFromRay } from './flight-support.mjs';
+import { moveFlightSphere, earlierFlightHit as earlier } from './flight-contact.mjs';
 import RAPIER from './vendor/rapier/rapier.mjs';
 
 export const WORLD_COLLISION_BACKEND =
@@ -28,13 +30,6 @@ export async function initWorldRuntime() {
       },
     );
   return initialization;
-}
-
-function earlier(a, b) {
-  if (!a) return b;
-  if (!b) return a;
-  const delta = a.toi - b.toi;
-  return Math.abs(delta) > 0.000001 ? (delta < 0 ? a : b) : a.id < b.id ? a : b;
 }
 
 /** Static broad phase is built once. Moving proxies are queried directly and
@@ -182,13 +177,7 @@ export function createWorldCollision(course) {
       undefined,
       staticOnly,
     );
-    if (!hit || hit.normal.y < 0.8660254) return null;
-    const surface = origin.y * 1000 - hit.timeOfImpact * 1000;
-    return {
-      id: staticIds.get(hit.collider.handle),
-      y: Math.ceil(surface + radius / hit.normal.y - radius),
-      normal: normal(hit.normal),
-    };
+    return flightSupportFromRay(origin.y, radius, hit, hit && staticIds.get(hit.collider.handle));
   }
   return {
     support,
@@ -317,38 +306,7 @@ export function createWorldCollision(course) {
     },
     moveSphere(position, delta, radius, motions = []) {
       assertLive();
-      let point = centre(position, radius);
-      let remaining = { ...delta };
-      let elapsed = 0;
-      let duration = 1;
-      const contacts = [];
-      for (let i = 0; i < 3; i++) {
-        // A stationary drone can still be crossed by a moving hazard. A floor
-        // contact removes vertical movement, not the rest of the tick's CCD.
-        if (
-          AXES.every((k) => Math.abs(remaining[k]) < 0.001) &&
-          (duration <= 0 || motions.every((m) => AXES.every((k) => m.from[k] === m.to[k])))
-        )
-          break;
-        const hit = earlier(
-          staticSweep(point, remaining, radius),
-          movingSweep(point, remaining, radius, motions, elapsed, duration),
-        );
-        if (!hit) {
-          point = add(point, remaining);
-          break;
-        }
-        contacts.push(hit);
-        const toi = Math.max(0, Math.min(1, hit.toi));
-        point = add(add(point, scale(remaining, toi)), scale(hit.normal, 0.000002));
-        if (hit.moving) break;
-        remaining = scale(remaining, 1 - toi);
-        const into = AXES.reduce((n, k) => n + remaining[k] * hit.normal[k], 0) / 1000000;
-        if (into < 0) remaining = sub(remaining, scale(hit.normal, into / 1000000));
-        elapsed += duration * toi;
-        duration *= 1 - toi;
-      }
-      return { position: rounded({ ...point, y: point.y - radius }), contacts };
+      return moveFlightSphere(position, delta, radius, motions, staticSweep, movingSweep);
     },
     castPulse(from, to, motions = [], player = null) {
       assertLive();

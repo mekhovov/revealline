@@ -104,6 +104,10 @@ import {
 } from './mission-library/classic-current-rules.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
 import { publishedJourneyLibrarySources } from './mission-library/published-routes.mjs';
+import {
+  duelExpeditionLibrarySources,
+  teamExpeditionLibrarySource,
+} from './mission-library/multiplayer-expeditions.mjs';
 import { combineJourneyLibrarySources } from './mission-library/cross-mode-journey.mjs';
 import { trackMissionLibraryOpening } from './mission-library/opening-intent.mjs';
 import { authoredMissionSuccessor } from './mission-library/authored-continuation.mjs';
@@ -12523,6 +12527,26 @@ try {
           ]),
           ...spatialEditions.sources,
           ...teamSources,
+        ];
+      }
+      if (!runtimeContent) {
+        const expansionSources = [
+          ...duelExpeditionLibrarySources({
+            themes: originalThemes,
+            activeRouteId: route.id,
+            launch: departLibraryMission,
+            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+          }),
+          teamExpeditionLibrarySource({
+            launch: departLibraryMission,
+            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+          }),
+        ];
+        journeySources = [
+          ...journeySources,
+          ...expansionSources.filter(
+            (source) => !journeySources.some((existing) => existing.id === source.id),
+          ),
         ];
       }
       const classicProjectionCache = new WeakMap();

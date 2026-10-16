@@ -8,17 +8,18 @@ on:
 permissions:
   contents: read
 
-# Deployment is deliberately separate from pull-request admission.  Each main
-# merge publishes the newest exact main snapshot, while a newer merge can
-# replace an unfinished older snapshot without delaying the merge queue.
+# Deployment is separate from pull-request admission. Let an active publication
+# finish so rapid main merges cannot starve Pages; GitHub retains only the newest
+# pending run, which publishes after the active one.
 concurrency:
   group: pages-production
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   # GitHub Pages has a published-site capacity limit. This guards deployment
-  # capacity only; it is never a required pull-request check.
-  MAX_PUBLISHED_BYTES: 950000000
+  # capacity only; it is never a required pull-request check. GitHub Pages
+  # permits published sites up to 1 GB; retain a 20 MB deployment margin.
+  MAX_PUBLISHED_BYTES: 980000000
 
 jobs:
   build:
@@ -98,34 +99,7 @@ jobs:
         run: |
           set -euo pipefail
           SOURCE_COMMITTED_AT="$(git show -s --format=%cI "$SOURCE_SHA")" \
-            node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          import path from 'node:path';
-          import { protectPageHTML } from './scripts/access-pages.mjs';
-          const root = path.join(process.env.RUNNER_TEMP, 'main-pages');
-          const deployment = {
-            format: 'revealline-main-deployment.v1',
-            channel: 'main',
-            sourceRevision: process.env.SOURCE_SHA,
-            sourceCommittedAt: process.env.SOURCE_COMMITTED_AT,
-            buildVersion: process.env.BUILD_VERSION,
-            play: 'game/',
-            releases: 'https://github.com/mekhovov/revealline/releases',
-          };
-          const json = JSON.stringify(deployment, null, 2) + '\n';
-          fs.writeFileSync(path.join(root, 'main-deployment.json'), json, { flag: 'wx' });
-          fs.writeFileSync(path.join(root, 'release.json'), json, { flag: 'wx' });
-          fs.mkdirSync(path.join(root, 'releases'), { recursive: true });
-          fs.writeFileSync(
-            path.join(root, 'releases/index.html'),
-            protectPageHTML(
-              '<!doctype html><meta charset="utf-8"><title>RevealLine releases</title><p>Immutable downloads and release notes are available on <a href="https://github.com/mekhovov/revealline/releases">GitHub</a>.',
-              'releases/index.html',
-              fs.readFileSync(path.join(root, 'game/index.html'), 'utf8'),
-            ),
-            { flag: 'wx' },
-          );
-          NODE
+            node scripts/write-main-pages-metadata.mjs
 
       - name: Verify Pages capacity and record the exact inventory
         id: inventory
@@ -133,31 +107,7 @@ jobs:
           SOURCE_SHA: ${{ steps.identity.outputs.source_sha }}
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import json, os, pathlib, stat
-          root = pathlib.Path(os.environ['RUNNER_TEMP']) / 'main-pages'
-          files = total = 0
-          for entry in root.rglob('*'):
-            mode = entry.lstat().st_mode
-            assert not stat.S_ISLNK(mode), f'Symbolic link is not publishable: {entry}'
-            if entry.is_file():
-              files += 1
-              total += entry.stat().st_size
-          maximum = int(os.environ['MAX_PUBLISHED_BYTES'])
-          assert total <= maximum, f'Pages snapshot exceeds {maximum} bytes: {total}'
-          receipt = {
-            'format': 'revealline-main-pages-receipt.v1',
-            'sourceRevision': os.environ['SOURCE_SHA'],
-            'files': files,
-            'bytes': total,
-            'maximumBytes': maximum,
-          }
-          pathlib.Path(os.environ['RUNNER_TEMP'], 'main-pages-receipt.json').write_text(
-            json.dumps(receipt, indent=2) + '\n'
-          )
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-            output.write(f'files={files}\nbytes={total}\n')
-          PY
+          python3 scripts/pages-capacity-evidence.py
 
       - name: Verify exact tracked source after build
         run: |
@@ -165,19 +115,44 @@ jobs:
           node scripts/check-source-identity.mjs --root .
 
       - name: Upload deployment receipt
+        if: ${{ !cancelled() && (steps.inventory.outcome == 'success' || steps.inventory.outcome == 'failure') }}
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: main-pages-receipt-${{ github.sha }}
-          path: ${{ runner.temp }}/main-pages-receipt.json
+          path: |
+            ${{ runner.temp }}/main-pages-receipt.json
+            ${{ runner.temp }}/main-pages-inventory.json
           compression-level: 0
           retention-days: 30
           if-no-files-found: error
 
       - name: Upload the exact Pages artifact
+        id: pages_artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: ${{ runner.temp }}/main-pages
           include-hidden-files: true
+
+      # The pinned composite action leaves the uploaded, uncompressed archive
+      # here. Check that actual archive, not a second independently built tar.
+      # Uploading is not deployment: any failure below keeps build unsuccessful.
+      - name: Verify the uploaded Pages archive against its inventory
+        id: archive
+        env:
+          SOURCE_SHA: ${{ steps.identity.outputs.source_sha }}
+          PAGES_ARTIFACT_ID: ${{ steps.pages_artifact.outputs.artifact_id }}
+        run: |
+          set -euo pipefail
+          python3 scripts/pages-archive-evidence.py
+
+      - name: Preserve archive acceptance or failure evidence
+        if: ${{ !cancelled() && (steps.archive.outcome == 'success' || steps.archive.outcome == 'failure') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: main-pages-archive-receipt-${{ github.sha }}
+          path: ${{ runner.temp }}/main-pages-archive-receipt.json
+          retention-days: 30
+          if-no-files-found: error
 
   deploy:
     needs: build

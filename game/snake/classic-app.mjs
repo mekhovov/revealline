@@ -28,6 +28,7 @@ import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
 import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
+import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import {
   getMenuAnimation,
   setMenuAnimation,
@@ -303,20 +304,6 @@ const presentation = createClassicPresentation({
   displayPreferences: display,
   onChange: () => missionChooser?.refresh(),
 });
-const enemyAppearanceControls = mountEnemyAppearanceControls({
-  document: doc,
-  container: $('snake-enemy-appearance'),
-  locale: getLocale,
-  applyMilitary: async () => {
-    await presentation.theme.applyComplete('military-field');
-    renderCopy();
-  },
-  applyAuthored: async () => {
-    await presentation.theme.set({ arcadeArt: 'authored' });
-    renderCopy();
-  },
-});
-onLocaleChange(enemyAppearanceControls.refresh);
 const audioMaster = createAudioMaster(),
   audioPreferences = createAudioPreferences({ audioMaster });
 const sound = new Soundscape({ audioMaster, persistentMusic: true });
@@ -1649,7 +1636,7 @@ function refresh() {
     outcome === 'p1' || outcome === 'p2'
       ? text('winner', { player: outcome === 'p1' ? 1 : 2 })
       : text(outcome ?? (ready ? 'ready' : 'paused'));
-  $('announcement').textContent =
+  const announcement =
     outcome === 'lost'
       ? failureText(runs[0], match.boardResults[0]) || title
       : outcome
@@ -1659,6 +1646,7 @@ function refresh() {
           : paused
             ? text('paused')
             : '';
+  if ($('announcement').textContent !== announcement) $('announcement').textContent = announcement;
   $('result-detail').textContent =
     $('announcement').textContent +
     (!nextMission() && outcome === 'won' && mode !== 'versus'
@@ -1735,12 +1723,12 @@ function refresh() {
         : signal.warning
           ? 'signalWarning'
           : 'signalClear';
-    board.reception.textContent = `⌁ ${text(signalState)}`;
+    const receptionText = `⌁ ${text(signalState)}`;
+    if (board.reception.textContent !== receptionText) board.reception.textContent = receptionText;
     board.reception.dataset.reception = signalState;
-    board.reception.setAttribute(
-      'aria-label',
-      `${text(signalState)}. ${text(signal.sources.some((source) => source.radius !== null) ? 'signalLocalHelp' : 'signalBroadcastHelp')}`,
-    );
+    const receptionLabel = `${text(signalState)}. ${text(signal.sources.some((source) => source.radius !== null) ? 'signalLocalHelp' : 'signalBroadcastHelp')}`;
+    if (board.reception.getAttribute('aria-label') !== receptionLabel)
+      board.reception.setAttribute('aria-label', receptionLabel);
     board.fields.score.value.textContent = String(summary.score);
     board.fields.best.value.textContent = String(
       records.get(run, mode, match.options.policy)?.score ?? 0,
@@ -1792,7 +1780,9 @@ function ratingCriteriaText(run, displayMode = mode) {
 function renderRatings() {
   if (!$('snake-stars')) return;
   $('result-save-notice').hidden = unsavedOutcome !== match || !result();
-  $('result-save-notice').textContent = unsavedOutcome === match ? text('verifiedNotSaved') : '';
+  const saveNotice = unsavedOutcome === match ? text('verifiedNotSaved') : '';
+  if ($('result-save-notice').textContent !== saveNotice)
+    $('result-save-notice').textContent = saveNotice;
   const eligible = format === 'campaign' && mode !== 'versus';
   const grade =
     eligible && verifiedOutcome === match
@@ -1807,7 +1797,7 @@ function renderRatings() {
         })
       : null;
   $('snake-stars').hidden = !eligible || result() !== 'won';
-  $('snake-stars').textContent =
+  const starsText =
     liveProvenance === 'import'
       ? locale === 'uk'
         ? 'Запис · без нових нагород'
@@ -1817,10 +1807,10 @@ function renderRatings() {
         : locale === 'uk'
           ? 'Перевірка результату…'
           : 'Verifying completion…';
-  $('snake-stars').setAttribute(
-    'aria-label',
-    grade?.stars ? `${grade.stars} / 3` : $('snake-stars').textContent,
-  );
+  if ($('snake-stars').textContent !== starsText) $('snake-stars').textContent = starsText;
+  const starsLabel = grade?.stars ? `${grade.stars} / 3` : starsText;
+  if ($('snake-stars').getAttribute('aria-label') !== starsLabel)
+    $('snake-stars').setAttribute('aria-label', starsLabel);
   $('snake-rating-criteria').textContent = ratingCriteriaText(runs[0]);
 }
 function restore(raw, { provenance = 'import' } = {}) {
@@ -2304,7 +2294,8 @@ function pollGamepads() {
       continue;
     }
     if (buttons[4] && !previous[4]) {
-      if (ready || paused) start();
+      if (result()) pause();
+      else if (ready || paused) start();
       else pause();
     }
     if (result() && buttons[5] && !previous[5]) {
@@ -2724,6 +2715,19 @@ attachThemeFamilyControls({
   root: snakeSettingsView.panels.display,
   host: presentation.theme,
   prefix: 'snake-',
+  mountBattlefieldGroundControls,
+  mountEnemyAppearance: (options) =>
+    mountEnemyAppearanceControls({
+      ...options,
+      applyMilitary: async () => {
+        await presentation.theme.applyComplete('military-field');
+        renderCopy();
+      },
+      applyAuthored: async () => {
+        await presentation.theme.set({ arcadeArt: 'authored' });
+        renderCopy();
+      },
+    }),
 });
 const displayBinding = (key) => ({
   get: () => display.snapshot()[key],

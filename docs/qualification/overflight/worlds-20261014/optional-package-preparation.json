@@ -1,0 +1,32 @@
+[
+  {
+    "packageId": "civilian-flight",
+    "qualification": "development closure test; synthetic commit binding",
+    "files": 91,
+    "bytes": 3664768,
+    "limits": {
+      "files": 93,
+      "bytes": 8388608
+    }
+  },
+  {
+    "packageId": "civilian-fpv",
+    "qualification": "development closure test; synthetic commit binding",
+    "files": 96,
+    "bytes": 6658888,
+    "limits": {
+      "files": 101,
+      "bytes": 8388608
+    }
+  },
+  {
+    "packageId": "fpv-worlds",
+    "qualification": "development closure test; synthetic commit binding",
+    "files": 131,
+    "bytes": 17072293,
+    "limits": {
+      "files": 133,
+      "bytes": 20971520
+    }
+  }
+]

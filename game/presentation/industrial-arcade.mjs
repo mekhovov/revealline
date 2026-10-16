@@ -7,7 +7,10 @@ import {
   INSTALLED_THEME_FAMILIES,
   resolveThemeFamilySelection,
 } from './theme-system.mjs';
-import { INDUSTRIAL_BUILTIN_SPRITES } from './industrial-arcade-builtins.mjs';
+import {
+  INDUSTRIAL_BUILTIN_SPRITES,
+  hasCustomIndustrialMachineryGeometry,
+} from './industrial-arcade-builtins.mjs';
 import {
   MILITARY_FIELD_ROLES,
   militaryFieldPixels,
@@ -339,7 +342,8 @@ export function createArcadeAdapter({
           if (
             !original ||
             asset?.id !== `${slot}.field-kit` ||
-            !INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(asset?.file?.sha256)
+            !INDUSTRIAL_BUILTIN_SPRITES[slot]?.includes(asset?.file?.sha256) ||
+            hasCustomIndustrialMachineryGeometry(asset, slot)
           )
             return original;
           let derived = original;

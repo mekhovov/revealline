@@ -1,3 +1,5 @@
+import { insideOverflightCamera } from './benchmark.mjs';
+
 const GOLD = 0xf4c765,
   OPEN = 0x9aebda,
   DANGER = 0xf9a275;
@@ -11,6 +13,88 @@ const layer = (frame, x, y, width, height, tint, alpha = 1, rotation = 0) => ({
   alpha,
   rotation,
 });
+
+/** Pending friendly impacts stay at their released positions, including echoes.
+ * These light footprints are below hostile warnings and never predict a hit. */
+export function overflightPendingPayloadLayers(payload) {
+  if (!payload.active || payload.remaining <= 0) return [];
+  const result = [];
+  const alpha = 0.18 + 0.18 * (1 - Math.min(1, payload.remaining / 0.85));
+  for (let index = 0; index < payload.count; index++) {
+    const offset = (index - (payload.count - 1) / 2) * payload.spacing;
+    const x = payload.x - Math.sin(payload.heading) * offset;
+    const y = payload.y + Math.cos(payload.heading) * offset;
+    result.push(layer('ring', x, y, payload.radius * 2, payload.radius * 2, GOLD, alpha));
+    result.push(layer('bar', x, y, 4, 4, GOLD, 0.6));
+  }
+  return result;
+}
+
+/** At most three actual links; reduced effects retains every affected target. */
+export function overflightEscortShotLayers(escort, reduced = false) {
+  if (escort.beamRemaining <= 0) return [];
+  const segments = escort.shotSegments
+    ? escort.shotSegments.slice(0, escort.shotSegmentCount)
+    : [escort];
+  const tint = escort.role === 'sweeper' ? 0x9aebda : GOLD;
+  return segments.map((segment) => {
+    const dx = segment.targetX - segment.x,
+      dy = segment.targetY - segment.y;
+    return layer(
+      'bar',
+      segment.x + dx / 2,
+      segment.y + dy / 2,
+      Math.hypot(dx, dy),
+      2,
+      tint,
+      reduced ? 0.45 : 0.8,
+      Math.atan2(dy, dx),
+    );
+  });
+}
+
+/** One persistent final objective, visually distinct from transient attack arrows. */
+export function overflightFinalTargetLayers(enemy, camera, frame) {
+  if (!enemy.active) return [];
+  const offscreen = !insideOverflightCamera(enemy.x, enemy.y - 47, camera, -60);
+  const dx = enemy.x - camera.x,
+    dy = enemy.y - camera.y;
+  const amount = Math.min(
+    (camera.width / 2 - 48) / Math.max(Math.abs(dx), 0.01),
+    (camera.height / 2 - 80) / Math.max(Math.abs(dy), 0.01),
+  );
+  const x = offscreen ? camera.x + dx * amount : enemy.x;
+  const y = offscreen ? camera.y + dy * amount : enemy.y - 47;
+  const result = [];
+  if (offscreen) {
+    result.push(layer('bar', x, y, 28, 28, 0x09120f, 0.94, Math.PI / 4));
+    result.push(layer(frame, x, y, 23, 23, 0xffffff));
+    const angle = Math.atan2(dy, dx);
+    result.push(
+      layer('arrow', x + Math.cos(angle) * 29, y + Math.sin(angle) * 29, 17, 17, GOLD, 1, angle),
+    );
+  }
+  const radius = offscreen ? 18 : 7;
+  for (const [sx, sy] of [
+    [1, 1],
+    [1, -1],
+    [-1, 1],
+    [-1, -1],
+  ])
+    result.push(
+      layer(
+        'bar',
+        x + (sx * radius) / 2,
+        y + (sy * radius) / 2,
+        radius * Math.SQRT2,
+        2,
+        GOLD,
+        1,
+        (-sx * sy * Math.PI) / 4,
+      ),
+    );
+  return result;
+}
 
 /** Shared V2 geometry. Rendering never infers damage from an appearance family. */
 export function overflightTacticalEnemyLayers(enemy, size = 24, player = null) {
@@ -126,7 +210,9 @@ export function overflightAttackLayers(attack) {
   }
   const heading = attack.heading ?? 0,
     length = attack.length ?? 200;
-  const ray = (angle) => {
+  const ray = (angle, rayIndex = 0) => {
+    const rayLength = attack.rayLengths?.[rayIndex] ?? length;
+    if (rayLength <= 0) return;
     const half = attack.radius ?? 8;
     for (const side of [-1, 1]) {
       const x = originX - Math.sin(angle) * half * side,
@@ -134,9 +220,9 @@ export function overflightAttackLayers(attack) {
       layers.push(
         layer(
           'bar',
-          x + (Math.cos(angle) * length) / 2,
-          y + (Math.sin(angle) * length) / 2,
-          length,
+          x + (Math.cos(angle) * rayLength) / 2,
+          y + (Math.sin(angle) * rayLength) / 2,
+          rayLength,
           2,
           DANGER,
           0.9,
@@ -147,8 +233,8 @@ export function overflightAttackLayers(attack) {
     layers.push(
       layer(
         'arrow',
-        originX + Math.cos(angle) * length,
-        originY + Math.sin(angle) * length,
+        originX + Math.cos(angle) * rayLength,
+        originY + Math.sin(angle) * rayLength,
         14,
         14,
         DANGER,
@@ -159,8 +245,8 @@ export function overflightAttackLayers(attack) {
   };
   if (attack.kind === 'lane') ray(heading);
   else
-    for (const offset of [-(attack.spread ?? 0.32), 0, attack.spread ?? 0.32])
-      ray(heading + offset);
+    for (const [index, offset] of [-(attack.spread ?? 0.32), 0, attack.spread ?? 0.32].entries())
+      ray(heading + offset, index);
   return layers;
 }
 

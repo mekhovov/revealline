@@ -1,0 +1,125 @@
+[
+  {
+    "id": "palm",
+    "inputSha256": "6dead7023338bc9f6c4d3edb74359b7f8ca83bed52c4790af83003aaf2a99d21",
+    "sourceBytes": 653703,
+    "sourceSha256": "a0a6b95cbb9cafcbac34b1b45613ed916a053d837fc0466959d0d310f70a5e23",
+    "glbBytes": 375872,
+    "glbSha256": "c97f7fa1bb1453f86e2b174dfe47ececbdc28deceed4ce3ec42aef94873e0b5a",
+    "inputTriangles": 688,
+    "omittedDegenerateTriangles": 0,
+    "compiledTriangles": 688,
+    "solidSurfaces": 1,
+    "visualOnlySurfaces": 3,
+    "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; MASK surfaces explicitly visual-only in this material review, not a world collision design.",
+    "textures": [
+      {
+        "sourceDimensions": [
+          512,
+          512
+        ],
+        "derivedDimensions": [
+          128,
+          128
+        ],
+        "resample": "Pillow LANCZOS",
+        "sourceSha256": "e276ba5f5fea0c8f7806bc157155327c8be3cbd6120598d632d476b223b02f7a",
+        "rgbaSha256": "b4254fec21130c7503bc9c204c81fb066296a866e4087ba2f5d97a3218d8e614"
+      },
+      {
+        "sourceDimensions": [
+          512,
+          512
+        ],
+        "derivedDimensions": [
+          128,
+          128
+        ],
+        "resample": "Pillow LANCZOS",
+        "sourceSha256": "56ec6ee782af4f5de8b677a733f81ce5adc104b0cba021c2234b2350039868b5",
+        "rgbaSha256": "10823ba50bd2661bb86c654030826ad1191fdbab2c6e3597642a8823717de80d"
+      },
+      {
+        "sourceDimensions": [
+          512,
+          512
+        ],
+        "derivedDimensions": [
+          128,
+          128
+        ],
+        "resample": "Pillow LANCZOS",
+        "sourceSha256": "7ba06af8d751632a01d42d4a13415e9c314887e07db41a3d3a74994c3803d013",
+        "rgbaSha256": "988dd3bbb141a13e6b6c016a2c0f1e1445ddfa570c3503a32a3e95c1feb57866"
+      },
+      {
+        "sourceDimensions": [
+          600,
+          600
+        ],
+        "derivedDimensions": [
+          128,
+          128
+        ],
+        "resample": "Pillow LANCZOS",
+        "sourceSha256": "a52bb5fbcab637ae8ffceff39ace5961ec8c0f1a3129320ce990be14db6e2198",
+        "rgbaSha256": "634f5f1a996c2f4c6b759af4ff004a3834c3d6335d0dc085f211b04adb3a3c47"
+      }
+    ]
+  },
+  {
+    "id": "covered-jetty",
+    "inputSha256": "ed0359301c0025ad1c544af29d255087fe4dfe159977d82a212eb61de8a05d0e",
+    "sourceBytes": 394878,
+    "sourceSha256": "a37a0512e85e56722279500319646cfd4fad7cf4f080d0617a36791753d81878",
+    "glbBytes": 254092,
+    "glbSha256": "11d21328e7916612f9e22e412f98b38ef34fb745933b009bca718423dd35a632",
+    "inputTriangles": 492,
+    "omittedDegenerateTriangles": 0,
+    "compiledTriangles": 492,
+    "solidSurfaces": 3,
+    "visualOnlySurfaces": 0,
+    "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; MASK surfaces explicitly visual-only in this material review, not a world collision design.",
+    "textures": [
+      {
+        "sourceDimensions": [
+          512,
+          256
+        ],
+        "derivedDimensions": [
+          128,
+          128
+        ],
+        "resample": "Pillow LANCZOS",
+        "sourceSha256": "0f6affe984bcf6ca50b286a0ea2dbfcfa33b4728ca9c119d863eee4ea8e68268",
+        "rgbaSha256": "a55a5b55444178d4b6f735bdfea0b5092d4a613bd86183bfca254cc46e44e0f6"
+      },
+      {
+        "sourceDimensions": [
+          512,
+          512
+        ],
+        "derivedDimensions": [
+          128,
+          128
+        ],
+        "resample": "Pillow LANCZOS",
+        "sourceSha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88",
+        "rgbaSha256": "062c581bb2b807a83bf0834378deaf58805f4e32a094b0f8783302dce8ee6de5"
+      },
+      {
+        "sourceDimensions": [
+          512,
+          512
+        ],
+        "derivedDimensions": [
+          128,
+          128
+        ],
+        "resample": "Pillow LANCZOS",
+        "sourceSha256": "094c51bf8dddb0ab12246d8106c68f85c52dac575a921d1adebaa49b142e2428",
+        "rgbaSha256": "f8ced190271c39d79764d93d98d5caffe54b0b1f5af47d7f2076e7b85486a74a"
+      }
+    ]
+  }
+]

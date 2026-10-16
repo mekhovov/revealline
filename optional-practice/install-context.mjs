@@ -130,24 +130,28 @@ function registerOptionalWorker(base, navigator, signal, retain) {
   });
 }
 
-/** Ask the exact owning worker to hash-check all of its pinned dependencies. */
+/**
+ * Ask the exact owning worker to hash-check all of its pinned dependencies.
+ * Detailed callers distinguish an inconclusive check from confirmed missing
+ * files or ownership; existing boolean callers remain fail-closed. Read-only.
+ */
 export async function inspectOptionalOffline(
   base,
-  { navigator = globalThis.navigator, timeoutMs = 30000, signal } = {},
+  { navigator = globalThis.navigator, timeoutMs = 30000, signal, detailed = false } = {},
 ) {
   base = new URL(base);
   checkCancelled(signal);
   return new Promise((resolve, reject) => {
     let channel,
       finished = false;
-    const finish = (value, error) => {
+    const finish = (value, error, status = value ? 'ready' : 'unknown') => {
       if (finished) return;
       finished = true;
       clearTimeout(timer);
       signal?.removeEventListener('abort', cancelled);
       channel?.port1.close();
       channel?.port2.close();
-      error ? reject(error) : resolve(value);
+      error ? reject(error) : resolve(detailed ? { status } : value);
     };
     const cancelled = () => finish(false, cancelledError());
     const timer = setTimeout(() => finish(false), timeoutMs);
@@ -162,12 +166,26 @@ export async function inspectOptionalOffline(
           !worker ||
           worker.scriptURL !== new URL('worker.js', base).href
         )
-          return finish(false);
+          return finish(false, undefined, 'unavailable');
         channel = new MessageChannel();
-        channel.port1.onmessage = ({ data }) =>
-          finish(
-            data?.type === 'practice-status' && data.ready === true && data.scope === base.href,
-          );
+        channel.port1.onmessage = ({ data }) => {
+          if (
+            data?.type !== 'practice-status' ||
+            data.scope !== base.href ||
+            typeof data.ready !== 'boolean'
+          )
+            return finish(false);
+          // Older workers report only ready. New workers distinguish a failed
+          // inspection from confirmed missing bytes without certifying either.
+          const status =
+            data.status === undefined ? (data.ready ? 'ready' : 'unavailable') : data.status;
+          if (
+            !['ready', 'unavailable', 'unknown'].includes(status) ||
+            data.ready !== (status === 'ready')
+          )
+            return finish(false);
+          finish(data.ready, undefined, status);
+        };
         channel.port1.onmessageerror = () => finish(false);
         worker.postMessage({ type: 'practice-status' }, [channel.port2]);
       })

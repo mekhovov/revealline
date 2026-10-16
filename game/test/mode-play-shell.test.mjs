@@ -41,7 +41,11 @@ function fixture(options = {}) {
         document.createElement('button'),
       ]),
     );
-    renderModeChoices({ root: slots.modes, current: options.currentMode ?? 'snake', actions });
+    renderModeChoices({
+      root: slots.modes,
+      current: options.currentMode ?? 'snake',
+      actions,
+    });
   }
   if (options.homeChoices) slots.homeChoices = options.homeChoices(document);
   const calls = [];
@@ -62,7 +66,11 @@ function fixture(options = {}) {
 }
 
 test('keyboard and controller directions share the exact landing cycle and mode row', () => {
-  const h = fixture({ withModes: true, currentMode: 'snake', actions: { fullscreen() {} } });
+  const h = fixture({
+    withModes: true,
+    currentMode: 'snake',
+    actions: { fullscreen() {} },
+  });
   const home = h.shell.elements.home;
   const navigation = attachControllerNavigation({
     document: h.document,
@@ -148,7 +156,9 @@ test('Settings, help, Back and native Escape never resume a paused attempt', asy
 test('explicit Start closes all preparation surfaces before the host starts its simulation', () => {
   let active;
   const calls = [];
-  const h = fixture({ actions: { start: () => calls.push(active.blocksPlay()) } });
+  const h = fixture({
+    actions: { start: () => calls.push(active.blocksPlay()) },
+  });
   active = h.shell;
   active.elements.buttons.missions.click();
   active.elements.buttons['mission-start'].click();
@@ -234,7 +244,10 @@ test('direct-level briefing can return to Select Mission without starting and lo
     initial: 'briefing',
     modeName: (locale) => (locale === 'uk' ? 'Змійка' : 'Snake'),
   });
-  h.shell.update({ missionName: { en: 'Cable Cutoff', uk: 'Перехоплення кабелем' }, muted: true });
+  h.shell.update({
+    missionName: { en: 'Cable Cutoff', uk: 'Перехоплення кабелем' },
+    muted: true,
+  });
   h.shell.setLocale('uk');
   assert.equal(h.shell.elements.header.querySelector('span').textContent, 'Змійка');
   assert.equal(h.shell.elements.buttons.missions.textContent, 'Вибрати місію');
@@ -363,7 +376,10 @@ for (const activation of ['cancelled-pointer', 'keyboard'])
     button.emit('pointerdown', { pointerId: 1, button: 0, isPrimary: true });
     h.shell.update({ phase: 'paused' });
     if (activation === 'cancelled-pointer') button.emit('pointercancel', { pointerId: 1 });
-    button.emit('click', { detail: activation === 'keyboard' ? 0 : 1, pointerId: 1 });
+    button.emit('click', {
+      detail: activation === 'keyboard' ? 0 : 1,
+      pointerId: 1,
+    });
     assert.deepEqual(h.calls, ['resume']);
     assert.equal(h.shell.blocksPlay(), false);
     h.shell.dispose();
@@ -545,7 +561,11 @@ test('results focus Next immediately and Pause cancels an active transition with
 
 for (const currentMode of ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator']) {
   test(`${currentMode}: More supports controller confirm, all destinations, Back and collapsed wrap`, () => {
-    const h = fixture({ withModes: true, currentMode, actions: { fullscreen() {} } });
+    const h = fixture({
+      withModes: true,
+      currentMode,
+      actions: { fullscreen() {} },
+    });
     const home = h.shell.elements.home;
     const more = home.querySelector('[data-mode-more]');
     const navigation = attachControllerNavigation({
@@ -615,7 +635,11 @@ for (const currentMode of ['solo', 'team', 'versus', 'snake', 'overflight', 'sim
 }
 
 test('unsupported fullscreen is absent on home and pause and the direction cycle skips it', () => {
-  const h = fixture({ withModes: true, fullscreenSupported: false, actions: { fullscreen() {} } });
+  const h = fixture({
+    withModes: true,
+    fullscreenSupported: false,
+    actions: { fullscreen() {} },
+  });
   const { buttons, home } = h.shell.elements;
   assert.equal(buttons.fullscreen.hidden, true);
   assert.equal(buttons['pause-fullscreen'].hidden, true);
@@ -713,7 +737,7 @@ for (const current of OVERFLIGHT_OPERATIONS.map(({ id }) => id)) {
       assert.equal(h.document.activeElement, selectedOperation);
       assert.equal(chosen, 0);
       navigation.handle({ confirm: true });
-      assert.equal(chosen, 1);
+      assert.equal(chosen, 0, 'confirming the current operation does not change or launch it');
       assert.deepEqual(h.calls, [], 'Navigation and choosing missions do not launch play.');
       assert.equal(h.shell.elements.dialogs.settings.contains(selectedOperation), false);
       for (const { id, path } of OVERFLIGHT_OPERATIONS) {
@@ -731,7 +755,11 @@ for (const current of OVERFLIGHT_OPERATIONS.map(({ id }) => id)) {
 
 for (const currentMode of ['solo', 'team', 'versus', 'snake', 'overflight', 'simulator']) {
   test(`${currentMode}: keyboard follows the home loop in both directions after disclosure changes`, () => {
-    const h = fixture({ withModes: true, currentMode, actions: { fullscreen() {} } });
+    const h = fixture({
+      withModes: true,
+      currentMode,
+      actions: { fullscreen() {} },
+    });
     const home = h.shell.elements.home;
     const navigation = attachControllerNavigation({
       document: h.document,
@@ -787,5 +815,28 @@ test('completed runs keep the visible Results home action in the directional pat
   navigation.handle({ direction: 'down' });
   assert.equal(h.document.activeElement, missions, 'Hidden Results must be skipped.');
   navigation.destroy();
+  h.shell.dispose();
+});
+
+test('regional corner opens settings menu without arming from ready or paused flight', () => {
+  const h = fixture();
+  for (const phase of ['paused', 'disarmed']) {
+    h.shell.enterPlay();
+    h.shell.update({ phase, pauseOpensMenu: true, canResume: true });
+    assert.equal(h.shell.elements.buttons.pause.disabled, false);
+    assert.equal(h.shell.elements.buttons.pause.textContent, 'Menu');
+    h.shell.elements.buttons.pause.click();
+    assert.equal(h.shell.elements.dialogs.pause.open, true);
+    assert.equal(h.calls.includes('resume'), false);
+  }
+  h.shell.enterPlay();
+  h.shell.update({ phase: 'playing', pauseOpensMenu: true });
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.shell.elements.dialogs.pause.open, true);
+  assert.deepEqual(h.calls, ['pause']);
+  h.shell.enterPlay();
+  h.shell.update({ phase: 'paused', pauseOpensMenu: false });
+  h.shell.elements.buttons.pause.click();
+  assert.equal(h.calls.at(-1), 'resume');
   h.shell.dispose();
 });

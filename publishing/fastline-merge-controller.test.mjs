@@ -6,6 +6,7 @@ import {
   asynchronousMergeResult,
   decideMergeAction,
   dependencyNumbers,
+  exactHeadCheckBlocker,
   isStackOnlyMergeError,
   mainPagesDispatchRequest,
 } from "./fastline-merge-controller.mjs";
@@ -31,6 +32,7 @@ function fixture(overrides = {}) {
       head_sha: SHA,
       admissionMatches: true,
     },
+    checkRuns: [{ id: 1, name: "release-ready", status: "completed", conclusion: "success", head_sha: SHA }],
     dependencies: [],
   };
 }
@@ -42,11 +44,41 @@ test("merges an admitted clean exact head through branch protection", () => {
   });
 });
 
-test("nonblocking failed checks do not block an exact-head merge", () => {
-  assert.equal(
-    decideMergeAction(fixture({ mergeable_state: "unstable" })).action,
-    "merge",
-  );
+test("pending and failed exact-head checks block a merge even when GitHub calls it unstable", () => {
+  for (const [status, conclusion] of [
+    ["in_progress", null],
+    ["completed", "failure"],
+    ["completed", "cancelled"],
+  ]) {
+    const input = fixture({ mergeable_state: "unstable" });
+    input.checkRuns.push({ id: 2, name: "candidate", status, conclusion, head_sha: SHA });
+    assert.equal(decideMergeAction(input).action, "wait");
+  }
+});
+
+test("only policy-selected source jobs may be skipped without claiming a pass", () => {
+  const input = fixture();
+  input.checkRuns.push({ id: 2, name: "test", status: "completed", conclusion: "skipped", head_sha: SHA });
+  assert.equal(decideMergeAction(input).action, "merge");
+  input.checkRuns.push({ id: 3, name: "candidate", status: "completed", conclusion: "skipped", head_sha: SHA });
+  assert.match(decideMergeAction(input).reason, /candidate concluded skipped/);
+});
+
+test("latest check attempt wins and the running controller does not deadlock itself", () => {
+  assert.equal(exactHeadCheckBlocker([
+    { id: 1, name: "preview", status: "completed", conclusion: "success", head_sha: SHA },
+    { id: 2, name: "preview", status: "in_progress", conclusion: null, head_sha: SHA },
+    { id: 3, name: "reconcile", status: "in_progress", conclusion: null, head_sha: SHA },
+  ], SHA), "preview is in_progress on the exact head");
+});
+
+test("a truncated exact-head check inventory fails closed", () => {
+  const input = fixture();
+  input.checkInventoryComplete = false;
+  assert.deepEqual(decideMergeAction(input), {
+    action: "wait",
+    reason: "exact-head check inventory is incomplete",
+  });
 });
 
 test("pending protected hooks arm auto-merge for the exact head", () => {

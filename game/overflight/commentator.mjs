@@ -112,6 +112,8 @@ export function createOverflightCommentator({ reactions = null, ...host } = {}) 
     // Warnings, damage and critical hull outrank decorative commentary. Consume
     // a missed milestone now; never replay its stale voice after danger passes.
     const danger =
+      has('damage') ||
+      has('armor-break') ||
       has('hit') ||
       has('hunt-blocked') ||
       has('shield') ||

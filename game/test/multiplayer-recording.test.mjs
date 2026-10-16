@@ -88,7 +88,7 @@ test('the observation contract pins native generations and refuses successor or 
   assert.throws(() => localTerminalObservations('versus', mixed), /Both recorded boards/);
   const team = createCoop(teamLevel());
   assert.doesNotThrow(() => localTerminalObservations('team', team));
-  team.ruleset = 'revealline-coop.v17';
+  team.ruleset = 'revealline-coop.v18';
   assert.throws(() => localTerminalObservations('team', team), /not supported/);
   assert.throws(() => localTerminalObservations('constructor', match), /not supported/);
 });

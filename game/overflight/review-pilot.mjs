@@ -2,6 +2,12 @@
 import { rerollOverflightUpgrades } from './core.mjs';
 import { overflightAttackContains } from './tactics.mjs';
 import { overflightPayload } from './upgrades.mjs';
+import { overflightEnemyVelocity } from './motion.mjs';
+import {
+  overflightTerrainClear,
+  overflightTerrainOpenPoint,
+  overflightTerrainWaypoint,
+} from './terrain.mjs';
 
 export const QUALIFICATION_BUILDS = Object.freeze({
   fan: ['primary:wide', 'proximity-pulse', 'side-burst', 'scanner'],
@@ -204,6 +210,12 @@ function directionalPilot(run, route) {
     goalX = final.x + Math.cos(angle) * radius;
     goalY = final.y + Math.sin(angle) * radius;
   }
+  if (run.terrain) {
+    const goal = overflightTerrainOpenPoint(run.terrain, goalX, goalY, p.radius, arena);
+    const waypoint = overflightTerrainWaypoint(run.terrain, p, goal, arena);
+    goalX = waypoint.x;
+    goalY = waypoint.y;
+  }
   const enemies = run.enemies
     .filter(
       (enemy) =>
@@ -213,6 +225,10 @@ function directionalPilot(run, route) {
         Math.abs(enemy.y - p.y) < 260,
     )
     .map((enemy) => {
+      if (run.rulesVersion >= 4) {
+        const velocity = overflightEnemyVelocity(enemy);
+        return { enemy, vx: velocity.x, vy: velocity.y };
+      }
       const burst = enemy.behaviorPhase === 'burst';
       const speed =
         enemy.speed *
@@ -243,6 +259,7 @@ function directionalPilot(run, route) {
           x = p.x + ux * distance,
           y = p.y + uy * distance;
         if (x < 28 || y < 28 || x > arena.width - 28 || y > arena.height - 28) continue;
+        if (!overflightTerrainClear(run.terrain, p.x, p.y, x, y, p.radius)) continue;
         let score = (before - Math.hypot(goalX - x, goalY - y)) * 0.8 - (boost ? 24 : 0);
         for (const { enemy, vx, vy } of enemies) {
           // Two segments represent the boost ending before the prediction horizon.

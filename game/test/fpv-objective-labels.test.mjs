@@ -180,6 +180,7 @@ async function rendererFixture() {
     }
   }
   const create = vm.runInNewContext(`${source}; createFlightRenderer`, {
+    applySimBattlefieldGround,
     ...themes,
     ...visuals,
     ...soldiers,
@@ -462,3 +463,4 @@ test('renderer requires a branded native environment before replacing its accept
     renderer.dispose();
   }
 });
+import { applySimBattlefieldGround } from '../../optional-practice/civilian-fpv/battlefield-ground.mjs';

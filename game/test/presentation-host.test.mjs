@@ -382,8 +382,12 @@ test('a small compressed manifest cannot allocate an unbounded decoded image set
   const f = await fixture(),
     manifest = structuredClone(f.manifest),
     files = new Map(f.files);
+  const budgetSlots = Object.keys(manifest.resolved.assets)
+    .filter((slot) => slot.startsWith('world.overflight.'))
+    .slice(0, 17);
+  assert.equal(budgetSlots.length, 17);
   for (let i = 1; i <= 17; i++) {
-    const slot = `enemy.budget-${i}`,
+    const slot = budgetSlots[i - 1],
       hash = i.toString(16).padStart(64, '0');
     const asset = structuredClone(manifest.resolved.assets['player.scout.compact']);
     asset.id = `budget-${i}`;
@@ -1070,4 +1074,58 @@ test('failed retained reload and aborted preparation preserve the accepted owner
     e.host.close();
   }
   assert.equal(e.decoded[0].closes, 1);
+});
+
+test('board scene filtering decodes selected world art only and preserves full-host behavior', async () => {
+  const original = await fixture(),
+    f = { ...original, files: new Map(original.files) },
+    manifest = structuredClone(original.manifest),
+    selected = 'world.overflight.material.earth',
+    other = 'world.overflight.module.floodgate-panel';
+  for (const [slot, name] of [
+    [selected, 'player-bomber-compact.png'],
+    [other, 'player-carrier-compact.png'],
+  ]) {
+    const bytes = new Uint8Array(
+        await fs.readFile(new URL(`../assets/field-kit/sprites/${name}`, import.meta.url)),
+      ),
+      hash = await hashPresentationBytes(bytes),
+      asset = structuredClone(manifest.resolved.assets['player.scout.compact']);
+    asset.id = `selected-world.${name.replace('.png', '')}`;
+    asset.file = { ...asset.file, sha256: hash, bytes: bytes.length };
+    manifest.resolved.bindings[slot] = { id: asset.id, revision: 1 };
+    manifest.resolved.assets[slot] = asset;
+    manifest.urls[hash] = `./assets/${hash}.png`;
+    f.files.set(`assets/${hash}.png`, bytes);
+  }
+  f.files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  const { host, requests } = environment(f, { profile: 'board' });
+  try {
+    let snapshot = await host.load({ worldImageSlots: [selected] });
+    assert.ok(snapshot.image(selected));
+    assert.ok(snapshot.image('player.scout.compact'), 'actor lease is unchanged');
+    assert.equal(snapshot.image(other), null);
+    assert.ok(
+      !requests.some(({ url }) =>
+        url.endsWith(`${manifest.resolved.assets[other].file.sha256}.png`),
+      ),
+    );
+    snapshot = await host.load({ worldImageSlots: [other] });
+    assert.ok(snapshot.image(other));
+    assert.equal(snapshot.image(selected), null, 'a later selected world has its own load scope');
+    await assert.rejects(
+      host.load({ worldImageSlots: ['arbitrary.slot'] }),
+      /registered battlefield/,
+    );
+  } finally {
+    host.close();
+  }
+  const full = environment(f);
+  try {
+    const snapshot = await full.host.load({ worldImageSlots: [] });
+    assert.ok(snapshot.image(selected));
+    assert.ok(snapshot.image(other));
+  } finally {
+    full.host.close();
+  }
 });

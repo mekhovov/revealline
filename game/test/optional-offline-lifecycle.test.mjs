@@ -110,6 +110,86 @@ test('status cancellation owns lookup and reply lifetime without cancelling a pl
   assert.deepEqual(f.messages, [], 'A late lookup never opens a port or cancels the flight');
 });
 
+test('detailed readiness distinguishes missing dependencies from an inconclusive worker check', async () => {
+  const f = fixture();
+  assert.deepEqual(
+    await inspectOptionalOffline(f.base, { navigator: f.navigator, detailed: true }),
+    { status: 'unavailable' },
+  );
+  f.activate();
+  for (const [reply, expected] of [
+    [true, 'ready'],
+    [false, 'unavailable'],
+    ['invalid', 'unknown'],
+  ]) {
+    const pending = inspectOptionalOffline(f.base, { navigator: f.navigator, detailed: true });
+    await waitFor(() => f.ports.length === 1);
+    f.reply(reply);
+    assert.deepEqual(await pending, { status: expected });
+  }
+  const lookup = deferred();
+  assert.deepEqual(
+    await inspectOptionalOffline(f.base, {
+      navigator: { serviceWorker: { getRegistration: () => lookup.promise } },
+      detailed: true,
+      timeoutMs: 1,
+    }),
+    { status: 'unknown' },
+  );
+  lookup.resolve(f.registration);
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.ports.length, 0, 'A timed-out lookup never opens a late status port');
+  assert.deepEqual(
+    await inspectOptionalOffline(f.base, {
+      navigator: {
+        serviceWorker: {
+          getRegistration: async () => {
+            throw new Error('Transient lookup failure');
+          },
+        },
+      },
+      detailed: true,
+    }),
+    { status: 'unknown' },
+  );
+  const legacy = inspectOptionalOffline(f.base, { navigator: f.navigator });
+  await waitFor(() => f.ports.length === 1);
+  f.reply(false);
+  assert.equal(await legacy, false, 'Existing boolean callers retain their fail-closed contract');
+  assert.equal(f.registrations(), 0);
+  assert.equal(f.unregisters(), 0);
+  assert.equal(f.values.size, 0);
+});
+
+test('readiness accepts legacy replies but never certifies inconclusive, contradictory or foreign status', async () => {
+  const f = fixture();
+  f.activate();
+  const rows = [
+    [{ ready: true }, 'ready'],
+    [{ ready: false }, 'unavailable'],
+    [{ ready: true, status: 'ready' }, 'ready'],
+    [{ ready: false, status: 'unavailable' }, 'unavailable'],
+    [{ ready: false, status: 'unknown' }, 'unknown'],
+    [{ ready: true, status: 'unknown' }, 'unknown'],
+    [{ ready: false, status: 'ready' }, 'unknown'],
+    [{ ready: true, status: 'unavailable' }, 'unknown'],
+    [{ ready: false, status: null }, 'unknown'],
+    [{ ready: true, status: 'invented' }, 'unknown'],
+    [{ ready: true, status: 'ready', scope: 'https://other.test/' }, 'unknown'],
+  ];
+  for (const [reply, status] of rows) {
+    for (const detailed of [true, false]) {
+      const pending = inspectOptionalOffline(f.base, { navigator: f.navigator, detailed });
+      await waitFor(() => f.ports.length === 1);
+      f.ports.shift().postMessage({ type: 'practice-status', scope: f.base.href, ...reply });
+      assert.deepEqual(await pending, detailed ? { status } : status === 'ready');
+    }
+  }
+  assert.equal(f.registrations(), 0);
+  assert.equal(f.unregisters(), 0);
+  assert.equal(f.values.size, 0, 'Inspection never rewrites installation records');
+});
+
 test('cancelling initial verification never records a late successful installation', async () => {
   const f = fixture(),
     abort = new AbortController();
@@ -533,6 +613,7 @@ function workerFixture(install, family, { initialRead, finalWrite, empty = false
   };
   return {
     base,
+    scope,
     name,
     stores,
     progress,
@@ -550,6 +631,89 @@ for (const [family, install] of [
   ['civilian-flight', installFlight],
   ['package', installFPV],
 ]) {
+  test(`${family} inspection exceptions are inconclusive without changing cached bytes`, async () => {
+    for (const stage of ['keys', 'match', 'body', 'digest']) {
+      const f = workerFixture(install, family);
+      await f.start();
+      const stored = [...f.stores.get(f.name).entries()];
+      const before = await Promise.all(
+        stored.map(async ([url, response]) => [url, await response.clone().text()]),
+      );
+      const opens = f.opens(),
+        fetches = f.fetches(),
+        writes = f.writes();
+      const fail = async () => {
+        throw new Error(`Transient ${stage} failure`);
+      };
+      if (stage === 'keys' || stage === 'match') f.caches[stage] = fail;
+      else if (stage === 'body') f.caches.match = async () => ({ arrayBuffer: fail });
+      else f.scope.crypto = { subtle: { digest: fail } };
+      let pending, reply;
+      f.listeners.get('message')({
+        data: { type: 'practice-status' },
+        ports: [
+          {
+            postMessage: (value) => {
+              reply = value;
+            },
+          },
+        ],
+        waitUntil: (value) => {
+          pending = value;
+        },
+      });
+      await pending;
+      assert.equal(reply.ready, false, 'Old boolean consumers remain fail-closed');
+      assert.equal(reply.status, 'unknown');
+      assert.equal(reply.scope, f.base);
+      assert.equal(
+        JSON.stringify(reply).includes('Transient'),
+        false,
+        'No internal exception details cross the status port',
+      );
+      assert.equal(f.opens(), opens);
+      assert.equal(f.fetches(), fetches);
+      assert.equal(f.writes(), writes);
+      assert.deepEqual(
+        await Promise.all(
+          [...f.stores.get(f.name).entries()].map(async ([url, response]) => [
+            url,
+            await response.clone().text(),
+          ]),
+        ),
+        before,
+      );
+    }
+  });
+  test(`${family} status distinguishes verified bytes from missing and hash-mismatched files`, async () => {
+    for (const kind of ['ready', 'missing', 'size', 'hash']) {
+      const f = workerFixture(install, family);
+      await f.start();
+      const stored = f.stores.get(f.name),
+        url = f.base + 'image.png';
+      if (kind === 'missing') stored.delete(url);
+      if (kind === 'size') stored.set(url, new Response('short'));
+      if (kind === 'hash') stored.set(url, new Response('pinned asseu'));
+      let pending, reply;
+      f.listeners.get('message')({
+        data: { type: 'practice-status' },
+        ports: [
+          {
+            postMessage: (value) => {
+              reply = value;
+            },
+          },
+        ],
+        waitUntil: (value) => {
+          pending = value;
+        },
+      });
+      await pending;
+      assert.equal(reply.ready, kind === 'ready');
+      assert.equal(reply.status, kind === 'ready' ? 'ready' : 'unavailable');
+      assert.equal(reply.scope, f.base);
+    }
+  });
   test(`${family} worker keeps cancellation received before its controller exists`, async () => {
     const initialRead = deferred(),
       f = workerFixture(install, family, { initialRead });

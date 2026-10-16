@@ -777,7 +777,11 @@ export async function addOfflineEntries(
     // The review gallery duplicates paintings already embedded in playable
     // content. Host its source copies without charging the offline game twice.
     ...entries
-      .filter((entry) => entry.name.startsWith('authoring/library/classic-reveal-artwork/'))
+      .filter((entry) =>
+        ['classic-reveal-artwork', 'neon-artwork', 'neon-mosaic', 'neon-reference-pack'].some(
+          (directory) => entry.name.startsWith(`authoring/library/${directory}/`),
+        ),
+      )
       .map((entry) => entry.name),
     ...entries
       .filter((entry) => isOptionalReactionVoiceBody(entry.name))

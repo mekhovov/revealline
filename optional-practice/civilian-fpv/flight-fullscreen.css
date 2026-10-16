@@ -1274,6 +1274,11 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   min-height: 44px;
 }
 
+/* Native option labels must not widen a nested grid label on compact screens. */
+.mode-settings-view .field-kit-settings-panel select {
+  min-width: 0;
+}
+
 .mode-settings-view :is(button, select, input, summary, a):focus-visible {
   outline: 3px solid var(--field-kit-focus, #a8eaf0);
   outline-offset: 2px;
@@ -3308,10 +3313,17 @@ html
   :is(#touch-controls, #academy-drone-response, #replay-controls) {
   display: none !important;
 }
-html body .mode-play-shell:has([data-sim-hud-active='true']) {
+html
+  body
+  .mode-play-shell:has(:is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])) {
   grid-template-rows: minmax(0, 1fr) !important;
 }
-html body :is(.mode-play-shell, #flight-dialog):has([data-sim-hud-active='true']) > .mode-play-bar {
+html
+  body
+  :is(.mode-play-shell, #flight-dialog):has(
+    :is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])
+  )
+  > .mode-play-bar {
   position: absolute !important;
   inset: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) auto auto !important;
   display: flex !important;
@@ -3327,14 +3339,18 @@ html body :is(.mode-play-shell, #flight-dialog):has([data-sim-hud-active='true']
 }
 html
   body
-  :is(.mode-play-shell, #flight-dialog):has([data-sim-hud-active='true'])
+  :is(.mode-play-shell, #flight-dialog):has(
+    :is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])
+  )
   > .mode-play-bar
   > :not([data-mode-action='pause']):not([data-mode-action='camera']) {
   display: none !important;
 }
 html
   body
-  :is(.mode-play-shell, #flight-dialog):has([data-sim-hud-active='true'])
+  :is(.mode-play-shell, #flight-dialog):has(
+    :is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])
+  )
   > .mode-play-bar
   :is([data-mode-action='pause'], [data-mode-action='camera']) {
   min-height: 44px !important;
@@ -3644,4 +3660,23 @@ html body.sim-academy #academy-replay-outcome:not([hidden]) {
 
 html body .shared-pause-menu[data-sim-practice='true'] [data-mode-action='pause-restart'] {
   display: none !important;
+}
+
+/* Regional ready/paused flight uses the same compact command bar as active flight. */
+html body.sim-worlds #flight-dialog[data-sim-flight-compact='true'] > header:not(.mode-play-bar) {
+  display: none !important;
+}
+
+/* Keep the paused action clear of both objective feedback and touch controls. */
+@media (max-width: 600px) {
+  html body.field-kit .handheld-flight-actions > .handheld-flight-resume {
+    top: calc(var(--flight-safe-top) + 48px);
+    bottom: auto;
+  }
+}
+@media (max-height: 480px) and (min-width: 500px) {
+  html body.field-kit .handheld-flight-actions > .handheld-flight-resume {
+    top: auto;
+    bottom: var(--flight-safe-bottom);
+  }
 }

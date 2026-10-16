@@ -9,6 +9,7 @@ import {
   overflightPreviewRequest,
   createOverflightReviewPlayback,
   overflightReviewStopAt,
+  overflightReviewControls,
   createOverflightKeyboardState,
   createOverflightJSONPages,
 } from '../overflight/host-loop.mjs';
@@ -23,6 +24,276 @@ import {
 import { DEFAULT_OVERFLIGHT_PROJECT, compileOverflightProject } from '../overflight/project.mjs';
 import { OVERFLIGHT_COPY } from '../overflight/copy.mjs';
 import { createOverflightReviewRecorder } from '../overflight/review-recorder.mjs';
+
+test('review provenance and pilot inputs share the selected route without changing prior defaults', () => {
+  for (const mode of ['overflight', 'overflight-riy']) {
+    for (const build of ['fan', 'echo', 'systems', 'echo-scanner']) {
+      const original = overflightReviewControls({ mode, build });
+      assert.deepEqual(original, { route: 'tight', pilotArgument: 'tight' });
+      assert.deepEqual(overflightReviewControls({ mode, build, route: 'unknown' }), original);
+      for (const route of ['tight', 'figure-eight']) {
+        const controls = overflightReviewControls({ mode, build, route });
+        assert.deepEqual(controls, { route, pilotArgument: route });
+        const calls = [];
+        const review = createOverflightReviewPlayback({
+          build,
+          route: controls.pilotArgument,
+          pilot: (run, received) => {
+            calls.push(received);
+            return { x: 1, y: 0, boost: false };
+          },
+          selectCard: () => null,
+        });
+        review.input({ tick: 0, time: 0 });
+        review.input({ tick: 5, time: 5 / 60 });
+        review.input({ tick: 6, time: 0.1 });
+        assert.deepEqual(calls, [controls.route, controls.route]);
+      }
+    }
+  }
+  assert.deepEqual(overflightReviewControls({ mode: 'overflight', build: null, route: 'tight' }), {
+    route: null,
+    pilotArgument: null,
+  });
+  assert.deepEqual(
+    overflightReviewControls({ mode: 'overflight-hunt', build: 'objectives', route: 'tight' }),
+    { route: 'objectives', pilotArgument: 'objectives' },
+  );
+  assert.deepEqual(
+    overflightReviewControls({ mode: 'overflight-hunt', build: 'breaker', route: 'figure-eight' }),
+    { route: 'packs', pilotArgument: 'breaker' },
+  );
+});
+
+test('native entry forwards an explicit review route through both wrappers and records that same route', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const variable = (name) =>
+    ast.body.flatMap((node) => node.declarations ?? []).find((node) => node.id.name === name);
+  const base = variable('mode').init.alternate.properties.find(
+    (node) => node.key.name === 'pilot',
+  ).value;
+  const forwarded = variable('review').init.arguments[0].properties.find(
+    (node) => node.key.name === 'pilot',
+  ).value;
+  const identity = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'reviewIdentity',
+  );
+  for (const route of ['tight', 'figure-eight']) {
+    const calls = [];
+    const nativePilot = runInNewContext(`(${source.slice(base.start, base.end)})`, {
+      pilot: (run, received) => {
+        calls.push(received);
+        return { x: 1, y: 0, boost: false };
+      },
+    });
+    const reviewControls = overflightReviewControls({
+      mode: 'overflight-riy',
+      build: 'echo',
+      route,
+    });
+    const forwarder = runInNewContext(`(${source.slice(forwarded.start, forwarded.end)})`, {
+      mode: { pilot: nativePilot },
+    });
+    const playback = createOverflightReviewPlayback({
+      build: 'echo',
+      route: reviewControls.pilotArgument,
+      pilot: forwarder,
+      selectCard: () => null,
+    });
+    playback.input({ tick: 0, time: 0 });
+    assert.deepEqual(
+      calls,
+      [route],
+      'neither native wrapper may silently replace the chosen route',
+    );
+    const report = runInNewContext(
+      `${source.slice(identity.start, identity.end)}; reviewIdentity()`,
+      { reviewBuild: 'echo', reviewStopAt: null, reviewControls },
+    );
+    assert.equal(report.route, calls[0]);
+  }
+});
+
+test('native variant mission picker queries progress only for supported installed projects', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const { OVERFLIGHT_HUNT_MODE } = await import('../overflight/raid-mode.mjs');
+  const { createOverflightRaidVariant } = await import('../overflight/raid-variants.mjs');
+  const { createExperimentalOverflightWorldProject } = await import('../overflight/worlds.mjs');
+  const { overflightPlayableMissionDefinitions } = await import(
+    '../overflight/mission-library.mjs'
+  );
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declaration = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'openMissionLibrary',
+  );
+  const experimental = createExperimentalOverflightWorldProject(OVERFLIGHT_HUNT_MODE.createProject);
+  const open = OVERFLIGHT_HUNT_MODE.createProject();
+  for (const variant of ['time-attack', 'marathon']) {
+    let refreshed = 0;
+    const queries = [];
+    const mode = createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE, { variant });
+    const context = {
+      mode,
+      pause() {},
+      missionRegistry: {},
+      missionChooser: {
+        open() {},
+        refresh() {
+          refreshed++;
+        },
+      },
+      doc: { activeElement: {} },
+      refreshMissions: async () => {},
+      records: {
+        async read(query) {
+          queries.push(query);
+          return { fastestClear: { time: 30 } };
+        },
+      },
+      progressEpoch: 0,
+      officialProjects: () => [],
+      installed: [experimental, open].map((project) => ({ project })),
+      options: {},
+      retired: false,
+      overflightPlayableMissionDefinitions,
+      overflightFlightProfile: () => ({}),
+    };
+    await runInNewContext(
+      `${source.slice(declaration.start, declaration.end)}; openMissionLibrary()`,
+      context,
+    );
+    assert.equal(queries.length, 1);
+    assert.equal(queries[0].compiled.id, open.id);
+    assert.equal(refreshed, 1);
+    assert.equal(context.missionProgress.size, 1);
+    assert.equal(
+      context.missionProgress.get(mode.compileProject(open).projectIdentity).state,
+      'completed',
+    );
+  }
+});
+
+test('completed-frame trials include explicitly requested native Survivor and Riy review builds', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const { overflightBenchmarkMeasureAt } = await import('../overflight/benchmark.mjs');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const declarations = ast.body
+    .filter((node) => node.type === 'VariableDeclaration')
+    .flatMap((node) => node.declarations);
+  const trial = declarations.find((node) => node.id.name === 'benchmarkTrial').init;
+  const measureAt = declarations.find((node) => node.id.name === 'measureAt').init;
+  const protocol = declarations.find((node) => node.id.name === 'benchmarkProtocol').init;
+  const evaluate = (id, query, reviewBuild = null, fixture = null) => {
+    const context = {
+      mode: { id },
+      params: new URLSearchParams(query),
+      reviewBuild,
+      fixture,
+      overflightBenchmarkMeasureAt,
+    };
+    context.benchmarkTrial = runInNewContext(source.slice(trial.start, trial.end), context);
+    context.measureAt = runInNewContext(source.slice(measureAt.start, measureAt.end), context);
+    return JSON.parse(
+      JSON.stringify({
+        trial: context.benchmarkTrial,
+        protocol: runInNewContext(source.slice(protocol.start, protocol.end), context),
+      }),
+    );
+  };
+  for (const id of ['overflight', 'overflight-riy', 'overflight-hunt']) {
+    for (const trial of ['1', '2', '3']) {
+      assert.deepEqual(evaluate(id, `benchmark=1&trial=${trial}`, 'fan-shield'), {
+        trial,
+        protocol: { warmupSeconds: 30, measurementSeconds: 120, repetitions: 1, stopAtEnd: true },
+      });
+      assert.equal(
+        evaluate(id, `benchmark=1&trial=${trial}&measureAt=160`, 'fan-shield').protocol.measureAt,
+        160,
+      );
+    }
+    assert.equal(evaluate(id, 'trial=1', 'fan-shield').trial, null);
+    assert.equal(evaluate(id, 'benchmark=1&trial=unrecognized', 'fan-shield').trial, null);
+  }
+  assert.equal(evaluate('overflight', 'benchmark=1&trial=1').trial, null);
+  assert.equal(evaluate('overflight-riy', 'benchmark=1&trial=1').trial, null);
+  assert.equal(evaluate('overflight-hunt', 'benchmark=1&trial=1').trial, '1');
+  assert.equal(evaluate('overflight', 'trial=2', null, 'reference').trial, '2');
+  for (const args of [
+    ['overflight', 'benchmark=1&trial=1&measureAt=160', 'fan-shield', 'reference'],
+    ['overflight-hunt', 'benchmark=1&trial=1&measureAt=160'],
+    ['overflight-riy', 'benchmark=1&trial=soak&measureAt=160', 'fan-shield'],
+    ['overflight-riy', 'benchmark=1&trial=1&measureAt=361', 'fan-shield'],
+  ]) {
+    assert.equal(Object.hasOwn(evaluate(...args).protocol, 'measureAt'), false);
+  }
+  assert.equal(
+    evaluate('overflight-riy', 'benchmark=1&trial=soak', 'fan-shield').protocol.measurementSeconds,
+    900,
+  );
+  assert.equal(
+    evaluate('overflight-riy', 'benchmark=1&trial=1&measureAt=240', 'fan-shield').protocol
+      .measureAt,
+    240,
+  );
+});
+
+test('native catalogue exposes all eighteen compiled layouts for all five operations', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { runInNewContext } = await import('node:vm');
+  const { parse } = await import('acorn');
+  const { OVERFLIGHT_BATTLEFIELDS } = await import('../overflight/battlefields.mjs');
+  const { createOverflightProject, compileOverflightProject } = await import(
+    '../overflight/project.mjs'
+  );
+  const { createOverflightRiyProject, compileOverflightRiyProject } = await import(
+    '../overflight/riy-project.mjs'
+  );
+  const { OVERFLIGHT_HUNT_MODE } = await import('../overflight/raid-mode.mjs');
+  const { createOverflightRaidVariant } = await import('../overflight/raid-variants.mjs');
+  const source = await readFile(new URL('../overflight/app.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const official = ast.body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'officialProjects',
+  );
+  const modes = [
+    {
+      createProject: (options) => createOverflightProject({ ...options, rulesVersion: 4 }),
+      compileProject: compileOverflightProject,
+    },
+    {
+      createProject: (options) => createOverflightRiyProject({ ...options, rulesVersion: 4 }),
+      compileProject: compileOverflightRiyProject,
+    },
+    OVERFLIGHT_HUNT_MODE,
+    ...['time-attack', 'marathon'].map((variant) =>
+      createOverflightRaidVariant(OVERFLIGHT_HUNT_MODE, { variant }),
+    ),
+  ];
+  for (const mode of modes) {
+    const projects = runInNewContext(`(${source.slice(official.start, official.end)})()`, {
+      mode,
+      OVERFLIGHT_BATTLEFIELDS,
+      options: { difficulty: 'standard' },
+    });
+    assert.equal(projects.length, 18);
+    assert.equal(new Set(projects.map((project) => project.battlefield.id)).size, 18);
+    for (const project of projects) {
+      const compiled = mode.compileProject(project);
+      assert.equal(compiled.rulesVersion, 4);
+      assert.equal(compiled.terrain.format, 'OverflightTerrainV2');
+    }
+  }
+});
 
 test('one fixed clock scales every simulation system and keeps paused time out of the run', () => {
   const clock = createOverflightClock();
@@ -563,6 +834,7 @@ test('native Marathon continuation retains its run when next-sortie settings cha
       seed: 42,
       fixture: null,
       reviewBuild: null,
+      studio: false,
       resultRun: original,
       overflightFlightProfile,
       mode: {
@@ -596,6 +868,7 @@ test('native Marathon continuation retains its run when next-sortie settings cha
         },
       },
       review: {
+        active: () => false,
         reset: () => {
           calls.reviewReset++;
         },
@@ -759,4 +1032,38 @@ test('native Settings initialization preserves operation cards and navigation on
     settingsView.destroy();
     shell.dispose();
   }
+});
+
+test('a selected demonstration remains manual until opt-in, and takeover stops all automation', () => {
+  let piloted = 0,
+    drafted = 0;
+  const playback = createOverflightReviewPlayback({
+    build: 'echo',
+    enabled: false,
+    pilot: () => {
+      piloted++;
+      return { x: -1, y: 0, boost: true };
+    },
+    selectCard: () => {
+      drafted++;
+      return null;
+    },
+  });
+  const run = { tick: 0, time: 0, phase: 'playing' };
+  const manual = { x: 1, y: 0, boost: false };
+  assert.equal(playback.active(), false);
+  assert.equal(playback.input(run, manual), manual);
+  assert.equal(run.review, undefined);
+  assert.equal(piloted, 0);
+  playback.setEnabled(true);
+  assert.equal(playback.input(run, manual).x, -1);
+  assert.equal(run.review, true);
+  playback.setEnabled(false);
+  assert.equal(playback.input(run, manual), manual);
+  run.phase = 'upgrade';
+  assert.equal(playback.upgrade(run, 100, true), null);
+  assert.equal(drafted, 0);
+  assert.equal(run.review, true, 'taking over cannot erase automated-run provenance');
+  playback.reset();
+  assert.equal(playback.active(), false, 'retry stays under manual control after takeover');
 });

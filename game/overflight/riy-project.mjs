@@ -1,4 +1,5 @@
-import { boundedJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
+import { overflightGameplayIdentity } from './worlds.mjs';
+import { boundedJSON, exactKeys, required } from '../data-json.mjs';
 import {
   createOverflightProject,
   validateOverflightProject,
@@ -9,6 +10,7 @@ import { upgradeOverflightProjectCopy } from './project-upgrade.mjs';
 
 export const OVERFLIGHT_RIY_PROJECT_FORMAT = 'OverflightRiyProjectV1';
 export const OVERFLIGHT_RIY_PROJECT_FORMAT_V2 = 'OverflightRiyProjectV2';
+export const OVERFLIGHT_RIY_PROJECT_FORMAT_V3 = 'OverflightRiyProjectV3';
 export const OVERFLIGHT_RIY_MAX_BYTES = OVERFLIGHT_PROJECT_MAX_BYTES + 4096;
 const freeze = (value) => {
   if (value && typeof value === 'object') {
@@ -184,7 +186,8 @@ export function overflightRiySurvivorProject(source) {
 }
 export function createOverflightRiyProject(options = {}) {
   const base = createOverflightProject(options);
-  const v2 = base.format === 'OverflightProjectV3';
+  const v3 = base.format === 'OverflightProjectV4';
+  const v2 = v3 || base.format === 'OverflightProjectV3';
   if (v2)
     base.upgrades.modules = base.upgrades.modules.filter((id) =>
       ['primary', 'scanner', 'shield', 'plating'].includes(id),
@@ -194,7 +197,11 @@ export function createOverflightRiyProject(options = {}) {
     id: `riy-${base.id}`,
     title: { en: `Riy · ${base.title.en}`, uk: `Рій · ${base.title.uk}` },
     survivorFormat: base.format,
-    format: v2 ? OVERFLIGHT_RIY_PROJECT_FORMAT_V2 : OVERFLIGHT_RIY_PROJECT_FORMAT,
+    format: v3
+      ? OVERFLIGHT_RIY_PROJECT_FORMAT_V3
+      : v2
+        ? OVERFLIGHT_RIY_PROJECT_FORMAT_V2
+        : OVERFLIGHT_RIY_PROJECT_FORMAT,
     riy: structuredClone(v2 ? OVERFLIGHT_RIY_DEFAULTS_V2 : OVERFLIGHT_RIY_DEFAULTS),
   };
 }
@@ -206,14 +213,21 @@ export function validateOverflightRiyProject(source) {
     maxDepth: 12,
   });
   required(
-    [OVERFLIGHT_RIY_PROJECT_FORMAT, OVERFLIGHT_RIY_PROJECT_FORMAT_V2].includes(project.format),
+    [
+      OVERFLIGHT_RIY_PROJECT_FORMAT,
+      OVERFLIGHT_RIY_PROJECT_FORMAT_V2,
+      OVERFLIGHT_RIY_PROJECT_FORMAT_V3,
+    ].includes(project.format),
     'Unsupported Riy project version.',
   );
-  const v2 = project.format === OVERFLIGHT_RIY_PROJECT_FORMAT_V2;
+  const v3 = project.format === OVERFLIGHT_RIY_PROJECT_FORMAT_V3;
+  const v2 = v3 || project.format === OVERFLIGHT_RIY_PROJECT_FORMAT_V2;
   required(
-    v2
-      ? project.survivorFormat === 'OverflightProjectV3'
-      : ['OverflightProjectV1', 'OverflightProjectV2'].includes(project.survivorFormat),
+    v3
+      ? project.survivorFormat === 'OverflightProjectV4'
+      : v2
+        ? project.survivorFormat === 'OverflightProjectV3'
+        : ['OverflightProjectV1', 'OverflightProjectV2'].includes(project.survivorFormat),
     'Riy project and Survivor rules versions do not match.',
   );
   const base = validateOverflightProject(overflightRiySurvivorProject(project));
@@ -236,22 +250,27 @@ export function compileOverflightRiyProject(source) {
   return freeze({
     ...base,
     sourceFormat: project.format,
-    projectIdentity: dataIdentity(project),
-    riyVersion: project.format === OVERFLIGHT_RIY_PROJECT_FORMAT_V2 ? 2 : 1,
+    projectIdentity: overflightGameplayIdentity(project),
+    riyVersion: project.format !== OVERFLIGHT_RIY_PROJECT_FORMAT ? 2 : 1,
     riy: project.riy,
   });
 }
 export function upgradeOverflightRiyProjectCopy(source, options) {
   const project = validateOverflightRiyProject(source);
   const base = upgradeOverflightProjectCopy(overflightRiySurvivorProject(project), options);
-  const v2 = base.format === 'OverflightProjectV3';
+  const v3 = base.format === 'OverflightProjectV4';
+  const v2 = v3 || base.format === 'OverflightProjectV3';
   if (v2)
     base.upgrades.modules = base.upgrades.modules.filter((id) =>
       ['primary', 'scanner', 'shield', 'plating'].includes(id),
     );
   return {
     ...base,
-    format: v2 ? OVERFLIGHT_RIY_PROJECT_FORMAT_V2 : OVERFLIGHT_RIY_PROJECT_FORMAT,
+    format: v3
+      ? OVERFLIGHT_RIY_PROJECT_FORMAT_V3
+      : v2
+        ? OVERFLIGHT_RIY_PROJECT_FORMAT_V2
+        : OVERFLIGHT_RIY_PROJECT_FORMAT,
     survivorFormat: base.format,
     riy:
       v2 && project.format === OVERFLIGHT_RIY_PROJECT_FORMAT

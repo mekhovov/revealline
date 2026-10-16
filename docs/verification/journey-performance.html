@@ -44,6 +44,7 @@
       <select id="mode">
         <option value="solo">Solo</option>
         <option value="versus">Versus</option>
+        <option value="team">Team</option>
       </select></label
     >
     <label
@@ -55,6 +56,23 @@
         <option value="victory-drones">Victory Drones</option>
         <option value="ukraine-culture">Ukraine</option>
         <option value="fpv-learning">FPV Learning</option>
+      </select>
+    </label>
+    <label
+      >Multiplayer sample
+      <select id="multiplayer-target">
+        <option value="default">Default Journey</option>
+        <option value="expedition">Expeditions · choose in game</option>
+        <option value="aurora">Aurora finale · combined mechanics</option>
+        <option value="sentinel">Sentinel finale · stages and warnings</option>
+        <option value="fracture">Fracture finale · erosion</option>
+      </select>
+    </label>
+    <label
+      >Frame sample
+      <select id="sample-scope">
+        <option value="visible">Visible scene (includes menus)</option>
+        <option value="active">Next 30 seconds of foreground play</option>
       </select>
     </label>
     <button id="sample" type="button" disabled>Observe 30 seconds</button>
@@ -70,10 +88,14 @@
       include the observer's own overhead and are not cross-device benchmarks. The optional
       30-second sample records animation-frame intervals and browser-reported long tasks, without
       logging during the sample. Keep this page visible; a hidden page or navigation discards the
-      sample. Compare the same scene, viewport, device, browser and input sequence against the
-      selected baseline commit. Frame intervals include browser scheduling and are not CPU render
-      duration. Long tasks are page-wide and cannot identify a reward renderer by themselves.
-      Unsupported browser counters remain unavailable, never a zero result.
+      sample. Active samples arm until the player starts or resumes through the game, then discard
+      on pause, result, focus loss, mission change or navigation. No input is generated. Keyboard
+      counts record only gameplay keys; HUD snapshots describe the observed activity. Canvas and
+      DOM-image pixel estimates are not complete decoded-media or GPU memory measurements. Compare
+      the same scene, viewport, device, browser and input sequence against the selected baseline
+      commit. Frame intervals include browser scheduling and are not CPU render duration. Long tasks
+      are page-wide and cannot identify a reward renderer by themselves. Unsupported browser
+      counters remain unavailable, never a zero result.
     </p>
     <p id="status" role="status">Ready to observe the current default Journey.</p>
     <details>

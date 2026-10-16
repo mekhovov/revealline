@@ -1,4 +1,6 @@
 // Optional horizontal handling tradeoffs. Default/classic behavior is unchanged.
+// Every handling option keeps the same collision silhouette.
+export const OVERFLIGHT_PLAYER_RADIUS = 9;
 export const OVERFLIGHT_FLIGHT_PROFILES = Object.freeze({
   balanced: Object.freeze({ id: 'balanced', speed: 180, boostSpeed: 330, maxHull: 100 }),
   interceptor: Object.freeze({ id: 'interceptor', speed: 198, boostSpeed: 350, maxHull: 80 }),

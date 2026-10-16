@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "sourceRecipe": "99988bef02c5e3bac0143f935ce6419cbdcefdd6",
+  "pin": {
+    "url": "https://alpine-delivery.invalid/delivery.json",
+    "bytes": 115311,
+    "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec"
+  },
+  "payloadFiles": 722,
+  "payloadBytes": 21644516,
+  "totalWithDescriptorBytes": 21759827,
+  "verifiedResponses": 723,
+  "productionSessionCases": [
+    {
+      "mode": "self-level",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 475984,
+      "textureBytes": 8
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 492744,
+      "textureBytes": 8
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 740944,
+      "textureBytes": 8
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 765812,
+      "textureBytes": 8
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 489064,
+      "textureBytes": 8
+    },
+    {
+      "mode": "self-level",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 463008,
+      "textureBytes": 8
+    },
+    {
+      "mode": "acro",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 475984,
+      "textureBytes": 8
+    },
+    {
+      "mode": "acro",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 492744,
+      "textureBytes": 8
+    },
+    {
+      "mode": "acro",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 740944,
+      "textureBytes": 8
+    },
+    {
+      "mode": "acro",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 765812,
+      "textureBytes": 8
+    },
+    {
+      "mode": "acro",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 489064,
+      "textureBytes": 8
+    },
+    {
+      "mode": "acro",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 463008,
+      "textureBytes": 8
+    }
+  ],
+  "disposalZero": true,
+  "playerAdmission": false,
+  "limitations": [
+    "Filesystem-backed HTTP response fixture, not internet throughput",
+    "No native rendering, IndexedDB installation, Library selection or public admission",
+    "Short actual shared-flight commands, not whole-region endurance"
+  ]
+}

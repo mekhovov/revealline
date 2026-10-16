@@ -4767,6 +4767,25 @@
   grid-column: 1 / -1;
   min-width: 0;
 }
+#journey-chooser.mission-library-chooser > .world-catalogue-browser {
+  grid-area: cards;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scroll-padding-block: 12px;
+  scrollbar-gutter: stable;
+}
+#journey-chooser .world-catalogue-browser > .journey-cards {
+  overflow: visible;
+  max-height: none;
+  height: auto;
+}
+#journey-chooser .world-catalogue-browser .world-catalogue-cards {
+  max-height: none;
+  overflow: visible;
+}
 @media (max-height: 500px) {
   .world-catalogue-cards {
     max-height: 180px;

@@ -1,4 +1,5 @@
 import { overflightCombatEditor } from './overflight-combat-editor.mjs';
+import { overflightWorldEditor } from './overflight-world-editor.mjs';
 import { upgradeOverflightProjectCopy } from '../overflight/project-upgrade.mjs';
 import {
   createOverflightHuntProject,
@@ -20,12 +21,21 @@ import { createProfileRecordBackend } from '../profile-storage.mjs';
 import { boundedJSON, exactKeys } from '../data-json.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { nativeArtReviewURL } from '../fpv-entry.mjs';
+import {
+  normalizeRaidPreviewOperation,
+  raidStudioPreviewMode,
+  raidStudioRuntimePath,
+} from './raid-preview-mode.mjs';
+import { overflightOperationContext } from '../overflight/operation-view.mjs';
+import { overflightText } from '../overflight/copy.mjs';
+import { overflightWorldForEncounterSet } from '../overflight/worlds.mjs';
 
 const params = new URL(location.href).searchParams;
 if (['en', 'uk'].includes(params.get('lang'))) setLocale(params.get('lang'), { persist: false });
 const locale = getLocale() === 'uk' ? 'uk' : 'en';
 document.documentElement.lang = locale;
 const words = (en, uk) => (locale === 'uk' ? uk : en);
+let previewOperation = normalizeRaidPreviewOperation(params.get('operation'));
 const element = (tag, text = '', attributes = {}) => {
   const node = document.createElement(tag);
   node.textContent = text;
@@ -81,7 +91,21 @@ for (const [path, en, uk] of [
   ['../../authoring/motion-lab/#overflight-motion-study', 'Motion Lab', 'Лабораторія руху'],
 ])
   nav.append(element('a', words(en, uk), { href: scopedURL(path) }));
-let draft = createOverflightHuntProject({ rulesVersion: 3 }),
+const operationContext = element('p', '', { class: 'micro-note', id: 'raid-operation-context' });
+const playLink = [...nav.querySelectorAll('a')].find((link) =>
+  link.getAttribute('href')?.includes('/overflight/raid.html'),
+);
+function refreshOperationContext() {
+  operationContext.textContent = overflightOperationContext(previewOperation, (key) =>
+    overflightText(locale, key),
+  );
+  if (playLink) {
+    playLink.href = scopedURL(raidStudioRuntimePath(previewOperation));
+    playLink.textContent = words('Play selected operation', 'Грати в обрану операцію');
+  }
+}
+refreshOperationContext();
+let draft = createOverflightHuntProject({ rulesVersion: 4, world: 'field-crossing' }),
   sector = 0,
   selected = { kind: 'objectives', index: 0 },
   revision = 0,
@@ -116,7 +140,7 @@ const preview = element('iframe', '', {
   id: 'raid-preview',
   title: words('Native Raid preview', 'Ігровий перегляд Нальоту'),
   allow: 'gamepad; fullscreen',
-  src: scopedURL(`../overflight/raid.html?studio=overflight-hunt`),
+  src: scopedURL(raidStudioRuntimePath(previewOperation, { studio: true })),
 });
 const objectivePositions = new WeakMap();
 function syncEscorts() {
@@ -163,7 +187,7 @@ function check() {
   return compiled;
 }
 function sendPreview() {
-  const compiled = compileOverflightHuntProject(draft);
+  const compiled = raidStudioPreviewMode(previewOperation).compileProject(draft);
   if (!ready) {
     reportPreview(
       words(
@@ -193,6 +217,7 @@ const onMessage = (event) => {
     event.data?.version !== 1
   )
     return;
+  if (normalizeRaidPreviewOperation(event.data.operationId) !== previewOperation) return;
   if (event.data.type === 'overflight-hunt:ready') {
     ready = true;
     try {
@@ -331,6 +356,21 @@ function render() {
   });
   const map = () => {
     svg.replaceChildren();
+    for (const obstacle of draft.terrain?.obstacles ?? [])
+      svg.append(
+        svgElement('rect', {
+          x: obstacle.x,
+          y: obstacle.y,
+          width: obstacle.width,
+          height: obstacle.height,
+          fill: obstacle.breakable ? '#75552e' : '#34454a',
+          stroke: obstacle.breakable ? '#f4c765' : '#d2dad6',
+          'stroke-width': 5,
+          'stroke-dasharray': obstacle.breakable ? '12 8' : 'none',
+          'data-terrain-footprint': obstacle.id,
+          'aria-label': `${obstacle.id} · ${obstacle.breakable ? words('Breakable', 'Руйнується') : words('Permanent', 'Постійна')}`,
+        }),
+      );
     draft.encounters.forEach((part) => {
       const tint = part.sector === sector ? '#f0c364' : '#586b60';
       svg.append(
@@ -690,6 +730,18 @@ function render() {
   });
   editor.append(
     general,
+    overflightWorldEditor({
+      document,
+      project: draft,
+      locale,
+      onChange: () => {
+        touch();
+        map();
+      },
+      onApply: render,
+      fieldsClass: 'raid-fields',
+      allowTerrain: previewOperation === 'overflight-hunt' || !!draft.battlefield,
+    }),
     overflightCombatEditor({
       document,
       project: draft,
@@ -710,7 +762,7 @@ async function refreshInstalled() {
   for (const row of rows)
     installed.append(
       element('a', row.title[locale], {
-        href: scopedURL(`../overflight/raid.html?community=${row.identity}`),
+        href: scopedURL(raidStudioRuntimePath(previewOperation, { community: row.identity })),
       }),
     );
   if (!rows.length)
@@ -725,6 +777,38 @@ async function refreshInstalled() {
     );
 }
 const toolbar = element('div', '', { class: 'raid-toolbar' });
+const operationSelect = field(
+  toolbar,
+  words('Preview operation', 'Операція перегляду'),
+  element('select', '', { id: 'raid-preview-operation' }),
+);
+for (const [value, en, uk] of [
+  ['overflight-hunt', 'Single Raid', 'Один наліт'],
+  ['time-attack', 'Time Attack', 'На час'],
+  ['marathon', 'Contract Marathon', 'Марафон контрактів'],
+])
+  operationSelect.append(element('option', words(en, uk), { value }));
+operationSelect.value = previewOperation;
+operationSelect.addEventListener('change', () => {
+  previewOperation = normalizeRaidPreviewOperation(operationSelect.value);
+  ready = false;
+  previewIdentity = null;
+  requestId++;
+  refreshOperationContext();
+  const url = new URL(location.href);
+  if (previewOperation === 'overflight-hunt') url.searchParams.delete('operation');
+  else url.searchParams.set('operation', previewOperation);
+  history.replaceState(null, '', url.href);
+  preview.src = scopedURL(raidStudioRuntimePath(previewOperation, { studio: true }));
+  render();
+  reportPreview(
+    words(
+      'Preparing the selected operation. The project is unchanged.',
+      'Готуємо обрану операцію. Проєкт не змінено.',
+    ),
+  );
+  void guarded(refreshInstalled)();
+});
 let preset = 'patrol',
   exportURL = null;
 const downloadLink = element('a', words('Download package', 'Завантажити пакет'), { hidden: '' });
@@ -743,12 +827,18 @@ toolbar.append(
       upgradeOverflightProjectCopy(draft, {
         hunt: true,
         difficulty: draft.difficulty ?? 'standard',
-        rulesVersion: 3,
+        rulesVersion: 4,
       }),
     ),
   ),
   button(words('New from preset', 'Новий зі зразка'), () =>
-    replaceProject(createOverflightHuntProject({ encounterSet: preset, rulesVersion: 3 })),
+    replaceProject(
+      createOverflightHuntProject({
+        encounterSet: preset,
+        rulesVersion: 4,
+        world: overflightWorldForEncounterSet(preset),
+      }),
+    ),
   ),
   button(words('Validate', 'Перевірити'), check),
   button(words('Preview', 'Перегляд'), sendPreview),
@@ -835,6 +925,7 @@ advanced.append(
 root.replaceChildren(
   nav,
   element('h1', words('Raid Studio', 'Майстерня Нальоту')),
+  operationContext,
   element(
     'p',
     words(

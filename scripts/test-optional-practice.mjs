@@ -88,8 +88,8 @@ test('release-qualified practice retains the full shared menu stylesheet closure
     engineTree: 'b'.repeat(40),
     basePath: '/revealline/',
   });
-  assert.equal(built.entries.length, 85);
-  assert.equal(OPTIONAL_PRACTICE_LIMITS.files, 87);
+  assert.equal(built.entries.length, 94);
+  assert.equal(OPTIONAL_PRACTICE_LIMITS.files, 96);
   for (const stylesheet of [
     'mode-play-shell.css',
     'mode-choice.css',

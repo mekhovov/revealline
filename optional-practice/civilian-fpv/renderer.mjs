@@ -29,6 +29,7 @@ import {
   resolveSimThemeProfile,
   resolveSimEffects,
 } from './world-themes.mjs';
+import { applySimBattlefieldGround } from './battlefield-ground.mjs';
 import {
   configureSimTextureSampling,
   createWorkshopMaterials,
@@ -44,6 +45,21 @@ import {
   simObjectiveLabelLayout,
   createSimGateCueFactory,
 } from './world-visuals.mjs';
+
+// The shared renderer also ships in legacy packages without regional factories.
+// Regional materials opt into quality changes through their owned callbacks.
+export function setRegionalSurfaceQuality(root, quality) {
+  const tiers = { low: 'performance', balanced: 'balanced', high: 'quality' };
+  if (!Object.hasOwn(tiers, quality)) throw new TypeError('Unknown regional flight quality');
+  const materials = new Set();
+  root?.traverse((object) => {
+    for (const material of Array.isArray(object.material) ? object.material : [object.material])
+      if (typeof material?.userData?.setRegionalSurfaceQuality === 'function')
+        materials.add(material);
+  });
+  for (const material of materials) material.userData.setRegionalSurfaceQuality(tiers[quality]);
+  return materials.size;
+}
 
 const QUALITIES = Object.freeze({
   low: {
@@ -122,6 +138,182 @@ export function configureWorldGLTFLoader(loader, { onImageError = () => {} } = {
     });
 }
 
+/** Shared presentation only. Hosts supply admitted bounds and poses; no physics or ownership. */
+export function createFlightViewFrame({ camera, aircraft }) {
+  const framePosition = new THREE.Vector3(),
+    frameRotation = new THREE.Quaternion(),
+    cameraOffset = new THREE.Vector3(),
+    cameraTiltRotation = new THREE.Quaternion(),
+    cameraTiltAxis = new THREE.Vector3(1, 0, 0),
+    flightNear = camera.near,
+    overviewDirection = new THREE.Vector3(0.55, 0.8, 0.65).normalize(),
+    overviewRight = new THREE.Vector3(overviewDirection.z, 0, -overviewDirection.x).normalize(),
+    overviewUp = new THREE.Vector3().crossVectors(overviewDirection, overviewRight);
+  let rotorTick = null,
+    rotorPhase = 0;
+  // Mutable configuration is retained by the host: no per-frame option/pose copies.
+  const frame = {
+    view: 'fpv',
+    regionalOverview: false,
+    regionalFar: camera.far,
+    fov: 82,
+    tilt: 0,
+    radiusMm: 220,
+    reducedMotion: false,
+    bounds: null,
+    originMm: null,
+    throttlePermille: null,
+    rotors: [],
+    editorCamera: { yaw: 0.65, pitch: 0.72, distance: null },
+    reset() {
+      rotorTick = null;
+      rotorPhase = 0;
+    },
+    get rotorPhase() {
+      return rotorPhase;
+    },
+    draw(state) {
+      const { view, fov, tilt, reducedMotion, bounds, editorCamera } = frame;
+      const mapView = view === 'overview' || view === 'editor';
+      const displayFov = mapView
+        ? Math.min(
+            120,
+            (2 * Math.atan(Math.tan((58 * Math.PI) / 360) / Math.min(1, camera.aspect)) * 180) /
+              Math.PI,
+          )
+        : fov;
+      if (camera.fov !== displayFov) {
+        camera.fov = displayFov;
+        camera.updateProjectionMatrix();
+      }
+      const position = framePosition.set(
+        (state.position.x - (frame.originMm?.x ?? 0)) / 1000,
+        (state.position.y - (frame.originMm?.y ?? 0)) / 1000 + frame.radiusMm / 1000,
+        (state.position.z - (frame.originMm?.z ?? 0)) / 1000,
+      );
+      const rotation = frameRotation
+        .set(
+          state.orientation[0] / 1000000,
+          state.orientation[1] / 1000000,
+          state.orientation[2] / 1000000,
+          state.orientation[3] / 1000000,
+        )
+        .normalize();
+      aircraft.position.copy(position);
+      aircraft.quaternion.copy(rotation);
+      aircraft.scale.setScalar(frame.radiusMm / 220);
+      aircraft.visible = view !== 'fpv';
+      // Integrate only elapsed simulation ticks. Changing throttle changes angular
+      // speed without reinterpreting the entire flight's already elapsed phase.
+      if (rotorTick === null || state.ticks < rotorTick) rotorPhase = 0;
+      else if (!reducedMotion && state.ticks > rotorTick) {
+        const rate =
+          0.12 +
+          Math.max(
+            0,
+            Math.min(1, (frame.throttlePermille ?? state.lastInput?.throttle ?? 0) / 1000),
+          ) *
+            0.74;
+        rotorPhase = (rotorPhase + (state.ticks - rotorTick) * rate) % (Math.PI * 2);
+      }
+      rotorTick = state.ticks;
+      for (const [index, rotor] of frame.rotors.entries())
+        rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
+      if (view === 'fpv') {
+        camera.position.copy(position);
+        camera.quaternion
+          .copy(rotation)
+          .multiply(cameraTiltRotation.setFromAxisAngle(cameraTiltAxis, (tilt * Math.PI) / 180));
+      } else if (view === 'chase') {
+        camera.position
+          .copy(position)
+          .add(cameraOffset.set(0, 1.35, 3.2).applyQuaternion(rotation));
+        camera.up.set(0, 1, 0);
+        camera.lookAt(position);
+      } else if (frame.regionalOverview && view === 'overview') {
+        // Fit the actual resident three-dimensional envelope, including elevated terrain.
+        // Keep the familiar direction; only this regional overview owns this framing.
+        const hx = (bounds.max.x - bounds.min.x) / 2000,
+          hy = (bounds.max.y - bounds.min.y) / 2000,
+          hz = (bounds.max.z - bounds.min.z) / 2000,
+          cx = (bounds.max.x + bounds.min.x) / 2000 - (frame.originMm?.x ?? 0) / 1000,
+          cy = (bounds.max.y + bounds.min.y) / 2000 - (frame.originMm?.y ?? 0) / 1000,
+          cz = (bounds.max.z + bounds.min.z) / 2000 - (frame.originMm?.z ?? 0) / 1000,
+          halfWidth = Math.abs(overviewRight.x) * hx + Math.abs(overviewRight.z) * hz,
+          halfHeight =
+            Math.abs(overviewUp.x) * hx +
+            Math.abs(overviewUp.y) * hy +
+            Math.abs(overviewUp.z) * hz,
+          halfDepth = overviewDirection.x * hx + overviewDirection.y * hy + overviewDirection.z * hz,
+          tangent = Math.tan((camera.fov * Math.PI) / 360),
+          distance =
+            halfDepth +
+            1.08 * Math.max(halfWidth / (tangent * camera.aspect), halfHeight / tangent, 1);
+        camera.position.set(cx, cy, cz).addScaledVector(overviewDirection, distance);
+        camera.up.set(0, 1, 0);
+        camera.lookAt(cx, cy, cz);
+        const far = Math.max(frame.regionalFar, distance + halfDepth + 10);
+        if (camera.far !== far) {
+          camera.far = far;
+          camera.updateProjectionMatrix();
+        }
+      } else {
+        const cx = (bounds.max.x + bounds.min.x) / 2000 - (frame.originMm?.x ?? 0) / 1000,
+          cz = (bounds.max.z + bounds.min.z) / 2000 - (frame.originMm?.z ?? 0) / 1000;
+        const extent = Math.max(bounds.max.x - bounds.min.x, bounds.max.z - bounds.min.z) / 1000;
+        if (view === 'editor') {
+          const distance = editorCamera.distance ?? extent * 1.35;
+          camera.position.set(
+            cx + Math.sin(editorCamera.yaw) * Math.cos(editorCamera.pitch) * distance,
+            Math.sin(editorCamera.pitch) * distance - (frame.originMm?.y ?? 0) / 1000,
+            cz + Math.cos(editorCamera.yaw) * Math.cos(editorCamera.pitch) * distance,
+          );
+        } else
+          camera.position.set(
+            cx + extent * 0.55,
+            extent * 0.8 - (frame.originMm?.y ?? 0) / 1000,
+            cz + extent * 0.65,
+          );
+        camera.up.set(0, 1, 0);
+        camera.lookAt(cx, -(frame.originMm?.y ?? 0) / 1000, cz);
+      }
+      if (frame.regionalOverview && view !== 'overview' && camera.far !== frame.regionalFar) {
+        camera.far = frame.regionalFar;
+        camera.updateProjectionMatrix();
+      }
+      let near = flightNear;
+      if (frame.regionalOverview && view === 'overview') {
+        // The overview camera is outside the admitted horizontal cell prism.
+        // Any point visible in its frustum has view depth at least this planar
+        // distance times the diagonal-frustum cosine. Keep a fourfold margin;
+        // this improves distant depth precision without clipping resident geometry.
+        const ox = (frame.originMm?.x ?? 0) / 1000,
+          oz = (frame.originMm?.z ?? 0) / 1000,
+          dx = Math.max(
+            bounds.min.x / 1000 - ox - camera.position.x,
+            0,
+            camera.position.x - (bounds.max.x / 1000 - ox),
+          ),
+          dz = Math.max(
+            bounds.min.z / 1000 - oz - camera.position.z,
+            0,
+            camera.position.z - (bounds.max.z / 1000 - oz),
+          ),
+          tangent = Math.tan((camera.fov * Math.PI) / 360),
+          visibleDepth =
+            Math.hypot(dx, dz) /
+            Math.sqrt(1 + tangent * tangent * (1 + camera.aspect * camera.aspect));
+        near = Math.max(flightNear, Math.min(10, visibleDepth / 4));
+      }
+      if (camera.near !== near) {
+        camera.near = near;
+        camera.updateProjectionMatrix();
+      }
+    },
+  };
+  return Object.seal(frame);
+}
+
 /** Presentation only. All world/actor positions are canonical millimetres.
  * Decorative structures remain outside the course; criteria are holograms. */
 export function createFlightRenderer({
@@ -184,6 +376,20 @@ export function createFlightRenderer({
     rimLight,
     rimLight.target,
   );
+  let regional = null;
+  const regionalPreparations = new Set();
+  // Weak keys do not retain released windows. Bounds are computed once while detached.
+  const regionalViewBounds = new WeakMap();
+  function measureRegionalBounds(group) {
+    let bounds = regionalViewBounds.get(group);
+    if (!bounds) {
+      bounds = new THREE.Box3().setFromObject(group);
+      regionalViewBounds.set(group, bounds);
+    }
+    return bounds;
+  }
+  let regionalPreparationReceipt = null,
+    regionalPreparationSequence = 0;
   let course = null,
     mode = 'self-level',
     view = 'fpv',
@@ -204,8 +410,6 @@ export function createFlightRenderer({
     sceneGeneration = 0,
     contextGeneration = 0,
     presentationGeneration = 0,
-    rotorTick = null,
-    rotorPhase = 0,
     importGeneration = 0,
     importedMixer = null,
     importedClips = [],
@@ -250,12 +454,8 @@ export function createFlightRenderer({
     garageDetailMaterials = new Map(),
     stadiumDetailMaterials = new Map(),
     qualityDetails = [];
-  const framePosition = new THREE.Vector3(),
-    frameRotation = new THREE.Quaternion(),
-    cameraOffset = new THREE.Vector3(),
-    cameraTiltRotation = new THREE.Quaternion(),
-    cameraTiltAxis = new THREE.Vector3(1, 0, 0),
-    pulseTransform = new THREE.Matrix4();
+  const flightViewFrame = createFlightViewFrame({ camera, aircraft });
+  const pulseTransform = new THREE.Matrix4();
   const labelPosition = new THREE.Vector3();
   const texturesOf = (paint) => Object.values(paint ?? {}).filter((value) => value?.isTexture);
   function ownShadowMaterial(item) {
@@ -415,6 +615,7 @@ export function createFlightRenderer({
     const changed = value !== quality;
     if (changed) presentationGeneration++;
     quality = value;
+    if (regional) setRegionalSurfaceQuality(regional.root, quality);
     const selected = QUALITIES[value];
     renderer.setPixelRatio(Math.min(win.devicePixelRatio || 1, selected.ratio));
     renderer.shadowMap.enabled = selected.shadows;
@@ -483,7 +684,7 @@ export function createFlightRenderer({
       }
     }
     for (const [index, rotor] of droneVisual.rotors.entries())
-      rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
+      rotor.rotation.y = flightViewFrame.rotorPhase * (index === 0 || index === 3 ? -1 : 1);
     setSurfaceQuality(materials, quality, renderer.capabilities.getMaxAnisotropy());
   }
   function setPresentation(value) {
@@ -1379,6 +1580,13 @@ export function createFlightRenderer({
   }
   function setCourse(value, selectedMode = 'self-level', options = {}) {
     if (disposed || renderer.getContext().isContextLost()) return;
+    regional?.root.removeFromParent();
+    regional = null;
+    flightViewFrame.originMm = null;
+    flightViewFrame.regionalOverview = false;
+    camera.near = 0.035;
+    camera.far = 300;
+    camera.updateProjectionMatrix();
     const environment = resolveIndustrialEnvironment(options.industrialEnvironment ?? null);
     const retained = value.world?.themeProfile;
     if (
@@ -1407,8 +1615,7 @@ export function createFlightRenderer({
     activePresentation = pendingPresentation;
     sceneGeneration++;
     presentationGeneration++;
-    rotorTick = null;
-    rotorPhase = 0;
+    flightViewFrame.reset();
     setGhost([]);
     editor?.detach();
     course = value;
@@ -1445,6 +1652,13 @@ export function createFlightRenderer({
       maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
       reviewRevision: machineryRevision,
       industrialEnvironment: environment,
+    });
+    applySimBattlefieldGround({
+      world,
+      profile: surroundings.profile,
+      environment,
+      THREE,
+      document: canvas.ownerDocument,
     });
     register(world);
     const theme = surroundings.theme;
@@ -2427,6 +2641,7 @@ export function createFlightRenderer({
     if (!disposed && course) huntPresentation?.observe?.(state, machineryPresentationOptions());
   }
   function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
+    if (regional) return drawRegional(state, { cameraMode, cameraFov, cameraTilt });
     if (disposed || !course || renderer.getContext().isContextLost()) return false;
     const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
     huntPresentation?.update(state, {
@@ -2453,72 +2668,15 @@ export function createFlightRenderer({
     // An overview is outside the flight arena; authored terrain must remain
     // inspectable there. Restore the exact course fog for FPV and chase.
     if (importedGroundFog) scene.fog = mapView ? null : importedGroundFog;
-    const displayFov = mapView
-      ? Math.min(
-          120,
-          (2 * Math.atan(Math.tan((58 * Math.PI) / 360) / Math.min(1, camera.aspect)) * 180) /
-            Math.PI,
-        )
-      : fov;
-    if (camera.fov !== displayFov) {
-      camera.fov = displayFov;
-      camera.updateProjectionMatrix();
-    }
-    const position = framePosition.set(
-      state.position.x / 1000,
-      state.position.y / 1000 + (course.rules?.droneRadius ?? 220) / 1000,
-      state.position.z / 1000,
-    );
-    const rotation = frameRotation
-      .set(
-        state.orientation[0] / 1000000,
-        state.orientation[1] / 1000000,
-        state.orientation[2] / 1000000,
-        state.orientation[3] / 1000000,
-      )
-      .normalize();
-    aircraft.position.copy(position);
-    aircraft.quaternion.copy(rotation);
-    aircraft.scale.setScalar((course.rules?.droneRadius ?? 220) / 220);
-    aircraft.visible = view !== 'fpv';
-    // Integrate only elapsed simulation ticks. Changing throttle changes angular
-    // speed without reinterpreting the entire flight's already elapsed phase.
-    if (rotorTick === null || state.ticks < rotorTick) rotorPhase = 0;
-    else if (!reducedMotion && state.ticks > rotorTick) {
-      const rate = 0.12 + Math.max(0, Math.min(1, (state.lastInput?.throttle ?? 0) / 1000)) * 0.74;
-      rotorPhase = (rotorPhase + (state.ticks - rotorTick) * rate) % (Math.PI * 2);
-    }
-    rotorTick = state.ticks;
-    for (const [index, rotor] of droneVisual.rotors.entries())
-      rotor.rotation.y = rotorPhase * (index === 0 || index === 3 ? -1 : 1);
-    if (view === 'fpv') {
-      camera.position.copy(position);
-      camera.quaternion
-        .copy(rotation)
-        .multiply(cameraTiltRotation.setFromAxisAngle(cameraTiltAxis, (tilt * Math.PI) / 180));
-    } else if (view === 'chase') {
-      camera.position.copy(position).add(cameraOffset.set(0, 1.35, 3.2).applyQuaternion(rotation));
-      camera.up.set(0, 1, 0);
-      camera.lookAt(position);
-    } else {
-      const cx = (course.bounds.max.x + course.bounds.min.x) / 2000,
-        cz = (course.bounds.max.z + course.bounds.min.z) / 2000;
-      const extent =
-        Math.max(
-          course.bounds.max.x - course.bounds.min.x,
-          course.bounds.max.z - course.bounds.min.z,
-        ) / 1000;
-      if (view === 'editor') {
-        const distance = editorCamera.distance ?? extent * 1.35;
-        camera.position.set(
-          cx + Math.sin(editorCamera.yaw) * Math.cos(editorCamera.pitch) * distance,
-          Math.sin(editorCamera.pitch) * distance,
-          cz + Math.cos(editorCamera.yaw) * Math.cos(editorCamera.pitch) * distance,
-        );
-      } else camera.position.set(cx + extent * 0.55, extent * 0.8, cz + extent * 0.65);
-      camera.up.set(0, 1, 0);
-      camera.lookAt(cx, 0, cz);
-    }
+    flightViewFrame.view = view;
+    flightViewFrame.fov = fov;
+    flightViewFrame.tilt = tilt;
+    flightViewFrame.radiusMm = course.rules?.droneRadius ?? 220;
+    flightViewFrame.bounds = course.bounds;
+    flightViewFrame.editorCamera = editorCamera;
+    flightViewFrame.reducedMotion = reducedMotion;
+    flightViewFrame.rotors = droneVisual.rotors;
+    flightViewFrame.draw(state);
     if (currentStep !== state.step) {
       currentStep = state.step;
       for (const row of goalRows) {
@@ -3142,6 +3300,11 @@ export function createFlightRenderer({
     return { detach: () => editor?.detach() };
   }
   function clearSceneResources() {
+    for (const controller of regionalPreparations) controller.abort();
+    // The regional session owns verified geometry and its asynchronous disposal.
+    // Detach it before disposing renderer-owned aircraft/menu presentation.
+    regional?.root.removeFromParent();
+    regional = null;
     huntPresentation?.dispose();
     huntPresentation = null;
     if (editor) {
@@ -3198,10 +3361,301 @@ export function createFlightRenderer({
   canvas.addEventListener('webglcontextlost', lost);
   setQuality(quality);
   setDrone(droneKind);
+  async function prepareRegionalFrame(group, { signal } = {}) {
+    if (!regional || disposed || !group?.isObject3D || group.parent)
+      throw new Error('Regional frame must be detached before preparation');
+    const owner = regional,
+      generation = sceneGeneration,
+      presentation = presentationGeneration,
+      selectedQuality = quality,
+      controller = new AbortController(),
+      started = performance.now(),
+      sequence = ++regionalPreparationSequence;
+    regionalPreparations.add(controller);
+    const abort = () => controller.abort();
+    signal?.addEventListener('abort', abort, { once: true });
+    if (signal?.aborted) abort();
+    const timeout = win.setTimeout(() => {
+      controller.abort(new DOMException('Regional graphics preparation timed out', 'TimeoutError'));
+    }, 30000);
+    const current = () => {
+      controller.signal.throwIfAborted();
+      if (
+        disposed ||
+        regional !== owner ||
+        generation !== sceneGeneration ||
+        presentation !== presentationGeneration ||
+        quality !== selectedQuality ||
+        renderer.getContext().isContextLost()
+      )
+        throw new DOMException('Regional graphics preparation replaced', 'AbortError');
+    };
+    const wait = (promise) =>
+      new Promise((resolve, reject) => {
+        const cancelled = () => reject(controller.signal.reason);
+        controller.signal.addEventListener('abort', cancelled, { once: true });
+        if (controller.signal.aborted) cancelled();
+        Promise.resolve(promise)
+          .then(resolve, reject)
+          .finally(() => controller.signal.removeEventListener('abort', cancelled));
+      });
+    const yieldFrame = () =>
+      new Promise((resolve, reject) => {
+        const cancelled = () => {
+            win.cancelAnimationFrame(id);
+            reject(controller.signal.reason);
+          },
+          id = win.requestAnimationFrame(() => {
+            controller.signal.removeEventListener('abort', cancelled);
+            resolve();
+          });
+        controller.signal.addEventListener('abort', cancelled, { once: true });
+        if (controller.signal.aborted) cancelled();
+      });
+    const target = new THREE.WebGLRenderTarget(1, 1),
+      uploadScene = new THREE.Scene(),
+      preparedCamera = camera.clone(),
+      objects = [];
+    target.texture.colorSpace = renderer.outputColorSpace;
+    let batches = 0,
+      submittedBytes = 0,
+      maxBatchBytes = 0,
+      compileWaitMs = 0,
+      uploadCpuMs = 0,
+      status = 'cancelled';
+    function rendererState() {
+      return {
+        target: renderer.getRenderTarget(),
+        face: renderer.getActiveCubeFace(),
+        mip: renderer.getActiveMipmapLevel(),
+        viewport: renderer.getViewport(new THREE.Vector4()),
+        scissor: renderer.getScissor(new THREE.Vector4()),
+        scissorTest: renderer.getScissorTest(),
+        autoClear: renderer.autoClear,
+        autoClearColor: renderer.autoClearColor,
+        autoClearDepth: renderer.autoClearDepth,
+        autoClearStencil: renderer.autoClearStencil,
+        shadowAuto: renderer.shadowMap.autoUpdate,
+        shadowNeeds: renderer.shadowMap.needsUpdate,
+      };
+    }
+    function restore(state) {
+      renderer.setRenderTarget(state.target, state.face, state.mip);
+      renderer.setViewport(state.viewport);
+      renderer.setScissor(state.scissor);
+      renderer.setScissorTest(state.scissorTest);
+      for (const key of ['autoClear', 'autoClearColor', 'autoClearDepth', 'autoClearStencil'])
+        renderer[key] = state[key];
+      renderer.shadowMap.autoUpdate = state.shadowAuto;
+      renderer.shadowMap.needsUpdate = state.shadowNeeds;
+    }
+    try {
+      current();
+      setRegionalSurfaceQuality(group, selectedQuality);
+      group.updateMatrixWorld(true);
+      group.traverse((object) => {
+        if (!object.geometry || !(object.isMesh || object.isLine || object.isPoints)) return;
+        const bytes =
+          Object.values(object.geometry.attributes).reduce(
+            (sum, a) => sum + (a.array?.byteLength ?? a.data?.array?.byteLength ?? 0),
+            0,
+          ) + (object.geometry.index?.array.byteLength ?? 0);
+        objects.push({ object, bytes });
+      });
+      for (let index = 0; index < objects.length; ) {
+        current();
+        const batch = new THREE.Group();
+        let bytes = 0;
+        while (index < objects.length && batch.children.length < 8) {
+          const item = objects[index];
+          if (batch.children.length && bytes + item.bytes > 512 * 1024) break;
+          const clone = item.object.clone(false);
+          clone.matrix.copy(item.object.matrixWorld);
+          clone.matrixAutoUpdate = false;
+          clone.frustumCulled = false;
+          clone.castShadow = false;
+          batch.add(clone);
+          bytes += item.bytes;
+          index++;
+        }
+        // The real framebuffer variant is compiled against the real lights/environment.
+        let before = performance.now();
+        await wait(renderer.compileAsync(batch, preparedCamera, scene));
+        current();
+        compileWaitMs += performance.now() - before;
+        uploadScene.clear();
+        uploadScene.environment = scene.environment;
+        uploadScene.fog = scene.fog;
+        for (const light of [hemisphere, sunlight, fillLight, rimLight]) {
+          const clone = light.clone();
+          if (light.target) {
+            clone.target = light.target.clone();
+            uploadScene.add(clone.target);
+          }
+          if (light.shadow) {
+            clone.shadow.map = light.shadow.map;
+            clone.shadow.matrix.copy(light.shadow.matrix);
+          }
+          uploadScene.add(clone);
+        }
+        uploadScene.add(batch);
+        // Offscreen output can require a separate shader variant. Restore state before waiting.
+        let compiled,
+          saved = rendererState();
+        before = performance.now();
+        try {
+          renderer.setRenderTarget(target);
+          compiled = renderer.compileAsync(batch, preparedCamera, scene);
+        } finally {
+          restore(saved);
+        }
+        await wait(compiled);
+        current();
+        compileWaitMs += performance.now() - before;
+        const gl = renderer.getContext();
+        if (
+          renderer.info.programs.some(
+            (p) => gl.getProgramParameter(p.program, gl.LINK_STATUS) === false,
+          )
+        )
+          throw new Error('Regional shader preparation failed');
+        saved = rendererState();
+        before = performance.now();
+        try {
+          renderer.setRenderTarget(target);
+          renderer.setViewport(0, 0, 1, 1);
+          renderer.setScissorTest(false);
+          renderer.autoClear = true;
+          renderer.autoClearColor = renderer.autoClearDepth = renderer.autoClearStencil = true;
+          // Reuse current shadow inputs without allocating/rendering another shadow map.
+          renderer.shadowMap.autoUpdate = false;
+          renderer.shadowMap.needsUpdate = false;
+          renderer.render(uploadScene, preparedCamera);
+        } finally {
+          restore(saved);
+        }
+        uploadCpuMs += performance.now() - before;
+        batches++;
+        submittedBytes += bytes;
+        maxBatchBytes = Math.max(maxBatchBytes, bytes);
+        uploadScene.clear();
+        batch.clear();
+        await yieldFrame();
+      }
+      current();
+      measureRegionalBounds(group);
+      status = 'prepared';
+    } catch (error) {
+      if (error?.name !== 'AbortError') status = 'failed';
+      throw error;
+    } finally {
+      uploadScene.clear();
+      target.dispose();
+      win.clearTimeout(timeout);
+      signal?.removeEventListener('abort', abort);
+      regionalPreparations.delete(controller);
+      if (sequence === regionalPreparationSequence)
+        regionalPreparationReceipt = {
+          sequence,
+          status,
+          objects: objects.length,
+          batches,
+          submittedBytes,
+          maxBatchBytes,
+          compileWaitMs,
+          uploadCpuMs,
+          elapsedMs: performance.now() - started,
+          gpuCompletionMeasured: false,
+        };
+    }
+  }
+  function setRegional(session, manifest) {
+    if (disposed || renderer.getContext().isContextLost()) return;
+    clearSceneResources();
+    world.userData = {};
+    sceneGeneration++;
+    regional = {
+      root: session.root,
+      cellSizeMm: manifest.grid.cellSizeMm,
+      chunks: new Map(manifest.chunks.map((row) => [row.id, row])),
+    };
+    scene.add(session.root);
+    scene.background = new THREE.Color(0xb5d3de);
+    scene.fog = null;
+    importedGroundFog = null;
+    scene.environment = null;
+    flightViewFrame.reset();
+    flightViewFrame.regionalOverview = true;
+    camera.near = 0.035;
+    // Keep the full bounded resident window visible at either supported lattice size.
+    camera.far = 1000 * (manifest.grid.cellSizeMm / 128000);
+    flightViewFrame.regionalFar = camera.far;
+    camera.updateProjectionMatrix();
+    setDrone(droneKind);
+    setQuality(quality);
+  }
+  function drawRegional(state, { cameraMode, cameraFov, cameraTilt }) {
+    if (disposed || renderer.getContext().isContextLost()) return false;
+    const rect = canvas.getBoundingClientRect(),
+      width = Math.max(1, Math.round(rect.width)),
+      height = Math.max(1, Math.round(rect.height));
+    if (width !== lastWidth || height !== lastHeight) {
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      lastWidth = width;
+      lastHeight = height;
+    }
+    const loaded =
+      state.terrain.provenance?.chunks
+        ?.map((row) => regional.chunks.get(row.chunkId))
+        .filter(Boolean) ?? [];
+    if (!loaded.length) return false;
+    flightViewFrame.bounds = {
+      min: {
+        x: Math.min(...loaded.map((row) => row.x)) * regional.cellSizeMm,
+        y: 0,
+        z: Math.min(...loaded.map((row) => row.z)) * regional.cellSizeMm,
+      },
+      max: {
+        x: (Math.max(...loaded.map((row) => row.x)) + 1) * regional.cellSizeMm,
+        y: 0,
+        z: (Math.max(...loaded.map((row) => row.z)) + 1) * regional.cellSizeMm,
+      },
+    };
+    // The prototype root also contains two empty pose anchors; only its admitted group
+    // contributes geometry. A newly adopted group already has staged bounds when prewarmed.
+    const admitted = regional.root.children.find((child) => child.isGroup);
+    if (admitted) {
+      const measured = measureRegionalBounds(admitted);
+      if (!measured.isEmpty()) {
+        for (const axis of ['x', 'y', 'z']) {
+          flightViewFrame.bounds.min[axis] = measured.min[axis] * 1000 + state.originMm[axis];
+          flightViewFrame.bounds.max[axis] = measured.max[axis] * 1000 + state.originMm[axis];
+        }
+      }
+    }
+    flightViewFrame.view = cameraMode;
+    flightViewFrame.fov = cameraFov;
+    flightViewFrame.tilt = cameraTilt;
+    flightViewFrame.originMm = state.originMm;
+    flightViewFrame.radiusMm = 220;
+    flightViewFrame.reducedMotion = reducedMotion;
+    flightViewFrame.rotors = droneVisual.rotors;
+    flightViewFrame.draw(state);
+    const p = aircraft.position;
+    sunlight.position.set(p.x - 24, p.y + 36, p.z + 15);
+    sunlight.target.position.copy(p);
+    renderer.render(scene, camera);
+    return !renderer.getContext().isContextLost();
+  }
   return {
     available: true,
     observePresentation,
     setCourse,
+    setRegional,
+    prepareRegionalFrame,
+    regionalPreparation: () => regionalPreparationReceipt && { ...regionalPreparationReceipt },
     setPresentation,
     setQuality,
     setDrone,
@@ -3218,7 +3672,7 @@ export function createFlightRenderer({
       const generation = sceneGeneration,
         presentation = presentationGeneration;
       signal?.throwIfAborted();
-      if (disposed || !course || renderer.getContext().isContextLost()) return false;
+      if (disposed || (!course && !regional) || renderer.getContext().isContextLost()) return false;
       await renderer.compileAsync(scene, camera);
       signal?.throwIfAborted();
       if (

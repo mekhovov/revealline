@@ -346,18 +346,23 @@
       content: attr(data-target);
       font-size: var(--handheld-label);
     }
-    body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    body.field-kit.playing:has(#coop-overlay[hidden]):has(
+        #coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])
+      )
       #coop-app {
       grid-template-rows: auto auto minmax(min-content, 1fr) auto;
     }
-    body.field-kit.playing:has(#coop-overlay[hidden]) #coop-objective[data-kind='stronghold'] {
+    body.field-kit.playing:has(#coop-overlay[hidden])
+      #coop-objective:is([data-kind='stronghold'], [data-kind='expedition']) {
       display: block;
       grid-row: 2;
       margin: 0;
       font-size: var(--handheld-label);
       line-height: 1.3;
     }
-    body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    body.field-kit.playing:has(#coop-overlay[hidden]):has(
+        #coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])
+      )
       :is(.coop-board-slot, .control-card) {
       grid-row: 3;
     }
@@ -499,7 +504,8 @@
     body.field-kit.playing:has(#coop-overlay[hidden])
       .hud
       :is(.identity strong, .team-status > span:first-child, progress),
-    body.field-kit.playing:has(#coop-overlay[hidden]) #coop-objective:not([data-kind='stronghold']),
+    body.field-kit.playing:has(#coop-overlay[hidden])
+      #coop-objective:not([data-kind='stronghold'], [data-kind='expedition']),
     body.field-kit.playing:has(#coop-overlay[hidden]) #coop-clock {
       display: none;
     }
@@ -699,30 +705,39 @@
       max-height: 2.5em;
       overflow: auto;
     }
-    body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
-      #coop-app {
-      grid-template-rows: auto auto minmax(0, 1fr) auto auto;
-    }
-    body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]):has(
-        #coop-objective[data-kind='stronghold']
+    body.field-kit.playing:has(#coop-overlay[hidden]):has(
+        #coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])
       )
       #coop-app {
       grid-template-rows: auto auto minmax(0, 1fr) auto auto;
     }
-    body.field-kit.playing:has(#coop-overlay[hidden]) #coop-objective[data-kind='stronghold'] {
+    body.field-kit.playing[data-text-size='large']:has(#coop-overlay[hidden]):has(
+        #coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])
+      )
+      #coop-app {
+      grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+    }
+    body.field-kit.playing:has(#coop-overlay[hidden])
+      #coop-objective:is([data-kind='stronghold'], [data-kind='expedition']) {
       grid-row: 2;
       margin: 0;
       font-size: var(--handheld-label);
     }
-    body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    body.field-kit.playing:has(#coop-overlay[hidden]):has(
+        #coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])
+      )
       .coop-board-slot {
       grid-row: 3;
     }
-    body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    body.field-kit.playing:has(#coop-overlay[hidden]):has(
+        #coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])
+      )
       .board-footer {
       grid-row: 4;
     }
-    body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-objective[data-kind='stronghold'])
+    body.field-kit.playing:has(#coop-overlay[hidden]):has(
+        #coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])
+      )
       #coop-controls {
       grid-row: 5;
     }
@@ -1430,7 +1445,8 @@
     body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad > button[data-action]::before {
       display: none;
     }
-    body.field-kit.playing:has(#coop-overlay[hidden]) #coop-objective[data-kind='stronghold'] {
+    body.field-kit.playing:has(#coop-overlay[hidden])
+      #coop-objective:is([data-kind='stronghold'], [data-kind='expedition']) {
       line-height: 1.3;
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .board-footer {
@@ -1517,7 +1533,7 @@
     }
     body.field-kit.playing:has(#coop-overlay[hidden]):has(
         #coop-music-now-playing:not([hidden])
-      ):has(#coop-objective[data-kind='stronghold']) {
+      ):has(#coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])) {
       /* The objective keeps its own reading strip above either steering pad. */
       --team-music-objective-space: calc(var(--handheld-label) * 2.6 + 8px);
     }
@@ -1549,7 +1565,7 @@
     body.field-kit.playing:has(#coop-overlay[hidden]):has(#coop-music-now-playing:not([hidden])),
     body.field-kit.playing:has(#coop-overlay[hidden]):has(
         #coop-music-now-playing:not([hidden])
-      ):has(#coop-objective[data-kind='stronghold']) {
+      ):has(#coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])) {
       --handheld-music-space: 0px;
       --team-music-objective-space: 0px;
     }

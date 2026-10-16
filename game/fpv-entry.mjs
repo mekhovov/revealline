@@ -56,7 +56,9 @@ export function appearanceLaunchURL(
               : (localStorage ?? win.localStorage);
           for (const candidate of candidates) {
             if (kind === 'session' || candidate.family.id === activeId)
-              saveAppearanceContext(storage, candidate, { shared: kind === 'local' });
+              saveAppearanceContext(storage, candidate, {
+                shared: kind === 'local',
+              });
           }
         } catch {
           // Denied storage keeps the normal visible authored fallback available.
@@ -172,6 +174,7 @@ export function overflightLaunchURL(href, locale = 'en', appearanceDefault = nul
     );
   if (!match) return null;
   const target = new URL(`${match[1]}game/overflight/play.html`, current);
+  target.searchParams.set('family', '1');
   target.searchParams.set('lang', locale === 'uk' ? 'uk' : 'en');
   return nativeArtReviewURL(appearanceLaunchURL(target.href, appearanceDefault), current.href);
 }
@@ -182,6 +185,7 @@ export function overflightHuntLaunchURL(href, locale = 'en', appearanceDefault =
   if (!shared) return null;
   const target = new URL(shared);
   target.pathname = target.pathname.replace(/\/overflight\/play\.html$/, '/overflight/raid.html');
+  target.searchParams.delete('family');
   return target.href;
 }
 

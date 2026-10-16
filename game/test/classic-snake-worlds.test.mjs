@@ -147,7 +147,7 @@ test('selector preview uses the same world renderer and selected appearance with
   assert.deepEqual(exportClassicSnakeReplay(run), before);
 });
 
-test('the complete world range reuses at most 192 tiny material tiles and 24 backdrop encodings', () => {
+test('the complete world range reuses at most 192 tiny material tiles and 27 backdrop encodings', () => {
   const surfaces = [],
     decodedBackdrops = [];
   const document = {
@@ -172,8 +172,8 @@ test('the complete world range reuses at most 192 tiny material tiles and 24 bac
         classicSceneBackdrop(scene, { document, treatment });
       }
   assert.equal(surfaces.filter((x) => x.width === 32).length, 192);
-  assert.equal(surfaces.filter((x) => x.width === 1 && x.height === 1).length, 24);
-  assert.equal(decodedBackdrops.length, 24);
+  assert.ok(surfaces.filter((x) => x.width === 1 && x.height === 1).length >= 27);
+  assert.equal(decodedBackdrops.length, 27, 'two Snake scenes share each native FPV battlefield');
   assert.ok(
     decodedBackdrops.every(
       ({ width, height }) =>

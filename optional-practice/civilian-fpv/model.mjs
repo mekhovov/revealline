@@ -205,6 +205,44 @@ function sweepBox(a, b, box) {
   }
   return entry >= 0 && entry <= Q && exit >= 0 ? { at: entry, axis: hitAxis, sign } : null;
 }
+/**
+ * Shared fixed-step air transition for validated body/input/response values.
+ * Mutates angular rate, orientation, velocity and the caller-owned displacement.
+ * Returns the resulting attitude without an extra wrapper. Hosts own position commit,
+ * collision, boundaries, tick/proof progression and arming; this helper grants none.
+ */
+export function advanceFlightAir(state, command, mode, rates, displacement) {
+  const angles = attitude(state.orientation);
+  for (const key of ['roll', 'pitch', 'yaw']) {
+    const shaped = responseCurve(command[key], rates.expo);
+    const desired =
+      mode === 'self-level' && key !== 'yaw'
+        ? clamp(
+            (roundDiv(shaped * rates.maxTilt * 100, 1000) - angles[key]) * 4,
+            -rates.maxRate * 100,
+            rates.maxRate * 100,
+          )
+        : roundDiv(shaped * rates.maxRate * 100, 1000);
+    const difference = desired - state.angular[key];
+    state.angular[key] += difference
+      ? Math.sign(difference) * Math.max(1, Math.abs(roundDiv(difference, rates.responseTicks)))
+      : 0;
+  }
+  state.orientation = integrateOrientation(state.orientation, state.angular, FLIGHT_HZ);
+  const nextAttitude = attitude(state.orientation),
+    thrust = roundDiv(command.throttle * 19620, 1000);
+  for (const axis of ['x', 'y', 'z']) {
+    const acceleration = mul(nextAttitude.up[axis], thrust) - (axis === 'y' ? 9810 : 0);
+    state.velocity[axis] = clamp(
+      roundDiv(state.velocity[axis] * 995, 1000) + roundDiv(acceleration, FLIGHT_HZ),
+      -30000,
+      30000,
+    );
+    displacement[axis] = roundDiv(state.velocity[axis], FLIGHT_HZ);
+  }
+  return nextAttitude;
+}
+
 export function createFlight({
   course,
   mode = 'self-level',
@@ -257,38 +295,10 @@ export function createFlight({
       state.status = 'expired';
       return snapshot();
     }
-    const angles = attitude(state.orientation),
-      shaped = Object.fromEntries(
-        ['roll', 'pitch', 'yaw'].map((key) => [key, responseCurve(command[key], rates.expo)]),
-      );
-    for (const key of ['roll', 'pitch', 'yaw']) {
-      const desired =
-        mode === 'self-level' && key !== 'yaw'
-          ? clamp(
-              (roundDiv(shaped[key] * rates.maxTilt * 100, 1000) - angles[key]) * 4,
-              -rates.maxRate * 100,
-              rates.maxRate * 100,
-            )
-          : roundDiv(shaped[key] * rates.maxRate * 100, 1000);
-      const difference = desired - state.angular[key];
-      state.angular[key] += difference
-        ? Math.sign(difference) * Math.max(1, Math.abs(roundDiv(difference, rates.responseTicks)))
-        : 0;
-    }
-    state.orientation = integrateOrientation(state.orientation, state.angular, FLIGHT_HZ);
-    const nextAttitude = attitude(state.orientation),
-      thrust = roundDiv(command.throttle * 19620, 1000),
-      before = { ...state.position },
+    const before = { ...state.position },
       next = {};
-    for (const axis of ['x', 'y', 'z']) {
-      const acceleration = mul(nextAttitude.up[axis], thrust) - (axis === 'y' ? 9810 : 0);
-      state.velocity[axis] = clamp(
-        roundDiv(state.velocity[axis] * 995, 1000) + roundDiv(acceleration, FLIGHT_HZ),
-        -30000,
-        30000,
-      );
-      next[axis] = state.position[axis] + roundDiv(state.velocity[axis], FLIGHT_HZ);
-    }
+    const nextAttitude = advanceFlightAir(state, command, mode, rates, next);
+    for (const axis of ['x', 'y', 'z']) next[axis] += before[axis];
     const speed = isqrt(Object.values(state.velocity).reduce((n, v) => n + v * v, 0)),
       tilt = Math.max(Math.abs(nextAttitude.roll), Math.abs(nextAttitude.pitch));
     let collision = null;

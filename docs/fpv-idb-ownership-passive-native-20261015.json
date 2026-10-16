@@ -1,0 +1,193 @@
+{
+  "receiptUTC": "2026-10-15T21:17:32.772278+00:00",
+  "toolRevision": "f3b34f4c8130ebd1f5f09f19a868d05898ed495a",
+  "productionRevision": "e27e6e5d9deab1a6488e55729d275816d2d98a0d",
+  "packageRevision": "bffea641cb1ff497ece02f4e3489cfe62bdc068adb393783a4ed4a052e8296b1",
+  "origin": "http://127.0.0.1:9206",
+  "identitySHA256": "e050884321c53f857d2346f1dd27ca565ddb53e739de154ed50bd2a2c7509eaf",
+  "mode": "passive; no explicit-close interception; authoring factory/window/bootstrap identity difference disclosed",
+  "scope": "Actual normal Roadworks download, Ready→explicit Arm→active guard→Pause, canonical settings/Library/record shortcut/compact EN→UK→EN, passive reads and Stop, then cached Fly. Fresh separate authoring host; no player-store injection or forced-close stimulus.",
+  "observations": {
+    "normalFirstPlay": "Ready/Motors off0m/Arm available; normal download succeeded.",
+    "correctedModalAccess": "Diagnostic opens inside flight-dialog and sim-settings native modals; backup-proofs remains focused until explicit diagnostic click. Earlier9205 body-modal negative remains unchanged.",
+    "activeGuard": {
+      "actualFlightState": "active",
+      "diagnosticDialogOpen": false,
+      "visibleButtonTitle": "Pause through the normal player before reading connection events."
+    },
+    "normalPauseAndSettings": "Actual Pause→Settings→Content & Offline→Library→Recorded flights & recovery remains paused. Compact390x844 and EN→UK→EN use ordinary settings.",
+    "capturedNativeOpenSuccesses": 5,
+    "nativeTrustedEvents": true,
+    "capturedNamesVersions": [
+      {
+        "name": "revealline-journey-v1",
+        "version": 1,
+        "openCaller": [
+          {
+            "path": "game/profile-storage.mjs",
+            "line": 92,
+            "column": 29
+          },
+          {
+            "path": "game/profile-storage.mjs",
+            "line": 83,
+            "column": 23
+          }
+        ],
+        "forcedCloseEvents": 0,
+        "versionChangeEvents": 0,
+        "explicitCloseCalls": null
+      },
+      {
+        "name": "revealline.fpv.world-records.v1",
+        "version": 1,
+        "openCaller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-records.mjs",
+            "line": 94,
+            "column": 31
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-records.mjs",
+            "line": 93,
+            "column": 20
+          }
+        ],
+        "forcedCloseEvents": 0,
+        "versionChangeEvents": 0,
+        "explicitCloseCalls": null
+      },
+      {
+        "name": "revealline-fpv-worlds-v1",
+        "version": 2,
+        "openCaller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-store.mjs",
+            "line": 21,
+            "column": 29
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-app.mjs",
+            "line": 8003,
+            "column": 7
+          },
+          {
+            "path": "optional-practice/civilian-fpv/world-app.mjs",
+            "line": 8032,
+            "column": 5
+          }
+        ],
+        "forcedCloseEvents": 0,
+        "versionChangeEvents": 0,
+        "explicitCloseCalls": null
+      },
+      {
+        "name": "revealline-fpv-regions-v1",
+        "version": 2,
+        "openCaller": [
+          {
+            "path": "optional-practice/civilian-fpv/world-store.mjs",
+            "line": 21,
+            "column": 29
+          },
+          {
+            "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+            "line": 316,
+            "column": 23
+          },
+          {
+            "path": "optional-practice/civilian-fpv/regional-library.mjs",
+            "line": 633,
+            "column": 48
+          }
+        ],
+        "forcedCloseEvents": 0,
+        "versionChangeEvents": 0,
+        "explicitCloseCalls": null
+      },
+      {
+        "name": "revealline-journey-v1",
+        "version": 1,
+        "openCaller": [
+          {
+            "path": "game/profile-storage.mjs",
+            "line": 92,
+            "column": 29
+          },
+          {
+            "path": "game/profile-storage.mjs",
+            "line": 83,
+            "column": 23
+          }
+        ],
+        "forcedCloseEvents": 0,
+        "versionChangeEvents": 0,
+        "explicitCloseCalls": null
+      }
+    ],
+    "counts": {
+      "opens": 5,
+      "droppedEvents": 0,
+      "droppedConnections": 0,
+      "droppedRequests": 0,
+      "diagnosticErrors": 0,
+      "closeInterceptions": 0,
+      "closeInterceptionRefused": 0,
+      "restorationSkipped": 0
+    },
+    "stop": {
+      "stopped": true,
+      "pendingRequests": 0,
+      "ownedRetireActions": 0
+    },
+    "afterStop": "Cached installed Roadworks Fly succeeds Ready/Motors off0m with Arm available; observer stop does not close/reconnect the ordinary player connections.",
+    "originalClosingFailureReproduced": false,
+    "rootTabClosed": true,
+    "viewportReset": true
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-f3b3-passive-after-locales-native-20261015.json",
+      "bytes": 5008,
+      "sha256": "282cc16e20b5f13c4eb857735643f9e7a85c495397de5792da0f611cf0a9e18d"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-f3b3-passive-after-stop-ready-native-20261015.png",
+      "bytes": 33234,
+      "sha256": "f603a8b29e643b1305d2525fcdb5d684c37b3589e5b926e16a4ecc1b5d380abd"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-f3b3-passive-after-stop-ready-native-20261015.txt",
+      "bytes": 1420,
+      "sha256": "02ec8f0c51769f67a0b434664d98537da3f7f78d7f201b90c3bd7e35c3217546"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-f3b3-passive-paused-compact-native-20261015.json",
+      "bytes": 5008,
+      "sha256": "282cc16e20b5f13c4eb857735643f9e7a85c495397de5792da0f611cf0a9e18d"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-f3b3-passive-paused-compact-native-20261015.png",
+      "bytes": 50058,
+      "sha256": "fbb0d307461e4ef497c8be00df3078ed7ade951fc7b70becbc15634a6b430729"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-f3b3-passive-ready-native-20261015.json",
+      "bytes": 5008,
+      "sha256": "282cc16e20b5f13c4eb857735643f9e7a85c495397de5792da0f611cf0a9e18d"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/idb-ownership-f3b3-passive-stopped-native-20261015.json",
+      "bytes": 5006,
+      "sha256": "ba5a97915c3c6f7ada6f11605453b74c3a0c89260e549568de08d491d950032e"
+    }
+  ],
+  "acceptedBoundary": "Bounded passive observer operation, sanitized native open ownership, modal reachability fix, active-flight refusal and owned listener cleanup. It does not diagnose or repair9196 closure, test actual abnormal/versionchange events or qualify exact default bootstrap.",
+  "remaining": [
+    "original connection-closing cause",
+    "native explicit-close opt-in/interception",
+    "actual native abnormal/versionchange events without destructive stimulus",
+    "cross-context capture and unobserved factories",
+    "offline/application restart/eviction and physical/public acceptance"
+  ]
+}

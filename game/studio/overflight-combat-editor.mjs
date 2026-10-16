@@ -33,7 +33,7 @@ export function overflightCombatEditor({
     label.append(input);
     fields.append(label);
   };
-  const modern = (project.survivorFormat ?? project.format).endsWith('V3');
+  const modern = /V[34]$/.test(project.survivorFormat ?? project.format);
   const difficulty = document.createElement('select');
   for (const [id, en, uk] of [
     ...(modern ? [['relaxed', 'Relaxed', 'Спокійна']] : []),

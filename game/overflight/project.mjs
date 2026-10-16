@@ -1,16 +1,29 @@
+import { validateOverflightPresentationCover } from './world-layout-presentation.mjs';
+import {
+  OVERFLIGHT_BATTLEFIELDS,
+  applyOverflightBattlefield,
+  validateOverflightBattlefieldProject,
+  validateOverflightMovement,
+} from './battlefields.mjs';
+import { validateOverflightTerrain } from './terrain.mjs';
+import {
+  applyOverflightWorld,
+  createOverflightWorldPresentation,
+  validateOverflightEncounterProfile,
+  validateOverflightWorldPresentation,
+  overflightGameplayIdentity,
+  overflightPresentationIdentity,
+} from './worlds.mjs';
 import {
   createOverflightCombatProfile,
   validateOverflightCombatProfile,
 } from './combat-profile.mjs';
-import { overflightFormationSchedule, OVERFLIGHT_DIFFICULTIES } from './tactics.mjs';
 import {
-  boundedJSON,
-  canonicalJSON,
-  dataIdentity,
-  exactKeys,
-  required,
-  stableId,
-} from '../data-json.mjs';
+  overflightFormationSchedule,
+  OVERFLIGHT_DIFFICULTIES,
+  validateOverflightSupplyTerrain,
+} from './tactics.mjs';
+import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from '../data-json.mjs';
 
 export const OVERFLIGHT_PROJECT_FORMAT = 'OverflightProjectV1';
 export const OVERFLIGHT_COMPILED_FORMAT = 'OverflightCompiledV1';
@@ -18,6 +31,9 @@ export const OVERFLIGHT_PROJECT_FORMAT_V2 = 'OverflightProjectV2';
 export const OVERFLIGHT_COMPILED_FORMAT_V2 = 'OverflightCompiledV2';
 export const OVERFLIGHT_PROJECT_FORMAT_V3 = 'OverflightProjectV3';
 export const OVERFLIGHT_COMPILED_FORMAT_V3 = 'OverflightCompiledV3';
+export const OVERFLIGHT_PROJECT_FORMAT_V4 = 'OverflightProjectV4';
+export const OVERFLIGHT_COMPILED_FORMAT_V4 = 'OverflightCompiledV4';
+export const OVERFLIGHT_BALANCE_REVISION_V4 = 'overflight-balance.v4';
 export const OVERFLIGHT_BALANCE_REVISION = 'overflight-balance.v3';
 export const OVERFLIGHT_PROJECT_MAX_BYTES = 128 * 1024;
 export const OVERFLIGHT_SOLDIERS = Object.freeze([
@@ -90,12 +106,15 @@ const encounterFamilies = {
   ],
 };
 export function createOverflightProject({
+  world = null,
+  layout = null,
   encounterSet = 'front',
   seed = 17031991,
   difficulty = 'standard',
   legacy = false,
   rulesVersion = 2,
 } = {}) {
+  required([1, 2, 3, 4].includes(rulesVersion), 'Unknown Overflight rules version.');
   required(
     OVERFLIGHT_DIFFICULTIES.includes(difficulty) && (rulesVersion >= 3 || difficulty !== 'relaxed'),
     'Unknown difficulty.',
@@ -192,13 +211,20 @@ export function createOverflightProject({
         });
     }
   }
-  return {
+  const project = {
     format: legacy
       ? OVERFLIGHT_PROJECT_FORMAT
-      : rulesVersion >= 3
-        ? OVERFLIGHT_PROJECT_FORMAT_V3
-        : OVERFLIGHT_PROJECT_FORMAT_V2,
-    ...(!legacy && rulesVersion >= 3 ? { balanceRevision: OVERFLIGHT_BALANCE_REVISION } : {}),
+      : rulesVersion >= 4
+        ? OVERFLIGHT_PROJECT_FORMAT_V4
+        : rulesVersion >= 3
+          ? OVERFLIGHT_PROJECT_FORMAT_V3
+          : OVERFLIGHT_PROJECT_FORMAT_V2,
+    ...(!legacy && rulesVersion >= 3
+      ? {
+          balanceRevision:
+            rulesVersion >= 4 ? OVERFLIGHT_BALANCE_REVISION_V4 : OVERFLIGHT_BALANCE_REVISION,
+        }
+      : {}),
     ...(!legacy
       ? {
           difficulty,
@@ -233,6 +259,24 @@ export function createOverflightProject({
       { id: 'case-east', x: 1920, y: 760, kind: 'supply-case' },
     ],
   };
+  if (!legacy && rulesVersion >= 4) {
+    const chosen =
+      layout ??
+      OVERFLIGHT_BATTLEFIELDS.find((entry) => entry.world === (world ?? 'field-crossing'))?.id;
+    required(chosen, 'Choose a known battlefield layout.');
+    const result = applyOverflightBattlefield(project, chosen);
+    // New battlefield sorties retain the accepted world pacing. Keep this in the
+    // constructor: compiling, importing or changing an authored layout must not retune it.
+    result.upgrades.thresholds = [12, 45, 100, 180, 300, 480, 700, 1000, 1400, 1900];
+    result.presentation = createOverflightWorldPresentation(
+      result.battlefield.world,
+      result.arena,
+      { layout: result.battlefield },
+    );
+    return result;
+  }
+  required(!layout, 'Battlefield layouts require V4 rules.');
+  return world ? applyOverflightWorld(project, world) : project;
 }
 export const DEFAULT_OVERFLIGHT_PROJECT = freeze(createOverflightProject());
 function number(value, min, max, label, integer = false) {
@@ -274,10 +318,20 @@ export function validateOverflightProject(source) {
       'goals',
       'resources',
       'props',
-      ...([OVERFLIGHT_PROJECT_FORMAT_V2, OVERFLIGHT_PROJECT_FORMAT_V3].includes(project.format)
+      ...(project.presentation !== undefined ? ['presentation'] : []),
+      ...(project.encounterProfile !== undefined ? ['encounterProfile'] : []),
+      ...(project.terrain !== undefined ? ['terrain'] : []),
+      ...(project.battlefield !== undefined ? ['battlefield'] : []),
+      ...([
+        OVERFLIGHT_PROJECT_FORMAT_V2,
+        OVERFLIGHT_PROJECT_FORMAT_V3,
+        OVERFLIGHT_PROJECT_FORMAT_V4,
+      ].includes(project.format)
         ? ['difficulty', 'combat']
         : []),
-      ...(project.format === OVERFLIGHT_PROJECT_FORMAT_V3 ? ['balanceRevision'] : []),
+      ...(['OverflightProjectV3', 'OverflightProjectV4'].includes(project.format)
+        ? ['balanceRevision']
+        : []),
     ],
     'Overflight project',
   );
@@ -286,14 +340,17 @@ export function validateOverflightProject(source) {
       OVERFLIGHT_PROJECT_FORMAT,
       OVERFLIGHT_PROJECT_FORMAT_V2,
       OVERFLIGHT_PROJECT_FORMAT_V3,
+      OVERFLIGHT_PROJECT_FORMAT_V4,
     ].includes(project.format),
     'Unsupported Overflight project version.',
   );
-  const v3 = project.format === OVERFLIGHT_PROJECT_FORMAT_V3;
+  const v4 = project.format === OVERFLIGHT_PROJECT_FORMAT_V4;
+  const v3 = v4 || project.format === OVERFLIGHT_PROJECT_FORMAT_V3;
   const v2 = v3 || project.format === OVERFLIGHT_PROJECT_FORMAT_V2;
   if (v3)
     required(
-      project.balanceRevision === OVERFLIGHT_BALANCE_REVISION,
+      project.balanceRevision ===
+        (v4 ? OVERFLIGHT_BALANCE_REVISION_V4 : OVERFLIGHT_BALANCE_REVISION),
       'Unsupported balance revision.',
     );
   if (v2) {
@@ -340,9 +397,21 @@ export function validateOverflightProject(source) {
   for (const encounter of project.encounters) {
     fields(
       encounter,
-      ['id', 'start', 'end', 'spawnPerSecond', 'speed', 'hp', 'families', 'pattern'],
+      [
+        'id',
+        'start',
+        'end',
+        'spawnPerSecond',
+        'speed',
+        'hp',
+        'families',
+        'pattern',
+        ...(v4 && encounter.movement !== undefined ? ['movement'] : []),
+      ],
       'Encounter',
     );
+    if (encounter.movement !== undefined)
+      validateOverflightMovement(encounter.movement, project.arena);
     required(stableId(encounter.id) && !ids.has(encounter.id), 'Encounter IDs must be unique.');
     ids.add(encounter.id);
     number(encounter.start, previousEnd, project.duration, 'encounter start');
@@ -416,6 +485,27 @@ export function validateOverflightProject(source) {
     number(prop.x, 0, project.arena.width, 'prop x');
     number(prop.y, 0, project.arena.height, 'prop y');
   }
+  if (project.terrain !== undefined) {
+    required(v3, 'Experimental terrain requires current rules.');
+    project.terrain = validateOverflightTerrain(project.terrain, project.arena);
+    validateOverflightSupplyTerrain(project);
+  }
+  if (project.encounterProfile !== undefined) {
+    required(v3, 'Authored world encounters require current rules.');
+    validateOverflightEncounterProfile(project.encounterProfile);
+  }
+  if (project.presentation !== undefined) {
+    required(v3, 'World presentation requires current rules.');
+    project.presentation = validateOverflightWorldPresentation(project.presentation, project.arena);
+  }
+  if (project.battlefield !== undefined) {
+    required(v4, 'Battlefield layouts require V4 rules.');
+    project.battlefield = validateOverflightBattlefieldProject(project);
+    if (project.presentation)
+      validateOverflightPresentationCover(project.presentation, project.terrain);
+  }
+  if (project.terrain?.format === 'OverflightTerrainV2')
+    required(v4 && project.battlefield, 'Terrain V2 needs a V4 battlefield snapshot.');
   return freeze(project);
 }
 export function compileOverflightProject(source) {
@@ -423,20 +513,25 @@ export function compileOverflightProject(source) {
   return freeze({
     ...project,
     format:
-      project.format === OVERFLIGHT_PROJECT_FORMAT_V3
-        ? OVERFLIGHT_COMPILED_FORMAT_V3
-        : project.format === OVERFLIGHT_PROJECT_FORMAT_V2
-          ? OVERFLIGHT_COMPILED_FORMAT_V2
-          : OVERFLIGHT_COMPILED_FORMAT,
+      project.format === OVERFLIGHT_PROJECT_FORMAT_V4
+        ? OVERFLIGHT_COMPILED_FORMAT_V4
+        : project.format === OVERFLIGHT_PROJECT_FORMAT_V3
+          ? OVERFLIGHT_COMPILED_FORMAT_V3
+          : project.format === OVERFLIGHT_PROJECT_FORMAT_V2
+            ? OVERFLIGHT_COMPILED_FORMAT_V2
+            : OVERFLIGHT_COMPILED_FORMAT,
     rulesVersion:
-      project.format === OVERFLIGHT_PROJECT_FORMAT_V3
-        ? 3
-        : project.format === OVERFLIGHT_PROJECT_FORMAT_V2
-          ? 2
-          : 1,
+      project.format === OVERFLIGHT_PROJECT_FORMAT_V4
+        ? 4
+        : project.format === OVERFLIGHT_PROJECT_FORMAT_V3
+          ? 3
+          : project.format === OVERFLIGHT_PROJECT_FORMAT_V2
+            ? 2
+            : 1,
     difficulty: project.difficulty ?? 'standard',
     combat: project.combat ?? null,
-    projectIdentity: dataIdentity(project),
+    projectIdentity: overflightGameplayIdentity(project),
+    visualIdentity: overflightPresentationIdentity(project),
     sourceFormat: project.format,
   });
 }

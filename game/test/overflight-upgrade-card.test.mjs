@@ -75,3 +75,45 @@ test('Ukrainian review cards preserve readable content and cannot choose while d
   assert.equal(card.querySelector('svg').querySelectorAll('style').length, 0);
   card.click();
 });
+
+test('Survivor and Riy cards consume the native sprite adapter while keeping the same accessible comparison', () => {
+  const build = createOverflightBuild();
+  const survivor = legalOverflightUpgrades(build, ['primary'])[0];
+  const riy = {
+    ...survivor,
+    id: 'riy-sweeper:broad:2',
+    system: 'riy-sweeper',
+    role: 'sweeper',
+    branch: 'broad',
+    rank: 2,
+    currentRank: 1,
+  };
+  for (const offer of [survivor, riy]) {
+    const document = cardDocument(),
+      create = document.createElement,
+      calls = [],
+      surfaces = [];
+    document.createElement = (tag) => {
+      const element = create(tag);
+      if (tag === 'canvas') {
+        element.getContext = () => ({});
+        element.toDataURL = () => 'data:image/png;base64,bmF0aXZl';
+        surfaces.push(element);
+      }
+      return element;
+    };
+    const card = createOverflightUpgradeCard({
+      document,
+      offer,
+      build,
+      rulesVersion: 4,
+      paintSprite: (_context, kind) => calls.push(kind),
+    });
+    assert.deepEqual(calls, ['drone', 'drone', 'drone', 'drone', 'enemy']);
+    assert.ok(card.querySelectorAll('image').length >= 4);
+    assert.equal(card.querySelectorAll('canvas').length, 0);
+    assert.ok(surfaces.every((surface) => surface.width === 0 && surface.height === 0));
+    assert.match(card.getAttribute('aria-label'), /Visual comparison.*NOW:.*NEXT:/);
+    assert.equal(card.querySelector('.upgrade-description').textContent, offer.next.en);
+  }
+});

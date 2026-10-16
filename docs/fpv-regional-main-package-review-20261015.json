@@ -1,0 +1,221 @@
+{
+  "packageRetrieval": {
+    "sourceRevision": "c3368bb60da7002f157fc7e9cae2688a53fb546c",
+    "sourceTree": "982823a6d4078f07ffa531e7a56657eeda4b3d1c",
+    "version": "v0.151.1",
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "revision": "adccf16a6a972e03f38d7395788928f1a7cd2f6f5f06fc8802a4f4baeef3bba9",
+    "cloudRun": 38658148642,
+    "githubArtifactId": 11938251159,
+    "topLevelChecksumsVerified": 15,
+    "worldsMembersVerified": 156,
+    "worldsBytes": 17339922,
+    "browserOfflineVerified": false,
+    "files": {
+      "github-artifact.zip": {
+        "bytes": 23032947,
+        "sha256": "7bc0f8f546aa78353d042a76b28ff2ebf28c0a31e20efa32e28895e60f008258"
+      },
+      "distribution-optional-fpv-worlds.zip": {
+        "bytes": 17394118,
+        "sha256": "e9e8fb86c0532c1fca01efeb001f57fdc5ee155a697ca74eb3cd733caa5cc5a5"
+      },
+      "manifest-optional-fpv-worlds.json": {
+        "bytes": 28768,
+        "sha256": "07adea139ec1ce94670a5843fbfa750097bef0d60415ba184cddbfa4dc3b5c84"
+      }
+    }
+  },
+  "archiveMembers": {
+    "sourceRevision": "c3368bb60da7002f157fc7e9cae2688a53fb546c",
+    "sourceTree": "982823a6d4078f07ffa531e7a56657eeda4b3d1c",
+    "version": "v0.151.1",
+    "scope": "Every archive member length/hash and exact inventory verified; not native/browser qualification",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "kind": "distribution",
+        "verifiedMembers": 94,
+        "uncompressedBytes": 3738628,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3752312,
+        "archiveSHA256": "86362943dcc67e04c42c40a062903fc663abed44afbaa89e083d8ec375798264"
+      },
+      {
+        "id": "civilian-flight",
+        "kind": "source",
+        "verifiedMembers": 96,
+        "uncompressedBytes": 3772182,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3786202,
+        "archiveSHA256": "8d80995a39abed0b03a16be6b989c4e54bb604fd9342b47e4fc4b2f71fd2d9d4"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "distribution",
+        "verifiedMembers": 101,
+        "uncompressedBytes": 6751069,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6766087,
+        "archiveSHA256": "53d8df4fc9533358fc276d8e1d6939d32ba423dce5ab987af944bb714a41b7b7"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "source",
+        "verifiedMembers": 103,
+        "uncompressedBytes": 6786133,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6801455,
+        "archiveSHA256": "570c1293f706884f873d6dd3bc4bc2ab2708cbe22027a3291aec9386f1dcfd88"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "distribution",
+        "verifiedMembers": 157,
+        "uncompressedBytes": 17368690,
+        "limits": {
+          "files": 159,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17394118,
+        "archiveSHA256": "e9e8fb86c0532c1fca01efeb001f57fdc5ee155a697ca74eb3cd733caa5cc5a5"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "source",
+        "verifiedMembers": 159,
+        "uncompressedBytes": 17411653,
+        "limits": {
+          "files": 159,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17437385,
+        "archiveSHA256": "2a8ebe1b8cd7a7e04849a6c91b897465d16921c41c724eaa67b201c613fc7692"
+      }
+    ]
+  },
+  "archiveImports": {
+    "scope": "Finished archive transitive import graph; no source-file fallback or execution",
+    "validatorSource": "3ccc72b25a29d5cd93b1bd4ecc4dd09d9b1e5207",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "modules": 68,
+        "imports": 96
+      },
+      {
+        "id": "civilian-fpv",
+        "modules": 81,
+        "imports": 152
+      },
+      {
+        "id": "fpv-worlds",
+        "modules": 129,
+        "imports": 319
+      }
+    ]
+  },
+  "native": {
+    "origin": "http://127.0.0.1:9045",
+    "method": "Manual native browser interaction through CUA; unchanged immutable package; normal shipped Library pin",
+    "initialPreparation": "Ready offline on first attempt; actual Open prepared link opened Home",
+    "installedRegion": {
+      "id": "urban-earthworks-study",
+      "revision": "review-r1",
+      "descriptorSha256": "1ba27d2242d61d61c0552564d75baa5f3e313e63a78c2ef434f63cdc7dbab94c",
+      "contentFiles": 38,
+      "contentBytes": 1455090
+    },
+    "onlineFlight": {
+      "entry": "Home \u2192 Explore \u2192 Download \u2192 Saved \u2192 Fly",
+      "ready": {
+        "heightMetres": 3,
+        "throttle": 0,
+        "armed": false,
+        "camera": "FPV"
+      },
+      "explicitControls": "Arm, W 1800 ms, Shift+Up 1200 ms, Space",
+      "paused": {
+        "heightMetres": 2.5,
+        "verticalMetresPerSecond": 3.2,
+        "driftMetresPerSecond": 0.7,
+        "throttlePercent": 64
+      }
+    },
+    "originUnavailable": {
+      "transportConfirmed": "Owned origin server stopped; exact entry curl exit 7 / HTTP 000",
+      "entry": "Same URL reload \u2192 cached Home \u2192 Explore \u2192 Saved review-r1 \u2192 Fly",
+      "ready": {
+        "heightMetres": 3,
+        "throttle": 0,
+        "armed": false
+      },
+      "explicitControls": "Arm, W 1800 ms, Shift+Up 1200 ms, Space",
+      "paused": {
+        "heightMetres": 2.4,
+        "verticalMetresPerSecond": 3.1,
+        "driftMetresPerSecond": 0.7,
+        "throttlePercent": 63
+      }
+    },
+    "restored": "Owned server restarted as PID 75140; exact immutable entry HTTP 200",
+    "evidence": [
+      {
+        "file": "regional-combined-main-flight.png",
+        "bytes": 54211,
+        "sha256": "d1390a28e0b6e40e49054d6558a854cdfe0d7db20d505564503c4bcdcef2f0fe"
+      },
+      {
+        "file": "regional-combined-main-origin-unavailable.png",
+        "bytes": 54131,
+        "sha256": "d98f8498f2c0b9cfa9b0d17ff132856c9f4e3f465bc198faffb7632cb76f6703"
+      }
+    ]
+  },
+  "contextRecovery": {
+    "sourceRevision": "9e43fc7f8c12fda0a0475e04b50ac93943d9d5ee",
+    "packageRevision": "b2613678aa1949fd22bef8e1e1f9b68cc3af08f3a9f28ac4b5f66f376863b984",
+    "method": "Explicit WEBGL_lose_context loss/restore in external manual same-origin harness",
+    "events": {
+      "loss": 1,
+      "restoration": 1
+    },
+    "safety": "Paused through both events; Arm disabled; no auto-arm",
+    "recovery": "Home \u2192 Continue \u2192 Pause \u2192 Restart rebuilt retained ground pose; explicit Arm and flight then pause succeeded",
+    "evidence": {
+      "file": "regional-context-restored-flight.png",
+      "bytes": 81511,
+      "sha256": "768d4925e5f21e340705dfeb419d43f18b185ed778a2c59fdaae2487260d48bd"
+    }
+  },
+  "limits": [
+    "Origin unavailable is not all-network offline or browser-process restart.",
+    "No device FPS, GPU memory, sustained native two-hour flight or real quota eviction claim.",
+    "The exact frozen package predates later compact-header, chooser, context-message and diagnostic changes.",
+    "Optional artifact validation is separate from broader company workflow conclusion and public publication."
+  ],
+  "cloudConclusion": {
+    "run": 38658148642,
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": {
+      "optional-practice": "success",
+      "candidate": "success"
+    },
+    "scope": "Company candidate admitted by cloud workflow; optional archives also independently checked here; no public publication claim"
+  }
+}

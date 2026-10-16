@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "source": "immutable GitHub HTTPS responses",
+  "pin": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/e561b41bb06d39775bf1bc5f9e078cabeeb84fef/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json",
+    "bytes": 329372,
+    "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+  },
+  "requests": 2051,
+  "peakConcurrentFetchHeaders": 4,
+  "files": 2050,
+  "totalBytes": 47975524,
+  "elapsedMilliseconds": 144317.011458,
+  "nativeStorageVerified": false
+}

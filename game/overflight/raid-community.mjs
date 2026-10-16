@@ -1,3 +1,4 @@
+import { overflightWorldDependencies } from './worlds.mjs';
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys, required } from '../data-json.mjs';
 import { createNativeProjectLibrary } from '../community/native-project-library.mjs';
 import {
@@ -13,7 +14,7 @@ export function createOverflightHuntPackage(project) {
   return {
     format: OVERFLIGHT_HUNT_PACKAGE_FORMAT,
     project: accepted,
-    dependencies: structuredClone(accepted.resources),
+    dependencies: overflightWorldDependencies(accepted),
   };
 }
 export function validateOverflightHuntPackage(source) {
@@ -27,7 +28,7 @@ export function validateOverflightHuntPackage(source) {
   required(pack.format === OVERFLIGHT_HUNT_PACKAGE_FORMAT, 'Unsupported Raid package version.');
   pack.project = validateOverflightHuntProject(pack.project);
   required(
-    canonicalJSON(pack.dependencies) === canonicalJSON(pack.project.resources),
+    canonicalJSON(pack.dependencies) === canonicalJSON(overflightWorldDependencies(pack.project)),
     'Incomplete or unsupported Raid dependency closure.',
   );
   compileOverflightHuntProject(pack.project);

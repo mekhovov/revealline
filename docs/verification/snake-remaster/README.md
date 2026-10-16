@@ -83,11 +83,77 @@ during celebration cancels automatic continuation. The full host suite passes
 pass 44. Existing recipe and grading evidence is unchanged. Physical testing
 and player feedback remain deferred; no fresh full-distribution build is claimed.
 
+## Full archive verification completed
+
+The final packaging gap is closed on clean merged main
+`1a2e87d50670f6c4e2c79faf6dd46d9a52479c93`. PRs #1194 and #1196, including
+all their implementation/report commits, are confirmed ancestors. Subsequent
+main changes leave Snake and its shared runtime unchanged; the updated optional
+worker is canonical, and all 14 focused offline dependency checks pass.
+
+The full default game distribution (including archived recipes) built **3,277
+files**, version **0.151.1**. Its ZIP SHA-256 is
+`f7de2ab16a59d899cec1986c91253666353cb9e1d9f9e1eb6641a2a65d1002f5`.
+Archive CRCs, every archived manifest entry, every expanded-file hash and output
+inventory passed. [The receipt](full-archive-validation.json) records exact source,
+command, file count and evidence limits. This supersedes the earlier disk-blocked
+full-build status; historical receipts remain unchanged.
+
+Only the task-owned, marker-checked generated output was removed after verification
+(2,075,953,812 logical bytes). All source, commits and saved data remain intact.
+This verifies the game distribution, not deployment or hosted publication.
+No additional implementation item remains identified by this final audit;
+physical-device and player checks stay deferred and grading extensions optional.
+
+## Interaction review follow-through
+
+[The interaction review](interaction-review.md) adds developer examples from
+Rytmos, Lost in Play and Donkey Kong Bananza and translates them into bounded
+feedback/input priorities. Its audit found three edge cases: controller Menu
+did not stop terminal playback, unchanged reception status was repeatedly
+rewritten, and globally enabled voices could override Snake's jammed-catch
+silence request. All are corrected, with 109 host, 74 audio and 16 package tests
+passing. A fresh full default build at `6cc04df43` verifies all 3,277 files and
+archive/expanded hashes; `interaction-validation.json` retains the receipt.
+No new simulation or grading rules are introduced. Historical build receipts
+retain their exact source attribution.
+
 ## Deferred qualification and intentional grading limits
+
+The [release follow-through](release-followthrough.md) confirms PR #1208 is merged
+and its Snake/audio modules are published at an observed main revision. It also
+records 72 additional alternate-look board comparisons, the Night Arcade roof
+contrast correction, and change-only pause/result/saving announcements with
+113 passing host tests. That public observation covers #1208; the new corrections
+are separately delivered and are not claimed live before their own deployment.
 
 1. **Deferred by request: physical-device qualification.** Responsive desktop emulation cannot establish touchscreen ergonomics, physical controller behavior, thermal throttling or low-end phone frame times. Use the existing lab/gallery on representative phones and controllers before claiming those devices qualified. This does not block the current delivery.
 2. **Optional: additional silver/gold calibration.** Completion stars and personal records are the accepted finished policy for uncalibrated and variable-condition setups. Higher grades require compatible independent evidence and a fairness policy; a single solver route is insufficient. This is not an undisclosed unlock task for players.
 3. **Deferred by request: player comparison and pacing feedback.** Editorial review, titles-hidden screenshots and winning proofs do not prove recognition or enjoyment. No new player study or approval wait is required for this delivery.
+
+## Latest-main appearance integration
+
+The [appearance integration review](appearance-integration-review.md) checks the
+newer shared Battlefield controls on main `07cf04c40`. It consolidates Snake's
+duplicated enemy preset into the shared Appearance section and corrects compact
+settings overflow found at 320px. Coverage preserves the accepted attempt and
+artwork across appearance changes, replay, mission previews and saved cosmetics.
+English/Ukrainian browser observations are recorded separately from deferred
+physical-device qualification. VoiceOver listening is skipped by explicit user
+request and is not an acceptance gate for this delivery. Higher-grade expansion
+remains optional; no new gameplay or mission content is needed for this fix.
+
+## Public interaction closure — 15 October 2026
+
+PR #1233 is merged and included in a successful public deployment. The
+[public release check](public-release-check-20261015.md) closes the remaining
+recommended desktop public-site follow-up: direct entry and mission activation,
+shared settings, appearance changes, fixture-assisted victory/results/Next,
+cancelled auto-next, an observed 2.93-second ordinary defeat/replay/retry, normal
+reload, and English/Ukrainian compact layouts. Exact deployment/module evidence,
+screenshots and the visible transition trace are retained alongside the report.
+No runtime defect was identified. Physical devices and player feedback remain
+deferred; VoiceOver remains skipped; higher-grade expansion remains optional.
 
 ## Original artwork and safety
 

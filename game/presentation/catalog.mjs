@@ -4,6 +4,8 @@ import { TEAM_PILOT_STATES } from '../couch/coop-pilot-slots.mjs';
 import { FORMATS, TOKEN_DEFAULTS, freezePresentation, validateThemeBundle } from './model.mjs';
 import { CURRENT_PICTURES } from './current-pictures.mjs';
 import { OVERFLIGHT_FIELD_KIT_IDS } from './overflight-field-kit-art.mjs';
+import { OVERFLIGHT_WORLD_IMAGE_SLOTS } from './overflight-world-slots.mjs';
+import { OVERFLIGHT_ACTOR_SLOTS } from './overflight-actor-slots.mjs';
 
 export const SCREEN_IDS = Object.freeze([
   'boot',
@@ -409,6 +411,49 @@ for (const id of OVERFLIGHT_FIELD_KIT_IDS)
         'Reusable Overflight Field Kit source asset; retain the exact slot and revision.',
         'Crisp native pixel clusters with alpha. Never bake text or authoritative hit geometry.',
         'Low supply cases are decorative; warning timing, damage and salvage value remain game-owned.',
+      ],
+    },
+  );
+for (const id of OVERFLIGHT_WORLD_IMAGE_SLOTS)
+  slot(
+    id,
+    `Decorative battlefield ${id.split('.').at(-1)}`,
+    'terrain',
+    'terrain.tile.v1',
+    [32, 32],
+    ['flight', 'studio', 'missions'],
+    {
+      required: false,
+      alpha: 'either',
+      requirements: id.includes('.module.')
+        ? [
+            'Optional joined battlefield module; each panel is repeated at native pixel density, never stretched over a building.',
+            'Panels, edge caps and corner trims share the world kit. Keep frame crop, pivot and occupied bounds intentional.',
+            'Solid-looking interior assemblies must match authored permanent cover. A source image never creates collision.',
+            'Keep danger marks, warning geometry and damage-state overlays separate from decorative pixels.',
+          ]
+        : [
+            'Optional decorative world source. The native material or landmark remains when no image is selected.',
+            'Never imply damaging terrain, slowing terrain or a solid interior wall. Collision belongs to the authored mission.',
+            'Use restrained pixel clusters. Preserve readable player silhouettes, rewards and hostile warnings.',
+            'Material images tile on a 32-pixel grid. Landmark images fit the authored decorative footprint.',
+          ],
+    },
+  );
+for (const actor of OVERFLIGHT_ACTOR_SLOTS)
+  slot(
+    actor.id,
+    `FPV Survivals ${actor.family}${actor.wardrobe ? ` · ${actor.wardrobe}` : ''}`,
+    'enemies',
+    'actor.enemy.v1',
+    [actor.size, actor.size],
+    ['flight', 'studio', 'guide'],
+    {
+      required: false,
+      requirements: [
+        'Optional native actor image or bounded sprite animation. The existing family renderer remains the default.',
+        'Preserve the directional silhouette. Combat facing, armor, contact radius and warning timers remain simulation-owned.',
+        'Use named animation clips for movement, preparation, attack, exposure and destruction. Native playback obeys pause and reduced motion.',
       ],
     },
   );

@@ -1,15 +1,224 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { runInNewContext } from 'node:vm';
 import {
   OBSERVED_PACKAGES,
   TRANSFER_TIMEOUT_MS,
   boundedOperation,
   closeAllPages,
+  closeBrowserForRestart,
   unlockObservedPage,
   matchesLaunchedAppURL,
   revealFPVOffline,
+  revealFPVProfiles,
+  expectedImportedProfileExport,
+  activateOfflineAction,
+  OBSERVATION_TIMEOUT_MS,
+  trackObservedResource,
+  resourceCleanupIssues,
 } from './optional-installation-observer-helpers.mjs';
+
+test('browser restart requires all pages closed and a confirmed persistent-context shutdown', async () => {
+  let listener;
+  const actions = [];
+  let pages = [
+    {
+      close: async () => {
+        actions.push('page');
+        pages = [];
+      },
+    },
+  ];
+  const context = {
+    pages: () => pages,
+    once: (name, callback) => {
+      assert.equal(name, 'close');
+      listener = callback;
+    },
+    off: (name, callback) => {
+      assert.equal(callback, listener);
+      actions.push('off');
+    },
+    close: async () => {
+      actions.push('browser');
+      listener();
+    },
+  };
+  assert.deepEqual(await closeBrowserForRestart(context), {
+    closedPageCount: 1,
+    contextClosed: true,
+  });
+  assert.deepEqual(actions, ['page', 'browser', 'off']);
+  context.close = async () => {};
+  await assert.rejects(closeBrowserForRestart(context), /did not confirm closure/);
+  context.close = async () => {
+    throw new Error('Browser close failed');
+  };
+  await assert.rejects(closeBrowserForRestart(context), /Browser close failed/);
+  const source = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(source, /await closeBrowserForRestart\(context\)/);
+  assert.match(source, /await launchBrowser\(true\)/);
+  assert.match(source, /browserRestart\.passed &&/);
+  assert.match(source, /app\.restartedOfflineWindow\?\.standalone/);
+});
+
+test('timed-out startup retains resource ownership and a late close failure cannot imply cleanup', async () => {
+  const state = { pending: new Set(), errors: [] };
+  let finishLaunch;
+  const launch = new Promise((resolve) => {
+    finishLaunch = resolve;
+  });
+  const acquisition = trackObservedResource(state, 'Browser', async () => {
+    await launch;
+    throw new Error('Late close failed');
+  });
+  const eventualFailure = acquisition.catch((error) => error);
+  await assert.rejects(
+    boundedOperation('Journey', () => acquisition, 2),
+    /timed out/,
+  );
+  const recordedAtCleanup = resourceCleanupIssues(state);
+  assert.equal(recordedAtCleanup.length, 1);
+  assert.match(recordedAtCleanup[0].error, /pending; profile retained/);
+  finishLaunch();
+  assert.match((await eventualFailure).message, /Late close failed/);
+  assert.equal(state.pending.size, 0);
+  assert.match(resourceCleanupIssues(state)[0].error, /Late close failed/);
+  // The already-written receipt remains conservatively unverified, never clean.
+  assert.match(recordedAtCleanup[0].error, /profile retained/);
+  const clean = { pending: new Set(), errors: [] };
+  assert.equal(await trackObservedResource(clean, 'Browser', async () => 42), 42);
+  assert.deepEqual(resourceCleanupIssues(clean), []);
+});
+
+test('an expired restart cannot start browser acquisition after cleanup has begun', async () => {
+  const source = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  const functionSource = source.slice(
+    source.indexOf('async function launchBrowser('),
+    source.indexOf('\nconst relativeRoot'),
+  );
+  let acquired = false;
+  await assert.rejects(
+    runInNewContext(`(${functionSource})(true)`, {
+      requireObservationTime: () => {
+        throw new Error('Installation observation deadline exceeded.');
+      },
+      trackObservedResource: () => {
+        acquired = true;
+      },
+    }),
+    /deadline exceeded/,
+  );
+  assert.equal(acquired, false);
+});
+
+test('offline action requires fresh observable work, native Enter and a fresh terminal status', async () => {
+  async function exercise({
+    initial = '',
+    changes = ['Preparing…', 'Ready offline'],
+    expected = /ready offline/i,
+    progressOnly = false,
+    stillBusy = false,
+  }) {
+    const node = { textContent: initial, contains: () => false };
+    let observer,
+      disconnected = false;
+    const environment = {
+      document: {
+        body: {},
+        querySelector: (selector) =>
+          selector === '#status'
+            ? node
+            : selector === '#prepare'
+              ? { disabled: stillBusy }
+              : stillBusy
+                ? {}
+                : null,
+      },
+      MutationObserver: class {
+        constructor(callback) {
+          observer = callback;
+        }
+        observe() {}
+        disconnect() {
+          disconnected = true;
+        }
+      },
+    };
+    // Keep the witness in one isolated browser-like global between evaluations.
+    const browser = { ...environment };
+    const invoke = (fn, input) => {
+      browser.input = input;
+      return runInNewContext(`(${fn.toString()})(input)`, browser);
+    };
+    const emit = (text) => {
+      node.textContent = text;
+      observer([{ target: node, addedNodes: [] }]);
+    };
+    const page = {
+      evaluate: async (fn, input) => invoke(fn, input),
+      locator: () => ({
+        press: async (key) => {
+          assert.equal(key, 'Enter');
+          if (progressOnly)
+            observer([{ target: {}, addedNodes: [{ nodeType: 1, matches: () => true }] }]);
+          else if (changes.length) emit(changes[0]);
+        },
+      }),
+      waitForFunction: async (fn, input, options) => {
+        assert.ok([30_000, TRANSFER_TIMEOUT_MS].includes(options.timeout));
+        if (options.timeout === TRANSFER_TIMEOUT_MS && changes.length > 1) emit(changes[1]);
+        if (!invoke(fn, input)) throw new Error('No fresh observed transition');
+      },
+    };
+    try {
+      await activateOfflineAction(page, { button: '#prepare', status: '#status', expected });
+    } finally {
+      assert.equal(disconnected, true);
+      assert.equal(browser.__optionalInstallationWitness, undefined);
+    }
+  }
+  await exercise({});
+  await exercise({ changes: ['Ready offline'] });
+  await exercise({ progressOnly: true });
+  await exercise({ initial: 'Ready offline', changes: ['Preparing…', 'Ready offline'] });
+  await assert.rejects(exercise({ initial: 'Ready offline', changes: [] }), /No fresh/);
+  await assert.rejects(exercise({ stillBusy: true }), /No fresh/);
+  await assert.rejects(
+    exercise({ changes: ['Preparing…', 'Storage quota denied'] }),
+    /Offline action failed/,
+  );
+  await exercise({
+    changes: ['Preparing…', 'Verification failed'],
+    expected: /verification failed/i,
+  });
+});
+
+test('overall observation deadline encloses the journey but preserves report and cleanup', async () => {
+  assert.equal(OBSERVATION_TIMEOUT_MS, 600_000);
+  const source = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.match(
+    source,
+    /try \{\s*await boundedOperation\(\s*'Complete installation observation',\s*async \(\) => \{/,
+  );
+  assert.match(source, /},\s*OBSERVATION_TIMEOUT_MS,?\s*\);\s*} catch \(error\)/);
+  assert.match(source, /} finally \{\s*const cleanupErrors/);
+  assert.match(source, /await writeFile\(output, JSON.stringify\(report/);
+  assert.match(
+    source,
+    /sha\(await readFile\(helperURL\)\);\s*\/\/[^\n]*\n\s*requireObservationTime\(\);\s*report =/,
+  );
+});
 
 test('installation observer covers all three public app identities and current offline controls', async () => {
   assert.deepEqual(Object.keys(OBSERVED_PACKAGES), [
@@ -153,6 +362,81 @@ test('Academy offline controls expand the ordinary closed Workshop disclosure in
     3,
     'Preparation, failed download, and removal share the same public disclosure action.',
   );
+});
+
+test('profile import and every export open the ordinary transfer disclosure without toggling it closed', async () => {
+  let setupOpen = false;
+  let transferOpen = false;
+  const actions = [];
+  const page = {
+    locator: (selector) => ({
+      isVisible: async () => setupOpen,
+      filter: ({ hasText }) => {
+        assert.ok(hasText.test('Back up or import a profile'));
+        return {
+          locator: () => ({ getAttribute: async () => (transferOpen ? '' : null) }),
+          press: async (key) => {
+            assert.equal(key, 'Enter');
+            actions.push(selector);
+            transferOpen = true;
+          },
+        };
+      },
+    }),
+    getByRole: (role, options) => ({
+      waitFor: async ({ state }) => {
+        assert.equal(role, 'textbox');
+        assert.deepEqual(options, { name: 'Profile JSON', exact: true });
+        assert.equal(state, 'visible');
+        assert.ok(setupOpen && transferOpen);
+      },
+    }),
+  };
+  const openSetup = async () => {
+    actions.push('#setup');
+    setupOpen = true;
+  };
+  await revealFPVProfiles(page, openSetup);
+  await revealFPVProfiles(page, openSetup);
+  assert.deepEqual(actions, ['#setup', '#setup-dialog summary']);
+  // Closing Setup destroys its radio editor, so the next visit is collapsed again.
+  setupOpen = transferOpen = false;
+  await revealFPVProfiles(page, openSetup);
+  assert.equal(actions.length, 4);
+  const guide = await readFile(
+    new URL('../optional-practice/civilian-fpv/radio-guide.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.ok(guide.includes("transfer: t('Back up or import a profile'"));
+  const observer = await readFile(
+    new URL('./observe-optional-installation.mjs', import.meta.url),
+    'utf8',
+  );
+  assert.equal(
+    observer.match(/await revealFPVProfiles\(page, \(\) => clickFPV\('#setup', 'controls'\)\)/g)
+      ?.length,
+    2,
+  );
+});
+
+test('profile export expectations preserve the entire legacy fixture and current radio library', () => {
+  const fixture = {
+    format: 'FlightProfiles.v1',
+    radio: { id: 'fixture', verified: false },
+    response: { id: 'response' },
+  };
+  assert.deepEqual(expectedImportedProfileExport('FlightProfiles.v1', fixture), fixture);
+  const library = expectedImportedProfileExport('FlightProfiles.v2', fixture);
+  assert.deepEqual(library, { ...fixture, format: 'FlightProfiles.v2', radios: [fixture.radio] });
+  assert.equal(fixture.format, 'FlightProfiles.v1');
+  assert.throws(() => expectedImportedProfileExport('FlightProfiles.v99', fixture), /Unsupported/);
+  for (const damaged of [
+    { ...library, radios: [] },
+    { ...library, radio: { ...fixture.radio, verified: true } },
+    { ...library, response: { id: 'changed' } },
+    { ...library, extra: 'unexpected' },
+  ])
+    assert.notDeepEqual(damaged, library);
 });
 
 test('offline restart closes every page and rejects surviving windows', async () => {

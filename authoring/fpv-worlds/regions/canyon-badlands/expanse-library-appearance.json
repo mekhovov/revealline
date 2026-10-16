@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "descriptorIdentity": {
+    "id": "canyon-expanse-study",
+    "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+  },
+  "records": [
+    {
+      "quality": "low",
+      "terrain": "performance",
+      "geometryBytes": 456408,
+      "textureBytes": 0,
+      "geometryDigest": "945a51d5803b5ee629ce44ce1c0cb1410af573662fef416f936d88c3a87f87e9"
+    },
+    {
+      "quality": "balanced",
+      "terrain": "balanced",
+      "geometryBytes": 456408,
+      "textureBytes": 0,
+      "geometryDigest": "945a51d5803b5ee629ce44ce1c0cb1410af573662fef416f936d88c3a87f87e9"
+    },
+    {
+      "quality": "high",
+      "terrain": "quality",
+      "geometryBytes": 456408,
+      "textureBytes": 0,
+      "geometryDigest": "945a51d5803b5ee629ce44ce1c0cb1410af573662fef416f936d88c3a87f87e9"
+    },
+    {
+      "quality": "unknown-pin",
+      "terrain": "plain",
+      "geometryBytes": 456408,
+      "textureBytes": 0,
+      "geometryDigest": "945a51d5803b5ee629ce44ce1c0cb1410af573662fef416f936d88c3a87f87e9"
+    }
+  ],
+  "launchOnly": true,
+  "sourcePins": {
+    "terrain": "74fbf90c62eafc79e2ba25a4375f5e1d5da5ec25b758da4b3c78cf64c95067d6",
+    "scenery": "688b6b655b584efb78438f4ab14f23b6b07971ef54c3f13cfed158afa1da4448"
+  },
+  "claim": "Verified source-to-material launch evidence; live mid-flight surface tier updates remain separate."
+}

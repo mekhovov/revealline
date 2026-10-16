@@ -288,6 +288,10 @@ export function mountModePlayShell({
         open('results');
         return;
       }
+      if (state.pauseOpensMenu && ['playing', 'paused', 'disarmed'].includes(state.phase)) {
+        open('pause');
+        return;
+      }
       if (!['playing', 'paused'].includes(state.phase)) return;
       if (phase === 'playing') open('pause');
       else if (phase === 'paused' && state.phase === 'paused') activate('resume');
@@ -557,7 +561,14 @@ export function mountModePlayShell({
       else if (node === buttons.start)
         value = COPY[language][state.phase === 'paused' ? 'resume' : 'start'];
       else if (node === buttons.pause)
-        value = COPY[language][state.phase === 'paused' ? 'resume' : 'pause'];
+        value =
+          COPY[language][
+            state.pauseOpensMenu && state.phase !== 'playing'
+              ? 'menu'
+              : state.phase === 'paused'
+                ? 'resume'
+                : 'pause'
+          ];
       else if (node === buttons.sound || node === buttons['pause-sound'])
         value = `${COPY[language].sound}: ${COPY[language][state.muted ? 'off' : 'on']}`;
       else if (node === briefingTitle) value = text(state.missionName) || value;
@@ -578,6 +589,7 @@ export function mountModePlayShell({
       buttons.pause,
       'disabled',
       !['playing', 'paused'].includes(state.phase) &&
+        !(state.pauseOpensMenu && state.phase === 'disarmed') &&
         !(state.phase === 'results' && state.transitionActive),
     );
     attribute(buttons.sound, 'aria-pressed', String(!state.muted));

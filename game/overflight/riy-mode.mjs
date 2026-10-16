@@ -7,10 +7,11 @@ import {
 import { overflightPreviewRequest } from './host-loop.mjs';
 import { createOverflightRiy, stepOverflightRiy, overflightRiyTarget } from './riy-core.mjs';
 import { overflightRiyBuildItems } from './riy-upgrades.mjs';
+import { overflightWorldForEncounterSet } from './worlds.mjs';
 
 const copy = {
   en: {
-    title: 'Riy · escorts',
+    title: 'Riy · Drone Squad',
     briefing:
       'Lead two escorts through the swarm. Sweeper covers your rear; Breaker fires ahead. Your squad shares the two combat slots: choose clearing or control for Sweeper, and bursts or linked strikes for Breaker. Press F, the controller Ability button, or Focus target to send both toward the marked priority target, leaving your formation uncovered until they return.',
     focus: 'F · Focus target',
@@ -23,7 +24,7 @@ const copy = {
     cooldown: 'Focus ready in',
   },
   uk: {
-    title: 'Рій · супровід',
+    title: 'Рій · загін дронів',
     briefing:
       'Ведіть два дрони супроводу крізь натовп. Зачисник прикриває тил, Пробійник стріляє вперед. Супровід займає два бойові слоти: оберіть зачищення або сповільнення для Зачисника, залпи або ланцюгові удари для Пробійника. Натисніть F, кнопку здібності на контролері або «Зосередити вогонь», щоб спрямувати обох на позначену ціль, залишивши стрій без прикриття до їхнього повернення.',
     focus: 'F · Зосередити вогонь',
@@ -44,10 +45,14 @@ export function createOverflightRiyMode(base) {
     controls = null;
   const label = (locale, key) => (copy[locale] ?? copy.en)[key];
   const createProject = (options = {}) =>
-    createOverflightRiyProject({ rulesVersion: 3, ...options });
+    createOverflightRiyProject({
+      ...options,
+      rulesVersion: options.rulesVersion ?? 4,
+      world: options.world ?? overflightWorldForEncounterSet(options.encounterSet ?? 'front'),
+    });
   return {
     ...base,
-    name: { en: 'Riy · escorts', uk: 'Рій · супровід' },
+    name: { en: 'Riy · Drone Squad', uk: 'Рій · загін дронів' },
     id: 'overflight-riy',
     defaultProject: createProject(),
     createProject,
@@ -115,6 +120,7 @@ export function createOverflightRiyMode(base) {
         ...base.summary(run),
         operation: 'overflight-riy',
         escortCommands: run.riy.commands,
+        escortEngagements: run.riy.engagements,
         escortShots: run.riy.escorts.map(({ role, shots }) => ({
           role,
           shots,

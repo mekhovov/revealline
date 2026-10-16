@@ -1,4 +1,5 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from '../data-json.mjs';
+import { isExpeditionLevel } from './expedition-version.mjs';
 
 export const TEAM_RUNNING_LEVEL_VERSION = 'revealline-coop-level.v9';
 export const TEAM_RUNNING_RULESET = 'revealline-coop.v11';
@@ -36,13 +37,15 @@ export const isTeamRunningLevel = (level) =>
     TEAM_SNAKE_PURSUIT_V2_LEVEL_VERSION,
   ].includes(level?.version);
 export const inheritedTeamVersion = (level) =>
-  level.version === 'revealline-coop-level.v10'
-    ? 'revealline-coop-level.v8'
-    : isTeamRunningLevel(level)
-      ? level.runningEnemies?.baseVersion === 'revealline-coop-level.v10'
-        ? 'revealline-coop-level.v8'
-        : level.runningEnemies?.baseVersion
-      : level.version;
+  isExpeditionLevel(level)
+    ? 'revealline-coop-level.v7'
+    : level.version === 'revealline-coop-level.v10'
+      ? 'revealline-coop-level.v8'
+      : isTeamRunningLevel(level)
+        ? level.runningEnemies?.baseVersion === 'revealline-coop-level.v10'
+          ? 'revealline-coop-level.v8'
+          : level.runningEnemies?.baseVersion
+        : level.version;
 
 /** Reconstruct the inherited edition for its unchanged admission and mechanics. */
 export function inheritedRunningTeamLevel(source) {

@@ -1603,6 +1603,34 @@
               >
             </div>
             <div class="candidate-entry" data-library-entry>
+              <label for="multiplayer-expedition-mode" data-i18n="interface:expeditions.mode"
+                >Multiplayer expeditions</label
+              >
+              <select id="multiplayer-expedition-mode">
+                <option value="team" data-i18n="interface:team">Team</option>
+                <option value="versus" data-i18n="interface:versus2">Duel</option>
+              </select>
+              <button id="multiplayer-expedition" data-i18n="interface:expeditions.inspect">
+                Inspect expedition source
+              </button>
+              <p class="note" data-i18n="interface:expeditions.note">
+                New cooperative routes and dedicated races. Inspect before Apply; existing artwork
+                is reused. Play and balance review are tracked separately.
+              </p>
+              <a
+                href="../couch/relay-rescue.html?journey=team-expedition-v1"
+                target="_blank"
+                rel="noopener"
+                data-i18n="interface:expeditions.playTeam"
+                >Play Team expeditions ↗</a
+              >
+              <a
+                href="../couch/?journey=duel-expedition-v1"
+                target="_blank"
+                rel="noopener"
+                data-i18n="interface:expeditions.playDuel"
+                >Play Duel expeditions ↗</a
+              >
               <label for="team-journey-edition" data-i18n="interface:teamJourneyEdition"
                 >Team Journey edition</label
               >
@@ -2473,6 +2501,24 @@
                 <p id="objective-result" class="note" role="status"></p>
               </fieldset>
             </form>
+          </details>
+          <details id="team-environment-panel">
+            <summary data-i18n="tools:studio.teamEnvironment.title">Edit Team environment</summary>
+            <p id="team-environment-qualification" class="note"></p>
+            <fieldset id="team-environment-tools" disabled>
+              <label for="team-environment-source" data-i18n="tools:studio.teamEnvironment.source"
+                >Environment recipe</label
+              >
+              <textarea id="team-environment-source" rows="14" spellcheck="false"></textarea>
+              <button
+                id="team-environment-apply"
+                type="button"
+                data-i18n="tools:studio.teamEnvironment.apply"
+              >
+                Validate &amp; apply environment
+              </button>
+              <p id="team-environment-result" class="note" role="status"></p>
+            </fieldset>
           </details>
           <details id="relay-panel">
             <summary data-i18n="interface:linkPermanentRelayGates">

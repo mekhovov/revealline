@@ -56,6 +56,10 @@ All 38 arenas include original reveal illustrations matched to their words or sy
 
 ## Rebuild and review
 
-Run `node scripts/build-neon-mosaic.mjs`, then `node scripts/build-neon-mosaic-pack.mjs`. The gallery launches editable scenarios using the normal practice importer. Metadata generation for the main catalog runs separately.
+Run `node scripts/build-neon-mosaic.mjs`, then `node scripts/build-neon-mosaic-pack.mjs`. Each gallery picture links to its exact current main-game mission. **Try editable copy** uses the normal practice importer; **Editable level** downloads an independently editable copy. Metadata generation for the main catalog runs separately.
 
-Validation: all 38 scenarios and single-level packs validate; both the sixteen-level reference pack and 38-level words/symbols pack validate. All 38 surrounding layouts and all 38 lower layouts are unique. Archive and Current rules each initialize and run a 120-tick idle smoke check. Unit tests were not run, as requested. Full-clear balance is not qualified.
+The main game's Missions catalog includes all 38 levels under **Neon Words & Symbols**.
+Install the pack while online for offline play. The artwork and layout review
+galleries load on demand and do not enlarge the mandatory core offline download.
+
+Original validation: all 38 scenarios and single-level packs validate; both the sixteen-level reference pack and 38-level words/symbols pack validate. All 38 surrounding layouts and all 38 lower layouts are unique. Archive and Current rules each initialize and run a 120-tick idle smoke check. Unit tests were not run, as requested. The October follow-up records complete moving-enemy wins for all 54 Neon levels in Standard and Gentle with both steering modes; see `docs/qualification/neon-level-completion/`. Human balance and device approval remain separate.
