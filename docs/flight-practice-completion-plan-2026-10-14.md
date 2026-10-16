@@ -6,18 +6,25 @@ Current checkpoint: unchanged `b8aec0821` packages pass all six restarted-offlin
 flight routes, the three real five-minute timeouts, and installed Academy
 different-version update continuity through actual native activation/blur/return.
 Independent audits verify these narrow passes; failed first attempts are retained.
-The full expanded practice suite passes 390/390; the observer suite passes 357
+The full expanded practice suite passes 397/397; the observer suite passes 363
 tests plus one explicit historical-fixture skip after delivery/C9 integration.
 Original native observer `57d3b748c` remains separately bound. Native zoom geometry is proved,
 but screenshots are cropped/blank and package accessibility remains unqualified.
 
-Production run 2 verifies every original build byte before/after but fails all six
-Home startups. A matched identical-byte diagnostic now isolates delivery-path
-sensitivity: repeated original-file reads fail the unchanged ten-second limit,
-verified memory delivery reaches Home in 7.47 seconds. Next: bounded original-byte
-test delivery and the full six-case production journey, without increasing startup
-limits or substituting source. Then the narrow package-bound EN/UK keyboard/native
-zoom/reduced-motion matrix and synchronization of World's old menu wording.
+The complete original-production journey now passes all six EN/UK cases with
+full 3,493-file verification before/after, one Play, no automatic arming and guide
+return. Its explicit bounded original-byte memory delivery changes only test I/O,
+not app bytes or startup limits. Independent audit is retained alongside the
+original failed runs and supporting matched diagnostic. World Studio's old menu
+wording is corrected and its fresh three-app candidate independently passes all
+six offline flights and Academy PWA update continuity again.
+
+Next is the narrow package-bound native zoom/keyboard/reduced-motion matrix:
+English Academy/Worlds pass, Gym clipping needs its actual failed geometry, and
+language setup now follows maintained Settings rather than static Home markup.
+A separate real main-entry return-language bug is fixed session-only with saved
+preferences preserved; source-shell native observation remains required. Broader
+recovery/active-flight/performance and human approvals remain separate gaps.
 See [current receipts, limits and remaining priorities](flight-practice-continuation-2026-10-16.md).
 
 Fresh audited software progress: observer `8e29a04c3` passes real imported-model
