@@ -1,5 +1,33 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { isDeepStrictEqual } from 'node:util';
+// Preserve exact deep strict equality without formatting megabytes of differing bytes.
+function boundedBytesEqual(actual, expected, message) {
+  if (isDeepStrictEqual(actual, expected)) return;
+  const label = (value) => {
+    if (value instanceof Uint8Array)
+      return (
+        value.constructor.name +
+        '(' +
+        value.byteLength +
+        ' bytes, sha256=' +
+        createHash('sha256').update(value).digest('hex') +
+        ')'
+      );
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    return typeof value;
+  };
+  assert.ok(
+    false,
+    (message ?? 'Deep strict byte mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import fs from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { importThemeBundle, exportThemeBundle } from '../presentation/bundle.mjs';
@@ -392,7 +420,7 @@ test('accepted58 is byte-exact, dependency-complete and fails closed without los
   assert.equal(original58.length, 979746);
   assert.equal(sha(original58), pin58.sha256);
   const files = await readFieldKitRetainedOutput({ assets: production.assets, read });
-  assert.deepEqual(files.get(`runtime.${pin58.sha256}.json`), original58);
+  boundedBytesEqual(files.get(`runtime.${pin58.sha256}.json`), original58);
   await verifyPresentationOutput(files);
   for (const body of [Buffer.from(original58), original58.subarray(1)]) {
     if (body.length === original58.length) body[10] ^= 1;
@@ -404,9 +432,9 @@ test('accepted58 is byte-exact, dependency-complete and fails closed without los
       /runtime input hash differs|runtime byte count differs/,
     );
   }
-  assert.deepEqual(files.get(`runtime.${pin.sha256}.json`), await read(pin.path));
-  assert.deepEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
-  assert.deepEqual(files.get('runtime.json'), await read(pinRadio102.path));
+  boundedBytesEqual(files.get(`runtime.${pin.sha256}.json`), await read(pin.path));
+  boundedBytesEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
+  boundedBytesEqual(files.get('runtime.json'), await read(pinRadio102.path));
 });
 
 test('explicit62 preserves all lazy dependencies and rejects changed original manifest bytes', async () => {
@@ -447,7 +475,7 @@ test('colliding preview and canonical revision101 retain different exact manifes
     const retained = files.get(
       item === pinRadio102 ? 'runtime.json' : `runtime.${item.sha256}.json`,
     );
-    assert.deepEqual(retained, original);
+    boundedBytesEqual(retained, original);
     const inventory = await inspectPresentationDependencies(retained, {
       retainedManifestSha256: item.sha256,
     });

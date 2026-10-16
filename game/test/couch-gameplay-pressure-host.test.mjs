@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { readFile } from 'node:fs/promises';
 import {
   recoverGameplayTuning,
@@ -158,7 +182,7 @@ test('Team fresh tuning preserves its exact authored picture, pause state and ex
     retainInitialDifficulty: true,
     beforeImport: ({ install }) => install('localStorage', { value: storage }),
   });
-  assert.equal(p.$('coop-difficulty').closest('[hidden]'), null);
+  boundedIdentity(p.$('coop-difficulty').closest('[hidden]'), null);
   assert.equal(p.$('coop-difficulty').value, 'standard');
   await p.choose('coop-difficulty', 'expert');
   assert(
