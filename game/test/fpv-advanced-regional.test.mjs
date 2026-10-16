@@ -5,6 +5,7 @@ import {
   createAdvancedSimulation,
   initAdvancedRuntime,
   replayAdvancedRecording,
+  verifyAdvancedRecovery,
 } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
 import { createEnduranceFixture } from '../../authoring/fpv-worlds/regions/endurance-fixture.mjs';
@@ -121,7 +122,9 @@ async function fixture(
 ) {
   let simulation, initialOptions, client;
   const makeClient = () => {
-    let ownedSimulation;
+    let ownedSimulation, rejectDisposed;
+    const closed = new Promise((resolve, reject) => (rejectDisposed = reject));
+    void closed.catch(() => {});
     return {
       async initialize(options) {
         initialOptions = structuredClone(options);
@@ -150,14 +153,15 @@ async function fixture(
         return ownedSimulation.snapshot();
       },
       async restore(saved) {
-        const result = ownedSimulation.restore(saved);
-        await beforeRestore?.();
-        return result;
+        const verified = await Promise.race([verifyAdvancedRecovery(saved), closed]);
+        await Promise.race([beforeRestore?.(), closed]);
+        return ownedSimulation.restore(verified);
       },
       async recording() {
         return ownedSimulation.recording();
       },
-      dispose() {
+      dispose(error = new Error('Worker closed')) {
+        rejectDisposed(error);
         ownedSimulation?.dispose();
       },
     };
@@ -537,6 +541,57 @@ test('cancelled detached recovery cannot overwrite the newer live session or its
   assert.equal(h.session.arm(), true);
   await h.session.step(command);
   assert.equal(h.session.snapshot().ticks, 3);
+});
+
+test(
+  'cancel preparation terminates pending recovery verification before adopting terrain or flight state',
+  { timeout: 5000 },
+  async (t) => {
+    let release, started;
+    const waiting = new Promise((resolve) => (started = resolve));
+    const gate = new Promise((resolve) => (release = resolve));
+    t.after(() => release());
+    const h = await fixture(t, {
+      beforeRestore: () => {
+        started();
+        return gate;
+      },
+    });
+    h.session.arm();
+    await h.session.step(command);
+    h.session.pause();
+    const saved = await h.session.captureRecovery();
+    h.session.arm();
+    await h.session.step(command);
+    h.session.pause();
+    const before = await h.session.recording();
+    const pending = h.session.restoreRecovery(saved);
+    const rejected = assert.rejects(pending, { name: 'AbortError' });
+    await waiting;
+    h.session.cancelPreparation();
+    await rejected; // No release of the suspended verifier is needed to cancel.
+    assert.deepEqual(await h.session.recording(), before);
+    assert.equal(h.session.snapshot().ticks, 2);
+    await h.session.prepare();
+    assert.equal(h.session.arm(), true);
+  },
+);
+
+test('a corrupt recovery remains detached and preserves the current Regional recording', async (t) => {
+  const h = await fixture(t);
+  h.session.arm();
+  await h.session.step(command);
+  h.session.pause();
+  const saved = await h.session.captureRecovery();
+  h.session.arm();
+  await h.session.step(command);
+  h.session.pause();
+  const before = await h.session.recording();
+  saved.simulation.controller.state.integral.roll += 0.001;
+  await assert.rejects(h.session.restoreRecovery(saved), /replay verification/);
+  assert.deepEqual(await h.session.recording(), before);
+  assert.equal(h.session.snapshot().ticks, 2);
+  assert.equal(h.session.arm(), true);
 });
 
 test('verified collider export is detached from mutable renderer geometry and preserves all collision layers', async (t) => {
