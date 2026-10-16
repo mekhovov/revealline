@@ -1,4 +1,4 @@
-name: Temporary Solo bounded baseline classification
+name: Temporary Solo bounded canonical verification
 
 # Task-only exact-source diagnostics, not release qualification.
 on:
@@ -28,15 +28,12 @@ jobs:
       max-parallel: 2
       matrix:
         include:
-          - label: baseline
+          - label: candidate
             case: presentation-team-runtime
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: test-company-content-inventory
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
+            source: 050d8ea3248edb4176e7b59fbc855a7dcf821ffb
+          - label: candidate
             case: selection-bookmark-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
+            source: 050d8ea3248edb4176e7b59fbc855a7dcf821ffb
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
