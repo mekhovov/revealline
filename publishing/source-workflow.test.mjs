@@ -94,3 +94,39 @@ test('the retired Pages playbook cannot prescribe a deployment path', async () =
   );
   assert.doesNotMatch(source, /actions\/deploy-pages|upload-pages-artifact|pages:\s*write/u);
 });
+
+test('optional practice integrates the event workflow source while company admission retains the PR head', async () => {
+  const source = await fs.readFile(new URL('company-edition-candidate.yml', workflows), 'utf8');
+  const optional = source.split('\n  optional-practice:\n')[1]?.split('\n  candidate:\n')[0];
+  const candidate = source.split('\n  candidate:\n')[1];
+  assert.ok(optional && candidate);
+  assert.match(optional, /^          ref: \$\{\{ github.sha \}\}$/mu);
+  assert.doesNotMatch(optional, /^          ref: .*pull_request\.head\.sha/mu);
+  assert.ok(optional.includes('test "$(git rev-parse HEAD)" = "$EVENT_SOURCE_REVISION"'));
+  assert.ok(optional.includes('EVENT_SOURCE_REVISION: ${{ github.sha }}'));
+  assert.ok(
+    optional.includes('PR_HEAD_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}'),
+  );
+  assert.ok(
+    optional.includes(
+      'name: optional-flight-integration-${{ github.sha }}-head-${{ github.event.pull_request.head.sha || github.sha }}',
+    ),
+  );
+  assert.ok(optional.includes('npm run practice:test'));
+  assert.doesNotMatch(optional, /continue-on-error: true|--if-present/u);
+  assert.match(optional, /^    timeout-minutes: 8$/mu);
+  assert.match(
+    candidate,
+    /^          ref: \$\{\{ github.event.pull_request.head.sha \|\| github.sha \}\}$/mu,
+  );
+  assert.ok(
+    candidate.includes(
+      'name: company-capacity-${{ github.event.pull_request.head.sha || github.sha }}',
+    ),
+  );
+  assert.ok(
+    candidate.includes(
+      'name: company-candidate-${{ github.event.pull_request.head.sha || github.sha }}',
+    ),
+  );
+});
