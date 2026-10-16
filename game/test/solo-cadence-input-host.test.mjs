@@ -178,13 +178,8 @@ for (const source of ['keyboard', 'gamepad']) {
       );
       const setControls = controls(page, source, pad);
       if (source === 'gamepad') {
-        // A neutral poll, a real join gesture, and its release precede Start.
-        // Joining is not an ability activation or a substitute for host input.
-        page.frame(0);
-        pad.buttons[0].pressed = true;
-        pad.buttons[0].value = 1;
-        page.frame(0);
-        setControls();
+        // Solo auto-joins a neutral controller. A face-button press here would
+        // already Confirm Start, so retain one ordinary public Start action.
         page.frame(0);
       }
       await start(page);
