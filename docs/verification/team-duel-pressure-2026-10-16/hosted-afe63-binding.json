@@ -1,0 +1,20 @@
+{
+  "format": "revealline-hosted-exact-source-binding.v1",
+  "observedAt": "2026-10-16T06:12:51.025489+00:00",
+  "headSha": "afe63ce5d985a90a0b56fd65b1d0913a741a659e",
+  "focusedRun": 38856890157,
+  "focusedJob": 116830352430,
+  "focusedURL": "https://github.com/mekhovov/revealline/actions/runs/38856890157/job/116830352430",
+  "selectedSuccess": 14,
+  "skipped": 3,
+  "failed": 0,
+  "finalCombinedScopedTests": 1354,
+  "finalCombinedFailures": 0,
+  "finalCombinedSkips": 0,
+  "fullRealSourceOriginalBodyCaseSeconds": 751.885251291,
+  "originalFocusedLog": {
+    "bytes": 1508221,
+    "sha256": "de36951c5fa452118c107d18c5f6508d2b0bc8d1fe5984db812975caa8c4b991"
+  },
+  "scope": "All selected exact-source hosted checks pass. Broad tests/build/full assembly remain skipped by existing policy. No later-head, public/frozen or full required-release evidence acceptance."
+}

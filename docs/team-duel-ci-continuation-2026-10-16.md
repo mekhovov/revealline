@@ -4,7 +4,20 @@ The [reviewed continuation plan](team-duel-plan-continuation-2026-10-16.md) reco
 the latest main integration, original-byte/worker corrections and additional
 gameplay-host/observer work. The older results below retain their actual sources.
 
-## Completed hosted source checkpoint
+## Latest completed hosted checkpoint
+
+Exact source `afe63ce5d985a90a0b56fd65b1d0913a741a659e` subsequently passes
+all **14 selected hosted checks**, with the same three broad test/build/assembly
+skips. Its [check inventory](verification/team-duel-pressure-2026-10-16/hosted-afe63-checks.json),
+[binding](verification/team-duel-pressure-2026-10-16/hosted-afe63-binding.json)
+and [lossless focused log](verification/team-duel-pressure-2026-10-16/hosted-afe63-focused.log.gz)
+retain that exact result. The final combined focused cohort passes 1,354/1,354,
+with zero failures, cancellations or skips. The full real-source original-body
+case passes in 751.885 seconds. Later pressure documentation does not
+retroactively grant a newer head its own CI result or close missing full release
+authorities.
+
+## Earlier completed hosted source checkpoint
 
 At exact source `85b2fd4f4b11e828947317400528d1e9bbd48f45`, all **14 selected
 hosted checks pass**: focused verification, its scoped release-ready summary,
