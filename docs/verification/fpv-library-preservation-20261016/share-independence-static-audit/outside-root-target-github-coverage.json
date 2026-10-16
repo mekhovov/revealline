@@ -340,5 +340,7 @@
       "exactTreeMatch": true
     }
   ],
-  "durablePreservationSourceCommit": "0959055975afe3a929c8f2c8602a6ab77488277c"
+  "durablePreservationSourceCommit": "0959055975afe3a929c8f2c8602a6ab77488277c",
+  "originalTargetSHA256": "b01face14009c2f3263d6f014d5f45acf3c2e84e3616e2da2b371a3889ed9cc0",
+  "originalTargetSHA256Encoding": "UTF-8 bytes of the exact captured symlink value; no path normalization, alias substitution or newline"
 }
