@@ -110,6 +110,9 @@ export function attachDemoHost({
     transitionAge = 0,
     lastPaint = null,
     displayRevision = 0,
+    displayLost = false,
+    paintOwner = null,
+    recoveryPaintTicket = 0,
     controlsRun = null,
     controlsSecond = null,
     controlsCoverage = null,
@@ -143,7 +146,30 @@ export function attachDemoHost({
         : (picture?.pictureVisibility ?? 'blurred');
   const foreground = () => !doc.hidden && doc.hasFocus();
   const ownsUI = () => !!doc.activeElement?.closest?.('[data-demo-ui]');
-  const watching = () => active && !practice && !interrupted && !busy;
+  const renderingLost = () => displayLost || (paintOwner?.losses.size ?? 0) > 0;
+  const watching = () => active && !practice && !interrupted && !busy && !renderingLost();
+  const currentOwner = (owner) =>
+    active && !owner.released && owner.epoch === epoch && paintOwner === owner;
+  function repaintRecovered() {
+    const owner = paintOwner,
+      ticket = ++recoveryPaintTicket,
+      session = epoch;
+    // Painter invalidation/retirement can report restoration synchronously.
+    // Repaint only after that owner operation has finished, without clock debt.
+    queueMicrotask(() => {
+      if (
+        ticket !== recoveryPaintTicket ||
+        session !== epoch ||
+        !owner ||
+        !currentOwner(owner) ||
+        renderingLost()
+      )
+        return;
+      context = null;
+      displayRevision++;
+      paint(0);
+    });
+  }
   let publishedPreparationPhase = null;
   function preparationPhase() {
     if (!active) return null;
@@ -162,7 +188,7 @@ export function attachDemoHost({
     onPreparationPhase(phase);
   }
   const takeoverAvailable = () =>
-    active && !practice && !busy && !lifecycleSuspended && foreground();
+    active && !practice && !busy && !lifecycleSuspended && !renderingLost() && foreground();
   function renderControls() {
     if (!active) return;
     publishPreparationPhase();
@@ -281,16 +307,16 @@ export function attachDemoHost({
     text('demo-back', t('demo:back'));
     $('demo-actions').hidden = !interrupted && !practice;
     $('demo-takeover').hidden = !!practice;
-    $('demo-takeover').disabled = loading || terminal;
+    $('demo-takeover').disabled = loading || terminal || renderingLost();
     $('demo-fresh').disabled = loading;
-    $('demo-resume').disabled = busy || (!!practice && terminal);
+    $('demo-resume').disabled = busy || (!!practice && terminal) || renderingLost();
     text('demo-resume', t(practice ? 'demo:continuePractice' : 'demo:keepWatching'));
     $('demo-next').hidden = !!practice;
-    $('demo-next').disabled = busy;
+    $('demo-next').disabled = busy || renderingLost();
     $('demo-practice-controls').hidden = !practice;
     $('demo-interrupt').hidden = !!practice;
     $('demo-watch-pause').hidden = !!practice;
-    $('demo-watch-pause').disabled = handoffPending;
+    $('demo-watch-pause').disabled = handoffPending || renderingLost();
     text('demo-watch-pause', t(interrupted ? 'demo:resumeShort' : 'demo:pauseShort'));
     $('demo-watch-pause').setAttribute(
       'aria-label',
@@ -299,6 +325,7 @@ export function attachDemoHost({
     $('demo-watch-pause').setAttribute('aria-pressed', String(interrupted));
 
     $('demo-return').hidden = !practice;
+    $('demo-return').disabled = renderingLost();
     $('demo-pause').hidden = !practice || !armed;
     const capabilities = arcadeActionCapabilities(state?.level);
     $('demo-ability').hidden = !capabilities.manualAbility;
@@ -361,11 +388,16 @@ export function attachDemoHost({
       renderControls();
   }
   const invalidateDisplay = () => {
-    if (active) displayRevision++;
+    if (!active) return;
+    displayRevision++;
+    if (lifecycleSuspended && !renderingLost()) repaintRecovered();
   };
   listen(doc.defaultView, 'resize', invalidateDisplay);
   listen(doc, 'fullscreenchange', invalidateDisplay);
-  listen(doc, 'visibilitychange', renderControls);
+  listen(doc, 'visibilitychange', () => {
+    renderControls();
+    if (!doc.hidden && lifecycleSuspended && !renderingLost()) repaintRecovered();
+  });
   const preferencesChanged = () => {
     if (!active) return;
     invalidateDisplay();
@@ -377,9 +409,24 @@ export function attachDemoHost({
     preferencesChanged();
   });
   listen(doc.defaultView, 'storage', preferencesChanged);
-  listen(canvas, 'contextrestored', () => {
+  listen(canvas, 'contextlost', () => {
+    if (displayLost) return;
+    // This canvas survives close/reopen; only its own restoration clears loss.
+    displayLost = true;
     context = null;
+    suspend();
+  });
+  listen(canvas, 'contextrestored', () => {
+    displayLost = false;
+    context = null;
+    // A reopened display can lose context before a player exists. Let its
+    // required preparation finish in a paused state instead of deadlocking
+    // behind the shared suspended admission queue and a disabled Resume.
+    if (active && !paintOwner && (busy || director?.phase === 'loading'))
+      lifecycleSuspended = false;
     invalidateDisplay();
+    renderControls();
+    repaintRecovered();
   });
   const displayObserver = doc.defaultView?.ResizeObserver
     ? new doc.defaultView.ResizeObserver(invalidateDisplay)
@@ -439,6 +486,7 @@ export function attachDemoHost({
     epoch++;
     handoffGeneration++;
     adoptedPlayer = null;
+    paintOwner = null;
     director?.dispose();
     director = null;
     painter = picture = source = practice = context = lastPaint = null;
@@ -452,6 +500,7 @@ export function attachDemoHost({
   }
   async function prepare(source, { signal }) {
     const player = await source.create({ signal });
+    const owner = { epoch, released: false, losses: new Set(), retiredSurfaces: new WeakSet() };
     let nextPicture = null,
       nextPainter = null,
       nextActors = null,
@@ -460,6 +509,8 @@ export function attachDemoHost({
     const release = () => {
       if (released) return;
       released = true;
+      owner.released = true;
+      owner.losses.clear();
       player.dispose?.();
       nextPicture?.dispose();
       nextPainter?.dispose?.();
@@ -480,7 +531,28 @@ export function attachDemoHost({
       nextActors = await prepareActors(entry, source.level, theme.id, { signal });
       if (released) nextActors?.release();
       check();
-      nextPainter = new BoardPainter(presets);
+      nextPainter = new BoardPainter(presets, {
+        onContextLoss: ({ owner: surface }) => {
+          if (
+            owner.released ||
+            owner.epoch !== epoch ||
+            owner.retiredSurfaces.has(surface) ||
+            owner.losses.has(surface)
+          )
+            return;
+          owner.losses.add(surface);
+          if (currentOwner(owner)) suspend();
+        },
+        onContextRestored: ({ owner: surface, retired }) => {
+          if (owner.released || owner.epoch !== epoch) return;
+          if (retired) owner.retiredSurfaces.add(surface);
+          if (!owner.losses.delete(surface)) return;
+          if (currentOwner(owner)) {
+            renderControls();
+            repaintRecovered();
+          }
+        },
+      });
       nextPresentation = await preparePresentation(nextPainter, entry, source.level, theme.id, {
         signal,
       });
@@ -541,7 +613,7 @@ export function attachDemoHost({
         forkForPractice: (options) => player.forkForPractice(options),
         dispose: release,
       };
-      owners.set(wrapper, {
+      Object.assign(owner, {
         painter: nextPainter,
         actors: nextActors,
         picture: nextPicture,
@@ -549,6 +621,7 @@ export function attachDemoHost({
         overrides,
         classId: player.state.activeClassId,
       });
+      owners.set(wrapper, owner);
       return wrapper;
     } catch (failure) {
       release();
@@ -564,7 +637,7 @@ export function attachDemoHost({
       reward.reset();
       delete dialog.dataset.reward;
       clock.reset();
-      source = painter = picture = context = adoptedPlayer = null;
+      source = painter = picture = context = adoptedPlayer = paintOwner = null;
       caption = 'demo:tipStart';
     }
     if (snapshot.source && snapshot.player !== adoptedPlayer) {
@@ -574,6 +647,7 @@ export function attachDemoHost({
       context = null;
       source = snapshot.source;
       const look = owners.get(snapshot.player);
+      paintOwner = look;
       ({ painter, picture } = look);
       audio?.setScene?.({ source, theme: look.theme });
       const size = boardPaintSizeForRun(snapshot.player.state);
@@ -586,6 +660,8 @@ export function attachDemoHost({
       rewardTail = 0;
       rewardAge = 0;
       error = '';
+      if (renderingLost()) suspend();
+      else if (interrupted || lifecycleSuspended) repaintRecovered();
     }
     if (snapshot.phase === 'unavailable') {
       close();
@@ -601,8 +677,8 @@ export function attachDemoHost({
     onEnter();
     clear();
     active = true;
-    interrupted = false;
-    lifecycleSuspended = false;
+    interrupted = displayLost;
+    lifecycleSuspended = displayLost;
     practice = null;
     armed = false;
     error = '';
@@ -612,13 +688,13 @@ export function attachDemoHost({
     picture = null;
     painter = null;
     caption = 'demo:tipStart';
-    canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
+    if (!displayLost) canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
     controller?.abort();
     controller = new AbortController();
     const signal = controller.signal,
       ticket = ++epoch;
     dialog.showModal();
-    clock.start();
+    if (!displayLost) clock.start();
     audioControls.render();
     canvas.focus({ preventScroll: true });
     renderControls();
@@ -674,7 +750,14 @@ export function attachDemoHost({
     else canvas.focus({ preventScroll: true });
   }
   async function takeover(intent = null) {
-    if (busy || !director?.player || practice || (intent && !takeoverAvailable())) return;
+    if (
+      busy ||
+      !director?.player ||
+      practice ||
+      renderingLost() ||
+      (intent && !takeoverAvailable())
+    )
+      return;
     interrupt({ focus: false });
     busy = true;
     handoffPending = true;
@@ -695,6 +778,7 @@ export function attachDemoHost({
         ticket !== epoch ||
         handoff !== handoffGeneration ||
         director.player !== player ||
+        renderingLost() ||
         doc.hidden ||
         !doc.hasFocus()
       )
@@ -730,6 +814,9 @@ export function attachDemoHost({
         close({ handoff: true });
         return;
       }
+      // A main-game handoff owns an independent renderer. A fallback practice
+      // still uses this Demo painter and must wait for its recovery.
+      if (renderingLost()) return;
       const recording = director.player.exportRecording();
       startPractice(createRun(recording.level, recording.options));
     } catch {
@@ -801,7 +888,7 @@ export function attachDemoHost({
     $('demo-details-toggle').focus();
   });
   listen($('demo-next'), 'click', () => {
-    if (!busy && !practice) {
+    if (!busy && !practice && !renderingLost()) {
       interrupted = false;
       lifecycleSuspended = false;
       error = '';
@@ -816,6 +903,7 @@ export function attachDemoHost({
     switchClass = $('demo-craft').value;
   });
   function resumeWatching() {
+    if (renderingLost()) return;
     clear();
     error = '';
     lifecycleSuspended = false;
@@ -830,6 +918,7 @@ export function attachDemoHost({
   }
   listen($('demo-resume'), 'click', resumeWatching);
   listen($('demo-return'), 'click', () => {
+    if (renderingLost()) return;
     practice = null;
     armed = false;
     interrupted = false;
@@ -896,6 +985,7 @@ export function attachDemoHost({
     }
   });
   function advance(seconds, { fresh = true } = {}) {
+    if (renderingLost()) return;
     const result = practice
       ? practice.advance(seconds, () => {
           const controls = { ...input.controls(), switchClass };
@@ -954,7 +1044,7 @@ export function attachDemoHost({
   }
 
   function paint(seconds) {
-    if (!active || doc.hidden) return;
+    if (!active || doc.hidden || renderingLost()) return;
     const state = currentRun();
     const current = getContext();
     if (lastPaint && lastPaint.reduced !== current.reduced) renderControls();
