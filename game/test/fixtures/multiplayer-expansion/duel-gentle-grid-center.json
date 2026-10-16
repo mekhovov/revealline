@@ -1,0 +1,5205 @@
+{
+  "kind": "rehearsed-duel-routes-not-human-review",
+  "rows": [
+    {
+      "missionId": "versus-harbor-gambit",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "0244066872c32bbe",
+      "tunedIdentity": "a63b692686e857c2",
+      "status": "won",
+      "coverage": 0.5754310344827587,
+      "tick": 3390,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 482
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 659
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 387
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 611
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 611
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "cfb478d5c915e9a1f75a885aa53c73c796070a3a18102e29e49c8915e15ef45f"
+    },
+    {
+      "missionId": "versus-short-shore",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "078d8047ab23919c",
+      "tunedIdentity": "336d1493879dbedb",
+      "status": "won",
+      "coverage": 0.5060034305317325,
+      "tick": 2740,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 482
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 693
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 693
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 130
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        }
+      ],
+      "checkpoint": "b9b89455ba8b8896bbca0c2d750872e714695a15a74c8cf4b3ee2210724aa09f"
+    },
+    {
+      "missionId": "versus-two-bay-bid",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "d25d126deceeca0f",
+      "tunedIdentity": "31278eba581d675d",
+      "status": "won",
+      "coverage": 0.8630872483221477,
+      "tick": 1691,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 224
+        },
+        {
+          "direction": "left",
+          "ticks": 462
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 964
+        }
+      ],
+      "checkpoint": "67992b854de839394cc2e8548e15050bb29f2910972a415cc465fd33e6aff1c0"
+    },
+    {
+      "missionId": "versus-island-overbid",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "199c1a55e6d66f82",
+      "tunedIdentity": "e1257f1f913633e4",
+      "status": "won",
+      "coverage": 0.6464912280701754,
+      "tick": 2264,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 143
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 530
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 530
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "aaf1cdd70aea47aa8288698f8115bbdbee96ad442fece70a385db6b95c9eb050"
+    },
+    {
+      "missionId": "versus-last-ferry",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "535715d381bc3fad",
+      "tunedIdentity": "3c341277415ec4d5",
+      "status": "won",
+      "coverage": 0.6144578313253012,
+      "tick": 4032,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 116
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "right",
+          "ticks": 788
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 360
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 353
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 639
+        },
+        {
+          "direction": "up",
+          "ticks": 150
+        },
+        {
+          "direction": "down",
+          "ticks": 353
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        }
+      ],
+      "checkpoint": "75ee313b53463adc3d2914772920a8d590b64ca6b30e50795c6d676265e61215"
+    },
+    {
+      "missionId": "versus-horizon-photo-finish",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "6d9889210bcb9b8d",
+      "tunedIdentity": "08e74b001230e74b",
+      "status": "won",
+      "coverage": 0.9569699686239355,
+      "tick": 2534,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 238
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 665
+        }
+      ],
+      "checkpoint": "3aebb5fc9e2c47e1b68a56b120c25ebe6028eff45e603d4ebfade4d3a998cbb9"
+    },
+    {
+      "missionId": "versus-signal-shortcut",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "8176e86b78ff7556",
+      "tunedIdentity": "afcbfd5a5f09d290",
+      "status": "won",
+      "coverage": 0.6078091106290673,
+      "tick": 2141,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 415
+        },
+        {
+          "direction": "right",
+          "ticks": 971
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 272
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 265
+        }
+      ],
+      "checkpoint": "356965705c39d19893664ef69a21324fc637a9691dcf424e3b5f5f4403051320"
+    },
+    {
+      "missionId": "versus-moss-line",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "ef2efd01f00b7f73",
+      "tunedIdentity": "56ef342feaa902b7",
+      "status": "won",
+      "coverage": 0.5874246339362619,
+      "tick": 3430,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 781
+        },
+        {
+          "direction": "left",
+          "ticks": 964
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 292
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 292
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 910
+        }
+      ],
+      "checkpoint": "62e2b21cc8c501d7ace48370e6a52eeacc52875336beb83fe76aedaa1c90c738"
+    },
+    {
+      "missionId": "versus-greenhouse-bid",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "1aa7c36c7baf22fa",
+      "tunedIdentity": "5c6a61b132888075",
+      "status": "won",
+      "coverage": 0.6748438893844781,
+      "tick": 8912,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 496
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 862
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 387
+        },
+        {
+          "direction": "down",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 7
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 441
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 88
+        },
+        {
+          "direction": "up",
+          "ticks": 469
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 7
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 14
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 441
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 679
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 231
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 272
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 272
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 231
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 516
+        }
+      ],
+      "checkpoint": "89eb11615a00cea655637cb43cd942a4e0a5d8f82493c660541c6a685ffbbc91"
+    },
+    {
+      "missionId": "versus-petal-fork",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "43afa4bb45a1ed94",
+      "tunedIdentity": "5c0ea230bf0a8d79",
+      "status": "won",
+      "coverage": 0.5838866755201416,
+      "tick": 1854,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 890
+        },
+        {
+          "direction": "left",
+          "ticks": 964
+        }
+      ],
+      "checkpoint": "f21582b984288163d22189074e8527b22f9be0214cdfff8a7123da3577e5c450"
+    },
+    {
+      "missionId": "versus-thorn-free-return",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "aa83a00a3a9fc46e",
+      "tunedIdentity": "cd33d51347dfcad5",
+      "status": "won",
+      "coverage": 0.6042972247090421,
+      "tick": 5973,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 835
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 387
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 788
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 462
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 462
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 706
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 353
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 354
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 122
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 122
+        },
+        {
+          "direction": "down",
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "827cba83b270a6a7a3a800d7a0ad64aa400f079cd3a045b783bf75ba4c91cd31"
+    },
+    {
+      "missionId": "versus-signal-sprint-finale",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "acbc71635509fd07",
+      "tunedIdentity": "9cc341d2c368672c",
+      "status": "won",
+      "coverage": 0.642243328810493,
+      "tick": 6843,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 611
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 672
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 387
+        },
+        {
+          "direction": "down",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 584
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 530
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 245
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 245
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 448
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 502
+        }
+      ],
+      "checkpoint": "a3d26a6814caac20595a61133e39e41870a53248d6d7e39b18e51cda1b312acf"
+    },
+    {
+      "missionId": "versus-neon-fork",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "40c08e7486774ad6",
+      "tunedIdentity": "340f64a60f331f4c",
+      "status": "won",
+      "coverage": 0.5809652683806946,
+      "tick": 7932,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 503
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 333
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 842
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 435
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 801
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 34
+        },
+        {
+          "direction": "up",
+          "ticks": 347
+        },
+        {
+          "direction": "down",
+          "ticks": 394
+        },
+        {
+          "direction": "up",
+          "ticks": 82
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 353
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 7
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 781
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 380
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 381
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 381
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 380
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 380
+        }
+      ],
+      "checkpoint": "9979a00f1f1c61a23663f7ad189c62574ed75d9b5b10ece8c3e1b03d2a991f30"
+    },
+    {
+      "missionId": "versus-circuit-sprint",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "9fb6a1f7a9102098",
+      "tunedIdentity": "a5dc6d38b937dd22",
+      "status": "won",
+      "coverage": 0.6079822616407983,
+      "tick": 5023,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 571
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 971
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 7
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 353
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 923
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 163
+        },
+        {
+          "direction": "up",
+          "ticks": 354
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 760
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 327
+        }
+      ],
+      "checkpoint": "a0248467c329d0ff1980da94c82c079837e2683dc421068d6f0ca986d830ee00"
+    },
+    {
+      "missionId": "versus-inside-lane",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "b783d27a48cf14af",
+      "tunedIdentity": "4ed6fa16330c108a",
+      "status": "won",
+      "coverage": 0.6131221719457014,
+      "tick": 6068,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 292
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 502
+        },
+        {
+          "direction": "left",
+          "ticks": 964
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 462
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 394
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 7
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 14
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 672
+        },
+        {
+          "direction": "left",
+          "ticks": 761
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 299
+        },
+        {
+          "direction": "right",
+          "ticks": 727
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 306
+        }
+      ],
+      "checkpoint": "1bfadcb2364c9ad4f706db72310078da6eed703048574aa105dfdda1f3786131"
+    },
+    {
+      "missionId": "versus-three-way-order",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "8612b0aa2ae91eb2",
+      "tunedIdentity": "d8143b3f5dedfe6c",
+      "status": "won",
+      "coverage": 0.6053225078935498,
+      "tick": 5987,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 116
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 482
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 68
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 115
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 353
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 645
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 645
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 645
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 346
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        }
+      ],
+      "checkpoint": "79280b2d3d4d5b7072c1d2d2d4b5ed74566db66cc62bea21acb98bdb19100b31"
+    },
+    {
+      "missionId": "versus-dogleg-dash",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "4743ecd1c2a1df37",
+      "tunedIdentity": "fe45093d1a81be13",
+      "status": "won",
+      "coverage": 0.5999101930848675,
+      "tick": 5034,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 740
+        },
+        {
+          "direction": "left",
+          "ticks": 964
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 367
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 862
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 278
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 82
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 326
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 258
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 68
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 652
+        }
+      ],
+      "checkpoint": "c2496e50123f4ccbe4c63adb41390325579d9c1d93e551517e887cd398bd5834"
+    },
+    {
+      "missionId": "versus-neon-switch-final",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "008e86e0cb11f2ae",
+      "tunedIdentity": "42779f6328e174a2",
+      "status": "won",
+      "coverage": 0.9446494464944649,
+      "tick": 1447,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 102
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 828
+        }
+      ],
+      "checkpoint": "88179120e6215339d94a2305fa09fd00dacd68145369edd72381c451fbb5d04a"
+    },
+    {
+      "missionId": "versus-rover-reserve",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "507107b042562a3f",
+      "tunedIdentity": "41f14f800e6eb7bb",
+      "status": "won",
+      "coverage": 0.6309683177153057,
+      "tick": 5566,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 197
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 795
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 387
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 747
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 394
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 394
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 665
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 353
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 354
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 312
+        }
+      ],
+      "checkpoint": "017e242ecb88d9fca48fbb466f90148e4a94ed33c04d3738afd71c838a8f9d80"
+    },
+    {
+      "missionId": "versus-first-cargo",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "1ff5804dd90609bb",
+      "tunedIdentity": "3f1cc25160df79dc",
+      "status": "won",
+      "coverage": 0.9160472234368168,
+      "tick": 1650,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 224
+        },
+        {
+          "direction": "right",
+          "ticks": 971
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 346
+        }
+      ],
+      "checkpoint": "50228d0f19c1453a053139b26f3db6fc092fc3e38639de3fe84460890d7a3847"
+    },
+    {
+      "missionId": "versus-spare-berth",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "147a39fd1140d694",
+      "tunedIdentity": "ee43aba50aca12da",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2575,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 129
+        },
+        {
+          "direction": "right",
+          "ticks": 801
+        },
+        {
+          "direction": "down",
+          "ticks": 381
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 801
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 272
+        }
+      ],
+      "checkpoint": "052105f37e1204b8e7053b6c72d1b1be8c91c77e8810b87e32a42aebe210e411"
+    },
+    {
+      "missionId": "versus-wake-window",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "9f725b88afd64ff8",
+      "tunedIdentity": "b818b9902f79bcd6",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2045,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 706
+        }
+      ],
+      "checkpoint": "f090a9b98c86da799c5c1fb273e356a6ed1f362e7048fda060736b886d4945ed"
+    },
+    {
+      "missionId": "versus-freight-detour",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "7331fef80f0100d3",
+      "tunedIdentity": "2d78f6f796e57199",
+      "status": "won",
+      "coverage": 0.9382826475849732,
+      "tick": 3838,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 184
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 496
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 387
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 299
+        },
+        {
+          "direction": "left",
+          "ticks": 367
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 299
+        },
+        {
+          "direction": "left",
+          "ticks": 581
+        }
+      ],
+      "checkpoint": "8a68050ef82f00217ab76e1e4c52d28387158c29836a21c100f7d653b87a825f"
+    },
+    {
+      "missionId": "versus-dockyard-decider",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "fa1a526b078a37e2",
+      "tunedIdentity": "34c37ee3449df077",
+      "status": "won",
+      "coverage": 0.6770691994572592,
+      "tick": 4821,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 842
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 95
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 436
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 584
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 326
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 88
+        },
+        {
+          "direction": "up",
+          "ticks": 360
+        }
+      ],
+      "checkpoint": "7271d935a74891c2e55a1feb769a718ff739fb15bfebdfb2c964069c5fe8c115"
+    },
+    {
+      "missionId": "versus-glass-margin",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "9b51655ac26a0963",
+      "tunedIdentity": "cf29dfaad214b154",
+      "status": "won",
+      "coverage": 0.9415929203539823,
+      "tick": 2521,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 184
+        },
+        {
+          "direction": "right",
+          "ticks": 971
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 374
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 910
+        }
+      ],
+      "checkpoint": "b5c99aab74937a9af02c16513906c81c896786bbca805193b2b38e1879031738"
+    },
+    {
+      "missionId": "versus-prism-bid",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "1b587d3f70aef004",
+      "tunedIdentity": "f6a219b4256a1bc7",
+      "status": "won",
+      "coverage": 0.6403587443946188,
+      "tick": 5515,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 509
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 340
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 177
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 299
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 177
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 299
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 563
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 449
+        }
+      ],
+      "checkpoint": "c73efefc7f80f6158dc74db004fe9c095dbe3eeda75497b043f993cb61419aa8"
+    },
+    {
+      "missionId": "versus-thin-refraction",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "a1e2337be6e483a5",
+      "tunedIdentity": "9c71336b39e8c21b",
+      "status": "won",
+      "coverage": 0.6528268551236749,
+      "tick": 2711,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 795
+        },
+        {
+          "direction": "left",
+          "ticks": 964
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 231
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 231
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 231
+        }
+      ],
+      "checkpoint": "ac15c5d2a145863cc12901189aba464e35fb057eb2176a408776834cc4dae3fe"
+    },
+    {
+      "missionId": "versus-afterimage-chase",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "9acf8cd972864dcb",
+      "tunedIdentity": "6eb379c8d7c9e701",
+      "status": "won",
+      "coverage": 0.651141961486789,
+      "tick": 1583,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 102
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 380
+        }
+      ],
+      "checkpoint": "154eb3bd7728f79c9ded54d8a6e4b84503b4a4235749813371a33cc1ccfe3918"
+    },
+    {
+      "missionId": "versus-borrowed-seconds",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "15611d6057be58b0",
+      "tunedIdentity": "7d60df9039468cf8",
+      "status": "won",
+      "coverage": 0.644474034620506,
+      "tick": 3826,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 102
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 767
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 61
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 638
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 326
+        }
+      ],
+      "checkpoint": "c2e189089b11c44353829621f19ebd6871e8e3848809ebc95690021e2baeca2a"
+    },
+    {
+      "missionId": "versus-prism-photo-finish",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "4ed1467471d5afa4",
+      "tunedIdentity": "841c71461a41f379",
+      "status": "won",
+      "coverage": 0.9102854553692795,
+      "tick": 5471,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 713
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 489
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 483
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 557
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 394
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 299
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 516
+        }
+      ],
+      "checkpoint": "2605b50d0c0260594ea38a0c921496c448841f383fcfcac781ff93ca0f717bdc"
+    },
+    {
+      "missionId": "versus-warning-bid",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "c67cd2aee21fd030",
+      "tunedIdentity": "a11a0e30cd42bf17",
+      "status": "won",
+      "coverage": 0.7737937140327579,
+      "tick": 4629,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 116
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 7
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 482
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 530
+        },
+        {
+          "direction": "left",
+          "ticks": 693
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 326
+        },
+        {
+          "direction": "right",
+          "ticks": 448
+        }
+      ],
+      "checkpoint": "0fdf681baf654fedd98b521846b216f875122ad3f74eddb78a32348b7295b517"
+    },
+    {
+      "missionId": "versus-column-gambit",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "4fd8bceb99349e01",
+      "tunedIdentity": "04090658bfbe2368",
+      "status": "won",
+      "coverage": 0.6880035810205909,
+      "tick": 1788,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 238
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        }
+      ],
+      "checkpoint": "8d56d2807d14d7ecf8bbd6b9e13306f84eb5417913accb8b146909ae335fdce9"
+    },
+    {
+      "missionId": "versus-cooling-dividend",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "f8f23adb0c2e0c1f",
+      "tunedIdentity": "a144bd20597d60be",
+      "status": "won",
+      "coverage": 0.7534307215582116,
+      "tick": 5334,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 116
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 672
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 672
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 665
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 136
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 557
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 163
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "right",
+          "ticks": 394
+        }
+      ],
+      "checkpoint": "0b12afe74c0c6f3a857eddedf978eef81e80e4f16ddf7a6760affa55ea9e28e7"
+    },
+    {
+      "missionId": "versus-locked-turn",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "fb11d8f07ac4706c",
+      "tunedIdentity": "d4c5a19d714abe26",
+      "status": "won",
+      "coverage": 0.6614349775784754,
+      "tick": 3298,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 238
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "right",
+          "ticks": 231
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 7
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 48
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 353
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "3d570dc9759a4519be11fc44f728396f07c2bbc26b960ff18b0da251a6ce5515"
+    },
+    {
+      "missionId": "versus-twin-furnace-sprint",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "ee633bba6c4bb130",
+      "tunedIdentity": "879ff1e52b5d30d1",
+      "status": "won",
+      "coverage": 0.6466848319709355,
+      "tick": 3826,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 252
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 177
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 516
+        },
+        {
+          "direction": "right",
+          "ticks": 971
+        },
+        {
+          "direction": "up",
+          "ticks": 68
+        },
+        {
+          "direction": "down",
+          "ticks": 204
+        },
+        {
+          "direction": "left",
+          "ticks": 455
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 516
+        }
+      ],
+      "checkpoint": "4c2c8058df65086b84fced1295c0161b56a852c0c8de16f4582f8f4e7449de17"
+    },
+    {
+      "missionId": "versus-afterglow-finish",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "cb1874f5f1b4b7d8",
+      "tunedIdentity": "c2acf650c8485842",
+      "status": "won",
+      "coverage": 0.7195838986883764,
+      "tick": 6220,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 374
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 7
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 20
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 462
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 27
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 190
+        },
+        {
+          "direction": "up",
+          "ticks": 394
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 482
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 61
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 190
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 292
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 82
+        },
+        {
+          "direction": "down",
+          "ticks": 55
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        }
+      ],
+      "checkpoint": "0362caf6e92bf73ab1a062cfa8cd5880b6a973c360ac3a7ff73fc23d4ae00fdc"
+    },
+    {
+      "missionId": "versus-first-key-advantage",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "ececee290a0cb349",
+      "tunedIdentity": "85ccddaddaf907ef",
+      "status": "won",
+      "coverage": 0.6826750448833034,
+      "tick": 4071,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 224
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 693
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 434
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 299
+        }
+      ],
+      "checkpoint": "2c375eb6ea09f12e4389a32c3c1d51ce785eda16a4f0bde7ec842a15d90bd023"
+    },
+    {
+      "missionId": "versus-archive-auction",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "421b93d52cf8980c",
+      "tunedIdentity": "b61bf5c610979a8e",
+      "status": "won",
+      "coverage": 0.6810540663334848,
+      "tick": 6487,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 136
+        },
+        {
+          "direction": "right",
+          "ticks": 509
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "down",
+          "ticks": 407
+        },
+        {
+          "direction": "left",
+          "ticks": 367
+        },
+        {
+          "direction": "up",
+          "ticks": 475
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 353
+        },
+        {
+          "direction": "right",
+          "ticks": 761
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 408
+        },
+        {
+          "direction": "left",
+          "ticks": 679
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 407
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 407
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 299
+        },
+        {
+          "direction": "right",
+          "ticks": 231
+        }
+      ],
+      "checkpoint": "7b7591f1e0d428fec989c85ce0fb645360c41f7e677fd4725494f24eee1392fc"
+    },
+    {
+      "missionId": "versus-keys-before-corners",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "a79a37a56670e220",
+      "tunedIdentity": "25b805e7c2bcb72d",
+      "status": "won",
+      "coverage": 0.7831215970961888,
+      "tick": 1107,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 143
+        },
+        {
+          "direction": "right",
+          "ticks": 964
+        }
+      ],
+      "checkpoint": "9a1ec13ad48346a31c2b52939ba6285b51a509a50b690ef89fe162d817f93f45"
+    },
+    {
+      "missionId": "versus-shelf-shortcut",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "7599673bf01ac551",
+      "tunedIdentity": "3003164de9706817",
+      "status": "won",
+      "coverage": 0.9954337899543378,
+      "tick": 3350,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 347
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 475
+        },
+        {
+          "direction": "right",
+          "ticks": 476
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 475
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        }
+      ],
+      "checkpoint": "3e01bb6efaa171aca70070ad68e872355c1e94b172e6d09c9ad2f1ceb39db9e2"
+    },
+    {
+      "missionId": "versus-priority-dispatch",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "441a19ba579db1aa",
+      "tunedIdentity": "32d5574f7409714f",
+      "status": "won",
+      "coverage": 0.7997231195200738,
+      "tick": 3757,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 117
+        },
+        {
+          "direction": "left",
+          "ticks": 114
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 353
+        },
+        {
+          "direction": "right",
+          "ticks": 272
+        },
+        {
+          "direction": "down",
+          "ticks": 68
+        },
+        {
+          "direction": "right",
+          "ticks": 516
+        },
+        {
+          "direction": "left",
+          "ticks": 788
+        },
+        {
+          "direction": "right",
+          "ticks": 265
+        },
+        {
+          "direction": "down",
+          "ticks": 414
+        }
+      ],
+      "checkpoint": "805ff2b525ad2f3829d6b85c995be3b678da53fdf135dfb36d8fcb9023208144"
+    },
+    {
+      "missionId": "versus-archive-decider",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "4bdc61ab6d65acf4",
+      "tunedIdentity": "071e5d776ecab6f6",
+      "status": "won",
+      "coverage": 0.8349696119682094,
+      "tick": 1272,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 89
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 116
+        },
+        {
+          "direction": "right",
+          "ticks": 237
+        },
+        {
+          "direction": "up",
+          "ticks": 354
+        }
+      ],
+      "checkpoint": "5aed0bcb2395135edf8d9f283300d7861af1f2994e436affb4e8450137fe180a"
+    },
+    {
+      "missionId": "versus-windward-bid",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "461c4165ac98a1c5",
+      "tunedIdentity": "56ca23fc09933901",
+      "status": "won",
+      "coverage": 0.9041095890410958,
+      "tick": 1760,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 170
+        },
+        {
+          "direction": "right",
+          "ticks": 931
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 441
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        }
+      ],
+      "checkpoint": "96b0f14657d0416d1a4034281ab6b942c5b47948df187f3ea222f13772202910"
+    },
+    {
+      "missionId": "versus-headwind-dividend",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "3bce796ac62cbd3f",
+      "tunedIdentity": "2b83403d629db0ac",
+      "status": "won",
+      "coverage": 0.904,
+      "tick": 1841,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 509
+        },
+        {
+          "direction": "up",
+          "ticks": 82
+        },
+        {
+          "direction": "left",
+          "ticks": 509
+        }
+      ],
+      "checkpoint": "9a4a81d7a43677d4ab14dfe7fa0c7cf864f27d7148d572d0d08bc4e25b8d2835"
+    },
+    {
+      "missionId": "versus-compass-cut",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "e89711ba08ca6030",
+      "tunedIdentity": "8ee8b3980da0bba4",
+      "status": "won",
+      "coverage": 0.6818791946308724,
+      "tick": 2467,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 61
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 706
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 489
+        },
+        {
+          "direction": "up",
+          "ticks": 394
+        }
+      ],
+      "checkpoint": "0b335c3f1c83ea635e0dd0d19c662e684988ff5cb7b3020c3d2b34ccb8cbef87"
+    },
+    {
+      "missionId": "versus-crosswise-advantage",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "e856a2cc597c6c32",
+      "tunedIdentity": "4b864e5b93778d75",
+      "status": "won",
+      "coverage": 0.8900221729490022,
+      "tick": 1774,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 170
+        },
+        {
+          "direction": "right",
+          "ticks": 971
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 401
+        },
+        {
+          "direction": "down",
+          "ticks": 123
+        }
+      ],
+      "checkpoint": "f817a39997dc328a26a1e8681e0e29023892c8d873a2abf6dd478bf851e552b9"
+    },
+    {
+      "missionId": "versus-long-wave-wager",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "3a37276945376767",
+      "tunedIdentity": "1925f8218728dcb7",
+      "status": "won",
+      "coverage": 0.9544846050870147,
+      "tick": 3390,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 828
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 265
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 360
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 706
+        }
+      ],
+      "checkpoint": "3c70bf1289c0f7f6cd33ff034814452ceb2bb75677ca7beae28c6a58574234e3"
+    },
+    {
+      "missionId": "versus-highland-finish",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "77e88602364e5f8a",
+      "tunedIdentity": "15b6c77f846fb575",
+      "status": "won",
+      "coverage": 0.8469573115349682,
+      "tick": 1258,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 89
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "right",
+          "ticks": 224
+        },
+        {
+          "direction": "up",
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "e356a908d8e7fcabc52fb57f44ab4e43e319d779d6825bf2e92631b5377d7f15"
+    },
+    {
+      "missionId": "versus-shore-timing",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "ce15fd65d6447695",
+      "tunedIdentity": "0e83fa383a5ce1b3",
+      "status": "won",
+      "coverage": 0.6740282685512368,
+      "tick": 4110,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "left",
+          "ticks": 170
+        },
+        {
+          "direction": "right",
+          "ticks": 971
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 360
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 910
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 910
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 353
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 231
+        }
+      ],
+      "checkpoint": "e9014e1bdb3fb63bcef6b7cf836207db8a826de6ded03eac074493803183ae62"
+    },
+    {
+      "missionId": "versus-inside-track",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "464fe2f644e608cb",
+      "tunedIdentity": "760bd616fa0f1e81",
+      "status": "won",
+      "coverage": 0.7484388938447815,
+      "tick": 2670,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 496
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 367
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 434
+        }
+      ],
+      "checkpoint": "82b4506c934b670d781fc9df23bef604a61fe1e93ba93752f00e4ad4d8370b02"
+    },
+    {
+      "missionId": "versus-beacon-detour",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "1c4433877d3bc221",
+      "tunedIdentity": "912f6ea0b24645ab",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2018,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 679
+        }
+      ],
+      "checkpoint": "d094a26932ca55a655a857ab4f2f1318d4f47c7754f39b038d8c6d5ac7705f07"
+    },
+    {
+      "missionId": "versus-passing-window",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "cc838e2a41f53187",
+      "tunedIdentity": "91bf2f624ebb1276",
+      "status": "won",
+      "coverage": 0.9542395693135935,
+      "tick": 1909,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 102
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 706
+        }
+      ],
+      "checkpoint": "a6384bdbd46097bc54af6d582a7dbf275bdf3031a6eaff93d6c742839a18039d"
+    },
+    {
+      "missionId": "versus-rail-reservation",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "15dfded960b8d30e",
+      "tunedIdentity": "fef5a66d0342e18f",
+      "status": "won",
+      "coverage": 0.969438202247191,
+      "tick": 3025,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 883
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 428
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 7
+        },
+        {
+          "direction": "right",
+          "ticks": 14
+        },
+        {
+          "direction": "down",
+          "ticks": 367
+        },
+        {
+          "direction": "left",
+          "ticks": 536
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        }
+      ],
+      "checkpoint": "68ba9b81694c5bfc2e59d52e5d2dbac4a514766668ecd0b4a9aa63a7eed772e0"
+    },
+    {
+      "missionId": "versus-watch-line-finish",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "4452404f6389cbf1",
+      "tunedIdentity": "f1a92011a75ee1a4",
+      "status": "won",
+      "coverage": 0.9546279491833031,
+      "tick": 2019,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 211
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 693
+        }
+      ],
+      "checkpoint": "2a47718b5503067b37424d2fad2c96c753acd0a0c87410b43f1ad8129c37d371"
+    },
+    {
+      "missionId": "versus-stone-margin",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "ccce84d9d093b796",
+      "tunedIdentity": "b72a862006a2888c",
+      "status": "won",
+      "coverage": 0.666371289322109,
+      "tick": 4219,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 102
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 774
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 774
+        },
+        {
+          "direction": "up",
+          "ticks": 68
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 326
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "right",
+          "ticks": 672
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 292
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 353
+        }
+      ],
+      "checkpoint": "8b22c354be8f092881ff2b499d01047d25db65cf9cf68fdf3632d67b4090a668"
+    },
+    {
+      "missionId": "versus-faultline-bid",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "6fe54656071b2f69",
+      "tunedIdentity": "726f63f885e83429",
+      "status": "won",
+      "coverage": 0.8363228699551569,
+      "tick": 1882,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 496
+        },
+        {
+          "direction": "up",
+          "ticks": 150
+        },
+        {
+          "direction": "left",
+          "ticks": 495
+        }
+      ],
+      "checkpoint": "8880a48203e3d1c17190e3e2afe0cd2e8b241e17b78e6b830497cb8d43370628"
+    },
+    {
+      "missionId": "versus-lasting-shortcut",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "21a545fcc99fb9ca",
+      "tunedIdentity": "4702d5b0f47cc95b",
+      "status": "won",
+      "coverage": 0.8162528216704289,
+      "tick": 4696,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 224
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 123
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 693
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 136
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 434
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 434
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 150
+        },
+        {
+          "direction": "left",
+          "ticks": 258
+        }
+      ],
+      "checkpoint": "203875e97b59d8d2c2dfb00278a70af613ef4bed5d244b41d4a50dcd7bc5be53"
+    },
+    {
+      "missionId": "versus-coastal-hedge",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "bca7afcf30e0b7c7",
+      "tunedIdentity": "c8591bd02a6cf99a",
+      "status": "won",
+      "coverage": 0.7507844016136261,
+      "tick": 2793,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 116
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 326
+        },
+        {
+          "direction": "right",
+          "ticks": 761
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 760
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 231
+        }
+      ],
+      "checkpoint": "a3ac47ab0965ef12a4cc936fa4abd4656b5504f1f24e552a26070704ddd70b4f"
+    },
+    {
+      "missionId": "versus-repair-dividend",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "5bb88dc9f68cfb8a",
+      "tunedIdentity": "65f8ac78ea9cc402",
+      "status": "won",
+      "coverage": 0.7121621621621622,
+      "tick": 3527,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 116
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 828
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 516
+        },
+        {
+          "direction": "up",
+          "ticks": 394
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 523
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 401
+        }
+      ],
+      "checkpoint": "c73bfbd5b10d91761f58d52607565e5e9c0c1515b59dea75b15e594b07d6354d"
+    },
+    {
+      "missionId": "versus-unbroken-finish",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "d0a2cf2d68554390",
+      "tunedIdentity": "0970c19ddc135ae2",
+      "status": "won",
+      "coverage": 0.737511353315168,
+      "tick": 8232,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 801
+        },
+        {
+          "direction": "left",
+          "ticks": 964
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 435
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 177
+        },
+        {
+          "direction": "left",
+          "ticks": 82
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 163
+        },
+        {
+          "direction": "right",
+          "ticks": 123
+        },
+        {
+          "direction": "up",
+          "ticks": 28
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "up",
+          "ticks": 353
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 700
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 441
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 245
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 394
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 353
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 353
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 163
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 639
+        }
+      ],
+      "checkpoint": "ecc47feba01b140bf2d76f9c87654ad2a569a2b1351d23ce0f9d06c7ee7afe05"
+    },
+    {
+      "missionId": "versus-shield-choice",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "bd9b6aac43470986",
+      "tunedIdentity": "0e852bcd6dde72c7",
+      "status": "won",
+      "coverage": 1,
+      "tick": 3432,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 360
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "down",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 170
+        },
+        {
+          "direction": "down",
+          "ticks": 265
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 326
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        }
+      ],
+      "checkpoint": "afc42e8e09d2e1b9646e430edad94d45e52d6aa4cdacbb7b0a020cdfbc9b9cb6"
+    },
+    {
+      "missionId": "versus-citadel-wager",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "920768d393a97eb4",
+      "tunedIdentity": "6c490a1f61f47158",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2699,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 238
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 475
+        },
+        {
+          "direction": "down",
+          "ticks": 367
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        }
+      ],
+      "checkpoint": "a57014433e186f48835c98a7015447051f66a910eda641c1fe39ed28c702a88e"
+    },
+    {
+      "missionId": "versus-core-approach",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "3261b5e0c9d7fd6c",
+      "tunedIdentity": "6cfb7cde04858124",
+      "status": "won",
+      "coverage": 1,
+      "tick": 3377,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 238
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 218
+        },
+        {
+          "direction": "left",
+          "ticks": 162
+        },
+        {
+          "direction": "up",
+          "ticks": 258
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 258
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "right",
+          "ticks": 652
+        },
+        {
+          "direction": "left",
+          "ticks": 367
+        },
+        {
+          "direction": "down",
+          "ticks": 326
+        }
+      ],
+      "checkpoint": "257fe99bdacffd26ee01f9294dbeb6faec102a9c4fa00d098df78dd545013745"
+    },
+    {
+      "missionId": "versus-vault-opening",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "cdd02e65749e12a8",
+      "tunedIdentity": "cc500dcac9a07c75",
+      "status": "won",
+      "coverage": 1,
+      "tick": 3694,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 347
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "up",
+          "ticks": 204
+        },
+        {
+          "direction": "right",
+          "ticks": 787
+        },
+        {
+          "direction": "left",
+          "ticks": 367
+        },
+        {
+          "direction": "down",
+          "ticks": 204
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 177
+        },
+        {
+          "direction": "right",
+          "ticks": 381
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 95
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": null,
+          "ticks": 220
+        }
+      ],
+      "checkpoint": "eb18d975e1f06b0b99d60d5fc7b820b079ce0fc27672f0d4eb75b0f3d1b54e05"
+    },
+    {
+      "missionId": "versus-last-shield-bet",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "61c0b83f68139a81",
+      "tunedIdentity": "7f0ddcd3e26f84df",
+      "status": "won",
+      "coverage": 1,
+      "tick": 3555,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 347
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "down",
+          "ticks": 265
+        },
+        {
+          "direction": "right",
+          "ticks": 136
+        },
+        {
+          "direction": "down",
+          "ticks": 197
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 367
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 82
+        },
+        {
+          "direction": "left",
+          "ticks": 163
+        },
+        {
+          "direction": "right",
+          "ticks": 367
+        }
+      ],
+      "checkpoint": "b21d66e1d35ead21b0d81a4afbfc16ffd5086b95ebf44d003ed1d390c8ca7c40"
+    },
+    {
+      "missionId": "versus-crown-photo-finish",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "22d0bcbda6efa5a6",
+      "tunedIdentity": "cb601f4b6a28b33e",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2534,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 353
+        },
+        {
+          "direction": "right",
+          "ticks": 584
+        },
+        {
+          "direction": "left",
+          "ticks": 496
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 88
+        }
+      ],
+      "checkpoint": "32f168da0369d51f3e6a03db8959f9a811dd482f33069a90974737bf224e3b03"
+    },
+    {
+      "missionId": "versus-polar-dividend",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "6fb3b7fddade961d",
+      "tunedIdentity": "b661869fd25bb9cf",
+      "status": "won",
+      "coverage": 0.7852650494159928,
+      "tick": 1661,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "right",
+          "ticks": 697
+        },
+        {
+          "direction": "left",
+          "ticks": 964
+        }
+      ],
+      "checkpoint": "df4d4fbee028bf3c21754e63d855e2895594e29527ddac1d6168e28505fa3d2f"
+    },
+    {
+      "missionId": "versus-warning-on-the-shore",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "d316dbb4f319f0b8",
+      "tunedIdentity": "421879dd641d2ee0",
+      "status": "won",
+      "coverage": 0.6825112107623318,
+      "tick": 1814,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        }
+      ],
+      "checkpoint": "0743ae6ecdc5a1596ee13718944f1411ff60b68ec3e968649daad4852d2b29b5"
+    },
+    {
+      "missionId": "versus-permanent-aurora",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "2733020b825371bf",
+      "tunedIdentity": "04c593d13135fd36",
+      "status": "won",
+      "coverage": 0.7002267573696145,
+      "tick": 3010,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 224
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 421
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 421
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 435
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 435
+        }
+      ],
+      "checkpoint": "d640ad840c77a89e533e27d5ddc71f76c8bc35a21709477ab475fe2df8808241"
+    },
+    {
+      "missionId": "versus-highland-lock-race",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "cb39639501156f35",
+      "tunedIdentity": "e71807b22bbb9a09",
+      "status": "won",
+      "coverage": 0.7674418604651163,
+      "tick": 4602,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 347
+        },
+        {
+          "direction": "down",
+          "ticks": 483
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "right",
+          "ticks": 109
+        },
+        {
+          "direction": "down",
+          "ticks": 68
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 482
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 55
+        },
+        {
+          "direction": "right",
+          "ticks": 781
+        },
+        {
+          "direction": "down",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 88
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 387
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "left",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 68
+        },
+        {
+          "direction": "right",
+          "ticks": 41
+        },
+        {
+          "direction": "up",
+          "ticks": 441
+        },
+        {
+          "direction": "right",
+          "ticks": 34
+        },
+        {
+          "direction": "up",
+          "ticks": 41
+        },
+        {
+          "direction": "down",
+          "ticks": 204
+        },
+        {
+          "direction": "left",
+          "ticks": 428
+        },
+        {
+          "direction": "down",
+          "ticks": 258
+        }
+      ],
+      "checkpoint": "f29fc8970a2cdd53de1582065aefb7216d232622a4056ce0bd15cd12cd4fc410"
+    },
+    {
+      "missionId": "versus-polar-crown-route",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "992a7c0a0374322c",
+      "tunedIdentity": "cf4c92ed9bdf1410",
+      "status": "won",
+      "coverage": 1,
+      "tick": 3474,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "down",
+          "ticks": 347
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "down",
+          "ticks": 265
+        },
+        {
+          "direction": "right",
+          "ticks": 136
+        },
+        {
+          "direction": "down",
+          "ticks": 197
+        },
+        {
+          "direction": "up",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 340
+        },
+        {
+          "direction": "down",
+          "ticks": 475
+        },
+        {
+          "direction": "left",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 82
+        },
+        {
+          "direction": "left",
+          "ticks": 136
+        },
+        {
+          "direction": "right",
+          "ticks": 340
+        }
+      ],
+      "checkpoint": "1ecf54f81d07c58791514df4aef715f434b7083e9337b99c9b20620976fafaa3"
+    },
+    {
+      "missionId": "versus-expedition-decider",
+      "difficulty": "gentle",
+      "options": {
+        "seed": 17,
+        "classId": "scout",
+        "turnPolicy": "grid-center"
+      },
+      "authoredIdentity": "feb80cb359a2acfc",
+      "tunedIdentity": "05f1d2630f6b8d93",
+      "status": "won",
+      "coverage": 1,
+      "tick": 2517,
+      "winner": null,
+      "reason": "First clear",
+      "segments": [
+        {
+          "direction": "up",
+          "ticks": 224
+        },
+        {
+          "direction": "down",
+          "ticks": 476
+        },
+        {
+          "direction": "right",
+          "ticks": 204
+        },
+        {
+          "direction": "up",
+          "ticks": 353
+        },
+        {
+          "direction": "right",
+          "ticks": 571
+        },
+        {
+          "direction": "left",
+          "ticks": 482
+        },
+        {
+          "direction": "down",
+          "ticks": 109
+        },
+        {
+          "direction": "left",
+          "ticks": 98
+        }
+      ],
+      "checkpoint": "730e068e8d225962b9fd1b747fc5bf3fd509abbe5caaed7007b8b7382fbbc63c"
+    }
+  ]
+}

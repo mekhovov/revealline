@@ -1,0 +1,33 @@
+{
+  "format": "snake-full-archive-validation.v1",
+  "checkedAt": "2026-10-14T12:28:10.130869+00:00",
+  "sourceRevision": "1a2e87d50670f6c4e2c79faf6dd46d9a52479c93",
+  "sourceCleanAtBuild": true,
+  "command": "node scripts/game-cli.mjs build --out .cache/snake-final-archive-20261014 --revision 1a2e87d50670f6c4e2c79faf6dd46d9a52479c93",
+  "publicationProfile": null,
+  "scope": "Full default game distribution including archived recipes; not a deployment or hosted-publication admission",
+  "version": "0.151.1",
+  "files": 3277,
+  "manifestPayloadBytes": 1037211893,
+  "archiveBytes": 1038254889,
+  "distributionSha256": "f7de2ab16a59d899cec1986c91253666353cb9e1d9f9e1eb6641a2a65d1002f5",
+  "archiveCrc": "passed",
+  "manifestEntryHashes": "all passed",
+  "expandedEntryHashes": "all passed",
+  "unexpectedOutputFiles": 0,
+  "mergedPullRequests": [1194, 1196],
+  "integrationChecks": {
+    "offlineCoreTests": 14,
+    "passed": 14,
+    "canonicalOptionalWorker": "byte-identical"
+  },
+  "priorSourceEvidence": "research-plan-refresh.md records unchanged-host regression evidence at 4e27c7ca0; these are not presented as newly rerun tests",
+  "disposableOutputRemoved": true,
+  "disposableOutputLogicalBytes": 2075953812,
+  "deferredByUser": ["physical-device qualification", "player feedback"],
+  "limits": [
+    "No publication performed",
+    "No additional star thresholds calibrated",
+    "Build correctness does not establish enjoyment or physical-device performance"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "d6b30dafb96ca4022c4d9214a4b9f060917fc90c84d6c6e40efe73a9358dbf93",
+  "originalGitBlob": "95128642fe04c299723e18e14b0d21e5af051f2c",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "kind": "functional DOM-boundary probe; not browser rendering or physical controller acceptance",
+    "checks": 28,
+    "passed": true,
+    "results": [
+      "launcher root game/",
+      "launcher root game/index.html",
+      "launcher root game/couch/",
+      "launcher root game/couch/relay-rescue.html",
+      "launcher root releases/v1.2.3/site/game/couch/",
+      "en/solo fourth separate action",
+      "en/solo checked same-build school entry",
+      "en/solo close preserves paused host and focus",
+      "en/versus fourth separate action",
+      "en/versus checked same-build school entry",
+      "en/versus close preserves paused host and focus",
+      "en/team fourth separate action",
+      "en/team checked same-build school entry",
+      "en/team close preserves paused host and focus",
+      "uk/solo fourth separate action",
+      "uk/solo checked same-build school entry",
+      "uk/solo close preserves paused host and focus",
+      "uk/versus fourth separate action",
+      "uk/versus checked same-build school entry",
+      "uk/versus close preserves paused host and focus",
+      "uk/team fourth separate action",
+      "uk/team checked same-build school entry",
+      "uk/team close preserves paused host and focus",
+      "missing bundled entry falls back only to validated World launcher",
+      "wrong-html bundled entry falls back only to validated World launcher",
+      "oversized bundled entry falls back only to validated World launcher",
+      "closed check never publishes late navigation"
+    ]
+  }
+}

@@ -1,10 +1,64 @@
 # Music in RevealLine
 
-The game includes **70 creator recordings in 15 built-in albums**. Open **Settings → Audio → Music library & playlists**. Under **Pick the music**, choose **Shuffle all music**, a **Music style → Play this style**, or a **Playback playlist → Play this playlist**. These actions save the current draft and start the chosen music; use **Sound controls → Unmute master sound** if muted. Fresh libraries start with **90s Synth**; existing saved choices are retained. Built-in albums do not consume your custom playlist or upload slots.
+The trusted game catalogue contains **77 recordings**, including the original **70 creator recordings in 15 albums**, the opening theme and six later admissions. Open **Settings → Audio → Music library & playlists**. Under **Pick the music**, choose **Shuffle all music**, a **Music style → Play this style**, or a **Playback playlist → Play this playlist**. These actions save the current draft and start the chosen music; use **Sound controls → Unmute master sound** if muted. The opening theme and existing saved choices are retained. Built-in albums do not consume your custom playlist or upload slots.
 
 To change a built-in album without starting paused music, expand **Offline album downloads** and choose **Save & use album**. To configure **My Mix**, **Installed only**, or **Recording mode**, expand **Filters & custom mix** and choose **Save listening preferences**. Those save actions preserve intentional Pause and master mute; **Play music** starts playback when you are ready.
 
 For a custom sequence, expand **Create playlists**, clone an album, add or remove songs, choose ordered or shuffled playback and a repeat mode, then save. You can mix catalogue songs with your own MP3 uploads. Now Playing shows the audible song, artist, original filename and creator/license websites.
+
+### Visit a song's creator
+
+In editions containing the creator-link follow-up in PR #903, select **Creator
+source ↗** beside the current title/artist in Audio, Pause, the music library or
+Demo. The song credit in the main-menu footer is itself a link. These links open
+the supplied creator page in a new tab and do not start, retry or resume music.
+Uploaded originals use their saved source metadata, including during audition;
+missing creator metadata leaves plain credits rather than an invented link.
+Licence and cultural-provenance links remain separate from creator attribution.
+This feature is implemented in the draft PR, not yet claimed publicly released.
+
+## Additional music sources
+
+In a game edition containing the optional-source feature, open **Settings → Audio →
+Music sources**. Paste a compatible public catalogue or site URL and select **Add
+and load**. For the separately hosted collection, use:
+
+```text
+https://mekhovov.github.io/revealline-soundtracks-fpv/
+```
+
+This saves and enables the source in this browser; it does not start music or change
+mute/volume. Leave the main archive enabled to mix sources, or turn it off to use only
+the additional catalogue. Choose styles and **Play selected styles** in Audio, or
+search/select a song in the music library. **Mix with the current game and uploaded
+music selection** controls whether local selections join that online queue.
+
+The main archive is enabled by default. Additional sources are never added by an
+import, a song's credits, a style selection or a game update. Up to four catalogue
+sources (including main) and 512 online recordings are supported. Disabling/removing
+a source cancels its requests and removes its remote songs from the queue; other
+sources, uploaded originals and bundled music remain usable. Removing a source does
+not delete personal uploads or installed audio. Source preferences persist separately
+from library edits, with their own conflict check; reload after another tab changes them.
+
+Available source styles and collections refresh after loading. Identical audio hashes
+are deduplicated across remote sources while preserving their metadata. Conflicting
+rights are handled conservatively. Unknown-licence entries are accepted only from an
+explicitly added source, retain their honest labels, and do not gain offline installation,
+backup/export or Recording-mode permission. Main remains licensed-only.
+
+Compatible sources must serve bounded catalogue-v1 JSON over public HTTPS with CORS.
+The game rejects credentials, local/private literal destinations, query tokens and
+catalogue redirects, then binds hash-addressed audio paths to the selected source.
+Browser URL checks do not pin DNS, and native media requests may follow redirects;
+add only sources you trust. Packaged browser previews permit HTTPS catalogue/media
+requests; script execution stays self-hosted. Native/self-contained package security
+is unchanged. A source that fails cannot disable the other sources.
+
+This is streaming support, not a new licence or admission into standard game albums.
+Source choices are browser preferences; existing `.rlsound` imports cannot enable
+network sources. Physical iPhone/controller qualification remains separate from
+software/browser tests.
 
 ## Online and offline listening
 

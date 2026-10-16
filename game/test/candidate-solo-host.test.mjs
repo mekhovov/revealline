@@ -56,6 +56,20 @@ const running = (p, levelId) =>
     p.frame(0);
     return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
   });
+async function startPrepared(p, levelId) {
+  await settle(() => {
+    p.frame(0);
+    return p.rendered.run.levelId === levelId && p.$('game-overlay').dataset.kind === 'ready';
+  });
+  const accepted = p.rendered.run,
+    checkpoint = authoritativeCheckpoint(accepted);
+  assert.equal(p.rendered.paused, true);
+  for (let i = 0; i < 12; i++) p.frame();
+  assert.deepEqual(authoritativeCheckpoint(accepted), checkpoint);
+  p.$('start-button').click();
+  await running(p, levelId);
+  assert.equal(p.rendered.run, accepted);
+}
 async function openMissions(p, opener = 'shell-play') {
   p.$(opener).click();
   await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
@@ -122,23 +136,23 @@ function playRoute(p, [id, authoredIdentity, gameplayIdentity, , segments]) {
   assertRouteEvidence(reference, expectedRouteEvidence(evidence, id), id);
 }
 
-test('the final authored core mission offers Find missions without recording a fictitious skip', async (t) => {
+test('the final authored core mission resolves the next unified-library owner without recording a skip', async (t) => {
   const { p, backend } = await setup(t);
   await openMissions(p);
   missionCard(p, 'opening', 'long-way-home').click();
-  await running(p, 'long-way-home');
+  await startPrepared(p, 'long-way-home');
   const original = p.rendered.run;
   assert.equal(p.$('journey-skip').hidden, false);
-  assert.equal(p.$('journey-skip').textContent, 'Find missions');
+  assert.equal(p.$('journey-skip').textContent, 'Skip mission');
   p.$('journey-skip').click();
-  await settle(() => p.$('journey-chooser').open);
+  await settle(() => p.$('journey-skip').textContent === 'Confirm skip');
   p.frame(0);
-  assert.equal(p.$('journey-chooser').open, true);
+  assert.equal(p.$('journey-chooser').open, false);
   assert.equal(p.rendered.run, original);
   assert.deepEqual((await backend.read()).skipped.solo, []);
-  p.$('journey-back').click();
-  p.frame(0);
-  assert.equal(p.$('journey-skip').textContent, 'Find missions');
+  p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
+  assert.equal(p.$('journey-skip').textContent, 'Skip mission');
   assert.deepEqual(p.errors, []);
 });
 
@@ -150,7 +164,7 @@ for (const [missionId, expected] of [
     const { p } = await setup(t);
     await openMissions(p);
     missionCard(p, 'opening', missionId).click();
-    await running(p, missionId);
+    await startPrepared(p, missionId);
     p.$('pause-button').click();
     p.rendered.run.status = 'won';
     p.$('show-result').click();
@@ -173,7 +187,7 @@ test('cross-pack Skip failure keeps Horizon intact, then retries into Border wit
   await openMissions(p);
   assert.equal(p.$('journey-cards').children.length, 17);
   missionCard(p, 'authored', 'long-way-home').click();
-  await running(p, 'long-way-home');
+  await startPrepared(p, 'long-way-home');
   const previous = p.rendered.run,
     picture = p.rendered.backdrop;
   refuseBorder = true;
@@ -203,7 +217,7 @@ test('cross-pack Skip failure keeps Horizon intact, then retries into Border wit
   assert.match(skipped.textContent, /Skipped/);
   assert.doesNotMatch(skipped.textContent, /Cleared/);
   skipped.click();
-  await running(p, 'long-way-home');
+  await startPrepared(p, 'long-way-home');
   assert.equal(p.rendered.run.coverage, 0);
   assert.deepEqual(p.errors, []);
 });
@@ -399,9 +413,11 @@ for (const route of ['opening', 'authored'])
     for (const row of rows) {
       const [id] = row;
       playRoute(p, row);
-      assert.equal(p.$('game-overlay').dataset.kind, 'won');
+      assert.equal(p.$('game-overlay').hidden, true, 'Every clear first keeps its full picture.');
       assert.equal(p.$('journey-chooser').open, false);
       if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+      p.$('show-result').click();
+      assert.equal(p.$('game-overlay').dataset.kind, 'won');
       await settle(() => !p.$('next-button').disabled);
       if (id !== rows.at(-1)[0]) {
         p.$('next-button').click();
@@ -466,8 +482,10 @@ for (const row of optionalRoutes)
     const { p, backend } = await setup(t, { search: '?journey=authored' });
     await openMissions(p);
     missionCard(p, 'authored', row[0]).click();
-    await running(p, row[0]);
+    await startPrepared(p, row[0]);
     playRoute(p, row);
+    if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+    p.$('show-result').click();
     assert.equal(p.$('next-button').textContent, 'Browse missions →');
     const completed = p.rendered.run,
       picture = p.rendered.backdrop,
@@ -547,6 +565,8 @@ test('authored result Retry applies Expert without managed-media pins or changin
   await running(p, 'first-return');
   playRoute(p, tunedRoutes[0]);
   assert.equal(p.rendered.run.status, 'won');
+  if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  p.$('show-result').click();
   const picture = p.rendered.backdrop;
   p.change('difficulty-select', 'expert');
   p.$('retry-button').click();
@@ -559,5 +579,18 @@ test('authored result Retry applies Expert without managed-media pins or changin
   const receipts = Object.values((await backend.read()).clears.solo);
   assert.equal(receipts.length, 1);
   assert.equal(receipts[0].difficulty, 'standard');
+  assert.deepEqual(p.errors, []);
+});
+
+test('source pursuit greybox starts and retries without treating null as an asset revision', async (t) => {
+  const { p } = await setup(t, { search: '?journey=pursuit-pilots-v1' });
+  p.$('shell-featured').click();
+  await running(p, 'crossing-post');
+  assert.equal(p.rendered.backdrop, null);
+  assert.ok(p.rendered.run.level.pursuit.actors.length > 0);
+  p.$('pause-button').click();
+  p.$('retry-button').click();
+  await running(p, 'crossing-post');
+  assert.equal(p.rendered.backdrop, null);
   assert.deepEqual(p.errors, []);
 });

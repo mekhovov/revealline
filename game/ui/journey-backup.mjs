@@ -68,8 +68,11 @@ export function attachJourneyBackup({
   doc.body.append(dialog);
   let revision = 0,
     inspected = null,
-    opener = null;
+    opener = null,
+    operation = null;
   function reset() {
+    operation?.abort();
+    operation = null;
     revision++;
     inspected = null;
     input.value = '';
@@ -81,6 +84,9 @@ export function attachJourneyBackup({
     opener?.focus({ preventScroll: true });
   }
   input.onchange = async () => {
+    operation?.abort();
+    const controller = new AbortController();
+    operation = controller;
     const file = input.files?.[0],
       ticket = ++revision;
     inspected = null;
@@ -93,7 +99,11 @@ export function attachJourneyBackup({
       if (file.size > 16 * 1024 * 1024)
         throw new Error(t('interface:backupExceedsThe16MibFileLimit'));
       localizedText(status, () => t('interface:inspectingTheLocalBackup'));
-      const { backup, merged, pictures } = profile.inspectBackup(await file.text());
+      const raw = await file.text();
+      if (ticket !== revision || controller.signal.aborted) return;
+      const { backup, merged, pictures } = profile.inspectBackupAsync
+        ? await profile.inspectBackupAsync(raw, { signal: controller.signal })
+        : profile.inspectBackup(raw);
       const addedPictures = pictures
         ? pictures.records.length - (profile.pictures?.().records.length ?? 0)
         : 0;
@@ -139,6 +149,9 @@ export function attachJourneyBackup({
   };
   apply.onclick = async () => {
     if (!inspected) return;
+    operation?.abort();
+    const controller = new AbortController();
+    operation = controller;
     const backup = inspected,
       ticket = revision;
     inspected = null;
@@ -147,13 +160,22 @@ export function attachJourneyBackup({
     if (dialog.open && doc.activeElement === apply) back.focus();
     apply.disabled = true;
     try {
-      profile.restore(backup);
+      const restored = profile.restoreAsync
+        ? await profile.restoreAsync(backup, { signal: controller.signal })
+        : (profile.restore(backup), null);
+      if (ticket !== revision || controller.signal.aborted) return;
       onRestore();
       const durable = await profile.flush();
       if (ticket !== revision) return;
       localizedText(status, () =>
         durable
-          ? t('interface:mergedAndSavedLocallyCurrentAttemptAndExistingProgressAre')
+          ? restored?.performance?.durable === false
+            ? t(
+                restored.performance.saveUnconfirmed
+                  ? 'interface:journeyBest.backupUnconfirmed'
+                  : 'interface:journeyBest.backupPartial',
+              )
+            : t('interface:mergedAndSavedLocallyCurrentAttemptAndExistingProgressAre')
           : t('interface:mergedInThisSessionOnlyStorageFailedExportNowOr'),
       );
     } catch (error) {
@@ -176,6 +198,7 @@ export function attachJourneyBackup({
     }
   };
   back.onclick = close;
+  dialog.addEventListener('close', reset);
   dialog.addEventListener('cancel', (event) => {
     if (event.target === dialog) {
       event.preventDefault();

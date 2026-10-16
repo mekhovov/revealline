@@ -1,0 +1,13 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "01bd7e3509ed2d2e3c8e965001729f1a5c0ba347580b65032eb28ecec9269ec2",
+  "originalGitBlob": "d8c6a875eaf1f4658b7f4b0eadb9f75ee586cca4",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "format": "revealline-retained-tap.v1",
+    "encoding": "utf8",
+    "originalBytes": 46805,
+    "originalSHA256": "a1c0be34b4d203002167e8ac6cce165b1b449aaf6276b9337b0d8ac042fa17d7"
+  }
+}

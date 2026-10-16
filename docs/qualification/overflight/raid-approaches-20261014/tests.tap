@@ -1,0 +1,310 @@
+TAP version 13
+# Subtest: Raid starts explicitly and preserves deterministic paused clocks and confirmation gating
+ok 1 - Raid starts explicitly and preserves deterministic paused clocks and confirmation gating
+  ---
+  duration_ms: 12.250458
+  ...
+# Subtest: sweep detects fast crossings even when neither endpoint overlaps, including both moving bodies
+ok 2 - sweep detects fast crossings even when neither endpoint overlaps, including both moving bodies
+  ---
+  duration_ms: 3.159417
+  ...
+# Subtest: exposed contact preserves hull and exactly-once death rewards and remains
+ok 3 - exposed contact preserves hull and exactly-once death rewards and remains
+  ---
+  duration_ms: 4
+  ...
+# Subtest: shield front blocks and rear exposes; guard orientation stays committed during approach
+ok 4 - shield front blocks and rear exposes; guard orientation stays committed during approach
+  ---
+  duration_ms: 1.800709
+  ...
+# Subtest: protection uses the visible pre-movement phase rather than transitioning on collision
+ok 5 - protection uses the visible pre-movement phase rather than transitioning on collision
+  ---
+  duration_ms: 2.507333
+  ...
+# Subtest: arrival warnings give a full harmless interval before contact becomes active
+ok 6 - arrival warnings give a full harmless interval before contact becomes active
+  ---
+  duration_ms: 10.388458
+  ...
+# Subtest: machinery requires boosted passes and cannot lose several segments while overlapping
+ok 7 - machinery requires boosted passes and cannot lose several segments while overlapping
+  ---
+  duration_ms: 2.496
+  ...
+# Subtest: blocking contact stops attacks against bodies behind a shield
+ok 8 - blocking contact stops attacks against bodies behind a shield
+  ---
+  duration_ms: 1.731417
+  ...
+# Subtest: wider offensive strike does not enlarge damage exposure
+ok 9 - wider offensive strike does not enlarge damage exposure
+  ---
+  duration_ms: 1.778292
+  ...
+# Subtest: independent projectile survives owner death and can damage the player in the same tick
+ok 10 - independent projectile survives owner death and can damage the player in the same tick
+  ---
+  duration_ms: 1.840083
+  ...
+# Subtest: priority warnings are bounded and a dead windup owner does not fire
+ok 11 - priority warnings are bounded and a dead windup owner does not fire
+  ---
+  duration_ms: 1.792041
+  ...
+# Subtest: each boost refunds once even for a full formation; passive recovery and hard floor remain
+ok 12 - each boost refunds once even for a full formation; passive recovery and hard floor remain
+  ---
+  duration_ms: 6.70375
+  ...
+# Subtest: Rush stores until a fresh boost, does not refill during active Rush, and survives damage
+ok 13 - Rush stores until a fresh boost, does not refill during active Rush, and survives damage
+  ---
+  duration_ms: 4.946833
+  ...
+# Subtest: eight choices remain three distinct legal cards and optional choices are awarded once
+ok 14 - eight choices remain three distinct legal cards and optional choices are awarded once
+  ---
+  duration_ms: 1.967959
+  ...
+# Subtest: draft waits for the boost transaction to finish and confirmation cannot trigger a boost
+ok 15 - draft waits for the boost transaction to finish and confirmation cannot trigger a boost
+  ---
+  duration_ms: 6.750209
+  ...
+# Subtest: courier escape starts only after reveal and required targets never expire
+ok 16 - courier escape starts only after reveal and required targets never expire
+  ---
+  duration_ms: 54.184875
+  ...
+# Subtest: replacement preserves the build and finite world and ends after the last airframe
+ok 17 - replacement preserves the build and finite world and ends after the last airframe
+  ---
+  duration_ms: 9.17525
+  ...
+# Subtest: all rank values used by previews are identical to simulation parameters
+ok 18 - all rank values used by previews are identical to simulation parameters
+  ---
+  duration_ms: 0.7235
+  ...
+# Subtest: same compiled seed and inputs produce byte-identical summaries and enemy states
+ok 19 - same compiled seed and inputs produce byte-identical summaries and enemy states
+  ---
+  duration_ms: 361.63875
+  ...
+# Subtest: initial machinery objectives require a telegraphed attack before their first opening
+ok 20 - initial machinery objectives require a telegraphed attack before their first opening
+  ---
+  duration_ms: 8.654792
+  ...
+# Subtest: one exposed base-kit tank takes exactly three distinct boosted passes
+ok 21 - one exposed base-kit tank takes exactly three distinct boosted passes
+  ---
+  duration_ms: 26.377625
+  ...
+# Subtest: small cosmetic pools can exhaust without losing casualties or rewards
+ok 22 - small cosmetic pools can exhaust without losing casualties or rewards
+  ---
+  duration_ms: 4.38225
+  ...
+# Subtest: an exhausted projectile pool defers shots without corrupting ownership or warning slots
+ok 23 - an exhausted projectile pool defers shots without corrupting ownership or warning slots
+  ---
+  duration_ms: 1.750542
+  ...
+# Subtest: stationary waiting cannot clear required objectives or replenish finite packs
+ok 24 - stationary waiting cannot clear required objectives or replenish finite packs
+  ---
+  duration_ms: 203.910417
+  ...
+# Subtest: the final fractional projectile flight segment collides, without flying past its lifetime
+ok 25 - the final fractional projectile flight segment collides, without flying past its lifetime
+  ---
+  duration_ms: 6.549583
+  ...
+# Subtest: formation-derived edge waypoints remain reachable inside the arena
+ok 26 - formation-derived edge waypoints remain reachable inside the arena
+  ---
+  duration_ms: 3.915125
+  ...
+# Subtest: Raid technical workload sustains actual contact effects and exact populations without a game result
+ok 27 - Raid technical workload sustains actual contact effects and exact populations without a game result
+  ---
+  duration_ms: 1988.829042
+  ...
+# Subtest: boost ranks, Rush and chain expiry obey exact fixed tick durations without floating residue
+ok 28 - boost ranks, Rush and chain expiry obey exact fixed tick durations without floating residue
+  ---
+  duration_ms: 23.711209
+  ...
+# Subtest: lethal independent projectile contact wins chronological precedence over a later prey hit
+ok 29 - lethal independent projectile contact wins chronological precedence over a later prey hit
+  ---
+  duration_ms: 1.741375
+  ...
+# Subtest: a tracked-tank appearance on an authored column objective still grants its guaranteed upgrade
+ok 30 - a tracked-tank appearance on an authored column objective still grants its guaranteed upgrade
+  ---
+  duration_ms: 4.640833
+  ...
+# Subtest: Rush instrument describes charge, stored activation and remaining time without stale accessible values
+ok 31 - Rush instrument describes charge, stored activation and remaining time without stale accessible values
+  ---
+  duration_ms: 18.225417
+  ...
+# Subtest: polite status announces milestones once rather than streaming score and countdown changes
+ok 32 - polite status announces milestones once rather than streaming score and countdown changes
+  ---
+  duration_ms: 3.25825
+  ...
+# Subtest: Raid Studio messages require the exact parent, origin, protocol and request identity
+ok 33 - Raid Studio messages require the exact parent, origin, protocol and request identity
+  ---
+  duration_ms: 0.124417
+  ...
+# Subtest: every Raid upgrade compare live rank parameters without changing the build
+ok 34 - every Raid upgrade compare live rank parameters without changing the build
+  ---
+  duration_ms: 4.570792
+  ...
+# Subtest: native card previews draw selected atlas sprites and reduced motion freezes the entire demonstration
+ok 35 - native card previews draw selected atlas sprites and reduced motion freezes the entire demonstration
+  ---
+  duration_ms: 10.200292
+  ...
+# Subtest: native cards remain keyboard buttons, carry complete EN/UK comparisons and delegate exact legal choices
+ok 36 - native cards remain keyboard buttons, carry complete EN/UK comparisons and delegate exact legal choices
+  ---
+  duration_ms: 7.706209
+  ...
+# Subtest: contact cues distinguish facing guards, closed machinery and segmented openings without enclosing the drone
+ok 37 - contact cues distinguish facing guards, closed machinery and segmented openings without enclosing the drone
+  ---
+  duration_ms: 1.069417
+  ...
+# Subtest: Raid localization keys match and preview rejects impossible ranks or systems
+ok 38 - Raid localization keys match and preview rejects impossible ranks or systems
+  ---
+  duration_ms: 0.205458
+  ...
+# Subtest: boost streaks reflect offensive width only while striking and preserve body size
+ok 39 - boost streaks reflect offensive width only while striking and preserve body size
+  ---
+  duration_ms: 0.135292
+  ...
+# Subtest: Raid records keep score and fastest successful clear independent
+ok 40 - Raid records keep score and fastest successful clear independent
+  ---
+  duration_ms: 1.739458
+  ...
+# Subtest: record identity separates content, seed and gameplay settings but shares cosmetics
+ok 41 - record identity separates content, seed and gameplay settings but shares cosmetics
+  ---
+  duration_ms: 0.739083
+  ...
+# Subtest: storage failure is session-only and can recover without losing the previous record
+ok 42 - storage failure is session-only and can recover without losing the previous record
+  ---
+  duration_ms: 0.601333
+  ...
+# Subtest: nonterminal, nonfinite and review attempts cannot set records
+ok 43 - nonterminal, nonfinite and review attempts cannot set records
+  ---
+  duration_ms: 0.829
+  ...
+# Subtest: failed writes preserve stronger durable records in session results and later reads
+ok 44 - failed writes preserve stronger durable records in session results and later reads
+  ---
+  duration_ms: 1.668791
+  ...
+# Subtest: Raid launch preserves same-build locale and artwork, rejects unknown paths
+ok 45 - Raid launch preserves same-build locale and artwork, rejects unknown paths
+  ---
+  duration_ms: 0.964458
+  ...
+# Subtest: Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+ok 46 - Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+  ---
+  duration_ms: 0.654333
+  ...
+# Subtest: Raid commentator never promises salvage on the ground and only announces first earned Rush
+ok 47 - Raid commentator never promises salvage on the ground and only announces first earned Rush
+  ---
+  duration_ms: 0.271375
+  ...
+# Subtest: V2 records write durably beside untouched legacy history and isolate difficulty
+ok 48 - V2 records write durably beside untouched legacy history and isolate difficulty
+  ---
+  duration_ms: 1.057667
+  ...
+# Subtest: Community admission and publisher identify Raid separately and preserve exact UTF-8 bytes
+ok 49 - Community admission and publisher identify Raid separately and preserve exact UTF-8 bytes
+  ---
+  duration_ms: 33.059917
+  ...
+# Subtest: global install → launch → exact recovery → offload → reinstall retains Raid identity and independent Survivor data
+ok 50 - global install → launch → exact recovery → offload → reinstall retains Raid identity and independent Survivor data
+  ---
+  duration_ms: 238.715791
+  ...
+# Subtest: Raid Studio ownership survives Community offload and stale reviews cannot remove a new owner
+ok 51 - Raid Studio ownership survives Community offload and stale reviews cannot remove a new owner
+  ---
+  duration_ms: 331.909083
+  ...
+# Subtest: Raid native and Studio compile the same immutable source and exact resource closure
+ok 52 - Raid native and Studio compile the same immutable source and exact resource closure
+  ---
+  duration_ms: 10.108833
+  ...
+# Subtest: three finite sets cover shared roster and guarantee six milestone upgrades before the final tank
+ok 53 - three finite sets cover shared roster and guarantee six milestone upgrades before the final tank
+  ---
+  duration_ms: 7.186875
+  ...
+# Subtest: Raid rejects impossible objectives, resource drift, route mistakes and executable data
+ok 54 - Raid rejects impossible objectives, resource drift, route mistakes and executable data
+  ---
+  duration_ms: 13.184416
+  ...
+# Subtest: formation routes account for every member offset and cannot strand edge actors
+ok 55 - formation routes account for every member offset and cannot strand edge actors
+  ---
+  duration_ms: 0.729208
+  ...
+# Subtest: surviving escorts cannot overlap a later sector beyond the visible specialist budget
+ok 56 - surviving escorts cannot overlap a later sector beyond the visible specialist budget
+  ---
+  duration_ms: 0.840541
+  ...
+# Subtest: Raid and Survivor portable formats cannot be silently interchanged
+ok 57 - Raid and Survivor portable formats cannot be silently interchanged
+  ---
+  duration_ms: 8.204875
+  ...
+# Subtest: author → preview → export → fresh-profile import → native play preserves definition
+ok 58 - author → preview → export → fresh-profile import → native play preserves definition
+  ---
+  duration_ms: 18.632709
+  ...
+# Subtest: paired specialist wings preserve budgets while objective routes distinguish all sets
+ok 59 - paired specialist wings preserve budgets while objective routes distinguish all sets
+  ---
+  duration_ms: 19.090166
+  ...
+# Subtest: small V2 specialist wings do not admit tiny ordinary packs or change legacy escorts
+ok 60 - small V2 specialist wings do not admit tiny ordinary packs or change legacy escorts
+  ---
+  duration_ms: 1.877042
+  ...
+1..60
+# tests 60
+# suites 0
+# pass 60
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3028.553458

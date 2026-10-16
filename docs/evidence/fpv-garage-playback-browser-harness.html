@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Garage installed playback qualification</title
+  ><style>
+    body {
+      font: 15px system-ui;
+      background: #101923;
+      color: #eef4f4;
+      margin: 18px;
+    }
+    button,
+    select {
+      font: inherit;
+      min-height: 44px;
+      padding: 8px;
+      margin: 3px;
+    }
+    iframe {
+      display: block;
+      width: 1280px;
+      max-width: 100%;
+      height: 800px;
+      border: 1px solid #49646e;
+    }
+    textarea {
+      width: 100%;
+      height: 220px;
+      font: 12px monospace;
+    }
+    p {
+      max-width: 100ch;
+    }
+    .manual iframe {
+      max-width: none;
+    }
+    body.manual #receipt {
+      height: 100px;
+    }
+  </style>
+  <h1>Installed Garage demonstrations · real renderer</h1>
+  <p>
+    Run consumes exact recorded commands using controlled200ms frame timestamps and real WebGL
+    draws. It is accelerated functional playback, not FPS, end-to-end latency or human visual
+    acceptance. Separate Show buttons use native real-time animation frames; inspect the elevated
+    deck and combat in FPV/chase.
+  </p>
+  <button id="run">Run all16 Garage demonstrations</button
+  ><button id="show-deck">Show elevated deck · real time</button
+  ><button id="show-combat">Show drone encounter · real time</button
+  ><button id="camera">Switch FPV / Chase</button
+  ><button id="portrait">390px / Desktop</button>
+  <p id="status">Ready</p>
+  <textarea id="receipt" aria-label="Playback qualification receipt" readonly></textarea
+  ><iframe id="sim" title="Actual installed simulator"></iframe>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      frame = $('sim'),
+      wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    const digest = async (text) =>
+      [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)))]
+        .map((n) => n.toString(16).padStart(2, '0'))
+        .join('');
+    let active = null,
+      manualCleanup = null;
+    async function execute(manual = null) {
+      if (manualCleanup) {
+        await manualCleanup();
+        manualCleanup = null;
+      }
+      const checks = [],
+        runs = [],
+        phases = [],
+        preparationPauses = [],
+        independentlyReplayed = new Map(),
+        names = new Set(),
+        prefix = 'fpv-garage-' + Date.now() + ':',
+        started = performance.now();
+      let manifest,
+        data,
+        w,
+        d,
+        app,
+        failed = null,
+        current = 'fixture',
+        phase = 'Prepare',
+        ctx = null;
+      const progress = (label) => {
+        phase = label;
+        phases.push({ ms: Math.round(performance.now() - started), label });
+        $('status').textContent = current + ' · ' + label;
+        if (!manual)
+          $('receipt').value = JSON.stringify({ status: 'running', phase, checks, runs }, null, 2);
+      };
+      const must = (ok, name, extra = {}) => {
+        checks.push({ case: current, name, passed: !!ok, ...extra });
+        if (!ok) throw Error(name);
+      };
+      async function bounded(operation, label, ms = 20000) {
+        progress(label);
+        let timer;
+        try {
+          return await Promise.race([
+            operation,
+            new Promise(
+              (_, reject) => (timer = setTimeout(() => reject(Error('Timeout: ' + label)), ms)),
+            ),
+          ]);
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      async function until(fn, label, ms = 30000) {
+        const at = performance.now();
+        while (!fn()) {
+          if (performance.now() - at > ms)
+            throw Error(
+              'Timeout: ' + label + '; ' + (d?.getElementById('flight-status')?.textContent ?? ''),
+            );
+          await wait(20);
+          // Native hosts keep receiving callbacks during async replay validation
+          // and shader preparation. Keep their actual watchdog current without
+          // advancing the controlled replay timestamp while awaiting readiness.
+          if (w?.fixtureRAF && app && frame.contentWindow === w) w.fixtureRAF.deliver(0);
+        }
+      }
+      const memory = new Map([
+        [
+          'revealline.fpv.world-settings.v1',
+          JSON.stringify({
+            'world-language': 'en',
+            'flight-source': 'keyboard',
+            'flight-camera': 'fpv',
+            'flight-quality': 'balanced',
+            'sim-motion': 'reduced',
+          }),
+        ],
+        [
+          'revealline.fpv.playlists.v1',
+          JSON.stringify({
+            playlists: [],
+            bookmark: { id: 'retained-fixture-playlist', revision: 'r1', nextIndex: 3 },
+          }),
+        ],
+      ]);
+      window.fixtureStorage = {
+        getItem: (k) => memory.get(k) ?? null,
+        setItem: (k, v) => memory.set(k, String(v)),
+        removeItem: (k) => memory.delete(k),
+      };
+      window.fixtureDB = {
+        open(name, version) {
+          const full = prefix + name;
+          names.add(full);
+          return version === undefined ? indexedDB.open(full) : indexedDB.open(full, version);
+        },
+        deleteDatabase: (name) => indexedDB.deleteDatabase(prefix + name),
+        cmp: indexedDB.cmp.bind(indexedDB),
+      };
+      const state = () => app.snapshot().state;
+      const set = (id, value) => {
+        const node = d.getElementById(id);
+        node.value = value;
+        node.dispatchEvent(new w.Event('change', { bubbles: true }));
+      };
+      const click = (node) => {
+        if (!node || node.disabled) throw Error('Missing or disabled public button');
+        node.click();
+      };
+      async function pulse(delta = 200) {
+        w.fixtureRAF.deliver(delta);
+        await wait(0);
+      }
+      // Snapshot data crosses the iframe realm. Normalize plain object prototypes
+      // before the parent canonicalizer; require the child-local hash too below.
+      const pose = () => data.model.worldStateIdentity(JSON.parse(JSON.stringify(state())));
+      async function verifyFiles() {
+        for (const [url, expected] of Object.entries({
+          ...Object.fromEntries(
+            Object.entries(manifest.fixtureFiles).map(([p, h]) => [
+              new URL(p, location.href).href,
+              h,
+            ]),
+          ),
+          ...manifest.currentSources,
+        })) {
+          const response = await fetch(url, { cache: 'no-store' });
+          if (!response.ok) throw Error('Missing frozen input ' + url);
+          if ((await digest(await response.text())) !== expected)
+            throw Error('Frozen input changed ' + url);
+        }
+        must(true, 'All frozen runtime/harness hashes match prepared candidate');
+      }
+      async function dbSnapshot() {
+        const values = {};
+        for (const name of [...names].sort()) {
+          const db = await new Promise((resolve, reject) => {
+            const req = indexedDB.open(name);
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => reject(req.error);
+          });
+          try {
+            values[name.slice(prefix.length)] = {};
+            for (const store of [...db.objectStoreNames].sort())
+              values[name.slice(prefix.length)][store] = await new Promise((resolve, reject) => {
+                const tx = db.transaction(store, 'readonly'),
+                  os = tx.objectStore(store),
+                  keys = os.getAllKeys(),
+                  rows = os.getAll();
+                tx.oncomplete = () => resolve({ keys: keys.result, values: rows.result });
+                tx.onerror = () => reject(tx.error);
+              });
+          } finally {
+            db.close();
+          }
+        }
+        return JSON.stringify(values);
+      }
+      async function mount(clock) {
+        if (active) {
+          await bounded(active.dispose(), 'Dispose prior host', 5000);
+          active = null;
+        }
+        const url = new URL('./player.html', location.href),
+          token = prefix + clock;
+        url.searchParams.set('token', token);
+        url.searchParams.set('clock', clock);
+        const loaded = new Promise((resolve) =>
+          frame.addEventListener('load', resolve, { once: true }),
+        );
+        frame.removeAttribute('srcdoc');
+        frame.src = url.href;
+        await bounded(loaded, 'Load actual HTTP player');
+        await until(
+          () => frame.contentWindow?.fixtureLoadToken === token && frame.contentWindow?.fixtureApp,
+          'fresh host mount',
+        );
+        w = frame.contentWindow;
+        d = w.document;
+        app = active = w.fixtureApp;
+        await bounded(app.ready, 'Initialize actual package');
+        w.focus();
+      }
+      function allEntry(id) {
+        return [...data.catalogue.WORLD_CATALOGUE, ...data.catalogue.BEGINNER_CATALOGUE].find(
+          (e) => e.id === id,
+        );
+      }
+      async function closeFlight() {
+        if (!d.getElementById('flight-dialog').open) return;
+        click(d.getElementById('leave-flight'));
+        await until(() => !d.getElementById('flight-dialog').open, 'Back to lobby');
+      }
+      async function startCard(entry, mode, locale = 'en') {
+        await closeFlight();
+        set('world-language', locale);
+        set('flight-mode', mode);
+        const sources = ['keyboard', 'touch', 'controller', 'radio'];
+        set('flight-source', sources[(Number(entry.id.slice(-2)) + (mode === 'acro' ? 1 : 0)) % 4]);
+        if (entry.beginner) {
+          click(d.querySelector('[data-tab="learn"]'));
+          const card = d.querySelector(`[data-lesson="${entry.id}"]`);
+          click(card?.querySelector('button[data-sim-icon="replay"]'));
+        } else {
+          click(d.querySelector('[data-tab="explore"]'));
+          click(d.querySelector(`[data-world="${entry.world}"]`));
+          const title = entry.course.locales[locale].title;
+          const watch = [...d.querySelectorAll('.watch-example')].find((n) =>
+            n.getAttribute('aria-label')?.endsWith(': ' + title),
+          );
+          click(watch);
+        }
+        await readyPlayback(entry, mode);
+      }
+      async function readyPlayback(entry, mode) {
+        await until(
+          () =>
+            app.snapshot().course === entry.id &&
+            app.snapshot().replay?.mode === mode &&
+            ['active', 'paused', 'disarmed'].includes(state()?.status) &&
+            !d.getElementById('world-arm').disabled,
+          'Card demonstration prepared',
+          60000,
+        );
+        d.getElementById('world-viewport').focus();
+        if (w.fixtureRAF) await pulse(0);
+        // The real callback-time watchdog may pause during synchronous proof or
+        // shader preparation. Resume deliberately once after scene readiness;
+        // never repair a pause after scored playback sampling has begun.
+        if (['paused', 'disarmed'].includes(state().status)) {
+          const before = state();
+          preparationPauses.push({
+            id: entry.id,
+            mode,
+            ticks: before.ticks,
+            status: before.status,
+            hostStatus: d.getElementById('flight-status').textContent,
+          });
+          click(d.getElementById('world-arm'));
+          if (w.fixtureRAF) await pulse(0);
+          must(
+            state().status === 'active' && state().ticks === before.ticks,
+            'Deliberate preparation resume starts without elapsed-time catch-up',
+          );
+        }
+        must(state().status === 'active', 'Prepared playback is active before sampled frames');
+      }
+      function inject(on) {
+        const viewport = d.getElementById('world-viewport');
+        for (const code of ['KeyD', 'ArrowUp', 'Space'])
+          viewport.dispatchEvent(
+            new w.KeyboardEvent(on ? 'keydown' : 'keyup', {
+              code,
+              key: code === 'Space' ? ' ' : code,
+              bubbles: true,
+              cancelable: true,
+            }),
+          );
+        w.controlledPad.axes[2] = on ? 0.9 : 0;
+        w.controlledPad.buttons[2] = { pressed: on, value: on ? 1 : 0 };
+        w.controlledRadio.axes[0] = on ? 0.85 : 0.004;
+        w.controlledRadio.axes[2] = on ? 0.6 : -1;
+        const stick = d.getElementById('world-right-stick'),
+          bounds = stick.getBoundingClientRect();
+        stick.dispatchEvent(
+          new w.PointerEvent(on ? 'pointerdown' : 'pointerup', {
+            pointerId: 18,
+            pointerType: 'touch',
+            clientX: bounds.right,
+            clientY: bounds.top,
+            bubbles: true,
+            cancelable: true,
+          }),
+        );
+        d.getElementById('world-fire').dispatchEvent(
+          new w.PointerEvent(on ? 'pointerdown' : 'pointerup', {
+            pointerId: 19,
+            pointerType: 'touch',
+            bubbles: true,
+            cancelable: true,
+          }),
+        );
+      }
+      async function views() {
+        const tick = state().ticks,
+          identity = pose(),
+          rows = [];
+        for (const camera of ['fpv', 'chase']) {
+          set('flight-camera', camera);
+          await pulse(0);
+          const r = w.fixtureRenderer.resources();
+          rows.push({
+            camera,
+            calls: r.renderer.calls,
+            triangles: r.renderer.triangles,
+            actors: r.presentation.actors.length,
+            projectiles: r.presentation.activeProjectiles,
+          });
+          must(
+            r.available &&
+              !r.renderer.contextLost &&
+              r.renderer.calls > 0 &&
+              r.renderer.triangles > 0,
+            'Actual WebGL ' + camera + ' renders prepared scene',
+            rows.at(-1),
+          );
+        }
+        must(
+          state().ticks === tick && pose() === identity,
+          'Camera changes do not restart or mutate recorded simulation',
+        );
+        return rows;
+      }
+      function stateDiff(actual, expected) {
+        const differences = [],
+          pending = [{ path: 'state', actual, expected }];
+        while (pending.length && differences.length < 40) {
+          const row = pending.pop();
+          if (Object.is(row.actual, row.expected)) continue;
+          if (
+            row.actual &&
+            row.expected &&
+            typeof row.actual === 'object' &&
+            typeof row.expected === 'object' &&
+            Array.isArray(row.actual) === Array.isArray(row.expected)
+          ) {
+            for (const key of new Set([...Object.keys(row.actual), ...Object.keys(row.expected)]))
+              pending.push({
+                path: row.path + '.' + key,
+                actual: row.actual[key],
+                expected: row.expected[key],
+              });
+          } else differences.push(row);
+        }
+        return differences;
+      }
+      async function playback(entry, mode, { detailed = false, locale = 'en' } = {}) {
+        current = entry.id + ' / ' + mode;
+        progress('Independent exact replay');
+        const item = data.demos.WORLD_DEMONSTRATIONS.find(
+          (x) => x.proof.course === entry.id && x.proof.mode === mode,
+        );
+        must(!!item, 'Installed exact-mode demonstration is present');
+        const proof = item.proof;
+        const expected = independentlyReplayed.get(entry.id + '/' + mode);
+        must(!!expected, 'Independent replay was verified before browser host mounted');
+        must(
+          expected.state.status === 'complete' &&
+            data.model.worldStateIdentity(expected.state) === proof.finalStateIdentity,
+          'Independent replay completes at recorded final identity',
+        );
+        await startCard(entry, mode, locale);
+        must(
+          app.snapshot().replay.kind === 'demonstration' &&
+            app.snapshot().replay.frames === proof.frames.length,
+          'Actual catalogue card opens installed demonstration with exact frame count',
+        );
+        const canvas = d.getElementById('world-canvas');
+        must(
+          canvas.width > 0 && canvas.height > 0 && canvas.getBoundingClientRect().width > 0,
+          'Prepared canvas is visible',
+        );
+        must(
+          d.getElementById('flight-source').disabled,
+          'Playback does not acquire selected live input',
+        );
+        const cameras = await views();
+        if (detailed) {
+          set('world-replay-rate', '0.5');
+          await pulse(0);
+          const tick = state().ticks;
+          await pulse(200);
+          must(
+            state().ticks - tick === 5,
+            '0.5× consumes exactly five fixed ticks per200ms supplied frame',
+          );
+          click(d.getElementById('world-pause'));
+          const paused = pose();
+          for (let i = 0; i < 3; i++) await pulse(100);
+          must(
+            state().status === 'paused' && pose() === paused,
+            'Pause freezes pose, time, actors, projectiles and cooldown',
+          );
+          click(d.getElementById('world-arm'));
+          set('world-replay-rate', '1');
+          await pulse(0);
+          const tick1 = state().ticks;
+          await pulse(200);
+          must(
+            state().ticks - tick1 === 10 && app.snapshot().replay.kind === 'demonstration',
+            'Resume and1× continue only recorded playback',
+          );
+        } else {
+          set('world-replay-rate', '1');
+          await pulse(0);
+        }
+        inject(true);
+        let rendered = 0,
+          peakProjectiles = 0,
+          highest = 0,
+          switched = false;
+        const checkpointRows = [];
+        let lastStep = -1;
+        const begin = performance.now();
+        while (state().status === 'active') {
+          if (performance.now() - begin > 120000)
+            throw Error('Playback exceeded bounded wall-time');
+          await pulse(200);
+          rendered++;
+          const s = state(),
+            r = w.fixtureRenderer.resources();
+          highest = Math.max(highest, s.position.y);
+          peakProjectiles = Math.max(peakProjectiles, r.presentation.activeProjectiles);
+          if (s.step !== lastStep) {
+            lastStep = s.step;
+            checkpointRows.push({
+              step: s.step,
+              tick: s.ticks,
+              height: s.position.y,
+              grounded: s.grounded,
+            });
+          }
+          if (s.ticks > 0) {
+            const frame = proof.frames[s.ticks - 1];
+            mustSample(s.lastInput, frame);
+          }
+          if (!switched && s.ticks >= proof.frames.length / 2) {
+            set('flight-camera', 'fpv');
+            await pulse(0);
+            switched = true;
+          }
+        }
+        const stoppedState = state(),
+          stoppedIdentity = pose();
+        inject(false);
+        const releasedIdentity = pose();
+        await until(() => app.snapshot().replay?.finished, 'Demonstration result');
+        const end = state(),
+          completedIdentity = pose();
+        must(
+          end.status === 'complete' &&
+            end.ticks === proof.frames.length &&
+            completedIdentity === proof.finalStateIdentity &&
+            w.fixtureWorldStateIdentity(end) === proof.finalStateIdentity,
+          'Full card playback completes at exact independently verified final state despite held live inputs',
+          {
+            status: end.status,
+            ticks: end.ticks,
+            expectedFrames: proof.frames.length,
+            health: end.health,
+            shots: end.shots,
+            hits: end.hits,
+            actualIdentity: completedIdentity,
+            childRealmIdentity: w.fixtureWorldStateIdentity(end),
+            expectedIdentity: proof.finalStateIdentity,
+            independentlyReplayedIdentity: data.model.worldStateIdentity(expected.state),
+            beforeReleaseStatus: stoppedState.status,
+            beforeReleaseIdentity: stoppedIdentity,
+            immediatelyAfterReleaseIdentity: releasedIdentity,
+            stateDifferences: stateDiff(end, expected.state),
+          },
+        );
+        must(
+          d
+            .getElementById('result-panel')
+            .textContent.includes(
+              locale === 'uk' ? 'Демонстрацію завершено' : 'Demonstration complete',
+            ),
+          'Localized demonstration result is displayed',
+        );
+        must(
+          d.getElementById('flight-objective').textContent.length > 0,
+          'Objective/result HUD remains populated',
+        );
+        if (entry.id === 'garage-02')
+          must(
+            checkpointRows.some((row) => row.step >= 3 && row.height >= 4900),
+            'Elevated deck landing objective completes with its5m departure rendered',
+          );
+        if (Number(entry.id.slice(-2)) >= 4 && entry.id.startsWith('garage'))
+          must(peakProjectiles > 0, 'Combat playback renders actual active projectiles', {
+            peakProjectiles,
+          });
+        if (detailed) {
+          const other = mode === 'self-level' ? 'acro' : 'self-level';
+          set('flight-mode', other);
+          await readyPlayback(entry, other);
+          must(
+            app.snapshot().course === entry.id &&
+              app.snapshot().replay.kind === 'demonstration' &&
+              app.snapshot().replay.frames ===
+                data.demos.WORLD_DEMONSTRATIONS.find(
+                  (row) => row.proof.course === entry.id && row.proof.mode === other,
+                ).proof.frames.length,
+            'Changing mode deliberately starts its matching recorded example',
+          );
+        }
+        runs.push({
+          id: entry.id,
+          mode,
+          locale,
+          ticks: end.ticks,
+          finalStateIdentity: completedIdentity,
+          health: end.health,
+          shots: end.shots,
+          hits: end.hits,
+          renderedFrames: rendered,
+          cameras,
+          peakProjectiles,
+          highest,
+          checkpoints: checkpointRows,
+          clock: 'controlled200ms timestamps; actual WebGL rendering; no FPS claim',
+        });
+        function mustSample(input, frame) {
+          const actual = ['roll', 'pitch', 'yaw', 'throttle', 'actions'].map((k) => input[k]);
+          if (actual.some((n, i) => n !== frame[i]))
+            throw Error('Recorded command diverged at tick' + state().ticks);
+        }
+      }
+      async function cleanup() {
+        if (active) {
+          try {
+            await bounded(active.dispose(), 'Dispose player', 7000);
+          } finally {
+            active = null;
+          }
+        }
+        for (const name of names) indexedDB.deleteDatabase(name);
+      }
+      try {
+        $('run').disabled = true;
+        manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+        must(manifest.format === 'FPVGaragePlaybackFixture.v1', 'Recognized prepared fixture');
+        await verifyFiles();
+        const root = manifest.candidateBase + '/optional-practice/civilian-fpv/';
+        const [catalogue, demos, model, records, legacy] = await Promise.all(
+          [
+            'world-catalogue.mjs',
+            'world-demonstrations.mjs',
+            'world-model.mjs',
+            'world-records.mjs',
+            'demonstrations.mjs',
+          ].map((name) => import(root + name)),
+        );
+        data = { catalogue, demos, model, records, legacy };
+        await model.initWorldRuntime();
+        must(
+          demos.WORLD_DEMONSTRATIONS.filter((x) => x.proof.course.startsWith('garage-')).length ===
+            16,
+          'Exactly16 installed Garage examples',
+        );
+        must(
+          demos.WORLD_DEMONSTRATIONS.length === 154 &&
+            demos.WORLD_DEMONSTRATIONS.filter((x) => x.proof.course.startsWith('beginner-'))
+              .length === 58 &&
+            legacy.FLIGHT_DEMONSTRATIONS.length === 24,
+          'Prior school and original demonstration allocations are retained',
+        );
+        must(
+          !demos.WORLD_DEMONSTRATIONS.some((x) => x.proof.course.startsWith('adventure-')),
+          'Adventure archives are not silently installed',
+        );
+        if (!manual) {
+          const pairs = [];
+          for (let index = 1; index <= 8; index++)
+            for (const mode of ['self-level', 'acro'])
+              pairs.push(['garage-' + String(index).padStart(2, '0'), mode]);
+          pairs.push(['woodland-01', 'self-level'], ['beginner-58', 'acro']);
+          for (const [id, mode] of pairs) {
+            progress('Pre-mount independent replay · ' + id + ' / ' + mode);
+            const entry = allEntry(id),
+              proof = demos.WORLD_DEMONSTRATIONS.find(
+                (row) => row.proof.course === id && row.proof.mode === mode,
+              )?.proof;
+            if (!entry || !proof)
+              throw Error('Missing independent replay input: ' + id + '/' + mode);
+            const checked = await bounded(
+              model.replayWorldFlight(entry.course, proof),
+              'Pre-mount independent replay · ' + id + ' / ' + mode,
+              30000,
+            );
+            must(
+              checked.state.status === 'complete' &&
+                model.worldStateIdentity(checked.state) === proof.finalStateIdentity,
+              'Pre-mount independent replay completes exactly: ' + id + '/' + mode,
+            );
+            independentlyReplayed.set(id + '/' + mode, checked);
+          }
+        }
+        const course = allEntry('garage-01'),
+          proof = demos.WORLD_DEMONSTRATIONS.find(
+            (x) => x.proof.course === 'garage-01' && x.proof.mode === 'self-level',
+          ).proof,
+          seed = model.createWorldFlight({
+            course: course.course,
+            mode: proof.mode,
+            response: proof.response,
+          }),
+          recorder = model.createWorldRecorder(seed, { session: 'practice' });
+        seed.arm();
+        for (const frame of proof.frames.slice(0, 100)) {
+          seed.step(
+            Object.fromEntries(
+              ['roll', 'pitch', 'yaw', 'throttle', 'actions'].map((k, i) => [
+                k,
+                i === 4 ? frame[i] : frame[i] / 1000,
+              ]),
+            ),
+          );
+          recorder.record();
+        }
+        const store = await records.openWorldRecords(window.fixtureDB);
+        await store.saveSession({
+          course: course.course,
+          proof: recorder.export(),
+          packIdentity: course.packIdentity,
+          preview: false,
+          sectorReferenceId: null,
+          ghostEnabled: false,
+        });
+        store.close();
+        seed.dispose();
+        await mount(manual ? 'native' : 'controlled');
+        must(
+          app.snapshot().catalogue === 148 &&
+            d.querySelector('#level-count').textContent === '148' &&
+            d.querySelectorAll('.catalogue-stats strong')[1].textContent === '14',
+          'Catalogue retains148challenges in14worlds',
+        );
+        if (manual) {
+          document.body.classList.add('manual');
+          frame.style.width = '1280px';
+          frame.style.height = '800px';
+          await startCard(allEntry(manual), 'self-level');
+          manualCleanup = cleanup;
+          progress('REAL-TIME manual review · ' + manual + ' · use camera/size buttons');
+          return;
+        }
+        document.body.classList.remove('manual');
+        const beforeStorage = await dbSnapshot(),
+          bookmark = memory.get('revealline.fpv.playlists.v1'),
+          recordsBefore = JSON.stringify(app.snapshot().records);
+        for (let index = 1; index <= 8; index++)
+          for (const mode of ['self-level', 'acro']) {
+            const entry = allEntry('garage-' + String(index).padStart(2, '0'));
+            await playback(entry, mode, {
+              detailed: index === 1 && mode === 'self-level',
+              locale: index === 8 && mode === 'acro' ? 'uk' : 'en',
+            });
+          }
+        await playback(allEntry('woodland-01'), 'self-level');
+        await playback(allEntry('beginner-58'), 'acro');
+        await closeFlight();
+        click(d.querySelector('[data-tab="learn"]'));
+        must(
+          d.querySelectorAll('[data-lesson] button[data-sim-icon="replay"]').length === 58,
+          'All58 school cards retain Watch demonstration',
+        );
+        must(
+          JSON.stringify(app.snapshot().records) === recordsBefore &&
+            memory.get('revealline.fpv.playlists.v1') === bookmark &&
+            (await dbSnapshot()) === beforeStorage,
+          'Playback leaves completion records, notebook, seeded interruption and playlist bookmark byte-equivalent',
+        );
+        must(w.fixtureErrors.length === 0, 'No uncaught browser errors', {
+          errors: w.fixtureErrors,
+        });
+        await verifyFiles();
+      } catch (error) {
+        failed = error.stack;
+        checks.push({
+          case: current,
+          name: 'Fixture completion',
+          passed: false,
+          error: failed,
+          phase,
+          hostStatus: d?.getElementById('flight-status')?.textContent,
+          errors: w?.fixtureErrors,
+        });
+      } finally {
+        if (manual && manualCleanup) {
+          $('run').disabled = false;
+        } else {
+          try {
+            await cleanup();
+          } catch (error) {
+            failed ??= error.stack;
+            checks.push({
+              case: 'cleanup',
+              name: 'Player disposal',
+              passed: false,
+              error: error.message,
+            });
+          }
+          const receipt = {
+            format: 'FPVGaragePlaybackBrowserEvidence.v1',
+            createdAt: new Date().toISOString(),
+            passed: !failed && checks.every((c) => c.passed),
+            candidateHostSha256: manifest?.candidateHostSha256,
+            sourceBase: manifest?.sourceBase,
+            sourceFiles: manifest?.sourceFiles,
+            checks,
+            runs,
+            phases,
+            preparationPauses,
+            limitations: [
+              'Controlled frame timestamps accelerate exact commands; counts/timings are not hardware FPS or input latency.',
+              'Preparation watchdog pauses are recorded and resumed deliberately once; in-flight pauses are never auto-resumed.',
+              'Actual production renderer and card/host flows; programmatic visibility does not certify artistic readability.',
+              'Live devices are controlled fixtures; no physical radio, mobile, native wrapper or human acceptance claim.',
+              'Separate real-time manual review uses native animation frames and does not alter this receipt.',
+              'No unit-test suite added.',
+            ],
+          };
+          window.fpvGaragePlaybackReceipt = receipt;
+          $('receipt').value = JSON.stringify(receipt, null, 2);
+          $('status').textContent =
+            `${receipt.passed ? 'PASS' : 'FAIL'} ${checks.filter((c) => c.passed).length}/${checks.length} · ${runs.length} completed runs`;
+          $('run').disabled = false;
+        }
+      }
+    }
+    $('run').onclick = () => execute();
+    $('show-deck').onclick = () => execute('garage-02');
+    $('show-combat').onclick = () => execute('garage-06');
+    $('camera').onclick = () => {
+      const w = frame.contentWindow,
+        node = w.document.getElementById('flight-camera');
+      if (node) {
+        node.value = node.value === 'fpv' ? 'chase' : 'fpv';
+        node.dispatchEvent(new w.Event('change', { bubbles: true }));
+      }
+    };
+    $('portrait').onclick = () => {
+      frame.style.width = frame.style.width === '390px' ? '1280px' : '390px';
+      frame.style.height = frame.style.width === '390px' ? '844px' : '800px';
+    };
+  </script>
+</html>

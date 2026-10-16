@@ -10,6 +10,7 @@ import {
   installedTeamGameplayId,
 } from '../creator/team-installed.mjs';
 import { stepCoop } from '../coop/core.mjs';
+import { resolveGameplayTuning as historicalTuning } from '../gameplay-tuning-v1.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 async function prepared(seed = 12) {
@@ -21,10 +22,15 @@ async function prepared(seed = 12) {
   return prepareCreatorTeamCampaign(generated.pack, generated.provenance);
 }
 
-function recordRoute(run) {
+function recordRoute(run, { finishHistorical = false } = {}) {
   const segments = [],
     tick = (directions) => {
       const commands = directions.map((direction, seat) => {
+          if (
+            finishHistorical &&
+            (run.needsNeutral[seat] || run.players[seat].blockedDirection === direction)
+          )
+            return { direction: null, boost: false, support: false };
           const player = run.players[seat],
             coverDrifters = Boolean(run.level.goal.cores),
             support =
@@ -109,6 +115,19 @@ function recordRoute(run) {
       () => at('y', [6.5, 6.5]),
     );
     stage(['right', 'left'], () => run.status === 'won');
+  }
+  if (finishHistorical) {
+    stage(['up', 'up'], () => run.players.every((player) => player.y <= 0.51));
+    stage(
+      () => toward('x', [60.5, 50.5]),
+      () => at('x', [60.5, 50.5]),
+    );
+    stage(['down', 'down'], () => run.players.every((player) => player.y >= 34.99));
+    stage(
+      () => toward('x', [10.5, 20.5]),
+      () => at('x', [10.5, 20.5]),
+    );
+    stage(['up', 'up'], () => run.players.every((player) => player.y <= 1));
   }
   return segments;
 }
@@ -338,4 +357,109 @@ test('inventory and launch reject changed stored package bytes before gameplay',
   });
   await assert.rejects(reopened.inventory(), /integrity check/);
   await assert.rejects(reopened.load(editionId), /integrity check/);
+});
+
+test('a verified old Retry completion clears only its matching checkpoint without issuing another receipt', async () => {
+  const memory = managedIndexedDB(),
+    store = createInstalledTeamCampaignStore({ indexedDB: memory.indexedDB }),
+    campaign = await prepared(8),
+    { editionId } = await store.install(campaign),
+    level = campaign.pack.levels[0],
+    tuning = historicalTuning('standard'),
+    gameplayId = installedTeamGameplayId(campaign.pack, level.id, 'standard', 'full', tuning),
+    run = createInstalledTeamAttempt(campaign.pack, level.id, 'standard', 'full', tuning),
+    segments = recordRoute(run, { finishHistorical: true }),
+    attempt = createInstalledTeamAttemptSnapshot({
+      editionId,
+      attemptId: 'old-picture-id',
+      gameplayId,
+      presetId: 'full',
+      tuning,
+      run,
+      segments,
+    }),
+    receipt = {
+      editionId,
+      levelId: level.id,
+      runId: attempt.attemptId,
+      gameplayId,
+      difficulty: 'standard',
+      presetId: 'full',
+      attempt,
+    },
+    first = await store.recordCompletion(receipt),
+    retry = createInstalledTeamAttempt(campaign.pack, level.id, 'standard', 'full', tuning),
+    commands = segments[0].commands;
+  for (let i = 0; i < 10; i++) stepCoop(retry, commands);
+  const snapshot = createInstalledTeamAttemptSnapshot({
+    editionId,
+    attemptId: attempt.attemptId,
+    gameplayId,
+    presetId: 'full',
+    tuning,
+    run: retry,
+    segments: [{ ticks: 10, commands }],
+  });
+  const saved = await store.recordAttempt(snapshot, { expectedGeneration: first.generation });
+  await assert.rejects(
+    store.recordCompletion({ ...receipt, expectedGeneration: first.generation }),
+    /changed in another tab/,
+  );
+  await assert.rejects(
+    store.recordCompletion({
+      ...receipt,
+      attempt: {
+        ...attempt,
+        checkpoint: { ...attempt.checkpoint, stateIdentity: '0000000000000000' },
+      },
+      expectedGeneration: saved.generation,
+    }),
+    /verification/,
+  );
+  assert.deepEqual((await store.recordCompletion(receipt)).attempts[level.id], snapshot);
+  const cleaned = await store.recordCompletion({
+    ...receipt,
+    expectedGeneration: saved.generation,
+  });
+  assert.equal(cleaned.generation, saved.generation + 1);
+  assert.deepEqual(cleaned.clears, first.clears);
+  assert.deepEqual(cleaned.attempts, {});
+  const newer = await store.recordAttempt(
+    { ...snapshot, attemptId: 'newer-id' },
+    { expectedGeneration: cleaned.generation },
+  );
+  const duplicate = await store.recordCompletion({
+    ...receipt,
+    expectedGeneration: newer.generation,
+  });
+  assert.deepEqual(duplicate, newer);
+  const divergedRun = createInstalledTeamAttempt(
+    campaign.pack,
+    level.id,
+    'standard',
+    'full',
+    tuning,
+  );
+  const neutral = [
+    { direction: null, boost: false, support: false },
+    { direction: null, boost: false, support: false },
+  ];
+  stepCoop(divergedRun, neutral);
+  const divergedSnapshot = createInstalledTeamAttemptSnapshot({
+    editionId,
+    attemptId: attempt.attemptId,
+    gameplayId,
+    presetId: 'full',
+    tuning,
+    run: divergedRun,
+    segments: [{ ticks: 1, commands: neutral }],
+  });
+  const diverged = await store.recordAttempt(divergedSnapshot, {
+    expectedGeneration: newer.generation,
+  });
+  await assert.rejects(
+    store.recordCompletion({ ...receipt, expectedGeneration: diverged.generation }),
+    /newer installed Team attempt/,
+  );
+  store.close();
 });

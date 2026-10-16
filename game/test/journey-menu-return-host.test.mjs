@@ -93,7 +93,7 @@ for (const route of ['1', 'opening', 'authored'])
       const { p, backend } = await setup(t, route);
       const before = await backend.read();
       const opener = await open(p, 'shell-play');
-      assert.equal(p.$('journey-back').textContent, 'Back to menu');
+      assert.equal(p.$('journey-back').textContent, 'Back to menu →');
       back(p, method, t);
       assert.equal(p.$('shell-home').open, true);
       assert.equal(p.doc.activeElement, opener);
@@ -134,7 +134,7 @@ for (const origin of ['field', 'home'])
     const opener = await open(p, origin === 'home' ? 'shell-play' : 'shell-packs');
     assert.equal(
       p.$('journey-back').textContent,
-      origin === 'home' ? 'Back to menu' : 'Back to game',
+      origin === 'home' ? 'Back to menu →' : 'Back to game',
     );
     p.$('journey-search').value = 'Two keepers';
     p.$('journey-search').emit('input');

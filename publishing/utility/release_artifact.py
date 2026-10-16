@@ -52,9 +52,12 @@ COMMIT = re.compile(r'[0-9a-f]{40}')
 WORKFLOW = '.github/workflows/qualify-release-source.yml'
 FASTLINE_WORKFLOW = '.github/workflows/fastline-release.yml'
 QUALIFICATION_WORKFLOWS = {WORKFLOW, FASTLINE_WORKFLOW}
-GATES = ['validate', 'lint', 'format', 'native-format', 'motion-syntax', 'test']
-COMMANDS = ['npm run validate', 'npm run lint', 'npm run format:check',
-            'npm run format:native:check', 'node --check authoring/motion-lab/app.js']
+GATES = ['validate', 'motion-syntax', 'test']
+COMMANDS = ['npm run validate', 'node --check authoring/motion-lab/app.js']
+# Keep the retained-workflow evidence contract in lockstep with the fast
+# qualification workflow.  Lint and formatting are intentionally no longer
+# release gates, so evidence must neither require nor fabricate their steps.
+GATE_STEP_NAMES = ['Validate source', 'Check motion lab syntax']
 WAIVER_FORMAT = 'revealline-source-qualification.v2'
 POLICY_PATH = 'publishing/test-policy.json'
 WAIVER_AUTHORIZATION = 'explicit-user-request-20260922'
@@ -379,7 +382,7 @@ def qualification_check(q, binding):
             'Reviewed qualification identity/result differs')
     gates = q['gates']
     require([g['gate'] for g in gates] == GATES and all(successful(g['step']) for g in gates) and
-            [g['command'] for g in gates[:5]] == COMMANDS, 'All six actual source gates required')
+            [g['command'] for g in gates[:len(COMMANDS)]] == COMMANDS, 'All configured source gates required')
     counts_pass(q['tests'])
     require(positive(q['testFiles'], 10000), 'Actual test-file count missing')
     families = [gates[-1]['actualJobSteps'], q['additionalManualQualification']['shards']]
@@ -410,9 +413,9 @@ def waiver_qualification_check(q, binding):
             q.get('version') == source['version'] and q.get('allTrackedSourceContentsAndModesMatch') is True,
             'Reviewed qualification identity/result differs')
     gates = q['gates']
-    require([g['gate'] for g in gates] == GATES[:5] and [g['command'] for g in gates] == COMMANDS and
+    require([g['gate'] for g in gates] == GATES[:len(COMMANDS)] and [g['command'] for g in gates] == COMMANDS and
             all(successful(g['step']) and 'actualJobSteps' not in g for g in gates),
-            'All five actual non-test source gates required')
+            'All configured non-test source gates required')
     policy = q['testPolicy']
     require(set(policy) == {'mode', 'authorization', 'reason', 'policyEvidence'} and
             policy['mode'] == 'waived' and policy['authorization'] == WAIVER_AUTHORIZATION and
@@ -531,9 +534,7 @@ def verify_evidence(body, qualification, source, policy_body=None):
                     len({j['id'] for j in job_rows}) == len(job_rows), 'Waiver original jobs incomplete or borrowed')
             source_jobs_check(job_rows, source['commit'], waived=True)
             qualify = next(j for j in job_rows if str(j.get('name', '')).removeprefix('qualify / ') == 'qualify')
-            names = ['Validate source', 'Lint source', 'Check formatting',
-                     'Check native formatting', 'Check motion lab syntax']
-            for gate, name in zip(qualification['gates'], names):
+            for gate, name in zip(qualification['gates'], GATE_STEP_NAMES):
                 matched = [s for s in qualify.get('steps', []) if s.get('name') == name]
                 require(gate.get('jobId') == qualify['id'] and len(matched) == 1 and
                         all(gate['step'].get(k) == matched[0].get(k) for k in ['name', 'number', 'status', 'conclusion']) and

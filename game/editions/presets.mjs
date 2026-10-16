@@ -3,11 +3,13 @@ import { bodyMotionPose, validateBodyBacking } from '../ui/body-motion.mjs';
 import { validateTheme } from '../content.mjs';
 import { validateAnimationRecipes } from '../../authoring/motion-lab/animation.mjs';
 import { freezeEdition, resolveEditionAssets, resolveEditionSelection } from './model.mjs';
+import { validateRewardCharacterIds, createRewardCosmeticRegistry } from '../rewards/cosmetics.mjs';
 
 /** Validate cosmetic motion before a theme becomes active. The same bounded
  * rigid transform is shared with rendering; it never supplies simulation rules. */
 export function validateEditionPresetMotion(source) {
   const value = boundedJSON(source);
+  validateRewardCharacterIds(value);
   for (const body of Object.values(value.characters ?? {})) {
     required(body && typeof body === 'object' && !Array.isArray(body), 'Invalid character preset.');
     validateBodyBacking(body);
@@ -102,5 +104,11 @@ export function validateEditionPresentation({ catalog, editionId, themes, preset
       'Edition body artwork is outside its selected approved asset closure.',
     );
   }
+  createRewardCosmeticRegistry({
+    presets: bodies,
+    assets,
+    themes: container.themes,
+    publication: selection.edition.publication,
+  });
   return freezeEdition({ theme, presets: bodies });
 }

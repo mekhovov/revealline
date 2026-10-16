@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "piers": [
+    {
+      "id": "dish-leg-w-n",
+      "bottom": 33.493,
+      "top": 55.65299999999999,
+      "minimumOverlapM": 0.03503287380698339,
+      "samples": 9
+    },
+    {
+      "id": "dish-leg-w-s",
+      "bottom": 33.493,
+      "top": 55.65299999999999,
+      "minimumOverlapM": 0.03503287380696918,
+      "samples": 9
+    },
+    {
+      "id": "dish-leg-e-n",
+      "bottom": 33.493,
+      "top": 55.65299999999999,
+      "minimumOverlapM": 0.03503287380698339,
+      "samples": 9
+    },
+    {
+      "id": "dish-leg-e-s",
+      "bottom": 33.493,
+      "top": 55.65299999999999,
+      "minimumOverlapM": 0.03503287380696918,
+      "samples": 9
+    }
+  ],
+  "receiverStruts": 3,
+  "terrainFilesIdentical": 72,
+  "sourceRevision": "composition-r3",
+  "nativeAccepted": false
+}

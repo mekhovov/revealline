@@ -14,7 +14,11 @@ import {
   declaredJSONPaths,
   validateStudioDraft,
   validateStudioHistory,
+  withStudioAppearanceTheme,
+  withStudioAppearanceDefault,
 } from '../../authoring/company-studio/model.mjs';
+import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
+import { createThemeCandidate } from '../presentation/theme-preview.mjs';
 import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createHash } from 'node:crypto';
@@ -23,6 +27,7 @@ import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { projectEditionGuideScenario } from '../editions/selected-presentation.mjs';
 import { createLessonScenario } from '../first-flight.mjs';
 import { readFile } from 'node:fs/promises';
+import { EDITION_LIMITS } from '../editions/model.mjs';
 
 const previewPath = '/preview/game/company.html';
 const baseURL = 'http://localhost/authoring/company-studio/';
@@ -37,8 +42,21 @@ function fetchFiles(files, requests = []) {
       : new Response('Missing', { status: 404 });
   };
 }
-async function neutral() {
+async function neutral({ appearanceCandidate } = {}) {
   const source = createCompanyWorkspaceFiles({ brandId: 'acme', name: 'Acme' });
+  if (appearanceCandidate) {
+    source.catalog = withStudioAppearanceDefault(
+      withStudioAppearanceTheme(source.catalog, appearanceCandidate),
+      {
+        scope: 'community',
+        id: 'acme',
+        appearanceDefault: {
+          familyId: appearanceCandidate.family.id,
+          revision: appearanceCandidate.family.revision,
+        },
+      },
+    );
+  }
   source.files.set(
     'game/company.html',
     Buffer.from('<!doctype html><html><head><title>Company</title></head><body></body></html>'),
@@ -68,6 +86,35 @@ async function neutral() {
   return { source, result, report, input };
 }
 
+test('preview admits the registered runtime ledger and rejects invalid or duplicate unselected assets', async () => {
+  const { input } = await neutral();
+  const runtimeAssets = JSON.parse(
+    await readFile(new URL('../editions/runtime-assets.json', import.meta.url)),
+  );
+  assert.ok(runtimeAssets.length > 128 && runtimeAssets.length <= EDITION_LIMITS.assets);
+  await verifyStudioPreview({ ...input, runtimeAssets });
+  for (const invalid of [null, Array(EDITION_LIMITS.assets + 1).fill(runtimeAssets[0])])
+    await assert.rejects(
+      verifyStudioPreview({ ...input, runtimeAssets: invalid }),
+      /Invalid trusted engine asset ledger/,
+    );
+  for (const duplicate of [
+    { ...runtimeAssets[0], path: 'game/otherwise-unused.png' },
+    { ...runtimeAssets[0], id: 'otherwise-unused' },
+  ])
+    await assert.rejects(
+      verifyStudioPreview({ ...input, runtimeAssets: [...runtimeAssets, duplicate] }),
+      /Duplicate trusted engine asset identity or path/,
+    );
+  await assert.rejects(
+    verifyStudioPreview({
+      ...input,
+      runtimeAssets: [...runtimeAssets, { ...runtimeAssets[0], path: '../outside.png' }],
+    }),
+    /Invalid asset identity or path/,
+  );
+});
+
 test('whole-game preview verifies the report, every artifact byte and exact selected draft', async () => {
   const f = await neutral(),
     requests = [];
@@ -75,7 +122,7 @@ test('whole-game preview verifies the report, every artifact byte and exact sele
     ...f.input,
     fetcher: fetchFiles(f.result.files, requests),
   });
-  assert.equal(verified.url.href, 'http://localhost/preview/game/company.html');
+  assert.equal(verified.url.href, 'http://localhost/preview/game/company.html?studio-preview=1');
   assert.equal(verified.verifiedFiles, f.result.files.size);
   assert.equal(requests.length, f.result.files.size);
   assert(
@@ -89,10 +136,51 @@ test('whole-game preview verifies the report, every artifact byte and exact sele
   );
 });
 
+test('a self-consistent compiler report cannot omit or add curated theme definitions behind matching pins', async () => {
+  const appearanceCandidate = createThemeCandidate(createDefaultThemeBundle());
+  const f = await neutral({ appearanceCandidate });
+  await verifyStudioPreview(f.input);
+  for (const appearanceThemes of [
+    [],
+    [appearanceCandidate, createThemeCandidate(createDefaultThemeBundle(), { familyId: 'tryzub' })],
+  ]) {
+    const files = new Map(f.result.files);
+    const catalog = JSON.parse(files.get('edition-catalog.json'));
+    catalog.appearanceThemes = appearanceThemes;
+    const catalogBytes = Buffer.from(canonicalJSON(catalog) + '\n');
+    files.set('edition-catalog.json', catalogBytes);
+    const manifest = JSON.parse(files.get('edition-build.json'));
+    const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+    manifest.catalogSha256 = hash(catalogBytes);
+    Object.assign(
+      manifest.files.find((row) => row.path === 'edition-catalog.json'),
+      {
+        bytes: catalogBytes.length,
+        sha256: hash(catalogBytes),
+      },
+    );
+    const manifestBytes = Buffer.from(canonicalJSON(manifest) + '\n');
+    files.set('edition-build.json', manifestBytes);
+    const report = structuredClone(f.report);
+    report.artifact = {
+      path: 'edition-build.json',
+      bytes: manifestBytes.length,
+      sha256: hash(manifestBytes),
+    };
+    report.summary.runtimeBytes = [...files.values()].reduce((sum, bytes) => sum + bytes.length, 0);
+    await assert.rejects(
+      verifyStudioPreview({ ...f.input, report, fetcher: fetchFiles(files) }),
+      /preview appearance differs/,
+    );
+  }
+});
+
 test('changed executable bytes, report totals/exclusions and invented approval cannot pass preview verification', async () => {
   const f = await neutral();
   const tampered = new Map(f.result.files);
-  tampered.set('game/preview-test.mjs', Buffer.from('export const version = 2;'));
+  const executable = Buffer.from(tampered.get('game/preview-test.mjs'));
+  executable[0] ^= 1;
+  tampered.set('game/preview-test.mjs', executable);
   await assert.rejects(
     verifyStudioPreview({ ...f.input, fetcher: fetchFiles(tampered) }),
     /Artifact hash differs/,
@@ -231,7 +319,11 @@ test('focused community previews accept canonical theme projection but reject se
       ...(edition.presentationHistory ?? []).map((record) => record.path),
       ...catalog.campaigns
         .filter((row) => edition.campaignIds.includes(row.id))
-        .flatMap((row) => [row.sourcePath, ...(row.lessonPath ? [row.lessonPath] : [])]),
+        .flatMap((row) => [
+          row.sourcePath,
+          ...(row.lessonPath ? [row.lessonPath] : []),
+          ...(row.rewardPath ? [row.rewardPath] : []),
+        ]),
     ];
     for (const path of paths) {
       const text = await readFile(new URL(`../../${path}`, import.meta.url), 'utf8');

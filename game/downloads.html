@@ -1,12 +1,47 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="./access-gate.css" />
+    <script src="./access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      data-theme-follow-context="true"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link rel="stylesheet" href="presentation/industrial-workshop.css" data-industrial-workshop />
+    <script
+      src="presentation/theme-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title data-i18n="interface:downloads.title">Reveal Line · Offline game</title>
+    <title data-i18n="interface:downloads.title">FPV / LINE · Offline game</title>
     <link rel="stylesheet" href="downloads.css" />
     <link rel="stylesheet" href="i18n/style.css" />
-    <script type="module" src="downloads.mjs"></script>
+    <script
+      src="downloads.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="ui/art/identity/fpv-line/icon-32.png" />
   </head>
   <body>
     <main>
@@ -21,7 +56,55 @@
         Download once, then play without an internet connection. Recorded music is optional; game
         sounds and the procedural score are included.
       </p>
-      <section id="destination-recovery" aria-labelledby="destination-title" hidden>
+      <section data-ui-surface="panel" aria-labelledby="updates-title">
+        <h2 id="updates-title" data-i18n="interface:updates.title">Game updates</h2>
+        <p id="update-status" role="status" data-i18n="interface:updates.help">
+          Check the latest published game. Review the download size before updating; your progress
+          is kept.
+        </p>
+        <a
+          id="check-updates"
+          class="button"
+          href="../app/update.html"
+          target="_top"
+          data-i18n="interface:updates.check"
+          >Check for updates</a
+        >
+        <a id="play-updated" class="button" hidden target="_top" data-i18n="interface:updates.play"
+          >Play updated game</a
+        >
+      </section>
+      <section
+        id="initialization-recovery"
+        data-ui-surface="panel"
+        hidden
+        aria-labelledby="initialization-title"
+      >
+        <h2 id="initialization-title" data-i18n="interface:downloads.loadingFailedTitle">
+          Download information unavailable
+        </h2>
+        <p data-i18n="interface:downloads.loadingFailed">
+          Could not load download information. Reconnect and try again. Your installed game,
+          downloaded files and progress are kept.
+        </p>
+        <button
+          id="retry-initialization"
+          type="button"
+          data-i18n="interface:downloads.retryLoading"
+        >
+          Retry loading update
+        </button>
+        <details>
+          <summary data-i18n="interface:downloads.loadingDetails">Loading details</summary>
+          <p id="initialization-detail"></p>
+        </details>
+      </section>
+      <section
+        data-ui-surface="panel"
+        id="destination-recovery"
+        aria-labelledby="destination-title"
+        hidden
+      >
         <h2 id="destination-title" data-i18n="interface:downloads.prepareRequestedMode">
           Prepare the requested mode
         </h2>
@@ -31,9 +114,9 @@
           Soundtracks are not required. Back to game returns to the downloaded Solo menu.
         </p>
       </section>
-      <section aria-labelledby="installation-title">
+      <section data-ui-surface="panel" aria-labelledby="installation-title">
         <h2 id="installation-title" data-i18n="interface:downloads.installHeading">
-          Install Reveal Line
+          Install FPV / LINE
         </h2>
         <p id="installation-status" role="status">Checking app installation…</p>
         <button id="install-native" hidden data-i18n="interface:launcher.install">
@@ -56,7 +139,7 @@
           this browser.
         </p>
       </section>
-      <section aria-labelledby="game-title">
+      <section data-ui-surface="panel" aria-labelledby="game-title">
         <h2 id="game-title">Game for offline play</h2>
         <p id="game-status" role="status">Checking this edition…</p>
         <label id="starter-choice"
@@ -66,11 +149,49 @@
           ></label
         >
         <label
-          ><input id="all-game" type="checkbox" />
+          ><input id="all-game" type="checkbox" disabled />
           <span data-i18n="interface:downloads.allGameplay"
-            >All current levels and modes</span
+            >All current levels, modes and communities</span
           ></label
         >
+        <div id="experience-choices">
+          <h3 data-i18n="interface:downloads.communitiesHeading">Communities</h3>
+          <p data-i18n="interface:downloads.communitiesHelp">
+            Choose communities to keep on this device, then switch between them here or in Settings
+            → Content &amp; Offline → Communities. Community rewards include their pictures and
+            listening activities. Soundtrack albums remain optional. Online play needs no download.
+          </p>
+          <div class="actions">
+            <button
+              id="select-communities"
+              disabled
+              type="button"
+              data-i18n="interface:downloads.selectCommunities"
+            >
+              Select all communities
+            </button>
+            <button
+              id="select-everything"
+              disabled
+              type="button"
+              data-i18n="interface:downloads.selectEverything"
+            >
+              Select all games, communities, SIM &amp; extras
+            </button>
+          </div>
+          <p data-i18n="interface:downloads.selectEverythingHelp">
+            Selection only: review the total below, then confirm the download. Soundtracks, archives
+            and authoring tools stay separate.
+          </p>
+          <div id="communities"></div>
+          <h3 data-i18n="interface:downloads.simHeading">Simulator &amp; flight practice</h3>
+          <div id="experiences"></div>
+          <p data-i18n="interface:downloads.simHelp">
+            Includes the published simulator, built-in worlds and local assets. Use touch, keyboard
+            or a supported controller. 3D flight requires WebGL 2. User-imported worlds remain in
+            their own library.
+          </p>
+        </div>
         <p id="game-size"></p>
         <p data-i18n="interface:downloads.sizeHelp">
           Choose the size that suits your connection; mobile data charges may apply. Keep this app
@@ -128,7 +249,7 @@
           >Open progress transfer in Classic</a
         >
       </section>
-      <section aria-labelledby="music-title">
+      <section data-ui-surface="panel" aria-labelledby="music-title">
         <h2 id="music-title" data-i18n="interface:downloads.musicHeading">Optional soundtracks</h2>
         <p id="music-status" role="status">Soundtracks: checking downloaded recordings…</p>
         <p data-i18n="interface:downloads.musicHelp">

@@ -1,0 +1,344 @@
+{
+  "format": "revealline.rotor-body-detail-candidates.v1",
+  "status": "source-candidate-not-runtime-default",
+  "construction": "reference-v5",
+  "referenceConcept": "authoring/library/fpv-proportion-candidates/roster-concept-v1.png",
+  "referenceReview": "docs/drone-reference-review.md",
+  "referenceUse": "Visual construction reference only; no pixels copied, resized or quantized.",
+  "sources": {
+    "game/presentation/rotor-body-optical-art.mjs": "75bf47f1ee5d2f9472e423d3e28a077b2ef734292c6a020af80f10aaefd6ccd4",
+    "game/presentation/rotor-body-detail-art.mjs": "6600a1df792142f8f046e75af7b069401f3af4b3351ad931ec64491331723338",
+    "game/presentation/rotor-candidate-art.mjs": "d43339132bbb0e16ff5f33af444decec62d7e9fb11f17de23e784d16904c756e",
+    "game/presentation/pixel-art.mjs": "544c975f88686455607dbed2f4babb472dc1ad5d9992d878c8c91dc2b123e582"
+  },
+  "preserves": [
+    "Existing production sprites and registries",
+    "Reference-v2, reference-v3 and reference-v4 source, PNGs and manifests",
+    "Exact reference-v3 Scout motor, camera, antenna and arm pixels outside the central equipment region",
+    "Exact reference-v3 frame size, pivot and global occupied bounds",
+    "Exact reference-v2 rotor geometry",
+    "Simulation, saves and replays"
+  ],
+  "assets": [
+    {
+      "id": "candidate.reference-v5.scout.compact",
+      "slot": "player.scout.compact",
+      "treatment": "compact",
+      "path": "authoring/library/fpv-body-optical-candidates/scout.compact.png",
+      "bytes": 295,
+      "sha256": "8a8841e02dcdcabff3993981cf3cd3025b13ce2aac99760fa3a19441e72a6a6f",
+      "width": 32,
+      "height": 32,
+      "inspection": {
+        "opaquePixels": 154,
+        "transparentPixels": 870,
+        "colors": ["#070b12", "#101923", "#182531", "#425563", "#647786", "#78dce8", "#f4bf62"],
+        "occupiedBounds": {
+          "x": 0.21875,
+          "y": 0.15625,
+          "width": 0.59375,
+          "height": 0.71875
+        }
+      },
+      "geometry": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        },
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "occupiedBounds": {
+          "x": 0.21875,
+          "y": 0.15625,
+          "width": 0.59375,
+          "height": 0.71875
+        },
+        "rotorAnchors": [
+          {
+            "x": 0.25,
+            "y": 0.25,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.75,
+            "y": 0.25,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": 0.25,
+            "y": 0.75,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": -1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.75,
+            "y": 0.75,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": 1,
+            "phaseDegrees": 69
+          }
+        ],
+        "nineSlice": null
+      },
+      "assetRevision": {
+        "format": "revealline-asset-revision.v1",
+        "id": "candidate.reference-v5.scout.compact",
+        "revision": 1,
+        "kind": "image",
+        "description": "Original native Scout optical candidate with a wider chamfered amber battery, dark tie-down straps and the unchanged v3 camera, carbon arms and small motors.",
+        "file": {
+          "sha256": "8a8841e02dcdcabff3993981cf3cd3025b13ce2aac99760fa3a19441e72a6a6f",
+          "bytes": 295,
+          "mime": "image/png",
+          "width": 32,
+          "height": 32
+        },
+        "geometry": {
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "occupiedBounds": {
+            "x": 0.21875,
+            "y": 0.15625,
+            "width": 0.59375,
+            "height": 0.71875
+          },
+          "rotorAnchors": [
+            {
+              "x": 0.25,
+              "y": 0.25,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": 1,
+              "phaseDegrees": 0
+            },
+            {
+              "x": 0.75,
+              "y": 0.25,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": -1,
+              "phaseDegrees": 23
+            },
+            {
+              "x": 0.25,
+              "y": 0.75,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": -1,
+              "phaseDegrees": 46
+            },
+            {
+              "x": 0.75,
+              "y": 0.75,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": 1,
+              "phaseDegrees": 69
+            }
+          ],
+          "nineSlice": null
+        },
+        "recipe": null,
+        "provenance": {
+          "creator": "Reveal Line original native pixel drawings, authored with Codex",
+          "source": "game/presentation/rotor-body-optical-art.mjs reference-v5; original native construction composed from immutable reference-v3 source",
+          "license": "Original project artwork; no reference-image pixels incorporated.",
+          "prompt": "Draw an original north-facing scout body directly on a 32 by 32 pixel grid. Refine the immutable reference-v3 source with a six-pixel-wide central amber battery face and chamfered equipment shoulders between the rotor sweeps. Preserve the camera, antenna, carbon arms, small motors and global occupied bounds. Keep all equipment clear of the nominal rotor disks and new shoulder pixels clear of the still larger reserved sizing envelope. Draw the compact and detailed battery faces on their native grids; do not load, resize or sample PNGs. Use only the existing twelve Field Kit colours and binary alpha. Preserve the exact reference-v2 pivot and rotor anchors, radii, blade counts, phases and handedness. Leave blades to the shared renderer; no reticles, baked blur or lettering. The reserved sizing envelope is conservative framing geometry, not a claim of blade contact. Compare against retained v3 at 20/24/32 CSS pixels, both render paths, bright/dark artwork and four headings.",
+          "parent": null
+        },
+        "quality": {
+          "stage": "produced",
+          "evidence": [
+            "Source candidate only. Source geometry and reproduction checks are not art approval. All equipment clears the nominal rotor disks and new shoulder pixels also clear the larger reserved sizing envelope. Full-board readability still requires visual review."
+          ]
+        }
+      }
+    },
+    {
+      "id": "candidate.reference-v5.scout.detailed",
+      "slot": "player.scout.detailed",
+      "treatment": "detailed",
+      "path": "authoring/library/fpv-body-optical-candidates/scout.detailed.png",
+      "bytes": 573,
+      "sha256": "3f0483f3a9b5b37cd11189fadc6afe4ffc3904e026d495fa0f63efaf7bedd531",
+      "width": 64,
+      "height": 64,
+      "inspection": {
+        "opaquePixels": 638,
+        "transparentPixels": 3458,
+        "colors": [
+          "#070b12",
+          "#101923",
+          "#182531",
+          "#425563",
+          "#647786",
+          "#687c55",
+          "#78dce8",
+          "#a5b2bb",
+          "#f4bf62"
+        ],
+        "occupiedBounds": {
+          "x": 0.21875,
+          "y": 0.15625,
+          "width": 0.578125,
+          "height": 0.71875
+        }
+      },
+      "geometry": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64
+        },
+        "pivot": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "occupiedBounds": {
+          "x": 0.21875,
+          "y": 0.15625,
+          "width": 0.578125,
+          "height": 0.71875
+        },
+        "rotorAnchors": [
+          {
+            "x": 0.25,
+            "y": 0.25,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.75,
+            "y": 0.25,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": 0.25,
+            "y": 0.75,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": -1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.75,
+            "y": 0.75,
+            "radius": 0.205,
+            "blades": 3,
+            "direction": 1,
+            "phaseDegrees": 69
+          }
+        ],
+        "nineSlice": null
+      },
+      "assetRevision": {
+        "format": "revealline-asset-revision.v1",
+        "id": "candidate.reference-v5.scout.detailed",
+        "revision": 1,
+        "kind": "image",
+        "description": "Original native Scout optical candidate with a wider chamfered amber battery, dark tie-down straps and the unchanged v3 camera, carbon arms and small motors.",
+        "file": {
+          "sha256": "3f0483f3a9b5b37cd11189fadc6afe4ffc3904e026d495fa0f63efaf7bedd531",
+          "bytes": 573,
+          "mime": "image/png",
+          "width": 64,
+          "height": 64
+        },
+        "geometry": {
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 64,
+            "height": 64
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "occupiedBounds": {
+            "x": 0.21875,
+            "y": 0.15625,
+            "width": 0.578125,
+            "height": 0.71875
+          },
+          "rotorAnchors": [
+            {
+              "x": 0.25,
+              "y": 0.25,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": 1,
+              "phaseDegrees": 0
+            },
+            {
+              "x": 0.75,
+              "y": 0.25,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": -1,
+              "phaseDegrees": 23
+            },
+            {
+              "x": 0.25,
+              "y": 0.75,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": -1,
+              "phaseDegrees": 46
+            },
+            {
+              "x": 0.75,
+              "y": 0.75,
+              "radius": 0.205,
+              "blades": 3,
+              "direction": 1,
+              "phaseDegrees": 69
+            }
+          ],
+          "nineSlice": null
+        },
+        "recipe": null,
+        "provenance": {
+          "creator": "Reveal Line original native pixel drawings, authored with Codex",
+          "source": "game/presentation/rotor-body-optical-art.mjs reference-v5; original native construction composed from immutable reference-v3 source",
+          "license": "Original project artwork; no reference-image pixels incorporated.",
+          "prompt": "Draw an original north-facing scout body directly on a 64 by 64 pixel grid. Refine the immutable reference-v3 source with a six-pixel-wide central amber battery face and chamfered equipment shoulders between the rotor sweeps. Preserve the camera, antenna, carbon arms, small motors and global occupied bounds. Keep all equipment clear of the nominal rotor disks and new shoulder pixels clear of the still larger reserved sizing envelope. Draw the compact and detailed battery faces on their native grids; do not load, resize or sample PNGs. Use only the existing twelve Field Kit colours and binary alpha. Preserve the exact reference-v2 pivot and rotor anchors, radii, blade counts, phases and handedness. Leave blades to the shared renderer; no reticles, baked blur or lettering. The reserved sizing envelope is conservative framing geometry, not a claim of blade contact. Compare against retained v3 at 20/24/32 CSS pixels, both render paths, bright/dark artwork and four headings.",
+          "parent": null
+        },
+        "quality": {
+          "stage": "produced",
+          "evidence": [
+            "Source candidate only. Source geometry and reproduction checks are not art approval. All equipment clears the nominal rotor disks and new shoulder pixels also clear the larger reserved sizing envelope. Full-board readability still requires visual review."
+          ]
+        }
+      }
+    }
+  ]
+}

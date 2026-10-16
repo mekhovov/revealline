@@ -41,6 +41,7 @@ export function attachCouchInput({
   heldActions = [],
   steeringEdges = false,
   initialSlots = [null, null],
+  controllerSession = null,
   onPause = () => {},
   onStop = () => {},
   onPads = () => {},
@@ -62,7 +63,9 @@ export function attachCouchInput({
     !Array.isArray(initialSlots) ||
     initialSlots.length !== 2 ||
     initialSlots.some(
-      (slot) => slot !== null && (!Number.isInteger(slot) || slot < 0 || slot > 255),
+      (slot) =>
+        slot !== null &&
+        (!Number.isInteger(slot) || slot < 0 || (slot > 255 && slot < 1024) || slot > 3071),
     ) ||
     new Set(initialSlots.filter((slot) => slot !== null)).size !==
       initialSlots.filter((slot) => slot !== null).length
@@ -431,12 +434,20 @@ export function attachCouchInput({
   function poll() {
     if (destroyed) return players.map(neutralCommand);
     let pads = [];
+    const controllerFrame = controllerSession?.frame();
     try {
-      pads = [...getGamepads()]
+      pads = [...(controllerFrame?.pads || getGamepads())]
         .filter((p) => p?.connected && p.mapping === 'standard')
         .sort((a, b) => a.index - b.index);
     } catch {}
     const indexes = new Set(pads.map((p) => p.index));
+    if (controllerFrame) {
+      players.forEach((player, i) => {
+        if (player.slot !== controllerFrame.slots[i]) player.blocked = true;
+        player.slot = controllerFrame.slots[i];
+      });
+      pendingInitialSlots = null;
+    }
     if (pendingInitialSlots) {
       for (const [seat, slot] of pendingInitialSlots.entries())
         if (slot !== null && indexes.has(slot)) players[seat].slot = slot;
@@ -448,7 +459,7 @@ export function attachCouchInput({
         player.slot = null;
         disconnected = true;
       }
-    for (const pad of pads)
+    for (const pad of controllerFrame ? [] : pads)
       if (!players.some((p) => p.slot === pad.index)) {
         const available = players.find((p) => p.slot === null);
         if (!available) break;

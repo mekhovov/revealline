@@ -42,14 +42,18 @@ const escape = (value) =>
     (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
   );
 
-export async function buildArtworkScreening({ root = ROOT, onProgress = () => {} } = {}) {
+export async function buildArtworkScreening({
+  root = ROOT,
+  onProgress = () => {},
+  inventoryBytes: suppliedInventoryBytes,
+} = {}) {
   const read = (relative) => fs.readFile(path.join(root, relative));
   assert.equal(
     sha256(await read(DECODER_PATH)),
     DECODER_SHA256,
     'Pinned original decoder changed; review and version the screening method.',
   );
-  const inventoryBytes = await read(INVENTORY),
+  const inventoryBytes = suppliedInventoryBytes ?? (await read(INVENTORY)),
     inventory = JSON.parse(inventoryBytes);
   assert.equal(inventory.format, 'revealline-content-inventory.v1');
   assert.equal(inventory.method.decoderSha256, DECODER_SHA256, 'Inventory decoder differs.');
@@ -70,6 +74,7 @@ export async function buildArtworkScreening({ root = ROOT, onProgress = () => {}
       route: mission.route,
       chapter: mission.chapter,
       classification: mission.classification,
+      ...(mission.inventoryLink ? { inventoryLink: mission.inventoryLink } : {}),
     });
     for (const artwork of mission.artworks)
       if (ownership.has(artwork.id))
@@ -206,22 +211,37 @@ export async function buildArtworkScreening({ root = ROOT, onProgress = () => {}
   return { report, thumbnails };
 }
 
-export function artworkScreeningHTML(report) {
+export function artworkScreeningHTML(
+  report,
+  {
+    inventoryFile = 'inventory.html',
+    reportFile = 'artwork-screening.json',
+    command = 'node scripts/content-artwork-screening.mjs --check',
+  } = {},
+) {
   const images = new Map(report.images.map((image) => [image.id, image]));
   const owners = new Map(report.owners.map((owner) => [owner.id, owner]));
   const ownerLink = (id) => {
     const owner = owners.get(id);
-    return `<a href="inventory.html#${encodeURIComponent(id)}">${escape(`${owner?.name ?? id} · ${owner?.mode ?? ''} · ${owner?.chapter ?? ''}`)}</a>`;
+    const link = owner?.inventoryLink;
+    const file = link?.file === 'company-inventory.html' ? link.file : 'inventory.html';
+    return `<a href="${file}#${encodeURIComponent(link?.anchor ?? id)}">${escape(`${owner?.name ?? id} · ${owner?.mode ?? ''} · ${owner?.chapter ?? ''}`)}</a>`;
   };
   const card = (id) => {
     const image = images.get(id);
     return `<figure><a href="../../${escape(image.path)}"><img loading="lazy" width="160" src="${escape(image.thumbnail.path)}" alt="${escape(image.description)}"></a><figcaption><a href="#image-${id}">${escape(image.description || image.path)}</a><br><small>${escape(id.slice(0, 16))}</small></figcaption></figure>`;
   };
-  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Reveal Line artwork screening</title><style>body{max-width:1160px;margin:2rem auto;padding:0 1rem;font:16px/1.5 system-ui;background:#111722;color:#e5edf5}a{color:#8edfff}h1,h2,h3{line-height:1.2}code,small{overflow-wrap:anywhere}.pairs{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem}article,details{border:1px solid #435166;border-radius:.4rem;padding:.8rem;margin:.5rem 0}.images{display:flex;gap:1rem;flex-wrap:wrap}figure{margin:0;flex:1;min-width:120px}img{max-width:100%;height:auto}summary{cursor:pointer}.suspect{border-color:#dcac5e}.warning{color:#ffdf9c}pre{white-space:pre-wrap}</style><h1>Artwork screening · visual review pending</h1><p>This is reproducible screening evidence, not an originality approval. <a href="inventory.html">Complete ownership inventory</a> · <a href="artwork-screening.json">Machine-readable results</a>. Thumbnails are review derivatives; click one to inspect the unchanged original.</p><pre>${escape(JSON.stringify(report.summary, null, 2))}</pre><p class="warning">Exact current copies require replacement decisions. Historical reuse is retained. Nearest matches may be false positives; low distances do not establish plagiarism, uniqueness or gameplay variety. No visual approval has been recorded.</p><h2>Exact current cross-owner copies</h2>${report.exactCurrent.map((group) => `<details><summary>${escape(group.kind)} · ${group.assignments.length} assignments · ${group.artwork.length} originals</summary><div class="images">${group.artwork.map(card).join('')}</div><ul>${group.assignments.map(({ owner }) => `<li>${ownerLink(owner)}</li>`).join('')}</ul></details>`).join('')}<h2>Nearest-match contact sheets</h2><p>Top ${report.method.thresholds.nearest} neighbours per current original after exact matches are removed, deduplicated into pairs. Scores range from 0 to 1216; at most ${report.method.thresholds.suspectDistance} is a conservative <em>suspected</em> label, not a calibrated probability. Crop/transform applies in the named direction.</p><div class="pairs">${report.pairs.map((pair) => `<article${pair.suspected ? ' class="suspect"' : ''}><h3>${pair.suspected ? 'Suspected similarity — review' : 'Nearest neighbour — review'} · ${pair.distance}/1216</h3><div class="images">${card(pair.left)}${card(pair.right)}</div><p>${escape(pair.direction)} · ${escape(pair.crop)} · ${escape(pair.transform)}${pair.lowInformation ? ' · low-information comparison' : ''}</p></article>`).join('')}</div><h2>All originals and ownership</h2>${report.images.map((image) => `<details id="image-${image.id}"><summary>${escape(image.description || image.path)} · ${image.currentOwners.length} current / ${image.historicalOwners.length} historical owners</summary><div class="images">${card(image.id)}</div><p><code>${escape(image.path)}</code><br>Source SHA-256: <code>${image.id}</code><br>Pixel SHA-256: <code>${image.pixelsSha256}</code></p><h3>Current owners</h3><ul>${image.currentOwners.map((id) => `<li>${ownerLink(id)}</li>`).join('')}</ul><details><summary>Historical / tooling references (preserved)</summary><ul>${image.historicalOwners.map((id) => `<li>${ownerLink(id)}</li>`).join('')}</ul></details></details>`).join('')}<h2>Method and limits</h2><p>${escape(report.method.exact)}</p><p>${escape(report.method.similarity)}</p><p>${escape(report.method.crops)}</p><ul>${report.method.limitations.map((value) => `<li>${escape(value)}</li>`).join('')}</ul><p><a href="${report.method.reference}">PDQ implementation guidance</a>: ${escape(report.method.referenceNote)}</p><p>Reproduce: <code>node scripts/content-artwork-screening.mjs --check</code>. Method SHA-256: <code>${report.method.algorithmSha256}</code>.</p></html>\n`;
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Reveal Line artwork screening</title><style>body{max-width:1160px;margin:2rem auto;padding:0 1rem;font:16px/1.5 system-ui;background:#111722;color:#e5edf5}a{color:#8edfff}h1,h2,h3{line-height:1.2}code,small{overflow-wrap:anywhere}.pairs{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem}article,details{border:1px solid #435166;border-radius:.4rem;padding:.8rem;margin:.5rem 0}.images{display:flex;gap:1rem;flex-wrap:wrap}figure{margin:0;flex:1;min-width:120px}img{max-width:100%;height:auto}summary{cursor:pointer}.suspect{border-color:#dcac5e}.warning{color:#ffdf9c}pre{white-space:pre-wrap}</style><h1>Artwork screening · visual review pending</h1><p>This is reproducible screening evidence, not an originality approval. <a href="${escape(inventoryFile)}">Complete ownership inventory</a> · <a href="${escape(reportFile)}">Machine-readable results</a>. Thumbnails are review derivatives; click one to inspect the unchanged original.</p><pre>${escape(JSON.stringify(report.summary, null, 2))}</pre><p class="warning">Exact current copies require replacement decisions. Historical reuse is retained. Nearest matches may be false positives; low distances do not establish plagiarism, uniqueness or gameplay variety. No visual approval has been recorded.</p><h2>Exact current cross-owner copies</h2>${report.exactCurrent.map((group) => `<details><summary>${escape(group.kind)} · ${group.assignments.length} assignments · ${group.artwork.length} originals</summary><div class="images">${group.artwork.map(card).join('')}</div><ul>${group.assignments.map(({ owner }) => `<li>${ownerLink(owner)}</li>`).join('')}</ul></details>`).join('')}<h2>Nearest-match contact sheets</h2><p>Top ${report.method.thresholds.nearest} neighbours per current original after exact matches are removed, deduplicated into pairs. Scores range from 0 to 1216; at most ${report.method.thresholds.suspectDistance} is a conservative <em>suspected</em> label, not a calibrated probability. Crop/transform applies in the named direction.</p><div class="pairs">${report.pairs.map((pair) => `<article${pair.suspected ? ' class="suspect"' : ''}><h3>${pair.suspected ? 'Suspected similarity — review' : 'Nearest neighbour — review'} · ${pair.distance}/1216</h3><div class="images">${card(pair.left)}${card(pair.right)}</div><p>${escape(pair.direction)} · ${escape(pair.crop)} · ${escape(pair.transform)}${pair.lowInformation ? ' · low-information comparison' : ''}</p></article>`).join('')}</div><h2>All originals and ownership</h2>${report.images.map((image) => `<details id="image-${image.id}"><summary>${escape(image.description || image.path)} · ${image.currentOwners.length} current / ${image.historicalOwners.length} historical owners</summary><div class="images">${card(image.id)}</div><p><code>${escape(image.path)}</code><br>Source SHA-256: <code>${image.id}</code><br>Pixel SHA-256: <code>${image.pixelsSha256}</code></p><h3>Current owners</h3><ul>${image.currentOwners.map((id) => `<li>${ownerLink(id)}</li>`).join('')}</ul><details><summary>Historical / tooling references (preserved)</summary><ul>${image.historicalOwners.map((id) => `<li>${ownerLink(id)}</li>`).join('')}</ul></details></details>`).join('')}<h2>Method and limits</h2><p>${escape(report.method.exact)}</p><p>${escape(report.method.similarity)}</p><p>${escape(report.method.crops)}</p><ul>${report.method.limitations.map((value) => `<li>${escape(value)}</li>`).join('')}</ul><p><a href="${report.method.reference}">PDQ implementation guidance</a>: ${escape(report.method.referenceNote)}</p><p>Reproduce: <code>${escape(command)}</code>. Method SHA-256: <code>${report.method.algorithmSha256}</code>.</p></html>\n`;
 }
 
-async function main() {
-  const args = process.argv.slice(2);
+export async function runArtworkScreening({
+  args = process.argv.slice(2),
+  root = ROOT,
+  build = buildArtworkScreening,
+  output = OUTPUT,
+  html = HTML,
+  htmlOptions,
+} = {}) {
   const allowed = new Set(['--write', '--check', '--strict-new', '--baseline', '--reviews']);
   for (let i = 0; i < args.length; i++) {
     assert.ok(allowed.has(args[i]), `Unknown argument: ${args[i]}`);
@@ -235,23 +255,24 @@ async function main() {
     !(args.includes('--write') && args.includes('--strict-new')),
     'Strict checking never updates its evidence.',
   );
-  const { report, thumbnails } = await buildArtworkScreening({
+  const { report, thumbnails } = await build({
+    root,
     onProgress: (message) => console.error(message),
   });
   const outputs = new Map([
-    [OUTPUT, Buffer.from(serialize(report))],
-    [HTML, Buffer.from(artworkScreeningHTML(report))],
+    [output, Buffer.from(serialize(report))],
+    [html, Buffer.from(artworkScreeningHTML(report, htmlOptions))],
     ...[...thumbnails].map(([file, bytes]) => [`${DIRECTORY}/${file}`, bytes]),
   ]);
   if (args.includes('--write'))
     for (const [file, bytes] of outputs) {
-      await fs.mkdir(path.dirname(path.join(ROOT, file)), { recursive: true });
-      await fs.writeFile(path.join(ROOT, file), bytes);
+      await fs.mkdir(path.dirname(path.join(root, file)), { recursive: true });
+      await fs.writeFile(path.join(root, file), bytes);
     }
   if (args.includes('--check'))
     for (const [file, bytes] of outputs)
       assert.ok(
-        bytes.equals(await fs.readFile(path.join(ROOT, file))),
+        bytes.equals(await fs.readFile(path.join(root, file))),
         `Stale screening artifact: ${file}`,
       );
   if (args.includes('--strict-new')) {
@@ -270,7 +291,7 @@ async function main() {
   } else console.log(serialize(report.summary));
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href)
-  main().catch((error) => {
+  runArtworkScreening().catch((error) => {
     console.error(error.message);
     process.exitCode = 1;
   });

@@ -1,0 +1,8 @@
+{
+  "sourceRevision": "cdbe38ff4561db4a0710d7994d0ef4934b552e0a",
+  "checks": 135,
+  "passed": 135,
+  "failed": 0,
+  "newUnitCoverage": false,
+  "command": "node --test game/test/fpv-radio-controls.test.mjs game/test/fpv-radio.test.mjs game/test/mode-play-shell.test.mjs game/test/fpv-flight-ui.test.mjs game/test/fpv-world-appearance-ui.test.mjs"
+}

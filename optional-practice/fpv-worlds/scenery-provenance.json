@@ -1,0 +1,317 @@
+{
+  "format": "FPVSceneryProvenance.v1",
+  "sources": [
+    {
+      "author": "Kenney",
+      "kit": "retro-urban",
+      "version": "2.0",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://opengameart.org/content/retro-urban-kit",
+      "downloadUrl": "https://opengameart.org/sites/default/files/kenney_retro-urban-kit.zip",
+      "downloadedAt": "2026-09-30",
+      "archiveSha256": "19201cbcb0d90080dfc33b54f5b4be2089de927c2a23274180798e7166d6b6ca",
+      "modifications": "None. Selected original GLB models and their texture dependencies. Generated runtime derivative tracked separately.",
+      "files": [
+        {
+          "path": "License.txt",
+          "sourcePath": "License.txt",
+          "bytes": 718,
+          "sha256": "83d0de4f34000323da12cf54bc542dbc24ba48cfad101510dccddaa69483ebeb"
+        },
+        {
+          "path": "Textures/concrete.png",
+          "sourcePath": "Models/GLB format/Textures/concrete.png",
+          "bytes": 5018,
+          "sha256": "3431cb462e8f8c120d29c23fa06e730ae488fceeb3e8d86945724675ff2be294"
+        },
+        {
+          "path": "Textures/dirt.png",
+          "sourcePath": "Models/GLB format/Textures/dirt.png",
+          "bytes": 5018,
+          "sha256": "ffba913266008f95b2ab329683a30726d1d4aadaf7aec80aa98e7375aea3f255"
+        },
+        {
+          "path": "Textures/doors.png",
+          "sourcePath": "Models/GLB format/Textures/doors.png",
+          "bytes": 4381,
+          "sha256": "8c5b729739cde0c9eae9f62ffe4acd194bbdba99cdd83e628bc638f0a45acf8d"
+        },
+        {
+          "path": "Textures/metal.png",
+          "sourcePath": "Models/GLB format/Textures/metal.png",
+          "bytes": 4930,
+          "sha256": "3893724d52a5788341345e16319fb8f5f7182d588b5d5b2babf577176ca3d701"
+        },
+        {
+          "path": "Textures/metal_wall.png",
+          "sourcePath": "Models/GLB format/Textures/metal_wall.png",
+          "bytes": 4773,
+          "sha256": "2700c58f6063520dd447ea6addc9477898bf4e0924b2ab6eb63b4340f36526c5"
+        },
+        {
+          "path": "Textures/planks.png",
+          "sourcePath": "Models/GLB format/Textures/planks.png",
+          "bytes": 5050,
+          "sha256": "1da26c7f5094b1164b22b7b8c63baf1a824ef9845ab0f6bef0ee6d59f31a6a0f"
+        },
+        {
+          "path": "Textures/roof.png",
+          "sourcePath": "Models/GLB format/Textures/roof.png",
+          "bytes": 4836,
+          "sha256": "50a09bac9a57a1732af6b6e4de0192efaba3627a997e0b1dc5fc1c1c6369acd6"
+        },
+        {
+          "path": "Textures/tiles.png",
+          "sourcePath": "Models/GLB format/Textures/tiles.png",
+          "bytes": 4948,
+          "sha256": "6bb08a68e1bc92d9bb4ad6427e71dcd4abb71bdf10f1add5f8c47e25c7f8b313"
+        },
+        {
+          "path": "Textures/treeA.png",
+          "sourcePath": "Models/GLB format/Textures/treeA.png",
+          "bytes": 3291,
+          "sha256": "8445833d6aef70e984bc8beae80389f407fe7caf556d4909da965e8919e36b0a"
+        },
+        {
+          "path": "Textures/treeB.png",
+          "sourcePath": "Models/GLB format/Textures/treeB.png",
+          "bytes": 2439,
+          "sha256": "51f87841b583de065c6a20252289f77827b1c6d1102a5a87b9511c49c17dd7b4"
+        },
+        {
+          "path": "Textures/truck_alien.png",
+          "sourcePath": "Models/GLB format/Textures/truck_alien.png",
+          "bytes": 11927,
+          "sha256": "950f4dcefecb6cd848d3f01ddd08bdef2b4948966c80980a70db71d05e01790c"
+        },
+        {
+          "path": "Textures/wall.png",
+          "sourcePath": "Models/GLB format/Textures/wall.png",
+          "bytes": 4518,
+          "sha256": "18dc996f37c4ac4510d09e6cb505c1decbd249d15108d0bfe6efdbd489425690"
+        },
+        {
+          "path": "Textures/wall_garage.png",
+          "sourcePath": "Models/GLB format/Textures/wall_garage.png",
+          "bytes": 4556,
+          "sha256": "ffb88c17f3497e8d3991cef4ac081743fafe91236cfd96d84ca0ccc2980dce56"
+        },
+        {
+          "path": "Textures/wall_lines.png",
+          "sourcePath": "Models/GLB format/Textures/wall_lines.png",
+          "bytes": 4725,
+          "sha256": "322d198d1ff4ce006c7029eee416ba96a981ba080756f829110ac8c34faa00f2"
+        },
+        {
+          "path": "Textures/windows.png",
+          "sourcePath": "Models/GLB format/Textures/windows.png",
+          "bytes": 4464,
+          "sha256": "9a99b16d1caa9b08dfd72eb74ac624b546df89ed6fcfefabe2e4a0933f632a42"
+        },
+        {
+          "path": "detail-bench.glb",
+          "sourcePath": "Models/GLB format/detail-bench.glb",
+          "bytes": 10260,
+          "sha256": "ccf6f0a95b04db1720c9a7040404ca0d676a0f850815aee90de5edc33b96c47c"
+        },
+        {
+          "path": "detail-dumpster-closed.glb",
+          "sourcePath": "Models/GLB format/detail-dumpster-closed.glb",
+          "bytes": 5056,
+          "sha256": "c2b54e446c95fa413929793f3d89cb0176077fa29e4a449dc03cada558bd07d9"
+        },
+        {
+          "path": "detail-light-double.glb",
+          "sourcePath": "Models/GLB format/detail-light-double.glb",
+          "bytes": 9332,
+          "sha256": "7ffb129be2565400449b32e349b3aeb33a4a2617d230320c4a03088f61507f63"
+        },
+        {
+          "path": "pallet.glb",
+          "sourcePath": "Models/GLB format/pallet.glb",
+          "bytes": 10044,
+          "sha256": "1844660dfffda177d42efc35db47c22e7476f991737f4c35f6b5fbaf0d2ccf8b"
+        },
+        {
+          "path": "tree-park-large.glb",
+          "sourcePath": "Models/GLB format/tree-park-large.glb",
+          "bytes": 7960,
+          "sha256": "ef15a84309719f770da2efc0de42052882274e132ccc2ed72c254d7fe51678cd"
+        },
+        {
+          "path": "tree-park-pine-large.glb",
+          "sourcePath": "Models/GLB format/tree-park-pine-large.glb",
+          "bytes": 7976,
+          "sha256": "7f8854543965e906e655c20140fbb2e79be9093157896af63821bbbc69092c9d"
+        },
+        {
+          "path": "tree-shrub.glb",
+          "sourcePath": "Models/GLB format/tree-shrub.glb",
+          "bytes": 4224,
+          "sha256": "b75bd1b2cddbae7d6b517a6ecd34c2beaddf9a19d4a0b4fc48a9bc61cf58b4fa"
+        },
+        {
+          "path": "truck-green-cargo.glb",
+          "sourcePath": "Models/GLB format/truck-green-cargo.glb",
+          "bytes": 3020,
+          "sha256": "0352d5a34094b766a6d5d0d5805aa0c967a4da71f976f2a12c900e748890c289"
+        },
+        {
+          "path": "truck-green.glb",
+          "sourcePath": "Models/GLB format/truck-green.glb",
+          "bytes": 5500,
+          "sha256": "a322288e2dbdc56b126751951451cf5d3014f5b04232fa66e84b74d1a941f9f4"
+        },
+        {
+          "path": "wall-a-corner.glb",
+          "sourcePath": "Models/GLB format/wall-a-corner.glb",
+          "bytes": 3976,
+          "sha256": "d65f9899e415af46f1340220e3d83e8af217eecbb2dfef3012f69ba1f97a0e3a"
+        },
+        {
+          "path": "wall-a-door.glb",
+          "sourcePath": "Models/GLB format/wall-a-door.glb",
+          "bytes": 6100,
+          "sha256": "554f1c0cedac9b31b73ee8c623395059a4bca05290ecf8f6a8920363d6f487bf"
+        },
+        {
+          "path": "wall-a-flat-window.glb",
+          "sourcePath": "Models/GLB format/wall-a-flat-window.glb",
+          "bytes": 4544,
+          "sha256": "bb171dffa5015747641e3131bf171dbf429042ee3b47408c409a7e4acc17cf66"
+        },
+        {
+          "path": "wall-a-garage.glb",
+          "sourcePath": "Models/GLB format/wall-a-garage.glb",
+          "bytes": 5076,
+          "sha256": "1388f38936e576e73c2df01f12d5afdaf78f22bf9af01132d77d38f8c0949d1c"
+        },
+        {
+          "path": "wall-a-roof.glb",
+          "sourcePath": "Models/GLB format/wall-a-roof.glb",
+          "bytes": 4640,
+          "sha256": "74b8263e1a28ecfca6b59e84709dd9dae1df9c9aa9b81ec0d3f83906c934545c"
+        },
+        {
+          "path": "wall-a-window.glb",
+          "sourcePath": "Models/GLB format/wall-a-window.glb",
+          "bytes": 6016,
+          "sha256": "4a5ecc11c1c8820f555375ccabb426c6420ebd2bc9c7bcb5f2c472f655c3b03b"
+        }
+      ]
+    },
+    {
+      "author": "Kenney",
+      "kit": "city-industrial",
+      "version": "2.0",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://kenney.nl/assets/city-kit-industrial",
+      "downloadUrl": "https://kenney.nl/media/pages/assets/city-kit-industrial/0ec35b139d-1788171848/kenney_city-kit-industrial_2.0.zip",
+      "downloadedAt": "2026-09-30",
+      "archiveSha256": "5b381164e5760f3830a2dbee43b972deee38b2a695d091b56e238ab2910c96d2",
+      "modifications": "None. Selected original GLB models and their texture dependencies. Generated runtime derivative tracked separately.",
+      "files": [
+        {
+          "path": "License.txt",
+          "sourcePath": "License.txt",
+          "bytes": 708,
+          "sha256": "60a8c5c31191256ec9779dc18745dea6d69c46f4b29703459ce064c1765a59ea"
+        },
+        {
+          "path": "Textures/colormap.png",
+          "sourcePath": "Models/GLB format/Textures/colormap.png",
+          "bytes": 11986,
+          "sha256": "950f4f891ebd05a2affac810e6eeb0fea1511bc39039b65a3cbf2e17d17bc6a2"
+        },
+        {
+          "path": "building-a.glb",
+          "sourcePath": "Models/GLB format/building-a.glb",
+          "bytes": 177316,
+          "sha256": "0e6ef8eb1e1bdbb9d06b5496b5daf3066e00eaf74b3fcd61b74072116a1c86cf"
+        },
+        {
+          "path": "building-d.glb",
+          "sourcePath": "Models/GLB format/building-d.glb",
+          "bytes": 100768,
+          "sha256": "72b9e9e29986df0778ffa7c56e2f92fcfadfaa0f89bf167603877db4f38a789e"
+        },
+        {
+          "path": "building-h.glb",
+          "sourcePath": "Models/GLB format/building-h.glb",
+          "bytes": 63644,
+          "sha256": "5a6a6c6824467972ba00b5a3c3cbb19da6e96673bc4e42daf1f09cfd4d2ed0e1"
+        },
+        {
+          "path": "building-l.glb",
+          "sourcePath": "Models/GLB format/building-l.glb",
+          "bytes": 162424,
+          "sha256": "86f03eb0b0c5882c59de79b505ffba4377a9b4591588215aa880ab6362087066"
+        },
+        {
+          "path": "detail-tank.glb",
+          "sourcePath": "Models/GLB format/detail-tank.glb",
+          "bytes": 31436,
+          "sha256": "9e955732e4ef9ccff4a4d6967d29d8a7d2f9ed16c903923f2568216d9f0b50d2"
+        },
+        {
+          "path": "shipping-container-a.glb",
+          "sourcePath": "Models/GLB format/shipping-container-a.glb",
+          "bytes": 36624,
+          "sha256": "7b2d5ca874c8e659ee6cfd1614f0470b70410b2ddc7620ac83b8954dedeb861d"
+        },
+        {
+          "path": "shipping-container-b.glb",
+          "sourcePath": "Models/GLB format/shipping-container-b.glb",
+          "bytes": 37052,
+          "sha256": "290b3808149f8a9456ee96ff682fcf6a99f76adeac8e3b7b38234be434ea455c"
+        },
+        {
+          "path": "water-tower.glb",
+          "sourcePath": "Models/GLB format/water-tower.glb",
+          "bytes": 93836,
+          "sha256": "11ac7ae19f32ce889bfe7a9c8e78c8ce8c77b7a76b52fd4ffa439a022ea2ef40"
+        }
+      ]
+    }
+  ],
+  "prepared": {
+    "format": "FPVSceneryProvenance.v1",
+    "author": "Kenney",
+    "license": "CC0-1.0",
+    "generator": "authoring/fpv-worlds/prepare-scenery.mjs",
+    "tool": "@gltf-transform/core/functions/extensions 4.5.1",
+    "sources": [
+      "assets/kenney/retro-urban/detail-bench.glb",
+      "assets/kenney/retro-urban/detail-dumpster-closed.glb",
+      "assets/kenney/retro-urban/detail-light-double.glb",
+      "assets/kenney/retro-urban/pallet.glb",
+      "assets/kenney/retro-urban/tree-park-large.glb",
+      "assets/kenney/retro-urban/tree-park-pine-large.glb",
+      "assets/kenney/retro-urban/tree-shrub.glb",
+      "assets/kenney/retro-urban/truck-green-cargo.glb",
+      "assets/kenney/retro-urban/truck-green.glb",
+      "assets/kenney/retro-urban/wall-a-corner.glb",
+      "assets/kenney/retro-urban/wall-a-door.glb",
+      "assets/kenney/retro-urban/wall-a-flat-window.glb",
+      "assets/kenney/retro-urban/wall-a-garage.glb",
+      "assets/kenney/retro-urban/wall-a-roof.glb",
+      "assets/kenney/retro-urban/wall-a-window.glb",
+      "assets/kenney/city-industrial/building-a.glb",
+      "assets/kenney/city-industrial/building-d.glb",
+      "assets/kenney/city-industrial/building-h.glb",
+      "assets/kenney/city-industrial/building-l.glb",
+      "assets/kenney/city-industrial/detail-tank.glb",
+      "assets/kenney/city-industrial/shipping-container-a.glb",
+      "assets/kenney/city-industrial/shipping-container-b.glb",
+      "assets/kenney/city-industrial/water-tower.glb"
+    ],
+    "modifications": "Embedded original textures, deduplicated shared geometry/materials/textures, centered source models at ground level. Runtime instances form original scenery layouts outside flight bounds. No source geometry changes.",
+    "runtime": "optional-practice/civilian-fpv/world-assets.mjs",
+    "bytes": 1155964,
+    "sha256": "9d51fa23cf65fcb86a21bcc4861af4adfaf964f43e964e6b2fe7a3ebe33ec8a5",
+    "libraryBytes": 861504,
+    "librarySha256": "6153c9c7e5dbe571e91a1ba54d021a95bf618db13873e7e661f1ea593c71573e"
+  }
+}

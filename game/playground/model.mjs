@@ -15,6 +15,12 @@ import {
   RELAY_SCENARIO_VERSION,
   DIRECTIONAL_SCENARIO_VERSION,
   SENTINEL_SCENARIO_VERSION,
+  HUNT_SCENARIO_VERSION,
+  SNAKE_SCENARIO_VERSION,
+  PURSUIT_SCENARIO_VERSION,
+  SNAKE_PURSUIT_SCENARIO_VERSION,
+  PURSUIT_V2_SCENARIO_VERSION,
+  SNAKE_PURSUIT_V2_SCENARIO_VERSION,
   CLASSIC_VISUAL_ROLES,
 } from '../content.mjs';
 import { createMasteryCatalog } from '../mastery-catalog.mjs';
@@ -33,6 +39,12 @@ import {
   RELAY_PACK_VERSION,
   DIRECTIONAL_PACK_VERSION,
   SENTINEL_PACK_VERSION,
+  HUNT_PACK_VERSION,
+  SNAKE_PACK_VERSION,
+  PURSUIT_PACK_VERSION,
+  SNAKE_PURSUIT_PACK_VERSION,
+  PURSUIT_V2_PACK_VERSION,
+  SNAKE_PURSUIT_V2_PACK_VERSION,
 } from '../packs.mjs';
 
 export function expansionEntries(library) {
@@ -62,6 +74,12 @@ export function visualsForLevelReplacement(current, format) {
         RELAY_SCENARIO_VERSION,
         DIRECTIONAL_SCENARIO_VERSION,
         SENTINEL_SCENARIO_VERSION,
+        HUNT_SCENARIO_VERSION,
+        SNAKE_SCENARIO_VERSION,
+        PURSUIT_SCENARIO_VERSION,
+        SNAKE_PURSUIT_SCENARIO_VERSION,
+        PURSUIT_V2_SCENARIO_VERSION,
+        SNAKE_PURSUIT_V2_SCENARIO_VERSION,
       ].includes(current.format) ||
       [
         CLASSIC_SCENARIO_VERSION,
@@ -69,6 +87,12 @@ export function visualsForLevelReplacement(current, format) {
         RELAY_SCENARIO_VERSION,
         DIRECTIONAL_SCENARIO_VERSION,
         SENTINEL_SCENARIO_VERSION,
+        HUNT_SCENARIO_VERSION,
+        SNAKE_SCENARIO_VERSION,
+        PURSUIT_SCENARIO_VERSION,
+        SNAKE_PURSUIT_SCENARIO_VERSION,
+        PURSUIT_V2_SCENARIO_VERSION,
+        SNAKE_PURSUIT_V2_SCENARIO_VERSION,
       ].includes(format)
         ? true
         : !CLASSIC_VISUAL_ROLES.includes(role),
@@ -80,21 +104,33 @@ export function withScenarioMastery(current, definition) {
   const candidate = {
     ...current,
     format:
-      current.format === SENTINEL_SCENARIO_VERSION
-        ? SENTINEL_SCENARIO_VERSION
-        : current.format === DIRECTIONAL_SCENARIO_VERSION
-          ? DIRECTIONAL_SCENARIO_VERSION
-          : current.format === RELAY_SCENARIO_VERSION
-            ? RELAY_SCENARIO_VERSION
-            : current.format === FOUNDATION_SCENARIO_VERSION
-              ? FOUNDATION_SCENARIO_VERSION
-              : current.format === CLASSIC_SCENARIO_VERSION
-                ? CLASSIC_SCENARIO_VERSION
-                : current.format === WIDE_SCENARIO_VERSION
-                  ? WIDE_SCENARIO_VERSION
-                  : current.format === ENCOUNTER_SCENARIO_VERSION
-                    ? ENCOUNTER_SCENARIO_VERSION
-                    : MASTERY_SCENARIO_VERSION,
+      current.format === SNAKE_PURSUIT_V2_SCENARIO_VERSION
+        ? SNAKE_PURSUIT_V2_SCENARIO_VERSION
+        : current.format === PURSUIT_V2_SCENARIO_VERSION
+          ? PURSUIT_V2_SCENARIO_VERSION
+          : current.format === SNAKE_PURSUIT_SCENARIO_VERSION
+            ? SNAKE_PURSUIT_SCENARIO_VERSION
+            : current.format === PURSUIT_SCENARIO_VERSION
+              ? PURSUIT_SCENARIO_VERSION
+              : current.format === SNAKE_SCENARIO_VERSION
+                ? SNAKE_SCENARIO_VERSION
+                : current.format === HUNT_SCENARIO_VERSION
+                  ? HUNT_SCENARIO_VERSION
+                  : current.format === SENTINEL_SCENARIO_VERSION
+                    ? SENTINEL_SCENARIO_VERSION
+                    : current.format === DIRECTIONAL_SCENARIO_VERSION
+                      ? DIRECTIONAL_SCENARIO_VERSION
+                      : current.format === RELAY_SCENARIO_VERSION
+                        ? RELAY_SCENARIO_VERSION
+                        : current.format === FOUNDATION_SCENARIO_VERSION
+                          ? FOUNDATION_SCENARIO_VERSION
+                          : current.format === CLASSIC_SCENARIO_VERSION
+                            ? CLASSIC_SCENARIO_VERSION
+                            : current.format === WIDE_SCENARIO_VERSION
+                              ? WIDE_SCENARIO_VERSION
+                              : current.format === ENCOUNTER_SCENARIO_VERSION
+                                ? ENCOUNTER_SCENARIO_VERSION
+                                : MASTERY_SCENARIO_VERSION,
     masteryDefinition: structuredClone(definition),
   };
   const checked = validateScenario(candidate);
@@ -106,36 +142,60 @@ export function withScenarioEncounter(current, descriptor) {
   const candidate = {
     ...current,
     format:
-      current.format === SENTINEL_SCENARIO_VERSION
-        ? SENTINEL_SCENARIO_VERSION
-        : current.format === DIRECTIONAL_SCENARIO_VERSION
-          ? DIRECTIONAL_SCENARIO_VERSION
-          : current.format === RELAY_SCENARIO_VERSION
-            ? RELAY_SCENARIO_VERSION
-            : current.format === FOUNDATION_SCENARIO_VERSION
-              ? FOUNDATION_SCENARIO_VERSION
-              : current.format === CLASSIC_SCENARIO_VERSION
-                ? CLASSIC_SCENARIO_VERSION
-                : current.format === WIDE_SCENARIO_VERSION
-                  ? WIDE_SCENARIO_VERSION
-                  : ENCOUNTER_SCENARIO_VERSION,
+      current.format === SNAKE_PURSUIT_V2_SCENARIO_VERSION
+        ? SNAKE_PURSUIT_V2_SCENARIO_VERSION
+        : current.format === PURSUIT_V2_SCENARIO_VERSION
+          ? PURSUIT_V2_SCENARIO_VERSION
+          : current.format === SNAKE_PURSUIT_SCENARIO_VERSION
+            ? SNAKE_PURSUIT_SCENARIO_VERSION
+            : current.format === PURSUIT_SCENARIO_VERSION
+              ? PURSUIT_SCENARIO_VERSION
+              : current.format === SNAKE_SCENARIO_VERSION
+                ? SNAKE_SCENARIO_VERSION
+                : current.format === HUNT_SCENARIO_VERSION
+                  ? HUNT_SCENARIO_VERSION
+                  : current.format === SENTINEL_SCENARIO_VERSION
+                    ? SENTINEL_SCENARIO_VERSION
+                    : current.format === DIRECTIONAL_SCENARIO_VERSION
+                      ? DIRECTIONAL_SCENARIO_VERSION
+                      : current.format === RELAY_SCENARIO_VERSION
+                        ? RELAY_SCENARIO_VERSION
+                        : current.format === FOUNDATION_SCENARIO_VERSION
+                          ? FOUNDATION_SCENARIO_VERSION
+                          : current.format === CLASSIC_SCENARIO_VERSION
+                            ? CLASSIC_SCENARIO_VERSION
+                            : current.format === WIDE_SCENARIO_VERSION
+                              ? WIDE_SCENARIO_VERSION
+                              : ENCOUNTER_SCENARIO_VERSION,
     masteryDefinition: null,
     level: {
       ...current.level,
       version:
-        current.format === SENTINEL_SCENARIO_VERSION
-          ? 'xonix-level.v8'
-          : current.format === DIRECTIONAL_SCENARIO_VERSION
-            ? 'xonix-level.v7'
-            : current.format === RELAY_SCENARIO_VERSION
-              ? 'xonix-level.v6'
-              : current.format === FOUNDATION_SCENARIO_VERSION
-                ? 'xonix-level.v5'
-                : current.format === CLASSIC_SCENARIO_VERSION
-                  ? 'xonix-level.v4'
-                  : current.format === WIDE_SCENARIO_VERSION
-                    ? 'xonix-level.v3'
-                    : 'xonix-level.v2',
+        current.format === SNAKE_PURSUIT_V2_SCENARIO_VERSION
+          ? 'xonix-level.v15'
+          : current.format === PURSUIT_V2_SCENARIO_VERSION
+            ? 'xonix-level.v14'
+            : current.format === SNAKE_PURSUIT_SCENARIO_VERSION
+              ? 'xonix-level.v13'
+              : current.format === PURSUIT_SCENARIO_VERSION
+                ? 'xonix-level.v12'
+                : current.format === SNAKE_SCENARIO_VERSION
+                  ? 'xonix-level.v11'
+                  : current.format === HUNT_SCENARIO_VERSION
+                    ? 'xonix-level.v9'
+                    : current.format === SENTINEL_SCENARIO_VERSION
+                      ? 'xonix-level.v8'
+                      : current.format === DIRECTIONAL_SCENARIO_VERSION
+                        ? 'xonix-level.v7'
+                        : current.format === RELAY_SCENARIO_VERSION
+                          ? 'xonix-level.v6'
+                          : current.format === FOUNDATION_SCENARIO_VERSION
+                            ? 'xonix-level.v5'
+                            : current.format === CLASSIC_SCENARIO_VERSION
+                              ? 'xonix-level.v4'
+                              : current.format === WIDE_SCENARIO_VERSION
+                                ? 'xonix-level.v3'
+                                : 'xonix-level.v2',
       encounter: structuredClone(descriptor),
     },
   };
@@ -155,6 +215,12 @@ export function withoutScenarioEncounter(current) {
     RELAY_SCENARIO_VERSION,
     DIRECTIONAL_SCENARIO_VERSION,
     SENTINEL_SCENARIO_VERSION,
+    HUNT_SCENARIO_VERSION,
+    SNAKE_SCENARIO_VERSION,
+    PURSUIT_SCENARIO_VERSION,
+    SNAKE_PURSUIT_SCENARIO_VERSION,
+    PURSUIT_V2_SCENARIO_VERSION,
+    SNAKE_PURSUIT_V2_SCENARIO_VERSION,
   ].includes(current.format);
   if (wide) level.encounter = null;
   else {
@@ -203,23 +269,35 @@ export function entryScenario(
     entry.themes[0];
   const current = {
     format:
-      level.version === 'xonix-level.v8'
-        ? SENTINEL_SCENARIO_VERSION
-        : level.version === 'xonix-level.v7'
-          ? DIRECTIONAL_SCENARIO_VERSION
-          : level.version === 'xonix-level.v6'
-            ? RELAY_SCENARIO_VERSION
-            : level.version === 'xonix-level.v5'
-              ? FOUNDATION_SCENARIO_VERSION
-              : level.version === 'xonix-level.v4'
-                ? CLASSIC_SCENARIO_VERSION
-                : level.version === 'xonix-level.v3'
-                  ? WIDE_SCENARIO_VERSION
-                  : entry.sourcePackFormat === ENCOUNTER_PACK_VERSION
-                    ? ENCOUNTER_SCENARIO_VERSION
-                    : entry.sourcePackFormat === MASTERY_PACK_VERSION
-                      ? MASTERY_SCENARIO_VERSION
-                      : 'xonix-playground.v1',
+      level.version === 'xonix-level.v15'
+        ? SNAKE_PURSUIT_V2_SCENARIO_VERSION
+        : level.version === 'xonix-level.v14'
+          ? PURSUIT_V2_SCENARIO_VERSION
+          : level.version === 'xonix-level.v13'
+            ? SNAKE_PURSUIT_SCENARIO_VERSION
+            : level.version === 'xonix-level.v12'
+              ? PURSUIT_SCENARIO_VERSION
+              : level.version === 'xonix-level.v11'
+                ? SNAKE_SCENARIO_VERSION
+                : level.version === 'xonix-level.v9'
+                  ? HUNT_SCENARIO_VERSION
+                  : level.version === 'xonix-level.v8'
+                    ? SENTINEL_SCENARIO_VERSION
+                    : level.version === 'xonix-level.v7'
+                      ? DIRECTIONAL_SCENARIO_VERSION
+                      : level.version === 'xonix-level.v6'
+                        ? RELAY_SCENARIO_VERSION
+                        : level.version === 'xonix-level.v5'
+                          ? FOUNDATION_SCENARIO_VERSION
+                          : level.version === 'xonix-level.v4'
+                            ? CLASSIC_SCENARIO_VERSION
+                            : level.version === 'xonix-level.v3'
+                              ? WIDE_SCENARIO_VERSION
+                              : entry.sourcePackFormat === ENCOUNTER_PACK_VERSION
+                                ? ENCOUNTER_SCENARIO_VERSION
+                                : entry.sourcePackFormat === MASTERY_PACK_VERSION
+                                  ? MASTERY_SCENARIO_VERSION
+                                  : 'xonix-playground.v1',
     ...([
       'xonix-level.v3',
       'xonix-level.v4',
@@ -227,6 +305,12 @@ export function entryScenario(
       'xonix-level.v6',
       'xonix-level.v7',
       'xonix-level.v8',
+      'xonix-level.v9',
+      'xonix-level.v11',
+      'xonix-level.v12',
+      'xonix-level.v13',
+      'xonix-level.v14',
+      'xonix-level.v15',
     ].includes(level.version) ||
     [
       MASTERY_PACK_VERSION,
@@ -237,6 +321,12 @@ export function entryScenario(
       RELAY_PACK_VERSION,
       DIRECTIONAL_PACK_VERSION,
       SENTINEL_PACK_VERSION,
+      HUNT_PACK_VERSION,
+      SNAKE_PACK_VERSION,
+      PURSUIT_PACK_VERSION,
+      SNAKE_PURSUIT_PACK_VERSION,
+      PURSUIT_V2_PACK_VERSION,
+      SNAKE_PURSUIT_V2_PACK_VERSION,
     ].includes(entry.sourcePackFormat)
       ? {
           masteryDefinition:
@@ -291,6 +381,12 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
       RELAY_PACK_VERSION,
       DIRECTIONAL_PACK_VERSION,
       SENTINEL_PACK_VERSION,
+      HUNT_PACK_VERSION,
+      SNAKE_PACK_VERSION,
+      PURSUIT_PACK_VERSION,
+      SNAKE_PURSUIT_PACK_VERSION,
+      PURSUIT_V2_PACK_VERSION,
+      SNAKE_PURSUIT_V2_PACK_VERSION,
       'xonix-pack-library.v1',
     ].includes(value.format)
   ) {
@@ -322,62 +418,118 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
     };
   }
   const candidateScenario =
-    value.version === 'xonix-level.v8'
-      ? { ...current, format: SENTINEL_SCENARIO_VERSION, masteryDefinition: null, level: value }
-      : value.version === 'xonix-level.v7'
-        ? {
-            ...current,
-            format: DIRECTIONAL_SCENARIO_VERSION,
-            masteryDefinition: null,
-            level: value,
-          }
-        : value.version === 'xonix-level.v6'
-          ? { ...current, format: RELAY_SCENARIO_VERSION, masteryDefinition: null, level: value }
-          : value.version === 'xonix-level.v5'
+    value.version === 'xonix-level.v15'
+      ? {
+          ...current,
+          format: SNAKE_PURSUIT_V2_SCENARIO_VERSION,
+          masteryDefinition: null,
+          level: value,
+        }
+      : value.version === 'xonix-level.v14'
+        ? { ...current, format: PURSUIT_V2_SCENARIO_VERSION, masteryDefinition: null, level: value }
+        : value.version === 'xonix-level.v13'
+          ? {
+              ...current,
+              format: SNAKE_PURSUIT_SCENARIO_VERSION,
+              masteryDefinition: null,
+              level: value,
+            }
+          : value.version === 'xonix-level.v12'
             ? {
                 ...current,
-                format: FOUNDATION_SCENARIO_VERSION,
+                format: PURSUIT_SCENARIO_VERSION,
                 masteryDefinition: null,
                 level: value,
               }
-            : value.version === 'xonix-level.v4'
+            : value.version === 'xonix-level.v11'
               ? {
                   ...current,
-                  format: CLASSIC_SCENARIO_VERSION,
+                  format: SNAKE_SCENARIO_VERSION,
                   masteryDefinition: null,
                   level: value,
                 }
-              : value.version === 'xonix-level.v3'
+              : value.version === 'xonix-level.v9'
                 ? {
                     ...current,
-                    format: WIDE_SCENARIO_VERSION,
+                    format: HUNT_SCENARIO_VERSION,
                     masteryDefinition: null,
                     level: value,
                   }
-                : value.version === 'xonix-level.v2'
+                : value.version === 'xonix-level.v8'
                   ? {
                       ...current,
-                      format: ENCOUNTER_SCENARIO_VERSION,
+                      format: SENTINEL_SCENARIO_VERSION,
                       masteryDefinition: null,
                       level: value,
                     }
-                  : value.version === 'xonix-level.v1'
+                  : value.version === 'xonix-level.v7'
                     ? {
                         ...current,
-                        ...([
-                          ENCOUNTER_SCENARIO_VERSION,
-                          WIDE_SCENARIO_VERSION,
-                          CLASSIC_SCENARIO_VERSION,
-                          FOUNDATION_SCENARIO_VERSION,
-                          RELAY_SCENARIO_VERSION,
-                          DIRECTIONAL_SCENARIO_VERSION,
-                          SENTINEL_SCENARIO_VERSION,
-                        ].includes(current?.format)
-                          ? { format: MASTERY_SCENARIO_VERSION, masteryDefinition: null }
-                          : {}),
+                        format: DIRECTIONAL_SCENARIO_VERSION,
+                        masteryDefinition: null,
                         level: value,
                       }
-                    : value;
+                    : value.version === 'xonix-level.v6'
+                      ? {
+                          ...current,
+                          format: RELAY_SCENARIO_VERSION,
+                          masteryDefinition: null,
+                          level: value,
+                        }
+                      : value.version === 'xonix-level.v5'
+                        ? {
+                            ...current,
+                            format: FOUNDATION_SCENARIO_VERSION,
+                            masteryDefinition: null,
+                            level: value,
+                          }
+                        : value.version === 'xonix-level.v4'
+                          ? {
+                              ...current,
+                              format: CLASSIC_SCENARIO_VERSION,
+                              masteryDefinition: null,
+                              level: value,
+                            }
+                          : value.version === 'xonix-level.v3'
+                            ? {
+                                ...current,
+                                format: WIDE_SCENARIO_VERSION,
+                                masteryDefinition: null,
+                                level: value,
+                              }
+                            : value.version === 'xonix-level.v2'
+                              ? {
+                                  ...current,
+                                  format: ENCOUNTER_SCENARIO_VERSION,
+                                  masteryDefinition: null,
+                                  level: value,
+                                }
+                              : value.version === 'xonix-level.v1'
+                                ? {
+                                    ...current,
+                                    ...([
+                                      ENCOUNTER_SCENARIO_VERSION,
+                                      WIDE_SCENARIO_VERSION,
+                                      CLASSIC_SCENARIO_VERSION,
+                                      FOUNDATION_SCENARIO_VERSION,
+                                      RELAY_SCENARIO_VERSION,
+                                      DIRECTIONAL_SCENARIO_VERSION,
+                                      SENTINEL_SCENARIO_VERSION,
+                                      HUNT_SCENARIO_VERSION,
+                                      SNAKE_SCENARIO_VERSION,
+                                      PURSUIT_SCENARIO_VERSION,
+                                      SNAKE_PURSUIT_SCENARIO_VERSION,
+                                      PURSUIT_V2_SCENARIO_VERSION,
+                                      SNAKE_PURSUIT_V2_SCENARIO_VERSION,
+                                    ].includes(current?.format)
+                                      ? {
+                                          format: MASTERY_SCENARIO_VERSION,
+                                          masteryDefinition: null,
+                                        }
+                                      : {}),
+                                    level: value,
+                                  }
+                                : value;
   if (['xonix-level.v1', 'xonix-level.v2', 'xonix-level.v3'].includes(value.version))
     candidateScenario.visualOverrides = visualsForLevelReplacement(
       current,
@@ -446,9 +598,18 @@ export function paintLevel(
   else if (
     brush === 'spawn' &&
     (!inside ||
-      ['xonix-level.v5', 'xonix-level.v6', 'xonix-level.v7', 'xonix-level.v8'].includes(
-        level.version,
-      ))
+      [
+        'xonix-level.v5',
+        'xonix-level.v6',
+        'xonix-level.v7',
+        'xonix-level.v8',
+        'xonix-level.v9',
+        'xonix-level.v11',
+        'xonix-level.v12',
+        'xonix-level.v13',
+        'xonix-level.v14',
+        'xonix-level.v15',
+      ].includes(level.version))
   )
     level.spawn = { x: x + 0.5, y: y + 0.5 };
   else if (brush === 'signal' && inside)
@@ -508,6 +669,12 @@ export function interactionPreset(kind, current, classRecipes = CLASSES) {
       RELAY_SCENARIO_VERSION,
       DIRECTIONAL_SCENARIO_VERSION,
       SENTINEL_SCENARIO_VERSION,
+      HUNT_SCENARIO_VERSION,
+      SNAKE_SCENARIO_VERSION,
+      PURSUIT_SCENARIO_VERSION,
+      SNAKE_PURSUIT_SCENARIO_VERSION,
+      PURSUIT_V2_SCENARIO_VERSION,
+      SNAKE_PURSUIT_V2_SCENARIO_VERSION,
     ].includes(scenario.format)
   ) {
     scenario.format = MASTERY_SCENARIO_VERSION;
@@ -575,27 +742,41 @@ export function expansionFromScenario(
   } = {},
 ) {
   const level = structuredClone(current.level);
-  delete level.themeId;
-  delete level.musicId;
+  if (!level.pursuit) {
+    delete level.themeId;
+    delete level.musicId;
+  }
   const pack = {
     format:
-      current.format === SENTINEL_SCENARIO_VERSION
-        ? SENTINEL_PACK_VERSION
-        : current.format === DIRECTIONAL_SCENARIO_VERSION
-          ? DIRECTIONAL_PACK_VERSION
-          : current.format === RELAY_SCENARIO_VERSION
-            ? RELAY_PACK_VERSION
-            : current.format === FOUNDATION_SCENARIO_VERSION
-              ? FOUNDATION_PACK_VERSION
-              : current.format === CLASSIC_SCENARIO_VERSION
-                ? CLASSIC_PACK_VERSION
-                : current.format === WIDE_SCENARIO_VERSION
-                  ? WIDE_PACK_VERSION
-                  : current.format === ENCOUNTER_SCENARIO_VERSION
-                    ? ENCOUNTER_PACK_VERSION
-                    : current.format === MASTERY_SCENARIO_VERSION
-                      ? MASTERY_PACK_VERSION
-                      : 'xonix-pack.v1',
+      current.format === SNAKE_PURSUIT_V2_SCENARIO_VERSION
+        ? SNAKE_PURSUIT_V2_PACK_VERSION
+        : current.format === PURSUIT_V2_SCENARIO_VERSION
+          ? PURSUIT_V2_PACK_VERSION
+          : current.format === SNAKE_PURSUIT_SCENARIO_VERSION
+            ? SNAKE_PURSUIT_PACK_VERSION
+            : current.format === PURSUIT_SCENARIO_VERSION
+              ? PURSUIT_PACK_VERSION
+              : current.format === SNAKE_SCENARIO_VERSION
+                ? SNAKE_PACK_VERSION
+                : current.format === HUNT_SCENARIO_VERSION
+                  ? HUNT_PACK_VERSION
+                  : current.format === SENTINEL_SCENARIO_VERSION
+                    ? SENTINEL_PACK_VERSION
+                    : current.format === DIRECTIONAL_SCENARIO_VERSION
+                      ? DIRECTIONAL_PACK_VERSION
+                      : current.format === RELAY_SCENARIO_VERSION
+                        ? RELAY_PACK_VERSION
+                        : current.format === FOUNDATION_SCENARIO_VERSION
+                          ? FOUNDATION_PACK_VERSION
+                          : current.format === CLASSIC_SCENARIO_VERSION
+                            ? CLASSIC_PACK_VERSION
+                            : current.format === WIDE_SCENARIO_VERSION
+                              ? WIDE_PACK_VERSION
+                              : current.format === ENCOUNTER_SCENARIO_VERSION
+                                ? ENCOUNTER_PACK_VERSION
+                                : current.format === MASTERY_SCENARIO_VERSION
+                                  ? MASTERY_PACK_VERSION
+                                  : 'xonix-pack.v1',
     ...([
       MASTERY_SCENARIO_VERSION,
       ENCOUNTER_SCENARIO_VERSION,
@@ -605,6 +786,12 @@ export function expansionFromScenario(
       RELAY_SCENARIO_VERSION,
       DIRECTIONAL_SCENARIO_VERSION,
       SENTINEL_SCENARIO_VERSION,
+      HUNT_SCENARIO_VERSION,
+      SNAKE_SCENARIO_VERSION,
+      PURSUIT_SCENARIO_VERSION,
+      SNAKE_PURSUIT_SCENARIO_VERSION,
+      PURSUIT_V2_SCENARIO_VERSION,
+      SNAKE_PURSUIT_V2_SCENARIO_VERSION,
     ].includes(current.format)
       ? {
           masteries: current.masteryDefinition
@@ -620,7 +807,7 @@ export function expansionFromScenario(
     id,
     version: '1.0.0',
     name,
-    description: 'A playable expansion authored in the Reveal Line playground.',
+    description: 'A playable expansion authored in the FPV / LINE playground.',
     engine: versionsForLevel(level).ruleset,
     dependencies: [],
     metadata: {

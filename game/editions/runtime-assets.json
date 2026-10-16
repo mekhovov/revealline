@@ -1,5 +1,23 @@
 [
   {
+    "id": "runtime-classic-scout",
+    "path": "game/presentation/compiled/assets/827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91.png",
+    "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91",
+    "bytes": 325,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-classic-wall",
+    "path": "game/presentation/compiled/assets/326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db.png",
+    "sha256": "326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db",
+    "bytes": 146,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
     "id": "runtime-tiny5-license",
     "path": "game/ui/fonts/OFL.txt",
     "sha256": "6fe7d64407c69d187748206265977654747d3e2fe9e38e45a62cd03ec4770df6",
@@ -15,7 +33,9 @@
     "bytes": 132124,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-tiny5-license"]
+    "dependencies": [
+      "runtime-tiny5-license"
+    ]
   },
   {
     "id": "runtime-handjet-license",
@@ -33,7 +53,9 @@
     "bytes": 38120,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-handjet-license"]
+    "dependencies": [
+      "runtime-handjet-license"
+    ]
   },
   {
     "id": "runtime-exo2-license",
@@ -51,7 +73,9 @@
     "bytes": 76652,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-exo2-license"]
+    "dependencies": [
+      "runtime-exo2-license"
+    ]
   },
   {
     "id": "runtime-plex-license",
@@ -69,7 +93,9 @@
     "bytes": 40080,
     "publication": "public",
     "approved": true,
-    "dependencies": ["runtime-plex-license"]
+    "dependencies": [
+      "runtime-plex-license"
+    ]
   },
   {
     "id": "runtime-shell-background",
@@ -94,6 +120,1376 @@
     "path": "game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3",
     "sha256": "d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58",
     "bytes": 8641768,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-departure-license",
+    "path": "game/ui/fonts/departure-mono/LICENSE",
+    "sha256": "b65e42750f3cb65437a97f4dfd781c58f199259949db2341012be60e32500e83",
+    "bytes": 4357,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-departure-provenance",
+    "path": "game/ui/fonts/departure-mono/provenance.json",
+    "sha256": "36932e33e4f97ee9e7887c2f3297d21cc82e4fc855209788d07ac53abea5c588",
+    "bytes": 828,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-departure-source",
+    "path": "game/ui/fonts/departure-mono/DepartureMono-Regular.otf",
+    "sha256": "4d53f663155cf8bf7ffc8e688776e719625f7bbb80a8d90073438b249261a2e0",
+    "bytes": 84480,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-departure-license"
+    ]
+  },
+  {
+    "id": "runtime-departure",
+    "path": "game/ui/fonts/departure-mono/DepartureMono-Regular.woff2",
+    "sha256": "5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb",
+    "bytes": 22496,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-departure-license",
+      "runtime-departure-provenance",
+      "runtime-departure-source"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-provenance",
+    "path": "game/ui/art/menu-scenes/provenance.json",
+    "sha256": "92bd0e5a43f92dbc4bab270a86332b16b26e638b5935a956e6d7788f3b514cfc",
+    "bytes": 21201,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-menu-scene-fpv",
+    "path": "game/ui/art/menu-scenes/fpv.webp",
+    "sha256": "19f43cb1602e59a692d416d36d715e664765eecc24784b3b3e6516651c53df45",
+    "bytes": 514190,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-portrait",
+    "path": "game/ui/art/menu-scenes/fpv-portrait.webp",
+    "sha256": "3d651795fa7623b0200fadaed05a1127109a9c9c6cbd44d183a92a8e12c2ee24",
+    "bytes": 482136,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine",
+    "path": "game/ui/art/menu-scenes/ukraine.webp",
+    "sha256": "7db1eeb0dffc03405a013a810aabcb4e31e099c06b1a739e3f801acac3a615d2",
+    "bytes": 475598,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-retro",
+    "path": "game/ui/art/menu-scenes/retro.webp",
+    "sha256": "2d18104ba075c38e5e018b632ff8a7009697804dd1827725daa196057c680608",
+    "bytes": 554888,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-community",
+    "path": "game/ui/art/menu-scenes/droneaid-community.webp",
+    "sha256": "925b826439a7c6029f87ddbe73a5182cce071ffbd992f2b639b4f2361da878c1",
+    "bytes": 280518,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-community",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-community.webp",
+    "sha256": "27b8f8e60d4c95d662d3a6073fdce17930f176267634260adf4a718eb7a42262",
+    "bytes": 408122,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-workshop-lights-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-workshop-lights-theme.webp",
+    "sha256": "7ffb886cc805e0f20073ee3c48665210620b9d59efe0264b8230fba968ef3193",
+    "bytes": 258060,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-parts-in-motion-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-parts-in-motion-theme.webp",
+    "sha256": "ffe4a0d4b50cc3e4bb50dec8c4457f38abb1a1b99b196809e12ee78f1eb6cbf1",
+    "bytes": 273258,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-makers-together-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-makers-together-theme.webp",
+    "sha256": "8cf01b27f85fe3334ad3dda904bac757e6aa6f8fd244d5b0164e1a9394453c80",
+    "bytes": 266786,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-careful-handoff-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-careful-handoff-theme.webp",
+    "sha256": "d48114be51a7e8114238cfa4473bd84d8434ee19e20a9ceb94164fd0b086bbf6",
+    "bytes": 259130,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-signals-of-support-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-signals-of-support-theme.webp",
+    "sha256": "e8467ef9b613f8ca1fdadab5be8b2a121a6abd6732aa2c2760f8bbe37d9df401",
+    "bytes": 230008,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-nl-shared-horizon-theme",
+    "path": "game/ui/art/menu-scenes/droneaid-nl-shared-horizon-theme.webp",
+    "sha256": "305eef95c78ec8cbd2b7000fde60aaeccd901ccf2bb0dddaf0b5ef943367affa",
+    "bytes": 243248,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-analog-noise-atlas",
+    "path": "game/ui/art/menu-scenes/analog-noise-atlas.png",
+    "sha256": "c2d184ff126006479ee8f18809e2f5c0c83e1793f61339e257b48505ee02921d",
+    "bytes": 147343,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-fpv-line-provenance",
+    "path": "game/ui/art/identity/fpv-line/provenance.json",
+    "sha256": "49c546e9d2111bbcf988fc8f084f2ad06465f533d1ca502ef20b0b32e9460eb7",
+    "bytes": 3489,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-fpv-line-install-recipe",
+    "path": "game/ui/art/identity/fpv-line/install-icons.json",
+    "sha256": "20e698a91aa34123672fa9e8947009fabf8b53948fa4412e2abb9cd4347308b6",
+    "bytes": 1691,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-fpv-line-provenance"
+    ]
+  },
+  {
+    "id": "runtime-fpv-line-wordmark",
+    "path": "game/ui/art/identity/fpv-line/wordmark.png",
+    "sha256": "1a0e6083ddc1147f20b374178c68618c4fc2ea1cb915664178f371ec055cc298",
+    "bytes": 485216,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-fpv-line-provenance"
+    ]
+  },
+  {
+    "id": "runtime-fpv-line-icon-16",
+    "path": "game/ui/art/identity/fpv-line/icon-16.png",
+    "sha256": "2a436d1404a2e0fef86ce2cb80fc0bbf866aea8fc038ab7b3390b52a29df86e5",
+    "bytes": 469,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
+  },
+  {
+    "id": "runtime-fpv-line-icon-32",
+    "path": "game/ui/art/identity/fpv-line/icon-32.png",
+    "sha256": "ca87e21a649eb91cd125b873af7f30ae9d252feaffe6edef7d3cfb21e2ad2c4b",
+    "bytes": 1386,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
+  },
+  {
+    "id": "runtime-fpv-line-icon-180",
+    "path": "game/ui/art/identity/fpv-line/icon-180.png",
+    "sha256": "a11433dc760210294c61f16191ba6ebdbd11143c7c0aa5b094cba2f94842571e",
+    "bytes": 29773,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
+  },
+  {
+    "id": "runtime-fpv-line-icon-192",
+    "path": "game/ui/art/identity/fpv-line/icon-192.png",
+    "sha256": "5bc0f892cc5c13a7b1564cca9ef3ee0799a38b7b5fb63ccc9d7559dc2bf3a34d",
+    "bytes": 33508,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
+  },
+  {
+    "id": "runtime-fpv-line-icon-512",
+    "path": "game/ui/art/identity/fpv-line/icon-512.png",
+    "sha256": "47f0661543ba686911027a8005c8b318c4f9146958f1736ee32fb056e5bfea91",
+    "bytes": 82577,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-fpv-line-install-recipe"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-main-background",
+    "path": "game/ui/art/menu-scenes/droneaid-main-background.png",
+    "sha256": "836c883d4eee658aab610f113eb4fec34f40ed1c963b4a759c52ec37990a8515",
+    "bytes": 880307,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-droneaid-wordmark-light",
+    "path": "game/ui/art/menu-scenes/droneaid-wordmark-light.svg",
+    "sha256": "cecf8a67c455d4a7f931594e2ffc4481c473c3475a3316b8cdd876c39abb1e5b",
+    "bytes": 119252,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-versus",
+    "path": "game/ui/art/menu-scenes/fpv-versus.webp",
+    "sha256": "ad084d205c1d246309f8b8c841db0ba4d49fd9e82d65c8a4a851a99c51fe546a",
+    "bytes": 286552,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-versus-portrait",
+    "path": "game/ui/art/menu-scenes/fpv-versus-portrait.webp",
+    "sha256": "678fa69cdd4490d669ab941be176ee1ed495dac3e129e3889427ff42b32e5170",
+    "bytes": 285890,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-team",
+    "path": "game/ui/art/menu-scenes/fpv-team.webp",
+    "sha256": "989ed6ff4d81da4b41d850aa692eeae39330cb03fa6d4167efbb7652cf4b1c38",
+    "bytes": 361554,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-fpv-team-portrait",
+    "path": "game/ui/art/menu-scenes/fpv-team-portrait.webp",
+    "sha256": "658ebdb4b4088997cce3251a55f8409ed9f0514d379f46e125815fd5a94a43a2",
+    "bytes": 293974,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-versus",
+    "path": "game/ui/art/menu-scenes/ukraine-versus.webp",
+    "sha256": "21d3e4a7dfd9abe379017dc1088ec875946c58a1a35c8a923ef1abec865d7ab6",
+    "bytes": 1887892,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-versus-portrait",
+    "path": "game/ui/art/menu-scenes/ukraine-versus-portrait.webp",
+    "sha256": "c9eb5d49f8a9c5fab9969a4abfd0bf557ef2a8c28f415da2779687d1da9707ea",
+    "bytes": 579008,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-team",
+    "path": "game/ui/art/menu-scenes/ukraine-team.webp",
+    "sha256": "c14e3169d45cdef51fcba3cee5da88a23071b861b7c906450cf5644e3df85569",
+    "bytes": 1848324,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-ukraine-team-portrait",
+    "path": "game/ui/art/menu-scenes/ukraine-team-portrait.webp",
+    "sha256": "7670db78d5d46fe4be95367ebb20c8ed2d39f007c501be621b5907d864164cfe",
+    "bytes": 546480,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-retro-versus",
+    "path": "game/ui/art/menu-scenes/retro-versus.webp",
+    "sha256": "587c3ca3efe91d906b1a5fa56993d125d0c533c11d7cfd15699bc12e59a37a20",
+    "bytes": 1929216,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-retro-versus-portrait",
+    "path": "game/ui/art/menu-scenes/retro-versus-portrait.webp",
+    "sha256": "a536925b458dfb1b0015328945e224eddf321ac877aa868fa9133d45617ccd8f",
+    "bytes": 580790,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-retro-team",
+    "path": "game/ui/art/menu-scenes/retro-team.webp",
+    "sha256": "0760ab82df934667efd69c14b778f4e6da862475db76ecf8fb8eacc6983e334b",
+    "bytes": 1937786,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-retro-team-portrait",
+    "path": "game/ui/art/menu-scenes/retro-team-portrait.webp",
+    "sha256": "3a235ff27b250595b6e95100bf7306d8962a4592ef6b02cc0ec690f4839de3a3",
+    "bytes": 545932,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-menu-scene-droneaid-main-background-lossless",
+    "path": "game/ui/art/menu-scenes/droneaid-main-background.webp",
+    "sha256": "378741b03c221c08ead77ee4af8f0a65a7d2b15088363898bfb8b79dfebc6000",
+    "bytes": 493598,
+    "publication": "public",
+    "approved": true,
+    "dependencies": [
+      "runtime-menu-scene-provenance"
+    ]
+  },
+  {
+    "id": "runtime-reaction-portrait-guide-idle",
+    "path": "game/ui/art/reactions/guide-idle.svg",
+    "sha256": "c20bead6de6c61157f810a0cfcbece41fd7a794a76ec0645ecd291af65c27e21",
+    "bytes": 725,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-portrait-guide-react",
+    "path": "game/ui/art/reactions/guide-react.svg",
+    "sha256": "6aa2d546b4f67ce585697229a7953ca19af94f5cf7a439b2fa598e90fa271bbb",
+    "bytes": 792,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-portrait-engineer-idle",
+    "path": "game/ui/art/reactions/engineer-idle.svg",
+    "sha256": "b92944e5723d96979c78494af29d84f6a653e0683f214910251e7be9ad7cbec2",
+    "bytes": 831,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-portrait-engineer-react",
+    "path": "game/ui/art/reactions/engineer-react.svg",
+    "sha256": "be3f93ad2744a76fb42f0c3397408def57f55eff3b1ed4d71870cefe8f31c993",
+    "bytes": 898,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-portrait-rival-idle",
+    "path": "game/ui/art/reactions/rival-idle.svg",
+    "sha256": "69529e4557cfc87b53899cb2fcfb442c956c1579ef4dcab3987b434bf19bd02d",
+    "bytes": 782,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-portrait-rival-react",
+    "path": "game/ui/art/reactions/rival-react.svg",
+    "sha256": "b3b923301b39e329b72993f60d0ef2e4d27d7943321a718c313465c07bfc5e28",
+    "bytes": 849,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-portrait-sentinel-idle",
+    "path": "game/ui/art/reactions/sentinel-idle.svg",
+    "sha256": "5296a8c8cb7f78db301243a3b4e14c99be2f37b4ff4b35e72022831553e553ca",
+    "bytes": 834,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-portrait-sentinel-react",
+    "path": "game/ui/art/reactions/sentinel-react.svg",
+    "sha256": "34900da2d7a4782f0ee0d0da4eb483dc29724f757bdc73bac50e135422405e6d",
+    "bytes": 901,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-guide-0-en",
+    "path": "game/audio/reactions/guide-0-en.m4a",
+    "sha256": "58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210",
+    "bytes": 23110,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-guide-0-uk",
+    "path": "game/audio/reactions/guide-0-uk.m4a",
+    "sha256": "999c06841d4ffc209732cc3dd5cd2e497430e65947da98472b7dd939d5140d9b",
+    "bytes": 24070,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-guide-capture-0-en",
+    "path": "game/audio/reactions/guide-capture-0-en.m4a",
+    "sha256": "8cec12f5da013e765a6b056384ff520a9ec82244060e962f4f515fbb4e32419c",
+    "bytes": 16018,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-guide-capture-0-uk",
+    "path": "game/audio/reactions/guide-capture-0-uk.m4a",
+    "sha256": "433631c972d042e82030f5e4559d0d11cf88b889b2fa468f03fa8f9208c91aa6",
+    "bytes": 20518,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-engineer-0-en",
+    "path": "game/audio/reactions/engineer-0-en.m4a",
+    "sha256": "284c41fcc8bccb3203001f63287e6d2246c3a2154e381cf3bfacccea5dec89df",
+    "bytes": 26177,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-engineer-0-uk",
+    "path": "game/audio/reactions/engineer-0-uk.m4a",
+    "sha256": "b9374b0497e3021ae5b572da741935aa0e3995792f1ea0f53801c341a69c7412",
+    "bytes": 25980,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-engineer-capture-0-en",
+    "path": "game/audio/reactions/engineer-capture-0-en.m4a",
+    "sha256": "737156beb735cb2202749e3ebc411bc14478caa17563275d334a26ff93e44cf9",
+    "bytes": 17202,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-engineer-capture-0-uk",
+    "path": "game/audio/reactions/engineer-capture-0-uk.m4a",
+    "sha256": "f31b61207464ac2a173e486bafd955a307c8e0a9a79716b8bc781d2497998722",
+    "bytes": 20518,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-rival-0-en",
+    "path": "game/audio/reactions/rival-0-en.m4a",
+    "sha256": "9a7a6f62be6e4a60c496ba88d5d6440ccda263587f24c2f652bac9e8a151516f",
+    "bytes": 25231,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-rival-0-uk",
+    "path": "game/audio/reactions/rival-0-uk.m4a",
+    "sha256": "d4fa7345de6753794d5e1709fa31983d254eb19549ab2aa5325078bbfa7ad5e9",
+    "bytes": 28181,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-rival-capture-0-en",
+    "path": "game/audio/reactions/rival-capture-0-en.m4a",
+    "sha256": "76d45144f3249a70d2f2faca1e9b378b1dddaec8414a9430b9c831de57c872f8",
+    "bytes": 15493,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-rival-capture-0-uk",
+    "path": "game/audio/reactions/rival-capture-0-uk.m4a",
+    "sha256": "4c8ea615be61b2ea24acf801e9a1d87ed34fe5f610955e346793eddaada1d3ca",
+    "bytes": 20518,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-sentinel-0-en",
+    "path": "game/audio/reactions/sentinel-0-en.m4a",
+    "sha256": "b40bbeb6fadbef7bd8a3d5399b008ccf7d2e309b946ceb0514c63ef1ad2344b6",
+    "bytes": 17879,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-sentinel-0-uk",
+    "path": "game/audio/reactions/sentinel-0-uk.m4a",
+    "sha256": "d96d5d5a671d09276a0fe1193512911f12ff32625a99016aac449f3b44afae95",
+    "bytes": 21677,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-sentinel-capture-0-en",
+    "path": "game/audio/reactions/sentinel-capture-0-en.m4a",
+    "sha256": "08336f37ef077c8cb0d1f436396577b074f8c4b4d52892b77b1ece0d0f13c14a",
+    "bytes": 18562,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-reaction-voice-sentinel-capture-0-uk",
+    "path": "game/audio/reactions/sentinel-capture-0-uk.m4a",
+    "sha256": "7532c7185bd851f7fdf9fde71a0b1b49b160ab416d82dab9968f7d64ad469634",
+    "bytes": 22286,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-lookout-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-lookout-notice-en.m4a",
+    "sha256": "a567406ee7e636e8fb33bb8db6b3114ed01bf2fe4ee6f41b64446f05c1875165",
+    "bytes": 16583,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-lookout-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-lookout-notice-uk.m4a",
+    "sha256": "e5509427115873ebba48d4fb3125046148760049ec8f10c07b2ada0319a786b7",
+    "bytes": 16008,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-lookout-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-lookout-caught-en.m4a",
+    "sha256": "eb202be4d1c066b2ba178d9c999cfbef8213dc111d285b127efd9c0725b9c45f",
+    "bytes": 14878,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-lookout-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-lookout-caught-uk.m4a",
+    "sha256": "b6a125966ae1a28cb8e282c40f3f139cfcb955d43ec0716063ec72f9ce6f3e9e",
+    "bytes": 15053,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-patroller-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-patroller-notice-en.m4a",
+    "sha256": "5ddc2c1d7aed2747e93379453fd8b46a8926e384fc095c4741c5b98f5df2193f",
+    "bytes": 13598,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-patroller-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-patroller-notice-uk.m4a",
+    "sha256": "cf111d88b310b71dbfde77ec569536dca43af334b1af738039db3c1cff06298d",
+    "bytes": 14432,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-patroller-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-patroller-caught-en.m4a",
+    "sha256": "5bf98f89f3c694eefc4ed2886b3904f749ed618d123d95464fa223fedac2d01b",
+    "bytes": 15968,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-patroller-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-patroller-caught-uk.m4a",
+    "sha256": "08087574625bd72a08a58b4549ba6884255d32de2003071014755641eac2f025",
+    "bytes": 20328,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-runner-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-runner-notice-en.m4a",
+    "sha256": "1c94c334347c3352b1e1e50380f43e41f59e8ada1728c97726a01a14863898b1",
+    "bytes": 15661,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-runner-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-runner-notice-uk.m4a",
+    "sha256": "a605e92659dd5f7073dbedecbbc1b1d119aaefe28ce2f081aaa09ae5c4b6f794",
+    "bytes": 23565,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-runner-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-runner-caught-en.m4a",
+    "sha256": "d54a656e0b409727d43f2cddb1542b792a3f087daaf09abdcb0ec3deda3e4dda",
+    "bytes": 15257,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-runner-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-runner-caught-uk.m4a",
+    "sha256": "519c3f8b06c56bd8d95e17c52d72a1a9936ac8faffe8a991cde7b6a991d19d25",
+    "bytes": 20042,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-sprinter-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-sprinter-notice-en.m4a",
+    "sha256": "2f91d071a758de445fd8d48eefc8a1d7badab077577f483f0a21e98d61272200",
+    "bytes": 17466,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-sprinter-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-sprinter-notice-uk.m4a",
+    "sha256": "ae25f4e21d379514a3678d6cd6ae36e454f084e19da24c4d31f673a79152cf0b",
+    "bytes": 20846,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-sprinter-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-sprinter-caught-en.m4a",
+    "sha256": "2a014371c62df7b146caa48c4155d47aac65ce9df6aa9cd5977bf44de97c6919",
+    "bytes": 12633,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-sprinter-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-sprinter-caught-uk.m4a",
+    "sha256": "93ae1eb3129f248f4e2d788ac0440173498967c507f765ae386087f762f68616",
+    "bytes": 15014,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-courier-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-courier-notice-en.m4a",
+    "sha256": "cf87e82b1007e4071baedc4088a736cea8483de8b202469d7c4ad4cfe88ca0bb",
+    "bytes": 18418,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-courier-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-courier-notice-uk.m4a",
+    "sha256": "99c267538a73a5ec61f92967d332285baa5397c322dd1d89cb89a11b648ca722",
+    "bytes": 19761,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-courier-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-courier-caught-en.m4a",
+    "sha256": "3af5c8292c0570d9da7bdb36ae1feb6c7ff18487e831ac743f2016da6411906c",
+    "bytes": 15044,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-courier-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-courier-caught-uk.m4a",
+    "sha256": "76463910db387b56c232a4e4cb91026fc7ae12b04d58089b03ee9adb9055f531",
+    "bytes": 15846,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-guard-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-guard-notice-en.m4a",
+    "sha256": "588c83967b9ccceadf2d502f6adcc365b7d7b240953324fd4e32af77086d5b51",
+    "bytes": 20746,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-guard-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-guard-notice-uk.m4a",
+    "sha256": "3b30975483ba66cdade0e1a2f38699ebc67416561ec4731a528f64ba1a0e7fb8",
+    "bytes": 18029,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-guard-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-guard-caught-en.m4a",
+    "sha256": "3091fcc4d52eb8a7c554ad395a23849995cc8b07e4a420ef08befa8179c3b591",
+    "bytes": 14582,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-guard-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-guard-caught-uk.m4a",
+    "sha256": "8febef93ddb730036edce32dc38994d09ffdcd3d8b5c85cdd2daaab0813af52d",
+    "bytes": 16895,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-refuge-seeker-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-refuge-seeker-notice-en.m4a",
+    "sha256": "6ac87a6460c4f13f44d9a2743435f1e9ca3be2d719cb3dda5945f81f406fe8a3",
+    "bytes": 17603,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-refuge-seeker-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-refuge-seeker-notice-uk.m4a",
+    "sha256": "88a472ae67778c8b48da26363bceab7723b11b706d23b105b2f834f5703d4920",
+    "bytes": 17546,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-refuge-seeker-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-refuge-seeker-caught-en.m4a",
+    "sha256": "bcf27e781c41e5a537104c021ba98a9b50f7e91a7c9687f9f535ba95fe1a02ba",
+    "bytes": 13598,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-refuge-seeker-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-refuge-seeker-caught-uk.m4a",
+    "sha256": "1b00da367d7426c0eef9f58acf131b5653131d19adcfc1adfb46e470b614b874",
+    "bytes": 22329,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-switchback-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-switchback-notice-en.m4a",
+    "sha256": "431c52942a4eca4f229c2bdff14983864160306fc07e333d9b80aa98b57af441",
+    "bytes": 15314,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-switchback-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-switchback-notice-uk.m4a",
+    "sha256": "c8f3edf47b9f691a2b3116097e33214bd4dcad69eeddd9ce5a058a95d57dd515",
+    "bytes": 14656,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-switchback-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-switchback-caught-en.m4a",
+    "sha256": "43af4d60c83b01f2244d282ae4185145afdc24134506664c3e86227c2c550994",
+    "bytes": 13097,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-switchback-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-switchback-caught-uk.m4a",
+    "sha256": "97c9b85bbcae74fbd6b1d56858a9511e558ae66322d8dc31272bc4001926aefd",
+    "bytes": 17544,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-rendezvous-pair-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-rendezvous-pair-notice-en.m4a",
+    "sha256": "b71fe944971fe122c52bfcf275be8743f368cd5d5bb4a514ed6f009dbf22c8f3",
+    "bytes": 15660,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-rendezvous-pair-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-rendezvous-pair-notice-uk.m4a",
+    "sha256": "c1ad55886b9d8e2a9c0a781c575bf7a29c88e711ce49941cd62f8298989ecd6d",
+    "bytes": 19008,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-rendezvous-pair-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-rendezvous-pair-caught-en.m4a",
+    "sha256": "2eeb7509585afbfa24031b2a222928f054df57fe72a390a6011bca29c217db32",
+    "bytes": 18483,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-rendezvous-pair-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-rendezvous-pair-caught-uk.m4a",
+    "sha256": "a850111ec29765749c4ad8512a6a30d86acd02e36579524c52efd427acf2bf75",
+    "bytes": 21324,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-shield-bearer-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-shield-bearer-notice-en.m4a",
+    "sha256": "1842c1fdecfbd4e8964e2d641676b4ea94be780541072ae89c0ac1acff542146",
+    "bytes": 19433,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-shield-bearer-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-shield-bearer-notice-uk.m4a",
+    "sha256": "c878ef73486957a4d1be16cd5e1d6d5bf710884abc1a57841c7822a085bc09c6",
+    "bytes": 26718,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-shield-bearer-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-shield-bearer-caught-en.m4a",
+    "sha256": "402042b0f56378e1c482cbada9925d3a16ea61719d3933584417c121deaea6c8",
+    "bytes": 19084,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-shield-bearer-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-shield-bearer-caught-uk.m4a",
+    "sha256": "54cd07848ede2d578218681bafd9036dadf26402695c3adace985f292038bf26",
+    "bytes": 21086,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-brace-trooper-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-brace-trooper-notice-en.m4a",
+    "sha256": "848f5e9d00bffa9737783b10a15fef02802f2ecdf1f04ffea617d624a87d0d79",
+    "bytes": 21658,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-brace-trooper-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-brace-trooper-notice-uk.m4a",
+    "sha256": "1f15d5769b9c1bb05a33fe8f5348fd614a9f414762f5d9ecbdfe0bb798b2a8ea",
+    "bytes": 30573,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-brace-trooper-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-brace-trooper-caught-en.m4a",
+    "sha256": "4cbc545e194cad7cc747f498f70990920346e58bdc35cff7923b08f91860d6d1",
+    "bytes": 13785,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-brace-trooper-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-brace-trooper-caught-uk.m4a",
+    "sha256": "b745facddb9224d2630f9504838dbca6a90d3a503ed0605775ade96159e596c9",
+    "bytes": 15010,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-relay-warden-notice-en",
+    "path": "game/audio/reactions/actors-v1/actor-relay-warden-notice-en.m4a",
+    "sha256": "36054f1ec751008f71467e14a493f1661030bc94441c84984507468e4b078960",
+    "bytes": 20566,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-relay-warden-notice-uk",
+    "path": "game/audio/reactions/actors-v1/actor-relay-warden-notice-uk.m4a",
+    "sha256": "78dac1dadf797f40dacc6afa10305926b24479e2f48ab0ffa189c7d37dadc7fe",
+    "bytes": 22782,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-relay-warden-caught-en",
+    "path": "game/audio/reactions/actors-v1/actor-relay-warden-caught-en.m4a",
+    "sha256": "c5cb2d93c9c15402606213c9111b1c3ea79a97a38ef29461a14f0dee440b0bf4",
+    "bytes": 20712,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-actor-relay-warden-caught-uk",
+    "path": "game/audio/reactions/actors-v1/actor-relay-warden-caught-uk.m4a",
+    "sha256": "51fe2e5cb8c24b946996a9a54d2e603d59869e73f32a2b5fcc0caf11cbc2f09f",
+    "bytes": 23964,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-5c51f6d7b29af2e8be90",
+    "path": "game/presentation/compiled/assets/5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683.png",
+    "sha256": "5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683",
+    "bytes": 295,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-e35ca174c360d5a572c7",
+    "path": "game/presentation/compiled/assets/e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e.png",
+    "sha256": "e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e",
+    "bytes": 290,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-fedb83171e9c894c8cbc",
+    "path": "game/presentation/compiled/assets/fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc.png",
+    "sha256": "fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc",
+    "bytes": 282,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-4edc2d90b443fbc191cb",
+    "path": "game/presentation/compiled/assets/4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9.png",
+    "sha256": "4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9",
+    "bytes": 269,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-05af7a73b7dadc8821ce",
+    "path": "game/presentation/compiled/assets/05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76.png",
+    "sha256": "05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76",
+    "bytes": 275,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-cea04fc27e33583748da",
+    "path": "game/presentation/compiled/assets/cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb.png",
+    "sha256": "cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb",
+    "bytes": 446,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-2d4e0eafa015c8e43408",
+    "path": "game/presentation/compiled/assets/2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0.png",
+    "sha256": "2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0",
+    "bytes": 515,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-02b4ab6f9e8339b921ac",
+    "path": "game/presentation/compiled/assets/02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872.png",
+    "sha256": "02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872",
+    "bytes": 233,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-7e696d173490ae948cea",
+    "path": "game/presentation/compiled/assets/7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192.png",
+    "sha256": "7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192",
+    "bytes": 185,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-44ebf8c1d8a028a91901",
+    "path": "game/presentation/compiled/assets/44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868.png",
+    "sha256": "44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868",
+    "bytes": 156,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-53f17c3672c097ce79b6",
+    "path": "game/presentation/compiled/assets/53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe.png",
+    "sha256": "53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe",
+    "bytes": 159,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-5cda580ceefd258918dc",
+    "path": "game/presentation/compiled/assets/5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420.png",
+    "sha256": "5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420",
+    "bytes": 137,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-7954823e793dd6140528",
+    "path": "game/presentation/compiled/assets/7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c.png",
+    "sha256": "7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c",
+    "bytes": 152,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-33955b0fafb24b5edab1",
+    "path": "game/presentation/compiled/assets/33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346.png",
+    "sha256": "33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346",
+    "bytes": 314,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-de2406eaf230f4701c82",
+    "path": "game/presentation/compiled/assets/de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c.png",
+    "sha256": "de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c",
+    "bytes": 564,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-7258c2453b49a52aaa2b",
+    "path": "game/presentation/compiled/assets/7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59.png",
+    "sha256": "7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59",
+    "bytes": 328,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-8535d7dec70f8fb64d3c",
+    "path": "game/presentation/compiled/assets/8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb.png",
+    "sha256": "8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb",
+    "bytes": 639,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-ad53247e6be0c1c2a308",
+    "path": "game/presentation/compiled/assets/ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35.png",
+    "sha256": "ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35",
+    "bytes": 303,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-77a93635bc7d39976bbf",
+    "path": "game/presentation/compiled/assets/77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3.png",
+    "sha256": "77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3",
+    "bytes": 567,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-4c0ab153dd814ff806ff",
+    "path": "game/presentation/compiled/assets/4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68.png",
+    "sha256": "4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68",
+    "bytes": 331,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-f03dc7d839fef8d53cae",
+    "path": "game/presentation/compiled/assets/f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa.png",
+    "sha256": "f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa",
+    "bytes": 583,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-2d0b8b6260f73e3fe008",
+    "path": "game/presentation/compiled/assets/2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3.png",
+    "sha256": "2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3",
+    "bytes": 341,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-85bb90c58fb61a1fdd21",
+    "path": "game/presentation/compiled/assets/85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e.png",
+    "sha256": "85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e",
+    "bytes": 635,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-3fa6527474d2da84fed1",
+    "path": "game/presentation/compiled/assets/3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c.png",
+    "sha256": "3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c",
+    "bytes": 600,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-83b8dea4de4fad710942",
+    "path": "game/presentation/compiled/assets/83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c.png",
+    "sha256": "83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c",
+    "bytes": 327,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-78033ee190de99663e4b",
+    "path": "game/presentation/compiled/assets/78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826.png",
+    "sha256": "78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826",
+    "bytes": 586,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-6abc4a68192b4d517b22",
+    "path": "game/presentation/compiled/assets/6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a.png",
+    "sha256": "6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a",
+    "bytes": 395,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-28e58f70c759b20798fa",
+    "path": "game/presentation/compiled/assets/28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d.png",
+    "sha256": "28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d",
+    "bytes": 366,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-009d14748f9430020912",
+    "path": "game/presentation/compiled/assets/009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a.png",
+    "sha256": "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a",
+    "bytes": 389,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-963bdc61942194177b4d",
+    "path": "game/presentation/compiled/assets/963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c.png",
+    "sha256": "963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c",
+    "bytes": 148,
+    "publication": "public",
+    "approved": true,
+    "dependencies": []
+  },
+  {
+    "id": "runtime-board-544551f875b2fd52c41d",
+    "path": "game/presentation/compiled/assets/544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48.png",
+    "sha256": "544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48",
+    "bytes": 144,
     "publication": "public",
     "approved": true,
     "dependencies": []

@@ -160,7 +160,7 @@ test('late native install opportunity is suggested once at a safe menu boundary'
   safe = true;
   h.window.emit('beforeinstallprompt', { prompt() {} });
   assert.equal(h.statuses.length, 1);
-  assert.match(h.statuses[0], /Install Reveal Line/);
+  assert.match(h.statuses[0], /Install FPV \/ LINE/);
   assert.equal(h.panel.suggest(), false);
   assert.equal(h.document.querySelector('iframe'), null);
   h.panel.dispose();

@@ -21,6 +21,7 @@ import { publishedReleasePages, releaseDecision } from "./release-policy.mjs";
 import { downloadReleaseAsset } from "./release-asset.mjs";
 import { requireMainRepositoryPolicy } from "./main-repository-policy.mjs";
 import { frozenEditionOverlay, validateEditionPublication } from "../edition-promotion.mjs";
+import { frozenOptionalPackageOverlay, validateOptionalPackagePublication } from "../optional-package-promotion.mjs";
 
 const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -47,6 +48,8 @@ async function workflowSummary(lines) {
 async function verify({ preview = false, remote = false } = {}) {
   const editionSelectorBytes = await readOrdinary(directory, "editions.json");
   validateEditionPublication(parseJSON(editionSelectorBytes));
+  const optionalSelectorBytes = await readOrdinary(directory, "optional-packages.json");
+  validateOptionalPackagePublication(parseJSON(optionalSelectorBytes));
   const {
       lock,
       metadata: catalogMetadata,
@@ -157,6 +160,7 @@ async function verify({ preview = false, remote = false } = {}) {
     catalogSha256,
     qualifiedSourceTree,
     editionSelectorSha256: digest(editionSelectorBytes),
+    optionalSelectorSha256: digest(optionalSelectorBytes),
     hostingPolicy: configuration.hostingPolicy,
     retainedLegacyRoutes: Object.keys(canonicalSites).length,
     downloadOnlyVersions,
@@ -202,6 +206,7 @@ async function main() {
       authority.catalogSha256 !== identity.catalogSha256 ||
       authority.qualifiedSourceTree !== identity.qualifiedSourceTree ||
       authority.editionSelectorSha256 !== identity.editionSelectorSha256 ||
+      authority.optionalSelectorSha256 !== identity.optionalSelectorSha256 ||
       authority.currentVersion !== identity.configuration.currentVersion ||
       authority.configurationSha256 !==
         digest(await readOrdinary(directory, "publication.json")) ||
@@ -242,6 +247,7 @@ async function main() {
       receipt.controllerTree !== identity.controllerTree ||
       receipt.qualifiedSourceTree !== identity.qualifiedSourceTree ||
       receipt.editionSelectorSha256 !== identity.editionSelectorSha256 ||
+      receipt.optionalSelectorSha256 !== identity.optionalSelectorSha256 ||
       receipt.currentVersion !== identity.configuration.currentVersion ||
       receipt.catalogSha256 !== identity.catalogSha256 ||
       receipt.configurationSha256 !==
@@ -306,19 +312,34 @@ async function main() {
       repository: "mekhovov/revealline", version, name, maxBytes,
     }) },
   );
-  if (receipt.totalBytes + [...editionFiles.values()].reduce((sum, bytes) => sum + bytes.length, 0) > 950_000_000)
+  const optionalFiles = await frozenOptionalPackageOverlay(
+    parseJSON(await readOrdinary(directory, "optional-packages.json")),
+    { targetBasePath: "/revealline/", resolveReleaseIdentity: (version) => ({
+      sourceRevision: run("git", ["rev-parse", `${version}^{commit}`]),
+      sourceTree: run("git", ["rev-parse", `${version}^{tree}`]),
+    }), readReleaseAsset: (version, name, maxBytes) => downloadReleaseAsset({
+      repository: "mekhovov/revealline", version, name, maxBytes,
+    }) },
+  );
+  const additiveFiles = new Map(editionFiles);
+  for (const [name, bytes] of optionalFiles) {
+    if (additiveFiles.has(name)) throw new Error("Edition and optional publication paths collide.");
+    additiveFiles.set(name, bytes);
+  }
+  if (receipt.totalBytes + [...additiveFiles.values()].reduce((sum, bytes) => sum + bytes.length, 0) > 950_000_000)
     throw new Error("Combined default and edition site exceeds the existing Pages budget.");
-  for (const [relative, bytes] of editionFiles) {
+  for (const [relative, bytes] of additiveFiles) {
     const target = path.join(output, "artifact", relative);
     await fs.mkdir(path.dirname(target), { recursive: true });
     await fs.writeFile(target, bytes, { flag: "wx" });
   }
-  if (editionFiles.size) {
+  if (additiveFiles.size) {
     receipt.files = await directoryInventory(path.join(output, "artifact"));
     receipt.totalBytes = receipt.files.reduce((sum, row) => sum + row.bytes, 0);
     if (receipt.totalBytes > 950_000_000)
       throw new Error("Combined default and edition site exceeds the existing Pages budget.");
     receipt.editionFiles = editionFiles.size;
+    if (optionalFiles.size) receipt.optionalPackageFiles = optionalFiles.size;
   }
   const { configuration: _configuration, ...binding } = identity;
   await fs.writeFile(

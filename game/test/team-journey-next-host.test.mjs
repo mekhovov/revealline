@@ -90,7 +90,14 @@ test('explicit Team Journey earns twelve consecutive clears across all five camp
     assert.equal(f.$('coop-discard-dialog').open, false);
     if (index < source.missions.length - 1) {
       assert.equal(f.doc.activeElement.id, 'coop-next');
-      assert.equal(f.$('coop-next').textContent, `Next: ${source.missions[index + 1].name}`);
+      const current = navigation.catalog.missions[index],
+        following = navigation.catalog.missions[index + 1];
+      assert.equal(
+        f.$('coop-next').textContent,
+        current.campaignId !== following.campaignId || current.packId !== following.packId
+          ? `Next campaign: ${following.campaignTitle}`
+          : `Next: ${following.name}`,
+      );
       f.$('coop-difficulty').value = 'expert';
       f.$('coop-experiment').value = 'independent';
       await next(f);

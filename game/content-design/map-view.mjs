@@ -1,3 +1,4 @@
+import { drawHumanoidPixelBody } from '../hunt/destruction.mjs';
 import { CELL } from '../core/registry.mjs';
 import { t } from '../i18n/index.mjs';
 import { captureOverlay } from './capture-overlay.mjs';
@@ -5,6 +6,7 @@ import { paintMaterialMarker } from './material-markers.mjs';
 import { traceContentActor, contentActorMarkerType } from './actor-marker.mjs';
 import { drawRelayGates, drawRelayTriggers } from '../ui/relay-view.mjs';
 import { drawDirectionalFields } from '../ui/directional-view.mjs';
+import { drawCoopExpedition } from '../ui/team-expedition-view.mjs';
 
 /** Map-first Studio renderer. Only the engine inspection supplies capture facts.
  * Shapes/patterns duplicate colors so the view does not require color distinction. */
@@ -107,10 +109,18 @@ export function paintContentMap(
     const x = actor.x * size,
       y = actor.y * size,
       radius = size * 0.45;
-    ctx.fillStyle = '#ffae8e';
-    ctx.beginPath();
-    traceContentActor(ctx, contentActorMarkerType(manifest.level, actor), x, y, radius);
-    ctx.fill();
+    if (actor.huntKind) {
+      ctx.save();
+      ctx.translate(x - size / 2, y - size / 2);
+      ctx.scale(size / 16, size / 16);
+      drawHumanoidPixelBody(ctx, { kind: actor.huntKind });
+      ctx.restore();
+    } else {
+      ctx.fillStyle = '#ffae8e';
+      ctx.beginPath();
+      traceContentActor(ctx, contentActorMarkerType(manifest.level, actor), x, y, radius);
+      ctx.fill();
+    }
     if (actor.inactive) {
       ctx.strokeStyle = '#ffffff';
       ctx.beginPath();
@@ -152,6 +162,18 @@ export function paintContentMap(
     ctx.fillText(objective.hidden ? '?' : objective.required ? '!' : 'o', x, y);
   }
   drawRelayTriggers(ctx, { triggers: preview.markers.relayTriggers }, size);
+  if (preview.markers.expedition) {
+    ctx.save();
+    ctx.scale(size, size);
+    drawCoopExpedition(ctx, {
+      environment: preview.markers.expedition,
+      width: geometry.width,
+      height: geometry.height,
+      cells: geometry.cells,
+      players: preview.markers.spawns,
+    });
+    ctx.restore();
+  }
   ctx.fillStyle = '#f5ffba';
   for (const [seat, { x, y }] of (preview.markers.spawns ?? [manifest.level.spawn]).entries()) {
     ctx.fillRect(x * size - 8, y * size - 2, 16, 4);

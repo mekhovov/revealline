@@ -1,15 +1,55 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../../game/access-gate.css" />
+    <script src="../../game/access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../../game/presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <link rel="stylesheet" href="../../game/i18n/style.css" />
-    <script src="../../game/vendor/i18next-26.4.2.min.js"></script>
-    <script src="../../game/i18n/catalogs.mjs"></script>
-    <script src="../../game/i18n/bootstrap.mjs"></script>
+    <script
+      src="../../game/vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../../game/i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../../game/i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n="tools:reveallineVideoPosterWorkshop">
-      RevealLine — video poster workshop
+      FPV / LINE — video poster workshop
     </title>
     <link rel="stylesheet" href="./workshop.css" />
     <link rel="stylesheet" href="../../game/ui/operation-status.css" />
@@ -17,9 +57,23 @@
     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
-    <script type="module" src="../../game/presentation/page-entry.mjs"></script>
-    <script type="module" src="../../game/ui/workshop-return-entry.mjs"></script>
+    <script
+      src="../../game/presentation/page-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../../game/ui/workshop-return-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../../game/ui/workshop-return.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../game/ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body data-workshop-tool="video-poster" class="field-kit field-kit-support">
     <div data-language-control></div>
@@ -179,7 +233,7 @@
           Optional physical trim, resize and compression
         </legend>
         <p data-i18n="tools:videoPoster.physicalTrimHelp">
-          Choose a bounded output plan. RevealLine checks the exported hash, decoded duration, exact
+          Choose a bounded output plan. FPV / LINE checks the exported hash, decoded duration, exact
           output dimensions and codec, audio tracks, and fresh start/end frame comparisons before
           offering a download.
         </p>
@@ -238,10 +292,12 @@
           >Download exact PNG</a
         >
       </section>
+      <section id="video-poster-reward-export"></section>
       <p id="video-poster-hint" data-i18n="tools:tabArrowsAndEnterNavigateUseTheTimeSliderWith">
-        Tab/arrows and Enter navigate. Use the time slider with controller South, then D-pad; South
-        confirms and East cancels. File picking/text entry use browser or OS controls. Escape
-        cancels work or returns to Workshop.
+        Tab/arrows and Enter navigate. Controller South edits the selected field or slider; D-pad
+        changes it, South confirms and East cancels. Choose a source opens bundled examples and
+        current assets. New device files use the browser or operating system chooser. Escape cancels
+        work or returns to Workshop.
       </p>
       <details>
         <summary data-i18n="tools:whatTheTimestampsMean">What the timestamps mean</summary>
@@ -263,6 +319,6 @@
         game or media storage has been accessed.</noscript
       >
     </main>
-    <script src="./launch.js"></script>
+    <script src="./launch.js" type="application/x-revealline-locked" data-access-type=""></script>
   </body>
 </html>

@@ -7,27 +7,54 @@ const PLAY_ENTRIES = [
   'game/replay-theater/index.html',
   'game/downloads.html',
   'game/profile-recovery.html',
+  'game/snake/index.html',
+  'game/snake/play.html',
+  'game/overflight/play.html',
+  'game/overflight/raid.html',
   'credits.html',
   'privacy.html',
 ];
-const MODE_ENTRIES = { versus: ['game/couch/index.html'], team: ['game/couch/relay-rescue.html'] };
+const MODE_ENTRIES = {
+  versus: ['game/couch/index.html'],
+  team: ['game/couch/relay-rescue.html'],
+};
 // These are conditional source-v1 library adapters. Published Solo navigation
-// has exact metadata views and never executes their imports.
+// has exact metadata views and never executes their imports. The shared
+// encounter host statically imports the Versus factory even for Solo; that
+// small module belongs to core, while the actual Versus page remains optional.
 const PUBLISHED_SOLO_BOUNDARIES = new Set([
   'game/couch/index.html',
   'game/couch/relay-rescue.html',
   'game/couch/couch.mjs',
   'game/couch/relay-rescue.mjs',
-  'game/content-design/versus-host.mjs',
   'game/mission-library/remote-team.mjs',
   'game/mission-library/spatial-next-editions.mjs',
 ]);
+
+/** Recorded effects stay hosted and can be selected as an offline extra. The
+ * runtime bank, credits and source manifest remain in the mandatory core so a
+ * missing pack degrades to the feedback director's existing silent fallback. */
+export const isOptionalSpatialAudioBody = (name) =>
+  /^game\/audio\/effects\/[a-z0-9][a-z0-9-]*\.wav$/i.test(name);
+export const isOptionalReactionVoiceBody = (name) =>
+  /^game\/audio\/reactions\/(?:actors-v[1-9][0-9]*\/)?[a-z0-9][a-z0-9-]*-(?:en|uk)\.m4a$/i.test(
+    name,
+  );
+
+// These exact older Team import themes are selectable recovery dependencies,
+// not part of every fresh installation. Other retained manifests stay core.
+export const OPTIONAL_TEAM_IMPORT_MANIFESTS = Object.freeze([
+  "game/presentation/compiled/runtime.e4d16e7b206f50023a1f67249c9be63f9968975071cf16ea0802891ca122e3b3.json",
+  "game/presentation/compiled/runtime.666e68e92f7472368ed915fdf434dff25958553121bc504c8a9b71724386bcae.json",
+]);
+const optionalTeamImportManifests = new Set(OPTIONAL_TEAM_IMPORT_MANIFESTS);
+export const isOptionalTeamImportManifest = (name) => optionalTeamImportManifests.has(name);
 
 /** Resolve local file references, never external addresses or speculative URLs. */
 function targets(value, owner, byPath) {
   if (typeof value !== 'string' || /^(?:[a-z]+:|\/|#)/i.test(value)) return [];
   const clean = value.split(/[?#]/)[0];
-  if (!/\.(?:m?js|json|css|html|png|webp|jpe?g|svg|woff2?|ttf)$/i.test(clean)) return [];
+  if (!/\.(?:m?js|json|css|html|png|webp|jpe?g|svg|woff2?|ttf|wav|m4a)$/i.test(clean)) return [];
   return [
     ...new Set([
       path.posix.normalize(path.posix.join(path.posix.dirname(owner), clean)),
@@ -58,6 +85,20 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
     if (
       byPath.has(name) &&
       !excluded.has(name) &&
+      // Decorative backdrops tolerate an offline miss (the menu keeps its CSS
+      // gradient). The master is only used to produce the shipped install icons.
+      // Keep all originals in the distribution/optional tooling package, not in
+      // every player's 64 MiB startup cache. Never exclude code, fonts or icons.
+      !/^game\/ui\/art\/menu-scenes\/[a-z0-9][a-z0-9-]*\.(?:png|webp)$/.test(name) &&
+      name !== 'game/ui/art/identity/fpv-line/icon-master.png' &&
+      !isOptionalSpatialAudioBody(name) &&
+      !isOptionalReactionVoiceBody(name) &&
+      !isOptionalTeamImportManifest(name) &&
+      // The native player links to its editor; navigation does not make the
+      // optional authoring surface part of a player's startup package.
+      !['game/studio/overflight.html', 'game/studio/raid.html', 'game/studio/snake.html'].includes(
+        name,
+      ) &&
       !retained.has(name) &&
       !(mode === 'solo' && PUBLISHED_SOLO_BOUNDARIES.has(name))
     ) {
@@ -69,6 +110,14 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
   (MODE_ENTRIES[mode] || PLAY_ENTRIES).forEach((name) => add(name));
   for (const entry of entries) {
     const name = entry.name;
+    // Navigation does not create a dependency edge. Keep the small directory
+    // and entry shells offline; edition artwork keeps its optional ownership.
+    if (
+      mode === 'solo' &&
+      (name === 'game/community/index.html' ||
+        /^game\/communities\/(?:[a-z][a-z0-9-]*\/)?index\.html$/.test(name))
+    )
+      add(name);
     // Immutable compiled presentation metadata includes player-selected actor
     // themes, restore/backup pins and replay rendering. Keep its exact closure.
     if (
@@ -86,10 +135,18 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
       name === 'game/ui/install-entry.mjs' ||
       name === 'authoring/motion-lab/presets.json' ||
       name.startsWith('game/content-design/runtime/') ||
+      // Bundled flight simulation includes vendor-to-vendor imports that the
+      // generic dependency walker deliberately does not parse. Retain its
+      // explicit build-config payload together for offline menu launches.
+      name.startsWith('optional-practice/civilian-fpv/') ||
+      name === 'optional-practice/install-context.mjs' ||
       name.startsWith('app/') ||
       name.startsWith('icons/') ||
       name === 'manifest.webmanifest' ||
       name === 'game/build-info.json' ||
+      // Redistribution notices and editable radio sources must remain available offline.
+      name === 'game/audio/effects/licenses.html' ||
+      name === 'game/audio/effects/edgetx-source.json' ||
       /^game\/i18n\/.*\.(?:mjs|json)$/.test(name) ||
       /^game\/assets\//.test(name) ||
       /^game\/ui\/(?:art|fonts)\//.test(name) ||
@@ -104,7 +161,10 @@ export function selectOfflineCore(entries, excluded, { mode = 'solo' } = {}) {
     const reference = (value) =>
       targets(value, name, byPath).forEach((target) => add(target, name));
     if ((name.endsWith('.mjs') || name.endsWith('.js')) && !name.includes('/vendor/')) {
-      const ast = parseModule(source, { ecmaVersion: 'latest', sourceType: 'module' });
+      const ast = parseModule(source, {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      });
       // Literal imports plus registered JSON/asset paths used by fetch helpers.
       walk(ast, (node) => {
         if (node.type === 'Literal') reference(node.value);

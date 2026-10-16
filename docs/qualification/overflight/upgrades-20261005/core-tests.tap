@@ -1,0 +1,180 @@
+TAP version 13
+# Subtest: explicit start, fixed ticks, paused upgrades, and confirm/boost release
+ok 1 - explicit start, fixed ticks, paused upgrades, and confirm/boost release
+  ---
+  duration_ms: 8.288458
+  ...
+# Subtest: approved primary payload keeps release distance, delay, radius and damage
+ok 2 - approved primary payload keeps release distance, delay, radius and damage
+  ---
+  duration_ms: 9.627166
+  ...
+# Subtest: movement normalizes diagonals, retains heading and uses approved boost values
+ok 3 - movement normalizes diagonals, retains heading and uses approved boost values
+  ---
+  duration_ms: 15.742959
+  ...
+# Subtest: dense area damage visits all 2500 candidates, rewards once and merges overflow XP
+ok 4 - dense area damage visits all 2500 candidates, rewards once and merges overflow XP
+  ---
+  duration_ms: 22.57
+  ...
+# Subtest: area grid boundaries agree with brute-force circle oracle including oversized bodies
+ok 5 - area grid boundaries agree with brute-force circle oracle including oversized bodies
+  ---
+  duration_ms: 5.838542
+  ...
+# Subtest: three combat slots, one support, admitted modules and guaranteed evolution
+ok 6 - three combat slots, one support, admitted modules and guaranteed evolution
+  ---
+  duration_ms: 0.65
+  ...
+# Subtest: queued choices stop at ten, rerolls stop at two, draft RNG does not change encounter RNG
+ok 7 - queued choices stop at ten, rerolls stop at two, draft RNG does not change encounter RNG
+  ---
+  duration_ms: 7.511667
+  ...
+# Subtest: arrival warning prevents contact and attack damage, contact is 20 with .75s protection
+ok 8 - arrival warning prevents contact and attack damage, contact is 20 with .75s protection
+  ---
+  duration_ms: 12.200875
+  ...
+# Subtest: priority attacks have at least one second warning, cap at two, cancel when owner dies
+ok 9 - priority attacks have at least one second warning, cap at two, cancel when owner dies
+  ---
+  duration_ms: 12.114833
+  ...
+# Subtest: sprinter telegraphs for one second, locks its burst heading, and preserves four-second travel
+ok 10 - sprinter telegraphs for one second, locks its burst heading, and preserves four-second travel
+  ---
+  duration_ms: 21.391667
+  ...
+# Subtest: courier and refuge rewards remain optional, exact-once and conserved through pickup overflow
+ok 11 - courier and refuge rewards remain optional, exact-once and conserved through pickup overflow
+  ---
+  duration_ms: 1.897166
+  ...
+# Subtest: radar support is bounded to eight sources, non-stacking, and cancels immediately on death
+ok 12 - radar support is bounded to eight sources, non-stacking, and cancels immediately on death
+  ---
+  duration_ms: 2.517958
+  ...
+# Subtest: relay rally has a full warning, a bounded flank bias, and cancels on death without an extra attack
+ok 13 - relay rally has a full warning, a bounded flank bias, and cancels on death without an extra attack
+  ---
+  duration_ms: 9.458083
+  ...
+# Subtest: family behavior phases are deterministic and do not consume encounter or draft randomness
+ok 14 - family behavior phases are deterministic and do not consume encounter or draft randomness
+  ---
+  duration_ms: 66.606625
+  ...
+# Subtest: relay and radar within attack range never create aimed threats
+ok 15 - relay and radar within attack range never create aimed threats
+  ---
+  duration_ms: 17.313875
+  ...
+# Subtest: three-airframe replacement preserves build, world, XP and cooldown with safe protection
+ok 16 - three-airframe replacement preserves build, world, XP and cooldown with safe protection
+  ---
+  duration_ms: 2.956375
+  ...
+# Subtest: regular spawn expiry continues play and final death wins before hostile damage in the same tick
+ok 17 - regular spawn expiry continues play and final death wins before hostile damage in the same tick
+  ---
+  duration_ms: 12.521042
+  ...
+# Subtest: ordinary pursuit decisions stagger at 10Hz while every actor moves each fixed tick
+ok 18 - ordinary pursuit decisions stagger at 10Hz while every actor moves each fixed tick
+  ---
+  duration_ms: 2.302292
+  ...
+# Subtest: nonpiercing shots hit first collision surface rather than nearest center
+ok 19 - nonpiercing shots hit first collision surface rather than nearest center
+  ---
+  duration_ms: 2.234208
+  ...
+# Subtest: piercing shots hit all crossed bodies once and projectile pool exhaustion defers launch
+ok 20 - piercing shots hit all crossed bodies once and projectile pool exhaustion defers launch
+  ---
+  duration_ms: 5.83125
+  ...
+# Subtest: identical seeds, decisions and inputs produce identical simulation and summary
+ok 21 - identical seeds, decisions and inputs produce identical simulation and summary
+  ---
+  duration_ms: 92.251583
+  ...
+# Subtest: reference fixture simulates every actor for 1000 ticks with stable alive/visible counts
+ok 22 - reference fixture simulates every actor for 1000 ticks with stable alive/visible counts
+  ---
+  duration_ms: 324.368042
+  ...
+# Subtest: stress fixture simulates every actor for 1000 ticks with stable alive/visible counts
+ok 23 - stress fixture simulates every actor for 1000 ticks with stable alive/visible counts
+  ---
+  duration_ms: 510.346625
+  ...
+# Subtest: stationary slow fields persist at departure and reduce ordinary travel
+ok 24 - stationary slow fields persist at departure and reduce ordinary travel
+  ---
+  duration_ms: 4.874042
+  ...
+# Subtest: return pulse is a delayed second opportunity at the first pulse location
+ok 25 - return pulse is a delayed second opportunity at the first pulse location
+  ---
+  duration_ms: 8.689416
+  ...
+# Subtest: pulse charge comes from admitted flight, is consumed, and cannot refill against arena bounds or on upgrade
+ok 26 - pulse charge comes from admitted flight, is consumed, and cannot refill against arena bounds or on upgrade
+  ---
+  duration_ms: 11.017292
+  ...
+# Subtest: first pulse remains chip damage even at full flight charge, and every nearby enemy is affected
+ok 27 - first pulse remains chip damage even at full flight charge, and every nearby enemy is affected
+  ---
+  duration_ms: 7.948291
+  ...
+# Subtest: overlapping slow fields share one damage cadence and never multiply the slow
+ok 28 - overlapping slow fields share one damage cadence and never multiply the slow
+  ---
+  duration_ms: 3.762791
+  ...
+# Subtest: earning two or three pulse ranks cannot sustain stationary survival through the opening encounters
+ok 29 - earning two or three pulse ranks cannot sustain stationary survival through the opening encounters
+  ---
+  duration_ms: 678.618791
+  ...
+# Subtest: scanner prioritizes machinery, increases marked damage and caps chain to three targets
+ok 30 - scanner prioritizes machinery, increases marked damage and caps chain to three targets
+  ---
+  duration_ms: 3.688542
+  ...
+# Subtest: evolved shield uses boost departure pulse and recharges after absorbing one hit
+ok 31 - evolved shield uses boost departure pulse and recharges after absorbing one hit
+  ---
+  duration_ms: 16.96025
+  ...
+# Subtest: fixture defeat recycling waits for the next movement/grid phase
+ok 32 - fixture defeat recycling waits for the next movement/grid phase
+  ---
+  duration_ms: 10.491458
+  ...
+# Subtest: reference fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+ok 33 - reference fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+  ---
+  duration_ms: 14619.125125
+  ...
+# Subtest: stress fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+ok 34 - stress fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+  ---
+  duration_ms: 26538.397584
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 43254.6

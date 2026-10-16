@@ -1668,3 +1668,35 @@ test('base selection reuse never caches dynamic published permissions, authored 
   assert.equal(h.player.snapshot().source, 'default');
   assert.match(h.player.snapshot().notice, /Published recording unavailable/);
 });
+
+test('user-owned local MP3 playback still accepts an upload without a public licence', async (t) => {
+  assert.equal(original.track.rights.license, '');
+  assert.equal(original.track.rights.source, '');
+  const library = {
+    ...original.library,
+    playlists: [
+      {
+        id: 'local.only',
+        title: 'My recording',
+        trackIds: [original.track.id],
+        order: 'ordered',
+        repeat: 'all',
+      },
+    ],
+    selection: { playlistId: 'local.only' },
+  };
+  let reads = 0;
+  const h = setup({
+    library,
+    readAsset: async (hash) => {
+      assert.equal(hash, original.track.asset.sha256);
+      reads++;
+      return original.blob;
+    },
+  });
+  t.after(() => h.player.dispose());
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.player.snapshot().track.id, original.track.id);
+  assert.equal(h.player.snapshot().track.kind, 'mp3');
+  assert.equal(reads, 1);
+});

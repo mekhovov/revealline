@@ -1,14 +1,66 @@
 <!doctype html>
-<html lang="en" data-tool-state="loading">
+<html
+  lang="en"
+  data-build-version="__REVEALLINE_VERSION__"
+  data-tool-state="loading"
+  data-access-state="locked"
+>
   <head>
     <meta charset="UTF-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="player"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link rel="stylesheet" href="../ui/mode-boot.css" />
+    <script
+      src="../snake/route.js"
+      data-mode="versus"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title data-i18n="interface:couchRaceRevealLine">Couch race · Reveal Line</title>
+    <title data-i18n="interface:couchRaceRevealLine">Couch race · FPV / LINE</title>
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../ui/game-shell.css" />
     <link rel="stylesheet" href="../ui/pixel-theme.css" />
@@ -19,7 +71,11 @@
     <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
     <link rel="stylesheet" href="../ui/settings.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
-    <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
+    <script
+      src="../ui/field-kit-surfaces.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
     <link rel="stylesheet" href="../ui/optional-chapters-panel.css" />
     <link rel="stylesheet" href="../ui/mode-choice.css" />
@@ -28,20 +84,40 @@
     <link rel="stylesheet" href="../ui/handheld-play.css" />
     <link rel="stylesheet" href="../ui/journey-save-cue.css" />
     <link rel="stylesheet" href="../ui/quick-music-controls.css" />
+    <link rel="stylesheet" href="../ui/menu-scenes.css" />
+    <link rel="stylesheet" href="../ui/native-menu.css" />
+    <link rel="stylesheet" href="../ui/pause-menu.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
+    <link rel="stylesheet" href="../ui/hunt-feedback.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <div data-language-control data-language-launch></div>
 
-    <p id="boot-status" class="operation-status" data-state="busy" role="status">
-      <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
-        ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
-        ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
-        ><i
-          style="display: inline-block; width: 4px; height: 8px; background: currentColor"
-        ></i></span
-      ><span data-i18n="interface:preparingBothBoards">Preparing both boards…</span>
-    </p>
-    <a id="boot-return" href="../" data-i18n="interface:backToTheGame2">Back to the game</a>
+    <section id="mode-boot" class="mode-boot" aria-label="FPV / LINE">
+      <div class="mode-boot-card">
+        <img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+        />
+        <p id="boot-status" class="operation-status" data-state="busy" role="status">
+          <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
+            ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+            ><i style="display: inline-block; width: 4px; height: 8px; background: currentColor"></i
+            ><i
+              style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+            ></i></span
+          ><span data-i18n="interface:preparingBothBoards">Preparing both boards…</span>
+        </p>
+        <a id="boot-return" href="../" data-i18n="interface:backToTheGame2">Back to the game</a>
+      </div>
+    </section>
+
     <main id="couch-app" data-boot-inert inert aria-busy="true">
       <nav
         id="race-journey-controls"
@@ -52,6 +128,9 @@
       >
         <button id="race-journey-next" type="button" hidden data-i18n="interface:nextMission2">
           Next mission
+        </button>
+        <button id="race-journey-random" type="button" data-i18n="interface:randomLevel">
+          Random level
         </button>
         <button id="race-journey-skip" type="button" data-i18n="interface:skipMission">
           Skip mission
@@ -91,6 +170,7 @@
           hidden
           data-i18n-aria-label="interface:currentMusic"
         ></div>
+        <div id="hunt-feedback" class="hunt-feedback"></div>
       </div>
       <div
         id="race-boards"
@@ -130,9 +210,11 @@
               data-i18n-aria-label="interface:player1RaceBoard"
             ></canvas>
           </div>
-          <p id="racer-stats-0" class="racer-stats" data-i18n="interface:003Lives0Points">
-            0.0% · 3 lives · 0 points
-          </p>
+          <div class="racer-readouts">
+            <p id="racer-stats-0" class="racer-stats" data-i18n="interface:003Lives0Points">
+              0.0% · 3 lives · 0 points
+            </p>
+          </div>
           <p
             id="racer-capture-0"
             class="racer-capture"
@@ -244,9 +326,11 @@
               data-i18n-aria-label="interface:player2RaceBoard"
             ></canvas>
           </div>
-          <p id="racer-stats-1" class="racer-stats" data-i18n="interface:003Lives0Points">
-            0.0% · 3 lives · 0 points
-          </p>
+          <div class="racer-readouts">
+            <p id="racer-stats-1" class="racer-stats" data-i18n="interface:003Lives0Points">
+              0.0% · 3 lives · 0 points
+            </p>
+          </div>
           <p
             id="racer-capture-1"
             class="racer-capture"
@@ -348,7 +432,7 @@
             data-i18n-aria-label="common:game.mode"
           ></nav>
           <p class="race-kicker" data-i18n="interface:revealLineLocalTwoPlayer">
-            REVEAL LINE / LOCAL TWO PLAYER
+            FPV / LINE / LOCAL TWO PLAYER
           </p>
           <h1 class="field-kit-display" id="race-title" data-i18n-rich="interface:twoBoardsOneRace">
             Two boards.<br data-i18n-slot="slot0" />One race.
@@ -383,6 +467,10 @@
               <p id="race-result-1" hidden></p>
             </article>
           </div>
+          <section id="race-briefing" aria-labelledby="race-briefing-title" hidden>
+            <h2 id="race-briefing-title"></h2>
+            <p id="race-briefing-copy"></p>
+          </section>
           <div class="race-menu-actions">
             <a
               id="race-coop"
@@ -402,6 +490,25 @@
             <button id="race-retry" type="button" hidden data-i18n="interface:couch.retryRace">
               Retry race
             </button>
+            <button id="race-export-recording" type="button" hidden>
+              Export recording of this round
+            </button>
+            <p id="race-recording-status" role="status" hidden></p>
+            <div id="race-recording-copy" class="recording-copy" hidden></div>
+            <p id="race-recording-help" class="recording-help" hidden>
+              <a
+                id="race-verify-recording"
+                href="../playground/#recording-verification"
+                target="_blank"
+                rel="noopener"
+                data-i18n="interface:recording.verifyExported"
+                >Verify exported recording ↗</a
+              >
+              <span data-i18n="interface:recording.exportHelp"
+                >Choose your exported file in the new tab. Wins and losses can be verified; this
+                grants no progress or rewards.</span
+              >
+            </p>
             <button
               id="race-journey-save-options"
               type="button"
@@ -835,6 +942,30 @@
               ><input id="race-reduced" type="checkbox" />
               <span data-i18n="interface:reducedEffects">Reduced effects</span></label
             >
+            <label class="settings-check"
+              ><input
+                id="race-enemy-remains"
+                type="checkbox"
+                aria-describedby="race-enemy-remains-hint"
+              /><span data-i18n="common:preferences.enemyRemains">Show enemy remains</span></label
+            >
+            <p
+              id="race-enemy-remains-hint"
+              class="micro-note"
+              data-i18n="common:preferences.enemyRemainsHint"
+            >
+              Show defeated optional enemies where supported. Warnings, shots and brief hit effects
+              stay visible.
+            </p>
+            <p id="race-enemy-remains-status" class="micro-note" role="status" hidden></p>
+            <button
+              id="race-enemy-remains-retry"
+              type="button"
+              data-i18n="common:preferences.retryEncounterSave"
+              hidden
+            >
+              Retry saving
+            </button>
             <p id="race-system-reduction" class="setting-note"></p>
             <p id="race-display-status" class="setting-note" role="status"></p>
             <label
@@ -850,7 +981,8 @@
               class="race-footnote"
               data-i18n="interface:optionalCaptionsAfterCompletedJourneyMissionsNoVoiceOrAnimation"
             >
-              Optional captions after completed Journey missions. No voice or animation.
+              Optional character captions, sound and brief reactions during play and after Journey
+              missions. Sound follows your audio settings.
             </p>
             <p id="race-journey-reactions-status" class="race-footnote" role="status" hidden></p>
             <button
@@ -924,9 +1056,7 @@
           hidden
           inert
         >
-          <p class="race-kicker" data-i18n="interface:couch.helpKicker">
-            REVEAL LINE / HOW TO PLAY
-          </p>
+          <p class="race-kicker" data-i18n="interface:couch.helpKicker">FPV / LINE / HOW TO PLAY</p>
           <h1 id="race-help-title" data-i18n="common:navigation.howToPlay">How to play</h1>
           <div id="race-help-unit">
             <div class="reading-toolbar">
@@ -989,6 +1119,7 @@
                 First clear wins the race. At the time limit: coverage, then lives, then score
                 decide. One race ends after this result. Rematch plays the same mission again.
               </p>
+              <section id="race-encounter-help" hidden></section>
             </div>
           </div>
           <button id="race-help-back" type="button" data-i18n="common:actions.back">Back</button>
@@ -1047,12 +1178,20 @@
         <p id="race-menu-status" class="race-menu-status" role="status"></p>
       </div>
     </main>
-    <script defer src="./mode-entry.js" data-mode="versus"></script>
+    <script
+      defer
+      src="./mode-entry.js"
+      data-mode="versus"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
     <script
       defer
       src="../ui/direct-tool-launch.js"
       data-module="./couch.mjs"
       data-status="boot-status"
+      type="application/x-revealline-locked"
+      data-access-type=""
     ></script>
   </body>
 </html>

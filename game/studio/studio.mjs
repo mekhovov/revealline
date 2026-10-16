@@ -1,4 +1,18 @@
+import {
+  prepareCreatorTeamSourceCampaign,
+  exportCreatorTeamCampaign,
+  importCreatorTeamCampaign,
+} from '../creator/team.mjs';
+import { createSnakeHuntCandidates } from '../content-design/snake-hunt-candidates.mjs';
+import { createTeamSnakeHuntCandidates } from '../content-design/team-snake-hunt-candidates.mjs';
 import { editorMessageError, editorErrorText } from './editor-copy.mjs';
+import { createSourceDiscardGate } from './source-discard.mjs';
+import {
+  disableStudioControl,
+  syncStudioHistory,
+  captureStudioActionFocus,
+} from './action-focus.mjs';
+import { createGridEditorAdapter, registerAuthoringEditor } from '../ui/authoring-editors.mjs';
 import { platformExportText } from '../ui/export-copy.mjs';
 import { localizedMessage, localizedText, onLocaleChange, t } from '../i18n/index.mjs';
 import { contentText } from '../i18n/content.mjs';
@@ -9,6 +23,8 @@ import { createTimedBorderCandidates } from '../content-design/timed-border-cand
 import { TIMED_BONUS_TRAIL_VERSION } from '../core/timed-bonuses.mjs';
 import { createCulturalWorkshopCandidates } from '../content-design/cultural-workshop-candidates.mjs';
 import { createPursuitInterceptCandidates } from '../content-design/pursuit-intercept-candidates.mjs';
+import { createPursuitPilotCandidates } from '../content-design/pursuit-pilot-candidates.mjs';
+import { createPursuitCampaignCandidates } from '../content-design/pursuit-campaign-candidates.mjs';
 import { createCombatCandidates } from '../content-design/combat-candidates.mjs';
 import { createSpatialBalanceCandidates } from '../content-design/spatial-balance-candidates.mjs';
 import { createSignalCandidates } from '../content-design/signal-candidates.mjs';
@@ -66,6 +82,7 @@ import { createUkrainianOrnamentAtlasJourney } from '../content-design/ukrainian
 import { withCampaignPresentation } from '../content-design/campaign-presentation.mjs';
 import { createTeamSignalCandidates } from '../content-design/team-signal-candidates.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
+import { createMultiplayerExpansionCandidates } from '../content-design/multiplayer-expansion.mjs';
 import { createTeamPressureOriginalCandidates } from '../content-design/team-pressure-originals.mjs';
 import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
 import { createTeamCompleteSpecialistOriginalCandidates } from '../content-design/team-complete-specialist-originals.mjs';
@@ -107,16 +124,19 @@ import { setBoardAvailability } from './board-state.mjs';
 import { tuneContentMission } from '../content-design/tuning.mjs';
 import { createImageWorkbench } from './image-workbench.mjs';
 import { createTraceRecovery } from './trace-recovery.mjs';
-import { freezeDesign } from '../content-design/catalogs.mjs';
 import { syncStudioDifficulty } from './difficulty-view.mjs';
 import { createTeamTestPack, createTeamCampaignTestPack } from '../content-design/team-export.mjs';
 import { createActorEditor } from './actor-editor.mjs';
 import { createCombatEditor } from './combat-editor.mjs';
+import { createHuntEditor } from './hunt-editor.mjs';
+import { createReactionVoiceEditor } from './reaction-voice-editor.mjs';
 import { createGeometryEditor } from './geometry-editor.mjs';
 import { createBonusEditor } from './bonus-editor.mjs';
 import { createTimedBonusEditor } from './timed-bonus-editor.mjs';
 import { createObjectiveEditor } from './objective-editor.mjs';
 import { createRelayEditor } from './relay-editor.mjs';
+import { createTeamEnvironmentEditor } from './team-environment-editor.mjs';
+import { createStudioDraftSnapshot } from './draft-snapshot.mjs';
 import { createDirectionalEditor } from './directional-editor.mjs';
 import { createEncounterEditor } from './encounter-editor.mjs';
 import { createPacingInspector } from './pacing-inspector.mjs';
@@ -128,6 +148,7 @@ import {
   inspectStudioSpatialReview,
   mountStudioSpatialReviews,
 } from './spatial-editions.mjs';
+import { createDiscoveryEditor } from './discovery-editor.mjs';
 
 const $ = (id) => document.getElementById(id);
 const creatorDraftId = new URLSearchParams(location.search).get('creator-draft');
@@ -158,6 +179,7 @@ let session,
   previewRevision = 0,
   previewController = null;
 const gameplayTuning = createGameplayTuningController();
+const currentDraftSnapshot = createStudioDraftSnapshot(() => session);
 const stopGameplayTuning = gameplayTuning.subscribe(() => {
   if (session) guarded(() => inspectBoard(inspectedTrail))();
 });
@@ -169,14 +191,31 @@ const inspections = createInspectionRequests(() =>
     $('checkpoint').value,
   ]),
 );
+const sourceDiscard = createSourceDiscardGate({
+  document,
+  isDirty: () => sourceChanged,
+  getContext: () => ({
+    owner: session,
+    signature: JSON.stringify([
+      session.export(),
+      $('source').value,
+      [...document.querySelectorAll('main input,main select,main textarea')].map((node) => [
+        node.id,
+        node.value,
+        node.checked,
+      ]),
+    ]),
+  }),
+  onStale: () => status(localizedMessage('tools:studio.source.changed'), true),
+});
 const imageWorkbench = createImageWorkbench({
   document,
   getSource: () => session.current(),
   getMission: () => currentMission(),
   getDifficulty: () => $('difficulty').value,
   redraw: () => inspectBoard(inspectedTrail),
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -196,8 +235,8 @@ const actorEditor = createActorEditor({
   getSource: () => session.current(),
   getMission: currentMission,
   getDifficulty: () => $('difficulty').value,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -208,20 +247,35 @@ const combatEditor = createCombatEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
     return true;
   },
 });
+const huntEditor = createHuntEditor({
+  container: $('hunt-editor-mount'),
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const reactionVoiceEditor = createReactionVoiceEditor({
+  container: $('reaction-voice-editor-mount'),
+});
 const geometryEditor = createGeometryEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -232,8 +286,8 @@ const bonusEditor = createBonusEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -244,8 +298,8 @@ const timedBonusEditor = createTimedBonusEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -256,8 +310,8 @@ const objectiveEditor = createObjectiveEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -268,8 +322,20 @@ const relayEditor = createRelayEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const teamEnvironmentEditor = createTeamEnvironmentEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -280,8 +346,8 @@ const directionalEditor = createDirectionalEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
-  apply: (candidate) => {
-    if (!discardSource()) return false;
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
     session.replace(candidate);
     render();
     queueSave();
@@ -289,6 +355,18 @@ const directionalEditor = createDirectionalEditor({
   },
 });
 const encounterEditor = createEncounterEditor({
+  document,
+  getSource: () => session.current(),
+  getMission: currentMission,
+  apply: (candidate, retry) => {
+    if (!discardSource(retry)) return false;
+    session.replace(candidate);
+    render();
+    queueSave();
+    return true;
+  },
+});
+const discoveryEditor = createDiscoveryEditor({
   document,
   getSource: () => session.current(),
   getMission: currentMission,
@@ -305,14 +383,27 @@ function status(text, error = false) {
   $('status').dataset.error = String(error);
 }
 function guarded(action) {
-  return async (event) => {
+  const handler = async (event) => {
     try {
-      await action(event);
+      await sourceDiscard.run(
+        () => action(event),
+        () => handler(event),
+      );
     } catch (error) {
       if (error.name === 'AbortError') return;
       status(() => editorErrorText(error), true);
     }
   };
+  return handler;
+}
+function syncHistory() {
+  syncStudioHistory({
+    undo: $('undo'),
+    redo: $('redo'),
+    fallback: $('save'),
+    canUndo: !!session?.canUndo(),
+    canRedo: !!session?.canRedo(),
+  });
 }
 function showStorage(state) {
   if (state.error)
@@ -327,8 +418,7 @@ function showStorage(state) {
         ? localizedMessage('tools:studio.storage.unsaved')
         : localizedMessage('tools:studio.storage.saved', { revision: state.revision }),
     );
-  $('undo').disabled = !session?.canUndo();
-  $('redo').disabled = !session?.canRedo();
+  syncHistory();
 }
 function setSession(project, revision = null) {
   inspections.invalidate();
@@ -354,8 +444,8 @@ function queueSave() {
     owner.save().catch(() => {});
   }, 300);
 }
-function discardSource() {
-  return !sourceChanged || window.confirm(t('tools:studio.source.discard'));
+function discardSource(retry) {
+  return sourceDiscard.allow(retry);
 }
 function currentMission() {
   return session.current().missions.find((m) => m.id === $('mission').value);
@@ -378,7 +468,9 @@ function draw(preview) {
   canvas.setAttribute('aria-describedby', 'geometry capture-summary');
 }
 function inspectBoard(trailCells = []) {
-  const project = freezeDesign(session.current());
+  $('preview-remains-options').hidden = true;
+  $('preview-show-remains').disabled = true;
+  const project = currentDraftSnapshot();
   const mission = project.missions.find((entry) => entry.id === $('mission').value);
   syncStudioDifficulty($('difficulty'), project.difficultyCatalogId, {
     team: !!mission && !mission.modes.includes('solo') && mission.modes[0] === 'team',
@@ -386,13 +478,16 @@ function inspectBoard(trailCells = []) {
   acceptanceInspector.sync();
   actorEditor.sync();
   combatEditor.sync();
+  huntEditor.sync();
   geometryEditor.sync();
   bonusEditor.sync();
   timedBonusEditor.sync();
   objectiveEditor.sync();
   relayEditor.sync();
+  teamEnvironmentEditor.sync();
   directionalEditor.sync();
   encounterEditor.sync();
+  discoveryEditor.sync();
   imageWorkbench.sync();
   traceRecovery.sync();
   setBoardAvailability(document, !!mission);
@@ -439,8 +534,11 @@ function inspectBoard(trailCells = []) {
       rules: manifest.level.rules,
       actors: manifest.level.enemies,
       effectiveGameplay,
-      ...(manifest.level.classic?.combatPatrols
-        ? { combatPatrols: manifest.level.classic.combatPatrols }
+      ...((manifest.level.classic?.combatPatrols ?? manifest.level.combatPatrols)
+        ? { combatPatrols: manifest.level.classic?.combatPatrols ?? manifest.level.combatPatrols }
+        : {}),
+      ...((manifest.level.classic?.hunt ?? manifest.level.hunt)
+        ? { hunt: manifest.level.classic?.hunt ?? manifest.level.hunt }
         : {}),
       objectives: mission.objectives,
       terrain: authoredTerrain,
@@ -475,7 +573,11 @@ function inspectBoard(trailCells = []) {
       return li;
     }),
   );
-  $('play').disabled = !mission.modes.includes('solo') || !!mission.combat?.enabled;
+  $('play').disabled = !mission.modes.includes('solo');
+  const optionalSolo =
+    manifest.mode === 'solo' && manifest.level.classic?.combatPatrols?.enabled === true;
+  $('preview-remains-options').hidden = !optionalSolo;
+  $('preview-show-remains').disabled = !optionalSolo;
   $('export-team').hidden = !mission.modes.includes('team');
   $('team-sequence-tools').hidden = !mission.modes.includes('team');
   const selectedTeamCampaign = $('team-test-campaign').value;
@@ -510,7 +612,7 @@ function render(selected = $('mission').value) {
   inspections.invalidate();
   pacingInspector.sync();
   tuningRevision = null;
-  const project = freezeDesign(session.current());
+  const project = currentDraftSnapshot();
   $('pressure-edition').disabled = project.difficultyCatalogId === 'journey-difficulty-v2';
   $('project-id').value = project.id;
   localizedText($('project-name'), () => contentText(project, 'name'));
@@ -533,7 +635,7 @@ function render(selected = $('mission').value) {
   sourceChanged = false;
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   localizedText(
     $('validation'),
     localizedMessage('tools:studio.source.current', {
@@ -541,14 +643,13 @@ function render(selected = $('mission').value) {
       missions: project.missions.length,
     }),
   );
-  $('undo').disabled = !session.canUndo();
-  $('redo').disabled = !session.canRedo();
+  syncHistory();
   localizedText($('structure-result'), localizedMessage('tools:studio.structure.current'));
   syncStructure();
   inspectBoard();
 }
 function syncStructure() {
-  const project = freezeDesign(session.current()),
+  const project = currentDraftSnapshot(),
     kind = $('item-kind').value,
     action = $('item-action').value;
   const creating = action === 'create' || action === 'duplicate';
@@ -653,19 +754,20 @@ function inspectSource({ head, selectedRevision } = {}) {
   inspections.invalidate();
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   const text = $('source').value,
     project = compileContentProject(text).source;
   inspected = { text, project, head };
-  localizedText($('validation'), () =>
+  const report = () =>
     t(head ? 'tools:studio.source.checkpointInspected' : 'tools:studio.source.inspected', {
       name: contentText(project, 'name'),
       maps: project.maps.length,
       missions: project.missions.length,
       selectedRevision,
       latestRevision: head?.revision,
-    }),
-  );
+    });
+  localizedText($('validation'), report);
+  status(report);
   $('apply').disabled = false;
   candidateLibrary.reportInspection(() =>
     t('tools:studio.library.inspected', {
@@ -679,7 +781,7 @@ $('source').addEventListener('input', () => {
   sourceChanged = true;
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   localizedText($('validation'), localizedMessage('tools:studio.source.unapplied'));
 });
 $('validate').onclick = guarded(() => inspectSource());
@@ -730,7 +832,7 @@ $('pressure-edition').onclick = guarded(() => {
   inspections.invalidate();
   inspected = null;
   candidateLibrary.clearInspection();
-  $('apply').disabled = true;
+  disableStudioControl($('apply'), $('validate'));
   $('source').value = JSON.stringify(withPressureDifficulty(session.current()), null, 2);
   sourceChanged = true;
   inspectSource();
@@ -784,6 +886,18 @@ $('pursuit-intercept').onclick = guarded(() => {
   sourceChanged = true;
   inspectSource();
 });
+for (const [id, create, team] of [
+  ['living-pilots', createPursuitPilotCandidates, false],
+  ['living-chapters', createPursuitCampaignCandidates, false],
+  ['living-team-pilots', createPursuitPilotCandidates, true],
+  ['living-team-chapters', createPursuitCampaignCandidates, true],
+])
+  $(id).onclick = guarded(() => {
+    if (!discardSource()) return;
+    $('source').value = JSON.stringify(create({ team }), null, 2);
+    sourceChanged = true;
+    inspectSource();
+  });
 $('combat-study').onclick = guarded(() => {
   if (!discardSource()) return;
   $('source').value = JSON.stringify(createCombatCandidates(), null, 2);
@@ -892,6 +1006,16 @@ $('team-journey').onclick = guarded(() => {
             : $('team-journey-edition').value === 'pressure-originals-1'
               ? createTeamPressureOriginalCandidates()
               : createTeamJourneyCandidates({ artwork: true }),
+    null,
+    2,
+  );
+  sourceChanged = true;
+  inspectSource();
+});
+$('multiplayer-expedition').onclick = guarded(() => {
+  if (!discardSource()) return;
+  $('source').value = JSON.stringify(
+    createMultiplayerExpansionCandidates({ mode: $('multiplayer-expedition-mode').value }),
     null,
     2,
   );
@@ -1036,6 +1160,8 @@ $('whole-variety').onclick = guarded(async () => {
     return;
   }
   const create = {
+    'snake-hunt-v1': createSnakeHuntCandidates,
+    'team-snake-hunt-v1': createTeamSnakeHuntCandidates,
     'variety-1': createWholeVarietyCandidates,
     'sorting-lanes-1': createWholeSortingCandidates,
     'global-impact-1': createWholeImpactCandidates,
@@ -1079,6 +1205,11 @@ $('import').onchange = guarded(async () => {
     return;
   }
   if (!current()) return;
+  if (JSON.parse(text)?.format === 'revealline-creator-team-portable.v2') {
+    const prepared = await importCreatorTeamCampaign(new Blob([text]));
+    if (!current()) return;
+    text = JSON.stringify(prepared.provenance.sourceProject, null, 2);
+  }
   $('source').value = text;
   sourceChanged = true;
   inspectSource();
@@ -1109,6 +1240,27 @@ $('export-team-campaign').onclick = guarded(async () => {
       message: platformExportText(result),
       count: pack.levels.length,
     }),
+  );
+});
+$('export-team-portable').onclick = guarded(async () => {
+  if (sourceChanged) throw editorMessageError('errors:studio.source.exportCampaign');
+  const source = session.current(),
+    campaignId = $('team-test-campaign').value;
+  const sourcePack = source.packs.find(
+    (pack) => !pack.archived && pack.campaignIds.includes(campaignId),
+  );
+  if (!sourcePack) throw editorMessageError('errors:studio.chooseTeam');
+  const difficulty = $('difficulty').value;
+  const prepared = await prepareCreatorTeamSourceCampaign(source, {
+    sourcePackId: sourcePack.id,
+    campaignId,
+    difficulty,
+  });
+  const portable = JSON.parse(await exportCreatorTeamCampaign(prepared).text());
+  const result = await exportJSONFile(portable, `${campaignId}-${difficulty}-team-portable.json`);
+  status(
+    () =>
+      `${platformExportText(result)} · Community package: structurally validated; human play qualification pending. / Пакунок спільноти: структура перевірена; ігрова перевірка ще попереду.`,
   );
 });
 for (const action of ['undo', 'redo'])
@@ -1186,6 +1338,27 @@ $('board').onclick = (event) => {
     Math.max(0, Math.floor(((event.clientY - rect.top) * 36) / rect.height)),
   );
 };
+registerAuthoringEditor(
+  $('board'),
+  createGridEditorAdapter({
+    element: $('board'),
+    available: () => !!currentMission(),
+    dimensions: () => [72, 36],
+    position: () => [Number($('x').value), Number($('y').value)],
+    move: ([x, y]) => {
+      $('x').value = x;
+      $('y').value = y;
+    },
+    apply: () => $('geometry-form').requestSubmit(),
+    changed: () => {
+      $('board').setAttribute(
+        'aria-label',
+        `${t('interface:map')} X ${$('x').value}, Y ${$('y').value}`,
+      );
+    },
+  }),
+  { keyboard: true },
+);
 $('inspect').onclick = guarded(() => {
   const text = $('trail').value.trim();
   if (text.length > 16000) throw editorMessageError('errors:studio.trail.inputBudget');
@@ -1202,6 +1375,8 @@ $('play').onclick = guarded(() =>
   launchPreview(session.current(), $('mission').value, $('difficulty').value),
 );
 async function launchPreview(source, missionId, difficulty) {
+  reactionVoiceEditor.suspend();
+  const focusIntent = captureStudioActionFocus(document.activeElement);
   previewController?.abort();
   const controller = new AbortController();
   previewController = controller;
@@ -1210,13 +1385,19 @@ async function launchPreview(source, missionId, difficulty) {
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = false;
   localizedText($('preview-status'), localizedMessage('tools:studio.preview.preparing'));
-  let result, previewProject;
+  let result,
+    previewProject,
+    showCombatScrap = null;
   try {
     // Own one immutable edition across asynchronous media loading and reuse its
     // validated projections; never compile the whole library twice per launch.
     const project = compileContentProject(source);
     previewProject = project.source;
     const manifest = prepareContentPreview(project, missionId, { difficulty }).manifest;
+    // Snapshot only a validated optional Solo mission's cosmetic launch choice.
+    // Later control changes apply to the next preview, never the pending one.
+    if (manifest.mode === 'solo' && manifest.level.classic?.combatPatrols?.enabled === true)
+      showCombatScrap = $('preview-show-remains').checked;
     const pin = manifest.background;
     const [theme, artwork] = await Promise.all([
       loadPreviewTheme({ themeId: manifest.presentation.themeId, signal: controller.signal }),
@@ -1229,22 +1410,33 @@ async function launchPreview(source, missionId, difficulty) {
           })()
         : null,
     ]);
-    if (ticket !== previewRevision) return;
+    if (ticket !== previewRevision) {
+      focusIntent.cancel();
+      return;
+    }
     result = prepareContentPreview(project, missionId, { difficulty, theme, artwork });
     sessionStorage.setItem('revealline.playground.current', JSON.stringify(result.scenario));
   } catch (error) {
+    focusIntent.cancel();
     if (ticket === previewRevision && error.name !== 'AbortError')
       localizedText($('preview-status'), () => studioPreviewFailureText(error));
     return;
   }
-  const url = new URL(`../?practice=1&revision=studio-${ticket}`, location.href).href;
+  const target = new URL(`../?practice=1&revision=studio-${ticket}`, location.href);
+  if (showCombatScrap !== null)
+    target.searchParams.set('preview-remains', showCombatScrap ? 'show' : 'hide');
+  const url = target.href;
+  // Media preparation can yield while an author auditions another recording.
+  reactionVoiceEditor.suspend();
   $('preview').src = url;
   localizedText($('preview-status'), () =>
     studioPreviewLoadingText(previewProject, missionId, difficulty),
   );
-  $('preview-panel').scrollIntoView({ block: 'start' });
+  focusIntent.reveal($('preview-panel'));
+  focusIntent.cancel();
   stopPreviewReadiness = observePreviewReadiness({
     expectedURL: url,
+    watchPractice: true,
     readDocument: () => $('preview').contentDocument,
     isCurrent: () => ticket === previewRevision,
     notify: (state) => {
@@ -1261,12 +1453,17 @@ async function launchPreview(source, missionId, difficulty) {
     },
   });
 }
-function closePreview() {
+function retirePreview() {
+  // Invalidate before aborting: a late or reentrant asset completion cannot
+  // revive an iframe retired by Close or by entry into the back/forward cache.
   previewRevision++;
   previewController?.abort();
   stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = true;
+}
+function closePreview() {
+  retirePreview();
   $('play').focus();
 }
 $('close-preview').onclick = closePreview;
@@ -1278,7 +1475,16 @@ window.addEventListener('beforeunload', (event) => {
   }
 });
 window.addEventListener('pagehide', (event) => {
+  // A restored Studio keeps its draft, but needs a deliberate new preview.
+  // Retire without moving focus, before any asynchronous completion can revive it.
+  retirePreview();
+  discoveryEditor.suspend();
+  reactionVoiceEditor.suspend();
   if (!event.persisted) {
+    discoveryEditor.dispose();
+    reactionVoiceEditor.dispose();
+    huntEditor.dispose();
+    sourceDiscard.destroy();
     stopSpatialReviews();
     stopGameplayTuning();
     gameplayTuning.dispose();
@@ -1286,9 +1492,7 @@ window.addEventListener('pagehide', (event) => {
     paintedPreview = null;
   }
   imageWorkbench.dispose();
-  previewController?.abort();
   clearTimeout(saveTimer);
-  stopPreviewReadiness();
 });
 window.addEventListener('pageshow', (event) => {
   if (event.persisted && session) imageWorkbench.sync();

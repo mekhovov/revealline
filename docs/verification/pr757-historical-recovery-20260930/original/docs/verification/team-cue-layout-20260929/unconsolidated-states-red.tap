@@ -1,0 +1,561 @@
+TAP version 13
+# Subtest: portrait functional player numerals retain at least fourteen CSS pixels
+ok 1 - portrait functional player numerals retain at least fourteen CSS pixels
+  ---
+  duration_ms: 7.879417
+  type: 'test'
+  ...
+# Subtest: pilot complete image frames remain within the arena at the true boundary
+ok 2 - pilot complete image frames remain within the arena at the true boundary
+  ---
+  duration_ms: 6.286083
+  type: 'test'
+  ...
+# Subtest: compact full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 3 - compact full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 31.960833
+  type: 'test'
+  ...
+# Subtest: detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 4 - detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 25.48975
+  type: 'test'
+  ...
+# Subtest: body offset leaves shared default drawing exact and contact at its real pixel position
+ok 5 - body offset leaves shared default drawing exact and contact at its real pixel position
+  ---
+  duration_ms: 1.335042
+  type: 'test'
+  ...
+# Subtest: plain portrait cues and player identities retain CSS size without covering true heads
+ok 6 - plain portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 2.352542
+  type: 'test'
+  ...
+# Subtest: pixel portrait cues and player identities retain CSS size without covering true heads
+ok 7 - pixel portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 2.362583
+  type: 'test'
+  ...
+# Subtest: complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+ok 8 - complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+  ---
+  duration_ms: 0.748292
+  type: 'test'
+  ...
+# Subtest: Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+ok 9 - Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+  ---
+  duration_ms: 0.721292
+  type: 'test'
+  ...
+# Subtest: Standard Team commands retain the pre-Large-preference baseline
+ok 10 - Standard Team commands retain the pre-Large-preference baseline
+  ---
+  duration_ms: 22.042792
+  type: 'test'
+  ...
+# Subtest: Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+ok 11 - Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+  ---
+  duration_ms: 29.518
+  type: 'test'
+  ...
+# Subtest: crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+ok 12 - crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+  ---
+  duration_ms: 0.153125
+  type: 'test'
+  ...
+# Subtest: invalid canvas text size fails before drawing or mutating the Team run
+ok 13 - invalid canvas text size fails before drawing or mutating the Team run
+  ---
+  duration_ms: 0.6785
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+ok 14 - 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+  ---
+  duration_ms: 35.4105
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+ok 15 - 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+  ---
+  duration_ms: 19.205375
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+ok 16 - 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+  ---
+  duration_ms: 30.456292
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+ok 17 - 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+  ---
+  duration_ms: 32.2215
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+ok 18 - 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+  ---
+  duration_ms: 58.088417
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay both-slowed retains complete distinct cue plates
+not ok 19 - 212 CSS px Ukrainian Large Relay both-slowed retains complete distinct cue plates
+  ---
+  duration_ms: 44.235209
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-actor-layout.test.mjs:694:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    {"context":{"phase":"both-slowed","textFace":"plain","reduced":false,"status":"running"},"conflicts":[{"first":{"text":"ЩИТ","cssFontSize":16,"textBounds":{"left":89.16777777777777,"right":119.88777777777779,"top":69.96666666666665,"bottom":85.96666666666665},"backing":{"left":85.16777777777779,"right":123.88777777777777,"top":66.76666666666665,"bottom":89.16666666666664},"badge":null},"second":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":37.83666666666667,"right":129.99666666666667,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":33.836666666666666,"right":133.99666666666667,"top":63.23888888888889,"bottom":85.63888888888889},"badge":null}},{"first":{"text":"ЩИТ","cssFontSize":16,"textBounds":{"left":89.16777777777777,"right":119.88777777777779,"top":69.96666666666665,"bottom":85.96666666666665},"backing":{"left":85.16777777777779,"right":123.88777777777777,"top":66.76666666666665,"bottom":89.16666666666664},"badge":null},"second":{"text":"УПОВІЛЬНЕНО","cssFontSize":16,"textBounds":{"left":27.596666666666675,"right":140.23666666666668,"top":59.638888888888886,"bottom":75.63888888888889},"backing":{"left":23.59666666666667,"right":144.23666666666665,"top":56.43888888888889,"bottom":78.83888888888889},"badge":null}},{"first":{"text":"ЩИТ","cssFontSize":16,"textBounds":{"left":89.16777777777777,"right":119.88777777777779,"top":69.96666666666665,"bottom":85.96666666666665},"backing":{"left":85.16777777777779,"right":123.88777777777777,"top":66.76666666666665,"bottom":89.16666666666664},"badge":null},"second":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":82.00333333333334,"right":174.16333333333336,"top":85.8,"bottom":101.8},"backing":{"left":78.00333333333333,"right":178.16333333333336,"top":82.6,"bottom":105},"badge":null}},{"first":{"text":"ЩИТ","cssFontSize":16,"textBounds":{"left":89.16777777777777,"right":119.88777777777779,"top":69.96666666666665,"bottom":85.96666666666665},"backing":{"left":85.16777777777779,"right":123.88777777777777,"top":66.76666666666665,"bottom":89.16666666666664},"badge":null},"second":{"text":"УПОВІЛЬНЕНО","cssFontSize":16,"textBounds":{"left":71.76333333333335,"right":184.40333333333334,"top":59.638888888888886,"bottom":75.63888888888889},"backing":{"left":67.76333333333335,"right":188.40333333333336,"top":56.43888888888889,"bottom":78.83888888888889},"badge":null}},{"first":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":37.83666666666667,"right":129.99666666666667,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":33.836666666666666,"right":133.99666666666667,"top":63.23888888888889,"bottom":85.63888888888889},"badge":null},"second":{"text":"УПОВІЛЬНЕНО","cssFontSize":16,"textBounds":{"left":27.596666666666675,"right":140.23666666666668,"top":59.638888888888886,"bottom":75.63888888888889},"backing":{"left":23.59666666666667,"right":144.23666666666665,"top":56.43888888888889,"bottom":78.83888888888889},"badge":null}},{"first":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":37.83666666666667,"right":129.99666666666667,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":33.836666666666666,"right":133.99666666666667,"top":63.23888888888889,"bottom":85.63888888888889},"badge":null},"second":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":82.00333333333334,"right":174.16333333333336,"top":85.8,"bottom":101.8},"backing":{"left":78.00333333333333,"right":178.16333333333336,"top":82.6,"bottom":105},"badge":null}},{"first":{"text":"МИСЛИВЕЦЬ","cssFontSize":16,"textBounds":{"left":37.83666666666667,"right":129.99666666666667,"top":66.4388888888889,"bottom":82.4388888888889},"backing":{"left":33.836666666666666,"right":133.99666666666667,"top":63.23888888888889,"bottom":85.63888888888889},"badge":null},"second":{"text":"УПОВІЛЬНЕНО","cssFontSize":16,"textBounds":{"left":71.76333333333335,"right":184.40333333333334,"top":59.638888888888886,"bottom":75.63888888888889},"backing":{"left":67.76333333333335,"right":188.40333333333336,"top":56.43888888888889,"bottom":78.83888888888889},"badge":null}},{"first":{"text":"УПОВІЛЬНЕНО","cssFontSize":16,"textBounds":{"left":27.596666666666675,"right":140.23666666666668,"top":59.638888888888886,"bottom":75.63888888888889},"backing":{"left":23.59666666666667,"right":144.23666666666665,"top":56.43888888888889,"bottom":78.83888888888889},"badge":null},"second":{"text":"УПОВІЛЬНЕНО","cssFontSize":16,"textBounds":{"left":71.76333333333335,"right":184.40333333333334,"top":59.638888888888886,"bottom":75.63888888888889},"backing":{"left":67.76333333333335,"right":188.40333333333336,"top":56.43888888888889,"bottom":78.83888888888889},"badge":null}}]}
+    + actual - expected
+    
+    + [
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 89.16666666666664,
+    +         left: 85.16777777777779,
+    +         right: 123.88777777777777,
+    +         top: 66.76666666666665
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'ЩИТ',
+    +       textBounds: {
+    +         bottom: 85.96666666666665,
+    +         left: 89.16777777777777,
+    +         right: 119.88777777777779,
+    +         top: 69.96666666666665
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 33.836666666666666,
+    +         right: 133.99666666666667,
+    +         top: 63.23888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 37.83666666666667,
+    +         right: 129.99666666666667,
+    +         top: 66.4388888888889
+    +       }
+    +     }
+    +   },
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 89.16666666666664,
+    +         left: 85.16777777777779,
+    +         right: 123.88777777777777,
+    +         top: 66.76666666666665
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'ЩИТ',
+    +       textBounds: {
+    +         bottom: 85.96666666666665,
+    +         left: 89.16777777777777,
+    +         right: 119.88777777777779,
+    +         top: 69.96666666666665
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 78.83888888888889,
+    +         left: 23.59666666666667,
+    +         right: 144.23666666666665,
+    +         top: 56.43888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'УПОВІЛЬНЕНО',
+    +       textBounds: {
+    +         bottom: 75.63888888888889,
+    +         left: 27.596666666666675,
+    +         right: 140.23666666666668,
+    +         top: 59.638888888888886
+    +       }
+    +     }
+    +   },
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 89.16666666666664,
+    +         left: 85.16777777777779,
+    +         right: 123.88777777777777,
+    +         top: 66.76666666666665
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'ЩИТ',
+    +       textBounds: {
+    +         bottom: 85.96666666666665,
+    +         left: 89.16777777777777,
+    +         right: 119.88777777777779,
+    +         top: 69.96666666666665
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 105,
+    +         left: 78.00333333333333,
+    +         right: 178.16333333333336,
+    +         top: 82.6
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 101.8,
+    +         left: 82.00333333333334,
+    +         right: 174.16333333333336,
+    +         top: 85.8
+    +       }
+    +     }
+    +   },
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 89.16666666666664,
+    +         left: 85.16777777777779,
+    +         right: 123.88777777777777,
+    +         top: 66.76666666666665
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'ЩИТ',
+    +       textBounds: {
+    +         bottom: 85.96666666666665,
+    +         left: 89.16777777777777,
+    +         right: 119.88777777777779,
+    +         top: 69.96666666666665
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 78.83888888888889,
+    +         left: 67.76333333333335,
+    +         right: 188.40333333333336,
+    +         top: 56.43888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'УПОВІЛЬНЕНО',
+    +       textBounds: {
+    +         bottom: 75.63888888888889,
+    +         left: 71.76333333333335,
+    +         right: 184.40333333333334,
+    +         top: 59.638888888888886
+    +       }
+    +     }
+    +   },
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 33.836666666666666,
+    +         right: 133.99666666666667,
+    +         top: 63.23888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 37.83666666666667,
+    +         right: 129.99666666666667,
+    +         top: 66.4388888888889
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 78.83888888888889,
+    +         left: 23.59666666666667,
+    +         right: 144.23666666666665,
+    +         top: 56.43888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'УПОВІЛЬНЕНО',
+    +       textBounds: {
+    +         bottom: 75.63888888888889,
+    +         left: 27.596666666666675,
+    +         right: 140.23666666666668,
+    +         top: 59.638888888888886
+    +       }
+    +     }
+    +   },
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 33.836666666666666,
+    +         right: 133.99666666666667,
+    +         top: 63.23888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 37.83666666666667,
+    +         right: 129.99666666666667,
+    +         top: 66.4388888888889
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 105,
+    +         left: 78.00333333333333,
+    +         right: 178.16333333333336,
+    +         top: 82.6
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 101.8,
+    +         left: 82.00333333333334,
+    +         right: 174.16333333333336,
+    +         top: 85.8
+    +       }
+    +     }
+    +   },
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 85.63888888888889,
+    +         left: 33.836666666666666,
+    +         right: 133.99666666666667,
+    +         top: 63.23888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'МИСЛИВЕЦЬ',
+    +       textBounds: {
+    +         bottom: 82.4388888888889,
+    +         left: 37.83666666666667,
+    +         right: 129.99666666666667,
+    +         top: 66.4388888888889
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 78.83888888888889,
+    +         left: 67.76333333333335,
+    +         right: 188.40333333333336,
+    +         top: 56.43888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'УПОВІЛЬНЕНО',
+    +       textBounds: {
+    +         bottom: 75.63888888888889,
+    +         left: 71.76333333333335,
+    +         right: 184.40333333333334,
+    +         top: 59.638888888888886
+    +       }
+    +     }
+    +   },
+    +   {
+    +     first: {
+    +       backing: {
+    +         bottom: 78.83888888888889,
+    +         left: 23.59666666666667,
+    +         right: 144.23666666666665,
+    +         top: 56.43888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'УПОВІЛЬНЕНО',
+    +       textBounds: {
+    +         bottom: 75.63888888888889,
+    +         left: 27.596666666666675,
+    +         right: 140.23666666666668,
+    +         top: 59.638888888888886
+    +       }
+    +     },
+    +     second: {
+    +       backing: {
+    +         bottom: 78.83888888888889,
+    +         left: 67.76333333333335,
+    +         right: 188.40333333333336,
+    +         top: 56.43888888888889
+    +       },
+    +       badge: null,
+    +       cssFontSize: 16,
+    +       text: 'УПОВІЛЬНЕНО',
+    +       textBounds: {
+    +         bottom: 75.63888888888889,
+    +         left: 71.76333333333335,
+    +         right: 184.40333333333334,
+    +         top: 59.638888888888886
+    +       }
+    +     }
+    +   }
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0:
+      first:
+        text: 'ЩИТ'
+        cssFontSize: 16
+        textBounds:
+          left: 89.16777777777777
+          right: 119.88777777777779
+          top: 69.96666666666665
+          bottom: 85.96666666666665
+        backing:
+          left: 85.16777777777779
+          right: 123.88777777777777
+          top: 66.76666666666665
+          bottom: 89.16666666666664
+        badge: ~
+      second:
+        text: 'МИСЛИВЕЦЬ'
+        cssFontSize: 16
+        textBounds:
+          left: 37.83666666666667
+          right: 129.99666666666667
+          top: 66.4388888888889
+          bottom: 82.4388888888889
+        backing:
+          left: 33.836666666666666
+          right: 133.99666666666667
+          top: 63.23888888888889
+          bottom: 85.63888888888889
+        badge: ~
+    1:
+      first: <Circular>
+      second:
+        text: 'УПОВІЛЬНЕНО'
+        cssFontSize: 16
+        textBounds:
+          left: 27.596666666666675
+          right: 140.23666666666668
+          top: 59.638888888888886
+          bottom: 75.63888888888889
+        backing:
+          left: 23.59666666666667
+          right: 144.23666666666665
+          top: 56.43888888888889
+          bottom: 78.83888888888889
+        badge: ~
+    2:
+      first: <Circular>
+      second:
+        text: 'МИСЛИВЕЦЬ'
+        cssFontSize: 16
+        textBounds:
+          left: 82.00333333333334
+          right: 174.16333333333336
+          top: 85.8
+          bottom: 101.8
+        backing:
+          left: 78.00333333333333
+          right: 178.16333333333336
+          top: 82.6
+          bottom: 105
+        badge: ~
+    3:
+      first: <Circular>
+      second:
+        text: 'УПОВІЛЬНЕНО'
+        cssFontSize: 16
+        textBounds:
+          left: 71.76333333333335
+          right: 184.40333333333334
+          top: 59.638888888888886
+          bottom: 75.63888888888889
+        backing:
+          left: 67.76333333333335
+          right: 188.40333333333336
+          top: 56.43888888888889
+          bottom: 78.83888888888889
+        badge: ~
+    4:
+      first: <Circular>
+      second: <Circular>
+    5:
+      first: <Circular>
+      second: <Circular>
+    6:
+      first: <Circular>
+      second: <Circular>
+    7:
+      first: <Circular>
+      second: <Circular>
+  operator: 'deepStrictEqual'
+  stack: |-
+    assertCrowdingCues (file:///Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-actor-layout.test.mjs:676:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/gallery-v133-verify/go_test/game/test/coop-actor-layout.test.mjs:701:11)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: 212 CSS px required cues remain complete with an active cut.joint outcome
+ok 20 - 212 CSS px required cues remain complete with an active cut.joint outcome
+  ---
+  duration_ms: 88.454166
+  type: 'test'
+  ...
+# Subtest: 212 CSS px required cues remain complete with an active team.recovery outcome
+ok 21 - 212 CSS px required cues remain complete with an active team.recovery outcome
+  ---
+  duration_ms: 74.983458
+  type: 'test'
+  ...
+# Subtest: compact cue packing reuses identical geometry and invalidates changed arena or warnings
+ok 22 - compact cue packing reuses identical geometry and invalidates changed arena or warnings
+  ---
+  duration_ms: 30.768375
+  type: 'test'
+  ...
+# Subtest: a moved locked target invalidates warm packing without changing warning text
+ok 23 - a moved locked target invalidates warm packing without changing warning text
+  ---
+  duration_ms: 4.854959
+  type: 'test'
+  ...
+# Subtest: an accepted won picture clears the last compact cue layout
+ok 24 - an accepted won picture clears the last compact cue layout
+  ---
+  duration_ms: 1.717667
+  type: 'test'
+  ...
+# Subtest: replacing or removing presentation clears its previous compact cue layout
+ok 25 - replacing or removing presentation clears its previous compact cue layout
+  ---
+  duration_ms: 6.889583
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 24
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 840.2505

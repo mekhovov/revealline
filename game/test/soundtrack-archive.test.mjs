@@ -107,6 +107,36 @@ test('immutable batch prefixes authorize only their exact inventory and object U
   );
 });
 
+test('canonical archive may pin an immutable named admission inventory', async () => {
+  const inventoryPath = 'admissions/approved-synth-metal-20260930.json';
+  const calls = [];
+  const reader = source({
+    archives: [{ ...admission, inventoryPath }],
+    fetch: async (url, options) => {
+      calls.push({ url, options });
+      return responseFor(url.endsWith(inventoryPath) ? inventoryJSON : raw.blob, url);
+    },
+  });
+  assert.deepEqual(
+    await (await reader.readAsset(track.asset.sha256)).arrayBuffer(),
+    await raw.blob.arrayBuffer(),
+  );
+  assert.deepEqual(
+    calls.map(({ url }) => url),
+    [`${admission.baseURL}${inventoryPath}`, `${admission.baseURL}${track.path}`],
+  );
+  for (const invalid of [
+    'inventory.json',
+    'admissions/Uppercase.json',
+    'admissions/../inventory.json',
+    'admissions/approved.json?mutable=1',
+  ])
+    assert.throws(
+      () => resolveSoundtrackArchives([{ ...admission, inventoryPath: invalid }]),
+      /inventory path/,
+    );
+});
+
 test('batch admission rejects unsupported prefixes, encoded paths, credentials and URL suffixes', () => {
   for (const suffix of [
     'batches/',

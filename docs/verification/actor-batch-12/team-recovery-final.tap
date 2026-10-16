@@ -1,0 +1,680 @@
+TAP version 13
+# Subtest: Team pilot 1 paints spinning blades and freezes them when paused, downed or reduced
+ok 1 - Team pilot 1 paints spinning blades and freezes them when paused, downed or reduced
+  ---
+  duration_ms: 91.651042
+  ...
+# Subtest: Team pilot 2 paints spinning blades and freezes them when paused, downed or reduced
+ok 2 - Team pilot 2 paints spinning blades and freezes them when paused, downed or reduced
+  ---
+  duration_ms: 15.891167
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 4FPS
+ok 3 - Team rendered 2-blade hubs keep a forward bounded phase at 4FPS
+  ---
+  duration_ms: 17.94375
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 30FPS
+ok 4 - Team rendered 2-blade hubs keep a forward bounded phase at 30FPS
+  ---
+  duration_ms: 28.04375
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 60FPS
+ok 5 - Team rendered 2-blade hubs keep a forward bounded phase at 60FPS
+  ---
+  duration_ms: 54.462125
+  ...
+# Subtest: Team rendered 2-blade hubs keep a forward bounded phase at 120FPS
+ok 6 - Team rendered 2-blade hubs keep a forward bounded phase at 120FPS
+  ---
+  duration_ms: 103.923041
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 4FPS
+ok 7 - Team rendered 3-blade hubs keep a forward bounded phase at 4FPS
+  ---
+  duration_ms: 3.788167
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 30FPS
+ok 8 - Team rendered 3-blade hubs keep a forward bounded phase at 30FPS
+  ---
+  duration_ms: 12.549208
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 60FPS
+ok 9 - Team rendered 3-blade hubs keep a forward bounded phase at 60FPS
+  ---
+  duration_ms: 20.706375
+  ...
+# Subtest: Team rendered 3-blade hubs keep a forward bounded phase at 120FPS
+ok 10 - Team rendered 3-blade hubs keep a forward bounded phase at 120FPS
+  ---
+  duration_ms: 62.835708
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 4FPS
+ok 11 - Team rendered 4-blade hubs keep a forward bounded phase at 4FPS
+  ---
+  duration_ms: 1.977458
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 30FPS
+ok 12 - Team rendered 4-blade hubs keep a forward bounded phase at 30FPS
+  ---
+  duration_ms: 9.716917
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 60FPS
+ok 13 - Team rendered 4-blade hubs keep a forward bounded phase at 60FPS
+  ---
+  duration_ms: 16.153417
+  ...
+# Subtest: Team rendered 4-blade hubs keep a forward bounded phase at 120FPS
+ok 14 - Team rendered 4-blade hubs keep a forward bounded phase at 120FPS
+  ---
+  duration_ms: 35.479125
+  ...
+# Subtest: tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+ok 15 - tuned Team revisions keep both prepared pilot bodies and every extra keeper visible
+  ---
+  duration_ms: 40.608417
+  ...
+# Subtest: six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+ok 16 - six approved source frames retain exact IDs, revisions, PNG hashes and dimensions
+  ---
+  duration_ms: 39.844667
+  ...
+# Subtest: explicit Team roles reuse prepared slots without changing actual types or run state
+ok 17 - explicit Team roles reuse prepared slots without changing actual types or run state
+  ---
+  duration_ms: 1.671459
+  ...
+# Subtest: Team prepared enemies reuse catalog surface motion without loading another body image
+ok 18 - Team prepared enemies reuse catalog surface motion without loading another body image
+  ---
+  duration_ms: 5.762416
+  ...
+# Subtest: qualified Team roamers borrow the tracked body and its bounded motion treatment
+ok 19 - qualified Team roamers borrow the tracked body and its bounded motion treatment
+  ---
+  duration_ms: 55.390667
+  ...
+# Subtest: Team 240px hybrid source detail and CSS body size stay separate from contact radii
+ok 20 - Team 240px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 2.213083
+  ...
+# Subtest: Team 200px props source detail and CSS body size stay separate from contact radii
+ok 21 - Team 200px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.304917
+  ...
+# Subtest: Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+ok 22 - Team 1152px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.484875
+  ...
+# Subtest: Team 479px hybrid source detail and CSS body size stay separate from contact radii
+ok 23 - Team 479px hybrid source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 2.715833
+  ...
+# Subtest: Team 1152px microtile source detail and CSS body size stay separate from contact radii
+ok 24 - Team 1152px microtile source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 2.492958
+  ...
+# Subtest: Team 640px props source detail and CSS body size stay separate from contact radii
+ok 25 - Team 640px props source detail and CSS body size stay separate from contact radii
+  ---
+  duration_ms: 1.297375
+  ...
+# Subtest: real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+ok 26 - real successive ticks animate pilots; pause and repeated paints preserve every cosmetic clock
+  ---
+  duration_ms: 6.940292
+  ...
+# Subtest: heading follows observed movement even when stale enemy velocity points elsewhere
+ok 27 - heading follows observed movement even when stale enemy velocity points elsewhere
+  ---
+  duration_ms: 1.70675
+  ...
+# Subtest: reduced motion and zero motion scale keep poses static while real movement still advances
+ok 28 - reduced motion and zero motion scale keep poses static while real movement still advances
+  ---
+  duration_ms: 8.376792
+  ...
+# Subtest: downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+ok 29 - downed pilots freeze cosmetic motion and fresh attempts or replacement snapshots reset it
+  ---
+  duration_ms: 1.425583
+  ...
+# Subtest: prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+ok 30 - prepared image and pivot geometry are borrowed once; reset and replacement never close shared images
+  ---
+  duration_ms: 2.889792
+  ...
+# Subtest: absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+ok 31 - absent prepared roles keep truthful geometric fallback and failed snapshot reads leave old art usable
+  ---
+  duration_ms: 1.945875
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+ok 32 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (current slots)
+  ---
+  duration_ms: 18.119042
+  ...
+# Subtest: actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+ok 33 - actual painter places body images below 1/2, down/grace, lock/recovery/slow and stronghold cues (optional slots absent)
+  ---
+  duration_ms: 18.487375
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+ok 34 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (current slots)
+  ---
+  duration_ms: 6.158875
+  ...
+# Subtest: stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+ok 35 - stronghold boss body stays beneath authored anchors and marker labels clear its envelope (optional slots absent)
+  ---
+  duration_ms: 3.760792
+  ...
+# Subtest: bright required picture stays exact beneath actors while painting and body detail never change gameplay
+ok 36 - bright required picture stays exact beneath actors while painting and body detail never change gameplay
+  ---
+  duration_ms: 55.174083
+  ...
+# Subtest: overlapping actor images cannot cover the final real enemy contact rings
+ok 37 - overlapping actor images cannot cover the final real enemy contact rings
+  ---
+  duration_ms: 1.802125
+  ...
+# Subtest: charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+ok 38 - charging hunters keep explicit phase text and slow pattern above their borrowed quad image
+  ---
+  duration_ms: 7.603625
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+ok 39 - exposed and secured strongholds retain functional labels and anchors over stationary body art (current slots)
+  ---
+  duration_ms: 6.475375
+  ...
+# Subtest: exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+ok 40 - exposed and secured strongholds retain functional labels and anchors over stationary body art (optional slots absent)
+  ---
+  duration_ms: 2.829417
+  ...
+# Subtest: minimum authored Team radius stays exact in the sampled frame and final footprint
+ok 41 - minimum authored Team radius stays exact in the sampled frame and final footprint
+  ---
+  duration_ms: 5.733708
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (current progress)
+ok 42 - actual rescue of player 1 has one legible cue (current progress)
+  ---
+  duration_ms: 117.95
+  ...
+# Subtest: actual rescue of player 1 has one legible cue (legacy static role)
+ok 43 - actual rescue of player 1 has one legible cue (legacy static role)
+  ---
+  duration_ms: 82.067334
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (current progress)
+ok 44 - actual rescue of player 2 has one legible cue (current progress)
+  ---
+  duration_ms: 129.3015
+  ...
+# Subtest: actual rescue of player 2 has one legible cue (legacy static role)
+ok 45 - actual rescue of player 2 has one legible cue (legacy static role)
+  ---
+  duration_ms: 99.191417
+  ...
+# Subtest: real Team freeze holds prepared moving parts without dimming the body or hiding contact
+ok 46 - real Team freeze holds prepared moving parts without dimming the body or hiding contact
+  ---
+  duration_ms: 271.966792
+  ...
+# Subtest: freeze expires at the core boundary and resumes moving parts without catching up hidden time
+ok 47 - freeze expires at the core boundary and resumes moving parts without catching up hidden time
+  ---
+  duration_ms: 127.5245
+  ...
+# Subtest: real freeze survives pause, reduced effects, cold preparation and active rover motion
+ok 48 - real freeze survives pause, reduced effects, cold preparation and active rover motion
+  ---
+  duration_ms: 152.00175
+  ...
+# Subtest: slow remains animated and ordinary or dormant Team actors keep their established state
+ok 49 - slow remains animated and ordinary or dormant Team actors keep their established state
+  ---
+  duration_ms: 42.331958
+  ...
+# Subtest: finite review checkpoints include real pickup, freeze, expiry and resumed motion
+ok 50 - finite review checkpoints include real pickup, freeze, expiry and resumed motion
+  ---
+  duration_ms: 11.21675
+  ...
+# Subtest: real Team warning, commitment and recovery point the prepared body along the locked attack
+ok 51 - real Team warning, commitment and recovery point the prepared body along the locked attack
+  ---
+  duration_ms: 49.871417
+  ...
+# Subtest: warning pose follows the fixed point, never the live player; coincident or invalid points retain heading
+ok 52 - warning pose follows the fixed point, never the live player; coincident or invalid points retain heading
+  ---
+  duration_ms: 29.947584
+  ...
+# Subtest: committed nose uses actual velocity even after passing the old target; recovery retains it
+ok 53 - committed nose uses actual velocity even after passing the old target; recovery retains it
+  ---
+  duration_ms: 12.192958
+  ...
+# Subtest: paused prepared phases keep body, rotor and contact commands stable (reduced=false)
+ok 54 - paused prepared phases keep body, rotor and contact commands stable (reduced=false)
+  ---
+  duration_ms: 16.486417
+  ...
+# Subtest: paused prepared phases keep body, rotor and contact commands stable (reduced=true)
+ok 55 - paused prepared phases keep body, rotor and contact commands stable (reduced=true)
+  ---
+  duration_ms: 10.738
+  ...
+# Subtest: reduced effects do not change locked aim and a fresh attempt cannot inherit an old recovery pose
+ok 56 - reduced effects do not change locked aim and a fresh attempt cannot inherit an old recovery pose
+  ---
+  duration_ms: 21.224583
+  ...
+# Subtest: enabling reduced effects while a real patrol turn is paused removes its cosmetic bank
+ok 57 - enabling reduced effects while a real patrol turn is paused removes its cosmetic bank
+  ---
+  duration_ms: 1.9735
+  ...
+# Subtest: P1 normal compact selects its actual body without simulation writes
+ok 58 - P1 normal compact selects its actual body without simulation writes
+  ---
+  duration_ms: 25.128209
+  ...
+# Subtest: P1 normal detailed selects its actual body without simulation writes
+ok 59 - P1 normal detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 5.289959
+  ...
+# Subtest: P1 cutting compact selects its actual body without simulation writes
+ok 60 - P1 cutting compact selects its actual body without simulation writes
+  ---
+  duration_ms: 33.967291
+  ...
+# Subtest: P1 cutting detailed selects its actual body without simulation writes
+ok 61 - P1 cutting detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 12.129333
+  ...
+# Subtest: P1 downed compact selects its actual body without simulation writes
+ok 62 - P1 downed compact selects its actual body without simulation writes
+  ---
+  duration_ms: 170.916
+  ...
+# Subtest: P1 downed detailed selects its actual body without simulation writes
+ok 63 - P1 downed detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 34.493125
+  ...
+# Subtest: P1 crawling compact selects its actual body without simulation writes
+ok 64 - P1 crawling compact selects its actual body without simulation writes
+  ---
+  duration_ms: 24.498375
+  ...
+# Subtest: P1 crawling detailed selects its actual body without simulation writes
+ok 65 - P1 crawling detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 35.262167
+  ...
+# Subtest: P1 rescuing compact selects its actual body without simulation writes
+ok 66 - P1 rescuing compact selects its actual body without simulation writes
+  ---
+  duration_ms: 23.388209
+  ...
+# Subtest: P1 rescuing detailed selects its actual body without simulation writes
+ok 67 - P1 rescuing detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 16.639209
+  ...
+# Subtest: P1 recovery compact selects its actual body without simulation writes
+ok 68 - P1 recovery compact selects its actual body without simulation writes
+  ---
+  duration_ms: 17.2025
+  ...
+# Subtest: P1 recovery detailed selects its actual body without simulation writes
+ok 69 - P1 recovery detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 28.146166
+  ...
+# Subtest: P2 normal compact selects its actual body without simulation writes
+ok 70 - P2 normal compact selects its actual body without simulation writes
+  ---
+  duration_ms: 6.723625
+  ...
+# Subtest: P2 normal detailed selects its actual body without simulation writes
+ok 71 - P2 normal detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 30.508375
+  ...
+# Subtest: P2 cutting compact selects its actual body without simulation writes
+ok 72 - P2 cutting compact selects its actual body without simulation writes
+  ---
+  duration_ms: 8.718167
+  ...
+# Subtest: P2 cutting detailed selects its actual body without simulation writes
+ok 73 - P2 cutting detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 4.25
+  ...
+# Subtest: P2 downed compact selects its actual body without simulation writes
+ok 74 - P2 downed compact selects its actual body without simulation writes
+  ---
+  duration_ms: 33.060292
+  ...
+# Subtest: P2 downed detailed selects its actual body without simulation writes
+ok 75 - P2 downed detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 15.747084
+  ...
+# Subtest: P2 crawling compact selects its actual body without simulation writes
+ok 76 - P2 crawling compact selects its actual body without simulation writes
+  ---
+  duration_ms: 26.725875
+  ...
+# Subtest: P2 crawling detailed selects its actual body without simulation writes
+ok 77 - P2 crawling detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 16.183167
+  ...
+# Subtest: P2 rescuing compact selects its actual body without simulation writes
+ok 78 - P2 rescuing compact selects its actual body without simulation writes
+  ---
+  duration_ms: 15.694792
+  ...
+# Subtest: P2 rescuing detailed selects its actual body without simulation writes
+ok 79 - P2 rescuing detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 15.978416
+  ...
+# Subtest: P2 recovery compact selects its actual body without simulation writes
+ok 80 - P2 recovery compact selects its actual body without simulation writes
+  ---
+  duration_ms: 41.157125
+  ...
+# Subtest: P2 recovery detailed selects its actual body without simulation writes
+ok 81 - P2 recovery detailed selects its actual body without simulation writes
+  ---
+  duration_ms: 17.314042
+  ...
+# Subtest: wrong-width/state/seat previews report inactive rather than claiming the selected image was drawn
+ok 82 - wrong-width/state/seat previews report inactive rather than claiming the selected image was drawn
+  ---
+  duration_ms: 61.662792
+  ...
+# Subtest: malformed custom pilot frames fail before replacing the accepted painter snapshot
+ok 83 - malformed custom pilot frames fail before replacing the accepted painter snapshot
+  ---
+  duration_ms: 3.099333
+  ...
+# Subtest: explicit recipes inherit shared Scout images; historical absent state slots do the same
+ok 84 - explicit recipes inherit shared Scout images; historical absent state slots do the same
+  ---
+  duration_ms: 5.8115
+  ...
+# Subtest: Team pilot upgrade preserves prior records and all24 body contracts have exact motors, dimensions and generation prompts
+ok 85 - Team pilot upgrade preserves prior records and all24 body contracts have exact motors, dimensions and generation prompts
+  ---
+  duration_ms: 551.520292
+  ...
+# Subtest: all24 bodies survive exact-byte bundle roundtrip with editable pivots and bounded rotors
+ok 86 - all24 bodies survive exact-byte bundle roundtrip with editable pivots and bounded rotors
+  ---
+  duration_ms: 392.563875
+  ...
+# Subtest: P1 crawl and prior sample match independent public commands
+ok 87 - P1 crawl and prior sample match independent public commands
+  ---
+  duration_ms: 36.870834
+  ...
+# Subtest: P2 crawl and prior sample match independent public commands
+ok 88 - P2 crawl and prior sample match independent public commands
+  ---
+  duration_ms: 25.4405
+  ...
+# Subtest: P1 command-earned knockdown does not turn the body toward its anchor teleport
+ok 89 - P1 command-earned knockdown does not turn the body toward its anchor teleport
+  ---
+  duration_ms: 131.828625
+  ...
+# Subtest: P1 real safe-ground crawl turns its heading with frozen rotors (normal)
+ok 90 - P1 real safe-ground crawl turns its heading with frozen rotors (normal)
+  ---
+  duration_ms: 139.318667
+  ...
+# Subtest: P1 real safe-ground crawl turns its heading with frozen rotors (reduced)
+ok 91 - P1 real safe-ground crawl turns its heading with frozen rotors (reduced)
+  ---
+  duration_ms: 137.482958
+  ...
+# Subtest: P1 real safe-ground crawl turns its heading with frozen rotors (zero motion)
+ok 92 - P1 real safe-ground crawl turns its heading with frozen rotors (zero motion)
+  ---
+  duration_ms: 83.705209
+  ...
+# Subtest: P1 actual rescue identifies only its live partner and clears on recovery
+ok 93 - P1 actual rescue identifies only its live partner and clears on recovery
+  ---
+  duration_ms: 77.723916
+  ...
+# Subtest: P1 cancelled or paused rescue cannot leave a stale target cue
+ok 94 - P1 cancelled or paused rescue cannot leave a stale target cue
+  ---
+  duration_ms: 169.161458
+  ...
+# Subtest: P2 command-earned knockdown does not turn the body toward its anchor teleport
+ok 95 - P2 command-earned knockdown does not turn the body toward its anchor teleport
+  ---
+  duration_ms: 26.648833
+  ...
+# Subtest: P2 real safe-ground crawl turns its heading with frozen rotors (normal)
+ok 96 - P2 real safe-ground crawl turns its heading with frozen rotors (normal)
+  ---
+  duration_ms: 75.470542
+  ...
+# Subtest: P2 real safe-ground crawl turns its heading with frozen rotors (reduced)
+ok 97 - P2 real safe-ground crawl turns its heading with frozen rotors (reduced)
+  ---
+  duration_ms: 66.602417
+  ...
+# Subtest: P2 real safe-ground crawl turns its heading with frozen rotors (zero motion)
+ok 98 - P2 real safe-ground crawl turns its heading with frozen rotors (zero motion)
+  ---
+  duration_ms: 59.9355
+  ...
+# Subtest: P2 actual rescue identifies only its live partner and clears on recovery
+ok 99 - P2 actual rescue identifies only its live partner and clears on recovery
+  ---
+  duration_ms: 49.233125
+  ...
+# Subtest: P2 cancelled or paused rescue cannot leave a stale target cue
+ok 100 - P2 cancelled or paused rescue cannot leave a stale target cue
+  ---
+  duration_ms: 90.335208
+  ...
+# Subtest: ordinary active-pilot heading remains equivalent to the shared observed-motion sampler
+ok 101 - ordinary active-pilot heading remains equivalent to the shared observed-motion sampler
+  ---
+  duration_ms: 9.35375
+  ...
+# Subtest: crawl into unsecured land stops truthfully instead of inferring motion from intended input
+ok 102 - crawl into unsecured land stops truthfully instead of inferring motion from intended input
+  ---
+  duration_ms: 57.82875
+  ...
+# Subtest: pilot heading and state caches reset with fresh attempts, explicit reset and snapshot replacement
+ok 103 - pilot heading and state caches reset with fresh attempts, explicit reset and snapshot replacement
+  ---
+  duration_ms: 39.326416
+  ...
+# Subtest: a revived crawler preserves its last observed heading until it actually moves again
+ok 104 - a revived crawler preserves its last observed heading until it actually moves again
+  ---
+  duration_ms: 261.594
+  ...
+# Subtest: real border crawl rotates uploaded pivot/rotor bounds before responsive body offsets
+ok 105 - real border crawl rotates uploaded pivot/rotor bounds before responsive body offsets
+  ---
+  duration_ms: 9.629042
+  ...
+# Subtest: first-connection gentle {}: same-tick team recovery is not flight toward the spawn
+ok 106 - first-connection gentle {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 21.77475
+  ...
+# Subtest: first-connection gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 107 - first-connection gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.275875
+  ...
+# Subtest: first-connection gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 108 - first-connection gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 16.608375
+  ...
+# Subtest: first-connection standard {}: same-tick team recovery is not flight toward the spawn
+ok 109 - first-connection standard {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 14.846
+  ...
+# Subtest: first-connection standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 110 - first-connection standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 6.503167
+  ...
+# Subtest: first-connection standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 111 - first-connection standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 4.266166
+  ...
+# Subtest: first-connection expert {}: same-tick team recovery is not flight toward the spawn
+ok 112 - first-connection expert {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 8.234458
+  ...
+# Subtest: first-connection expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 113 - first-connection expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.289667
+  ...
+# Subtest: first-connection expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 114 - first-connection expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.644125
+  ...
+# Subtest: relay-yard gentle {}: same-tick team recovery is not flight toward the spawn
+ok 115 - relay-yard gentle {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 9.426458
+  ...
+# Subtest: relay-yard gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 116 - relay-yard gentle {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.767584
+  ...
+# Subtest: relay-yard gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 117 - relay-yard gentle {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.710583
+  ...
+# Subtest: relay-yard standard {}: same-tick team recovery is not flight toward the spawn
+ok 118 - relay-yard standard {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 5.223208
+  ...
+# Subtest: relay-yard standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 119 - relay-yard standard {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 3.610875
+  ...
+# Subtest: relay-yard standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 120 - relay-yard standard {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 26.051584
+  ...
+# Subtest: relay-yard expert {}: same-tick team recovery is not flight toward the spawn
+ok 121 - relay-yard expert {}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 4.065666
+  ...
+# Subtest: relay-yard expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+ok 122 - relay-yard expert {"reduced":true}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 4.657334
+  ...
+# Subtest: relay-yard expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+ok 123 - relay-yard expert {"motionScale":0}: same-tick team recovery is not flight toward the spawn
+  ---
+  duration_ms: 6.933541
+  ...
+# Subtest: recovery is observed after skipped rendering even when its core events have retired
+ok 124 - recovery is observed after skipped rendering even when its core events have retired
+  ---
+  duration_ms: 6.823292
+  ...
+# Subtest: first-connection {}: skipped recovery remains detectable after a new cut clears grace
+ok 125 - first-connection {}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 2.73125
+  ...
+# Subtest: first-connection {"reduced":true}: skipped recovery remains detectable after a new cut clears grace
+ok 126 - first-connection {"reduced":true}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 4.201458
+  ...
+# Subtest: first-connection {"motionScale":0}: skipped recovery remains detectable after a new cut clears grace
+ok 127 - first-connection {"motionScale":0}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 4.647
+  ...
+# Subtest: relay-yard {}: skipped recovery remains detectable after a new cut clears grace
+ok 128 - relay-yard {}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 5.747
+  ...
+# Subtest: relay-yard {"reduced":true}: skipped recovery remains detectable after a new cut clears grace
+ok 129 - relay-yard {"reduced":true}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 1.971875
+  ...
+# Subtest: relay-yard {"motionScale":0}: skipped recovery remains detectable after a new cut clears grace
+ok 130 - relay-yard {"motionScale":0}: skipped recovery remains detectable after a new cut clears grace
+  ---
+  duration_ms: 11.666375
+  ...
+# Subtest: pause and held neutral retain the recovered nose; real safe-ground motion resumes it
+ok 131 - pause and held neutral retain the recovered nose; real safe-ground motion resumes it
+  ---
+  duration_ms: 32.742333
+  ...
+# Subtest: single-player reserve recovery conservatively holds its moving partner for one sample only
+ok 132 - single-player reserve recovery conservatively holds its moving partner for one sample only
+  ---
+  duration_ms: 132.143459
+  ...
+# Subtest: an earned reserve pickup does not hold normal pilot movement
+ok 133 - an earned reserve pickup does not hold normal pilot movement
+  ---
+  duration_ms: 57.729792
+  ...
+# Subtest: actual prepared image keeps the last heading and opacity through real recovery
+ok 134 - actual prepared image keeps the last heading and opacity through real recovery
+  ---
+  duration_ms: 191.257625
+  ...
+1..134
+# tests 134
+# suites 0
+# pass 134
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2583.107959

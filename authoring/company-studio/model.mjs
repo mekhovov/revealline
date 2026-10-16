@@ -9,17 +9,33 @@ import {
   editionRelativePath,
   freezeEdition,
   resolveEditionSelection,
+  resolveEditionAssets,
+  resolveEditionAppearanceThemes,
   validateEditionRuntimeCatalog,
+  validateAppearanceDefault,
+  EDITION_FORMATS,
 } from '../../game/editions/model.mjs';
 import {
   validateEditionCampaignProject,
   validateEditionLessonBundle,
+  validateEditionRewardBundle,
 } from '../../game/editions/project.mjs';
+import {
+  validateCampaignLocalization,
+  verifyCampaignLocalization,
+} from '../../game/editions/localization.mjs';
+import { validateCompletionRewards } from '../../game/rewards/model.mjs';
+import { mergeEditionProjects } from '../../game/editions/bootstrap.mjs';
 import { hashPresentationBytes } from '../../game/presentation/bundle.mjs';
 import { validateRetainedPresentation } from '../../game/editions/retained-presentation.mjs';
 import { projectEditionThemeSelection } from '../../game/editions/selected-presentation.mjs';
 import { validateCompanyLessons } from '../../game/company-campaigns/learning.mjs';
 import { validateTheme } from '../../game/content.mjs';
+import { getThemeFamily, BUILTIN_THEME_FAMILIES } from '../../game/presentation/theme-system.mjs';
+import {
+  validateCuratedThemeQuality,
+  validateCuratedAppearanceInventory,
+} from '../../game/presentation/theme-system.mjs';
 import { validateAnimationRecipes } from '../motion-lab/animation.mjs';
 import {
   validateEditionPresetMotion,
@@ -65,6 +81,8 @@ export function declaredJSONPaths(catalog) {
       ...catalog.campaigns.flatMap((campaign) => [
         campaign.sourcePath,
         ...(campaign.lessonPath ? [campaign.lessonPath] : []),
+        ...(campaign.rewardPath ? [campaign.rewardPath] : []),
+        ...(campaign.localizationPath ? [campaign.localizationPath] : []),
       ]),
       ...catalog.editions.flatMap((edition) => [
         ...Object.values(edition.boot ?? {}),
@@ -110,6 +128,40 @@ export function validateStudioData(path, input, catalog, files = new Map()) {
     const project = files.get(lessonCampaign.sourcePath);
     if (project) validateEditionLessonBundle(lessons, project);
     return lessons;
+  }
+  const rewardCampaign = catalog.campaigns.find((entry) => entry.rewardPath === path);
+  const localizationCampaign = catalog.campaigns.find((entry) => entry.localizationPath === path);
+  if (localizationCampaign) {
+    const project = files.get(localizationCampaign.sourcePath);
+    required(project, 'Load the exact campaign before validating its localization.');
+    return validateCampaignLocalization(data, project, localizationCampaign);
+  }
+  if (rewardCampaign) {
+    const rewards = validateCompletionRewards(data);
+    const project = files.get(rewardCampaign.sourcePath);
+    required(project, 'Load the exact campaign before validating its rewards.');
+    for (const edition of catalog.editions.filter((edition) =>
+      edition.campaignIds.includes(rewardCampaign.id),
+    )) {
+      const selection = resolveEditionSelection(catalog, { editionId: edition.id });
+      validateEditionRewardBundle(rewards, project, {
+        descriptor: rewardCampaign,
+        assets: resolveEditionAssets(catalog, { editionId: edition.id }),
+        editionId: edition.id,
+        presets: files.get(edition.boot?.presets),
+        themes: files.get(edition.boot?.themes)?.themes ?? [],
+        lessons: selection.campaigns.flatMap((campaign) =>
+          campaign.lessonPath ? (files.get(campaign.lessonPath) ?? []) : [],
+        ),
+        editionProject: rewards.some((reward) => reward.scope.kind === 'edition')
+          ? mergeEditionProjects(
+              selection,
+              selection.campaigns.map((campaign) => files.get(campaign.sourcePath)),
+            )
+          : undefined,
+      });
+    }
+    return rewards;
   }
   if (catalog.editions.some((edition) => edition.boot?.themes === path)) {
     required(
@@ -182,12 +234,32 @@ export function validateStudioDraft(input) {
       themes: files.get(edition.boot.themes),
       presets: files.get(edition.boot.presets),
     });
+    validateCompletionRewards(
+      catalog.campaigns
+        .filter((campaign) => edition.campaignIds.includes(campaign.id) && campaign.rewardPath)
+        .flatMap((campaign) => files.get(campaign.rewardPath)),
+    );
   }
   return { catalog, files };
 }
 /** Immutable retained JSON travels as exact text, separate from editable source. */
 export async function validateStudioHistory(catalog, files, { editionId = null, signal } = {}) {
   const retained = [];
+  for (const campaign of catalog.campaigns.filter(
+    (item) =>
+      item.localizationPath &&
+      (!editionId ||
+        catalog.editions.some(
+          (edition) => edition.id === editionId && edition.campaignIds.includes(item.id),
+        )),
+  )) {
+    signal?.throwIfAborted();
+    await verifyCampaignLocalization(
+      files.get(campaign.localizationPath),
+      files.get(campaign.sourcePath),
+      campaign,
+    );
+  }
   for (const edition of catalog.editions.filter((item) => !editionId || item.id === editionId)) {
     for (const descriptor of edition.presentationHistory ?? []) {
       signal?.throwIfAborted();
@@ -221,6 +293,11 @@ export function validateStudioReport(input) {
         (key) => Number.isSafeInteger(report.summary[key]) && report.summary[key] >= 0,
       ),
     'Invalid compiler summary.',
+  );
+  required(
+    report.summary.rewards === undefined ||
+      (Number.isSafeInteger(report.summary.rewards) && report.summary.rewards >= 0),
+    'Invalid compiler reward summary.',
   );
   required(
     Array.isArray(report.admittedPaths) &&
@@ -275,6 +352,7 @@ export function studioPreviewURL(report, baseURL) {
       !url.hash,
     'Preview must use this server’s origin.',
   );
+  url.searchParams.set('studio-preview', '1');
   return url;
 }
 export function studioSelection(catalog, editionId) {
@@ -320,5 +398,116 @@ export function assertMatchingStudioSelection(draft, built, editionId, files = n
       canonicalJSON(a[key]) === canonicalJSON(b[key]),
       'The compiled preview differs from this applied draft. Compile and import a fresh report.',
     );
+  const expectedThemes = resolveEditionAppearanceThemes(draft, { editionIds: [editionId] });
+  required(
+    canonicalJSON(expectedThemes) === canonicalJSON(built.appearanceThemes ?? []),
+    'The compiled preview appearance differs from this applied draft. Compile a fresh report.',
+  );
+  validateCuratedAppearanceInventory(built, { selectedOnly: true });
   return b;
+}
+
+/** Presentation-only catalog edit. Omission preserves legacy descriptor output;
+ * all editions containing this campaign receive an explicit new pack revision. */
+export function withStudioCampaignHero(source, campaignId, heroAssetId) {
+  const catalog = structuredClone(validateEditionRuntimeCatalog(source));
+  const campaign = catalog.campaigns.find((item) => item.id === campaignId);
+  required(campaign, 'Choose a registered campaign for artwork.');
+  if (heroAssetId === undefined || heroAssetId === null || heroAssetId === '')
+    delete campaign.heroAssetId;
+  else campaign.heroAssetId = heroAssetId;
+  const checked = validateEditionRuntimeCatalog(catalog);
+  if (canonicalJSON(checked) === canonicalJSON(source)) return checked;
+  for (const edition of catalog.editions.filter((item) => item.campaignIds.includes(campaignId)))
+    edition.revision++;
+  return validateEditionRuntimeCatalog(catalog);
+}
+
+/** A default is portable presentation metadata, separate from campaign content
+ * and legacy theme inventory. Only applied drafts change; publication remains
+ * the ordinary compile, review and export flow. */
+export function withStudioAppearanceDefault(source, { scope, id, appearanceDefault = null }) {
+  const catalog = structuredClone(validateEditionRuntimeCatalog(source));
+  required(['community', 'campaign'].includes(scope), 'Choose a community or campaign default.');
+  const owner = (scope === 'community' ? catalog.brands : catalog.campaigns).find(
+    (row) => row.id === id,
+  );
+  required(owner, 'Choose a registered community or campaign.');
+  if (appearanceDefault === null) delete owner.appearanceDefault;
+  else {
+    const pin = validateAppearanceDefault(appearanceDefault);
+    required(
+      findStudioAppearanceTheme(catalog, pin.familyId, pin.revision),
+      'The selected theme revision is unavailable in this Studio.',
+    );
+    owner.appearanceDefault = pin;
+    if (catalog.format !== EDITION_FORMATS.curatedAppearanceCatalog)
+      catalog.format = EDITION_FORMATS.appearanceCatalog;
+    if (scope === 'community') owner.format = EDITION_FORMATS.appearanceBrand;
+  }
+  if (canonicalJSON(catalog) === canonicalJSON(source))
+    return validateEditionRuntimeCatalog(catalog);
+  if (scope === 'community') owner.revision++;
+  for (const edition of catalog.editions.filter((row) =>
+    scope === 'community' ? row.brandId === id : row.campaignIds.includes(id),
+  ))
+    edition.revision++;
+  return validateEditionRuntimeCatalog(catalog);
+}
+
+export function listStudioAppearanceThemes(source) {
+  const catalog = validateEditionRuntimeCatalog(source);
+  return Object.freeze([
+    ...BUILTIN_THEME_FAMILIES,
+    ...(catalog.appearanceThemes ?? []).map((row) => row.family),
+  ]);
+}
+
+export function findStudioAppearanceTheme(source, id, revision) {
+  const catalog = validateEditionRuntimeCatalog(source);
+  return (
+    getThemeFamily(id, revision) ??
+    (catalog.appearanceThemes ?? []).find(
+      (row) => row.family.id === id && (!revision || row.family.revision === revision),
+    )?.family ??
+    null
+  );
+}
+
+/** Curated registration adds a closed interface candidate, not executable code
+ * or arbitrary player assets. Assignment remains a separate explicit action. */
+export function withStudioAppearanceTheme(source, input) {
+  const catalog = structuredClone(validateEditionRuntimeCatalog(source));
+  const candidate = validateCuratedThemeQuality(input);
+  required(candidate.format === 'ThemeCandidate.v2', 'Register an exact-version Studio theme.');
+  const prior = (catalog.appearanceThemes ?? []).find(
+    (row) =>
+      row.family.id === candidate.family.id && row.family.revision === candidate.family.revision,
+  );
+  if (prior) {
+    required(
+      canonicalJSON(prior) === canonicalJSON(candidate),
+      'An immutable curated theme cannot be replaced.',
+    );
+    return validateEditionRuntimeCatalog(catalog);
+  }
+  catalog.appearanceThemes = [...(catalog.appearanceThemes ?? []), candidate];
+  catalog.format = EDITION_FORMATS.curatedAppearanceCatalog;
+  // A formerly unavailable exact pin becoming usable changes the compiled
+  // presentation even when the owner already stores that same reference.
+  const matches = (owner) =>
+    owner.appearanceDefault?.familyId === candidate.family.id &&
+    owner.appearanceDefault.revision === candidate.family.revision;
+  const brands = new Set(
+    catalog.brands.filter(matches).map((brand) => {
+      brand.revision++;
+      return brand.id;
+    }),
+  );
+  const campaigns = new Set(catalog.campaigns.filter(matches).map((row) => row.id));
+  for (const edition of catalog.editions) {
+    if (brands.has(edition.brandId) || edition.campaignIds.some((id) => campaigns.has(id)))
+      edition.revision++;
+  }
+  return validateEditionRuntimeCatalog(catalog);
 }

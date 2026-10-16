@@ -1,81 +1,49 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # Company communities
 
-The [public directory](https://mekhovov.github.io/revealline/game/community/) is a discovery
-page outside the game. Its source is [`game/community/index.html`](../game/community/index.html).
-The repository guide and public website link to it. The ordinary game and company game menus
-do not expose cross-company discovery or a company switcher.
+The static [public directory](../game/communities/index.html) opens the main game
+and all current public community brands without an account or backend request.
+The two DroneAid collections share a directory card, but retain separate edition,
+save and artwork identities. There are 12 public edition selectors across six
+brand records; aggregate selectors do not create additional campaigns.
 
-## Entry points
+Friendly URLs under `game/communities/<slug>/` load the one shared Solo document.
+They keep the friendly address visible, rebase resources to `game/index.html`,
+and reject foreign/duplicate edition overrides before loading. DroneAid
+Netherlands and Community Relay retain the original #784 routes. Social Drone UA,
+Victory Drones, Ukraine: Living Culture and FPV Learning preserve newer content.
+Installed edition identities, public aliases, retained presentations, Studio
+preview isolation and the Solo-v2 saved-attempt envelope remain unchanged.
 
-| Community | Stable public entry | Stored edition identity | Brand boundary |
-| --- | --- | --- | --- |
-| DroneAid Netherlands | [Play DroneAid](https://mekhovov.github.io/revealline/game/company.html?edition=droneaid-nl-community) | `droneaid-nl-community` | `droneaid-nl` |
+Campaign selection and final navigation remain within the selected brand; asset
+URLs must belong to the selected edition closure. This is public navigation and
+save isolation, not authentication or access control for private deployments.
 
-The directory uses `../company.html?edition=…`, not origin-root paths or standalone
-`/editions/` links. These links stay inside the same deployment when served locally, under
-the GitHub project prefix, or within a frozen release. The company entry forwards to the
-ordinary game host with the exact company selected. The DroneAid link uses the canonical
-`droneaid-nl-community` ID supported by this source baseline. No stored identity is renamed.
+`game/community/` redirects to the directory. Its former marketplace is preserved
+at `game/community/store.html`, including current input support and account UI.
+The marketplace and moderation tools require the existing same-origin community
+service; GitHub Pages does not supply its account or catalog API.
 
-## Isolation contract
+Original source lineage: closed PR #784 at
+`ff56e0881e7355ebe3e07e0804827dc9b256fb50`. Historical screenshots and test reports
+remain at that preserved commit; they do not qualify the current composition.
+No historical release, published asset or tag is rewritten by this recovery.
 
-- A company's campaign selector contains only editions with its current `brandId`.
-- Both the UI request and final departure validation reject an edition belonging to
-  another brand. Rejection happens before a departure can mutate a saved flight or navigate.
-- The runtime provider resolves asset IDs only within the selected edition's declared
-  asset closure, including any explicitly shared assets. A foreign catalog asset does
-  not become loadable merely because its metadata appears in the shared catalog.
-- Company libraries continue to exclude ordinary installed creator campaigns and imported
-  packs. Compiled company builds continue to reject query overrides to another edition.
-- Saved attempts, progression, collection receipts and persistence ownership retain their
-  existing edition identities. Same-company campaign navigation remains available, with
-  the existing save/replace and writer-ownership safeguards.
-- Global preferences such as language, audio and controls remain shared preferences.
+## Recovery verification boundary
 
-This is a navigation, content and saved-progress boundary for public editions. It is not
-authentication: someone with another public company URL can open it directly. A private
-company deployment needs its own access control. The public creator service has creator
-ownership and public collections; it does not implement company tenant access control.
+This recovery adapts the old routes to current main instead of replaying its old
+host, catalog or production output. Targeted checks cover route rejection before
+fetch, same-brand departure, friendly-route gameplay/save ownership, retained-logo
+eligibility, localization, and synthetic offline/native packaging. The four newer
+community fixtures use the existing raster decoder so current WebP originals are
+not incorrectly treated as PNG. These are bounded automated checks, not a full
+suite, browser/hardware acceptance or listening approval.
 
-## Directory versus creator marketplace
-
-`game/community/index.html` is static HTML plus packaged localization. It has no catalog
-fetch, account form, upload client or dependency on IndexedDB. Its company links work
-without JavaScript. Both English and Ukrainian are provided.
-
-`game/community/store.html` retains the creator marketplace and its existing `page.mjs`
-controller. That page needs the [community Node service](../services/community/README.md)
-and its account routes behind a same-origin HTTPS proxy. GitHub Pages returns HTML errors
-for `/v1/catalog` and `/api/auth/get-session`; it cannot supply this backend. Pointing the
-account client at an arbitrary remote URL is not a supported substitute for same-origin
-cookie authentication. The marketplace and moderator console remain separate service
-tools; the static company directory does not link players into them.
-
-## Adding a community
-
-1. Add and validate its brand and public aggregate edition through the existing company
-   content pipeline. Set a distinct `brandId`; do not reuse another company's brand to
-   gain campaign visibility.
-2. Add one explicit entry to the static directory, with its public edition slug and both
-   English/Ukrainian labels. Keep the link relative to `../company.html`.
-3. Add its direct URL to the repository guide and table above. Do not add discovery links
-   to `game/index.html` or the game's menus.
-4. Check directory routing, same-company navigation, cross-company rejection, asset
-   closure and retained progress before publishing a new immutable release.
-
-## Publication status
-
-The reported `releases/v0.142.2/site/game/community/index.html` belongs to an immutable
-snapshot. On 2026-09-29 it still served the old marketplace and attempted unavailable API
-requests. This fix updates source; it does not edit that frozen snapshot or promote a
-release. After the next reviewed release is promoted, the stable `/game/community/` alias
-will lead to its static directory. Bookmarks into `v0.142.2` retain that archived version.
-
-The current-entry generator discovers both `index.html` and `store.html`. The full static
-build includes `game/`, so the directory, stylesheet and local translations travel together.
-Standalone company builds retain their selected-content packaging boundary; the directory
-does not introduce new edition routes or a dependency on standalone `/editions/` publishing.
-
-See the [verification report](verification/company-community-directory-2026-09-29.md).
+The production ledger and compiled manifest/runtime/Studio files remain byte-for-byte
+identical to the accepted predecessor. Of the 50 declared audio source inputs,
+only `app.mjs` URL resolution and `edition-solo.mjs` navigation/asset eligibility
+change. Neither change alters synthesis or audio recipes. The accepted predecessor
+already differs from the producer's approved source fingerprint; this recovery
+does not rewrite that fingerprint or claim fresh producer qualification. A future
+production regeneration must separately reconcile the complete current source and
+preserve all accepted history. Broad deferred verification remains skipped, not
+passed. Hosted Pages build and its existing capacity limits still gate deployment.

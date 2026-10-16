@@ -272,6 +272,7 @@ for (const [version, missionIds] of [
   [35, ['phase-remix', 'livewire-remix']],
   [36, ['side-door-bays', 'staggered-reserve', 'crossbar-depot']],
   [37, ['pressure-ladder', 'cooling-loop', 'relay-remix']],
+  [38, ['cooling-loop']],
 ]) {
   const predecessor = `whole-spatial-v${version - 1}`;
   CANDIDATE_EDITION_HISTORY[`whole-spatial-v${version}`] = Object.freeze([

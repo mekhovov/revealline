@@ -1,0 +1,37 @@
+{
+  "format": "revealline.verification-observation.v1",
+  "scope": "Actual browser-exported packet identity, metadata and every original byte; decode checked natively before export, node callback re-reads headers only.",
+  "packet": {
+    "bytes": 7642568,
+    "sha256": "8d2a403fd9e95b3362a061f2d9d983ee1235f81be4e3e6315c991edc84c0c63e"
+  },
+  "files": [
+    {
+      "name": "workshop-original.png",
+      "sha256": "8782c3642af6866d09e441891b34876e0c8fa3197a018d9e0cef562699a79cf8",
+      "bytes": 2408056,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "name": "poltava-original.png",
+      "sha256": "6e528a622b5bcd1fa2ed0b0ddf50404ecf7a433fee0a71ef400ae9f309dc13c5",
+      "bytes": 2914645,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "name": "synevyr-original.png",
+      "sha256": "e4e66fcd65d54c560353ad8f08c42454a7b9ea187a81998dece04a6bd165d5c1",
+      "bytes": 2310897,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    }
+  ],
+  "unchangedOriginals": true,
+  "matchingAutomaticAndFallbackDownloads": true,
+  "limitation": "CUA download-event observer timed out although the actual automatic and explicit-link downloads completed to Downloads."
+}

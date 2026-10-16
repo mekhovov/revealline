@@ -1,0 +1,18 @@
+{
+  "output": "/private/tmp/practice-observer-controlled-ltQpNN/.cache/candidate",
+  "version": "v9.0.0",
+  "sourceRevision": "7997fd5c1144bfa9ae5922a9c619b44644c4cab9",
+  "sourceTree": "e2dc938461e878880e23e3adc5250cd2ff489903",
+  "packageIds": [
+    "civilian-flight",
+    "civilian-fpv",
+    "fpv-worlds"
+  ],
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "publicEligible": false,
+  "fixture": "/tmp/practice-observer-controlled-ltQpNN",
+  "baselineRevision": "caab4312e42d9193faa3a0450aaba015b3c6ae5e",
+  "disclaimer": "Controlled test copies: only password metadata and test version changed; not actual-package qualification."
+}

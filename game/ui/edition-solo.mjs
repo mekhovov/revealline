@@ -1,7 +1,12 @@
 import { localizedText, t } from '../i18n/index.mjs';
+import { resolveEditionAssets } from '../editions/model.mjs';
 import { mountEditionNavigation } from './edition-navigation.mjs';
 import { mountEditionLessons } from './edition-lessons.mjs';
+import { mountEditionMastery } from './edition-mastery.mjs';
+import { mountEditionRewards } from './edition-rewards.mjs';
+import { mountEditionExpedition } from './edition-expedition.mjs';
 import { mountEditionPlayLayout } from './edition-play-layout.mjs';
+import { editionDisplayName, mountLandingBrand } from './brand-identity.mjs';
 import {
   prepareEditionOffline,
   verifyEditionOffline,
@@ -18,20 +23,38 @@ export async function mountEditionSoloUI({
   version,
   pause,
   getRun,
+  getRunId,
   getRecorder,
   getPictureVisible,
+  getJourneyProfile,
+  getJourneyRevision,
+  getJourneyDurable,
+  getReducedMotion,
+  audioMaster,
+  musicDucker,
+  motionPreferences,
+  onCosmeticBodiesChange,
+  onChooseCosmetic,
+  onRecoverCosmetic,
   report,
   onMissions,
   onEditionChange,
   getSavedPresentation = () => null,
   onPresentationChange,
+  previewSession = null,
 }) {
   const { selection, theme } = provider;
+  let disposed = false;
   mountEditionNavigation({ provider, document: doc, href: win.location.href });
   const node = (tag, text) => {
     const value = doc.createElement(tag);
     if (text !== undefined) value.textContent = text;
     return value;
+  };
+  const copy = (tag, key, values) => {
+    const element = node(tag);
+    localizedText(element, () => t('interface:editionShell.' + key, values));
+    return element;
   };
   const root = doc.documentElement;
   doc.body.dataset.brandId = selection.brand.id;
@@ -46,18 +69,65 @@ export async function mountEditionSoloUI({
     doc.fonts.add(await font.load());
     root.style.setProperty('--brand-font', '"Company Brand", system-ui, sans-serif');
   }
-  doc.title =
-    selection.edition.name === selection.brand.name
-      ? selection.edition.name
-      : `${selection.edition.name} · ${selection.brand.name}`;
+  const currentEdition = (provider.currentCatalog ?? provider.catalog)?.editions?.find(
+    (edition) => edition.id === provider.editionId,
+  );
+  const currentBrand = (provider.currentCatalog ?? provider.catalog)?.brands?.find(
+    (brand) => brand.id === selection.brand.id,
+  );
+  const brandName = currentBrand?.name ?? selection.brand.name;
+  // Current chrome may use a renamed mark around retained gameplay, but only
+  // artwork admitted by that selected edition's receipt can be requested.
+  const logoAsset = resolveEditionAssets(provider.catalog, { editionId: provider.editionId }).some(
+    (asset) => asset.id === currentBrand?.logoAssetId,
+  )
+    ? currentBrand.logoAssetId
+    : selection.brand.logoAssetId;
+  const displayName = editionDisplayName(
+    currentEdition?.name ?? selection.edition.name,
+    provider.editionId,
+  );
+  doc.title = displayName;
   const color = doc.querySelector('meta[name="theme-color"]');
   if (color) color.content = theme.palette.ink;
   for (const id of ['shell-title', 'landing-title'])
-    if (doc.getElementById(id)) localizedText(doc.getElementById(id), () => selection.edition.name);
+    if (doc.getElementById(id))
+      mountLandingBrand(doc.getElementById(id), { name: displayName, edition: true });
   for (const id of ['shell-title-edition', 'shell-edition'])
-    if (doc.getElementById(id)) localizedText(doc.getElementById(id), () => selection.brand.name);
+    if (doc.getElementById(id)) localizedText(doc.getElementById(id), () => brandName);
   const home = doc.getElementById('shell-home');
-  if (selection.brand.heroAssetId) {
+  const homeContent = home.querySelector('.home-content') ?? home;
+  const editionMenu = doc.getElementById('shell-workshop-dialog') ?? homeContent;
+  const titleEdition = doc.getElementById('shell-title-edition');
+  if (titleEdition && selection.edition.name === selection.brand.name) titleEdition.hidden = true;
+  const previewNotice = previewSession ? node('p') : null;
+  if (previewNotice) {
+    previewNotice.id = 'edition-studio-preview';
+    previewNotice.className = 'completion-reward-save-note';
+    previewNotice.setAttribute('role', 'status');
+    localizedText(previewNotice, () => t('interface:studioPreview.sessionOnly'));
+    (home.querySelector('.home-content') ?? home).prepend(previewNotice);
+  }
+  const droneAidLanding =
+    provider.editionId === 'droneaid-nl-community' && home.classList.contains('native-landing');
+  let disposeLandingWordmark = () => {};
+  const iconAsset = selection.brand.iconAssetId ?? selection.brand.logoAssetId;
+  if (iconAsset) {
+    for (const rel of ['icon', 'apple-touch-icon']) {
+      let icon = doc.querySelector(`link[rel="${rel}"]`);
+      if (!icon && doc.head) {
+        icon = node('link');
+        icon.rel = rel;
+        doc.head.append(icon);
+      }
+      if (icon) {
+        icon.href = provider.assetURL(iconAsset);
+        icon.removeAttribute('sizes');
+      }
+    }
+  }
+  const propeller = logoAsset === 'droneaid-nl-propeller';
+  if (selection.brand.heroAssetId && !home.classList.contains('native-landing')) {
     const hero = node('img');
     hero.id = 'edition-home-art';
     hero.className = 'edition-home-art';
@@ -65,25 +135,60 @@ export async function mountEditionSoloUI({
     hero.alt = '';
     home.prepend(hero);
   }
-  if (selection.brand.logoAssetId)
-    for (const mark of doc.querySelectorAll('.brand-mark')) {
+  if (logoAsset)
+    for (const mark of doc.querySelectorAll('.brand-mark, #shell-menu .fpv-line-brand')) {
       const logo = node('img');
       logo.className = 'edition-brand-logo';
-      logo.src = provider.assetURL(selection.brand.logoAssetId);
-      logo.alt = selection.brand.name;
+      // Compact in-game marks stay still; the landing owns the ambient motion.
+      logo.src = provider.assetURL(logoAsset);
+      logo.alt = brandName;
+      if (mark.classList.contains('fpv-line-brand')) {
+        mark.classList.remove('fpv-line-brand', 'fpv-line-brand--compact');
+        mark.classList.add('edition-compact-logo');
+      }
       mark.replaceChildren(logo);
     }
-  if (selection.brand.logoAssetId) {
+  if (droneAidLanding) {
+    home.dataset.landingIdentity = 'droneaid';
+    const title = doc.getElementById('shell-title');
+    if (title) {
+      const wordmark = node('img');
+      wordmark.className = 'droneaid-landing-wordmark';
+      wordmark.alt = '';
+      wordmark.draggable = false;
+      wordmark.decoding = 'async';
+      wordmark.setAttribute('aria-hidden', 'true');
+      title.dataset.wordmarkLoaded = 'false';
+      const loaded = () => {
+        if (!disposed) title.dataset.wordmarkLoaded = 'true';
+      };
+      const failed = () => {
+        if (!disposed) title.dataset.wordmarkLoaded = 'false';
+      };
+      wordmark.addEventListener('load', loaded);
+      wordmark.addEventListener('error', failed);
+      wordmark.src = new URL('./art/menu-scenes/droneaid-wordmark-light.svg', import.meta.url).href;
+      title.insertBefore(wordmark, title.firstChild);
+      if (wordmark.complete && wordmark.naturalWidth > 0) loaded();
+      disposeLandingWordmark = () => {
+        wordmark.removeEventListener('load', loaded);
+        wordmark.removeEventListener('error', failed);
+        wordmark.remove();
+        delete title.dataset.wordmarkLoaded;
+        delete home.dataset.landingIdentity;
+      };
+    }
+  } else if (logoAsset) {
     const logo = node('img');
     logo.className = 'edition-home-logo';
-    logo.src = provider.assetURL(selection.brand.logoAssetId);
-    logo.alt = selection.brand.name;
+    if (propeller) logo.classList.add('edition-propeller');
+    logo.src = provider.assetURL(logoAsset);
+    logo.alt = brandName;
     (home.querySelector('.home-content') ?? home).prepend(logo);
   }
   const picker = node('label'),
-    pickerLabel = node('span'),
+    pickerTitle = copy('span', 'chooseEdition'),
     select = node('select');
-  localizedText(pickerLabel, () => t('interface:editionSolo.switcherLabel'));
   picker.className = 'field edition-switcher';
   select.id = 'edition-select';
   const availableEditions = (provider.currentCatalog ?? provider.catalog).editions.filter(
@@ -96,8 +201,9 @@ export async function mountEditionSoloUI({
   }
   select.value = provider.editionId;
   select.disabled = availableEditions.length === 1;
-  picker.append(pickerLabel, select);
-  (home.querySelector('.home-content') ?? home).append(picker);
+  picker.append(pickerTitle, select);
+  picker.hidden = availableEditions.length === 1;
+  (doc.getElementById('settings-panel-content') ?? editionMenu).append(picker);
   select.onchange = () => {
     const requested = select.value;
     // This remains the active edition until the shared host has retained the
@@ -110,25 +216,21 @@ export async function mountEditionSoloUI({
       return false;
     return onEditionChange(requested, select);
   };
+  let retainedPanel;
   if (provider.presentationHistory?.length) {
     const retained = node('details'),
-      title = node('summary'),
+      title = copy('summary', 'originalArt'),
       choice = node('select'),
-      label = node('label'),
-      labelText = node('span');
-    localizedText(title, () => t('interface:editionSolo.originalArtworkRecovery'));
-    localizedText(labelText, () => t('interface:editionSolo.artworkSnapshot'));
+      label = node('label');
+    label.append(copy('span', 'snapshot'));
     retained.className = 'edition-about';
+    retainedPanel = retained;
     choice.id = 'edition-presentation-select';
-    const current = node('option');
-    localizedText(current, () => t('interface:soloDeparture.currentArtwork'));
+    const current = copy('option', 'currentArt');
     current.value = '';
     choice.append(current);
     for (const record of provider.presentationHistory) {
-      const option = node('option');
-      localizedText(option, () =>
-        t('interface:editionSolo.retainedOriginal', { id: record.id.slice(0, 12) }),
-      );
+      const option = copy('option', 'retainedOriginal', { revision: record.id.slice(0, 12) });
       option.value = record.id;
       choice.append(option);
     }
@@ -138,17 +240,14 @@ export async function mountEditionSoloUI({
       choice.value = provider.retainedPresentationId ?? '';
       return onPresentationChange(requested, choice);
     };
-    label.append(labelText, choice);
-    const recoveryExplanation = node('p');
-    localizedText(recoveryExplanation, () => t('interface:editionSolo.recoveryExplanation'));
-    retained.append(title, recoveryExplanation, label);
+    label.append(choice);
+    retained.append(title, copy('p', 'recoveryExplanation'), label);
     const saved = getSavedPresentation();
     if (
       saved !== provider.authoredPresentationSha256 &&
       provider.presentationHistory.some((item) => item.id === saved)
     ) {
-      const recover = node('button');
-      localizedText(recover, () => t('interface:editionSolo.openSavedArtwork'));
+      const recover = copy('button', 'recoverSaved');
       recover.type = 'button';
       recover.id = 'edition-recover-presentation';
       recover.className = 'button secondary';
@@ -156,24 +255,22 @@ export async function mountEditionSoloUI({
       retained.append(recover);
       retained.open = true;
     }
-    if (provider.retainedPresentationId) {
-      const retainedNotice = node('p');
-      localizedText(retainedNotice, () =>
-        t('interface:editionSolo.retainedNotice', {
-          id: provider.retainedPresentationId.slice(0, 12),
+    if (provider.retainedPresentationId)
+      retained.append(
+        copy('p', 'retainedExplanation', {
+          revision: provider.retainedPresentationId.slice(0, 12),
         }),
       );
-      retained.append(retainedNotice);
-    }
-    (home.querySelector('.home-content') ?? home).append(retained);
+    // A known saved-flight mismatch remains immediately reachable at home.
+    (retained.open
+      ? homeContent
+      : (doc.getElementById('settings-panel-data') ?? editionMenu)
+    ).append(retained);
   }
   const about = node('details'),
-    aboutTitle = node('summary'),
-    learningDisclaimer = node('p');
-  localizedText(aboutTitle, () => t('interface:editionSolo.about'));
-  localizedText(learningDisclaimer, () => t('interface:editionSolo.learningDisclaimer'));
+    aboutTitle = copy('summary', 'about');
   about.className = 'edition-about';
-  about.append(aboutTitle, node('p', selection.brand.description), learningDisclaimer);
+  about.append(aboutTitle, node('p', selection.brand.description), copy('p', 'learningContext'));
   for (const source of new Map(
     [
       ...(selection.brand.sources ?? []),
@@ -188,11 +285,10 @@ export async function mountEditionSoloUI({
     p.append(link);
     about.append(p);
   }
-  (home.querySelector('.home-content') ?? home).append(about);
+  (doc.getElementById('settings-panel-extras') ?? editionMenu).append(about);
   // Mode controls stay on the common template, but this delivery contains only
   // Solo. The mission library itself derives availability from selected sources.
   for (const id of [
-    'shell-title-modes',
     'shell-mode-choice',
     'shell-team',
     'shell-versus',
@@ -207,7 +303,7 @@ export async function mountEditionSoloUI({
   }
   if (doc.getElementById('menu-actor-note'))
     localizedText(doc.getElementById('menu-actor-note'), () =>
-      t('interface:editionSolo.campaignArtworkNote'),
+      t('interface:editionShell.sharedRules'),
     );
   const worlds = doc.getElementById('shell-worlds');
   if (worlds) {
@@ -238,10 +334,58 @@ export async function mountEditionSoloUI({
     getRecorder,
     getPictureVisible,
     report,
+    previewSession,
+  });
+  const mastery = await mountEditionMastery({
+    provider,
+    document: doc,
+    window: win,
+    writer,
+    getRun,
+    getRunId,
+    getRecorder,
+    getJourneyProfile,
+    getJourneyRevision,
+    getJourneyDurable,
+    previewSession,
+    report,
+  });
+  const rewards = await mountEditionRewards({
+    provider,
+    document: doc,
+    window: win,
+    writer,
+    pause,
+    getRun,
+    getJourneyProfile,
+    getJourneyRevision,
+    getJourneyDurable,
+    getLearningEvidence: lessons.rewardEvidence,
+    getMasteryEvidence: mastery.rewardEvidence,
+    motionPreferences,
+    onCosmeticBodiesChange,
+    onChooseCosmetic,
+    onRecoverCosmetic,
+    getReducedMotion,
+    audioMaster,
+    musicDucker,
+    previewSession,
+  });
+  const stopLearningRewards = lessons.onRewardEvidenceChange(() => rewards.refresh());
+  const stopMasteryRewards = mastery.onRewardEvidenceChange(() => rewards.refresh());
+  const expedition = mountEditionExpedition({
+    provider,
+    document: doc,
+    window: win,
+    getJourneyProfile,
+    getJourneyRevision,
+    getRewards: () => rewards.snapshot?.(),
   });
   const legacy = node('section');
   try {
-    const raw = (win.localStorage ?? globalThis.localStorage).getItem(provider.legacySessionKey);
+    const raw = (previewSession?.storage ?? win.localStorage ?? globalThis.localStorage).getItem(
+      provider.legacySessionKey,
+    );
     if (raw) {
       const legacyHeading = node('h3'),
         legacyExplanation = node('p');
@@ -266,10 +410,9 @@ export async function mountEditionSoloUI({
   } catch {
     report(t('errors:editionSolo.legacyStorageUnreadable'));
   }
-  let disposed = false;
   const offline = node('section');
   offline.className = 'edition-offline';
-  if (root.dataset.editionId && version !== 'DEV') {
+  if (!previewSession && root.dataset.editionId && version !== 'DEV') {
     const prepare = node('button'),
       install = node('button'),
       status = node('p');
@@ -323,19 +466,38 @@ export async function mountEditionSoloUI({
       }
     };
     offline.append(prepare, install, status);
-    doc.getElementById('settings-panel-data').append(offline);
+    (
+      doc.getElementById('settings-panel-content') ?? doc.getElementById('settings-panel-data')
+    ).append(offline);
   }
   return {
-    refresh: lessons.refresh,
+    refresh() {
+      lessons.refresh();
+      mastery.refresh();
+      rewards.refresh();
+      expedition.refresh();
+    },
     pictureReady: lessons.pictureReady,
+    cosmeticBodies: rewards.cosmeticBodies,
+    closeResultDetails: rewards.closeResultDetails,
+    presentVictoryVideo: rewards.presentVictoryVideo,
     dispose() {
+      if (disposed) return;
       disposed = true;
+      stopLearningRewards();
+      stopMasteryRewards();
+      disposeLandingWordmark();
       lessons.dispose();
+      mastery.dispose();
+      rewards.dispose();
+      expedition.dispose();
       typeof layout === 'function' ? layout() : layout.disconnect?.();
       picker.remove();
       about.remove();
+      retainedPanel?.remove();
       offline.remove();
       legacy.remove();
+      previewNotice?.remove();
     },
   };
 }

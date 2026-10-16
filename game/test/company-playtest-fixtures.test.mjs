@@ -60,6 +60,8 @@ test('the actual standalone runtime dependency closure excludes the transfer ans
   });
   assert(!files.has('game/company-campaigns/playtest-fixtures.mjs'));
   assert(!files.has('game/company-campaigns/lessons.mjs'));
+  for (const name of ['qrcodegen-1.8.0.mjs', 'qrcodegen-1.8.0.json', 'QRCODEGEN-LICENSE.txt'])
+    assert(files.has(`game/vendor/${name}`), `Standalone QR dependency is retained: ${name}`);
 });
 
 test('repeating the first mission’s salient answer fails the changed transfer evidence', () => {

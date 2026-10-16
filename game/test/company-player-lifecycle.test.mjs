@@ -14,6 +14,8 @@ import { createDisplayPreferences } from '../display-preferences.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { Soundscape } from '../ui/audio.mjs';
+import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
+import { Document } from './helpers/couch-dom.mjs';
 import { auditSource } from '../../scripts/localization-audit.mjs';
 
 // Run the actual host callbacks against real stores/preference adapters without
@@ -89,7 +91,12 @@ test('company notices retain a live message producer in the page and open dialog
 test('company player leaves only technical tokens outside the localization catalogs', () => {
   assert.deepEqual(
     auditSource(source, 'game/company-player.mjs').map(({ text }) => text),
-    ['Company Brand', '"Company Brand", system-ui, sans-serif', 'noopener noreferrer'],
+    [
+      'Company Brand',
+      '"Company Brand", system-ui, sans-serif',
+      'noopener noreferrer',
+      'company-level-title',
+    ],
   );
 });
 
@@ -116,10 +123,13 @@ test('the company host keeps multiple read-only wins in exported progress withou
     find(tree, (node) => node.type === 'FunctionDeclaration' && node.id?.name === 'creditWin'),
     context,
   );
-  for (const missionId of ['first-connection', 'second-connection']) {
+  for (const [missionId, medal] of [
+    ['first-connection', 'silver'],
+    ['second-connection', 'gold'],
+  ]) {
     context.awarded = false;
     context.current = {
-      run: { status: 'won', levelId: missionId },
+      run: { status: 'won', levelId: missionId, medal },
       mission: { id: missionId },
       runId: `${missionId}-run`,
       selection: { difficulty: 'standard' },
@@ -128,11 +138,14 @@ test('the company host keeps multiple read-only wins in exported progress withou
     creditWin();
     assert.equal(await profile.flush(), false);
   }
-  const exported = JSON.parse(profile.export()).profile;
+  const backup = JSON.parse(profile.export()),
+    exported = backup.profile;
   assert.deepEqual(Object.keys(exported.clears.solo).sort(), [
     'first-connection',
     'second-connection',
   ]);
+  assert.equal(backup.stars.best.solo['first-connection'], 2);
+  assert.equal(backup.stars.best.solo['second-connection'], 3);
   assert.equal(exported.generation, 2, 'an already credited win is not counted twice');
   assert.deepEqual(await backend.read(), emptyJourneyProfile());
   assert.equal(disk.allPuts.length, 0);
@@ -163,17 +176,28 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
     getStorage: () => null,
   });
   const calls = [];
+  const doc = new Document();
+  const defeatSounds = attachDefeatSoundControls({
+    document: doc,
+    window: eventTarget,
+    container: doc.body,
+    getStorage: () => null,
+  });
   const context = {
     displayPreferences,
     touchPreferences,
     audioPreferences,
     audioMaster,
     sound,
+    defeatSounds,
     pause: () => calls.push('pause'),
+    menuAudio: { close: () => calls.push('menu-audio') },
     writer: { release: () => calls.push('release') },
     frame: 123,
     cancelAnimationFrame: (id) => calls.push(`cancel-${id}`),
     input: { destroy: () => calls.push('input') },
+    painter: { dispose: () => calls.push('painter') },
+    themeHost: { dispose: () => calls.push('theme-host') },
     current: { picture: { release: () => calls.push('picture') } },
     host: { preparer: { dispose: () => calls.push('preparer') } },
   };
@@ -189,10 +213,10 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
   const pagehide = callback(registration.arguments[1], context);
   const listenerCount = () =>
     [...listeners.values()].reduce((sum, entries) => sum + entries.size, 0);
-  assert.equal(listenerCount(), 6);
+  assert.equal(listenerCount(), 8);
   pagehide({ persisted: true });
   assert.deepEqual(calls, ['pause']);
-  assert.equal(listenerCount(), 6);
+  assert.equal(listenerCount(), 8);
   assert.equal(sound.disposed, false);
   assert.doesNotThrow(() => pagehide({ persisted: false }));
   await Promise.resolve();
@@ -209,6 +233,9 @@ test('company pagehide uses real preference teardown APIs and preserves a cached
     'input',
     'picture',
     'preparer',
+    'menu-audio',
+    'painter',
+    'theme-host',
   ]);
 });
 

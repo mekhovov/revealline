@@ -1,18 +1,78 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      data-theme-follow-context="true"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+    <script
+      src="../presentation/theme-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-i18n="interface:contentStudioRevealLine">Content Studio · Reveal Line</title>
+    <title data-i18n="interface:contentStudioRevealLine">Content Studio · FPV / LINE</title>
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="studio.css" />
-    <script type="module" src="../ui/content-studio-navigation-entry.mjs"></script>
-    <script type="module" src="studio.mjs"></script>
+    <script
+      src="../ui/content-studio-navigation-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="studio.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body>
     <div data-language-control></div>
@@ -23,8 +83,11 @@
         data-content-studio-route="game"
         inert
         aria-disabled="true"
-        data-i18n="interface:revealLine"
-        >◩ REVEAL / LINE</a
+        class="fpv-line-brand fpv-line-brand--compact"
+        ><img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE" /></a
       ><span data-i18n="interface:contentStudioLocalDrafts">CONTENT STUDIO / LOCAL DRAFTS</span
       ><a
         href="../playground/"
@@ -49,7 +112,29 @@
         Opening your local workbench…
       </p>
       <noscript>This editor needs JavaScript. No project has been changed.</noscript>
+      <p>
+        <a href="../playground/#symbol-generator" data-i18n="tools:symbolLink"
+          >Create a level from text or a symbol image →</a
+        >
+      </p>
       <p><a href="../creator/">Create a playable campaign from a picture →</a></p>
+      <p>
+        <a href="snake.html"
+          >Snake Studio · routes, prey, shutters and supplies / маршрути, цілі, заслінки та припаси
+          →</a
+        >
+      </p>
+      <p>
+        <a href="overflight.html"
+          >Overflight Studio · encounters, upgrades and arena / хвилі, вдосконалення й арена →</a
+        >
+      </p>
+      <p>
+        <a href="raid.html"
+          >Raid Studio · hunting routes, formations and objectives / Наліт · маршрути, групи й цілі
+          →</a
+        >
+      </p>
       <details class="community-guide">
         <summary data-i18n="interface:createACommunityGameStepByStepGuide">
           Create a community game · step-by-step guide
@@ -225,6 +310,12 @@
               <label
                 ><span data-i18n="interface:combinedJourneyEdition">Combined Journey edition</span>
                 <select id="whole-variety-edition">
+                  <option value="snake-hunt-v1" data-i18n="content:snakeHuntV1.edition">
+                    Snake Hunt · eight chapters
+                  </option>
+                  <option value="team-snake-hunt-v1" data-i18n="content:snakeHuntV1.teamEdition">
+                    Team Snake Hunt · eight chapters
+                  </option>
                   <option value="variety-1" data-i18n="interface:ornamentAndWorkshopV4">
                     Ornament and workshop · v4
                   </option>
@@ -1319,6 +1410,22 @@
             <div
               class="candidate-entry"
               data-library-entry
+              data-library-keywords="living routes crossing post humanoid patrol courier pursuit-pilots-v1 pursuit-campaigns-v1"
+            >
+              <button id="living-pilots" data-i18n="interface:inspectLivingRoutePilots">
+                Inspect Living Routes pilot · Solo / Versus
+              </button>
+              <button id="living-chapters" data-i18n="interface:inspectLivingRouteChapters">
+                Inspect Living Routes chapters · Solo / Versus
+              </button>
+              <p class="note" data-i18n="interface:livingRouteCandidatesHelp">
+                Inspect the authored source, then Apply to edit. Completion and release
+                qualification remain pending.
+              </p>
+            </div>
+            <div
+              class="candidate-entry"
+              data-library-entry
               data-library-keywords="ukrainian vyshyvanka vyshivanka fpv drone pressure"
             >
               <label
@@ -1414,6 +1521,25 @@
             <div
               class="candidate-entry"
               data-library-entry
+              data-library-keywords="living routes pincer yard relay rendezvous partners humanoid pursuit-pilots-v1 pursuit-campaigns-v1"
+            >
+              <button id="living-team-pilots" data-i18n="interface:inspectLivingRouteTeamPilots">
+                Inspect Living Routes pilots · Team
+              </button>
+              <button
+                id="living-team-chapters"
+                data-i18n="interface:inspectLivingRouteTeamChapters"
+              >
+                Inspect Living Routes chapters · Team
+              </button>
+              <p class="note" data-i18n="interface:livingRouteCandidatesHelp">
+                Inspect the authored source, then Apply to edit. Completion and release
+                qualification remain pending.
+              </p>
+            </div>
+            <div
+              class="candidate-entry"
+              data-library-entry
               data-library-keywords="freeze slow speed bonus depot coolant window"
             >
               <label
@@ -1477,6 +1603,34 @@
               >
             </div>
             <div class="candidate-entry" data-library-entry>
+              <label for="multiplayer-expedition-mode" data-i18n="interface:expeditions.mode"
+                >Multiplayer expeditions</label
+              >
+              <select id="multiplayer-expedition-mode">
+                <option value="team" data-i18n="interface:team">Team</option>
+                <option value="versus" data-i18n="interface:versus2">Duel</option>
+              </select>
+              <button id="multiplayer-expedition" data-i18n="interface:expeditions.inspect">
+                Inspect expedition source
+              </button>
+              <p class="note" data-i18n="interface:expeditions.note">
+                New cooperative routes and dedicated races. Inspect before Apply; existing artwork
+                is reused. Play and balance review are tracked separately.
+              </p>
+              <a
+                href="../couch/relay-rescue.html?journey=team-expedition-v1"
+                target="_blank"
+                rel="noopener"
+                data-i18n="interface:expeditions.playTeam"
+                >Play Team expeditions ↗</a
+              >
+              <a
+                href="../couch/?journey=duel-expedition-v1"
+                target="_blank"
+                rel="noopener"
+                data-i18n="interface:expeditions.playDuel"
+                >Play Duel expeditions ↗</a
+              >
               <label for="team-journey-edition" data-i18n="interface:teamJourneyEdition"
                 >Team Journey edition</label
               >
@@ -1674,7 +1828,14 @@
           aria-label="Project and missions"
           data-i18n-aria-label="interface:projectAndMissions"
         >
-          <p class="eyebrow" data-i18n="interface:project">PROJECT</p>
+          <h2
+            class="eyebrow"
+            id="studio-project-title"
+            data-authoring-target="project-id"
+            data-i18n="interface:project"
+          >
+            PROJECT
+          </h2>
           <label
             ><span data-i18n="common:editor.localProjectId">Local project ID</span
             ><input id="project-id" value="my-journey" maxlength="80"
@@ -1864,6 +2025,10 @@
             <span data-i18n="interface:capturingFieldNeutralizesItsTerrainWallsNeverCloseCuts"
               >Capturing field neutralizes its terrain; walls never close cuts.</span
             >
+          </p>
+          <p class="note" data-i18n="tools:studio.hunt.legend">
+            Humanoid figures: huntable runners and guards. Touch or enclosure removes them; their
+            bodies never retain territory. Guards carry a weapon; their shots remain dangerous.
           </p>
           <p id="geometry" class="note"></p>
           <label class="toggle"
@@ -2096,6 +2261,12 @@
                 <p id="actor-result" class="note" role="status"></p>
               </fieldset>
             </form>
+          </details>
+          <details id="hunt-editor-panel">
+            <summary data-i18n="interface:authorHuntingForThisMission">
+              Author hunting for this mission
+            </summary>
+            <div id="hunt-editor-mount"></div>
           </details>
           <details id="bonus-panel">
             <summary data-i18n="interface:placeOptionalBonuses">Place optional bonuses</summary>
@@ -2330,6 +2501,24 @@
                 <p id="objective-result" class="note" role="status"></p>
               </fieldset>
             </form>
+          </details>
+          <details id="team-environment-panel">
+            <summary data-i18n="tools:studio.teamEnvironment.title">Edit Team environment</summary>
+            <p id="team-environment-qualification" class="note"></p>
+            <fieldset id="team-environment-tools" disabled>
+              <label for="team-environment-source" data-i18n="tools:studio.teamEnvironment.source"
+                >Environment recipe</label
+              >
+              <textarea id="team-environment-source" rows="14" spellcheck="false"></textarea>
+              <button
+                id="team-environment-apply"
+                type="button"
+                data-i18n="tools:studio.teamEnvironment.apply"
+              >
+                Validate &amp; apply environment
+              </button>
+              <p id="team-environment-result" class="note" role="status"></p>
+            </fieldset>
           </details>
           <details id="relay-panel">
             <summary data-i18n="interface:linkPermanentRelayGates">
@@ -2781,6 +2970,27 @@
             ><span data-i18n="interface:practiceOnlyNoAwardsCandidatePresentation"
               >Practice only · no awards · candidate presentation</span
             >
+            <div id="preview-remains-options" class="preview-remains-options" hidden>
+              <label class="preview-remains-toggle"
+                ><input
+                  id="preview-show-remains"
+                  type="checkbox"
+                  checked
+                  disabled
+                  aria-describedby="preview-remains-hint"
+                /><span data-i18n="tools:studio.preview.showRemains"
+                  >Show enemy remains</span
+                ></label
+              >
+              <p
+                id="preview-remains-hint"
+                class="note"
+                data-i18n="tools:studio.preview.remainsHint"
+              >
+                For the next Solo preview only. Hides inert remains when off; live enemies, aim
+                warnings, shots and brief sparks stay visible. Does not change the draft or replay.
+              </p>
+            </div>
             <button id="export-team" hidden data-i18n="interface:exportExactTeamTestMission">
               Export exact Team test mission
             </button>
@@ -2792,6 +3002,9 @@
               ></label>
               <button id="export-team-campaign" data-i18n="interface:exportExactTeamTestCampaign">
                 Export exact Team test campaign
+              </button>
+              <button id="export-team-portable">
+                Export shareable Team campaign · Пакунок Team для спільноти
               </button>
               <p class="note" data-i18n="interface:preservesTheAuthoredOrderForNextInTheTeamHost">
                 Preserves the authored order for Next in the Team host. Geometry and rules only; no
@@ -2931,6 +3144,64 @@
               <pre id="acceptance-report"></pre>
             </details>
           </details>
+          <details id="discovery-editor">
+            <summary data-i18n="tools:studio.discovery.title">
+              Discoveries, pacing and campaign exhibits
+            </summary>
+            <p class="note" data-i18n="tools:studio.discovery.help">
+              Choose a beat and exact reward references. Import the campaign reward sidecar first;
+              keep it alongside the project backup. Previews never earn progress.
+            </p>
+            <label class="file-button"
+              ><span data-i18n="tools:studio.discovery.import">Inspect reward sidecar</span
+              ><input id="discovery-import" type="file" accept="application/json,.json"
+            /></label>
+            <form id="discovery-form">
+              <fieldset id="discovery-tools">
+                <label
+                  ><span data-i18n="tools:studio.discovery.campaign">Campaign</span
+                  ><select id="discovery-campaign"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.pacing">Mission beat</span
+                  ><select id="discovery-beat"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.reward">First-win discovery</span
+                  ><select id="discovery-reward"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.exhibit">Campaign exhibit layout</span
+                  ><select id="discovery-layout"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.finale">Campaign finale</span
+                  ><select id="discovery-finale"></select
+                ></label>
+                <label
+                  ><span data-i18n="tools:studio.discovery.language">Preview language</span
+                  ><select id="discovery-locale">
+                    <option value="en">English</option>
+                    <option value="uk">Українська</option>
+                  </select></label
+                >
+                <button id="discovery-apply" type="submit" data-i18n="tools:studio.discovery.apply">
+                  Apply discovery design
+                </button>
+                <button id="discovery-show" type="button" data-i18n="tools:studio.discovery.show">
+                  Preview route and exhibit
+                </button>
+              </fieldset>
+            </form>
+            <p id="discovery-result" class="note" role="status"></p>
+            <div id="discovery-preview" aria-live="polite"></div>
+          </details>
+          <details id="reaction-voice-editor-panel">
+            <summary data-i18n="interface:characterVoiceRecordings">
+              Character voice recordings
+            </summary>
+            <div id="reaction-voice-editor-mount"></div>
+          </details>
           <details id="structure-editor">
             <summary data-i18n="common:editor.organizeContent">
               Organize missions, campaigns & packs
@@ -3051,9 +3322,14 @@
               data-i18n-aria-label="tools:studio.structure.orderLabel"
             ></pre>
           </details>
-          <p class="eyebrow" data-i18n="interface:sourceAllMapsCampaigns">
+          <h2
+            class="eyebrow"
+            id="studio-source-title"
+            data-authoring-target="source"
+            data-i18n="interface:sourceAllMapsCampaigns"
+          >
             SOURCE / ALL MAPS & CAMPAIGNS
-          </p>
+          </h2>
           <p class="note" data-i18n="interface:editNamesOrderActorsAndDesignNotesHereInspectFirst">
             Edit names, order, actors and design notes here. Inspect first; applying is explicit.
             Published editions are never overwritten.
@@ -3098,5 +3374,10 @@
         required
       </footer>
     </main>
+    <script
+      src="../ui/authoring-input-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </body>
 </html>

@@ -458,9 +458,9 @@ test('an interrupted offload journal remains recoverable from its exact retained
   let writes = 0;
   const stateStore = {
     read: memoryState.read,
-    write(value) {
+    update(mutate) {
       if (++writes === 4) throw new Error('storage unavailable');
-      return memoryState.write(value);
+      return memoryState.update(mutate);
     },
   };
   const { library, creatorStore } = await fixture({
@@ -489,9 +489,9 @@ test('staged association recovers a committed install when the final journal wri
   let writes = 0;
   const stateStore = {
     read: memoryState.read,
-    write(value) {
+    update(mutate) {
       if (++writes === 2) throw new Error('storage unavailable');
-      return memoryState.write(value);
+      return memoryState.update(mutate);
     },
   };
   const { library, creatorStore } = await fixture({

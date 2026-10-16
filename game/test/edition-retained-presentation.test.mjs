@@ -54,9 +54,9 @@ test('retained original preserves exact execution and receipt while new artwork 
     new URL(retained.href({ presentation: null })).searchParams.has('presentation'),
     false,
   );
-  assert.equal(
-    new URL(retained.href({ edition: 'another-edition' })).searchParams.has('presentation'),
-    false,
+  assert.throws(
+    () => retained.href({ edition: 'another-edition' }),
+    /cannot navigate to another company/,
   );
 });
 
@@ -173,4 +173,33 @@ test('retained snapshot reads cancel stalled fetches and streams without late ac
   controller.abort();
   await assert.rejects(pending, { name: 'AbortError' });
   assert.equal(cancelled, true);
+});
+
+test('adding permitted campaigns preserves exact old presentations while removed campaigns cannot be restored', async () => {
+  const f = await retainedEditionFixture();
+  const edition = structuredClone(f.catalog.editions[0]);
+  edition.campaignIds.push('newly-permitted-campaign');
+  const restored = await validateRetainedPresentation(f.snapshot, { edition });
+  assert(restored);
+  for (const change of [
+    (value) => {
+      value.campaignIds = ['newly-permitted-campaign'];
+    },
+    (value) => {
+      value.audience = 'another-audience';
+    },
+    (value) => {
+      value.brandId = 'another-brand';
+    },
+    (value) => {
+      value.modes = ['solo', 'team'];
+    },
+  ]) {
+    const invalid = structuredClone(edition);
+    change(invalid);
+    await assert.rejects(
+      validateRetainedPresentation(f.snapshot, { edition: invalid }),
+      /selected audience/,
+    );
+  }
 });

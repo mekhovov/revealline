@@ -5,6 +5,28 @@ import { webcrypto } from 'node:crypto';
 import { buildEditionOfflineFiles } from './edition-offline.mjs';
 import { validateCompanyInstallationReference } from '../game/edition-context.mjs';
 import { validateEditionCodeClosure } from './compile-edition.mjs';
+import { COMPANY_PACKAGE_BUDGET } from '../game/editions/package-budget.mjs';
+
+const STORED_RESPONSE = Symbol('stored-response');
+
+async function storeResponse(response) {
+  return {
+    [STORED_RESPONSE]: true,
+    bytes: new Uint8Array(await response.clone().arrayBuffer()),
+    status: response.status,
+    statusText: response.statusText,
+    headers: [...response.headers],
+  };
+}
+
+function readStoredResponse(value) {
+  if (!value?.[STORED_RESPONSE]) return value?.clone();
+  return new Response(value.bytes.slice(), {
+    status: value.status,
+    statusText: value.statusText,
+    headers: value.headers,
+  });
+}
 
 async function build(editionId = 'sample', options = {}) {
   return buildEditionOfflineFiles({
@@ -54,11 +76,11 @@ function worker(
       return {
         match: async (key) => {
           storageOperation('match', name, key);
-          return target.get(key)?.clone();
+          return readStoredResponse(target.get(key));
         },
         put: async (key, response) => {
           storageOperation('put', name, key);
-          target.set(key, response.clone());
+          target.set(key, await storeResponse(response));
         },
       };
     },
@@ -113,7 +135,12 @@ async function workerReceipt(runtime, type = 'verify-company-edition') {
 
 const storedBytes = (cache) =>
   Promise.all(
-    [...cache].map(async ([url, response]) => [url, await response.clone().arrayBuffer()]),
+    [...cache].map(async ([url, response]) => [
+      url,
+      response?.[STORED_RESPONSE]
+        ? response.bytes.slice().buffer
+        : await response.clone().arrayBuffer(),
+    ]),
   );
 
 test('offline artifacts are reproducible with distinct stable app IDs and scoped workers', async () => {
@@ -198,6 +225,42 @@ test('corrupt downloads refuse worker installation and over-budget editions are 
     buildEditionOfflineFiles({ files, editionId: 'sample', version: '1.0.0' }),
     /2000 files/,
   );
+});
+
+test('generated Company workers reject enlarged or inconsistent embedded inventories before caching', async () => {
+  const original = await build();
+  for (const mutate of [
+    (inventory) => {
+      inventory.files[0].bytes = COMPANY_PACKAGE_BUDGET.maxBytes + 1;
+      inventory.totalBytes = inventory.files.reduce((sum, row) => sum + row.bytes, 0);
+      inventory.budget = { maxBytes: inventory.totalBytes };
+    },
+    (inventory) => inventory.totalBytes++,
+    (inventory) => inventory.files.push({ ...inventory.files[0] }),
+    (inventory) => {
+      inventory.files = Array.from({ length: COMPANY_PACKAGE_BUDGET.maxFiles + 1 }, (_, i) => ({
+        path: `game/file-${i}.txt`,
+        bytes: 0,
+        sha256: 'a'.repeat(64),
+      }));
+      inventory.totalBytes = 0;
+    },
+  ]) {
+    const files = new Map(original);
+    const source = files.get('service-worker.js').toString();
+    const inventory = JSON.parse(source.match(/^const INVENTORY = (.+);\n/)[1]);
+    mutate(inventory);
+    files.set(
+      'service-worker.js',
+      Buffer.from(
+        source.replace(
+          /^const INVENTORY = .+;\n/,
+          `const INVENTORY = ${JSON.stringify(inventory)};\n`,
+        ),
+      ),
+    );
+    assert.throws(() => worker(files), /Company offline/);
+  }
 });
 
 test('offline downloads stop and cancel overlong streams before allocating the advertised body', async () => {
@@ -362,7 +425,11 @@ test('cache storage failures never certify a partial game or launcher and repair
       blocked = false;
       runtime.requests.length = 0;
       const repaired = await workerReceipt(runtime, 'repair-company-edition');
-      assert.equal(repaired.status, 'ready');
+      assert.equal(
+        repaired.status,
+        'ready',
+        `repair failed after ${operation} fault for ${launcher ? 'launcher' : 'game'}: ${JSON.stringify(repaired)}`,
+      );
       assert.equal(repaired.buildId, runtime.inventory.buildId);
       assert.equal(repaired.count, runtime.inventory.files.length);
       assert.equal(repaired.bytes, runtime.inventory.totalBytes);
@@ -427,13 +494,17 @@ test('failed update and foreign-client repair cannot change a retained release o
   await old.dispatch('install');
   const retained = new Map(
     await Promise.all(
-      [...old.cache].map(async ([url, response]) => [url, await response.clone().text()]),
+      [...old.cache].map(async ([url, response]) => [
+        url,
+        await readStoredResponse(response).text(),
+      ]),
     ),
   );
   const update = worker(await build('sample', { version: '0.141.0' }), { stores, corrupt: true });
   await assert.rejects(update.dispatch('install'), /differs/);
   assert.equal(stores.size, 2);
-  for (const [url, body] of retained) assert.equal(await old.cache.get(url).clone().text(), body);
+  for (const [url, body] of retained)
+    assert.equal(await readStoredResponse(old.cache.get(url)).text(), body);
   const response = await old.dispatch('fetch', {
     request: { method: 'GET', url: `${old.scope}game/company.html` },
   });
@@ -457,7 +528,8 @@ test('failed update and foreign-client repair cannot change a retained release o
   });
   assert.equal(receipt.status, 'error');
   assert.equal(foreign.requests.length, 0);
-  for (const [url, body] of retained) assert.equal(await old.cache.get(url).clone().text(), body);
+  for (const [url, body] of retained)
+    assert.equal(await readStoredResponse(old.cache.get(url)).text(), body);
 });
 
 test('generated stable launcher opens verified active and retained release links and rejects foreign update pointers', async () => {
@@ -488,7 +560,7 @@ test('generated stable launcher opens verified active and retained release links
   const script = files
     .get('app/app.mjs')
     .toString()
-    .replace(/^import[^\n]+\n/, '');
+    .replace(/^import[^\n]+\n/gm, '');
   vm.runInNewContext(script, {
     document,
     location: { href: `${root}app/`, origin: new URL(root).origin },
@@ -496,6 +568,7 @@ test('generated stable launcher opens verified active and retained release links
     URL,
     navigator: {},
     validateCompanyInstallationReference,
+    attachLauncherNavigation() {},
     fetch: async () => ({ ok: true, json: async () => candidate }),
   });
   assert.equal(nodes.get('play').href.href, `${state.active.scope}game/company.html`);
@@ -509,4 +582,63 @@ test('generated stable launcher opens verified active and retained release links
   await nodes.get('check').onclick();
   assert.match(nodes.get('status').textContent, /matching published edition/);
   assert.equal(values.get('revealline.company-installed.sample.v1'), JSON.stringify(state));
+});
+
+test('canonical DroneAid launcher keeps its stable installed key and reopens saved legacy scopes', async () => {
+  const editionId = 'droneaid-nl-community';
+  const files = await build(editionId, { name: 'DroneAid / LINE' });
+  const manifest = JSON.parse(files.get('app/manifest.webmanifest'));
+  assert.equal(manifest.id, `/revealline/editions/${editionId}/`);
+  assert.equal(manifest.scope, '/revealline/editions/droneaid/');
+  assert.equal(manifest.start_url, '/revealline/editions/droneaid/app/');
+  assert.equal(manifest.name, 'DroneAid / LINE');
+  assert.equal(JSON.parse(files.get('app/current.json')).editionId, editionId);
+  const oldScope = `https://game.test/revealline/editions/${editionId}/releases/v0.139.0/site/`;
+  const state = JSON.stringify({
+    active: { editionId, version: '0.139.0', scope: oldScope, entry: 'game/company.html' },
+  });
+  const nodes = new Map();
+  const reads = [];
+  vm.runInNewContext(
+    files
+      .get('app/app.mjs')
+      .toString()
+      .replace(/^import[^\n]+\n/gm, ''),
+    {
+      document: {
+        getElementById(id) {
+          if (!nodes.has(id)) nodes.set(id, { hidden: true });
+          return nodes.get(id);
+        },
+      },
+      location: { href: 'https://game.test/revealline/editions/droneaid/app/' },
+      localStorage: {
+        getItem(key) {
+          reads.push(key);
+          return state;
+        },
+      },
+      URL,
+      navigator: {},
+      validateCompanyInstallationReference,
+      attachLauncherNavigation() {},
+      fetch: async () => ({
+        ok: true,
+        json: async () => ({
+          editionId,
+          version: '0.140.0',
+          scope: '../releases/v0.140.0/site/',
+          entry: 'game/company.html',
+        }),
+      }),
+    },
+  );
+  assert.deepEqual(reads, [`revealline.company-installed.${editionId}.v1`]);
+  assert.equal(nodes.get('play').href.href, `${oldScope}game/company.html`);
+  assert.equal(nodes.get('play').hidden, false);
+  await nodes.get('check').onclick();
+  assert.equal(
+    nodes.get('prepare').href.href,
+    'https://game.test/revealline/editions/droneaid/releases/v0.140.0/site/game/company.html',
+  );
 });

@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
+  DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS,
   PUBLIC_SOUNDTRACK_STYLE_IDS,
   localGenresForPublicStyles,
   publicSoundtrackStyles,
+  publicSoundtrackStylesForLocalGenres,
 } from '../soundtrack-style-taxonomy.mjs';
 
 test('public music styles use the player-first order with Ukrainian families last', () => {
@@ -18,6 +20,16 @@ test('public music styles use the player-first order with Ukrainian families las
     'other',
     'ukrainian',
     'fpv',
+  ]);
+  assert.deepEqual(DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS, [
+    'synth',
+    'metal',
+    'chiptune',
+    'rock',
+    'electronic',
+    'ambient',
+    'fusion',
+    'other',
   ]);
 });
 
@@ -39,4 +51,22 @@ test('public styles map to the closest built-in and uploaded music families', ()
     'ukrainian',
   ]);
   assert.deepEqual(localGenresForPublicStyles(['fpv']), []);
+});
+
+test('saved local genre mixes restore the matching public style controls', () => {
+  assert.deepEqual(publicSoundtrackStylesForLocalGenres(['synth90s', 'metal']), ['synth', 'metal']);
+  assert.deepEqual(
+    publicSoundtrackStylesForLocalGenres([
+      'synth90s',
+      'metal',
+      'electronic',
+      'chiptune',
+      'rock',
+      'ambient',
+      'cinematic',
+      'acoustic',
+      'ukrainian',
+    ]),
+    PUBLIC_SOUNDTRACK_STYLE_IDS,
+  );
 });

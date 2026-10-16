@@ -22,6 +22,17 @@ const model = createMissionLibrary(
 );
 const late = model.missions.find((row) => row.runtimeId === 'signal-12');
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 10000 });
+function assertReadyCard(card, name = card.querySelector('.journey-card-title').textContent) {
+  assert.equal(card.tagName, 'BUTTON');
+  assert.equal(card.type, 'button');
+  assert.equal(card.disabled, false);
+  assert.equal(card.dataset.availabilityState, 'ready');
+  assert.ok(name.length > 0, 'The ready mission has a readable name.');
+  assert.ok(
+    card.getAttribute('aria-label').includes(name),
+    'Its accessible name identifies the mission.',
+  );
+}
 class Locks {
   held = new Set();
   async request(name, options, work) {
@@ -93,26 +104,30 @@ async function fixture(t, { href, fetchResponse, installedSource, ...options } =
   return p;
 }
 function beginOpen(p, { focus = true } = {}) {
-  // Preserve the real anchor click and Couch-shell departure guards while
+  if (p.state() === 'running') {
+    assert.equal(p.$('race-pause').hidden, false);
+    p.$('race-pause').click();
+    p.frame(0);
+    assert.equal(p.state(), 'paused');
+  }
+  // Preserve the visible Missions click and Couch-shell departure guards while
   // joining its operation, rather than timing catalogue compilation with polls.
-  const opener = p.$('race-library-switch'),
-    listeners = opener.listeners.get('click'),
+  const opener = p.$('race-chapters'),
+    handler = opener.onclick,
     pending = [];
-  opener.listeners.set(
-    'click',
-    new Set(
-      [...listeners].map((listener) => (event) => {
-        const result = listener.call(opener, event);
-        if (result instanceof Promise) pending.push(result);
-        return result;
-      }),
-    ),
-  );
+  assert.equal(opener.hidden, false);
+  assert.equal(opener.disabled, false);
+  assert.equal(typeof handler, 'function');
+  opener.onclick = (event) => {
+    const result = handler.call(opener, event);
+    if (result instanceof Promise) pending.push(result);
+    return result;
+  };
   try {
     if (focus) opener.focus();
     opener.click();
   } finally {
-    opener.listeners.set('click', listeners);
+    opener.onclick = handler;
   }
   assert.equal(pending.length, 1, 'The real Missions click owns one preparation.');
   assert.match(p.$('race-message').textContent, /Preparing missions/);
@@ -131,6 +146,14 @@ async function running(p, id) {
   try {
     await settle(() => {
       p.frame(0);
+      return p.renders[0]?.level.id === id && ['ready', 'running'].includes(p.state());
+    });
+    if (p.state() === 'ready') {
+      p.$('race-start').focus();
+      p.$('race-start').click();
+    }
+    await settle(() => {
+      p.frame(0);
       return p.renders[0]?.level.id === id && p.state() === 'running';
     });
   } catch (error) {
@@ -146,33 +169,38 @@ test('Versus All missions lists exact Journey and retained Classic rows without 
       requests.push(String(path));
     },
   });
-  assert.equal(p.$('race-library-switch').textContent, 'All missions');
+  assert.equal(p.$('race-chapters').textContent, 'Select Mission');
   const before = p.checkpoint();
   await open(p);
   assert.equal(p.$('journey-mode').value, 'versus');
   assert.equal(p.$('journey-collection').value, '');
   assert.equal(p.$('journey-lifecycle').value, 'current');
-  assert.equal(p.$('journey-cards').children.length, 186);
+  assert.equal(p.$('journey-cards').children.length, 240);
   showAllLifecycles(p);
-  assert.equal(p.$('journey-cards').children.length, 327);
+  assert.equal(p.$('journey-cards').children.length, 435);
   assert.match(p.$('journey-cards').children[0].textContent, /Journey/);
   const classic = [...p.$('journey-cards').children].filter((card) =>
     card.querySelector('.journey-card-tags').textContent.includes('Classic'),
   );
-  assert.equal(classic.length, 188);
-  assert.match(classic.find((card) => card.dataset.missionId === late.id).textContent, /Play/);
+  assert.equal(classic.length, 296);
+  assertReadyCard(
+    classic.find((card) => card.dataset.missionId === late.id),
+    late.name,
+  );
   assert(!requests.some((path) => path.includes('/content-design/assets/')));
   p.$('journey-back').click();
   p.frame(0);
   assert.deepEqual(p.checkpoint(), before);
-  assert.equal(p.doc.activeElement, p.$('race-library-switch'));
+  assert.ok(p.doc.activeElement === p.$('race-chapters'), 'Back returns to native Missions.');
 });
 
-test('empty-profile Versus library starts a late Base mission directly and pauses both boards before replacement', async (t) => {
+test('empty-profile Versus library directly starts a late Base mission and preserves both boards on cancelled replacement', async (t) => {
   const p = await fixture(t);
   await open(p);
   [...p.$('journey-cards').children].find((card) => card.dataset.missionId === late.id).click();
   await running(p, late.runtimeId);
+  assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.$('race-main').hidden, true);
   assert.equal(p.renders[1].level.id, late.runtimeId);
   p.key('ArrowDown');
   p.frames(12);
@@ -352,9 +380,10 @@ test('Versus mode filter exposes the same qualified Journey identities in Solo w
     cards.map((card) => card.dataset.missionId),
     original,
   );
-  assert.equal(new Set(original).size, 327);
+  assert.equal(new Set(original).size, 435);
   const target = cards[1];
-  assert.match(target.textContent, /Journey.*Band 1\/12.*Play/);
+  assert.match(target.textContent, /Journey.*Band 1\/12/);
+  assertReadyCard(target);
   target.click();
   await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
   const destination = new URL(globalThis.location.href);
@@ -376,7 +405,7 @@ for (const collection of ['Journey', 'Classic'])
     const target = cards.find((card) =>
       card.querySelector('.journey-card-tags').textContent.includes(collection),
     );
-    assert.match(target.textContent, /Play/);
+    assertReadyCard(target);
     target.click();
     await settle(() => new URL(globalThis.location.href).searchParams.has('library-mission'));
     const destination = new URL(globalThis.location.href);
@@ -404,7 +433,7 @@ for (const custom of [false, true])
       (card) => JSON.parse(card.dataset.missionId)[3] === lateLevel.id,
     );
     assert(card);
-    assert.match(card.textContent, /Play/);
+    assertReadyCard(card, lateLevel.name);
     card.click();
     await running(p, lateLevel.id);
     assert.equal(p.renders[1].level.id, lateLevel.id);
@@ -460,7 +489,7 @@ test('new Journey Versus mounts the same library and chooses an exact authored m
   assert.equal(p.renders[0].level.id, 'first-return');
   await open(p);
   showAllLifecycles(p);
-  assert.equal(p.$('journey-cards').children.length, 327);
+  assert.equal(p.$('journey-cards').children.length, 435);
   const card = [...p.$('journey-cards').children].find((card) =>
     JSON.parse(card.dataset.missionId)[3].endsWith('/choose-your-share'),
   );
@@ -585,7 +614,7 @@ for (const chapterSource of ['optional'])
       p.frame(0);
       assert.deepEqual(p.checkpoint(), before);
       assert.equal(p.drawOptions[0].backdrop, picture);
-      assert.equal(card().querySelector('.journey-card-action').textContent, 'Play');
+      assertReadyCard(card(), target.name);
       card().click();
       await waitFor(() => p.$('race-library-replace')?.open, { timeoutMs: 60000 });
       p.$('race-library-play').click();
@@ -635,7 +664,7 @@ for (const interruption of ['blur', 'focus', 'pointer'])
         assert.equal(p.doc.activeElement, focused);
         await open(p);
         showAllLifecycles(p);
-        assert.equal(p.$('journey-cards').children.length, 327);
+        assert.equal(p.$('journey-cards').children.length, 435);
       } finally {
         release();
         await opening;

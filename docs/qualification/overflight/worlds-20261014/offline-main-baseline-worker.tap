@@ -1,0 +1,323 @@
+TAP version 13
+# Subtest: explicit offline recovery preserves selection, then opens verified bytes
+ok 1 - explicit offline recovery preserves selection, then opens verified bytes
+  ---
+  duration_ms: 33.342833
+  ...
+# Subtest: ordinary mode navigation and artwork use the network without download redirects
+ok 2 - ordinary mode navigation and artwork use the network without download redirects
+  ---
+  duration_ms: 2.026084
+  ...
+# Subtest: a cached Solo shell opens archived bookmarks without requiring an offline bootstrap
+ok 3 - a cached Solo shell opens archived bookmarks without requiring an offline bootstrap
+  ---
+  duration_ms: 5.569333
+  ...
+# Subtest: package editions load unseen artwork online without installing it
+ok 4 - package editions load unseen artwork online without installing it
+  ---
+  duration_ms: 1.382
+  ...
+# Subtest: a downloaded chapter is served locally even when every outbound request fails
+ok 5 - a downloaded chapter is served locally even when every outbound request fails
+  ---
+  duration_ms: 2.985167
+  ...
+# Subtest: denied browser storage cannot block online gameplay assets or the core shell
+ok 6 - denied browser storage cannot block online gameplay assets or the core shell
+  ---
+  duration_ms: 2.670458
+  ...
+# Subtest: explicit verified repair bypasses a same-sized corrupt official cache entry
+ok 7 - explicit verified repair bypasses a same-sized corrupt official cache entry
+  ---
+  duration_ms: 1.516334
+  ...
+# Subtest: offline source pages have no registration side effect and reject explicit preparation without build marker
+ok 8 - offline source pages have no registration side effect and reject explicit preparation without build marker
+  ---
+  duration_ms: 0.454
+  ...
+# Subtest: scope metadata rejects a remote worker or a sibling app
+ok 9 - scope metadata rejects a remote worker or a sibling app
+  ---
+  duration_ms: 0.325875
+  ...
+# Subtest: install verifies all shipped bytes and activate removes only this exact scope previous versions
+ok 10 - install verifies all shipped bytes and activate removes only this exact scope previous versions
+  ---
+  duration_ms: 4.783833
+  ...
+# Subtest: failed network or integrity prevents installation and preserves the active previous cache
+ok 11 - failed network or integrity prevents installation and preserves the active previous cache
+  ---
+  duration_ms: 2.034791
+  ...
+# Subtest: a cached version supports nested navigations and sibling shipped assets with no network
+ok 12 - a cached version supports nested navigations and sibling shipped assets with no network
+  ---
+  duration_ms: 3.069125
+  ...
+# Subtest: one installed PWA serves first-visit Survivor, Raid and Snake bookmarks and recorded audio offline
+ok 13 - one installed PWA serves first-visit Survivor, Raid and Snake bookmarks and recorded audio offline
+  ---
+  duration_ms: 23.809917
+  ...
+# Subtest: durable runtime resumes verified files after quota failure and worker replacement
+ok 14 - durable runtime resumes verified files after quota failure and worker replacement
+  ---
+  duration_ms: 4.787708
+  ...
+# Subtest: an edition update reuses verified hashes and only downloads changed runtime files
+ok 15 - an edition update reuses verified hashes and only downloads changed runtime files
+  ---
+  duration_ms: 5.260833
+  ...
+# Subtest: identical runtime bytes at different URLs download once but remain addressable offline
+ok 16 - identical runtime bytes at different URLs download once but remain addressable offline
+  ---
+  duration_ms: 4.186167
+  ...
+# Subtest: explicit pause stops durable preparation after its atomic file checkpoint
+ok 17 - explicit pause stops durable preparation after its atomic file checkpoint
+  ---
+  duration_ms: 5.565209
+  ...
+# Subtest: the stable updater can prepare and inspect its exact immutable worker only
+ok 18 - the stable updater can prepare and inspect its exact immutable worker only
+  ---
+  duration_ms: 4.904458
+  ...
+# (node:23679) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: an explicit updater awaits discovery before addressing a same-URL worker and rejects other builds
+ok 19 - an explicit updater awaits discovery before addressing a same-URL worker and rejects other builds
+  ---
+  duration_ms: 2.978292
+  ...
+# Subtest: updater activation waits naturally and preserves bounded failure outcomes
+    # Subtest: activated
+    ok 1 - activated
+      ---
+      duration_ms: 3.657125
+      ...
+    # Subtest: waiting
+    ok 2 - waiting
+      ---
+      duration_ms: 1.443083
+      ...
+    # Subtest: activating
+    ok 3 - activating
+      ---
+      duration_ms: 0.940084
+      ...
+    # Subtest: redundant
+    ok 4 - redundant
+      ---
+      duration_ms: 0.367833
+      ...
+    # Subtest: replaced
+    ok 5 - replaced
+      ---
+      duration_ms: 0.481708
+      ...
+    # Subtest: aborted
+    ok 6 - aborted
+      ---
+      duration_ms: 0.416667
+      ...
+    1..6
+ok 20 - updater activation waits naturally and preserves bounded failure outcomes
+  ---
+  duration_ms: 7.986292
+  ...
+# Subtest: outside-scope updater pause requires the exact streaming worker binding
+ok 21 - outside-scope updater pause requires the exact streaming worker binding
+  ---
+  duration_ms: 2.761792
+  ...
+# Subtest: complete cached files serve audio byte ranges without caching a partial response
+ok 22 - complete cached files serve audio byte ranges without caching a partial response
+  ---
+  duration_ms: 3.315166
+  ...
+# Subtest: worker never intercepts another release, remote URL, unknown route or mutating request
+ok 23 - worker never intercepts another release, remote URL, unknown route or mutating request
+  ---
+  duration_ms: 2.789208
+  ...
+# Subtest: self-check detects corrupt and missing files without a network request
+ok 24 - self-check detects corrupt and missing files without a network request
+  ---
+  duration_ms: 1.543417
+  ...
+# Subtest: a missing file may repair from its expected bytes but cannot mix another deployed version into active code
+ok 25 - a missing file may repair from its expected bytes but cannot mix another deployed version into active code
+  ---
+  duration_ms: 1.429958
+  ...
+# Subtest: cached complete install is reused offline without redownloading resources
+ok 26 - cached complete install is reused offline without redownloading resources
+  ---
+  duration_ms: 4.472334
+  ...
+# Subtest: explicit preparation and later verification expose a bounded worker report; waiting updates never skip waiting
+ok 27 - explicit preparation and later verification expose a bounded worker report; waiting updates never skip waiting
+  ---
+  duration_ms: 0.98375
+  ...
+# Subtest: explicit prepare repairs an evicted file after reconnection without discarding other scopes
+ok 28 - explicit prepare repairs an evicted file after reconnection without discarding other scopes
+  ---
+  duration_ms: 2.406708
+  ...
+# Subtest: network bodies are consumed once without cloning and reconstructed with decoded headers
+ok 29 - network bodies are consumed once without cloning and reconstructed with decoded headers
+  ---
+  duration_ms: 3.866125
+  ...
+# Subtest: stream overruns are cancelled before copying and malformed bodies never create a cache
+ok 30 - stream overruns are cancelled before copying and malformed bodies never create a cache
+  ---
+  duration_ms: 4.847291
+  ...
+# Subtest: generated byte and file budgets reject malformed inventory before body allocation or fetch
+ok 31 - generated byte and file budgets reject malformed inventory before body allocation or fetch
+  ---
+  duration_ms: 9.53975
+  ...
+# Subtest: redirects, opaque/error and non-cacheable network responses remain rejected
+ok 32 - redirects, opaque/error and non-cacheable network responses remain rejected
+  ---
+  duration_ms: 5.373541
+  ...
+# Subtest: valid empty 200, 204 and 205 bodies retain status and an accurate zero length
+ok 33 - valid empty 200, 204 and 205 bodies retain status and an accurate zero length
+  ---
+  duration_ms: 4.721625
+  ...
+# Subtest: actual illustrated Workshop bytes survive both install and missing-file repair
+ok 34 - actual illustrated Workshop bytes survive both install and missing-file repair
+  ---
+  duration_ms: 84.098209
+  ...
+# Subtest: native fetch gzip and brotli decoding produces cacheable owned payloads with preserved policy
+ok 35 - native fetch gzip and brotli decoding produces cacheable owned payloads with preserved policy
+  ---
+  duration_ms: 19.838208
+  ...
+# Subtest: all downloads finish before a new cache exists and the older build stays exact until activation
+ok 36 - all downloads finish before a new cache exists and the older build stays exact until activation
+  ---
+  duration_ms: 6.043542
+  ...
+# Subtest: installation overlaps at most four downloads and publishes in inventory order only after every body verifies
+ok 37 - installation overlaps at most four downloads and publishes in inventory order only after every body verifies
+  ---
+  duration_ms: 5.652042
+  ...
+# Subtest: a failed parallel download aborts active requests, stops the queue and preserves the previous cache
+ok 38 - a failed parallel download aborts active requests, stops the queue and preserves the previous cache
+  ---
+  duration_ms: 2.16925
+  ...
+# Subtest: simultaneous prepare requests share one install and can retry after a failed download
+ok 39 - simultaneous prepare requests share one install and can retry after a failed download
+  ---
+  duration_ms: 2.414542
+  ...
+# Subtest: native streaming downloads abort after another file fails verification
+ok 40 - native streaming downloads abort after another file fails verification
+  ---
+  duration_ms: 7.479333
+  ...
+# Subtest: asset and marker cache-write failures clean only the partial build and never claim clients
+ok 41 - asset and marker cache-write failures clean only the partial build and never claim clients
+  ---
+  duration_ms: 3.680625
+  ...
+# Subtest: repair cache-write failure still serves verified online bytes and keeps existing entries
+ok 42 - repair cache-write failure still serves verified online bytes and keeps existing entries
+  ---
+  duration_ms: 2.346584
+  ...
+# Subtest: published pack growth does not inherit the old twelve imported-pack slot limit
+ok 43 - published pack growth does not inherit the old twelve imported-pack slot limit
+  ---
+  duration_ms: 0.380708
+  ...
+# Subtest: optional pack preparation and verification explicitly distinguish core cache from already-installed device packs
+ok 44 - optional pack preparation and verification explicitly distinguish core cache from already-installed device packs
+  ---
+  duration_ms: 1.045958
+  ...
+# Subtest: optional Journey artwork never receives a core-offline readiness claim
+ok 45 - optional Journey artwork never receives a core-offline readiness claim
+  ---
+  duration_ms: 0.564458
+  ...
+# Subtest: a measured installing-worker download survives more than sixty seconds and separates downloaded, verified and saved work
+ok 46 - a measured installing-worker download survives more than sixty seconds and separates downloaded, verified and saved work
+  ---
+  duration_ms: 23.32875
+  ...
+# Subtest: an installation observation timeout is recoverable; reopening and two tabs rejoin the same download
+ok 47 - an installation observation timeout is recoverable; reopening and two tabs rejoin the same download
+  ---
+  duration_ms: 14.218084
+  ...
+# Subtest: closing an observer aborts only that caller; background installation completes and cached reopening does not fetch
+ok 48 - closing an observer aborts only that caller; background installation completes and cached reopening does not fetch
+  ---
+  duration_ms: 11.493792
+  ...
+# Subtest: separate report timeout and cancellation during cached verification preserve storage and do not start preparation
+ok 49 - separate report timeout and cancellation during cached verification preserve storage and do not start preparation
+  ---
+  duration_ms: 14.780583
+  ...
+# Subtest: a historical terminal-only worker remains compatible while a silent old install times out truthfully
+ok 50 - a historical terminal-only worker remains compatible while a silent old install times out truthfully
+  ---
+  duration_ms: 6.11575
+  ...
+# Subtest: versioned progress rejects mismatched build or scope before downloads and ignores a stale request completion
+ok 51 - versioned progress rejects mismatched build or scope before downloads and ignores a stale request completion
+  ---
+  duration_ms: 8.523083
+  ...
+# Subtest: a changed or redundant worker cannot publish success to an old observation
+ok 52 - a changed or redundant worker cannot publish success to an old observation
+  ---
+  duration_ms: 18.049375
+  ...
+# Subtest: streamed integrity, missing-file and quota failures remain real failures with no ready claim
+ok 53 - streamed integrity, missing-file and quota failures remain real failures with no ready claim
+  ---
+  duration_ms: 4.878459
+  ...
+# Subtest: versioned subscribers release on detach, completion, expiry and capacity while shared install keeps running
+ok 54 - versioned subscribers release on detach, completion, expiry and capacity while shared install keeps running
+  ---
+  duration_ms: 11.690958
+  ...
+# Subtest: aborting while registration is pending detaches promptly and never unregisters the eventual worker
+ok 55 - aborting while registration is pending detaches promptly and never unregisters the eventual worker
+  ---
+  duration_ms: 1.257375
+  ...
+# Subtest: prepare joins a pending cached inspection before repair and final verification uses the repaired bytes
+ok 56 - prepare joins a pending cached inspection before repair and final verification uses the repaired bytes
+  ---
+  duration_ms: 9.523666
+  ...
+1..56
+# tests 62
+# suites 0
+# pass 62
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 509.032875

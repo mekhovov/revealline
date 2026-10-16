@@ -203,6 +203,31 @@ test('synchronous host input cleanup cannot split a committed release transactio
   assert.deepEqual(events.slice(0, 3), ['transaction-start', 'commit', 'transaction-finish']);
 });
 
+for (const boundary of ['blur', 'visibilitychange'])
+  test(`a synchronous ${boundary} inside activation cannot poison the next Confirm`, (t) => {
+    const h = setup(t);
+    let handedOff = false;
+    h.doc.addEventListener('click', (event) => {
+      if (handedOff || event.defaultPrevented) return;
+      handedOff = true;
+      const target = boundary === 'blur' ? h.doc.defaultView : h.doc;
+      target.dispatchEvent(new Event(boundary));
+    });
+    h.guard.begin(h.target);
+    assert.equal(h.guard.activate(h.target), true);
+    h.guard.finish();
+    assert.equal(h.programmaticActivations, 1);
+
+    // Model a fresh neutral-gated gesture after focus returns and the echo expires.
+    h.setTime(1500);
+    h.guard.begin(h.target);
+    assert.equal(h.guard.activate(h.target), true);
+    h.guard.finish();
+    assert.equal(h.programmaticActivations, 2);
+    assert.equal(h.emit('click', { button: 0, isTrusted: true }).defaultPrevented, true);
+    assert.equal(h.nativeActivations, 0, 'The new gesture still owns its native echo.');
+  });
+
 test('cancel and blur retire a transaction without activation', (t) => {
   const h = setup(t);
   h.guard.begin(h.target);

@@ -1,8 +1,8 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # Community directory and creator store
 
-`index.html` is the static company directory linked from the repository guide and public
+`../communities/index.html` is the static company directory linked from the repository guide and public
+website. It opens the main game and all public communities through portable friendly entry URLs.
+`index.html` preserves older directory bookmarks by forwarding to `../communities/`. It
 does not load catalog, account, publishing or upload clients, so it works on GitHub Pages
 without a server. Its English links still work when JavaScript is unavailable; the local
 i18n bootstrap adds English/Ukrainian selection.

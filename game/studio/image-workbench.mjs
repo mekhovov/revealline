@@ -359,18 +359,19 @@ export function createImageWorkbench({
     const result = currentInspection();
     return play(result.candidate, result.missionId, getDifficulty());
   });
-  $('reference-apply').onclick = guard(() => {
+  function applyInspection() {
     const result = currentInspection();
     // Compile again at the mutation boundary, not merely at inspection time.
     const fresh = inspectManualImageMap(getSource(), result.missionId, rows);
     if (JSON.stringify(fresh.candidate) !== JSON.stringify(result.candidate))
       throw editorMessageError('errors:studio.image.candidateChanged');
-    if (!apply(fresh.candidate)) return;
+    if (!apply(fresh.candidate, guard(applyInspection))) return;
     rows = [];
     list();
     invalidate(localizedMessage('tools:studio.image.applied'));
     changed();
-  });
+  }
+  $('reference-apply').onclick = guard(applyInspection);
   resetReference();
   setBundledListeners(true);
   return {

@@ -171,7 +171,7 @@ async function harness(t, source = recording(), { expectLoadFailure = false } = 
     frame(now);
     return snapshots.at(-1);
   };
-  const pad = (buttons = [], id = 'Test pad') => {
+  const pad = (buttons = [], id = 'Test pad', sampled = true) => {
     pads = [
       {
         id,
@@ -185,11 +185,12 @@ async function harness(t, source = recording(), { expectLoadFailure = false } = 
         })),
       },
     ];
-    return tick();
+    if (sampled) return tick();
   };
   const press = (button) => {
     pad();
-    return pad([button]);
+    const pressed = pad([button]);
+    return button === 0 ? pad() : pressed;
   };
   const key = (node, name, extra = {}) => {
     node.focus();
@@ -422,6 +423,123 @@ test('Jump with no loaded recording reaches Load example without retrying the fa
   assert.equal(h.snapshots.length, 0);
 });
 
+test('invalid pasted replay exposes local non-live feedback and recovers without taking editor focus or changing the retained route', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  const h = await harness(t),
+    { $, doc, tick } = h;
+  setLocale('en', { persist: false });
+  h.key($('board'), 'ArrowRight');
+  const before = tick().checkpoint,
+    feedback = $('replay-import-feedback');
+  $('replay-text').value = '{}';
+  $('load-text').focus();
+  $('load-text').click();
+  await until(() => $('import-status').dataset.state === 'error', 'pasted import rejected');
+  assert.equal(feedback.hidden, false);
+  assert.equal(feedback.dataset.error, 'true');
+  assert.equal(feedback.dataset.uiTone, 'danger');
+  assert.equal(feedback.closest('.import-panel'), $('replay-text').closest('.import-panel'));
+  assert.equal(
+    feedback.textContent,
+    $('import-status').querySelector('.operation-status-label').textContent,
+  );
+  assert.equal(feedback.getAttribute('aria-live'), 'off');
+  assert.equal(feedback.getAttribute('role'), null);
+  for (const id of ['replay-file', 'replay-text', 'load-text'])
+    assert.equal($(id).getAttribute('aria-describedby'), feedback.id);
+  assert.equal(doc.activeElement, $('load-text'));
+  assert.equal($('replay-text').value, '{}', 'Rejected input remains available to correct.');
+  assert.deepEqual(tick().checkpoint, before);
+
+  const english = feedback.textContent;
+  setLocale('uk', { persist: false });
+  assert.notEqual(feedback.textContent, english);
+  assert.equal(
+    feedback.textContent,
+    $('import-status').querySelector('.operation-status-label').textContent,
+  );
+  assert.equal($('playback-phase').textContent, translate('interface:replay.phase.paused'));
+  assert.equal(doc.activeElement, $('load-text'));
+  assert.deepEqual(tick().checkpoint, before);
+
+  $('replay-text').value = JSON.stringify(h.source);
+  $('load-text').click();
+  await until(() => $('import-status').dataset.state === 'ready', 'corrected import accepted');
+  assert.equal(feedback.dataset.error, 'false');
+  assert.equal(feedback.dataset.uiTone, 'neutral');
+  assert.equal(
+    feedback.textContent,
+    $('import-status').querySelector('.operation-status-label').textContent,
+  );
+  assert.equal(doc.activeElement, $('load-text'));
+  assert.equal($('play-pause').disabled, false);
+  assert.equal(tick().tick, 0, 'Only the deliberate valid reload resets playback.');
+});
+
+test('finishing or cancelling a held import restores a focused Cancel to a usable control, but never steals newer or background focus', async (t) => {
+  const h = await harness(t),
+    { $, doc, tick } = h,
+    cancel = $('cancel-load');
+  let hidden = cancel.hidden;
+  Object.defineProperty(cancel, 'hidden', {
+    configurable: true,
+    get: () => hidden,
+    set: (value) => {
+      hidden = value;
+      if (value && doc.activeElement === cancel) doc.body.focus();
+    },
+  });
+  for (const outcome of ['rejected', 'accepted', 'cancelled', 'new-focus', 'background']) {
+    let finish;
+    $('replay-file').files = [
+      { name: 'held.json', size: 100, text: () => new Promise((resolve) => (finish = resolve)) },
+    ];
+    $('replay-file').emit('change');
+    await until(() => finish, 'held import reading');
+    cancel.focus();
+    const prior = tick().checkpoint;
+    if (outcome === 'new-focus') $('replay-text').focus();
+    if (outcome === 'background') doc.focused = false;
+    if (outcome === 'cancelled') cancel.click();
+    finish(outcome === 'accepted' ? JSON.stringify(h.source) : '{}');
+    await until(() => cancel.hidden, `${outcome} import settled`);
+    assert.equal(
+      doc.activeElement,
+      outcome === 'new-focus'
+        ? $('replay-text')
+        : outcome === 'background'
+          ? doc.body
+          : $('play-pause'),
+    );
+    if (outcome !== 'accepted') assert.deepEqual(tick().checkpoint, prior);
+    doc.focused = true;
+  }
+});
+
+test('Escape return guidance and the paused badge change locale without replaying or moving focus', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  const h = await harness(t),
+    { $, doc, tick } = h;
+  setLocale('en', { persist: false });
+  h.key($('board'), 'ArrowRight');
+  h.key($('board'), 'Escape');
+  const checkpoint = tick().checkpoint,
+    english = $('navigation-status').textContent;
+  setLocale('uk', { persist: false });
+  assert.notEqual($('navigation-status').textContent, english);
+  assert.equal(
+    $('navigation-status').textContent,
+    translate('interface:replay.returnFocused', {
+      destination: $('return-game').textContent.trim(),
+    }),
+  );
+  assert.equal($('playback-phase').textContent, translate('interface:replay.phase.paused'));
+  assert.equal(doc.activeElement, $('return-game'));
+  assert.deepEqual(tick().checkpoint, checkpoint);
+});
+
 test('Jump preserves modified clicks and yields to newer focus, input, background and terminal disposal', async (t) => {
   const h = await harness(t),
     { $, doc, win, tick } = h,
@@ -603,10 +721,11 @@ test('controller joins without activation, previews native speed, cancels once a
   pad([0]);
   assert.equal($('playback-phase').textContent, 'paused');
   press(0);
-  pad([0]);
   assert.equal(doc.activeElement, $('play-pause'));
   assert.equal($('playback-phase').textContent, 'paused');
-  press(0);
+  pad([0]);
+  assert.equal($('playback-phase').textContent, 'paused', 'Confirm waits for release');
+  pad();
   assert.equal($('playback-phase').textContent, 'playing');
   $('speed').focus();
   press(0);
@@ -784,4 +903,21 @@ test('Classic replay import stays paused and controller completion checks the ex
   assert.equal($('playback-phase').textContent, 'complete');
   assert.deepEqual(h.snapshots.at(-1).checkpoint, source.checkpoint);
   assert.equal(h.snapshots.at(-1).run.ruleset, 'xonix-core.v5');
+});
+
+test('Replay Theater native Confirm commits between frames without a second playback toggle', async (t) => {
+  const h = await harness(t);
+  h.pad();
+  h.press(0);
+  const play = h.$('play-pause');
+  play.focus();
+  h.pad([0], undefined, false);
+  assert.equal(play.emit('keydown', { key: 'Enter', isTrusted: true }).defaultPrevented, true);
+  assert.equal(h.$('playback-phase').textContent, 'paused');
+  h.pad([], undefined, false);
+  play.emit('keyup', { key: 'Enter', isTrusted: true });
+  assert.equal(h.$('playback-phase').textContent, 'playing');
+  play.emit('click', { isTrusted: true });
+  h.tick();
+  assert.equal(h.$('playback-phase').textContent, 'playing');
 });

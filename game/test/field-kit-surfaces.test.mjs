@@ -59,6 +59,9 @@ test('settings categories keep the real controls and preferences without startin
   );
   page.$('shell-options').click();
   assert.equal(page.$('settings-dialog').open, true);
+  const back = page.$('settings-dialog').querySelector('[data-close="settings-dialog"]');
+  assert.equal(back.textContent, 'Back');
+  assert.equal(back.getAttribute('aria-label'), 'Back');
   for (const category of ['controls', 'audio', 'display', 'data']) {
     const tab = page.$(`settings-tab-${category}`);
     tab.click();
@@ -70,7 +73,7 @@ test('settings categories keep the real controls and preferences without startin
       1,
     );
   }
-  page.$('settings-tab-display').click();
+  page.$('settings-tab-accessibility').click();
   const textSize = page.$('text-size');
   textSize.value = 'large';
   textSize.emit('change');
@@ -100,12 +103,12 @@ test('settings tabs support arrow and end navigation without leaking the key to 
   const page = await soloPage(t, { titleScreen: true });
   page.$('shell-options').click();
   page.$('settings-tab-audio').focus();
-  const right = page.$('settings-tab-audio').emit('keydown', { key: 'ArrowRight' });
+  const right = page.$('settings-tab-audio').emit('keydown', { key: 'ArrowDown' });
   assert.equal(right.defaultPrevented, true);
   assert.equal(page.doc.activeElement.id, 'settings-tab-display');
   assert.equal(page.$('settings-panel-display').hidden, false);
   page.$('settings-tab-display').emit('keydown', { key: 'End' });
-  assert.equal(page.doc.activeElement.id, 'settings-tab-data');
+  assert.equal(page.doc.activeElement.id, 'settings-tab-extras');
   page.frame(0);
   assert.equal(page.rendered.run.tick, 0);
 });

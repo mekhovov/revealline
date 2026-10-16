@@ -163,6 +163,8 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
   const f = await fixture(t);
   for (const name of [
     'scripts/game-cli.mjs',
+    'scripts/brand-icons.mjs',
+    'game/ui/art/identity/fpv-line/icon-master.png',
     'scripts/offline-content.mjs',
     'scripts/offline-finalize.mjs',
     'scripts/offline-launcher.mjs',
@@ -438,7 +440,10 @@ test('all 70 hosted registrations retain provenance without inventing listening 
   const catalogue = JSON.parse(
     await readFile(path.join(source, 'game/content/soundtrack-catalogue.json'), 'utf8'),
   );
-  assert.equal(catalogue.tracks.length, 71);
+  assert.equal(
+    catalogue.tracks.filter((track) => track.archiveId === 'licensed-preview-01').length,
+    70,
+  );
   assert.deepEqual(
     new Set(
       catalogue.tracks

@@ -17,6 +17,7 @@ COPY services/community/src ./src
 COPY services/community/migrations ./migrations
 COPY package.json /package.json
 COPY game /game
+COPY optional-practice/civilian-fpv /optional-practice/civilian-fpv
 RUN mkdir -p /data/blobs /data/tus /data/recovery \
   && chown -R node:node /data/blobs /data/tus /data/recovery /srv/community
 USER node

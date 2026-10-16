@@ -1,5 +1,7 @@
-import { boundedJSON, exactKeys } from '../data-json.mjs';
+import { boundedJSON, canonicalJSON, exactKeys } from '../data-json.mjs';
 import { t } from '../i18n/index.mjs';
+import { inspectJourneyPerformance } from './performance.mjs';
+import { createJourneyPerformanceController } from './performance-store.mjs';
 import { JOURNEY_MODES } from './catalog.mjs';
 import {
   emptyJourneyPictures,
@@ -7,12 +9,23 @@ import {
   validateJourneyPictureCompletions,
   applyJourneyPictureEvent,
 } from './pictures.mjs';
+import {
+  emptyJourneyStars,
+  validateJourneyStars,
+  journeyStarsForProfile,
+  applyJourneyStarsEvent,
+} from './stars.mjs';
 
 export const JOURNEY_PROFILE_VERSION = 'revealline-journey-profile.v1';
-export const JOURNEY_PROFILE_DATABASE = 'revealline-journey-v1';
+import { JOURNEY_PROFILE_DATABASE } from '../profile-database.mjs';
+export { JOURNEY_PROFILE_DATABASE } from '../profile-database.mjs';
 export const JOURNEY_BACKUP_VERSION = 'revealline-journey-backup.v1';
 export const JOURNEY_SCOPED_BACKUP_VERSION = 'revealline-journey-backup.v2';
 export const JOURNEY_PICTURE_BACKUP_VERSION = 'revealline-journey-backup.v3';
+// Both exact v4 shapes were issued independently; keep their readers immutable.
+export const JOURNEY_PERFORMANCE_BACKUP_VERSION = 'revealline-journey-backup.v4';
+export const JOURNEY_STARS_BACKUP_VERSION = 'revealline-journey-backup.v4';
+export const JOURNEY_COMBINED_BACKUP_VERSION = 'revealline-journey-backup.v5';
 const emptyModes = (make) => Object.fromEntries(JOURNEY_MODES.map((mode) => [mode, make()]));
 const text = (value) => typeof value === 'string' && value.length > 0 && value.length <= 1024;
 const own = (object, key) => Object.hasOwn(object, key);
@@ -35,11 +48,25 @@ function pictureEditionId(profileKey) {
 }
 
 function inspectProfileBackup(source, profileKey) {
-  const candidate = boundedJSON(source, { maxBytes: 16 * 1024 * 1024, maxNodes: 200020 });
-  if (candidate?.format === JOURNEY_PICTURE_BACKUP_VERSION) {
+  const candidate = boundedJSON(source, { maxBytes: 16 * 1024 * 1024, maxNodes: 430032 });
+  const legacySidecar = candidate?.format === JOURNEY_PERFORMANCE_BACKUP_VERSION,
+    combined = candidate?.format === JOURNEY_COMBINED_BACKUP_VERSION;
+  if (legacySidecar || combined || candidate?.format === JOURNEY_PICTURE_BACKUP_VERSION) {
+    const hasStars = own(candidate, 'stars'),
+      hasPerformance = own(candidate, 'performance');
+    if (legacySidecar && hasStars === hasPerformance)
+      throw new TypeError('Journey v4 backup requires exactly one historical sidecar.');
+    if (combined && !hasStars) throw new TypeError('Journey v5 backup requires its stars sidecar.');
     exactJourneyKeys(
       candidate,
-      ['format', 'profileKey', 'profile', 'pictures'],
+      [
+        'format',
+        'profileKey',
+        'profile',
+        'pictures',
+        ...((legacySidecar || combined) && hasStars ? ['stars'] : []),
+        ...((legacySidecar || combined) && hasPerformance ? ['performance'] : []),
+      ],
       'Journey picture backup',
     );
     if (candidate.profileKey !== profileKey)
@@ -47,11 +74,23 @@ function inspectProfileBackup(source, profileKey) {
     const profile = validateJourneyProfile(candidate.profile),
       pictures = validateJourneyPictureCompletions(profile, candidate.pictures, {
         editionId: pictureEditionId(profileKey),
-      });
+      }),
+      starResults = hasStars
+        ? journeyStarsForProfile(candidate.stars, profile, { strict: true })
+        : undefined,
+      performance = hasPerformance ? inspectJourneyPerformance(candidate.performance) : undefined;
     return {
-      backup: { ...candidate, profile, pictures },
+      backup: {
+        ...candidate,
+        profile,
+        pictures,
+        ...(hasStars ? { stars: starResults } : {}),
+        ...(hasPerformance ? { performance } : {}),
+      },
       normalized: { format: JOURNEY_BACKUP_VERSION, profile },
       pictures,
+      ...(hasStars ? { starResults } : {}),
+      ...(hasPerformance ? { performance } : {}),
     };
   }
 
@@ -195,7 +234,8 @@ export function applyJourneyEvent(source, event) {
     if (
       !text(event.runId) ||
       !text(event.gameplayId) ||
-      !['gentle', 'standard', 'expert'].includes(event.difficulty)
+      !['gentle', 'standard', 'expert'].includes(event.difficulty) ||
+      !(event.stars === undefined || [1, 2, 3].includes(event.stars))
     )
       throw new TypeError(t('errors:journey.exactReceiptRequired'));
     if (own(profile.clears[mode], missionId)) {
@@ -260,21 +300,37 @@ export function createJourneyBackend({
       };
     }));
   };
-  async function transaction(events) {
+  async function transaction(events, { signal } = {}) {
+    signal?.throwIfAborted();
     checkWrite(events);
     const db = await open();
+    signal?.throwIfAborted();
     checkWrite(events);
     return new Promise((resolve, reject) => {
       const tx = db.transaction('profiles', events.length ? 'readwrite' : 'readonly'),
         store = tx.objectStore('profiles'),
         read = store.get(profileKey),
-        pictureRead = store.get(`${profileKey}:pictures.v1`);
+        pictureRead = store.get(`${profileKey}:pictures.v1`),
+        starsRead = store.get(`${profileKey}:stars.v1`),
+        performanceRead = store.get(`${profileKey}:performance.v1`);
       let next,
         failure,
-        remaining = 2;
+        remaining = 4;
+      const abort = () => {
+        failure = signal.reason;
+        try {
+          tx.abort();
+        } catch {
+          // A transaction already committed before cancellation is confirmed by
+          // oncomplete; callers must not report a rollback that did not happen.
+        }
+      };
+      const cleanup = () => signal?.removeEventListener('abort', abort);
+      signal?.addEventListener('abort', abort, { once: true });
       const loaded = () => {
         if (--remaining) return;
         try {
+          signal?.throwIfAborted();
           checkWrite(events);
           next = {
             profile:
@@ -285,21 +341,43 @@ export function createJourneyBackend({
               pictureRead.result === undefined
                 ? emptyJourneyPictures()
                 : validateJourneyPictures(pictureRead.result),
+            stars:
+              starsRead.result === undefined
+                ? emptyJourneyStars()
+                : validateJourneyStars(starsRead.result),
+            ...(performanceRead.result === undefined
+              ? {}
+              : { performance: performanceRead.result }),
           };
+          next.stars = journeyStarsForProfile(next.stars, next.profile);
           for (const event of events)
             next = applyStateEvent(next, event, pictureEditionId(profileKey));
-          if (events.length) store.put(next.profile, profileKey);
+          if (events.some((event) => event.type !== 'performance'))
+            store.put(next.profile, profileKey);
+          if (events.some((event) => event.type === 'performance'))
+            store.put(next.performance, `${profileKey}:performance.v1`);
           if (events.some((event) => event.picture !== undefined || event.pictures !== undefined))
             store.put(next.pictures, `${profileKey}:pictures.v1`);
+          if (events.some((event) => event.stars !== undefined || event.starResults !== undefined))
+            store.put(next.stars, `${profileKey}:stars.v1`);
         } catch (error) {
           failure = error;
           tx.abort();
         }
       };
-      read.onsuccess = pictureRead.onsuccess = loaded;
-      tx.oncomplete = () => resolve(next);
-      tx.onabort = tx.onerror = () =>
+      read.onsuccess =
+        pictureRead.onsuccess =
+        starsRead.onsuccess =
+        performanceRead.onsuccess =
+          loaded;
+      tx.oncomplete = () => {
+        cleanup();
+        resolve(next);
+      };
+      tx.onabort = tx.onerror = () => {
+        cleanup();
         reject(failure || tx.error || new Error(t('errors:journey.saveFailed')));
+      };
     });
   }
   return {
@@ -311,16 +389,34 @@ export function createJourneyBackend({
   };
 }
 function applyStateEvent(state, event, editionId = null) {
-  const { pictures, ...profileEvent } = event;
+  if (event.type === 'performance') {
+    exactJourneyKeys(event, ['type', 'previous', 'performance'], 'Journey performance transaction');
+    if (event.previous !== canonicalJSON(state.performance ?? null))
+      throw new Error(
+        'Journey performance changed in another tab. Try the optional comparison again.',
+      );
+    const performance = inspectJourneyPerformance(event.performance);
+    if (performance.generation !== (state.performance?.generation ?? 0) + 1)
+      throw new Error('Journey performance generation changed.');
+    return { ...state, performance };
+  }
+  const { pictures, starResults: _starResults, ...profileEvent } = event;
   const profile = applyJourneyEvent(state.profile, profileEvent);
   if (event.type === 'restore' && pictures !== undefined)
     validateJourneyPictureCompletions(profile, pictures, { editionId });
-  return { profile, pictures: applyJourneyPictureEvent(state.pictures, event) };
+  return {
+    ...state,
+    profile,
+    pictures: applyJourneyPictureEvent(state.pictures, event),
+    stars: applyJourneyStarsEvent(state.stars ?? emptyJourneyStars(), event, profile),
+  };
 }
 function validateState(state) {
   return {
     profile: validateJourneyProfile(state.profile),
     pictures: validateJourneyPictures(state.pictures),
+    stars: journeyStarsForProfile(state.stars ?? emptyJourneyStars(), state.profile),
+    ...(state.performance === undefined ? {} : { performance: state.performance }),
   };
 }
 
@@ -331,6 +427,7 @@ export function createJourneyProfileStore({
   onStatus = () => {},
   operationTimeoutMs = 1500,
   canWrite = () => true,
+  acceptPerformanceBinding,
 } = {}) {
   validateProfileKey(profileKey);
   if (typeof canWrite !== 'function') throw new TypeError('A profile write guard is required.');
@@ -352,6 +449,7 @@ export function createJourneyProfileStore({
     });
   let profile = emptyJourneyProfile(),
     pictures = emptyJourneyPictures(),
+    stars = emptyJourneyStars(),
     pending = [],
     saving = null,
     ready = false,
@@ -371,22 +469,34 @@ export function createJourneyProfileStore({
   };
   const snapshot = () => structuredClone(profile);
   const pictureSnapshot = () => structuredClone(pictures);
-  const adopt = (state) => {
-    ({ profile, pictures } = state);
+  const starSnapshot = () => structuredClone(stars);
+  const adopt = (state, { observePerformance = true } = {}) => {
+    ({ profile, pictures, stars = emptyJourneyStars() } = state);
     stateRevision++;
+    if (observePerformance) performance.observe(state);
   };
   const readState = async () =>
     backend.readState
       ? validateState(await backend.readState())
-      : { profile: validateJourneyProfile(await backend.read()), pictures: emptyJourneyPictures() };
-  const commitState = async (events) => {
+      : {
+          profile: validateJourneyProfile(await backend.read()),
+          pictures: emptyJourneyPictures(),
+          stars: emptyJourneyStars(),
+        };
+  const commitState = async (events, { signal } = {}) => {
+    signal?.throwIfAborted();
     if (!canWrite()) throw new Error('The profile saving lease is no longer held.');
-    if (backend.commitState) return validateState(await backend.commitState(events));
+    if (backend.commitState) return validateState(await backend.commitState(events, { signal }));
+    if (events.some((event) => event.type === 'performance'))
+      throw new Error('This Journey backend cannot retain optional performance evidence.');
     if (events.some((event) => event.picture !== undefined || event.pictures !== undefined))
       throw new Error(t('errors:journey.pictureReceiptsUnsupported'));
+    if (events.some((event) => event.stars !== undefined || event.starResults !== undefined))
+      throw new Error(t('errors:journey.saveFailed'));
     return {
       profile: validateJourneyProfile(await backend.commit(events)),
       pictures: emptyJourneyPictures(),
+      stars: emptyJourneyStars(),
     };
   };
   async function flush() {
@@ -420,11 +530,13 @@ export function createJourneyProfileStore({
   const recordEvents = (events) => {
     if (!Array.isArray(events) || events.length < 1 || events.length > 256)
       throw new TypeError(t('errors:journey.eventBatchSize'));
+    if (events.some((event) => event.type === 'performance'))
+      throw new TypeError('Use the verified Journey performance adapter.');
     const owned = structuredClone(events);
     // Validate the whole transition before publishing either its cursor or skip.
     // One status notification cannot expose a partially applied transition.
-    const next = owned.reduce(applyEvent, { profile, pictures });
-    adopt(next);
+    const next = owned.reduce(applyEvent, { profile, pictures, stars });
+    adopt(next, { observePerformance: false });
     pending.push(...owned);
     durable = false;
     status();
@@ -494,13 +606,116 @@ export function createJourneyProfileStore({
       error: primaryError?.message ?? null,
     };
   }
+  const commitPerformance = (events, { signal } = {}) =>
+    new Promise((resolve, reject) => {
+      const controller = new AbortController();
+      let settled = false,
+        timer;
+      const finish = (callback, value) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        signal?.removeEventListener('abort', abort);
+        callback(value);
+      };
+      const abort = () => {
+        controller.abort(signal.reason);
+        finish(reject, signal.reason);
+      };
+      signal?.addEventListener('abort', abort, { once: true });
+      if (signal?.aborted) {
+        abort();
+        return;
+      }
+      timer = setTimeout(() => {
+        const error = new Error(t('errors:journey.storageTimeout'));
+        error.name = 'JourneyPerformanceSaveUnconfirmed';
+        controller.abort(error);
+        finish(reject, error);
+      }, operationTimeoutMs);
+      Promise.resolve()
+        .then(() => commitState(events, { signal: controller.signal }))
+        .then(
+          (value) => finish(resolve, value),
+          (error) => finish(reject, error),
+        );
+    });
+  const performance = createJourneyPerformanceController({
+    backend: {
+      readState: () => bounded(readState),
+      commitState: commitPerformance,
+    },
+    getProfile: snapshot,
+    flushProfile: flush,
+    acceptBinding: acceptPerformanceBinding,
+    canWrite,
+  });
+  const inspectAsync = async (source, { signal } = {}) => {
+    const inspected = inspectProfileBackup(source, profileKey);
+    const merged = applyEvent(
+      { profile, pictures, stars },
+      {
+        type: 'restore',
+        backup: inspected.normalized,
+        ...(inspected.pictures ? { pictures: inspected.pictures } : {}),
+        ...(inspected.starResults ? { starResults: inspected.starResults } : {}),
+      },
+    );
+    if (inspected.performance)
+      await performance.inspect(inspected.performance, merged.profile, { signal });
+    signal?.throwIfAborted();
+    return {
+      backup: inspected.backup,
+      merged: merged.profile,
+      pictures: merged.pictures,
+      stars: merged.stars,
+    };
+  };
   return {
+    performance,
+    inspectBackupAsync: inspectAsync,
+    async restoreAsync(source, { signal } = {}) {
+      const checked = await inspectAsync(source, { signal });
+      signal?.throwIfAborted();
+      // The caller can mutate an object while replay verification yields. Apply
+      // only the owned clone that actually passed asynchronous inspection.
+      const inspected = inspectProfileBackup(checked.backup, profileKey);
+      recordEvents([
+        {
+          type: 'restore',
+          backup: inspected.normalized,
+          ...(inspected.pictures ? { pictures: inspected.pictures } : {}),
+          ...(inspected.starResults ? { starResults: inspected.starResults } : {}),
+        },
+      ]);
+      let optional;
+      if (inspected.performance) {
+        try {
+          optional = { durable: await performance.restore(inspected.performance, { signal }) };
+        } catch (error) {
+          signal?.throwIfAborted();
+          optional = {
+            durable: false,
+            error: error.message,
+            ...(error.name === 'JourneyPerformanceSaveUnconfirmed'
+              ? { saveUnconfirmed: true }
+              : {}),
+          };
+        }
+      }
+      return { profile: snapshot(), ...(optional ? { performance: optional } : {}) };
+    },
     async load() {
       await flush();
       return snapshot();
     },
     snapshot,
     pictures: pictureSnapshot,
+    stars: starSnapshot,
+    bestStars: (mode, missionId) =>
+      own(profile.clears[mode] ?? {}, missionId) && own(stars.best[mode] ?? {}, missionId)
+        ? stars.best[mode][missionId]
+        : null,
     stateRevision: () => stateRevision,
     status,
     flush,
@@ -509,20 +724,33 @@ export function createJourneyProfileStore({
         ? 'revealline-journey-progress.json'
         : `revealline-${profileKey}-progress.json`,
     inspectBackup(source) {
-      const { backup, normalized, pictures: restored } = inspectProfileBackup(source, profileKey);
+      const inspected = inspectProfileBackup(source, profileKey);
+      if (inspected.performance)
+        throw new TypeError('Inspect performance evidence asynchronously before restoring it.');
+      const { backup, normalized, pictures: restored, starResults } = inspected;
       const merged = applyEvent(
-        { profile, pictures },
-        { type: 'restore', backup: normalized, ...(restored ? { pictures: restored } : {}) },
+        { profile, pictures, stars },
+        {
+          type: 'restore',
+          backup: normalized,
+          ...(restored ? { pictures: restored } : {}),
+          ...(starResults ? { starResults } : {}),
+        },
       );
-      return { backup, merged: merged.profile, pictures: merged.pictures };
+      return { backup, merged: merged.profile, pictures: merged.pictures, stars: merged.stars };
     },
     restore(source) {
       const inspected = inspectProfileBackup(source, profileKey);
+      if (inspected.performance)
+        throw new TypeError(
+          'Restore performance evidence through verified asynchronous inspection.',
+        );
       return recordEvents([
         {
           type: 'restore',
           backup: inspected.normalized,
           ...(inspected.pictures ? { pictures: inspected.pictures } : {}),
+          ...(inspected.starResults ? { starResults: inspected.starResults } : {}),
         },
       ]);
     },
@@ -532,17 +760,28 @@ export function createJourneyProfileStore({
     recordWithReceiptFallback,
     recordMany: recordEvents,
     export() {
+      const evidence = performance.backup(),
+        hasStars = JOURNEY_MODES.some((mode) => Object.keys(stars.best[mode]).length);
       return JSON.stringify(
-        pictures.records.length
+        evidence || hasStars
           ? {
-              format: JOURNEY_PICTURE_BACKUP_VERSION,
+              format: JOURNEY_COMBINED_BACKUP_VERSION,
               profileKey,
               profile: snapshot(),
               pictures: pictureSnapshot(),
+              stars: starSnapshot(),
+              ...(evidence ? { performance: evidence } : {}),
             }
-          : profileKey === 'journey'
-            ? { format: JOURNEY_BACKUP_VERSION, profile: snapshot() }
-            : { format: JOURNEY_SCOPED_BACKUP_VERSION, profileKey, profile: snapshot() },
+          : pictures.records.length
+            ? {
+                format: JOURNEY_PICTURE_BACKUP_VERSION,
+                profileKey,
+                profile: snapshot(),
+                pictures: pictureSnapshot(),
+              }
+            : profileKey === 'journey'
+              ? { format: JOURNEY_BACKUP_VERSION, profile: snapshot() }
+              : { format: JOURNEY_SCOPED_BACKUP_VERSION, profileKey, profile: snapshot() },
         null,
         2,
       );
