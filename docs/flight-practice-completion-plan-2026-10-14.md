@@ -38,8 +38,12 @@ for original failures, exact sources, preserved records and remaining scope.
 All three separate real five-minute cases now pass with exact cache/data
 preservation, pristine retry/removal and independent evidence audit. The first
 active-session attempt fails before update because default automation focus
-emulation prevents genuine blur; a separately reviewed owned-window minimization
-diagnostic and all-three genuine migration lane await native execution.
+emulation prevents genuine blur. A second owned-window attempt records actual
+positive lift/pause/resume but fails before update on an immediate minimization
+state read; bounded actual-transition polling is being checked. The all-three
+genuine migration lane establishes its historical baseline but fails its strict
+cache check during current-launcher opening. Both original failed receipts and
+their executed authority are retained; neither lane is qualified yet.
 The full build's second attempt was cancelled
 at a cross-volume file-cloning bottleneck, not accepted as a distribution pass.
 A narrow same-device writer guard preserves exact-byte checks and fallbacks.

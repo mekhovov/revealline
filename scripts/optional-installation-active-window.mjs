@@ -1,5 +1,7 @@
 /** Opt-in desktop-software minimization diagnostic; never synthesizes DOM events. */
 import assert from 'node:assert/strict';
+import { performance } from 'node:perf_hooks';
+import { setTimeout as pause } from 'node:timers/promises';
 import { validateHistoricalSessionURL } from './optional-installation-active-session.mjs';
 export const ACTIVE_WINDOW_MODE = 'owned-window-minimize-98ad851';
 export const FOCUS_SOURCE_SHA256 =
@@ -23,7 +25,7 @@ async function deadline(work, ms) {
     clearTimeout(timer);
   }
 }
-async function call(g, name, work, acquire = false) {
+async function call(g, name, work, acquire = false, timeoutMs = g.timeoutMs) {
   assert(owned.has(g) && !g.closed && !g.failed, 'Owned-window guard unavailable.');
   const row = { name, pending: true };
   g.operations.push(row);
@@ -43,7 +45,7 @@ async function call(g, name, work, acquire = false) {
     row.failed = true;
   });
   try {
-    return await deadline(() => promise, g.timeoutMs);
+    return await deadline(() => promise, timeoutMs);
   } catch (error) {
     g.failed = true;
     g.receipt.failure = name;
@@ -59,6 +61,64 @@ function normalBounds(value) {
   for (const key of ['left', 'top', 'width', 'height']) assert(Number.isSafeInteger(value[key]));
   assert(value.width > 0 && value.height > 0);
   return { left: value.left, top: value.top, width: value.width, height: value.height };
+}
+async function waitForBounds(g, expected, { geometry = false, cleanup = false } = {}) {
+  const started = performance.now(),
+    limit = Math.min(1500, g.timeoutMs),
+    end = started + limit;
+  const observation = { expected, geometry, cleanup, limitMs: limit, passed: false, samples: [] };
+  (g.receipt.windowTransitions ??= []).push(observation);
+  try {
+    for (;;) {
+      const left = end - performance.now();
+      assert(left > 0, `Native window did not reach ${expected} within ${limit}ms.`);
+      let result;
+      if (cleanup) {
+        const row = { name: 'cleanup bounds read', pending: true };
+        g.operations.push(row);
+        const read = Promise.resolve()
+          .then(() => g.sa.send('Browser.getWindowBounds', { windowId: g.aWindow }))
+          .finally(() => {
+            row.pending = false;
+          });
+        result = await deadline(() => read, left);
+      } else {
+        result = await call(
+          g,
+          `observe native ${expected} bounds`,
+          () => g.sa.send('Browser.getWindowBounds', { windowId: g.aWindow }),
+          false,
+          left,
+        );
+      }
+      assert(performance.now() < end, `Native ${expected} observation arrived beyond ${limit}ms.`);
+      const bounds = result.bounds;
+      assert(['normal', 'minimized', 'maximized', 'fullscreen'].includes(bounds?.windowState));
+      assert(observation.samples.length < 32);
+      observation.samples.push({
+        elapsedMs: Math.round(performance.now() - started),
+        bounds: { ...bounds },
+      });
+      if (
+        bounds.windowState === expected &&
+        (!geometry ||
+          ['left', 'top', 'width', 'height'].every((key) => bounds[key] === g.aBounds[key]))
+      ) {
+        observation.passed = true;
+        return bounds;
+      }
+      const wait = Math.min(50, end - performance.now());
+      assert(wait > 0, `Native window did not reach ${expected} within ${limit}ms.`);
+      await pause(wait);
+    }
+  } catch (error) {
+    observation.failure = error.message;
+    if (!cleanup) {
+      g.failed = true;
+      g.receipt.failure = `native ${expected} transition`;
+    }
+    throw error;
+  }
 }
 export async function configureHistoricalSessionWindow({
   context,
@@ -165,8 +225,7 @@ export async function minimizeHistoricalSessionWindow(g) {
     windowId: g.aWindow,
     bounds: { windowState: 'minimized' },
   });
-  const result = await send(g, g.sa, 'Browser.getWindowBounds', { windowId: g.aWindow });
-  assert.equal(result.bounds.windowState, 'minimized');
+  await waitForBounds(g, 'minimized');
   g.stage = 'minimized';
   g.receipt.minimized = true;
   // This alone is NOT a pause witness; caller must capture native phase/focus afterward.
@@ -177,11 +236,10 @@ export async function restoreHistoricalSessionWindow(g) {
     windowId: g.aWindow,
     bounds: { windowState: 'normal' },
   });
+  await waitForBounds(g, 'normal');
   await send(g, g.sa, 'Browser.setWindowBounds', { windowId: g.aWindow, bounds: g.aBounds });
+  await waitForBounds(g, 'normal', { geometry: true });
   await call(g, 'foreground restored A', () => g.a.bringToFront());
-  const result = await send(g, g.sa, 'Browser.getWindowBounds', { windowId: g.aWindow });
-  assert.equal(result.bounds.windowState, 'normal');
-  assert.deepEqual(normalBounds(result.bounds), g.aBounds, 'Original A geometry was not restored.');
   g.stage = 'restored';
   g.receipt.restored = true;
 }
@@ -207,14 +265,14 @@ export async function disposeHistoricalSessionWindow(g) {
         bounds: { windowState: 'normal' },
       }),
     );
+    await attempt('verify A normal state', () => waitForBounds(g, 'normal', { cleanup: true }));
     if (g.aBounds)
       await attempt('restore A original bounds', () =>
         g.sa.send('Browser.setWindowBounds', { windowId: g.aWindow, bounds: g.aBounds }),
       );
-    await attempt('verify A original normal bounds', async () => {
-      const result = await g.sa.send('Browser.getWindowBounds', { windowId: g.aWindow });
-      assert.deepEqual(normalBounds(result.bounds), g.aBounds);
-    });
+    await attempt('verify A original normal bounds', () =>
+      waitForBounds(g, 'normal', { cleanup: true, geometry: true }),
+    );
   }
   for (const [name, session] of [
     ['A', g.sa],
