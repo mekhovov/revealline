@@ -24,10 +24,15 @@ The helper verifies the entire supplied archive, extracts just its exact
 `6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22`), checks
 the four native-observed HTML/style/browser-module hashes and writes an exclusive
 fresh directory plus identity. Existing paths, changed archives, changed harness
-identities and in-repository staging are refused. Failed partial stages remain
+identities and in-repository staging, including symlink aliases into source, are
+refused. Failed partial stages remain
 preserved. No package download, server, browser, database or player operation is
 started by preparation. The repository deliberately contains **no duplicate
 packaged WorldStore**.
+
+The source page is kept as `index.html.template`, outside production HTML entry
+discovery. Preparation emits the unchanged native-observed bytes as `index.html`
+only in the external stage; no appearance bootstrap or player storage is added.
 
 Serve only the newly prepared directory on a fresh explicitly chosen local port:
 
