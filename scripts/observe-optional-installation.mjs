@@ -9,6 +9,11 @@ import { validateOptionalPackageAdmission } from '../publishing/optional-package
 import { startServer } from './game-cli.mjs';
 import { installOptionalStatusDiagnostics } from './optional-installation-diagnostics.mjs';
 import { withOptionalQuotaDeny } from './optional-installation-quota-probe.mjs';
+import { admitPinnedHistoricalPractice } from './practice-historical-admission.mjs';
+import {
+  selectHistoricalInstallationMode,
+  revealHistoricalAcademyControl,
+} from './practice-historical-ui.mjs';
 import {
   INSTALLATION_WORLD_SEED,
   selectInstallationWorldSeed,
@@ -88,7 +93,18 @@ async function admitBundle(directory) {
   return { envelopeBytes, envelope, admittedBytes };
 }
 const { envelopeBytes, envelope, admittedBytes } = await admitBundle(bundlePath);
-const previous = previousBundlePath ? await admitBundle(previousBundlePath) : null;
+const historicalPrevious = selectHistoricalInstallationMode(
+  process.env.OPTIONAL_INSTALLATION_PREVIOUS_HISTORICAL,
+);
+assert(
+  !historicalPrevious || previousBundlePath,
+  'Historical mode requires its pinned prior bundle.',
+);
+const previous = previousBundlePath
+  ? historicalPrevious
+    ? await admitPinnedHistoricalPractice(previousBundlePath)
+    : await admitBundle(previousBundlePath)
+  : null;
 const version = envelope.version,
   fpv = 'civilian-fpv',
   gym = 'civilian-flight',
@@ -126,6 +142,14 @@ const { chromium } = await import(pathToFileURL(path.resolve(modulePath)).href);
 const harnessSha256 = sha(await readFile(fileURLToPath(import.meta.url)));
 const helperURL = new URL('./optional-installation-observer-helpers.mjs', import.meta.url);
 const helperSha256 = sha(await readFile(helperURL));
+const historicalAuthority = historicalPrevious
+  ? await Promise.all(
+      ['practice-historical-admission.mjs', 'practice-historical-ui.mjs'].map(async (name) => ({
+        path: name,
+        sha256: sha(await readFile(new URL(name, import.meta.url))),
+      })),
+    )
+  : [];
 const worldSeedURL = new URL('./optional-installation-world-seed.mjs', import.meta.url);
 const continuityURL = new URL(
   '../authoring/fpv-worlds/storage-continuity/observe.mjs',
@@ -150,7 +174,11 @@ const worldSeed = worldSeedEnabled
   : null;
 const password = process.env.OPTIONAL_INSTALLATION_PASSWORD;
 const transition = {
-  kind: previous ? 'distinct-frozen-candidates' : 'same-payload-path-fixture',
+  kind: historicalPrevious
+    ? 'distinct-historically-admitted-candidates'
+    : previous
+      ? 'distinct-frozen-candidates'
+      : 'same-payload-path-fixture',
   fromVersion: priorVersion,
   toVersion: version,
   changedFiles: null,
@@ -160,6 +188,9 @@ const transition = {
         sourceRevision: previous.envelope.sourceRevision,
         sourceTree: previous.envelope.sourceTree,
         package: previous.envelope.packages.find((row) => row.id === fpv),
+        ...(historicalPrevious
+          ? { historicalAdmission: previous.receipt, observerAuthority: historicalAuthority }
+          : {}),
       }
     : null,
 };
@@ -366,16 +397,31 @@ try {
         await target.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
       }
       async function revealControl(id, selector, category = 'extras') {
-        if (await page.locator(selector).isVisible()) return;
+        if (isHistoricalAcademy()) {
+          assert.equal(id, fpv, 'Historical adapter is Academy-only.');
+          return (await revealHistoricalAcademyControl(page, selector, { category })).selector;
+        }
+        if (await page.locator(selector).isVisible()) return selector;
         const prefix = OBSERVED_PACKAGES[id].settingsPrefix;
         const tab = page.locator(`#${prefix}-settings-tab-${category}`);
         if (!(await tab.isVisible()))
           await page.locator(`#${prefix}-shell-action-settings`).click();
         await tab.click();
+        return selector;
+      }
+      function isHistoricalAcademy() {
+        const current = new URL(page.url()),
+          expected = new URL(url(entry(fpv, priorVersion)));
+        return (
+          historicalPrevious &&
+          current.origin === expected.origin &&
+          current.pathname === expected.pathname
+        );
       }
       async function clickFPV(selector, category = 'extras') {
-        await revealControl(fpv, selector, category);
-        await page.locator(selector).click();
+        const target = await revealControl(fpv, selector, category);
+        if (isHistoricalAcademy()) await page.locator(target).press('Enter');
+        else await page.locator(target).click();
       }
       async function open(id, selected = version) {
         currentStep = `open ${id} ${selected}`;
@@ -933,6 +979,12 @@ try {
       )
         ? 'passed'
         : 'unverified';
+      for (const item of historicalAuthority)
+        assert.equal(
+          item.sha256,
+          sha(await readFile(new URL(item.path, import.meta.url))),
+          'Historical observer authority changed.',
+        );
       const harnessStable =
         harnessSha256 === sha(await readFile(fileURLToPath(import.meta.url))) &&
         helperSha256 === sha(await readFile(helperURL));
@@ -957,7 +1009,10 @@ try {
         scope:
           'All three apps in an isolated local persistent Chrome profile, admitted frozen runtime bytes and ordinary offline/profile/backup UI. All tabs/windows close before offline launcher and standalone app reopening; the persistent browser then closes and relaunches the same profile with browser-context offline enabled before app navigation. This is not an OS reboot or machine-wide airplane-mode claim. ' +
           (previous
-            ? 'Two distinct frozen candidates with original versions and source bindings; changed files are listed. '
+            ? 'Two distinct frozen candidates with original versions and source bindings; changed files are listed. ' +
+              (historicalPrevious
+                ? 'Previous Academy uses one explicitly pinned historical admission/UI authority; current candidate retains unchanged current admission. This observer does not migrate historical Gym/Worlds. '
+                : '')
             : 'v0.0.0 holds the same candidate payload at an alternate path. ') +
           'v0.0.1 is a deliberately damaged local path fixture. No release is allocated. Progress comes from a scripted verified input import, not a human flight. No public deployment, arbitrary historical-model migration or physical radio claim.',
         transition,

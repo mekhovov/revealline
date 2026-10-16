@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
+import { parse } from 'acorn';
+import { selectHistoricalInstallationMode } from './practice-historical-ui.mjs';
 import {
   OBSERVED_PACKAGES,
   TRANSFER_TIMEOUT_MS,
@@ -18,6 +20,32 @@ import {
   trackObservedResource,
   resourceCleanupIssues,
 } from './optional-installation-observer-helpers.mjs';
+
+const historicalObserverSource = await readFile(
+  new URL('./observe-optional-installation.mjs', import.meta.url),
+  'utf8',
+);
+const historicalObserverAST = parse(historicalObserverSource, {
+  ecmaVersion: 'latest',
+  sourceType: 'module',
+});
+function findObserverNode(predicate) {
+  const pending = [historicalObserverAST];
+  while (pending.length) {
+    const node = pending.pop();
+    if (predicate(node)) return node;
+    for (const value of Object.values(node)) {
+      if (Array.isArray(value)) pending.push(...value.filter((child) => child?.type));
+      else if (value?.type) pending.push(value);
+    }
+  }
+  assert.fail('Expected observer integration node is absent.');
+}
+const observerNodeSource = (node) => historicalObserverSource.slice(node.start, node.end);
+const observerFunction = (name) =>
+  observerNodeSource(
+    findObserverNode((node) => node.type === 'FunctionDeclaration' && node.id.name === name),
+  );
 
 test('browser restart requires all pages closed and a confirmed persistent-context shutdown', async () => {
   let listener;
@@ -702,4 +730,196 @@ test('access-gated candidates require normal-form credentials and never expose t
   });
   page.locator = () => ({ getAttribute: async () => 'unlocked' });
   assert.equal(await unlockObservedPage(page), false);
+});
+
+test('historical UI routing requires explicit mode and exact prior Academy origin/path', () => {
+  const expected =
+    'http://127.0.0.1:1234/revealline/practice/civilian-fpv/releases/v0.142.4/site/optional-practice/civilian-fpv/index.html';
+  const run = (current, enabled = true) =>
+    runInNewContext(`(${observerFunction('isHistoricalAcademy')})()`, {
+      URL,
+      page: { url: () => current },
+      historicalPrevious: enabled,
+      fpv: 'civilian-fpv',
+      priorVersion: 'v0.142.4',
+      entry: () => expected,
+      url: (value) => value,
+    });
+  assert.equal(run(expected), true);
+  assert.equal(run(`${expected}?lang=uk`), true);
+  assert.equal(run(expected, false), false);
+  for (const changed of [
+    expected.replace(':1234', ':1235'),
+    expected.replace('http:', 'https:'),
+    expected.replace('/v0.142.4/', '/v0.152.0/'),
+    expected.replaceAll('civilian-fpv', 'fpv-worlds'),
+    expected.replaceAll('civilian-fpv', 'civilian-flight'),
+    `${expected}/extra`,
+    expected.replace('/revealline/', '/other/'),
+  ])
+    assert.equal(run(changed), false);
+});
+
+test('current candidate always uses current admission and historical admission is explicitly prior-only', async () => {
+  const body = historicalObserverAST.body;
+  const start = body.findIndex(
+    (node) =>
+      node.type === 'VariableDeclaration' &&
+      node.declarations.some(
+        (row) =>
+          row.id.type === 'ObjectPattern' &&
+          row.id.properties.some((item) => item.key?.name === 'envelopeBytes'),
+      ),
+  );
+  const end = body.findIndex(
+    (node) =>
+      node.type === 'VariableDeclaration' &&
+      node.declarations.some((row) => row.id.name === 'previous'),
+  );
+  assert(start >= 0 && end > start);
+  const selection = historicalObserverSource.slice(body[start].start, body[end].end);
+  async function scenario(flag, prior = 'prior-A', rejectCurrent = false) {
+    const calls = [];
+    const operation = runInNewContext(
+      `(async()=>{${selection};return {envelope,previous,historicalPrevious};})()`,
+      {
+        assert,
+        bundlePath: 'current-B',
+        previousBundlePath: prior,
+        process: { env: { OPTIONAL_INSTALLATION_PREVIOUS_HISTORICAL: flag } },
+        selectHistoricalInstallationMode,
+        admitBundle: async (directory) => {
+          calls.push(['current', directory]);
+          if (rejectCurrent) throw Error('Current candidate denied');
+          return {
+            envelope: { id: directory },
+            envelopeBytes: Buffer.from(''),
+            admittedBytes: new Map(),
+          };
+        },
+        admitPinnedHistoricalPractice: async (directory) => {
+          calls.push(['historical', directory]);
+          return { envelope: { id: directory } };
+        },
+      },
+    );
+    return { calls, operation };
+  }
+  let item = await scenario('v0.142.4-98ad851');
+  await item.operation;
+  assert.deepEqual(item.calls, [
+    ['current', 'current-B'],
+    ['historical', 'prior-A'],
+  ]);
+  item = await scenario(undefined);
+  await item.operation;
+  assert.deepEqual(item.calls, [
+    ['current', 'current-B'],
+    ['current', 'prior-A'],
+  ]);
+  item = await scenario(undefined, null);
+  await item.operation;
+  assert.deepEqual(item.calls, [['current', 'current-B']]);
+  for (const [flag, prior] of [
+    ['unknown', 'prior-A'],
+    ['v0.142.4-98ad851', null],
+  ]) {
+    item = await scenario(flag, prior);
+    await assert.rejects(item.operation);
+    assert.deepEqual(item.calls, [['current', 'current-B']]);
+  }
+  item = await scenario('v0.142.4-98ad851', 'prior-A', true);
+  await assert.rejects(item.operation, /Current candidate denied/);
+  assert.deepEqual(item.calls, [['current', 'current-B']]);
+});
+
+test('historical reveal mapping receives exactly one final Enter; current path retains current action', async () => {
+  const source = ['revealControl', 'isHistoricalAcademy', 'clickFPV']
+    .map(observerFunction)
+    .join('\n');
+  for (const historical of [true, false]) {
+    const events = [],
+      expected = 'http://127.0.0.1:1234/prior-A/academy.html';
+    const click = runInNewContext(`(()=>{${source};return clickFPV;})()`, {
+      assert,
+      URL,
+      fpv: 'civilian-fpv',
+      priorVersion: 'v0.142.4',
+      historicalPrevious: historical,
+      entry: () => expected,
+      url: (value) => value,
+      OBSERVED_PACKAGES,
+      page: {
+        url: () => expected,
+        locator: (selector) => ({
+          isVisible: async () => true,
+          press: async (key) => events.push(['press', selector, key]),
+          click: async () => events.push(['click', selector]),
+        }),
+      },
+      revealHistoricalAcademyControl: async (page, selector, { category }) => {
+        events.push(['reveal', selector, category]);
+        return { selector: '#academy-shell-action-help', activated: false };
+      },
+    });
+    await click('#help', 'extras');
+    assert.deepEqual(
+      events,
+      historical
+        ? [
+            ['reveal', '#help', 'extras'],
+            ['press', '#academy-shell-action-help', 'Enter'],
+          ]
+        : [['click', '#help']],
+    );
+  }
+});
+
+test('historical authority pins both helpers and refuses changed authority at completion', async () => {
+  const declaration = findObserverNode(
+    (node) =>
+      node.type === 'VariableDeclaration' &&
+      node.declarations.some((row) => row.id.name === 'historicalAuthority'),
+  );
+  const recheck = findObserverNode(
+    (node) => node.type === 'ForOfStatement' && node.right?.name === 'historicalAuthority',
+  );
+  const capture = observerNodeSource(declaration).replaceAll('import.meta.url', 'observerURL');
+  const verify = observerNodeSource(recheck).replaceAll('import.meta.url', 'observerURL');
+  const paths = [],
+    scope = {
+      assert,
+      URL,
+      observerURL: 'file:///trusted/scripts/observe-optional-installation.mjs',
+      historicalPrevious: true,
+      sha: (bytes) => bytes.toString('hex'),
+      readFile: async (url) => {
+        paths.push(url.pathname);
+        return Buffer.from(url.pathname);
+      },
+    };
+  const pinned = await runInNewContext(
+    `(async()=>{${capture};return historicalAuthority;})()`,
+    scope,
+  );
+  assert.deepEqual(
+    [...pinned].map((row) => row.path),
+    ['practice-historical-admission.mjs', 'practice-historical-ui.mjs'],
+  );
+  await runInNewContext(`(async()=>{${verify}})()`, { ...scope, historicalAuthority: pinned });
+  await assert.rejects(
+    runInNewContext(`(async()=>{${verify}})()`, {
+      ...scope,
+      historicalAuthority: pinned,
+      readFile: async () => Buffer.from('changed'),
+    }),
+    /Historical observer authority changed/,
+  );
+  paths.length = 0;
+  const none = await runInNewContext(`(async()=>{${capture};return historicalAuthority;})()`, {
+    ...scope,
+    historicalPrevious: false,
+  });
+  assert.equal(none.length, 0);
+  assert.deepEqual(paths, []);
 });
