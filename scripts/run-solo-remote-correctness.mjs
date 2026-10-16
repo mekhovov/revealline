@@ -319,8 +319,9 @@ async function sourceIdentity(path, revision) {
   assert.equal(git('status', '--porcelain=v1', '--untracked-files=normal'), '');
   return { revision, tree: git('rev-parse', 'HEAD^{tree}') };
 }
-async function downloadCandidate(plan, work, evidence, signal) {
-  const { candidate } = plan;
+async function downloadCandidate(plan, work, evidence, signal, reuse = null) {
+  const candidate = reuse ?? plan.candidate;
+  const role = reuse ? 'baseline-reuse' : 'candidate';
   const headers = {
     Authorization: `Bearer ${process.env.GH_TOKEN}`,
     Accept: 'application/vnd.github+json',
@@ -336,16 +337,28 @@ async function downloadCandidate(plan, work, evidence, signal) {
   };
   const run = await get(`${api}/runs/${candidate.run}`);
   const artifact = await get(`${api}/artifacts/${candidate.artifact}`);
-  assert.equal(run.head_sha, candidate.revision);
-  assert.equal(run.conclusion, 'success');
+  assert.equal(run.head_sha, reuse ? reuse.producer.toolingRevision : candidate.revision);
+  if (reuse) {
+    assert.equal(run.status, 'completed');
+    assert(
+      ['success', 'failure'].includes(run.conclusion),
+      'Interrupted producer cannot provide reuse authority',
+    );
+    assert.equal(run.path, reuse.producer.workflow);
+    assert.equal(run.run_attempt, reuse.producer.attempt);
+  } else assert.equal(run.conclusion, 'success');
   assert.equal(run.repository.full_name, plan.repository);
   assert.equal(artifact.workflow_run.id, candidate.run);
-  assert.equal(artifact.workflow_run.head_sha, candidate.revision);
+  assert.equal(
+    artifact.workflow_run.head_sha,
+    reuse ? reuse.producer.toolingRevision : candidate.revision,
+  );
   assert.equal(artifact.size_in_bytes, candidate.outer.bytes);
   assert.equal(artifact.digest, `sha256:${candidate.outer.sha256}`);
   assert.equal(artifact.expired, false);
-  await save(join(evidence, 'candidate-run.json'), run);
-  await save(join(evidence, 'candidate-artifact.json'), artifact);
+  if (reuse) assert.equal(artifact.name, reuse.name);
+  await save(join(evidence, `${role}-run.json`), run);
+  await save(join(evidence, `${role}-artifact.json`), artifact);
   const redirect = await fetch(`${api}/artifacts/${candidate.artifact}/zip`, {
     headers,
     redirect: 'manual',
@@ -359,7 +372,7 @@ async function downloadCandidate(plan, work, evidence, signal) {
     signal: AbortSignal.any([signal, AbortSignal.timeout(300000)]),
   });
   assert(response.ok, `Artifact download HTTP ${response.status}`);
-  const path = join(work, 'candidate-outer.zip'),
+  const path = join(work, `${role}-outer.zip`),
     file = await open(path, 'wx');
   let bytes = 0;
   try {
@@ -388,11 +401,32 @@ async function main() {
   await mkdir(evidence);
   await mkdir(work);
   const plan = await json(planPath);
+  const extension =
+    plan.format === 'SoloHostedOfflinePairPlan.v1'
+      ? 'offline'
+      : plan.format === 'SoloHostedSustainedPlanV1'
+        ? 'sustained'
+        : null;
+  let adapter = null,
+    modeState = null,
+    setupActive = extension === 'sustained';
+  if (extension) {
+    adapter = await import(`./solo-remote-${extension}.mjs`);
+    adapter[extension === 'offline' ? 'validateOfflinePlan' : 'validateSustainedPlan'](plan);
+  }
+  const profileEvidence = extension === 'offline' ? join(output, 'profile-evidence') : null;
+  if (profileEvidence) await mkdir(profileEvidence);
   const report = {
-    format: 'SoloHostedCorrectness.v1',
+    format:
+      extension === 'offline'
+        ? 'SoloHostedOfflinePair.v1'
+        : extension === 'sustained'
+          ? 'SoloHostedSustained.v1'
+          : 'SoloHostedCorrectness.v1',
     status: 'failed',
-    performanceExclusion: true,
-    timingQualification: 'not-attempted',
+    performanceExclusion: extension === 'sustained' ? plan.performanceExclusion : true,
+    timingQualification:
+      extension === 'sustained' ? 'source-and-host-scoped-raw-gates-required' : 'not-attempted',
     startedAt: new Date().toISOString(),
     rows: plan.rows.map((row) => ({ ...row, status: 'not-run' })),
   };
@@ -412,14 +446,30 @@ async function main() {
   const inspect = async () => {
     assert(!stop.signal.aborted, 'outer-stop-or-deadline');
     assert(Date.now() - start < plan.helperTimeoutMs, 'overall-helper-deadline');
+    if (setupActive) assert(Date.now() - start < plan.setupTimeoutMs, 'setup-deadline');
     const fs = await statfs(output);
     assert(fs.bavail * fs.bsize >= GiB + 4 * MiB, 'disk-floor-plus-finalization-reserve');
     assert(
       (await evidenceSize(evidence)) <= plan.evidenceBytes - 4 * MiB,
       'aggregate-evidence-cap',
     );
+    if (profileEvidence)
+      assert(
+        (await evidenceSize(profileEvidence)) <= plan.profileEvidenceBytes - 4 * MiB,
+        'profile-evidence-cap',
+      );
+  };
+  let progressCount = 0;
+  const progress = (event, id, result = {}) => {
+    if (!extension) return;
+    assert(++progressCount <= 256, 'Progress record cap');
+    assert(/^[a-z0-9-]{1,100}$/.test(id), 'Bounded public stage identifier');
+    process.stdout.write(
+      JSON.stringify({ event, id, at: new Date().toISOString(), ...result }) + '\n',
+    );
   };
   const run = async (id, argv, timeoutMs, options = {}) => {
+    progress('stage-start', id);
     const command = await ownedCommand(argv, {
       cwd: repository,
       env: cleanEnv,
@@ -429,6 +479,7 @@ async function main() {
       inspect,
       ...options,
     });
+    progress('stage-end', id, { status: command.status, exitCode: command.exitCode });
     assert(
       !command.cleanupUnconfirmed && !command.survivors.length && !command.ambiguous.length,
       'Unclosed owner; remaining rows withheld',
@@ -449,8 +500,10 @@ async function main() {
     candidate: join(work, 'candidate-payload'),
   };
   try {
-    assert.equal(plan.format, 'SoloHostedCorrectnessPlan.v1');
-    assert.equal(plan.rows.length, 8);
+    if (!extension) {
+      assert.equal(plan.format, 'SoloHostedCorrectnessPlan.v1');
+      assert.equal(plan.rows.length, 8);
+    }
     assert.equal(process.version, `v${plan.node}`);
     assert.equal(arch(), 'x64');
     report.tooling = await sourceIdentity(repository, process.env.SOLO_TOOLING_REVISION);
@@ -466,6 +519,9 @@ async function main() {
       runId: process.env.GITHUB_RUN_ID,
       attempt: process.env.GITHUB_RUN_ATTEMPT,
       node: process.version,
+      ...(extension || plan.baseline.publishVerifiedNormal
+        ? { workflowRef: process.env.GITHUB_WORKFLOW_REF }
+        : {}),
     };
     assert(totalmem() >= 12 * GiB, 'Hosted runner memory admission');
     const disk = await statfs(output);
@@ -487,14 +543,49 @@ async function main() {
       report[`${role}Source`] = await sourceIdentity(sources[role], plan[role].revision);
       assert.equal(report[`${role}Source`].tree, plan[role].tree);
     }
-    const fixture = resolve(repository, plan.fixture.path);
-    assert.deepEqual(await digest(fixture), {
-      bytes: plan.fixture.bytes,
-      sha256: plan.fixture.sha256,
-    });
-    await writeFile(join(evidence, 'first30.qualification.json'), await readFile(fixture), {
-      flag: 'wx',
-    });
+    if (plan.baseline.publishVerifiedNormal) {
+      const ref = plan.baseline.publisher;
+      assert.equal(ref.path, 'scripts/solo-remote-baseline.mjs');
+      assert.deepEqual(await digest(join(repository, ref.path)), {
+        bytes: ref.bytes,
+        sha256: ref.sha256,
+      });
+      if (!extension)
+        await writeFile(
+          join(evidence, 'solo-remote-baseline.mjs'),
+          await readFile(join(repository, ref.path)),
+          { flag: 'wx' },
+        );
+    }
+    const fixture = extension ? null : resolve(repository, plan.fixture.path);
+    if (fixture) {
+      assert.deepEqual(await digest(fixture), {
+        bytes: plan.fixture.bytes,
+        sha256: plan.fixture.sha256,
+      });
+      await writeFile(join(evidence, 'first30.qualification.json'), await readFile(fixture), {
+        flag: 'wx',
+      });
+    }
+    if (extension) {
+      if (plan.baseline.publishVerifiedNormal || plan.baseline.reusableArtifact)
+        assert(
+          plan.adapterInputs.some((ref) => ref.path === 'scripts/solo-remote-baseline.mjs'),
+          'Baseline adapter identity must be pinned',
+        );
+      for (const ref of plan.adapterInputs) {
+        assert(ref.path.startsWith('scripts/') && !ref.path.includes('..'));
+        assert.deepEqual(await digest(join(repository, ref.path)), {
+          bytes: ref.bytes,
+          sha256: ref.sha256,
+        });
+        await writeFile(
+          join(evidence, ref.path.split('/').at(-1)),
+          await readFile(join(repository, ref.path)),
+          { flag: 'wx' },
+        );
+      }
+    }
     await writeFile(join(evidence, 'plan.json'), await readFile(planPath), { flag: 'wx' });
     for (const name of ['run-solo-remote-correctness.mjs', 'solo-remote-archive.py'])
       await writeFile(join(evidence, name), await readFile(join(here, name)), { flag: 'wx' });
@@ -508,7 +599,7 @@ async function main() {
       moduleIdentity: await digest(browserModule),
       engines: {},
     };
-    for (const engine of ['chromium', 'webkit'])
+    for (const engine of extension === 'offline' ? ['chromium'] : ['chromium', 'webkit'])
       report.playwright.engines[engine] = {
         executable: pw[engine].executablePath(),
         identity: await digest(pw[engine].executablePath()),
@@ -559,8 +650,9 @@ async function main() {
       performanceExclusion: true,
       artifacts: {},
     };
+    let baselineArchive = join(baselineBuild, 'distribution.zip');
     const verifyArtifact = async (role) => {
-      const archive = join(role === 'candidate' ? selected : baselineBuild, 'distribution.zip');
+      const archive = role === 'candidate' ? join(selected, 'distribution.zip') : baselineArchive;
       const archiveProof = await json(join(evidence, `${role}-archive.json`));
       await writeFile(`${archive}.sha256`, `${archiveProof.zipSHA256}  distribution.zip\n`);
       await required(
@@ -581,6 +673,8 @@ async function main() {
       assert.equal(proof.status, 'passed');
       assert.equal(proof.source.wholeTreeRevision, plan[role].revision);
       if (role === 'candidate') assert.equal(proof.manifest.sha256, plan.candidate.manifestSHA256);
+      if (role === 'baseline' && plan.baseline.reusableArtifact)
+        assert.equal(proof.manifest.sha256, plan.baseline.reusableArtifact.manifestSHA256);
       const retained = join(evidence, `${role}-payload-metadata`);
       await mkdir(retained);
       for (const name of ['manifest.json', '_headers', 'game/build-info.json']) {
@@ -610,75 +704,51 @@ async function main() {
     await verifyArtifact('candidate');
     report.candidateSetupStatus = 'passed';
     await save(finalPath, report);
-    for (const row of report.rows) {
-      if (row.kind === 'first30' && !admitted.artifacts.baseline) {
-        report.baselineSetupStatus = 'running';
-        const observations = [];
-        let lastObservation = -Infinity;
-        const observeBuild = async (force = false) => {
-          if (!force && Date.now() - lastObservation < 15000) return;
-          assert(observations.length < 100, 'baseline-build-observation-cap');
-          lastObservation = Date.now();
-          const staging = (await readdir(work, { withFileTypes: true })).filter((entry) =>
-            entry.name.startsWith('.xonix-build-'),
-          );
-          assert(staging.length <= 2, 'Unexpected baseline staging count');
-          const roots = [baselineBuild, ...staging.map((entry) => join(work, entry.name))];
-          const paths = [];
-          for (const root of roots) {
-            try {
-              assert((await lstat(root)).isDirectory(), 'Build output must remain a directory');
-            } catch (error) {
-              if (error.code !== 'ENOENT') throw error;
-              paths.push({ path: root, exists: false });
-              continue;
-            }
-            for (const name of ['manifest.json', 'distribution.zip', '.xonix-build.json']) {
-              const path = join(root, name);
-              try {
-                const info = await lstat(path);
-                assert(info.isFile(), 'Declared build output must remain a regular file');
-                paths.push({ path, exists: true, bytes: info.size, modifiedMs: info.mtimeMs });
-              } catch (error) {
-                if (error.code !== 'ENOENT') throw error;
-                paths.push({ path, exists: false });
-              }
-            }
-          }
-          observations.push({ at: new Date().toISOString(), paths });
-          await save(join(evidence, 'baseline-build-observations.json'), {
-            scope:
-              'Setup-only scalar lstat observations; absence/presence does not identify CPU cause',
-            intervalMs: 15000,
-            maximumRecords: 100,
-            observations,
-          });
-        };
-        await observeBuild();
-        try {
-          await required(
-            'baseline-build',
-            [
-              process.execPath,
-              join(sources.baseline, 'scripts/game-cli.mjs'),
-              'build',
-              '--out',
-              baselineBuild,
-              '--revision',
-              plan.baseline.revision,
-            ],
-            1200000,
-            {
-              cwd: sources.baseline,
-              inspect: async () => {
-                await inspect();
-                await observeBuild();
-              },
-            },
-          );
-        } finally {
-          await observeBuild(true);
+    const ensureBaseline = async () => {
+      if (admitted.artifacts.baseline) return;
+      report.baselineSetupStatus = 'running';
+      if (extension && plan.baseline.reusableArtifact) {
+        assert(
+          !plan.baseline.publishVerifiedNormal,
+          'Cannot republish a reused baseline as freshly built',
+        );
+        const { validateBaselineReuse, readBaselineBundle, BASELINE_FILES } = await import(
+          './solo-remote-baseline.mjs'
+        );
+        const reuse = plan.baseline.reusableArtifact;
+        validateBaselineReuse(reuse, plan);
+        const baselineOuter = await downloadCandidate(plan, work, evidence, stop.signal, reuse);
+        const baselineSelected = join(work, 'baseline-reuse-selected');
+        await required(
+          'baseline-reuse-outer',
+          [
+            'python3',
+            '-B',
+            join(here, 'solo-remote-archive.py'),
+            'baseline-outer',
+            baselineOuter,
+            baselineSelected,
+            plan.baseline.revision,
+            join(evidence, 'baseline-reuse-outer.json'),
+          ],
+          600000,
+        );
+        const retained = await readBaselineBundle(baselineSelected, reuse);
+        await save(join(evidence, 'baseline-reuse-authority.json'), {
+          status: 'passed',
+          producer: retained.ready.producer,
+          ready: retained.readyIdentity,
+          disposition:
+            'Producer proof is historical; current inner and exact-source proofs remain independently required.',
+        });
+        const historical = join(evidence, 'baseline-reuse-proof');
+        await mkdir(historical);
+        for (const name of BASELINE_FILES.filter((name) => name !== 'distribution.zip')) {
+          const target = join(historical, name);
+          await mkdir(dirname(target), { recursive: true });
+          await writeFile(target, await readFile(join(baselineSelected, name)), { flag: 'wx' });
         }
+        baselineArchive = join(baselineSelected, 'distribution.zip');
         await required(
           'baseline-inner',
           [
@@ -686,7 +756,7 @@ async function main() {
             '-B',
             join(here, 'solo-remote-archive.py'),
             'inner',
-            join(baselineBuild, 'distribution.zip'),
+            baselineArchive,
             payloads.baseline,
             plan.baseline.revision,
             join(evidence, 'baseline-archive.json'),
@@ -695,7 +765,147 @@ async function main() {
         );
         await verifyArtifact('baseline');
         report.baselineSetupStatus = 'passed';
+        report.baselineAcquisition = 'pinned-normal-artifact-reverified';
+        return;
       }
+      const observations = [];
+      let lastObservation = -Infinity;
+      const observeBuild = async (force = false) => {
+        if (!force && Date.now() - lastObservation < 15000) return;
+        assert(observations.length < 100, 'baseline-build-observation-cap');
+        lastObservation = Date.now();
+        const staging = (await readdir(work, { withFileTypes: true })).filter((entry) =>
+          entry.name.startsWith('.xonix-build-'),
+        );
+        assert(staging.length <= 2, 'Unexpected baseline staging count');
+        const roots = [baselineBuild, ...staging.map((entry) => join(work, entry.name))];
+        const paths = [];
+        for (const root of roots) {
+          try {
+            assert((await lstat(root)).isDirectory(), 'Build output must remain a directory');
+          } catch (error) {
+            if (error.code !== 'ENOENT') throw error;
+            paths.push({ path: root, exists: false });
+            continue;
+          }
+          for (const name of ['manifest.json', 'distribution.zip', '.xonix-build.json']) {
+            const path = join(root, name);
+            try {
+              const info = await lstat(path);
+              assert(info.isFile(), 'Declared build output must remain a regular file');
+              paths.push({ path, exists: true, bytes: info.size, modifiedMs: info.mtimeMs });
+            } catch (error) {
+              if (error.code !== 'ENOENT') throw error;
+              paths.push({ path, exists: false });
+            }
+          }
+        }
+        observations.push({ at: new Date().toISOString(), paths });
+        await save(join(evidence, 'baseline-build-observations.json'), {
+          scope:
+            'Setup-only scalar lstat observations; absence/presence does not identify CPU cause',
+          intervalMs: 15000,
+          maximumRecords: 100,
+          observations,
+        });
+      };
+      await observeBuild();
+      try {
+        await required(
+          'baseline-build',
+          [
+            process.execPath,
+            join(sources.baseline, 'scripts/game-cli.mjs'),
+            'build',
+            '--out',
+            baselineBuild,
+            '--revision',
+            plan.baseline.revision,
+          ],
+          1200000,
+          {
+            cwd: sources.baseline,
+            inspect: async () => {
+              await inspect();
+              await observeBuild();
+            },
+          },
+        );
+      } finally {
+        await observeBuild(true);
+      }
+      await required(
+        'baseline-inner',
+        [
+          'python3',
+          '-B',
+          join(here, 'solo-remote-archive.py'),
+          'inner',
+          join(baselineBuild, 'distribution.zip'),
+          payloads.baseline,
+          plan.baseline.revision,
+          join(evidence, 'baseline-archive.json'),
+        ],
+        600000,
+      );
+      await verifyArtifact('baseline');
+      report.baselineSetupStatus = 'passed';
+      report.baselineAcquisition = 'fresh-normal-build';
+      if (plan.baseline.publishVerifiedNormal) {
+        const { publishBaseline } = await import('./solo-remote-baseline.mjs');
+        report.baselinePublication = await publishBaseline({
+          buildPath: baselineBuild,
+          payloadPath: payloads.baseline,
+          evidence,
+          report,
+          plan,
+          sourcePath: sources.baseline,
+          nodeExecutable: process.execPath,
+          archiveHelper: join(here, 'solo-remote-archive.py'),
+          sourceVerifier: join(here, 'verify-solo-build.mjs'),
+          inspect,
+        });
+        await save(join(evidence, 'baseline-publication.json'), report.baselinePublication);
+      }
+    };
+    const context = {
+      plan,
+      report,
+      sources,
+      payloads,
+      admitted,
+      cleanEnv,
+      inspect,
+      ensureBaseline,
+      run,
+      required,
+      digest,
+      evidenceSize,
+      here,
+      repository,
+      output,
+      work,
+      evidence,
+      browserModule,
+      chromeExecutable: cleanEnv.CHROME_EXECUTABLE,
+    };
+    if (extension) {
+      if (extension === 'offline' || plan.phase !== 'diagnostics') await ensureBaseline();
+      setupActive = false;
+      report.setupCompletedAt = new Date().toISOString();
+      report.modePreparationStartedAt = report.setupCompletedAt;
+      modeState =
+        await adapter[extension === 'offline' ? 'prepareOfflineMode' : 'prepareSustainedMode'](
+          context,
+        );
+      context.modeState = modeState;
+      report.modePreparationCompletedAt = new Date().toISOString();
+      report.modeScope = plan.scope;
+      report.supervisorScope =
+        'Common process/resource admission samples ownership and aggregate filesystem/RSS at250ms outside application callbacks. This environment work remains part of the hosted stratum; no per-frame trace/profiler added.';
+    }
+    for (const row of report.rows) {
+      if (row.kind === 'first30' && !admitted.artifacts.baseline) await ensureBaseline();
       const dir = join(evidence, row.id);
       await mkdir(dir);
       const rawPath = join(dir, 'report.json'),
@@ -716,110 +926,139 @@ async function main() {
         freeBytesAtAdmission: scratchSpace.bavail * scratchSpace.bsize,
         minimumRemainingBytes: GiB,
       };
+      if (extension === 'offline') {
+        const authorityPath = join(dir, 'scratch-authority.json');
+        await writeFile(
+          authorityPath,
+          JSON.stringify(
+            {
+              format: 'SoloHostedRowScratchV1',
+              runRoot: output,
+              rowId: row.id,
+              storage: row.storage,
+            },
+            null,
+            2,
+          ) + '\n',
+          { flag: 'wx' },
+        );
+        row.scratchAuthority = { path: authorityPath, ...(await digest(authorityPath)) };
+      }
       row.startedAt = new Date().toISOString();
+      progress('row-start', row.id);
       row.status = 'failed';
       try {
         await inspect();
         await sourceIdentity(repository, report.tooling.revision);
         for (const role of ['baseline', 'candidate'])
           await sourceIdentity(sources[role], plan[role].revision);
-        assert.deepEqual(await digest(fixture), {
-          bytes: plan.fixture.bytes,
-          sha256: plan.fixture.sha256,
-        });
-        server = await startProductionPreview({
-          root: payloads[row.source],
-          port: 0,
-          fixtureAccess: row.kind === 'first30',
-          cache: 'policy',
-        });
-        const url = new URL('game/', server.url).href;
-        const response = await fetch(new URL('game/build-info.json', server.url), {
-          signal: AbortSignal.timeout(10000),
-        });
-        const infoBytes = Buffer.from(await response.arrayBuffer());
-        const build = JSON.parse(infoBytes);
-        assert.equal(build.sourceRevision, plan[row.source].revision);
-        for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS))
-          assert.equal(response.headers.get(name), value);
-        row.served = {
-          url,
-          build,
-          buildInfoSHA256: hash(infoBytes),
-          headers: server.headers,
-          mode: server.mode,
-          fixtureAccess: server.fixtureAccess,
-        };
-        const args =
-          row.kind === 'first30'
-            ? [
-                join(here, 'qualify-solo-runtime.mjs'),
-                url,
-                fixture,
-                rawPath,
-                '--work-probe',
-                '--server-fixture-access',
-                '--cadence=settled120',
-                `--source-revision=${plan[row.source].revision}`,
-                ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
-                ...(row.engine === 'webkit' ? ['--browser=webkit', '--context=persistent'] : []),
-              ]
-            : [
-                join(
-                  here,
-                  row.kind === 'worker'
-                    ? 'verify-solo-mp3-worker.mjs'
-                    : 'verify-solo-paused-render.mjs',
-                ),
-                url,
-                rawPath,
-                '--fixture-access',
-                ...(row.engine === 'webkit' ? ['--browser=webkit'] : []),
-              ];
-        // The server owns the unchanged localhost access fixture. Authentication is excluded.
-        const env = { ...cleanEnv, TMPDIR: tmp };
-        const command = await ownedCommand([process.execPath, ...args], {
-          cwd: repository,
-          env,
-          log: join(dir, 'command.log'),
-          receipt: join(dir, 'command.json'),
-          timeoutMs: row.timeoutMs,
-          inspect: async () => {
-            await inspect();
-            assert((await evidenceSize(dir)) <= 32 * MiB, 'row-evidence-cap');
-          },
-        });
-        row.command = command;
-        let raw = null;
-        try {
-          raw = await json(rawPath);
-        } catch (error) {
-          row.reportReadFailure = error.message;
-        }
-        row.rawPerformanceGateStatus = raw?.performanceGateStatus ?? null;
-        row.status = functionalResult(row, raw, command, plan[row.source].revision)
-          ? 'passed'
-          : 'failed';
-        row.browserVersion = raw?.environment?.browserVersion ?? raw?.browser ?? null;
-        assert.equal(typeof row.browserVersion, 'string', 'Actual browser version is required');
-        const previous = report.rows.find(
-          (other) => other !== row && other.engine === row.engine && other.browserVersion,
-        );
-        if (previous)
-          assert.equal(
-            row.browserVersion,
-            previous.browserVersion,
-            'Browser version changed across rows',
+        if (extension) {
+          await adapter[extension === 'offline' ? 'runOfflineRow' : 'runSustainedRow'](
+            context,
+            row,
+            dir,
+            tmp,
           );
-        assert(
-          !command.cleanupUnconfirmed && !command.survivors.length && !command.ambiguous.length,
-          'Owned or ambiguous browser remains',
-        );
+        } else {
+          assert.deepEqual(await digest(fixture), {
+            bytes: plan.fixture.bytes,
+            sha256: plan.fixture.sha256,
+          });
+          server = await startProductionPreview({
+            root: payloads[row.source],
+            port: 0,
+            fixtureAccess: row.kind === 'first30',
+            cache: 'policy',
+          });
+          const url = new URL('game/', server.url).href;
+          const response = await fetch(new URL('game/build-info.json', server.url), {
+            signal: AbortSignal.timeout(10000),
+          });
+          const infoBytes = Buffer.from(await response.arrayBuffer());
+          const build = JSON.parse(infoBytes);
+          assert.equal(build.sourceRevision, plan[row.source].revision);
+          for (const [name, value] of Object.entries(PUBLIC_SECURITY_HEADERS))
+            assert.equal(response.headers.get(name), value);
+          row.served = {
+            url,
+            build,
+            buildInfoSHA256: hash(infoBytes),
+            headers: server.headers,
+            mode: server.mode,
+            fixtureAccess: server.fixtureAccess,
+          };
+          const args =
+            row.kind === 'first30'
+              ? [
+                  join(here, 'qualify-solo-runtime.mjs'),
+                  url,
+                  fixture,
+                  rawPath,
+                  '--work-probe',
+                  '--server-fixture-access',
+                  '--cadence=settled120',
+                  `--source-revision=${plan[row.source].revision}`,
+                  ...(row.source === 'baseline' ? ['--baseline-runtime'] : []),
+                  ...(row.engine === 'webkit' ? ['--browser=webkit', '--context=persistent'] : []),
+                ]
+              : [
+                  join(
+                    here,
+                    row.kind === 'worker'
+                      ? 'verify-solo-mp3-worker.mjs'
+                      : 'verify-solo-paused-render.mjs',
+                  ),
+                  url,
+                  rawPath,
+                  '--fixture-access',
+                  ...(row.engine === 'webkit' ? ['--browser=webkit'] : []),
+                ];
+          // The server owns the unchanged localhost access fixture. Authentication is excluded.
+          const env = { ...cleanEnv, TMPDIR: tmp };
+          const command = await ownedCommand([process.execPath, ...args], {
+            cwd: repository,
+            env,
+            log: join(dir, 'command.log'),
+            receipt: join(dir, 'command.json'),
+            timeoutMs: row.timeoutMs,
+            inspect: async () => {
+              await inspect();
+              assert((await evidenceSize(dir)) <= 32 * MiB, 'row-evidence-cap');
+            },
+          });
+          row.command = command;
+          let raw = null;
+          try {
+            raw = await json(rawPath);
+          } catch (error) {
+            row.reportReadFailure = error.message;
+          }
+          row.rawPerformanceGateStatus = raw?.performanceGateStatus ?? null;
+          row.status = functionalResult(row, raw, command, plan[row.source].revision)
+            ? 'passed'
+            : 'failed';
+          row.browserVersion = raw?.environment?.browserVersion ?? raw?.browser ?? null;
+          assert.equal(typeof row.browserVersion, 'string', 'Actual browser version is required');
+          const previous = report.rows.find(
+            (other) => other !== row && other.engine === row.engine && other.browserVersion,
+          );
+          if (previous)
+            assert.equal(
+              row.browserVersion,
+              previous.browserVersion,
+              'Browser version changed across rows',
+            );
+          assert(
+            !command.cleanupUnconfirmed && !command.survivors.length && !command.ambiguous.length,
+            'Owned or ambiguous browser remains',
+          );
+        }
       } catch (error) {
         row.status = 'failed';
         row.error = String(error.stack ?? error);
         if (
           !row.command ||
+          row.serverCleanupFailure ||
           row.command.cleanupUnconfirmed ||
           row.command?.survivors.length ||
           row.command?.ambiguous.length
@@ -840,13 +1079,25 @@ async function main() {
           ]);
         }
         row.completedAt = new Date().toISOString();
+        progress('row-end', row.id, { status: row.status });
         await save(finalPath, report);
         await inspect();
-        assert((await evidenceSize(dir)) <= 32 * MiB, 'Final row evidence cap');
+        assert(
+          (await evidenceSize(dir)) <= (extension ? (plan.rowEvidenceBytes ?? 32 * MiB) : 32 * MiB),
+          'Final row evidence cap',
+        );
       }
     }
     await inspect();
-    report.status = report.rows.every((row) => row.status === 'passed') ? 'passed' : 'failed';
+    report.status =
+      extension === 'offline'
+        ? report.rows.every((row) => row.status === 'completed-diagnostic')
+          ? 'completed-diagnostic'
+          : 'failed'
+        : report.rows.every((row) => row.status === 'passed')
+          ? 'passed'
+          : 'failed';
+    if (extension === 'offline') report.offlineQualification = 'not-qualified-diagnostic-only';
   } catch (error) {
     report.status = 'failed';
     report.failure = String(error.stack ?? error);
@@ -858,8 +1109,16 @@ async function main() {
       report.serverCleanupFailure = true;
     }
     report.completedAt = new Date().toISOString();
+    const baselineScope =
+      report.baselineSetupStatus !== 'passed'
+        ? 'baseline not admitted; see setup status'
+        : report.baselineAcquisition === 'pinned-normal-artifact-reverified'
+          ? 'baseline pinned prior normal Linux artifact with fresh full inner/source verification'
+          : 'baseline fresh pinned-source normal Linux build';
     report.artifactScope =
-      'Candidate exact retained CI package; baseline fresh pinned-source Linux build. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification.';
+      extension === 'sustained'
+        ? `Candidate exact retained CI package; ${baselineScope}. Hosted source/context-scoped raw timing gates only; common process/resource supervisor is part of this environment. No authentication, physical-device, GPU or thermal qualification.`
+        : `Candidate exact retained CI package; ${baselineScope}. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification.`;
     const finalSpace = await statfs(output);
     assert(finalSpace.bavail * finalSpace.bsize >= GiB + 4 * MiB, 'Final evidence disk reserve');
     assert(
@@ -878,6 +1137,28 @@ async function main() {
       }
     };
     await walk(evidence);
+    if (profileEvidence) {
+      assert((await evidenceSize(profileEvidence)) <= plan.profileEvidenceBytes - 4 * MiB);
+      const profiles = [];
+      for (const name of await readdir(profileEvidence)) {
+        const dir = join(profileEvidence, name);
+        assert((await lstat(dir)).isDirectory());
+        for (const item of await readdir(dir)) {
+          const file = join(dir, item),
+            info = await lstat(file);
+          assert(info.isFile() && !info.isSymbolicLink());
+          profiles.push({ path: `${name}/${item}`, ...(await digest(file)) });
+        }
+      }
+      const profileInventory = Buffer.from(JSON.stringify(profiles, null, 2) + '\n');
+      assert(profileInventory.length <= 2 * MiB);
+      await writeFile(join(profileEvidence, 'inventory.json'), profileInventory, { flag: 'wx' });
+      report.profileEvidence = {
+        path: profileEvidence,
+        inventorySHA256: hash(profileInventory),
+        files: profiles.length,
+      };
+    }
     const failExpiredFinalization = () => {
       if (stop.signal.aborted || Date.now() - start >= plan.helperTimeoutMs) {
         report.status = 'failed';
@@ -911,7 +1192,7 @@ async function main() {
     clearTimeout(overallDeadline);
     process.removeListener('SIGTERM', stopSignal);
     process.removeListener('SIGINT', stopSignal);
-    process.exitCode = report.status === 'passed' ? 0 : 1;
+    process.exitCode = ['passed', 'completed-diagnostic'].includes(report.status) ? 0 : 1;
   }
 }
 
