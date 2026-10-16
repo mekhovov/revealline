@@ -6,6 +6,7 @@ the second review rebased the accumulated work onto `3585f2c32` before edits.
 The third review rebased onto `20768f599` before its corrections. The fourth
 review rebased onto `1cdf442dc` before edits; earlier source-bound reports retain
 their original hashes.
+The fifth review rebased onto `0597edff7` before its corrections.
 This document supplements the original plan; the
 [implementation status](fpv-tuning-implementation-status.md) retains earlier
 results and limitations.
@@ -378,3 +379,63 @@ pass within the existing Pages cap.
 This closes the available software scope. Original measurement, platform and
 public-rollout gates remain as listed above; none is represented as completed or
 waived. The tested commit is ready for normal reviewed Pages integration.
+
+## Fifth review — exact firmware headers and asynchronous saves
+
+Reviewed again on 16 October, then rebased all five feature commits onto current
+`main` at `0597edff7` before implementation. The rebased commits are `6f04efd1f`,
+`e89af7a15`, `61454f37d`, `054e19d37` and `54ad967de`. Main adds publication
+controller and isolated candidate-composition checks; it does not change the
+simulator runtime. Those integration checks must pass without broadening this
+branch's publication eligibility.
+
+Additional primary examples refine the acceptance checks without expanding the
+release:
+
+| Reference | Finding and decision |
+| --- | --- |
+| [FPVSIM's rate-system guide](https://fpvsim.com/how-tos/simulator/tuning/actual-quick-kiss-rates) | Keeps aircraft, camera and calibration fixed while comparing center, half and full-stick behavior, and applies settings before reloading the world. Retain our explicit Apply & restart and repeatable practice workflow. Rate numbers are not interchangeable between algorithms. |
+| [CurryKitten's Flight Assist menu](https://github.com/CurryKitten/CurryKitten-Sim/wiki/Flight-Assist-Menu) | Documents axis-colored curves, moving markers, rotation preview and explicit saving. Keep the evaluator shared between preview and flight; save feedback must describe the settings actually stored. Its UI ceiling is not a substitute for verified firmware limits. |
+| [FPV Freerider's developer page](https://fpv-freerider.itch.io/fpv-freerider) | Separately exposes rates, camera and physics, and documents recalibration after an input-system change. Preserve our calibration/rates separation and migration behavior; the page does not establish Betaflight-equivalent curves. |
+| [Uncrashed's official updates](https://steamcommunity.com/app/1682970/allnews//1000) | Rate-model, replay and optional battery-sag changes reinforce independent curve fixtures, frozen recordings and explicit rollout. Lens distortion, video export and additional camera controls remain optional future features. |
+
+Two independent reproductions reopened concrete software work:
+
+1. **Exact source-version interpretation.** An explicit old/future or
+   development firmware header must not become a missing header or lose its
+   suffix and borrow a verified release's defaults. Reject unsupported or
+   conflicting versions before preview/save. Continue accepting exact supported
+   release headers and genuinely headerless `dump rates`/snippet workflows.
+2. **Honest asynchronous aircraft saves.** Capture the submitted tune, prevent
+   overlapping Save operations, and keep a newer visible edit marked as unsaved
+   when an earlier save finishes. Failed saves remain retryable; late results
+   cannot revive a disposed editor. The active worker retains its frozen tune
+   until the existing explicit restart action.
+
+Verify these boundaries with positive and negative importer/UI cases, a delayed
+save/edit regression, real-browser interactions, the full practice suite and
+normal generated Pages online/offline checks. Refresh affected native/host
+source-bound evidence; reuse unchanged numerical evidence only after checking
+every recorded hash. Keep historical results and the existing publication,
+physics and promotion gates unchanged.
+
+The original phase disposition remains in force: finish the available software,
+record missing measurements accurately, and commit the tested result. No new
+radio, pilot or aircraft evidence is available. Their absence does not block
+these corrections and does not authorize claiming physical qualification or
+promoting Advanced to scored/default flight.
+
+### Fifth-review completion
+
+Both reopened software items are implemented and independently reviewed. The
+[combined receipt](fpv-tuning-fifth-review-verification.json) binds 673 passing
+practice tests, 75 native tests, 79 publication-tooling integration tests, seven
+linted/formatted modules, six browser-editor cases, actual Advanced comparison
+and World/Regional checks, release validation and normal production Pages
+online/offline checks. Unchanged numerical sources retain historical evidence;
+no benchmark or physical measurement is invented.
+
+The available software scope is complete. The original qualification gates remain
+explicitly open, including unavailable radio/pilot sessions, real-aircraft data,
+wider platforms and public rollout. The tested commit is ready for normal Pages
+integration; local build success does not publish or promote Advanced.

@@ -1,12 +1,79 @@
 # FPV tuning implementation status
 
 Updated 2026-10-16. Work is on `codex/fpv-rates-and-tuning`, rebased onto
-`origin/main` at `1cdf442dc` before the fourth review. The four earlier feature
-commits are now `da420505a`, `6d846f285`, `c4b771b14` and `8fe7b118f`; historical
-reports keep their original hashes. Unrelated local files are preserved. A local
-commit does not deploy GitHub Pages.
+`origin/main` at `0597edff7` before the fifth review. The earlier feature commits
+are now `6f04efd1f`, `e89af7a15`, `61454f37d`, `054e19d37` and `54ad967de`;
+historical reports keep their original hashes. Unrelated local files are
+preserved. A local commit does not deploy GitHub Pages.
 
-## Fourth review — calibration, presets and current-main integration
+## Fifth review — firmware identity and pending aircraft saves
+
+The [updated plan](fpv-tuning-completion-plan.md#fifth-review--exact-firmware-headers-and-asynchronous-saves)
+adds primary examples from FPVSIM, CurryKitten, FPV Freerider and Uncrashed.
+They reinforce consistent comparison conditions, explicit application/saving,
+calibration separation and frozen replay settings. Independent audits reproduced
+and corrected two software gaps:
+
+- Explicit unsupported firmware headers retain their entire version, including
+  development, release-candidate and build suffixes. Old/future versions cannot
+  be treated as headerless, and a development build cannot borrow an exact
+  verified release's defaults. Conflicting manual selections and multi-header
+  files reject atomically. Exact supported tags and genuine headerless workflows
+  remain supported; the verified firmware set has not expanded.
+- An Advanced aircraft save captures its submitted values and prevents duplicate
+  pending saves. Later valid or incomplete edits remain visible and unsaved when
+  the earlier request completes. Successful captures become the revert baseline;
+  failed saves preserve it and allow retry. Late completion cannot update a
+  disposed editor. Running attempts retain their frozen configuration.
+
+Both fixes passed independent review. The full practice suite passes **673 tests**
+(668 top-level and five nested), with no failures, skips or cancellations.
+All **75 native tests**, **79 current-main publication integration tests** and
+seven-module lint/formatting checks pass.
+
+The six [editor browser cases](fpv-tuning-browser-fifth-review-qualification.json)
+pass in Chrome, Firefox and WebKit, desktop and narrow touch emulation, including
+unsupported-header preview/save rejection with unchanged library bytes. All 23
+source hashes match. The [actual Advanced browser check](fpv-advanced-comparison-fifth-review.json)
+holds the save callback, submits mass 0.8, retains a newer 0.9 draft and confirms
+the active worker still uses 0.65. Explicit revert/restart then uses 0.8. This is
+controlled asynchronous-callback testing, not a measurement of real lock
+contention. All eleven workers terminate; prior ghost/tamper/class/cancellation
+checks pass and there are no browser errors.
+
+The [World/Regional check](fpv-advanced-regional-browser-smoke-2026-10-16-fifth-review.json)
+passes recording replay, recovery adoption, corruption rejection, cancellation,
+landing/takeoff and Legacy return. All 143 source hashes match; five workers are
+disposed with no page errors. The [native staging receipt](fpv-native-fifth-review-staging.json)
+verifies 172 runtime source hashes, desktop 183 files / 18,280,517 bytes and iOS
+188 files / 18,354,744 bytes. Security policies and package limits remain
+unchanged. No Electron/iOS runtime interactions were repeated; previous actual
+Electron evidence remains historical, and iOS runtime remains unavailable.
+
+All 20 source pins in the [third-review numerical matrix](fpv-advanced-runtime-qualification-2026-10-16-third-review.json)
+still match exactly. Its six-runtime numerical/determinism observations remain
+historical evidence; this review does not claim a new timing run. Dynamics,
+backend identities, frozen 250 Hz frequency and promotion gates are unchanged.
+
+Release validation passes 3,328 distribution files, valid literal references,
+13,651 EN/UK messages and 9,049 references, plus generated runtime/asset checks.
+The seven existing navigation warnings remain unchanged.
+
+The normal production build and [generated Pages check](fpv-pages-fifth-review-live-testing-evidence.json)
+pass Academy and World online and in isolated offline contexts. All 3,433 manifest
+entries and the ZIP checksum verify, and both changed runtime modules match the
+checkout. The 3,435-file publication is 963,654,068 bytes; the conservative archive
+forecast leaves 7,723,264 bytes below the unchanged 980,000,000-byte cap.
+
+The [combined fifth-review receipt](fpv-tuning-fifth-review-verification.json)
+binds the final implementation and results. Both reproduced software gaps are
+closed; no additional actionable gaps were found in the bounded workflow,
+transfer and lifecycle audits. The available software scope is complete and ready
+for normal reviewed Pages integration. The original physical, wider-platform and
+public-rollout gates remain open; Advanced stays optional, unscored and ineligible
+as the default. This local commit does not deploy Pages.
+
+## Fourth review — historical calibration, presets and integration evidence
 
 The [updated plan](fpv-tuning-completion-plan.md#fourth-review--calibration-and-preview-boundaries)
 adds primary-source findings from Betaflight App, WebFPV, QuadMath and SimITL.

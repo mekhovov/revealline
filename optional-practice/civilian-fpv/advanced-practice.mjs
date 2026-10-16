@@ -232,7 +232,8 @@ export function mountAdvancedPractice({
     lastConsumedPollAt = null,
     observedPollHz = null;
   let removeNativeInactive = null,
-    exporting = false;
+    exporting = false,
+    savingConfiguration = false;
   const fileOptions = {
     locationRef: win.location,
     documentRef: doc,
@@ -561,16 +562,28 @@ export function mountAdvancedPractice({
   exportTuning.disabled = true;
   saveTuning.hidden = typeof onSaveConfiguration !== 'function';
   listen(saveTuning, 'click', async () => {
+    if (disposed || savingConfiguration) return;
     try {
       const next = readTuning();
+      savingConfiguration = true;
+      saveTuning.disabled = true;
       await onSaveConfiguration?.(structuredClone(next));
       if (!disposed) {
-        draftConfiguration = next;
         savedConfiguration = structuredClone(next);
-        tunePreview.textContent = copy.savedConfiguration;
+        let unchanged = false;
+        try {
+          unchanged = JSON.stringify(readTuning()) === JSON.stringify(next);
+        } catch {
+          // Incomplete edits remain a draft while the captured save completes.
+        }
+        if (unchanged) draftConfiguration = next;
+        tunePreview.textContent = unchanged ? copy.savedConfiguration : copy.draftConfiguration;
       }
     } catch (error) {
       if (!disposed) tunePreview.textContent = `${copy.invalidConfiguration} ${error.message}`;
+    } finally {
+      savingConfiguration = false;
+      if (!disposed) saveTuning.disabled = false;
     }
   });
   listen(revertTuning, 'click', () => {

@@ -583,6 +583,34 @@ test('headerless CLI version selection and firmware-default baseline support del
   assert.match(f.ui.root.textContent, /No verified SIM adapter/);
 });
 
+test('unsupported firmware headers invalidate a prior preview and cannot save against another version', async (t) => {
+  const f = fixture(t),
+    initial = f.store.export();
+  f.edit('Operation', 'diff', { tag: 'select', event: 'change' });
+  for (const version of ['3.5.7', '2026.6.2-dev', '2026.6.2+custom.1']) {
+    f.edit('Source / export firmware version', '', { tag: 'select', event: 'change' });
+    f.edit('Paste CLI or a SIM rate profile', '# Betaflight 2026.6.2\nset roll_srate = 83', {
+      tag: 'textarea',
+    });
+    await f.click('Preview import');
+    f.edit('Source / export firmware version', '2026.6.2', { tag: 'select', event: 'change' });
+    f.edit('Paste CLI or a SIM rate profile', `# Betaflight ${version}\nset roll_srate = 90`, {
+      tag: 'textarea',
+    });
+    await f.click('Preview import');
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      /conflicts with the file header/,
+    );
+    await f.click('Save import as new profile');
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      /Preview the import first/,
+    );
+    assert.equal(f.store.export(), initial);
+  }
+});
+
 test('shared profile users, name history and per-drone vertical camera values remain visible', async (t) => {
   const f = fixture(t);
   await f.click('New Actual profile');

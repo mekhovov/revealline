@@ -159,6 +159,169 @@ test('editing and saving an aircraft leave the active worker frozen until explic
   assert.equal(saves.length, 1);
 });
 
+test('a pending aircraft save keeps later edits unsaved, ignores duplicate clicks and updates the revert baseline', async (t) => {
+  let finish;
+  const saves = [];
+  const f = await fixture(t, {
+    onSaveConfiguration(configuration) {
+      saves.push(configuration);
+      return new Promise((resolve) => {
+        finish = resolve;
+      });
+    },
+  });
+  const worker = LocalWorker.instances.at(-1),
+    mass = f.container
+      .querySelectorAll('label')
+      .find((node) => node.textContent.startsWith('Mass (kg)'))
+      .querySelector('input'),
+    save = f.button('Save aircraft for next flight');
+  mass.value = '0.8';
+  mass.emit('input');
+  save.emit('click');
+  assert.equal(save.disabled, true);
+  mass.value = '0.9';
+  mass.emit('input');
+  save.emit('click');
+  assert.equal(saves.length, 1);
+  finish();
+  await waitFor(() => !save.disabled);
+  assert.equal(saves[0].aircraft.mass, 0.8);
+  assert.equal(mass.value, '0.9');
+  assert.match(f.container.textContent, /Draft changed\. Restart practice to test it/);
+  assert.doesNotMatch(f.container.textContent, /Aircraft and controller saved for the next flight/);
+  assert.equal(worker.messages[0].options.aircraft.mass, 0.65);
+  assert.equal(worker.messages.filter((message) => message.type === 'init').length, 1);
+  assert.equal(worker.terminated, false);
+  f.button('Revert aircraft draft').emit('click');
+  assert.equal(mass.value, '0.8');
+});
+
+test('completing an older aircraft save cannot replace a newly selected template', async (t) => {
+  let finish;
+  const f = await fixture(t, {
+    onSaveConfiguration: () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  });
+  const aircraft = f.container
+      .querySelectorAll('label')
+      .find((node) => node.textContent.startsWith('Aircraft template'))
+      .querySelector('select'),
+    save = f.button('Save aircraft for next flight'),
+    worker = LocalWorker.instances.at(-1);
+  save.emit('click');
+  aircraft.value = 'whoop';
+  aircraft.emit('change');
+  finish();
+  await waitFor(() => !save.disabled);
+  assert.equal(aircraft.value, 'whoop');
+  assert.match(f.container.textContent, /Draft changed\. Restart practice to test it/);
+  f.button('Restart practice').emit('click');
+  await waitFor(
+    () => LocalWorker.instances.at(-1) !== worker && !f.button('Start practice').disabled,
+  );
+  assert.equal(LocalWorker.instances.at(-1).messages[0].options.aircraft.id, 'whoop');
+  f.button('Revert aircraft draft').emit('click');
+  assert.equal(aircraft.value, 'freestyle');
+});
+
+test('an incomplete aircraft edit survives a pending save and can revert to the saved values', async (t) => {
+  let finish;
+  const f = await fixture(t, {
+    onSaveConfiguration: () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  });
+  const mass = f.container
+      .querySelectorAll('label')
+      .find((node) => node.textContent.startsWith('Mass (kg)'))
+      .querySelector('input'),
+    save = f.button('Save aircraft for next flight');
+  mass.value = '0.8';
+  mass.emit('input');
+  save.emit('click');
+  mass.value = '';
+  mass.emit('input');
+  finish();
+  await waitFor(() => !save.disabled);
+  assert.equal(mass.value, '');
+  assert.match(f.container.textContent, /Draft changed\. Restart practice to test it/);
+  f.button('Revert aircraft draft').emit('click');
+  assert.equal(mass.value, '0.8');
+});
+
+test('failed aircraft saves retain edits and the old baseline, then allow a successful retry', async (t) => {
+  let rejectSave, finish;
+  const saves = [];
+  const f = await fixture(t, {
+    onSaveConfiguration(configuration) {
+      saves.push(configuration);
+      return new Promise((resolve, reject) => {
+        finish = resolve;
+        rejectSave = reject;
+      });
+    },
+  });
+  const mass = f.container
+      .querySelectorAll('label')
+      .find((node) => node.textContent.startsWith('Mass (kg)'))
+      .querySelector('input'),
+    save = f.button('Save aircraft for next flight');
+  mass.value = '0.8';
+  mass.emit('input');
+  save.emit('click');
+  rejectSave(new Error('Storage is full'));
+  await waitFor(() => !save.disabled);
+  assert.equal(mass.value, '0.8');
+  assert.match(f.container.textContent, /Storage is full/);
+  f.button('Revert aircraft draft').emit('click');
+  assert.equal(mass.value, '0.65');
+  mass.value = '0.9';
+  mass.emit('input');
+  save.emit('click');
+  mass.value = '1';
+  mass.emit('input');
+  mass.value = '0.9';
+  mass.emit('input');
+  finish();
+  await waitFor(() => !save.disabled);
+  assert.equal(saves.length, 2);
+  assert.equal(saves[1].aircraft.mass, 0.9);
+  assert.match(f.container.textContent, /Aircraft and controller saved for the next flight/);
+  mass.value = '1';
+  mass.emit('input');
+  f.button('Revert aircraft draft').emit('click');
+  assert.equal(mass.value, '0.9');
+});
+
+for (const outcome of ['success', 'failure'])
+  test(`closing Advanced while an aircraft save waits ignores its late ${outcome}`, async (t) => {
+    let finish, rejectSave;
+    const f = await fixture(t, {
+      onSaveConfiguration: () =>
+        new Promise((resolve, reject) => {
+          finish = resolve;
+          rejectSave = reject;
+        }),
+    });
+    const root = f.session.element,
+      worker = LocalWorker.instances.at(-1),
+      save = f.button('Save aircraft for next flight');
+    save.emit('click');
+    f.session.dispose();
+    const text = root.textContent;
+    if (outcome === 'success') finish();
+    else rejectSave(new Error('Storage is full'));
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(root.textContent, text);
+    assert.equal(f.container.contains(root), false);
+    assert.equal(save.disabled, true);
+    assert.equal(worker.terminated, true);
+  });
+
 test('native inactivity pauses and releases the bridge; cancelled/failed shares keep a usable session', async (t) => {
   let inactive,
     removed = 0;
