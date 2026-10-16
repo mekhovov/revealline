@@ -12,7 +12,8 @@ def cleared(row, clearances):
     return (row['path'], row.get('sha256')) in clearances
 
 
-def build(manifests, state, verified_receipts, library_manifests, catalogue, source_root, clearances=()):
+def build(manifests, state, verified_receipts, library_manifests, catalogue, source_root,
+          clearances=(), inventory_set_final=False):
     approved = {(x['path'], x['sha256']) for x in clearances}
     files, symlinks, other, conflicts = {}, {}, [], []
     for manifest in manifests:
@@ -83,6 +84,7 @@ def build(manifests, state, verified_receipts, library_manifests, catalogue, sou
     safe_links = [r for r in symlinks.values() if r not in held_links]
     result = {'format': 'FPVPreservationIndex.v1', 'repo': 'mekhovov/revealline',
               'sourceRoot': source_root, 'inventoryComplete': inventory_state.get('complete') is True,
+              'inventorySetFinal': inventory_set_final,
               'inventoryInputs': [{'path': str(p), 'sha256': digest(p)} for p in manifests],
               'parts': parts, 'directAssets': needed_direct, 'files': covered, 'symlinks': safe_links,
               'held': held + held_links, 'uncovered': uncovered, 'inventoryConflicts': conflicts,
@@ -90,7 +92,8 @@ def build(manifests, state, verified_receipts, library_manifests, catalogue, sou
               'gitCheckouts': [r for r in other if r.get('kind') == 'git-checkout'],
               'excluded': [r for r in other if r.get('kind') == 'excluded'],
               'reviewClearances': list(clearances),
-              'coverageComplete': inventory_state.get('complete') is True and not (held or held_links or uncovered or conflicts or unresolved),
+              'coverageComplete': inventory_set_final and inventory_state.get('complete') is True
+                                  and not (held or held_links or uncovered or conflicts or unresolved),
               'portableRestoreComplete': False, 'createdAtUnix': time.time()}
     result['counts'] = {'inventoryFilePaths': len(files), 'coveredFilePaths': len(covered),
                         'heldFilePaths': len(held), 'uncoveredFilePaths': len(uncovered),
@@ -109,11 +112,13 @@ def main():
     p.add_argument('--catalogue', required=True)
     p.add_argument('--source-root', required=True)
     p.add_argument('--clearances')
+    p.add_argument('--inventory-set-final', action='store_true',
+                   help='Root-confirmed complete set includes primary, flat, ignored payload and final delta manifests')
     p.add_argument('--output', required=True)
     a = p.parse_args()
     clearances = load_clearances(a.clearances)
     result = build(a.manifest, a.inventory_state, a.verified_receipt, a.library_manifest,
-                   a.catalogue, a.source_root, clearances)
+                   a.catalogue, a.source_root, clearances, a.inventory_set_final)
     with Path(a.output).open('x') as f:
         json.dump(result, f, indent=2)
         f.write('\n')

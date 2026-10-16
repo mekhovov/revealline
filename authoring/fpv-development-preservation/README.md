@@ -12,6 +12,8 @@ Parts are deterministic regular-file-only TAR streams compressed with Zstandard.
 
 `build_index.py` joins the primary and supplemental inventories, verified CAS receipts, the verified original-archive manifest and the existing release digest catalogue. It never reads source payloads. Missing objects, unreviewed records, conflicting inventory rows, errors, unstable files or an incomplete root inventory prevent its coverage-complete field. Git checkout and exclusion records remain explicit. An interim index is a progress report, not a completion receipt.
 
+Coverage completion also requires `--inventory-set-final`, which may be supplied only after the root audit confirms that all primary, flat-file, ignored-payload and final-delta manifests are included. A completed primary walk alone does not establish that complete input set. Active-batch reservations avoid duplicate packing and never count as uploaded or verified coverage.
+
 ## Portable restoration
 
 The restore utility requires Python 3.10+, `zstd`, the GitHub CLI, authenticated read access, the final index, and these Python files in one directory. Choose fresh output and cache directories on any disk; the old volume is not required. Paths below are examples, not fixed locations:
