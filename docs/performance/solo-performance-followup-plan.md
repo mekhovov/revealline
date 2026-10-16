@@ -6,6 +6,8 @@ Updated 2026-10-16 for [PR #1544](https://github.com/mekhovov/revealline/pull/15
 
 The latest independently verified development package is exact source `2ec605eb76e38f9c9a3e21b7fa82dd80c580c457`, including runtime `fd96e86cf4b689d9bb9511035eba38424057043b`. Its CI focused suite passes **819/819 across 65 complete files**. All 3,502 ZIP members, supported source projections, static workers, offline resource closure and exact CSP pass independent verification. Full lint and validation pass; eight formatting failures match original main byte for byte. The original archive and proof readbacks are retained locally, and the previous baseline/8c1 payloads remain untouched. This is package evidence, not native or physical qualification. [Package identities and limits](solo-artifact-2ec605eb.md).
 
+Runtime `a5106a7cc` adds Demo decorative adaptation and cached display dimensions, with 91/91 modeled checks and full repository lint passing. Its successor production gate now contains 68 complete files. The previous exact `41e925a6` Company job completes all 1,363 Company tests and packaging successfully, and its Appearance job also succeeds; these preceding-source CI results do not qualify the new runtime. [Exact CI distinctions](solo-remote-correctness.md#other-ci-evidence).
+
 The original six phases remain the acceptance structure:
 
 | Phase                            | Implementation status                                                                                                                       | Remaining acceptance                                                                                                                    |

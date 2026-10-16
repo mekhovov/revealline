@@ -106,3 +106,15 @@ passing. Source-release checks also passed (72 JavaScript and 64 Python tests).
 The subsequent packaging step was canceled, and package uploads were skipped.
 The job is **canceled**, not passed; complete test steps do not establish a
 successful package or whole-PR pass.
+
+The next exact-head Company job, source
+`41e925a6fbd7e1d3d68fbe092bf8cee368f7827a`, **passed** in
+[run 38975072276](https://github.com/mekhovov/revealline/actions/runs/38975072276).
+It completed the 1,363 Company tests, all 1,641 focused JavaScript tests,
+72 source-release JavaScript tests and 64 Python tests, then successfully
+compiled and inspected the original package members. The retained 676,571-byte
+job log has SHA-256 `694d43d0983b36fba2f8feb5fbc701f63af8e5d8236d51acb7f4672ef8ac92cd`.
+The earlier canceled job remains a separate result. Appearance production CI
+also succeeded at exact `41e925a6` in run `38975072909`; that archive was not
+independently acquired, and the latest verified local package remains `2ec605eb`.
+These results do not qualify the subsequent Demo runtime change.

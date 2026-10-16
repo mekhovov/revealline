@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { bindAppearanceMetadata } from './prepare-appearance-preview-metadata.mjs';
 import { parseTestPolicy, policyDecision } from '../publishing/test-policy.mjs';
 
 const workflow = await readFile(
@@ -162,4 +163,128 @@ test('required preview receipts require successful focused checks and bind their
   await assert.rejects(bindEvidence('required', 'skipped'), /outcome does not match/);
   await assert.rejects(bindEvidence('required', 'failure'), /outcome does not match/);
   await assert.rejects(bindEvidence('waived', 'success'), /outcome does not match/);
+});
+
+function compactMetadataFixture(mode = 'required') {
+  const sourceRevision = 'a'.repeat(40),
+    runURL = 'https://github.com/mekhovov/revealline/actions/runs/123';
+  const mainBytes = Buffer.from(JSON.stringify({ sourceRevision, sha256: 'b'.repeat(64) }));
+  const identityBytes = Buffer.from(
+    JSON.stringify({
+      format: 'AppearancePreview.v1',
+      sourceRevision,
+      sourceTree: 'c'.repeat(40),
+      workflowRun: runURL,
+      node: 'v22.13.1',
+      deployed: false,
+      releaseQualified: false,
+      artifacts: [{ path: 'distribution.zip', bytes: 100, sha256: 'b'.repeat(64) }],
+      focusedTests: {
+        result: mode === 'waived' ? 'waived' : 'passed',
+        executed: mode !== 'waived',
+      },
+      testPolicy: { mode },
+    }),
+  );
+  const checksumBytes = Buffer.from(
+    `${'b'.repeat(64)}  distribution.zip\n${digest(mainBytes)}  main-build.json\n${digest(identityBytes)}  preview-identity.json\n`,
+  );
+  return {
+    sourceRevision,
+    runURL,
+    artifactID: '456',
+    artifactURL: runURL + '/artifacts/456',
+    artifactDigest: 'd'.repeat(64),
+    identityBytes,
+    mainBytes,
+    checksumBytes,
+    manifestBytes: Buffer.from(JSON.stringify({ formatVersion: 1, sourceRevision, files: [] })),
+  };
+}
+
+test('compact metadata binds actual full-upload identity and original bytes without copying the payload', () => {
+  const input = compactMetadataFixture(),
+    files = bindAppearanceMetadata(input);
+  assert.deepEqual(Object.keys(files), [
+    'preview-identity.json',
+    'main-build.json',
+    'SHA256SUMS',
+    'package-binding.json',
+    'METADATA-SHA256SUMS',
+  ]);
+  assert.deepEqual(files['preview-identity.json'], input.identityBytes);
+  const binding = JSON.parse(files['package-binding.json']);
+  assert.equal(binding.fullArtifact.id, 456);
+  assert.equal(binding.fullArtifact.sha256, input.artifactDigest);
+  assert.equal(binding.manifest.sha256, digest(input.manifestBytes));
+  assert.equal(binding.inner.sha256, 'b'.repeat(64));
+});
+
+test('compact metadata cannot publish without successful full-upload outputs or exact source identity', () => {
+  for (const mutate of [
+    (x) => {
+      x.artifactID = '';
+    },
+    (x) => {
+      x.artifactDigest = '';
+    },
+    (x) => {
+      x.artifactURL += 'other';
+    },
+    (x) => {
+      x.sourceRevision = 'f'.repeat(40);
+    },
+    (x) => {
+      x.manifestBytes = Buffer.from(
+        JSON.stringify({ formatVersion: 1, sourceRevision: 'f'.repeat(40) }),
+      );
+    },
+  ]) {
+    const input = compactMetadataFixture();
+    mutate(input);
+    assert.throws(() => bindAppearanceMetadata(input));
+  }
+});
+
+test('compact metadata rejects changed original checksum inputs and bounds local reads', () => {
+  for (const mutate of [
+    (x) => {
+      x.mainBytes = Buffer.from('{}');
+    },
+    (x) => {
+      x.checksumBytes = Buffer.from('');
+    },
+    (x) => {
+      x.checksumBytes = Buffer.concat([x.checksumBytes, x.checksumBytes]);
+    },
+    (x) => {
+      x.manifestBytes = Buffer.alloc(2 * 1024 ** 2 + 1);
+    },
+  ]) {
+    const input = compactMetadataFixture();
+    mutate(input);
+    assert.throws(() => bindAppearanceMetadata(input));
+  }
+});
+
+test('compact metadata preserves explicit waived policy without adding a passing test verdict', () => {
+  const files = bindAppearanceMetadata(compactMetadataFixture('waived'));
+  const binding = JSON.parse(files['package-binding.json']);
+  assert.equal(binding.focusedTests.result, 'waived');
+  assert.equal(binding.focusedTests.executed, false);
+  assert.equal(binding.testPolicy.mode, 'waived');
+  assert.match(binding.qualification, /No test, release, offline or performance verdict added/);
+});
+
+test('compact upload follows the successful full archive and preserves the original checksum artifact', () => {
+  const full = step('Upload playable preview archives and receipts');
+  assert.match(full, /id: playable_archive/);
+  const bind = step('Bind small metadata to the successfully uploaded exact package');
+  assert.doesNotMatch(bind, /always\(\)|continue-on-error/);
+  assert.match(bind, /steps\.playable_archive\.outputs\.artifact-digest/);
+  assert.match(
+    step('Upload compact package identity for remote verification'),
+    /path: \.cache\/appearance-preview-metadata\//,
+  );
+  assert.match(full, /path: \.cache\/appearance-preview\//);
 });
