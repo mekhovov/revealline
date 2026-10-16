@@ -7,6 +7,7 @@ import {
   compileOverflightHuntProject,
 } from '../overflight/raid-project.mjs';
 import { createOverflightHuntReviewPilot } from '../overflight/raid-review-pilot.mjs';
+import { applyOverflightBattlefield } from '../overflight/battlefields.mjs';
 import {
   overflightHuntRecordContext,
   OVERFLIGHT_HUNT_RECORDS_FORMAT,
@@ -16,6 +17,9 @@ import {
   overflightTimeAttackResult,
   overflightRaidMedalTime,
   overflightMarathonProject,
+  overflightMarathonNextContract,
+  overflightMarathonSequence,
+  OVERFLIGHT_MARATHON_TACTICS,
   overflightRaidVariantRecord,
 } from '../overflight/raid-variants.mjs';
 const compiled = () => compileOverflightHuntProject(createOverflightHuntProject({ seed: 42 }));
@@ -54,6 +58,71 @@ test('pre-run variant record lookup uses the same revision as its completed run'
       const beforeRun = mode.recordQuery({ compiled: definition });
       assert.equal(beforeRun.compiled.projectIdentity, saved.compiled.projectIdentity);
     }
+});
+
+test('Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages', () => {
+  const mode = variant();
+  const current = createOverflightHuntProject({
+    rulesVersion: 4,
+    layout: 'relay-ruins-receiver-gardens',
+    seed: 42,
+  });
+  const sequence = overflightMarathonSequence(current);
+  const run = mode.createRun(compileOverflightHuntProject(current));
+  const previews = {
+    en: [
+      'Guarded approaches · attached escorts screen the new layout',
+      'Return approach · reordered routes through familiar cover',
+      'Combined command · selected columns reverse through familiar cover',
+    ],
+    uk: [
+      'Захищені підходи · супровід прикриває нову місцевість',
+      'Повторний підхід · новий порядок маршрутів серед знайомих укриттів',
+      'Спільне командування · окремі колони змінюють напрямок серед знайомих укриттів',
+    ],
+  };
+  const points = (route) =>
+    route.map(({ x, y }) => [x, y]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  for (const contract of [3, 4, 5]) {
+    const authored = applyOverflightBattlefield(current, sequence[contract - 1]);
+    const project = overflightMarathonProject(current, contract, 42);
+    let reordered = false;
+    for (const [index, encounter] of project.encounters.entries()) {
+      const original = authored.encounters[index];
+      for (const [actorIndex, actor] of [...encounter.packs, ...encounter.objectives].entries()) {
+        const before = [...original.packs, ...original.objectives].find((p) => p.id === actor.id);
+        assert.deepEqual(points(actor.route), points(before.route));
+        if (JSON.stringify(actor.route) !== JSON.stringify(before.route)) reordered = true;
+        if (actor.escortOf) {
+          assert.equal(actor.x, before.x);
+          assert.equal(actor.y, before.y);
+        } else {
+          const offset = (contract - 1) % before.route.length;
+          const expected = [...before.route.slice(offset), ...before.route.slice(0, offset)];
+          if (contract === 5 && actorIndex % 2) expected.reverse();
+          assert.deepEqual(actor.route, expected);
+        }
+      }
+    }
+    assert.ok(reordered, `contract ${contract} changes approach ordering inside authored cover`);
+    run.raidVariant.contract = contract - 1;
+    for (const locale of ['en', 'uk']) {
+      assert.ok(
+        overflightMarathonNextContract(run, locale).endsWith(previews[locale][contract - 3]),
+      );
+    }
+  }
+  const legacy = mode.createRun(
+    compileOverflightHuntProject(createOverflightHuntProject({ rulesVersion: 3, seed: 42 })),
+  );
+  for (const contract of [3, 4, 5]) {
+    legacy.raidVariant.contract = contract - 1;
+    for (const locale of ['en', 'uk'])
+      assert.equal(
+        overflightMarathonNextContract(legacy, locale),
+        OVERFLIGHT_MARATHON_TACTICS[contract - 1][locale],
+      );
+  }
 });
 
 test('Time Attack and Marathon reject experimental terrain rather than silently changing routes', () => {
