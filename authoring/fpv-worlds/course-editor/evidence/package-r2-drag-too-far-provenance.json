@@ -1,0 +1,10 @@
+{
+  "file": "package-r2-drag-too-far.json.gz",
+  "uncompressedBytes": 156125,
+  "uncompressedSha256": "0502ab326e36c13f1b36c433e1a70b790b75cdb59cc120efc24f1a4a8cf7391b",
+  "status": "failed",
+  "passedChecks": 220,
+  "failedChecks": 1,
+  "reason": "An operator trusted drag of about 11 screen pixels translated the selected gate 8,000 mm, exceeding the unchanged 5,000 mm bound. The same immutable fixture was retained for a smaller deliberate retry.",
+  "runtimeOrHarnessChanged": false
+}

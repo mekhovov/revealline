@@ -1,4 +1,8 @@
-import { CREATOR_TEMPLATES, generateCreatorProject } from './templates.mjs';
+import {
+  CREATOR_TEMPLATES,
+  generateCreatorProject,
+  selectCreatorBatchTemplate,
+} from './templates.mjs';
 import { prepareCreatorImage } from './image.mjs';
 import {
   prepareCreatorBundle,
@@ -15,6 +19,7 @@ import {
 } from './installed.mjs';
 import {
   prepareCreatorSource,
+  creatorBundleAssets,
   exportCreatorSource,
   importCreatorSource,
   createCreatorDraftBackend,
@@ -26,11 +31,22 @@ import { createContentDraftBackend } from '../content-design/drafts.mjs';
 import { downloadCreatorFile } from './download.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { createBatchCreatorController } from './batch-ui.mjs';
+import {
+  createCreatorBatchDraftBackend,
+  prepareCreatorBatchDraft,
+  reopenCreatorBatchDraft,
+} from './batch-drafts.mjs';
 import { prepareReviewedCreatorBundle } from './batch-bundle.mjs';
 import { createCreatorMediaReviewController } from './media-review.mjs';
 import { prepareCreatorMediaCampaign } from './media-campaign.mjs';
+import { focusCreatorInstalledPlay } from './player-menu-focus.mjs';
+import { runCreatorOperation } from './operation.mjs';
+import { attachCreatorReviewReading } from './review-reading.mjs';
+import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
+import { mountCreatorStorageRetention } from './storage-retention.mjs';
 import {
   formatNumber,
+  localizedAttribute,
   localizedMessage,
   localizedText,
   onLocaleChange,
@@ -39,7 +55,9 @@ import {
 
 const $ = (id) => document.getElementById(id),
   store = createCreatorStore(),
-  backend = createCreatorDraftBackend(store);
+  backend = createCreatorDraftBackend(store),
+  batchBackend = createCreatorBatchDraftBackend(store);
+mountCreatorStorageRetention({ document, window });
 const status = (message, error = false) => {
   localizedText($('status'), message);
   $('status').classList.toggle('error', error);
@@ -58,6 +76,10 @@ const mib = (bytes) =>
       maximumFractionDigits: 2,
     }),
   });
+const seconds = (value) =>
+  t('common:format.seconds', {
+    value: formatNumber(value, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+  });
 const params = new URLSearchParams(location.search);
 const id = params.get('draft') ?? `creation-${crypto.randomUUID()}`;
 const draft = { id, revision: null, source: null, saved: null, running: null };
@@ -69,14 +91,24 @@ let sourceFile = null,
   installReview = null,
   controller = null,
   busy = true,
-  pictureURL = null,
+  pictureURLs = [],
   batchMode = false,
   batchSource = null,
   mediaMode = false,
   mediaSource = null,
   sourceVersion = 0,
   saveTimer = null;
-const batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
+const batchDraft = {
+  revision: null,
+  checkpoint: null,
+  saved: null,
+  snapshot: null,
+  running: null,
+  pending: null,
+  version: 0,
+  restoring: false,
+};
+let batchSeed = crypto.getRandomValues(new Uint32Array(1))[0];
 let themes = [];
 try {
   const themesResponse = await fetch('../content-design/themes.json');
@@ -118,15 +150,15 @@ refreshDefaultFields();
 
 function controls() {
   $('edits').hidden = !content || batchMode || mediaMode;
-  $('generate').disabled = busy || mediaMode || (!sourceFile && !content);
+  $('generate').disabled = busy || (!sourceFile && !content);
   $('approve').disabled = busy || !prepared;
   $('approve').hidden = batchMode && !!approval;
   $('install').disabled = busy || !installReview?.enoughManagedSpace;
   $('download').disabled = busy || !approval;
-  $('backup').disabled = busy || !content || mediaMode;
-  $('save').disabled = busy || !content || mediaMode;
+  $('backup').disabled = busy || !content;
+  $('save').disabled = busy || !content;
   $('cancel').hidden = !busy;
-  for (const key of ['image', 'import']) $(key).disabled = busy;
+  for (const key of ['image', 'import', 'social-drone-example']) $(key).disabled = busy;
   for (const key of ['advanced', 'load-advanced', 'regenerate']) $(key).disabled = busy || !content;
   for (const key of [
     'name',
@@ -136,7 +168,7 @@ function controls() {
     'picture-credit',
     'license',
   ])
-    $(key).disabled = busy || mediaMode;
+    $(key).disabled = busy;
   $('fit').disabled = busy || mediaMode || (!!content && !sourceFile);
 }
 
@@ -169,15 +201,12 @@ const batch = createBatchCreatorController({
       { signal: context.signal },
     );
     const seed = (batchSeed + context.index + context.generation * 65537) >>> 0;
-    const families = CREATOR_TEMPLATES.map(({ id: templateId }) => templateId);
-    const templateId =
-      context.settings.pacing === 'gentle-first' && context.index < Math.ceil(context.total / 3)
-        ? families[0]
-        : context.settings.pacing === 'steady'
-          ? families[2]
-          : context.settings.pacing === 'balanced'
-            ? families[(seed + context.index) % families.length]
-            : undefined;
+    const templateId = selectCreatorBatchTemplate({
+      seed,
+      index: context.index,
+      total: context.total,
+      pacing: context.settings.pacing,
+    });
     const generated = generateCreatorProject({
       id: `${id}-${item.id}`,
       name: context.settings.collectionName,
@@ -240,9 +269,10 @@ const batch = createBatchCreatorController({
     };
   },
   approveBatch: batchApprovalAdapter?.approve,
-  onChange: () => {
+  onChange: (review) => {
     $('batch-split-results').replaceChildren();
     $('batch-split-results').hidden = true;
+    checkpointBatchReview(review);
   },
   onSplit: (chunks, settings) => {
     localizedText($('batch-capacity'), () =>
@@ -287,6 +317,34 @@ const mediaReview = createCreatorMediaReviewController({
     status: $('media-status'),
     apply: $('media-apply'),
     cancel: $('media-cancel'),
+    capacity: $('media-capacity'),
+    removeExcluded: $('media-remove-excluded'),
+    split: $('media-split'),
+  },
+  onChange: (review) => {
+    if (review.dirty && mediaMode && prepared) invalidate();
+    $('media-split-results').replaceChildren();
+    $('media-split-results').hidden = true;
+  },
+  onSplit: (chunks) => {
+    const results = $('media-split-results');
+    const explanation = document.createElement('p');
+    localizedText(explanation, () => t('interface:creator.mediaSplitReviewHelp'));
+    results.replaceChildren(explanation);
+    for (const [index, chunk] of chunks.entries()) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'secondary';
+      localizedText(button, () =>
+        t('interface:creator.reviewPart', { current: index + 1, total: chunks.length }),
+      );
+      button.onclick = () => {
+        mediaReview.setFiles(chunk);
+        void mediaReview.prepare().catch(fail);
+      };
+      results.append(button);
+    }
+    results.hidden = false;
   },
   onPrepared: (reviewed) => {
     if (reviewed.items.some((item) => item.errors.length)) {
@@ -318,10 +376,8 @@ const mediaReview = createCreatorMediaReviewController({
       batchMode = false;
       mediaMode = true;
       sourceFile = image = null;
-      localizedText(
-        $('save-status'),
-        localizedMessage('interface:creator.videoSourcesSessionOnly'),
-      );
+      fillLabels();
+      await saveDraft();
       showReview(prepared);
       status(
         localizedMessage('interface:creator.mediaLevelsGenerated', {
@@ -362,7 +418,7 @@ function fillLabels() {
   $('license').value = content.credits.license;
 }
 function currentAssets() {
-  if (mediaSource) return mediaSource.sourceAssets;
+  if (mediaSource) return creatorBundleAssets(mediaSource.sourceAssets);
   if (batchSource) return batchSource.sourceAssets;
   const all = [
     ...(image
@@ -387,12 +443,71 @@ function currentAssets() {
     ).values(),
   ];
 }
+function checkpointBatchReview(review) {
+  if (batchDraft.restoring || !batchMode) return;
+  batchDraft.snapshot = { ...review, seed: batchSeed };
+  // The stable states before and after generation are sufficient. Avoid one
+  // storage revision for every transient progress render in a 50-item batch.
+  if (review.running) return;
+  const pending = saveBatchDraft().catch((error) => {
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.sessionOnlyBackupAvailable', {
+        error: error.message,
+      }),
+    );
+  });
+  batchDraft.pending = pending;
+  void pending.finally(() => {
+    if (batchDraft.pending === pending) batchDraft.pending = null;
+  });
+}
+
+async function saveBatchDraft() {
+  if (!batchDraft.snapshot) return;
+  const version = ++batchDraft.version;
+  const checkpoint = await prepareCreatorBatchDraft(id, batchDraft.snapshot);
+  if (version !== batchDraft.version) return;
+  batchDraft.checkpoint = checkpoint;
+  if (
+    batchDraft.saved &&
+    canonicalJSON(batchDraft.saved.document) === canonicalJSON(checkpoint.document)
+  )
+    batchDraft.checkpoint = batchDraft.saved;
+  if (batchDraft.running) return batchDraft.running;
+  const running = (async () => {
+    while (batchDraft.checkpoint !== batchDraft.saved) {
+      const next = batchDraft.checkpoint;
+      const result = await batchBackend.save(next, batchDraft.revision);
+      batchDraft.revision = result.revision;
+      batchDraft.saved = next;
+    }
+    localizedText(
+      $('save-status'),
+      localizedMessage('interface:creator.savedCheckpoint', { revision: batchDraft.revision }),
+    );
+  })();
+  batchDraft.running = running;
+  try {
+    await running;
+  } finally {
+    if (batchDraft.running === running) batchDraft.running = null;
+  }
+}
+
 async function sourceSnapshot() {
   return prepareCreatorSource(
     {
       draftId: id,
       content: structuredClone(content),
-      editing: { fit: $('fit').value },
+      editing: {
+        fit: $('fit').value,
+        ...(content.media
+          ? {
+              media: mediaSource?.sourceEditing ?? draft.source?.document.editing.media,
+            }
+          : {}),
+      },
       originalSha256:
         batchSource?.originalSha256 ??
         image?.original?.sha256 ??
@@ -443,67 +558,112 @@ async function saveDraft() {
     if (draft.running === running) draft.running = null;
   }
 }
-async function operation(action) {
+async function operation(action, options = {}) {
   if (busy) return;
-  busy = true;
-  controller = new AbortController();
-  controls();
-  try {
-    await action(controller.signal);
-  } catch (error) {
-    fail(error);
-  } finally {
-    busy = false;
-    controller = null;
-    controls();
-  }
+  return runCreatorOperation(action, {
+    document,
+    window,
+    cancel: $('cancel'),
+    onStart: (next) => {
+      busy = true;
+      controller = next;
+      controls();
+    },
+    onFinish: () => {
+      busy = false;
+      controller = null;
+      controls();
+    },
+    onError: fail,
+    ...options,
+  });
 }
 function showReview(pack) {
   const project = pack.manifest.content.project;
   const provenances = Array.isArray(pack.manifest.content.provenance)
     ? pack.manifest.content.provenance
     : [pack.manifest.content.provenance];
-  const provenance = provenances[0];
-  const mission = project.missions.find(({ id: missionId }) => missionId === provenance.missionId);
-  const picture = project.assets.find(
-    ({ id: assetId }) => assetId === mission?.presentation.backgroundAssetId,
-  );
-  const runtime = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
-  if (!mission || !picture || !runtime)
-    throw new Error(t('errors:creator.firstMissionPictureMissing'));
-  if (pictureURL) URL.revokeObjectURL(pictureURL);
-  pictureURL = URL.createObjectURL(runtime.blob);
-  $('picture').src = pictureURL;
-  $('picture').alt = picture.alt;
-  localizedText($('picture-caption'), () =>
-    project.missions.length === 1
-      ? mission.name
-      : t('interface:creator.firstOfLevels', {
-          mission: mission.name,
-          count: project.missions.length,
-        }),
-  );
-  const preview = prepareContentPreview(project, provenance.missionId);
-  paintContentMap($('map').getContext('2d'), preview, { width: 720, showCapture: false });
-  const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
-  const map = project.maps.find(
-    ({ id: mapId, revision }) => mapId === mission.map.id && revision === mission.map.revision,
-  );
-  const enemies = mission.actors.length;
-  const walls = map?.walls.length ?? 0;
-  const foundations = map?.foundations.length ?? 0;
-  const terrain = map?.terrain.length ?? 0;
-  localizedText($('map-caption'), () =>
-    t('interface:creator.mapSummary', {
-      template: template?.name ?? t('interface:creator.verifiedCrossing'),
-      enemies: t('common:counts.enemies', { count: enemies }),
-      walls: t('common:counts.walls', { count: walls }),
-      foundations: t('common:counts.safeIslands', { count: foundations }),
-      terrain: t('common:counts.terrainZones', { count: terrain }),
-      evidence: t('interface:creator.routeEvidence', { count: provenances.length }),
-    }),
-  );
-  $('validation').textContent = pack.review.validation;
+  for (const url of pictureURLs) URL.revokeObjectURL(url);
+  pictureURLs = [];
+  const cards = [];
+  for (const [index, provenance] of provenances.entries()) {
+    const mission = project.missions.find(({ id }) => id === provenance.missionId);
+    const picture = project.assets.find(
+      ({ id: assetId }) => assetId === mission?.presentation.backgroundAssetId,
+    );
+    const runtime = pack.assets.find(({ sha256 }) => sha256 === picture?.sha256);
+    if (!mission || !picture || !runtime)
+      throw new Error(t('errors:creator.firstMissionPictureMissing'));
+    const card = document.createElement('article');
+    card.className = 'creator-mission-review-card';
+    const heading = document.createElement('h3');
+    localizedText(heading, () =>
+      t('interface:creator.numberedTitle', { number: index + 1, title: mission.name }),
+    );
+    const grid = document.createElement('div');
+    grid.className = 'review-grid';
+    const picturePanel = document.createElement('div');
+    const image = document.createElement('img');
+    const url = URL.createObjectURL(runtime.blob);
+    pictureURLs.push(url);
+    image.src = url;
+    image.alt = picture.alt;
+    const pictureCaption = document.createElement('p');
+    pictureCaption.textContent = mission.name;
+    picturePanel.append(image, pictureCaption);
+    const mapPanel = document.createElement('div');
+    const canvas = document.createElement('canvas');
+    canvas.width = 720;
+    canvas.height = 360;
+    localizedAttribute(canvas, 'aria-label', () => t('interface:creator.generatedLevelMap'));
+    paintContentMap(canvas.getContext('2d'), prepareContentPreview(project, provenance.missionId), {
+      width: 720,
+      showCapture: false,
+    });
+    const mapCaption = document.createElement('p');
+    const template = CREATOR_TEMPLATES.find(({ id }) => id === provenance.templateId);
+    const map = project.maps.find(
+      ({ id: mapId, revision }) => mapId === mission.map.id && revision === mission.map.revision,
+    );
+    localizedText(mapCaption, () =>
+      t('interface:creator.mapSummary', {
+        template: template?.name ?? t('interface:creator.verifiedCrossing'),
+        enemies: t('common:counts.enemies', { count: mission.actors.length }),
+        walls: t('common:counts.walls', { count: map?.walls.length ?? 0 }),
+        foundations: t('common:counts.safeIslands', { count: map?.foundations.length ?? 0 }),
+        terrain: t('common:counts.terrainZones', { count: map?.terrain.length ?? 0 }),
+        evidence: t('interface:creator.routeEvidence', { count: 1 }),
+      }),
+    );
+    mapPanel.append(canvas, mapCaption);
+    grid.append(picturePanel, mapPanel);
+    const story = pack.manifest.content.media?.stories.find(
+      ({ missionId }) => missionId === mission.id,
+    );
+    const storyStatus = document.createElement('p');
+    localizedText(storyStatus, () =>
+      story
+        ? t('interface:creator.missionVictoryStory', {
+            start: seconds(story.playbackRange.startSeconds),
+            end: seconds(story.playbackRange.endSeconds),
+          })
+        : t('interface:creator.missionPosterReward'),
+    );
+    const validation = document.createElement('p');
+    validation.className = 'creator-mission-validation';
+    validation.textContent = pack.review.validation;
+    attachCreatorReviewReading({
+      card,
+      heading,
+      content: [grid, storyStatus, validation],
+      index,
+      navigation: mountAuthoringInputHost().navigation,
+    });
+    cards.push(card);
+  }
+  $('legacy-review-grid').hidden = true;
+  $('validation').hidden = true;
+  $('mission-review-list').replaceChildren(...cards);
   const storyCount = pack.manifest.content.media?.stories.length ?? 0;
   localizedText($('package-size'), () =>
     t('interface:creator.packageSummary', {
@@ -691,17 +851,21 @@ async function openPrepared(pack) {
   mediaSource = null;
   sourceFile = image = null;
   if (mediaMode) {
-    draft.source = null;
     $('fit').value = 'contain';
     $('fit').disabled = true;
     fillLabels();
     invalidate();
     prepared = pack;
-    showReview(pack);
-    localizedText(
-      $('save-status'),
-      localizedMessage('interface:creator.videoCampaignSessionVerified'),
+    draft.source = await prepareCreatorSource(
+      { draftId: id, content, editing: { fit: 'contain' }, originalSha256: null },
+      pack.assets,
     );
+    mediaSource = {
+      sourceAssets: draft.source.assets,
+      sourceEditing: draft.source.document.editing.media,
+    };
+    showReview(pack);
+    await saveDraft();
     status(localizedMessage('interface:creator.mediaPackVerified'));
     return;
   }
@@ -723,7 +887,12 @@ async function openSource(source) {
   batchMode = content.project.missions.length > 1;
   batchSource = null;
   mediaMode = !!content.media;
-  mediaSource = null;
+  mediaSource = mediaMode
+    ? {
+        sourceAssets: source.assets,
+        sourceEditing: source.document.editing.media,
+      }
+    : null;
   draft.source = source;
   image = null;
   sourceFile = Array.isArray(source.document.originalSha256)
@@ -733,6 +902,10 @@ async function openSource(source) {
   $('fit').disabled = !sourceFile;
   fillLabels();
   invalidate();
+  if (mediaMode) {
+    prepared = await prepareCreatorBundle(content, currentAssets());
+    showReview(prepared);
+  }
   status(localizedMessage('interface:creator.sourceDraftRestored'));
 }
 async function listInstalled() {
@@ -762,8 +935,10 @@ async function listInstalled() {
       edit.className = 'secondary';
       localizedText(edit, () => t('interface:creator.openEditableSource'));
       edit.onclick = () =>
-        operation(async (signal) =>
-          openPrepared(await loadInstalledCreatorBundle(store, manifest.editionId, { signal })),
+        operation(
+          async (signal) =>
+            openPrepared(await loadInstalledCreatorBundle(store, manifest.editionId, { signal })),
+          { opener: edit },
         );
       row.append(title, edition, play, document.createTextNode(' '), edit);
       list.append(row);
@@ -809,62 +984,85 @@ for (const key of [
     }
     status(localizedMessage('interface:creator.draftChangesPending'));
   };
-$('generate').onclick = () => operation(generate);
+$('generate').onclick = () => operation(generate, { opener: $('generate') });
 $('regenerate').onclick = () =>
-  operation(async (signal) => {
-    const created = generateCreatorProject({
-      id: content.project.id,
-      name: $('name').value,
-      seed: (content.provenance.generationSeed + 1) >>> 0,
-    });
-    const assets = content.project.assets;
-    content.project = structuredClone(created.project);
-    content.project.assets = assets;
-    content.project.missions[0].presentation.backgroundAssetId = assets[0].id;
-    content.provenance = created.provenance;
-    await generate(signal);
-  });
+  operation(
+    async (signal) => {
+      const created = generateCreatorProject({
+        id: content.project.id,
+        name: $('name').value,
+        seed: (content.provenance.generationSeed + 1) >>> 0,
+      });
+      const assets = content.project.assets;
+      content.project = structuredClone(created.project);
+      content.project.assets = assets;
+      content.project.missions[0].presentation.backgroundAssetId = assets[0].id;
+      content.provenance = created.provenance;
+      await generate(signal);
+    },
+    { opener: $('regenerate') },
+  );
 $('cancel').onclick = () => controller?.abort();
 $('approve').onclick = () =>
-  operation(async (signal) => {
-    await draft.running;
-    approval = approveCreatorBundle(prepared);
-    $('approved').hidden = false;
-    try {
-      installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
-      const review = installReview;
-      localizedText($('storage-review'), () =>
-        t('interface:creator.storageReview', {
-          pack: mib(review.packageBytes),
-          staging: mib(review.stagingBytes),
-          used: mib(review.usedBytes),
-          limit: mib(review.limitBytes),
-          status: t(
-            review.enoughManagedSpace
-              ? 'interface:creator.readyToInstall'
-              : 'interface:creator.storageFullDownload',
-          ),
-        }),
-      );
-    } catch (error) {
-      localizedText(
-        $('storage-review'),
-        localizedMessage('interface:creator.installStorageUnavailable', {
-          error: error.message,
-        }),
-      );
-    }
-    status(localizedMessage('interface:creator.approvedInstallOrDownload'));
-  });
+  operation(
+    async (signal) => {
+      await draft.running;
+      approval = approveCreatorBundle(prepared);
+      $('approved').hidden = false;
+      try {
+        installReview = await reviewCreatorInstallation(store, prepared, approval, { signal });
+        const review = installReview;
+        localizedText($('storage-review'), () =>
+          t('interface:creator.storageReview', {
+            pack: mib(review.packageBytes),
+            staging: mib(review.stagingBytes),
+            used: mib(review.usedBytes),
+            limit: mib(review.limitBytes),
+            status: t(
+              review.enoughManagedSpace
+                ? 'interface:creator.readyToInstall'
+                : 'interface:creator.storageFullDownload',
+            ),
+          }),
+        );
+      } catch (error) {
+        localizedText(
+          $('storage-review'),
+          localizedMessage('interface:creator.installStorageUnavailable', {
+            error: error.message,
+          }),
+        );
+      }
+      status(localizedMessage('interface:creator.approvedInstallOrDownload'));
+    },
+    { opener: $('approve') },
+  );
 $('install').onclick = () =>
-  operation(async (signal) => {
-    await installPreparedCreatorBundle(store, prepared, approval, installReview, { signal });
-    $('play').href = `./player.html?edition=${prepared.editionId}`;
-    $('play').hidden = false;
-    installReview = null;
-    status(localizedMessage('interface:creator.campaignInstalled'));
-    await listInstalled();
-  });
+  operation(
+    async (signal) => {
+      // Installation reviews authorize one attempt. Keep Approve available for
+      // a fresh store review after cancellation, contention or a failed write.
+      const review = installReview;
+      installReview = null;
+      await installPreparedCreatorBundle(store, prepared, approval, review, { signal });
+      $('play').href = `./player.html?edition=${prepared.editionId}`;
+      $('play').hidden = false;
+      status(localizedMessage('interface:creator.campaignInstalled'));
+      await listInstalled();
+    },
+    {
+      opener: $('install'),
+      restoreTo: $('approve'),
+      onSuccessFocus: ({ opener, ownedFocus }) =>
+        focusCreatorInstalledPlay({
+          document,
+          opener,
+          ownedFocus,
+          play: $('play'),
+          wasFocused: true,
+        }),
+    },
+  );
 $('download').onclick = () => {
   try {
     downloadCreatorFile(exportCreatorBundle(prepared, approval), `${content.project.id}.rlpack`);
@@ -882,49 +1080,77 @@ $('backup').onclick = async () => {
 $('save').onclick = () => {
   void saveDraft().catch(fail);
 };
+$('social-drone-example').onclick = () =>
+  operation(
+    async (signal) => {
+      const response = await fetch(
+        new URL('./examples/social-drone-sky-watch.rlpack', import.meta.url),
+        { signal },
+      );
+      if (!response.ok) throw new Error(t('interface:creator.socialDroneExampleUnavailable'));
+      await openPrepared(await importCreatorBundle(await response.blob(), { signal }));
+    },
+    { opener: $('social-drone-example') },
+  );
 $('import').onchange = () =>
-  operation(async (signal) => {
-    const file = $('import').files[0];
-    if (!file) return;
-    if (file.name.toLowerCase().endsWith('.rlsource')) {
-      await openSource(await importCreatorSource(file, { signal }));
-      await saveDraft();
-    } else await openPrepared(await importCreatorBundle(file, { signal }));
-  });
+  operation(
+    async (signal) => {
+      const file = $('import').files[0];
+      if (!file) return;
+      if (file.name.toLowerCase().endsWith('.rlsource')) {
+        await openSource(await importCreatorSource(file, { signal }));
+        await saveDraft();
+      } else await openPrepared(await importCreatorBundle(file, { signal }));
+    },
+    { opener: $('import') },
+  );
 const advancedId = `advanced-${id}`;
 $('advanced').onclick = () =>
-  operation(async () => {
-    await saveDraft();
-    const drafts = createContentDraftBackend();
-    const checkpoint = await drafts.read(advancedId);
-    if (!checkpoint)
-      await drafts.save({ ...structuredClone(content.project), id: advancedId }, null);
-    location.href = `../studio/?project=${advancedId}&creator-draft=${id}`;
-  });
+  operation(
+    async () => {
+      await saveDraft();
+      const drafts = createContentDraftBackend();
+      const checkpoint = await drafts.read(advancedId);
+      if (!checkpoint)
+        await drafts.save({ ...structuredClone(content.project), id: advancedId }, null);
+      location.href = `../studio/?project=${advancedId}&creator-draft=${id}`;
+    },
+    { opener: $('advanced') },
+  );
 $('load-advanced').onclick = () =>
-  operation(async () => {
-    const checkpoint = await createContentDraftBackend().read(advancedId);
-    if (!checkpoint) throw new Error(t('errors:creator.saveAdvancedCheckpointFirst'));
-    requireCreatorEditableProject(checkpoint.project);
-    const next = { ...content, project: checkpoint.project };
-    // Validate source dependencies before replacing the current editable draft.
-    await prepareCreatorSource(
-      {
-        draftId: id,
-        content: next,
-        editing: { fit: $('fit').value },
-        originalSha256: image?.original?.sha256 ?? draft.source?.document.originalSha256 ?? null,
-      },
-      currentAssets(),
-    );
-    content = next;
-    invalidate();
-    fillLabels();
-    await saveDraft();
-    status(localizedMessage('interface:creator.studioEditsLoaded'));
-  });
+  operation(
+    async () => {
+      const checkpoint = await createContentDraftBackend().read(advancedId);
+      if (!checkpoint) throw new Error(t('errors:creator.saveAdvancedCheckpointFirst'));
+      requireCreatorEditableProject(checkpoint.project);
+      const next = { ...content, project: checkpoint.project };
+      // Validate source dependencies before replacing the current editable draft.
+      await prepareCreatorSource(
+        {
+          draftId: id,
+          content: next,
+          editing: { fit: $('fit').value },
+          originalSha256: image?.original?.sha256 ?? draft.source?.document.originalSha256 ?? null,
+        },
+        currentAssets(),
+      );
+      content = next;
+      invalidate();
+      fillLabels();
+      await saveDraft();
+      status(localizedMessage('interface:creator.studioEditsLoaded'));
+    },
+    { opener: $('load-advanced') },
+  );
 window.addEventListener('beforeunload', (event) => {
-  if (saveTimer || draft.running || (draft.source && draft.source !== draft.saved)) {
+  if (
+    saveTimer ||
+    draft.running ||
+    batchDraft.pending ||
+    batchDraft.running ||
+    (draft.source && draft.source !== draft.saved) ||
+    (batchDraft.checkpoint && batchDraft.checkpoint !== batchDraft.saved)
+  ) {
     event.preventDefault();
     event.returnValue = '';
   }
@@ -933,8 +1159,10 @@ window.addEventListener('pagehide', () => {
   controller?.abort();
   batch.destroy();
   mediaReview.destroy();
-  if (pictureURL) URL.revokeObjectURL(pictureURL);
-  store.close();
+  for (const url of pictureURLs) URL.revokeObjectURL(url);
+  const pending = batchDraft.pending || batchDraft.running || draft.running;
+  if (pending) void pending.finally(() => store.close());
+  else store.close();
 });
 try {
   const saved = await backend.read(id);
@@ -946,6 +1174,41 @@ try {
       $('save-status'),
       localizedMessage('interface:creator.restoredCheckpoint', { revision: saved.revision }),
     );
+  } else {
+    const savedBatch = await batchBackend.read(id);
+    if (savedBatch) {
+      batchDraft.revision = savedBatch.revision;
+      batchDraft.checkpoint = savedBatch.checkpoint;
+      batchDraft.saved = savedBatch.checkpoint;
+      const reopened = reopenCreatorBatchDraft(savedBatch.checkpoint);
+      if (reopened.items.length) {
+        batchSeed = reopened.seed;
+        batchMode = true;
+        $('batch-options').hidden = false;
+        batchDraft.restoring = true;
+        try {
+          batch.restore(reopened);
+        } finally {
+          batchDraft.restoring = false;
+        }
+        localizedText(
+          $('save-status'),
+          localizedMessage('interface:creator.restoredCheckpoint', {
+            revision: savedBatch.revision,
+          }),
+        );
+        await batch.resume(reopened.resumeItemIds);
+        const restoredReview = batch.snapshot();
+        status(
+          localizedMessage(
+            restoredReview.ready
+              ? 'interface:creator.levelsReady'
+              : 'interface:creator.batchSelected',
+            { count: restoredReview.included },
+          ),
+        );
+      }
+    }
   }
 } catch (error) {
   localizedText(
@@ -962,6 +1225,7 @@ $('image').multiple = batchEnabled;
 if (batchEnabled) {
   localizedText($('choose-title'), () => t('interface:creator.chooseMediaHeading'));
   localizedText($('intake-help'), () => t('interface:creator.dropMediaHelp'));
-  status(localizedMessage('interface:creator.chooseMediaToBegin'));
+  if (!content && !batchMode && !mediaMode)
+    status(localizedMessage('interface:creator.chooseMediaToBegin'));
 }
 controls();

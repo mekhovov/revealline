@@ -1,0 +1,52 @@
+{
+  "format": "FPVWorldLibraryBrowserEvidence.v1",
+  "candidate": "74bd1b1a53325be1a7661bc876df0890b4153a18",
+  "passed": 192,
+  "failed": 0,
+  "archives": [
+    {
+      "file": "source-r2.json.gz",
+      "rawBytes": 53727,
+      "rawSHA256": "acef6e94c1de4dc22aefb9cf50532724362c856b6d7928229505d4f5ead6752b",
+      "gzipBytes": 9723,
+      "gzipSHA256": "30b29dc3f5afec5335ad3f1ebd380cc49cf6becdb98519c768ff598a6b8bf7ff"
+    },
+    {
+      "file": "source-r2-fixture.json.gz",
+      "rawBytes": 20297,
+      "rawSHA256": "a0ee3ef63dee025557ea853e86a85278340e4008244518643e5491acb2ca5eb7",
+      "gzipBytes": 6609,
+      "gzipSHA256": "753899d111693696488089100c838fb1e9c3346a4b853c68b511e09f241e7d71"
+    },
+    {
+      "file": "source-r2-harness.mjs.gz",
+      "rawBytes": 17251,
+      "rawSHA256": "550959ff462ff6ab8adc1de81101e432e2d86c283d179deb5ce6c70263f8b01a",
+      "gzipBytes": 5528,
+      "gzipSHA256": "2232d98b7ed68523368467f4ea608b70924009654624b9c25efaff74eab36ab4"
+    },
+    {
+      "file": "source-r2-host.html.gz",
+      "rawBytes": 38688,
+      "rawSHA256": "b8b562124fbb794c0d72098101d65ea0bf73942da5c20d8c0bc583e388ee0f4c",
+      "gzipBytes": 9914,
+      "gzipSHA256": "793a6f9bbf6fe99194b3174a7cf39e06a09fe948d681a4cb5ce418a3ce58ced4"
+    },
+    {
+      "file": "source-r2-index.html.gz",
+      "rawBytes": 1419,
+      "rawSHA256": "bd1d2c3e235be469bc3800ef9d1b3a609ed57a408db724c86caaa1059a806912",
+      "gzipBytes": 759,
+      "gzipSHA256": "5bcfb2943edbc62db6ea0c11951cfce541ecdd0ca232d8f83fde4cc95cdf1346"
+    }
+  ],
+  "screenshot": {
+    "bytes": 56419,
+    "sha256": "3803658d0cd24c556f4ec70e85bc742a4a9183617a601b6c05b6d91c4c786893"
+  },
+  "limits": [
+    "Actual native host/IndexedDB and unchanged production clock. Only named catalogue/network fault responses and isolated storage names are injected.",
+    "Successful pack download uses the actual immutable first-party HTTPS URL. The production catalogue remains empty.",
+    "Timeout callback is explicitly injected, not a claim of two-minute wall-clock endurance. No offline, finished-world, flight-completion or FPS claim."
+  ]
+}

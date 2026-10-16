@@ -1,0 +1,77 @@
+{
+  "scope": "Three bounded model-directed Team playthroughs. Visible-state greedy shortest distance/free-space steering, second seat avoids first intended head cell; no state mutation, no future RNG or AI. Not human qualification or a test suite.",
+  "entries": [
+    {
+      "id": "classic-pursuit-oval-intercept",
+      "mode": "team",
+      "status": "won",
+      "tick": 63,
+      "catches": 8,
+      "goal": 8,
+      "credits": [
+        4,
+        4
+      ],
+      "bonus": 0,
+      "pickups": 0,
+      "failure": null,
+      "restoredExactly": true,
+      "replay": "classic-pursuit-oval-intercept-team.json",
+      "sha256": "aabac3dd873c17a24396cf965e89012019bedca48a62a69fdf4eae6cd7b8d400"
+    },
+    {
+      "id": "classic-pursuit-first-shutter",
+      "mode": "team",
+      "status": "lost",
+      "tick": 91,
+      "catches": 6,
+      "goal": 14,
+      "credits": [
+        3,
+        3
+      ],
+      "bonus": 0,
+      "pickups": 0,
+      "failure": {
+        "cause": "partner-body",
+        "players": [
+          {
+            "playerId": 1,
+            "cause": "partner-body",
+            "at": {
+              "x": 9,
+              "y": 3
+            }
+          }
+        ]
+      },
+      "restoredExactly": true,
+      "replay": "classic-pursuit-first-shutter-team.json",
+      "sha256": "f56adb0997b5b9301dad1391781e53ad96e32c60385d803b40e5d9522e406634"
+    },
+    {
+      "id": "classic-pursuit-shared-supply",
+      "mode": "team",
+      "status": "won",
+      "tick": 115,
+      "catches": 16,
+      "goal": 16,
+      "credits": [
+        9,
+        7
+      ],
+      "bonus": 0,
+      "pickups": 2,
+      "failure": null,
+      "restoredExactly": true,
+      "replay": "classic-pursuit-shared-supply-team.json",
+      "sha256": "656740a16f82dc30566c8df4cabd46bf8f21a31ead46f9d1d5dd6904dcb94579"
+    }
+  ],
+  "sourceHashes": {
+    "game/snake/classic-core.mjs": "f9a4361b85bfc8d4cba8e8889109b893bbca8de65e91863b93c7d5ddc0435f74",
+    "game/snake/classic-core-v2.mjs": "79d8da0cb894def4d09b5e664f8a28ec6bf18cac1b8fd4c7d43c16b74decd92f",
+    "game/snake/classic-match.mjs": "02d904912c0df723bbe7ec760c07c489939298f109817d6542bfd38e1d287d77",
+    "game/snake/classic-catalogue-v2.mjs": "7da35f440d8b9ca30345f468844142e00517c0fbfaa9501b068a95b48c073531"
+  }
+}

@@ -1,12 +1,17 @@
 import { emptyJourneyPictures, journeyPictureCompletion } from '../journey/pictures.mjs';
 import { contentText } from '../i18n/content.mjs';
 import { t } from '../i18n/index.mjs';
+import { classifyContent } from '../content-design/content-lifecycle.mjs';
+import { canonicalMissionLevelKey, officialLevelNumber } from '../level-numbering.mjs';
 /** Adapt one exact Journey edition without replacing its runtime mission objects,
  * profile scope, difficulty rules, or Next sequence. */
 export function journeyLibrarySource({
   editionId,
   edition,
   editionLabel = () => edition,
+  lifecycle = classifyContent({ family: 'journey', id: editionId }) === 'archived'
+    ? 'archive'
+    : 'current',
   catalog,
   profile,
   launch,
@@ -37,17 +42,23 @@ export function journeyLibrarySource({
     editionId,
     edition,
     collection: 'Journey',
+    lifecycle,
     entries: catalog.missions,
-    describe: (mission) => ({
-      id: mission.id,
-      campaignKey: JSON.stringify([mission.source, mission.packId, mission.campaignId]),
-      campaignTitle: mission.campaignTitle,
-      name: mission.name,
-      levelIndex: mission.levelIndex,
-      modes: mission.modes,
-      hook: mission.hook,
-      tags: tags(mission),
-    }),
+    describe: (mission) => {
+      const canonicalLevelKey = canonicalMissionLevelKey(mission);
+      return {
+        id: mission.id,
+        campaignKey: JSON.stringify([mission.source, mission.packId, mission.campaignId]),
+        campaignTitle: mission.campaignTitle,
+        name: mission.name,
+        levelIndex: mission.levelIndex,
+        canonicalLevelKey,
+        globalLevelNumber: officialLevelNumber(canonicalLevelKey),
+        modes: mission.modes,
+        hook: mission.hook,
+        tags: tags(mission),
+      };
+    },
     availability: () => ({ state: 'ready' }),
     presentation: (mission) => ({
       edition: editionLabel(),
@@ -63,6 +74,19 @@ export function journeyLibrarySource({
         : snapshot.skipped[mode]?.includes(mission.id)
           ? t('interface:skippedTryAgain')
           : '';
+    },
+    progressState(mission, mode) {
+      if (!profile) return { state: 'new', bestStars: null };
+      const receipt = currentState().snapshot.clears[mode]?.[mission.id];
+      if (receipt)
+        return {
+          state: 'completed',
+          bestStars: profile.bestStars?.(mode, mission.id) ?? null,
+        };
+      return {
+        state: currentState().snapshot.skipped[mode]?.includes(mission.id) ? 'skipped' : 'new',
+        bestStars: null,
+      };
     },
     completion(mission, mode) {
       if (!profile) return null;

@@ -1,0 +1,214 @@
+{
+  "format": "FPVHarborRefinementComparison.v1",
+  "scope": "Frozen r1/r2 source and project identity checks. No visual, ordinary-flight or performance acceptance.",
+  "before": {
+    "format": "FPVHarborDocksCheckpointBuild.v1",
+    "stage": "one course; actual visual review and ordinary completion qualification pending",
+    "source": {
+      "bytes": 620516,
+      "sha256": "2f21c64b68086dd567cd515caa0423ee604cd62ef2951e054a61115eb2c01d49",
+      "triangles": 6088,
+      "materials": 10,
+      "nodes": 53,
+      "textures": 2,
+      "colliders": 38
+    },
+    "prepared": {
+      "bytes": 619848,
+      "sha256": "325e3df3a85de92af514adb0418f8a3301e34ed86db6b292f3909f6099c6eeee",
+      "validatorErrors": 0
+    },
+    "pack": {
+      "bytes": 646529,
+      "sha256": "6466b450df3895d09231effb53331baa5e1cc9919d7dc8cbcf793f51a1f8f68d",
+      "identity": "fpv-pack:6466b450df3895d09231effb53331baa5e1cc9919d7dc8cbcf793f51a1f8f68d"
+    },
+    "zip": {
+      "bytes": 646585,
+      "sha256": "467862aef78175f826513f2f2718b323d043e8d57dcf8264093febc3b75a68bd"
+    },
+    "sourceFiles": [
+      {
+        "path": "source/scene.mjs",
+        "sha256": "4b1fb5a657f9f47f4b01f874f48346c158711abf9e85de1019f099d2f70effc9"
+      },
+      {
+        "path": "source/art.mjs",
+        "sha256": "1a9228236a8d1d39f210770ac4064d02ca45889bb711376daa8c2760f410091d"
+      },
+      {
+        "path": "source/lettering.mjs",
+        "sha256": "f4f52cbfce5cfb6c9f5390c1a94da17189a98e315ddf3dce139bf66ff1681c81"
+      },
+      {
+        "path": "build-checkpoint.mjs",
+        "sha256": "acb4721ba666f37f655ac7f486ad234b78318728bff2705743734a8d6267106e"
+      }
+    ],
+    "courses": [
+      "harbor-docks-01"
+    ],
+    "runtimeChanges": 0,
+    "limitsUnchanged": true
+  },
+  "after": {
+    "format": "FPVHarborDocksCheckpointBuild.v1",
+    "stage": "one course; actual visual review and ordinary completion qualification pending",
+    "source": {
+      "bytes": 761036,
+      "sha256": "c7609e2bb9b2371124a311e4128c3a3e6c81aaadd3613806bb6405270821d246",
+      "triangles": 7900,
+      "materials": 10,
+      "nodes": 53,
+      "textures": 2,
+      "colliders": 38
+    },
+    "prepared": {
+      "bytes": 760368,
+      "sha256": "9a0ec37f294afad1ac906e10f5483769bfca9dc1f7a0e30769fda110ecbc1854",
+      "validatorErrors": 0
+    },
+    "pack": {
+      "bytes": 787128,
+      "sha256": "f87a995b87763e336d7427fb39d770a701065d93829189f6d71b73484bafa631",
+      "identity": "fpv-pack:f87a995b87763e336d7427fb39d770a701065d93829189f6d71b73484bafa631"
+    },
+    "zip": {
+      "bytes": 787184,
+      "sha256": "0f1a134b5132cce835022376f5016f9f564196f0ca3b15107ba63f5b51c2b0cb"
+    },
+    "sourceFiles": [
+      {
+        "path": "source/scene.mjs",
+        "sha256": "86f7fb0c267989e0e81bc3fd0ea25e72d1e863f9af67ef9853cd5562041deeb2"
+      },
+      {
+        "path": "source/art.mjs",
+        "sha256": "1a9228236a8d1d39f210770ac4064d02ca45889bb711376daa8c2760f410091d"
+      },
+      {
+        "path": "source/lettering.mjs",
+        "sha256": "f4f52cbfce5cfb6c9f5390c1a94da17189a98e315ddf3dce139bf66ff1681c81"
+      },
+      {
+        "path": "build-checkpoint.mjs",
+        "sha256": "648a37d92a61f551d015977cfb2591d0e719a9dbbd883fd1555f5dd2f920a44d"
+      }
+    ],
+    "courses": [
+      "harbor-docks-01"
+    ],
+    "runtimeChanges": 0,
+    "limitsUnchanged": true
+  },
+  "imageBytes": [
+    {
+      "name": "original-harbor-paint-256",
+      "mimeType": "image/png",
+      "bytes": 62832,
+      "sha256": "0a6cf919333063bcf80806d72d3b6f4a6d62218d2384946780c97b59a48e102c"
+    },
+    {
+      "name": "original-harbor-ground-256",
+      "mimeType": "image/png",
+      "bytes": 67984,
+      "sha256": "5363298412ec9bb3a47f02582ad18ac1f22e42c3e3180b55778f712335c10c39"
+    }
+  ],
+  "triangleDelta": 1812,
+  "checks": [
+    {
+      "name": "Explicit r1 to r2 content revision",
+      "passed": true
+    },
+    {
+      "name": "r1 one course checkpoint only",
+      "passed": true
+    },
+    {
+      "name": "r2 one course checkpoint only",
+      "passed": true
+    },
+    {
+      "name": "Every course field except revision is exact, including routes, bounds, spawn, physics and actors",
+      "passed": true
+    },
+    {
+      "name": "Exact source anchors",
+      "passed": true
+    },
+    {
+      "name": "Exact source colliders",
+      "passed": true
+    },
+    {
+      "name": "Exact project spawnBindings",
+      "passed": true
+    },
+    {
+      "name": "Exact project routeBindings",
+      "passed": true
+    },
+    {
+      "name": "Exact project overrides",
+      "passed": true
+    },
+    {
+      "name": "Exact project themes",
+      "passed": true
+    },
+    {
+      "name": "Exact project campaigns",
+      "passed": true
+    },
+    {
+      "name": "Exact project playlists",
+      "passed": true
+    },
+    {
+      "name": "Exact serialized semantic marker nodes",
+      "passed": true
+    },
+    {
+      "name": "All 38 collision records retained",
+      "passed": true
+    },
+    {
+      "name": "Exact GLB materials",
+      "passed": true
+    },
+    {
+      "name": "Exact GLB textures",
+      "passed": true
+    },
+    {
+      "name": "Exact GLB samplers",
+      "passed": true
+    },
+    {
+      "name": "Exact GLB extensionsUsed",
+      "passed": true
+    },
+    {
+      "name": "Exact GLB extensionsRequired",
+      "passed": true
+    },
+    {
+      "name": "Both original embedded PNG byte streams exact",
+      "passed": true
+    },
+    {
+      "name": "Ten imported material batches retained",
+      "passed": true
+    },
+    {
+      "name": "Revised scene within unchanged authoring limits",
+      "passed": true
+    },
+    {
+      "name": "Prepared GLB validator has zero errors",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,216 @@
+{
+  "format": "FPVSkillSchoolAuthoringEvidence.v1",
+  "sources": {
+    "catalogue": {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sha256": "a0111508d84e19da88bdb78c1834e8a05950d5ee04a59819dd8545209d2698fb"
+    },
+    "runtime": {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "sha256": "692f95aa2eef7f9fd8be04e20799e928b5c4fb917daae8128306e9fe66b07cc2"
+    },
+    "pilot": {
+      "path": "scripts/qualify-fpv-skill-school.mjs",
+      "sha256": "9e77cb48e0c078c2a8401d16a4b615500e37517f229107d8c6eb191a2f843a40"
+    }
+  },
+  "response": {
+    "format": "FlightResponseProfile.v1",
+    "id": "gentle-v1",
+    "name": "Gentle",
+    "maxRate": 240,
+    "maxTilt": 30,
+    "expo": 30,
+    "responseTicks": 8
+  },
+  "method": "Ordinary normalized inputs drive the unchanged fixed-step physics. Every complete recording independently replays against the exact course and response; no state or objective advancement is injected.",
+  "summary": {
+    "lessons": 16,
+    "completed": 16,
+    "independentlyReplayed": 16,
+    "frames": 35045,
+    "matchedInstalledRecordings": 16
+  },
+  "limitations": [
+    "Controlled-input qualification does not establish human usability, physical-controller acceptance, browser performance or public availability.",
+    "New unit-test coverage remains deferred."
+  ],
+  "results": [
+    {
+      "id": "beginner-43",
+      "status": "complete",
+      "ticks": 1657,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "5873933e67fe81af",
+      "finalStateIdentity": "c272e62e0a9e6d02",
+      "proofSha256": "e861bed3f9f23653ab82719c523be7b53c96a48e834f2d37bdffac750dc45e48"
+    },
+    {
+      "id": "beginner-44",
+      "status": "complete",
+      "ticks": 1657,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "5f4e0c788f1171c3",
+      "finalStateIdentity": "774cd1ede8a1f63e",
+      "proofSha256": "790ea96e4fb4b31ef808be39df4c0f8e539845d39e8dc09aba875071cd1b63ad"
+    },
+    {
+      "id": "beginner-45",
+      "status": "complete",
+      "ticks": 1045,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "56713a5aa945fe30",
+      "finalStateIdentity": "23393f68b2059498",
+      "proofSha256": "0310209b89f25f8ac34183c04ff89f13349a69db047ccc9fd6cb2ba006a48a30"
+    },
+    {
+      "id": "beginner-46",
+      "status": "complete",
+      "ticks": 1527,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "0c9d849f3be4be28",
+      "finalStateIdentity": "21110474859f0887",
+      "proofSha256": "bbe49aeaafd3454f04162498bfb9f54b70a8b1438dcbd64928159079dfe48475"
+    },
+    {
+      "id": "beginner-47",
+      "status": "complete",
+      "ticks": 1678,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "bc9b796f6f708d31",
+      "finalStateIdentity": "9c8306ffaf6dcc89",
+      "proofSha256": "ae2a22f828bd5e6df64d8bce8b02679d38b512ccff12f21b9196b977e1e9c624"
+    },
+    {
+      "id": "beginner-48",
+      "status": "complete",
+      "ticks": 1845,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "411698d0d162f643",
+      "finalStateIdentity": "b58df5e614999bda",
+      "proofSha256": "24c157a123366719811795245a29878175e9b77128c229d8c2de0b09c0e13604"
+    },
+    {
+      "id": "beginner-49",
+      "status": "complete",
+      "ticks": 1752,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "89c87f6188de63fa",
+      "finalStateIdentity": "ce1234ce0817c6b8",
+      "proofSha256": "b8eb034f4a6a3901b6b769cbd10493127a49dbf98e26d983c9a7c478faf973cf"
+    },
+    {
+      "id": "beginner-50",
+      "status": "complete",
+      "ticks": 1846,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "dee283da2f49063b",
+      "finalStateIdentity": "5d1a9e28acad2504",
+      "proofSha256": "3846eb91d35ba9d08e62c985025fbfd30cfe3dce236de761af53c0fbcee76313"
+    },
+    {
+      "id": "beginner-51",
+      "status": "complete",
+      "ticks": 2018,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "f2b8ec6f56c3353a",
+      "finalStateIdentity": "7a49fb39bcb506c3",
+      "proofSha256": "1abc58b4ff073a81b19e66ba94aea9dea9133de5e287b6af610c8daf8eb414c0"
+    },
+    {
+      "id": "beginner-52",
+      "status": "complete",
+      "ticks": 2793,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "65adb09bd2b16dde",
+      "finalStateIdentity": "83ec857c83cdb077",
+      "proofSha256": "33d3fd330086017a742a0e4a728f788bcb587e34b5f3b96bb6721d6b67034d26"
+    },
+    {
+      "id": "beginner-53",
+      "status": "complete",
+      "ticks": 2491,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "3c6264a46bcd9d85",
+      "finalStateIdentity": "83168bd78a32adf5",
+      "proofSha256": "650cf558612131922f61c96d0aeb42acc26cab09d571e2a0a7f9b7d8ac8ede33"
+    },
+    {
+      "id": "beginner-54",
+      "status": "complete",
+      "ticks": 1542,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "1acb62e68122fa51",
+      "finalStateIdentity": "2f94f3b6491254c7",
+      "proofSha256": "a6b2f96e1f6978054dbb721fe6981dcdcaa643b1182a88af01b496fa2b40ff20"
+    },
+    {
+      "id": "beginner-55",
+      "status": "complete",
+      "ticks": 2075,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "82f7b51474cc2fec",
+      "finalStateIdentity": "ffe2815daa8a832f",
+      "proofSha256": "9f4a51642e7a7a579f392d8a424fa37b2f7c9d07830c1e29a861fe03a0a8ed91"
+    },
+    {
+      "id": "beginner-56",
+      "status": "complete",
+      "ticks": 2622,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "999d17dd9a263cd2",
+      "finalStateIdentity": "863576bd05ea03e6",
+      "proofSha256": "27e0520a68d1a6e3b584191405a233d4f1eed00205ad40414920a6ef3b218818"
+    },
+    {
+      "id": "beginner-57",
+      "status": "complete",
+      "ticks": 3212,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "472b0aa21b2fca36",
+      "finalStateIdentity": "def0ca53a5dcd820",
+      "proofSha256": "62f9a9334e346a773997e76f11f29cac8c3f7189f39f63ceea6df4fb86ed2e12"
+    },
+    {
+      "id": "beginner-58",
+      "status": "complete",
+      "ticks": 5285,
+      "contacts": 0,
+      "independentlyReplayed": true,
+      "matchesInstalledRecording": true,
+      "sourceIdentity": "b11704875488ce3a",
+      "finalStateIdentity": "19644e21a6648a57",
+      "proofSha256": "74dee49a09835d801928c6dd4357c948017b47f687724ad3c60dec211e11f7c8"
+    }
+  ]
+}

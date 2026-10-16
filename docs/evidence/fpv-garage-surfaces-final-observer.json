@@ -1,0 +1,76 @@
+{
+  "format": "FPVGarageTargetedObserverEvidence.v1",
+  "recordedAt": "2026-10-03T18:10:44.385274+00:00",
+  "runtimeCandidate": "866b0f9d93416603d95b2f8329d7a6484b861a43",
+  "sourceTree": "43a66b2f6234c4cdeb84878d4ffef23657b84f65",
+  "baseline": "a1cb86c85cd52db7256ad2ed16c30c8f40f90c32",
+  "verification": "Integration owner observed the actual final packaged player and selected views in Codex browser; reported directly to implementation owner.",
+  "player": {
+    "lesson": "Upper deck survey",
+    "launched": true,
+    "armed": true,
+    "pausedAfterSeconds": 0.2,
+    "status": "Paused. Arm deliberately to continue."
+  },
+  "observerViews": [
+    {
+      "course": "garage-02",
+      "pose": "ramp crest",
+      "heightMeters": 5.5,
+      "passed": true
+    },
+    {
+      "course": "garage-02",
+      "pose": "column",
+      "heightMeters": 1.5,
+      "passed": true
+    },
+    {
+      "course": "garage-02",
+      "pose": "ramp toe",
+      "heightMeters": 1.5,
+      "passed": true
+    },
+    {
+      "appearance": "Pixel",
+      "styleRetained": true
+    },
+    {
+      "appearance": "industrial-workshop",
+      "styleRetained": true
+    },
+    {
+      "course": "beginner-41",
+      "pose": "school platform",
+      "heightMeters": 5.5,
+      "passed": true,
+      "observation": "Separate school platform remains readable and its support unchanged."
+    }
+  ],
+  "screenshots": {
+    "fpv-garage-player-final.png": {
+      "bytes": 55887,
+      "sha256": "2f199be1555e139311e0aacc8429cf8df15778d5ba53788052dc915f0ae5eff0"
+    },
+    "fpv-garage-final-column.png": {
+      "bytes": 146789,
+      "sha256": "d95da25477f6853f8b3af1bf81b63f00ab90e6395c61e02be5844e64ae930bcc"
+    },
+    "fpv-garage-final-ramp.png": {
+      "bytes": 158132,
+      "sha256": "8ef2ed43cd4d0ac2c3f5f239737174193a34bc5899f72eca7be2a03b77b96865"
+    },
+    "fpv-garage-final-platform.png": {
+      "bytes": 171302,
+      "sha256": "f77091c26d3bba24c644d7fd18726dbf0e55c1c740fc9ee00896074aa365c846"
+    }
+  },
+  "sourceFixtureManifestSha256": "f026d2c3dcd65a0bec90e337d6d3c26e7506fee57735d352c959ea8fcf33cc3b",
+  "packageFixtureManifestSha256": "1270b61f4da22758e2e9941267d07ee1411d699c830905ddaf19b3a01f38051b",
+  "limitations": [
+    "Targeted final observer and short actual player launch; not a new full 528-check matrix run.",
+    "The complete packaged browser matrix remains bound to candidate79c68.",
+    "Historical source Courtyard pixel controls remain disclosed non-passes with unproven cause.",
+    "No public deployment, hardware performance, sustained gameplay, physical-controller or player/artist acceptance claim."
+  ]
+}

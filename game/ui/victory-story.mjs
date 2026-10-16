@@ -68,10 +68,13 @@ export function createVictoryStoryPresentation({
   masterVolume = 1,
   muted = false,
   reducedMotion = false,
+  autoplay = false,
+  cinematicTransition = false,
   timeoutMs = VICTORY_STORY_LIMITS.timeoutMs,
   onChange = () => {},
   signal,
 } = {}) {
+  let autoStartPending = autoplay && !reducedMotion;
   const story = requirePreparedVictoryStory(prepared, picturePin).descriptor;
   required(
     container?.append && posterElement && document?.createElement,
@@ -112,12 +115,15 @@ export function createVictoryStoryPresentation({
   element.className = 'victory-story';
   localizedAttribute(element, 'aria-label', () => t('interface:optionalVictoryStory'));
   const description = document.createElement('p');
+  description.className = 'story-description';
   localizedText(description, () => contentText(story, 'description'));
   const notice = document.createElement('p');
+  notice.className = 'story-notice';
   const feedback = createOperationStatus(notice);
   let activity = null;
   notice.tabIndex = -1;
   const controls = document.createElement('div');
+  controls.className = 'story-controls';
   const buttons = {};
   for (const [id, key] of [
     ['play', 'common:actions.playback'],
@@ -198,10 +204,22 @@ export function createVictoryStoryPresentation({
     if (disposed) return;
     // Native browsers can blur an active control immediately when it is hidden
     // or disabled. Remember ownership before updating its availability.
+    const previousState = element.dataset.state;
+    element.dataset.state = state;
     const focused = document.activeElement;
     const showing = state === 'playing' || state === 'paused' || state === 'starting';
-    posterElement.hidden = showing;
-    if (media) media.hidden = !showing;
+    // Keep the exact poster underneath until a decoded video actually plays.
+    posterElement.hidden = cinematicTransition ? false : showing;
+    if (media) {
+      media.hidden = cinematicTransition ? !['playing', 'paused'].includes(state) : !showing;
+      if (
+        cinematicTransition &&
+        state === 'playing' &&
+        previousState !== 'playing' &&
+        !reducedMotion
+      )
+        media.animate?.([{ opacity: 0 }, { opacity: 1 }], { duration: 650, easing: 'ease-out' });
+    }
     buttons.play.hidden = hasPlayed && state === 'poster';
     localizedText(buttons.play, () =>
       state === 'paused' ? t('interface:resumeStory') : t('common:actions.playback'),
@@ -310,6 +328,7 @@ export function createVictoryStoryPresentation({
     render();
   };
   function pause() {
+    autoStartPending = false;
     if (disposed) return false;
     const inFlight = ['playing', 'starting', 'preparing'].includes(state);
     halt();
@@ -325,6 +344,7 @@ export function createVictoryStoryPresentation({
     return inFlight;
   }
   function skip() {
+    autoStartPending = false;
     if (disposed) return false;
     keepPoster = true;
     finish(localizedMessage('interface:storySkippedYourExactPictureIsUnchanged'));
@@ -472,7 +492,8 @@ export function createVictoryStoryPresentation({
       fail(localizedMessage('interface:theRequestedStorySeekWasNotHonored'));
       return;
     }
-    const autoplay = desired;
+    const autoplay = desired || (autoStartPending && !reducedMotion);
+    autoStartPending = false;
     stopDeadline();
     seekingStart = false;
     ready = true;

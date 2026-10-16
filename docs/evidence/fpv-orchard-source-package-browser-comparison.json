@@ -1,0 +1,77 @@
+{
+  "format": "FPVOrchardSourcePackageBrowserComparison.v1",
+  "source": {
+    "bytes": 47082,
+    "sha256": "89a04ca8abb5aa5894b3cdf2c48e1eea8c2b7d9139d7e001755d8631e6553cab"
+  },
+  "packaged": {
+    "bytes": 47123,
+    "sha256": "34355de10493682c128ca00fc38338eda3c63e1cc8bd429f110b0738ca8ee223"
+  },
+  "exactFunctionalFields": [
+    "checks",
+    "samples",
+    "resourceCycles",
+    "contextLosses",
+    "finalResources",
+    "passed",
+    "limitations"
+  ],
+  "fields": [
+    {
+      "field": "baseline",
+      "exact": true
+    },
+    {
+      "field": "candidate",
+      "exact": false
+    },
+    {
+      "field": "checks",
+      "exact": true
+    },
+    {
+      "field": "contextLosses",
+      "exact": true
+    },
+    {
+      "field": "createdAt",
+      "exact": false
+    },
+    {
+      "field": "finalResources",
+      "exact": true
+    },
+    {
+      "field": "format",
+      "exact": true
+    },
+    {
+      "field": "limitations",
+      "exact": true
+    },
+    {
+      "field": "passed",
+      "exact": true
+    },
+    {
+      "field": "resourceCycles",
+      "exact": true
+    },
+    {
+      "field": "samples",
+      "exact": true
+    },
+    {
+      "field": "sourceFiles",
+      "exact": false
+    },
+    {
+      "field": "viewport",
+      "exact": true
+    }
+  ],
+  "checks": 96,
+  "imagePairs": 43,
+  "note": "Exact functional/semantic/image observations. Metadata may differ; this does not claim a new device/FPS measurement."
+}

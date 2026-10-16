@@ -1,0 +1,16 @@
+- main:
+  - button "Menu"
+  - generic: Overflight
+  - button "Pause"
+  - region "Overflight battlefield":
+    - generic: Hull 100 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 00:00
+    - generic: Level 1
+    - generic: 0 Cleared
+    - generic: Overflight payload 1
+    - generic: Boost Ready
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- text: + + + + + + + + +

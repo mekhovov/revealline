@@ -8,10 +8,19 @@ import { createHash, webcrypto } from 'node:crypto';
 import vm from 'node:vm';
 import { readBuildConfig, collectBuildFiles, buildProject } from '../../scripts/game-cli.mjs';
 import { planCurrentEntries } from '../../scripts/pages-current-entry.mjs';
+import { projectEditionModuleIndentation } from '../../scripts/edition-code-indentation.mjs';
+import {
+  LAUNCHER_APPEARANCE_FILES,
+  LAUNCHER_NAVIGATION_FILES,
+} from '../../scripts/offline-launcher.mjs';
 
 const sourceRoot = fileURLToPath(new URL('../../', import.meta.url));
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const fieldKitFiles = [
+  'game/access-gate.css',
+  'game/access-gate.mjs',
+  'game/presentation/theme-bootstrap.mjs',
+  'game/presentation/industrial-workshop.css',
   // HTML-selected reading entry; copy() follows its exact runtime imports.
   'game/ui/tool-display-entry.mjs',
   'game/ui/workshop-return-entry.mjs',
@@ -19,6 +28,11 @@ const fieldKitFiles = [
   'game/ui/operation-status.css',
   'game/ui/operation-status.mjs',
   'game/ui/field-kit-fonts.css',
+  'game/ui/brand-identity.css',
+  'game/ui/art/identity/fpv-line/icon-32.png',
+  'game/ui/art/identity/fpv-line/icon-192.png',
+  'game/ui/fonts/departure-mono/DepartureMono-Regular.woff2',
+  'game/ui/fonts/departure-mono/LICENSE',
   'game/ui/field-kit-tokens.css',
   'game/ui/field-kit-components.css',
   'game/ui/field-kit-flow.css',
@@ -41,6 +55,14 @@ const fieldKitFiles = [
   'game/ui/fonts/METADATA.pb',
   'game/ui/fonts/provenance.json',
 ];
+const localizationFiles = [
+  'game/i18n/style.css',
+  'game/i18n/catalogs.mjs',
+  'game/i18n/bootstrap.mjs',
+  'game/vendor/i18next-26.4.2.min.js',
+  'game/vendor/lz-string-1.5.0.min.js',
+  'game/vendor/LZ-STRING-LICENSE.txt',
+];
 const workshopEntries = [
   'authoring/still-media/index.html',
   'authoring/still-media/launch.js',
@@ -57,6 +79,266 @@ const teachingScenarios = [
   'tactical-borrowed-seconds',
   'tactical-quiet-crossing',
 ].map((id) => `authoring/library/tactical-teaching/scenarios/${id}.json`);
+// Explicit current source assets admitted through main 2169552a0; keep this
+// inventory separate from build-config so accidental source admission still fails.
+const establishedLibraryAssets = [
+  'authoring/library/neon-artwork/README.md',
+  'authoring/library/neon-artwork/backgrounds/arrows.jpg',
+  'authoring/library/neon-artwork/backgrounds/bandura.jpg',
+  'authoring/library/neon-artwork/backgrounds/barvinok.jpg',
+  'authoring/library/neon-artwork/backgrounds/berehynia.jpg',
+  'authoring/library/neon-artwork/backgrounds/bezkonechnyk.jpg',
+  'authoring/library/neon-artwork/backgrounds/chambers.jpg',
+  'authoring/library/neon-artwork/backgrounds/channels.jpg',
+  'authoring/library/neon-artwork/backgrounds/conduit.jpg',
+  'authoring/library/neon-artwork/backgrounds/crossfire.jpg',
+  'authoring/library/neon-artwork/backgrounds/crossgrid.jpg',
+  'authoring/library/neon-artwork/backgrounds/crossroads.jpg',
+  'authoring/library/neon-artwork/backgrounds/deer.jpg',
+  'authoring/library/neon-artwork/backgrounds/didukh.jpg',
+  'authoring/library/neon-artwork/backgrounds/drone-aid.jpg',
+  'authoring/library/neon-artwork/backgrounds/fish.jpg',
+  'authoring/library/neon-artwork/backgrounds/fly-free.jpg',
+  'authoring/library/neon-artwork/backgrounds/fpv-drone.jpg',
+  'authoring/library/neon-artwork/backgrounds/fpv-line.jpg',
+  'authoring/library/neon-artwork/backgrounds/fpv.jpg',
+  'authoring/library/neon-artwork/backgrounds/hearts.jpg',
+  'authoring/library/neon-artwork/backgrounds/horse.jpg',
+  'authoring/library/neon-artwork/backgrounds/kalyna.jpg',
+  'authoring/library/neon-artwork/backgrounds/kosiv-pitcher.jpg',
+  'authoring/library/neon-artwork/backgrounds/labyrinth.jpg',
+  'authoring/library/neon-artwork/backgrounds/oak.jpg',
+  'authoring/library/neon-artwork/backgrounds/opishnia-ram.jpg',
+  'authoring/library/neon-artwork/backgrounds/ornek-tulip.jpg',
+  'authoring/library/neon-artwork/backgrounds/petrykivka.jpg',
+  'authoring/library/neon-artwork/backgrounds/pinwheels.jpg',
+  'authoring/library/neon-artwork/backgrounds/prism.jpg',
+  'authoring/library/neon-artwork/backgrounds/pysanka.jpg',
+  'authoring/library/neon-artwork/backgrounds/reveal.jpg',
+  'authoring/library/neon-artwork/backgrounds/rushnyk.jpg',
+  'authoring/library/neon-artwork/backgrounds/ruzha.jpg',
+  'authoring/library/neon-artwork/backgrounds/sdua.jpg',
+  'authoring/library/neon-artwork/backgrounds/social-drone.jpg',
+  'authoring/library/neon-artwork/backgrounds/spines.jpg',
+  'authoring/library/neon-artwork/backgrounds/spirals.jpg',
+  'authoring/library/neon-artwork/backgrounds/stork.jpg',
+  'authoring/library/neon-artwork/backgrounds/swallow.jpg',
+  'authoring/library/neon-artwork/backgrounds/switchback.jpg',
+  'authoring/library/neon-artwork/backgrounds/switchyards.jpg',
+  'authoring/library/neon-artwork/backgrounds/tree-of-life.jpg',
+  'authoring/library/neon-artwork/backgrounds/trembita.jpg',
+  'authoring/library/neon-artwork/backgrounds/tryzub.jpg',
+  'authoring/library/neon-artwork/backgrounds/tsymbaly.jpg',
+  'authoring/library/neon-artwork/backgrounds/ukraine.jpg',
+  'authoring/library/neon-artwork/backgrounds/vd.jpg',
+  'authoring/library/neon-artwork/backgrounds/victory-drones.jpg',
+  'authoring/library/neon-artwork/backgrounds/vinok.jpg',
+  'authoring/library/neon-artwork/backgrounds/vyshyvanka.jpg',
+  'authoring/library/neon-artwork/backgrounds/wavebands.jpg',
+  'authoring/library/neon-artwork/backgrounds/wheat.jpg',
+  'authoring/library/neon-artwork/coverage-audit.json',
+  'authoring/library/neon-artwork/index.html',
+  'authoring/library/neon-artwork/prompts.json',
+  'authoring/library/neon-mosaic/README.md',
+  'authoring/library/neon-mosaic/bandura/preview.svg',
+  'authoring/library/neon-mosaic/bandura/scenario.json',
+  'authoring/library/neon-mosaic/barvinok/preview.svg',
+  'authoring/library/neon-mosaic/barvinok/scenario.json',
+  'authoring/library/neon-mosaic/berehynia/preview.svg',
+  'authoring/library/neon-mosaic/berehynia/scenario.json',
+  'authoring/library/neon-mosaic/bezkonechnyk/preview.svg',
+  'authoring/library/neon-mosaic/bezkonechnyk/scenario.json',
+  'authoring/library/neon-mosaic/deer/preview.svg',
+  'authoring/library/neon-mosaic/deer/scenario.json',
+  'authoring/library/neon-mosaic/designs.json',
+  'authoring/library/neon-mosaic/didukh/preview.svg',
+  'authoring/library/neon-mosaic/didukh/scenario.json',
+  'authoring/library/neon-mosaic/drone-aid/preview.svg',
+  'authoring/library/neon-mosaic/drone-aid/scenario.json',
+  'authoring/library/neon-mosaic/fish/preview.svg',
+  'authoring/library/neon-mosaic/fish/scenario.json',
+  'authoring/library/neon-mosaic/fly-free/preview.svg',
+  'authoring/library/neon-mosaic/fly-free/scenario.json',
+  'authoring/library/neon-mosaic/fpv-drone/preview.svg',
+  'authoring/library/neon-mosaic/fpv-drone/scenario.json',
+  'authoring/library/neon-mosaic/fpv-line/preview.svg',
+  'authoring/library/neon-mosaic/fpv-line/scenario.json',
+  'authoring/library/neon-mosaic/fpv/preview.svg',
+  'authoring/library/neon-mosaic/fpv/scenario.json',
+  'authoring/library/neon-mosaic/horse/preview.svg',
+  'authoring/library/neon-mosaic/horse/scenario.json',
+  'authoring/library/neon-mosaic/index.html',
+  'authoring/library/neon-mosaic/kalyna/preview.svg',
+  'authoring/library/neon-mosaic/kalyna/scenario.json',
+  'authoring/library/neon-mosaic/kosiv-pitcher/preview.svg',
+  'authoring/library/neon-mosaic/kosiv-pitcher/scenario.json',
+  'authoring/library/neon-mosaic/launch.mjs',
+  'authoring/library/neon-mosaic/oak/preview.svg',
+  'authoring/library/neon-mosaic/oak/scenario.json',
+  'authoring/library/neon-mosaic/opishnia-ram/preview.svg',
+  'authoring/library/neon-mosaic/opishnia-ram/scenario.json',
+  'authoring/library/neon-mosaic/ornek-tulip/preview.svg',
+  'authoring/library/neon-mosaic/ornek-tulip/scenario.json',
+  'authoring/library/neon-mosaic/overview.svg',
+  'authoring/library/neon-mosaic/petrykivka/preview.svg',
+  'authoring/library/neon-mosaic/petrykivka/scenario.json',
+  'authoring/library/neon-mosaic/pysanka/preview.svg',
+  'authoring/library/neon-mosaic/pysanka/scenario.json',
+  'authoring/library/neon-mosaic/references.json',
+  'authoring/library/neon-mosaic/reveal/preview.svg',
+  'authoring/library/neon-mosaic/reveal/scenario.json',
+  'authoring/library/neon-mosaic/rushnyk/preview.svg',
+  'authoring/library/neon-mosaic/rushnyk/scenario.json',
+  'authoring/library/neon-mosaic/ruzha/preview.svg',
+  'authoring/library/neon-mosaic/ruzha/scenario.json',
+  'authoring/library/neon-mosaic/sdua/preview.svg',
+  'authoring/library/neon-mosaic/sdua/scenario.json',
+  'authoring/library/neon-mosaic/social-drone/preview.svg',
+  'authoring/library/neon-mosaic/social-drone/scenario.json',
+  'authoring/library/neon-mosaic/stork/preview.svg',
+  'authoring/library/neon-mosaic/stork/scenario.json',
+  'authoring/library/neon-mosaic/swallow/preview.svg',
+  'authoring/library/neon-mosaic/swallow/scenario.json',
+  'authoring/library/neon-mosaic/tree-of-life/preview.svg',
+  'authoring/library/neon-mosaic/tree-of-life/scenario.json',
+  'authoring/library/neon-mosaic/trembita/preview.svg',
+  'authoring/library/neon-mosaic/trembita/scenario.json',
+  'authoring/library/neon-mosaic/tryzub/preview.svg',
+  'authoring/library/neon-mosaic/tryzub/scenario.json',
+  'authoring/library/neon-mosaic/tsymbaly/preview.svg',
+  'authoring/library/neon-mosaic/tsymbaly/scenario.json',
+  'authoring/library/neon-mosaic/ukraine/preview.svg',
+  'authoring/library/neon-mosaic/ukraine/scenario.json',
+  'authoring/library/neon-mosaic/vd/preview.svg',
+  'authoring/library/neon-mosaic/vd/scenario.json',
+  'authoring/library/neon-mosaic/victory-drones/preview.svg',
+  'authoring/library/neon-mosaic/victory-drones/scenario.json',
+  'authoring/library/neon-mosaic/vinok/preview.svg',
+  'authoring/library/neon-mosaic/vinok/scenario.json',
+  'authoring/library/neon-mosaic/vyshyvanka/preview.svg',
+  'authoring/library/neon-mosaic/vyshyvanka/scenario.json',
+  'authoring/library/neon-mosaic/wheat/preview.svg',
+  'authoring/library/neon-mosaic/wheat/scenario.json',
+  'authoring/library/neon-reference-pack/README.md',
+  'authoring/library/classic-reveal-artwork/README.md',
+  'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-02.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-03.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-04.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/living-threads-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/living-threads-02.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/living-threads-03.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/night-shift-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/night-shift-02.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/night-shift-03.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/sentinel-relay-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-01.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-02.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-03.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-04.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-05.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-06.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-07.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-08.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-09.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-10.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-11.jpg',
+  'authoring/library/classic-reveal-artwork/backgrounds/signal-12.jpg',
+  'authoring/library/classic-reveal-artwork/contact-sheet.jpg',
+  'authoring/library/classic-reveal-artwork/index.html',
+  'authoring/library/classic-reveal-artwork/manifest.json',
+  'authoring/library/classic-reveal-artwork/prompts.json',
+  'authoring/library/overflight-field-kit-v1/manifest.json',
+  'authoring/library/overflight-field-kit-v1/pickup-module-primary.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-proximity-pulse.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-scanner.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-shield.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-side-burst.png',
+  'authoring/library/overflight-field-kit-v1/pickup-module-slow-field.png',
+  'authoring/library/overflight-field-kit-v1/pickup-overflight-impact.png',
+  'authoring/library/overflight-field-kit-v1/pickup-overflight-warning.png',
+  'authoring/library/overflight-field-kit-v1/pickup-salvage-cluster.png',
+  'authoring/library/overflight-field-kit-v1/pickup-salvage-small.png',
+  'authoring/library/overflight-field-kit-v1/pickup-supply-case-closed.png',
+  'authoring/library/overflight-field-kit-v1/pickup-supply-case-open.png',
+  'authoring/library/overflight-field-kit-v1/pickup-support-marker.png',
+
+  'authoring/library/1994-forever-art/originals/last-train-cassette.png',
+  'authoring/library/1994-forever-art/originals/midnight-arcade.png',
+  'authoring/library/1994-forever-art/originals/rainy-video-rental.png',
+  'authoring/library/1994-forever-art/provenance.json',
+  'authoring/library/challenge-chapter-art/originals/crosswind-depot.png',
+  'authoring/library/challenge-chapter-art/originals/signal-switchback.png',
+  'authoring/library/challenge-chapter-art/originals/split-signal-foundry.png',
+  'authoring/library/challenge-chapter-art/provenance.json',
+  'authoring/library/dawn-signal-story/candidate-v1/frame-95.png',
+  'authoring/library/dawn-signal-story/candidate-v1/native-inspection.json',
+  'authoring/library/dawn-signal-story/provenance.json',
+  'authoring/library/external-chapter-pilot/descriptor.json',
+  'authoring/library/four-worlds-chapters/distribution.json',
+  'authoring/library/four-worlds-source/catalog.json',
+  'authoring/library/fpv-body-contrast-candidates/manifest.json',
+  'authoring/library/fpv-body-contrast-candidates/scout.compact.png',
+  'authoring/library/fpv-body-contrast-candidates/scout.detailed.png',
+  'authoring/library/fpv-body-detail-candidates/manifest.json',
+  'authoring/library/fpv-body-detail-candidates/scout.compact.png',
+  'authoring/library/fpv-body-detail-candidates/scout.detailed.png',
+  'authoring/library/fpv-body-optical-candidates/manifest.json',
+  'authoring/library/fpv-body-optical-candidates/scout.compact.png',
+  'authoring/library/fpv-body-optical-candidates/scout.detailed.png',
+  'authoring/library/fpv-body-roster-candidates/bomber.compact.png',
+  'authoring/library/fpv-body-roster-candidates/bomber.detailed.png',
+  'authoring/library/fpv-body-roster-candidates/carrier.compact.png',
+  'authoring/library/fpv-body-roster-candidates/carrier.detailed.png',
+  'authoring/library/fpv-body-roster-candidates/fiber.compact.png',
+  'authoring/library/fpv-body-roster-candidates/fiber.detailed.png',
+  'authoring/library/fpv-body-roster-candidates/impact.compact.png',
+  'authoring/library/fpv-body-roster-candidates/impact.detailed.png',
+  'authoring/library/fpv-body-roster-candidates/interceptor.compact.png',
+  'authoring/library/fpv-body-roster-candidates/interceptor.detailed.png',
+  'authoring/library/fpv-body-roster-candidates/manifest.json',
+  'authoring/library/fpv-body-roster-candidates/scout.compact.png',
+  'authoring/library/fpv-body-roster-candidates/scout.detailed.png',
+  'authoring/library/fpv-body-roster-candidates/trapper.compact.png',
+  'authoring/library/fpv-body-roster-candidates/trapper.detailed.png',
+  'authoring/library/fpv-pressure-art/originals/courtyard-exits.png',
+  'authoring/library/fpv-pressure-art/originals/night-crossfire.png',
+  'authoring/library/fpv-pressure-art/originals/orchard-crossing.png',
+  'authoring/library/fpv-pressure-art/provenance.json',
+  'authoring/library/fpv-route-choices/distribution.json',
+  'authoring/library/real-world-references/synevyr-lake-rafts.jpg',
+  'authoring/library/real-world-references/synevyr-lake-rafts.json',
+  'authoring/library/retro-route-art/originals/crosswind-courier.png',
+  'authoring/library/retro-route-art/originals/midnight-workshop.png',
+  'authoring/library/retro-route-art/originals/signal-thread.png',
+  'authoring/library/retro-route-art/provenance.json',
+  'authoring/library/route-worlds/descriptors/retro.json',
+  'authoring/library/route-worlds/descriptors/ukraine.json',
+  'authoring/library/route-worlds/editions.json',
+  'authoring/library/sentinel-circuit-art/originals/listening-court.png',
+  'authoring/library/sentinel-circuit-art/originals/open-the-circuit.png',
+  'authoring/library/sentinel-circuit-art/originals/switchyard-gates.png',
+  'authoring/library/sentinel-circuit-art/provenance.json',
+  'authoring/library/sentinel-circuit-external/descriptor.json',
+  'authoring/library/sentinel-theme-art/provenance.json',
+  'authoring/library/sentinel-theme-art/retro/originals/listening-court.png',
+  'authoring/library/sentinel-theme-art/retro/originals/open-the-circuit.png',
+  'authoring/library/sentinel-theme-art/retro/originals/switchyard-gates.png',
+  'authoring/library/sentinel-theme-art/ukraine/originals/listening-court.png',
+  'authoring/library/sentinel-theme-art/ukraine/originals/open-the-circuit.png',
+  'authoring/library/sentinel-theme-art/ukraine/originals/switchyard-gates.png',
+  'authoring/library/sentinel-theme-chapters/descriptors/retro.json',
+  'authoring/library/sentinel-theme-chapters/descriptors/ukraine.json',
+  'authoring/library/sentinel-theme-chapters/editions.json',
+  'authoring/library/ukraine-atlas-art/originals/carpathian-woven-dawn.png',
+  'authoring/library/ukraine-atlas-art/originals/dnipro-autumn-watch.png',
+  'authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png',
+  'authoring/library/ukraine-atlas-art/provenance.json',
+  'authoring/library/ukraine-route-art/originals/carpathian-thread-relay.png',
+  'authoring/library/ukraine-route-art/originals/crosswind-market-depot.png',
+  'authoring/library/ukraine-route-art/originals/two-lanes-forge.png',
+  'authoring/library/ukraine-route-art/provenance.json',
+];
 const dawnEntries = [
   'Dawn-Signal-originals.rlmedia',
   'Dawn-Signal-stories.rlstory',
@@ -83,6 +365,7 @@ const storyRuntime = [
 ];
 const requiredRuntime = [
   ...fieldKitFiles,
+  ...localizationFiles,
   'game/ui/still-media-host.mjs',
   'game/ui/still-media-panel.mjs',
   'game/ui/still-media-panel.css',
@@ -122,6 +405,7 @@ test('actual release allowlist ships the standalone still entry and exact existi
     files.filter((name) => name.startsWith('authoring/library/')).sort(),
     [
       ...teachingScenarios,
+      ...establishedLibraryAssets,
       'authoring/library/fpv-role-presentations/originals/scout.png',
       'authoring/library/fpv-role-presentations/originals/bomber.png',
       'authoring/library/fpv-role-presentations/originals/carrier.png',
@@ -132,6 +416,12 @@ test('actual release allowlist ships the standalone still entry and exact existi
       'authoring/library/fpv-field-kit/prepared/reveals/reveals.json',
       'authoring/library/fpv-field-kit/prepared/reveals/review.html',
       'authoring/library/fpv-field-kit/prepared/reveals/review.mjs',
+      'authoring/library/fpv-field-kit/prepared/reveals/review-copy.mjs',
+      'authoring/library/fpv-field-kit/prepared/reveals/review-manifest-viewer.mjs',
+      'authoring/library/fpv-field-kit/prepared/reveals/review-model.mjs',
+      'authoring/library/fpv-field-kit/prepared/reveals/review-readers.mjs',
+      'authoring/library/fpv-field-kit/prepared/reveals/review-sources.mjs',
+      'authoring/library/fpv-field-kit/prepared/reveals/review.css',
       'authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-hunter-v1-e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914.png',
       'authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-border-patrol-v1-537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1.png',
       'authoring/library/runtime-sprite-candidates-v1/export/fpv-compact-contour-patrol-v1-9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f.png',
@@ -148,12 +438,31 @@ test('actual release allowlist ships the standalone still entry and exact existi
       'authoring/library/runtime-sprite-candidates-v1/export/atlas-woven-basket-v1-3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac.png',
       'authoring/library/runtime-sprite-candidates-v1/export/manifest.json',
     ].sort(),
-    'Only the explicit teaching/presentation resources, existing FPV player originals and fourteen fallback derivatives ship; other source originals and proof tooling stay excluded.',
+    'Only the explicit teaching/presentation resources and reviewed main source assets ship; unrelated source originals and proof tooling stay excluded.',
   );
   assert.deepEqual(
     files.filter((name) => name.startsWith('authoring/video-poster/')).sort(),
     [...posterEntries].sort(),
   );
+});
+
+test('the shipped Motion catalogue retains every selectable character image', async () => {
+  const files = new Set(await collectBuildFiles(sourceRoot, await readBuildConfig(sourceRoot)));
+  const presetPath = 'authoring/motion-lab/presets.json';
+  assert.ok(files.has(presetPath), 'The Motion catalogue must ship with the tool.');
+  const presets = JSON.parse(await fs.readFile(path.join(sourceRoot, presetPath), 'utf8'));
+  // The renderer reads character.src. derivation.source.src records provenance
+  // and must not pull unused high-resolution originals into player packages.
+  const references = new Set(
+    Object.values(presets.characters)
+      .filter((character) => character.src)
+      .map((character) =>
+        path.posix.normalize(path.posix.join(path.posix.dirname(presetPath), character.src)),
+      ),
+  );
+  assert.ok(references.size > 0, 'Exercise actual authored character artwork.');
+  for (const name of references)
+    assert.ok(files.has(name), `Missing selectable Motion character artwork: ${name}`);
 });
 
 async function fixture(t) {
@@ -172,7 +481,8 @@ async function fixture(t) {
     const bytes = await fs.readFile(path.join(sourceRoot, name));
     originals.set(name, bytes);
     await put(name, bytes);
-    if (!/\.m?js$/.test(name)) return;
+    // Launcher template imports resolve after relocation into app/, not offline/.
+    if (!/\.m?js$/.test(name) || name === 'game/offline/app.mjs') return;
     for (const match of bytes
       .toString()
       .matchAll(
@@ -192,6 +502,7 @@ async function fixture(t) {
     ...publicationEntries,
     ...storyRuntime,
     ...fieldKitFiles,
+    ...localizationFiles,
     'game/mediabunny-trim-adapter.mjs',
     'game/vendor/mediabunny-1.59.1.min.mjs',
     'game/vendor/mediabunny-1.59.1.json',
@@ -199,6 +510,18 @@ async function fixture(t) {
     'game/ui/still-media-panel.css',
     'game/offline.mjs',
     'game/offline/service-worker.template.js',
+    'game/offline/app.html',
+    'game/offline/app.mjs',
+    'game/offline/app-worker.template.js',
+    'game/offline/navigation.css',
+    'game/downloads.css',
+    ...LAUNCHER_APPEARANCE_FILES.map((file) => `game/${file}`),
+    ...LAUNCHER_NAVIGATION_FILES.map((file) => `game/${file}`),
+    ...['en', 'uk'].flatMap((language) =>
+      ['common', 'interface', 'gameplay', 'controllerEditor', 'errors'].map(
+        (namespace) => `game/locales/${language}/${namespace}.json`,
+      ),
+    ),
   ])
     await copy(name);
   await put(
@@ -268,7 +591,20 @@ for (const version of ['0.32.0', 'v0.32.0'])
       'game/build-info.json',
     ]) {
       const bytes = await fs.readFile(path.join(out, name));
-      if (f.originals.has(name)) assert.deepEqual(bytes, f.originals.get(name));
+      if (f.originals.has(name)) {
+        const original = f.originals.get(name);
+        // Current main compacts only whitespace in these four inspected modules.
+        // Everything else in this workshop assertion retains exact source bytes.
+        const expected = [
+          'game/story-media-store.mjs',
+          'game/ui/victory-story.mjs',
+          'game/video-poster.mjs',
+          'game/presentation/theme-bootstrap.mjs',
+        ].includes(name)
+          ? projectEditionModuleIndentation(name, original)
+          : original;
+        assert.equal(digest(bytes), digest(expected), name);
+      }
       for (const list of [manifest.files, offline.files]) {
         const entry = list.find((row) => row.path === name);
         assert.ok(entry, `${name} missing from inventory`);
@@ -375,14 +711,16 @@ test('built poster/still links and teaching requests retain their edition and wo
   );
   const worker = await fs.readFile(path.join(out, 'service-worker.js'), 'utf8');
   const gameHTML = await fs.readFile(path.join(sourceRoot, 'game/index.html'), 'utf8');
-  const creatorLink = gameHTML.match(/href="([^"]+)"[^>]*>\s*Video poster workshop\s*<\/a>/)?.[1];
+  const creatorLink = gameHTML.match(
+    /href="([^"]*authoring\/video-poster\/)"[^>]*data-i18n="interface:videoPosterWorkshop"/,
+  )?.[1];
   assert.ok(creatorLink, 'A native Creator tools link opens the poster workshop.');
   const posterHTML = bodies.get('authoring/video-poster/index.html').toString();
-  const stillLink = posterHTML.match(/id="video-poster-still" href="([^"]+)"/)?.[1];
+  const stillLink = posterHTML.match(/id="video-poster-still"[^>]*href="([^"]+)"/)?.[1];
   assert.ok(stillLink);
   const stillHTML = bodies.get('authoring/still-media/index.html').toString();
   const dawnLinks = [
-    ...stillHTML.matchAll(/href="(\.\/examples\/dawn-signal\/[^\"]+)" download/g),
+    ...stillHTML.matchAll(/href="(\.\/examples\/dawn-signal\/[^\"]+)"[^>]*\bdownload\b/g),
   ].map((match) => match[1]);
   assert.equal(
     dawnLinks.length,

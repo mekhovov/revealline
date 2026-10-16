@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "de84e356d517bd7815ae10c851737ef2236fd48e",
+  "sourcePR": 1437,
+  "sourceRevision": "district-r2",
+  "descriptorBytes": 6580,
+  "descriptorSHA256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+  "payloadFiles": 38,
+  "payloadBytes": 6765271,
+  "totalBytes": 6771851,
+  "nativeSourceReview": {
+    "authoringPort": 9141,
+    "acceptedViews": [
+      "arch",
+      "lock",
+      "warehouse",
+      "highbridge",
+      "courtyard",
+      "basin"
+    ],
+    "disposal": "No live scenery or collision",
+    "scope": "Bounded original composition, not representative final art; large empty banks and sparse surroundings remain."
+  },
+  "automatedRuntimeBase": "e006821b9ce49d97e52ec9bdd9c2ae4725ce94b5 exact preserved package",
+  "builder": {
+    "head": "6a6baac96c778d522b1570356ce91a694dcaef34",
+    "path": "authoring/fpv-worlds/regions/prepare-delivery.mjs"
+  },
+  "playerAdmission": false,
+  "packageQualification": false
+}

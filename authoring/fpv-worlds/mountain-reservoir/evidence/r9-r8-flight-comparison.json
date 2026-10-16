@@ -1,0 +1,343 @@
+{
+  "format": "FPVReservoirR8R9FlightComparison.v1",
+  "status": "passed",
+  "scope": "Independent fresh r9 flights match every retained r8 flight field except the explicit revision and exact dependency-bound proof file hash.",
+  "checks": [
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-01",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-02",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-03",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-04",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-05",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-06",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-07",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "self-level",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    },
+    {
+      "course": "mountain-reservoir-08",
+      "mode": "acro",
+      "allRetainedPhysicsFieldsExact": true,
+      "fields": [
+        "course",
+        "mode",
+        "status",
+        "ticks",
+        "completedSteps",
+        "contacts",
+        "health",
+        "support",
+        "landingSpeed",
+        "landingTilt",
+        "position",
+        "milestones",
+        "finalStateIdentity",
+        "path"
+      ]
+    }
+  ]
+}

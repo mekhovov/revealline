@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { resolveControllerBindings } from '../controller-bindings.mjs';
 import {
   createControllerRouter,
   neutralControllerFlight,
@@ -204,6 +205,225 @@ test('overlapping South and West aliases form one menu Confirm gesture', () => {
   f.sample();
   f.first.buttons[2].pressed = true;
   assert.equal(f.sample().ui.confirm, true, 'a new neutral-to-pressed gesture remains usable');
+});
+
+test('menu frames expose exact Confirm indexes and the Gamepad timestamp', () => {
+  const f = fixture({ navigationAliases: true });
+  f.join();
+  f.first.timestamp = 41.5;
+  f.first.buttons[0].pressed = true;
+  f.first.buttons[2].pressed = true;
+  const frame = f.sample();
+  assert.deepEqual(frame.confirmButtons, [0, 2]);
+  assert.equal(frame.confirmHeld, true);
+  assert.equal(frame.gamepadTimestamp, 41.5);
+  f.first.timestamp = 52;
+  f.first.buttons[0].pressed = false;
+  const westOnly = f.sample();
+  assert.deepEqual(westOnly.confirmButtons, [2]);
+  assert.equal(westOnly.gamepadTimestamp, 52);
+});
+
+test('native Confirm probes expose live assigned input without adopting or consuming its edge', () => {
+  const f = fixture({ autoJoin: true, navigationAliases: true });
+  assert.equal(f.router.readMenuConfirm({ scope: 'ready' }).reason, 'unassigned');
+  assert.equal(f.reads, 0, 'an unassigned probe cannot discover or adopt a controller');
+  const joined = f.sample();
+  assert.deepEqual(joined.confirmSnapshot, f.router.readMenuConfirm({ scope: 'ready' }));
+  f.first.timestamp = 75;
+  f.first.buttons[0].pressed = true;
+  f.first.buttons[2].pressed = true;
+  const observed = f.router.readMenuConfirm({ scope: 'ready' });
+  assert.deepEqual(observed, {
+    assigned: joined.assigned,
+    buttons: [0, 2],
+    timestamp: 75,
+    held: true,
+    neutral: false,
+    eligible: true,
+    blocked: false,
+    reason: 'ready',
+    scope: 'ready',
+    routerScope: 'ready',
+  });
+  const before = f.reads,
+    frame = f.sample();
+  assert.equal(f.reads, before + 1, 'the regular frame reuses its single hardware read');
+  assert.equal(frame.ui.confirm, true, 'the native probe did not consume the Confirm edge');
+  assert.deepEqual(frame.confirmSnapshot, observed);
+  observed.assigned.index = 99;
+  observed.buttons.length = 0;
+  frame.confirmSnapshot.assigned.generation = -1;
+  assert.equal(f.router.readMenuConfirm().assigned.index, 0);
+  assert.equal(f.router.readMenuConfirm().assigned.generation, joined.assigned.generation);
+  assert.deepEqual(f.router.readMenuConfirm().buttons, [0, 2]);
+});
+
+test('Confirm probes cannot lift neutral gates or change the active scope', () => {
+  const f = fixture();
+  f.join();
+  f.router.clear();
+  assert.equal(f.router.readMenuConfirm().neutral, true);
+  assert.equal(f.router.readMenuConfirm().reason, 'waiting-neutral');
+  f.first.buttons[0].pressed = true;
+  assert.equal(f.sample().ui.confirm, false, 'a probe is not a neutral-gate acknowledgement');
+  f.first.buttons[0].pressed = false;
+  f.sample();
+  f.first.buttons[0].pressed = true;
+  const otherScope = f.router.readMenuConfirm({ scope: 'modal:settings' });
+  assert.equal(otherScope.eligible, false);
+  assert.equal(otherScope.reason, 'scope-change');
+  assert.equal(otherScope.blocked, false);
+  assert.equal(otherScope.routerScope, 'ready');
+  assert.equal(f.router.readMenuConfirm({ scope: 'ready' }).eligible, true);
+  assert.equal(f.sample().ui.confirm, true, 'a probe did not switch scopes or clear the edge');
+});
+
+test('repeated native probes leave direction, Back, Menu, and flight edges for the host', () => {
+  const cases = [
+    ['ready', 13, 'ui', 'direction', 'down'],
+    ['ready', 1, 'ui', 'back', true],
+    ['ready', 9, 'ui', 'menu', true],
+    ['flight', 9, 'flight', 'pause', true],
+    ['flight', 3, 'flight', 'hangar', true],
+    ['flight', 0, 'flight', 'action', true],
+  ];
+  for (const [scope, index, group, action, expected] of cases) {
+    const f = fixture();
+    f.join(f.first, scope);
+    f.first.buttons[index].pressed = true;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const observed = f.router.readMenuConfirm({ scope });
+      assert.equal(observed.eligible, scope !== 'flight');
+      if (scope === 'flight') assert.equal(observed.reason, 'flight');
+    }
+    assert.equal(f.sample(scope)[group][action], expected, `${scope} ${action} is not consumed`);
+  }
+});
+
+test('Confirm probes respect custom bindings and do not advance stick hysteresis', () => {
+  const config = resolveControllerBindings();
+  config.menu.buttons.confirm = 7;
+  config.deadZone = { press: 0.5, release: 0.2 };
+  const f = fixture({ bindings: config, navigationAliases: true });
+  f.join();
+  f.first.buttons[0].pressed = true;
+  f.first.buttons[2].pressed = true;
+  assert.deepEqual(f.router.readMenuConfirm().buttons, []);
+  f.first.buttons[7].pressed = true;
+  assert.deepEqual(f.router.readMenuConfirm().buttons, [7]);
+  assert.equal(f.sample().ui.confirm, true);
+  f.first.buttons.forEach((button) => (button.pressed = false));
+  f.sample();
+  f.first.axes[0] = 0.6;
+  assert.equal(f.router.readMenuConfirm().neutral, false);
+  f.first.axes[0] = 0.3;
+  assert.equal(f.sample().ui.direction, null, 'a probe cannot latch analog movement');
+});
+
+test('Confirm probes report assignment loss without stealing router disconnect handling', () => {
+  const f = fixture({ diagnostics: true });
+  const initial = f.join();
+  const replacement = pad(0, 'Replacement');
+  f.setPads([replacement]);
+  const lost = f.router.readMenuConfirm();
+  assert.equal(lost.assigned, null);
+  assert.equal(lost.eligible, false);
+  assert.equal(lost.reason, 'assignment-lost');
+  assert.equal(lost.rawGamepads[0].id, 'Replacement');
+  const disconnected = f.sample();
+  assert.equal(disconnected.disconnected, true);
+  assert.equal(disconnected.confirmSnapshot.assigned, null);
+  assert.equal(disconnected.confirmSnapshot.rawGamepads[0].id, 'Replacement');
+  const next = f.join(replacement);
+  assert.notEqual(next.generation, initial.generation);
+  assert.equal(f.router.readMenuConfirm().assigned.generation, next.generation);
+  f.router.disconnect(0);
+  assert.equal(f.router.readMenuConfirm().reason, 'unassigned');
+  assert.equal(f.sample().disconnected, true, 'the pending disconnect is retained');
+  f.router.destroy();
+  const reads = f.reads;
+  assert.equal(f.router.readMenuConfirm().reason, 'disposed');
+  assert.equal(f.reads, reads);
+});
+
+test('Confirm probes follow the assigned device when another pad exposes the same button', () => {
+  const f = fixture(),
+    selected = pad(1);
+  f.setPads([null, selected]);
+  const assigned = f.join(selected);
+  f.setPads([f.first, selected]);
+  f.first.buttons[0].pressed = true;
+  assert.deepEqual(f.router.readMenuConfirm().assigned, assigned);
+  assert.deepEqual(f.router.readMenuConfirm().buttons, []);
+  selected.buttons[0].pressed = true;
+  assert.deepEqual(f.router.readMenuConfirm().buttons, [0]);
+  assert.equal(f.sample().ui.confirm, true);
+});
+
+test('a failed native Confirm read does not invalidate a healthy router assignment', () => {
+  const device = pad();
+  let unavailable = false;
+  const f = fixture({
+    autoJoin: true,
+    readPads: () => {
+      if (unavailable) throw new Error('Gamepad access failed');
+      return [device];
+    },
+  });
+  const joined = f.sample();
+  unavailable = true;
+  assert.equal(f.router.readMenuConfirm().reason, 'unavailable');
+  unavailable = false;
+  device.buttons[0].pressed = true;
+  const frame = f.sample();
+  assert.deepEqual(frame.assigned, joined.assigned);
+  assert.equal(frame.ui.confirm, true);
+  assert.equal(frame.disconnected, false);
+});
+
+test('opt-in Confirm diagnostics describe raw devices from the existing read and can be disabled', () => {
+  let diagnostics = false;
+  const f = fixture({ autoJoin: true, diagnostics: () => diagnostics }),
+    unsupported = { ...pad(1, 'x'.repeat(600)), mapping: '', timestamp: 20 };
+  f.first.buttons = Array.from({ length: 80 }, () => ({ pressed: false, value: 0 }));
+  f.setPads([f.first, unsupported]);
+  f.sample();
+  assert.equal(f.router.readMenuConfirm().rawGamepads, undefined);
+  diagnostics = true;
+  f.first.timestamp = 50;
+  for (const index of [0, 63, 70]) f.first.buttons[index].pressed = true;
+  unsupported.buttons[1].pressed = true;
+  const probe = f.router.readMenuConfirm();
+  assert.deepEqual(probe.rawGamepads[0], {
+    index: 0,
+    id: 'Controller 0',
+    mapping: 'standard',
+    connected: true,
+    timestamp: 50,
+    buttonCount: 80,
+    buttons: [0, 63],
+  });
+  assert.equal(probe.rawGamepads[1].id.length, 512);
+  assert.equal(probe.rawGamepads[1].mapping, '');
+  assert.deepEqual(probe.rawGamepads[1].buttons, [1]);
+  const before = f.reads;
+  assert.deepEqual(f.sample().confirmSnapshot.rawGamepads, probe.rawGamepads);
+  assert.equal(f.reads, before + 1, 'frame diagnostics reuse the hardware snapshot');
+  diagnostics = false;
+  assert.equal(f.sample().confirmSnapshot.rawGamepads, undefined);
+  assert.equal(f.router.readMenuConfirm().rawGamepads, undefined);
+});
+
+test('unassigned diagnostic probes report bounded raw pads without adopting any device', () => {
+  const f = fixture({ autoJoin: true, diagnostics: true });
+  f.setPads(Array.from({ length: 40 }, (_, index) => pad(index)));
+  const observed = f.router.readMenuConfirm({ scope: 'ready' });
+  assert.equal(observed.assigned, null);
+  assert.equal(observed.reason, 'unassigned');
+  assert.equal(observed.rawGamepads.length, 32);
+  assert.equal(f.reads, 1);
+  assert.equal(f.sample().status.code, 'joined', 'only the ordinary frame adopts input');
 });
 
 test('UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst', () => {

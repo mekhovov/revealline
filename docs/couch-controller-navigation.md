@@ -1,12 +1,12 @@
 # Couch controller menus
 
-This guide describes **v0.20's shared couch menu**. The [source checks](verification/round-29/couch-source.md), [packaged browser observations](verification/round-29/v020-browser.md), [archive verification](verification/round-29/v020-integrity.md) and [public deployment](verification/round-29/v020-public.md) have separate scopes; none certifies physical controllers. The [implementation plan](round-29-couch-navigation-plan.md) records the accepted scope.
+For current two-player assignment, custom mappings and radio support, see [Two controllers](two-controller-support.md). The historical evidence below describes **v0.20's shared couch menu**. The [source checks](verification/round-29/couch-source.md), [packaged browser observations](verification/round-29/v020-browser.md), [archive verification](verification/round-29/v020-integrity.md) and [public deployment](verification/round-29/v020-public.md) have separate scopes; none certifies physical controllers. The [implementation plan](round-29-couch-navigation-plan.md) records the accepted scope.
 
 Couch race has two independent boards using the same map, class, seed and steering. A shared menu chooses the setup and controls the round. It remains a local race: no network connection, shared-arena co-op or campaign rewards are added.
 
 ## Choose who controls the menu
 
-Up to two standard controllers automatically occupy the existing Player 1 and Player 2 flight slots. Keyboard and touch remain available to both players; they do not require a menu join. Losing one controller does not move the surviving controller to the other player.
+Up to two controllers deliberately join Player 1 and Player 2 with a neutral-then-press gesture, or through Settings → Controls → Two controllers. Keyboard and touch remain available to both players; they do not require a menu join. Losing one controller does not move the surviving controller to the other player.
 
 While the match is **Ready, paused or finished**, either assigned controller can take the shared menu:
 
@@ -45,6 +45,6 @@ The existing two keyboard layouts and touch controls continue to work. Native po
 
 The current markup keeps a separate player-assignment note and shared-menu status, with visible focus/edit styles from the common navigation adapter. Action targets have a 44 CSS-pixel sizing floor and long labels can wrap. Those source rules express layout intent; actual target geometry, viewport reachability and physical-device behavior still require their own observations.
 
-Focus loss, hidden pages, native inactivity and leaving the page pause running play and release held input. Returning does not automatically resume. A controller disconnect pauses both players; replacement cannot carry a held action into the round. Controller polling also does not guarantee the browser's trusted activation for audio: keyboard/touch remains available for **Enable music**, and a failure message should remain truthful.
+Focus loss, hidden pages, native inactivity and leaving the page pause running play and release held input. Returning does not automatically resume. An assigned controller disconnect pauses both players; replacement cannot carry a held action into the round. Controller polling also does not guarantee the browser's trusted activation for audio: keyboard/touch remains available for **Enable music**, and a failure message should remain truthful.
 
 Maintainers should use the [four bounded workflows](../authoring/prompts/round-29-couch-menus.md) and [Runtime Maintainer guidance](../authoring/skills/xonix-runtime-maintainer/SKILL.md). The existing Controller Lab mounts solo practice, not a two-controller couch session. Injected-pad tests, ordinary browser interactions, CSS viewport simulation and physical-controller checks must be reported separately. This increment does not change duel/core rules, command or replay formats, saved progress, artwork, solo bindings or the future network boundary.

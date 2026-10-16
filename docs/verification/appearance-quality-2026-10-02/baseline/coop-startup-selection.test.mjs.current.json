@@ -1,0 +1,44 @@
+{
+  "file": "game/test/coop-startup-selection.test.mjs",
+  "kind": "current",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-startup-selection.test.mjs"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 11.78,
+  "failures": [
+    {
+      "test": "ordinary post-ready selection supplies the gameplay and artwork reference",
+      "location": "game/test/coop-startup-selection.test.mjs:62:11",
+      "detail": "\n      ---\n      duration_ms: 436.102541\n      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:62:11'\n      failureType: 'testCodeFailure'\n      error: |-\n        Expected values to be strictly deep-equal:\n        + actual - expected\n        \n          [\n            '53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850',\n        +   '3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c',\n        +   'e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e',\n        +   '5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683'\n          ]\n      code: 'ERR_ASSERTION'\n      name: 'AssertionError'\n      expected:\n        0: '53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850'\n      actual:\n        0: '53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850'\n        1: '3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c'\n        2: 'e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e'\n        3: '5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683'\n      operator: 'deepStrictEqual'\n      stack: |-\n        startAndMove (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:54:10)\n        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:69:18)\n        async Test.run (node:internal/test_runner/test:797:9)\n        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:62:3)\n        async Test.run (node:internal/test_runner/test:797:9)\n        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n      ...\n    # Subtest: pre-attachment First Connection and Expert survive boot and exact preparation\n    not ok 2 - pre-attachment First Connection and Expert survive boot and exact preparation\n      ---\n      duration_ms: 268.808042\n      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:72:11'\n      failureType: 'testCodeFailure'\n      error: |-\n      "
+    },
+    {
+      "test": "pre-attachment First Connection and Expert survive boot and exact preparation",
+      "location": "game/test/coop-startup-selection.test.mjs:72:11",
+      "detail": "\n      ---\n      duration_ms: 268.808042\n      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:72:11'\n      failureType: 'testCodeFailure'\n      error: |-\n        Expected values to be strictly deep-equal:\n        + actual - expected\n        \n          [\n            '53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850',\n        +   '3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c',\n        +   'e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e',\n        +   '5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683'\n          ]\n      code: 'ERR_ASSERTION'\n      name: 'AssertionError'\n      expected:\n        0: '53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850'\n      actual:\n        0: '53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850'\n        1: '3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c'\n        2: 'e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e'\n        3: '5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683'\n      operator: 'deepStrictEqual'\n      stack: |-\n        startAndMove (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:54:10)\n        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:105:24)\n        async Test.run (node:internal/test_runner/test:797:9)\n        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:72:3)\n        async Test.run (node:internal/test_runner/test:797:9)\n        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n      ...\n    1..2\nnot ok 1 - native setup chosen before module attachment matches the ordinary Expert First Connection flight\n  ---\n  duration_ms: 705.866375\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:60:1'\n  failureType: 'subtestsFailed'\n  error: '2 subtests failed'\n  code: 'ERR_TEST_FAILURE'"
+    },
+    {
+      "test": "native setup chosen before module attachment matches the ordinary Expert First Connection flight",
+      "location": "game/test/coop-startup-selection.test.mjs:60:1",
+      "detail": "\n  ---\n  duration_ms: 705.866375\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:60:1'\n  failureType: 'subtestsFailed'\n  error: '2 subtests failed'\n  code: 'ERR_TEST_FAILURE'"
+    },
+    {
+      "test": "queryless Team adopts the early Expert preset before preparing its owned original and retains it on Retry",
+      "location": "game/test/coop-startup-selection.test.mjs:237:1",
+      "detail": "\n  ---\n  duration_ms: 6359.01925\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:237:1'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. Team picture unavailable. Retry picture or choose another arena.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async page (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/helpers/coop-host.mjs:285:7)\n    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/coop-startup-selection.test.mjs:243:13)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 15",
+    "# pass 11",
+    "# fail 4",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 11759.46975"
+  ]
+}

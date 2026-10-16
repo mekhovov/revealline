@@ -1,0 +1,24 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/.codex/worktrees/v0131-localization-finish/go_test",
+  "branch": "codex/v1417-ledger-reconciliation",
+  "head": "e1e31312d3e34842688eb9922bbda1203238c435",
+  "status": [
+    " M authoring/library/fpv-field-kit/production.rltheme",
+    " M game/presentation/compiled/manifest.json",
+    " M game/presentation/compiled/runtime.json",
+    " M game/presentation/compiled/studio.json",
+    " M scripts/produce-field-kit-theme.mjs",
+    " M scripts/test-field-kit-recipe-sources.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "54044b81171efb1767e769e4baed7be1a9110e6e5ac6bb6f5b305520827ce5f4",
+      "bytes": 706838
+    },
+    "untrackedArchive": null,
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

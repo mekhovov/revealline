@@ -1,0 +1,37 @@
+- main:
+  - button "Menu"
+  - generic: Riy · escorts
+  - button "Resume"
+  - region "Survive battlefield":
+    - generic: Hull 100 / 100
+    - progressbar "Hull"
+    - generic: Spare airframes 2
+    - generic: Sortie
+    - strong: 00:07
+    - generic: Level 1
+    - generic: 3 Cleared
+    - generic: Overflight payload 1
+    - generic: Sweeper 1
+    - generic: Breaker 1
+    - generic: Boost Ready
+    - status: Paused · use Resume
+    - complementary:
+      - strong: Riy · escorts
+      - generic: Sweeper · rear cover / Breaker · forward strikes
+      - generic: Escorts following
+      - button "F · Focus target" [disabled]
+  - text: ⌃
+  - dialog "Pause":
+    - heading "Pause" [level=1]
+    - button "Resume" [active]
+    - heading "Missions" [level=3]
+    - button "Restart"
+    - button "Choose"
+    - heading "Sound" [level=3]
+    - 'button "Sound: off"'
+    - heading "Settings" [level=3]
+    - button "Settings"
+    - button "Enter fullscreen": Full screen
+    - button "Home"
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- text: + + + + + + + + +

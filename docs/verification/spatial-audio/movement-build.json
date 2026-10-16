@@ -1,0 +1,12 @@
+{
+  "implementationCommit": "ee3da7deaa955a3f5960fc88ea4f1e4ae907437d",
+  "sourceRevision": null,
+  "distributionSha256": "52e641139b64f503d8552b302e1dc8baae9339d1933047a69ab1dab930b9ad91",
+  "offlineBuildId": "5a7b4e9e655c5cf3791a4d05c7619d04bb0bda41528e84938ac5edd92f38335a",
+  "files": 1834,
+  "effectEntriesInCore": 57,
+  "runtimeWavCount": 52,
+  "runtimeWavBytes": 2575136,
+  "effectsAndMovementModulesMatchSource": true,
+  "qualification": "Local packaging evidence only. Full-suite release qualification and physical sustained listening remain open."
+}

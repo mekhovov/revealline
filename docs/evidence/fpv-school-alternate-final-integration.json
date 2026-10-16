@@ -1,0 +1,62 @@
+{
+  "format": "FPVSchoolAlternateFinalIntegration.v1",
+  "candidate": "8f5a97373e10c289f2bec8d120f21b2179fe564c",
+  "incomingMain": "a087facd9ca57f0e7519aa161cb6acc86a7eee3e",
+  "priorMain": "5e4abe27305ef06f4bbecb8f9365c218dee55979",
+  "changedMainFiles": [
+    "docs/demo-complete-runs-2026-10-04.md",
+    "game/demo-bot-player.mjs",
+    "game/demo-bot.mjs",
+    "game/demo-data/catalog.json",
+    "game/demo-improv-player.mjs",
+    "game/demo-sources.mjs",
+    "game/index.html",
+    "game/test/browser/demo-toolbar.html",
+    "game/test/browser/demo-toolbar.mjs",
+    "game/test/demo-bot.test.mjs",
+    "game/test/demo-host.test.mjs",
+    "game/test/demo-improv-player.test.mjs",
+    "game/test/demo-recordings.test.mjs",
+    "game/test/demo-sources.test.mjs",
+    "game/ui/demo-host.mjs",
+    "game/ui/demo.css",
+    "scripts/build-demo-recordings.mjs"
+  ],
+  "hostModules": 70,
+  "admittedMembers": 102,
+  "archives": [
+    {
+      "path": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-acro-proof-part-1-of-1.json",
+      "bytes": 176551,
+      "sha256": "81f5a88402188a5632991e53ed3e5fbabd919ffcdbeb7916c0acc91ca0937422"
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-self-level-proof-part-1-of-1.json",
+      "bytes": 603794,
+      "sha256": "db03219d3e9925b34e7d99769af3ba630ac94f8148365d906b3d88a200ad4c2b"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Incoming non-FPV main update has no frozen host module overlap",
+      "passed": true
+    },
+    {
+      "name": "Incoming non-FPV main update has no admitted player member overlap",
+      "passed": true
+    },
+    {
+      "name": "Final School branch has zero production delta from current main",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-acro-proof-part-1-of-1.json retains qualified bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-self-level-proof-part-1-of-1.json retains qualified bytes",
+      "passed": true
+    }
+  ],
+  "scope": "Prior39-check Orchard guard audit remains historical. Subsequent unrelated main demo-player update touches none of the frozen70module host or102admitted members. Archive/proof and production runtime inputs are unchanged by this School-only branch; no new package admission claimed."
+}

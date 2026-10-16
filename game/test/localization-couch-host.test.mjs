@@ -1,7 +1,44 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { couchPage } from './helpers/couch-host.mjs';
+import { page as teamPage } from './helpers/coop-host.mjs';
 import { getLocale, setLocale, t } from '../i18n/index.mjs';
+
+for (const [mode, mount, filename, prefix] of [
+  ['Versus', couchPage, '', 'race'],
+  ['Team', teamPage, 'relay-rescue.html', 'coop'],
+]) {
+  test(`${mode} recording verification retains its owning build after page retirement and locale changes`, async (context) => {
+    const locale = getLocale();
+    context.after(() => setLocale(locale, { persist: false }));
+    setLocale('en', { persist: false });
+    const f = await mount(context, {
+      href: `https://example.test/revealline/releases/v0.60.8/site/game/couch/${filename}?journey=legacy`,
+    });
+    const link = f.$(`${prefix}-verify-recording`);
+    const expected =
+      'https://example.test/revealline/releases/v0.60.8/site/game/playground/?lang=uk#recording-verification';
+    f.win.emit('pagehide', { persisted: false });
+    const location = Object.getOwnPropertyDescriptor(globalThis, 'location'),
+      document = Object.getOwnPropertyDescriptor(globalThis, 'document');
+    try {
+      globalThis.location = { href: 'https://example.test/revealline/game/couch/' };
+      setLocale('uk', { persist: false });
+      assert.equal(
+        link.getAttribute('href'),
+        expected,
+        'Later page navigation cannot rebase a retained link',
+      );
+      delete globalThis.location;
+      delete globalThis.document;
+      assert.doesNotThrow(() => setLocale('en', { persist: false }));
+      assert.equal(link.getAttribute('href'), expected.replace('lang=uk', 'lang=en'));
+    } finally {
+      Object.defineProperty(globalThis, 'location', location);
+      Object.defineProperty(globalThis, 'document', document);
+    }
+  });
+}
 
 test('Couch language changes translate the lobby and paused help without changing the match', async (context) => {
   const locale = getLocale();
@@ -41,7 +78,7 @@ test('Couch language changes translate the lobby and paused help without changin
   }
 });
 
-test('controller edits the lobby and Settings language selectors without starting either board', async (context) => {
+test('controller edits the single Settings language choice and synchronizes retained controls without starting either board', async (context) => {
   const { attachLanguageControls } = await import('../i18n/index.mjs');
   const locale = getLocale();
   context.after(() => setLocale(locale, { persist: false }));
@@ -58,23 +95,24 @@ test('controller edits the lobby and Settings language selectors without startin
   attachLanguageControls(f.doc);
   const lobby = f.$('race-language-select');
   const settings = f.$('race-settings-language-select');
-  assert.ok(f.$('race-main').contains(lobby));
+  assert.equal(f.$('race-main').contains(lobby), false);
+  assert.ok(lobby.closest('[hidden]'), 'The retained lobby language control is hidden.');
   assert.ok(f.$('race-settings-panel-display').contains(settings));
   const checkpoint = f.checkpoint();
+  f.$('race-options').click();
+  f.$('race-settings-tab-display').click();
   f.join(0);
-  f.focus(lobby.id);
+  f.focus(settings.id);
   f.pulse(0, 0);
-  assert.equal(lobby.getAttribute('data-controller-editing'), 'true');
+  assert.equal(settings.getAttribute('data-controller-editing'), 'true');
   f.pulse(0, 13);
   f.pulse(0, 0);
   assert.equal(getLocale(), 'uk');
-  assert.equal(f.doc.activeElement, lobby);
+  assert.equal(f.doc.activeElement, settings);
   assert.equal(lobby.value, 'uk');
   assert.equal(settings.value, 'uk');
   assert.deepEqual(f.checkpoint(), checkpoint);
   f.frames(151, 1000 / 120);
-  f.$('race-options').click();
-  f.$('race-settings-tab-display').click();
   f.frame(0);
   f.focus(settings.id);
   f.pulse(0, 0);

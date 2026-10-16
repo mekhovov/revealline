@@ -6,6 +6,7 @@ export default [
     ignores: [
       '**/node_modules/**',
       'game/vendor/**',
+      'optional-practice/civilian-fpv/vendor/**',
       'dist/**',
       'releases/**',
       'platforms/desktop/site/**',
@@ -18,6 +19,8 @@ export default [
   {
     files: [
       'game/**/*.mjs',
+      'optional-practice/**/*.mjs',
+      'intake/**/*.mjs',
       'scripts/**/*.mjs',
       'site/**/*.mjs',
       'platforms/**/*.{mjs,js}',
@@ -32,7 +35,7 @@ export default [
     },
   },
   {
-    files: ['game/**/*.mjs', 'site/**/*.mjs'],
+    files: ['game/**/*.mjs', 'site/**/*.mjs', 'optional-practice/**/*.mjs'],
     ignores: ['game/core/**', 'game/test/**'],
     languageOptions: { globals: globals.browser },
   },
@@ -42,7 +45,13 @@ export default [
     languageOptions: { globals: { structuredClone: 'readonly' } },
   },
   {
-    files: ['scripts/**/*.mjs', 'game/test/**/*.mjs', 'platforms/**/*.mjs', 'eslint.config.mjs'],
+    files: [
+      'intake/**/*.mjs',
+      'scripts/**/*.mjs',
+      'game/test/**/*.mjs',
+      'platforms/**/*.mjs',
+      'eslint.config.mjs',
+    ],
     ignores: ['platforms/ios/diagnostics/**'],
     // ESM files do not implicitly receive CommonJS require/module/__dirname.
     languageOptions: { globals: globals.nodeBuiltin },

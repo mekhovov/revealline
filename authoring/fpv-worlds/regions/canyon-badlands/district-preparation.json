@@ -1,0 +1,161 @@
+{
+  "id": "canyon-arrival-landmarks-study",
+  "revision": "district-r3",
+  "actualExtentM": [768, 768],
+  "designTargetExtentM": [8192, 8192],
+  "designTargetIsDelivered": false,
+  "cells": 36,
+  "assets": 144,
+  "districts": 6,
+  "parentTerrainManifestSHA256": "9fad494a6dc1e974695e9fa218b99e74f1676d2589303c7ececea8728b106239",
+  "parentSceneryManifestSHA256": "a72ba600c11eba60486b645ca40967802498deb28e46dece02b10b3f04e0c30f",
+  "terrainManifestSHA256": "219b438a19fdd7decd022cd48d145b1a45505198e86e9270cf818696894210a4",
+  "sceneryManifestSHA256": "3b704a760c06c7ed066e11050cadcb1af27d5ad18ed87e63e2a66137507fcff6",
+  "retainedAssetCount": 36,
+  "retainedArrivalBytesUnchanged": true,
+  "sourceBytes": 3336288,
+  "licensedSource": {
+    "format": "FPVCanyonSourceReceipt.v1",
+    "reviewed": "2026-10-14",
+    "sourceURL": "https://opengameart.org/content/canyon-terrain-asset",
+    "downloadURL": "https://opengameart.org/sites/default/files/canyonterrain_blend_fbx_glb.zip",
+    "author": "loafbrr_1 / loafbrr",
+    "license": "CC0-1.0",
+    "licenseEvidence": "README-upstream.txt from exact archive; publisher page also lists CC0",
+    "archiveBytes": 64599746,
+    "archiveSHA256": "90a59ca7d7cfcdd6b73b464c9ee8ed50fd1857a105c9a5e7ef2c85b562d5d00a",
+    "modelArchivePath": "glb/CanyonPlantsRocksTiles.glb",
+    "modelSHA256": "0b24bb22f0089767990d58401e516ec1853380eda6a33802036a377f8519d623",
+    "modelBytes": 945596,
+    "nodes": 160,
+    "meshes": 160,
+    "materials": 5,
+    "images": 0,
+    "requiredExtensions": [],
+    "inventory": {
+      ".blend": 1,
+      ".fbx": 174,
+      ".glb": 1,
+      ".png": 16,
+      ".dds": 4,
+      ".tga": 3,
+      ".txt": 1
+    },
+    "admission": "Authoring source only. No source model is referenced by the terrain manifest, player package, catalogue or runtime. Individual optimization, placement and collision checks remain before scenery admission. Godot addons and preview HDRI are not included."
+  },
+  "objects": 54,
+  "grounding": [
+    {
+      "id": "mesa-west-fin",
+      "topAboveHighestFootprintMm": 15961
+    },
+    {
+      "id": "mesa-low-spire",
+      "topAboveHighestFootprintMm": 23360
+    },
+    {
+      "id": "mesa-east-crown",
+      "topAboveHighestFootprintMm": 20953
+    },
+    {
+      "id": "mesa-arch",
+      "topAboveHighestFootprintMm": 16831
+    },
+    {
+      "id": "mesa-balcony",
+      "topAboveHighestFootprintMm": 19556
+    },
+    {
+      "id": "mesa-overlook",
+      "topAboveHighestFootprintMm": 23593
+    },
+    {
+      "id": "butte-west-crown",
+      "topAboveHighestFootprintMm": 4556
+    },
+    {
+      "id": "butte-east-fin",
+      "topAboveHighestFootprintMm": 4400
+    },
+    {
+      "id": "butte-north-watch",
+      "topAboveHighestFootprintMm": 19250
+    },
+    {
+      "id": "gorge-west-arch",
+      "topAboveHighestFootprintMm": 26439
+    },
+    {
+      "id": "gorge-turn-spire",
+      "topAboveHighestFootprintMm": 25624
+    },
+    {
+      "id": "gorge-east-wall",
+      "topAboveHighestFootprintMm": 19683
+    },
+    {
+      "id": "butte-saddle",
+      "topAboveHighestFootprintMm": 18529
+    },
+    {
+      "id": "butte-south-crown",
+      "topAboveHighestFootprintMm": 6689
+    },
+    {
+      "id": "butte-east-turn",
+      "topAboveHighestFootprintMm": 25162
+    },
+    {
+      "id": "fork-west-plateau",
+      "topAboveHighestFootprintMm": 16649
+    },
+    {
+      "id": "fork-mouth-spire",
+      "topAboveHighestFootprintMm": 22429
+    },
+    {
+      "id": "fork-divider",
+      "topAboveHighestFootprintMm": 7928
+    },
+    {
+      "id": "shelf-entry",
+      "topAboveHighestFootprintMm": 11222
+    },
+    {
+      "id": "shelf-north-rim",
+      "topAboveHighestFootprintMm": 21268
+    },
+    {
+      "id": "shelf-east-watch",
+      "topAboveHighestFootprintMm": 14332
+    },
+    {
+      "id": "fork-exit-arch",
+      "topAboveHighestFootprintMm": 24233
+    },
+    {
+      "id": "fork-exit-spire",
+      "topAboveHighestFootprintMm": 26179
+    },
+    {
+      "id": "gorge-south-fin",
+      "topAboveHighestFootprintMm": 17282
+    },
+    {
+      "id": "shelf-west-crown",
+      "topAboveHighestFootprintMm": 17812
+    },
+    {
+      "id": "shelf-south-arch",
+      "topAboveHighestFootprintMm": 26075
+    },
+    {
+      "id": "sunset-marker",
+      "topAboveHighestFootprintMm": 23855
+    }
+  ],
+  "routes": 8,
+  "sourceSeamsExact": true,
+  "flightReady": false,
+  "playerAdmission": false
+}

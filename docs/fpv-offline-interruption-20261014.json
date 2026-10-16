@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-14",
+  "scope": "Native same-origin interrupted optional simulator update",
+  "origin": "http://127.0.0.1:9017",
+  "installationRoot": "/revealline/practice/fpv-worlds/",
+  "baseline": {
+    "version": "v0.142.4",
+    "source": "b309f8232ab38b27fe4081466d550f22c63673d3",
+    "revision": "923f391477e06ecba67b129fb83f47952c8b8fb958be349e6742bfc1e4a08199",
+    "readyBytes": 15779904
+  },
+  "offered": {
+    "version": "v0.151.1",
+    "source": "347aee8a0e70945c1fdb742dd41fc4317b5e2908",
+    "artifact": 11906860991
+  },
+  "retainedWorld": {
+    "title": "Mountain Reservoir",
+    "revision": 16,
+    "challenges": 8,
+    "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554"
+  },
+  "method": {
+    "browser": "Native Codex in-app browser, coordinator-driven visible UI",
+    "delayPath": "/revealline/practice/fpv-worlds/releases/v0.151.1/site/game/fpv-entry.mjs",
+    "serverDelayCeilingSeconds": 90,
+    "packageBytesChanged": false,
+    "browserStorageCleared": false,
+    "freshOrigin": true
+  },
+  "observations": [
+    "Old baseline Ready offline; all eight Reservoir challenges installed.",
+    "First transfer stalled; product reported its 30-second stalled-download error and retained Open prepared practice.",
+    "Explicit Cancel during Checking offline files reported Cancelled and retained the old launch action.",
+    "Second explicit Cancel during Downloading 0% reported Cancelled; the new dependency reached the gate at 2026-10-14T17:29:26.621143+00:00 and five adjacent dependencies were served.",
+    "After both cancellations, a read-only exact-worker check returned ready:true for the old revision and only the old installation pointer.",
+    "Open prepared practice opened the actual old player; Library retained all eight Reservoir challenges and their digest.",
+    "The delay gate was then disabled; no player storage or package bytes were removed."
+  ],
+  "readinessDefect": {
+    "observed": "Launcher transiently reported Needs repair although exact old-worker and launcher-worker verification returned ready:true. Another Check recovered Ready offline.",
+    "correctionSource": "5db194727",
+    "sourceChecks": 48,
+    "nativeMixedHarnessVerified": true,
+    "nativeReview": {
+      "source": "5db194727",
+      "method": "Separate unpinned launcher/context with a visible checkbox reducing actual read-only status timeout to 1 ms; frozen player bytes unchanged.",
+      "observations": [
+        "Normal verification exposed the old prepared action.",
+        "One-millisecond verification showed the English inconclusive warning and retained the known action without repair advice.",
+        "Changing locale to Ukrainian updated warning and links.",
+        "Restoring normal timeout and checking returned Ready then Update available with Check enabled.",
+        "Following the old prepared action opened immutable v0.142.4 with lang=uk and a rendered localized home page."
+      ],
+      "screenshot": "/Volumes/alex/CodexMigrationStaging/fpv-temp/readiness-inconclusive-native.png",
+      "sha256": {
+        "launcherReview": "5b0c10f1c4b54cde976ae28af71395406723bb860e25ab42dc9aed10c04fb847",
+        "contextReview": "ea1e55e632c86a64cfd349bdd8ef13eb07aac6df1871a237c544b8ab7ca8bd9c",
+        "htmlReview": "9caba5a1692e117ac7720fa9dbb6181eff07ceb8d288417756519ce22566694c"
+      }
+    },
+    "nativePackagedUpdateVerified": true,
+    "packageReceipt": "fpv-corrected-package-20261014.json"
+  },
+  "screenshotNames": ["cancelled-update-retains-old.jpg", "cancelled-update-world-preserved.jpg"],
+  "limits": [
+    "Controlled origin-local dependency stall, not network-wide offline.",
+    "Actual quota/eviction and process restart remain untested.",
+    "The tri-state correction passed mixed-harness checks; the separate corrected-package receipt records bounded native update/recovery. Public release admission remains pending.",
+    "No hardware/controller or FPS qualification inferred."
+  ]
+}

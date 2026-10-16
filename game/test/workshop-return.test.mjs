@@ -8,25 +8,87 @@ import {
   readWorkshopReturn,
   clearWorkshopReturn,
   mountToolReturnLinks,
+  workshopPageTool,
 } from '../ui/workshop-return.mjs';
 import { soloPage, SoloElement } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { mountEditionNavigation } from '../ui/edition-navigation.mjs';
+import { Document } from './helpers/couch-dom.mjs';
+
+test('edition navigation retains the exact tool-return owner inside its installed root', () => {
+  const doc = new Document(),
+    link = doc.createElement('a');
+  link.setAttribute('href', '../?edition=foreign&workshop=controller-lab#details');
+  doc.body.append(link);
+  const root = 'https://example.test/releases/v2/site/';
+  mountEditionNavigation({
+    document: doc,
+    href: `${root}game/controller-lab/`,
+    provider: {
+      editionId: 'sample-public',
+      rootURL: root,
+      selection: { brand: { name: 'Sample' } },
+      href: () => `${root}game/index.html?edition=sample-public`,
+    },
+  });
+  const target = new URL(link.href);
+  assert.equal(target.pathname, '/releases/v2/site/game/index.html');
+  assert.equal(target.searchParams.get('edition'), 'sample-public');
+  assert.equal(target.searchParams.get('workshop'), 'controller-lab');
+  assert.equal(target.hash, '#details');
+});
+
+test('retained presentation stays scoped across game and replay/controller tool returns', () => {
+  const doc = new Document(),
+    root = 'https://example.test/editions/sample/releases/v2/site/',
+    receipt = 'a'.repeat(64);
+  const links = [
+    '../index.html?presentation=foreign',
+    '../replay-theater/',
+    '../controller-lab/',
+  ].map((href) => {
+    const link = doc.createElement('a');
+    link.setAttribute('href', href);
+    doc.body.append(link);
+    return link;
+  });
+  mountEditionNavigation({
+    document: doc,
+    href: `${root}game/replay-theater/`,
+    provider: {
+      editionId: 'sample-public',
+      retainedPresentationId: receipt,
+      rootURL: root,
+      selection: { brand: { name: 'Sample' } },
+      href: () => `${root}game/index.html?edition=sample-public&presentation=${receipt}`,
+    },
+  });
+  for (const link of links) {
+    const url = new URL(link.href);
+    assert.equal(url.searchParams.get('presentation'), receipt);
+    assert.equal(url.searchParams.get('edition'), 'sample-public');
+    assert.ok(url.pathname.startsWith(new URL(root).pathname));
+  }
+});
 
 for (const prefix of [
   'http://localhost/',
   'https://example.test/releases/v0.69.3/site/',
   'https://example.test/archive/releases/v0.68.2/site/',
 ]) {
-  test(`all nine tools retain exact edition routes under ${prefix}`, () => {
-    assert.equal(WORKSHOP_TOOLS.length, 9);
-    for (const { id, path, opener } of WORKSHOP_TOOLS) {
+  test(`all ten tools retain exact edition routes under ${prefix}`, () => {
+    assert.equal(WORKSHOP_TOOLS.length, 10);
+    for (const { id, path, opener, studio } of WORKSHOP_TOOLS) {
       assert.ok(opener.startsWith('shell-'));
       for (const index of ['', 'index.html']) {
         const target = workshopToolHref(
           `${prefix}game/${index}?journey=opening&pack=other#old`,
           id,
         );
-        assert.equal(target, `${prefix}${path}?journey=opening`);
+        assert.equal(
+          target,
+          `${prefix}${path}?journey=opening${studio ? `&studio=${studio}` : ''}`,
+        );
         const returns = workshopReturnLinks(
           `${prefix}${path}${index}?journey=opening&other=discard`,
           id,
@@ -73,9 +135,39 @@ test('finite tools and competing launch owners cannot be overridden by a return 
     assert.equal(
       new URL(workshopToolHref('https://example.test/game/?journey=opening&journey=other', id))
         .search,
-      '',
+      id === 'theme-studio' ? '?studio=themes' : '',
     );
   }
+});
+
+test('Theme Studio is a fixed shared-editor view with its own return owner', () => {
+  for (const root of ['https://example.test/', 'https://example.test/releases/v2/site/']) {
+    const href = workshopToolHref(
+      `${root}game/?journey=opening&edition=example&studio=other`,
+      'theme-studio',
+    );
+    assert.equal(
+      href,
+      `${root}authoring/asset-studio/?journey=opening&edition=example&studio=themes`,
+    );
+    assert.equal(workshopPageTool(href, 'asset-studio'), 'theme-studio');
+    assert.equal(workshopPageTool(href, 'motion-lab'), 'motion-lab');
+    assert.equal(
+      readWorkshopReturn(new URL(workshopReturnLinks(href, 'theme-studio').workshop).search).opener,
+      'shell-theme-studio',
+    );
+    for (const query of [
+      'studio=other',
+      'studio=themes&studio=themes',
+      'studio=themes&studio=other',
+    ])
+      assert.equal(
+        workshopPageTool(`${root}authoring/asset-studio/?${query}`, 'asset-studio'),
+        'asset-studio',
+      );
+    assert.equal(workshopPageTool(`${root}game/?studio=themes`, 'asset-studio'), 'asset-studio');
+  }
+  assert.equal(workshopPageTool('invalid', 'asset-studio'), 'asset-studio');
 });
 
 test('history consumption preserves unrelated route and state and tolerates unavailable history', () => {
@@ -112,17 +204,24 @@ test('every standalone tool keeps a same-edition game exit before any module loa
 test('all standalone pages prepare both returns before enabling and retain cross-tool hints', async () => {
   for (const entry of WORKSHOP_TOOLS) {
     const html = await readFile(new URL(`../../${entry.path}index.html`, import.meta.url), 'utf8');
-    assert.match(html, new RegExp(`data-workshop-tool="${entry.id}"`));
+    assert.match(
+      html,
+      new RegExp(`data-workshop-tool="${entry.studio ? 'asset-studio' : entry.id}"`),
+    );
     assert.match(html, /workshop-return-entry\.mjs/);
     assert.match(html, /workshop-return\.css/);
-    if (entry.id === 'video-poster') assert.match(html, /cancels work or returns to Workshop\./);
+    if (entry.id === 'video-poster') assert.match(html, /cancels\s+work or returns to Workshop\./);
     for (const role of ['workshop', 'game'])
       assert.match(html, new RegExp(`data-workshop-return="${role}"`));
     for (const anchor of html.matchAll(/<a\b[^>]*>/g)) {
       const href = anchor[0].match(/href="([^"]+)"/)?.[1];
       if (!href || href.startsWith('#')) continue;
       const resolved = new URL(href, `https://example.test/${entry.path}`);
-      const destination = WORKSHOP_TOOLS.find((tool) => resolved.pathname === `/${tool.path}`);
+      const destination = WORKSHOP_TOOLS.find(
+        (tool) =>
+          resolved.pathname === `/${tool.path}` &&
+          (tool.studio ?? null) === resolved.searchParams.get('studio'),
+      );
       if (destination)
         assert.match(anchor[0], new RegExp(`data-workshop-tool="${destination.id}"`));
     }
@@ -184,20 +283,32 @@ function nativeDialogs(t) {
 }
 
 for (const { id, opener } of WORKSHOP_TOOLS) {
-  test(`actual Solo boot returns ${id} to its own Workshop opener without advancing or saving`, async (t) => {
+  test(`actual Solo boot returns ${id} to its own menu opener without advancing or saving`, async (t) => {
     nativeDialogs(t);
     const h = await soloPage(t, { titleScreen: true, search: `?workshop=${id}` });
     assert.equal(h.$('shell-home').open, true);
-    assert.equal(h.$('shell-workshop-dialog').open, true);
+    const controls = id === 'controller-lab';
+    assert.equal(h.$('shell-workshop-dialog').open, !controls);
+    assert.equal(h.$('settings-dialog').open, controls);
+    if (controls) {
+      assert.equal(h.$('settings-panel-controls').hidden, false);
+      assert.equal(h.$('settings-tab-controls').getAttribute('aria-selected'), 'true');
+    }
     assert.equal(h.doc.activeElement.id, opener);
     const checkpoint = authoritativeCheckpoint(h.rendered.run),
       stored = [...h.storage.map];
     const event = h.$(opener).emit('keydown', { key: 'Escape', code: 'Escape' });
-    assert.equal(event.defaultPrevented, true);
+    if (controls) {
+      // Settings uses the browser's native Escape → cancel default action.
+      assert.equal(event.defaultPrevented, false);
+      const dialog = h.$('settings-dialog');
+      if (!dialog.emit('cancel', { bubbles: false }).defaultPrevented) dialog.close();
+    } else assert.equal(event.defaultPrevented, true);
     await Promise.resolve();
     assert.equal(h.$('shell-home').open, true);
     assert.equal(h.$('shell-workshop-dialog').open, false);
-    assert.equal(h.doc.activeElement.id, 'shell-workshop');
+    assert.equal(h.$('settings-dialog').open, false);
+    assert.equal(h.doc.activeElement.id, controls ? 'shell-options' : 'shell-workshop');
     h.frame();
     assert.equal(h.rendered.paused, true);
     assert.equal(h.rendered.run.tick, 0);
@@ -206,3 +317,27 @@ for (const { id, opener } of WORKSHOP_TOOLS) {
     assert.deepEqual(h.errors, []);
   });
 }
+
+test('company tool routes retain only a valid single edition through exact-release return', () => {
+  const game =
+    'https://example.test/editions/sample-all/releases/v1.0.0/site/game/index.html?edition=sample-all&journey=sample-all&practice=1';
+  const href = workshopToolHref(game, 'controller-lab');
+  assert.equal(new URL(href).searchParams.get('edition'), 'sample-all');
+  assert.equal(new URL(href).searchParams.has('practice'), false);
+  assert.equal(
+    new URL(workshopReturnLinks(href, 'controller-lab').game).searchParams.get('edition'),
+    'sample-all',
+  );
+  for (const query of [
+    'edition=one&edition=two',
+    'edition=https://other.test',
+    'edition=../escape',
+  ]) {
+    assert.equal(
+      new URL(
+        workshopToolHref(`https://example.test/game/?${query}`, 'controller-lab'),
+      ).searchParams.has('edition'),
+      false,
+    );
+  }
+});

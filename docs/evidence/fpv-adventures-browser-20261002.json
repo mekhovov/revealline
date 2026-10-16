@@ -1,0 +1,6062 @@
+{
+  "format": "fpv-adventures-browser.v1",
+  "startedAt": "2026-10-02T07:16:11.421Z",
+  "source": {
+    "format": "fpv-adventures-source.v1",
+    "preparedAt": "2026-10-02T07:08:29.910Z",
+    "sourceHead": "bcad075c21fb0e29d0b9b673d10c4218d293f1f1",
+    "sourceState": "Explicit file hashes bind current working-tree bytes; HEAD alone is not a clean-tree claim.",
+    "files": {
+      "docs/evidence/fpv-adventures-browser-harness.html": {
+        "sha256": "b720cb851914e2f6ddf2ed07f9cc0a1c6f0891dcd8d8b68e3f5b73628213cfaa",
+        "bytes": 2975
+      },
+      "docs/evidence/fpv-adventures-browser-harness.mjs": {
+        "sha256": "ad6dcb4629e1e89d11dc8a5b99a1db2d9d139c38eb6078b034075c80e583bd95",
+        "bytes": 19624
+      },
+      "game/data-json.mjs": {
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+        "bytes": 5594
+      },
+      "game/i18n/bootstrap.mjs": {
+        "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+        "bytes": 13117
+      },
+      "game/i18n/catalogs.mjs": {
+        "sha256": "fc6c3209d2f31e873757fbc746a886382ce0f5b884f1013adcd9ef4747f79ebf",
+        "bytes": 1085715
+      },
+      "game/i18n/index.mjs": {
+        "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+        "bytes": 417
+      },
+      "game/vendor/i18next-26.4.2.min.js": {
+        "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+        "bytes": 43702
+      },
+      "optional-practice/civilian-fpv/catalogue.mjs": {
+        "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+        "bytes": 10565
+      },
+      "optional-practice/civilian-fpv/flight-sectors.mjs": {
+        "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+        "bytes": 2673
+      },
+      "optional-practice/civilian-fpv/math.mjs": {
+        "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+        "bytes": 3062
+      },
+      "optional-practice/civilian-fpv/model.mjs": {
+        "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+        "bytes": 17641
+      },
+      "optional-practice/civilian-fpv/radio-profile.mjs": {
+        "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+        "bytes": 18097
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "sha256": "6795380297b86b1b7f8b215d9bf0a505571b7f414d626970f59454a7ca5af15e",
+        "bytes": 72632
+      },
+      "optional-practice/civilian-fpv/rotation-table.mjs": {
+        "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+        "bytes": 7509
+      },
+      "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": {
+        "sha256": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+        "bytes": 51722
+      },
+      "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": {
+        "sha256": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+        "bytes": 117586
+      },
+      "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": {
+        "sha256": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+        "bytes": 37728
+      },
+      "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": {
+        "sha256": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+        "bytes": 11551
+      },
+      "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": {
+        "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "bytes": 4340292
+      },
+      "optional-practice/civilian-fpv/vendor/three.core.js": {
+        "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+        "bytes": 1458113
+      },
+      "optional-practice/civilian-fpv/vendor/three.module.js": {
+        "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+        "bytes": 662772
+      },
+      "optional-practice/civilian-fpv/world-assets.mjs": {
+        "sha256": "b246c3e05acb0050786a187267a6766ad9ab009a75525b93af7098ed8b18125a",
+        "bytes": 1162934
+      },
+      "optional-practice/civilian-fpv/world-catalogue.mjs": {
+        "sha256": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+        "bytes": 239978
+      },
+      "optional-practice/civilian-fpv/world-collision.mjs": {
+        "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+        "bytes": 12256
+      },
+      "optional-practice/civilian-fpv/world-model.mjs": {
+        "sha256": "78f606f2d7acc02c0cacccfcf6566996658854666b1ad453a906e2fa94ed7208",
+        "bytes": 52653
+      },
+      "optional-practice/civilian-fpv/world-themes.mjs": {
+        "sha256": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7",
+        "bytes": 7637
+      },
+      "optional-practice/civilian-fpv/world-visuals.mjs": {
+        "sha256": "5c5bcfc0602c43a8f350823744843be5e839c97a69a05cce8ec502ae08ab5a51",
+        "bytes": 44480
+      }
+    }
+  },
+  "qualification": "Actual WebGL, authored runtime courses and real control snapshots. Object counts are not GPU memory bytes, FPS qualification, hardware acceptance or public deployment.",
+  "checks": [
+    {
+      "name": "All30 authored courses ×3 presets ×3 camera views render immutable real snapshots",
+      "passed": true,
+      "configurations": 270
+    },
+    {
+      "name": "Moving subject cue and paused pose · adventure-coast-03",
+      "passed": true,
+      "actualStartTick": 350,
+      "actualEndTick": 410,
+      "targetIndex": 1,
+      "moved": true,
+      "animated": true
+    },
+    {
+      "name": "Moving subject cue and paused pose · adventure-coast-04",
+      "passed": true,
+      "actualStartTick": 403,
+      "actualEndTick": 463,
+      "targetIndex": 1,
+      "moved": true,
+      "animated": true
+    },
+    {
+      "name": "Moving subject cue and paused pose · adventure-quarry-03",
+      "passed": true,
+      "actualStartTick": 350,
+      "actualEndTick": 410,
+      "targetIndex": 1,
+      "moved": true,
+      "animated": true
+    },
+    {
+      "name": "Moving subject cue and paused pose · adventure-rooftops-03",
+      "passed": true,
+      "actualStartTick": 350,
+      "actualEndTick": 410,
+      "targetIndex": 1,
+      "moved": true,
+      "animated": true
+    },
+    {
+      "name": "Moving subject cue and paused pose · adventure-orchard-03",
+      "passed": true,
+      "actualStartTick": 387,
+      "actualEndTick": 447,
+      "targetIndex": 1,
+      "moved": true,
+      "animated": true
+    },
+    {
+      "name": "Moving subject cue and paused pose · adventure-orchard-04",
+      "passed": true,
+      "actualStartTick": 350,
+      "actualEndTick": 410,
+      "targetIndex": 1,
+      "moved": true,
+      "animated": true
+    },
+    {
+      "name": "Moving subject cue and paused pose · adventure-solar-farm-03",
+      "passed": true,
+      "actualStartTick": 403,
+      "actualEndTick": 463,
+      "targetIndex": 1,
+      "moved": true,
+      "animated": true
+    },
+    {
+      "name": "Moving subject cue and paused pose · adventure-rail-depot-03",
+      "passed": true,
+      "actualStartTick": 350,
+      "actualEndTick": 410,
+      "targetIndex": 1,
+      "moved": true,
+      "animated": true
+    },
+    {
+      "name": "Six worlds reload repeatedly without resource growth after warmup",
+      "passed": true,
+      "rounds": 3
+    },
+    {
+      "name": "Disposal releases all registered scene resources",
+      "passed": true
+    },
+    {
+      "name": "A fresh reduced-motion renderer retains real subject position with still cosmetic parts",
+      "passed": true
+    },
+    {
+      "name": "Source dependency closure remains exactly bound through the run",
+      "passed": true
+    }
+  ],
+  "contextLosses": [],
+  "configurations": [
+    {
+      "course": "adventure-coast-01",
+      "world": "coast",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 46,
+      "triangles": 1068,
+      "resources": {
+        "geometries": 99,
+        "materials": 113,
+        "textures": 21,
+        "gpuGeometries": 42,
+        "gpuTextures": 19,
+        "programs": 18
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-coast-01",
+      "world": "coast",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 101,
+      "triangles": 3318,
+      "resources": {
+        "geometries": 99,
+        "materials": 113,
+        "textures": 21,
+        "gpuGeometries": 94,
+        "gpuTextures": 19,
+        "programs": 18
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-coast-01",
+      "world": "coast",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 102,
+      "triangles": 3320,
+      "resources": {
+        "geometries": 99,
+        "materials": 113,
+        "textures": 21,
+        "gpuGeometries": 94,
+        "gpuTextures": 20,
+        "programs": 18
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-coast-01",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 66,
+      "triangles": 1812,
+      "resources": {
+        "geometries": 101,
+        "materials": 115,
+        "textures": 24,
+        "gpuGeometries": 48,
+        "gpuTextures": 22,
+        "programs": 20
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-coast-01",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 154,
+      "triangles": 5170,
+      "resources": {
+        "geometries": 101,
+        "materials": 115,
+        "textures": 24,
+        "gpuGeometries": 97,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-coast-01",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 155,
+      "triangles": 5172,
+      "resources": {
+        "geometries": 101,
+        "materials": 115,
+        "textures": 24,
+        "gpuGeometries": 97,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-coast-01",
+      "world": "coast",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 76,
+      "triangles": 7772,
+      "resources": {
+        "geometries": 147,
+        "materials": 121,
+        "textures": 24,
+        "gpuGeometries": 54,
+        "gpuTextures": 22,
+        "programs": 20
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-coast-01",
+      "world": "coast",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 248,
+      "triangles": 13330,
+      "resources": {
+        "geometries": 147,
+        "materials": 121,
+        "textures": 24,
+        "gpuGeometries": 145,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-coast-01",
+      "world": "coast",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 249,
+      "triangles": 13332,
+      "resources": {
+        "geometries": 147,
+        "materials": 121,
+        "textures": 24,
+        "gpuGeometries": 145,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "world": "coast",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 132,
+      "triangles": 2420,
+      "resources": {
+        "geometries": 175,
+        "materials": 164,
+        "textures": 25,
+        "gpuGeometries": 114,
+        "gpuTextures": 23,
+        "programs": 22
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "world": "coast",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 187,
+      "triangles": 4670,
+      "resources": {
+        "geometries": 175,
+        "materials": 164,
+        "textures": 25,
+        "gpuGeometries": 166,
+        "gpuTextures": 23,
+        "programs": 22
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "world": "coast",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 188,
+      "triangles": 4672,
+      "resources": {
+        "geometries": 175,
+        "materials": 164,
+        "textures": 25,
+        "gpuGeometries": 166,
+        "gpuTextures": 24,
+        "programs": 22
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 174,
+      "triangles": 3616,
+      "resources": {
+        "geometries": 175,
+        "materials": 166,
+        "textures": 28,
+        "gpuGeometries": 118,
+        "gpuTextures": 26,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 262,
+      "triangles": 6974,
+      "resources": {
+        "geometries": 175,
+        "materials": 166,
+        "textures": 28,
+        "gpuGeometries": 167,
+        "gpuTextures": 29,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 263,
+      "triangles": 6976,
+      "resources": {
+        "geometries": 175,
+        "materials": 166,
+        "textures": 28,
+        "gpuGeometries": 167,
+        "gpuTextures": 29,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "world": "coast",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 176,
+      "triangles": 9512,
+      "resources": {
+        "geometries": 217,
+        "materials": 172,
+        "textures": 31,
+        "gpuGeometries": 120,
+        "gpuTextures": 29,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "world": "coast",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 348,
+      "triangles": 15070,
+      "resources": {
+        "geometries": 217,
+        "materials": 172,
+        "textures": 31,
+        "gpuGeometries": 211,
+        "gpuTextures": 32,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-02",
+      "world": "coast",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 349,
+      "triangles": 15072,
+      "resources": {
+        "geometries": 217,
+        "materials": 172,
+        "textures": 31,
+        "gpuGeometries": 211,
+        "gpuTextures": 32,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "world": "coast",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 84,
+      "triangles": 2060,
+      "resources": {
+        "geometries": 138,
+        "materials": 125,
+        "textures": 20,
+        "gpuGeometries": 82,
+        "gpuTextures": 17,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "world": "coast",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 139,
+      "triangles": 4310,
+      "resources": {
+        "geometries": 138,
+        "materials": 125,
+        "textures": 20,
+        "gpuGeometries": 134,
+        "gpuTextures": 17,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "world": "coast",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 140,
+      "triangles": 4312,
+      "resources": {
+        "geometries": 138,
+        "materials": 125,
+        "textures": 20,
+        "gpuGeometries": 134,
+        "gpuTextures": 18,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 126,
+      "triangles": 3256,
+      "resources": {
+        "geometries": 138,
+        "materials": 127,
+        "textures": 23,
+        "gpuGeometries": 86,
+        "gpuTextures": 20,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 214,
+      "triangles": 6614,
+      "resources": {
+        "geometries": 138,
+        "materials": 127,
+        "textures": 23,
+        "gpuGeometries": 135,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 215,
+      "triangles": 6616,
+      "resources": {
+        "geometries": 138,
+        "materials": 127,
+        "textures": 23,
+        "gpuGeometries": 135,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "world": "coast",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 128,
+      "triangles": 9152,
+      "resources": {
+        "geometries": 180,
+        "materials": 133,
+        "textures": 26,
+        "gpuGeometries": 88,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "world": "coast",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 300,
+      "triangles": 14710,
+      "resources": {
+        "geometries": 180,
+        "materials": 133,
+        "textures": 26,
+        "gpuGeometries": 179,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-03",
+      "world": "coast",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 301,
+      "triangles": 14712,
+      "resources": {
+        "geometries": 180,
+        "materials": 133,
+        "textures": 26,
+        "gpuGeometries": 179,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "world": "coast",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 44,
+      "triangles": 974,
+      "resources": {
+        "geometries": 99,
+        "materials": 115,
+        "textures": 22,
+        "gpuGeometries": 41,
+        "gpuTextures": 18,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "world": "coast",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 99,
+      "triangles": 3224,
+      "resources": {
+        "geometries": 99,
+        "materials": 115,
+        "textures": 22,
+        "gpuGeometries": 93,
+        "gpuTextures": 18,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "world": "coast",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 100,
+      "triangles": 3226,
+      "resources": {
+        "geometries": 99,
+        "materials": 115,
+        "textures": 22,
+        "gpuGeometries": 93,
+        "gpuTextures": 19,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 74,
+      "triangles": 1778,
+      "resources": {
+        "geometries": 106,
+        "materials": 118,
+        "textures": 25,
+        "gpuGeometries": 52,
+        "gpuTextures": 21,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 162,
+      "triangles": 5136,
+      "resources": {
+        "geometries": 106,
+        "materials": 118,
+        "textures": 25,
+        "gpuGeometries": 101,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 163,
+      "triangles": 5138,
+      "resources": {
+        "geometries": 106,
+        "materials": 118,
+        "textures": 25,
+        "gpuGeometries": 101,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "world": "coast",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 92,
+      "triangles": 7898,
+      "resources": {
+        "geometries": 156,
+        "materials": 125,
+        "textures": 25,
+        "gpuGeometries": 62,
+        "gpuTextures": 21,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "world": "coast",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 264,
+      "triangles": 13456,
+      "resources": {
+        "geometries": 156,
+        "materials": 125,
+        "textures": 25,
+        "gpuGeometries": 153,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-coast-04",
+      "world": "coast",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 265,
+      "triangles": 13458,
+      "resources": {
+        "geometries": 156,
+        "materials": 125,
+        "textures": 25,
+        "gpuGeometries": 153,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-coast-05",
+      "world": "coast",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 44,
+      "triangles": 816,
+      "resources": {
+        "geometries": 98,
+        "materials": 118,
+        "textures": 23,
+        "gpuGeometries": 38,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-coast-05",
+      "world": "coast",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 99,
+      "triangles": 3066,
+      "resources": {
+        "geometries": 98,
+        "materials": 118,
+        "textures": 23,
+        "gpuGeometries": 90,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-coast-05",
+      "world": "coast",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 100,
+      "triangles": 3068,
+      "resources": {
+        "geometries": 98,
+        "materials": 118,
+        "textures": 23,
+        "gpuGeometries": 90,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-coast-05",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 53,
+      "triangles": 1032,
+      "resources": {
+        "geometries": 98,
+        "materials": 118,
+        "textures": 26,
+        "gpuGeometries": 42,
+        "gpuTextures": 24,
+        "programs": 19
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-coast-05",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 141,
+      "triangles": 4390,
+      "resources": {
+        "geometries": 98,
+        "materials": 118,
+        "textures": 26,
+        "gpuGeometries": 91,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-coast-05",
+      "world": "coast",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 142,
+      "triangles": 4392,
+      "resources": {
+        "geometries": 98,
+        "materials": 118,
+        "textures": 26,
+        "gpuGeometries": 91,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-coast-05",
+      "world": "coast",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 55,
+      "triangles": 6800,
+      "resources": {
+        "geometries": 140,
+        "materials": 124,
+        "textures": 26,
+        "gpuGeometries": 44,
+        "gpuTextures": 24,
+        "programs": 19
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-coast-05",
+      "world": "coast",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 227,
+      "triangles": 12358,
+      "resources": {
+        "geometries": 140,
+        "materials": 124,
+        "textures": 26,
+        "gpuGeometries": 135,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-coast-05",
+      "world": "coast",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 228,
+      "triangles": 12360,
+      "resources": {
+        "geometries": 140,
+        "materials": 124,
+        "textures": 26,
+        "gpuGeometries": 135,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-quarry-01",
+      "world": "quarry",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 48,
+      "triangles": 1402,
+      "resources": {
+        "geometries": 102,
+        "materials": 118,
+        "textures": 22,
+        "gpuGeometries": 43,
+        "gpuTextures": 20,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-01",
+      "world": "quarry",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 103,
+      "triangles": 3652,
+      "resources": {
+        "geometries": 102,
+        "materials": 118,
+        "textures": 22,
+        "gpuGeometries": 95,
+        "gpuTextures": 20,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-01",
+      "world": "quarry",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 104,
+      "triangles": 3654,
+      "resources": {
+        "geometries": 102,
+        "materials": 118,
+        "textures": 22,
+        "gpuGeometries": 95,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-01",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 78,
+      "triangles": 2098,
+      "resources": {
+        "geometries": 109,
+        "materials": 121,
+        "textures": 25,
+        "gpuGeometries": 53,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-01",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 166,
+      "triangles": 5456,
+      "resources": {
+        "geometries": 109,
+        "materials": 121,
+        "textures": 25,
+        "gpuGeometries": 102,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-01",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 167,
+      "triangles": 5458,
+      "resources": {
+        "geometries": 109,
+        "materials": 121,
+        "textures": 25,
+        "gpuGeometries": 102,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-01",
+      "world": "quarry",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 98,
+      "triangles": 8234,
+      "resources": {
+        "geometries": 159,
+        "materials": 128,
+        "textures": 25,
+        "gpuGeometries": 65,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-01",
+      "world": "quarry",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 270,
+      "triangles": 13792,
+      "resources": {
+        "geometries": 159,
+        "materials": 128,
+        "textures": 25,
+        "gpuGeometries": 156,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-01",
+      "world": "quarry",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 271,
+      "triangles": 13794,
+      "resources": {
+        "geometries": 159,
+        "materials": 128,
+        "textures": 25,
+        "gpuGeometries": 156,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "world": "quarry",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 46,
+      "triangles": 1816,
+      "resources": {
+        "geometries": 99,
+        "materials": 123,
+        "textures": 23,
+        "gpuGeometries": 40,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "world": "quarry",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 101,
+      "triangles": 4066,
+      "resources": {
+        "geometries": 99,
+        "materials": 123,
+        "textures": 23,
+        "gpuGeometries": 92,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "world": "quarry",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 102,
+      "triangles": 4068,
+      "resources": {
+        "geometries": 99,
+        "materials": 123,
+        "textures": 23,
+        "gpuGeometries": 92,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 59,
+      "triangles": 2500,
+      "resources": {
+        "geometries": 99,
+        "materials": 127,
+        "textures": 26,
+        "gpuGeometries": 43,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 147,
+      "triangles": 5858,
+      "resources": {
+        "geometries": 99,
+        "materials": 127,
+        "textures": 26,
+        "gpuGeometries": 92,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 148,
+      "triangles": 5860,
+      "resources": {
+        "geometries": 99,
+        "materials": 127,
+        "textures": 26,
+        "gpuGeometries": 92,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "world": "quarry",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 63,
+      "triangles": 8284,
+      "resources": {
+        "geometries": 141,
+        "materials": 133,
+        "textures": 26,
+        "gpuGeometries": 47,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "world": "quarry",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 235,
+      "triangles": 13842,
+      "resources": {
+        "geometries": 141,
+        "materials": 133,
+        "textures": 26,
+        "gpuGeometries": 138,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-quarry-02",
+      "world": "quarry",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 236,
+      "triangles": 13844,
+      "resources": {
+        "geometries": 141,
+        "materials": 133,
+        "textures": 26,
+        "gpuGeometries": 138,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "world": "quarry",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 42,
+      "triangles": 1396,
+      "resources": {
+        "geometries": 97,
+        "materials": 109,
+        "textures": 20,
+        "gpuGeometries": 40,
+        "gpuTextures": 17,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "world": "quarry",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 97,
+      "triangles": 3646,
+      "resources": {
+        "geometries": 97,
+        "materials": 109,
+        "textures": 20,
+        "gpuGeometries": 92,
+        "gpuTextures": 17,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "world": "quarry",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 98,
+      "triangles": 3648,
+      "resources": {
+        "geometries": 97,
+        "materials": 109,
+        "textures": 20,
+        "gpuGeometries": 92,
+        "gpuTextures": 18,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 72,
+      "triangles": 2092,
+      "resources": {
+        "geometries": 104,
+        "materials": 112,
+        "textures": 23,
+        "gpuGeometries": 50,
+        "gpuTextures": 20,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 160,
+      "triangles": 5450,
+      "resources": {
+        "geometries": 104,
+        "materials": 112,
+        "textures": 23,
+        "gpuGeometries": 99,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 161,
+      "triangles": 5452,
+      "resources": {
+        "geometries": 104,
+        "materials": 112,
+        "textures": 23,
+        "gpuGeometries": 99,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "world": "quarry",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 92,
+      "triangles": 8228,
+      "resources": {
+        "geometries": 154,
+        "materials": 119,
+        "textures": 23,
+        "gpuGeometries": 62,
+        "gpuTextures": 20,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "world": "quarry",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 264,
+      "triangles": 13786,
+      "resources": {
+        "geometries": 154,
+        "materials": 119,
+        "textures": 23,
+        "gpuGeometries": 153,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-03",
+      "world": "quarry",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 265,
+      "triangles": 13788,
+      "resources": {
+        "geometries": 154,
+        "materials": 119,
+        "textures": 23,
+        "gpuGeometries": 153,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "world": "quarry",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 105,
+      "triangles": 4072,
+      "resources": {
+        "geometries": 157,
+        "materials": 137,
+        "textures": 21,
+        "gpuGeometries": 101,
+        "gpuTextures": 19,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "world": "quarry",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 160,
+      "triangles": 6322,
+      "resources": {
+        "geometries": 157,
+        "materials": 137,
+        "textures": 21,
+        "gpuGeometries": 153,
+        "gpuTextures": 19,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "world": "quarry",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 161,
+      "triangles": 6324,
+      "resources": {
+        "geometries": 157,
+        "materials": 137,
+        "textures": 21,
+        "gpuGeometries": 153,
+        "gpuTextures": 20,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 184,
+      "triangles": 7440,
+      "resources": {
+        "geometries": 166,
+        "materials": 144,
+        "textures": 24,
+        "gpuGeometries": 113,
+        "gpuTextures": 22,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 272,
+      "triangles": 10798,
+      "resources": {
+        "geometries": 166,
+        "materials": 144,
+        "textures": 24,
+        "gpuGeometries": 162,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 273,
+      "triangles": 10800,
+      "resources": {
+        "geometries": 166,
+        "materials": 144,
+        "textures": 24,
+        "gpuGeometries": 162,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "world": "quarry",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 214,
+      "triangles": 13944,
+      "resources": {
+        "geometries": 221,
+        "materials": 151,
+        "textures": 27,
+        "gpuGeometries": 130,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "world": "quarry",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 386,
+      "triangles": 19502,
+      "resources": {
+        "geometries": 221,
+        "materials": 151,
+        "textures": 27,
+        "gpuGeometries": 221,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-quarry-04",
+      "world": "quarry",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 387,
+      "triangles": 19504,
+      "resources": {
+        "geometries": 221,
+        "materials": 151,
+        "textures": 27,
+        "gpuGeometries": 221,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-quarry-05",
+      "world": "quarry",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 86,
+      "triangles": 1652,
+      "resources": {
+        "geometries": 133,
+        "materials": 138,
+        "textures": 24,
+        "gpuGeometries": 71,
+        "gpuTextures": 22,
+        "programs": 22
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-quarry-05",
+      "world": "quarry",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 141,
+      "triangles": 3902,
+      "resources": {
+        "geometries": 133,
+        "materials": 138,
+        "textures": 24,
+        "gpuGeometries": 123,
+        "gpuTextures": 22,
+        "programs": 22
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-quarry-05",
+      "world": "quarry",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 142,
+      "triangles": 3904,
+      "resources": {
+        "geometries": 133,
+        "materials": 138,
+        "textures": 24,
+        "gpuGeometries": 123,
+        "gpuTextures": 23,
+        "programs": 22
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-quarry-05",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 95,
+      "triangles": 1760,
+      "resources": {
+        "geometries": 133,
+        "materials": 138,
+        "textures": 27,
+        "gpuGeometries": 74,
+        "gpuTextures": 25,
+        "programs": 23
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-quarry-05",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 183,
+      "triangles": 5118,
+      "resources": {
+        "geometries": 133,
+        "materials": 138,
+        "textures": 27,
+        "gpuGeometries": 123,
+        "gpuTextures": 28,
+        "programs": 24
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-quarry-05",
+      "world": "quarry",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 184,
+      "triangles": 5120,
+      "resources": {
+        "geometries": 133,
+        "materials": 138,
+        "textures": 27,
+        "gpuGeometries": 123,
+        "gpuTextures": 28,
+        "programs": 24
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-quarry-05",
+      "world": "quarry",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 99,
+      "triangles": 7544,
+      "resources": {
+        "geometries": 175,
+        "materials": 144,
+        "textures": 27,
+        "gpuGeometries": 78,
+        "gpuTextures": 25,
+        "programs": 23
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-quarry-05",
+      "world": "quarry",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 271,
+      "triangles": 13102,
+      "resources": {
+        "geometries": 175,
+        "materials": 144,
+        "textures": 27,
+        "gpuGeometries": 169,
+        "gpuTextures": 28,
+        "programs": 24
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-quarry-05",
+      "world": "quarry",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 272,
+      "triangles": 13104,
+      "resources": {
+        "geometries": 175,
+        "materials": 144,
+        "textures": 27,
+        "gpuGeometries": 169,
+        "gpuTextures": 28,
+        "programs": 24
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 88,
+      "triangles": 3394,
+      "resources": {
+        "geometries": 147,
+        "materials": 144,
+        "textures": 22,
+        "gpuGeometries": 83,
+        "gpuTextures": 20,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 142,
+      "triangles": 5642,
+      "resources": {
+        "geometries": 147,
+        "materials": 144,
+        "textures": 22,
+        "gpuGeometries": 135,
+        "gpuTextures": 20,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 144,
+      "triangles": 5646,
+      "resources": {
+        "geometries": 147,
+        "materials": 144,
+        "textures": 22,
+        "gpuGeometries": 135,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 132,
+      "triangles": 4598,
+      "resources": {
+        "geometries": 147,
+        "materials": 146,
+        "textures": 25,
+        "gpuGeometries": 90,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 219,
+      "triangles": 7954,
+      "resources": {
+        "geometries": 147,
+        "materials": 146,
+        "textures": 25,
+        "gpuGeometries": 139,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 221,
+      "triangles": 7958,
+      "resources": {
+        "geometries": 147,
+        "materials": 146,
+        "textures": 25,
+        "gpuGeometries": 139,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 137,
+      "triangles": 10390,
+      "resources": {
+        "geometries": 189,
+        "materials": 152,
+        "textures": 25,
+        "gpuGeometries": 95,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 308,
+      "triangles": 15946,
+      "resources": {
+        "geometries": 189,
+        "materials": 152,
+        "textures": 25,
+        "gpuGeometries": 186,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-01",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 310,
+      "triangles": 15950,
+      "resources": {
+        "geometries": 189,
+        "materials": 152,
+        "textures": 25,
+        "gpuGeometries": 186,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 103,
+      "triangles": 3074,
+      "resources": {
+        "geometries": 151,
+        "materials": 157,
+        "textures": 25,
+        "gpuGeometries": 83,
+        "gpuTextures": 23,
+        "programs": 22
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 158,
+      "triangles": 5324,
+      "resources": {
+        "geometries": 151,
+        "materials": 157,
+        "textures": 25,
+        "gpuGeometries": 135,
+        "gpuTextures": 23,
+        "programs": 22
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 159,
+      "triangles": 5326,
+      "resources": {
+        "geometries": 151,
+        "materials": 157,
+        "textures": 25,
+        "gpuGeometries": 135,
+        "gpuTextures": 24,
+        "programs": 22
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 115,
+      "triangles": 3650,
+      "resources": {
+        "geometries": 151,
+        "materials": 157,
+        "textures": 28,
+        "gpuGeometries": 90,
+        "gpuTextures": 26,
+        "programs": 23
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 203,
+      "triangles": 7008,
+      "resources": {
+        "geometries": 151,
+        "materials": 157,
+        "textures": 28,
+        "gpuGeometries": 139,
+        "gpuTextures": 29,
+        "programs": 24
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 204,
+      "triangles": 7010,
+      "resources": {
+        "geometries": 151,
+        "materials": 157,
+        "textures": 28,
+        "gpuGeometries": 139,
+        "gpuTextures": 29,
+        "programs": 24
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 120,
+      "triangles": 9442,
+      "resources": {
+        "geometries": 193,
+        "materials": 163,
+        "textures": 28,
+        "gpuGeometries": 95,
+        "gpuTextures": 26,
+        "programs": 23
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 292,
+      "triangles": 15000,
+      "resources": {
+        "geometries": 193,
+        "materials": 163,
+        "textures": 28,
+        "gpuGeometries": 186,
+        "gpuTextures": 29,
+        "programs": 24
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-02",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 293,
+      "triangles": 15002,
+      "resources": {
+        "geometries": 193,
+        "materials": 163,
+        "textures": 28,
+        "gpuGeometries": 186,
+        "gpuTextures": 29,
+        "programs": 24
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 82,
+      "triangles": 3388,
+      "resources": {
+        "geometries": 142,
+        "materials": 135,
+        "textures": 20,
+        "gpuGeometries": 80,
+        "gpuTextures": 17,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 137,
+      "triangles": 5638,
+      "resources": {
+        "geometries": 142,
+        "materials": 135,
+        "textures": 20,
+        "gpuGeometries": 132,
+        "gpuTextures": 17,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 138,
+      "triangles": 5640,
+      "resources": {
+        "geometries": 142,
+        "materials": 135,
+        "textures": 20,
+        "gpuGeometries": 132,
+        "gpuTextures": 18,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 126,
+      "triangles": 4592,
+      "resources": {
+        "geometries": 142,
+        "materials": 137,
+        "textures": 23,
+        "gpuGeometries": 87,
+        "gpuTextures": 20,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 214,
+      "triangles": 7950,
+      "resources": {
+        "geometries": 142,
+        "materials": 137,
+        "textures": 23,
+        "gpuGeometries": 136,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 215,
+      "triangles": 7952,
+      "resources": {
+        "geometries": 142,
+        "materials": 137,
+        "textures": 23,
+        "gpuGeometries": 136,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 131,
+      "triangles": 10384,
+      "resources": {
+        "geometries": 184,
+        "materials": 143,
+        "textures": 23,
+        "gpuGeometries": 92,
+        "gpuTextures": 20,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 303,
+      "triangles": 15942,
+      "resources": {
+        "geometries": 184,
+        "materials": 143,
+        "textures": 23,
+        "gpuGeometries": 183,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-03",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 304,
+      "triangles": 15944,
+      "resources": {
+        "geometries": 184,
+        "materials": 143,
+        "textures": 23,
+        "gpuGeometries": 183,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 43,
+      "triangles": 2496,
+      "resources": {
+        "geometries": 103,
+        "materials": 128,
+        "textures": 23,
+        "gpuGeometries": 37,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 96,
+      "triangles": 4742,
+      "resources": {
+        "geometries": 103,
+        "materials": 128,
+        "textures": 23,
+        "gpuGeometries": 89,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 99,
+      "triangles": 4748,
+      "resources": {
+        "geometries": 103,
+        "materials": 128,
+        "textures": 23,
+        "gpuGeometries": 89,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 55,
+      "triangles": 3072,
+      "resources": {
+        "geometries": 103,
+        "materials": 128,
+        "textures": 26,
+        "gpuGeometries": 44,
+        "gpuTextures": 24,
+        "programs": 19
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 141,
+      "triangles": 6426,
+      "resources": {
+        "geometries": 103,
+        "materials": 128,
+        "textures": 26,
+        "gpuGeometries": 93,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 144,
+      "triangles": 6432,
+      "resources": {
+        "geometries": 103,
+        "materials": 128,
+        "textures": 26,
+        "gpuGeometries": 93,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 60,
+      "triangles": 8864,
+      "resources": {
+        "geometries": 145,
+        "materials": 134,
+        "textures": 26,
+        "gpuGeometries": 49,
+        "gpuTextures": 24,
+        "programs": 19
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 230,
+      "triangles": 14418,
+      "resources": {
+        "geometries": 145,
+        "materials": 134,
+        "textures": 26,
+        "gpuGeometries": 140,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-04",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 233,
+      "triangles": 14424,
+      "resources": {
+        "geometries": 145,
+        "materials": 134,
+        "textures": 26,
+        "gpuGeometries": 140,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 45,
+      "triangles": 2784,
+      "resources": {
+        "geometries": 103,
+        "materials": 132,
+        "textures": 23,
+        "gpuGeometries": 39,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 100,
+      "triangles": 5034,
+      "resources": {
+        "geometries": 103,
+        "materials": 132,
+        "textures": 23,
+        "gpuGeometries": 91,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "world": "rooftops",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 101,
+      "triangles": 5036,
+      "resources": {
+        "geometries": 103,
+        "materials": 132,
+        "textures": 23,
+        "gpuGeometries": 91,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 61,
+      "triangles": 3648,
+      "resources": {
+        "geometries": 103,
+        "materials": 136,
+        "textures": 26,
+        "gpuGeometries": 46,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 149,
+      "triangles": 7006,
+      "resources": {
+        "geometries": 103,
+        "materials": 136,
+        "textures": 26,
+        "gpuGeometries": 95,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "world": "rooftops",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 150,
+      "triangles": 7008,
+      "resources": {
+        "geometries": 103,
+        "materials": 136,
+        "textures": 26,
+        "gpuGeometries": 95,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 66,
+      "triangles": 9440,
+      "resources": {
+        "geometries": 145,
+        "materials": 142,
+        "textures": 26,
+        "gpuGeometries": 51,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 238,
+      "triangles": 14998,
+      "resources": {
+        "geometries": 145,
+        "materials": 142,
+        "textures": 26,
+        "gpuGeometries": 142,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rooftops-05",
+      "world": "rooftops",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 239,
+      "triangles": 15000,
+      "resources": {
+        "geometries": 145,
+        "materials": 142,
+        "textures": 26,
+        "gpuGeometries": 142,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "world": "orchard",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 98,
+      "triangles": 3564,
+      "resources": {
+        "geometries": 152,
+        "materials": 196,
+        "textures": 28,
+        "gpuGeometries": 93,
+        "gpuTextures": 26,
+        "programs": 18
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "world": "orchard",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 153,
+      "triangles": 5814,
+      "resources": {
+        "geometries": 152,
+        "materials": 196,
+        "textures": 28,
+        "gpuGeometries": 145,
+        "gpuTextures": 26,
+        "programs": 18
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "world": "orchard",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 156,
+      "triangles": 5836,
+      "resources": {
+        "geometries": 152,
+        "materials": 196,
+        "textures": 28,
+        "gpuGeometries": 147,
+        "gpuTextures": 27,
+        "programs": 18
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 144,
+      "triangles": 4556,
+      "resources": {
+        "geometries": 154,
+        "materials": 198,
+        "textures": 31,
+        "gpuGeometries": 101,
+        "gpuTextures": 29,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 232,
+      "triangles": 7914,
+      "resources": {
+        "geometries": 154,
+        "materials": 198,
+        "textures": 31,
+        "gpuGeometries": 150,
+        "gpuTextures": 32,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 235,
+      "triangles": 7936,
+      "resources": {
+        "geometries": 154,
+        "materials": 198,
+        "textures": 31,
+        "gpuGeometries": 150,
+        "gpuTextures": 32,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "world": "orchard",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 153,
+      "triangles": 4756,
+      "resources": {
+        "geometries": 200,
+        "materials": 204,
+        "textures": 31,
+        "gpuGeometries": 106,
+        "gpuTextures": 29,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "world": "orchard",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 325,
+      "triangles": 10314,
+      "resources": {
+        "geometries": 200,
+        "materials": 204,
+        "textures": 31,
+        "gpuGeometries": 197,
+        "gpuTextures": 32,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-01",
+      "world": "orchard",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 328,
+      "triangles": 10336,
+      "resources": {
+        "geometries": 200,
+        "materials": 204,
+        "textures": 31,
+        "gpuGeometries": 197,
+        "gpuTextures": 32,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "world": "orchard",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 100,
+      "triangles": 3474,
+      "resources": {
+        "geometries": 154,
+        "materials": 200,
+        "textures": 29,
+        "gpuGeometries": 94,
+        "gpuTextures": 27,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "world": "orchard",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 155,
+      "triangles": 5724,
+      "resources": {
+        "geometries": 154,
+        "materials": 200,
+        "textures": 29,
+        "gpuGeometries": 146,
+        "gpuTextures": 27,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "world": "orchard",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 158,
+      "triangles": 5746,
+      "resources": {
+        "geometries": 154,
+        "materials": 200,
+        "textures": 29,
+        "gpuGeometries": 148,
+        "gpuTextures": 28,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 156,
+      "triangles": 4526,
+      "resources": {
+        "geometries": 161,
+        "materials": 203,
+        "textures": 32,
+        "gpuGeometries": 107,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 244,
+      "triangles": 7884,
+      "resources": {
+        "geometries": 161,
+        "materials": 203,
+        "textures": 32,
+        "gpuGeometries": 156,
+        "gpuTextures": 33,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 247,
+      "triangles": 7906,
+      "resources": {
+        "geometries": 161,
+        "materials": 203,
+        "textures": 32,
+        "gpuGeometries": 156,
+        "gpuTextures": 33,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "world": "orchard",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 173,
+      "triangles": 4886,
+      "resources": {
+        "geometries": 211,
+        "materials": 210,
+        "textures": 32,
+        "gpuGeometries": 116,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "world": "orchard",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 345,
+      "triangles": 10444,
+      "resources": {
+        "geometries": 211,
+        "materials": 210,
+        "textures": 32,
+        "gpuGeometries": 207,
+        "gpuTextures": 33,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-02",
+      "world": "orchard",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 348,
+      "triangles": 10466,
+      "resources": {
+        "geometries": 211,
+        "materials": 210,
+        "textures": 32,
+        "gpuGeometries": 207,
+        "gpuTextures": 33,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "world": "orchard",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 94,
+      "triangles": 3468,
+      "resources": {
+        "geometries": 150,
+        "materials": 194,
+        "textures": 28,
+        "gpuGeometries": 91,
+        "gpuTextures": 24,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "world": "orchard",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 149,
+      "triangles": 5718,
+      "resources": {
+        "geometries": 150,
+        "materials": 194,
+        "textures": 28,
+        "gpuGeometries": 143,
+        "gpuTextures": 24,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "world": "orchard",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 152,
+      "triangles": 5740,
+      "resources": {
+        "geometries": 150,
+        "materials": 194,
+        "textures": 28,
+        "gpuGeometries": 145,
+        "gpuTextures": 25,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 150,
+      "triangles": 4520,
+      "resources": {
+        "geometries": 157,
+        "materials": 197,
+        "textures": 31,
+        "gpuGeometries": 104,
+        "gpuTextures": 27,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 238,
+      "triangles": 7878,
+      "resources": {
+        "geometries": 157,
+        "materials": 197,
+        "textures": 31,
+        "gpuGeometries": 153,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 241,
+      "triangles": 7900,
+      "resources": {
+        "geometries": 157,
+        "materials": 197,
+        "textures": 31,
+        "gpuGeometries": 153,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "world": "orchard",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 167,
+      "triangles": 4880,
+      "resources": {
+        "geometries": 207,
+        "materials": 204,
+        "textures": 31,
+        "gpuGeometries": 113,
+        "gpuTextures": 27,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "world": "orchard",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 339,
+      "triangles": 10438,
+      "resources": {
+        "geometries": 207,
+        "materials": 204,
+        "textures": 31,
+        "gpuGeometries": 204,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-03",
+      "world": "orchard",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 342,
+      "triangles": 10460,
+      "resources": {
+        "geometries": 207,
+        "materials": 204,
+        "textures": 31,
+        "gpuGeometries": 204,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "world": "orchard",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 92,
+      "triangles": 3558,
+      "resources": {
+        "geometries": 147,
+        "materials": 187,
+        "textures": 26,
+        "gpuGeometries": 90,
+        "gpuTextures": 23,
+        "programs": 18
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "world": "orchard",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 147,
+      "triangles": 5808,
+      "resources": {
+        "geometries": 147,
+        "materials": 187,
+        "textures": 26,
+        "gpuGeometries": 142,
+        "gpuTextures": 23,
+        "programs": 18
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "world": "orchard",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 150,
+      "triangles": 5830,
+      "resources": {
+        "geometries": 147,
+        "materials": 187,
+        "textures": 26,
+        "gpuGeometries": 144,
+        "gpuTextures": 24,
+        "programs": 18
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 138,
+      "triangles": 4550,
+      "resources": {
+        "geometries": 149,
+        "materials": 189,
+        "textures": 29,
+        "gpuGeometries": 98,
+        "gpuTextures": 26,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 226,
+      "triangles": 7908,
+      "resources": {
+        "geometries": 149,
+        "materials": 189,
+        "textures": 29,
+        "gpuGeometries": 147,
+        "gpuTextures": 29,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 229,
+      "triangles": 7930,
+      "resources": {
+        "geometries": 149,
+        "materials": 189,
+        "textures": 29,
+        "gpuGeometries": 147,
+        "gpuTextures": 29,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "world": "orchard",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 147,
+      "triangles": 4750,
+      "resources": {
+        "geometries": 195,
+        "materials": 195,
+        "textures": 29,
+        "gpuGeometries": 103,
+        "gpuTextures": 26,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "world": "orchard",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 319,
+      "triangles": 10308,
+      "resources": {
+        "geometries": 195,
+        "materials": 195,
+        "textures": 29,
+        "gpuGeometries": 194,
+        "gpuTextures": 29,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-04",
+      "world": "orchard",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 322,
+      "triangles": 10330,
+      "resources": {
+        "geometries": 195,
+        "materials": 195,
+        "textures": 29,
+        "gpuGeometries": 194,
+        "gpuTextures": 29,
+        "programs": 21
+      },
+      "actorTypes": [
+        "patrol"
+      ]
+    },
+    {
+      "course": "adventure-orchard-05",
+      "world": "orchard",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 88,
+      "triangles": 3304,
+      "resources": {
+        "geometries": 143,
+        "materials": 185,
+        "textures": 26,
+        "gpuGeometries": 85,
+        "gpuTextures": 24,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-orchard-05",
+      "world": "orchard",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 143,
+      "triangles": 5554,
+      "resources": {
+        "geometries": 143,
+        "materials": 185,
+        "textures": 26,
+        "gpuGeometries": 137,
+        "gpuTextures": 24,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-orchard-05",
+      "world": "orchard",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 146,
+      "triangles": 5576,
+      "resources": {
+        "geometries": 143,
+        "materials": 185,
+        "textures": 26,
+        "gpuGeometries": 139,
+        "gpuTextures": 25,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-orchard-05",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 123,
+      "triangles": 3768,
+      "resources": {
+        "geometries": 143,
+        "materials": 185,
+        "textures": 29,
+        "gpuGeometries": 91,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-orchard-05",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 211,
+      "triangles": 7126,
+      "resources": {
+        "geometries": 143,
+        "materials": 185,
+        "textures": 29,
+        "gpuGeometries": 140,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-orchard-05",
+      "world": "orchard",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 214,
+      "triangles": 7148,
+      "resources": {
+        "geometries": 143,
+        "materials": 185,
+        "textures": 29,
+        "gpuGeometries": 140,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-orchard-05",
+      "world": "orchard",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 124,
+      "triangles": 3776,
+      "resources": {
+        "geometries": 185,
+        "materials": 191,
+        "textures": 29,
+        "gpuGeometries": 92,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-orchard-05",
+      "world": "orchard",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 296,
+      "triangles": 9334,
+      "resources": {
+        "geometries": 185,
+        "materials": 191,
+        "textures": 29,
+        "gpuGeometries": 183,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-orchard-05",
+      "world": "orchard",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 299,
+      "triangles": 9356,
+      "resources": {
+        "geometries": 185,
+        "materials": 191,
+        "textures": 29,
+        "gpuGeometries": 183,
+        "gpuTextures": 30,
+        "programs": 21
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 90,
+      "triangles": 1802,
+      "resources": {
+        "geometries": 150,
+        "materials": 190,
+        "textures": 25,
+        "gpuGeometries": 85,
+        "gpuTextures": 23,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 149,
+      "triangles": 4076,
+      "resources": {
+        "geometries": 150,
+        "materials": 190,
+        "textures": 25,
+        "gpuGeometries": 141,
+        "gpuTextures": 23,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 154,
+      "triangles": 4102,
+      "resources": {
+        "geometries": 150,
+        "materials": 190,
+        "textures": 25,
+        "gpuGeometries": 145,
+        "gpuTextures": 24,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 145,
+      "triangles": 2798,
+      "resources": {
+        "geometries": 157,
+        "materials": 193,
+        "textures": 28,
+        "gpuGeometries": 103,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 237,
+      "triangles": 6180,
+      "resources": {
+        "geometries": 157,
+        "materials": 193,
+        "textures": 28,
+        "gpuGeometries": 152,
+        "gpuTextures": 29,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 242,
+      "triangles": 6206,
+      "resources": {
+        "geometries": 157,
+        "materials": 193,
+        "textures": 28,
+        "gpuGeometries": 152,
+        "gpuTextures": 29,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 163,
+      "triangles": 8918,
+      "resources": {
+        "geometries": 207,
+        "materials": 200,
+        "textures": 28,
+        "gpuGeometries": 113,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 339,
+      "triangles": 14500,
+      "resources": {
+        "geometries": 207,
+        "materials": 200,
+        "textures": 28,
+        "gpuGeometries": 204,
+        "gpuTextures": 29,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 344,
+      "triangles": 14526,
+      "resources": {
+        "geometries": 207,
+        "materials": 200,
+        "textures": 28,
+        "gpuGeometries": 204,
+        "gpuTextures": 29,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 82,
+      "triangles": 1636,
+      "resources": {
+        "geometries": 143,
+        "materials": 183,
+        "textures": 24,
+        "gpuGeometries": 78,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 141,
+      "triangles": 3910,
+      "resources": {
+        "geometries": 143,
+        "materials": 183,
+        "textures": 24,
+        "gpuGeometries": 134,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 146,
+      "triangles": 3936,
+      "resources": {
+        "geometries": 143,
+        "materials": 183,
+        "textures": 24,
+        "gpuGeometries": 138,
+        "gpuTextures": 23,
+        "programs": 18
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 116,
+      "triangles": 2044,
+      "resources": {
+        "geometries": 143,
+        "materials": 183,
+        "textures": 27,
+        "gpuGeometries": 89,
+        "gpuTextures": 25,
+        "programs": 19
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 208,
+      "triangles": 5426,
+      "resources": {
+        "geometries": 143,
+        "materials": 183,
+        "textures": 27,
+        "gpuGeometries": 138,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 213,
+      "triangles": 5452,
+      "resources": {
+        "geometries": 143,
+        "materials": 183,
+        "textures": 27,
+        "gpuGeometries": 138,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 118,
+      "triangles": 7812,
+      "resources": {
+        "geometries": 185,
+        "materials": 189,
+        "textures": 27,
+        "gpuGeometries": 91,
+        "gpuTextures": 25,
+        "programs": 19
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 294,
+      "triangles": 13394,
+      "resources": {
+        "geometries": 185,
+        "materials": 189,
+        "textures": 27,
+        "gpuGeometries": 182,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 299,
+      "triangles": 13420,
+      "resources": {
+        "geometries": 185,
+        "materials": 189,
+        "textures": 27,
+        "gpuGeometries": 182,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": []
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 86,
+      "triangles": 1798,
+      "resources": {
+        "geometries": 148,
+        "materials": 188,
+        "textures": 25,
+        "gpuGeometries": 83,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 145,
+      "triangles": 4072,
+      "resources": {
+        "geometries": 148,
+        "materials": 188,
+        "textures": 25,
+        "gpuGeometries": 139,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 150,
+      "triangles": 4098,
+      "resources": {
+        "geometries": 148,
+        "materials": 188,
+        "textures": 25,
+        "gpuGeometries": 143,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 141,
+      "triangles": 2794,
+      "resources": {
+        "geometries": 155,
+        "materials": 191,
+        "textures": 28,
+        "gpuGeometries": 101,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 233,
+      "triangles": 6176,
+      "resources": {
+        "geometries": 155,
+        "materials": 191,
+        "textures": 28,
+        "gpuGeometries": 150,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 238,
+      "triangles": 6202,
+      "resources": {
+        "geometries": 155,
+        "materials": 191,
+        "textures": 28,
+        "gpuGeometries": 150,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 159,
+      "triangles": 8914,
+      "resources": {
+        "geometries": 205,
+        "materials": 198,
+        "textures": 28,
+        "gpuGeometries": 111,
+        "gpuTextures": 24,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 335,
+      "triangles": 14496,
+      "resources": {
+        "geometries": 205,
+        "materials": 198,
+        "textures": 28,
+        "gpuGeometries": 202,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 340,
+      "triangles": 14522,
+      "resources": {
+        "geometries": 205,
+        "materials": 198,
+        "textures": 28,
+        "gpuGeometries": 202,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 132,
+      "triangles": 2630,
+      "resources": {
+        "geometries": 183,
+        "materials": 218,
+        "textures": 28,
+        "gpuGeometries": 116,
+        "gpuTextures": 26,
+        "programs": 22
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 191,
+      "triangles": 4904,
+      "resources": {
+        "geometries": 183,
+        "materials": 218,
+        "textures": 28,
+        "gpuGeometries": 172,
+        "gpuTextures": 26,
+        "programs": 22
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 196,
+      "triangles": 4930,
+      "resources": {
+        "geometries": 183,
+        "materials": 218,
+        "textures": 28,
+        "gpuGeometries": 176,
+        "gpuTextures": 27,
+        "programs": 22
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 170,
+      "triangles": 3614,
+      "resources": {
+        "geometries": 183,
+        "materials": 222,
+        "textures": 31,
+        "gpuGeometries": 127,
+        "gpuTextures": 29,
+        "programs": 24
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 262,
+      "triangles": 6996,
+      "resources": {
+        "geometries": 183,
+        "materials": 222,
+        "textures": 31,
+        "gpuGeometries": 176,
+        "gpuTextures": 32,
+        "programs": 24
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 267,
+      "triangles": 7022,
+      "resources": {
+        "geometries": 183,
+        "materials": 222,
+        "textures": 31,
+        "gpuGeometries": 176,
+        "gpuTextures": 32,
+        "programs": 24
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 172,
+      "triangles": 9382,
+      "resources": {
+        "geometries": 225,
+        "materials": 228,
+        "textures": 31,
+        "gpuGeometries": 129,
+        "gpuTextures": 29,
+        "programs": 24
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 348,
+      "triangles": 14964,
+      "resources": {
+        "geometries": 225,
+        "materials": 228,
+        "textures": 31,
+        "gpuGeometries": 220,
+        "gpuTextures": 32,
+        "programs": 24
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 353,
+      "triangles": 14990,
+      "resources": {
+        "geometries": 225,
+        "materials": 228,
+        "textures": 31,
+        "gpuGeometries": 220,
+        "gpuTextures": 32,
+        "programs": 24
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 147,
+      "triangles": 4472,
+      "resources": {
+        "geometries": 205,
+        "materials": 209,
+        "textures": 24,
+        "gpuGeometries": 143,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 206,
+      "triangles": 6746,
+      "resources": {
+        "geometries": 205,
+        "materials": 209,
+        "textures": 24,
+        "gpuGeometries": 199,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 211,
+      "triangles": 6772,
+      "resources": {
+        "geometries": 205,
+        "materials": 209,
+        "textures": 24,
+        "gpuGeometries": 203,
+        "gpuTextures": 23,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 251,
+      "triangles": 8140,
+      "resources": {
+        "geometries": 214,
+        "materials": 216,
+        "textures": 27,
+        "gpuGeometries": 163,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 343,
+      "triangles": 11522,
+      "resources": {
+        "geometries": 214,
+        "materials": 216,
+        "textures": 27,
+        "gpuGeometries": 212,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 348,
+      "triangles": 11548,
+      "resources": {
+        "geometries": 214,
+        "materials": 216,
+        "textures": 27,
+        "gpuGeometries": 212,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 279,
+      "triangles": 14628,
+      "resources": {
+        "geometries": 269,
+        "materials": 223,
+        "textures": 30,
+        "gpuGeometries": 178,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 455,
+      "triangles": 20210,
+      "resources": {
+        "geometries": 269,
+        "materials": 223,
+        "textures": 30,
+        "gpuGeometries": 269,
+        "gpuTextures": 31,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 460,
+      "triangles": 20236,
+      "resources": {
+        "geometries": 269,
+        "materials": 223,
+        "textures": 30,
+        "gpuGeometries": 269,
+        "gpuTextures": 31,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 63,
+      "triangles": 1158,
+      "resources": {
+        "geometries": 130,
+        "materials": 167,
+        "textures": 24,
+        "gpuGeometries": 59,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 118,
+      "triangles": 3408,
+      "resources": {
+        "geometries": 130,
+        "materials": 167,
+        "textures": 24,
+        "gpuGeometries": 111,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 119,
+      "triangles": 3410,
+      "resources": {
+        "geometries": 130,
+        "materials": 167,
+        "textures": 24,
+        "gpuGeometries": 111,
+        "gpuTextures": 23,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 102,
+      "triangles": 2022,
+      "resources": {
+        "geometries": 137,
+        "materials": 170,
+        "textures": 27,
+        "gpuGeometries": 70,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 190,
+      "triangles": 5380,
+      "resources": {
+        "geometries": 137,
+        "materials": 170,
+        "textures": 27,
+        "gpuGeometries": 119,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 191,
+      "triangles": 5382,
+      "resources": {
+        "geometries": 137,
+        "materials": 170,
+        "textures": 27,
+        "gpuGeometries": 119,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 134,
+      "triangles": 8254,
+      "resources": {
+        "geometries": 187,
+        "materials": 177,
+        "textures": 27,
+        "gpuGeometries": 94,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 306,
+      "triangles": 13812,
+      "resources": {
+        "geometries": 187,
+        "materials": 177,
+        "textures": 27,
+        "gpuGeometries": 185,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 307,
+      "triangles": 13814,
+      "resources": {
+        "geometries": 187,
+        "materials": 177,
+        "textures": 27,
+        "gpuGeometries": 185,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 171,
+      "triangles": 2830,
+      "resources": {
+        "geometries": 226,
+        "materials": 225,
+        "textures": 29,
+        "gpuGeometries": 150,
+        "gpuTextures": 27,
+        "programs": 22
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 226,
+      "triangles": 5080,
+      "resources": {
+        "geometries": 226,
+        "materials": 225,
+        "textures": 29,
+        "gpuGeometries": 202,
+        "gpuTextures": 27,
+        "programs": 22
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 227,
+      "triangles": 5082,
+      "resources": {
+        "geometries": 226,
+        "materials": 225,
+        "textures": 29,
+        "gpuGeometries": 202,
+        "gpuTextures": 28,
+        "programs": 22
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 222,
+      "triangles": 4086,
+      "resources": {
+        "geometries": 226,
+        "materials": 227,
+        "textures": 32,
+        "gpuGeometries": 154,
+        "gpuTextures": 30,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 310,
+      "triangles": 7444,
+      "resources": {
+        "geometries": 226,
+        "materials": 227,
+        "textures": 32,
+        "gpuGeometries": 203,
+        "gpuTextures": 33,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 311,
+      "triangles": 7446,
+      "resources": {
+        "geometries": 226,
+        "materials": 227,
+        "textures": 32,
+        "gpuGeometries": 203,
+        "gpuTextures": 33,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 238,
+      "triangles": 10094,
+      "resources": {
+        "geometries": 268,
+        "materials": 233,
+        "textures": 35,
+        "gpuGeometries": 170,
+        "gpuTextures": 33,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 410,
+      "triangles": 15652,
+      "resources": {
+        "geometries": 268,
+        "materials": 233,
+        "textures": 35,
+        "gpuGeometries": 261,
+        "gpuTextures": 36,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 411,
+      "triangles": 15654,
+      "resources": {
+        "geometries": 268,
+        "materials": 233,
+        "textures": 35,
+        "gpuGeometries": 261,
+        "gpuTextures": 36,
+        "programs": 24
+      },
+      "actorTypes": [
+        "drone"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 59,
+      "triangles": 1154,
+      "resources": {
+        "geometries": 127,
+        "materials": 162,
+        "textures": 23,
+        "gpuGeometries": 57,
+        "gpuTextures": 20,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 114,
+      "triangles": 3404,
+      "resources": {
+        "geometries": 127,
+        "materials": 162,
+        "textures": 23,
+        "gpuGeometries": 109,
+        "gpuTextures": 20,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 115,
+      "triangles": 3406,
+      "resources": {
+        "geometries": 127,
+        "materials": 162,
+        "textures": 23,
+        "gpuGeometries": 109,
+        "gpuTextures": 21,
+        "programs": 18
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 98,
+      "triangles": 2018,
+      "resources": {
+        "geometries": 134,
+        "materials": 165,
+        "textures": 26,
+        "gpuGeometries": 68,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 186,
+      "triangles": 5376,
+      "resources": {
+        "geometries": 134,
+        "materials": 165,
+        "textures": 26,
+        "gpuGeometries": 117,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 187,
+      "triangles": 5378,
+      "resources": {
+        "geometries": 134,
+        "materials": 165,
+        "textures": 26,
+        "gpuGeometries": 117,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 130,
+      "triangles": 8250,
+      "resources": {
+        "geometries": 184,
+        "materials": 172,
+        "textures": 26,
+        "gpuGeometries": 92,
+        "gpuTextures": 23,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 302,
+      "triangles": 13808,
+      "resources": {
+        "geometries": 184,
+        "materials": 172,
+        "textures": 26,
+        "gpuGeometries": 183,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 303,
+      "triangles": 13810,
+      "resources": {
+        "geometries": 184,
+        "materials": 172,
+        "textures": 26,
+        "gpuGeometries": 183,
+        "gpuTextures": 26,
+        "programs": 20
+      },
+      "actorTypes": [
+        "vehicle"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 63,
+      "triangles": 1574,
+      "resources": {
+        "geometries": 129,
+        "materials": 176,
+        "textures": 26,
+        "gpuGeometries": 57,
+        "gpuTextures": 24,
+        "programs": 18
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 118,
+      "triangles": 3824,
+      "resources": {
+        "geometries": 129,
+        "materials": 176,
+        "textures": 26,
+        "gpuGeometries": 109,
+        "gpuTextures": 24,
+        "programs": 18
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 119,
+      "triangles": 3826,
+      "resources": {
+        "geometries": 129,
+        "materials": 176,
+        "textures": 26,
+        "gpuGeometries": 109,
+        "gpuTextures": 25,
+        "programs": 18
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 85,
+      "triangles": 2426,
+      "resources": {
+        "geometries": 129,
+        "materials": 180,
+        "textures": 29,
+        "gpuGeometries": 61,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 173,
+      "triangles": 5784,
+      "resources": {
+        "geometries": 129,
+        "materials": 180,
+        "textures": 29,
+        "gpuGeometries": 110,
+        "gpuTextures": 30,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 174,
+      "triangles": 5786,
+      "resources": {
+        "geometries": 129,
+        "materials": 180,
+        "textures": 29,
+        "gpuGeometries": 110,
+        "gpuTextures": 30,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 101,
+      "triangles": 8306,
+      "resources": {
+        "geometries": 171,
+        "materials": 186,
+        "textures": 29,
+        "gpuGeometries": 77,
+        "gpuTextures": 27,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 273,
+      "triangles": 13864,
+      "resources": {
+        "geometries": 171,
+        "materials": 186,
+        "textures": 29,
+        "gpuGeometries": 168,
+        "gpuTextures": 30,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 274,
+      "triangles": 13866,
+      "resources": {
+        "geometries": 171,
+        "materials": 186,
+        "textures": 29,
+        "gpuGeometries": 168,
+        "gpuTextures": 30,
+        "programs": 20
+      },
+      "actorTypes": [
+        "hazard"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 122,
+      "triangles": 3830,
+      "resources": {
+        "geometries": 187,
+        "materials": 190,
+        "textures": 24,
+        "gpuGeometries": 118,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 177,
+      "triangles": 6080,
+      "resources": {
+        "geometries": 187,
+        "materials": 190,
+        "textures": 24,
+        "gpuGeometries": 170,
+        "gpuTextures": 22,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "quality": "low",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 178,
+      "triangles": 6082,
+      "resources": {
+        "geometries": 187,
+        "materials": 190,
+        "textures": 24,
+        "gpuGeometries": 170,
+        "gpuTextures": 23,
+        "programs": 18
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 210,
+      "triangles": 7366,
+      "resources": {
+        "geometries": 196,
+        "materials": 197,
+        "textures": 27,
+        "gpuGeometries": 131,
+        "gpuTextures": 25,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 298,
+      "triangles": 10724,
+      "resources": {
+        "geometries": 196,
+        "materials": 197,
+        "textures": 27,
+        "gpuGeometries": 180,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "quality": "balanced",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 299,
+      "triangles": 10726,
+      "resources": {
+        "geometries": 196,
+        "materials": 197,
+        "textures": 27,
+        "gpuGeometries": 180,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "fpv",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 252,
+      "triangles": 13966,
+      "resources": {
+        "geometries": 251,
+        "materials": 204,
+        "textures": 30,
+        "gpuGeometries": 160,
+        "gpuTextures": 28,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "chase",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 424,
+      "triangles": 19524,
+      "resources": {
+        "geometries": 251,
+        "materials": 204,
+        "textures": 30,
+        "gpuGeometries": 251,
+        "gpuTextures": 31,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    },
+    {
+      "course": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "quality": "high",
+      "view": "overview",
+      "tick": 120,
+      "importedBytes": 0,
+      "calls": 425,
+      "triangles": 19526,
+      "resources": {
+        "geometries": 251,
+        "materials": 204,
+        "textures": 30,
+        "gpuGeometries": 251,
+        "gpuTextures": 31,
+        "programs": 20
+      },
+      "actorTypes": [
+        "drone",
+        "vehicle",
+        "sentry"
+      ]
+    }
+  ],
+  "complete": true,
+  "resourceCycles": [
+    [
+      {
+        "course": "adventure-coast-03",
+        "geometries": 180,
+        "materials": 133,
+        "textures": 26,
+        "gpuGeometries": 179,
+        "gpuTextures": 26,
+        "programs": 11
+      },
+      {
+        "course": "adventure-quarry-03",
+        "geometries": 154,
+        "materials": 119,
+        "textures": 23,
+        "gpuGeometries": 153,
+        "gpuTextures": 23,
+        "programs": 11
+      },
+      {
+        "course": "adventure-rooftops-03",
+        "geometries": 184,
+        "materials": 143,
+        "textures": 23,
+        "gpuGeometries": 183,
+        "gpuTextures": 23,
+        "programs": 11
+      },
+      {
+        "course": "adventure-orchard-03",
+        "geometries": 207,
+        "materials": 204,
+        "textures": 31,
+        "gpuGeometries": 204,
+        "gpuTextures": 30,
+        "programs": 12
+      },
+      {
+        "course": "adventure-solar-farm-03",
+        "geometries": 205,
+        "materials": 198,
+        "textures": 28,
+        "gpuGeometries": 202,
+        "gpuTextures": 27,
+        "programs": 11
+      },
+      {
+        "course": "adventure-rail-depot-03",
+        "geometries": 184,
+        "materials": 172,
+        "textures": 26,
+        "gpuGeometries": 183,
+        "gpuTextures": 26,
+        "programs": 11
+      }
+    ],
+    [
+      {
+        "course": "adventure-coast-03",
+        "geometries": 180,
+        "materials": 133,
+        "textures": 26,
+        "gpuGeometries": 179,
+        "gpuTextures": 26,
+        "programs": 11
+      },
+      {
+        "course": "adventure-quarry-03",
+        "geometries": 154,
+        "materials": 119,
+        "textures": 23,
+        "gpuGeometries": 153,
+        "gpuTextures": 23,
+        "programs": 11
+      },
+      {
+        "course": "adventure-rooftops-03",
+        "geometries": 184,
+        "materials": 143,
+        "textures": 23,
+        "gpuGeometries": 183,
+        "gpuTextures": 23,
+        "programs": 11
+      },
+      {
+        "course": "adventure-orchard-03",
+        "geometries": 207,
+        "materials": 204,
+        "textures": 31,
+        "gpuGeometries": 204,
+        "gpuTextures": 30,
+        "programs": 12
+      },
+      {
+        "course": "adventure-solar-farm-03",
+        "geometries": 205,
+        "materials": 198,
+        "textures": 28,
+        "gpuGeometries": 202,
+        "gpuTextures": 27,
+        "programs": 11
+      },
+      {
+        "course": "adventure-rail-depot-03",
+        "geometries": 184,
+        "materials": 172,
+        "textures": 26,
+        "gpuGeometries": 183,
+        "gpuTextures": 26,
+        "programs": 11
+      }
+    ],
+    [
+      {
+        "course": "adventure-coast-03",
+        "geometries": 180,
+        "materials": 133,
+        "textures": 26,
+        "gpuGeometries": 179,
+        "gpuTextures": 26,
+        "programs": 11
+      },
+      {
+        "course": "adventure-quarry-03",
+        "geometries": 154,
+        "materials": 119,
+        "textures": 23,
+        "gpuGeometries": 153,
+        "gpuTextures": 23,
+        "programs": 11
+      },
+      {
+        "course": "adventure-rooftops-03",
+        "geometries": 184,
+        "materials": 143,
+        "textures": 23,
+        "gpuGeometries": 183,
+        "gpuTextures": 23,
+        "programs": 11
+      },
+      {
+        "course": "adventure-orchard-03",
+        "geometries": 207,
+        "materials": 204,
+        "textures": 31,
+        "gpuGeometries": 204,
+        "gpuTextures": 30,
+        "programs": 12
+      },
+      {
+        "course": "adventure-solar-farm-03",
+        "geometries": 205,
+        "materials": 198,
+        "textures": 28,
+        "gpuGeometries": 202,
+        "gpuTextures": 27,
+        "programs": 11
+      },
+      {
+        "course": "adventure-rail-depot-03",
+        "geometries": 184,
+        "materials": 172,
+        "textures": 26,
+        "gpuGeometries": 183,
+        "gpuTextures": 26,
+        "programs": 11
+      }
+    ]
+  ],
+  "disposal": {
+    "available": true,
+    "disposed": true,
+    "quality": "high",
+    "drone": "racer",
+    "presentation": {
+      "actors": [],
+      "actorGoals": [],
+      "projectileBatches": 0,
+      "activeProjectiles": 0,
+      "surfaceDetailGroups": 0
+    },
+    "registered": {
+      "geometries": 0,
+      "materials": 0,
+      "textures": 0
+    },
+    "renderer": {
+      "geometries": 0,
+      "textures": 1,
+      "programs": 0,
+      "contextLost": true,
+      "calls": 303,
+      "triangles": 13810
+    }
+  },
+  "reducedMotionDisposal": {
+    "available": true,
+    "disposed": true,
+    "quality": "balanced",
+    "drone": "racer",
+    "presentation": {
+      "actors": [],
+      "actorGoals": [],
+      "projectileBatches": 0,
+      "activeProjectiles": 0,
+      "surfaceDetailGroups": 0
+    },
+    "registered": {
+      "geometries": 0,
+      "materials": 0,
+      "textures": 0
+    },
+    "renderer": {
+      "geometries": 0,
+      "textures": 1,
+      "programs": 0,
+      "contextLost": true,
+      "calls": 216,
+      "triangles": 6330
+    }
+  },
+  "completedAt": "2026-10-02T07:16:39.186Z",
+  "passed": 13,
+  "total": 13
+}

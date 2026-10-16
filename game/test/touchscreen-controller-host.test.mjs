@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -75,7 +76,10 @@ async function setup(t) {
   async function start() {
     release();
     press(0);
+    release();
     await settle(() => page.doc.body.dataset.flightState === 'running', 'Flight starts');
+    await new Promise((resolve) => setImmediate(resolve));
+    page.frame(0);
     release();
   }
   return { page, pad, press, release, start };
@@ -99,7 +103,7 @@ test('actual host: either stick moves, face pause/resume preserves the run and r
   page.frame();
   assert.deepEqual([page.rendered.run.player.x, page.rendered.run.player.y], paused);
   const saved = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
-  assert.equal(verifyReplay(saved.replay).match, true);
+  assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
   press(9);
   await settle(() => page.doc.body.dataset.flightState === 'running', 'Menu resumes');
   release();
@@ -194,6 +198,9 @@ test('cold Steam Deck-style discovery: fresh A starts the selected flight after 
     pad.buttons[index].pressed = true;
     pad.buttons[index].value = 1;
     page.frame();
+    pad.buttons[index].pressed = false;
+    pad.buttons[index].value = 0;
+    page.frame();
   };
   assert.equal(page.$('shell-home').open, true);
   connected = true;
@@ -273,6 +280,9 @@ test('modeled controller: Missions selection, Deploy, Pause and explicit Resume 
     pad.buttons[index].pressed = true;
     pad.buttons[index].value = 1;
     page.frame();
+    pad.buttons[index].pressed = false;
+    pad.buttons[index].value = 0;
+    page.frame();
   };
   const navigate = (id) => {
     const visited = [];
@@ -326,7 +336,36 @@ test('modeled controller: Missions selection, Deploy, Pause and explicit Resume 
     clearTimeout(timer);
   }
   page.frame(0);
+  assert.equal(page.doc.body.dataset.flightState, 'briefing');
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.$('journey-chooser').open, false);
+  const accepted = page.rendered.run,
+    prepared = authoritativeCheckpoint(accepted),
+    start = page.$('start-button'),
+    startHandler = start.onclick;
+  navigate('start-button');
+  release();
+  assert.deepEqual(
+    authoritativeCheckpoint(accepted),
+    prepared,
+    'Briefing navigation cannot move the drone.',
+  );
+  let starting,
+    invoked = false;
+  start.onclick = (...args) => {
+    invoked = true;
+    return (starting = startHandler.apply(start, args));
+  };
+  try {
+    press(0);
+    assert.equal(invoked, true, 'Controller Confirm activates the actual Start handler.');
+    await starting;
+  } finally {
+    start.onclick = startHandler;
+  }
+  page.frame(0);
   assert.equal(page.doc.body.dataset.flightState, 'running');
+  assert.equal(page.rendered.run, accepted, 'Start keeps the exact selected mission.');
   release();
   assert.equal(page.$('journey-chooser').open, false);
   assert.equal(page.rendered.run.player.speed, 0);
@@ -350,6 +389,7 @@ for (const mode of ['stick', 'swipe', 'dpad'])
     page.change('touch-mode', mode);
     page.change('screen-controls', 'always');
     await start();
+    await new Promise((resolve) => setTimeout(resolve, 1300));
     const surface =
       mode === 'dpad' ? page.doc.querySelector('.direction-controls') : page.$('touch-surface');
     surface._rect = { x: 0, y: 0, width: 156, height: 156 };
@@ -399,6 +439,7 @@ for (const mode of ['stick', 'swipe', 'dpad'])
       'Interrupted finger and held stick cannot resume',
     );
     press(0);
+    release();
     await settle(() => {
       page.frame(0);
       return page.doc.body.dataset.flightState === 'running';
@@ -406,7 +447,7 @@ for (const mode of ['stick', 'swipe', 'dpad'])
     release();
     press(9);
     const saved = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
-    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
     assert.deepEqual(page.errors, []);
   });
 
@@ -431,7 +472,7 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     assert.equal(page.doc.body.dataset.flightState, 'paused');
     const checkpoint = authoritativeCheckpoint(page.rendered.run);
     const suspended = page.storage.getItem('revealline.suspended.dev.v1');
-    assert.equal(verifyReplay(JSON.parse(suspended).replay).match, true);
+    assert.equal(verifyReplay(nativeSession(JSON.parse(suspended)).replay).match, true);
     pad.buttons[0].pressed = true;
     pad.buttons[0].value = 1;
     pad.connected = true;
@@ -445,6 +486,9 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     pad.buttons[0].pressed = true;
     pad.buttons[0].value = 1;
     page.frame(0);
+    pad.buttons[0].pressed = false;
+    pad.buttons[0].value = 0;
+    page.frame(0);
     await settle(() => {
       page.frame(0);
       return page.doc.body.dataset.flightState === 'running';
@@ -454,7 +498,9 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     press(9);
     assert.equal(page.doc.body.dataset.flightState, 'paused');
     assert.equal(
-      verifyReplay(JSON.parse(page.storage.getItem('revealline.suspended.dev.v1')).replay).match,
+      verifyReplay(
+        nativeSession(JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'))).replay,
+      ).match,
       true,
     );
     assert.deepEqual(page.errors, []);

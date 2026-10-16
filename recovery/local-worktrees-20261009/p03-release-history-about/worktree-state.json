@@ -1,0 +1,34 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03-release-history-about",
+  "branch": "codex/p03-release-history-about",
+  "head": "628e95daf403082768cdcf900a8ea1d1ef4629a2",
+  "status": [
+    " M authoring/skills/xonix-runtime-maintainer/SKILL.md",
+    " M docs/field-kit-surfaces.md",
+    " M game/app.mjs",
+    " M game/index.html",
+    " M game/test/field-kit-flow.test.mjs",
+    " M game/test/site-release-links.test.mjs",
+    " M scripts/test-pages-current-entry.mjs",
+    " M site/about.html",
+    " M site/landing.css",
+    " M site/landing.mjs",
+    " M site/release-links.mjs",
+    "?? game/test/landing-release-history-host.test.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 0,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "70227afcc28b00d891417176a2c4818c1b56cac59fc80bb1abad559b1d61329e",
+      "bytes": 26628
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "02f351414496f355ff2cb654677a797a0d2a1364a8a246220b0c3196b6a32b0d",
+      "bytes": 2905
+    },
+    "localCommitPatch": null,
+    "conflictStages": 0
+  }
+}

@@ -208,6 +208,39 @@ test('failure feedback stays at the failed tick, never later respawn; reduced ef
   drawRecoveryCue(ctx, { status: 'respawning', respawnAt: 3, time: 2.6 }, themes[0].palette);
   assert.ok(calls.some((c) => c.op === 'fillText' && c.args[0] === 'RECOVERY 0.4s'));
 });
+test('FPV-family editions keep FPV loss feedback without borrowing the default theme id', () => {
+  const run = createRun(
+      createEnemyCatalogScenario('bouncer', emptyEnemyCatalogDraft(), themes).level,
+    ),
+    feedback = presentationEvent({ type: 'player.failed', tick: run.tick }, run),
+    fpv = canvas(),
+    community = canvas();
+  drawEventFeedback(fpv.ctx, feedback, themes[0].palette, {
+    themeId: 'fpv',
+    reduced: true,
+  });
+  drawEventFeedback(community.ctx, feedback, themes[0].palette, {
+    themeId: 'droneaid-de',
+    themeFamily: 'fpv',
+    reduced: true,
+  });
+  const visible = (calls) =>
+    calls
+      .filter((call) => ['fillRect', 'strokeRect', 'fillText'].includes(call.op))
+      .map((call) => [call.op, call.args]);
+  assert.deepEqual(visible(community.calls), visible(fpv.calls));
+  const painter = new BoardPainter(presets),
+    board = canvas();
+  painter.theme = { ...themes[0], id: 'droneaid-de', family: 'fpv' };
+  painter.body = presets.characters['neutral-marker'];
+  painter.recipe = presets.animationRecipes[painter.body.animationRecipe];
+  painter.background = { width: 384, height: 288 };
+  painter.effectsFor([{ type: 'player.failed', tick: run.tick }], run);
+  painter.draw(board.ctx, run, 0, { paused: true, reduced: true });
+  assert.ok(
+    board.calls.some((call) => call.op === 'fillText' && call.args[0] === 'CRAFT LOST · -1 LIFE'),
+  );
+});
 test('real line strike projects authoritative front positions unchanged under repeated pause/reduced painting', () => {
   const level = createEnemyCatalogScenario('bouncer', emptyEnemyCatalogDraft(), themes).level;
   level.spawn = { x: 36.5, y: 0.5 };

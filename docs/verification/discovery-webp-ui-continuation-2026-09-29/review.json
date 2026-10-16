@@ -1,0 +1,179 @@
+{
+  "format": "revealline-discovery-webp-ui-continuation.v1",
+  "status": "Scoped functional software continuation for24 existing UI recipe identities. No human artwork, device or publication approval.",
+  "reviewedAt": "2026-09-29T02:21:46.935282+00:00",
+  "source": {
+    "candidateCommit": "d541946f4e9d49e97cfcb2b0ce4054f3dac7d2cf",
+    "candidateTree": "04034155a858fd6ecf786163fc1413b10c013576",
+    "baselineCommit": "6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8"
+  },
+  "fingerprints": {
+    "ui": {
+      "group": "ui",
+      "orderedInputs": 7,
+      "bytes": 76444,
+      "priorSHA256": "2530c099cf3b9fc0d5d3dbd865a083b76368f51b95b357ece7209111434a3360",
+      "currentSHA256": "96761947c99f18dda6af25b3eb109e9cee1460991420776822903daa9e465b9a",
+      "algorithm": "SHA256 concatenation of ordered raw source bytes declared by scripts/produce-field-kit-theme.mjs",
+      "paths": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs",
+      "inputs": [
+        {
+          "path": "game/ui/field-kit-components.css",
+          "bytes": 11424,
+          "sha256": "cc6f763eb64ae5f78125febe539ce8dd0858f442b52c366ed5ae7d6fbf9f6757",
+          "gitBlob": "00f48afb3fd0ff022490f40f923ea7007fdaec08",
+          "changedFromPreviousReview": false
+        },
+        {
+          "path": "game/ui/field-kit-compiled.css",
+          "bytes": 23542,
+          "sha256": "9a9c6e0ab846b623c73fa811f43df1d39a0ba43bbdc567e93f3d5d30d70cc731",
+          "gitBlob": "eaf445aae144cfa56ea8b313f4896ea42988ebda",
+          "changedFromPreviousReview": false
+        },
+        {
+          "path": "game/presentation/host.mjs",
+          "bytes": 29899,
+          "sha256": "5d8421a36d43c348a999be81c61d16d86935995a387cf0f79ce7c517dfa3cbbf",
+          "gitBlob": "4518c81f1cf6cddba873d4aa45b916c5ae0ccbc7",
+          "changedFromPreviousReview": true
+        },
+        {
+          "path": "game/presentation/team-runtime-slots.mjs",
+          "bytes": 1669,
+          "sha256": "4d078cf93726755540e83d1f84143808f385c0b56ea6212a502ab4a438418738",
+          "gitBlob": "29fc93d2fb6baa432f494bbcbd9452831d0f4b78",
+          "changedFromPreviousReview": false
+        },
+        {
+          "path": "game/ui/operation-status.css",
+          "bytes": 1889,
+          "sha256": "7e9131637045630f440ed82782bf73c8077397b35fd12c23c64665894ad59f5e",
+          "gitBlob": "0fb541e1e5e2211fde429784eeffa1c91df57d1b",
+          "changedFromPreviousReview": false
+        },
+        {
+          "path": "game/ui/operation-status.mjs",
+          "bytes": 4738,
+          "sha256": "7d4f624d8911afd9670664ceca3dc09fb865315a286c834d560056b3d23c3d98",
+          "gitBlob": "f8f1deb870b39aa238548c5ead96d86b3d114974",
+          "changedFromPreviousReview": false
+        },
+        {
+          "path": "game/presentation/dom-ownership.mjs",
+          "bytes": 3283,
+          "sha256": "d558d33a28023e98489c0ae2ccb402e4deffeea0be5a0f54ed3040c0e4f5df7e",
+          "gitBlob": "e2167c4ca23151d806ef743036c146cfde42633c",
+          "changedFromPreviousReview": false
+        }
+      ],
+      "changedInputs": ["game/presentation/host.mjs"]
+    }
+  },
+  "priorReviews": {
+    "steamDeckPresentation": {
+      "path": "docs/verification/v0.141.8-steamdeck-confirm-presentation-continuation/review.json",
+      "bytes": 14096,
+      "sha256": "15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867"
+    }
+  },
+  "predecessorOracle": {
+    "path": "game/test/fixtures/production-discovery-source-ui-fpv101.json",
+    "bytes": 1728,
+    "sha256": "bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c"
+  },
+  "checkpointEvidence": {
+    "path": "docs/verification/evidence/discovery-production101-checkpoint-2026-09-29.json",
+    "bytes": 5165,
+    "sha256": "a33fd8010a8d36cc23ab71b0a826b22e17b1b6305ebad9678f4dbdaa470f0c61"
+  },
+  "assessment": {
+    "methods": [
+      "Root source inspection and independent software review of the two-line complete-frame WebP allowlist/message change.",
+      "Three new real-host regressions plus existing manifest-pinning, still-media, release-picture and raster-asset tests.",
+      "Independent extraction of committed production101 from Git, with exact archive reconstruction before computing the historical oracle."
+    ],
+    "finding": "Only the complete-original PNG/JPEG MIME allowlist and its error message add WebP. No runtime imports or other source inputs change. Existing4 MiB asset limits, same-origin hash paths, bounded reads, SHA verification, immutable current snapshots, static-header dimensions and abort/stale ownership remain. Downstream complete image decoding remains required before durable adoption. No SVG, animation, geometry or source-eligibility expansion.",
+    "testInputs": [
+      {
+        "path": "game/test/presentation-host.test.mjs",
+        "bytes": 29496,
+        "sha256": "fd291e29d202ff88446e4992eb06c79a849958c574cdd0ad1a5e7d9d07b57046"
+      },
+      {
+        "path": "game/test/presentation-host-manifest-pin.test.mjs",
+        "bytes": 8172,
+        "sha256": "af5e4e4f74d607a29490559ffb81cbc91576d67b696806873816c18a02b85b92"
+      },
+      {
+        "path": "game/test/media-still.test.mjs",
+        "bytes": 10303,
+        "sha256": "9e73ac6a5c03b25c9bf75b4cdff5734efeae659973ecefe00f2888b68aad72f3"
+      },
+      {
+        "path": "game/test/release-pictures.test.mjs",
+        "bytes": 31911,
+        "sha256": "513b165601410f71597a0459bdd8b9ebb4e3af7c1257b0f51cc680a9ace2eb01"
+      },
+      {
+        "path": "game/test/edition-raster-assets.test.mjs",
+        "bytes": 7275,
+        "sha256": "8f74da14e8bbe691ca83514bfad7edb51a89e423f6059eb022cdb0b225802278"
+      },
+      {
+        "path": "game/test/helpers/raster-fixtures.mjs",
+        "bytes": 600,
+        "sha256": "10af8d805084718fd8d1fa826d8aaab1ab83d831483edb5676a62a868fd0ea45"
+      }
+    ],
+    "testRuns": [
+      {
+        "tests": 60,
+        "passed": 59,
+        "failed": 1,
+        "skipped": 0,
+        "log": {
+          "bytes": 15164,
+          "sha256": "acc2043985c31b3ce9742bc2bbb367570160667321604d7aeea9bbcb6e41ee1d",
+          "name": "discovery-ui-webp-cohort.log",
+          "rawKeptLocal": true
+        },
+        "scope": "Initial ENOENT for sparse-missing tracked orchard fixture, retained."
+      },
+      {
+        "tests": 60,
+        "passed": 60,
+        "failed": 0,
+        "skipped": 0,
+        "log": {
+          "bytes": 14394,
+          "sha256": "c826e24125dfb522776d76368b4bdfba41a1e4e67b971998ac329e4329967b93",
+          "name": "discovery-ui-webp-cohort-restored.log",
+          "rawKeptLocal": true
+        },
+        "scope": "Full five-file cohort after restoring only exact committed missing fixture; no runtime change."
+      }
+    ]
+  },
+  "expectedProducerSemantics": {
+    "previousThemeRevision": 101,
+    "nextThemeRevision": 102,
+    "previousUIRevision": 23,
+    "nextUIRevision": 24,
+    "addedAssets": 24,
+    "assetFileBytesChange": false,
+    "recipeIdsChange": false,
+    "otherSelectedBindingsChange": false,
+    "retainEveryHistoricalRecordAndPayload": true
+  },
+  "decision": {
+    "functionalContinuationApproved": true,
+    "scope": "24existing UI recipes at the exact seven-input fingerprint. Preserve source-stage production101 and append reviewed UI24 successors in production102 only.",
+    "finalIntegratedSourceMustReopenIfChanged": true
+  },
+  "limitations": [
+    "This software review does not establish human artwork, screen-reader, physical touch/controller/radio or cross-device acceptance.",
+    "No frozen/public byte, installed-app, complete navigation, performance or release-promotion qualification from these automated checks.",
+    "The earlier audio-only production expectation was not met: production101 also correctly demoted the changed UI to source stage. That checkpoint and its failure evidence remain immutable."
+  ]
+}

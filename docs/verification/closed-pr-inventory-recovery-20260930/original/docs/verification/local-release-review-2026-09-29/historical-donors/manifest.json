@@ -1,0 +1,38 @@
+{
+  "time_utc": "2026-09-29T01:21:43.187521+00:00",
+  "main": "b5ab06e12542f72e33c45b973ba693a5e1509c1c",
+  "scoped_pr782": "b4e91d856157eab0cc60eb3dcc77cc1f45c78c46",
+  "target": "future selective port after PR782 / v0.150 intake; not current v0.142.3",
+  "warning": "Archival donor patches, not ready-to-apply latest-main patches. No worktree mutation or patch application.",
+  "donors": {
+    "p03-enemy-workshop-reading": {
+      "head": "2f1074a37ade9c731ea7be37a6e56e533b51d1ac",
+      "branch": "codex/p03-enemy-reading-next",
+      "files": {
+        "authoring/enemy-catalog/index.html": "8d6ae8d12da8ed6550b7c765996f89f742a07a9133abec252846f28fed0fa0dc",
+        "authoring/enemy-catalog/workshop.mjs": "169bc8e86a7c2d1889b1f4d2ac57b1e73993919f9465357aab1a0cded794483f",
+        "game/ui/enemy-catalog-panel.css": "0b82f10d58810b9e498446fcf23d77f9e06b5b5a065019b52a7aad6a69608181",
+        "game/test/enemy-workshop-host.test.mjs": "bda421f2515b11e695815c008bf327363d04b1bb589ab754aa8141fb3920004c"
+      },
+      "patch": "p03-enemy-workshop-reading-source-only.patch",
+      "patch_sha256": "78e848c20e1e72f69ad9aa5a7679e80194f2aeac474a50c4323dfb59f01c02e8",
+      "patch_bytes": 13506,
+      "patch_lines": 339
+    },
+    "p05-narrow-hud": {
+      "head": "17e0a455f76c3f4a72f2e596397a0e73463335a5",
+      "branch": "codex/p05-narrow-hud-actor622-r5",
+      "files": {
+        "game/app.mjs": "fc5cdd5c04bdb3662c7f6bdd0343bda5aa24053a479adeb8d168dd75031d646a",
+        "game/couch/couch.css": "1bbefcaa095d440065126c8a9dda42b54a9c90863302796cf25143817a5ec7e7",
+        "game/ui/field-kit-compiled.css": "a3446bef6874a130b9cae2838124014e7c053bd4e5fee4e59ba4cda30cc8c595",
+        "game/ui/hud-values.mjs": "df37feee2506ab546bd991ef193cddd20c2a0540e99e2ac991a710fd76e2b16d",
+        "game/test/hud-numeric-values.test.mjs": "358705647ff471585e2f9bf8b580175c42e55c44b105e58370d57337ae8f47d7"
+      },
+      "patch": "p05-narrow-hud-source-only.patch",
+      "patch_sha256": "51fb6827de1083d2ad5fd40f5795df914434feb4a52e694a39cb70f22e92efd4",
+      "patch_bytes": 7297,
+      "patch_lines": 193
+    }
+  }
+}

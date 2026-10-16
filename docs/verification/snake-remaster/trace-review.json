@@ -1,0 +1,2633 @@
+{
+  "format": "classic-snake-trace-review.v1",
+  "scope": "66 verified winning remaster journals; retained evidence must match the current recipe exactly. One route per setup, not all player strategies.",
+  "definitions": {
+    "captureConcentration": "Largest capture count at one cell divided by all accepted captures, including bonuses.",
+    "maxRepeatedSpot": "Largest total number of captures at one cell; longestSameSpotStreak separately counts consecutive captures.",
+    "noChange": "Moves without accepted encounter/objective/supply events or actor phase/intention/interference changes. Ordinary target movement alone does not reset the interval.",
+    "signals": "Review concentrated captures at >=3 catches and >=50% concentration; review no-change intervals at >=24 moves or >=6000ms. Heuristics only, not difficulty or enjoyment scores."
+  },
+  "summary": {
+    "runs": 66,
+    "missions": 9,
+    "setups": 54,
+    "missingSetups": [],
+    "missingMissions": [],
+    "flaggedRuns": 0,
+    "flaggedMissions": []
+  },
+  "runs": [
+    {
+      "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 42,
+      "elapsedMs": 8400,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "14,11",
+          "count": 1
+        },
+        {
+          "cell": "14,12",
+          "count": 1
+        },
+        {
+          "cell": "14,5",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 6,
+      "maxNoChangeMs": 1200,
+      "meaningfulSteps": 16,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 3,
+        "target.warning": 2,
+        "plate.activated": 2,
+        "plate.released": 2,
+        "plate.gate-closed": 2,
+        "operation.stage-completed": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 42,
+      "elapsedMs": 11760,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "14,11",
+          "count": 1
+        },
+        {
+          "cell": "14,12",
+          "count": 1
+        },
+        {
+          "cell": "14,5",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 7,
+      "maxNoChangeMs": 1960,
+      "meaningfulSteps": 16,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 3,
+        "target.warning": 2,
+        "plate.activated": 2,
+        "plate.released": 2,
+        "plate.gate-closed": 2,
+        "operation.stage-completed": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 42,
+      "elapsedMs": 6300,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "14,11",
+          "count": 1
+        },
+        {
+          "cell": "14,12",
+          "count": 1
+        },
+        {
+          "cell": "14,5",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 5,
+      "maxNoChangeMs": 750,
+      "meaningfulSteps": 14,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 3,
+        "target.warning": 2,
+        "plate.activated": 2,
+        "plate.released": 2,
+        "plate.gate-closed": 2,
+        "operation.stage-completed": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 26,
+      "elapsedMs": 5200,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "14,10",
+          "count": 1
+        },
+        {
+          "cell": "14,12",
+          "count": 1
+        },
+        {
+          "cell": "14,5",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 7,
+      "maxNoChangeMs": 1400,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 3,
+        "plate.activated": 1,
+        "target.warning": 1,
+        "plate.released": 1,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 26,
+      "elapsedMs": 7280,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "14,10",
+          "count": 1
+        },
+        {
+          "cell": "14,12",
+          "count": 1
+        },
+        {
+          "cell": "14,5",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 7,
+      "maxNoChangeMs": 1960,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 3,
+        "plate.activated": 1,
+        "target.warning": 1,
+        "plate.released": 1,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-runner-valve",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 26,
+      "elapsedMs": 3900,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "14,10",
+          "count": 1
+        },
+        {
+          "cell": "14,12",
+          "count": 1
+        },
+        {
+          "cell": "14,5",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 5,
+      "maxNoChangeMs": 750,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 3,
+        "plate.activated": 1,
+        "target.warning": 1,
+        "plate.released": 1,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 52,
+      "elapsedMs": 10400,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "12,5",
+          "count": 1
+        },
+        {
+          "cell": "17,10",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 13,
+      "maxNoChangeMs": 2600,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "target.spawned": 1,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 52,
+      "elapsedMs": 14560,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "12,5",
+          "count": 1
+        },
+        {
+          "cell": "17,10",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 13,
+      "maxNoChangeMs": 3640,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "target.spawned": 1,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 52,
+      "elapsedMs": 7800,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "12,5",
+          "count": 1
+        },
+        {
+          "cell": "17,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 13,
+      "maxNoChangeMs": 1950,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "target.spawned": 1,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 56,
+      "elapsedMs": 11200,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "17,6",
+          "count": 1
+        },
+        {
+          "cell": "17,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 15,
+      "maxNoChangeMs": 3000,
+      "meaningfulSteps": 13,
+      "eventCounts": {
+        "target.warning": 2,
+        "cargo.collected": 2,
+        "target.caught": 2,
+        "target.spawned": 1,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 56,
+      "elapsedMs": 15680,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "17,6",
+          "count": 1
+        },
+        {
+          "cell": "17,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 15,
+      "maxNoChangeMs": 4200,
+      "meaningfulSteps": 13,
+      "eventCounts": {
+        "target.warning": 2,
+        "cargo.collected": 2,
+        "target.caught": 2,
+        "target.spawned": 1,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-orchard-post",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 56,
+      "elapsedMs": 8400,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "17,6",
+          "count": 1
+        },
+        {
+          "cell": "17,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 15,
+      "maxNoChangeMs": 2250,
+      "meaningfulSteps": 12,
+      "eventCounts": {
+        "target.warning": 2,
+        "cargo.collected": 2,
+        "target.caught": 2,
+        "target.spawned": 1,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 83,
+      "elapsedMs": 16600,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "10,11",
+          "count": 1
+        },
+        {
+          "cell": "10,5",
+          "count": 1
+        },
+        {
+          "cell": "10,6",
+          "count": 1
+        },
+        {
+          "cell": "11,11",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 11,
+      "maxNoChangeMs": 2200,
+      "meaningfulSteps": 19,
+      "eventCounts": {
+        "target.warning": 4,
+        "cargo.collected": 2,
+        "target.caught": 4,
+        "target.spawned": 3,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 83,
+      "elapsedMs": 23240,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "10,11",
+          "count": 1
+        },
+        {
+          "cell": "10,5",
+          "count": 1
+        },
+        {
+          "cell": "10,6",
+          "count": 1
+        },
+        {
+          "cell": "11,11",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 11,
+      "maxNoChangeMs": 3080,
+      "meaningfulSteps": 19,
+      "eventCounts": {
+        "target.warning": 4,
+        "cargo.collected": 2,
+        "target.caught": 4,
+        "target.spawned": 3,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 83,
+      "elapsedMs": 12450,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "10,5",
+          "count": 2
+        },
+        {
+          "cell": "10,11",
+          "count": 1
+        },
+        {
+          "cell": "11,11",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 2,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 2,
+      "maxNoChangeMoves": 11,
+      "maxNoChangeMs": 1650,
+      "meaningfulSteps": 17,
+      "eventCounts": {
+        "target.warning": 4,
+        "cargo.collected": 2,
+        "target.caught": 4,
+        "target.spawned": 3,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 53,
+      "elapsedMs": 10600,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "10,5",
+          "count": 1
+        },
+        {
+          "cell": "10,6",
+          "count": 1
+        },
+        {
+          "cell": "11,11",
+          "count": 1
+        },
+        {
+          "cell": "14,11",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 9,
+      "maxNoChangeMs": 1800,
+      "meaningfulSteps": 15,
+      "eventCounts": {
+        "target.warning": 3,
+        "cargo.collected": 2,
+        "target.caught": 4,
+        "target.spawned": 3,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 53,
+      "elapsedMs": 14840,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "10,5",
+          "count": 1
+        },
+        {
+          "cell": "10,6",
+          "count": 1
+        },
+        {
+          "cell": "11,11",
+          "count": 1
+        },
+        {
+          "cell": "14,11",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 9,
+      "maxNoChangeMs": 2520,
+      "meaningfulSteps": 15,
+      "eventCounts": {
+        "target.warning": 3,
+        "cargo.collected": 2,
+        "target.caught": 4,
+        "target.spawned": 3,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-refuge-cargo",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 49,
+      "elapsedMs": 7350,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "10,5",
+          "count": 1
+        },
+        {
+          "cell": "10,7",
+          "count": 1
+        },
+        {
+          "cell": "12,11",
+          "count": 1
+        },
+        {
+          "cell": "14,11",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 1500,
+      "meaningfulSteps": 15,
+      "eventCounts": {
+        "target.warning": 2,
+        "cargo.collected": 2,
+        "target.caught": 4,
+        "target.spawned": 3,
+        "cargo.delivered": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 127,
+      "elapsedMs": 25400,
+      "captures": 5,
+      "captureLocations": [
+        {
+          "cell": "12,13",
+          "count": 1
+        },
+        {
+          "cell": "15,15",
+          "count": 1
+        },
+        {
+          "cell": "18,5",
+          "count": 1
+        },
+        {
+          "cell": "18,6",
+          "count": 1
+        },
+        {
+          "cell": "3,8",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.2,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 3200,
+      "meaningfulSteps": 31,
+      "eventCounts": {
+        "cargo.collected": 4,
+        "target.warning": 5,
+        "cargo.delivered": 4,
+        "target.caught": 5,
+        "operation.stage-completed": 3,
+        "target.spawned": 3
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 127,
+      "elapsedMs": 35560,
+      "captures": 5,
+      "captureLocations": [
+        {
+          "cell": "12,13",
+          "count": 1
+        },
+        {
+          "cell": "15,15",
+          "count": 1
+        },
+        {
+          "cell": "18,5",
+          "count": 1
+        },
+        {
+          "cell": "18,6",
+          "count": 1
+        },
+        {
+          "cell": "3,8",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.2,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 4480,
+      "meaningfulSteps": 31,
+      "eventCounts": {
+        "cargo.collected": 4,
+        "target.warning": 5,
+        "cargo.delivered": 4,
+        "target.caught": 5,
+        "operation.stage-completed": 3,
+        "target.spawned": 3
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 127,
+      "elapsedMs": 19050,
+      "captures": 5,
+      "captureLocations": [
+        {
+          "cell": "12,13",
+          "count": 1
+        },
+        {
+          "cell": "15,15",
+          "count": 1
+        },
+        {
+          "cell": "18,5",
+          "count": 1
+        },
+        {
+          "cell": "18,6",
+          "count": 1
+        },
+        {
+          "cell": "3,8",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.2,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 2400,
+      "meaningfulSteps": 29,
+      "eventCounts": {
+        "cargo.collected": 4,
+        "target.warning": 4,
+        "cargo.delivered": 4,
+        "target.caught": 5,
+        "operation.stage-completed": 3,
+        "target.spawned": 3
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 95,
+      "elapsedMs": 19000,
+      "captures": 5,
+      "captureLocations": [
+        {
+          "cell": "13,10",
+          "count": 1
+        },
+        {
+          "cell": "16,16",
+          "count": 1
+        },
+        {
+          "cell": "18,5",
+          "count": 1
+        },
+        {
+          "cell": "18,6",
+          "count": 1
+        },
+        {
+          "cell": "2,6",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.2,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 18,
+      "maxNoChangeMs": 3600,
+      "meaningfulSteps": 31,
+      "eventCounts": {
+        "cargo.collected": 4,
+        "target.warning": 6,
+        "cargo.delivered": 4,
+        "target.caught": 5,
+        "target.spawned": 3,
+        "operation.stage-completed": 3
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 95,
+      "elapsedMs": 26600,
+      "captures": 5,
+      "captureLocations": [
+        {
+          "cell": "13,10",
+          "count": 1
+        },
+        {
+          "cell": "16,16",
+          "count": 1
+        },
+        {
+          "cell": "18,5",
+          "count": 1
+        },
+        {
+          "cell": "18,6",
+          "count": 1
+        },
+        {
+          "cell": "2,6",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.2,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 18,
+      "maxNoChangeMs": 5040,
+      "meaningfulSteps": 31,
+      "eventCounts": {
+        "cargo.collected": 4,
+        "target.warning": 6,
+        "cargo.delivered": 4,
+        "target.caught": 5,
+        "target.spawned": 3,
+        "operation.stage-completed": 3
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-harvest-rendezvous",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 95,
+      "elapsedMs": 14250,
+      "captures": 5,
+      "captureLocations": [
+        {
+          "cell": "13,10",
+          "count": 1
+        },
+        {
+          "cell": "16,16",
+          "count": 1
+        },
+        {
+          "cell": "18,5",
+          "count": 1
+        },
+        {
+          "cell": "18,6",
+          "count": 1
+        },
+        {
+          "cell": "2,6",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.2,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 18,
+      "maxNoChangeMs": 2700,
+      "meaningfulSteps": 25,
+      "eventCounts": {
+        "cargo.collected": 4,
+        "target.warning": 5,
+        "cargo.delivered": 4,
+        "target.caught": 5,
+        "target.spawned": 3,
+        "operation.stage-completed": 3
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 39,
+      "elapsedMs": 7800,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "17,4",
+          "count": 1
+        },
+        {
+          "cell": "5,4",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        },
+        {
+          "cell": "8,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 18,
+      "maxNoChangeMs": 3600,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "target.warning": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 39,
+      "elapsedMs": 10920,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "17,4",
+          "count": 1
+        },
+        {
+          "cell": "5,4",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        },
+        {
+          "cell": "8,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 18,
+      "maxNoChangeMs": 5040,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "target.warning": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 39,
+      "elapsedMs": 5850,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "16,4",
+          "count": 1
+        },
+        {
+          "cell": "5,4",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        },
+        {
+          "cell": "8,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 17,
+      "maxNoChangeMs": 2550,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "target.warning": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 37,
+      "elapsedMs": 7400,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "16,4",
+          "count": 1
+        },
+        {
+          "cell": "5,4",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        },
+        {
+          "cell": "8,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 15,
+      "maxNoChangeMs": 3000,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "target.warning": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 37,
+      "elapsedMs": 10360,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "16,4",
+          "count": 1
+        },
+        {
+          "cell": "5,4",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        },
+        {
+          "cell": "8,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 15,
+      "maxNoChangeMs": 4200,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "target.warning": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-north-south",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 37,
+      "elapsedMs": 5550,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "15,4",
+          "count": 1
+        },
+        {
+          "cell": "5,4",
+          "count": 1
+        },
+        {
+          "cell": "7,4",
+          "count": 1
+        },
+        {
+          "cell": "8,4",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 14,
+      "maxNoChangeMs": 2100,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "target.warning": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 64,
+      "elapsedMs": 12800,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "16,15",
+          "count": 1
+        },
+        {
+          "cell": "16,6",
+          "count": 1
+        },
+        {
+          "cell": "17,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 19,
+      "maxNoChangeMs": 3800,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "operation.stage-completed": 2,
+        "target.warning": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 64,
+      "elapsedMs": 17920,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "16,15",
+          "count": 1
+        },
+        {
+          "cell": "16,6",
+          "count": 1
+        },
+        {
+          "cell": "17,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 19,
+      "maxNoChangeMs": 5320,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "operation.stage-completed": 2,
+        "target.warning": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 64,
+      "elapsedMs": 9600,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "16,15",
+          "count": 1
+        },
+        {
+          "cell": "16,6",
+          "count": 1
+        },
+        {
+          "cell": "17,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 19,
+      "maxNoChangeMs": 2850,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "operation.stage-completed": 2,
+        "target.warning": 1
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 48,
+      "elapsedMs": 9600,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "13,16",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "16,6",
+          "count": 1
+        },
+        {
+          "cell": "17,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 21,
+      "maxNoChangeMs": 4200,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "target.warning": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 48,
+      "elapsedMs": 13440,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "13,16",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "16,6",
+          "count": 1
+        },
+        {
+          "cell": "17,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 21,
+      "maxNoChangeMs": 5880,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "target.warning": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-watch-the-aim",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 48,
+      "elapsedMs": 7200,
+      "captures": 4,
+      "captureLocations": [
+        {
+          "cell": "13,16",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "16,6",
+          "count": 1
+        },
+        {
+          "cell": "17,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.25,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 21,
+      "maxNoChangeMs": 3150,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "target.caught": 4,
+        "target.spawned": 2,
+        "target.warning": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "hazardSeed": 17,
+      "board": 0,
+      "steps": 98,
+      "elapsedMs": 19600,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,8",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 3200,
+      "meaningfulSteps": 13,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "hazardSeed": 17,
+      "board": 0,
+      "steps": 98,
+      "elapsedMs": 27440,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,8",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 4480,
+      "meaningfulSteps": 15,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "hazardSeed": 17,
+      "board": 0,
+      "steps": 98,
+      "elapsedMs": 14700,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,8",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 18,
+      "maxNoChangeMs": 2700,
+      "meaningfulSteps": 12,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "hazardSeed": 17,
+      "board": 0,
+      "steps": 54,
+      "elapsedMs": 10800,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,11",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 11,
+      "maxNoChangeMs": 2200,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "hazardSeed": 17,
+      "board": 0,
+      "steps": 54,
+      "elapsedMs": 15120,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,11",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 2800,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "hazardSeed": 17,
+      "board": 0,
+      "steps": 54,
+      "elapsedMs": 8100,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,11",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 1500,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 73,
+      "elapsedMs": 14600,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "0,17",
+          "count": 1
+        },
+        {
+          "cell": "12,5",
+          "count": 1
+        },
+        {
+          "cell": "6,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 3200,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 1,
+        "pickup.spawned": 1,
+        "target.warning": 1,
+        "operation.stage-completed": 2,
+        "cargo.collected": 2,
+        "cargo.delivered": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 73,
+      "elapsedMs": 20440,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "0,17",
+          "count": 1
+        },
+        {
+          "cell": "12,5",
+          "count": 1
+        },
+        {
+          "cell": "6,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 4480,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 1,
+        "pickup.spawned": 1,
+        "target.warning": 1,
+        "operation.stage-completed": 2,
+        "cargo.collected": 2,
+        "cargo.delivered": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 73,
+      "elapsedMs": 10950,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "0,17",
+          "count": 1
+        },
+        {
+          "cell": "12,5",
+          "count": 1
+        },
+        {
+          "cell": "6,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 2400,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 1,
+        "pickup.spawned": 1,
+        "target.warning": 1,
+        "operation.stage-completed": 2,
+        "cargo.collected": 2,
+        "cargo.delivered": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 47,
+      "elapsedMs": 9400,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "0,17",
+          "count": 1
+        },
+        {
+          "cell": "12,5",
+          "count": 1
+        },
+        {
+          "cell": "6,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 9,
+      "maxNoChangeMs": 1800,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 1,
+        "pickup.spawned": 1,
+        "target.warning": 1,
+        "operation.stage-completed": 2,
+        "cargo.collected": 2,
+        "cargo.delivered": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 47,
+      "elapsedMs": 13160,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "0,17",
+          "count": 1
+        },
+        {
+          "cell": "12,5",
+          "count": 1
+        },
+        {
+          "cell": "6,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 9,
+      "maxNoChangeMs": 2520,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 1,
+        "pickup.spawned": 1,
+        "target.warning": 1,
+        "operation.stage-completed": 2,
+        "cargo.collected": 2,
+        "cargo.delivered": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-freight-flank",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 47,
+      "elapsedMs": 7050,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "0,17",
+          "count": 1
+        },
+        {
+          "cell": "12,5",
+          "count": 1
+        },
+        {
+          "cell": "6,2",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 9,
+      "maxNoChangeMs": 1350,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "target.caught": 3,
+        "target.spawned": 1,
+        "pickup.spawned": 1,
+        "target.warning": 1,
+        "operation.stage-completed": 2,
+        "cargo.collected": 2,
+        "cargo.delivered": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "normal",
+      "board": 0,
+      "steps": 45,
+      "elapsedMs": 9000,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 20,
+      "maxNoChangeMs": 4000,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "slow",
+      "board": 0,
+      "steps": 45,
+      "elapsedMs": 12600,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 20,
+      "maxNoChangeMs": 5600,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "solo",
+      "pace": "fast",
+      "board": 0,
+      "steps": 53,
+      "elapsedMs": 7950,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,11",
+          "count": 1
+        },
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 20,
+      "maxNoChangeMs": 3000,
+      "meaningfulSteps": 14,
+      "eventCounts": {
+        "target.warning": 2,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "normal",
+      "board": 0,
+      "steps": 35,
+      "elapsedMs": 7000,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 2000,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "slow",
+      "board": 0,
+      "steps": 35,
+      "elapsedMs": 9800,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 2800,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "source": "tactical-proofs.json",
+      "mode": "team",
+      "pace": "fast",
+      "board": 0,
+      "steps": 39,
+      "elapsedMs": 5850,
+      "captures": 3,
+      "captureLocations": [
+        {
+          "cell": "14,7",
+          "count": 1
+        },
+        {
+          "cell": "14,8",
+          "count": 1
+        },
+        {
+          "cell": "14,9",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.3333333333333333,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 12,
+      "maxNoChangeMs": 1800,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "target.warning": 1,
+        "plate.activated": 1,
+        "plate.released": 1,
+        "target.caught": 3,
+        "target.spawned": 2,
+        "plate.gate-closed": 1,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
+      "mode": "solo",
+      "pace": "normal",
+      "hazardSeed": 73,
+      "board": 0,
+      "steps": 98,
+      "elapsedMs": 19600,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,8",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 3200,
+      "meaningfulSteps": 15,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
+      "mode": "solo",
+      "pace": "slow",
+      "hazardSeed": 73,
+      "board": 0,
+      "steps": 98,
+      "elapsedMs": 27440,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,8",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 4480,
+      "meaningfulSteps": 14,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
+      "mode": "solo",
+      "pace": "fast",
+      "hazardSeed": 73,
+      "board": 0,
+      "steps": 98,
+      "elapsedMs": 14700,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,8",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 2400,
+      "meaningfulSteps": 12,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
+      "mode": "team",
+      "pace": "normal",
+      "hazardSeed": 73,
+      "board": 0,
+      "steps": 54,
+      "elapsedMs": 10800,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,11",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 2000,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
+      "mode": "team",
+      "pace": "slow",
+      "hazardSeed": 73,
+      "board": 0,
+      "steps": 54,
+      "elapsedMs": 15120,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,11",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 2800,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-73.json",
+      "mode": "team",
+      "pace": "fast",
+      "hazardSeed": 73,
+      "board": 0,
+      "steps": 54,
+      "elapsedMs": 8100,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,11",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 12,
+      "maxNoChangeMs": 1800,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
+      "mode": "solo",
+      "pace": "normal",
+      "hazardSeed": 2026,
+      "board": 0,
+      "steps": 98,
+      "elapsedMs": 19600,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,8",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 3200,
+      "meaningfulSteps": 13,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
+      "mode": "solo",
+      "pace": "slow",
+      "hazardSeed": 2026,
+      "board": 0,
+      "steps": 98,
+      "elapsedMs": 27440,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,8",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 16,
+      "maxNoChangeMs": 4480,
+      "meaningfulSteps": 15,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 2,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
+      "mode": "solo",
+      "pace": "fast",
+      "hazardSeed": 2026,
+      "board": 0,
+      "steps": 98,
+      "elapsedMs": 14700,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,8",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 18,
+      "maxNoChangeMs": 2700,
+      "meaningfulSteps": 11,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
+      "mode": "team",
+      "pace": "normal",
+      "hazardSeed": 2026,
+      "board": 0,
+      "steps": 54,
+      "elapsedMs": 10800,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,11",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 2000,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
+      "mode": "team",
+      "pace": "slow",
+      "hazardSeed": 2026,
+      "board": 0,
+      "steps": 54,
+      "elapsedMs": 15120,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,11",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 2800,
+      "meaningfulSteps": 10,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "source": "tactical-proofs-hazards-2026.json",
+      "mode": "team",
+      "pace": "fast",
+      "hazardSeed": 2026,
+      "board": 0,
+      "steps": 54,
+      "elapsedMs": 8100,
+      "captures": 2,
+      "captureLocations": [
+        {
+          "cell": "18,11",
+          "count": 1
+        },
+        {
+          "cell": "23,17",
+          "count": 1
+        }
+      ],
+      "maxRepeatedSpot": 1,
+      "captureConcentration": 0.5,
+      "longestSameSpotStreak": 1,
+      "maxNoChangeMoves": 10,
+      "maxNoChangeMs": 1500,
+      "meaningfulSteps": 9,
+      "eventCounts": {
+        "cargo.collected": 2,
+        "cargo.delivered": 2,
+        "target.warning": 1,
+        "target.caught": 2,
+        "operation.stage-completed": 2
+      },
+      "signals": []
+    }
+  ]
+}

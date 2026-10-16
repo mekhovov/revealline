@@ -1,6 +1,6 @@
 import { required } from '../data-json.mjs';
 import { creatorSHA256 } from '../creator/bytes.mjs';
-import { importCreatorBundle } from '../creator/bundle.mjs';
+import { inspectCommunityPackage } from './package-family.mjs';
 import { validateCommunitySubmission } from './client.mjs';
 
 const slug = (value) =>
@@ -21,15 +21,16 @@ export function createCommunityPublisher({ client, decodeImage } = {}) {
     pending = null;
   return Object.freeze({
     async select(blob) {
-      const pack = await importCreatorBundle(blob, { decodeImage });
+      const pack = await inspectCommunityPackage(blob, { decodeImage });
       const packageSha256 = await creatorSHA256(await blob.arrayBuffer());
       selection = Object.freeze({
         blob: blob.slice(),
         packageSha256,
         packageSize: blob.size,
         creatorEditionId: pack.editionId,
-        suggestedTitle: pack.review.name,
-        suggestedSlug: slug(pack.review.name) || `campaign-${pack.editionId.slice(0, 10)}`,
+        suggestedTitle: pack.title,
+        family: pack.family,
+        suggestedSlug: slug(pack.title) || `campaign-${pack.editionId.slice(0, 10)}`,
       });
       pending = null;
       publication = null;
@@ -43,7 +44,7 @@ export function createCommunityPublisher({ client, decodeImage } = {}) {
       slug: requestedSlug,
       onProgress,
     } = {}) {
-      required(selection, 'Choose an approved .rlpack file first.');
+      required(selection, 'Choose a validated native game package first.');
       const metadata = {
         slug: requestedSlug || selection.suggestedSlug,
         title: title || selection.suggestedTitle,

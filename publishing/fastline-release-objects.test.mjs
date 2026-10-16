@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   decideReleaseObjects,
   inspectReleaseObjects,
+  resolveRelease,
   resolveTagCommit,
 } from "./fastline-release-objects.mjs";
 
@@ -11,7 +12,54 @@ const tagObject = "b".repeat(40);
 const repository = "example/revealline";
 const version = "v1.2.3";
 
-test("creates only missing objects and reuses only exact objects", () => {
+test("creation receipt ID uses the direct release endpoint, not draft listing", async () => {
+  const paths = [];
+  const release = await resolveRelease({
+    repository,
+    version,
+    releaseId: 7,
+    get: async (pathname) => {
+      paths.push(pathname);
+      return { id: 7 };
+    },
+  });
+  assert.equal(release.id, 7);
+  assert.deepEqual(paths, [`/repos/${repository}/releases/7`]);
+});
+
+test("direct release discovery rejects invalid and mismatched IDs and preserves missing", async () => {
+  for (const releaseId of [0, -1, 1.5, "7", Number.MAX_SAFE_INTEGER + 1]) {
+    await assert.rejects(
+      resolveRelease({
+        repository,
+        version,
+        releaseId,
+        get: async () => assert.fail("no request"),
+      }),
+      /invalid release ID/u,
+    );
+  }
+  await assert.rejects(
+    resolveRelease({
+      repository,
+      version,
+      releaseId: 7,
+      get: async () => ({ id: 8 }),
+    }),
+    /ID differs/u,
+  );
+  assert.equal(
+    await resolveRelease({
+      repository,
+      version,
+      releaseId: 7,
+      get: async () => null,
+    }),
+    null,
+  );
+});
+
+test("creates only missing objects and reuses existing release objects", () => {
   assert.equal(decideReleaseObjects({ version, sourceSha }).action, "create");
   assert.equal(
     decideReleaseObjects({ version, sourceSha, tagCommit: sourceSha }).action,
@@ -37,61 +85,36 @@ test("creates only missing objects and reuses only exact objects", () => {
   );
 });
 
-test("fails closed on tag, release, or stable-channel drift", () => {
-  assert.throws(
-    () =>
-      decideReleaseObjects({
-        version,
-        sourceSha,
-        tagCommit: sourceSha,
-        tagType: "commit",
-      }),
-    /annotated tag/u,
-  );
-  assert.throws(
-    () =>
-      decideReleaseObjects({
-        version,
-        sourceSha,
-        tagCommit: "c".repeat(40),
-      }),
-    /resolves to/u,
-  );
-  for (const release of [
-    {
-      tag_name: version,
-      target_commitish: "c".repeat(40),
+test("existing release objects do not need to match the incoming source request", () => {
+  const decision = decideReleaseObjects({
+    version,
+    sourceSha,
+    tagCommit: "c".repeat(40),
+    tagType: "commit",
+    release: {
+      tag_name: "v9.9.9",
+      target_commitish: "d".repeat(40),
       draft: true,
       prerelease: false,
     },
-    {
-      tag_name: version,
-      target_commitish: sourceSha,
-      draft: true,
-      prerelease: true,
-    },
-  ])
-    assert.throws(() =>
-      decideReleaseObjects({
-        version,
-        sourceSha,
-        tagCommit: sourceSha,
-        release,
-      }),
-    );
-  assert.throws(
-    () =>
-      decideReleaseObjects({
-        version,
-        sourceSha,
-        release: {
-          tag_name: version,
-          target_commitish: sourceSha,
-          draft: true,
-          prerelease: false,
-        },
-      }),
-    /no matching immutable tag/u,
+  });
+  assert.equal(decision.action, "reuse");
+  assert.throws(() =>
+    decideReleaseObjects({
+      version,
+      sourceSha,
+      release: { draft: true, prerelease: "false" },
+    }),
+    /channel metadata/u,
+  );
+  assert.throws(() =>
+    decideReleaseObjects({
+      version,
+      sourceSha,
+      tagCommit: sourceSha,
+      release: { draft: true, prerelease: true },
+    }),
+    /prerelease/u,
   );
 });
 
@@ -145,4 +168,38 @@ test("inspection compares the tag and draft in one fail-closed decision", async 
     state: "published",
     reason: "exact published release exists",
   });
+});
+
+test("discovers an exact draft when GitHub release-by-tag returns 404", async () => {
+  const draft = {
+    id: 19,
+    tag_name: version,
+    target_commitish: sourceSha,
+    draft: true,
+    prerelease: false,
+  };
+  const calls = [];
+  const get = async (pathname) => {
+    calls.push(pathname);
+    if (pathname.endsWith(`/releases/tags/${version}`)) return null;
+    if (pathname.endsWith("/releases?per_page=100&page=1")) return [draft];
+    throw new Error(`unexpected ${pathname}`);
+  };
+
+  assert.equal(await resolveRelease({ repository, version, get }), draft);
+  assert.deepEqual(calls, [
+    `/repos/${repository}/releases/tags/${version}`,
+    `/repos/${repository}/releases?per_page=100&page=1`,
+  ]);
+});
+
+test("draft discovery refuses duplicate tag matches", async () => {
+  const get = async (pathname) => {
+    if (pathname.endsWith(`/releases/tags/${version}`)) return null;
+    return [{ tag_name: version }, { tag_name: version }];
+  };
+  await assert.rejects(
+    resolveRelease({ repository, version, get }),
+    /multiple releases/u,
+  );
 });

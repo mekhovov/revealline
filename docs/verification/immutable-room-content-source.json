@@ -1,0 +1,19 @@
+{
+  "format": "revealline-source-verification-receipt.v1",
+  "sourceRevision": "b20ca9e0ed568b3f5477726083f011cc2e19f4ac",
+  "sourceTree": "244f148d14d2c9e169ad453290e3c459e35e5081",
+  "files": 25061,
+  "originalBytes": 2358176094,
+  "manifestBytes": 5875006,
+  "manifestSha256": "abf7a2ae357391d1676277ed82ef8c0b5ff40af869560d416812a5fffd31b8a2",
+  "rawAggregateSha256": "d8a3b418a194ab97d2a7bcd95074e45c5e3f8cee922c758d94109db88173719b",
+  "rawAggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+  "allTrackedSourceContentsAndModesMatch": true,
+  "allGitBlobContentsAndModesVerified": true,
+  "workingTreeCleanAfterVerification": true,
+  "automatedSuites": "waived-not-run",
+  "provenance": {
+    "raw": "scripts/check-source-identity.mjs compares raw tracked contents and modes against immutable HEAD, without trusting index stat caches",
+    "immutable": "publishing/utility/source_manifest.py creates and independently verifies the manifest from Git blobs and modes"
+  }
+}

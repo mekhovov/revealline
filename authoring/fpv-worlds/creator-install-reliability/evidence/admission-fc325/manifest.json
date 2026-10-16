@@ -1,0 +1,77 @@
+{
+  "format": "FPVCreatorInstallAdmission.v1",
+  "admittedRevision": "fc32543821bcea9bba27a4f435902ccaa0934d9d",
+  "fullValidationRevision": "f1c8641b64480f3c82304278f6dfc2e6b069a4d7",
+  "existingChecks": 28,
+  "hostByteExactToFullValidation": true,
+  "other94ByteExactToCoatingAdmission": "364fb78c3dc7e268b84b0a13349af32864bca802",
+  "originalInputBytes": 16739781,
+  "sourceReserve": 37435,
+  "packages": 3,
+  "builds": 2,
+  "files": [
+    {
+      "path": "fpv-creator-install-f1c8641b6-validate.log.gz",
+      "bytes": 1535,
+      "sha256": "375a0bebee899b75b9d5aead2c37ebd021c2b811e3a5f022c6161d1cbd288c72",
+      "originalBytes": 3676,
+      "originalSHA256": "99398d5702bab0c517bc59f010cac7d21c13af441923834a1b3888f279d5eb81"
+    },
+    {
+      "path": "fpv-creator-install-integrated-existing.log.gz",
+      "bytes": 1820,
+      "sha256": "9c73c3527dc01ea167156197d23f9acbcb030b4b69041b1f50c62eb82e31e482",
+      "originalBytes": 7180,
+      "originalSHA256": "bd0ca93378aceea62982dec2fc3d34eae857a734dade835f6db7f1b8e860cd99"
+    },
+    {
+      "path": "fpv-creator-install-fc3254382-admission.log.gz",
+      "bytes": 290,
+      "sha256": "07432879b57787289ebcfcdc85ea1e548c180fcb3943b547e5320d1d7332ea3a",
+      "originalBytes": 422,
+      "originalSHA256": "0e989e0662e6e5c959e94344239be5411cad62833bc8e9e52c7bfa6582f24911"
+    },
+    {
+      "path": "fpv-creator-install-fc3254382-integration-bridge.json.gz",
+      "bytes": 5661,
+      "sha256": "1f82c95742f81c3c6584408acd13b8873fdcc331e9ec3b40a1555e87d635b15d",
+      "originalBytes": 21262,
+      "originalSHA256": "51e3121b4101550c15edac5fb97a546b781ca86882da7afb23cdec3087bbadfa"
+    },
+    {
+      "path": "fpv-creator-install-player-fc3254382.json.gz",
+      "bytes": 7342,
+      "sha256": "ab42b54306e9cca26085431829085d277b27ee31287299db082b9ee7d272080f",
+      "originalBytes": 42949,
+      "originalSHA256": "f44255bb0a3c1eb6942b776fd9c7bd0d38e8d54632443f6a933e18bb1e1dd483"
+    },
+    {
+      "path": "fixture.json.gz",
+      "bytes": 8297,
+      "sha256": "600ffb37968387d482210d61ede71de49b79a88322c3f9d8768660a432edae5e",
+      "originalBytes": 45758,
+      "originalSHA256": "980c912e228a42958c55677776e1882f1452ed4d3239ca0750336fe2e96e6e4e"
+    },
+    {
+      "path": "optional-candidate-verification.json.gz",
+      "bytes": 609,
+      "sha256": "873e3977073b2bef718a19b92f4611d18cd435d8caa723ec2d369f28e54203de",
+      "originalBytes": 1142,
+      "originalSHA256": "057068edde169acd7ac62fe5bb950c62325e27d3bceb8fc3cd0ef9e822a1b4a0"
+    },
+    {
+      "path": "optional-checksums.json.gz",
+      "bytes": 920,
+      "sha256": "53b1ad36a8c954cba86e4d8692465ae5ba6fdf93a5097e73859be77aaf80345c",
+      "originalBytes": 2136,
+      "originalSHA256": "10dfa178039fbfbe7844cd7ab3824eff4c7aff72b74d6977bfefe9c025cd2ba8"
+    },
+    {
+      "path": "source-inventory-optional-fpv-worlds.json.gz",
+      "bytes": 7143,
+      "sha256": "da6db25589dded2f457c5f72eb012239e290bdef14f1ceb657a5c59e41a19526",
+      "originalBytes": 32166,
+      "originalSHA256": "db93a8c25ac25db43dbf5f0f951159f56413fe160d2eee004cd1f90f96c6f941"
+    }
+  ]
+}

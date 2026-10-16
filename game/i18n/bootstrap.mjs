@@ -38,6 +38,7 @@
     }
   }
   explicit = savedLocale();
+  let activeLocale = explicit || detectLocale();
   engine.use({
     type: 'formatter',
     init() {},
@@ -47,7 +48,7 @@
         : value,
   });
   engine.init({
-    lng: explicit || detectLocale(),
+    lng: activeLocale,
     fallbackLng: 'en',
     supportedLngs: locales,
     resources: host.RevealLineTranslations,
@@ -63,7 +64,9 @@
     },
   });
   const t = (key, values = {}) => engine.t(key, values);
-  const getLocale = () => engine.resolvedLanguage || engine.language || 'en';
+  // Content adapters run during our synchronous refresh. Keep the requested
+  // supported locale authoritative while i18next finishes its own resolution.
+  const getLocale = () => activeLocale;
   const messageTag = Symbol('localized-message');
   const message = (key, values = {}) => ({
     [messageTag]: true,
@@ -258,6 +261,7 @@
         /* A session choice remains usable even when persistence is unavailable. */
       }
     }
+    activeLocale = locale;
     engine.changeLanguage(locale);
     refresh();
     return { locale, saved };

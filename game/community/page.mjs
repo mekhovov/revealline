@@ -8,6 +8,7 @@ import { createCommunityStateStore } from './state.mjs';
 import { createTusBrowserUpload } from './tus-upload.mjs';
 import {
   formatDate,
+  getLocale,
   formatNumber,
   localizedAttribute,
   localizedMessage,
@@ -45,6 +46,8 @@ let nextCursor = null;
 let submissionId = null;
 let submissionTimer = null;
 let accountSession = injectedAuth ? { user: {}, configured: true } : null;
+const accountParameters = new URL(globalThis.location.href).searchParams;
+const passwordResetToken = accountParameters.get('token');
 const previewURLs = new Set();
 const canPublish = () => Boolean(accountSession && auth?.headers);
 const renderAccount = () => {
@@ -63,6 +66,31 @@ const renderAccount = () => {
 const setAccountStatus = (message, error = false) => {
   localizedText($('account-status'), message);
   $('account-status').classList.toggle('error', error);
+};
+const clearAccountAction = () => {
+  const url = new URL(globalThis.location.href);
+  url.searchParams.delete('account');
+  url.searchParams.delete('token');
+  url.searchParams.delete('error');
+  globalThis.history.replaceState(null, '', url);
+};
+const renderAccountAction = () => {
+  if (accountParameters.get('account') === 'reset' && passwordResetToken) {
+    $('account-reset').hidden = false;
+    setAccountStatus(localizedMessage('interface:community.enterNewPassword'));
+    return true;
+  }
+  if (accountParameters.get('account') === 'verified') {
+    setAccountStatus(localizedMessage('interface:community.emailVerified'));
+    clearAccountAction();
+    return true;
+  }
+  if (accountParameters.get('error')) {
+    setAccountStatus(localizedMessage('interface:community.accountLinkInvalid'), true);
+    clearAccountAction();
+    return true;
+  }
+  return false;
 };
 
 const text = (tag, value, className) => {
@@ -105,13 +133,44 @@ function render() {
       ),
     );
     const flags = document.createElement('p');
+    if (edition.family)
+      flags.append(
+        text(
+          'span',
+          () =>
+            ({
+              classic: 'Snake',
+              team: 'Team',
+              fpv: 'FPV SIM',
+              overflight: getLocale() === 'uk' ? 'Проліт' : 'Overflight',
+              'overflight-hunt': getLocale() === 'uk' ? 'Проліт: Наліт' : 'Overflight: Raid',
+              'overflight-riy': getLocale() === 'uk' ? 'Проліт: Рій' : 'Overflight: Riy',
+            })[edition.family],
+          'badge',
+        ),
+      );
     if (edition.installed)
       flags.append(text('span', localizedMessage('common:status.installed'), 'badge'));
+    if (edition.offloaded)
+      flags.append(text('span', localizedMessage('interface:community.mediaOffloaded'), 'badge'));
     if (edition.packageRetained)
       flags.append(text('span', localizedMessage('interface:community.offlineCopy'), 'badge'));
     if (edition.updateAvailable)
       flags.append(text('span', localizedMessage('interface:community.updateAvailable'), 'badge'));
     card.append(flags);
+    if (edition.localCopyRetained)
+      card.append(
+        text(
+          'p',
+          ['overflight', 'overflight-hunt', 'overflight-riy'].includes(edition.family)
+            ? () =>
+                getLocale() === 'uk'
+                  ? 'Локальна копія Studio також використовує цей виліт. Вивантаження видання збереже її.'
+                  : 'A local Studio copy also uses this sortie. Offloading this edition keeps that copy.'
+            : localizedMessage('interface:community.localSnakeCopyRetained'),
+          'meta',
+        ),
+      );
     const preview = document.createElement('figure');
     preview.className = 'preview';
     if (edition.previewAvailable)
@@ -127,7 +186,9 @@ function render() {
             localizedAttribute(
               image,
               'alt',
-              localizedMessage('interface:community.catalogPreview', { title: edition.title }),
+              localizedMessage('interface:community.catalogPreview', {
+                title: edition.title,
+              }),
             );
             preview.replaceChildren(image);
           },
@@ -159,6 +220,28 @@ function render() {
       if (edition.packageRetained)
         actions.append(
           action(
+            localizedMessage('interface:community.offloadInstalledMedia'),
+            async () => {
+              const review = await library.reviewInstalledOffload(edition);
+              await library.offloadInstalled(edition, review);
+              await refresh({ reset: true });
+              status(
+                review.localCopyRetained &&
+                  ['overflight', 'overflight-hunt', 'overflight-riy'].includes(edition.family)
+                  ? () =>
+                      getLocale() === 'uk'
+                        ? 'Видання вивантажено. Локальну копію та пакет відновлення збережено.'
+                        : 'Edition offloaded. The local copy and recovery package are retained.'
+                  : localizedMessage(
+                      review.localCopyRetained
+                        ? 'interface:community.snakeEditionOffloadedLocalKept'
+                        : 'interface:community.installedMediaOffloaded',
+                    ),
+              );
+            },
+            'secondary',
+          ),
+          action(
             localizedMessage('interface:community.removeRecoveryDownload'),
             async () => {
               const review = await library.reviewDownloadRemoval(edition);
@@ -185,15 +268,23 @@ function render() {
       actions.append(
         action(
           localizedMessage(
-            edition.updateAvailable
-              ? 'interface:community.downloadUpdate'
-              : 'interface:community.downloadAndInstall',
+            edition.offloaded
+              ? 'interface:community.reinstallExactEdition'
+              : edition.updateAvailable
+                ? 'interface:community.downloadUpdate'
+                : 'interface:community.downloadAndInstall',
           ),
           async () => {
-            status(localizedMessage('interface:community.downloading', { title: edition.title }));
-            await library.install(edition, { offline: false });
             status(
-              localizedMessage('interface:community.installedOffline', { title: edition.title }),
+              localizedMessage('interface:community.downloading', {
+                title: edition.title,
+              }),
+            );
+            await library.install(edition, { offline: edition.offloaded });
+            status(
+              localizedMessage('interface:community.installedOffline', {
+                title: edition.title,
+              }),
             );
             await refresh({ reset: true });
           },
@@ -203,7 +294,9 @@ function render() {
     localizedAttribute(
       reportReason,
       'aria-label',
-      localizedMessage('interface:community.reportReasonFor', { title: edition.title }),
+      localizedMessage('interface:community.reportReasonFor', {
+        title: edition.title,
+      }),
     );
     for (const [value, key] of [
       ['broken', 'brokenContent'],
@@ -253,10 +346,16 @@ async function refresh({ reset = true } = {}) {
     nextCursor = result.nextCursor;
     $('more').hidden = !nextCursor;
     render();
-    status(localizedMessage('interface:community.editionsShown', { count: rows.length }));
+    status(
+      localizedMessage('interface:community.editionsShown', {
+        count: rows.length,
+      }),
+    );
   } catch (error) {
     status(
-      localizedMessage('interface:community.catalogUnavailable', { error: error.message }),
+      localizedMessage('interface:community.catalogUnavailable', {
+        error: error.message,
+      }),
       true,
     );
   }
@@ -306,7 +405,9 @@ $('publish').onclick = async () => {
     submissionId = result.id;
     localizedText(
       $('publish-status'),
-      localizedMessage('interface:community.submissionStatus', { status: result.status }),
+      localizedMessage('interface:community.submissionStatus', {
+        status: result.status,
+      }),
     );
     if (['queued', 'validating'].includes(result.status)) scheduleSubmissionCheck();
   } catch (error) {
@@ -337,7 +438,9 @@ async function checkSubmission() {
   } catch (error) {
     localizedText(
       $('publish-status'),
-      localizedMessage('interface:community.submissionRefreshFailed', { error: error.message }),
+      localizedMessage('interface:community.submissionRefreshFailed', {
+        error: error.message,
+      }),
     );
   }
 }
@@ -347,7 +450,9 @@ $('publish-unlist').onclick = async () => {
     const current = await publisher.unlist();
     localizedText(
       $('publish-status'),
-      localizedMessage('interface:community.editionStatus', { status: current.status }),
+      localizedMessage('interface:community.editionStatus', {
+        status: current.status,
+      }),
     );
     $('publish-unlist').hidden = true;
   } catch (error) {
@@ -370,12 +475,54 @@ $('account-sign-up').onclick = async () => {
       password: $('account-password').value,
     });
     $('account-password').value = '';
-    setAccountStatus(localizedMessage('interface:community.accountCreated'));
+    setAccountStatus(localizedMessage('interface:community.accountCreatedVerify'));
     renderAccount();
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
     $('account-sign-up').disabled = false;
+  }
+};
+$('account-verify').onclick = async () => {
+  if (!account) return;
+  $('account-verify').disabled = true;
+  try {
+    await account.requestEmailVerification({ email: $('account-email').value });
+    setAccountStatus(localizedMessage('interface:community.verificationSent'));
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-verify').disabled = false;
+  }
+};
+$('account-forgot').onclick = async () => {
+  if (!account) return;
+  $('account-forgot').disabled = true;
+  try {
+    await account.requestPasswordReset({ email: $('account-email').value });
+    setAccountStatus(localizedMessage('interface:community.passwordResetSent'));
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-forgot').disabled = false;
+  }
+};
+$('account-reset').onclick = async () => {
+  if (!account || !passwordResetToken) return;
+  $('account-reset').disabled = true;
+  try {
+    await account.resetPassword({
+      token: passwordResetToken,
+      newPassword: $('account-password').value,
+    });
+    $('account-password').value = '';
+    clearAccountAction();
+    $('account-reset').hidden = true;
+    setAccountStatus(localizedMessage('interface:community.passwordChanged'));
+  } catch (error) {
+    setAccountStatus(error.message, true);
+  } finally {
+    $('account-reset').disabled = false;
   }
 };
 $('account-sign-in').onclick = async () => {
@@ -414,6 +561,7 @@ $('account-sign-out').onclick = async () => {
 window.addEventListener('pagehide', () => {
   clearTimeout(submissionTimer);
   for (const url of previewURLs) URL.revokeObjectURL(url);
+  library.close();
   creatorStore.close();
 });
 renderAccount();
@@ -422,13 +570,9 @@ if (account)
     .session()
     .then((session) => {
       accountSession = session;
-      setAccountStatus(
-        localizedMessage(
-          session
-            ? 'interface:community.sessionRestored'
-            : 'interface:community.signInOnlyToPublish',
-        ),
-      );
+      if (session) setAccountStatus(localizedMessage('interface:community.sessionRestored'));
+      else if (!renderAccountAction())
+        setAccountStatus(localizedMessage('interface:community.signInOnlyToPublish'));
       renderAccount();
     })
     .catch((error) =>
