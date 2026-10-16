@@ -1,5 +1,61 @@
 import { evaluateQualificationBudgets } from './solo-qualification.mjs';
 
+/** Self-contained for installation before page scripts. Cadence eligibility is
+ * not application/asset readiness: packaged title launches prepare on Start. */
+export function readPrePlayReadiness(documentRef = globalThis.document) {
+  const controls = ['#shell-featured', '#start-button'].map((selector) => {
+    const element = documentRef.querySelector(selector);
+    return {
+      selector,
+      present: Boolean(element),
+      visible: Boolean(
+        element &&
+          !element.hidden &&
+          element.getClientRects().length &&
+          documentRef.defaultView.getComputedStyle(element).visibility === 'visible',
+      ),
+      enabled: Boolean(
+        element && !element.disabled && element.getAttribute('aria-disabled') !== 'true',
+      ),
+    };
+  });
+  let packageConsent = false;
+  const marker = documentRef.querySelector('meta[name="revealline-offline"]')?.content;
+  if (marker && marker.length <= 65536) {
+    try {
+      packageConsent = JSON.parse(marker).packageConsent === true;
+    } catch {
+      // An invalid marker cannot establish preparation deferred by the package.
+    }
+  }
+  const boot = documentRef.documentElement.dataset.bootState ?? null,
+    phase = documentRef.body?.dataset.flightState ?? null,
+    picture = documentRef.body?.dataset.pictureState ?? null,
+    publicLaunch = controls.find((control) => control.visible && control.enabled)?.selector ?? null;
+  const preparationDeferredToStart =
+    packageConsent && phase === 'briefing' && picture === 'pending';
+  return {
+    ready:
+      boot === 'ready' &&
+      ['briefing', 'paused'].includes(phase) &&
+      Boolean(publicLaunch) &&
+      (picture === 'ready' || preparationDeferredToStart) &&
+      !documentRef.hidden,
+    boot,
+    phase,
+    picture,
+    pictureReady: picture === 'ready',
+    preparationDeferredToStart,
+    packageConsent,
+    publicLaunch,
+    controls,
+    visibility: documentRef.visibilityState,
+    scope: preparationDeferredToStart
+      ? 'Prelaunch title; required preparation deferred to Start. Cadence eligibility does not establish application or asset readiness.'
+      : 'Foreground public launch with observable picture readiness; other preparation may remain.',
+  };
+}
+
 /** Declared stability check for a single, fixed pre-play30-frame window. Never
  * recalibrate after starting to make missed frames disappear. */
 export function calibrateReadyCadence(samples, state = {}) {
@@ -37,7 +93,7 @@ export function calibrateReadyCadence(samples, state = {}) {
     relativeP05P95Spread: spread,
     limits: { coefficientOfVariation: 0.1, relativeP05P95Spread: 0.2 },
     scope:
-      'Thirty rAF intervals after observable required preparation/boot readiness, while not playing. Optional catalogue/decode activity may remain; this does not prove host quiescence or physical refresh rate.',
+      'Thirty foreground rAF intervals after boot with a visible enabled public launch, before playing. Packaged title preparation may be explicitly deferred to Start; asset readiness is recorded separately. This does not prove application readiness, host quiescence or physical refresh rate.',
   };
 }
 

@@ -8,6 +8,7 @@ import {
   observedMediaAdvancement,
 } from './solo-qualification-audio.mjs';
 import {
+  readPrePlayReadiness,
   calibrateReadyCadence,
   externalQualificationBudgets,
   aggregateQualificationGates,
@@ -327,6 +328,57 @@ test('offline native-recording inspection verifies actual captures and rejects a
   const tampered = structuredClone(replay);
   tampered.segments[0].ticks++;
   assert.throws(() => inspectQualificationReplay(tampered));
+});
+
+test('packaged title cadence accepts the actual launch without inventing asset readiness', () => {
+  const controls = new Map();
+  const marker = { content: JSON.stringify({ packageConsent: true }) };
+  const document = {
+    documentElement: { dataset: { bootState: 'ready' } },
+    body: { dataset: { flightState: 'briefing', pictureState: 'pending' } },
+    hidden: false,
+    visibilityState: 'visible',
+    defaultView: {
+      getComputedStyle: (element) => ({ visibility: element.visibility ?? 'visible' }),
+    },
+    querySelector: (selector) => (selector.startsWith('meta[') ? marker : controls.get(selector)),
+  };
+  const button = (options = {}) => ({
+    disabled: false,
+    hidden: false,
+    getClientRects: () => [{}],
+    getAttribute: () => null,
+    ...options,
+  });
+  controls.set('#shell-featured', button());
+  controls.set('#start-button', button({ disabled: true, getClientRects: () => [] }));
+  // Execute the exact self-contained source installed in the native page.
+  const installed = vm.runInNewContext(`(${readPrePlayReadiness.toString()})()`, { document });
+  assert.equal(installed.ready, true);
+  assert.equal(installed.publicLaunch, '#shell-featured');
+  assert.equal(installed.pictureReady, false);
+  assert.equal(installed.preparationDeferredToStart, true);
+  assert.equal(
+    calibrateReadyCadence(Array(30).fill(16.67), installed).status,
+    'measured-before-play',
+  );
+  controls.get('#shell-featured').disabled = true;
+  assert.equal(readPrePlayReadiness(document).ready, false);
+  controls.clear();
+  assert.equal(readPrePlayReadiness(document).ready, false);
+  controls.set('#start-button', button());
+  marker.content = '{';
+  assert.equal(readPrePlayReadiness(document).ready, false);
+  document.body.dataset.pictureState = 'ready';
+  assert.equal(readPrePlayReadiness(document).ready, true);
+  document.hidden = true;
+  assert.equal(readPrePlayReadiness(document).ready, false);
+  document.hidden = false;
+  document.body.dataset.flightState = 'running';
+  assert.equal(readPrePlayReadiness(document).ready, false);
+  document.body.dataset.flightState = 'briefing';
+  controls.get('#start-button').visibility = 'hidden';
+  assert.equal(readPrePlayReadiness(document).ready, false);
 });
 
 test('pre-play calibration keeps unstable, incomplete and active windows provisional', () => {
