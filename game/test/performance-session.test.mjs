@@ -177,3 +177,95 @@ test('disabled collection is inert and resource inspection runs only on explicit
   assert.equal(data.phases.playing.durationMs, 16);
   assert.equal(snapshots, 2);
 });
+
+test('event witnesses keep chronological bounded rows and explicit omitted counts by kind', () => {
+  let now = 0;
+  const session = createPerformanceSession({ now: () => now });
+  session.setPhase('playing');
+  for (let i = 0; i < 300; i++)
+    session.markEvent(i % 2 ? 'capture-accepted' : 'run-adopted', 1 + Math.floor(i / 10), i, ++now);
+  const data = session.export({ paused: true });
+  assert.equal(data.frames.count, 0, 'Event witnesses must not invent frame observations');
+  assert.equal(data.eventWitnesses.total, 300);
+  assert.equal(data.eventWitnesses.retained, 256);
+  assert.equal(data.eventWitnesses.omitted, 44);
+  assert.equal(data.eventWitnesses.rejected, 0);
+  assert.deepEqual(data.eventWitnesses.recent[0], {
+    atMs: 45,
+    kind: 'run-adopted',
+    runGeneration: 5,
+    tick: 44,
+    phase: 'playing',
+  });
+  assert.equal(data.eventWitnesses.recent.at(-1).atMs, 300);
+  assert.deepEqual(data.eventWitnesses.byKind['capture-accepted'], {
+    total: 150,
+    retained: 128,
+    omitted: 22,
+  });
+});
+
+test('event witnesses reject invalid observations and disabled collection reads no clock', () => {
+  let reads = 0;
+  const session = createPerformanceSession({
+    now: () => {
+      reads++;
+      return 10;
+    },
+  });
+  session.markEvent('run-adopted', 1, 0, 10);
+  session.markEvent('capture-accepted', 1, 10, 10);
+  for (const args of [
+    ['unknown', 1, 10, 11],
+    ['capture-accepted', 0, 10, 11],
+    ['capture-accepted', 1.5, 10, 11],
+    ['capture-accepted', Number.MAX_SAFE_INTEGER + 1, 10, 11],
+    ['capture-accepted', 1, -1, 11],
+    ['capture-accepted', 1, 1.5, 11],
+    ['capture-accepted', 1, 10, NaN],
+    ['capture-accepted', 1, 10, Infinity],
+    ['capture-accepted', 1, 10, -1],
+    ['capture-accepted', 1, 10, 9],
+  ])
+    session.markEvent(...args);
+  const before = session.export({ paused: true }).eventWitnesses;
+  assert.equal(before.total, 2, 'Equal timestamps retain their insertion order');
+  assert.equal(before.rejected, 10);
+  session.setEnabled(false);
+  const previousReads = reads;
+  session.markEvent('victory-accepted', 1, 11);
+  session.markEvent('unknown', -1, -1);
+  assert.equal(reads, previousReads);
+  assert.deepEqual(session.export({ paused: true }).eventWitnesses, before);
+});
+
+test('terminal witnesses do not reclassify prior-playing hitches or manufacture successful work', () => {
+  let now = 0;
+  const ordinary = createPerformanceSession({ now: () => now });
+  const observed = createPerformanceSession({ now: () => now });
+  for (const session of [ordinary, observed]) {
+    session.setPhase('playing');
+    session.recordFrame(16, 1, 1);
+  }
+  observed.markEvent('run-adopted', 1, 0, 0);
+  observed.markEvent('capture-accepted', 1, 30, 100);
+  observed.markEvent('victory-accepted', 1, 30, 100);
+  observed.markEvent('terminal-work-begin', 1, 30, 101);
+  // A failed terminal block has no end marker. Its original failure and the
+  // following delayed callback still belong to the existing prior phase.
+  for (const session of [ordinary, observed]) {
+    session.reportFailure('Terminal presentation failed', 120);
+    session.setPhase('error', 120);
+    session.recordFrame(216, 150, 2);
+  }
+  now = 216;
+  const expected = ordinary.export({ paused: true });
+  const actual = observed.export({ paused: true });
+  assert.equal(actual.phases.playing.frames.maxMs, 200);
+  assert.equal(actual.phases.playing.frames.over100ms, 1);
+  assert.equal(actual.eventWitnesses.byKind['terminal-work-end'].total, 0);
+  assert.deepEqual(actual.failures, expected.failures);
+  delete actual.eventWitnesses;
+  delete expected.eventWitnesses;
+  assert.deepEqual(actual, expected);
+});

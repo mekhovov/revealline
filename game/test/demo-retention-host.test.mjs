@@ -194,15 +194,49 @@ function assertRetained(document, checkpoint) {
   assert.equal(document.items[0].descriptor.campaignKey, campaignKey(campaign));
 }
 
+function observeWinningHostSerialization(t, page) {
+  let inHostFrame = false,
+    winningSerializations = 0;
+  const frame = page.frame;
+  t.mock.method(page, 'frame', (...args) => {
+    inHostFrame = true;
+    try {
+      return frame(...args);
+    } finally {
+      inHostFrame = false;
+    }
+  });
+  const stringify = JSON.stringify;
+  t.mock.method(JSON, 'stringify', (value, ...args) => {
+    // Observe the real replay byte-budget serialization, without replacing an
+    // exporter/validator. Reference replay checks outside host frames do not count.
+    if (
+      inHostFrame &&
+      value?.version === trace.version &&
+      value?.summary?.status === 'won' &&
+      Array.isArray(value?.segments)
+    )
+      winningSerializations++;
+    return stringify(value, ...args);
+  });
+  return () => winningSerializations;
+}
+
 test('mounted ordinary restored win is kept manually without enabling automatic collection', async (t) => {
   const f = await mountedFlight(t),
     { page, database, requests } = f;
+  const winningSerializations = observeWinningHostSerialization(t, page);
   assert.equal(page.$('demo-collect').checked, false);
   openKeep(page);
   assert.match(page.$('demo-keep-status').textContent, /Complete a normal run/);
   assert.deepEqual(requests, [], 'An unfinished Keep does not open the demo database.');
   page.doc.querySelector('[data-close="shell-workshop-dialog"]').click();
   const { checkpoint, earned } = await completeOrdinary(f);
+  assert.equal(
+    winningSerializations(),
+    0,
+    'Disabled automatic collection must not export a replay',
+  );
   assert.deepEqual(requests, [], 'A normal win does not silently opt into automatic collection.');
   assert.equal(page.storage.getItem(SETTINGS), null);
   openKeep(page);
@@ -219,6 +253,7 @@ test('mounted ordinary restored win is kept manually without enabling automatic 
 test('mounted ordinary restored win is retained automatically only after the real Settings opt-in', async (t) => {
   const f = await mountedFlight(t),
     { page, database, requests } = f;
+  const winningSerializations = observeWinningHostSerialization(t, page);
   setCollection(page, true);
   assert.deepEqual(
     requests,
@@ -226,6 +261,10 @@ test('mounted ordinary restored win is retained automatically only after the rea
     'Enabling collection does not create a cache before an eligible win.',
   );
   const { checkpoint, earned } = await completeOrdinary(f);
+  assert.ok(
+    winningSerializations() > 0,
+    'Enabled collection still serializes the real winning replay',
+  );
   await settle(() => database.allPuts.length === 1);
   assertRetained(await readCache(database), checkpoint);
   assert.equal(page.$('demo-keep-status').textContent, '', 'No manual Keep action was used.');
