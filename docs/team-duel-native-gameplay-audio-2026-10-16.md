@@ -70,12 +70,18 @@ native start/voice/decode joins, snapshot prefixes and exact candidate overlays.
 
 ## Duel: a witnessed semantic-cooldown gap
 
-The same candidate entered Duel Expedition through its ordinary page. An initial
+Both native Duel runs—the original negative observation and the corrected rerun
+below—used the manually entered, unrecognized `journey=versus-expedition-v1`.
+The valid route ID is `duel-expedition-v1`. Neither run adopted Duel Expedition;
+both actually ran the legacy catalogue's Orchard Crossing (`orchard-crossing`).
+The raw action logs retain their original mistaken Expedition labels. No
+Expedition-specific native pass is inferred.
+
+The original candidate entered ordinary Duel through its page. An initial
 picture preparation exposed Retry; the existing Retry control completed and
 enabled Start. The exact failure reason was not captured, so this is not labeled
 a diagnosed timeout. Expert, FPV actors, sound on and deliberate continuation
-remained selected. The actual first arena is `orchard-crossing`, three lives per
-seat and a 90-second race.
+remained selected, with three lives per seat and a 90-second race.
 
 The [cold](verification/team-duel-gameplay-audio-2026-10-16/duel-cold.json.gz) and
 [warm](verification/team-duel-gameplay-audio-2026-10-16/duel-warm.json.gz) receipts
@@ -138,8 +144,9 @@ and [offered-byte receipts](verification/team-duel-gameplay-audio-2026-10-16/cor
 retain their earlier response-prepared limitation; no baseline or performance
 result is inferred.
 
-Ordinary UI again selects Duel Expedition `orchard-crossing`, Expert, FPV actors,
-sound on, automatic Next/Retry off. The [cold checkpoint](verification/team-duel-gameplay-audio-2026-10-16/duel-corrected-cold.json.gz)
+The corrected rerun used the same unrecognized manually entered journey query
+and again ran the legacy Orchard Crossing arena through ordinary Duel controls:
+Expert, FPV actors, sound on, automatic Next/Retry off. The [cold checkpoint](verification/team-duel-gameplay-audio-2026-10-16/duel-corrected-cold.json.gz)
 has zero custom starts through 9.339 seconds after custom buffer `4639`'s
 decoded-and-hashed identity record. Same-byte bank `loss` is the different native
 buffer `38`. Both retain the exact 38,444-byte original SHA above and native
@@ -177,14 +184,153 @@ and the [native result image](verification/team-duel-gameplay-audio-2026-10-16/d
 retain successful and unsuccessful actions. The complete actual-host cohort
 passes all seven cases, without skips; its [retained result](verification/team-duel-gameplay-audio-2026-10-16/actual-host-final-seven.tap.gz)
 also covers capture, victory, cancellation and the legacy admission guard. The
-native run completes the WAV failure/recovery subtask. OGG/MP3 gameplay, acoustic
-listening and production/public/frozen acceptance remain separate.
+native run completes the WAV failure/recovery subtask. Ready OGG/MP3 gameplay,
+acoustic listening and production/public/frozen acceptance remain separate.
+
+## Earlier MP3 attempt: cold victory with unsuccessful replays
+
+A further bounded attempt uses the same corrected candidate `6e74a45`, genuine
+revision-107 compiler output and normal Team Originals `twin-landings` route.
+Standard, full teamwork, FPV actors and sound are selected; automatic Next and
+Retry remain off. Ordinary keyboard steering reaches a real **71.1% victory in
+0:22**, with two reserves. This is a gameplay result, not a balance or pressure
+qualification.
+
+The [cold receipt](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-cold.json.gz)
+retains delivery `2813`, containing `support.recharged`, `cells.claimed`,
+`cut.closed` and `run.completed` with status `won`. Its only recorded buffer-source
+start is bank pickup `2814`, buffer `17`. The observer does not wrap oscillator
+starts, so this does not establish silence or the absence of a procedural
+victory phrase. The custom MP3 buffer `2830`'s decoded-and-hashed identity is
+recorded 151 ms after that delivery: **32,600 original bytes**, SHA-256
+`cdee5b2980749d03f6c622c4438bbf068f7f24f2d7f4214835152929834ae891`,
+48 kHz, mono, 97,802 frames / 2.0375417 seconds. That interval includes hashing;
+it is not isolated native decoder latency.
+
+Ordinary Restart initially leaves the terminal screen unchanged under several
+pointer actions; keyboard Enter on the visible control starts the next attempt.
+Three later route attempts encounter the roaming enemy. The
+[intermediate](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-attempts.json.gz)
+and [final paused receipt](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-final.json.gz)
+contain no second victory and zero starts from custom buffer `2830`. They cannot
+qualify ready MP3 playback or diagnose ready-victory suppression. All cumulative
+event, start and identity prefixes match. The final receipt retains **30
+deliveries, 145 buffer starts and 68 decoded-and-hashed identities**. Its owner
+is paused with both pause flags true and a suspended context, not disposed or
+closed. The bounded hash queue drops **12 hashes** during the native bank burst;
+event/start/decode record drops and observer errors remain zero. The directly
+retained MP3 identity is unaffected, but this is not a complete hashed bank
+inventory. [Input attempts](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-actions.json.gz)
+and a [paused image](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-attempts.jpg)
+preserve the unsuccessful routes and focus attempts.
+
+For this audio-only attempt, exact regular Git members of the same candidate
+were materialized into a temporary development site. The
+[lossless member binding](verification/team-duel-gameplay-audio-2026-10-16/mp3-materialized-binding.json.gz)
+and [postflight verification](verification/team-duel-gameplay-audio-2026-10-16/mp3-materialized-postflight.json)
+verify the unchanged file set, byte lengths, SHA-256 and Git blob SHA-1 of all
+**2,179 members / 214,677,185 bytes**. This selected preview is not a complete
+site, release, production admission or performance transport. Its
+[HTTP log](verification/team-duel-gameplay-audio-2026-10-16/mp3-materialized-http.log.gz)
+has 716 requests; the only non-200 response is an unrelated `/favicon.ico` 404.
+Served-member identity alone does not prove browser consumption. The owned tab
+and server were closed/stopped afterward and browser visibility returned to
+false; no native context-closure receipt is inferred.
+
+That checkpoint leaves ready MP3 victory and actual OGG pickup gameplay open.
+The later observations below complete those targeted event cases; acoustic
+listening remains separate. The earlier unsuccessful attempts stay retained.
+
+## Native MP3: deliberate Restart and a ready victory
+
+A fresh same-candidate page initially remembers the next Shared returns mission.
+Its Stepping exchange picture is absent from this selected development preview;
+four ordinary preparation attempts return 404. These failures are retained in
+the [HTTP log](verification/team-duel-gameplay-audio-2026-10-16/mp3-gentle-http.log.gz)
+and [postflight](verification/team-duel-gameplay-audio-2026-10-16/mp3-gentle-postflight.json),
+not attributed to the complete game. Normal Settings selects Gentle and mission
+discovery returns to Twin landings, whose picture is present. All 2,179 preview
+members retain their exact bytes. No missing-artwork guard is bypassed.
+
+The route now preserves its real idle intervals rather than combining idle with
+outward steering, which changes the craft's position. The existing legal route
+guides ordinary keyboard commands; elapsed time and native enemy phases remain
+real. The first run reaches **74.2% / 0:20 / four reserves**. The
+[cold receipt](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-gentle-cold.json.gz)
+contains victory delivery `4881`; the selected MP3's native buffer is now `4898`,
+with the same original identity and native format above. It starts zero times
+through 13.394 seconds after the decoded-and-hashed identity record.
+
+After ordinary Restart, a second run reaches **73.8% / 0:20 / four reserves**.
+The [ready receipt](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-gentle-ready.json.gz)
+joins actual victory delivery `7421` to voice `victory`, board `solo`, source
+`7423` and exact custom buffer `4898`, with no fallback-bank identity. A separately
+owned support pickup remains in that batch. Exactly one custom MP3 source starts;
+the [29.882-second follow-up](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-gentle-followup.json.gz)
+adds no event or buffer start. There are two genuine victories and no downings.
+Prefixes match; the final receipt has **11 deliveries, 64 starts and 61
+decoded-and-hashed identities**. It explicitly retains **19 dropped hashes**;
+other record drops and observer errors are zero. This proves the targeted ready
+MP3 victory owner, without a complete bank or acoustic claim.
+
+[Input attempts](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-gentle-actions.json.gz)
+and the [second native victory image](verification/team-duel-gameplay-audio-2026-10-16/team-mp3-gentle-result.jpg)
+accompany the independent read-only source/buffer/prefix audit.
+
+## Native OGG: actual timed collection and a ready pickup
+
+The recognized historical `team-timed-originals` route selects Window exchange,
+Gentle, full teamwork, FPV actors and sound, with automatic Next/Retry off.
+Only after the MP3 phases, the development preview adds **13 exact same-candidate
+picture originals**. Its [member binding](verification/team-duel-gameplay-audio-2026-10-16/ogg-materialized-binding.json.gz)
+and [postflight](verification/team-duel-gameplay-audio-2026-10-16/ogg-materialized-postflight.json)
+verify all **2,192 regular members / 249,837,752 bytes**, including every earlier
+member, by length, SHA-256 and Git blob SHA-1. The
+[693-request log](verification/team-duel-gameplay-audio-2026-10-16/ogg-materialized-http.log.gz)
+has only 200/304 responses. No compiled output, gameplay code or approval changes.
+This remains a selected development preview, not a production or offline claim.
+
+Ordinary steering, screenshots and explicit pause/resume guide the craft onto the
+solid enemies-slow symbol. The [cold receipt](verification/team-duel-gameplay-audio-2026-10-16/team-ogg-cold.json.gz)
+records actual `powerup.collected` delivery `1733`, native bank `pickup-2` source
+`1734`. The selected custom OGG buffer `1736`'s decoded-and-hashed identity is
+recorded 14.8 ms later: **6,941 bytes**, SHA-256
+`c977fe249ff42d1c93a552b33abc13a8399df3879fa510475426e5c4bbac1da9`,
+48 kHz, stereo, 7,759 frames / 0.1616458333 seconds. No custom start occurs
+through the cold checkpoint, 16.530 seconds after that identity record. A later
+self-cross downs Player 1 and produces a warning, not terminal failure.
+
+After ordinary Restart, native route timing differs from the reference model;
+the visible safe ledge and solid symbol guide fresh keyboard directions. The
+[ready receipt](verification/team-duel-gameplay-audio-2026-10-16/team-ogg-ready.json.gz)
+joins the second actual `powerup.collected`, delivery `3378`, to custom `pickup`,
+board `solo`, source `3379`, exact buffer `1736` and an empty fallback-bank list.
+This is the only custom OGG start. `support.recharged` is not counted as collection.
+
+The ready snapshot has `gameplayPaused: true` while its general pause/context
+snapshot is still false/running. The later explicit observer refresh while the
+game remains visibly paused records both pause flags true and a suspended
+context. This [25.400-second follow-up](verification/team-duel-gameplay-audio-2026-10-16/team-ogg-followup.json.gz)
+adds no event or start: **20 deliveries, 101 starts and 35 decoded-and-hashed
+identities**. All prefixes match; **45 dropped hashes** remain explicit, with
+other record drops/errors zero. No instantaneous context-suspension inference
+is made from the earlier snapshot.
+
+[Input attempts](verification/team-duel-gameplay-audio-2026-10-16/team-ogg-actions.json.gz),
+the [cold approach](verification/team-duel-gameplay-audio-2026-10-16/team-ogg-cold-approach.jpg),
+[cold correction](verification/team-duel-gameplay-audio-2026-10-16/team-ogg-cold-near.jpg),
+[warm safe ledge](verification/team-duel-gameplay-audio-2026-10-16/team-ogg-warm-start.jpg),
+[warm approach](verification/team-duel-gameplay-audio-2026-10-16/team-ogg-warm-near.jpg)
+and [paused collection image](verification/team-duel-gameplay-audio-2026-10-16/team-ogg-result.jpg)
+retain the actual route adjustments. Independent review confirms the joins,
+unique start and unchanged follow-up. This closes the shared Team OGG collection
+sample, not native OGG for each seat or every codec/cue combination.
 
 ## Observation boundaries
 
 The raw native JSON reports and input-attempt receipts are retained as lossless
 gzip files. [Original-byte pins](verification/team-duel-gameplay-audio-2026-10-16/raw-observation-pins.json)
-record each original name, byte count and SHA-256; all 13 round-trip to the exact
+record each original name, byte count and SHA-256; all 25 round-trip to the exact
 captured bytes. Compression changes no observation or source-admission claim.
 
 The development hook installs in the game's own realm before the ordinary host
@@ -195,8 +341,11 @@ Records, source identities, byte hashing and publication are bounded. Same-origi
 source checks protect the outer observer. Nine adapter regressions and all 61
 combined observer/routing cases pass, without skips.
 
-All native records have zero dropped events/starts/decodes/hashes or observer
-errors. The temporary tabs and all owned helper attempts were closed/stopped.
+The earlier WAV runs have zero dropped records, hashes or observer errors. The
+later MP3/OGG phases explicitly retain their 12/19/45 dropped bank hashes above;
+their event, start and decode records and observer errors have no drops. The
+selected custom originals all have exact native identity receipts. The temporary
+tabs and all owned helper attempts were closed/stopped; visibility returned to false.
 There is no native context-closure receipt; source lifecycle tests retain that
 separate coverage. No acoustic clarity, mono/headphone, all-codec gameplay,
 controller, sustained-pressure, public installation or frozen-release acceptance

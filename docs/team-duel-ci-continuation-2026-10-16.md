@@ -4,6 +4,32 @@ The [reviewed continuation plan](team-duel-plan-continuation-2026-10-16.md) reco
 the latest main integration, original-byte/worker corrections and additional
 gameplay-host/observer work. The older results below retain their actual sources.
 
+## Completed hosted source checkpoint
+
+At exact source `85b2fd4f4b11e828947317400528d1e9bbd48f45`, all **14 selected
+hosted checks pass**: focused verification, its scoped release-ready summary,
+all six industrial feature jobs, appearance, candidate, optional practice,
+preflight, utility verification and reconciliation. The
+[retained binding](verification/team-duel-gameplay-audio-2026-10-16/hosted-85b2-binding.json),
+[check inventory](verification/team-duel-gameplay-audio-2026-10-16/hosted-85b2-checks.json)
+and [lossless focused log](verification/team-duel-gameplay-audio-2026-10-16/hosted-85b2-focused.log.gz)
+record that exact scope.
+
+The full real-source external case passes in **743.535 seconds**, including all
+32 exact original bodies, selected Production originals/provenance, loose/ZIP/
+manifest checks, worker ownership, core budgets and the installed-capacity tail.
+The final combined focused cohort passes **1,354/1,354**, with no failures or
+skips. Other selected cohorts also execute; these overlapping counts are not a
+whole-repository total. Later documentation and native codec receipts do not
+retroactively change the measured source or grant a later head its own CI pass.
+
+Broad test, broad build and full-evidence assembly are the **three skipped
+checks**, under the existing explicit fast-release policy. The scoped job named
+`release-ready` does not supply the missing required full release authorities,
+source-admission decision, canonical frozen artifact or native capacity approval.
+Those release boundaries remain open. The following sections retain the earlier
+failures and repairs that led to this completed source checkpoint.
+
 This continues the [acceptance register](team-duel-qualification-2026-10-15.md)
 and [PR #1496](https://github.com/mekhovov/revealline/pull/1496). The branch
 rebased without conflicts onto fetched main `b11745223`; the replayed checkpoint

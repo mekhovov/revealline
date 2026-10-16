@@ -118,9 +118,49 @@
       "sha256": "71936aa0f25733ee6a87340f53fa3f65113fb3ce99c6cf3cc7de8e2bd0e5c49e"
     },
     {
+      "path": "hosted-85b2-binding.json",
+      "bytes": 997,
+      "sha256": "ffe2485d87fb0831af789b7143c06bd7a17499a247d8382d211e743d221ad7ec"
+    },
+    {
+      "path": "hosted-85b2-checks.json",
+      "bytes": 2655,
+      "sha256": "8dccb0cbe5c3386894bde4b042eee98451f8ddb88edb5ade2684a3c1a816d641"
+    },
+    {
+      "path": "hosted-85b2-focused.log.gz",
+      "bytes": 202474,
+      "sha256": "c5fa96918d4a1bc3a7611fd412065c2d001926bfff629f9fc1534d1cce0450a7"
+    },
+    {
       "path": "local-review-candidate.bundle",
       "bytes": 110696,
       "sha256": "5b3bf7911c7ad7405f27c306d82b35771926731285ec09c83234e4e4dc514fd5"
+    },
+    {
+      "path": "mp3-gentle-http.log.gz",
+      "bytes": 8981,
+      "sha256": "ad1876ee5c9992ac127a47af544da46ddb88563c6f870076e79fff8ab9a6fb6c"
+    },
+    {
+      "path": "mp3-gentle-postflight.json",
+      "bytes": 1284,
+      "sha256": "19a2bd746ebc96818ee4fedd110f28280cd97ad00fe80fb680bcdec4f8007b1e"
+    },
+    {
+      "path": "mp3-materialized-binding.json.gz",
+      "bytes": 165174,
+      "sha256": "e67ea9ba5817806f859d6c7d6cab66904c665ba094d48e8009be6f5c0819a31b"
+    },
+    {
+      "path": "mp3-materialized-http.log.gz",
+      "bytes": 9119,
+      "sha256": "871c7137b7b03bd3f02e6de8d3a889d342308bb22f51d5999faf67eb500fa844"
+    },
+    {
+      "path": "mp3-materialized-postflight.json",
+      "bytes": 1155,
+      "sha256": "a564f987618f6f6992df346241890bbfc92dccce50ec635a5e9c14bb6f2d98fa"
     },
     {
       "path": "native-impact-host-red-valid.tap.gz",
@@ -148,9 +188,24 @@
       "sha256": "e6222ce2c5e795dd8188d6206807ceb70b3652f61d5a5abc172bf84efaa91670"
     },
     {
+      "path": "ogg-materialized-binding.json.gz",
+      "bytes": 166443,
+      "sha256": "a36effc689aea0874aaeebbf050f6ea862d46d1bb76e15acd9effc5532ef68c4"
+    },
+    {
+      "path": "ogg-materialized-http.log.gz",
+      "bytes": 8874,
+      "sha256": "fb0073818bd746d33bc4575459ba788913f7bc75c9692fd18ff70907a714322f"
+    },
+    {
+      "path": "ogg-materialized-postflight.json",
+      "bytes": 2048,
+      "sha256": "db8691b0bd4868f062b447ec524131689f99e288ef62fa220a3480ac1133e4a4"
+    },
+    {
       "path": "raw-observation-pins.json",
-      "bytes": 3139,
-      "sha256": "47d01c17c3bb589353e934b665365df2aa144cfcac9cbca85b092965aa0cb428"
+      "bytes": 5846,
+      "sha256": "46dfe35310228cc4b0984af85138a298a0af5afa5b98c2f4d7c44cea4c0c105e"
     },
     {
       "path": "studio-line-impact-audio-cohort.log.gz",
@@ -176,6 +231,101 @@
       "path": "team-cold.json.gz",
       "bytes": 7678,
       "sha256": "fc45069f7e15198c2c4a726d4da048701ede67a5b822f16b21873f4dc9bbeb83"
+    },
+    {
+      "path": "team-mp3-actions.json.gz",
+      "bytes": 1145,
+      "sha256": "60536b31094ac582ab4901d3109d4791a56d3aff3fbe936f7dd7a826fb846ce3"
+    },
+    {
+      "path": "team-mp3-attempts.jpg",
+      "bytes": 90853,
+      "sha256": "de33bf793a11efe17d97dade8493a5770d89be9626421e72d11e7b311da835e8"
+    },
+    {
+      "path": "team-mp3-attempts.json.gz",
+      "bytes": 10487,
+      "sha256": "dee2b46de4174d3dfb27602f6efe139edfd7c382e9a0b5776f7039a09a1dc39c"
+    },
+    {
+      "path": "team-mp3-cold.json.gz",
+      "bytes": 7148,
+      "sha256": "263f3c2f2567c380c5ff308ea72e45e87ab5f3b6733a3f5760d11c4f569d5850"
+    },
+    {
+      "path": "team-mp3-final.json.gz",
+      "bytes": 11176,
+      "sha256": "4891cac5b32152e55490f0cc6ff90d47033c4f49c54cdd3887447392c70006bd"
+    },
+    {
+      "path": "team-mp3-gentle-actions.json.gz",
+      "bytes": 701,
+      "sha256": "4dcb7bdf7fd4423e55004b73d0e9a2abb0faf350cbc6e016baae2b02e5b46b30"
+    },
+    {
+      "path": "team-mp3-gentle-cold.json.gz",
+      "bytes": 6725,
+      "sha256": "3e8459bb264c1c12f0bc79406ca5cd243fc08249df54d7841e0a8d919edd7801"
+    },
+    {
+      "path": "team-mp3-gentle-followup.json.gz",
+      "bytes": 7789,
+      "sha256": "984f6f76b2c91b07f92cac7e3830794c89162af3c8ed45fcb5a7aab9d42a7c87"
+    },
+    {
+      "path": "team-mp3-gentle-ready.json.gz",
+      "bytes": 7791,
+      "sha256": "3f44002d6da70535e01604f1c529dd8e8ec2523cef4288123107e5a7a2b61f58"
+    },
+    {
+      "path": "team-mp3-gentle-result.jpg",
+      "bytes": 105579,
+      "sha256": "72d721b7aaf511c1e3d1f510fdf62b5911b410aef1252974f183de29ad04af2d"
+    },
+    {
+      "path": "team-ogg-actions.json.gz",
+      "bytes": 916,
+      "sha256": "4793c60f21c4cead43587d2f90b4ec9bf25f9abee5e8ca31445c7cfc7074f993"
+    },
+    {
+      "path": "team-ogg-cold-approach.jpg",
+      "bytes": 98722,
+      "sha256": "e50c3e83cbf1fa8c98c0f102dc9ebe0e9dc477d33379ef30c5e6ba283ca370cf"
+    },
+    {
+      "path": "team-ogg-cold-near.jpg",
+      "bytes": 98772,
+      "sha256": "7fe7ec3f2914d6bd933d048632235b0e2c0ef261a7b62545259313abd9f1214b"
+    },
+    {
+      "path": "team-ogg-cold.json.gz",
+      "bytes": 5773,
+      "sha256": "967d4226bd3f357ad64f0560cd0be9436d2fa5f135edd6eb874125a7c0795d16"
+    },
+    {
+      "path": "team-ogg-followup.json.gz",
+      "bytes": 7046,
+      "sha256": "ff8904ed334ffa812255e03103981e86447c53273bca931a1f8a906d2d37e6e6"
+    },
+    {
+      "path": "team-ogg-ready.json.gz",
+      "bytes": 7037,
+      "sha256": "8ebb2ae19d5a461b9c34c35cd573edd48b9bf3c3c786152915fa69674580bab8"
+    },
+    {
+      "path": "team-ogg-result.jpg",
+      "bytes": 98885,
+      "sha256": "c8b197998a2698818bd803a1cf4ff649d91bf025e37afd05aeb28f144fc8c37c"
+    },
+    {
+      "path": "team-ogg-warm-near.jpg",
+      "bytes": 98660,
+      "sha256": "7c24b045b5463ace95c492c25a93c46dfe63aa9c5f8446a19a1bfcdc50205f4f"
+    },
+    {
+      "path": "team-ogg-warm-start.jpg",
+      "bytes": 102828,
+      "sha256": "061d28af11579c0159fa6e782012e1491bb9f4cbd10734f85ff4d61bcbf7b498"
     },
     {
       "path": "team-ready.json.gz",
