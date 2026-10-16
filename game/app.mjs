@@ -3782,6 +3782,7 @@ try {
     },
   });
   function clearInput({ preserveNavigation = false, resetDirection = false } = {}) {
+    fieldScene?.resetTitleQuality();
     sceneClock.reset();
     performanceSession?.discardInputs();
     inputTokenCount = inputAppliedCount = 0;
@@ -12558,6 +12559,8 @@ try {
       this.renderSuppressed = false;
       this.readyFrames = new Float64Array(30);
       this.readyCount = 0;
+      this.observedTitleOwner = null;
+      this.frameTitleQuality = null;
       this.lastInterfaceAt = -Infinity;
       this.lastInterfaceRun = null;
       this.lastInterfaceStatus = null;
@@ -12607,6 +12610,7 @@ try {
         };
       });
       window.addEventListener('pagehide', (event) => {
+        this.resetTitleQuality();
         sceneClock.reset();
         performanceSession?.discardInputs();
         performanceSession?.setPhase('hidden');
@@ -12686,6 +12690,24 @@ try {
       renderer.config.clearBeforeRender = false;
       camera.visible = false;
     }
+    titleQualityOwner() {
+      if (
+        document.hidden ||
+        !document.hasFocus() ||
+        demoHost?.active ||
+        pictureResume ||
+        preparationOperation ||
+        pictureThemePending ||
+        rendererLost.size
+      )
+        return null;
+      const owner = gameShell?.qualityObservationOwner;
+      return owner && controllerDialog() === $('shell-home') ? owner : null;
+    }
+    resetTitleQuality() {
+      if (this.observedTitleOwner) qualityPolicy.safeTransition(performance.now());
+      this.observedTitleOwner = this.frameTitleQuality = null;
+    }
     beginFrame() {
       // A failed/aborted renderer may not emit POST_RENDER.
       this.restoreDisplayRender();
@@ -12744,6 +12766,14 @@ try {
           (this.frameDemoPractice && this.frameDemoPractice === demoHost?.qualityPracticeOwner)
         )
           qualityPolicy.observe(this.frameNow, this.frameRawMs, workMs);
+        else if (
+          this.frameTitleQuality &&
+          this.frameTitleQuality === this.observedTitleOwner &&
+          this.frameTitleQuality === this.titleQualityOwner()
+        )
+          qualityPolicy.observe(this.frameNow, this.frameRawMs, workMs, true);
+        else if (this.observedTitleOwner && this.observedTitleOwner !== this.titleQualityOwner())
+          this.resetTitleQuality();
         performanceSession?.recordFrame(
           this.frameNow,
           this.frameUpdateMs,
@@ -12753,6 +12783,7 @@ try {
           workMs,
         );
       }
+      gameShell?.setQuality(qualityPolicy.snapshot().tier);
       if (!visibleBoard || !this.pendingSubmission || this.submittedRun !== run) return;
       const count = Math.min(this.submittedInputCount, inputAppliedCount, inputTokenCount);
       for (let i = 0; i < count; i++) performanceSession?.rendered(inputTokens[i], submittedAt);
@@ -12900,6 +12931,12 @@ try {
         drawMs = 0;
       const foreground = !document.hidden && document.hasFocus();
       const demoPractice = demoHost?.qualityPracticeOwner ?? null;
+      const titleOwner = this.titleQualityOwner();
+      const titleQuality = titleOwner && titleOwner === this.observedTitleOwner ? titleOwner : null;
+      if (titleOwner !== this.observedTitleOwner) {
+        qualityPolicy.safeTransition(now);
+        this.observedTitleOwner = titleOwner;
+      }
       if (foreground)
         qualityPolicy.setReducedPreference(displayPreferences.snapshot().effectiveReducedEffects);
       const active = foreground && started && !paused && !dialogOpen() && !rendererLost.size;
@@ -12996,6 +13033,7 @@ try {
         this.frameRawMs = rawMs;
         this.frameActive = active;
         this.frameDemoPractice = demoPractice;
+        this.frameTitleQuality = titleQuality;
         this.frameUpdateMs = updateMs;
         this.frameDrawMs = drawMs;
         this.frameHudMs = hudWorkMs;
