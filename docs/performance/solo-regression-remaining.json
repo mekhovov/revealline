@@ -1,5 +1,5 @@
 {
-  "format": "SoloRemainingRegressionManifestV1",
+  "format": "SoloRemainingRegressionManifestV2",
   "purpose": "Temporary tests-only remote continuation of the exact715 unstarted files. This is not release qualification or a passing verdict.",
   "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
   "sourceHeadAtPreparation": "4f9db963b0966f98a707f130363247a222c9e861",
@@ -42,8 +42,7 @@
     ],
     "scope": "Already-proven later additions remain separate evidence; they are not silently inserted into the715 continuation."
   },
-  "shardCount": 4,
-  "sharding": "Sort files lexicographically, then index modulo4 equals shard-1. Each selected file is run once in its own serial Node process.",
+  "sharding": "Sort the unchanged715 files lexicographically, then index modulo36 equals batch-1. Each batch has at most20 files; each file runs once serially. Checkpoint artifacts are retained after every5 selected files.",
   "files": [
     {
       "path": "game/test/candidate-versus-host.test.mjs",
@@ -6098,5 +6097,18 @@
       "game/test/whole-timed-candidates.test.mjs"
     ],
     "scope": "Exact file-path projections from the retained raw inventory and completed ledger identified above. Remote validation proves this committed partition and current file bytes; the original full ledger remains separately retained and is not synthesized as a remote test result."
+  },
+  "batchCount": 36,
+  "maxFilesPerBatch": 20,
+  "checkpointFiles": 5,
+  "previousInterruptedRun": {
+    "runId": 38862753875,
+    "runAttempt": 1,
+    "sourceRevision": "252ed90948f6b9303da31e1064ee728e558d34d1",
+    "manifestSHA256": "1d4066517241e9ba21b6cd80d7eb4dd01139ff8995fca259540dfa1900e27597",
+    "jobs": [116848576321, 116848576144, 116848576416, 116848576586],
+    "artifactCount": 0,
+    "verifiedFilesExcluded": [],
+    "scope": "All four runners reported shutdown and skipped artifact upload. Console-only partial outcomes remain historical evidence and grant no coverage credit. All715 files remain selected; no large-shard rerun is used."
   }
 }
