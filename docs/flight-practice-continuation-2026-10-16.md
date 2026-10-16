@@ -35,6 +35,25 @@ fractional visual measurements; [MDN](https://developer.mozilla.org/en-US/docs/W
 documents the integer layout height. The tolerance is our explicit observation
 precision policy, not a standard-mandated accessibility allowance.
 
+The fresh v2 run at `e63621860d11364f17cef186ce1ef8d1d86b5337` passes all six
+cases, including actual EN/UK return-document language, source rechecks, zoom
+reset and complete owned cleanup. Its **overall result remains failed**: the
+aggregate gate incorrectly requires zero source-preview request failures. The
+only failures are twelve absent generated `/revealline/game/build-info.json`
+probes and one browser `/favicon.ico` probe outside the fixture root.
+[Unchanged v2 originals](flight-practice-continuation-20261016/native-c9-e636-failed-originals.tgz)
+SHA-256: `1c81725c60fc4c0d6ffcf1d8c8b724e8f9d7da2ec9b55a5d72b79bf5e50ffbf4`.
+
+V3 preserves every raw failure and separately classifies only those exact
+path/message pairs, at most twelve each, in this non-production source-shell
+lane. Generated identity absence is bound to the committed tree; nothing is
+fabricated. Every other failure remains blocking, including package assets,
+altered paths/reasons and production requests. Classification repeats after
+pending work settles. Main startup explicitly supports this development
+fallback; release/profile recovery still requires built metadata and is not
+qualified by this exception. Twenty-four focused tool regressions pass; the
+fresh v3 matrix remains required, not inferred from the retained v2 case passes.
+
 ### Production journey and fresh-candidate offline/update checks pass
 
 Observer `88867270621a9d59f8041056e2653d21421ad374`, tree
