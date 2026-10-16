@@ -2,6 +2,15 @@
 
 ## Decision boundary and current baseline
 
+**16 October populated-world continuation:** [exact restart evidence](flight-practice-world-restart-2026-10-16.md)
+passes nine installation/recovery checkpoints plus five unchanged nonempty World
+project/card witnesses across offline launcher, standalone-window and persistent-
+browser restart. The initial reader-expression failure and passing correction are
+both retained. This does not measure offline flight or imported assets, and its
+same-payload path update remains separate from C5. A genuine older candidate now
+reproduces under historical policy; current admission correctly rejects its older
+contract, so a pinned diagnostic historical verifier/UI adapter is the next C5 step.
+
 **16 October result-action continuation:** one native Academy keyboard
 completion/export/exact-package replay now passes with clean shutdown on the
 guide-inclusive `80a32d6a9` candidate. The shared result-row repair preserves its
@@ -274,6 +283,14 @@ workaround is not first-pointer acceptance. A current pointer failure gets its
 own issue/evidence and SIM/UI ownership, not a hidden observer workaround.
 
 ### C4 — Three-app preparation, closed windows, process restart and full-network offline
+
+Progress: the `90d8443b2` candidate passes the existing nine-checkpoint
+installation/recovery journey with five additional exact nonempty World project,
+revision, metadata and card witnesses through offline browser/standalone restarts.
+See the 16 October report above for the failed first attempt, hash-pinned readonly
+instrumentation, status-diagnostic effect and same-payload Academy path fixture.
+Deliberate offline flight/pause, imported assets/content and machine-wide network
+loss remain unmeasured; do not mark all of C4 closed.
 
 1. Through public UI prepare all three apps. Record progress, terminal readiness,
    exact owning worker scopes and cached dependency verification. Export an FPV
