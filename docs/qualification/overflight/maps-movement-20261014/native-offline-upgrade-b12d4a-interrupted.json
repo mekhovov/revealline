@@ -1,0 +1,10 @@
+{
+  "status": "interrupted-before-preparation-completed",
+  "at": "2026-10-14T15:52:03.415Z",
+  "candidate": "b12d4a1346786ba38bd707e008110a549a1bea7e",
+  "reason": "Parent requested reopening source freeze to fix the native Creator Install and play operation-routing defect.",
+  "process": 94357,
+  "action": "Sent SIGTERM only to owned second-generation preparation; existing8935 and8936 hosts left alive.",
+  "output": "No generated manifest/report or upgrade server was produced; no validation pass claimed.",
+  "log": "native-offline-upgrade-b12d4a-interrupted.log"
+}

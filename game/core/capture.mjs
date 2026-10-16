@@ -1,3 +1,4 @@
+import { coverageCellCount } from './coverage.mjs';
 import { CELL } from './registry.mjs';
 import { EPS, capsuleTime, pointAt } from './geometry.mjs';
 import { ownershipSpans, cellIndex } from './movement.mjs';
@@ -6,6 +7,7 @@ import { classicClaim, updateClassicAnchors } from './classic-topology.mjs';
 import { retainedCaptureCells } from './capture-regions.mjs';
 import { openCapturedRelays } from './relay-gates.mjs';
 import { captureCombatPatrols } from './combat-patrols.mjs';
+import { recordSnakeReturn } from '../snake/rules.mjs';
 
 export function tracePlan(state, paths, duration) {
   const additions = [],
@@ -152,7 +154,7 @@ function captureCells(state, releaseSeed, closeCut) {
         secured.push(i);
       }
     }
-  state.claimedCount += secured.length;
+  state.claimedCount += coverageCellCount(state, secured);
   state.coverage = state.claimedCount / state.totalClaimable;
   state.score +=
     (state.classic ? classicClaim(state, secured) : secured.length) * state.rules.pointsPerCell;
@@ -192,6 +194,7 @@ function captureCells(state, releaseSeed, closeCut) {
     }
   openCapturedRelays(state);
   captureCombatPatrols(state);
+  if (closeCut) recordSnakeReturn(state, 0);
   if (state.classic) updateClassicAnchors(state);
 }
 

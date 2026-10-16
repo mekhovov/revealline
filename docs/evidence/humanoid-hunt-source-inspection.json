@@ -1,0 +1,51 @@
+{
+  "format": "revealline-hunt-inspection-summary.v1",
+  "version": "0.142.4",
+  "sourceRevision": "3a807dccd168dd18006157201091db62ddd261f4",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "publicationAssessment": "not-performed",
+  "payloadBytesIncludingManifest": 966575137,
+  "manifestDescriptor": {
+    "path": "manifest.json",
+    "bytes": 417476,
+    "sha256": "8db90b6d8f9d195f71669c48b09f96ff1a5195a94246248211984ffa62e5716c"
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "sourceTree": "f2bcf0ff8d7176fac62e39fabcbd7db7986aa65c",
+  "includedInputs": {
+    "format": "revealline-default-build-inputs.v1",
+    "sourceRevision": "3a807dccd168dd18006157201091db62ddd261f4",
+    "sourceTree": "f2bcf0ff8d7176fac62e39fabcbd7db7986aa65c",
+    "files": 2634,
+    "bytes": 755137122,
+    "note": "Included originals only; transitive producer inputs are checked by normal build preparation."
+  },
+  "availableCommittedSources": {
+    "files": 23672,
+    "bytes": 2230980096,
+    "absentTrackedFiles": 0,
+    "inventorySha256": "0dde4a3d59810af570ebec05831484ee6753aefe02f53f4644be007a58f5b81b"
+  },
+  "sourceEligibility": {
+    "status": "verified",
+    "format": "revealline-public-source-eligibility.v1",
+    "files": 23672,
+    "assets": 346
+  },
+  "includedInputsVerified": true,
+  "availableCommittedSourcesVerified": true,
+  "reproducibleBuilds": 0,
+  "note": "One normal build preparation, without ZIP or expanded-site writes. Not frozen release, archive verification, human review or whole-site qualification.",
+  "preparedFiles": 2798,
+  "fullReport": {
+    "bytes": 542384,
+    "sha256": "65467edc0c36b98c4cbf6c1033717838a8dbddfa24f480df878a61c5b7d9d3c5",
+    "inspectionFormat": "revealline-default-build-inspection.v1"
+  }
+}

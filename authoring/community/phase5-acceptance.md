@@ -1,9 +1,10 @@
-# Phase 5 acceptance — stacked service/client candidate, not released
+# Phase 5 acceptance — released local client/service source and deployment follow-ups
 
-Status: the community catalog client is stacked on the completed Phase 4 service candidate. The
-network boundary is exercised through the real Fastify application with its in-memory repository
-and blob store. No community deployment, public catalog or production account provider is claimed
-by this candidate.
+Status: the community catalog client and service source shipped in `v0.141.0`. The network boundary
+is exercised through the real Fastify application with its in-memory repository and blob store.
+The published `v0.141.2` hardening release adds the administrator report-triage page, deployment
+preflight, recovery rehearsal, interrupted-tus fault proxy and deployed two-user acceptance runner.
+No community deployment, public catalog or production account provider is claimed by this record.
 
 ## Completed automated evidence
 
@@ -13,6 +14,11 @@ by this candidate.
   4 MiB. Remote listing text is inserted with DOM `textContent`.
 - Report and authenticated owner-unlist calls have separate adapters. Publication status validates
   every state and exposes published, rejected and unlisted as terminal outcomes.
+- The administrator client strictly validates paged report rows without accepting reporter
+  identity, normalizes bounded resolution/removal reasons, and checks that service response
+  identities match each request. The report page renders remote data as text, loads media only on
+  demand, and unlists before resolving so a partial failure leaves the safer public state and an
+  explicit retry path.
 - Every downloaded package is checked against the published byte count and SHA-256, then passes the
   existing `.rlpack`, compiler, replay and managed-storage review. Corrupt bytes cannot create an
   installed index.
@@ -30,11 +36,13 @@ by this candidate.
 - The service derives a stable `collectionId` from owner plus slug and returns its authoritative
   `latestEditionId` and `latestVersion`. Update discovery therefore does not group unrelated
   creators or depend on matching remote display text.
-- One cross-layer test drives the real Fastify routes through the production client: Alice uploads
-  and publishes two valid `.rlpack` editions, cursor pagination and search return the expected
-  immutable records, Player B's store downloads and installs exact validated bytes, a report is
-  accepted, Bob cannot unlist Alice's edition, Alice can, and the installed edition remains
-  offline-playable after public removal.
+- One cross-layer test drives the real Fastify routes through the production client: Creator A
+  publishes two valid `.rlpack` editions, cursor pagination and search return the expected immutable
+  records, and Player B discovers and installs the latest exact bytes. The modeled player saves an
+  unfinished attempt, the creator unlists the edition and the service shuts down, then a fresh
+  runtime restores and legally completes that attempt entirely offline. A reloaded profile retains
+  the exact clear and picture binding, and another offline run starts without a network request.
+  Reporting and cross-owner unlisting refusal remain in the same scenario.
 - The production browser boundary restores a same-origin Better Auth session and supports email
   sign-up, sign-in and sign-out without persisting credentials or session tokens. A real Better
   Auth memory-adapter session created through the browser client owns a submission, uploads exact
@@ -53,9 +61,12 @@ by this candidate.
   same-origin account/publish path is covered through Fastify and Better Auth in-process; a visible
   browser pass remains open.
 
-The focused Phase 5 store suite passes 11/11 scenarios and the account/tus browser boundary passes
-2/2 on Node 20.19.5. The Phase 4 service suite passes 21/21, including the real Better Auth
-browser-client scenario. Scoped ESLint, Prettier and diff checks are recorded on the final commit.
+The focused Phase 5 store suite and account/tus browser boundary are included in the combined
+creator/service acceptance counts recorded for `v0.141.0`. The Phase 4 service suite includes the
+real Better Auth browser-client scenario. The `v0.141.2` source suite passes **63/63** checks,
+including the moderation client/controller, exact 17-byte interrupted tus resume, redacted and
+immutable deployment receipts, strict owner-isolation response, source-to-target restore
+rehearsal, and the complete in-process two-user journey.
 
 ## Integrated service contract
 
@@ -66,20 +77,45 @@ creation/offset/chunk contract and treats only server responses as upload progre
 
 ## Remaining acceptance gates
 
-- Exercise Creator A publish → automatic validation → listing → Player B preview/install → legal win
-  → reload/offline play in a clean built-in-browser origin.
+The `v0.141.2` hardening release adds the fail-closed production Compose and readiness contract
+recorded in [deployment-acceptance.md](deployment-acceptance.md). This removes manual ordering and
+configuration ambiguity from the source deployment path. `npm run acceptance:tus-resume`,
+`npm run recovery:rehearse`, and `npm run acceptance:deployed` make the remaining rehearsals
+repeatable and produce bounded evidence, but they do not replace the live gates below.
+
+- Repeat Creator A publish → automatic validation → listing → Player B preview/install →
+  legal win → reload/offline play through the deployed same-origin service in a clean physical
+  browser profile. The modeled in-process integration now covers this behavioral chain but is not
+  deployed-browser evidence.
 - Exercise service restart, catalog outage, report, unlist and immutable update with the
   containerized PostgreSQL service. The browser and mounted server interruption/resume paths are
   independently covered; restart persistence still needs container acceptance.
-- Rehearse database/blob recovery and verify that an unlisted edition stays playable for players who
-  already installed its exact bytes.
-- Run hosted preflight/build/release-ready checks and publish only through the release coordinator.
+- Run `npm run recovery:rehearse` against a distinct disposable PostgreSQL/blob target, then verify
+  that an unlisted edition stays playable for players who already installed its exact bytes.
+- Exercise the report-triage page with a real administrator session against the deployed service,
+  including the retry state where unlisting succeeds but resolution is temporarily unavailable.
+- Release publication completed through PR #675 and selector PR #677. See
+  [v0.141.2-publication-evidence.md](v0.141.2-publication-evidence.md). This closes the source release
+  gate without claiming a live community-service deployment.
 
-Physical removal of installed managed-media bytes is outside this candidate. The current media store
-preserves historical references monotonically; the UI calls the implemented operation **Remove
-recovery download** and does not describe it as uninstall or runtime offloading.
+Reference-aware installed-media offload is implemented locally. **Offload installed media** first
+requires and revalidates the exact retained `.rlpack`, reconstructs the installed edition, and
+records an `offloading` journal before the managed-media commit. The commit keeps the immutable
+manifest and ownership keys, hides the edition from playable discovery, detaches only creator asset
+references unused by another active edition, and deletes a blob only when no managed domain retains
+its hash. **Reinstall exact edition** restores those bytes from the retained package without a
+network request. Focused tests cover unshared deletion, shared-asset retention, stale concurrent
+generation refusal, interrupted-journal recovery and exact offline reinstall. A physical browser
+offload/reinstall run passed in the built-in browser using an exact 810,180-byte local `.rlpack`.
+The catalog first showed Installed and Offline copy, then replaced Play with **Reinstall exact
+edition** after offload. Reinstall restored the same creator edition
+`6033108fe9e7acc279cb888b19cfccb7033aa9ce20999dc5213b58e282873467`, and its ordinary Custom player
+opened with **Start mission** enabled. This local browser evidence does not claim a deployed
+community service.
 
-The cross-layer test uses the in-memory repository and blob store. It does not qualify the Docker
-Compose topology, PostgreSQL migration on an existing volume, Better Auth account recovery,
-disk/S3 failover, or production backup/restore. Those operations remain
-deployment acceptance work and no AWS, domain, mail, or public-service availability is claimed.
+The cross-layer journey uses the in-memory repository and blob store with injected account tokens;
+it composes production client, runtime, storage and Fastify boundaries without claiming a physical
+browser or deployed service. It does not qualify the Docker Compose topology, PostgreSQL migration
+on an existing volume, Better Auth account recovery, disk/S3 failover, or production
+backup/restore. Those operations remain deployment acceptance work and no AWS, domain, mail, or
+public-service availability is claimed.

@@ -36,10 +36,16 @@ export function attachProfileRecoveryDialog({
   document: doc = globalThis.document,
   window: win = globalThis.window,
   currentVersion,
+  editionId,
+  heldWriter,
   packaged,
   resolveSourceVersion = () => currentVersion,
   unavailable = () => '',
   onOpen = () => {},
+  onClose = () => {},
+  isSettingsOpen = () => doc.getElementById('settings-dialog')?.open === true,
+  getOwner = () => null,
+  isOwnerCurrent = () => true,
   load = loadRuntime,
 } = {}) {
   const dialog = doc.getElementById('profile-recovery-dialog'),
@@ -48,12 +54,18 @@ export function attachProfileRecoveryDialog({
     status = doc.getElementById('profile-recovery-status'),
     entryStatus = doc.getElementById('profile-recovery-entry-status');
   const presenter = createOperationStatus(status);
-  let operation = null,
+  let disposed = false,
+    operation = null,
     closing = null;
-  const current = (value) => operation === value && !value.controller.signal.aborted;
+  const current = (value) =>
+    !disposed &&
+    operation === value &&
+    !value.controller.signal.aborted &&
+    isSettingsOpen() &&
+    isOwnerCurrent(value.owner);
   function refresh() {
     const reason = unavailable();
-    opener.disabled = !!operation || !!closing || !!reason;
+    opener.disabled = disposed || !!operation || !!closing || !!reason;
     localizedText(entryStatus, () => reason);
   }
   function close() {
@@ -82,10 +94,15 @@ export function attachProfileRecoveryDialog({
       closing = null;
       refresh();
       dialog.close();
+      onClose();
       if (
+        !disposed &&
         !doc.hidden &&
         doc.hasFocus?.() !== false &&
-        doc.getElementById('settings-dialog').open &&
+        isSettingsOpen() &&
+        isOwnerCurrent(active.owner) &&
+        opener.isConnected &&
+        !opener.closest('[hidden],[inert],[aria-hidden="true"]') &&
         !opener.disabled
       )
         opener.focus({ preventScroll: true });
@@ -98,10 +115,17 @@ export function attachProfileRecoveryDialog({
   }
   function open() {
     refresh();
-    if (opener.disabled || !doc.getElementById('settings-dialog').open)
-      return Promise.resolve(false);
+    if (opener.disabled || !isSettingsOpen()) return Promise.resolve(false);
+    const owner = getOwner();
     onOpen();
-    const active = { controller: new AbortController(), view: null, reader: null, ready: null };
+    if (disposed || !isSettingsOpen() || !isOwnerCurrent(owner)) return Promise.resolve(false);
+    const active = {
+      owner,
+      controller: new AbortController(),
+      view: null,
+      reader: null,
+      ready: null,
+    };
     operation = active;
     // Prior view handlers remain closed until a fresh reader is ready.
     back.onclick = close;
@@ -130,7 +154,7 @@ export function attachProfileRecoveryDialog({
         if (!current(active)) return;
         let recoveryCatalogs = [],
           catalogIssue = t('interface:openAPackagedReleaseToVerifyHistoricalOriginals');
-        if (packaged) {
+        if (packaged && !editionId) {
           const catalogController = new AbortController();
           const cancelCatalog = () => catalogController.abort(signal.reason);
           signal.addEventListener('abort', cancelCatalog, { once: true });
@@ -160,7 +184,11 @@ export function attachProfileRecoveryDialog({
           }
         }
         if (!current(active)) return;
-        active.reader = runtime.createReader({ currentVersion: version, recoveryCatalogs });
+        active.reader = runtime.createReader({
+          currentVersion: version,
+          recoveryCatalogs,
+          ...(editionId ? { editionId, heldWriter } : {}),
+        });
         active.view = runtime.attachView({
           document: doc,
           presenter,
@@ -199,5 +227,21 @@ export function attachProfileRecoveryDialog({
   win.addEventListener('blur', cancel);
   win.addEventListener('pagehide', close);
   refresh();
-  return { open, close, cancel, refresh };
+  return {
+    open,
+    close,
+    cancel,
+    refresh,
+    async dispose() {
+      if (disposed) return;
+      disposed = true;
+      dialog.removeEventListener('cancel', escape);
+      win.removeEventListener('blur', cancel);
+      win.removeEventListener('pagehide', close);
+      if (opener.onclick === open) opener.onclick = null;
+      if (back.onclick === close) back.onclick = null;
+      await close();
+      presenter.dispose();
+    },
+  };
 }

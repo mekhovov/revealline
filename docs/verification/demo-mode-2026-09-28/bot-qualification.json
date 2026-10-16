@@ -1,0 +1,169 @@
+{
+  "base": "a10fcbf8a",
+  "tuning": "gameplay-pressure.v4 / standard",
+  "limits": {
+    "candidates": 16,
+    "candidateTicks": 1200,
+    "totalTicks": 12000,
+    "watchdogMs": 1000
+  },
+  "qualification": "Exact normal-input playback and replay verification; route metrics are observed for these twelve qualified combinations, not guarantees for other content or devices.",
+  "cases": [
+    {
+      "level": "orchard-crossing",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 3540,
+      "status": "running",
+      "coverage": 0.514505119453925,
+      "captures": 5,
+      "bends": 7,
+      "endReason": "no-safe-macro",
+      "maxPlanningMs": 401
+    },
+    {
+      "level": "orchard-crossing",
+      "turnPolicy": "immediate",
+      "seed": 2,
+      "ticks": 3770,
+      "status": "won",
+      "coverage": 0.8528156996587031,
+      "captures": 4,
+      "bends": 5,
+      "endReason": null,
+      "maxPlanningMs": 348
+    },
+    {
+      "level": "orchard-crossing",
+      "turnPolicy": "immediate",
+      "seed": 3,
+      "ticks": 3919,
+      "status": "running",
+      "coverage": 0.47696245733788395,
+      "captures": 5,
+      "bends": 6,
+      "endReason": "no-safe-macro",
+      "maxPlanningMs": 320
+    },
+    {
+      "level": "orchard-crossing",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 6311,
+      "status": "won",
+      "coverage": 0.7892491467576792,
+      "captures": 10,
+      "bends": 13,
+      "endReason": null,
+      "maxPlanningMs": 339
+    },
+    {
+      "level": "orchard-crossing",
+      "turnPolicy": "grid-center",
+      "seed": 2,
+      "ticks": 6139,
+      "status": "won",
+      "coverage": 0.7039249146757679,
+      "captures": 9,
+      "bends": 10,
+      "endReason": null,
+      "maxPlanningMs": 381
+    },
+    {
+      "level": "orchard-crossing",
+      "turnPolicy": "grid-center",
+      "seed": 3,
+      "ticks": 5346,
+      "status": "won",
+      "coverage": 0.7414675767918089,
+      "captures": 6,
+      "bends": 10,
+      "endReason": null,
+      "maxPlanningMs": 399
+    },
+    {
+      "level": "courtyard-exits",
+      "turnPolicy": "immediate",
+      "seed": 1,
+      "ticks": 3837,
+      "status": "won",
+      "coverage": 0.7707612456747405,
+      "captures": 6,
+      "bends": 5,
+      "endReason": null,
+      "maxPlanningMs": 348
+    },
+    {
+      "level": "courtyard-exits",
+      "turnPolicy": "immediate",
+      "seed": 2,
+      "ticks": 5799,
+      "status": "won",
+      "coverage": 0.740484429065744,
+      "captures": 9,
+      "bends": 12,
+      "endReason": null,
+      "maxPlanningMs": 373
+    },
+    {
+      "level": "courtyard-exits",
+      "turnPolicy": "immediate",
+      "seed": 3,
+      "ticks": 2256,
+      "status": "running",
+      "coverage": 0.45501730103806226,
+      "captures": 3,
+      "bends": 2,
+      "endReason": "no-safe-macro",
+      "maxPlanningMs": 333
+    },
+    {
+      "level": "courtyard-exits",
+      "turnPolicy": "grid-center",
+      "seed": 1,
+      "ticks": 5969,
+      "status": "won",
+      "coverage": 0.7768166089965398,
+      "captures": 10,
+      "bends": 13,
+      "endReason": null,
+      "maxPlanningMs": 319
+    },
+    {
+      "level": "courtyard-exits",
+      "turnPolicy": "grid-center",
+      "seed": 2,
+      "ticks": 6246,
+      "status": "won",
+      "coverage": 0.8209342560553633,
+      "captures": 11,
+      "bends": 15,
+      "endReason": null,
+      "maxPlanningMs": 311
+    },
+    {
+      "level": "courtyard-exits",
+      "turnPolicy": "grid-center",
+      "seed": 3,
+      "ticks": 4687,
+      "status": "running",
+      "coverage": 0.6384083044982699,
+      "captures": 6,
+      "bends": 7,
+      "endReason": "no-safe-macro",
+      "maxPlanningMs": 325
+    }
+  ],
+  "checks": {
+    "mainSuite": {
+      "passed": 9,
+      "failed": 0
+    },
+    "addedStalePlanRegression": {
+      "passed": 1,
+      "failed": 0
+    },
+    "eslint": "passed",
+    "prettier": "passed"
+  }
+}

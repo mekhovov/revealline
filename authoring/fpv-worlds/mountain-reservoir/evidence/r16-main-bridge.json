@@ -1,0 +1,501 @@
+{
+  "format": "FPVReservoirR16MainBridge.v1",
+  "candidate": "0d38f4e8cf0c08c88beb765b897c99db11cf971b",
+  "base": "3bc7a923da2b7d50a6a675a91d5560005ad0f20d",
+  "preservedArt": "ce27b6159dc700c705b9aa95f218a779b8095771",
+  "admittedRuntime": "364fb78c3dc7e268b84b0a13349af32864bca802",
+  "checks": [
+    {
+      "name": "Exactly95 admitted paths",
+      "passed": true
+    },
+    {
+      "name": "game/data-json.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/encounter-display-preferences.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/fpv-entry.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/hunt/actor-art.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/hunt/actor-catalog.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/hunt/preferences.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/hunt/presentation-catalog.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/i18n/bootstrap.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/i18n/index.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/locales/en/errors.json exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/locales/en/interface.json exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/locales/uk/errors.json exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/locales/uk/interface.json exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/presentation/theme-system.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/profile-database.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/profile-storage.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/rewards/audio-groups.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/rewards/exploration.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/rewards/learning-profiles.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/rewards/model.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/rewards/store.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/ui/art/identity/fpv-line/wordmark.png exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/ui/art/menu-scenes/fpv-portrait.webp exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/ui/art/menu-scenes/fpv.webp exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/ui/native-menu-icons.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/ui/reward-knowledge.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/vendor/I18NEXT-LICENSE.txt exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "game/vendor/i18next-26.4.2.min.js exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/README.md exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/attempts.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/beginner-coach.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/catalogue.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/content-definitions.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/demonstrations.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-sectors.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/input.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/math.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/model.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/notebook.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/offline.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/playlists.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-controls.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-guide.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-profile.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-runtime.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-session.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-setup.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/renderer.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/rotation-table.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/sim-presentation.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/style.css exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/LICENSE.txt exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/provenance.json exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/LICENSE exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/provenance.json exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.core.js exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.module.js exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-app.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-app.mjs original blob agrees with qualified admission",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-assets.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-catalogue.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-collision.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-content.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-demonstrations.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-editor.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-model.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-reaction-runtime.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-records.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-store.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-style.css exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-themes.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-visuals.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-zip.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/fpv-worlds/README.md exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/fpv-worlds/SCENERY-LICENSES.txt exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/fpv-worlds/app.webmanifest exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/fpv-worlds/guide.html exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/fpv-worlds/index.html exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/fpv-worlds/package-info.json exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/fpv-worlds/preview.png exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/fpv-worlds/scenery-provenance.json exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/guide.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/install-context.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/launcher-template.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/navigation.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/worker-template.mjs exact merged-main source blob",
+      "passed": true
+    },
+    {
+      "name": "Only qualified incoming language-phase host difference from364",
+      "passed": true
+    },
+    {
+      "name": "Art source and generated distribution exact preserved candidate",
+      "passed": true
+    },
+    {
+      "name": "Data-only PR scope",
+      "passed": true
+    },
+    {
+      "name": "No intervening Reservoir edits overwritten on current main",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: game/i18n/index.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: game/vendor/i18next-26.4.2.min.js",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: game/i18n/bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/world-zip.mjs",
+      "passed": true
+    },
+    {
+      "name": "Qualified proof closure unchanged on merged main: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    }
+  ],
+  "changedSinceAdmission": [
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "beforeBytes": 261643,
+      "afterBytes": 261748,
+      "beforeSHA256": "186e011fbb9701136503f60bf30b6feb8038feedcc3cbbc8f9bdd76d6ae347b6",
+      "afterSHA256": "218061ea2b1696606895b1a33d6597a3473d7b979e45e0e45d7370e891cefe30",
+      "deltaBytes": 105
+    }
+  ],
+  "raw95InputBytes": 16739458,
+  "scope": "All95 inputs exact merged main;94 exact admitted364. Only incoming qualified phase host +105B; coating renderer/content/theme and proof closure unchanged. Data-only release, no new whole-head admission or browser relabel."
+}

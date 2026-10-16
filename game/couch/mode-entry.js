@@ -6,8 +6,39 @@
   const params = new URL(doc.baseURI).searchParams;
   const set = (id, href) => doc.getElementById(id)?.setAttribute('href', href);
   if (!['versus', 'team'].includes(mode)) return;
+  // The host prepares its real controls out of sight. Keep its original live
+  // status and native recovery links visible until the shared menu is ready.
+  const boot = doc.getElementById('mode-boot');
+  if (boot && mode === 'team' && typeof MutationObserver === 'function') {
+    const restoreStatus = () => {
+      if (doc.documentElement.dataset.toolState !== 'ready') return false;
+      const status = doc.getElementById('coop-boot');
+      const slot = doc.getElementById('coop-boot-slot');
+      if (status && slot) {
+        slot.parentNode.insertBefore(status, slot);
+        slot.remove();
+      }
+      return true;
+    };
+    if (!restoreStatus()) {
+      const observer = new MutationObserver(() => {
+        if (restoreStatus()) observer.disconnect();
+      });
+      observer.observe(doc.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-tool-state'],
+      });
+      globalThis.addEventListener('pagehide', (event) => {
+        if (!event.persisted) observer.disconnect();
+      });
+    }
+  }
   const authoredRoutes = [
     'opening',
+    'humanoid-hunt-v1',
+    'pursuit-pilots-v1',
+    'pursuit-campaigns-v1',
+    'snake-hunt-v1',
     'authored',
     'whole-originals',
     'whole-originals-v2',
@@ -24,6 +55,33 @@
     'whole-spatial-v9',
     'whole-spatial-v10',
     'whole-spatial-v11',
+    'whole-spatial-v12',
+    'whole-spatial-v13',
+    'whole-spatial-v14',
+    'whole-spatial-v15',
+    'whole-spatial-v16',
+    'whole-spatial-v17',
+    'whole-spatial-v18',
+    'whole-spatial-v19',
+    'whole-spatial-v20',
+    'whole-spatial-v21',
+    'whole-spatial-v22',
+    'whole-spatial-v23',
+    'whole-spatial-v24',
+    'whole-spatial-v25',
+    'whole-spatial-v26',
+    'whole-spatial-v27',
+    'whole-spatial-v28',
+    'whole-spatial-v29',
+    'whole-spatial-v30',
+    'whole-spatial-v31',
+    'whole-spatial-v32',
+    'whole-spatial-v33',
+    'whole-spatial-v34',
+    'whole-spatial-v35',
+    'whole-spatial-v36',
+    'whole-spatial-v37',
+    'whole-spatial-v38',
     'whole-ornament-v1',
     'whole-ornament-v2',
   ];
@@ -46,6 +104,7 @@
     set('coop-solo', solo);
     set('coop-versus', versus);
     set('coop-race', fromSolo ? solo : versus);
+    set('mode-boot-return', solo);
     const back = doc.getElementById('coop-race');
     if (back) back.textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
   };

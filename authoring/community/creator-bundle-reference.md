@@ -28,9 +28,15 @@ See [Phase 7 generated Team qualification](phase7-team-qualification.md) for
 its two-seat contribution, Retry, continuation and transfer contracts.
 
 Team editions and their completion receipts use a bounded dedicated IndexedDB
-database. Storage failure keeps the verified campaign playable for the current
-visit. This first installed continuation does not yet retain unfinished Team
-attempts, package creator media, or grant a durable picture reward.
+database. They retain exact unfinished attempts, package-bound reward pictures,
+optional victory videos and durable legal-clear receipts. The package SHA-256
+remains the edition identity.
+
+Team package bytes also participate in the existing 256 MiB managed-media
+ledger. A pending external-usage claim is recorded before the dedicated Team
+transaction, finalized after commit, and reconciled against verified installed
+editions after interruption. This is an explicit recovery journal across the
+two storage authorities; it does not claim cross-database atomicity.
 
 The full inventory, immutable manifest reference and payloads are committed in one transaction of the existing managed-media database, using retained generic-byte references. This adds no storage authority or database upgrade beyond the current DB5 capability. Existing still, story and audio history remains intact. The installer makes no cross-store atomicity claim; draft/player operations are separate actions. Future multi-domain operations must add a recovery journal.
 

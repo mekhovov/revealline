@@ -25,6 +25,7 @@ import {
 } from '../library.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { resolveKeyBindings } from '../key-bindings.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 const level = {
   version: 'xonix-level.v1',
   id: 'first',
@@ -67,6 +68,33 @@ function storage() {
   const map = new Map();
   return { map, getItem: (k) => map.get(k) ?? null, setItem: (k, v) => map.set(k, String(v)) };
 }
+test('library validation and storage messages follow the active locale', (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+
+  setLocale('en', { persist: false });
+  assert.equal(
+    validateLibrary({ ...emptyLibrary(), format: 'future' }).errors[0],
+    'Unsupported player library version.',
+  );
+  assert.match(new LibraryCapacityError('gallery', 2, 1).message, /Library gallery budget/);
+
+  setLocale('uk', { persist: false });
+  assert.equal(
+    validateLibrary({ ...emptyLibrary(), format: 'future' }).errors[0],
+    'Версія бібліотеки гравця не підтримується.',
+  );
+  assert.match(new LibraryCapacityError('gallery', 2, 1).message, /Перевищено ліміт бібліотеки/);
+  const unreadable = loadLibrary(
+    {
+      getItem: () => {
+        throw new Error('blocked');
+      },
+    },
+    'profile',
+  );
+  assert.match(unreadable.warning, /Не вдалося прочитати бібліотеку гравця/);
+});
 test('a real kernel win atomically records progress, gallery and local scores; portable roundtrip preserves each', () => {
   const original = emptyLibrary(),
     before = structuredClone(original),

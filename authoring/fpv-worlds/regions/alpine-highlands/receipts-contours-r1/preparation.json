@@ -1,0 +1,112 @@
+{
+  "format": "FPVAlpineHighlandsPreparation.v1",
+  "id": "alpine-highlands-study",
+  "revision": "relief-r2-contours",
+  "actualExtentM": [
+    4096,
+    4096
+  ],
+  "sampleSpacingM": 8,
+  "terrainCells": 256,
+  "sceneryCells": 104,
+  "knownEmptySceneryCells": 152,
+  "seams": 480,
+  "sourceBytes": 21644516,
+  "terrainManifestSHA256": "c1218b914e01346414dd160e2535fdd115a057a18b511a29577526675b6a90b0",
+  "sceneryManifestSHA256": "73d63d56158b300b006bcd3e1750477ba23304af51665cda7080aec891ed5a61",
+  "originalArchitecturePieces": 69,
+  "overlayTriangles": 133288,
+  "maxNineCellResourceBytes": 1040912,
+  "maxRetainedCandidateResourceBytes": 2081824,
+  "districts": 6,
+  "landmarks": 20,
+  "routes": 129,
+  "spawns": [
+    {
+      "id": "glacial-valley",
+      "position": {
+        "x": 640000,
+        "y": 114000,
+        "z": 700000
+      }
+    },
+    {
+      "id": "switchback-pass",
+      "position": {
+        "x": 1700000,
+        "y": 264000,
+        "z": 600000
+      }
+    },
+    {
+      "id": "snow-saddle",
+      "position": {
+        "x": 3000000,
+        "y": 424000,
+        "z": 800000
+      }
+    },
+    {
+      "id": "summit-station",
+      "position": {
+        "x": 3400000,
+        "y": 564000,
+        "z": 3100000
+      }
+    },
+    {
+      "id": "viaduct-gorge",
+      "position": {
+        "x": 2400000,
+        "y": 214000,
+        "z": 3000000
+      }
+    },
+    {
+      "id": "reservoir-dam",
+      "position": {
+        "x": 800000,
+        "y": 174000,
+        "z": 2800000
+      }
+    }
+  ],
+  "solidProbes": [
+    {
+      "id": "station-wall",
+      "from": [
+        3346,
+        567,
+        3068
+      ],
+      "to": [
+        3360,
+        567,
+        3068
+      ],
+      "halfWidth": 1
+    },
+    {
+      "id": "dam-face",
+      "from": [
+        730,
+        184,
+        2800
+      ],
+      "to": [
+        730,
+        184,
+        2860
+      ],
+      "halfWidth": 1
+    }
+  ],
+  "playerReady": false,
+  "limitations": [
+    "Original4.096km early study, not8km plan completion or representative final art.",
+    "No native player/visual/performance or Library qualification.",
+    "Water, snow and scree overlays are explicit visual-only surfaces; no swimming/water physics.",
+    "Static original structures; no operating railway, cable cars, moving subjects or scored missions.",
+    "Controlled representative routes do not prove every arbitrary path safe."
+  ]
+}

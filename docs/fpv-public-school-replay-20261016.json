@@ -1,0 +1,305 @@
+{
+  "format": "PublicFpvSchoolOrdinaryAudit.v1",
+  "createdAt": "2026-10-15T22:25:52.292343+00:00",
+  "status": "PASS-software-replay-and-source-callability",
+  "publicSourceRevision": "836263fa3926bd23a68d67892829203f9931935c",
+  "entry": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html#learn",
+  "sourceScope": {
+    "actualHttpModules": 175,
+    "bytes": 16726898,
+    "byteEqualToPublicRevision": 166,
+    "compactedSyntaxEqualToPublicRevision": 9,
+    "allCompactedSyntaxEqual": true,
+    "postReplayCriticalBytesUnchanged": true,
+    "notFullShippedApplicationClosure": true
+  },
+  "school": {
+    "lessons": 58,
+    "primaryAcro": 46,
+    "optionalSelfLevel": 12,
+    "tiers": {
+      "primary": 46,
+      "optionalSelfLevel": 12,
+      "beginner": 14,
+      "experienced": 8,
+      "advanced": 8,
+      "pro": 8,
+      "master": 8
+    },
+    "recommendedAvailableByExactUiResolver": 58,
+    "directAndIndependentOriginalIdentityPass": 58
+  },
+  "academy": {
+    "courses": 12,
+    "recordings": 24,
+    "directAndIndependentStatesEqual": true
+  },
+  "ordinary": {
+    "catalogueEntries": 146,
+    "uniqueIds": 144,
+    "worlds": 14,
+    "bundledRecordingPairs": 120,
+    "distinctChallengesWithBundledRecordings": 60,
+    "nonlegacyReplayCases": 96,
+    "nonlegacyRecordedTicks": 225430,
+    "nonlegacyMinHealth": 85,
+    "nonlegacyMaxContacts": 0,
+    "entriesWithoutBundledDemo": 86,
+    "separateAdventureArchiveEntries": 30,
+    "huntPursuitEntriesWithoutBundledProof": 56,
+    "groups": [
+      {
+        "world": "stadium",
+        "courses": 30,
+        "bundledModes": 16,
+        "withoutBundled": [
+          "snake-hunt-loops-01",
+          "snake-hunt-loops-02",
+          "snake-hunt-loops-03",
+          "snake-hunt-loops-04",
+          "snake-hunt-loops-05",
+          "snake-hunt-loops-06",
+          "snake-hunt-interception-loop-intercept",
+          "snake-hunt-interception-crossing-patrols",
+          "snake-hunt-route-choices-courtyard-approaches",
+          "snake-hunt-route-choices-cross-route-choice",
+          "snake-hunt-ground-routes-crossing-arrivals",
+          "snake-hunt-ground-routes-forked-depot",
+          "snake-hunt-approach-windows-return-slot",
+          "snake-hunt-approach-windows-three-yard-finale",
+          "native-pursuit-refuge-return",
+          "native-pursuit-meeting-yard",
+          "native-pursuit-runner-court",
+          "native-pursuit-burst-lanes",
+          "native-pursuit-refuge-return",
+          "native-pursuit-switchback-crossing",
+          "native-pursuit-meeting-yard",
+          "native-pursuit-armor-windows"
+        ]
+      },
+      {
+        "world": "warehouse",
+        "courses": 27,
+        "bundledModes": 16,
+        "withoutBundled": [
+          "snake-hunt-weave-01",
+          "snake-hunt-weave-02",
+          "snake-hunt-weave-03",
+          "snake-hunt-weave-04",
+          "snake-hunt-weave-05",
+          "snake-hunt-weave-06",
+          "snake-hunt-interception-two-return-lanes",
+          "snake-hunt-interception-corner-approach",
+          "snake-hunt-interception-staggered-interception",
+          "snake-hunt-route-choices-warehouse-return",
+          "snake-hunt-route-choices-boundary-cutback",
+          "snake-hunt-ground-routes-low-pass-depot",
+          "snake-hunt-ground-routes-split-yard-return",
+          "snake-hunt-ground-routes-shelter-arc",
+          "snake-hunt-ground-routes-freight-slalom",
+          "snake-hunt-approach-windows-low-roof-window",
+          "snake-hunt-approach-windows-roofline-exchange",
+          "snake-hunt-approach-windows-staggered-roofs",
+          "snake-hunt-approach-windows-window-chain"
+        ]
+      },
+      {
+        "world": "garage",
+        "courses": 17,
+        "bundledModes": 16,
+        "withoutBundled": [
+          "snake-hunt-heights-01",
+          "snake-hunt-heights-02",
+          "snake-hunt-heights-03",
+          "snake-hunt-heights-04",
+          "snake-hunt-heights-05",
+          "snake-hunt-heights-06",
+          "snake-hunt-interception-island-bypass",
+          "snake-hunt-route-choices-platform-perimeter",
+          "snake-hunt-route-choices-airfield-circuit"
+        ]
+      },
+      {
+        "world": "container-yard",
+        "courses": 14,
+        "bundledModes": 16,
+        "withoutBundled": [
+          "snake-hunt-chase-01",
+          "snake-hunt-chase-02",
+          "snake-hunt-chase-03",
+          "snake-hunt-chase-04",
+          "snake-hunt-chase-05",
+          "snake-hunt-chase-06"
+        ]
+      },
+      {
+        "world": "coast",
+        "courses": 5,
+        "bundledModes": 0,
+        "withoutBundled": [
+          "adventure-coast-01",
+          "adventure-coast-02",
+          "adventure-coast-03",
+          "adventure-coast-04",
+          "adventure-coast-05"
+        ]
+      },
+      {
+        "world": "quarry",
+        "courses": 5,
+        "bundledModes": 0,
+        "withoutBundled": [
+          "adventure-quarry-01",
+          "adventure-quarry-02",
+          "adventure-quarry-03",
+          "adventure-quarry-04",
+          "adventure-quarry-05"
+        ]
+      },
+      {
+        "world": "rooftops",
+        "courses": 5,
+        "bundledModes": 0,
+        "withoutBundled": [
+          "adventure-rooftops-01",
+          "adventure-rooftops-02",
+          "adventure-rooftops-03",
+          "adventure-rooftops-04",
+          "adventure-rooftops-05"
+        ]
+      },
+      {
+        "world": "orchard",
+        "courses": 5,
+        "bundledModes": 0,
+        "withoutBundled": [
+          "adventure-orchard-01",
+          "adventure-orchard-02",
+          "adventure-orchard-03",
+          "adventure-orchard-04",
+          "adventure-orchard-05"
+        ]
+      },
+      {
+        "world": "solar-farm",
+        "courses": 5,
+        "bundledModes": 0,
+        "withoutBundled": [
+          "adventure-solar-farm-01",
+          "adventure-solar-farm-02",
+          "adventure-solar-farm-03",
+          "adventure-solar-farm-04",
+          "adventure-solar-farm-05"
+        ]
+      },
+      {
+        "world": "rail-depot",
+        "courses": 5,
+        "bundledModes": 0,
+        "withoutBundled": [
+          "adventure-rail-depot-01",
+          "adventure-rail-depot-02",
+          "adventure-rail-depot-03",
+          "adventure-rail-depot-04",
+          "adventure-rail-depot-05"
+        ]
+      },
+      {
+        "world": "gym",
+        "courses": 4,
+        "bundledModes": 8,
+        "withoutBundled": []
+      },
+      {
+        "world": "field",
+        "courses": 8,
+        "bundledModes": 16,
+        "withoutBundled": []
+      },
+      {
+        "world": "woodland",
+        "courses": 8,
+        "bundledModes": 16,
+        "withoutBundled": []
+      },
+      {
+        "world": "courtyard",
+        "courses": 8,
+        "bundledModes": 16,
+        "withoutBundled": []
+      }
+    ]
+  },
+  "totals": {
+    "uniqueBundledRecordingsIndependentlyReplayed": 178,
+    "independentlyReplayedTicks": 327795,
+    "directlySteppedTicks": 102365,
+    "holdLandingAgreementChecks": 65309,
+    "runtimeTransitions": 484,
+    "localizedInitialFeedbackCalls": 3336,
+    "focusedChecks": 18
+  },
+  "limits": [
+    "No browser/DOM/native public-screen run, physical devices/controllers, actual player usability, elapsed endurance, offline or package qualification performed in this lane.",
+    "Source callability uses exact two function bodies extracted from served world-app with empty saved/imported recording library, not a complete host mount.",
+    "The existing verifier baseline field retains b066 historical reference; actual HTTP source hashes,836 marker,166 exact module bytes and9 compacted AST equivalences bind this audit.",
+    "Academy v1 proofs do not contain final-state identities: direct and independent current-runtime snapshots are compared exactly.",
+    "Optional60 Adventure and14 alternate Self-level recordings are separate import archives; neither was installed or imported here. No assertion that every ordinary mission has a bundled demo.",
+    "Catalogue has146 entries/144 unique IDs across14 authored world labels; two IDs recur across revisions. Entries are not maps.",
+    "The175 fetched modules are audit inputs; this is not full shipped-app closure or cache coverage.",
+    "No source, art WIP, Git refs, player storage, original proof frames, physics, scoring or thresholds were changed."
+  ],
+  "retainedPreparationNotes": [
+    "First broad import-discovery regex was interrupted and retained; narrowed discovery completed.",
+    "First sample import preceded dependency completion and failed with missing module; second lacked Node ESM package context for browser vendor bootstrap. Both stderr logs retained. Final external harness uses type:module, matching repository environment; production module bytes unchanged.",
+    "Initial observer tier fallback metadata was corrected in a separate final inventory; original inventory and its counts/proof hashes retained."
+  ],
+  "artifacts": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-school-replay-audit-20261016/source-http-receipt-with-marker.json",
+      "bytes": 105627,
+      "sha256": "755ab5f67f80ff29e9036c86515f4a084817daf185f602c1baaa695d6b6d0c8c"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-school-replay-audit-20261016/projected-syntax-receipt.json",
+      "bytes": 4482,
+      "sha256": "af6d31c25488e0cb1874639dd1b6101a66ca92fe5b91992388b77d9911a8ca19"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-school-replay-audit-20261016/post-replay-http-receipt.json",
+      "bytes": 2900,
+      "sha256": "feb0e4b065b5f2b8c638b2b0abff9951b1b92bd629bd22170cd76ed0df99b571"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-school-replay-audit-20261016/verifier-adaptation.json",
+      "bytes": 672,
+      "sha256": "e4b4102772fc4117ffd4ba82a5b268d6b808d97a891d786eaaaa90dc0539ca5a"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-school-replay-audit-20261016/public-demo-inventory-final.json",
+      "bytes": 117126,
+      "sha256": "2e42c8228183b5fe63b110da19ed9f26edea02a005ed89dc9d43cde7e857448b"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-school-replay-audit-20261016/source/docs/fpv-flight-hud-verification.json",
+      "bytes": 35756,
+      "sha256": "8b9a0a30f4de7a64fd8c91249be6a172d6192494936ec54e2646a74992ab2898"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-school-replay-audit-20261016/source/docs/public-ordinary-replay.json",
+      "bytes": 36369,
+      "sha256": "8005bdad5a4b7b2312fe85fc98c754d96c5a55de8ad64bd4aa310697c6fd7d46"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-school-replay-audit-20261016/source/docs/public-ui-demonstration-resolver.json",
+      "bytes": 41276,
+      "sha256": "659e2f8d6c8e9680e309cbcbfd580ac50587271c3faf82fd18debeb82b0105f1"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/public-school-replay-audit-20261016/original-verifier.mjs",
+      "bytes": 16609,
+      "sha256": "bd4d237245c26d17c1d9e1f44563fb40e6411944d3bc6272bf8ac1c9ac848f18"
+    }
+  ],
+  "sourceWorkingTreeClean": true
+}

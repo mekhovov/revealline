@@ -1,0 +1,819 @@
+{
+  "format": "FPVTropicalCoastPreparation.v1",
+  "scope": "Bounded384m authoring candidate, not large archipelago/default player admission",
+  "regionId": "tropical-coastal-study",
+  "revision": "coastal-r1",
+  "sizeM": [384, 384],
+  "terrainManifestSHA256": "076a93c6d08181b2ee0d4d4c172d974435df8cf6b7e210d4a9a2ada3753756fd",
+  "sceneryManifestSHA256": "d31187a12b26c11a359e1914963767e9e2da1a70839f755ae7667f1e022e84e3",
+  "resources": {
+    "geometryBytes": 498936,
+    "textureBytes": 2599580,
+    "resourceBytes": 3098516,
+    "textures": 18,
+    "terrainGeometryBytes": 456408,
+    "retainedAndCandidateBytes": 7109848
+  },
+  "cells": [
+    {
+      "id": "coast-0-0",
+      "sourceBytes": 352371,
+      "sceneBytes": 238904,
+      "surfaces": 4,
+      "triangles": 494,
+      "textures": 4,
+      "solid": 3,
+      "visualOnly": 1
+    },
+    {
+      "id": "coast-1-0",
+      "sourceBytes": 263561,
+      "sceneBytes": 167312,
+      "surfaces": 3,
+      "triangles": 422,
+      "textures": 3,
+      "solid": 2,
+      "visualOnly": 1
+    },
+    {
+      "id": "coast-2-0",
+      "sourceBytes": 311593,
+      "sceneBytes": 152732,
+      "surfaces": 4,
+      "triangles": 2306,
+      "textures": 2,
+      "solid": 3,
+      "visualOnly": 1
+    },
+    {
+      "id": "coast-0-1",
+      "sourceBytes": 550524,
+      "sceneBytes": 350852,
+      "surfaces": 8,
+      "triangles": 1376,
+      "textures": 4,
+      "solid": 2,
+      "visualOnly": 6
+    },
+    {
+      "id": "coast-1-1",
+      "sourceBytes": 468934,
+      "sceneBytes": 308956,
+      "surfaces": 4,
+      "triangles": 608,
+      "textures": 4,
+      "solid": 4,
+      "visualOnly": 0
+    },
+    {
+      "id": "coast-2-1",
+      "sourceBytes": 346954,
+      "sceneBytes": 207016,
+      "surfaces": 6,
+      "triangles": 1584,
+      "textures": 2,
+      "solid": 3,
+      "visualOnly": 3
+    },
+    {
+      "id": "coast-0-2",
+      "sourceBytes": 166069,
+      "sceneBytes": 125752,
+      "surfaces": 24,
+      "triangles": 384,
+      "textures": 1,
+      "solid": 0,
+      "visualOnly": 24
+    },
+    {
+      "id": "coast-1-2",
+      "sourceBytes": 407141,
+      "sceneBytes": 256688,
+      "surfaces": 9,
+      "triangles": 756,
+      "textures": 3,
+      "solid": 9,
+      "visualOnly": 0
+    },
+    {
+      "id": "coast-2-2",
+      "sourceBytes": 550161,
+      "sceneBytes": 350872,
+      "surfaces": 8,
+      "triangles": 1376,
+      "textures": 4,
+      "solid": 2,
+      "visualOnly": 6
+    }
+  ],
+  "placements": [
+    {
+      "id": "covered-pier",
+      "asset": "covered-jetty",
+      "x": 80,
+      "z": 102,
+      "y": -3,
+      "scale": 1,
+      "yaw": 0
+    },
+    {
+      "id": "open-pier",
+      "asset": "open-jetty",
+      "x": 190,
+      "z": 100,
+      "y": -1.5,
+      "scale": 1,
+      "yaw": 0
+    },
+    {
+      "id": "shallows-rock-0",
+      "asset": "beach-rock",
+      "x": 294,
+      "z": 103,
+      "y": 0.161,
+      "scale": 1.4,
+      "yaw": 0
+    },
+    {
+      "id": "shallows-rock-1",
+      "asset": "beach-rock",
+      "x": 310,
+      "z": 113,
+      "y": 0.982,
+      "scale": 1.1,
+      "yaw": 0.7
+    },
+    {
+      "id": "shallows-rock-2",
+      "asset": "beach-rock",
+      "x": 327,
+      "z": 96,
+      "y": -0.502,
+      "scale": 1.5,
+      "yaw": 1.4
+    },
+    {
+      "id": "palm-0",
+      "asset": "palm",
+      "x": 64,
+      "z": 180,
+      "y": 4.088,
+      "scale": 1,
+      "yaw": 0
+    },
+    {
+      "id": "palm-1",
+      "asset": "palm",
+      "x": 101,
+      "z": 211,
+      "y": 1.457,
+      "scale": 1,
+      "yaw": 0.5
+    },
+    {
+      "id": "palm-2",
+      "asset": "palm",
+      "x": 292,
+      "z": 298,
+      "y": 4.33,
+      "scale": 1,
+      "yaw": 1
+    },
+    {
+      "id": "palm-3",
+      "asset": "palm",
+      "x": 325,
+      "z": 326,
+      "y": 5.003,
+      "scale": 1,
+      "yaw": 1.5
+    },
+    {
+      "id": "stilt-hut",
+      "asset": "jungle-hut",
+      "x": 192,
+      "z": 196,
+      "y": 2,
+      "scale": 1,
+      "yaw": 0
+    },
+    {
+      "id": "bamboo-0",
+      "asset": "young-bamboo",
+      "x": 290,
+      "z": 185,
+      "y": 5.79,
+      "scale": 1.5,
+      "yaw": 0
+    },
+    {
+      "id": "bamboo-1",
+      "asset": "young-bamboo",
+      "x": 312,
+      "z": 199,
+      "y": 4.114,
+      "scale": 1.5,
+      "yaw": 0.8
+    },
+    {
+      "id": "bamboo-2",
+      "asset": "young-bamboo",
+      "x": 330,
+      "z": 180,
+      "y": 3.467,
+      "scale": 1.5,
+      "yaw": 1.6
+    },
+    {
+      "id": "grass-0",
+      "asset": "beach-grass",
+      "x": 28,
+      "z": 275,
+      "y": 3.325,
+      "scale": 3,
+      "yaw": 0
+    },
+    {
+      "id": "grass-1",
+      "asset": "beach-grass",
+      "x": 43,
+      "z": 275,
+      "y": 2.644,
+      "scale": 3,
+      "yaw": 0.9
+    },
+    {
+      "id": "grass-2",
+      "asset": "beach-grass",
+      "x": 58,
+      "z": 275,
+      "y": 2.22,
+      "scale": 3,
+      "yaw": 1.8
+    },
+    {
+      "id": "grass-3",
+      "asset": "beach-grass",
+      "x": 73,
+      "z": 275,
+      "y": 2.127,
+      "scale": 3,
+      "yaw": 2.7
+    },
+    {
+      "id": "grass-4",
+      "asset": "beach-grass",
+      "x": 88,
+      "z": 275,
+      "y": 2.376,
+      "scale": 3,
+      "yaw": 3.6
+    },
+    {
+      "id": "grass-5",
+      "asset": "beach-grass",
+      "x": 103,
+      "z": 275,
+      "y": 2.905,
+      "scale": 3,
+      "yaw": 4.5
+    },
+    {
+      "id": "grass-6",
+      "asset": "beach-grass",
+      "x": 28,
+      "z": 297,
+      "y": 3.194,
+      "scale": 3,
+      "yaw": 5.4
+    },
+    {
+      "id": "grass-7",
+      "asset": "beach-grass",
+      "x": 43,
+      "z": 297,
+      "y": 3.058,
+      "scale": 3,
+      "yaw": 6.3
+    },
+    {
+      "id": "grass-8",
+      "asset": "beach-grass",
+      "x": 58,
+      "z": 297,
+      "y": 3.193,
+      "scale": 3,
+      "yaw": 7.2
+    },
+    {
+      "id": "grass-9",
+      "asset": "beach-grass",
+      "x": 73,
+      "z": 297,
+      "y": 3.57,
+      "scale": 3,
+      "yaw": 8.1
+    },
+    {
+      "id": "grass-10",
+      "asset": "beach-grass",
+      "x": 88,
+      "z": 297,
+      "y": 4.103,
+      "scale": 3,
+      "yaw": 9
+    },
+    {
+      "id": "grass-11",
+      "asset": "beach-grass",
+      "x": 103,
+      "z": 297,
+      "y": 4.67,
+      "scale": 3,
+      "yaw": 9.9
+    },
+    {
+      "id": "grass-12",
+      "asset": "beach-grass",
+      "x": 28,
+      "z": 319,
+      "y": 3.559,
+      "scale": 3,
+      "yaw": 10.8
+    },
+    {
+      "id": "grass-13",
+      "asset": "beach-grass",
+      "x": 43,
+      "z": 319,
+      "y": 4.039,
+      "scale": 3,
+      "yaw": 11.700000000000001
+    },
+    {
+      "id": "grass-14",
+      "asset": "beach-grass",
+      "x": 58,
+      "z": 319,
+      "y": 4.671,
+      "scale": 3,
+      "yaw": 12.6
+    },
+    {
+      "id": "grass-15",
+      "asset": "beach-grass",
+      "x": 73,
+      "z": 319,
+      "y": 5.337,
+      "scale": 3,
+      "yaw": 13.5
+    },
+    {
+      "id": "grass-16",
+      "asset": "beach-grass",
+      "x": 88,
+      "z": 319,
+      "y": 5.898,
+      "scale": 3,
+      "yaw": 14.4
+    },
+    {
+      "id": "grass-17",
+      "asset": "beach-grass",
+      "x": 103,
+      "z": 319,
+      "y": 6.228,
+      "scale": 3,
+      "yaw": 15.3
+    },
+    {
+      "id": "grass-18",
+      "asset": "beach-grass",
+      "x": 28,
+      "z": 341,
+      "y": 4.377,
+      "scale": 3,
+      "yaw": 16.2
+    },
+    {
+      "id": "grass-19",
+      "asset": "beach-grass",
+      "x": 43,
+      "z": 341,
+      "y": 5.304,
+      "scale": 3,
+      "yaw": 17.1
+    },
+    {
+      "id": "grass-20",
+      "asset": "beach-grass",
+      "x": 58,
+      "z": 341,
+      "y": 6.175,
+      "scale": 3,
+      "yaw": 18
+    },
+    {
+      "id": "grass-21",
+      "asset": "beach-grass",
+      "x": 73,
+      "z": 341,
+      "y": 6.835,
+      "scale": 3,
+      "yaw": 18.900000000000002
+    },
+    {
+      "id": "grass-22",
+      "asset": "beach-grass",
+      "x": 88,
+      "z": 341,
+      "y": 7.157,
+      "scale": 3,
+      "yaw": 19.8
+    },
+    {
+      "id": "grass-23",
+      "asset": "beach-grass",
+      "x": 103,
+      "z": 341,
+      "y": 7.072,
+      "scale": 3,
+      "yaw": 20.7
+    },
+    {
+      "id": "cargo-0",
+      "asset": "crate",
+      "x": 186,
+      "z": 292,
+      "y": 3,
+      "scale": 1.4,
+      "yaw": 0
+    },
+    {
+      "id": "cargo-1",
+      "asset": "crate",
+      "x": 192,
+      "z": 300,
+      "y": 3,
+      "scale": 1.4,
+      "yaw": 1.5707963267948966
+    },
+    {
+      "id": "cargo-2",
+      "asset": "crate",
+      "x": 199,
+      "z": 292,
+      "y": 3,
+      "scale": 1.4,
+      "yaw": 3.141592653589793
+    }
+  ],
+  "water": {
+    "cells": ["coast-0-0", "coast-1-0", "coast-2-0"],
+    "meaning": "Visual sea at0m above actual terrain seabed; no buoyancy or water-damage behavior"
+  },
+  "routes": [
+    {
+      "id": "shoreline-crossings",
+      "points": [
+        [30, 12, 143],
+        [130, 12, 143],
+        [250, 12, 143],
+        [350, 12, 143]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "covered-pier-opening",
+      "points": [
+        [65, 4.4, 102],
+        [95, 4.4, 102]
+      ],
+      "halfWidth": 1
+    },
+    {
+      "id": "under-pier",
+      "points": [
+        [65, 0.7, 102],
+        [95, 0.7, 102]
+      ],
+      "halfWidth": 0.8
+    },
+    {
+      "id": "palm-slalom",
+      "points": [
+        [48, 12, 180],
+        [64, 12, 171],
+        [80, 12, 182],
+        [101, 12, 202],
+        [116, 12, 215]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "bamboo-corridor",
+      "points": [
+        [278, 12, 193],
+        [305, 12, 186],
+        [343, 12, 193]
+      ],
+      "halfWidth": 2
+    },
+    {
+      "id": "cargo-braking",
+      "points": [
+        [179, 5, 300],
+        [185, 5, 302],
+        [201, 5, 302],
+        [210, 5, 292]
+      ],
+      "halfWidth": 1.5
+    }
+  ],
+  "inputs": [
+    {
+      "id": "beach-grass",
+      "inputSha256": "068086ac550ebf5e0eb9430d9bddc30cbac229fbcfbc3b42b711c09a4f288fff",
+      "sourceBytes": 90888,
+      "sourceSha256": "cac6cd1324a9084510d5d283ec79b259e731dd361ecdc70002a7e6a342e9a384",
+      "glbBytes": 68700,
+      "glbSha256": "22cb8760519b68efe5cdbe604183a2c7bf858a2cb76a9224e9d327e422299bbe",
+      "inputTriangles": 16,
+      "outputVertices": 24,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 16,
+      "solidSurfaces": 0,
+      "visualOnlySurfaces": 1,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [400, 388],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "c2d8f75e2a9f9ff6c3614f20aef93d8a1853b6f290308a3db046b1d551466809",
+          "rgbaSha256": "8735e9752ec52b7177f302392a5967890cfe26fd471e175bdce7148436199984"
+        }
+      ]
+    },
+    {
+      "id": "young-bamboo",
+      "inputSha256": "cb46c82d438724875cfeabed78f8119e4a431d751383374c08a8258fc628e9d8",
+      "sourceBytes": 232118,
+      "sourceSha256": "b04e3282d0d2b4817314cae42130b394e89067b171a5a0b4233614bd5fffece1",
+      "glbBytes": 157100,
+      "glbSha256": "1c492b6a7f4881efebd2ecf8a877ffbd8cd429558129e5c587691f0a8a8c547d",
+      "inputTriangles": 528,
+      "outputVertices": 520,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 528,
+      "solidSurfaces": 1,
+      "visualOnlySurfaces": 1,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "91d47d4a5883800f89899de39ae7df6ad1dcd0dd8e8e48772eb9f91e535f65e7",
+          "rgbaSha256": "82f5342aacbfe77e5c6347b079e95fb2e41389c99dbe5781a5c868608c0aeef6"
+        },
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "3ba386d684affd3ad9fb541af19d8b3fb9c832b1398046fc97815b9f0f3df483",
+          "rgbaSha256": "4952e391c70f3890f824db054994959845489066b67a80de98f283b95c8acd7b"
+        }
+      ]
+    },
+    {
+      "id": "crate",
+      "inputSha256": "b279533730d4eeb36ecceb1c888cb5cf786cc7332ecf3d564b9f3063b80ea8a7",
+      "sourceBytes": 307527,
+      "sourceSha256": "c08cb432b2559b5087a705bfa86f7674b653cb247e3c0419dd2abbebdc61060b",
+      "glbBytes": 217620,
+      "glbSha256": "4786e5669e3703ebe75409e0160a457c479d849630f85177f609844b0aaba6a7",
+      "inputTriangles": 252,
+      "outputVertices": 426,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 252,
+      "solidSurfaces": 3,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88",
+          "rgbaSha256": "062c581bb2b807a83bf0834378deaf58805f4e32a094b0f8783302dce8ee6de5"
+        },
+        {
+          "sourceDimensions": [512, 256],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b30c259ef85c55552795af4a4580b85842ee0649951d5e0d4a7455083e7788d6",
+          "rgbaSha256": "2aad3a2f62a216b9f45900e9a04105f989d7552d06a113eaeff723c10275a0fa"
+        },
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "2907231248a9af860fb30bc811ec69888a23456337d2d9cd2838cc67ed5a0540",
+          "rgbaSha256": "7ef92f1f4cfcb14447e403562dc5e824f2c417c0bb9d9b34a4c07c0a0a89572b"
+        }
+      ]
+    },
+    {
+      "id": "covered-jetty",
+      "inputSha256": "ed0359301c0025ad1c544af29d255087fe4dfe159977d82a212eb61de8a05d0e",
+      "sourceBytes": 350531,
+      "sourceSha256": "8ba989e1860e8294351d1e82465dd34f585dc3d09dee253fdcc840cae045fb24",
+      "glbBytes": 237576,
+      "glbSha256": "e8d1801ff2d286494f1d6fa235c5cd63497542d4688a785b4a2189550366938a",
+      "inputTriangles": 492,
+      "outputVertices": 960,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 492,
+      "solidSurfaces": 3,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [512, 256],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "0f6affe984bcf6ca50b286a0ea2dbfcfa33b4728ca9c119d863eee4ea8e68268",
+          "rgbaSha256": "a55a5b55444178d4b6f735bdfea0b5092d4a613bd86183bfca254cc46e44e0f6"
+        },
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88",
+          "rgbaSha256": "062c581bb2b807a83bf0834378deaf58805f4e32a094b0f8783302dce8ee6de5"
+        },
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "094c51bf8dddb0ab12246d8106c68f85c52dac575a921d1adebaa49b142e2428",
+          "rgbaSha256": "f8ced190271c39d79764d93d98d5caffe54b0b1f5af47d7f2076e7b85486a74a"
+        }
+      ]
+    },
+    {
+      "id": "open-jetty",
+      "inputSha256": "b7f948b08f175087d1af698a7d7a61d7cf7ab4551d3d6d1a5774004e1c1523b2",
+      "sourceBytes": 262158,
+      "sourceSha256": "e89be50dc037b7d9d985fec2c13dc0fb10ab34f40b31d95b106dc3338aefe3a0",
+      "glbBytes": 165996,
+      "glbSha256": "7d4f2f87c7783f534b2ffe825c9e87ca2013db71dec0e34c80ab2241afa18ab2",
+      "inputTriangles": 420,
+      "outputVertices": 840,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 420,
+      "solidSurfaces": 2,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [512, 256],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "0f6affe984bcf6ca50b286a0ea2dbfcfa33b4728ca9c119d863eee4ea8e68268",
+          "rgbaSha256": "a55a5b55444178d4b6f735bdfea0b5092d4a613bd86183bfca254cc46e44e0f6"
+        },
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b2a8311d920fcaf9dc1a6a269f10482cd49a0a92260f20f78d598f85fffffa88",
+          "rgbaSha256": "062c581bb2b807a83bf0834378deaf58805f4e32a094b0f8783302dce8ee6de5"
+        }
+      ]
+    },
+    {
+      "id": "jungle-hut",
+      "inputSha256": "d724de1ae5db55cbfc0c4a91f91b06e98e3022c1663cc4cd728785ca18248718",
+      "sourceBytes": 468555,
+      "sourceSha256": "34e43d9410bacb1715c7efc2bb7359265b7b394e8c0f173dcb58ad37a5125d0a",
+      "glbBytes": 308916,
+      "glbSha256": "73a550bc07051ab555a7a75bf9970f9f53642e266cff6b84434c124f8a6ccaf2",
+      "inputTriangles": 608,
+      "outputVertices": 1053,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 608,
+      "solidSurfaces": 4,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "32342553e5ca9e00b5034537e36c441e2d53745e2a87c985890ec6c041df2b74",
+          "rgbaSha256": "c30cdabd0bfd5e72743768ece5f1ec468409d4f5073015877a57b9f4d57a429e"
+        },
+        {
+          "sourceDimensions": [256, 1024],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "acb775330a6fd245f14d31408d0ecb7881f3dd04e074ecdb83be85800f9706ff",
+          "rgbaSha256": "be46b8606f712b12a69b52e6f39eba7b42d20d8cf05f2ff6dc76b76573a505e2"
+        },
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "1c6681aaaf30c100829a1815f320ff051c0da81494c42c4006655c5bc890967e",
+          "rgbaSha256": "2e05bc124aa3a88f2564f89e646b2669507f713ed0bcd0ea3340d31dd12d828e"
+        },
+        {
+          "sourceDimensions": [700, 700],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "b468762f33b846eef33cfdb35618712f9b8a284568ffdb7a1182c81014c61a09",
+          "rgbaSha256": "9617859387ee24e2242f55b9dc2d7538b1e4c1e127620b6600abf20a7107b079"
+        }
+      ]
+    },
+    {
+      "id": "beach-rock",
+      "inputSha256": "48f193286c5a555d4f67d3749ff9b5171107a1c3dd4143ee31811e79e735ab8c",
+      "sourceBytes": 161556,
+      "sourceSha256": "845005c12f41280e1d4585fd8101414a0dafc39f9d95bd6c8873315c498dddc9",
+      "glbBytes": 94620,
+      "glbSha256": "9c72f85037c2e3d002c8f86ac8c5ed8e5ebe5ab770854c11f4edf59dd7cd659e",
+      "inputTriangles": 768,
+      "outputVertices": 569,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 768,
+      "solidSurfaces": 1,
+      "visualOnlySurfaces": 0,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [1024, 1024],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "dcf714a10d4cea4c30f30078b9df4d01ed5efc937ed3c5becc0774871b0b8f3b",
+          "rgbaSha256": "4890b58ef08f6095b45030798085ebb6633bf90a802d24e5d11101827a2ca022"
+        }
+      ]
+    },
+    {
+      "id": "palm",
+      "inputSha256": "6dead7023338bc9f6c4d3edb74359b7f8ca83bed52c4790af83003aaf2a99d21",
+      "sourceBytes": 449781,
+      "sourceSha256": "a105294cf830eda0ca167bd095d417f0b670e5ea4c8c320c6164267e21620c70",
+      "glbBytes": 307400,
+      "glbSha256": "78651cff55aa6d7d354f7a681558563c04309e8b415c85a23b907688d25970d4",
+      "inputTriangles": 688,
+      "outputVertices": 638,
+      "exactAttributeWelding": true,
+      "omittedDegenerateTriangles": 0,
+      "compiledTriangles": 688,
+      "solidSurfaces": 1,
+      "visualOnlySurfaces": 3,
+      "derivation": "Centre x/z at 64m; ground at source minY; round geometry to millimetres; authoring LANCZOS downsample; Only named foliage materials are explicitly visual-only; trunks and structural materials (including cutout thatch/canvas/planks) remain solid.",
+      "textures": [
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "e276ba5f5fea0c8f7806bc157155327c8be3cbd6120598d632d476b223b02f7a",
+          "rgbaSha256": "b4254fec21130c7503bc9c204c81fb066296a866e4087ba2f5d97a3218d8e614"
+        },
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "56ec6ee782af4f5de8b677a733f81ce5adc104b0cba021c2234b2350039868b5",
+          "rgbaSha256": "10823ba50bd2661bb86c654030826ad1191fdbab2c6e3597642a8823717de80d"
+        },
+        {
+          "sourceDimensions": [512, 512],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "7ba06af8d751632a01d42d4a13415e9c314887e07db41a3d3a74994c3803d013",
+          "rgbaSha256": "988dd3bbb141a13e6b6c016a2c0f1e1445ddfa570c3503a32a3e95c1feb57866"
+        },
+        {
+          "sourceDimensions": [600, 600],
+          "derivedDimensions": [128, 128],
+          "resample": "Pillow LANCZOS",
+          "sourceSha256": "a52bb5fbcab637ae8ffceff39ace5961ec8c0f1a3129320ce990be14db6e2198",
+          "rgbaSha256": "634f5f1a996c2f4c6b759af4ff004a3834c3d6335d0dc085f211b04adb3a3c47"
+        }
+      ]
+    }
+  ]
+}

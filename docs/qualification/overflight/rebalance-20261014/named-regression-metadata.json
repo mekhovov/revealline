@@ -1,0 +1,334 @@
+{
+  "format": "OverflightNamedRegressionMetadataV1",
+  "recordedAt": "2026-10-14T00:34:25.247385+00:00",
+  "headBeforeRuns": "ae0901966d6976c772e7fea16bcb12b15fd216a5",
+  "sourceState": "Working tree implementation; source SHA-256 values bind these runs independently of the existing HEAD commit.",
+  "harness": {
+    "executed": "docs/qualification/overflight/rebalance-20261014/verify-balance.mjs",
+    "preservedCopy": "docs/qualification/overflight/rebalance-20261014/verify-balance-named-regressions.executed.mjs",
+    "sha256": "1db24328570699e062362977a2de3e11215a1f4f9ba702f5d2e1cc4c6a88004b"
+  },
+  "sourceBefore": [
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "97720dc4bf8d13dd5801dd4b61d89591786a05d79d367a4b5b3037b9a8f02913"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+    },
+    {
+      "path": "game/overflight/tactics.mjs",
+      "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+    },
+    {
+      "path": "game/overflight/combat-profile.mjs",
+      "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+    },
+    {
+      "path": "game/overflight/riy-core.mjs",
+      "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+    },
+    {
+      "path": "game/overflight/riy-project.mjs",
+      "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+    },
+    {
+      "path": "game/overflight/riy-upgrades.mjs",
+      "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+    },
+    {
+      "path": "game/overflight/riy-mode.mjs",
+      "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+    },
+    {
+      "path": "game/overflight/flight-profile.mjs",
+      "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "docs/qualification/overflight/rebalance-20261014/verify-balance.mjs",
+      "sha256": "1db24328570699e062362977a2de3e11215a1f4f9ba702f5d2e1cc4c6a88004b"
+    }
+  ],
+  "runs": [
+    {
+      "output": "named-regression-v3.json.gz",
+      "environment": {
+        "BALANCE_MODE": "riy",
+        "BALANCE_BUILD": "echo",
+        "BALANCE_FOCUS": "0",
+        "BALANCE_RULES": "3",
+        "BALANCE_STOP": "210",
+        "BALANCE_OUTPUT": "named-regression-v3.json.gz"
+      },
+      "defaults": {
+        "BALANCE_MATRIX": false,
+        "seed": 17031991,
+        "encounterSet": "front",
+        "difficulty": "standard",
+        "airframes": 3
+      },
+      "outputSha256": "63b26e020bc98013025101d87f3b984c53c587b89c529cdf05030ad9e9c48589",
+      "outcomes": [
+        {
+          "route": "active",
+          "outcome": "won",
+          "time": 399.53333333333336,
+          "checkpoint": {
+            "time": 210,
+            "build": {
+              "primary": {
+                "rank": 4,
+                "branch": "double",
+                "evolved": true
+              },
+              "combat": [],
+              "support": {
+                "id": "shield",
+                "rank": 1
+              },
+              "reinforcement": 0,
+              "repair": 0,
+              "escorts": [
+                {
+                  "role": "sweeper",
+                  "rank": 3,
+                  "branch": "trail"
+                },
+                {
+                  "role": "breaker",
+                  "rank": 3,
+                  "branch": "burst"
+                }
+              ]
+            },
+            "hull": 60,
+            "airframes": 3,
+            "choices": 8,
+            "heading": 3.141592653589793
+          },
+          "damageTaken": 125,
+          "airframesRemaining": 2
+        },
+        {
+          "route": "none",
+          "outcome": "lost",
+          "time": 228.85,
+          "checkpoint": {
+            "time": 210,
+            "build": {
+              "primary": {
+                "rank": 4,
+                "branch": "double",
+                "evolved": true
+              },
+              "combat": [],
+              "support": {
+                "id": "shield",
+                "rank": 1
+              },
+              "reinforcement": 0,
+              "repair": 0,
+              "escorts": [
+                {
+                  "role": "sweeper",
+                  "rank": 3,
+                  "branch": "trail"
+                },
+                {
+                  "role": "breaker",
+                  "rank": 3,
+                  "branch": "burst"
+                }
+              ]
+            },
+            "hull": 60,
+            "airframes": 3,
+            "choices": 8,
+            "heading": 3.141592653589793
+          },
+          "damageTaken": 300,
+          "airframesRemaining": 0
+        }
+      ]
+    },
+    {
+      "output": "named-regression-v3-stop240.json.gz",
+      "environment": {
+        "BALANCE_MODE": "riy",
+        "BALANCE_BUILD": "echo",
+        "BALANCE_FOCUS": "0",
+        "BALANCE_RULES": "3",
+        "BALANCE_STOP": "240",
+        "BALANCE_OUTPUT": "named-regression-v3-stop240.json.gz"
+      },
+      "defaults": {
+        "BALANCE_MATRIX": false,
+        "seed": 17031991,
+        "encounterSet": "front",
+        "difficulty": "standard",
+        "airframes": 3
+      },
+      "outputSha256": "cad9b42f6efd033e0635cde63a9f76b3b7b7fc1c0c44e3e84ebcac25e54a7e5f",
+      "outcomes": [
+        {
+          "route": "active",
+          "outcome": "won",
+          "time": 399.53333333333336,
+          "checkpoint": {
+            "time": 240,
+            "build": {
+              "primary": {
+                "rank": 4,
+                "branch": "double",
+                "evolved": true
+              },
+              "combat": [],
+              "support": {
+                "id": "shield",
+                "rank": 1
+              },
+              "reinforcement": 0,
+              "repair": 0,
+              "escorts": [
+                {
+                  "role": "sweeper",
+                  "rank": 3,
+                  "branch": "trail"
+                },
+                {
+                  "role": "breaker",
+                  "rank": 3,
+                  "branch": "burst"
+                }
+              ]
+            },
+            "hull": 20,
+            "airframes": 3,
+            "choices": 8,
+            "heading": -0.2617993877991503
+          },
+          "damageTaken": 125,
+          "airframesRemaining": 2
+        },
+        {
+          "route": "none",
+          "outcome": "lost",
+          "time": 250.36666666666667,
+          "checkpoint": {
+            "time": 240,
+            "build": {
+              "primary": {
+                "rank": 4,
+                "branch": "double",
+                "evolved": true
+              },
+              "combat": [],
+              "support": {
+                "id": "shield",
+                "rank": 1
+              },
+              "reinforcement": 0,
+              "repair": 0,
+              "escorts": [
+                {
+                  "role": "sweeper",
+                  "rank": 3,
+                  "branch": "trail"
+                },
+                {
+                  "role": "breaker",
+                  "rank": 3,
+                  "branch": "burst"
+                }
+              ]
+            },
+            "hull": 20,
+            "airframes": 3,
+            "choices": 8,
+            "heading": -0.2617993877991503
+          },
+          "damageTaken": 300,
+          "airframesRemaining": 0
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Ordinary-input automated probes establish reproducible mechanics, not human enjoyment or difficulty.",
+    "The broad matrix samples checkpoints 120/180/240 across configurations rather than testing all three for every configuration; these named runs separately match the legacy exploit at 210 and 240.",
+    "The broad matrix couples seeds to encounter sets and airframes to configuration index; it is sampled coverage, not a full Cartesian sweep.",
+    "A route that loses before its checkpoint has no mature unattended branch and must be reported as an early failure.",
+    "No-input means no new movement, boost or Focus after the checkpoint. Inherited brief movement and automatic airframe replacement may still move the drone.",
+    "Earned upgrade menus continue to be resolved on all branches, including after automatic replacement.",
+    "These direct fixed-step probes do not measure rendered performance or host slow-resume wall time."
+  ],
+  "completedAt": "2026-10-14T00:35:18.577994+00:00",
+  "sourceAfter": [
+    {
+      "path": "game/overflight/core.mjs",
+      "sha256": "97720dc4bf8d13dd5801dd4b61d89591786a05d79d367a4b5b3037b9a8f02913"
+    },
+    {
+      "path": "game/overflight/project.mjs",
+      "sha256": "178d7eb95b821083aed4b899da1a543d6bacc1847b3cf0296ef58c64f9d1bda1"
+    },
+    {
+      "path": "game/overflight/tactics.mjs",
+      "sha256": "b6c957ff0ca67d3282e64aca1f85a87c7d05321afa8f20a04d944c85450bb097"
+    },
+    {
+      "path": "game/overflight/combat-profile.mjs",
+      "sha256": "7c6fa4401df0811ce2d4ba338ef509c0cff8cb212b35e39fab38a600bb2c6185"
+    },
+    {
+      "path": "game/overflight/upgrades.mjs",
+      "sha256": "1236ffde41c7c79b6ddd0f49e42a5ede1279756549e9361a6f25263c178145ee"
+    },
+    {
+      "path": "game/overflight/riy-core.mjs",
+      "sha256": "6260a932b7e3d8a2c0c224c4c6489426412a5eac52482b8aed16e14513a10a5a"
+    },
+    {
+      "path": "game/overflight/riy-project.mjs",
+      "sha256": "11a08442ab12c3235cacd6946116bfc239e7daa27b695bd1cb1021a17db959e8"
+    },
+    {
+      "path": "game/overflight/riy-upgrades.mjs",
+      "sha256": "807c1deed2aba6691b6f893a1a4ae26a5450d2ded91584af538b9f9e347a4dcd"
+    },
+    {
+      "path": "game/overflight/review-pilot.mjs",
+      "sha256": "02f6662b96f2385a0bb7f1a65941808037cf3c88753bc55dade0b5ef2c476349"
+    },
+    {
+      "path": "game/overflight/riy-mode.mjs",
+      "sha256": "1a336f3836eb2f3a34fd72ecfd6dd6b8bf04261519d3a9bb2bb93cc2a23a90bd"
+    },
+    {
+      "path": "game/overflight/flight-profile.mjs",
+      "sha256": "09bea1f13dba163bfd1cffdc339a1352c54af0c1a961c8f701cc1df0d9b96d33"
+    },
+    {
+      "path": "game/overflight/grid.mjs",
+      "sha256": "ef130a7f9594bff6af374fe252bb8aafdc7e86762bb8ef60107914654f21dd30"
+    },
+    {
+      "path": "docs/qualification/overflight/rebalance-20261014/verify-balance.mjs",
+      "sha256": "1db24328570699e062362977a2de3e11215a1f4f9ba702f5d2e1cc4c6a88004b"
+    }
+  ],
+  "sourceUnchanged": true
+}

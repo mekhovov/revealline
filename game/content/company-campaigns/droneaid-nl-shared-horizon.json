@@ -1,0 +1,656 @@
+{
+  "actorCatalogId": "journey-actors-v9",
+  "assets": [
+    {
+      "alt": "A Dutch brick workshop with a large carbon FPV quad and adjoining workroom.",
+      "bytes": 356331,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-shared-horizon-01-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-01.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "f19b8c80f5675a501c3388a94eef5cae41422150c828eddf860354b958bd3476",
+      "width": 640
+    },
+    {
+      "alt": "A sheltered Dutch courtyard workshop with a recognizable carbon FPV quad and goggles.",
+      "bytes": 374823,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-shared-horizon-02-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-02.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "816183b5818bdac0f2e1782e1ab7e21d5cb7331cb2d35d2f809462bd48aca36b",
+      "width": 640
+    },
+    {
+      "alt": "An evening workshop collection desk with a visible quad, goggles and closed equipment cases.",
+      "bytes": 346604,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-shared-horizon-03-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-03.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "0da7beb1f8b10979eb12d1d4d5949749f1e66ffcb813cc670c1f782297799939",
+      "width": 640
+    },
+    {
+      "alt": "A carbon FPV quad and goggles beside glowing workshop windows at blue hour.",
+      "bytes": 351779,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-shared-horizon-04-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-04.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "202d47f30f2ce1143203c7345b83b4ace5b0d87312e36446e1ecfc37be06ee08",
+      "width": 640
+    },
+    {
+      "alt": "Three connected practical workshop spaces with FPV equipment, a large foreground quad and goggles.",
+      "bytes": 353605,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-shared-horizon-05-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-05.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "1683839d3777a344b70e8898e86a0ab623fcacd5e92605d9c5b9ee2cffd67035",
+      "width": 640
+    },
+    {
+      "alt": "A dawn workshop reopening with a complete FPV quad, goggles, fresh tools and preserved equipment cases.",
+      "bytes": 371853,
+      "format": "AssetRevisionV1",
+      "height": 320,
+      "id": "droneaid-nl-shared-horizon-06-picture",
+      "kind": "reveal-background",
+      "path": "editions/assets/droneaid-nl/artwork-v2/droneaid-nl-shared-horizon-06.png",
+      "review": "candidate",
+      "revision": "2",
+      "sha256": "2afb526dcf3cd806459685a1f44fd7637228693deeb62f7d4425d4a50161010f",
+      "width": 640
+    }
+  ],
+  "campaigns": [
+    {
+      "band": 11,
+      "format": "CampaignDesignV1",
+      "id": "droneaid-nl-shared-horizon",
+      "missionIds": [
+        "droneaid-nl-shared-horizon-01",
+        "droneaid-nl-shared-horizon-02",
+        "droneaid-nl-shared-horizon-03",
+        "droneaid-nl-shared-horizon-04",
+        "droneaid-nl-shared-horizon-05",
+        "droneaid-nl-shared-horizon-06"
+      ],
+      "name": "Shared Horizon",
+      "revision": "2"
+    }
+  ],
+  "difficultyCatalogId": "journey-difficulty-v2",
+  "format": "ContentProjectV1",
+  "id": "droneaid-nl-shared-horizon",
+  "maps": [
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 11, "x": 29, "y": 12 },
+        { "h": 4, "w": 12, "x": 29, "y": 24 },
+        { "h": 3, "w": 7, "x": 9, "y": 22 },
+        { "h": 3, "w": 7, "x": 54, "y": 7 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "droneaid-nl-shared-horizon-01-map",
+      "name": "Canal Connections",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 29.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 41, "y": 24 }
+      ],
+      "terrain": [],
+      "walls": [
+        { "h": 8, "w": 2, "x": 20, "y": 9 },
+        { "h": 8, "w": 2, "x": 48, "y": 21 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 11, "x": 30, "y": 12 },
+        { "h": 4, "w": 12, "x": 28, "y": 24 },
+        { "h": 3, "w": 7, "x": 10, "y": 22 },
+        { "h": 3, "w": 7, "x": 53, "y": 7 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "droneaid-nl-shared-horizon-02-map",
+      "name": "Courtyard Workshop",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 30.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 40, "y": 24 }
+      ],
+      "terrain": [],
+      "walls": [
+        { "h": 8, "w": 2, "x": 21, "y": 9 },
+        { "h": 8, "w": 2, "x": 47, "y": 21 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 11, "x": 31, "y": 12 },
+        { "h": 4, "w": 12, "x": 29, "y": 24 },
+        { "h": 3, "w": 7, "x": 11, "y": 22 },
+        { "h": 3, "w": 7, "x": 52, "y": 7 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "droneaid-nl-shared-horizon-03-map",
+      "name": "Evening Collection",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 31.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 41, "y": 24 }
+      ],
+      "terrain": [],
+      "walls": [
+        { "h": 8, "w": 2, "x": 20, "y": 9 },
+        { "h": 8, "w": 2, "x": 48, "y": 21 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 11, "x": 29, "y": 12 },
+        { "h": 4, "w": 12, "x": 28, "y": 24 },
+        { "h": 3, "w": 7, "x": 12, "y": 22 },
+        { "h": 3, "w": 7, "x": 51, "y": 7 }
+      ],
+      "gates": [],
+      "height": 36,
+      "id": "droneaid-nl-shared-horizon-04-map",
+      "name": "Windows of Light",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 32.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [{ "h": 2, "id": "slow-1", "kind": "slow", "w": 17, "x": 26, "y": 18 }],
+      "walls": [
+        { "h": 8, "w": 2, "x": 21, "y": 9 },
+        { "h": 8, "w": 2, "x": 47, "y": 21 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 11, "x": 30, "y": 12 },
+        { "h": 4, "w": 12, "x": 29, "y": 24 },
+        { "h": 3, "w": 7, "x": 13, "y": 22 },
+        { "h": 3, "w": 7, "x": 50, "y": 7 }
+      ],
+      "gates": [{ "h": 6, "id": "return-1", "w": 1, "x": 53, "y": 1 }],
+      "height": 36,
+      "id": "droneaid-nl-shared-horizon-05-map",
+      "name": "The Whole Neighbourhood",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 33.5, "y": 0.5 }],
+      "speedZones": [],
+      "terrain": [{ "h": 2, "id": "slow-1", "kind": "slow", "w": 18, "x": 26, "y": 18 }],
+      "walls": [
+        { "h": 8, "w": 2, "x": 20, "y": 9 },
+        { "h": 8, "w": 2, "x": 48, "y": 21 }
+      ],
+      "width": 72
+    },
+    {
+      "format": "MapDesignV3",
+      "foundations": [
+        { "h": 4, "w": 11, "x": 31, "y": 12 },
+        { "h": 4, "w": 12, "x": 28, "y": 24 },
+        { "h": 3, "w": 7, "x": 14, "y": 22 },
+        { "h": 3, "w": 7, "x": 49, "y": 7 }
+      ],
+      "gates": [
+        { "h": 6, "id": "return-1", "w": 1, "x": 52, "y": 1 },
+        { "h": 7, "id": "return-2", "w": 1, "x": 34, "y": 28 }
+      ],
+      "height": 36,
+      "id": "droneaid-nl-shared-horizon-06-map",
+      "name": "Tomorrow Starts Here",
+      "revision": "2",
+      "spawns": [{ "id": "home", "x": 34.5, "y": 0.5 }],
+      "speedZones": [
+        { "direction": "down", "h": 7, "id": "outbound-flow", "w": 3, "x": 24, "y": 8 },
+        { "direction": "right", "h": 3, "id": "return-flow", "w": 7, "x": 40, "y": 24 }
+      ],
+      "terrain": [{ "h": 2, "id": "slow-1", "kind": "slow", "w": 19, "x": 26, "y": 18 }],
+      "walls": [
+        { "h": 8, "w": 2, "x": 21, "y": 9 },
+        { "h": 8, "w": 2, "x": 47, "y": 21 }
+      ],
+      "width": 72
+    }
+  ],
+  "missions": [
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6020000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Plan a complete return around the lane warning before committing to the marked flow. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 11,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 11,
+          "planning": 11,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": ["directional-fields"],
+        "lesson": "Join the imagined neighbourhood across two short bridges. Plan a complete return around the lane warning before committing to the marked flow.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "A foreground FPV quad and equipped workshop connect to a fictional Dutch neighbourhood beyond the windows.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "directional-fields"
+        ],
+        "routeDecision": "Use the near bridge landing before crossing to the far courtyard. Choose the flow direction that reaches a return before the next lane pulse."
+      },
+      "encounter": null,
+      "format": "MissionDesignV4",
+      "id": "droneaid-nl-shared-horizon-01",
+      "map": { "id": "droneaid-nl-shared-horizon-01-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Canal Connections",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-01-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "axis": "vertical",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6520000000000001,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Plan a complete return around the lane warning before committing to the marked flow. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 11,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 11,
+          "planning": 11,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Connect the open workshop with its surrounding courtyards. Plan a complete return around the lane warning before committing to the marked flow.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Carbon quads, goggles and practical tools turn a sheltered courtyard into a shared FPV workshop.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "directional-fields"
+        ],
+        "routeDecision": "Choose the upper or lower courtyard as the first return. Choose the flow direction that reaches a return before the next lane pulse."
+      },
+      "encounter": null,
+      "format": "MissionDesignV4",
+      "id": "droneaid-nl-shared-horizon-02",
+      "map": { "id": "droneaid-nl-shared-horizon-02-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Courtyard Workshop",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-02-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        {
+          "heading": [-1, -1],
+          "id": "paper-drifter",
+          "role": "field-keeper",
+          "tier": "measured",
+          "x": 61.5,
+          "y": 28.5
+        },
+        {
+          "axis": "horizontal",
+          "id": "scheduled-wave",
+          "role": "lane-emitter",
+          "tier": "measured",
+          "x": 57.5,
+          "y": 27.5
+        }
+      ],
+      "bonuses": [],
+      "coverage": 0.6820000000000002,
+      "design": {
+        "captureConsequence": "This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [],
+        "counterplay": "Plan a complete return around the lane warning before committing to the marked flow. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 11,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 11,
+          "planning": 11,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Link the collection corners as the windows begin to glow. Plan a complete return around the lane warning before committing to the marked flow.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Warm task lights illuminate FPV donation cases and a final quad ready for careful packing.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "lane-emitter",
+          "directional-fields"
+        ],
+        "routeDecision": "Connect the small collection bay before crossing the broad canal field. Choose the flow direction that reaches a return before the next lane pulse."
+      },
+      "encounter": null,
+      "format": "MissionDesignV4",
+      "id": "droneaid-nl-shared-horizon-03",
+      "map": { "id": "droneaid-nl-shared-horizon-03-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Evening Collection",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 55.5, "y": 25.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-03-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        { "id": "shared-core", "role": "relay-sentinel", "tier": "measured", "x": 55.5, "y": 17.5 }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 29.5, "y": 12.5 }],
+      "coverage": 0.82,
+      "design": {
+        "captureConsequence": "Shield capture advances the shared core encounter; only its release secures the remaining picture. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["shield-relay-sentinel"],
+        "counterplay": "Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+        "difficulty": {
+          "band": 12,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 12,
+          "planning": 12,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": ["shield-relay-sentinel"],
+        "lesson": "Bring the separated rooms into one illuminated picture. Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Lit FPV workbenches, goggles and protected equipment connect workshop rooms at violet dusk.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "shield-relay-sentinel"
+        ],
+        "routeDecision": "Use the central light court to stay clear of the outer patrol. Connect the shield relays before committing to the exposed shared core."
+      },
+      "encounter": {
+        "coreObjectiveId": "core",
+        "enemyId": "shared-core",
+        "recipeId": "shield-relays-v1",
+        "shieldObjectiveIds": ["connection"]
+      },
+      "format": "MissionDesignV4",
+      "id": "droneaid-nl-shared-horizon-04",
+      "map": { "id": "droneaid-nl-shared-horizon-04-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Windows of Light",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-04-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
+      "relayLinks": [],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        { "id": "shared-core", "role": "relay-sentinel", "tier": "measured", "x": 55.5, "y": 17.5 }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 30.5, "y": 12.5 }],
+      "coverage": 0.82,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. Shield capture advances the shared core encounter; only its release secures the remaining picture. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": ["shield-relay-sentinel", "relay-gates"],
+        "counterplay": "Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill.",
+        "difficulty": {
+          "band": 12,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 12,
+          "planning": 12,
+          "threatDensity": 1,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Reconnect the workshop, depot and gathering spaces. Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "The FPV workshop, component shelves and donation depot return as one connected fictional neighbourhood.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "shield-relay-sentinel",
+          "relay-gates"
+        ],
+        "routeDecision": "Join the staggered inner landings before crossing between the outer courts. Connect the shield relays before committing to the exposed shared core."
+      },
+      "encounter": {
+        "coreObjectiveId": "core",
+        "enemyId": "shared-core",
+        "recipeId": "shield-relays-v1",
+        "shieldObjectiveIds": ["connection", "handoff"]
+      },
+      "format": "MissionDesignV4",
+      "id": "droneaid-nl-shared-horizon-05",
+      "map": { "id": "droneaid-nl-shared-horizon-05-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "The Whole Neighbourhood",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 47.5, "y": 27.5 },
+        { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-05-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
+      "relayLinks": [{ "gateId": "return-1", "objectiveId": "connection" }],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    },
+    {
+      "actors": [
+        { "id": "shared-core", "role": "relay-sentinel", "tier": "measured", "x": 55.5, "y": 17.5 },
+        {
+          "clockwise": true,
+          "edge": { "side": "east", "x": 30, "y": 12 },
+          "id": "moving-boundary",
+          "role": "frontier-patrol",
+          "tier": "measured"
+        }
+      ],
+      "bonuses": [{ "id": "steady-return", "kind": "extra-life", "x": 31.5, "y": 12.5 }],
+      "coverage": 0.82,
+      "design": {
+        "captureConsequence": "The captured relay opens its matching return. Shield capture advances the shared core encounter; only its release secures the remaining picture. This fictional reveal never changes a business record or a real-world delivery.",
+        "combines": [
+          "shield-relay-sentinel",
+          "frontier-patrol",
+          "relay-gates",
+          "directional-fields"
+        ],
+        "counterplay": "Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field. Frontier patrols follow the changed boundary after capture; check the return edge before departing. Each numbered objective opens its matching connector. Closed connectors block a cut; open ones become safe returns without another fill. Arrows speed travel with the flow and slow opposite travel in unclaimed field. Capture neutralizes them.",
+        "difficulty": {
+          "band": 12,
+          "coordination": 0,
+          "execution": 10,
+          "mechanicLoad": 12,
+          "planning": 12,
+          "threatDensity": 2,
+          "timePressure": 0
+        },
+        "durationSeconds": [70, 240],
+        "introduces": [],
+        "lesson": "Complete the shared horizon and open the next chapter. Capture every shield relay. After the vertical core attack, close eight fresh trail cells during CORE OPEN or isolate the core; release secures the remaining field.",
+        "mastery": "Connect every required objective and complete the encounter without losing a life; optional learning remains separate from arcade progress.",
+        "memorableMoment": "Recognizable FPV quads and blue-and-yellow donation cases look toward another day of learning and Ukraine support.",
+        "practices": [
+          "foundations",
+          "enemy-seeded-closure",
+          "travelling-trail-impact",
+          "shield-relay-sentinel",
+          "frontier-patrol",
+          "relay-gates",
+          "directional-fields"
+        ],
+        "routeDecision": "Choose your route through all the familiar safe returns before the final loop. Connect the shield relays before committing to the exposed shared core."
+      },
+      "encounter": {
+        "coreObjectiveId": "core",
+        "enemyId": "shared-core",
+        "recipeId": "shield-relays-v1",
+        "shieldObjectiveIds": ["connection", "handoff"]
+      },
+      "format": "MissionDesignV4",
+      "id": "droneaid-nl-shared-horizon-06",
+      "map": { "id": "droneaid-nl-shared-horizon-06-map", "revision": "2" },
+      "modes": ["solo"],
+      "name": "Tomorrow Starts Here",
+      "objectives": [
+        { "hidden": false, "id": "connection", "required": true, "x": 12.5, "y": 8.5 },
+        { "hidden": false, "id": "handoff", "required": true, "x": 46.5, "y": 27.5 },
+        { "hidden": false, "id": "core", "required": true, "x": 55.5, "y": 17.5 }
+      ],
+      "presentation": {
+        "backgroundAssetId": "droneaid-nl-shared-horizon-06-picture",
+        "themeId": "droneaid-nl-shared-horizon-theme"
+      },
+      "relayLinks": [
+        { "gateId": "return-1", "objectiveId": "connection" },
+        { "gateId": "return-2", "objectiveId": "handoff" }
+      ],
+      "revision": "2",
+      "spawnId": "home",
+      "timeLimitSeconds": 0
+    }
+  ],
+  "name": "Shared Horizon",
+  "packs": [
+    {
+      "campaignIds": ["droneaid-nl-shared-horizon"],
+      "format": "PackDesignV1",
+      "id": "droneaid-nl-shared-horizon-pack",
+      "name": "Shared Horizon",
+      "revision": "2"
+    }
+  ],
+  "policyId": "journey-trail-impact-v3",
+  "revision": "2"
+}

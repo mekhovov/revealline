@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: visible unfocused watch advances independently and close retires its clock without changing an ordinary cut
+ok 1 - visible unfocused watch advances independently and close retires its clock without changing an ordinary cut
+  ---
+  duration_ms: 5991.667791
+  ...
+# Subtest: hidden timer wake consumes bounded elapsed replay time exactly and return paints the current tick
+ok 2 - hidden timer wake consumes bounded elapsed replay time exactly and return paints the current tick
+  ---
+  duration_ms: 1000.118833
+  ...
+# Subtest: explicit watch pause survives hidden time, blur and return until Keep watching
+ok 3 - explicit watch pause survives hidden time, blur and return until Keep watching # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.077541
+  ...
+# Subtest: hidden playback completes a real recorded level, retains its recap and adopts the next scene without RAF
+ok 4 - hidden playback completes a real recorded level, retains its recap and adopts the next scene without RAF # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030333
+  ...
+# Subtest: blur during pending watch source loading preserves adoption and continuous playback
+ok 5 - blur during pending watch source loading preserves adoption and continuous playback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022208
+  ...
+# Subtest: withheld visible RAF recovers real replay completion and rotation while preserving explicit pause and the ordinary save
+ok 6 - withheld visible RAF recovers real replay completion and rotation while preserving explicit pause and the ordinary save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022875
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 4
+# todo 0
+# duration_ms 7905.007125

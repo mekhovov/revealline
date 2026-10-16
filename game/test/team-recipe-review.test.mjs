@@ -17,6 +17,10 @@ const bytes = await read('docs/verification/team37/review.json');
 const review = JSON.parse(bytes);
 const successorBytes = await read('docs/verification/team-specialist-cues-2026-09-24/review.json');
 const successor = JSON.parse(successorBytes);
+const continuationBytes = await read(
+  'docs/verification/v0.132.5-presentation-continuation/review.json',
+);
+const continuation = JSON.parse(continuationBytes);
 const fingerprint = (await fieldKitRecipeSources(read)).team;
 const reviewedSuccessorFingerprint = `${successor.fingerprint.paths} sha256:${successor.fingerprint.sha256}`;
 const defaults = createDefaultThemeBundle().assets;
@@ -37,21 +41,23 @@ const input = (role, source = fingerprint) => ({
   inheritedAssets: images,
   reviewBytes: bytes,
   successorReviewBytes: successorBytes,
+  continuationReviewBytes: continuationBytes,
 });
 const stage = (args) => fieldKitTeamRecipeQuality(args).stage;
 
-test('current Team motion sources fail closed while the exact reviewed predecessor remains usable', () => {
+test('current Team sources and both exact reviewed predecessors remain usable', () => {
   assert.equal(review.recipes.length, 37);
   assert.equal(new Set(review.recipes.map(({ slot }) => slot)).size, 37);
   assert.equal(review.inheritedImages.length, 4);
   for (const role of review.recipes) {
-    assert.equal(stage(input(role)), 'source', role.slot);
+    assert.equal(stage(input(role)), 'reviewed', role.slot);
     assert.equal(stage(input(role, reviewedSuccessorFingerprint)), 'reviewed', role.slot);
     const asset = resolved.assets[role.slot];
     assert.equal(asset.kind, 'recipe');
     assert.deepEqual(asset.recipe, role.defaultRecipePayload);
     assert.deepEqual(asset.quality, fieldKitTeamRecipeQuality(input(role)));
-    assert.equal(asset.quality.stage, 'source');
+    assert.equal(asset.quality.stage, 'reviewed');
+    assert.match(asset.quality.evidence[0], /v0\.132\.5 exact Team continuation:/);
     const reviewed = fieldKitTeamRecipeQuality(input(role, reviewedSuccessorFingerprint));
     assert.match(reviewed.evidence[0], /Team specialist functional successor:/);
     assert.ok(
@@ -93,26 +99,35 @@ test('changed/unknown roles, payloads, default records and review bytes remain s
       'source',
     );
     assert.equal(stage({ ...original, successorReviewBytes: null }), 'source');
+    assert.equal(
+      stage({
+        ...original,
+        continuationReviewBytes: Buffer.concat([continuationBytes, Buffer.from('\n')]),
+      }),
+      'source',
+    );
+    assert.equal(stage({ ...original, continuationReviewBytes: null }), 'source');
   }
   for (const slotId of ['team.unknown', 'team.anchor.available', '__proto__', 'trail.active'])
     assert.equal(stage({ ...input(review.recipes[0]), slotId }), 'source');
 });
 
-test('the exact predecessor remains reviewed and every current renderer dependency fails closed', async () => {
+test('both exact predecessors remain reviewed and every current renderer dependency fails closed', async () => {
   assert.equal(successor.priorReview.sha256, createHash('sha256').update(bytes).digest('hex'));
   assert.notEqual(fingerprint, reviewedSuccessorFingerprint);
   assert.match(fingerprint, /game\/ui\/enemy-body-assets\.mjs/);
-  for (const entry of review.fingerprint.inputs) {
+  assert.equal(continuation.fingerprints.team.currentSHA256, fingerprint.split(' sha256:')[1]);
+  for (const dependency of fingerprint.split(' sha256:')[0].split('; ')) {
     const changed = (
       await fieldKitRecipeSources(async (name) => {
         const value = await read(name);
-        return name === entry.path
+        return name === dependency
           ? Buffer.concat([value, Buffer.from('\n// unreviewed\n')])
           : value;
       })
     ).team;
     for (const role of review.recipes)
-      assert.equal(stage({ ...input(role), source: changed }), 'source', entry.path);
+      assert.equal(stage({ ...input(role), source: changed }), 'source', dependency);
   }
   assert.equal(
     stage({

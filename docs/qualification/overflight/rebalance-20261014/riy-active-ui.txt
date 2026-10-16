@@ -1,0 +1,27 @@
+- main:
+  - button "Menu"
+  - generic: Riy · escorts
+  - button "Pause"
+  - region "Survive battlefield":
+    - generic: Hull 60 / 80
+    - progressbar "Hull"
+    - generic: Spare airframes 1
+    - generic: Shield hits 1
+    - generic: Sortie
+    - strong: 03:43
+    - generic: Level 9
+    - generic: 844 Cleared
+    - paragraph: Automated review · Echo build
+    - generic: Echo Cascade 4
+    - generic: Recovery shield 1
+    - generic: Slowing trail 3
+    - generic: Breaker burst 3
+    - generic: Boost 1.1s
+    - generic "Diagnostics"
+    - complementary:
+      - strong: Riy · escorts
+      - generic: Sweeper · rear cover / Breaker · forward strikes
+      - generic: Focusing priority target
+      - button "F · Focus target" [disabled]
+  - text: ✓ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄ ⌄
+- text: + + + + + + + + +

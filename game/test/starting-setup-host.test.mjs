@@ -1,3 +1,4 @@
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -94,8 +95,8 @@ for (const choice of choices)
       assert.equal(h.storage.getItem(profile), oldProfile);
       const saved = h.storage.getItem(slot),
         session = JSON.parse(saved);
-      assert.equal(verifyReplay(session.replay).match, true);
-      assert.equal(session.replay.options[choice.field], choice.before);
+      assert.equal(verifyReplay(nativeSession(session).replay).match, true);
+      assert.equal(nativeSession(session).replay.options[choice.field], choice.before);
       preserved(h, run, before);
       await change(h, choice.id, choice.after); // repeated native changes do not create another owner
       assert.equal(h.storage.getItem(slot), saved);
@@ -121,7 +122,7 @@ for (const choice of choices)
       assert.equal(h.rendered.paused, true);
       assert.equal(h.storage.getItem(slot), retained);
       assert.equal(loadLibrary(h.storage, profile).library.preferences[choice.field], choice.after);
-      assert.equal(verifyReplay(JSON.parse(retained).replay).match, true);
+      assert.equal(verifyReplay(nativeSession(JSON.parse(retained)).replay).match, true);
       if (h.$('journey-chooser')?.open) h.$('journey-back').click();
       await action(h.$('continue-saved'));
       h.frame(0);
@@ -213,7 +214,7 @@ for (const method of ['button', 'Escape', 'controller', 'pagehide'])
       assert.equal(h.$('mission-replace-dialog').open, false);
       assert.equal(h.doc.activeElement.id, 'turn-select');
       h.$('journey-back').click();
-      const expected = verifyReplay(JSON.parse(raw).replay).state;
+      const expected = verifyReplay(nativeSession(JSON.parse(raw)).replay).state;
       const tick = run.tick;
       h.$('start-button').click();
       h.frame();
@@ -247,7 +248,10 @@ for (const failure of ['quota', 'readback', 'newer-before', 'newer-after'])
     if (failure === 'newer-after') {
       set(slot, get(slot) + ' ');
       await action(h.$('mission-replace-confirm'));
-      assert.match(h.$('mission-replace-status').textContent, /changed.*Prepare again/);
+      assert.match(
+        h.$('mission-replace-status').textContent,
+        /changed.*Prepare fresh attempt again/,
+      );
     }
     assert.match(h.$('mission-replace-status').textContent, /not verified.*may lose/);
     assert.doesNotMatch(
@@ -388,15 +392,36 @@ test('actual controller editor draft/Back and Confirm are separate from fresh-at
   assert.equal(h.storage.getItem(profile), prefs);
   pulse(0);
   pulse(13);
-  set(0, true);
-  h.frame();
+  // Native controller navigation commits on release. Holding Confirm keeps
+  // the editor draft; releasing it owns the asynchronous retention check.
+  const select = h.$('class-select'),
+    onChange = select.onchange;
+  let pendingChange,
+    committed = false;
+  select.onchange = function (...args) {
+    committed = true;
+    return (pendingChange = onChange.apply(this, args));
+  };
+  try {
+    set(0, true);
+    h.frame();
+    frames(h, 8);
+    assert.equal(committed, false, 'Held Confirm cannot commit the editor draft.');
+    assert.equal(h.$('mission-replace-dialog').open, false);
+    assert.equal(select.value, 'scout');
+    assert.equal(h.rendered.run, run);
+    set(0, false);
+    h.frame();
+  } finally {
+    select.onchange = onChange;
+  }
+  assert.equal(committed, true, 'Confirm release must commit the native select.');
+  await pendingChange;
   assert.equal(h.$('mission-replace-dialog').open, true);
   assert.equal(h.doc.activeElement.id, 'mission-replace-stay');
   frames(h, 8);
   assert.equal(h.rendered.run, run);
   assert.equal(h.$('mission-replace-dialog').open, true);
-  set(0, false);
-  h.frame();
   await settle(() => !h.$('mission-replace-confirm').disabled);
   pulse(1);
   assert.equal(h.$('mission-replace-dialog').open, false);

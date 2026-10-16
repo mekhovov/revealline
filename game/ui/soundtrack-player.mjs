@@ -16,10 +16,16 @@ import { validateTrack } from './music.mjs';
 import { inspectMP3, ownSoundtrackBlob, throwIfSoundtrackAborted } from '../mp3.mjs';
 import { bindAudioMasterMedia } from './audio-master.mjs';
 import {
+  fetchOnlineSoundtrackCatalogue,
   isResolvedOnlineSoundtrackTrack,
   onlineSoundtrackRecordingAllowed,
-  onlineSoundtrackRecordingURL,
 } from '../online-soundtrack-catalogue.mjs';
+
+import {
+  soundtrackStyleSelection,
+  sameSoundtrackListening,
+  publicSoundtrackSelection,
+} from '../soundtrack-style-selection.mjs';
 
 const wait = (ms, signal) =>
   new Promise((resolve, reject) => {
@@ -54,6 +60,8 @@ export function createSoundtrackPlayer({
   bundledTrackIds = [],
   localPlayback = false,
   localRecordingIds = [],
+  onlineCatalogueDownload = {},
+  onlineSourceManager = null,
 } = {}) {
   required(
     soundscape?.persistentMusic === true &&
@@ -173,6 +181,11 @@ export function createSoundtrackPlayer({
     notice = null,
     selectionNotice = null;
   let preparation = null;
+  let savedPublicStyles = null,
+    pendingPublicStyles = null,
+    publicStyleLoad = null;
+  let sourceManager = null,
+    unsubscribeSources = null;
   let status = 'idle',
     error = null,
     desired = false,
@@ -182,10 +195,12 @@ export function createSoundtrackPlayer({
     volume = soundscape.getSettings().music,
     fade = 1,
     generation = 0,
+    intentGeneration = 0,
     operation = null,
     pendingSeek = null;
   let failed = new Set(),
-    fallbackUsed = false;
+    fallbackUsed = false,
+    failureFallback = null;
   let baseSelection = null;
   const gainLeases = new Map();
   const tracks = () => [
@@ -294,6 +309,7 @@ export function createSoundtrackPlayer({
         preparation?.generation === generation
           ? Object.freeze({ stage: preparation.stage, message: preparation.message })
           : null,
+      pendingPublicStyles: pendingPublicStyles !== null,
       playing: status === 'playing',
       desired,
       track: current
@@ -305,6 +321,7 @@ export function createSoundtrackPlayer({
             fileName: current.fileName ?? null,
             websites: current.websites ?? [],
             rights: current.rights ?? null,
+            sourceCredits: current.sourceCredits ?? Object.freeze([]),
           })
         : null,
       playlistId: playlist?.id ?? null,
@@ -406,7 +423,12 @@ export function createSoundtrackPlayer({
     }
     for (const deck of decks) if (deck !== activeDeck && deck !== keep) clearDeck(deck);
   }
+  function cancelPublicStyleLoad() {
+    publicStyleLoad?.controller.abort();
+    publicStyleLoad = null;
+  }
   function cancel(keep = null) {
+    cancelPublicStyleLoad();
     generation++;
     operation?.abort();
     operation = null;
@@ -465,6 +487,10 @@ export function createSoundtrackPlayer({
       emit();
     }
     if (track.kind === 'remote') {
+      required(
+        isResolvedOnlineSoundtrackTrack(track),
+        t('interface:invalidOnlineSoundtrackRecording'),
+      );
       throwIfSoundtrackAborted(signal);
       installDeckURL(deck, track, track.url, { owned: false });
       return true;
@@ -557,7 +583,17 @@ export function createSoundtrackPlayer({
     });
     deck.media.preload = 'auto';
     deck.media.loop = false;
-    if (track.kind === 'remote') deck.media.crossOrigin = 'anonymous';
+    if (track.kind === 'remote') {
+      // Release assets stream through a signed redirect without CORS response
+      // headers. The trusted catalogue still pins repository, path and hash.
+      if (
+        track.delivery?.type !== 'external-url' &&
+        track.url.startsWith('https://github.com/mekhovov/revealline-soundtracks/releases/')
+      ) {
+        deck.media.removeAttribute?.('crossorigin');
+        deck.media.crossOrigin = null;
+      } else deck.media.crossOrigin = 'anonymous';
+    }
     deck.media.src = deck.url;
     deck.media.load();
     gains();
@@ -600,7 +636,12 @@ export function createSoundtrackPlayer({
       .then(() => {
         if (controller.signal.aborted || disposed) return;
         preloadOperation = null;
-        preloaded = { deck, track, at };
+        const retainedAt = queue.indexOf(track.id);
+        if (retainedAt < 0) {
+          clearDeck(deck);
+          return;
+        }
+        preloaded = { deck, track, at: retainedAt };
         emit();
         maybeTransition();
       })
@@ -877,9 +918,18 @@ export function createSoundtrackPlayer({
     let at = playableIndex(
       index + 1 < queue.length ? index + 1 : playlist?.repeat === 'all' ? 0 : -1,
     );
+    if (at < 0 && failureFallback?.fromPlaylistId === playlist?.id) {
+      const fallbackPlaylistId = failureFallback.toPlaylistId;
+      failureFallback = null;
+      fallbackUsed = true;
+      override = fallbackPlaylistId;
+      install(resolve());
+      at = playableIndex(0);
+    }
     if (
       at < 0 &&
       !fallbackUsed &&
+      !(playlistSource === 'remote' && remoteSelection?.allowLibraryFallback === false) &&
       (library.format === SOUNDTRACK_FORMAT ||
         ['catalogue', 'catalogue-fallback', 'unavailable', 'published', 'remote'].includes(
           playlistSource,
@@ -992,9 +1042,27 @@ export function createSoundtrackPlayer({
     emit();
     return snapshot();
   }
-  function setLibrary(value) {
+  function setLibrary(value, { publicStyles } = {}) {
     const next = resolveSoundtrackLibrary(value),
+      styles = publicStyles == null ? null : soundtrackStyleSelection(publicStyles, 0).styles,
+      changedStyles = canonicalJSON(styles) !== canonicalJSON(savedPublicStyles),
+      changedPolicy = !sameSoundtrackListening(next, library),
       previousStored = library.selection.playlistId;
+    if (changedStyles || (styles && changedPolicy)) {
+      cancel();
+      savedPublicStyles = styles;
+      pendingPublicStyles = styles;
+      // An obsolete prepared local track must not make Solo Start skip Play.
+      clearMedia();
+      soundscape.pauseMusic();
+      current = null;
+      remoteSelection = null;
+      remoteTracks = [];
+      playlist = null;
+      queue = [];
+      index = -1;
+      status = 'paused';
+    }
     cancelPreload();
     library = next;
     if (remoteSelection && next.listening?.recordingMode) {
@@ -1029,8 +1097,10 @@ export function createSoundtrackPlayer({
     }
     if (override !== null && !soundtrackPlaylists(next).some((p) => p.id === override))
       override = null;
-    if (!current || next.selection.playlistId !== previousStored)
+    if (!current || next.selection.playlistId !== previousStored) {
       override = next.selection.playlistId;
+      failureFallback = null;
+    }
     failed = new Set();
     fallbackUsed = false;
     dirty = true;
@@ -1069,15 +1139,41 @@ export function createSoundtrackPlayer({
     const next = resolve();
     if (canonicalJSON(next.playlist) !== canonicalJSON(playlist)) pending = next;
     else if (!dirty) pending = null;
-    if (sceneChanged && current && !next.playlist.trackIds.includes(current.id)) {
+    if (
+      !pendingPublicStyles &&
+      sceneChanged &&
+      current &&
+      !next.playlist.trackIds.includes(current.id)
+    ) {
       install(next);
       void startAt(0, { fading: true });
     }
     emit();
     return snapshot();
   }
-  async function selectPlaylist(id) {
+  async function selectPlaylist(id, options = {}) {
+    required(
+      options !== null &&
+        typeof options === 'object' &&
+        !Array.isArray(options) &&
+        Object.keys(options).every((key) => key === 'failureFallbackPlaylistId'),
+      'Invalid soundtrack selection options.',
+    );
+    const failureFallbackPlaylistId = options.failureFallbackPlaylistId ?? null;
     resolveSoundtrackSelection({ ...library, selection: { playlistId: id } }, selectionContext());
+    if (failureFallbackPlaylistId !== null) {
+      required(
+        failureFallbackPlaylistId !== id,
+        'The soundtrack failure fallback must use a different playlist.',
+      );
+      resolveSoundtrackSelection(
+        { ...library, selection: { playlistId: failureFallbackPlaylistId } },
+        selectionContext(),
+      );
+    }
+    pendingPublicStyles = null;
+    cancelPublicStyleLoad();
+    intentGeneration++;
     remoteSelection = null;
     remoteTracks = [];
     override = id;
@@ -1085,6 +1181,13 @@ export function createSoundtrackPlayer({
     failed = new Set();
     fallbackUsed = false;
     install(resolve());
+    failureFallback =
+      failureFallbackPlaylistId === null
+        ? null
+        : {
+            fromPlaylistId: playlist.id,
+            toPlaylistId: failureFallbackPlaylistId,
+          };
     return startAt(0, { fading: true });
   }
   async function selectListening(listening) {
@@ -1096,7 +1199,13 @@ export function createSoundtrackPlayer({
   }
   async function playRemotePlaylist(
     value,
-    { order = 'ordered', repeat = 'all', startTrackId = null, mixWithLibrary = false } = {},
+    {
+      order = 'ordered',
+      repeat = 'all',
+      startTrackId = null,
+      mixWithLibrary = false,
+      allowLibraryFallback = true,
+    } = {},
   ) {
     required(
       Array.isArray(value) && value.every(isResolvedOnlineSoundtrackTrack),
@@ -1109,14 +1218,18 @@ export function createSoundtrackPlayer({
     );
     required(typeof mixWithLibrary === 'boolean', t('interface:invalidOnlineSoundtrackMixMode'));
     required(
+      typeof allowLibraryFallback === 'boolean',
+      'Invalid online soundtrack fallback policy.',
+    );
+    required(
       startTrackId === null || /^online\.[a-f0-9]{64}$/.test(startTrackId),
       t('interface:invalidOnlineSoundtrackStartRecording'),
     );
     const owned = boundedJSON(value, {
-      maxBytes: 512 * 1024,
-      maxNodes: 10000,
+      maxBytes: 1024 * 1024,
+      maxNodes: 65536,
       maxDepth: 5,
-      maxArray: 256,
+      maxArray: 512,
       maxString: 2048,
     });
     required(
@@ -1124,7 +1237,7 @@ export function createSoundtrackPlayer({
       t('interface:chooseAtLeastOneOnlineSoundtrack'),
     );
     const ids = new Set();
-    const validated = owned.map((track) => {
+    const validated = owned.map((track, index) => {
       required(
         track?.kind === 'remote' &&
           /^online\.[a-f0-9]{64}$/.test(track.id) &&
@@ -1134,12 +1247,13 @@ export function createSoundtrackPlayer({
           [true, false, null, 'unknown'].includes(track.contentId) &&
           typeof track.recordingModeEligible === 'boolean' &&
           (!track.recordingModeEligible || track.contentId === false) &&
-          onlineSoundtrackRecordingURL(track.url, track.sha256) &&
           !ids.has(track.id),
         t('interface:invalidOnlineSoundtrackRecording'),
       );
       ids.add(track.id);
-      return Object.freeze({ ...track, websites: Object.freeze(track.websites ?? []) });
+      // Retain the immutable resolved object and its source-scoped provenance.
+      // A later catalogue refresh can then revoke a stale remote queue entry.
+      return value[index];
     });
     const eligibleTracks = library.listening?.recordingMode
       ? validated.filter(onlineSoundtrackRecordingAllowed)
@@ -1152,6 +1266,9 @@ export function createSoundtrackPlayer({
       startTrackId === null || eligibleTracks.some((track) => track.id === startTrackId),
       t('interface:theChosenOnlineSoundtrackIsUnavailableInThisPlaybackMode'),
     );
+    pendingPublicStyles = null;
+    cancelPublicStyleLoad();
+    intentGeneration++;
     const localSelection = mixWithLibrary ? resolveBase() : null;
     remoteTracks = eligibleTracks;
     const localTrackIds = localSelection
@@ -1161,6 +1278,7 @@ export function createSoundtrackPlayer({
       : [];
     remoteSelection = {
       source: 'remote',
+      allowLibraryFallback,
       playlist: {
         id: 'online.archive.current',
         title: mixWithLibrary
@@ -1179,6 +1297,7 @@ export function createSoundtrackPlayer({
     notice = null;
     failed = new Set();
     fallbackUsed = false;
+    failureFallback = null;
     install(remoteSelection);
     if (startTrackId !== null) {
       const at = queue.indexOf(startTrackId);
@@ -1186,8 +1305,81 @@ export function createSoundtrackPlayer({
     }
     return startAt(0, { fading: true, localOnly: false });
   }
+  function playSavedPublicStyles() {
+    if (publicStyleLoad) return publicStyleLoad.promise;
+    const request = { controller: new AbortController(), promise: null },
+      styles = pendingPublicStyles,
+      intent = ++intentGeneration;
+    publicStyleLoad = request;
+    intentionallyPaused = false;
+    desired = true;
+    status = 'loading';
+    error = null;
+    preparation = {
+      generation,
+      stage: 'reading',
+      message: t('interface:loadingThePublicSoundtrackCatalogue'),
+    };
+    // Keep the audio-context wake in the activation turn. A denied media start
+    // retains the resolved queue so the next gesture can call play directly.
+    emit();
+    const active = () =>
+      publicStyleLoad === request &&
+      !disposed &&
+      !suspended &&
+      desired &&
+      intentGeneration === intent &&
+      !request.controller.signal.aborted;
+    request.promise = (async () => {
+      try {
+        Promise.resolve(soundscape.enable()).catch(() => {});
+        const catalogue = sourceManager
+          ? await sourceManager.refresh({ signal: request.controller.signal })
+          : await fetchOnlineSoundtrackCatalogue({
+              ...onlineCatalogueDownload,
+              signal: request.controller.signal,
+            });
+        if (!active()) return false;
+        const selected = publicSoundtrackSelection(catalogue, styles, {
+          recordingMode: Boolean(library.listening?.recordingMode),
+        });
+        if (!selected.tracks.length && sourceManager && selected.mixWithLibrary) {
+          publicStyleLoad = null;
+          preparation = null;
+          pendingPublicStyles = null;
+          remoteSelection = null;
+          remoteTracks = [];
+          install(resolveBase());
+          return startAt(0, { localOnly: false });
+        }
+        required(selected.tracks.length > 0, t('interface:soundtrack.chooseAtLeastOneStyle'));
+        publicStyleLoad = null;
+        preparation = null;
+        return playRemotePlaylist(selected.tracks, {
+          order: 'shuffle',
+          repeat: 'all',
+          mixWithLibrary: selected.mixWithLibrary,
+          allowLibraryFallback: false,
+        });
+      } catch (failure) {
+        if (!active()) return false;
+        status = 'error';
+        error = failure.message;
+        return false;
+      } finally {
+        if (publicStyleLoad === request) {
+          publicStyleLoad = null;
+          preparation = null;
+          emit();
+        }
+      }
+    })();
+    return request.promise;
+  }
   async function play() {
     if (disposed || suspended) return false;
+    if (pendingPublicStyles) return playSavedPublicStyles();
+    intentGeneration++;
     intentionallyPaused = false;
     desired = true;
     notice = null;
@@ -1227,6 +1419,10 @@ export function createSoundtrackPlayer({
           }
           soundscape.resumeMusic();
         } else {
+          required(
+            current.kind !== 'remote' || isResolvedOnlineSoundtrackTrack(current),
+            t('interface:invalidOnlineSoundtrackRecording'),
+          );
           const enabled = soundscape.enable();
           if (
             current.kind === 'published' &&
@@ -1271,7 +1467,14 @@ export function createSoundtrackPlayer({
    */
   async function prepare({ allowNetwork = false } = {}) {
     required(typeof allowNetwork === 'boolean', t('interface:invalidSoundtrackPreparationPolicy'));
-    if (disposed || suspended || desired || status === 'playing' || status === 'loading')
+    if (
+      pendingPublicStyles ||
+      disposed ||
+      suspended ||
+      desired ||
+      status === 'playing' ||
+      status === 'loading'
+    )
       return false;
     if (!playlist || dirty || status === 'ended' || status === 'error') install(resolve());
     return startAt(Math.max(0, index), {
@@ -1295,6 +1498,8 @@ export function createSoundtrackPlayer({
       status !== 'playing' && status !== 'loading',
       t('interface:restoreListeningIntentOnlyWhileMusicIsInactive'),
     );
+    cancelPublicStyleLoad();
+    intentGeneration++;
     desired = value;
     intentionallyPaused = !value;
     emit();
@@ -1302,6 +1507,7 @@ export function createSoundtrackPlayer({
   }
   function pause() {
     if (disposed) return;
+    intentGeneration++;
     desired = false;
     intentionallyPaused = true;
     cancel();
@@ -1337,6 +1543,8 @@ export function createSoundtrackPlayer({
   }
   async function previous() {
     if (disposed || suspended) return false;
+    if (pendingPublicStyles) return desired ? play() : false;
+    intentGeneration++;
     failed = new Set();
     fallbackUsed = false;
     if (position().positionSeconds > 3) {
@@ -1360,6 +1568,7 @@ export function createSoundtrackPlayer({
   }
   function suspend() {
     if (disposed) return;
+    intentGeneration++;
     cancel();
     suspended = true;
     clearTimeout(activeDeck.remoteWatchdog);
@@ -1381,10 +1590,84 @@ export function createSoundtrackPlayer({
     await enabled;
     return playing;
   }
+  function reconcileOnlineSources(state) {
+    if (disposed || !remoteSelection) return;
+    const allowed = new Map(
+      state.tracks
+        .filter(
+          (track) =>
+            isResolvedOnlineSoundtrackTrack(track) &&
+            (!library.listening?.recordingMode || onlineSoundtrackRecordingAllowed(track)),
+        )
+        .map((track) => [track.id, track]),
+    );
+    const oldIds = new Set(remoteTracks.map((track) => track.id));
+    const replacement = current?.kind === 'remote' ? allowed.get(current.id) : current;
+    const stopCurrent =
+      current?.kind === 'remote' && (!replacement || replacement.url !== current.url);
+    remoteTracks = remoteTracks.flatMap((track) =>
+      allowed.has(track.id) ? [allowed.get(track.id)] : [],
+    );
+    const retained = remoteSelection.playlist.trackIds.filter(
+      (id) => !oldIds.has(id) || allowed.has(id),
+    );
+    const oldQueue = queue,
+      oldIndex = index;
+    remoteSelection = {
+      ...remoteSelection,
+      playlist: { ...remoteSelection.playlist, trackIds: retained },
+    };
+    playlist = remoteSelection.playlist;
+    queue = queue.filter((id) => retained.includes(id));
+    index = current ? queue.indexOf(current.id) : -1;
+    if (stopCurrent) {
+      const continuePlaying = desired && !intentionallyPaused && !suspended;
+      cancel();
+      clearMedia();
+      soundscape.pauseMusic();
+      current = null;
+      pending = null;
+      dirty = false;
+      status = 'paused';
+      preparation = null;
+      const nextId = oldQueue.slice(oldIndex).find((id) => retained.includes(id));
+      const at = nextId ? queue.indexOf(nextId) : queue.length ? 0 : -1;
+      index = at - 1;
+      if (continuePlaying && at >= 0) void startAt(at, { localOnly: false });
+    } else {
+      if (current?.kind === 'remote') current = replacement;
+      if (
+        preloaded &&
+        (!retained.includes(preloaded.track.id) ||
+          (preloaded.track.kind === 'remote' && !isResolvedOnlineSoundtrackTrack(preloaded.track)))
+      )
+        cancelPreload();
+      else if (preloaded) preloaded.at = queue.indexOf(preloaded.track.id);
+    }
+    emit();
+  }
+  function setOnlineSourceManager(manager) {
+    required(
+      manager === null ||
+        (typeof manager.snapshot === 'function' &&
+          typeof manager.subscribe === 'function' &&
+          typeof manager.refresh === 'function'),
+      'Invalid soundtrack source manager.',
+    );
+    unsubscribeSources?.();
+    unsubscribeSources = null;
+    sourceManager = manager;
+    if (manager) {
+      unsubscribeSources = manager.subscribe(reconcileOnlineSources);
+      reconcileOnlineSources(manager.snapshot());
+    }
+    return snapshot();
+  }
   function dispose() {
     if (disposed) return;
     disposed = true;
     unsubscribeMaster?.();
+    unsubscribeSources?.();
     desired = false;
     cancel();
     soundscape.setSongEndHandler(null);
@@ -1405,8 +1688,11 @@ export function createSoundtrackPlayer({
     if (state.muted) cancelPreload();
     else prepareNext();
   });
+  if (onlineSourceManager) setOnlineSourceManager(onlineSourceManager);
   return Object.freeze({
+    setOnlineSourceManager,
     setLibrary,
+    intentRevision: () => intentGeneration,
     setLocalRecordingIds,
     setContext,
     setAuthoredTrack,
@@ -1417,9 +1703,17 @@ export function createSoundtrackPlayer({
     prepare,
     wake,
     play,
+    cancelPendingPlay: () => {
+      if (publicStyleLoad) pause();
+    },
     pause,
     setIntent,
-    next: () => advance(false),
+    next: () => {
+      if (disposed || suspended) return false;
+      if (pendingPublicStyles) return desired ? play() : false;
+      intentGeneration++;
+      return advance(false);
+    },
     previous,
     seek,
     setVolume,

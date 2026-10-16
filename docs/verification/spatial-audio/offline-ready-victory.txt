@@ -1,0 +1,38 @@
+- button "Game menu":
+  - img "FPV / LINE"
+- generic: ARCADE EDITION
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - progressbar "Picture revealed": 34.3%
+    - emphasis: TARGET 30%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 0:36
+    - generic: SCORE
+    - strong: "08160"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; change craft G; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again."
+    - region "Mission details":
+      - img "The picture revealed in this flight"
+      - paragraph: MISSION 01 / FIRST RETURN
+      - heading "A little more light." [level=1]
+      - paragraph: 34.3% captured · 8,160 points · 0:36. Journey mission complete.
+      - paragraph: First verified performance record for this setup. Your next win can be compared.
+      - paragraph: Journey Standard. 3 starting lives; no failing countdown. 1 enemies · 8.8 craft cells/s.
+      - generic: ★★★
+    - 'button "Next: Choose your share" [active]'
+    - button "View picture ⤢"
+    - button "Try again"
+    - button "Home"
+    - paragraph: "Gold: fast and no lives lost."
+    - paragraph: Guide — That picture was waiting for a line like yours.
+    - strong: Mission complete
+    - generic: Target reached
+    - status: Picture unlocked. A whole world, from one brave line.
+    - status
+    - status
+- text: + + + + + + + +

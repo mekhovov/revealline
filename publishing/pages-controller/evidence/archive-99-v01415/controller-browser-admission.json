@@ -1,0 +1,63 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-99",
+  "infrastructureCommit": "5f85cef5928d8bb594e954782b9429aa43653038",
+  "deploymentId": 6684142373,
+  "deploymentStatusId": 18886838681,
+  "versions": ["v0.141.5"],
+  "surface": "bounded built-in-browser interaction",
+  "sequence": [
+    "RevealLine archive 99 / original v0.141.5 build",
+    "v0.141.5 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+    "Library opened; 286 missions · Solo; first card focused; 91 Journey missions and playable/downloadable entries visible",
+    "Mission 01 briefing loaded with 1 enemy, Start mission, Learn by playing and mission brief actions",
+    "No warnings or errors"
+  ],
+  "observed": {
+    "sourceObservations": [
+      {
+        "surface": "archive index",
+        "observed": "RevealLine archive 99 / original v0.141.5 build",
+        "result": "PASS"
+      },
+      {
+        "surface": "Play -> archived Home",
+        "observed": "v0.141.5 Home; NEW JOURNEY / 91 MISSIONS; Solo, Versus and Team visible",
+        "result": "PASS"
+      },
+      {
+        "surface": "Missions",
+        "observed": "Library opened; 286 missions · Solo; first card focused; 91 Journey missions and playable/downloadable entries visible",
+        "result": "PASS"
+      },
+      {
+        "surface": "First return launch",
+        "observed": "Mission 01 briefing loaded with 1 enemy, Start mission, Learn by playing and mission brief actions",
+        "result": "PASS"
+      },
+      {
+        "surface": "browser logs",
+        "observed": "No warnings or errors",
+        "result": "PASS"
+      }
+    ],
+    "observedAt": "2026-09-26T21:02:46.6NZ"
+  },
+  "scope": "Archive99 index, archived Home, mission library, First return launch briefing, and browser-log acceptance for the preserved v0.141.5 route.",
+  "limitations": [
+    "Built-in-browser interaction is not physical touch certification.",
+    "Built-in-browser interaction is not physical-controller certification.",
+    "No full mission playthrough was performed during this bounded archive admission check."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-99-v01415/browser-admission.json",
+      "sha256": "678c34f7802470d0b587cea5140d47fa9f085b8622f4a532b77063217674d8b8"
+    },
+    {
+      "path": "evidence/archive-99-v01415/public-acceptance.json",
+      "sha256": "eebaf8469fc9b94b38e61c9c917bb00e1e218ac33a3e769154925e7a9f5d152c"
+    }
+  ]
+}

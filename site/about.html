@@ -1,28 +1,82 @@
 <!doctype html>
-<html lang="en" data-current-version="__REVEALLINE_VERSION__">
+<html lang="en" data-current-version="__REVEALLINE_VERSION__" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../game/access-gate.css" />
+    <script src="../game/access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../game/presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <link rel="stylesheet" href="../game/i18n/style.css" />
-    <script src="../game/vendor/i18next-26.4.2.min.js"></script>
-    <script src="../game/i18n/catalogs.mjs"></script>
-    <script src="../game/i18n/bootstrap.mjs"></script>
+    <script
+      src="../game/vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../game/i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../game/i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#091118" />
     <meta
       name="description"
-      content="Reveal Line is a modern pixel-art territory-capture game with a guided coach, Solo, Couch Versus, Couch Team, and optional campaign packs."
+      content="FPV / LINE is a modern pixel-art territory-capture game with a guided coach, Solo, Couch Versus, Couch Team, and optional campaign packs."
       data-i18n-content="website:revealLineIsAModernPixelArtTerritoryCaptureGame2"
     />
-    <title data-i18n="website:aboutRevealLineFieldKit">About Reveal Line · Field Kit</title>
+    <title data-i18n="website:aboutRevealLineFieldKit">About FPV / LINE · Field Kit</title>
     <link rel="stylesheet" href="./landing.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-components.css" />
     <link rel="stylesheet" href="../game/ui/field-kit-compiled.css" />
-    <script type="module" src="../game/presentation/page-entry.mjs"></script>
+    <script
+      src="../game/presentation/page-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../game/ui/field-kit-surfaces.css" />
-    <script type="module" src="../game/ui/field-kit-surfaces.mjs"></script>
+    <script
+      src="../game/ui/field-kit-surfaces.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../game/ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="about">
     <div data-language-control></div>
@@ -30,13 +84,16 @@
     <div class="grain" aria-hidden="true"></div>
     <header class="site-header">
       <a
-        class="brand"
+        class="brand fpv-line-brand fpv-line-brand--compact"
         href="../game/"
-        aria-label="Reveal Line home"
+        aria-label="FPV / LINE home"
         data-i18n-aria-label="website:revealLineHome"
       >
-        <span class="brand-mark" aria-hidden="true">◩</span>
-        <span data-i18n-rich="website:revealLine">REVEAL <i data-i18n-slot="slot0">/</i> LINE</span>
+        <img
+          class="fpv-line-wordmark"
+          src="../game/ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+        />
       </a>
       <label class="field-kit-page-text"
         ><span data-field-kit-copy="display.textSize" data-i18n="website:textSize">Text size</span
@@ -707,6 +764,59 @@
             </div>
           </article>
 
+          <article class="pack-card pack-night">
+            <div class="pack-art" aria-hidden="true"><span class="neon-grid"></span></div>
+            <div class="pack-body">
+              <h3 data-i18n="website:neonReferencePack">Neon Reference Pack</h3>
+              <p data-i18n="website:neonReferenceDescription">
+                Sixteen screenshot-based neon arenas: Channels, Crossroads, Hearts, Labyrinth,
+                Arrows, Chambers, Crossgrid, Switchback, Spirals, Crossfire, Pinwheels and
+                Wavebands.
+              </p>
+              <p>
+                <a
+                  href="../authoring/library/neon-artwork/#neon-reference-pack"
+                  data-i18n="website:pictureGallery"
+                  >Picture gallery</a
+                >
+              </p>
+              <div class="pack-footer">
+                <span class="pack-price" data-i18n="website:included">INCLUDED</span>
+                <a
+                  href="../game/?pack=neon-reference-pack&amp;campaign=neon-reference&amp;level=neon-channels-pack&amp;play=1"
+                  data-i18n-rich="website:installPlay"
+                  >Install &amp; play <span aria-hidden="true" data-i18n-slot="slot0">↗</span></a
+                >
+              </div>
+            </div>
+          </article>
+
+          <article class="pack-card pack-night">
+            <div class="pack-art" aria-hidden="true"><span class="neon-grid"></span></div>
+            <div class="pack-body">
+              <h3 data-i18n="website:neonMosaicPackTitle">Neon Words &amp; Symbols</h3>
+              <p data-i18n="website:neonMosaicPackDescription">
+                38 word and symbol arenas with varied terrain, passages and enemies, inspired by FPV
+                flight and Ukrainian cultural motifs.
+              </p>
+              <p>
+                <a
+                  href="../authoring/library/neon-artwork/#neon-mosaic-pack"
+                  data-i18n="website:pictureGallery"
+                  >Picture gallery</a
+                >
+              </p>
+              <div class="pack-footer">
+                <span class="pack-price" data-i18n="website:included">INCLUDED</span>
+                <a
+                  href="../game/?pack=neon-mosaic-pack&amp;campaign=neon-mosaic&amp;level=neon-fpv-pack&amp;play=1"
+                  data-i18n-rich="website:installPlay"
+                  >Install &amp; play <span aria-hidden="true" data-i18n-slot="slot0">↗</span></a
+                >
+              </div>
+            </div>
+          </article>
+
           <article class="pack-card pack-workshop">
             <div class="pack-art" aria-hidden="true">
               <span class="workshop-board"></span><span class="workshop-chip chip-a"></span
@@ -799,12 +909,12 @@
     </main>
 
     <footer class="site-footer">
-      <a class="brand" href="../game/"
-        ><span class="brand-mark" aria-hidden="true">◩</span
-        ><span data-i18n-rich="website:revealLine"
-          >REVEAL <i data-i18n-slot="slot0">/</i> LINE</span
-        ></a
-      >
+      <a class="brand fpv-line-brand fpv-line-brand--compact" href="../game/"
+        ><img
+          class="fpv-line-wordmark"
+          src="../game/ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+      /></a>
       <p data-i18n="website:originalTerritoryCaptureArcadeLocalSavesNoAccountRequired">
         Original territory-capture arcade · local saves · no account required
       </p>
@@ -816,6 +926,10 @@
         >
       </nav>
     </footer>
-    <script type="module" src="./landing.mjs"></script>
+    <script
+      src="./landing.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
   </body>
 </html>

@@ -1,0 +1,34 @@
+TAP version 13
+# Subtest: actual edition campaign adoption updates appearance and SIM context without saving a preference
+ok 1 - actual edition campaign adoption updates appearance and SIM context without saving a preference
+  ---
+  duration_ms: 1073.553416
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+ok 2 - actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+  ---
+  duration_ms: 782.591625
+  ...
+# Subtest: a cancelled campaign theme preload retains the active flight and SIM context
+ok 3 - a cancelled campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 630.88775
+  ...
+# Mission preparation failed. Error: Fixture font decode failed.
+#     at TestContext.<anonymous> (file:///private/tmp/revealline-overflight-riy-20261013/game/test/edition-appearance-host.test.mjs:240:19)
+#     at async Test.run (node:internal/test_runner/test:797:9)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+# Subtest: a failed campaign theme preload retains the active flight and SIM context
+ok 4 - a failed campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 657.350833
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3436.836125

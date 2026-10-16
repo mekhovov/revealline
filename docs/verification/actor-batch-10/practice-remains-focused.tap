@@ -1,0 +1,207 @@
+TAP version 13
+# Subtest: immutable held patch pins its base while the actual renderer retains newer adapters
+ok 1 - immutable held patch pins its base while the actual renderer retains newer adapters
+  ---
+  duration_ms: 7.802
+  ...
+# Pinned renderer f93317fa0d48d862ecffa29d4cd3b854d04a35b9; patched renderer f731b54cf167c91adeea1df3203f3a56294524b5; patch SHA-256 c4fde0cb043e472517a7c0b22330bce42e3d34181d324ec15b1a0628abd846c9.
+# Subtest: absent and disabled combat preserve both historical and current command streams and authority exactly
+ok 2 - absent and disabled combat preserve both historical and current command streams and authority exactly
+  ---
+  duration_ms: 190.953292
+  ...
+# Subtest: absent and disabled combat leave current pursuit/interception warnings byte-for-command unchanged
+ok 3 - absent and disabled combat leave current pursuit/interception warnings byte-for-command unchanged
+  ---
+  duration_ms: 465.372542
+  ...
+# Subtest: malformed active combat throws before canvas, caches, animation or painter state changes
+ok 4 - malformed active combat throws before canvas, caches, animation or painter state changes
+  ---
+  duration_ms: 78.279792
+  ...
+# Subtest: actual warning bodies and rays sit below the live trail, ordinary keepers and craft
+ok 5 - actual warning bodies and rays sit below the live trail, ordinary keepers and craft
+  ---
+  duration_ms: 40.652708
+  ...
+# Subtest: actual painter layers trail-pursuer/immediate with sentry warning, shot and real capture cancellation
+ok 6 - actual painter layers trail-pursuer/immediate with sentry warning, shot and real capture cancellation
+  ---
+  duration_ms: 433.874209
+  ...
+# Subtest: actual painter layers trail-pursuer/grid-center with sentry warning, shot and real capture cancellation
+ok 7 - actual painter layers trail-pursuer/grid-center with sentry warning, shot and real capture cancellation
+  ---
+  duration_ms: 393.943958
+  ...
+# Subtest: actual painter layers heading-interceptor/immediate with sentry warning, shot and real capture cancellation
+ok 8 - actual painter layers heading-interceptor/immediate with sentry warning, shot and real capture cancellation
+  ---
+  duration_ms: 389.084709
+  ...
+# Subtest: actual painter layers heading-interceptor/grid-center with sentry warning, shot and real capture cancellation
+ok 9 - actual painter layers heading-interceptor/grid-center with sentry warning, shot and real capture cancellation
+  ---
+  duration_ms: 364.210875
+  ...
+# Subtest: actual fired projectiles draw above keepers and below the craft with a readable diamond
+ok 10 - actual fired projectiles draw above keepers and below the craft with a readable diamond
+  ---
+  duration_ms: 45.652459
+  ...
+# Subtest: real ram and terminal capture place inert scrap over the picture with no terminal live threats
+ok 11 - real ram and terminal capture place inert scrap over the picture with no terminal live threats
+  ---
+  duration_ms: 99.045208
+  ...
+# Subtest: small and reduced viewports retain warning and shot cues, including real freeze pickups and pause
+ok 12 - small and reduced viewports retain warning and shot cues, including real freeze pickups and pause
+  ---
+  duration_ms: 302.050792
+  ...
+# Subtest: the cosmetic scrap toggle cannot hide live warning bodies or projectiles
+ok 13 - the cosmetic scrap toggle cannot hide live warning bodies or projectiles
+  ---
+  duration_ms: 89.60125
+  ...
+# Subtest: a real terminal capture is immediately static even unreduced, while surviving sentries stay hidden
+ok 14 - a real terminal capture is immediately static even unreduced, while surviving sentries stay hidden
+  ---
+  duration_ms: 102.828875
+  ...
+# Subtest: one painter reuses a bounded sprite cache and resets it on setLevel and setLook
+ok 15 - one painter reuses a bounded sprite cache and resets it on setLevel and setLook
+  ---
+  duration_ms: 3755.596291
+  ...
+# Subtest: practice remains affect only painter options through a real combat route and Retry
+    # Subtest: hide
+    ok 1 - hide
+      ---
+      duration_ms: 14877.792708
+      ...
+    # Subtest: show
+    ok 2 - show
+      ---
+      duration_ms: 13836.754625
+      ...
+    1..2
+ok 16 - practice remains affect only painter options through a real combat route and Retry
+  ---
+  duration_ms: 28718.031
+  ...
+# Subtest: ordinary game ignores preview-remains even when a practice scenario remains in tab storage
+ok 17 - ordinary game ignores preview-remains even when a practice scenario remains in tab storage
+  ---
+  duration_ms: 1449.835458
+  ...
+# Subtest: only one exact, explicitly owned practice query may hide remains
+ok 18 - only one exact, explicitly owned practice query may hide remains
+  ---
+  duration_ms: 0.910584
+  ...
+# Subtest: missing, malformed, unknown and duplicate options retain the usual presentation
+ok 19 - missing, malformed, unknown and duplicate options retain the usual presentation
+  ---
+  duration_ms: 0.228834
+  ...
+# Subtest: reading cosmetic options leaves the query unchanged and returns an immutable choice
+ok 20 - reading cosmetic options leaves the query unchanged and returns an immutable choice
+  ---
+  duration_ms: 0.23825
+  ...
+# Subtest: actual Studio remains control has a native label and translates through the runtime catalog without changing selection
+ok 21 - actual Studio remains control has a native label and translates through the runtime catalog without changing selection
+  ---
+  duration_ms: 41.666667
+  ...
+# Subtest: Studio slow preview warns once, then accepts later exact-document readiness
+ok 22 - Studio slow preview warns once, then accepts later exact-document readiness
+  ---
+  duration_ms: 1.938292
+  ...
+# Subtest: Studio accepts ready without depending on the iframe load event
+ok 23 - Studio accepts ready without depending on the iframe load event
+  ---
+  duration_ms: 0.193792
+  ...
+# Subtest: Studio terminal boot failure settles even after a slow warning
+ok 24 - Studio terminal boot failure settles even after a slow warning
+  ---
+  duration_ms: 0.242875
+  ...
+# Subtest: stale, blank and foreign preview documents cannot report ready
+ok 25 - stale, blank and foreign preview documents cannot report ready
+  ---
+  duration_ms: 0.159625
+  ...
+# Subtest: replaced previews stop before reading or notifying, including queued callbacks
+ok 26 - replaced previews stop before reading or notifying, including queued callbacks
+  ---
+  duration_ms: 0.132084
+  ...
+# Subtest: closing or leaving Studio cancels the owned monitor and late callbacks
+ok 27 - closing or leaving Studio cancels the owned monitor and late callbacks
+  ---
+  duration_ms: 0.208459
+  ...
+# Subtest: inaccessible frame remains unknown and does not throw or claim successful boot
+ok 28 - inaccessible frame remains unknown and does not throw or claim successful boot
+  ---
+  duration_ms: 0.414291
+  ...
+# Subtest: owned practice observes a post-ready render failure without repeating readiness
+ok 29 - owned practice observes a post-ready render failure without repeating readiness
+  ---
+  duration_ms: 0.190625
+  ...
+# Subtest: foreign or replaced practice cannot overwrite an accepted ready status with failure
+ok 30 - foreign or replaced practice cannot overwrite an accepted ready status with failure
+  ---
+  duration_ms: 0.441041
+  ...
+# Subtest: practice render failure before first readiness is visible without a ready flash
+ok 31 - practice render failure before first readiness is visible without a ready flash
+  ---
+  duration_ms: 0.369541
+  ...
+# Subtest: Studio pagehide persisted=false retires pending media without focus or late launch
+ok 32 - Studio pagehide persisted=false retires pending media without focus or late launch
+  ---
+  duration_ms: 128.802416
+  ...
+# Subtest: Studio pagehide persisted=true retires pending media without focus or late launch
+ok 33 - Studio pagehide persisted=true retires pending media without focus or late launch
+  ---
+  duration_ms: 51.143583
+  ...
+# Subtest: Studio BFcache retirement stops post-ready monitoring and deliberate relaunch gets a fresh owner
+ok 34 - Studio BFcache retirement stops post-ready monitoring and deliberate relaunch gets a fresh owner
+  ---
+  duration_ms: 82.980458
+  ...
+# Subtest: Studio exposes the remains option only for a validated enabled Solo mission and remembers its choice
+ok 35 - Studio exposes the remains option only for a validated enabled Solo mission and remembers its choice
+  ---
+  duration_ms: 284.268833
+  ...
+# Subtest: Studio snapshots remains before media awaits and transports it outside byte-identical scenario data
+ok 36 - Studio snapshots remains before media awaits and transports it outside byte-identical scenario data
+  ---
+  duration_ms: 126.980542
+  ...
+# Subtest: Studio ignores the remembered hidden-remains choice for ordinary and disabled previews
+ok 37 - Studio ignores the remembered hidden-remains choice for ordinary and disabled previews
+  ---
+  duration_ms: 69.621458
+  ...
+1..37
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30669.45625

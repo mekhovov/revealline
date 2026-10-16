@@ -1,0 +1,37 @@
+{
+  "sourceCommit": "92367843769c2d9ac380bf0caae3f3b196602951",
+  "buildId": "7240cc6c399f859926b6fbe13b6ad8f0021b96f4dadc4fd3ef91c9b37e866849",
+  "origin": "http://127.0.0.1:8894",
+  "surface": "Codex in-app browser",
+  "updateVerification": {
+    "workerActivatedAfterClosingOldClients": true,
+    "selectedOverflightAndSnakePreserved": true,
+    "verifiedCoreFiles": 1621,
+    "missing": [],
+    "corrupt": [],
+    "launcherReady": true
+  },
+  "network": "Dedicated listener stopped before main launch; curl exit 7 confirmed before and after all round-trips.",
+  "offlineNavigation": [
+    "downloads \u2192 main home",
+    "main home \u2192 Overflight Survivor \u2192 Start \u2192 Pause \u2192 Home",
+    "Survivor \u2192 Raid \u2192 Start \u2192 Pause \u2192 Home",
+    "Raid \u2192 Solo main home",
+    "main home \u2192 Snake \u2192 Continue/result \u2192 Retry \u2192 Pause \u2192 Home",
+    "Snake \u2192 Solo main home"
+  ],
+  "mainHome": {
+    "bootedOffline": true,
+    "returnFromRaid": true,
+    "returnFromSnake": true,
+    "oneOverflightEntry": true,
+    "snakeInSharedRow": true,
+    "consoleErrors": []
+  },
+  "modeRuntimesMatchInitialSmoke": true,
+  "limitations": [
+    "Functional smoke checks; no new full-run balance or GPU qualification",
+    "OS-specific app-icon installation not exercised",
+    "Optional authoring tools and soundtrack albums not selected"
+  ]
+}

@@ -1,14 +1,54 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-access-state="locked">
   <head>
     <meta charset="utf-8" />
+    <!-- access-gate:start -->
+    <meta name="revealline-access-id" content="revealline" />
+    <meta name="revealline-access-title" content="FPV / LINE" />
+    <meta
+      name="revealline-access-salt"
+      content="bWVraG92b3YuZ2l0aHViLmlvL3JldmVhbGxpbmUvYWNjZXNzL3Yx"
+    />
+    <meta name="revealline-access-verifier" content="fD62nYJ5uj8yGLsEBEAn2Blq8lcesFrR_gdebUswlxg" />
+    <style>
+      html:not([data-access-state='unlocked']) body > :not(#access-gate):not(script) {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="../access-gate.css" />
+    <script src="../access-gate.mjs" defer></script>
+    <!-- access-gate:end -->
+
+    <script
+      src="../presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
     <link rel="stylesheet" href="../i18n/style.css" />
-    <script src="../vendor/i18next-26.4.2.min.js"></script>
-    <script src="../i18n/catalogs.mjs"></script>
-    <script src="../i18n/bootstrap.mjs"></script>
+    <script
+      src="../vendor/i18next-26.4.2.min.js"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/catalogs.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../i18n/bootstrap.mjs"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
 
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <title data-i18n="tools:revealLinePlayground">Reveal / Line — Playground</title>
+    <title data-i18n="tools:revealLinePlayground">FPV / LINE — Playground</title>
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="playground.css" />
     <link rel="stylesheet" href="../ui/pixel-theme.css" />
@@ -16,12 +56,34 @@
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
-    <script type="module" src="../ui/tool-display-entry.mjs"></script>
-    <script type="module" src="../presentation/page-entry.mjs"></script>
+    <script
+      src="../ui/tool-display-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../presentation/page-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
-    <script type="module" src="../ui/workshop-return-entry.mjs"></script>
-    <script type="module" src="../ui/content-studio-navigation-entry.mjs"></script>
+    <script
+      src="../ui/workshop-return-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
+    <script
+      src="../ui/content-studio-navigation-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
+    ></script>
     <link rel="stylesheet" href="../ui/workshop-return.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../ui/art/identity/fpv-line/icon-32.png"
+    />
   </head>
   <body data-workshop-tool="playground" class="playground-page field-kit field-kit-support">
     <div data-language-control></div>
@@ -33,9 +95,15 @@
       >
     </p>
     <header class="masthead">
-      <a class="wordmark" href="../" data-workshop-return="game" data-i18n="tools:revealLine"
-        >◩ REVEAL / LINE</a
-      >
+      <a
+        class="wordmark fpv-line-brand fpv-line-brand--compact"
+        href="../"
+        data-workshop-return="game"
+        ><img
+          class="fpv-line-wordmark"
+          src="../ui/art/identity/fpv-line/wordmark.png"
+          alt="FPV / LINE"
+      /></a>
       <nav>
         <span data-i18n="tools:playground">PLAYGROUND</span
         ><a
@@ -136,6 +204,7 @@
           aria-label="Configuration"
           data-i18n-aria-label="tools:configuration"
         >
+          <h2 class="playground-section-heading" data-i18n="tools:configuration">Configuration</h2>
           <label class="field"
             ><span data-i18n="tools:campaignSource">Campaign source</span
             ><select id="campaign-select"></select
@@ -188,8 +257,14 @@
             >
           </div>
           <div class="section-line">
-            <span data-i18n="tools:tryAnInteraction">TRY AN INTERACTION</span
-            ><span data-i18n="tools:safePracticeRecipes">SAFE PRACTICE RECIPES</span>
+            <h2
+              class="playground-section-heading"
+              data-authoring-target="preset-fiber"
+              data-i18n="tools:tryAnInteraction"
+            >
+              TRY AN INTERACTION
+            </h2>
+            <span data-i18n="tools:safePracticeRecipes">SAFE PRACTICE RECIPES</span>
           </div>
           <div
             class="preset-buttons"
@@ -197,7 +272,12 @@
             aria-label="Interaction preset"
             data-i18n-aria-label="tools:interactionPreset"
           >
-            <button class="button" data-preset="fiber" data-i18n="tools:fiberRelay">
+            <button
+              id="preset-fiber"
+              class="button"
+              data-preset="fiber"
+              data-i18n="tools:fiberRelay"
+            >
               Fiber relay
             </button>
             <button class="button" data-preset="bomber" data-i18n="tools:bomberSupply">
@@ -354,6 +434,107 @@
               </p>
             </fieldset>
           </details>
+          <details id="symbol-generator" open>
+            <summary data-i18n="tools:symbolHeading">Create a level from text or a symbol</summary>
+            <p data-i18n="tools:symbolHelp">
+              Trace a high-contrast symbol into terrain, or type up to three lines. Preview first,
+              then apply and refine with the map tools. Image processing stays on your device.
+            </p>
+            <label class="field"
+              ><span data-i18n="tools:symbolSource">Source</span
+              ><select id="symbol-source">
+                <option value="text" data-i18n="tools:symbolText">Text</option>
+                <option value="image" data-i18n="tools:symbolImage">Symbol image</option>
+              </select></label
+            >
+            <label class="field" id="symbol-text-field"
+              ><span data-i18n="tools:symbolTextLabel">Text (up to 16 characters per line)</span
+              ><textarea id="symbol-text" rows="3" maxlength="50">FPV</textarea>
+            </label>
+            <div id="symbol-image-fields" hidden>
+              <label class="field"
+                ><span data-i18n="tools:symbolFile">PNG, JPEG or WebP · up to 4 MB</span
+                ><input id="symbol-file" type="file" accept="image/png,image/jpeg,image/webp"
+              /></label>
+              <label class="field"
+                ><span data-i18n="tools:symbolThreshold">Image threshold</span
+                ><input id="symbol-threshold" type="range" min="1" max="254" value="150"
+              /></label>
+              <label
+                ><input id="symbol-invert" type="checkbox" /><span data-i18n="tools:symbolInvert"
+                  >Trace light shapes on a dark background</span
+                ></label
+              >
+              <p data-i18n="tools:symbolImageHelp">
+                Choose a tightly cropped silhouette or logo. Adjust threshold and preview again to
+                keep fine details recognizable.
+              </p>
+            </div>
+            <label class="field"
+              ><span data-i18n="tools:symbolTitle">Level title</span
+              ><input id="symbol-title" maxlength="60" value="My symbol"
+            /></label>
+            <div class="settings-row">
+              <label class="field"
+                ><span data-i18n="tools:symbolMaterial">Symbol terrain</span
+                ><select id="symbol-material">
+                  <option value="lethal" data-i18n="tools:symbolLethal">
+                    Red · lethal until captured
+                  </option>
+                  <option value="slow" data-i18n="tools:symbolSlow">Blue · slows the craft</option>
+                </select></label
+              >
+              <label class="field"
+                ><span data-i18n="tools:symbolLayout">Surrounding layout</span
+                ><select id="symbol-layout">
+                  <option value="islands" data-i18n="tools:symbolIslands">Safe islands</option>
+                  <option value="gates" data-i18n="tools:symbolGates">Staggered gates</option>
+                  <option value="open" data-i18n="tools:symbolOpen">Open arena</option>
+                </select></label
+              >
+            </div>
+            <p data-i18n="tools:symbolApplyHelp">
+              Apply replaces the layout and enemies, keeps your reveal picture, and can be undone.
+              Use the generator seed below for variations. Play it with Preview; download the
+              scenario to save or share it.
+            </p>
+            <button
+              id="symbol-preview-button"
+              class="button"
+              type="button"
+              data-i18n="tools:symbolPreview"
+            >
+              Preview generated level
+            </button>
+            <button
+              id="symbol-apply"
+              class="button secondary"
+              type="button"
+              disabled
+              data-i18n="tools:symbolApply"
+            >
+              Apply to editor
+            </button>
+            <canvas
+              id="symbol-preview"
+              width="1152"
+              height="576"
+              style="width: 100%; height: auto"
+              hidden
+              role="img"
+              aria-label="Generated symbol level preview"
+              data-i18n-aria-label="tools:symbolPreviewAlt"
+            ></canvas>
+            <p id="symbol-preview-status" role="status"></p>
+          </details>
+          <label class="field"
+            ><span
+              ><input id="route-coverage" type="checkbox" /><span data-i18n="tools:routeCoverage"
+                >Use reachable-route coverage</span
+              ></span
+            ></label
+          >
+          <p id="route-coverage-status" role="status"></p>
           <div class="settings-row seed-row">
             <label class="field"
               ><span data-i18n="tools:generatorSeed">Generator seed</span
@@ -376,8 +557,14 @@
             /></label>
           </div>
           <div class="section-line">
-            <span data-i18n="tools:paintTheBoard">PAINT THE BOARD</span
-            ><button id="undo-button" class="text-button" disabled data-i18n="tools:undo">
+            <h2
+              class="playground-section-heading"
+              data-authoring-target="map-editor"
+              data-i18n="tools:paintTheBoard"
+            >
+              PAINT THE BOARD
+            </h2>
+            <button id="undo-button" class="text-button" disabled data-i18n="tools:undo">
               Undo
             </button>
           </div>
@@ -479,8 +666,14 @@
             </ul>
           </details>
           <div class="section-line">
-            <span data-i18n="tools:replaceOneVisualRole">REPLACE ONE VISUAL ROLE</span
-            ><span data-i18n="tools:originalFilesPreserved">ORIGINAL FILES PRESERVED</span>
+            <h2
+              class="playground-section-heading"
+              data-authoring-target="asset-role"
+              data-i18n="tools:replaceOneVisualRole"
+            >
+              REPLACE ONE VISUAL ROLE
+            </h2>
+            <span data-i18n="tools:originalFilesPreserved">ORIGINAL FILES PRESERVED</span>
           </div>
           <div class="settings-row">
             <label class="field"
@@ -630,19 +823,25 @@
             </p>
             <p id="music-readout" class="micro-note"></p>
           </details>
-          <details>
+          <details id="recording-verification">
             <summary data-i18n="tools:replayARecordedRun">Replay a recorded run</summary>
             <p data-i18n="tools:importAnExportedReplayToCheckItsFinalSimulationSummary">
-              Import an exported replay to check its final simulation summary. Playback is a
-              verification run and grants no campaign rewards.
+              Import a Solo replay or a local Capture Team/Versus recording to check its recorded
+              result. The report states whether the full state or declared terminal observations
+              match. Wins and losses can both match. Verification grants no progress or rewards and
+              does not prove mission completion.
             </p>
             <p>
               <a
                 data-workshop-tool="replay-theater"
                 href="../replay-theater/"
                 data-i18n="tools:openReplayTheaterToWatchPauseAndStepThroughA"
-                >Open Replay Theater to watch, pause and step through a recording ↗</a
+                >Watch a Solo recording in Replay Theater ↗</a
               >
+            </p>
+            <p data-i18n="tools:multiplayerRecordingVerificationOnly">
+              Team and Versus recordings are checked here with their native rules. Replay Theater
+              currently provides visual playback for Solo recordings only.
             </p>
 
             <label class="file-button button"
@@ -669,8 +868,14 @@
           data-i18n-aria-label="tools:playablePreview"
         >
           <div class="section-line">
-            <span data-i18n="tools:liveEnginePractice">LIVE ENGINE / PRACTICE</span
-            ><a
+            <h2
+              class="playground-section-heading"
+              data-authoring-target="preview-mode"
+              data-i18n="tools:liveEnginePractice"
+            >
+              LIVE ENGINE / PRACTICE
+            </h2>
+            <a
               id="open-preview"
               href="../?practice=1"
               target="_blank"
@@ -838,6 +1043,13 @@
       src="../ui/direct-tool-launch.js"
       data-module="playground.mjs"
       data-status="boot-status"
+      type="application/x-revealline-locked"
+      data-access-type=""
+    ></script>
+    <script
+      src="../ui/authoring-input-entry.mjs"
+      type="application/x-revealline-locked"
+      data-access-type="module"
     ></script>
   </body>
 </html>

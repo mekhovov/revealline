@@ -1,0 +1,359 @@
+{
+  "format": "revealline-gameplay-tuning-compatibility-observation.v1",
+  "qualified": false,
+  "date": "2026-09-29",
+  "scope": "Software compatibility diagnosis and focused regression checks. Browser module probes use a frozen archive plus explicitly pinned source overlays; these are not qualified frozen builds, native gameplay captures, performance measurements or human review.",
+  "source": {
+    "baseCommit": "336a7b58b9a614da61e701fca7626b948ba9ec11",
+    "baseTree": "4d696c2461e59e30360965dad98a66c3b19940f7",
+    "kind": "uncommitted source overlay",
+    "files": [
+      {
+        "path": "game/gameplay-tuning.mjs",
+        "bytes": 21295,
+        "sha256": "695f972ce0904a4ba41b677a3085ef910dbf127da4227422494125040f0c41c9"
+      },
+      {
+        "path": "game/replay-installed-rules.mjs",
+        "bytes": 1373,
+        "sha256": "ee442be156fdc28f8de7a887a6e68f66d1a4e4dee7fd21e3d6b11883376a319e"
+      },
+      {
+        "path": "game/sessions.mjs",
+        "bytes": 14931,
+        "sha256": "3eff5566f68867e90e7caa050b60474e6a1448dac87bf49efde91a1aa3cde4cc"
+      },
+      {
+        "path": "game/journey/performance-binding.mjs",
+        "bytes": 3438,
+        "sha256": "fab1247e2af8e2513fda70530b2521d762eaaa6254ccab722b6335d2b1f07b3e"
+      },
+      {
+        "path": "game/company-session.mjs",
+        "bytes": 5702,
+        "sha256": "a2c533ecee104c4afb258ebe26089ef5b587ddf3715238d75542b82a78582424"
+      },
+      {
+        "path": "game/app.mjs",
+        "bytes": 471963,
+        "sha256": "66427475570df32f0323f8abedf4c49c06dfecffd1e161ddee316dec92b79965"
+      },
+      {
+        "path": "game/test/gameplay-tuning-portability.test.mjs",
+        "bytes": 4199,
+        "sha256": "0f5a930dd47b30f98b406e3ef4bca98ba0ec539eff5f4f48a5a72eafbda0d542"
+      },
+      {
+        "path": "game/test/gameplay-tuning-native-restore.test.mjs",
+        "bytes": 9520,
+        "sha256": "d0c96d61281c8c8179d29c2818c3bb6b872999e5af5acbc993e3f4a9d6b513e0"
+      },
+      {
+        "path": "game/test/fixtures/firefox146-gp4-session.json",
+        "bytes": 10374,
+        "sha256": "bdaca29085f7471a8d99f2efb3c61046ebc3b8f343fe363648cc251e8e5de04d"
+      },
+      {
+        "path": "game/test/fixtures/firefox146-gp4-completion-session.json",
+        "bytes": 10459,
+        "sha256": "61adcfe2d4bc195ca0fa3388ecb880f857ec998481a1693eeaeb6477c3db7988"
+      }
+    ]
+  },
+  "originalArtifact": {
+    "sourceCommit": "4689753f6af7dbc5bc6a7fe37161b08a511599b7",
+    "sourceTree": "b61f31b0993cd71ec1c98bfc649ae02787df0b08",
+    "editionId": "ukraine-culture",
+    "archive": {
+      "path": ".cache/phase7-4689753f6/showcase-editions/distribution-ukraine-culture.zip",
+      "bytes": 42180665,
+      "sha256": "5981194fdd06d0b6bb9f05366742f20b064b6c13e29544268f535cc3920357d0"
+    },
+    "manifest": {
+      "path": ".cache/phase7-4689753f6/showcase-editions/manifest-ukraine-culture.json",
+      "bytes": 89964,
+      "sha256": "0682d1b68e9da600343c8b882c60182f9a2889d331767aae52861bcd0c446980"
+    },
+    "memberCount": 663,
+    "admission": "Original ZIP and manifest hashes checked; all members inspected against exact manifest inventory before use."
+  },
+  "diagnosis": {
+    "publicBootError": "Reward gameplay binding differs from the selected mission.",
+    "rows": 108,
+    "differingRows": 33,
+    "differingDifficulties": {
+      "gentle": 33,
+      "standard": 0,
+      "expert": 0
+    },
+    "authoredManifestDifferences": 0,
+    "first": {
+      "missionId": "ukraine-cities-symbols-time-01",
+      "difficulty": "gentle",
+      "sourceVx": -1.6970562748477138,
+      "sourceVy": -1.6970562748477138,
+      "nodeMagnitude": 2.4,
+      "firefoxMagnitude": 2.3999999999999995,
+      "nodeVx": -5.860147449083513,
+      "firefoxVx": -5.860147449083514,
+      "publishedGameplayId": "97519dcde5323802",
+      "oldFirefoxGameplayId": "3575425135c1c6da"
+    }
+  },
+  "correction": {
+    "owner": "game/gameplay-tuning.mjs",
+    "version": "gameplay-pressure.v4",
+    "description": "Fresh v4 normalization uses explicit scaled two-component square root arithmetic with the published V8 operation order. No tolerance, identity rewrite or reward-binding exception is introduced.",
+    "primarySource": "https://chromium.googlesource.com/v8/v8/+/refs/heads/main/src/builtins/math.tq",
+    "reference": "FastMathHypot two-argument branch; indexed source blob 98dab8e9b8c229831d3fc0384b79d8266b6d21a7.",
+    "unchanged": [
+      "game/core/*",
+      "game/gameplay-tuning-v1.mjs",
+      "game/gameplay-tuning-v2.mjs",
+      "game/gameplay-tuning-v3.mjs",
+      "authored mission/reward revisions and requirements",
+      "reward gameplay-binding checks"
+    ]
+  },
+  "publishedBindingProbe": {
+    "originalTuningSha256": "2172441efdd5c8e75c67c4a5de861db25c9a4788ae2afeed37d4b219cb1a6b01",
+    "overlayTuningSha256": "695f972ce0904a4ba41b677a3085ef910dbf127da4227422494125040f0c41c9",
+    "all108BindingOracleSha256": "e033b42b684829861c1278fd50ef6f16feb772aa62e92667e5a5076305ac4984",
+    "node": {
+      "version": "v20.19.5",
+      "allBindingsUnchanged": true,
+      "bootstrapCampaigns": 6,
+      "rewards": 43
+    },
+    "browsers": [
+      {
+        "engine": "firefox",
+        "version": "146.0.1",
+        "bootstrapCampaigns": 6,
+        "rewards": 43,
+        "nativeMagnitude": 2.3999999999999995,
+        "allBindingsUnchanged": true,
+        "bindings": 108
+      },
+      {
+        "engine": "chromium",
+        "version": "154.0.8037.57",
+        "bootstrapCampaigns": 6,
+        "rewards": 43,
+        "nativeMagnitude": 2.4,
+        "allBindingsUnchanged": true,
+        "bindings": 108
+      }
+    ],
+    "limitations": "Current Ukraine authored identities and complete current six-campaign/43-reward bootstrap only. No simulation tick/replay cross-engine equivalence or native UI claim. Two initial probe setup failures (selected locale-module difference and blocked eval under packaged-preview CSP) were corrected by extracting the exact module closure and serving explicit separate instrumentation; those early setup logs were not retained."
+  },
+  "legacyCompatibility": {
+    "authority": "matchRecordedGameplayTuning compares the complete recorded level to an exact reconstruction from the installed authored source: canonical first, then gp4-only previous native arithmetic. Replay verification and exact class checks remain separate required authorities. No new run or reward binding uses the historical branch.",
+    "boundary": "Same-runtime prior native arithmetic is preserved. This does not make arbitrary old Firefox replay imports portable to Chrome or other historical engines.",
+    "before": {
+      "verified": true,
+      "restored": false,
+      "error": "Saved rules differ from the installed campaign."
+    },
+    "after": {
+      "browserVersion": "146.0.1",
+      "verified": true,
+      "restored": true,
+      "resavedUnchanged": true,
+      "checkpoint": "300ba83ff9c0d279"
+    },
+    "fixtureProvenance": "Both committed fixtures were generated through unchanged original archive APIs in Firefox 146.0.1 using small explicit diagnostic sources, 30 neutral ticks and the ordinary recorder/session serializers. They are test data, not user progress. The completion fixture was regenerated with complete campaign/level display labels; no key, level or replay was rewritten to adopt it.",
+    "consumers": [
+      "verified replay installed-rule matching",
+      "re-suspension with authored picture source",
+      "Journey performance source admission",
+      "prepared company sessions with identical tuning recipe and recorded anchored learning identity",
+      "default Collection eligibility with unchanged admin rejection"
+    ],
+    "actualHostCheck": "Node DOM-boundary Solo host: actual Continue restores the archived diagnostic save, ordinary movement wins, and Collection contains the authored revision. Exact original checkpoint and native recorded velocity remain intact. This is not a native Firefox gameplay or layout observation.",
+    "negativeChecks": [
+      "changed velocity",
+      "changed goal",
+      "changed source revision",
+      "changed tuned recipe revision",
+      "changed spawn",
+      "changed class roster",
+      "wrong difficulty",
+      "admin performance eligibility",
+      "untuned company mission receiving a tuned replay",
+      "learning transcript using the new canonical identity instead of the recorded identity"
+    ]
+  },
+  "tests": {
+    "final": {
+      "command": "node --test --test-concurrency=2 game/test/gameplay-tuning-portability.test.mjs game/test/gameplay-tuning-native-restore.test.mjs game/test/gameplay-tuning.test.mjs game/test/field-course.test.mjs game/test/collision-course.test.mjs game/test/replay.test.mjs game/test/sessions.test.mjs game/test/sessions-continuous.test.mjs game/test/company-session.test.mjs game/test/journey-performance-binding.test.mjs game/test/gameplay-pressure-completion-host.test.mjs",
+      "total": 88,
+      "passed": 88,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 32381.827833,
+      "log": {
+        "path": ".cache/phase7-336a7b58b/identity-probe/tests/gameplay-tuning-native-final-cohort.log",
+        "bytes": 20296,
+        "sha256": "64014583324aa4ee25ed98a7670dce9fa27f6b68e0cb162bc84fec162e99be72"
+      }
+    },
+    "earlierCompanyCheck": {
+      "scope": "Canonical normalization stage, before compatibility-consumer and root package additions.",
+      "command": "npm run company:check",
+      "generatedCompanyFiles": 186,
+      "eligibleFiles": 5043,
+      "assets": 294,
+      "log": {
+        "path": ".cache/phase7-336a7b58b/identity-probe/tests/gameplay-tuning-portability-company-check.log",
+        "bytes": 258,
+        "sha256": "da16a865d51b3e94067bb0a25eafc2724ca8eaf3be3100cdd207b00b0ecc5ea8"
+      }
+    },
+    "lintAndFormat": "ESLint for six changed runtime modules and two new tests passed; Prettier and git diff --check passed.",
+    "otherLogs": [
+      {
+        "path": ".cache/phase7-336a7b58b/identity-probe/tests/gameplay-tuning-portability-tests.log",
+        "bytes": 1782,
+        "sha256": "ff6249c989323a86b907b5f580003820e8d1a53e525d81afa6ba7a915844624a"
+      },
+      {
+        "path": ".cache/phase7-336a7b58b/identity-probe/tests/gameplay-tuning-portability-cohort.log",
+        "bytes": 10427,
+        "sha256": "e4c1065d6641caa6c61424f0a9b0a46f9ef5e1f9be3651568d95f7d0a9b3bd8b"
+      },
+      {
+        "path": ".cache/phase7-336a7b58b/identity-probe/tests/gameplay-tuning-portability-collision.log",
+        "bytes": 3172,
+        "sha256": "8b612fc1b9eebcb3281fdd54690706b532d5a71869fb9bcaae254cedc8dca84e"
+      },
+      {
+        "path": ".cache/phase7-336a7b58b/identity-probe/tests/gameplay-tuning-native-restore-host-missing-label.log",
+        "bytes": 4429,
+        "sha256": "2ae17c473bc08d1b06393f91d8c0fa93deeec1e2bc1671eeb4e64dd4fe524266"
+      },
+      {
+        "path": ".cache/phase7-336a7b58b/identity-probe/tests/gameplay-tuning-native-restore-attempt3.log",
+        "bytes": 2252,
+        "sha256": "73e1b0b85021bc39d83e80ce58d58bb84d5ce4d0700eaa3e06f3bedfe9e7771b"
+      },
+      {
+        "path": ".cache/phase7-336a7b58b/identity-probe/tests/gameplay-tuning-native-restore-attempt4.log",
+        "bytes": 1409,
+        "sha256": "4b9ef3c351323bf81c591f05fd21f4cad783ea49e74f1461ba565f069c752ee0"
+      }
+    ]
+  },
+  "initialFailures": [
+    {
+      "case": "Axial-vector expected literal",
+      "result": "2 pass / 1 fail",
+      "cause": "Test initially rounded the expected legacy floating-point result to 8.2875. Unchanged archive output proved 8.287500000000001; only the expected literal was corrected.",
+      "rawLogRetained": true
+    },
+    {
+      "case": "Completion fixture missing campaign title",
+      "result": "4 pass / 1 fail",
+      "cause": "The diagnostic campaign supplied name instead of required title. Product mastery validation correctly rejected it; no product schema change.",
+      "rawLogRetained": false,
+      "record": "The original complete error was observed in tool output; that log was overwritten before preservation was requested. No retained raw-log claim."
+    },
+    {
+      "case": "Completion fixture missing level display label",
+      "result": "4 pass / 1 fail",
+      "cause": "A required Journey label was undefined; preserved log records the rejection. No product parser change.",
+      "rawLogRetained": true
+    },
+    {
+      "case": "Attempted label-only fixture projection",
+      "result": "4 pass / 1 fail",
+      "cause": "Campaign-key assertion proved that changing the label changed the source identity. That approach was rejected; the final correctly labelled source and save were regenerated through original Firefox archive APIs.",
+      "rawLogRetained": true
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/probe.mjs",
+      "bytes": 5229,
+      "sha256": "8554eb29f2aa2322131daf4d6ce8339ed33fe9d8db9c6b022c237507441b2084"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/report.json",
+      "bytes": 41952,
+      "sha256": "ccf6cde3bbe2f01d29457e441199bd6ddb88339677bc2546f353168a8cb8f0a0"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/node.json",
+      "bytes": 756490,
+      "sha256": "df76be904efd15cead7e600cf7056d383cc0ea99da78ea5271e7b2299c4bb29c"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/firefox.json",
+      "bytes": 756490,
+      "sha256": "0e9c20f1662bc0962ce4024915c24e4cf31a832890bc0313059c321c9e2a55d4"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/probe-overlay.mjs",
+      "bytes": 6493,
+      "sha256": "38b38a156634fbe37bf01450988a1401700e0b7d1b894b9439a5766c27106c6b"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/overlay-report.json",
+      "bytes": 32826,
+      "sha256": "f694c54bc87a49cc838da79ab8b281ede6d44fdb8824059ccc0cf61990764a48"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/probe-overlay-final.mjs",
+      "bytes": 6505,
+      "sha256": "9719b8c50d824e963ab1d1f7303b7264f7530d33d87a42a5db4e63474ffac3d3"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/overlay-final-report.json",
+      "bytes": 32826,
+      "sha256": "957e31b51d145b1108d800e418eff42c72e0ce328474edad88e0a5b38cccae9c"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/legacy-restore-probe.mjs",
+      "bytes": 5050,
+      "sha256": "c929df2f9d637bcbec4f120a5efeed04d5e8477f69a2386aaec99d4de3dbf5bd"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/legacy-restore-before.json",
+      "bytes": 12882,
+      "sha256": "02dc87f4284bbf9da4b6303372d32e3f97172d8f26b4daa80dcf30aeb9a24abb"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/legacy-restore-fixed.json",
+      "bytes": 14006,
+      "sha256": "b7bd1142bbe5a63e7c6d2362d304394d196e0e3e0c178796e72e786c3eab3429"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/legacy-host-probe.mjs",
+      "bytes": 5081,
+      "sha256": "5d70f618e21a6f08c511a3cc70956d7b0667d430b5b2f3f7e9b803fedd2b24de"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/legacy-restore-host.json",
+      "bytes": 14006,
+      "sha256": "5473a7ade32ac32efa0c7e4c5e7299efcd1423246385d2da89ce030f12816b83"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/legacy-restore-host-title.json",
+      "bytes": 14007,
+      "sha256": "f6e0d72ddcb712f41aedd80f207e1dbb11835dd2b6dd4b3e4ac176e0fbd91f6d"
+    },
+    {
+      "path": ".cache/phase7-336a7b58b/identity-probe/legacy-restore-host-labelled.json",
+      "bytes": 14095,
+      "sha256": "344ed39dd45f7c5488e43de63bcdb12195a354e2e3f76193dbb0b199c6231a68"
+    }
+  ],
+  "cleanup": {
+    "moduleProbes": "Each completed module probe closed its page, Firefox/Chrome browser and owned loopback server in finally; processes exited 0.",
+    "remainingOwnedBrowsers": false
+  },
+  "remaining": [
+    "Fresh candidate compilation and full native Firefox showcase boot/playthrough belong to subsequent frozen-artifact validation.",
+    "No human/listening, physical-device, performance, whole-game historical cross-engine replay, source publication or release qualification is claimed."
+  ]
+}

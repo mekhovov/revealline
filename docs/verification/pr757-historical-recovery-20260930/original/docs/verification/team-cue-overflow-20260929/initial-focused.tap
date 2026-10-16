@@ -1,0 +1,340 @@
+TAP version 13
+# Subtest: portrait functional player numerals retain at least fourteen CSS pixels
+ok 1 - portrait functional player numerals retain at least fourteen CSS pixels
+  ---
+  duration_ms: 12.41625
+  type: 'test'
+  ...
+# Subtest: pilot complete image frames remain within the arena at the true boundary
+ok 2 - pilot complete image frames remain within the arena at the true boundary
+  ---
+  duration_ms: 4.245375
+  type: 'test'
+  ...
+# Subtest: compact full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 3 - compact full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 35.907625
+  type: 'test'
+  ...
+# Subtest: detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+ok 4 - detailed full frame, motor and nose bounds stay inside every corner through heading and banking
+  ---
+  duration_ms: 27.796291
+  type: 'test'
+  ...
+# Subtest: body offset leaves shared default drawing exact and contact at its real pixel position
+ok 5 - body offset leaves shared default drawing exact and contact at its real pixel position
+  ---
+  duration_ms: 1.364959
+  type: 'test'
+  ...
+# Subtest: plain portrait cues and player identities retain CSS size without covering true heads
+ok 6 - plain portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 2.87775
+  type: 'test'
+  ...
+# Subtest: pixel portrait cues and player identities retain CSS size without covering true heads
+ok 7 - pixel portrait cues and player identities retain CSS size without covering true heads
+  ---
+  duration_ms: 2.523542
+  type: 'test'
+  ...
+# Subtest: complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+ok 8 - complete CSS cue plates avoid both pilot heads and remain in the 362 by181 arena
+  ---
+  duration_ms: 0.400125
+  type: 'test'
+  ...
+# Subtest: Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+ok 9 - Large scales Team canvas type after its CSS-size clamp without changing cell geometry
+  ---
+  duration_ms: 0.510167
+  type: 'test'
+  ...
+# Subtest: Standard Team commands retain the pre-Large-preference baseline
+ok 10 - Standard Team commands retain the pre-Large-preference baseline
+  ---
+  duration_ms: 20.305541
+  type: 'test'
+  ...
+# Subtest: Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+ok 11 - Large enlarges actual player, downed and warning labels while preserving prepared bodies and contacts
+  ---
+  duration_ms: 36.851875
+  type: 'test'
+  ...
+# Subtest: crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+ok 12 - crowded Team labels keep their measured size instead of covering a pilot or shrinking text
+  ---
+  duration_ms: 0.133166
+  type: 'test'
+  ...
+# Subtest: invalid canvas text size fails before drawing or mutating the Team run
+ok 13 - invalid canvas text size fails before drawing or mutating the Team run
+  ---
+  duration_ms: 0.623792
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+ok 14 - 212 CSS px Ukrainian Large Relay patrol retains complete distinct cue plates
+  ---
+  duration_ms: 42.897041
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+ok 15 - 212 CSS px Ukrainian Large Relay warning retains complete distinct cue plates
+  ---
+  duration_ms: 21.668459
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+ok 16 - 212 CSS px Ukrainian Large Relay commit retains complete distinct cue plates
+  ---
+  duration_ms: 32.491708
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+ok 17 - 212 CSS px Ukrainian Large Relay recovery retains complete distinct cue plates
+  ---
+  duration_ms: 22.701833
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+ok 18 - 212 CSS px Ukrainian Large Relay slowed retains complete distinct cue plates
+  ---
+  duration_ms: 32.863125
+  type: 'test'
+  ...
+# Subtest: 212 CSS px Ukrainian Large Relay both-slowed retains complete distinct cue plates
+ok 19 - 212 CSS px Ukrainian Large Relay both-slowed retains complete distinct cue plates
+  ---
+  duration_ms: 21.117208
+  type: 'test'
+  ...
+# Subtest: 362 CSS px Ukrainian Large Relay keeps legacy full role/danger and Slowed captions
+ok 20 - 362 CSS px Ukrainian Large Relay keeps legacy full role/danger and Slowed captions
+  ---
+  duration_ms: 99.869333
+  type: 'test'
+  ...
+# Subtest: 212 CSS px slowed warning Hunters retain full danger captions, arrows and dashed rings
+ok 21 - 212 CSS px slowed warning Hunters retain full danger captions, arrows and dashed rings
+  ---
+  duration_ms: 30.869625
+  type: 'test'
+  ...
+# Subtest: 212 CSS px slowed commit Hunters retain full danger captions, arrows and dashed rings
+ok 22 - 212 CSS px slowed commit Hunters retain full danger captions, arrows and dashed rings
+  ---
+  duration_ms: 26.381334
+  type: 'test'
+  ...
+# Subtest: 212 CSS px slowed recovery Hunters retain full danger captions, arrows and dashed rings
+ok 23 - 212 CSS px slowed recovery Hunters retain full danger captions, arrows and dashed rings
+  ---
+  duration_ms: 27.21975
+  type: 'test'
+  ...
+# Subtest: 212 CSS px required cues remain complete with an active cut.joint outcome
+ok 24 - 212 CSS px required cues remain complete with an active cut.joint outcome
+  ---
+  duration_ms: 38.304917
+  type: 'test'
+  ...
+# Subtest: 212 CSS px required cues remain complete with an active team.recovery outcome
+ok 25 - 212 CSS px required cues remain complete with an active team.recovery outcome
+  ---
+  duration_ms: 39.50475
+  type: 'test'
+  ...
+# Subtest: compact cue packing reuses identical geometry and invalidates changed arena or warnings
+ok 26 - compact cue packing reuses identical geometry and invalidates changed arena or warnings
+  ---
+  duration_ms: 8.415791
+  type: 'test'
+  ...
+# Subtest: a moved locked target invalidates warm packing without changing warning text
+ok 27 - a moved locked target invalidates warm packing without changing warning text
+  ---
+  duration_ms: 4.175125
+  type: 'test'
+  ...
+# Subtest: an accepted won picture clears the last compact cue layout
+ok 28 - an accepted won picture clears the last compact cue layout
+  ---
+  duration_ms: 2.002834
+  type: 'test'
+  ...
+# Subtest: replacing or removing presentation clears its previous compact cue layout
+ok 29 - replacing or removing presentation clears its previous compact cue layout
+  ---
+  duration_ms: 5.919
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: empty
+ok 30 - Team setup and paused Help describe only authored roles: empty
+  ---
+  duration_ms: 673.670708
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter
+ok 31 - Team setup and paused Help describe only authored roles: hunter
+  ---
+  duration_ms: 433.731208
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: drifter
+ok 32 - Team setup and paused Help describe only authored roles: drifter
+  ---
+  duration_ms: 476.484792
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: relay
+ok 33 - Team setup and paused Help describe only authored roles: relay
+  ---
+  duration_ms: 415.9905
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter, drifter
+ok 34 - Team setup and paused Help describe only authored roles: hunter, drifter
+  ---
+  duration_ms: 442.107833
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter, relay
+ok 35 - Team setup and paused Help describe only authored roles: hunter, relay
+  ---
+  duration_ms: 415.62425
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: drifter, relay
+ok 36 - Team setup and paused Help describe only authored roles: drifter, relay
+  ---
+  duration_ms: 423.965583
+  type: 'test'
+  ...
+# Subtest: Team setup and paused Help describe only authored roles: hunter, drifter, relay
+ok 37 - Team setup and paused Help describe only authored roles: hunter, drifter, relay
+  ---
+  duration_ms: 418.194541
+  type: 'test'
+  ...
+# Subtest: clear historical cue placements remain exact and input measurements are untouched
+ok 38 - clear historical cue placements remain exact and input measurements are untouched
+  ---
+  duration_ms: 0.907833
+  type: 'test'
+  ...
+# Subtest: group packing repairs overlapping greedy positions without shrinking or covering heads
+ok 39 - group packing repairs overlapping greedy positions without shrinking or covering heads
+  ---
+  duration_ms: 1.059791
+  type: 'test'
+  ...
+# Subtest: oversized, impossible and malformed cues remain explicit overflow instead of disappearing
+ok 40 - oversized, impossible and malformed cues remain explicit overflow instead of disappearing
+  ---
+  duration_ms: 0.187084
+  type: 'test'
+  ...
+# Subtest: a malformed original rectangle cannot bypass the group head exclusion
+ok 41 - a malformed original rectangle cannot bypass the group head exclusion
+  ---
+  duration_ms: 0.08475
+  type: 'test'
+  ...
+# Subtest: actual imported maximum-density arena exposes all entries and one press enters paused reading
+ok 42 - actual imported maximum-density arena exposes all entries and one press enters paused reading
+  ---
+  duration_ms: 1916.310167
+  type: 'test'
+  ...
+# Subtest: fresh controller Confirm enters overflow details once and Back preserves the paused attempt
+ok 43 - fresh controller Confirm enters overflow details once and Back preserves the paused attempt
+  ---
+  duration_ms: 716.175292
+  type: 'test'
+  ...
+# Subtest: clear ordinary Team canvas adds no overflow action or announcement
+ok 44 - clear ordinary Team canvas adds no overflow action or announcement
+  ---
+  duration_ms: 94.951708
+  type: 'test'
+  ...
+# Subtest: overflow admission requires an actual compact unplaced result
+ok 45 - overflow admission requires an actual compact unplaced result
+  ---
+  duration_ms: 1.670958
+  type: 'test'
+  ...
+# Subtest: complete overflow text retains seats, actual locked target, slowdown and core/anchor identity without writes
+ok 46 - complete overflow text retains seats, actual locked target, slowdown and core/anchor identity without writes
+  ---
+  duration_ms: 19.614916
+  type: 'test'
+  ...
+# Subtest: phase and half-open status expiry remain truthful while paused and translate through the current locale
+ok 47 - phase and half-open status expiry remain truthful while paused and translate through the current locale
+  ---
+  duration_ms: 2.9145
+  type: 'test'
+  ...
+# Subtest: rotation reveals the same paused Settings action without refocus, resume or checkpoint change
+ok 48 - rotation reveals the same paused Settings action without refocus, resume or checkpoint change
+  ---
+  duration_ms: 647.567667
+  type: 'test'
+  ...
+# Subtest: the bordered client scrollport and 8px outline clearance govern reveal, not only the window
+ok 49 - the bordered client scrollport and 8px outline clearance govern reveal, not only the window
+  ---
+  duration_ms: 128.485167
+  type: 'test'
+  ...
+# Subtest: layout measurement cannot reveal the previous action after another action takes focus
+ok 50 - layout measurement cannot reveal the previous action after another action takes focus
+  ---
+  duration_ms: 117.478083
+  type: 'test'
+  ...
+# Subtest: the final style read cannot revive a stale paused focus owner
+ok 51 - the final style read cannot revive a stale paused focus owner
+  ---
+  duration_ms: 124.245167
+  type: 'test'
+  ...
+# Subtest: background, hidden and disabled actions do not schedule a later reveal on return
+ok 52 - background, hidden and disabled actions do not schedule a later reveal on return
+  ---
+  duration_ms: 126.081667
+  type: 'test'
+  ...
+# Subtest: a Settings dialog owns focus independently of the underlying Pause scroller
+ok 53 - a Settings dialog owns focus independently of the underlying Pause scroller
+  ---
+  duration_ms: 131.734416
+  type: 'test'
+  ...
+# Subtest: a synchronous resize callback cannot recurse or reveal a newly running attempt
+ok 54 - a synchronous resize callback cannot recurse or reveal a newly running attempt
+  ---
+  duration_ms: 135.88
+  type: 'test'
+  ...
+# Subtest: terminal disposal removes the Pause resize owner
+ok 55 - terminal disposal removes the Pause resize owner
+  ---
+  duration_ms: 127.491042
+  type: 'test'
+  ...
+1..55
+# tests 55
+# suites 0
+# pass 55
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4072.678833

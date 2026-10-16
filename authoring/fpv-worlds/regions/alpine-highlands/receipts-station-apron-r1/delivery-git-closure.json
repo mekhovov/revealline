@@ -1,0 +1,33 @@
+{
+  "format": "FPVAlpineStationApronGitClosure.v1",
+  "passed": true,
+  "head": "95b2f108c7c0ef347e120e6f66775805ee5d6e8a",
+  "base": "e51ff517ed7a870bf57736d9115dda781521f64c",
+  "preservedEditions": [
+    {
+      "revision": "r3",
+      "originalPin": "ffb79b67479f9ed5c8104610695ac8b5cb04edc7",
+      "fileCount": 723,
+      "allGitBlobsExact": true
+    },
+    {
+      "revision": "r4",
+      "originalPin": "02f2b140d06cc930d8d4dd6b01abcd860db75436",
+      "fileCount": 723,
+      "allGitBlobsExact": true
+    }
+  ],
+  "newFiles": 723,
+  "reusedPayloadBlobs": 716,
+  "changedPayloadsPlusDescriptor": [
+    "delivery.json",
+    "scenery/alpine-12-12.glb",
+    "scenery/alpine-12-12.json",
+    "scenery/alpine-13-12.glb",
+    "scenery/alpine-13-12.json",
+    "scenery/region.json",
+    "terrain/region.json"
+  ],
+  "changedPathsTotal": 726,
+  "changesOnlyNewDeliveryAndExplicitDocumentation": true
+}

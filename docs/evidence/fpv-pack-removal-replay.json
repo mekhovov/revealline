@@ -1,0 +1,46 @@
+{
+  "format": "FPVPackRemovalFunctionalEvidence.v1",
+  "status": "passed",
+  "browserReceiptSha256": "179525c0aaf02c831db5c293024c775b9b2ed92487e3776cbec9ff7d54b3a861",
+  "browserChecks": 90,
+  "preservationSnapshots": 13,
+  "sources": {
+    "optional-practice/civilian-fpv/world-model.mjs": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551",
+    "optional-practice/civilian-fpv/world-store.mjs": "4b8c2fe165868f38eb297d678ea5aca232d61d2dd2a05b79db9d20145f3d0cfa",
+    "optional-practice/civilian-fpv/world-app.mjs": "c3f2a71d5e44ffe1e26110b6712ae1f8fb9032a78337567ecb0e945c71e6e776",
+    "scripts/qualify-fpv-pack-removal.mjs": "99bf8182ca58bc704eda530a377e6d79f12a26dc4ab1dbced7a9b40cd25d20e4"
+  },
+  "results": [
+    {
+      "course": "removal-target-course",
+      "revision": "r1",
+      "mode": "self-level",
+      "packIdentity": "fpv-pack:008eef9c1b110d0ed3ae8bdeb4271be43055601d117940a1701e9d241e8721d3",
+      "completedTicks": 80,
+      "prefixTicks": 25,
+      "finalStateIdentity": "7292921c52b51346",
+      "prefixStateIdentity": "798bce53cc865d9f"
+    },
+    {
+      "course": "removal-target-course",
+      "revision": "r2",
+      "mode": "acro",
+      "packIdentity": "fpv-pack:ba063bff22d401e758b88a5fdae1d1ea87688a4ebde139f8c6128318d5a95e30",
+      "completedTicks": 80,
+      "prefixTicks": 25,
+      "finalStateIdentity": "7292921c52b51346",
+      "prefixStateIdentity": "798bce53cc865d9f"
+    },
+    {
+      "course": "removal-unrelated-course",
+      "revision": "r1",
+      "mode": "self-level",
+      "packIdentity": "fpv-pack:73d422e445d493d9d82c059ef867c5c6318c88df21ee51aa8cd5024c5b408b7a",
+      "completedTicks": 80,
+      "prefixTicks": 25,
+      "finalStateIdentity": "7292921c52b51346",
+      "prefixStateIdentity": "798bce53cc865d9f"
+    }
+  ],
+  "qualification": "Independent exact-command replay of completed and interrupted proof bytes retained through the actual native IndexedDB browser flow. Browser UI assertions remain in the input receipt. No new unit suite or hardware/eviction/performance qualification."
+}

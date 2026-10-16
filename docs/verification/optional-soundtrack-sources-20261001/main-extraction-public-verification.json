@@ -1,0 +1,1208 @@
+{
+  "format": "revealline-main-fpv-extraction-public-acceptance.v1",
+  "verifiedAt": "2026-09-30T23:52:01.331Z",
+  "sourceRevision": "f791c039f75ed046d248c280a53845da24885dcc",
+  "workflowRun": 36792959364,
+  "baseURL": "https://mekhovov.github.io/revealline-soundtracks/",
+  "catalogue": {
+    "licensed": 188,
+    "normal": 123,
+    "reviewOnly": 65
+  },
+  "metadata": [
+    {
+      "path": "deployment-manifest.json",
+      "bytes": 42585,
+      "sha256": "f055de29479f0f1f4b164072539eac0399e8442aa34e8e0ad9acd8956c1e001f",
+      "status": 200
+    },
+    {
+      "path": "admissions/approved-synth-metal-20260930.json",
+      "bytes": 1607,
+      "sha256": "64f0e2ac28718af710fc20702519dfa171fe4020a56037242795027c8f1d5caa",
+      "status": 200
+    },
+    {
+      "path": "admissions/metal-next-20260930.json",
+      "bytes": 1383,
+      "sha256": "9e92ce2757f17568ff9753be21f07268314490153520273eb2034ef06534c560",
+      "status": 200
+    },
+    {
+      "path": "admissions/runner2088-game-mix-20260930.json",
+      "bytes": 322,
+      "sha256": "16e36e2316a0b9685bcae326f03c30191823a86064f3e94d9b3aab08129ee6e8",
+      "status": 200
+    },
+    {
+      "path": "audio-volumes.json",
+      "bytes": 26033,
+      "sha256": "5112790f39df6051b4b676aa39f10ed8d9c144f19c14f566975d4288b148bfb8",
+      "status": 200
+    },
+    {
+      "path": "batches.json",
+      "bytes": 6097,
+      "sha256": "c9225c0d5b5f6521e06d340bed0532760b46f778fff1bccc15c88aadc80f963b",
+      "status": 200
+    },
+    {
+      "path": "catalogue.json",
+      "bytes": 386238,
+      "sha256": "4aaafe50ae88aa96755900f4162134de345d0e8ac4529eaacedb54bca11f30c4",
+      "status": 200
+    },
+    {
+      "path": "CREDITS.md",
+      "bytes": 60116,
+      "sha256": "d7c743d6d12b0492d81cf5bc719ba709eeb6e3ffc9a26e827472d0551fc97f0c",
+      "status": 200
+    },
+    {
+      "path": "external-deliveries.json",
+      "bytes": 78,
+      "sha256": "1b5f88f924218eb92e05d3dd51adc2dde4917aeebea6ef5c421bc78cd3ad8220",
+      "status": 200
+    },
+    {
+      "path": "filter-url.mjs",
+      "bytes": 2359,
+      "sha256": "3a6158a6cb9b2561609b7ea03df5588009bb1dbf4a0dd84ba5d1cccaa9cefb34",
+      "status": 200
+    },
+    {
+      "path": "index.html",
+      "bytes": 12674,
+      "sha256": "f63040c7a008e81b585b6075c5a686b6145a96f52d524c9e30a83ebc700574be",
+      "status": 200
+    },
+    {
+      "path": "intake-browser.mjs",
+      "bytes": 9191,
+      "sha256": "40d43de76856ee60f0397e102734ff340544e2ddfa10d63f76bd6707e8bf1caa",
+      "status": 200
+    },
+    {
+      "path": "intake/external-url.mjs",
+      "bytes": 3053,
+      "sha256": "30de91804ca6be3f6873ca3b5a9ca14418cf83f1745128007bd7e010d6ff5244",
+      "status": 200
+    },
+    {
+      "path": "intake/package.mjs",
+      "bytes": 14186,
+      "sha256": "7a1ab619aa6f4cf38ddb0970ff39043b96769c6daf5d1d1187d2159768077229",
+      "status": 200
+    },
+    {
+      "path": "inventory.json",
+      "bytes": 15081,
+      "sha256": "2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/catalogue.json",
+      "bytes": 237283,
+      "sha256": "37631eb8038637bf171e072c4d4336bc3ff704e7dbb75e4486017b2aed141281",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/CREDITS.md",
+      "bytes": 44099,
+      "sha256": "04d711f986aaeeeef857679999c5dc2e26f87ea539b06b5a2cb2f8d20497f756",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/deployment-manifest.json",
+      "bytes": 18700,
+      "sha256": "8bdc97bd85ecc103d0564359ec77f956c178fd65df7cdcb8160c423bc150264b",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/inventory.json",
+      "bytes": 15081,
+      "sha256": "2706445dafe995f6c4dc044ad5e92031cae60627699f6a72985e67a972064ccd",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/preview-catalogue.json",
+      "bytes": 103709,
+      "sha256": "4d10e0cf9074c6d72c7896db9f6e1c9c8d132a34ac4eca0a7c5deeed6eb82950",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/README.md",
+      "bytes": 5447,
+      "sha256": "fdba4c023a41acde647d061416ea78f350cd58376f9e884619885a42bddf0c17",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/release/assets.json",
+      "bytes": 5555,
+      "sha256": "4686886f2bf9c33e6d5bcbf1bed8bc12d6e32ed723b1ae7c7cb1a4d931b1396d",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/release/CREDITS.md",
+      "bytes": 44099,
+      "sha256": "04d711f986aaeeeef857679999c5dc2e26f87ea539b06b5a2cb2f8d20497f756",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/release/preview-catalogue.json",
+      "bytes": 103709,
+      "sha256": "4d10e0cf9074c6d72c7896db9f6e1c9c8d132a34ac4eca0a7c5deeed6eb82950",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/release/public-albums.json",
+      "bytes": 17311,
+      "sha256": "0811669e2eca9b529ad5d9d00701dbd497e7652b5fb2c82a13ae249962b51842",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-01/release/SHA256SUMS",
+      "bytes": 1748,
+      "sha256": "64867b8038030a0da954d1ab20d30d474d30d31a6164f0cf73c6fc1fa691248f",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-02/batches.json",
+      "bytes": 4383,
+      "sha256": "9c5b8a96198d5a24cba3a6fbfde1188db3a40c28056c33d709eb45cfa8c3ad04",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-02/catalogue.json",
+      "bytes": 58469,
+      "sha256": "552847acb507cec47b98b335390a6c54b6900564fec045b3438b2bfba34625a7",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-02/CREDITS.md",
+      "bytes": 7954,
+      "sha256": "c1e901ebfbabd080640acfdac712f043a2548aa01988a3a5e44b08cab46c0679",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-02/README.md",
+      "bytes": 1042,
+      "sha256": "625cb1285af88bc518142f8f15b341e412ab9482641592571951d93a831a1dab",
+      "status": 200
+    },
+    {
+      "path": "legacy/archive-02/UPLOAD_GUIDE.md",
+      "bytes": 5239,
+      "sha256": "4fe2274d25cb3c6dc4ad5454b5a3e395998368fd9f66c0c95facd51f00de44f8",
+      "status": 200
+    },
+    {
+      "path": "legacy/README.md",
+      "bytes": 1114,
+      "sha256": "16f50945886218e45ee6c8e225e0fb8088d28af2861306134205409fc0d93c94",
+      "status": 200
+    },
+    {
+      "path": "licensing-policy.mjs",
+      "bytes": 2094,
+      "sha256": "489b7ffc1c1c650c1fa747b4ced3199b9fddfaab94b8fbc7ad099b9b4db93022",
+      "status": 200
+    },
+    {
+      "path": "playback-policy.mjs",
+      "bytes": 1273,
+      "sha256": "d807c72caaa1991012bde3d61ac281917ef485026b0dc59873c3fd3c5c54ef33",
+      "status": 200
+    },
+    {
+      "path": "playback-recovery.mjs",
+      "bytes": 442,
+      "sha256": "f79c19abb6d77f1226a01d62fe71c9e23e3c1d4ee700493e5a8e05e719b4cf0b",
+      "status": 200
+    },
+    {
+      "path": "player.mjs",
+      "bytes": 19530,
+      "sha256": "f362c32fb50c6396ca69d4e9e94596800f951f92b87ff043c119bf7a0c301d8d",
+      "status": 200
+    },
+    {
+      "path": "README.md",
+      "bytes": 6002,
+      "sha256": "3a87e6a941a8e95e71079f3d722bbb57e645902f26d413d60e4ca33773c4467a",
+      "status": 200
+    },
+    {
+      "path": "review-policy.mjs",
+      "bytes": 448,
+      "sha256": "3c2336209bec8838169453e41300bf3c946d3212b69f1f41b0b8047862349f5a",
+      "status": 200
+    },
+    {
+      "path": "style-taxonomy.mjs",
+      "bytes": 2436,
+      "sha256": "2c095c2de4a838b629b37466270322d1f122ca1d9b9ef263444153e7b8f39b57",
+      "status": 200
+    },
+    {
+      "path": "style.css",
+      "bytes": 9766,
+      "sha256": "34259833657e490de9f0b0c2cdaa440b0145b2ad4fb5c7b47d410bacf221d04d",
+      "status": 200
+    },
+    {
+      "path": "UPLOAD_GUIDE.md",
+      "bytes": 11295,
+      "sha256": "627ae203cc9cac3ed2d97c3574e17deb6103bd55a810e93b82debb7dafade896",
+      "status": 200
+    },
+    {
+      "path": "upload-guide/index.html",
+      "bytes": 11389,
+      "sha256": "f9456ebe1daf154e43d6caac0d03374bff649b0f4f0798377a6e7230d3189df6",
+      "status": 200
+    }
+  ],
+  "artifactOnlyMarker": {
+    "path": ".nojekyll",
+    "publicStatus": 404,
+    "explanation": "Pages does not serve this dotfile; its artifact bytes remain covered by the pinned deployment manifest.",
+    "initialAuditFailure": "The first public check incorrectly required HTTP 200 for .nojekyll; catalogue and MP3 verification were not completed in that attempt."
+  },
+  "removedObjects": [
+    {
+      "id": "trench-orderly.soundtrack",
+      "path": "objects/8ddb7eb4f274fa64e1ccc8f438f6483d80b755a04cc903079fd13474db11f0c7.mp3",
+      "sha256": "8ddb7eb4f274fa64e1ccc8f438f6483d80b755a04cc903079fd13474db11f0c7",
+      "status": 404
+    },
+    {
+      "id": "trench-orderly.drones-hunter",
+      "path": "objects/5e7b33426088ade0a9345102d3ceb1ec38c43c09535e2288c6e1e032e1cee5a0.mp3",
+      "sha256": "5e7b33426088ade0a9345102d3ceb1ec38c43c09535e2288c6e1e032e1cee5a0",
+      "status": 404
+    },
+    {
+      "id": "trench-orderly.vampire",
+      "path": "objects/9d7e478a3682783da745f96b6c44864c2639a468bce7a24e8f5a8e7c6bf70e77.mp3",
+      "sha256": "9d7e478a3682783da745f96b6c44864c2639a468bce7a24e8f5a8e7c6bf70e77",
+      "status": 404
+    },
+    {
+      "id": "trench-orderly.soundtrack.2",
+      "path": "objects/1d2614956debbbd54ce30bca449315f7771e84ac487d525333e23630ed54d9e3.mp3",
+      "sha256": "1d2614956debbbd54ce30bca449315f7771e84ac487d525333e23630ed54d9e3",
+      "status": 404
+    },
+    {
+      "id": "trench-orderly.soundtrack.3",
+      "path": "objects/9eef10e0b20b4ef35341fd9f906a615a9f94c327ec7e57d25c939b13b9ec98f9.mp3",
+      "sha256": "9eef10e0b20b4ef35341fd9f906a615a9f94c327ec7e57d25c939b13b9ec98f9",
+      "status": 404
+    },
+    {
+      "id": "trench-orderly.soundtrack.4",
+      "path": "objects/515f5806573a0737f3c609b48895a09137289e1510e673b66ecca72c574f7aa2.mp3",
+      "sha256": "515f5806573a0737f3c609b48895a09137289e1510e673b66ecca72c574f7aa2",
+      "status": 404
+    },
+    {
+      "id": "trench-orderly.soundtrack.5",
+      "path": "objects/f8d1c2797031fdf2f673c798b0bb19b0ff0a0ba72212e9d8f577c5b625db0c6e.mp3",
+      "sha256": "f8d1c2797031fdf2f673c798b0bb19b0ff0a0ba72212e9d8f577c5b625db0c6e",
+      "status": 404
+    },
+    {
+      "id": "probass-hardi.probass-hardi-drone",
+      "path": "objects/de54b41d16ff268fd61663a7d885efee321b25fcf5157bf9dbc6332d1f84a69c.mp3",
+      "sha256": "de54b41d16ff268fd61663a7d885efee321b25fcf5157bf9dbc6332d1f84a69c",
+      "status": 404
+    },
+    {
+      "id": "probass-hardi.singing-drones",
+      "path": "objects/22b22397afb79f27beb3af592a7e9c078b65c02df1b57865aeefb2a754d6e87a.mp3",
+      "sha256": "22b22397afb79f27beb3af592a7e9c078b65c02df1b57865aeefb2a754d6e87a",
+      "status": 404
+    },
+    {
+      "id": "ribson.ribson-fpv",
+      "path": "objects/bd3c7a30c774c1265cc5a45b89f6c874291d01769bc5a010a039833928c54ae6.mp3",
+      "sha256": "bd3c7a30c774c1265cc5a45b89f6c874291d01769bc5a010a039833928c54ae6",
+      "status": 404
+    },
+    {
+      "id": "ribson.ribson",
+      "path": "objects/17185c9266ed947e97ce954986eacdf2da36c836528945af2e41db0e7a5982f2.mp3",
+      "sha256": "17185c9266ed947e97ce954986eacdf2da36c836528945af2e41db0e7a5982f2",
+      "status": 404
+    },
+    {
+      "id": "tarko.tarko-fpv-official-video",
+      "path": "objects/500f1c35200fa3f5e89d5125770a7a64f55078e6c542530d5cda27386bf90b1f.mp3",
+      "sha256": "500f1c35200fa3f5e89d5125770a7a64f55078e6c542530d5cda27386bf90b1f",
+      "status": 404
+    },
+    {
+      "id": "tarko.fpv",
+      "path": "objects/4f70b5eccd5d055badc2a520e4e22c1d7019446486924cdd6347545a1f458d65.mp3",
+      "sha256": "4f70b5eccd5d055badc2a520e4e22c1d7019446486924cdd6347545a1f458d65",
+      "status": 404
+    },
+    {
+      "id": "the-bloger-ua.the-bloger-ua-official-video",
+      "path": "objects/bef1cece660fe28d3bcfcb0e11f7e1adfd47bb7f56948b836560056123a00094.mp3",
+      "sha256": "bef1cece660fe28d3bcfcb0e11f7e1adfd47bb7f56948b836560056123a00094",
+      "status": 404
+    },
+    {
+      "id": "the-bloger-ua.the-bloger-ua-fpv",
+      "path": "objects/a108d139434b5cc6254cc25718ddf5059733e4d05d334ccabf3bedce87c68e71.mp3",
+      "sha256": "a108d139434b5cc6254cc25718ddf5059733e4d05d334ccabf3bedce87c68e71",
+      "status": 404
+    },
+    {
+      "id": "the-bloger-ua.the-bloger-ua-official-music-video",
+      "path": "objects/4a0d62a1a78201a923f112dc0e695ac5537ae1444a96b4665fab62976c853dd7.mp3",
+      "sha256": "4a0d62a1a78201a923f112dc0e695ac5537ae1444a96b4665fab62976c853dd7",
+      "status": 404
+    },
+    {
+      "id": "the-bloger-ua.the-bloger-ua-official-music-video.2",
+      "path": "objects/f12db6a6b9b12cfe55f47fd8f7643a37a2cab275918a0eb5870a4806d43934dd.mp3",
+      "sha256": "f12db6a6b9b12cfe55f47fd8f7643a37a2cab275918a0eb5870a4806d43934dd",
+      "status": 404
+    },
+    {
+      "id": "the-bloger-ua.the-bloger-ua-2026-fpv",
+      "path": "objects/561e17ea45775729d4c164f62c9c9188fa75e18c14749c87e354d76028d59d0c.mp3",
+      "sha256": "561e17ea45775729d4c164f62c9c9188fa75e18c14749c87e354d76028d59d0c",
+      "status": 404
+    },
+    {
+      "id": "the-bloger-ua.the-bloger-ua",
+      "path": "objects/28468f6e00c8cff1e8932cc3942a5f66b2d6dde33642b9016d62bc3dd3e8e9b8.mp3",
+      "sha256": "28468f6e00c8cff1e8932cc3942a5f66b2d6dde33642b9016d62bc3dd3e8e9b8",
+      "status": 404
+    },
+    {
+      "id": "the-bloger-ua.the-bloger-ua-official-music-video.3",
+      "path": "objects/49f1008bd27695434a717695b4bcc30bbab3e85f306bdb2b79462135db1760cc.mp3",
+      "sha256": "49f1008bd27695434a717695b4bcc30bbab3e85f306bdb2b79462135db1760cc",
+      "status": 404
+    },
+    {
+      "id": "the-bloger-ua.the-bloger-ua-official-music-video.4",
+      "path": "objects/328ef348415efca85f5323f380559ed42ab6b1904464f0331b9c6ec1fbac4802.mp3",
+      "sha256": "328ef348415efca85f5323f380559ed42ab6b1904464f0331b9c6ec1fbac4802",
+      "status": 404
+    },
+    {
+      "id": "s.s",
+      "path": "objects/ed464d7cad5793b7c0197331644c52af6b614ee98e193ab7e30544790a35bdd9.mp3",
+      "sha256": "ed464d7cad5793b7c0197331644c52af6b614ee98e193ab7e30544790a35bdd9",
+      "status": 404
+    },
+    {
+      "id": "s.s.2",
+      "path": "objects/c73191d9e1a388fc8d0a42031e95d6722848c9a53e1ba585f32e32fc3e78cab8.mp3",
+      "sha256": "c73191d9e1a388fc8d0a42031e95d6722848c9a53e1ba585f32e32fc3e78cab8",
+      "status": 404
+    },
+    {
+      "id": "soundtrack.414",
+      "path": "objects/0462b8ef82a8a9f86f20c2d36b191c9827a139185b87cd455346e576bc1af4fd.mp3",
+      "sha256": "0462b8ef82a8a9f86f20c2d36b191c9827a139185b87cd455346e576bc1af4fd",
+      "status": 404
+    },
+    {
+      "id": "soundtrack.soundtrack",
+      "path": "objects/5069168cc6e90c16c7765afb56fbce180e8144b63775ee2e0d839de4b85a80fe.mp3",
+      "sha256": "5069168cc6e90c16c7765afb56fbce180e8144b63775ee2e0d839de4b85a80fe",
+      "status": 404
+    },
+    {
+      "id": "soundtrack.bloger-414",
+      "path": "objects/48b4cfb0075837a93fd0703dc28fbc19157f1d69e5ef69abed8ce0e833607f30.mp3",
+      "sha256": "48b4cfb0075837a93fd0703dc28fbc19157f1d69e5ef69abed8ce0e833607f30",
+      "status": 404
+    },
+    {
+      "id": "soundtrack.soundtrack.2",
+      "path": "objects/9cf9912bbd80d3e304e555f45a33a94dc9cd0b8924e4bc4771e659e133422cc8.mp3",
+      "sha256": "9cf9912bbd80d3e304e555f45a33a94dc9cd0b8924e4bc4771e659e133422cc8",
+      "status": 404
+    },
+    {
+      "id": "mos.mos-kloun",
+      "path": "objects/0093e7e90c9f7d771707c0920f3a61abc8070cda6ca42da4b11054c61268b10c.mp3",
+      "sha256": "0093e7e90c9f7d771707c0920f3a61abc8070cda6ca42da4b11054c61268b10c",
+      "status": 404
+    },
+    {
+      "id": "neyronnyy-hupach.neyronnyy-hupach-litaly-litaly-polka",
+      "path": "objects/0e70cd808403487bce3b3898a3798099fd9b7b1e4477937603c816e7f3591b9c.mp3",
+      "sha256": "0e70cd808403487bce3b3898a3798099fd9b7b1e4477937603c816e7f3591b9c",
+      "status": 404
+    },
+    {
+      "id": "neyronnyy-hupach.neyronnyy-hupach-litaly-litaly-ii",
+      "path": "objects/a7326eabe93d54a2d8606e978517034ba242fe30d39973fb24deea49c44c733d.mp3",
+      "sha256": "a7326eabe93d54a2d8606e978517034ba242fe30d39973fb24deea49c44c733d",
+      "status": 404
+    },
+    {
+      "id": "neyronnyy-hupach.neyronnyy-hupach-litaly-litaly",
+      "path": "objects/c98d235cb99ff5d4fb471c2b8377f135c9b7a82f1ec91a7c4df632c2aede59b6.mp3",
+      "sha256": "c98d235cb99ff5d4fb471c2b8377f135c9b7a82f1ec91a7c4df632c2aede59b6",
+      "status": 404
+    },
+    {
+      "id": "neyronnyy-hupach.neyronnyy-hupach-pisenka-madyara-z-multfilmu-pro-barmaleyiv",
+      "path": "objects/7fc1d588e5027bd4a1df5f7ff9b37d128a528300878e288b16a7da38c0f25ac9.mp3",
+      "sha256": "7fc1d588e5027bd4a1df5f7ff9b37d128a528300878e288b16a7da38c0f25ac9",
+      "status": 404
+    },
+    {
+      "id": "neyronnyy-hupach.neyronnyy-hupach-povitryana-tryvoha",
+      "path": "objects/a45cb366d97648fa810a535dd29024cd45b929299b388d66d8007fd84795c49d.mp3",
+      "sha256": "a45cb366d97648fa810a535dd29024cd45b929299b388d66d8007fd84795c49d",
+      "status": 404
+    },
+    {
+      "id": "neyronnyy-hupach.neyronnyy-hupach-khrobaky-rozshyrena-dzhaha-dzhaha",
+      "path": "objects/bbc8d3e40202d66388cabc8c3e416cf08af0b7b8531531361704323ba85b748c.mp3",
+      "sha256": "bbc8d3e40202d66388cabc8c3e416cf08af0b7b8531531361704323ba85b748c",
+      "status": 404
+    },
+    {
+      "id": "nytso-potvorno.nytso-potvorno-rusni-pizda",
+      "path": "objects/edad4597c38ca22d295658d4cbe23bcf50399f0c16244b850a9383fe939124d1.mp3",
+      "sha256": "edad4597c38ca22d295658d4cbe23bcf50399f0c16244b850a9383fe939124d1",
+      "status": 404
+    },
+    {
+      "id": "pivnich.pivnich-fpv",
+      "path": "objects/9641f728119b657b46d2e7b668e0d34d511fee75447cc133652cf98106992357.mp3",
+      "sha256": "9641f728119b657b46d2e7b668e0d34d511fee75447cc133652cf98106992357",
+      "status": 404
+    },
+    {
+      "id": "pisnya-dnya.boyovyy-p1-sun-pisnya-dnya-povna-versiya",
+      "path": "objects/bb25de89589df1a6623e80f71bc19137abe26b1b14796b3ff75af1a63d96cbd0.mp3",
+      "sha256": "bb25de89589df1a6623e80f71bc19137abe26b1b14796b3ff75af1a63d96cbd0",
+      "status": 404
+    },
+    {
+      "id": "pisnya-dnya.na-krok-poperedu-himn-syl-bezpilotnykh-system-sbs-pisnya-dnya-povna-ve",
+      "path": "objects/a9c490400466be36b63133248b81910c5028ed297ab59f1a8e06609e421da469.mp3",
+      "sha256": "a9c490400466be36b63133248b81910c5028ed297ab59f1a8e06609e421da469",
+      "status": 404
+    },
+    {
+      "id": "pisnya-dnya.pavutyna-malyuka-pisnya-dnya-povna-versiya",
+      "path": "objects/674925a9446876e6bd6a56e6019b854072e263b7975c3f2a59725f0fc10ea917.mp3",
+      "sha256": "674925a9446876e6bd6a56e6019b854072e263b7975c3f2a59725f0fc10ea917",
+      "status": 404
+    },
+    {
+      "id": "pisnya-dnya.retsept-bavovny-vidpovid-tym-khto-smiyavsya-z-nashoho-leho-pisnya-dnya",
+      "path": "objects/c63b1118e49911fbf4a0091ea54867817c5dd6ff0a3f0877481ba1544ea8a7d3.mp3",
+      "sha256": "c63b1118e49911fbf4a0091ea54867817c5dd6ff0a3f0877481ba1544ea8a7d3",
+      "status": 404
+    },
+    {
+      "id": "pisnya-dnya.shou-madyara-pisnya-dnya-povna-versiya",
+      "path": "objects/4befd36da5e444577da89a12e58914695bcaaaf703a2ef788e3a675b2324f2a4.mp3",
+      "sha256": "4befd36da5e444577da89a12e58914695bcaaaf703a2ef788e3a675b2324f2a4",
+      "status": 404
+    },
+    {
+      "id": "prodyusyer-valyentin.prodyusyer-valyentin-i-hurt-mama-zlipy-snyezhku-z-pisneyu-zamoryly-mos",
+      "path": "objects/78d37bea0b64d2ee79a7818a737e98bd491d4bdcc8154e9e7e2edf0552c1bfd8.mp3",
+      "sha256": "78d37bea0b64d2ee79a7818a737e98bd491d4bdcc8154e9e7e2edf0552c1bfd8",
+      "status": 404
+    },
+    {
+      "id": "prodyusyer-valyentin.prodyuser-valyentiv-i-hurt-imeni-vitalika-z-novoyu-pisneyu-bila-lada-d",
+      "path": "objects/7d85028cd248b4b990f653d7a7432b4d6b89ab919efd1bbe7b32a4e3f41abb63.mp3",
+      "sha256": "7d85028cd248b4b990f653d7a7432b4d6b89ab919efd1bbe7b32a4e3f41abb63",
+      "status": 404
+    },
+    {
+      "id": "prodyusyer-valyentin.prodyusyer-valyentin-ta-hurt-bavovna-bavovna-prezentuyus-tresh-surzhyk",
+      "path": "objects/d4c98f81662ac285e0c51bac2a4b3851d2c8d78b881df84c9cfdca5641b97239.mp3",
+      "sha256": "d4c98f81662ac285e0c51bac2a4b3851d2c8d78b881df84c9cfdca5641b97239",
+      "status": 404
+    },
+    {
+      "id": "telebachennya-toronto.nytso-potvorno-feat-telebachennya-toronto-fpv-letyt-rusakiv-bombyt-pre",
+      "path": "objects/417eea94faf4114996886dbcad58e158667df0dd94c497d847eabaf5fc64a9ba.mp3",
+      "sha256": "417eea94faf4114996886dbcad58e158667df0dd94c497d847eabaf5fc64a9ba",
+      "status": 404
+    },
+    {
+      "id": "telebachennya-toronto.shaleniy-fpv-versiya-nytso-potvorno-haytana-cover",
+      "path": "objects/50869ac99f181aa46a0a8f0da99216bd45d342dc5fd5e9c8deba2c6f31c41555.mp3",
+      "sha256": "50869ac99f181aa46a0a8f0da99216bd45d342dc5fd5e9c8deba2c6f31c41555",
+      "status": 404
+    },
+    {
+      "id": "yuriy-hromovyy.la-la-la-letyt-miy-dron-bamper-yanovych-hromovyy-tymoshenko-baydak-lyk",
+      "path": "objects/e2b921d96d021eb8199309a5cd7baed82e5ad2405673f16ee43b0366332d317a.mp3",
+      "sha256": "e2b921d96d021eb8199309a5cd7baed82e5ad2405673f16ee43b0366332d317a",
+      "status": 404
+    },
+    {
+      "id": "414-ptakhy-madyara.414-ptakhy-madyara-lehendarni-stalevi-ptakhy-proty-khrobakiv",
+      "path": "objects/1b2bf1f95d104f09b7a8ff0c176d40604210e7b4387ee5478d8b751af862ae03.mp3",
+      "sha256": "1b2bf1f95d104f09b7a8ff0c176d40604210e7b4387ee5478d8b751af862ae03",
+      "status": 404
+    },
+    {
+      "id": "a-m-ukrainian.ai-cover-fpv-dron-sonet",
+      "path": "objects/45812cca6e1bf70fbf5f1df5f9c104730c9a88a89b26c284d83437d14c985b18.mp3",
+      "sha256": "45812cca6e1bf70fbf5f1df5f9c104730c9a88a89b26c284d83437d14c985b18",
+      "status": 404
+    },
+    {
+      "id": "alexbust-co.operator-fpv",
+      "path": "objects/3935a1314f133f4b4e3029f27329e52eff72245e0961787cbdc2e48ad01b0783.mp3",
+      "sha256": "3935a1314f133f4b4e3029f27329e52eff72245e0961787cbdc2e48ad01b0783",
+      "status": 404
+    },
+    {
+      "id": "dushevniy.operator-fpv-drona-radio-edit",
+      "path": "objects/e3de791418e27e1b0414ff0ff1973e94c86507a9ecfb3c8037a81e9f212cfac1.mp3",
+      "sha256": "e3de791418e27e1b0414ff0ff1973e94c86507a9ecfb3c8037a81e9f212cfac1",
+      "status": 404
+    },
+    {
+      "id": "expert-ukrainian-hits.dron-pes-ukrayinski-khity-ukrayinska-muzyka",
+      "path": "objects/00139528c586b94a332b2038fce86a5f21f1bab25cd79145a705d6351f02eab6.mp3",
+      "sha256": "00139528c586b94a332b2038fce86a5f21f1bab25cd79145a705d6351f02eab6",
+      "status": 404
+    },
+    {
+      "id": "maestroshadow777.nova-avtorska-pisnya-oy-letily-drony-sbu-new-original-song-oh-the-ssu",
+      "path": "objects/cfaf70305e6f9356f89b3696c7e30e746965275d592066f3108dc35edd8c1a1a.mp3",
+      "sha256": "cfaf70305e6f9356f89b3696c7e30e746965275d592066f3108dc35edd8c1a1a",
+      "status": 404
+    },
+    {
+      "id": "neuronenko.neuronenko-ukrayinskyy-fpv-dron-pisnya-pro-ukrayinskykh-heroyiv-i-nysh",
+      "path": "objects/bc0a38dfb8228dd25afd469c20b4d0471ba22bd9e3c4140736c8b5b13320d384.mp3",
+      "sha256": "bc0a38dfb8228dd25afd469c20b4d0471ba22bd9e3c4140736c8b5b13320d384",
+      "status": 404
+    },
+    {
+      "id": "postman-dity-razom-z-ivanom-marunychem-ta-oleksandrom-polozhynskym.milyon-na-dron-dity-razom-z-ivanom-marunychem-ta-oleksandrom-polozhyns",
+      "path": "objects/0ebf9e84567743acd38453df6d8ce3d3800987ca7aa13a3374524e24902c3e83.mp3",
+      "sha256": "0ebf9e84567743acd38453df6d8ce3d3800987ca7aa13a3374524e24902c3e83",
+      "status": 404
+    },
+    {
+      "id": "ruslan-nota.oy-letiv-do-orkiv-dron",
+      "path": "objects/e25a39ca1833313f09bc9bcbd95e6e9214fa4f38707111f7cc0f2b3c1a1d20c8.mp3",
+      "sha256": "e25a39ca1833313f09bc9bcbd95e6e9214fa4f38707111f7cc0f2b3c1a1d20c8",
+      "status": 404
+    },
+    {
+      "id": "siva.siva-moskalskyy-cherep-pisnya-serhiya-sivachenka",
+      "path": "objects/5f622aad63e879cfde758aaf14420981dccdea923383d0f9ac8e328c61317dc5.mp3",
+      "sha256": "5f622aad63e879cfde758aaf14420981dccdea923383d0f9ac8e328c61317dc5",
+      "status": 404
+    },
+    {
+      "id": "ukrainian-tik-tok.zakyn-na-donat-donat-bambam-zsudonat-viyskovyyhumor",
+      "path": "objects/3d8d157da92cc88668f0c661456e4f9239646dbf5a987dce17e010c86558a64b.mp3",
+      "sha256": "3d8d157da92cc88668f0c661456e4f9239646dbf5a987dce17e010c86558a64b",
+      "status": 404
+    },
+    {
+      "id": "vitold-ua-band-feat-black-d.vitold-band-feat-black-d-drakaris-muzychnyy-klip-do-video-dron-drakon",
+      "path": "objects/ef37e31610e6fd4723c82319f34cad07c4cbb902a494a1f468bf16990d1ed64a.mp3",
+      "sha256": "ef37e31610e6fd4723c82319f34cad07c4cbb902a494a1f468bf16990d1ed64a",
+      "status": 404
+    },
+    {
+      "id": "zababura.zababura-tsey-dron-tsey-dron-za-motyvamy-pisni-tsey-son-stepana-hihy",
+      "path": "objects/222a3a770ba96401eab824e82b93c8a5d3ed2f7ae02730d83f232cff6e960b3e.mp3",
+      "sha256": "222a3a770ba96401eab824e82b93c8a5d3ed2f7ae02730d83f232cff6e960b3e",
+      "status": 404
+    },
+    {
+      "id": "andriy-matsevko.dron-andriymatsevko-o1t",
+      "path": "objects/7af03535606e776b446ba77db57a184890b9094d3341b9a30660705c14fcf8e0.mp3",
+      "sha256": "7af03535606e776b446ba77db57a184890b9094d3341b9a30660705c14fcf8e0",
+      "status": 404
+    },
+    {
+      "id": "hurt-dno-medovyy-polyn-mukha-mukhych.hurt-dno-medovyy-polyn-mukha-mukhych-rehi-dron",
+      "path": "objects/46a99517674d545cb85ba5400b3adc3e7f88ebf79caa79d4c2aa7e7bd9cccba8.mp3",
+      "sha256": "46a99517674d545cb85ba5400b3adc3e7f88ebf79caa79d4c2aa7e7bd9cccba8",
+      "status": 404
+    },
+    {
+      "id": "dyadya-sirozha.pisni-dyadi-sirozhy-drony-mahichni-drony-hratsiyni-pochatok-kintsya-st",
+      "path": "objects/9555184abb2a5430227b45410340911b1bdd18966d0ab7f3d4037f440092a09e.mp3",
+      "sha256": "9555184abb2a5430227b45410340911b1bdd18966d0ab7f3d4037f440092a09e",
+      "status": 404
+    },
+    {
+      "id": "zabavka-i-dmytryk.zabavka-i-dmytryk-dronshchyk-home-video",
+      "path": "objects/1e8a3540686dd112920bb939bb8650d5f2dca08a3a609f3f5bd185b388aba08b.mp3",
+      "sha256": "1e8a3540686dd112920bb939bb8650d5f2dca08a3a609f3f5bd185b388aba08b",
+      "status": 404
+    },
+    {
+      "id": "ivan-hanzera.vesela-pisenka-ukrayinskoho-drona-prem-yera-2024-ivan-hanzera",
+      "path": "objects/56ccb8cf806d141b891f1febe44e3261227ddcf010a4dba172fc94be51c37b49.mp3",
+      "sha256": "56ccb8cf806d141b891f1febe44e3261227ddcf010a4dba172fc94be51c37b49",
+      "status": 404
+    },
+    {
+      "id": "madyar.usyudy-de-ne-bachu-i-bachu-khrobakiv-znymkuyut-ptakhy-madyara",
+      "path": "objects/6c8699e9cbf469c18e73031a62b72461c1e9c44eda406e1eb88619900d557c4e.mp3",
+      "sha256": "6c8699e9cbf469c18e73031a62b72461c1e9c44eda406e1eb88619900d557c4e",
+      "status": 404
+    },
+    {
+      "id": "madyar.stalevyy-ptakh-tekst-muzyka-bloger-414-bryhada-ptakhy-madyara",
+      "path": "objects/5d8e57ca42b50ab463504a68cde5907f9eebcd767df18ca9b6017a782d3e2d43.mp3",
+      "sha256": "5d8e57ca42b50ab463504a68cde5907f9eebcd767df18ca9b6017a782d3e2d43",
+      "status": 404
+    },
+    {
+      "id": "proklyatyy-tretya-shturmova.proklyatyy-tretya-shturmova-sportyvni-povitryani-roboty-proyekt-epokha",
+      "path": "objects/0b92127dd20223f0644b9b2b4812812fb841674a36841e4a2b0eb2b0e12d408c.mp3",
+      "sha256": "0b92127dd20223f0644b9b2b4812812fb841674a36841e4a2b0eb2b0e12d408c",
+      "status": 404
+    },
+    {
+      "id": "sarhiy-prytula-ta-misha-krupin.yi-ty-snyu-24-7-misha-krupin-ta-fond-prytuly",
+      "path": "objects/3d981d479f4d5447a6806ed3ee7709b8a408d213ca8a8ae6a8b1b342461322c1.mp3",
+      "sha256": "3d981d479f4d5447a6806ed3ee7709b8a408d213ca8a8ae6a8b1b342461322c1",
+      "status": 404
+    },
+    {
+      "id": "surenzh.akhilles",
+      "path": "objects/cdba5db44c8417af7271bec25909ab1f0e40944ca7b530ed9c064aa3d7fcd3ed.mp3",
+      "sha256": "cdba5db44c8417af7271bec25909ab1f0e40944ca7b530ed9c064aa3d7fcd3ed",
+      "status": 404
+    },
+    {
+      "id": "ukrayinski-pisni-pisni-ua.pisnya-pro-dron-babka-yozhka",
+      "path": "objects/09bbee881a6e655ca2c6edb49378502be95b37117d72a7a0232f44c1aaa98f0e.mp3",
+      "sha256": "09bbee881a6e655ca2c6edb49378502be95b37117d72a7a0232f44c1aaa98f0e",
+      "status": 404
+    },
+    {
+      "id": "khvostati-lovelasy.drony-bdzholy-ofitsiynyy-klip-ukrayinska-satyra-pro-viynu-khvostati-lo",
+      "path": "objects/93ba351fb0cdafde13e33f30bc73e9ae357bb9e16ce94da25768ef839e450a38.mp3",
+      "sha256": "93ba351fb0cdafde13e33f30bc73e9ae357bb9e16ce94da25768ef839e450a38",
+      "status": 404
+    },
+    {
+      "id": "tsybrr.klip-rusoriz",
+      "path": "objects/b86f77c8d106596fcbc24e42d58a502b0c7b1576c83b57cd5b889b62a42be4a6.mp3",
+      "sha256": "b86f77c8d106596fcbc24e42d58a502b0c7b1576c83b57cd5b889b62a42be4a6",
+      "status": 404
+    }
+  ],
+  "installerObjects": [
+    {
+      "path": "objects/00073ec8ed2031e75a72d11e4933fdef45ecd22930f0dbf6117447f9888dd539.mp3",
+      "bytes": 8796913,
+      "sha256": "00073ec8ed2031e75a72d11e4933fdef45ecd22930f0dbf6117447f9888dd539",
+      "status": 200,
+      "contentLength": 8796913
+    },
+    {
+      "path": "objects/01fc5e02157285c9ceb8f3c2d303768dfb02a43896f9c75a07629628330af126.mp3",
+      "bytes": 7640845,
+      "sha256": "01fc5e02157285c9ceb8f3c2d303768dfb02a43896f9c75a07629628330af126",
+      "status": 200,
+      "contentLength": 7640845
+    },
+    {
+      "path": "objects/027fe8682dd4e8b9e0ddaccf1617fd7681e3b9d3ce4390c92cb865bb92e2ae47.mp3",
+      "bytes": 11470806,
+      "sha256": "027fe8682dd4e8b9e0ddaccf1617fd7681e3b9d3ce4390c92cb865bb92e2ae47",
+      "status": 200,
+      "contentLength": 11470806
+    },
+    {
+      "path": "objects/0aba9efcd8b2d6b127ac69676e15c7364ba5e2ed0adc811a19aa2da2eb2ed1d7.mp3",
+      "bytes": 8919565,
+      "sha256": "0aba9efcd8b2d6b127ac69676e15c7364ba5e2ed0adc811a19aa2da2eb2ed1d7",
+      "status": 200,
+      "contentLength": 8919565
+    },
+    {
+      "path": "objects/0ee835fd279ac5fa15f9346744cbafc2ba800c1c0671b78ca9abe2b4353402f7.mp3",
+      "bytes": 1196325,
+      "sha256": "0ee835fd279ac5fa15f9346744cbafc2ba800c1c0671b78ca9abe2b4353402f7",
+      "status": 200,
+      "contentLength": 1196325
+    },
+    {
+      "path": "objects/10c172f2fcc6cd889fcbefcd8ac64d18e494748223973fba906d7371575181ed.mp3",
+      "bytes": 6799885,
+      "sha256": "10c172f2fcc6cd889fcbefcd8ac64d18e494748223973fba906d7371575181ed",
+      "status": 200,
+      "contentLength": 6799885
+    },
+    {
+      "path": "objects/119b628fece763ccaf3da607d848258e6a281d6a45d0e27ac6c6841ee3022b21.mp3",
+      "bytes": 8960845,
+      "sha256": "119b628fece763ccaf3da607d848258e6a281d6a45d0e27ac6c6841ee3022b21",
+      "status": 200,
+      "contentLength": 8960845
+    },
+    {
+      "path": "objects/13ac89fa8e5b12b78c872f981376315d0b9d33829ab85f259972be54913f8239.mp3",
+      "bytes": 5374338,
+      "sha256": "13ac89fa8e5b12b78c872f981376315d0b9d33829ab85f259972be54913f8239",
+      "status": 200,
+      "contentLength": 5374338
+    },
+    {
+      "path": "objects/27849453fb457c39726138ddd9974aa35307e713b9b04262edc09c05a1808b21.mp3",
+      "bytes": 4630905,
+      "sha256": "27849453fb457c39726138ddd9974aa35307e713b9b04262edc09c05a1808b21",
+      "status": 200,
+      "contentLength": 4630905
+    },
+    {
+      "path": "objects/28931f058fe83769115217f8de4eb91fd8ec2001bf5b5fc9d56621061ff59d5c.mp3",
+      "bytes": 4361822,
+      "sha256": "28931f058fe83769115217f8de4eb91fd8ec2001bf5b5fc9d56621061ff59d5c",
+      "status": 200,
+      "contentLength": 4361822
+    },
+    {
+      "path": "objects/2c26b4ed893f5b816fee12fa2f0bdb17a31d8560b7858d89ed6272a8866c9c8c.mp3",
+      "bytes": 2155833,
+      "sha256": "2c26b4ed893f5b816fee12fa2f0bdb17a31d8560b7858d89ed6272a8866c9c8c",
+      "status": 200,
+      "contentLength": 2155833
+    },
+    {
+      "path": "objects/2f50bfab8dfe1a857a5ab35f0f07247f3c47ca5579eda3786a946c253c3317fb.mp3",
+      "bytes": 4993776,
+      "sha256": "2f50bfab8dfe1a857a5ab35f0f07247f3c47ca5579eda3786a946c253c3317fb",
+      "status": 200,
+      "contentLength": 4993776
+    },
+    {
+      "path": "objects/345324857ee7c8ffc6ae15b8d646036f3630fbc7c4470cc633907715bfaad44f.mp3",
+      "bytes": 7901965,
+      "sha256": "345324857ee7c8ffc6ae15b8d646036f3630fbc7c4470cc633907715bfaad44f",
+      "status": 200,
+      "contentLength": 7901965
+    },
+    {
+      "path": "objects/384c37d74793e52dd575132a036ff8e7cde085dbe1ae09d202e6d935f747be4e.mp3",
+      "bytes": 4923476,
+      "sha256": "384c37d74793e52dd575132a036ff8e7cde085dbe1ae09d202e6d935f747be4e",
+      "status": 200,
+      "contentLength": 4923476
+    },
+    {
+      "path": "objects/385d8b71a88b933f5360ef63ed1e777ceb869e32ad6b1c6a4b784cba56a0255c.mp3",
+      "bytes": 5228365,
+      "sha256": "385d8b71a88b933f5360ef63ed1e777ceb869e32ad6b1c6a4b784cba56a0255c",
+      "status": 200,
+      "contentLength": 5228365
+    },
+    {
+      "path": "objects/39bab87bc4caa84d82d409bac0b7c44f54567e2c090f318556bdf48a6cdcd691.mp3",
+      "bytes": 6299607,
+      "sha256": "39bab87bc4caa84d82d409bac0b7c44f54567e2c090f318556bdf48a6cdcd691",
+      "status": 200,
+      "contentLength": 6299607
+    },
+    {
+      "path": "objects/3a92a37aa184c85e0e38ca9116d3707ebb63c29d8e5fa77b645f3c9e7cd2f902.mp3",
+      "bytes": 1465364,
+      "sha256": "3a92a37aa184c85e0e38ca9116d3707ebb63c29d8e5fa77b645f3c9e7cd2f902",
+      "status": 200,
+      "contentLength": 1465364
+    },
+    {
+      "path": "objects/3dd1b959c4734a7463998e07f9b95a810d277c3b8946630988651ff2ef3fc222.mp3",
+      "bytes": 3323941,
+      "sha256": "3dd1b959c4734a7463998e07f9b95a810d277c3b8946630988651ff2ef3fc222",
+      "status": 200,
+      "contentLength": 3323941
+    },
+    {
+      "path": "objects/3e8b8926c561a6656ed6e4a0c4cc7cccec809007843056d37152ce00295a6981.mp3",
+      "bytes": 6630504,
+      "sha256": "3e8b8926c561a6656ed6e4a0c4cc7cccec809007843056d37152ce00295a6981",
+      "status": 200,
+      "contentLength": 6630504
+    },
+    {
+      "path": "objects/409a98ca2923cbe78427ba21f8f5131fb9f3439a255be562bcd840b111586fe7.mp3",
+      "bytes": 2745003,
+      "sha256": "409a98ca2923cbe78427ba21f8f5131fb9f3439a255be562bcd840b111586fe7",
+      "status": 200,
+      "contentLength": 2745003
+    },
+    {
+      "path": "objects/44b337d6ddf62e508c16207b0cc98679d2403c35db032430efc515852c33dacc.mp3",
+      "bytes": 4321698,
+      "sha256": "44b337d6ddf62e508c16207b0cc98679d2403c35db032430efc515852c33dacc",
+      "status": 200,
+      "contentLength": 4321698
+    },
+    {
+      "path": "objects/4616ba62005e668bd5d1d6ba7327ec280876f076b7195e2eed923b6d52e8dcd3.mp3",
+      "bytes": 3820523,
+      "sha256": "4616ba62005e668bd5d1d6ba7327ec280876f076b7195e2eed923b6d52e8dcd3",
+      "status": 200,
+      "contentLength": 3820523
+    },
+    {
+      "path": "objects/4c78ecf889cf63e02243f030b1e25f1f0f352247d3c0f4dd4ce74cb2583117a5.mp3",
+      "bytes": 2433358,
+      "sha256": "4c78ecf889cf63e02243f030b1e25f1f0f352247d3c0f4dd4ce74cb2583117a5",
+      "status": 200,
+      "contentLength": 2433358
+    },
+    {
+      "path": "objects/4d3a746a85c475498a8f4426536d2a1fc3337e4904c55a687d827f386f50004a.mp3",
+      "bytes": 3226644,
+      "sha256": "4d3a746a85c475498a8f4426536d2a1fc3337e4904c55a687d827f386f50004a",
+      "status": 200,
+      "contentLength": 3226644
+    },
+    {
+      "path": "objects/4f7d3674fe0989867ec831bb7d838e34d677cca2229f8b3f191ebe73ede40781.mp3",
+      "bytes": 7318382,
+      "sha256": "4f7d3674fe0989867ec831bb7d838e34d677cca2229f8b3f191ebe73ede40781",
+      "status": 200,
+      "contentLength": 7318382
+    },
+    {
+      "path": "objects/5126faf85adffc64f22a4cd176b84ed47b6014c03328ba8380fdb24efca11f90.mp3",
+      "bytes": 8951846,
+      "sha256": "5126faf85adffc64f22a4cd176b84ed47b6014c03328ba8380fdb24efca11f90",
+      "status": 200,
+      "contentLength": 8951846
+    },
+    {
+      "path": "objects/53f4aabfa0b926af5c23af9a33c8d5c93b86780004d09cc2276bbad964d4c022.mp3",
+      "bytes": 2573792,
+      "sha256": "53f4aabfa0b926af5c23af9a33c8d5c93b86780004d09cc2276bbad964d4c022",
+      "status": 200,
+      "contentLength": 2573792
+    },
+    {
+      "path": "objects/575730b8c1f04d701aa55c3acaf53b24685b25bbd9fc8cd42d4df0d2d29d430e.mp3",
+      "bytes": 8197141,
+      "sha256": "575730b8c1f04d701aa55c3acaf53b24685b25bbd9fc8cd42d4df0d2d29d430e",
+      "status": 200,
+      "contentLength": 8197141
+    },
+    {
+      "path": "objects/5af6bb3a28e3e8a45996c64638ebfbaf7abb71954a2a957de4b89141f555dbf2.mp3",
+      "bytes": 8572045,
+      "sha256": "5af6bb3a28e3e8a45996c64638ebfbaf7abb71954a2a957de4b89141f555dbf2",
+      "status": 200,
+      "contentLength": 8572045
+    },
+    {
+      "path": "objects/5ddd44a06548f11ec5bdfe81cc51e863ade55f753ccfede58d9848a4d154ba06.mp3",
+      "bytes": 2881410,
+      "sha256": "5ddd44a06548f11ec5bdfe81cc51e863ade55f753ccfede58d9848a4d154ba06",
+      "status": 200,
+      "contentLength": 2881410
+    },
+    {
+      "path": "objects/63082bcdf83c78759205dc0bdb86584c9d2e2afb31000721d56dd129982b88cb.mp3",
+      "bytes": 2861038,
+      "sha256": "63082bcdf83c78759205dc0bdb86584c9d2e2afb31000721d56dd129982b88cb",
+      "status": 200,
+      "contentLength": 2861038
+    },
+    {
+      "path": "objects/64066f4a06e7c7dd64033e31fa404da9ff3535bbbcb0b7e80399c552123d5b52.mp3",
+      "bytes": 2048835,
+      "sha256": "64066f4a06e7c7dd64033e31fa404da9ff3535bbbcb0b7e80399c552123d5b52",
+      "status": 200,
+      "contentLength": 2048835
+    },
+    {
+      "path": "objects/6a7ab8157315c16eee234fd0eb5c523dc830c335272cec3cc5e795a5aa067e26.mp3",
+      "bytes": 7270456,
+      "sha256": "6a7ab8157315c16eee234fd0eb5c523dc830c335272cec3cc5e795a5aa067e26",
+      "status": 200,
+      "contentLength": 7270456
+    },
+    {
+      "path": "objects/709bdef4fae6f42a2747ddab802ce3087c79e126037f64b9d60b0fa71160c536.mp3",
+      "bytes": 3841044,
+      "sha256": "709bdef4fae6f42a2747ddab802ce3087c79e126037f64b9d60b0fa71160c536",
+      "status": 200,
+      "contentLength": 3841044
+    },
+    {
+      "path": "objects/76f7c2e5f50824961cc1b169dbe6096b1c44a934d2c8f4c49a724fc602406c35.mp3",
+      "bytes": 3626213,
+      "sha256": "76f7c2e5f50824961cc1b169dbe6096b1c44a934d2c8f4c49a724fc602406c35",
+      "status": 200,
+      "contentLength": 3626213
+    },
+    {
+      "path": "objects/77e1ad0bd0a7c5625a12eaa1c8099408ede6959b2ee2dbf5bace85d09a602ada.mp3",
+      "bytes": 1925141,
+      "sha256": "77e1ad0bd0a7c5625a12eaa1c8099408ede6959b2ee2dbf5bace85d09a602ada",
+      "status": 200,
+      "contentLength": 1925141
+    },
+    {
+      "path": "objects/77e8b47ad4ed2b2bb54ee4a1def79fedbd4c60b99963aa1f0d0de231e8391941.mp3",
+      "bytes": 4096835,
+      "sha256": "77e8b47ad4ed2b2bb54ee4a1def79fedbd4c60b99963aa1f0d0de231e8391941",
+      "status": 200,
+      "contentLength": 4096835
+    },
+    {
+      "path": "objects/7b1a78a001d69aa47d75b2f55d647836ea445355065a3df3b0cebd2e978863fa.mp3",
+      "bytes": 5586442,
+      "sha256": "7b1a78a001d69aa47d75b2f55d647836ea445355065a3df3b0cebd2e978863fa",
+      "status": 200,
+      "contentLength": 5586442
+    },
+    {
+      "path": "objects/8613eadc32ee33dc4889f138efc3c4e1865e61c853412adcb50b135e1515bc2e.mp3",
+      "bytes": 7609364,
+      "sha256": "8613eadc32ee33dc4889f138efc3c4e1865e61c853412adcb50b135e1515bc2e",
+      "status": 200,
+      "contentLength": 7609364
+    },
+    {
+      "path": "objects/88b95dc4ea8749d136e03813cc0ff4dae2ef753bcdde2e3acb3b2aeb3efcd24d.mp3",
+      "bytes": 6646272,
+      "sha256": "88b95dc4ea8749d136e03813cc0ff4dae2ef753bcdde2e3acb3b2aeb3efcd24d",
+      "status": 200,
+      "contentLength": 6646272
+    },
+    {
+      "path": "objects/88e339e870c4f4ec8a2061b00686117b03decee32707c5b2566e7d13b6910fef.mp3",
+      "bytes": 4521381,
+      "sha256": "88e339e870c4f4ec8a2061b00686117b03decee32707c5b2566e7d13b6910fef",
+      "status": 200,
+      "contentLength": 4521381
+    },
+    {
+      "path": "objects/8b46f7e941447e929c09cbe64921e963e4bc6ab3962332e42c070dc9de9c67e1.mp3",
+      "bytes": 1740382,
+      "sha256": "8b46f7e941447e929c09cbe64921e963e4bc6ab3962332e42c070dc9de9c67e1",
+      "status": 200,
+      "contentLength": 1740382
+    },
+    {
+      "path": "objects/93634c4c3d76558d0b4c80740883223c2d68cc0a095142c420107b2f8b08d037.mp3",
+      "bytes": 3890364,
+      "sha256": "93634c4c3d76558d0b4c80740883223c2d68cc0a095142c420107b2f8b08d037",
+      "status": 200,
+      "contentLength": 3890364
+    },
+    {
+      "path": "objects/94a15e5c78640ca23410acfdbf65b9ab4a6a26d93534ec973b4aa6ed1bddf6af.mp3",
+      "bytes": 2110508,
+      "sha256": "94a15e5c78640ca23410acfdbf65b9ab4a6a26d93534ec973b4aa6ed1bddf6af",
+      "status": 200,
+      "contentLength": 2110508
+    },
+    {
+      "path": "objects/9ce237e3111768fe0fd4e2d9322bd36f03500ed4d46fd49d11dcf0b503c4fc01.mp3",
+      "bytes": 9898235,
+      "sha256": "9ce237e3111768fe0fd4e2d9322bd36f03500ed4d46fd49d11dcf0b503c4fc01",
+      "status": 200,
+      "contentLength": 9898235
+    },
+    {
+      "path": "objects/9fd1c9a97740411e7dcaebdc9af17ab017cf070a82089a48503765a24b7bedf4.mp3",
+      "bytes": 4033222,
+      "sha256": "9fd1c9a97740411e7dcaebdc9af17ab017cf070a82089a48503765a24b7bedf4",
+      "status": 200,
+      "contentLength": 4033222
+    },
+    {
+      "path": "objects/a17902981d0ab1de0bc495be5d1656f9079ad43d76b94b5ef230bef07a702e1a.mp3",
+      "bytes": 1537253,
+      "sha256": "a17902981d0ab1de0bc495be5d1656f9079ad43d76b94b5ef230bef07a702e1a",
+      "status": 200,
+      "contentLength": 1537253
+    },
+    {
+      "path": "objects/a94a518bc895aac281a8f4b546c590dab313e6391de739b12fe6e32536072791.mp3",
+      "bytes": 8994481,
+      "sha256": "a94a518bc895aac281a8f4b546c590dab313e6391de739b12fe6e32536072791",
+      "status": 200,
+      "contentLength": 8994481
+    },
+    {
+      "path": "objects/abdd83e954c7ab59e1e5a1174e12e7e18c978367c15025572a54610e8211abae.mp3",
+      "bytes": 1450318,
+      "sha256": "abdd83e954c7ab59e1e5a1174e12e7e18c978367c15025572a54610e8211abae",
+      "status": 200,
+      "contentLength": 1450318
+    },
+    {
+      "path": "objects/abe5a49446af9a06514277dd4e585694cd0be70a4191ed9932a419f3086a4930.mp3",
+      "bytes": 7920205,
+      "sha256": "abe5a49446af9a06514277dd4e585694cd0be70a4191ed9932a419f3086a4930",
+      "status": 200,
+      "contentLength": 7920205
+    },
+    {
+      "path": "objects/af00dced5a911446c2e6c3c5f42361b74bdaf252f5aea020ad49f682cda0b0c1.mp3",
+      "bytes": 2911503,
+      "sha256": "af00dced5a911446c2e6c3c5f42361b74bdaf252f5aea020ad49f682cda0b0c1",
+      "status": 200,
+      "contentLength": 2911503
+    },
+    {
+      "path": "objects/b5a0d55e0a88c0e4d2bf258bc0b2219372751b781c3bc53d195d4b1c4a0d8a07.mp3",
+      "bytes": 2458435,
+      "sha256": "b5a0d55e0a88c0e4d2bf258bc0b2219372751b781c3bc53d195d4b1c4a0d8a07",
+      "status": 200,
+      "contentLength": 2458435
+    },
+    {
+      "path": "objects/b5f4aaee16d26df31fb64d19d80d98190b617a3e8bfa41c4f20a977bdbf56982.mp3",
+      "bytes": 6308365,
+      "sha256": "b5f4aaee16d26df31fb64d19d80d98190b617a3e8bfa41c4f20a977bdbf56982",
+      "status": 200,
+      "contentLength": 6308365
+    },
+    {
+      "path": "objects/b629204a2617990696ed110d9177c43e99c2fc7b92d9b0cc9b28e1e7a8a443e3.mp3",
+      "bytes": 1707781,
+      "sha256": "b629204a2617990696ed110d9177c43e99c2fc7b92d9b0cc9b28e1e7a8a443e3",
+      "status": 200,
+      "contentLength": 1707781
+    },
+    {
+      "path": "objects/bacdf4eae1d6031a357837389b86f5b114997629be60ca9cb3d2e14284fee34b.mp3",
+      "bytes": 8431885,
+      "sha256": "bacdf4eae1d6031a357837389b86f5b114997629be60ca9cb3d2e14284fee34b",
+      "status": 200,
+      "contentLength": 8431885
+    },
+    {
+      "path": "objects/bdff30f60f78f5c6e5103ba387f31b98672b8514358a9624207c33aeed1ac9c7.mp3",
+      "bytes": 7559209,
+      "sha256": "bdff30f60f78f5c6e5103ba387f31b98672b8514358a9624207c33aeed1ac9c7",
+      "status": 200,
+      "contentLength": 7559209
+    },
+    {
+      "path": "objects/c00de3e6294bc7dbd484c26815dfcfe0787cb352e7129a0e84ba14941fcab37f.mp3",
+      "bytes": 5228365,
+      "sha256": "c00de3e6294bc7dbd484c26815dfcfe0787cb352e7129a0e84ba14941fcab37f",
+      "status": 200,
+      "contentLength": 5228365
+    },
+    {
+      "path": "objects/d4ae034c6ad065a6f85b7924dd10a719231889a78bc0e90730157d91124dc8f2.mp3",
+      "bytes": 4168724,
+      "sha256": "d4ae034c6ad065a6f85b7924dd10a719231889a78bc0e90730157d91124dc8f2",
+      "status": 200,
+      "contentLength": 4168724
+    },
+    {
+      "path": "objects/d6ed263bd431951a17010a3d31d60e514aece937bcf4bd51aca442cc09162142.mp3",
+      "bytes": 4043337,
+      "sha256": "d6ed263bd431951a17010a3d31d60e514aece937bcf4bd51aca442cc09162142",
+      "status": 200,
+      "contentLength": 4043337
+    },
+    {
+      "path": "objects/dc87558e382425e2b6751b448579f32caeeafc9f6159b8cc92ff7550bc237ac2.mp3",
+      "bytes": 6646513,
+      "sha256": "dc87558e382425e2b6751b448579f32caeeafc9f6159b8cc92ff7550bc237ac2",
+      "status": 200,
+      "contentLength": 6646513
+    },
+    {
+      "path": "objects/e2e0f54a07a3c227f842f81b5a9d5711e29d505866530aa6d18316037b3a64a1.mp3",
+      "bytes": 1897534,
+      "sha256": "e2e0f54a07a3c227f842f81b5a9d5711e29d505866530aa6d18316037b3a64a1",
+      "status": 200,
+      "contentLength": 1897534
+    },
+    {
+      "path": "objects/e50fd5b7f3275040ba246df9ce2ed9a07b7c015d90ce628692f3c7615cd9dee3.mp3",
+      "bytes": 6492685,
+      "sha256": "e50fd5b7f3275040ba246df9ce2ed9a07b7c015d90ce628692f3c7615cd9dee3",
+      "status": 200,
+      "contentLength": 6492685
+    },
+    {
+      "path": "objects/e9cd1330b99e2f978b04795a7311c37f2fd7e2419bfd89c3c4277bfd15f216fa.mp3",
+      "bytes": 5684244,
+      "sha256": "e9cd1330b99e2f978b04795a7311c37f2fd7e2419bfd89c3c4277bfd15f216fa",
+      "status": 200,
+      "contentLength": 5684244
+    },
+    {
+      "path": "objects/ea025d386c8598dd966d13c2f0758417ff97198172cfbd7a2a1b25a9b3cedfbf.mp3",
+      "bytes": 1217831,
+      "sha256": "ea025d386c8598dd966d13c2f0758417ff97198172cfbd7a2a1b25a9b3cedfbf",
+      "status": 200,
+      "contentLength": 1217831
+    },
+    {
+      "path": "objects/ea56caa66bd6c7ae35e07da2ee3912588e4934970d887f6cc1427716c30ef66b.mp3",
+      "bytes": 5612365,
+      "sha256": "ea56caa66bd6c7ae35e07da2ee3912588e4934970d887f6cc1427716c30ef66b",
+      "status": 200,
+      "contentLength": 5612365
+    },
+    {
+      "path": "objects/ecf32b424b78773ba6df4c56a5068ddb0e1674f5c3fdadc47d23c79dde15f5af.mp3",
+      "bytes": 1781342,
+      "sha256": "ecf32b424b78773ba6df4c56a5068ddb0e1674f5c3fdadc47d23c79dde15f5af",
+      "status": 200,
+      "contentLength": 1781342
+    },
+    {
+      "path": "objects/ee645b6a0cf9c8cd45fa96882cd35cc3ba5ffd0a5b4fb92544d8ee49d24cedf1.mp3",
+      "bytes": 8675578,
+      "sha256": "ee645b6a0cf9c8cd45fa96882cd35cc3ba5ffd0a5b4fb92544d8ee49d24cedf1",
+      "status": 200,
+      "contentLength": 8675578
+    },
+    {
+      "path": "objects/f03927dbb34fca2946b4d156523e24d8ada69fbf390ed522597b9fbaedbf09a6.mp3",
+      "bytes": 1423569,
+      "sha256": "f03927dbb34fca2946b4d156523e24d8ada69fbf390ed522597b9fbaedbf09a6",
+      "status": 200,
+      "contentLength": 1423569
+    },
+    {
+      "path": "objects/f97ea7ef15cff0de647b8116a8e917827268559b35f3bf3cad58ad901132b49f.mp3",
+      "bytes": 2972525,
+      "sha256": "f97ea7ef15cff0de647b8116a8e917827268559b35f3bf3cad58ad901132b49f",
+      "status": 200,
+      "contentLength": 2972525
+    },
+    {
+      "path": "objects/ffb085ff6ba6a0191a8bba10d71db94822a3c36f703a5fb5f33f4b3d80874c31.mp3",
+      "bytes": 12039421,
+      "sha256": "ffb085ff6ba6a0191a8bba10d71db94822a3c36f703a5fb5f33f4b3d80874c31",
+      "status": 200,
+      "contentLength": 12039421
+    }
+  ],
+  "limitations": [
+    "MP3 bodies were hash-verified in hosted staging; local public checks verify HEAD availability/size and exact manifest/inventory identity, without re-downloading audio.",
+    "No listening or physical device playback assertion."
+  ]
+}

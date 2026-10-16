@@ -4,7 +4,11 @@ import { readFile, writeFile, mkdir, mkdtemp, rm, readdir } from 'node:fs/promis
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
-import { compileHostedSoundtracks, hostedSoundtrackId } from './hosted-soundtrack-publication.mjs';
+import {
+  canonicalHostedSoundtrackBaseURL,
+  compileHostedSoundtracks,
+  hostedSoundtrackId,
+} from './hosted-soundtrack-publication.mjs';
 import {
   compilePublishedSoundtracks,
   soundtrackCatalogueModule,
@@ -43,6 +47,7 @@ test('70 exact hosted recordings and15 albums compile reproducibly without local
   assert.equal(a.tracks.length, 70);
   assert.equal(a.collections.length, 15);
   assert.equal(a.archives.length, 1);
+  assert.equal(a.archives[0].baseURL, canonicalHostedSoundtrackBaseURL);
   assert.equal(
     a.tracks.reduce((total, track) => total + track.asset.bytes, 0),
     354986122,
