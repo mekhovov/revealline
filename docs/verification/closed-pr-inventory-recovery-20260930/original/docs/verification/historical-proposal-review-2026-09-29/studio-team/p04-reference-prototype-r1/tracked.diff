@@ -1,0 +1,1090 @@
+diff --git a/authoring/asset-studio/index.html b/authoring/asset-studio/index.html
+index d3d973c9ee560ad485ba0a767c0530353f5c3291..5921e33ac49f561ded69c6295344a9d007362e49 100644
+--- a/authoring/asset-studio/index.html
++++ b/authoring/asset-studio/index.html
+@@ -64,7 +64,23 @@
+             type="file"
+             accept=".rltheme,application/vnd.revealline.theme"
+         /></label>
++        <button
++          data-studio-host="control"
++          type="button"
++          id="upgrade-workspace"
++          data-tool-control
++          data-studio-startup-disabled
++          disabled
++          aria-describedby="workspace-format-help"
++        >
++          Upgrade workspace to v2
++        </button>
+       </div>
++      <p id="workspace-format-help" data-studio-host="body">
++        Export a v1 backup before upgrading. Upgrade stages an undoable draft; Save makes it
++        persistent. Older Studios cannot open v2, and later v2 work cannot be exported as v1.
++        Ordinary saves keep the workspace's current format.
++      </p>
+       <details class="studio-interface">
+         <summary data-studio-host="control">Interface</summary>
+         <p data-studio-host="body">Interface preferences do not change the exported theme.</p>
+@@ -154,6 +170,12 @@
+             </li>
+           </ol>
+           <h3 data-studio-host="heading">Keep your work</h3>
++          <p data-studio-host="body">
++            Export a v1 backup before Upgrade workspace to v2. Upgrade stages an unsaved draft; Undo
++            draft or Reset to saved restores the old format before Save. Older Studios cannot open
++            saved v2 workspaces. A backup preserves the earlier v1 state, not later v2 edits. A
++            download request does not confirm that you kept the file.
++          </p>
+           <p data-studio-host="body">
+             Pixel Undo and Redo affect the sprite editor. Undo draft and Redo draft affect staged,
+             unsaved workspace revisions. A successful Save local revision clears the draft undo
+diff --git a/authoring/asset-studio/studio.mjs b/authoring/asset-studio/studio.mjs
+index d990d0201691769d9f60c30fb65e3fa04b0b2a54..fdbd4992777a6cb87cba30deba3d8ab70b73f904 100644
+--- a/authoring/asset-studio/studio.mjs
++++ b/authoring/asset-studio/studio.mjs
+@@ -1,27 +1,20 @@
+ globalThis.RevealLineToolLaunch?.attached();
+ import { createDefaultThemeBundle } from '../../game/presentation/catalog.mjs';
++import { FORMATS, LIMITS, presentationGeometryControls } from '../../game/presentation/model.mjs';
++import { hashPresentationBytes } from '../../game/presentation/bundle.mjs';
++import { generateAssetPrompt, nextAssetRevision } from '../../game/presentation/studio-session.mjs';
+ import {
+-  FORMATS,
+-  LIMITS,
+-  resolvePresentation,
+-  validateThemeBundle,
+-  presentationCoverage,
+-  presentationGeometryControls,
+-} from '../../game/presentation/model.mjs';
+-import {
+-  hashPresentationBytes,
+-  verifyThemeAssets,
+-  exportThemeBundle,
+-  importThemeBundle,
+-} from '../../game/presentation/bundle.mjs';
+-import {
+-  reviseStudioTheme,
+-  replaceStudioCollection,
+-  adoptStudioBundle,
+-  generateAssetPrompt,
+-  nextAssetRevision,
+-} from '../../game/presentation/studio-session.mjs';
+-import { createStudioStore } from '../../game/presentation/studio-store.mjs';
++  createFormatStudioStore,
++  prepareStudioSnapshot,
++  reviseStudioDocument,
++  replaceStudioDocumentCollection,
++  selectStudioTheme,
++  adoptStudioDocument,
++  upgradeStudioDocument,
++  verifyStudioAssets,
++  importStudioBundle,
++  exportStudioBundle,
++} from '../../game/presentation/studio-formats.mjs';
+ import { loadPublishedStudio } from '../../game/presentation/published-studio.mjs';
+ import { inspectImageDataUrl } from '../../game/content.mjs';
+ import { centerCrop, checkedCrop, pixelBounds, matchingSlots } from './helpers.mjs';
+@@ -42,8 +35,8 @@ const node = (tag, value = '', className = '', hostRole = null) => {
+   return el;
+ };
+ const ref = (asset) => ({ id: asset.id, revision: asset.revision });
+-const store = createStudioStore();
+-let working = { document: createDefaultThemeBundle(), assets: new Map() },
++const store = createFormatStudioStore();
++let working = await prepareStudioSnapshot(createDefaultThemeBundle(), new Map()),
+   saved = working,
+   generation = 0,
+   storageReady = false;
+@@ -55,7 +48,7 @@ let selected = working.document.slots[0].id,
+ const collectionSlots = new Set();
+ let previewGeneration = 0;
+ const currentSlot = () => working.document.slots.find((slot) => slot.id === selected);
+-const resolved = () => resolvePresentation(working.document);
++const resolved = () => working.view;
+ // Static controls stay disabled until this host owns their handlers and lock.
+ document.querySelectorAll('[data-studio-startup-disabled]').forEach((control) => {
+   control.disabled = false;
+@@ -124,15 +117,18 @@ function requireSettled(allowPixels = false) {
+       'Validate and stage the prepared slot, or discard it, before changing workspace revisions.',
+     );
+ }
+-function stage(
++async function stage(
+   document,
+   assets = working.assets,
+   message = 'Change staged. Save a local revision or export to keep it.',
++  task,
+ ) {
++  const snapshot = await prepareStudioSnapshot(await document, assets, { signal: task.signal });
++  task.check();
+   undo.push(working);
+   if (undo.length > 40) undo.shift();
+   redo = [];
+-  working = { document, assets };
++  working = snapshot;
+   refresh();
+   status(message, 'success');
+ }
+@@ -165,7 +161,7 @@ function refreshInventory() {
+   const view = resolved(),
+     rows = matchingSlots(working.document.slots, view, filters());
+   $('slot-count').textContent = `${rows.length} / ${working.document.slots.length}`;
+-  const coverage = presentationCoverage(working.document);
++  const coverage = working.coverage;
+   $('coverage-summary').textContent =
+     `${coverage.counts.missing} missing · ${coverage.counts.source} source · ${coverage.counts.produced} produced · ${coverage.counts.reviewed} reviewed. Readiness is evidence based.`;
+   const list = document.createDocumentFragment();
+@@ -225,7 +221,8 @@ function refresh() {
+   );
+   $('filter-theme').value = view.theme.id;
+   $('workspace-summary').textContent =
+-    `Theme ${view.theme.name} · document r${working.document.revision} · local save ${generation || 'none'}${working !== saved ? ' · unsaved changes' : ''}${view.collection ? ` · ${view.collection.id}` : ''}`;
++    `Theme ${view.theme.name} · ${working.document.format === FORMATS.bundle ? 'v1 inline' : 'v2 references'} · document r${working.document.revision} · local save ${generation || 'none'}${working !== saved ? ' · unsaved changes' : ''}${view.collection ? ` · ${view.collection.id}` : ''}`;
++  $('upgrade-workspace').disabled = working.document.format !== FORMATS.bundle;
+   $('undo-draft').disabled = !undo.length;
+   $('redo-draft').disabled = !redo.length;
+   $('reset-draft').disabled = working === saved;
+@@ -319,7 +316,7 @@ function refreshInspector() {
+ async function refreshPreviews() {
+   const requestedPreview = ++previewGeneration;
+   const slot = currentSlot(),
+-    current = resolvePresentation(saved.document),
++    current = saved.view,
+     view = resolved();
+   const candidate = pending?.candidate || view.assets[slot.id],
+     map = new Map(working.assets);
+@@ -389,7 +386,8 @@ function refreshHistory() {
+     ]);
+   const history = working.document.assets.filter((item) => related.has(item.id)).reverse();
+   $('asset-history').replaceChildren(
+-    ...history.map((item) => {
++    ...history.map((encoded) => {
++      const item = working.asset(encoded);
+       const row = node('div', '', 'history-row'),
+         copy = node('div');
+       copy.append(
+@@ -416,12 +414,13 @@ function refreshHistory() {
+       button.type = 'button';
+       button.disabled = item.id === asset?.id && item.revision === asset?.revision;
+       button.onclick = () =>
+-        operation('Preparing workspace change…', () => {
++        operation('Preparing workspace change…', async (task) => {
+           requireSettled();
+-          stage(
+-            reviseStudioTheme(working.document, { bindings: { [selected]: ref(item) } }),
++          await stage(
++            reviseStudioDocument(working.document, { bindings: { [selected]: ref(item) } }),
+             working.assets,
+             'Earlier asset bound in a new immutable theme revision.',
++            task,
+           );
+         });
+       row.append(button);
+@@ -776,10 +775,11 @@ async function validatePending(geometryOnly = false, task) {
+     bytes = new Map(working.assets);
+   if (original) bytes.set(original.file.sha256, pending.blob);
+   bytes.set(asset.file.sha256, pending.candidateBlob);
+-  const next = reviseStudioTheme(working.document, {
++  const next = await reviseStudioDocument(working.document, {
+     assets,
+     bindings: { [selected]: ref(asset) },
+   });
++  task.check();
+   if (geometryOnly) {
+     pending.candidate = asset;
+     refreshPreviews();
+@@ -826,14 +826,16 @@ async function validatePending(geometryOnly = false, task) {
+     await new FontFace('RLStudioValidation', fontBytes).load();
+   }
+   task.update('Verifying original bytes and replacement history…', 'verifying');
+-  const verified = await verifyThemeAssets(next, bytes, { signal: task.signal });
++  const verified = await verifyStudioAssets(next, bytes, { signal: task.signal });
+   task.check();
+-  discardPreparation();
+-  stage(
++  await stage(
+     next,
+     verified,
+     'Replacement validated and staged. The original source and earlier revisions remain in the bundle.',
++    task,
+   );
++  discardPreparation();
++  refreshInspector();
+ }
+ const editGeometry = node('button', 'Edit current raster metadata', '', 'control');
+ editGeometry.type = 'button';
+@@ -947,7 +949,7 @@ $('discard-asset').onclick = () => {
+ };
+ $('token-form').onsubmit = (event) => {
+   event.preventDefault();
+-  operation('Preparing workspace change…', () => {
++  return operation('Preparing workspace change…', async (task) => {
+     requireSettled();
+     const tokens = Object.fromEntries(
+       [...new FormData(event.currentTarget)].map(([key, value]) => [
+@@ -955,25 +957,29 @@ $('token-form').onsubmit = (event) => {
+         key in numberRanges ? Number(value) : value,
+       ]),
+     );
+-    stage(reviseStudioTheme(working.document, { tokens }));
++    await stage(
++      reviseStudioDocument(working.document, { tokens }),
++      working.assets,
++      undefined,
++      task,
++    );
+   });
+ };
+ ['filter-search', 'filter-screen', 'filter-state', 'filter-kind', 'filter-quality'].forEach((id) =>
+   $(id).addEventListener(id === 'filter-search' ? 'input' : 'change', refreshInventory),
+ );
+ $('filter-theme').onchange = () =>
+-  operation('Preparing workspace change…', () => {
++  operation('Preparing workspace change…', async (task) => {
+     try {
+       requireSettled();
+-      const previous = working.document,
+-        next = structuredClone(previous),
+-        theme = next.themes.filter((t) => t.id === $('filter-theme').value).at(-1);
+-      next.selection.theme = ref(theme);
+-      next.selection.collection = null;
+-      next.revision++;
+-      stage(validateThemeBundle(next, { previous, expectedRevision: previous.revision }));
++      await stage(
++        selectStudioTheme(working.document, $('filter-theme').value),
++        working.assets,
++        undefined,
++        task,
++      );
+     } finally {
+-      $('filter-theme').value = resolved().theme.id;
++      if (!task.signal.aborted) $('filter-theme').value = resolved().theme.id;
+     }
+   });
+ [
+@@ -998,7 +1004,7 @@ $('clear-collection').onclick = () => {
+   refreshPrompt();
+ };
+ $('stage-collection').onclick = () =>
+-  operation('Preparing workspace change…', () => {
++  operation('Preparing workspace change…', async (task) => {
+     requireSettled();
+     if (!collectionSlots.size) throw new Error('Select at least one slot to build a collection.');
+     const view = resolved(),
+@@ -1009,8 +1015,8 @@ $('stage-collection').onclick = () =>
+         return [id, view.bindings[id]];
+       }),
+     );
+-    stage(
+-      replaceStudioCollection(working.document, {
++    await stage(
++      replaceStudioDocumentCollection(working.document, {
+         id: $('collection-id').value.trim(),
+         name: $('collection-name').value.trim(),
+         requiredSlots,
+@@ -1018,6 +1024,7 @@ $('stage-collection').onclick = () =>
+       }),
+       working.assets,
+       'Collection staged atomically. Every selected slot has a valid binding.',
++      task,
+     );
+   });
+ for (const button of document.querySelectorAll('[data-prompt-action]'))
+@@ -1078,7 +1085,7 @@ $('reset-draft').onclick = () =>
+     status('Returned to the last saved workspace.');
+   });
+ $('record-review').onclick = () =>
+-  operation('Preparing workspace change…', () => {
++  operation('Preparing workspace change…', async (task) => {
+     requireSettled();
+     const evidence = [
+       ...new Set(
+@@ -1098,13 +1105,14 @@ $('record-review').onclick = () =>
+       provenance: { ...structuredClone(current.provenance), parent: ref(current) },
+       quality: { stage: 'reviewed', evidence },
+     };
+-    stage(
+-      reviseStudioTheme(working.document, {
++    await stage(
++      reviseStudioDocument(working.document, {
+         assets: [asset],
+         bindings: { [selected]: ref(asset) },
+       }),
+       working.assets,
+       'Review evidence recorded in a new immutable revision.',
++      task,
+     );
+     $('review-evidence').value = '';
+   });
+@@ -1118,20 +1126,51 @@ $('save-workspace').onclick = () =>
+     task.commit();
+     const result = await store.save(working.document, working.assets, {
+       expectedGeneration: generation,
++      signal: task.signal,
++    });
++    const snapshot = await prepareStudioSnapshot(result.document, result.assets, {
++      signal: task.signal,
+     });
+     task.check();
+     generation = result.generation;
+-    working = { document: result.document, assets: result.assets };
++    working = snapshot;
+     saved = working;
+     undo = [];
+     redo = [];
+     refresh();
+     status('Local revision saved atomically. Player saves are untouched.', 'success');
+   });
++$('upgrade-workspace').onclick = async () => {
++  const ownedFocus = document.hasFocus() && document.activeElement === $('upgrade-workspace');
++  let installed = null;
++  await operation('Preparing an explicit v2 upgrade…', async (task) => {
++    requireSettled();
++    const snapshot = await upgradeStudioDocument(working.document, working.assets, {
++      signal: task.signal,
++    });
++    task.check();
++    await stage(
++      snapshot.document,
++      snapshot.assets,
++      'v2 upgrade staged, not saved. Undo or Reset restores the earlier format. Older Studios cannot read v2; keep your exported v1 backup before Save.',
++      task,
++    );
++    installed = working;
++  });
++  // Upgrade becomes disabled; hand its owned focus to the next explicit action
++  // only after the operation unlocks. Never replace a newer deliberate focus.
++  if (
++    installed === working &&
++    ownedFocus &&
++    document.hasFocus() &&
++    [document.body, $('upgrade-workspace')].includes(document.activeElement)
++  )
++    $('save-workspace').focus();
++};
+ $('export-workspace').onclick = () =>
+   operation('Verifying original bytes for export…', async (task) => {
+     requireSettled();
+-    const bundle = await exportThemeBundle(working.document, working.assets, {
++    const bundle = await exportStudioBundle(working.document, working.assets, {
+       signal: task.signal,
+     });
+     task.check();
+@@ -1142,18 +1181,19 @@ $('import-workspace').onchange = () => {
+   const file = $('import-workspace').files[0];
+   if (!file) return;
+   $('import-workspace').value = '';
+-  operation('Reading and validating the imported bundle…', async (task) => {
++  return operation('Reading and validating the imported bundle…', async (task) => {
+     requireSettled();
+-    const incoming = await importThemeBundle(file, { signal: task.signal });
++    const incoming = await importStudioBundle(file, { signal: task.signal });
+     task.update('Verifying merged assets and immutable revisions…', 'verifying');
+-    const next = adoptStudioBundle(working.document, incoming.document),
++    const next = await adoptStudioDocument(working.document, incoming.document),
+       merged = new Map([...working.assets, ...incoming.assets]);
+-    const bytes = await verifyThemeAssets(next, merged, { signal: task.signal });
++    const bytes = await verifyStudioAssets(next, merged, { signal: task.signal });
+     task.check();
+-    stage(
++    await stage(
+       next,
+       bytes,
+       'Verified collection staged atomically. Current and imported source files are retained. Save to persist.',
++      task,
+     );
+   });
+ };
+@@ -1161,16 +1201,18 @@ async function loadWorkspace(task) {
+   requireSettled();
+   if (working !== saved)
+     throw new Error('Export or save the staged workspace, or Reset to saved, before reloading.');
+-  const result = await store.load();
++  const result = await store.load({ signal: task.signal });
+   task.check();
+   if (!result) task.update('Loading and verifying the current release collection…', 'downloading');
+   const published = result ? null : await loadPublishedStudio({ signal: task.signal });
++  const loaded = result ?? published ?? { document: createDefaultThemeBundle(), assets: new Map() };
++  const snapshot = await prepareStudioSnapshot(loaded.document, loaded.assets, {
++    signal: task.signal,
++  });
+   task.check();
+   storageReady = true;
+   generation = result?.generation || 0;
+-  working = result
+-    ? { document: result.document, assets: result.assets }
+-    : (published ?? { document: createDefaultThemeBundle(), assets: new Map() });
++  working = snapshot;
+   saved = working;
+   undo = [];
+   redo = [];
+@@ -1193,17 +1235,18 @@ $('load-release').onclick = () =>
+     const published = await loadPublishedStudio({ signal: task.signal });
+     task.update('Verifying merged release assets…', 'verifying');
+     if (!published) throw new Error('This source checkout has no compiled release collection.');
+-    const next = adoptStudioBundle(working.document, published.document);
+-    const assets = await verifyThemeAssets(
++    const next = await adoptStudioDocument(working.document, published.document);
++    const assets = await verifyStudioAssets(
+       next,
+       new Map([...working.assets, ...published.assets]),
+       { signal: task.signal },
+     );
+     task.check();
+-    stage(
++    await stage(
+       next,
+       assets,
+       'Release collection staged. Existing local history is retained; save or undo this change.',
++      task,
+     );
+   });
+ window.addEventListener('pagehide', (event) => {
+@@ -1213,6 +1256,7 @@ window.addEventListener('pagehide', (event) => {
+     promptStatus.clear();
+   } else {
+     operations.dispose();
++    void store.close();
+     promptStatus.dispose();
+     pending?.bitmap?.close();
+   }
+diff --git a/authoring/skills/xonix-asset-creator/SKILL.md b/authoring/skills/xonix-asset-creator/SKILL.md
+index 27aac7ef895aba98d781d419881917dffc687370..fea7e3d28bf0958f825a6cfeba2765b4d8ba08ce 100644
+--- a/authoring/skills/xonix-asset-creator/SKILL.md
++++ b/authoring/skills/xonix-asset-creator/SKILL.md
+@@ -92,6 +92,10 @@ The [local Asset Studio](../../asset-studio/index.html) implements uploads, orig
+ 
+ ## Field Kit review successors and font briefs
+ 
++For the source Studio reference candidate, follow [explicit upgrade and recovery](../../../docs/asset-studio.md#explicit-reference-workspace-upgrade). Keep v1 workspaces v1 until the user stages Upgrade and explicitly saves. Retain exported backup bytes, all immutable records and original payloads; never trim history, raise 4 MiB/32 MiB ceilings or imply a lossy v1 downgrade. A v2 import into v1 must refuse with recovery guidance. The current producer/default CLI stays v1; this candidate does not upgrade the production ledger or prove browser migration.
++
++Focused request: “In an isolated Studio workspace, export v1, cancel and undo Upgrade, then explicitly upgrade/save/reload. Review and replace a complete collection, inspect original/history downloads and effective prompts, and export/import v2. Preserve all source hashes and actual saved generations. Exercise stale-tab export recovery, Stop waiting versus actual transaction abort, keyboard focus and Back/BFCache. Record finite tests separately from native browser and public acceptance.”
++
+ Use the Studio's medium-specific prompts: real WOFF2 plus retained license/source for fonts, encoded audio plus measured playback requirements for sound, and exact raster geometry for images. Keep a current custom production brief. The immutable baseline contract remains readable, even when its old generic art wording needs a medium-specific effective brief. Recheck actual shipped English/Ukrainian glyphs and Standard/Large/200% layout before a font successor.
+ 
+ Studio Interface Theme/Plain and Standard/Large choices affect the host's instructions and controls; they must not replace the selected file or stage a theme revision. Compare saved/draft font originals at the actual selected role: display at least 40px/600, UI 400/500/600 and numeric 500, including `Ґґ Єє Іі Її`, apostrophes and ambiguous letter/number pairs. A compatible shared-file cache or successful decode is not proof of glyph coverage, native matching, readability or reviewed quality. Record source-byte identity and actual browser inspection separately. Preserve prepared uploads and dirty sprites when adjusting Interface settings; follow the [Studio readability contract](../../../docs/asset-studio.md#studio-interface--readability-candidate) and its candidate/release limits.
+diff --git a/authoring/skills/xonix-theme-designer/SKILL.md b/authoring/skills/xonix-theme-designer/SKILL.md
+index 67f071f388964f9e46df65885f54a72d0f8abed0..46ed304bad57700283f385f51f4f30478cfd09b1 100644
+--- a/authoring/skills/xonix-theme-designer/SKILL.md
++++ b/authoring/skills/xonix-theme-designer/SKILL.md
+@@ -70,6 +70,10 @@ When a task touches reveal artwork, a saved flight, Collection or media export,
+ 
+ ## Implemented presentation registry and transfer contract
+ 
++The [source Studio v2 reference candidate](../../../docs/asset-studio.md#explicit-reference-workspace-upgrade) provides an explicit, undoable Upgrade action; ordinary v1 load/save must retain its format. Request a v1 export before persisting an upgrade, preserve exact historical records/payloads and keep 4 MiB encoded metadata / 32 MiB transfer limits. Do not silently migrate on collection import, capacity failure or release load. Older readers refuse v2; later v2 work has no history-dropping v1 downgrade. The default producer/compiler CLI remains v1 until its separate integration is qualified.
++
++Review prompt: “Exercise a complete themed collection on an explicitly upgraded draft, including token/theme selection, historical binding, review, replacement and export/import. Check exact provenance, payloads and generation conflicts; prove Cancel/Undo leaves the prior workspace intact. Keep real-browser migration, focus, quota and public acceptance distinct from finite source fixtures.”
++
+ Use [the versioned framework](../../../docs/presentation-system.md) for semantic slots and immutable image/font/audio/recipe revisions. Resolve base → theme → collection → draft through the shared validator; never add executable recipes, fetch URLs or arbitrary CSS to imported data. The `.rltheme` compiler checks the manifest and exact payload hashes and emits deterministic runtime files; it does not publish an upload. Match frame dimensions, alpha, bounded geometry, motor count and slot budget. Palette and artistic-readability claims still require actual inspection.
+ 
+ Keep source, produced and reviewed stages distinct. Preserve all prior revisions and required collection members atomically. Current picture previews resolve code-owned exact owners through `current-art.mjs`; do not substitute a new picture for missing saved or first-earned originals. `node scripts/compile-presentation.mjs --bundle candidate.rltheme --out .cache/new-presentation-review` prepares a review artifact. Record native-browser decoding, fonts, sound and gameplay separately from structural compilation.
+diff --git a/docs/asset-studio.md b/docs/asset-studio.md
+index 49bccd83c94cf4e1c76ff3cc06c26d6f94d045bc..1a5751bfb977816041bec70a2608e88280be29b0 100644
+--- a/docs/asset-studio.md
++++ b/docs/asset-studio.md
+@@ -18,6 +18,18 @@ Every validated change appends immutable asset, theme, or collection records. **
+ 
+ An edited pixel document must be prepared or explicitly discarded. A prepared upload must be staged or explicitly discarded before switching assets or saving. Browser navigation warns about prepared or staged work. A second tab cannot silently overwrite a newer local generation: a stale save fails and keeps the in-memory workspace available for export. Export it before resetting/reloading. If IndexedDB is unavailable or corrupt, the default inventory still works in memory and remains exportable; saving stays blocked until a successful reload. No repair action clears player or Studio storage automatically.
+ 
++## Explicit reference workspace upgrade
++
++The source candidate supports v1 inline and v2 reference workspaces. The workspace summary identifies the loaded format. Ordinary load, edits and Save retain that format. Export a v1 backup with **Export .rltheme** before choosing **Upgrade workspace to v2**. The upgrade preserves every historical record and original payload, changes only the envelope and its revision, and stages an unsaved draft. **Undo draft** or **Reset to saved** restores v1 before Save. Save persists v2 through the same generation check; older Studios then refuse it and cannot overwrite it with a v1 draft. Later v2 edits cannot be downgraded into a v1 export by discarding history.
++
++v2 revisions may refer to a hash-checked inline provenance anchor within the same workspace. History, prompts, coverage and previews resolve the actual creator, license and brief; they never expose an unresolved anchor as user content. Asset edits, review records, tokens, theme selection, historical binding and complete collection replacement all append immutable records. A v2 workspace can import a verified v1 or v2 collection. A v1 workspace refuses v2 imports with explicit upgrade guidance; importing or loading a release collection never upgrades an existing workspace silently.
++
++The limits stay at 4 MiB for the encoded manifest and transfer metadata, 32 MiB for the full transfer and 2,048 asset records. Original bytes and shared file facts remain verified. Export may refuse a document whose extra transfer table exceeds its budget; a saveable document is not a promise of unlimited portable history. The producer and default compiler CLI remain v1 in this candidate; no production ledger is migrated.
++
++**Cancel** before a staged operation finishes leaves its previous draft intact. **Stop waiting** during Save does not promise rollback and keeps changes locked until the save settles. Terminal departure closes this Studio's owned connection and aborts its pending v2 transaction when still abortable; a transaction already committed remains committed. Persisted navigation leaves the connection usable, and the next save still checks the actual generation. This follows [IndexedDB transaction abort semantics](https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction/abort). Upgrade hands its own foreground focus to Save after unlocking; deliberate newer focus is retained. The existing guide is a disclosure, not a new modal. Any later modal must follow [W3C dialog focus and Escape guidance](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/).
++
++Focused source tests exercise the real Studio handlers with finite DOM/storage/image fixtures. They do not establish real-browser migration, native image decoding, two-tab recovery, quota behavior, public release or whole-phase acceptance. Before production acceptance, use an isolated browser workspace to export/re-import v1, cancel/undo Upgrade, deliberately upgrade/save/reload, perform a complete replacement and export/import, check old-client refusal and stale-tab recovery, and inspect keyboard focus, Large/Plain rotation, Back and BFCache. Keep exact original/export hashes and actual storage outcomes.
++
+ ## Preview and inspection
+ 
+ The inspector shows saved/current and working-draft assets beside one another. Available views are native pixels, enlarged pixels, alpha, and field context. Transparency view maps alpha to grayscale. Geometry overlays show the occupied bounds, pivot, rotor envelopes, and nine-slice interior. Overlay markings are inspection aids, never baked into exported pixels.
+diff --git a/docs/presentation-system.md b/docs/presentation-system.md
+index f5294a9c919cc81ac919cdfdacd859b807255fb7..3e4be05bef77a5d06b776d58878c4463d0cce91f 100644
+--- a/docs/presentation-system.md
++++ b/docs/presentation-system.md
+@@ -6,6 +6,14 @@ The framework describes and transfers a complete visual configuration independen
+ 
+ Every default binding is explicitly a **source-stage registered component**. This establishes complete configuration coverage, not finished artwork, uploaded fonts, working recipe adoption, listening approval or browser qualification. `presentationCoverage()` reports missing, source, produced and reviewed slots separately. A reviewed stage requires explicit evidence, which remains a recorded claim to inspect, not automated artistic approval. Recipe assets cannot claim to be produced raster/audio work.
+ 
++## Explicit v2 Studio reference candidate
++
++The Studio's named `studio-formats.mjs` adapter dispatches only supported v1/v2 documents and transfer magic. Legacy validators, bundle APIs and CLI defaults remain strict v1. Existing workspaces never migrate on load, ordinary Save, import or capacity failure: the user stages **Upgrade workspace to v2**, may Undo/Reset, and explicitly saves through the existing generation CAS. See [the recovery and compatibility contract](asset-studio.md#explicit-reference-workspace-upgrade). This source integration does not migrate the production ledger or establish browser/public acceptance.
++
++`revealline-theme-bundle.v2` retains original inline v1 history exactly. New `revealline-asset-revision.v2` provenance can contain a direct local inline anchor `{id, revision, sha256}` and a separate derivative parent. The anchor hash covers canonical creator/source/license/prompt; a chain, missing/foreign/self anchor, changed hash or inconsistent shared-file facts is rejected. Validated snapshots keep the encoded history while resolving only active assets or a requested historical record. They never materialize the full history as an over-budget v1 document. Complete collection replacement and imports still validate every required binding and preserve local parents after foreign identity remapping.
++
++Encoded documents and transfer metadata each retain the 4 MiB ceiling; complete transfers retain 32 MiB. No count/byte guard is raised. The unchanged runtime format continues to receive effective legacy-shaped records. v2 storage uses the reviewed pending-transaction cancellation opt-in; legacy wrappers retain their behavior. A completed IndexedDB commit cannot be rolled back by late cancellation. Native browser upgrade/recovery, old-reader refusal, two-tab CAS, real quota, decoding, keyboard focus and Back/BFCache remain required separately from finite automated fixtures.
++
+ ## Records and APIs
+ 
+ `model.mjs` exports `FORMATS`, `LIMITS`, the registered recipe IDs, token defaults, the individual record validators and these operations:
+diff --git a/game/presentation/bundle.mjs b/game/presentation/bundle.mjs
+index efbc0d2676186b9a21101cbd4b96d89ef58d0b73..4758c9db09bb0cd6533c46d53d6bebac16942821 100644
+--- a/game/presentation/bundle.mjs
++++ b/game/presentation/bundle.mjs
+@@ -85,10 +85,19 @@ function inspectAudio(bytes, mime) {
+  * decoding; font loading and audio audition remain separate host checks. */
+ export async function verifyThemeAssets(source, sourceAssets, { signal, decodeImage = null } = {}) {
+   const document = validateThemeBundle(source);
++  return verifyPresentationFileRows(document.assets, sourceAssets, { signal, decodeImage });
++}
++/** Payload facts verifier shared by separately validated document formats.
++ * It accepts asset rows, never a document or its reference graph. */
++export async function verifyPresentationFileRows(
++  rows,
++  sourceAssets,
++  { signal, decodeImage = null } = {},
++) {
+   required(sourceAssets instanceof Map, 'Assets must be a hash-to-Blob Map.');
+   const incoming = new Map(Map.prototype.entries.call(sourceAssets));
+   const facts = new Map(
+-    document.assets
++    rows
+       .filter((asset) => asset.file)
+       .map((asset) => [asset.file.sha256, { kind: asset.kind, ...asset.file }]),
+   );
+diff --git a/game/presentation/model.mjs b/game/presentation/model.mjs
+index ebf144d3fabc19fdc78bfbf05cd3e700c31a69ea..54bb5e67402652e3c46b8d8c8f6adde8b96bfa92 100644
+--- a/game/presentation/model.mjs
++++ b/game/presentation/model.mjs
+@@ -540,22 +540,9 @@ function resolve(value, index, { themeId, collectionId, draft } = {}) {
+     assets,
+   };
+ }
+-export function validateThemeBundle(source, { previous = null, expectedRevision } = {}) {
+-  const value = own(source);
+-  fields(value, 'format id revision slots assets themes collections selection', 'theme bundle');
+-  identity(value, FORMATS.bundle, 'bundle');
+-  indexed(value.slots, slotCheck, LIMITS.slots, 'slots');
+-  required(
+-    value.slots.length > 0 && new Set(value.slots.map((s) => s.id)).size === value.slots.length,
+-    'Slots require unique stable IDs.',
+-  );
+-  indexed(value.assets, assetCheck, LIMITS.assets, 'assets');
+-  indexed(value.themes, themeCheck, LIMITS.themes, 'themes');
+-  indexed(value.collections, collectionCheck, LIMITS.collections, 'collections');
+-  fields(value.selection, 'base theme collection', 'selection');
+-  ref(value.selection.base);
+-  ref(value.selection.theme);
+-  if (value.selection.collection !== null) ref(value.selection.collection);
++/** Shared graph stage only. Callers must first own/bound the encoded document
++ * and validate every record. This does not accept a document format. */
++export function validatePresentationReferences(value) {
+   const index = tables(value);
+   const visitedSlots = new Set(),
+     visitingSlots = new Set();
+@@ -623,6 +610,25 @@ export function validateThemeBundle(source, { previous = null, expectedRevision
+     );
+     fileFacts.set(asset.file.sha256, asset.file);
+   }
++  resolve(value, index);
++}
++export function validateThemeBundle(source, { previous = null, expectedRevision } = {}) {
++  const value = own(source);
++  fields(value, 'format id revision slots assets themes collections selection', 'theme bundle');
++  identity(value, FORMATS.bundle, 'bundle');
++  indexed(value.slots, slotCheck, LIMITS.slots, 'slots');
++  required(
++    value.slots.length > 0 && new Set(value.slots.map((s) => s.id)).size === value.slots.length,
++    'Slots require unique stable IDs.',
++  );
++  indexed(value.assets, assetCheck, LIMITS.assets, 'assets');
++  indexed(value.themes, themeCheck, LIMITS.themes, 'themes');
++  indexed(value.collections, collectionCheck, LIMITS.collections, 'collections');
++  fields(value.selection, 'base theme collection', 'selection');
++  ref(value.selection.base);
++  ref(value.selection.theme);
++  if (value.selection.collection !== null) ref(value.selection.collection);
++  validatePresentationReferences(value);
+   if (previous) {
+     const old = validateThemeBundle(previous);
+     required(
+@@ -653,11 +659,13 @@ export function validateThemeBundle(source, { previous = null, expectedRevision
+     }
+   } else if (expectedRevision !== undefined)
+     required(value.revision === expectedRevision, 'Stale expected revision.');
+-  resolve(value, index);
+   return freezePresentation(value);
+ }
+ export function resolvePresentation(source, options = {}) {
+-  const value = validateThemeBundle(source);
++  return resolvePresentationRecords(validateThemeBundle(source), options);
++}
++/** Shared selection stage for an already validated graph; not a format boundary. */
++export function resolvePresentationRecords(value, options = {}) {
+   const safe = own(options);
+   exactKeys(safe, ['themeId', 'collectionId', 'draft'], 'presentation selection');
+   required(safe.themeId === undefined || stableId(safe.themeId), 'Invalid selected theme ID.');
+@@ -670,7 +678,11 @@ export function resolvePresentation(source, options = {}) {
+ export function presentationCoverage(source, options = {}) {
+   const value = validateThemeBundle(source),
+     resolved = resolvePresentation(value, options);
+-  const rows = value.slots.map((slot) => {
++  return presentationCoverageFromView(value.slots, resolved);
++}
++/** Coverage of an already validated, owned presentation view. */
++export function presentationCoverageFromView(slots, resolved) {
++  const rows = slots.map((slot) => {
+     const asset = resolved.assets[slot.id];
+     return {
+       slotId: slot.id,
+diff --git a/game/presentation/published-studio.mjs b/game/presentation/published-studio.mjs
+index 0e7fc9db76316013bb73d24cd3736a07dbd700e3..56532c11afac92d5fff7047d4d271f8f43652b5e 100644
+--- a/game/presentation/published-studio.mjs
++++ b/game/presentation/published-studio.mjs
+@@ -1,6 +1,6 @@
+ import { required } from '../data-json.mjs';
+-import { LIMITS, validateThemeBundle } from './model.mjs';
+-import { verifyThemeAssets } from './bundle.mjs';
++import { LIMITS } from './model.mjs';
++import { validateStudioDocument, verifyStudioAssets } from './studio-formats.mjs';
+ 
+ const extensions = {
+   'image/png': 'png',
+@@ -82,7 +82,10 @@ export async function loadPublishedStudio({
+   try {
+     const source = await bytesAt('studio.json', LIMITS.manifestBytes, true);
+     if (!source) return null;
+-    const document = validateThemeBundle(new TextDecoder('utf-8', { fatal: true }).decode(source));
++    const document = await validateStudioDocument(
++      new TextDecoder('utf-8', { fatal: true }).decode(source),
++      { signal },
++    );
+     const files = new Map(
+       document.assets.filter((a) => a.file).map((a) => [a.file.sha256, a.file]),
+     );
+@@ -112,7 +115,7 @@ export async function loadPublishedStudio({
+     );
+     for (const result of results) if (result.status === 'rejected') throw result.reason;
+     abort(signal);
+-    return { document, assets: await verifyThemeAssets(document, assets, { signal }) };
++    return { document, assets: await verifyStudioAssets(document, assets, { signal }) };
+   } finally {
+     cancellation.abort();
+     signal?.removeEventListener('abort', cancel);
+diff --git a/game/presentation/studio-store.mjs b/game/presentation/studio-store.mjs
+index 9a870b3e60ce1144cf523cc34b22fdab0386ee96..9b364dd23def25992c58e18f1dba8ae5ad7b9448 100644
+--- a/game/presentation/studio-store.mjs
++++ b/game/presentation/studio-store.mjs
+@@ -37,9 +37,13 @@ function verifySavedHistory(document, current) {
+     }
+   }
+ }
+-export function createStudioStore({ indexedDB = globalThis.indexedDB } = {}) {
++export function createStudioRecordConnection({
++  indexedDB = globalThis.indexedDB,
++  cancelPendingWrites = false,
++} = {}) {
+   let connection = null;
+   let closed = false;
++  const pendingWrites = new Set();
+   async function database() {
+     if (closed) throw closedError();
+     if (!indexedDB)
+@@ -95,12 +99,13 @@ export function createStudioStore({ indexedDB = globalThis.indexedDB } = {}) {
+     }
+     return connection.promise;
+   }
+-  async function transaction(mode, operation) {
++  async function transaction(mode, operation, { signal } = {}) {
+     const { db, owner } = await database();
+     if (closed) throw closedError();
+     return new Promise((resolve, reject) => {
+       let result, failure;
+       let tx;
++      const cancellable = cancelPendingWrites && mode === 'readwrite';
+       try {
+         tx = db.transaction('drafts', mode);
+       } catch (error) {
+@@ -109,9 +114,41 @@ export function createStudioStore({ indexedDB = globalThis.indexedDB } = {}) {
+         reject(error);
+         return;
+       }
+-      tx.oncomplete = () => resolve(result);
+-      tx.onerror = () => reject(failure ?? tx.error ?? new Error('Studio storage failed.'));
+-      tx.onabort = () => reject(failure ?? tx.error ?? new Error('Studio storage was cancelled.'));
++      let settled = false;
++      const finish = (callback, value) => {
++        if (settled) return;
++        settled = true;
++        if (cancellable) {
++          pendingWrites.delete(cancel);
++          signal?.removeEventListener('abort', onSignalAbort);
++        }
++        callback(value);
++      };
++      const cancel = (error) => {
++        if (settled) return;
++        try {
++          tx.abort();
++          failure = error;
++        } catch (abortError) {
++          // Commit can finish before its complete event is delivered. Await
++          // that event; do not report a rollback that did not happen.
++          if (abortError.name !== 'InvalidStateError') throw abortError;
++        }
++      };
++      const onSignalAbort = () =>
++        cancel(new DOMException('Theme operation cancelled.', 'AbortError'));
++      tx.oncomplete = () => finish(resolve, result);
++      tx.onerror = () => finish(reject, failure ?? tx.error ?? new Error('Studio storage failed.'));
++      tx.onabort = () =>
++        finish(reject, failure ?? tx.error ?? new Error('Studio storage was cancelled.'));
++      if (cancellable) {
++        pendingWrites.add(cancel);
++        signal?.addEventListener('abort', onSignalAbort, { once: true });
++        if (signal?.aborted) {
++          onSignalAbort();
++          return;
++        }
++      }
+       const store = tx.objectStore('drafts');
+       const request = store.get(KEY);
+       request.onsuccess = () => {
+@@ -124,6 +161,24 @@ export function createStudioStore({ indexedDB = globalThis.indexedDB } = {}) {
+       };
+     });
+   }
++  return Object.freeze({
++    transaction,
++    async close() {
++      closed = true;
++      for (const cancel of pendingWrites) cancel(closedError());
++      const owner = connection;
++      connection = null;
++      if (owner) {
++        owner.reject(closedError());
++        owner.db?.close();
++      }
++    },
++  });
++}
++/** Legacy v1 boundary; storage transport is shared without relaxing validation. */
++export function createStudioStore({ indexedDB = globalThis.indexedDB } = {}) {
++  const connection = createStudioRecordConnection({ indexedDB });
++  const transaction = (...args) => connection.transaction(...args);
+   return Object.freeze({
+     async load() {
+       const record = await transaction('readonly', (_store, value) => value);
+@@ -153,14 +208,6 @@ export function createStudioStore({ indexedDB = globalThis.indexedDB } = {}) {
+         return { generation, document, assets };
+       });
+     },
+-    async close() {
+-      closed = true;
+-      const owner = connection;
+-      connection = null;
+-      if (owner) {
+-        owner.reject(closedError());
+-        owner.db?.close();
+-      }
+-    },
++    close: connection.close,
+   });
+ }
+diff --git a/game/test/asset-studio-host-loading.test.mjs b/game/test/asset-studio-host-loading.test.mjs
+index fbf7c1b4092bc6d4b539c2d4d6bbcc73b6ec71d2..a2c812d295ec36ce2c0a418935341f5a917db1be 100644
+--- a/game/test/asset-studio-host-loading.test.mjs
++++ b/game/test/asset-studio-host-loading.test.mjs
+@@ -9,6 +9,15 @@ import { encodeSpritePNG } from '../../scripts/produce-field-kit-sprites.mjs';
+ import { hashPresentationBytes } from '../presentation/bundle.mjs';
+ import { waitFor } from './helpers/wait-for.mjs';
+ import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
++import {
++  createFormatStudioStore,
++  importStudioBundle,
++  upgradeStudioDocument,
++  exportStudioBundle,
++  reviseStudioDocument,
++} from '../presentation/studio-formats.mjs';
++import { FORMATS } from '../presentation/model.mjs';
++import { REFERENCE_FORMAT } from '../presentation/reference-model.mjs';
+ 
+ const flush = () => new Promise((resolve) => setImmediate(resolve));
+ const deferred = () => {
+@@ -170,6 +179,18 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+     window,
+     indexedDB,
+     FileReader: Reader,
++    // Finite native-image event boundary; real browser pixel decoding remains
++    // a separate migration journey. The source PNG hash is checked below.
++    Image: class {
++      set src(value) {
++        const raw = Buffer.from(value.split(',')[1], 'base64');
++        this.naturalWidth = raw.readUInt32BE(16);
++        this.naturalHeight = raw.readUInt32BE(20);
++        queueMicrotask(() => this.onload?.());
++      }
++      async decode() {}
++      removeAttribute() {}
++    },
+     ImageData: class {
+       constructor(data, width, height) {
+         Object.assign(this, { data, width, height });
+@@ -617,6 +638,172 @@ test('actual Studio handlers show startup/read/encode stages, cancel a late uplo
+   assert.equal(saved.generation, 1);
+   assert.ok(saved.document.assets.some((asset) => asset.id.endsWith('.source')));
+   assert.deepEqual(new Set(opened), new Set([STUDIO_DATABASE]));
++  // Exercise the actual migration/edit/transfer handlers, not a model-only
++  // approximation. The DOM fixture is not a native-browser migration claim.
++  const beforeUpgrade = $('workspace-summary').textContent;
++  const cancelledUpgrade = $('upgrade-workspace').onclick();
++  $('cancel-studio-operation').onclick();
++  await cancelledUpgrade;
++  assert.equal($('workspace-summary').textContent, beforeUpgrade);
++  assert.equal((await createStudioStore({ indexedDB: db.indexedDB }).load()).generation, 1);
++  $('upgrade-workspace').focus();
++  await $('upgrade-workspace').onclick();
++  assert.match($('workspace-summary').textContent, /v2 references.*unsaved changes/);
++  assert.equal(doc.activeElement, $('save-workspace'));
++  assert.match(message(), /not saved/);
++  await $('undo-draft').onclick();
++  assert.equal($('workspace-summary').textContent, beforeUpgrade);
++  await $('redo-draft').onclick();
++  assert.match($('workspace-summary').textContent, /v2 references/);
++  await $('reset-draft').onclick();
++  assert.equal($('workspace-summary').textContent, beforeUpgrade);
++  const downloads = [],
++    createURL = URL.createObjectURL;
++  t.mock.method(URL, 'createObjectURL', (blob) => {
++    if (blob.type === 'application/vnd.revealline.theme') downloads.push(blob);
++    return createURL(blob);
++  });
++  await $('export-workspace').onclick();
++  const v1Backup = downloads.at(-1);
++  assert.equal(
++    (await importStudioBundle(v1Backup, { decodeImage: null })).document.format,
++    FORMATS.bundle,
++  );
++  const foreignV2 = await upgradeStudioDocument(saved.document, saved.assets);
++  $('import-workspace').files = [await exportStudioBundle(foreignV2.document, foreignV2.assets)];
++  await $('import-workspace').onchange();
++  assert.match(message(), /explicitly Upgrade workspace/);
++  assert.equal($('workspace-summary').textContent, beforeUpgrade);
++  assert.deepEqual(
++    (await createStudioStore({ indexedDB: db.indexedDB }).load()).document,
++    saved.document,
++  );
++  await $('upgrade-workspace').onclick();
++  await $('save-workspace').onclick();
++  assert.match(message(), /saved atomically/);
++  const formatStore = createFormatStudioStore({ indexedDB: db.indexedDB });
++  const upgradedSaved = await formatStore.load();
++  assert.equal(upgradedSaved.generation, 2);
++  assert.equal(upgradedSaved.document.format, REFERENCE_FORMAT);
++  assert.deepEqual(upgradedSaved.document.assets, saved.document.assets);
++  assert.deepEqual(
++    Buffer.from(await upgradedSaved.assets.get(hash).arrayBuffer()),
++    Buffer.from(bytes),
++  );
++  await $('reload-workspace').onclick();
++  assert.match($('workspace-summary').textContent, /v2 references/);
++  assert.equal($('upgrade-workspace').disabled, true);
++  $('review-evidence').value =
++    'Actual fixture image checked with the existing source byte assertion.';
++  await $('record-review').onclick();
++  assert.match(message(), /Review evidence recorded/);
++  assert.ok(
++    $('asset-history')
++      .querySelectorAll('p')
++      .every((row) => !row.textContent.includes('undefined')),
++  );
++  assert.ok(
++    $('asset-history')
++      .querySelectorAll('p')
++      .some((row) => row.textContent.includes('Fixture author')),
++  );
++  assert.doesNotMatch($('generated-prompt').value, /"anchor"\s*:/);
++  const historical = $('asset-history')
++    .querySelectorAll('button')
++    .find((button) => button.textContent === 'Bind this revision' && !button.disabled);
++  assert.ok(historical);
++  await historical.onclick();
++  assert.match(message(), /Earlier asset bound/);
++  $('select-required').onclick();
++  $('collection-id').value = 'fixture-reference-collection';
++  $('collection-name').value = 'Fixture reference collection';
++  await $('stage-collection').onclick();
++  assert.match(message(), /Collection staged atomically/);
++  const selectedTheme = $('filter-theme').value;
++  const otherTheme = $('filter-theme').children.find((option) => option.value !== selectedTheme);
++  assert.ok(otherTheme);
++  const cancelledSelection = $('filter-theme').onchange();
++  $('cancel-studio-operation').onclick();
++  $('filter-theme').value = otherTheme.value;
++  await cancelledSelection;
++  assert.equal(
++    $('filter-theme').value,
++    otherTheme.value,
++    'Late cancelled selection cannot replace newer input.',
++  );
++  $('filter-theme').value = selectedTheme;
++  await $('filter-theme').onchange();
++  assert.notEqual($('studio-status').dataset.state, 'error');
++  const realFormData = globalThis.FormData;
++  globalThis.FormData = class {
++    *[Symbol.iterator]() {
++      yield ['textSize', '23'];
++    }
++  };
++  try {
++    await $('token-form').onsubmit({ preventDefault() {}, currentTarget: $('token-form') });
++  } finally {
++    globalThis.FormData = realFormData;
++  }
++  assert.match(message(), /Change staged/);
++  // Existing actual upload/stage handler is also valid on the v2 root.
++  await $('edit-geometry').onclick();
++  const geometryCheck = $('apply-geometry').onclick();
++  $('cancel-studio-operation').onclick();
++  const cancelledGeometryMessage = message();
++  await geometryCheck;
++  assert.equal(
++    message(),
++    cancelledGeometryMessage,
++    'A cancelled async geometry check cannot update the draft or replace newer status.',
++  );
++  await $('stage-asset').onclick();
++  assert.match(message(), /validated and staged/);
++  await $('export-workspace').onclick();
++  const v2Export = downloads.at(-1),
++    v2RoundTrip = await importStudioBundle(v2Export, { decodeImage: null });
++  assert.equal(v2RoundTrip.document.format, REFERENCE_FORMAT);
++  assert.equal(v2RoundTrip.document.assets.at(-1).format, 'revealline-asset-revision.v2');
++  assert.deepEqual(
++    Buffer.from(await v2RoundTrip.assets.get(hash).arrayBuffer()),
++    Buffer.from(bytes),
++  );
++  for (const file of [v1Backup, v2Export]) {
++    $('import-workspace').files = [file];
++    await $('import-workspace').onchange();
++    assert.match(message(), /Verified collection staged/);
++  }
++  const beforeMalformed = $('workspace-summary').textContent;
++  $('import-workspace').files = [new Blob(['RLTHM9\r\n1234'])];
++  await $('import-workspace').onchange();
++  assert.match(message(), /Unsupported/);
++  assert.equal($('workspace-summary').textContent, beforeMalformed);
++  assert.equal(
++    (await formatStore.load()).generation,
++    2,
++    'Failed import does not persist or replace the draft.',
++  );
++  await $('save-workspace').onclick();
++  assert.match(message(), /saved atomically/);
++  await $('reload-workspace').onclick();
++  assert.equal((await formatStore.load()).generation, 3);
++  // A second connection wins. The real UI's stale Save retains its exportable
++  // draft, and only explicit Reset/Reload replaces it with the winner.
++  const remote = await formatStore.load();
++  const remoteNext = await reviseStudioDocument(remote.document, { tokens: { textSize: 25 } });
++  await formatStore.save(remoteNext, remote.assets, { expectedGeneration: 3 });
++  await $('filter-theme').onchange();
++  const localUnsaved = $('workspace-summary').textContent;
++  await $('save-workspace').onclick();
++  assert.match(message(), /another tab/);
++  assert.equal($('workspace-summary').textContent, localUnsaved);
++  await $('export-workspace').onclick();
++  assert.match(message(), /download requested/);
++  assert.deepEqual((await formatStore.load()).document, remoteNext);
++  await $('reset-draft').onclick();
++  await $('reload-workspace').onclick();
++  assert.match($('workspace-summary').textContent, /local save 4/);
++  await formatStore.close();
+   $('new-sprite').onclick();
+   const originalSpritePixels = new Uint8ClampedArray($('sprite-canvas').paintedPixels);
+   $('sprite-canvas').emit('keydown', { code: 'Space' });
+diff --git a/game/test/published-studio.test.mjs b/game/test/published-studio.test.mjs
+index 31331e2f91699dc9b65986ca6dde8b38fec25819..7d9374c0b201ea6786f41e766775a83d33465c04 100644
+--- a/game/test/published-studio.test.mjs
++++ b/game/test/published-studio.test.mjs
+@@ -6,6 +6,11 @@ import { loadPublishedStudio } from '../presentation/published-studio.mjs';
+ import { iconForSlot } from '../presentation/icons.mjs';
+ import { encodeSpritePNG } from '../../scripts/produce-field-kit-sprites.mjs';
+ import { compilePresentation } from '../../scripts/compile-presentation.mjs';
++import {
++  upgradeStudioDocument,
++  exportStudioBundle,
++  importStudioBundle,
++} from '../presentation/studio-formats.mjs';
+ import {
+   hashPresentationBytes,
+   exportThemeBundle,
+@@ -35,6 +40,32 @@ async function fixture() {
+   return { document, assets, compiled, hash };
+ }
+ const baseURL = 'https://game.example/releases/v0.49.0/site/game/presentation/compiled/';
++test('fixed-path release loader accepts declared v2 without changing its encoded history or payloads', async () => {
++  const f = await fixture();
++  const upgraded = await upgradeStudioDocument(f.document, f.assets);
++  const loaded = await loadPublishedStudio({
++    baseURL,
++    fetch: async (url, options) => {
++      assert.equal(options.redirect, 'error');
++      assert.ok(url.startsWith(baseURL));
++      return new Response(
++        url.endsWith('studio.json')
++          ? JSON.stringify(upgraded.document)
++          : f.compiled.files.get(url.slice(baseURL.length)),
++      );
++    },
++  });
++  assert.deepEqual(loaded.document, upgraded.document);
++  const roundTrip = await importStudioBundle(
++    await exportStudioBundle(loaded.document, loaded.assets),
++    { decodeImage: null },
++  );
++  assert.deepEqual(roundTrip.document, upgraded.document);
++  assert.deepEqual(
++    new Uint8Array(await roundTrip.assets.get(f.hash).arrayBuffer()),
++    new Uint8Array(await f.assets.get(f.hash).arrayBuffer()),
++  );
++});
+ test('release studio adopts exact current assets and preserves export bytes without storage', async () => {
+   const f = await fixture(),
+     requests = [];
+diff --git a/scripts/compile-presentation.mjs b/scripts/compile-presentation.mjs
+index fc45381aa5a04ba5b625f3e79b0bc1bb8597d527..f1e910b09a9181844e3fad9068ba08d00f97fe3a 100644
+--- a/scripts/compile-presentation.mjs
++++ b/scripts/compile-presentation.mjs
+@@ -40,8 +40,12 @@ export async function compilePresentation(
+   const options = {};
+   if (themeId !== undefined) options.themeId = themeId;
+   if (collectionId !== undefined) options.collectionId = collectionId;
+-  const resolved = resolvePresentation(document, options),
+-    files = new Map(),
++  const resolved = resolvePresentation(document, options);
++  return compileVerifiedPresentation(document, assets, resolved, decodeImage);
++}
++/** Output assembly only: both format entry points validate before calling. */
++async function compileVerifiedPresentation(document, assets, resolved, decodeImage) {
++  const files = new Map(),
+     urls = {};
+   const selected = new Map(
+     Object.values(resolved.assets)
+@@ -295,3 +299,22 @@ if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === imp
+     process.stderr.write(`${error.message}\n`);
+     process.exitCode = 1;
+   });
++
++/** Local v2 prototype entry; the published v1 entry remains unchanged. */
++export async function compileReferencedPresentation(
++  source,
++  sourceAssets = new Map(),
++  options = {},
++) {
++  const { validateReferencedBundle, resolveReferencedPresentation } = await import(
++    '../game/presentation/reference-model.mjs'
++  );
++  const { verifyReferencedAssets } = await import('../game/presentation/reference-bundle.mjs');
++  const document = await validateReferencedBundle(source, { signal: options.signal });
++  const assets = await verifyReferencedAssets(document, sourceAssets, options);
++  const resolved = await resolveReferencedPresentation(document, {
++    themeId: options.themeId,
++    collectionId: options.collectionId,
++  });
++  return compileVerifiedPresentation(document, assets, resolved, options.decodeImage ?? null);
++}

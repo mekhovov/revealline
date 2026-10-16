@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: optional preparation preserves current pressure catalogue and every unrelated edition
+ok 1 - optional preparation preserves current pressure catalogue and every unrelated edition
+  ---
+  duration_ms: 1517.193333
+  type: 'test'
+  ...
+# Subtest: v9 optional scout/sentry edits keep pressure recipes, independent populations and explicit on/off identities
+ok 2 - v9 optional scout/sentry edits keep pressure recipes, independent populations and explicit on/off identities
+  ---
+  duration_ms: 557.512583
+  type: 'test'
+  ...
+# Subtest: trail-pursuer/immediate: independent locked attacks replay, restore and cancel on a real return
+ok 3 - trail-pursuer/immediate: independent locked attacks replay, restore and cancel on a real return
+  ---
+  duration_ms: 249.112125
+  type: 'test'
+  ...
+# Subtest: trail-pursuer/grid-center: independent locked attacks replay, restore and cancel on a real return
+ok 4 - trail-pursuer/grid-center: independent locked attacks replay, restore and cancel on a real return
+  ---
+  duration_ms: 212.124583
+  type: 'test'
+  ...
+# Subtest: heading-interceptor/immediate: independent locked attacks replay, restore and cancel on a real return
+ok 5 - heading-interceptor/immediate: independent locked attacks replay, restore and cancel on a real return
+  ---
+  duration_ms: 198.90775
+  type: 'test'
+  ...
+# Subtest: heading-interceptor/grid-center: independent locked attacks replay, restore and cancel on a real return
+ok 6 - heading-interceptor/grid-center: independent locked attacks replay, restore and cancel on a real return
+  ---
+  duration_ms: 190.792167
+  type: 'test'
+  ...
+# Subtest: v8 inherits every historical recipe exactly and resolves optional speed/rest once
+ok 7 - v8 inherits every historical recipe exactly and resolves optional speed/rest once
+  ---
+  duration_ms: 1.342375
+  type: 'test'
+  ...
+# Subtest: compiler separates explicit combat population, preserves ordinary identity and matches paired race
+ok 8 - compiler separates explicit combat population, preserves ordinary identity and matches paired race
+  ---
+  duration_ms: 166.196083
+  type: 'test'
+  ...
+# Subtest: combat is additive across mission geometry editions and the total actor budget remains shared
+ok 9 - combat is additive across mission geometry editions and the total actor budget remains shared
+  ---
+  duration_ms: 159.302375
+  type: 'test'
+  ...
+# Subtest: missing flags, unknown fields, arbitrary physics, invalid disabled placement and Team combat fail closed
+ok 10 - missing flags, unknown fields, arbitrary physics, invalid disabled placement and Team combat fail closed
+  ---
+  duration_ms: 231.393416
+  type: 'test'
+  ...
+# Subtest: pressure report keeps disabled authored speeds explicit without reporting active combat pressure
+ok 11 - pressure report keeps disabled authored speeds explicit without reporting active combat pressure
+  ---
+  duration_ms: 91.882125
+  type: 'test'
+  ...
+# Subtest: frozen capture overlay removes non-retaining scout without changing state; disabled actors remain authored
+ok 12 - frozen capture overlay removes non-retaining scout without changing state; disabled actors remain authored
+  ---
+  duration_ms: 83.427625
+  type: 'test'
+  ...
+# Subtest: active optional actors in initially empty chambers get honest auto-fill diagnostics
+ok 13 - active optional actors in initially empty chambers get honest auto-fill diagnostics
+  ---
+  duration_ms: 31.36825
+  type: 'test'
+  ...
+# Subtest: Solo optional encounters prepare an exact no-awards practice scenario with explicit state
+ok 14 - Solo optional encounters prepare an exact no-awards practice scenario with explicit state
+  ---
+  duration_ms: 122.234458
+  type: 'test'
+  ...
+# Subtest: authoring silhouettes distinguish scout, sentry and retaining keeper without colour
+ok 15 - authoring silhouettes distinguish scout, sentry and retaining keeper without colour
+  ---
+  duration_ms: 0.539458
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3110.512625

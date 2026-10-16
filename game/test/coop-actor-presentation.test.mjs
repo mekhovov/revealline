@@ -176,6 +176,127 @@ const poses = (adapter, run) => [
 ];
 const labels = (calls) => calls.filter((call) => call.name === 'fillText');
 
+// Inspect the actual shared painter between its body image and body restore.
+// Rotor rotations and connected polygons are observable even when a pause
+// intentionally removes the decorative translucent sweep disc.
+function paintedRotorCommands(adapter, id, view) {
+  view.reset();
+  assert.equal(adapter.draw(view.ctx, 'pilot', id, palette), true);
+  const index = view.calls.findIndex((call) => call.name === 'drawImage');
+  assert.ok(index >= 0, 'the prepared Team pilot image is painted');
+  let depth = 0;
+  for (const call of view.calls.slice(0, index + 1))
+    depth += call.name === 'save' ? 1 : call.name === 'restore' ? -1 : 0;
+  const bodyDepth = depth,
+    calls = [];
+  for (const call of view.calls.slice(index + 1)) {
+    depth += call.name === 'save' ? 1 : call.name === 'restore' ? -1 : 0;
+    if (depth < bodyDepth) break;
+    calls.push(call);
+  }
+  assert.equal(view.stack.length, 0, 'painting restores the caller canvas state');
+  return {
+    calls,
+    angles: calls.filter((call) => call.name === 'rotate').map((call) => call.args[0]),
+  };
+}
+
+for (const seat of [0, 1])
+  test(`Team pilot ${seat + 1} paints spinning blades and freezes them when paused, downed or reduced`, () => {
+    const run = createCoop(FIRST_CONNECTION),
+      adapter = createCoopActorPresentation(),
+      view = surface();
+    adapter.setPresentation(prepared().snapshot);
+    startCoop(run);
+    adapter.update(run);
+    const first = paintedRotorCommands(adapter, seat, view);
+    assert.equal(first.angles.length, 12, 'four declared hubs each paint three blades');
+    assert.ok(
+      first.calls.some((call) => call.name === 'lineTo'),
+      'blades are connected polygons',
+    );
+    stepCoop(run, neutral(), 1 / 120);
+    adapter.update(run);
+    const running = paintedRotorCommands(adapter, seat, view),
+      phase = adapter.frame('pilot', seat).rotorPhase;
+    assert.notDeepEqual(running.angles, first.angles, 'playing advances actual blade rotations');
+    pauseCoop(run);
+    const pausedRun = structuredClone(run);
+    adapter.update(run);
+    assert.deepEqual(paintedRotorCommands(adapter, seat, view).angles, running.angles);
+    assert.equal(adapter.frame('pilot', seat).rotorPhase, phase);
+    assert.deepEqual(run, pausedRun, 'paused rendering is read-only');
+    run.status = 'running';
+    run.players[seat].status = 'downed';
+    run.tick++;
+    run.time += 1 / 60;
+    const downedRun = structuredClone(run);
+    adapter.update(run);
+    const downed = paintedRotorCommands(adapter, seat, view);
+    assert.deepEqual(downed.angles, running.angles, 'downed craft stops its propellers');
+    assert.ok(
+      downed.calls.some((call) => call.name === 'fill' && call.state.globalAlpha === 0.45),
+      'blade opacity preserves the downed state',
+    );
+    assert.deepEqual(run, downedRun, 'downed rendering is read-only');
+    run.players[seat].status = 'active';
+    run.tick++;
+    run.time += 1 / 60;
+    adapter.update(run, { reduced: true });
+    const reduced = paintedRotorCommands(adapter, seat, view);
+    run.tick++;
+    run.time += 1 / 60;
+    const reducedRun = structuredClone(run);
+    adapter.update(run, { reduced: true });
+    assert.deepEqual(paintedRotorCommands(adapter, seat, view).angles, reduced.angles);
+    assert.equal(reduced.angles.length, 12, 'reduced effects retains all stationary blades');
+    assert.deepEqual(run, reducedRun, 'reduced-effects rendering is read-only');
+  });
+
+for (const bladeCount of [2, 3, 4])
+  for (const fps of [4, 30, 60, 120])
+    test(`Team rendered ${bladeCount}-blade hubs keep a forward bounded phase at ${fps}FPS`, () => {
+      const p = prepared(),
+        adapter = createCoopActorPresentation(),
+        run = createCoop(FIRST_CONNECTION),
+        view = surface(),
+        tau = Math.PI * 2;
+      for (const slot of ['player.scout.compact', 'player.scout.detailed']) {
+        const source = p.images.get(slot);
+        p.images.set(slot, {
+          ...source,
+          geometry: {
+            ...source.geometry,
+            rotors: source.geometry.rotors.map((anchor) => ({ ...anchor, bladeCount })),
+          },
+        });
+      }
+      adapter.setPresentation(p.snapshot);
+      startCoop(run);
+      adapter.update(run);
+      let previous = paintedRotorCommands(adapter, 0, view).angles[0];
+      // Bounded render observations isolate the displayed frame rate from the
+      // fixed-step simulation. This includes phase wrap and a degraded 4FPS.
+      for (let step = 1; step <= fps * 2; step++) {
+        run.tick++;
+        run.time = step / fps;
+        const before = structuredClone(run);
+        adapter.update(run);
+        const drawn = paintedRotorCommands(adapter, 0, view),
+          angle = drawn.angles[0],
+          advance = (((angle - previous) % tau) + tau) % tau;
+        assert.equal(drawn.angles.length, 4 * bladeCount);
+        assert.ok(advance > 0, 'each displayed running frame advances the rotor');
+        assert.ok(
+          advance <= (tau / bladeCount) * 0.22 + 1e-12,
+          'the visible repeated blade pattern cannot step backward or alias across half a turn',
+        );
+        assert.equal(angle, adapter.frame('pilot', 0).rotorPhase);
+        assert.deepEqual(run, before, 'render sampling leaves the authoritative run unchanged');
+        previous = angle;
+      }
+    });
+
 test('tuned Team revisions keep both prepared pilot bodies and every extra keeper visible', () => {
   const level = applyGameplayTuning(FIRST_CONNECTION, resolveGameplayTuning('expert'));
   const run = createCoop(level),

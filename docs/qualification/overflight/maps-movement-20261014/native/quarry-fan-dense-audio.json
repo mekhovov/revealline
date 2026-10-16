@@ -1,0 +1,27 @@
+{
+  "schema": "OverflightNativeAudioSampleV1",
+  "sourceRevision": "3a1e1f7d916fa8685b2338894229d8700b94fa10",
+  "layout": "chalk-quarry-haul-switchbacks",
+  "seed": 17031991,
+  "operation": "Single Drone",
+  "build": "Fan",
+  "difficulty": "Standard",
+  "airframes": 3,
+  "hudAtStartSeconds": 254,
+  "upgrades": [
+    "Saturation Fan4",
+    "Slow Field3",
+    "Side Burst3"
+  ],
+  "masterMuted": false,
+  "reducedEffects": false,
+  "trackDisplayed": "Carol of the Bells (Metal Version) \u00b7 Alexander Nakarada",
+  "captureBoundary": "Native battlefield recorder captures enabled effects and voices but excludes external soundtrack, HUD and upgrade cards. The Now playing label is UI evidence only; it does not establish that music was captured or audibly reviewed.",
+  "reviewStatus": "Non-silent audio confirmed by measurement. Human audible mix/readability judgment remains open.",
+  "volume": [
+    "mean_volume: -47.5 dB",
+    "max_volume: -29.2 dB"
+  ],
+  "file": "quarry-fan-dense-audio.webm",
+  "sha256": "ed7bc307a986d3fcecc359705fc147380b0bb3afff7d78259aa28ce13b583331"
+}

@@ -1,0 +1,50 @@
+{
+  "sourceHead": "10e3a4956",
+  "route": "http://127.0.0.1:8799/appearance-review-20261002/game/?journey=whole-spatial-v25",
+  "browser": "Codex in-app browser",
+  "normalViewport": [926, 1316],
+  "narrowViewport": [390, 844],
+  "language": ["en", "uk"],
+  "observations": {
+    "dropdownCards": 13,
+    "applyButtonPresent": false,
+    "allDropdownChoicesApplyImmediately": true,
+    "keyboardEnterAppliesPocketLcd": true,
+    "keyboardFocusRetained": "theme-card-pocket-lcd",
+    "classicFieldKit": {
+      "themeStyled": true,
+      "ink": "#070914",
+      "panel": "rgb(17, 21, 43)"
+    },
+    "highContrastDisablesTexture": true,
+    "ornamentsOffDisablesTexture": true,
+    "cardBorderImages": "none",
+    "narrowPageHorizontalOverflow": false,
+    "narrowCardHorizontalOverflow": false,
+    "narrowTabReadOnlyNoticeObserved": true,
+    "restored": {
+      "family": "vyshyvanka",
+      "language": "en",
+      "highContrast": false,
+      "viewportOverride": "reset"
+    }
+  },
+  "sim": {
+    "initialCourse": "Lighthouse approach",
+    "comparedCourse": "Lift and land",
+    "quality": "Balanced",
+    "collections": ["pocket-lcd", "copper-observatory", "sakura-station"],
+    "geometryCounts": {
+      "drawCalls": 198,
+      "triangles": 7490,
+      "textures": 19
+    },
+    "consoleErrorsAfterReload": []
+  },
+  "limits": [
+    "Bounded menu and calibration inspection, not full flight readability qualification.",
+    "Narrow second game tab correctly uses session-only appearance while the original tab owns saving.",
+    "No physical controller, touch device or screen-reader qualification.",
+    "No new performance or sustained-switch resource gate claimed."
+  ]
+}

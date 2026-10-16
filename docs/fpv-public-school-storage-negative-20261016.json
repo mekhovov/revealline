@@ -1,0 +1,82 @@
+{
+  "format": "PublicSchoolStorageNegative.v1",
+  "source": "b11745223861c3973ad4bf440cc536198b8e0371",
+  "observedAt": "2026-10-15T22:57:30.078Z",
+  "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?game-return=%2Frevealline%2Fgame%2F&lang=en",
+  "sequence": [
+    "Main game More -> SIM",
+    "Learn to fly -> Acro: the tilt stays",
+    "Watch full flight Acro -> Demonstration complete",
+    "Try it yourself -> preparation",
+    "Lets fly explicit start -> Pause",
+    "Self-level to Acro while paused",
+    "Keyboard to Touch while paused",
+    "Resume in Pause dialog",
+    "Viewport request390x844"
+  ],
+  "result": "Paused; arm available; HUD raw closing-IDBDatabase transaction error",
+  "originalExceptionObserved": false,
+  "consoleWarningsAndErrors": 0,
+  "viewportActualCSS": {
+    "width": 433,
+    "height": 938
+  },
+  "preservedStoredRegions": 13,
+  "preservedWorldpacks": 20,
+  "noStorageClear": true,
+  "notCapacityRootCause": true,
+  "evidence": [
+    {
+      "file": "public-school-closing-database-negative.txt",
+      "bytes": 1612,
+      "sha256": "1c86a460b588c9ab34c3cdadda9bc2e4cb47170c57028ceaa9d5b4eef3b26630"
+    },
+    {
+      "file": "public-school-closing-database-negative.png",
+      "bytes": 34639,
+      "sha256": "e5121ba4e032a835e8f09cabc37d1b1253fb27bc5e577c2c192f77596ca1db10"
+    },
+    {
+      "file": "public-school-closing-database-console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "file": "school-acro-tilt-demo-complete.txt",
+      "bytes": 757,
+      "sha256": "6c98018cc1bbffbbbdde5fd99e6295745dd0ff45f9d7b2c24bac0108b37aa9ed"
+    },
+    {
+      "file": "school-acro-tilt-demo-complete.png",
+      "bytes": 53881,
+      "sha256": "23e105e7ddda76d26e88f2d8d48454ec881ea832718a4d3b2927d836b428cd22"
+    },
+    {
+      "file": "school-acro-tilt-return-paused.txt",
+      "bytes": 2771,
+      "sha256": "91dc284f21465c92998ec0f1b4a4df05581701982a333c1cef9a8f195d76b6cb"
+    },
+    {
+      "file": "landing-mode-menu.txt",
+      "bytes": 3096,
+      "sha256": "f14b446eae12e6f745314e7b0d337c4e7d8a3aeee1bfc575bcc4716019b76c51"
+    },
+    {
+      "file": "landing-sim-arrival.txt",
+      "bytes": 1785,
+      "sha256": "6f7f3a130e1fe5a31f16660f3f2e65260aefd2aafba6faab707b0f9f1be4ca0b"
+    },
+    {
+      "file": "landing-sim-receipt.json",
+      "bytes": 336,
+      "sha256": "104931e6f4d4306a2c93664b0175b3c9c0e23015083bcdd73c568010cb73ea6c"
+    }
+  ],
+  "limits": [
+    "Native caught Error object and database identity not captured.",
+    "Mode/input/viewport sequence is context, not causal attribution.",
+    "Empty console does not prove storage success.",
+    "Viewport request390x844 reported433x938CSS; no390CSS device acceptance.",
+    "Try it yourself returned to preparation; the subsequent Lets fly was an explicit start."
+  ]
+}

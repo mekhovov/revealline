@@ -1,0 +1,609 @@
+TAP version 13
+# Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+    # Subtest: actual rotor controls preserve inherited motion while editing one existing hub
+    ok 1 - actual rotor controls preserve inherited motion while editing one existing hub
+      ---
+      duration_ms: 483.316417
+      type: 'test'
+      ...
+    # Subtest: actual rotor handlers reject invalid fields and unapplied advanced geometry without replacing the preview
+    ok 2 - actual rotor handlers reject invalid fields and unapplied advanced geometry without replacing the preview
+      ---
+      duration_ms: 148.775083
+      type: 'test'
+      ...
+    # Subtest: actual rotor controls translate EN/UK labels without rewriting a prepared draft
+    ok 3 - actual rotor controls translate EN/UK labels without rewriting a prepared draft
+      ---
+      duration_ms: 22.02925
+      type: 'test'
+      ...
+    # Subtest: staging and saving rotor geometry retain the reviewed original and exact source bytes
+    ok 4 - staging and saving rotor geometry retain the reviewed original and exact source bytes
+      ---
+      duration_ms: 688.291417
+      type: 'test'
+      ...
+    # Subtest: actual rotor Apply rejects a changed crop and disables unavailable hub controls
+    ok 5 - actual rotor Apply rejects a changed crop and disables unavailable hub controls
+      ---
+      duration_ms: 161.969334
+      type: 'test'
+      ...
+    1..5
+ok 1 - actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
+  ---
+  duration_ms: 7005.815583
+  type: 'test'
+  ...
+# Subtest: appearance defaults are data-only immutable pins and preserve unavailable intent
+ok 2 - appearance defaults are data-only immutable pins and preserve unavailable intent
+  ---
+  duration_ms: 16.579167
+  type: 'test'
+  ...
+# Subtest: each installed family travels through an ordinary community draft without changing source or legacy identity
+ok 3 - each installed family travels through an ordinary community draft without changing source or legacy identity
+  ---
+  duration_ms: 234.550084
+  type: 'test'
+  ...
+# Subtest: canonical provider resolves selected campaign appearance and retains its edition admission boundary
+ok 4 - canonical provider resolves selected campaign appearance and retains its edition admission boundary
+  ---
+  duration_ms: 213.119792
+  type: 'test'
+  ...
+# Subtest: v1 documents remain exact and reject new appearance fields until explicitly upgraded
+ok 5 - v1 documents remain exact and reject new appearance fields until explicitly upgraded
+  ---
+  duration_ms: 7.775375
+  type: 'test'
+  ...
+# Subtest: compiled entry hints use campaign over community and scope legacy brand styles away from themed chrome
+ok 6 - compiled entry hints use campaign over community and scope legacy brand styles away from themed chrome
+  ---
+  duration_ms: 72.210292
+  type: 'test'
+  ...
+# Subtest: the same complete appearance is portable across unrelated community drafts without merging their content
+ok 7 - the same complete appearance is portable across unrelated community drafts without merging their content
+  ---
+  duration_ms: 29.271833
+  type: 'test'
+  ...
+# Subtest: upgrading current defaults preserves exact v1 retained presentation bytes and identity
+ok 8 - upgrading current defaults preserves exact v1 retained presentation bytes and identity
+  ---
+  duration_ms: 267.386625
+  type: 'test'
+  ...
+# Subtest: edition tools share family authority and keep high contrast and plain type above legacy branding
+ok 9 - edition tools share family authority and keep high contrast and plain type above legacy branding
+  ---
+  duration_ms: 106.500916
+  type: 'test'
+  ...
+# Subtest: the default distribution includes Company Studio, transfer practice and their live local links
+ok 10 - the default distribution includes Company Studio, transfer practice and their live local links
+  ---
+  duration_ms: 3268.694333
+  type: 'test'
+  ...
+# Subtest: Company Studio registered source and artwork choices are present in the default package
+ok 11 - Company Studio registered source and artwork choices are present in the default package
+  ---
+  duration_ms: 1098.080959
+  type: 'test'
+  ...
+# Subtest: new companies use the same complete source workspace and player compiler
+ok 12 - new companies use the same complete source workspace and player compiler
+  ---
+  duration_ms: 181.117042
+  type: 'test'
+  ...
+# Subtest: a bounded studio draft roundtrips source JSON and refuses undeclared payload paths
+ok 13 - a bounded studio draft roundtrips source JSON and refuses undeclared payload paths
+  ---
+  duration_ms: 16.302334
+  type: 'test'
+  ...
+# Subtest: studio draft roundtrips exact retained snapshot pins and refuses changed historical JSON
+ok 14 - studio draft roundtrips exact retained snapshot pins and refuses changed historical JSON
+  ---
+  duration_ms: 359.161584
+  type: 'test'
+  ...
+# Subtest: English edition projection removes other languages and legacy campaign translations
+ok 15 - English edition projection removes other languages and legacy campaign translations
+  ---
+  duration_ms: 4.096875
+  type: 'test'
+  ...
+# Subtest: publication sources and motion are bounded before an edition becomes active
+ok 16 - publication sources and motion are bounded before an edition becomes active
+  ---
+  duration_ms: 21.53975
+  type: 'test'
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context without saving a preference
+ok 17 - actual edition campaign adoption updates appearance and SIM context without saving a preference
+  ---
+  duration_ms: 1424.845583
+  type: 'test'
+  ...
+# Subtest: actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+ok 18 - actual edition campaign adoption updates appearance and SIM context while preserving a global choice
+  ---
+  duration_ms: 588.112291
+  type: 'test'
+  ...
+# Subtest: a cancelled campaign theme preload retains the active flight and SIM context
+ok 19 - a cancelled campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 423.55575
+  type: 'test'
+  ...
+# Mission preparation failed. Error: Fixture font decode failed.
+#     at TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/edition-appearance-host.test.mjs:163:19)
+#     at async Test.run (node:internal/test_runner/test:1054:7)
+#     at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+# Subtest: a failed campaign theme preload retains the active flight and SIM context
+ok 20 - a failed campaign theme preload retains the active flight and SIM context
+  ---
+  duration_ms: 454.841542
+  type: 'test'
+  ...
+# Subtest: actual company lab loads only admitted boot data and never overwrites Playground
+ok 21 - actual company lab loads only admitted boot data and never overwrites Playground
+  ---
+  duration_ms: 498.979917
+  type: 'test'
+  ...
+# Subtest: retained original preserves exact execution and receipt while new artwork keeps logical Journey progress
+ok 22 - retained original preserves exact execution and receipt while new artwork keeps logical Journey progress
+  ---
+  duration_ms: 576.241292
+  type: 'test'
+  ...
+# Subtest: retained lookup refuses unknown identities and corrupt or missing originals without substituting current data
+ok 23 - retained lookup refuses unknown identities and corrupt or missing originals without substituting current data
+  ---
+  duration_ms: 313.45475
+  type: 'test'
+  ...
+# Subtest: retained snapshot cannot admit another audience, omitted JSON, restricted art or a forged receipt
+ok 24 - retained snapshot cannot admit another audience, omitted JSON, restricted art or a forged receipt
+  ---
+  duration_ms: 197.129583
+  type: 'test'
+  ...
+# Subtest: old pixels remain separately pinned and cannot fall back to the new image when absent or corrupt
+ok 25 - old pixels remain separately pinned and cannot fall back to the new image when absent or corrupt
+  ---
+  duration_ms: 498.466083
+  type: 'test'
+  ...
+# Subtest: retained snapshot reads cancel stalled fetches and streams without late activation
+ok 26 - retained snapshot reads cancel stalled fetches and streams without late activation
+  ---
+  duration_ms: 112.985042
+  type: 'test'
+  ...
+# Subtest: adding permitted campaigns preserves exact old presentations while removed campaigns cannot be restored
+ok 27 - adding permitted campaigns preserves exact old presentations while removed campaigns cannot be restored
+  ---
+  duration_ms: 112.796584
+  type: 'test'
+  ...
+# Subtest: compiler retains the selected logo and projects shared fallback resources without default artwork
+ok 28 - compiler retains the selected logo and projects shared fallback resources without default artwork
+  ---
+  duration_ms: 413.479042
+  type: 'test'
+  ...
+# Subtest: final offline edition budget counts every generated worker and manifest
+ok 29 - final offline edition budget counts every generated worker and manifest
+  ---
+  duration_ms: 721.103292
+  type: 'test'
+  ...
+# Subtest: lazy shared panel styles retain exact bytes through selected compilation, archives and offline inventory
+ok 30 - lazy shared panel styles retain exact bytes through selected compilation, archives and offline inventory
+  ---
+  duration_ms: 224.361375
+  type: 'test'
+  ...
+# Subtest: selected retained presentation media stays exact in runtime, source and offline archives
+ok 31 - selected retained presentation media stays exact in runtime, source and offline archives
+  ---
+  duration_ms: 668.145875
+  type: 'test'
+  ...
+# Subtest: retained packaging rejects altered originals, foreign audiences and unselected snapshots
+ok 32 - retained packaging rejects altered originals, foreign audiences and unselected snapshots
+  ---
+  duration_ms: 178.490416
+  type: 'test'
+  ...
+# Subtest: whole-source eligibility includes registered historical-only originals before freezing candidates
+ok 33 - whole-source eligibility includes registered historical-only originals before freezing candidates
+  ---
+  duration_ms: 177.72725
+  type: 'test'
+  ...
+# Subtest: source admission retains an earlier campaign subset after expansion but rejects removed or duplicate permissions
+ok 34 - source admission retains an earlier campaign subset after expansion but rejects removed or duplicate permissions
+  ---
+  duration_ms: 121.616667
+  type: 'test'
+  ...
+# Subtest: sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts
+ok 35 - sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts
+  ---
+  duration_ms: 117.105708
+  type: 'test'
+  ...
+# Subtest: catalog validates generic brands, immutable selections and strict allowlist lookup
+ok 36 - catalog validates generic brands, immutable selections and strict allowlist lookup
+  ---
+  duration_ms: 1.919583
+  type: 'test'
+  ...
+# Subtest: repeated asset reads reuse only fully validated immutable edition closures
+ok 37 - repeated asset reads reuse only fully validated immutable edition closures
+  ---
+  duration_ms: 0.590792
+  type: 'test'
+  ...
+# Subtest: mutable imports, copied catalogues and caller-frozen data cannot inherit admission
+ok 38 - mutable imports, copied catalogues and caller-frozen data cannot inherit admission
+  ---
+  duration_ms: 3.252417
+  type: 'test'
+  ...
+# Subtest: shared-brand audience editions retain separate cached asset permissions
+ok 39 - shared-brand audience editions retain separate cached asset permissions
+  ---
+  duration_ms: 2.113916
+  type: 'test'
+  ...
+# Subtest: dependency closure rejects cycles, undeclared assets and cross-brand campaigns
+ok 40 - dependency closure rejects cycles, undeclared assets and cross-brand campaigns
+  ---
+  duration_ms: 1.078292
+  type: 'test'
+  ...
+# Subtest: standalone HTML binds its real version in both attributes and text and rejects unsafe versions
+ok 41 - standalone HTML binds its real version in both attributes and text and rejects unsafe versions
+  ---
+  duration_ms: 69.759458
+  type: 'test'
+  ...
+# Subtest: compilation excludes every omitted brand file and hashes exact selected media
+ok 42 - compilation excludes every omitted brand file and hashes exact selected media
+  ---
+  duration_ms: 88.719041
+  type: 'test'
+  ...
+# Subtest: unselected restricted sources stay out, selected restricted and engine bypasses fail
+ok 43 - unselected restricted sources stay out, selected restricted and engine bypasses fail
+  ---
+  duration_ms: 34.087375
+  type: 'test'
+  ...
+# Subtest: transitive assets are copied once and a boot file cannot sneak in omitted levels
+ok 44 - transitive assets are copied once and a boot file cannot sneak in omitted levels
+  ---
+  duration_ms: 61.24725
+  type: 'test'
+  ...
+# Subtest: static dependency validation catches omitted imports and CSS images
+ok 45 - static dependency validation catches omitted imports and CSS images
+  ---
+  duration_ms: 0.454875
+  type: 'test'
+  ...
+# Subtest: web editions reject external or computed code dependencies except the exact staged iOS bridge
+ok 46 - web editions reject external or computed code dependencies except the exact staged iOS bridge
+  ---
+  duration_ms: 0.439625
+  type: 'test'
+  ...
+# Subtest: bootstrap preserves optional default and fetches only selected sources
+ok 47 - bootstrap preserves optional default and fetches only selected sources
+  ---
+  duration_ms: 51.59125
+  type: 'test'
+  ...
+# Subtest: project merging rejects mismatched or conflicting immutable gameplay
+ok 48 - project merging rejects mismatched or conflicting immutable gameplay
+  ---
+  duration_ms: 112.730042
+  type: 'test'
+  ...
+# Subtest: hub and compiled edition share progress and presentation pins including transitive and edition assets
+ok 49 - hub and compiled edition share progress and presentation pins including transitive and edition assets
+  ---
+  duration_ms: 279.209583
+  type: 'test'
+  ...
+# Subtest: compiled first-paint and error shell uses only the selected brand and escapes HTML text
+ok 50 - compiled first-paint and error shell uses only the selected brand and escapes HTML text
+  ---
+  duration_ms: 61.5935
+  type: 'test'
+  ...
+# Subtest: actual canonical and tool HTML brand first paint without replacing loader or localized recovery hooks
+ok 51 - actual canonical and tool HTML brand first paint without replacing loader or localized recovery hooks
+  ---
+  duration_ms: 35.1775
+  type: 'test'
+  ...
+# Subtest: edition admission rejects mismatched themes and artwork outside the selected brand closure
+ok 52 - edition admission rejects mismatched themes and artwork outside the selected brand closure
+  ---
+  duration_ms: 189.302709
+  type: 'test'
+  ...
+# Subtest: audience editions project primary and selected mission themes without other campaign labels
+ok 53 - audience editions project primary and selected mission themes without other campaign labels
+  ---
+  duration_ms: 276.21225
+  type: 'test'
+  ...
+# Subtest: approved original-derived install icons ship both square sizes and the selected font only
+ok 54 - approved original-derived install icons ship both square sizes and the selected font only
+  ---
+  duration_ms: 1834.52975
+  type: 'test'
+  ...
+# Subtest: canonical public edition selector compiles one stable identity and canonical standalone launcher
+ok 55 - canonical public edition selector compiles one stable identity and canonical standalone launcher
+  ---
+  duration_ms: 61.560917
+  type: 'test'
+  ...
+# Subtest: SIM launch carries only a bounded cosmetic default without changing the return route
+ok 56 - SIM launch carries only a bounded cosmetic default without changing the return route
+  ---
+  duration_ms: 0.758083
+  type: 'test'
+  ...
+# Subtest: bundled FPV launches and returns to the exact game entry across source, hosted and native roots
+ok 57 - bundled FPV launches and returns to the exact game entry across source, hosted and native roots
+  ---
+  duration_ms: 0.539542
+  type: 'test'
+  ...
+# Subtest: FPV return refuses foreign origins, credentials and unrelated paths
+ok 58 - FPV return refuses foreign origins, credentials and unrelated paths
+  ---
+  duration_ms: 0.191917
+  type: 'test'
+  ...
+# Subtest: regular game build includes the simulator and all policy dependencies without an optional download
+ok 59 - regular game build includes the simulator and all policy dependencies without an optional download
+  ---
+  duration_ms: 4.689542
+  type: 'test'
+  ...
+# Subtest: bundled FPV renderer vendor dependencies stay in the offline core
+ok 60 - bundled FPV renderer vendor dependencies stay in the offline core
+  ---
+  duration_ms: 2.157333
+  type: 'test'
+  ...
+# Subtest: optional installations preserve previous versions and isolate stable roots without touching Journey
+ok 61 - optional installations preserve previous versions and isolate stable roots without touching Journey
+  ---
+  duration_ms: 22.951417
+  type: 'test'
+  ...
+# Subtest: optional launch references reject foreign origins, roots, entries and versions
+ok 62 - optional launch references reject foreign origins, roots, entries and versions
+  ---
+  duration_ms: 0.375292
+  type: 'test'
+  ...
+# Subtest: an installation pointer is recorded only after a verified worker activates
+ok 63 - an installation pointer is recorded only after a verified worker activates
+  ---
+  duration_ms: 4.247541
+  type: 'test'
+  ...
+# Subtest: stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+ok 64 - stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+  ---
+  duration_ms: 17.2245
+  type: 'test'
+  ...
+# Subtest: stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+ok 65 - stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+  ---
+  duration_ms: 1.137125
+  type: 'test'
+  ...
+# Subtest: optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+ok 66 - optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+  ---
+  duration_ms: 0.679833
+  type: 'test'
+  ...
+# Subtest: unqualified source previews are limited to the loopback source entry
+ok 67 - unqualified source previews are limited to the loopback source entry
+  ---
+  duration_ms: 0.5495
+  type: 'test'
+  ...
+# Subtest: launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+ok 68 - launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+  ---
+  duration_ms: 25.000833
+  type: 'test'
+  ...
+# Subtest: shared practice entry is explicit, pauses once and never prefetches package bytes
+ok 69 - shared practice entry is explicit, pauses once and never prefetches package bytes
+  ---
+  duration_ms: 11.004417
+  type: 'test'
+  ...
+# Subtest: closing an in-flight optional catalog discards late results and restores its opener
+ok 70 - closing an in-flight optional catalog discards late results and restores its opener
+  ---
+  duration_ms: 1.8745
+  type: 'test'
+  ...
+# Subtest: a stalled optional catalog times out and leaves an explicit retry available
+ok 71 - a stalled optional catalog times out and leaves an explicit retry available
+  ---
+  duration_ms: 8.471584
+  type: 'test'
+  ...
+# Subtest: Home and More share one public loader and restore the actual opener without resuming play
+ok 72 - Home and More share one public loader and restore the actual opener without resuming play
+  ---
+  duration_ms: 9.747666
+  type: 'test'
+  ...
+# Subtest: local gym and FPV previews stay separate and usable while the public catalog is unavailable
+ok 73 - local gym and FPV previews stay separate and usable while the public catalog is unavailable
+  ---
+  duration_ms: 7.709625
+  type: 'test'
+  ...
+# Subtest: arcade specimen prepares exact selected workspace tokens and custom artwork through runtime host
+ok 74 - arcade specimen prepares exact selected workspace tokens and custom artwork through runtime host
+  ---
+  duration_ms: 588.759125
+  type: 'test'
+  ...
+# Subtest: arcade specimen refuses missing or changed source bytes instead of substituting published art
+ok 75 - arcade specimen refuses missing or changed source bytes instead of substituting published art
+  ---
+  duration_ms: 398.864917
+  type: 'test'
+  ...
+# Subtest: compact runtime preserves selected revisions/provenance while pruning authoring and unbound files
+ok 76 - compact runtime preserves selected revisions/provenance while pruning authoring and unbound files
+  ---
+  duration_ms: 1220.925709
+  type: 'test'
+  ...
+# Subtest: RLRUN1 files remain readable without inventing missing cross-domain descriptors
+ok 77 - RLRUN1 files remain readable without inventing missing cross-domain descriptors
+  ---
+  duration_ms: 521.411542
+  type: 'test'
+  ...
+# Subtest: v2 verifies the envelope checksum and binds candidate identity/tokens/SIM to the selected snapshot
+ok 78 - v2 verifies the envelope checksum and binds candidate identity/tokens/SIM to the selected snapshot
+  ---
+  duration_ms: 521.294291
+  type: 'test'
+  ...
+# Subtest: runtime reader rejects tampered, truncated and trailing bytes before exposing a snapshot
+ok 79 - runtime reader rejects tampered, truncated and trailing bytes before exposing a snapshot
+  ---
+  duration_ms: 404.288541
+  type: 'test'
+  ...
+# Subtest: runtime snapshots retain collection identity and the resolved binding priority
+ok 80 - runtime snapshots retain collection identity and the resolved binding priority
+  ---
+  duration_ms: 522.077125
+  type: 'test'
+  ...
+# Subtest: duplicate flattens selected appearance without carrying theme history
+ok 81 - duplicate flattens selected appearance without carrying theme history
+  ---
+  duration_ms: 600.639125
+  type: 'test'
+  ...
+# Subtest: workspace migration is atomic, idempotent and leaves the legacy recovery copy
+ok 82 - workspace migration is atomic, idempotent and leaves the legacy recovery copy
+  ---
+  duration_ms: 1235.986
+  type: 'test'
+  ...
+# Subtest: independent workspaces reject identity collisions and stale saves without growing each other
+ok 83 - independent workspaces reject identity collisions and stale saves without growing each other
+  ---
+  duration_ms: 751.431917
+  type: 'test'
+  ...
+# Subtest: failed independent workspace creation publishes neither entry nor bytes
+ok 84 - failed independent workspace creation publishes neither entry nor bytes
+  ---
+  duration_ms: 104.475084
+  type: 'test'
+  ...
+# Subtest: explicit replacement preserves imported identity and a recoverable prior generation
+ok 85 - explicit replacement preserves imported identity and a recoverable prior generation
+  ---
+  duration_ms: 957.91975
+  type: 'test'
+  ...
+# Subtest: inspection reports exact role provenance and token contrast without claiming visual approval
+ok 86 - inspection reports exact role provenance and token contrast without claiming visual approval
+  ---
+  duration_ms: 101.441333
+  type: 'test'
+  ...
+# Subtest: maximum-length identities migrate and replace into bounded loadable recovery IDs
+ok 87 - maximum-length identities migrate and replace into bounded loadable recovery IDs
+  ---
+  duration_ms: 966.481917
+  type: 'test'
+  ...
+# Subtest: snapshot drops unbound historical assets while preserving derivative provenance
+ok 88 - snapshot drops unbound historical assets while preserving derivative provenance
+  ---
+  duration_ms: 175.161792
+  type: 'test'
+  ...
+# Subtest: all registered candidate families pin exact interface revisions and edited paired colors
+ok 89 - all registered candidate families pin exact interface revisions and edited paired colors
+  ---
+  duration_ms: 561.579708
+  type: 'test'
+  ...
+# Subtest: original candidate envelopes retain their r1 interface after the builtin upgrade
+ok 90 - original candidate envelopes retain their r1 interface after the builtin upgrade
+  ---
+  duration_ms: 350.704542
+  type: 'test'
+  ...
+# Subtest: candidate preview and runtime interface derive the same source tokens with separate immutable identities
+ok 91 - candidate preview and runtime interface derive the same source tokens with separate immutable identities
+  ---
+  duration_ms: 363.218084
+  type: 'test'
+  ...
+# Subtest: one bounded same-tab payload hands off the candidate once without touching player preferences
+ok 92 - one bounded same-tab payload hands off the candidate once without touching player preferences
+  ---
+  duration_ms: 77.426583
+  type: 'test'
+  ...
+# Subtest: malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+ok 93 - malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+  ---
+  duration_ms: 100.23
+  type: 'test'
+  ...
+# Subtest: failed handoff preserves the previous usable candidate
+ok 94 - failed handoff preserves the previous usable candidate
+  ---
+  duration_ms: 124.307208
+  type: 'test'
+  ...
+1..94
+# tests 99
+# suites 0
+# pass 99
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9500.101375

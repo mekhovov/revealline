@@ -401,8 +401,12 @@ test('state snapshots cannot mutate the latch and destroy makes cancellation har
   assert.deepEqual(f.router.boostState(), { mode: 'toggle', latched: true });
   assert.deepEqual(Object.keys(frame).sort(), [
     'assigned',
+    'confirmButtons',
+    'confirmHeld',
+    'confirmSnapshot',
     'disconnected',
     'flight',
+    'gamepadTimestamp',
     'status',
     'ui',
   ]);

@@ -1,0 +1,27 @@
+{
+  "format": "snake-public-release-check.v1",
+  "checkedAt": "2026-10-15T04:16:04.167Z",
+  "deployment": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "018bd53a09f1366b918f1184605fab215ccab1df",
+    "sourceCommittedAt": "2026-10-15T05:21:36+02:00",
+    "buildVersion": "main-018bd53a09f1",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "includesPR": 1233,
+  "records": [
+    {
+      "path": "game/snake/classic-app.mjs",
+      "publishedSha256": "4aab7064bc863f6f4a4e97cb8c3189128825d703769b3f6df0df393e818c0954",
+      "tokensMatchSource": true
+    },
+    {
+      "path": "game/ui/theme-family-controls.mjs",
+      "publishedSha256": "5b6187087e04a661717738eb4360d7e898cc3b9a3383479dad1df091650e3ec1",
+      "tokensMatchSource": true
+    }
+  ],
+  "scope": "Public identity and token-equivalent host/shared controls; browser observations documented separately."
+}

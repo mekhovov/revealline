@@ -1,0 +1,14 @@
+{
+  "testedCommit": "14649912ba3f94d335b5bbc94ce6ce92d522a1a8",
+  "sourceHashesCompared": [
+    "game/overflight/raid-project.mjs",
+    "game/overflight/raid-core.mjs",
+    "game/overflight/raid-variants.mjs",
+    "game/overflight/raid-upgrades.mjs",
+    "game/overflight/raid-review-pilot.mjs",
+    "game/overflight/combat-profile.mjs",
+    "game/overflight/tactics.mjs"
+  ],
+  "mismatches": [],
+  "qualificationSourceStable": true
+}

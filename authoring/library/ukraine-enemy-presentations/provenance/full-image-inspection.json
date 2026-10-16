@@ -1,0 +1,34 @@
+{
+  "format": "ukraine-enemy-full-image-inspection.v1",
+  "method": "Whole unchanged tool originals viewed with view_image at original detail. Visual observations do not certify pixels at game scale, alpha, pivots or animation.",
+  "rows": [
+    {
+      "role": "bouncer",
+      "observation": "Broad ivory shell/coral north head, six stout leg forms and two antennae visible. Complete major silhouette; ornamental clusters and dark fine feet exceed requested simplicity."
+    },
+    {
+      "role": "border-patrol",
+      "observation": "Broad bow-tie wings with notched rear corners, coral north head and antennae; complete visible silhouette. Wings use nearly full width, tighter margins than requested. Repeated ornament and softened edge clusters remain."
+    },
+    {
+      "role": "contour-patrol",
+      "observation": "Thick angular S and inward curled tail, visible negative gaps and coral north nose. Complete major silhouette with very tight top/bottom margins. Repeated segment ornament is finer than the compact brief; no articulated segments/rig delivered."
+    },
+    {
+      "role": "claimed-rover",
+      "observation": "Two tall coral-tipped ears, ivory back rim/turquoise diamond, broad rear feet and forepaws read as a clockwork hare. Major silhouette complete; ears/feet have very tight frame margins. Shaded hardware gives some raised/front-face reading; strict flat orthographic/pixel palette aim is not fully met."
+    },
+    {
+      "role": "eroder",
+      "observation": "Root ring with thick spokes, five visible outward teeth including large coral north point, and bottom notch. Requested six teeth were not achieved. Major silhouette complete but north tip nearly reaches frame. Broad shape differs from beetle/moth/serpent/hare; roots and small enamel marks remain detailed."
+    },
+    {
+      "role": "lane-boss",
+      "observation": "Wide open U with two long ivory/turquoise piers, coral north caps and broad bronze south crossbar. Major silhouette is complete with more breathing room than the hare/serpent; ornament on each pier is finer than requested. Small lower projections do not represent attack effects or new lane geometry."
+    },
+    {
+      "role": "relay-sentinel",
+      "observation": "Complete broad diamond fortress around eight amber petal plates and turquoise core; coral north bastion contrasts ivory south bastion. Strong distinct filled silhouette, but detailed construction and narrow margins remain. Petals/core are baked surfaces, not separate animated layers."
+    }
+  ]
+}

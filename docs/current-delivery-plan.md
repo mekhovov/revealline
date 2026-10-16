@@ -1,5 +1,21 @@
 # RevealLine: detailed delivery history
 
+> **3 October implementation update:** [Unified gameplay and industrial art](unified-industrial-plan.md) records the newly approved priorities, bounded budget increases, implemented scope and remaining art/device gates.
+
+> **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
+> Use that dated rollup for current priorities, release status and acceptance limits.
+> The older checkpoints below retain their historical scope.
+
+> **Current status and execution order:** use the
+> [30 September source reconciliation and remaining delivery plan](plan-status-2026-09-30.md).
+> It separates merged source, the publisher's pending queue, retained local work
+> and deferred qualification. Every dated checkpoint and “next” label below is
+> preserved historical evidence, not today's release queue.
+
+## Current scoped handoff — 28 September 2026
+
+The [completed/remaining phase audit and Flight Details correction](flight-details-localization-2026-09-28.md) records the v0.141.7 public baseline, queued touch work, the next bounded P05/P03 fix, and the original whole-game phases still open. The release coordinator owns cumulative integration, version allocation and Pages publication. Read the dated sections below as history; they do not describe the current queue.
+
 ## Current execution order — 24 September 2026
 
 The approved [player-first UX execution board](player-first-ux-execution.md) now

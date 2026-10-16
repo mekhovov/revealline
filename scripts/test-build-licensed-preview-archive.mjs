@@ -13,6 +13,7 @@ import {
   resolveSoundtrackArchives,
 } from '../game/soundtrack-archive.mjs';
 import { fixture as audioFixture } from '../game/test/helpers/soundtrack-fixtures.mjs';
+import { renderPreviewSite } from '../authoring/library/licensed-audio/preview-site/render.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const json = (value) => JSON.stringify(value, null, 2) + '\n';
@@ -166,6 +167,33 @@ async function fixture(t, { derivative = false, artist = 'Preview QA' } = {}) {
     target: path.join(root, '.cache/preview'),
   };
 }
+
+test('generated music archive keeps creator text exact and carries local language switching assets', () => {
+  const html = renderPreviewSite({
+    tracks: [
+      {
+        title: 'A <synthetic> preview',
+        artist: 'Preview QA',
+        source: 'https://example.test/source',
+        credit: 'Preview QA — fixture only.',
+        license: 'CC BY 3.0 Unported',
+        licenseURL: 'https://creativecommons.org/licenses/by/3.0/',
+        path: 'objects/example.mp3',
+        sha256: 'a'.repeat(64),
+        fileName: 'test.mp3',
+        durationSeconds: 42,
+        tags: { genres: ['chiptune'] },
+      },
+    ],
+  });
+  assert.match(html, /i18n\/i18next-26\.4\.2\.min\.js/u);
+  assert.match(html, /data-language-control/u);
+  assert.match(html, /data-i18n="website:musicArchive\.takeTrackIntoGame"/u);
+  assert.match(html, /data-i18n="website:musicArchive\.genre\.chiptune"/u);
+  assert.match(html, /A &lt;synthetic&gt; preview/u);
+  assert.doesNotMatch(html, /<h2>A <synthetic>/u);
+  assert.match(html, /Language: English \/ Мова: Українська/u);
+});
 
 test('preview staging preserves exact bytes and credits without requiring or changing listening approvals', async (t) => {
   const f = await fixture(t),

@@ -1,0 +1,90 @@
+{
+  "receiptUTC": "2026-10-15T20:16:40.405280+00:00",
+  "toolRevision": "61106dee2a9f0d551d1031eadbfd7956678c10e3",
+  "productionRevision": "da5df4837f8db357a2094b9eb343692cbc511d0e",
+  "packageRevision": "6a092df1b8916288c637fd75266a546b8737463b6f5b08a681036d444cd4402b",
+  "origin": "http://127.0.0.1:9202",
+  "identity": {
+    "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-attribution-retention-review-9202/review-identity.json",
+    "sha256": "7c4de3cdda68e6aed59e70fd6410cd3aea527fd33fb22ea262685c8923402236"
+  },
+  "scope": "Actual strict-focus five-minute receive-time association review; unchanged qualified production. Read complete final report from visible DOM, not imported history or injected runtime. Not two-hour endurance.",
+  "observations": {
+    "startedUTC": "2026-10-15T20:09:30.834Z",
+    "elapsedSeconds": 300.0046999999881,
+    "ticks": 15000,
+    "dimensions": {
+      "basis": "visualViewport",
+      "width": 868,
+      "height": 1165,
+      "dpr": 2,
+      "cssWidth": 868,
+      "cssHeight": 675.6953125,
+      "backingWidth": 1302,
+      "backingHeight": 1014
+    },
+    "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "contacts": 0,
+    "cellCrossings": 4,
+    "route": {
+      "target": "parking-approach",
+      "acceptedWaypoints": 3,
+      "completedCircuits": 0,
+      "visits": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    "disposalZero": true,
+    "routeCoverageQualified": false,
+    "maximumClockFrameIntervalMs": 71.40000000596046,
+    "actualLoAFEntries": 7,
+    "loafDurationRangeMs": [
+      52.6000000089407,
+      79.8999999910593
+    ],
+    "rowsWithScriptFrameEntryPoint": 5,
+    "allRowsRetainAvailableReceiveTimeOverlaps": true,
+    "allRowsPredateFinal128SpanWindow": true,
+    "overlapExamplesBound": 12,
+    "oneRowExplicitlyDropsOneExample": true,
+    "allCountsHonestlyLowerBound": true,
+    "observerCallbackCPU": {
+      "count": 8,
+      "totalMs": 1.2999999970197678,
+      "maxMs": 0.5
+    },
+    "malformed": 0,
+    "readFailures": 0,
+    "stopped": true,
+    "rootTabClosed": true
+  },
+  "evidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-retention-five-minute-20261015.json",
+      "bytes": 210963,
+      "sha256": "5e1f3629985a6691e0183ebe3d6cf2b428469f889542692c0c510e065adc9da0"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-retention-five-minute-final-native-20261015.txt",
+      "bytes": 2001,
+      "sha256": "3eed40e8f3e69473eeb111035fc758e05d7546a89f45cf315367f6ac042a6d6d"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/authored-urban-retention-five-minute-final-native-20261015.png",
+      "bytes": 98193,
+      "sha256": "a6af56fbed74aeb58385c9d843e29879f0bae1817d92c96f443da9916542eb16"
+    }
+  ],
+  "acceptedBoundary": "Native receive-time retention behavior, caps/disclosure and unchanged actual five-minute gates. Root independent source review accepted before run. No production performance fix or causal descendant/GC proof.",
+  "remaining": [
+    "actual costly-interval/JS/GC diagnosis",
+    "two-hour uninterrupted authored route acceptance",
+    "same-workload/device comparative performance",
+    "physical-device and public launch acceptance"
+  ]
+}

@@ -92,3 +92,19 @@ Compare compact/microtile, detailed-object and hybrid terrain with the same char
 Preserve the user's configured turning policy: **immediate** and **grid-center buffered** movement are both intended comparison options. Use the motion lab's current README and tests for exact queue, release, reversal, alignment and mode-switch behavior; this guide does not define those semantics. Inspect cosmetic independence in each supported mode against that mode's own baseline. The same inputs can produce different intended paths between policies. A character, palette, terrain or animation-recipe change must not silently reset the mode or replace buffered movement with immediate turns. Record mode coverage with each review and keep this setting out of collection fields that do not accept it.
 
 Track data validity, source provenance, generated concept, applied visual, played motion and simulated reward results separately. A contact sheet is not a working animation; a collection evaluator is not full game progression; a well-specified plan is not proven fun. See [Round 08 authoring checks](../evaluations/round-08-authoring-checks.md) for executed tool and package validation.
+
+## Existing-state and optional-residue review prompt
+
+“Show the actual Team freeze pickup interval using both a labelled prepared custom
+rig and the current tank body. Hold moving-part clocks without dimming contact cues;
+resume only at expiry. Compare real core checkpoints and paused/reduced states.
+For optional enemy remains, use the shared cosmetic Settings preference and keep
+warnings/projectiles/hit cues. Verify explicit Studio Show/Hide wins for that
+preview, no player-save mutation, and exact native return focus. Report production
+art adoption separately from renderer/host checks.”
+
+“Revise the Poltava source through the image tool using the retained original and
+museum text as reference only. Keep previous sources untouched, record all observed
+versus requested geometry, and retain the exact revised source in a new immutable
+collection revision. Do not call generated detail native pixel cleanup or cultural
+approval; require separate board preparation and actor-contrast inspection.”

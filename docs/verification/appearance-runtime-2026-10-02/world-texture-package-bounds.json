@@ -1,0 +1,30 @@
+[
+  {
+    "packageId": "civilian-fpv",
+    "qualification": "requires-release-qualification",
+    "sourceRevision": "5fbceaae5c9544af69f570f3a29771b42362aba2",
+    "includesWorkingTreeChanges": true,
+    "runtimeFiles": 67,
+    "runtimeBytes": 4119317,
+    "inputFiles": 60,
+    "limits": {
+      "files": 72,
+      "bytes": 8388608
+    },
+    "revision": "3a086db90b674098e1c3320844de58494c0aefe720423d5f759519139b798df7"
+  },
+  {
+    "packageId": "fpv-worlds",
+    "qualification": "requires-release-qualification",
+    "sourceRevision": "5fbceaae5c9544af69f570f3a29771b42362aba2",
+    "includesWorkingTreeChanges": true,
+    "runtimeFiles": 99,
+    "runtimeBytes": 14388130,
+    "inputFiles": 92,
+    "limits": {
+      "files": 104,
+      "bytes": 16777216
+    },
+    "revision": "5aee238336fd8a18933e34bd3d66a0b7a8fefccbacdfbb2500ec01581b72eb6a"
+  }
+]

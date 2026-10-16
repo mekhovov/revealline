@@ -1,0 +1,390 @@
+TAP version 13
+# Subtest: default channels retain their exact spellings; same-release company profiles and app IDs differ
+ok 1 - default channels retain their exact spellings; same-release company profiles and app IDs differ
+  ---
+  duration_ms: 2.319459
+  ...
+# Subtest: transfer discovers earlier same-edition profiles; read-only recovery protects other editions
+ok 2 - transfer discovers earlier same-edition profiles; read-only recovery protects other editions
+  ---
+  duration_ms: 1.303292
+  ...
+# Subtest: same-release installed editions have independent state and writer locks
+ok 3 - same-release installed editions have independent state and writer locks
+  ---
+  duration_ms: 2.200334
+  ...
+# Subtest: branded updates require source review and retain both profiles through rollback
+ok 4 - branded updates require source review and retain both profiles through rollback
+  ---
+  duration_ms: 4.985709
+  ...
+# Subtest: canonical DroneAid launch reads existing installed state and migrates without changing profile identity
+ok 5 - canonical DroneAid launch reads existing installed state and migrates without changing profile identity
+  ---
+  duration_ms: 2.595125
+  ...
+# Subtest: DroneAid is one edition with a canonical public alias and stable stored identity
+ok 6 - DroneAid is one edition with a canonical public alias and stable stored identity
+  ---
+  duration_ms: 131.545208
+  ...
+# Subtest: canonical and legacy selectors resume the same profile, execution, and presentation
+ok 7 - canonical and legacy selectors resume the same profile, execution, and presentation
+  ---
+  duration_ms: 339.629125
+  ...
+# Subtest: new launcher address preserves installed PWA identity and accepts only exact old/new roots
+ok 8 - new launcher address preserves installed PWA identity and accepts only exact old/new roots
+  ---
+  duration_ms: 0.4875
+  ...
+# Subtest: standalone and public offline menus retain every dynamically attached panel stylesheet
+ok 9 - standalone and public offline menus retain every dynamically attached panel stylesheet
+  ---
+  duration_ms: 644.083167
+  ...
+# Subtest: actual landing closure retains artwork motion, receiver loss and signal atlas offline
+ok 10 - actual landing closure retains artwork motion, receiver loss and signal atlas offline
+  ---
+  duration_ms: 441.091833
+  ...
+# Subtest: standalone menu projection preserves selected profile data and fallback without unrelated images
+ok 11 - standalone menu projection preserves selected profile data and fallback without unrelated images
+  ---
+  duration_ms: 16.322
+  ...
+# Subtest: DroneAid aggregate originals are selected alone while campaigns keep their existing artwork
+ok 12 - DroneAid aggregate originals are selected alone while campaigns keep their existing artwork
+  ---
+  duration_ms: 15.732667
+  ...
+# Subtest: shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+ok 13 - shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+  ---
+  duration_ms: 4.485583
+  ...
+# Subtest: common host import projection closes over committed adapters without visiting historical registries
+ok 14 - common host import projection closes over committed adapters without visiting historical registries
+  ---
+  duration_ms: 32.477166
+  ...
+# Subtest: dynamic boot entry is explicit and unknown host JSON requests fail closed
+ok 15 - dynamic boot entry is explicit and unknown host JSON requests fail closed
+  ---
+  duration_ms: 0.70475
+  ...
+# Subtest: declared canonical navigation and data requests must exist in the artifact
+ok 16 - declared canonical navigation and data requests must exist in the artifact
+  ---
+  duration_ms: 0.221292
+  ...
+# Subtest: shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+ok 17 - shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+  ---
+  duration_ms: 16.097917
+  ...
+# Subtest: current DroneAid branding labels all seven retained themes without changing their identity
+ok 18 - current DroneAid branding labels all seven retained themes without changing their identity
+  ---
+  duration_ms: 2.4325
+  ...
+# Subtest: localized campaign suffixes survive the current metadata override
+ok 19 - localized campaign suffixes survive the current metadata override
+  ---
+  duration_ms: 0.275125
+  ...
+# Subtest: generic, custom and other-brand theme labels retain their authored values
+ok 20 - generic, custom and other-brand theme labels retain their authored values
+  ---
+  duration_ms: 0.205042
+  ...
+# Subtest: selected retained presentation media stays exact in runtime, source and offline archives
+ok 21 - selected retained presentation media stays exact in runtime, source and offline archives
+  ---
+  duration_ms: 990.870417
+  ...
+# Subtest: retained packaging rejects altered originals, foreign audiences and unselected snapshots
+ok 22 - retained packaging rejects altered originals, foreign audiences and unselected snapshots
+  ---
+  duration_ms: 232.122333
+  ...
+# Subtest: whole-source eligibility includes registered historical-only originals before freezing candidates
+ok 23 - whole-source eligibility includes registered historical-only originals before freezing candidates
+  ---
+  duration_ms: 150.55525
+  ...
+# Subtest: sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts
+ok 24 - sparse publisher rejects retained foreign branding, private JSON, unselected art and path conflicts
+  ---
+  duration_ms: 112.852375
+  ...
+# Subtest: catalog validates generic brands, immutable selections and strict allowlist lookup
+ok 25 - catalog validates generic brands, immutable selections and strict allowlist lookup
+  ---
+  duration_ms: 3.31325
+  ...
+# Subtest: dependency closure rejects cycles, undeclared assets and cross-brand campaigns
+ok 26 - dependency closure rejects cycles, undeclared assets and cross-brand campaigns
+  ---
+  duration_ms: 1.371167
+  ...
+# Subtest: standalone HTML binds its real version in both attributes and text and rejects unsafe versions
+ok 27 - standalone HTML binds its real version in both attributes and text and rejects unsafe versions
+  ---
+  duration_ms: 53.174375
+  ...
+# Subtest: compilation excludes every omitted brand file and hashes exact selected media
+ok 28 - compilation excludes every omitted brand file and hashes exact selected media
+  ---
+  duration_ms: 52.329209
+  ...
+# Subtest: unselected restricted sources stay out, selected restricted and engine bypasses fail
+ok 29 - unselected restricted sources stay out, selected restricted and engine bypasses fail
+  ---
+  duration_ms: 30.621875
+  ...
+# Subtest: transitive assets are copied once and a boot file cannot sneak in omitted levels
+ok 30 - transitive assets are copied once and a boot file cannot sneak in omitted levels
+  ---
+  duration_ms: 54.863042
+  ...
+# Subtest: static dependency validation catches omitted imports and CSS images
+ok 31 - static dependency validation catches omitted imports and CSS images
+  ---
+  duration_ms: 0.776291
+  ...
+# Subtest: web editions reject external or computed code dependencies except the exact staged iOS bridge
+ok 32 - web editions reject external or computed code dependencies except the exact staged iOS bridge
+  ---
+  duration_ms: 1.353292
+  ...
+# Subtest: bootstrap preserves optional default and fetches only selected sources
+ok 33 - bootstrap preserves optional default and fetches only selected sources
+  ---
+  duration_ms: 37.1715
+  ...
+# Subtest: project merging rejects mismatched or conflicting immutable gameplay
+ok 34 - project merging rejects mismatched or conflicting immutable gameplay
+  ---
+  duration_ms: 82.666166
+  ...
+# Subtest: hub and compiled edition share progress and presentation pins including transitive and edition assets
+ok 35 - hub and compiled edition share progress and presentation pins including transitive and edition assets
+  ---
+  duration_ms: 164.233542
+  ...
+# Subtest: compiled first-paint and error shell uses only the selected brand and escapes HTML text
+ok 36 - compiled first-paint and error shell uses only the selected brand and escapes HTML text
+  ---
+  duration_ms: 41.142459
+  ...
+# Subtest: actual canonical and tool HTML brand first paint without replacing loader or localized recovery hooks
+ok 37 - actual canonical and tool HTML brand first paint without replacing loader or localized recovery hooks
+  ---
+  duration_ms: 34.962292
+  ...
+# Subtest: edition admission rejects mismatched themes and artwork outside the selected brand closure
+ok 38 - edition admission rejects mismatched themes and artwork outside the selected brand closure
+  ---
+  duration_ms: 203.814333
+  ...
+# Subtest: audience editions project primary and selected mission themes without other campaign labels
+ok 39 - audience editions project primary and selected mission themes without other campaign labels
+  ---
+  duration_ms: 723.516375
+  ...
+# Subtest: approved original-derived install icons ship both square sizes and the selected font only
+ok 40 - approved original-derived install icons ship both square sizes and the selected font only
+  ---
+  duration_ms: 1926.804
+  ...
+# Subtest: canonical public edition selector compiles one stable identity and canonical standalone launcher
+ok 41 - canonical public edition selector compiles one stable identity and canonical standalone launcher
+  ---
+  duration_ms: 128.754375
+  ...
+# Subtest: an empty edition selector neither downloads nor changes any default publication files
+ok 42 - an empty edition selector neither downloads nor changes any default publication files
+  ---
+  duration_ms: 1.987416
+  ...
+# Subtest: review admission verifies real ZIP members and all hash-bound evidence gates
+ok 43 - review admission verifies real ZIP members and all hash-bound evidence gates
+  ---
+  duration_ms: 5.602667
+  ...
+# Subtest: candidate artifacts and incomplete or fabricated review coverage cannot be promoted
+ok 44 - candidate artifacts and incomplete or fabricated review coverage cannot be promoted
+  ---
+  duration_ms: 2.831917
+  ...
+# Subtest: receipt pins reject another envelope, source tree or changed human evidence bytes
+ok 45 - receipt pins reject another envelope, source tree or changed human evidence bytes
+  ---
+  duration_ms: 8.779208
+  ...
+# Subtest: promotion preserves every frozen byte and changes only the stable launcher pointer
+ok 46 - promotion preserves every frozen byte and changes only the stable launcher pointer
+  ---
+  duration_ms: 3.7015
+  ...
+# Subtest: inactive historical editions retain frozen files and only the chosen version owns the launcher
+ok 47 - inactive historical editions retain frozen files and only the chosen version owns the launcher
+  ---
+  duration_ms: 1.343958
+  ...
+# Subtest: retained rollback changes only explicitly selected launcher ownership after full artifact verification
+ok 48 - retained rollback changes only explicitly selected launcher ownership after full artifact verification
+  ---
+  duration_ms: 11.174416
+  ...
+# Subtest: invalid retained selections and changed review evidence never return a staged selector
+ok 49 - invalid retained selections and changed review evidence never return a staged selector
+  ---
+  duration_ms: 0.896667
+  ...
+# Subtest: select-retained CLI uses read-only exact downloads and leaves the selector intact on corruption
+ok 50 - select-retained CLI uses read-only exact downloads and leaves the selector intact on corruption
+  ---
+  duration_ms: 2958.082
+  ...
+# Subtest: sync-selector verifies the complete retained publication before selecting a new release
+ok 51 - sync-selector verifies the complete retained publication before selecting a new release
+  ---
+  duration_ms: 3942.903375
+  ...
+# Subtest: upload tag binding uses the qualified tag before any release mutation
+ok 52 - upload tag binding uses the qualified tag before any release mutation
+  ---
+  duration_ms: 574.717375
+  ...
+# Subtest: sync-selector refuses changed retained ZIPs, source identities, evidence and missing assets without staging
+ok 53 - sync-selector refuses changed retained ZIPs, source identities, evidence and missing assets without staging
+  ---
+  duration_ms: 1933.149833
+  ...
+# Subtest: sync-selector rejects invalid retained selections before downloads and preserves concurrent local edits
+ok 54 - sync-selector rejects invalid retained selections before downloads and preserves concurrent local edits
+  ---
+  duration_ms: 1879.635625
+  ...
+# Subtest: duplicate active launchers and duplicate selected identities fail before release reads
+ok 55 - duplicate active launchers and duplicate selected identities fail before release reads
+  ---
+  duration_ms: 1.584333
+  ...
+# Subtest: a different deployment base path cannot reuse the frozen PWA installation identity
+ok 56 - a different deployment base path cannot reuse the frozen PWA installation identity
+  ---
+  duration_ms: 0.692584
+  ...
+# Subtest: configured deployment mismatch rejects a selector before reading any release assets
+ok 57 - configured deployment mismatch rejects a selector before reading any release assets
+  ---
+  duration_ms: 0.308834
+  ...
+# Subtest: repeated verification and extraction use one bounded original download per release asset
+ok 58 - repeated verification and extraction use one bounded original download per release asset
+  ---
+  duration_ms: 1.111958
+  ...
+# Subtest: published selector rejects changed receipt bytes and changed distribution payload
+ok 59 - published selector rejects changed receipt bytes and changed distribution payload
+  ---
+  duration_ms: 0.807208
+  ...
+# Subtest: publication requires an independently resolved tag matching both source commit and tree
+ok 60 - publication requires an independently resolved tag matching both source commit and tree
+  ---
+  duration_ms: 0.658542
+  ...
+# Subtest: renamed DroneAid publishes one canonical launcher and preserves legacy frozen releases and links
+ok 61 - renamed DroneAid publishes one canonical launcher and preserves legacy frozen releases and links
+  ---
+  duration_ms: 2.164417
+  ...
+# Subtest: rollback to a frozen legacy DroneAid release keeps the canonical launcher address reachable
+ok 62 - rollback to a frozen legacy DroneAid release keeps the canonical launcher address reachable
+  ---
+  duration_ms: 1.782375
+  ...
+# Subtest: offline artifacts are reproducible with distinct stable app IDs and scoped workers
+ok 63 - offline artifacts are reproducible with distinct stable app IDs and scoped workers
+  ---
+  duration_ms: 339.157375
+  ...
+# Subtest: real generated worker verifies all files, serves offline, and scopes messages
+ok 64 - real generated worker verifies all files, serves offline, and scopes messages
+  ---
+  duration_ms: 121.6
+  ...
+# Subtest: corrupt downloads refuse worker installation and over-budget editions are refused
+ok 65 - corrupt downloads refuse worker installation and over-budget editions are refused
+  ---
+  duration_ms: 81.99425
+  ...
+# Subtest: offline downloads stop and cancel overlong streams before allocating the advertised body
+ok 66 - offline downloads stop and cancel overlong streams before allocating the advertised body
+  ---
+  duration_ms: 84.68
+  ...
+# Subtest: launcher identity and palette are branded before scripts run and reject CSS injection
+ok 67 - launcher identity and palette are branded before scripts run and reject CSS injection
+  ---
+  duration_ms: 24.746958
+  ...
+# Subtest: manifest raster icon format and dimensions come from the original image bytes
+ok 68 - manifest raster icon format and dimensions come from the original image bytes
+  ---
+  duration_ms: 25.427042
+  ...
+# Subtest: an active unchanged worker repairs only evicted or corrupt files after an interrupted download
+ok 69 - an active unchanged worker repairs only evicted or corrupt files after an interrupted download
+  ---
+  duration_ms: 71.540459
+  ...
+# Subtest: cache storage failures never certify a partial game or launcher and repair preserves retained editions
+ok 70 - cache storage failures never certify a partial game or launcher and repair preserves retained editions
+  ---
+  duration_ms: 464.22475
+  ...
+# Subtest: game and launcher online fetches remain byte-verified when caching is unavailable
+ok 71 - game and launcher online fetches remain byte-verified when caching is unavailable
+  ---
+  duration_ms: 28.689417
+  ...
+# Subtest: failed update and foreign-client repair cannot change a retained release or another edition cache
+ok 72 - failed update and foreign-client repair cannot change a retained release or another edition cache
+  ---
+  duration_ms: 87.678042
+  ...
+# Subtest: generated stable launcher opens verified active and retained release links and rejects foreign update pointers
+ok 73 - generated stable launcher opens verified active and retained release links and rejects foreign update pointers
+  ---
+  duration_ms: 25.212959
+  ...
+# Subtest: canonical DroneAid launcher keeps its stable installed key and reopens saved legacy scopes
+ok 74 - canonical DroneAid launcher keeps its stable installed key and reopens saved legacy scopes
+  ---
+  duration_ms: 22.112542
+  ...
+# Subtest: all official missions have gameplay-only closure and soundtrack groups exactly match Audio settings
+ok 75 - all official missions have gameplay-only closure and soundtrack groups exactly match Audio settings
+  ---
+  duration_ms: 856.36025
+  ...
+# Subtest: publisher copies only the frozen lightweight launcher and points at the immutable edition
+ok 76 - publisher copies only the frozen lightweight launcher and points at the immutable edition
+  ---
+  duration_ms: 320.026458
+  ...
+1..76
+# tests 76
+# suites 0
+# pass 76
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11880.166875

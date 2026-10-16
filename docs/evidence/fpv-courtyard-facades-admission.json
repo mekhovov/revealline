@@ -1,0 +1,166 @@
+{
+  "format": "FPVCourtyardFacadeAdmission.v1",
+  "candidate": {
+    "admission": {
+      "format": "revealline-optional-package-admission.v1",
+      "packages": [
+        {
+          "bytes": 679266,
+          "files": 48,
+          "id": "civilian-flight",
+          "revision": "68a6c4ebd904a16c54475cd281ec89e82ccc0b9803c0f47a56099d954fd71249"
+        },
+        {
+          "bytes": 4384679,
+          "files": 69,
+          "id": "civilian-fpv",
+          "revision": "03b6a2395990557f61c9ecaddd6c19b2a1237898fae6676e1b8fd329f0164b43"
+        },
+        {
+          "bytes": 15536580,
+          "files": 102,
+          "id": "fpv-worlds",
+          "revision": "6528c3c9392afcfe3c450d64be8305b72467d88725f711135cf96c140fc5f724"
+        }
+      ],
+      "publicEligible": false,
+      "sourceRevision": "c452dd215d62f5e0a5b87584f407a6c7a24cdd6b",
+      "sourceTree": "ddb5b5ecd82b44d85703133a243db832e61370a7",
+      "version": "v0.142.4",
+      "zipMembersVerified": true
+    },
+    "committedInputsVerified": true,
+    "envelopeSha256": "548cc4691912e25508d068f8dd1a28bfb8644fae4fc3f244600b7b9a67cd61f7",
+    "format": "revealline-optional-package-candidate-verification.v1",
+    "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "sourceRevision": "c452dd215d62f5e0a5b87584f407a6c7a24cdd6b",
+    "sourceTree": "ddb5b5ecd82b44d85703133a243db832e61370a7",
+    "version": "v0.142.4"
+  },
+  "artifactChecksumsVerified": 15,
+  "checksums": [
+    {
+      "bytes": 686136,
+      "path": "distribution-optional-civilian-flight.zip",
+      "sha256": "8d8ac8477c39a29844635dd8e33a781866a04c86a3664b015c8f724cabaf12f6"
+    },
+    {
+      "bytes": 4394893,
+      "path": "distribution-optional-civilian-fpv.zip",
+      "sha256": "6411c361e65b4b27e9260f0fe604ff5a52e979ee76827a0e1151a96b4c6dd372"
+    },
+    {
+      "bytes": 15552686,
+      "path": "distribution-optional-fpv-worlds.zip",
+      "sha256": "00e62f023317fceb6f4c223fd25b4477a040e4ecacc3c27905c79ea38e37a4d4"
+    },
+    {
+      "bytes": 8847,
+      "path": "manifest-optional-civilian-flight.json",
+      "sha256": "36367b519ae8f99f2b427acf05750acdd5c0e89ed81cc2a8481fabbc7d4cec74"
+    },
+    {
+      "bytes": 12570,
+      "path": "manifest-optional-civilian-fpv.json",
+      "sha256": "c525013b1a98b4c9e4c691772c6eeb65ea60db4b3876acc9f73c1bf5c56829c5"
+    },
+    {
+      "bytes": 18746,
+      "path": "manifest-optional-fpv-worlds.json",
+      "sha256": "9ae4d95aae6c554b7b7d643af034f6c648a89cce6675bb89f0dc6faf17862664"
+    },
+    {
+      "bytes": 1142,
+      "path": "optional-candidate-verification.json",
+      "sha256": "1ea8bc7b3fbd2d9c27b04d7676df4e3660f416d126de928c636b19a028b979bd"
+    },
+    {
+      "bytes": 2838,
+      "path": "optional-package-review.json",
+      "sha256": "7cfa4d05b63e52da70d3676a375ddc0fa45082cb2e1d6c0d12e4bde0807efcdb"
+    },
+    {
+      "bytes": 2633,
+      "path": "optional-packages.json",
+      "sha256": "548cc4691912e25508d068f8dd1a28bfb8644fae4fc3f244600b7b9a67cd61f7"
+    },
+    {
+      "bytes": 14052,
+      "path": "source-inventory-optional-civilian-flight.json",
+      "sha256": "58b4567cb4bfe5624f12a96ab2f57b4d1107bfdee2d3d8255041af94c36e6021"
+    },
+    {
+      "bytes": 21034,
+      "path": "source-inventory-optional-civilian-fpv.json",
+      "sha256": "ca9113f6868461223d0517e4d318b88eba5890679e0b70acd902667a2d039f55"
+    },
+    {
+      "bytes": 32166,
+      "path": "source-inventory-optional-fpv-worlds.json",
+      "sha256": "2d16aa10e0911c9e5a56a52bcbd2604081f7893539ff92bacc8ae19706af9724"
+    },
+    {
+      "bytes": 711655,
+      "path": "source-optional-civilian-flight.zip",
+      "sha256": "5ea21faa988faaac7e037c8afe84360f4340dcc45d2bf6298312bf49144785b6"
+    },
+    {
+      "bytes": 4423644,
+      "path": "source-optional-civilian-fpv.zip",
+      "sha256": "792b672862d4a96032ca7bfa282a9878c800bfc742471afb3ef371c8dc441a54"
+    },
+    {
+      "bytes": 15586401,
+      "path": "source-optional-fpv-worlds.zip",
+      "sha256": "226f60eb9c0a2fb9e8276500370ee1fdc3fd48b09a9594c4cf1762493fcd0cd2"
+    }
+  ],
+  "sourceInventories": [
+    {
+      "id": "civilian-flight",
+      "inputFiles": 41,
+      "inputBytes": 1902195,
+      "sourceFiles": 49,
+      "sourceBytes": 690397
+    },
+    {
+      "id": "civilian-fpv",
+      "inputFiles": 62,
+      "inputBytes": 5602329,
+      "sourceFiles": 70,
+      "sourceBytes": 4392092
+    },
+    {
+      "id": "fpv-worlds",
+      "inputFiles": 95,
+      "inputBytes": 16742742,
+      "sourceFiles": 103,
+      "sourceBytes": 15537825
+    }
+  ],
+  "sourceVsPackagedRendering": {
+    "modules": 31,
+    "admittedZipAndPlayerExact": true,
+    "onlyGeneratedCatalogDiffersFromSource": [
+      "game/i18n/catalogs.mjs"
+    ],
+    "harnessDifference": "Only provenance label: working tree instead of dot and explicit Runtime SHA-256 prefix. All qualification and render logic unchanged."
+  },
+  "player": {
+    "root": "dist/fpv-courtyard-facades-playtest-c452dd215",
+    "fixture": "dist/fpv-courtyard-facades-verification-package-c452dd215",
+    "receipt": {
+      "out": "/Users/oleksandr.mekhovov/.codex/worktrees/fpv-stadium-structures/go_test/dist/fpv-courtyard-facades-playtest-c452dd215",
+      "format": "FPVPlaytestBuild.v1",
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "files": 94,
+      "bytes": 15378809,
+      "zipSha256": "882e54c123843ce1065310e33a5bda52673a7c6700cf4d8a3ea56af1ea244e7e",
+      "qualification": "development-playtest",
+      "unitTests": "deferred-to-final-phase",
+      "releaseQualified": false
+    }
+  }
+}

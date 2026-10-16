@@ -25,6 +25,7 @@ import {
   exportPackLibrary,
 } from '../packs.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 import { releasePictureForIdentity } from '../presentation/release-pictures.mjs';
 
 const root = new URL('../../', import.meta.url);
@@ -200,6 +201,16 @@ async function setup(
   let holdBody = null;
   globalThis.fetch = async (url, options) => {
     if (!String(url).startsWith('http')) return fetchBefore(url, options);
+    // Presentation manifests and their authenticated image assets belong to
+    // soloPage's existing local-file boundary, not optional-pack transport.
+    // Keep this wrapper strict for every other HTTP request and count only
+    // optional catalogue/pack reads in the no-redownload assertions below.
+    const requestURL = new URL(String(url));
+    if (
+      requestURL.origin === 'http://localhost' &&
+      requestURL.pathname.startsWith('/game/presentation/')
+    )
+      return fetchBefore(url, options);
     requests.push(String(url));
     if (String(url).endsWith('game/content/optional-worlds.json'))
       return new Response(JSON.stringify(optional));
@@ -311,6 +322,7 @@ async function win(p) {
     }),
   );
   if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
+  p.$('show-result').click();
   await settle(() =>
     [...p.$('missions').children].every((b) => b.dataset.pictureState !== 'loading'),
   );
@@ -445,8 +457,13 @@ test('unfinished flight keeps its exact cut through Stay, then one Replace compl
   const verifiedSave = p.storage.getItem(sessionKey);
   const original = JSON.parse(before.saved),
     verified = JSON.parse(verifiedSave);
-  delete original.savedAt;
-  delete verified.savedAt;
+  const originalSession = nativeCaptureSession(original),
+    verifiedSession = nativeCaptureSession(verified);
+  assert.ok(Number.isFinite(Date.parse(originalSession.savedAt)));
+  assert.ok(Number.isFinite(Date.parse(verifiedSession.savedAt)));
+  assert.ok(Date.parse(verifiedSession.savedAt) >= Date.parse(originalSession.savedAt));
+  delete originalSession.savedAt;
+  delete verifiedSession.savedAt;
   assert.deepEqual(verified, original);
   before.saved = verifiedSave;
   p.$('mission-replace-stay').click();
@@ -667,6 +684,10 @@ test('modeled Settings and return during download retire launch intent before an
   assert.equal(p.$('settings-dialog').open, true);
   p.doc.querySelector('[data-close="settings-dialog"]').click();
   assert.equal(p.$('settings-dialog').open, false);
+  // Shared modal navigation restores the opener in a microtask after all close
+  // handlers can claim a newer focus. Observe that boundary before releasing
+  // the held download; do not replace it with an arbitrary delay.
+  await settle(() => p.doc.activeElement === p.$('optional-worlds-cancel'));
   const returnFocus = p.doc.activeElement;
   assert.equal(returnFocus, p.$('optional-worlds-cancel'));
   assert.equal(

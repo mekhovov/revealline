@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: current Team assembly uses separate exact recipe and equipment reviews
+not ok 1 - current Team assembly uses separate exact recipe and equipment reviews
+  ---
+  duration_ms: 474.26925
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/team-production-review.test.mjs:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Team Support has its own scoped functional declaration
+    + actual - expected
+
+    + 'source'
+    - 'reviewed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'reviewed'
+  actual: 'source'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/game/test/team-production-review.test.mjs:17:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: each declared Team recipe dependency changes its fingerprint independently
+ok 2 - each declared Team recipe dependency changes its fingerprint independently
+  ---
+  duration_ms: 402.619209
+  type: 'test'
+  ...
+# Subtest: every declared helper invalidates all sharing groups and leaves nonconsumers unchanged
+ok 3 - every declared helper invalidates all sharing groups and leaves nonconsumers unchanged
+  ---
+  duration_ms: 41.216209
+  type: 'test'
+  ...
+# Subtest: missing helper bytes cannot produce a supposedly valid fingerprint
+ok 4 - missing helper bytes cannot produce a supposedly valid fingerprint
+  ---
+  duration_ms: 4.987917
+  type: 'test'
+  ...
+# Subtest: audio continuation pins both current review and immutable predecessor bytes
+ok 5 - audio continuation pins both current review and immutable predecessor bytes
+  ---
+  duration_ms: 3.545958
+  type: 'test'
+  ...
+# Subtest: current presentation continuation authenticates each immutable predecessor
+ok 6 - current presentation continuation authenticates each immutable predecessor
+  ---
+  duration_ms: 31.612625
+  type: 'test'
+  ...
+# Subtest: scoped current Team and equipment approval retains every semantic guard
+not ok 7 - scoped current Team and equipment approval retains every semantic guard
+  ---
+  duration_ms: 508.997042
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/scripts/test-field-kit-recipe-sources.mjs:175:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    team.enemy.drifter
+    + actual - expected
+
+    + 'source'
+    - 'reviewed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'reviewed'
+  actual: 'source'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/actor-loader-regression/go_test/scripts/test-field-kit-recipe-sources.mjs:212:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: company startup audio review and both immutable predecessor byte strings fail closed
+ok 8 - company startup audio review and both immutable predecessor byte strings fail closed
+  ---
+  duration_ms: 3.649417
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 6
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1237.443292

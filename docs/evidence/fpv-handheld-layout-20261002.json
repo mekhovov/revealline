@@ -1,0 +1,1329 @@
+{
+  "format": "FPVHandheldLayoutEvidence.v1",
+  "status": "passed",
+  "sources": {
+    "/optional-practice/civilian-fpv/app.mjs": "c06ae3fa70d08ecfca77cf4dc8541cb3bdd7b0e1572e2cdf3b4854a28f237bcf",
+    "/optional-practice/civilian-fpv/world-app.mjs": "ba44d42728c2715dbaba77cc4eb7afc0ea929dc2ef3dc7f26aa514ce02d03bd3",
+    "/optional-practice/civilian-fpv/input.mjs": "d23195a04aad25ba9a45e62d5b69e0aeb9650c24724c1e1e0132cec2f828f277",
+    "/optional-practice/civilian-fpv/beginner-coach.mjs": "5c078ab1bb114ef7a63d9435c2c33f3adf40896bf5ef03333958ba9f845b3a5c",
+    "/optional-practice/civilian-fpv/style.css": "2f1d5e02227ef44817c25da499d0158f3d84e4263f3a0bc7ed7f86ecfe39711f",
+    "/optional-practice/civilian-fpv/world-style.css": "14015e9aea9781316cb9c7dd8c7eb5b9b5c9bef026780573c86acc6c64a361c0",
+    "/optional-practice/civilian-fpv/index.html": "2be1b614e049a7c59696db9d18cc2697a2cda99c40aa9be24751308665cab0ff",
+    "/optional-practice/fpv-worlds/index.html": "56da2c8a764ecf0a7b437a31bdaa89805fcbe272bfae12d232d7d35f5e083681"
+  },
+  "checks": [
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Viewport occupies the available iframe",
+      "pass": true,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "right": 390,
+        "bottom": 844
+      }
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Menu visible inside viewport with44px target",
+      "pass": true,
+      "bounds": {
+        "x": 317.84375,
+        "y": 10,
+        "width": 60.15625,
+        "height": 44,
+        "right": 378,
+        "bottom": 54
+      }
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Paused Resume is visible",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Closed flight has no menu hint overlay",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Detailed header/footer are out of flight view",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Coarse first visit defaults to touch",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "No duplicate throttle slider in touch flight",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Menu opens with visible return control",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Paused menu hides covered flight canvas",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Paused menu does not overflow horizontally",
+      "pass": true,
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Menu stays paused",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Back to flight never arms",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Closing menu restores viewport and controls",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Active flight hides Resume",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Central flight area remains clear",
+      "pass": true,
+      "central": {
+        "x": 117,
+        "y": 227.88000000000002,
+        "right": 273,
+        "bottom": 590.8
+      },
+      "overlaps": []
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "Menu pauses active flight",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "en"
+      },
+      "name": "No uncaught host errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Viewport occupies the available iframe",
+      "pass": true,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844,
+        "right": 390,
+        "bottom": 844
+      }
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Menu visible inside viewport with44px target",
+      "pass": true,
+      "bounds": {
+        "x": 314.7265625,
+        "y": 10,
+        "width": 63.2734375,
+        "height": 44,
+        "right": 378,
+        "bottom": 54
+      }
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Paused Resume is visible",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Closed flight has no menu hint overlay",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Detailed header/footer are out of flight view",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Coarse first visit defaults to touch",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Menu opens with visible return control",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Paused menu hides covered flight canvas",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Paused menu does not overflow horizontally",
+      "pass": true,
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Menu stays paused",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Back to flight never arms",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Closing menu restores viewport and controls",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Active flight hides Resume",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Central flight area remains clear",
+      "pass": true,
+      "central": {
+        "x": 117,
+        "y": 227.88000000000002,
+        "right": 273,
+        "bottom": 590.8
+      },
+      "overlaps": []
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "Menu pauses active flight",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 390,
+        "h": 844,
+        "coarse": true,
+        "standalone": false,
+        "locale": "uk"
+      },
+      "name": "No uncaught host errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Viewport occupies the available iframe",
+      "pass": true,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 390,
+        "right": 844,
+        "bottom": 390
+      }
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Menu visible inside viewport with44px target",
+      "pass": true,
+      "bounds": {
+        "x": 768.7265625,
+        "y": 10,
+        "width": 63.2734375,
+        "height": 44,
+        "right": 832,
+        "bottom": 54
+      }
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Paused Resume is visible",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Closed flight has no menu hint overlay",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Detailed header/footer are out of flight view",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Coarse first visit defaults to touch",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "No duplicate throttle slider in touch flight",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Menu opens with visible return control",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Paused menu hides covered flight canvas",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Paused menu does not overflow horizontally",
+      "pass": true,
+      "scrollWidth": 844,
+      "clientWidth": 844
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Menu stays paused",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Back to flight never arms",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Closing menu restores viewport and controls",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Active flight hides Resume",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Central flight area remains clear",
+      "pass": true,
+      "central": {
+        "x": 253.2,
+        "y": 105.30000000000001,
+        "right": 590.8,
+        "bottom": 273
+      },
+      "overlaps": []
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Menu pauses active flight",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "No uncaught host errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Viewport occupies the available iframe",
+      "pass": true,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 390,
+        "right": 844,
+        "bottom": 390
+      }
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Menu visible inside viewport with44px target",
+      "pass": true,
+      "bounds": {
+        "x": 771.84375,
+        "y": 10,
+        "width": 60.15625,
+        "height": 44,
+        "right": 832,
+        "bottom": 54
+      }
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Paused Resume is visible",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Closed flight has no menu hint overlay",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Detailed header/footer are out of flight view",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Coarse first visit defaults to touch",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Menu opens with visible return control",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Paused menu hides covered flight canvas",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Paused menu does not overflow horizontally",
+      "pass": true,
+      "scrollWidth": 844,
+      "clientWidth": 844
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Menu stays paused",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Back to flight never arms",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Closing menu restores viewport and controls",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Active flight hides Resume",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Central flight area remains clear",
+      "pass": true,
+      "central": {
+        "x": 253.2,
+        "y": 105.30000000000001,
+        "right": 590.8,
+        "bottom": 273
+      },
+      "overlaps": []
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Menu pauses active flight",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 844,
+        "h": 390,
+        "coarse": true,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "No uncaught host errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Viewport occupies the available iframe",
+      "pass": true,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800,
+        "right": 1280,
+        "bottom": 800
+      }
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Menu visible inside viewport with44px target",
+      "pass": true,
+      "bounds": {
+        "x": 1207.84375,
+        "y": 10,
+        "width": 60.15625,
+        "height": 44,
+        "right": 1268,
+        "bottom": 54
+      }
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Paused Resume is visible",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Closed flight has no menu hint overlay",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Detailed header/footer are out of flight view",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Menu opens with visible return control",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Paused menu hides covered flight canvas",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Paused menu does not overflow horizontally",
+      "pass": true,
+      "scrollWidth": 1280,
+      "clientWidth": 1280
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Menu stays paused",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Back to flight never arms",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Closing menu restores viewport and controls",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Active flight hides Resume",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Central flight area remains clear",
+      "pass": true,
+      "central": {
+        "x": 384,
+        "y": 216,
+        "right": 896,
+        "bottom": 560
+      },
+      "overlaps": []
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "Menu pauses active flight",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "academy",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "en"
+      },
+      "name": "No uncaught host errors",
+      "pass": true,
+      "errors": []
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Viewport occupies the available iframe",
+      "pass": true,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800,
+        "right": 1280,
+        "bottom": 800
+      }
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Menu visible inside viewport with44px target",
+      "pass": true,
+      "bounds": {
+        "x": 1204.7265625,
+        "y": 10,
+        "width": 63.2734375,
+        "height": 44,
+        "right": 1268,
+        "bottom": 54
+      }
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Paused Resume is visible",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Closed flight has no menu hint overlay",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Detailed header/footer are out of flight view",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Menu opens with visible return control",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Paused menu hides covered flight canvas",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Paused menu does not overflow horizontally",
+      "pass": true,
+      "scrollWidth": 1280,
+      "clientWidth": 1280
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Menu stays paused",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Back to flight never arms",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Closing menu restores viewport and controls",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Active flight hides Resume",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Central flight area remains clear",
+      "pass": true,
+      "central": {
+        "x": 384,
+        "y": 216,
+        "right": 896,
+        "bottom": 560
+      },
+      "overlaps": []
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "Menu pauses active flight",
+      "pass": true
+    },
+    {
+      "case": {
+        "host": "world",
+        "w": 1280,
+        "h": 800,
+        "coarse": false,
+        "standalone": true,
+        "locale": "uk"
+      },
+      "name": "No uncaught host errors",
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "limitations": [
+    "Controlled browser layout and feature-query wrappers, not physical mobile/Steam Deck acceptance.",
+    "Actual host canvas/menu/input lifecycle; no GPU-performance or safe-area hardware claim.",
+    "No unit suite added."
+  ]
+}

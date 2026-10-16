@@ -1,0 +1,57 @@
+{
+  "format": "revealline-curated-appearance-acceptance.v1",
+  "basis": {
+    "familyId": "dnipro-porcelain",
+    "familyRevision": "r1",
+    "interfaceId": "dnipro-porcelain",
+    "interfaceRevision": "r1"
+  },
+  "pin": {
+    "familyId": "candidate-67ed37898477f80f",
+    "revision": "r1"
+  },
+  "engineInputSha256": "e36077d934e98bedf9f5670c6459092abce664c3dcc91c9173935d8e9be0d157",
+  "scope": "Compiled bytes, real HTTP, emitted runtime and cache-only Node reload; DOM adapter for host assertions. Physical browser/offline installation requires separate evidence.",
+  "checks": [
+    "saved basis/native/runtime/source-draft round trips",
+    "one immutable candidate in two unrelated communities",
+    "real compiler report and every artifact hash",
+    "compiled entry redirect and emitted runtime provider over HTTP",
+    "verified cache-only reload with no network fallback",
+    "community boundary and authored presentation identity",
+    "personal choice precedence and unavailable exact revision recovery (DOM adapter)",
+    "source content byte preservation"
+  ],
+  "communities": [
+    {
+      "context": "north",
+      "route": "http://127.0.0.1:8876/north/game/company.html",
+      "files": 745,
+      "bytes": 19601025,
+      "headroomBytes": 47507839,
+      "verifiedFiles": 745,
+      "entrySha256": "8b1b08878eb10c4c6e14bc3285f4a5985ccb815abefe8c8d634429cffadaddf6",
+      "canonicalEntrySha256": "11b769b01b5c55edb7d324cb8afc176b20b0e4397329688870066d1dd90bde6d",
+      "catalogSha256": "ca6de17a2fddaa2ac9b6e41fcfc60b33488077513a3062c224232617ca6ffe61",
+      "emittedModules": 142,
+      "offlineFiles": 716,
+      "offlineRequests": 8,
+      "authoredPresentationSha256": "09f7682d11cfb54e2f75f15b3ea1f8ad7151a02b9cd4e67f4b581b8882fce249"
+    },
+    {
+      "context": "south",
+      "route": "http://127.0.0.1:8876/south/game/company.html",
+      "files": 745,
+      "bytes": 19600947,
+      "headroomBytes": 47507917,
+      "verifiedFiles": 745,
+      "entrySha256": "8f391fd67a9d681674a4ce555255685aa67c1b0b8e1c058264562df53bf264a4",
+      "canonicalEntrySha256": "b39f7fad68eb8e6277fac8d49c5ec703f05417dd96d0c32d9efb0e56ebd56846",
+      "catalogSha256": "f0bf4a77904e692a3913deefcb1f3b5f2aae3d92f723aaf6b06061e54ccc1b8e",
+      "emittedModules": 142,
+      "offlineFiles": 716,
+      "offlineRequests": 8,
+      "authoredPresentationSha256": "67b4e58dba8ac594b35561d204fb52e1c65787cdc77ec0fa2959e15f4006c972"
+    }
+  ]
+}

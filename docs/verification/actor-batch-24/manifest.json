@@ -1,0 +1,124 @@
+{
+  "parent": "752df72d66c1a1bbbebb95e9db72fe8de0e1f332",
+  "productionReview": "deferred-not-passed",
+  "focusedResults": {
+    "soloFreezeContinue": {
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "note": "One parent journey and two sequential host subtests; modeled browser boundary."
+    },
+    "numericHud": {
+      "pass": 2,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "sentryImpactRecovery": {
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "note": "Authored Standard/grid-center/seed1; partial replays, no terminal win or native artwork claim."
+    }
+  },
+  "parentHudEvidence": "1pass/1failure on actual fractional label; test later formatted without assertion changes.",
+  "freezeDiagnostics": "Fixture development only, not product regression evidence.",
+  "limits": [
+    "No new production approval or native artwork adoption",
+    "No fresh native-browser or physical-device acceptance",
+    "Long suites waived, not passed",
+    "Publisher retains integrated build/provenance/public acceptance"
+  ],
+  "files": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 461298,
+      "sha256": "273833163b8ad00950e83ecc97363a9e2d74551075ac170cfe1700394139e092"
+    },
+    {
+      "path": "game/test/hud-numeric-values.test.mjs",
+      "bytes": 3305,
+      "sha256": "2144b959a74c6e2be4cd6f2d561bca075e7eff71bc5421d69ec686e451c6ea53"
+    },
+    {
+      "path": "game/test/solo-continue-freeze-presentation.test.mjs",
+      "bytes": 11532,
+      "sha256": "64d4b369622a5fd3b88e2e5b12e4518568c07f4a0eec20fa4ecbc9564c7b6052"
+    },
+    {
+      "path": "game/test/sentry-impact-recovery-host.test.mjs",
+      "bytes": 13105,
+      "sha256": "07a47cb6427106d0d6530ad78cb186438c116d3a9d5c2f4037e0560ccbf12f1a"
+    },
+    {
+      "path": "game/content/packs/classic-lab.json",
+      "bytes": 40556,
+      "sha256": "661dfa8ec8a7304b2b3efd47195f83a0424fd9e36a2ced570435402cca5c852b"
+    },
+    {
+      "path": "game/content-design/combat-candidates.mjs",
+      "bytes": 6419,
+      "sha256": "241cca3ee64dcadd779e433687143549bb16c1054c05fbb63f5b0c51eb71495e"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 373346,
+      "sha256": "e1f09e89979e7f7ad79d605af3e704a16ace6459b3c0810ad1105dcecef07d2a"
+    },
+    {
+      "path": "authoring/prompts/field-kit-production.md",
+      "bytes": 12318,
+      "sha256": "06acea0d54baf54a7517955322bd89b057f3bb2d38a5dc1e76258d958fb30dad"
+    },
+    {
+      "path": "docs/character-game-feel-plan.md",
+      "bytes": 42187,
+      "sha256": "8ed0e395f486298d7e23d9fe55d407620279f8290d6dca75b4baf01e62fddae7"
+    },
+    {
+      "path": "docs/plan-status-2026-09-29.md",
+      "bytes": 32544,
+      "sha256": "c0fb7eedfc6f71786eef72582cca2ecda6860c5b32f95bbca543f61940cc7c39"
+    },
+    {
+      "path": "docs/verification/actor-batch-24/README.md",
+      "bytes": 6067,
+      "sha256": "68df69c12268883fa7e53a5def7e0791676336bb9063b32381d66d8cb9e35f62"
+    },
+    {
+      "path": "docs/verification/actor-batch-24/freeze-final.tap",
+      "bytes": 907,
+      "sha256": "8357d7835f328ec2726e4ab47982b9c60422b93d94e1c7169dc21cb781650bc3"
+    },
+    {
+      "path": "docs/verification/actor-batch-24/freeze-fixture-diagnostics.txt.gz",
+      "bytes": 3617,
+      "sha256": "9740efaacd46ab7be3cf6b6143e7809c0dacfc5790a9120724f71610c00b3387"
+    },
+    {
+      "path": "docs/verification/actor-batch-24/hud-final.tap",
+      "bytes": 564,
+      "sha256": "6fb94066e3bc8947fb0b4ab29fca6ada29f33aac5180d7e98418e6bedf4c3e2b"
+    },
+    {
+      "path": "docs/verification/actor-batch-24/hud-parent-red.tap",
+      "bytes": 1302,
+      "sha256": "a3d7419bf9c0ae02b72de063134dd889e6f479fd9c3382b3cbf69db5019bb585"
+    },
+    {
+      "path": "docs/verification/actor-batch-24/sentry-final.tap",
+      "bytes": 432,
+      "sha256": "412767d8dce72567c1098e37c0e4f654a5cfb164c495023ca7df3b79c5751470"
+    }
+  ],
+  "decodedDiagnostics": {
+    "bytes": 34451,
+    "sha256": "42307ecb7fbbf5458de2c7b8dca4fadb6636bbee33822bb527ffb493381f652b"
+  },
+  "preservedIntermediateCommits": [
+    "547bb44cb052fb821b1250880cd57632cd64de65",
+    "69dd53c88194d0cbf00c8c8c939004f90936ec26"
+  ]
+}

@@ -1,0 +1,4271 @@
+{
+  "format": "FPVHarborWorldQualification.v1",
+  "status": "failed",
+  "pack": {
+    "path": "/tmp/fpv-harbor-world-r3-v1/prepared/harbor-docks.r3.rlpack",
+    "bytes": 878942,
+    "sha256": "97887c21d200f6e1bc180eea7aeb2e1ed99e72eb4e86e089ab39dd0ab108dcad",
+    "identity": "fpv-pack:97887c21d200f6e1bc180eea7aeb2e1ed99e72eb4e86e089ab39dd0ab108dcad"
+  },
+  "checks": [
+    {
+      "name": "Exact eight-course allocation",
+      "passed": true
+    },
+    {
+      "name": "Eight distinct actual ordered criteria sets",
+      "passed": true
+    },
+    {
+      "name": "Accepted r2 scene source identity",
+      "passed": true
+    },
+    {
+      "name": "Only follow, observe and isolated training layouts own actors",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-05 real actor spawn is clear",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-05 actual civilian subject and tracking objective",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-05 deliberate follow/observe criterion",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-05 real actor ground sweep1",
+      "passed": true,
+      "detail": {
+        "goal": {
+          "x": 4000,
+          "y": 2000,
+          "z": 0
+        },
+        "position": {
+          "x": 4000,
+          "y": 2000,
+          "z": 0
+        },
+        "blocked": false,
+        "maxSupportDeviation": 0
+      }
+    },
+    {
+      "name": "harbor-docks-05 actor waypoint1 named raised support",
+      "passed": true,
+      "detail": {
+        "support": "platform-quay",
+        "goal": {
+          "x": 4000,
+          "y": 2000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05 real actor ground sweep2",
+      "passed": false,
+      "detail": {
+        "goal": {
+          "x": 4000,
+          "y": 2000,
+          "z": 18000
+        },
+        "position": {
+          "x": 4000,
+          "y": 2001,
+          "z": 140
+        },
+        "blocked": false,
+        "maxSupportDeviation": 1
+      }
+    },
+    {
+      "name": "harbor-docks-05 actor waypoint2 named raised support",
+      "passed": true,
+      "detail": {
+        "support": "platform-quay",
+        "goal": {
+          "x": 4000,
+          "y": 2000,
+          "z": 18000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05 real actor ground sweep3",
+      "passed": false,
+      "detail": {
+        "goal": {
+          "x": 4000,
+          "y": 2000,
+          "z": 0
+        },
+        "position": {
+          "x": 4000,
+          "y": 1998,
+          "z": 6061
+        },
+        "blocked": false,
+        "maxSupportDeviation": 2
+      }
+    },
+    {
+      "name": "harbor-docks-05 actor waypoint3 named raised support",
+      "passed": true,
+      "detail": {
+        "support": "platform-quay",
+        "goal": {
+          "x": 4000,
+          "y": 2000,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06 real actor spawn is clear",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-06 actual civilian subject and tracking objective",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-06 deliberate follow/observe criterion",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-06 real actor ground sweep1",
+      "passed": true,
+      "detail": {
+        "goal": {
+          "x": -15500,
+          "y": 5500,
+          "z": 30000
+        },
+        "position": {
+          "x": -15500,
+          "y": 5500,
+          "z": 30000
+        },
+        "blocked": false,
+        "maxSupportDeviation": 0
+      }
+    },
+    {
+      "name": "harbor-docks-06 actor waypoint1 named raised support",
+      "passed": true,
+      "detail": {
+        "support": "platform-service-deck",
+        "goal": {
+          "x": -15500,
+          "y": 5500,
+          "z": 30000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06 real actor ground sweep2",
+      "passed": false,
+      "detail": {
+        "goal": {
+          "x": -15500,
+          "y": 5500,
+          "z": 33500
+        },
+        "position": {
+          "x": -15500,
+          "y": 5499,
+          "z": 31450
+        },
+        "blocked": false,
+        "maxSupportDeviation": 1
+      }
+    },
+    {
+      "name": "harbor-docks-06 actor waypoint2 named raised support",
+      "passed": true,
+      "detail": {
+        "support": "platform-service-deck",
+        "goal": {
+          "x": -15500,
+          "y": 5500,
+          "z": 33500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06 real actor ground sweep3",
+      "passed": false,
+      "detail": {
+        "goal": {
+          "x": -15500,
+          "y": 5500,
+          "z": 30000
+        },
+        "position": {
+          "x": -15500,
+          "y": 5500,
+          "z": 32763
+        },
+        "blocked": false,
+        "maxSupportDeviation": 0
+      }
+    },
+    {
+      "name": "harbor-docks-06 actor waypoint3 named raised support",
+      "passed": true,
+      "detail": {
+        "support": "platform-service-deck",
+        "goal": {
+          "x": -15500,
+          "y": 5500,
+          "z": 30000
+        }
+      }
+    },
+    {
+      "name": "Isolated training drone has a clear stationary nonfiring spawn",
+      "passed": true
+    },
+    {
+      "name": "Training standoff has an unobstructed simulated pulse line",
+      "passed": true
+    },
+    {
+      "name": "One shared physical world across eight courses",
+      "passed": true
+    },
+    {
+      "name": "All eight starts retain the clear entry H",
+      "passed": true
+    },
+    {
+      "name": "platform-quay solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-quay retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-quay eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-0 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-0 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-0 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-1 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-1 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-1 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-2 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-2 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-2 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-3 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-3 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-3 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-4 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-4 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-4 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-5 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-5 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-5 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-6 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-6 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-6 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-7 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-7 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-7 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-8 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-8 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-8 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-9 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-9 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-9 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-10 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-10 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-10 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-11 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-11 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "container-harbor-11 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--23 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--23 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--23 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--23 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--23 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--23 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--5 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--5 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-14--5 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--5 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--5 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-14--5 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--23 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--23 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--23 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--23 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--23 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--23 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--5 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--5 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-gantry-foot-32--5 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--5 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--5 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "post-gantry-32--5 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--23 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--23 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--23 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--5 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--5 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-cross--5 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-14 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-14 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-14 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-32 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-32 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "beam-gantry-rail-32 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "beam-quayside-boom solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "beam-quayside-boom retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "beam-quayside-boom eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "gantry-operator-cab solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "gantry-operator-cab retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "gantry-operator-cab eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-house solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-house retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-house eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-annex solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-annex retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "harbor-service-annex eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "platform-service-deck solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "platform-service-deck retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "platform-service-deck eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-27.4 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-27.4 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-27.4 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-35.6 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-35.6 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--20.6-35.6 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-27.4 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-27.4 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-27.4 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-35.6 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-35.6 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "post-service-deck--10.4-35.6 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "wall-quay-boundary solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "wall-quay-boundary retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "wall-quay-boundary eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "bollard--34 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "bollard--34 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "bollard--34 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "bollard-19 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "bollard-19 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "bollard-19 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "bollard-39 solid interior rejects spawn",
+      "passed": true
+    },
+    {
+      "name": "bollard-39 retains a source collider marker",
+      "passed": true
+    },
+    {
+      "name": "bollard-39 eight source corners match physical solid within1mm quantization",
+      "passed": true
+    },
+    {
+      "name": "harbor-docks-01/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 6000,
+          "z": 20000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -2000,
+          "y": 6000,
+          "z": 20000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -3000,
+          "y": 7000,
+          "z": -4000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 6000,
+          "z": 20000
+        },
+        "to": {
+          "x": -3000,
+          "y": 7000,
+          "z": -4000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 24000,
+          "y": 9000,
+          "z": -14000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -3000,
+          "y": 7000,
+          "z": -4000
+        },
+        "to": {
+          "x": 24000,
+          "y": 9000,
+          "z": -14000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 24000,
+          "y": 8000,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 9000,
+          "z": -14000
+        },
+        "to": {
+          "x": 24000,
+          "y": 8000,
+          "z": 25000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 8000,
+          "z": 25000
+        },
+        "to": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 6000,
+          "z": 20000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -2000,
+          "y": 6000,
+          "z": 20000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -3000,
+          "y": 7000,
+          "z": -4000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 6000,
+          "z": 20000
+        },
+        "to": {
+          "x": -3000,
+          "y": 7000,
+          "z": -4000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 24000,
+          "y": 9000,
+          "z": -14000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -3000,
+          "y": 7000,
+          "z": -4000
+        },
+        "to": {
+          "x": 24000,
+          "y": 9000,
+          "z": -14000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 24000,
+          "y": 8000,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 9000,
+          "z": -14000
+        },
+        "to": {
+          "x": 24000,
+          "y": 8000,
+          "z": 25000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 8000,
+          "z": 25000
+        },
+        "to": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-01/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -8000,
+          "y": 5000,
+          "z": 18000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -8000,
+          "y": 5000,
+          "z": 18000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -22000,
+          "z": 15000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -8000,
+          "y": 5000,
+          "z": 18000
+        },
+        "to": {
+          "x": -22000,
+          "z": 15000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28500,
+          "z": 15000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -22000,
+          "z": 15000,
+          "y": 5000
+        },
+        "to": {
+          "x": -28500,
+          "z": 15000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -39000,
+          "y": 5000,
+          "z": 15000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -28500,
+          "z": 15000,
+          "y": 5000
+        },
+        "to": {
+          "x": -39000,
+          "y": 5000,
+          "z": 15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -7000,
+          "x": -39000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -39000,
+          "y": 5000,
+          "z": 15000
+        },
+        "to": {
+          "z": -7000,
+          "x": -39000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -13500,
+          "x": -39000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -7000,
+          "x": -39000,
+          "y": 5000
+        },
+        "to": {
+          "z": -13500,
+          "x": -39000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -29000,
+          "x": -39000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -13500,
+          "x": -39000,
+          "y": 5000
+        },
+        "to": {
+          "z": -29000,
+          "x": -39000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -35500,
+          "x": -39000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -29000,
+          "x": -39000,
+          "y": 5000
+        },
+        "to": {
+          "z": -35500,
+          "x": -39000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -39000,
+          "y": 5000,
+          "z": -38000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -35500,
+          "x": -39000,
+          "y": 5000
+        },
+        "to": {
+          "x": -39000,
+          "y": 5000,
+          "z": -38000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "z": -38000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -39000,
+          "y": 5000,
+          "z": -38000
+        },
+        "to": {
+          "x": -10000,
+          "z": -38000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -3500,
+          "z": -38000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "z": -38000,
+          "y": 5000
+        },
+        "to": {
+          "x": -3500,
+          "z": -38000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 7000,
+          "x": -7000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -3500,
+          "z": -38000,
+          "y": 5000
+        },
+        "to": {
+          "z": 7000,
+          "x": -7000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point13 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 13500,
+          "x": -7000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment13 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 7000,
+          "x": -7000,
+          "y": 5000
+        },
+        "to": {
+          "z": 13500,
+          "x": -7000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point14 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -6000,
+          "y": 5000,
+          "z": 24000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment14 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 13500,
+          "x": -7000,
+          "y": 5000
+        },
+        "to": {
+          "x": -6000,
+          "y": 5000,
+          "z": 24000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level nominal point15 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 5000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level swept segment15 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -6000,
+          "y": 5000,
+          "z": 24000
+        },
+        "to": {
+          "x": -2000,
+          "y": 5000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -8000,
+          "y": 5000,
+          "z": 18000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -8000,
+          "y": 5000,
+          "z": 18000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -22000,
+          "z": 15000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -8000,
+          "y": 5000,
+          "z": 18000
+        },
+        "to": {
+          "x": -22000,
+          "z": 15000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -28500,
+          "z": 15000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -22000,
+          "z": 15000,
+          "y": 5000
+        },
+        "to": {
+          "x": -28500,
+          "z": 15000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -39000,
+          "y": 5000,
+          "z": 15000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -28500,
+          "z": 15000,
+          "y": 5000
+        },
+        "to": {
+          "x": -39000,
+          "y": 5000,
+          "z": 15000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -7000,
+          "x": -39000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -39000,
+          "y": 5000,
+          "z": 15000
+        },
+        "to": {
+          "z": -7000,
+          "x": -39000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -13500,
+          "x": -39000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -7000,
+          "x": -39000,
+          "y": 5000
+        },
+        "to": {
+          "z": -13500,
+          "x": -39000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -29000,
+          "x": -39000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -13500,
+          "x": -39000,
+          "y": 5000
+        },
+        "to": {
+          "z": -29000,
+          "x": -39000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -35500,
+          "x": -39000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -29000,
+          "x": -39000,
+          "y": 5000
+        },
+        "to": {
+          "z": -35500,
+          "x": -39000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -39000,
+          "y": 5000,
+          "z": -38000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -35500,
+          "x": -39000,
+          "y": 5000
+        },
+        "to": {
+          "x": -39000,
+          "y": 5000,
+          "z": -38000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -10000,
+          "z": -38000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -39000,
+          "y": 5000,
+          "z": -38000
+        },
+        "to": {
+          "x": -10000,
+          "z": -38000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -3500,
+          "z": -38000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -10000,
+          "z": -38000,
+          "y": 5000
+        },
+        "to": {
+          "x": -3500,
+          "z": -38000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 7000,
+          "x": -7000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -3500,
+          "z": -38000,
+          "y": 5000
+        },
+        "to": {
+          "z": 7000,
+          "x": -7000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point13 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 13500,
+          "x": -7000,
+          "y": 5000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment13 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 7000,
+          "x": -7000,
+          "y": 5000
+        },
+        "to": {
+          "z": 13500,
+          "x": -7000,
+          "y": 5000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point14 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -6000,
+          "y": 5000,
+          "z": 24000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment14 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 13500,
+          "x": -7000,
+          "y": 5000
+        },
+        "to": {
+          "x": -6000,
+          "y": 5000,
+          "z": 24000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro nominal point15 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 5000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro swept segment15 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -6000,
+          "y": 5000,
+          "z": 24000
+        },
+        "to": {
+          "x": -2000,
+          "y": 5000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-02/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 6000,
+          "z": 22000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": 23000,
+          "y": 6000,
+          "z": 22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 4000,
+          "x": 23000,
+          "y": 6500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 6000,
+          "z": 22000
+        },
+        "to": {
+          "z": 4000,
+          "x": 23000,
+          "y": 6500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -2500,
+          "x": 23000,
+          "y": 6500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 4000,
+          "x": 23000,
+          "y": 6500
+        },
+        "to": {
+          "z": -2500,
+          "x": 23000,
+          "y": 6500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -11000,
+          "x": 23000,
+          "y": 13500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -2500,
+          "x": 23000,
+          "y": 6500
+        },
+        "to": {
+          "z": -11000,
+          "x": 23000,
+          "y": 13500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -17500,
+          "x": 23000,
+          "y": 13500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -11000,
+          "x": 23000,
+          "y": 13500
+        },
+        "to": {
+          "z": -17500,
+          "x": 23000,
+          "y": 13500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 16000,
+          "z": -32000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -17500,
+          "x": 23000,
+          "y": 13500
+        },
+        "to": {
+          "x": 23000,
+          "y": 16000,
+          "z": -32000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 31000,
+          "z": -34000,
+          "y": 18500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 16000,
+          "z": -32000
+        },
+        "to": {
+          "x": 31000,
+          "z": -34000,
+          "y": 18500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 37500,
+          "z": -34000,
+          "y": 18500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 31000,
+          "z": -34000,
+          "y": 18500
+        },
+        "to": {
+          "x": 37500,
+          "z": -34000,
+          "y": 18500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 36000,
+          "y": 18000,
+          "z": -30000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 37500,
+          "z": -34000,
+          "y": 18500
+        },
+        "to": {
+          "x": 36000,
+          "y": 18000,
+          "z": -30000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 4000,
+          "x": 36250,
+          "y": 12500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 36000,
+          "y": 18000,
+          "z": -30000
+        },
+        "to": {
+          "z": 4000,
+          "x": 36250,
+          "y": 12500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 10500,
+          "x": 36250,
+          "y": 12500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 4000,
+          "x": 36250,
+          "y": 12500
+        },
+        "to": {
+          "z": 10500,
+          "x": 36250,
+          "y": 12500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 24000,
+          "y": 9000,
+          "z": 23000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 10500,
+          "x": 36250,
+          "y": 12500
+        },
+        "to": {
+          "x": 24000,
+          "y": 9000,
+          "z": 23000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level nominal point13 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 9000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level swept segment13 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 9000,
+          "z": 23000
+        },
+        "to": {
+          "x": -2000,
+          "y": 9000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 6000,
+          "z": 22000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": 23000,
+          "y": 6000,
+          "z": 22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 4000,
+          "x": 23000,
+          "y": 6500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 6000,
+          "z": 22000
+        },
+        "to": {
+          "z": 4000,
+          "x": 23000,
+          "y": 6500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -2500,
+          "x": 23000,
+          "y": 6500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 4000,
+          "x": 23000,
+          "y": 6500
+        },
+        "to": {
+          "z": -2500,
+          "x": 23000,
+          "y": 6500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -11000,
+          "x": 23000,
+          "y": 13500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -2500,
+          "x": 23000,
+          "y": 6500
+        },
+        "to": {
+          "z": -11000,
+          "x": 23000,
+          "y": 13500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -17500,
+          "x": 23000,
+          "y": 13500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -11000,
+          "x": 23000,
+          "y": 13500
+        },
+        "to": {
+          "z": -17500,
+          "x": 23000,
+          "y": 13500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 16000,
+          "z": -32000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -17500,
+          "x": 23000,
+          "y": 13500
+        },
+        "to": {
+          "x": 23000,
+          "y": 16000,
+          "z": -32000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 31000,
+          "z": -34000,
+          "y": 18500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 16000,
+          "z": -32000
+        },
+        "to": {
+          "x": 31000,
+          "z": -34000,
+          "y": 18500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 37500,
+          "z": -34000,
+          "y": 18500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 31000,
+          "z": -34000,
+          "y": 18500
+        },
+        "to": {
+          "x": 37500,
+          "z": -34000,
+          "y": 18500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 36000,
+          "y": 18000,
+          "z": -30000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 37500,
+          "z": -34000,
+          "y": 18500
+        },
+        "to": {
+          "x": 36000,
+          "y": 18000,
+          "z": -30000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 4000,
+          "x": 36250,
+          "y": 12500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 36000,
+          "y": 18000,
+          "z": -30000
+        },
+        "to": {
+          "z": 4000,
+          "x": 36250,
+          "y": 12500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 10500,
+          "x": 36250,
+          "y": 12500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 4000,
+          "x": 36250,
+          "y": 12500
+        },
+        "to": {
+          "z": 10500,
+          "x": 36250,
+          "y": 12500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 24000,
+          "y": 9000,
+          "z": 23000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 10500,
+          "x": 36250,
+          "y": 12500
+        },
+        "to": {
+          "x": 24000,
+          "y": 9000,
+          "z": 23000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro nominal point13 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 9000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro swept segment13 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 24000,
+          "y": 9000,
+          "z": 23000
+        },
+        "to": {
+          "x": -2000,
+          "y": 9000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-03/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-04/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-04/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -4000,
+          "y": 9000,
+          "z": 32000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-04/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -4000,
+          "y": 9000,
+          "z": 32000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-04/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-04/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -4000,
+          "y": 9000,
+          "z": 32000
+        },
+        "to": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-04/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-04/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "to": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-04/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-service-deck",
+        "top": 5500
+      }
+    },
+    {
+      "name": "harbor-docks-04/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-04/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -4000,
+          "y": 9000,
+          "z": 32000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-04/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -4000,
+          "y": 9000,
+          "z": 32000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-04/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-04/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -4000,
+          "y": 9000,
+          "z": 32000
+        },
+        "to": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-04/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-04/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "to": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-04/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-service-deck",
+        "top": 5500
+      }
+    },
+    {
+      "name": "harbor-docks-05/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 4000,
+          "y": 4500,
+          "z": 29000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": 4000,
+          "y": 4500,
+          "z": 29000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-05/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 4000,
+          "y": 5000,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 5000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 4000,
+          "y": 5000,
+          "z": 25000
+        },
+        "to": {
+          "x": -2000,
+          "y": 5000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-05/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-05/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 4000,
+          "y": 4500,
+          "z": 29000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": 4000,
+          "y": 4500,
+          "z": 29000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-05/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 4000,
+          "y": 5000,
+          "z": 25000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 5000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-05/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 4000,
+          "y": 5000,
+          "z": 25000
+        },
+        "to": {
+          "x": -2000,
+          "y": 5000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-05/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-06/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -5000,
+          "y": 7200,
+          "z": 31000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -5000,
+          "y": 7200,
+          "z": 31000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-06/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -4000,
+          "y": 8000,
+          "z": 33000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -4000,
+          "y": 8000,
+          "z": 33000
+        },
+        "to": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-06/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-06/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -5000,
+          "y": 7200,
+          "z": 31000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -5000,
+          "y": 7200,
+          "z": 31000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-06/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -4000,
+          "y": 8000,
+          "z": 33000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-06/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -4000,
+          "y": 8000,
+          "z": 33000
+        },
+        "to": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-06/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 10000,
+          "z": -24000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        },
+        "to": {
+          "x": 23000,
+          "y": 10000,
+          "z": -24000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 10000,
+          "z": -20000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 10000,
+          "z": -20000
+        },
+        "to": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        },
+        "to": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-07/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 10000,
+          "z": -24000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        },
+        "to": {
+          "x": 23000,
+          "y": 10000,
+          "z": -24000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 10000,
+          "z": -20000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 10000,
+          "z": -20000
+        },
+        "to": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 8000,
+          "z": 22000
+        },
+        "to": {
+          "x": -2000,
+          "y": 8000,
+          "z": 34000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-07/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-quay",
+        "top": 2000
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -7000,
+          "y": 6000,
+          "z": 16000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -7000,
+          "y": 6000,
+          "z": 16000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -32000,
+          "x": -7000,
+          "y": 6000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -7000,
+          "y": 6000,
+          "z": 16000
+        },
+        "to": {
+          "z": -32000,
+          "x": -7000,
+          "y": 6000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -38500,
+          "x": -7000,
+          "y": 6000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -32000,
+          "x": -7000,
+          "y": 6000
+        },
+        "to": {
+          "z": -38500,
+          "x": -7000,
+          "y": 6000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -7000,
+          "y": 7000,
+          "z": -40000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -38500,
+          "x": -7000,
+          "y": 6000
+        },
+        "to": {
+          "x": -7000,
+          "y": 7000,
+          "z": -40000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 20000,
+          "z": -40000,
+          "y": 9500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -7000,
+          "y": 7000,
+          "z": -40000
+        },
+        "to": {
+          "x": 20000,
+          "z": -40000,
+          "y": 9500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 26500,
+          "z": -40000,
+          "y": 9500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 20000,
+          "z": -40000,
+          "y": 9500
+        },
+        "to": {
+          "x": 26500,
+          "z": -40000,
+          "y": 9500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 12000,
+          "z": -32000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 26500,
+          "z": -40000,
+          "y": 9500
+        },
+        "to": {
+          "x": 23000,
+          "y": 12000,
+          "z": -32000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -1000,
+          "x": 23000,
+          "y": 13500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 12000,
+          "z": -32000
+        },
+        "to": {
+          "z": -1000,
+          "x": 23000,
+          "y": 13500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 5500,
+          "x": 23000,
+          "y": 13500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -1000,
+          "x": 23000,
+          "y": 13500
+        },
+        "to": {
+          "z": 5500,
+          "x": 23000,
+          "y": 13500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 9000,
+          "z": 22000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 5500,
+          "x": 23000,
+          "y": 13500
+        },
+        "to": {
+          "x": 23000,
+          "y": 9000,
+          "z": 22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -4000,
+          "y": 9000,
+          "z": 24000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 9000,
+          "z": 22000
+        },
+        "to": {
+          "x": -4000,
+          "y": 9000,
+          "z": 24000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -4000,
+          "y": 9000,
+          "z": 24000
+        },
+        "to": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level nominal point13 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level swept segment13 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "to": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/self-level real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-service-deck",
+        "top": 5500
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point0 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point1 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -7000,
+          "y": 6000,
+          "z": 16000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment1 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -2000,
+          "y": 4450,
+          "z": 34000
+        },
+        "to": {
+          "x": -7000,
+          "y": 6000,
+          "z": 16000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point2 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -32000,
+          "x": -7000,
+          "y": 6000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment2 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -7000,
+          "y": 6000,
+          "z": 16000
+        },
+        "to": {
+          "z": -32000,
+          "x": -7000,
+          "y": 6000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point3 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -38500,
+          "x": -7000,
+          "y": 6000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment3 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -32000,
+          "x": -7000,
+          "y": 6000
+        },
+        "to": {
+          "z": -38500,
+          "x": -7000,
+          "y": 6000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point4 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -7000,
+          "y": 7000,
+          "z": -40000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment4 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -38500,
+          "x": -7000,
+          "y": 6000
+        },
+        "to": {
+          "x": -7000,
+          "y": 7000,
+          "z": -40000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point5 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 20000,
+          "z": -40000,
+          "y": 9500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment5 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -7000,
+          "y": 7000,
+          "z": -40000
+        },
+        "to": {
+          "x": 20000,
+          "z": -40000,
+          "y": 9500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point6 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 26500,
+          "z": -40000,
+          "y": 9500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment6 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 20000,
+          "z": -40000,
+          "y": 9500
+        },
+        "to": {
+          "x": 26500,
+          "z": -40000,
+          "y": 9500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point7 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 12000,
+          "z": -32000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment7 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 26500,
+          "z": -40000,
+          "y": 9500
+        },
+        "to": {
+          "x": 23000,
+          "y": 12000,
+          "z": -32000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point8 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": -1000,
+          "x": 23000,
+          "y": 13500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment8 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 12000,
+          "z": -32000
+        },
+        "to": {
+          "z": -1000,
+          "x": 23000,
+          "y": 13500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point9 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "z": 5500,
+          "x": 23000,
+          "y": 13500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment9 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": -1000,
+          "x": 23000,
+          "y": 13500
+        },
+        "to": {
+          "z": 5500,
+          "x": 23000,
+          "y": 13500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point10 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": 23000,
+          "y": 9000,
+          "z": 22000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment10 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "z": 5500,
+          "x": 23000,
+          "y": 13500
+        },
+        "to": {
+          "x": 23000,
+          "y": 9000,
+          "z": 22000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point11 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -4000,
+          "y": 9000,
+          "z": 24000
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment11 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": 23000,
+          "y": 9000,
+          "z": 22000
+        },
+        "to": {
+          "x": -4000,
+          "y": 9000,
+          "z": 24000
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point12 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment12 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -4000,
+          "y": 9000,
+          "z": 24000
+        },
+        "to": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro nominal point13 bounds/extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "lowerPoint": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        }
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro swept segment13 extra0.5m clearance",
+      "passed": true,
+      "detail": {
+        "from": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "to": {
+          "x": -15500,
+          "y": 9000,
+          "z": 31500
+        },
+        "contacts": []
+      }
+    },
+    {
+      "name": "harbor-docks-08/acro real named landing support",
+      "passed": true,
+      "detail": {
+        "surface": "platform-service-deck",
+        "top": 5500
+      }
+    }
+  ],
+  "flights": [],
+  "tickHz": 50,
+  "scope": "Static source/collision survey only; no ordinary-flight or visual acceptance.",
+  "pilot": "Existing adventureAuthoringPilot ordinary inputs. Explicit surveyed legs bypass its coarse AABB detour planner through empty authoring navigation boxes; actual flight retains every real collider. Gentle48% throttle replaces early motor cut only in the final65mm until contact.",
+  "error": "Error: Static collision survey failed; see every failed check before flight generation\n    at file:///private/tmp/fpv-mountain-reservoir-20261004/authoring/fpv-worlds/harbor-docks/qualify-world.mjs:327:11"
+}

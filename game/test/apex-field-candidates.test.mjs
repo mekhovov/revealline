@@ -141,7 +141,7 @@ test('Studio inspects the pending study and requires explicit Apply, without lau
   const html = await readFile(new URL('../studio/index.html', import.meta.url), 'utf8');
   assert.match(
     html,
-    /id="apex-field">\s*Inspect Home Signal field-finale study · balance pending\s*<\/button>/,
+    /id="apex-field"[^>]*>\s*Inspect Home Signal field-finale study · balance pending\s*<\/button>/,
   );
   const action = host.slice(
     host.indexOf("$('apex-field').onclick"),

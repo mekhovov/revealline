@@ -1,0 +1,755 @@
+{
+  "id": "canyon-arrival-landmarks-study",
+  "revision": "r1",
+  "actualExtentM": [
+    384,
+    384
+  ],
+  "originalTerrainExtentM": [
+    768,
+    768
+  ],
+  "parentTerrainManifestSHA256": "d5983b35c07f46f66558396c3e22090d7581283a2df395c6f23ff045f3e42c9a",
+  "terrainManifestSHA256": "2ac0b427f15eb370385320b5d65a8cdd2964814e4f323506fee027948bb01e51",
+  "sceneryManifestSHA256": "a2e116a4be7049808bef431ee9b850508dc072d296f4330ec4629364ebc9f493",
+  "sourceBytes": 1112386,
+  "cells": 9,
+  "assets": 36,
+  "byteIdenticalTerrainAssets": 18,
+  "licensedSource": {
+    "format": "FPVCanyonSourceReceipt.v1",
+    "reviewed": "2026-10-14",
+    "sourceURL": "https://opengameart.org/content/canyon-terrain-asset",
+    "downloadURL": "https://opengameart.org/sites/default/files/canyonterrain_blend_fbx_glb.zip",
+    "author": "loafbrr_1 / loafbrr",
+    "license": "CC0-1.0",
+    "licenseEvidence": "README-upstream.txt from exact archive; publisher page also lists CC0",
+    "archiveBytes": 64599746,
+    "archiveSHA256": "90a59ca7d7cfcdd6b73b464c9ee8ed50fd1857a105c9a5e7ef2c85b562d5d00a",
+    "modelArchivePath": "glb/CanyonPlantsRocksTiles.glb",
+    "modelSHA256": "0b24bb22f0089767990d58401e516ec1853380eda6a33802036a377f8519d623",
+    "modelBytes": 945596,
+    "nodes": 160,
+    "meshes": 160,
+    "materials": 5,
+    "images": 0,
+    "requiredExtensions": [],
+    "inventory": {
+      ".blend": 1,
+      ".fbx": 174,
+      ".glb": 1,
+      ".png": 16,
+      ".dds": 4,
+      ".tga": 3,
+      ".txt": 1
+    },
+    "admission": "Authoring source only. No source model is referenced by the terrain manifest, player package, catalogue or runtime. Individual optimization, placement and collision checks remain before scenery admission. Godot addons and preview HDRI are not included."
+  },
+  "objects": [
+    {
+      "id": "arrival-cairn",
+      "sourceNode": "Rock_Formations_6",
+      "center": [
+        61,
+        108
+      ],
+      "requestedWidthM": 12,
+      "requestedHeightM": 19,
+      "baseMm": 5200,
+      "topMm": 24200,
+      "boundsMm": [
+        [
+          55591,
+          65976
+        ],
+        [
+          101753,
+          113521
+        ]
+      ],
+      "triangles": 164
+    },
+    {
+      "id": "arrival-scree",
+      "sourceNode": "Rock_Boulders_4",
+      "center": [
+        76,
+        114
+      ],
+      "requestedWidthM": 8,
+      "requestedHeightM": 4,
+      "baseMm": 5200,
+      "topMm": 9200,
+      "boundsMm": [
+        [
+          71990,
+          79468
+        ],
+        [
+          110101,
+          117728
+        ]
+      ],
+      "triangles": 212
+    },
+    {
+      "id": "arrival-step",
+      "sourceNode": "Rock_Boulders_1",
+      "center": [
+        65,
+        94
+      ],
+      "requestedWidthM": 6,
+      "requestedHeightM": 3,
+      "baseMm": 5200,
+      "topMm": 8200,
+      "boundsMm": [
+        [
+          61985,
+          68042
+        ],
+        [
+          90786,
+          97286
+        ]
+      ],
+      "triangles": 180
+    },
+    {
+      "id": "twin-west",
+      "sourceNode": "Rock_Formations_6",
+      "center": [
+        147,
+        104
+      ],
+      "requestedWidthM": 12,
+      "requestedHeightM": 28,
+      "baseMm": 5200,
+      "topMm": 33200,
+      "boundsMm": [
+        [
+          141191,
+          152510
+        ],
+        [
+          98442,
+          110240
+        ]
+      ],
+      "triangles": 164
+    },
+    {
+      "id": "twin-east",
+      "sourceNode": "Rock_Formations_12",
+      "center": [
+        177,
+        104
+      ],
+      "requestedWidthM": 12,
+      "requestedHeightM": 24,
+      "baseMm": 5200,
+      "topMm": 29200,
+      "boundsMm": [
+        [
+          171112,
+          183743
+        ],
+        [
+          99138,
+          108839
+        ]
+      ],
+      "triangles": 292
+    },
+    {
+      "id": "twin-foot",
+      "sourceNode": "Rock_Boulders_5",
+      "center": [
+        187,
+        114
+      ],
+      "requestedWidthM": 6,
+      "requestedHeightM": 4,
+      "baseMm": 5200,
+      "topMm": 9200,
+      "boundsMm": [
+        [
+          183457,
+          190324
+        ],
+        [
+          110663,
+          116540
+        ]
+      ],
+      "triangles": 216
+    },
+    {
+      "id": "mesa-crown",
+      "sourceNode": "Rock_Formations_11",
+      "center": [
+        345,
+        65
+      ],
+      "requestedWidthM": 38,
+      "requestedHeightM": 32,
+      "baseMm": 68104,
+      "topMm": 100104,
+      "boundsMm": [
+        [
+          325619,
+          364625
+        ],
+        [
+          59138,
+          73911
+        ]
+      ],
+      "triangles": 532
+    },
+    {
+      "id": "mesa-foreground",
+      "sourceNode": "Rock_Boulders_2",
+      "center": [
+        292,
+        91
+      ],
+      "requestedWidthM": 8,
+      "requestedHeightM": 8,
+      "baseMm": 28804,
+      "topMm": 36804,
+      "boundsMm": [
+        [
+          288083,
+          295380
+        ],
+        [
+          87387,
+          94412
+        ]
+      ],
+      "triangles": 292
+    },
+    {
+      "id": "mesa-step",
+      "sourceNode": "Rock_Formations_1",
+      "center": [
+        342,
+        101
+      ],
+      "requestedWidthM": 18,
+      "requestedHeightM": 6,
+      "baseMm": 69906,
+      "topMm": 75906,
+      "boundsMm": [
+        [
+          333156,
+          351099
+        ],
+        [
+          91794,
+          110003
+        ]
+      ],
+      "triangles": 192
+    },
+    {
+      "id": "basin-exit",
+      "sourceNode": "Rock_Formations_7",
+      "center": [
+        90,
+        221
+      ],
+      "requestedWidthM": 24,
+      "requestedHeightM": 28,
+      "baseMm": 5200,
+      "topMm": 33200,
+      "boundsMm": [
+        [
+          78021,
+          101516
+        ],
+        [
+          208847,
+          232712
+        ]
+      ],
+      "triangles": 188
+    },
+    {
+      "id": "basin-exit-foot",
+      "sourceNode": "Rock_Boulders_4",
+      "center": [
+        110,
+        215
+      ],
+      "requestedWidthM": 9,
+      "requestedHeightM": 5,
+      "baseMm": 5200,
+      "topMm": 10200,
+      "boundsMm": [
+        [
+          105488,
+          114323
+        ],
+        [
+          210727,
+          218972
+        ]
+      ],
+      "triangles": 212
+    },
+    {
+      "id": "basin-exit-talus",
+      "sourceNode": "Rock_Boulders_6",
+      "center": [
+        85,
+        205
+      ],
+      "requestedWidthM": 6,
+      "requestedHeightM": 4,
+      "baseMm": 5200,
+      "topMm": 9200,
+      "boundsMm": [
+        [
+          82712,
+          88090
+        ],
+        [
+          202000,
+          208283
+        ]
+      ],
+      "triangles": 216
+    },
+    {
+      "id": "gorge-entry",
+      "sourceNode": "Rock_Formations_3",
+      "center": [
+        194,
+        218
+      ],
+      "requestedWidthM": 24,
+      "requestedHeightM": 25,
+      "baseMm": 5200,
+      "topMm": 30200,
+      "boundsMm": [
+        [
+          181967,
+          204812
+        ],
+        [
+          209497,
+          227928
+        ]
+      ],
+      "triangles": 384
+    },
+    {
+      "id": "gorge-entry-foot",
+      "sourceNode": "Rock_Boulders_1",
+      "center": [
+        218,
+        240
+      ],
+      "requestedWidthM": 7,
+      "requestedHeightM": 4,
+      "baseMm": 9675,
+      "topMm": 13675,
+      "boundsMm": [
+        [
+          214621,
+          221836
+        ],
+        [
+          236589,
+          243547
+        ]
+      ],
+      "triangles": 180
+    },
+    {
+      "id": "gorge-entry-talus",
+      "sourceNode": "Rock_Boulders_5",
+      "center": [
+        211,
+        250
+      ],
+      "requestedWidthM": 5,
+      "requestedHeightM": 4,
+      "baseMm": 9725,
+      "topMm": 13725,
+      "boundsMm": [
+        [
+          208071,
+          213702
+        ],
+        [
+          247220,
+          252117
+        ]
+      ],
+      "triangles": 216
+    },
+    {
+      "id": "east-overlook",
+      "sourceNode": "Rock_Formations_5",
+      "center": [
+        331,
+        201
+      ],
+      "requestedWidthM": 37,
+      "requestedHeightM": 31,
+      "baseMm": 73235,
+      "topMm": 104235,
+      "boundsMm": [
+        [
+          312756,
+          349885
+        ],
+        [
+          191691,
+          209579
+        ]
+      ],
+      "triangles": 256
+    },
+    {
+      "id": "east-overlook-foot",
+      "sourceNode": "Rock_Boulders_3",
+      "center": [
+        305,
+        217
+      ],
+      "requestedWidthM": 8,
+      "requestedHeightM": 10,
+      "baseMm": 73150,
+      "topMm": 83150,
+      "boundsMm": [
+        [
+          300602,
+          308860
+        ],
+        [
+          212938,
+          221179
+        ]
+      ],
+      "triangles": 252
+    },
+    {
+      "id": "east-overlook-talus",
+      "sourceNode": "Rock_Boulders_6",
+      "center": [
+        348,
+        225
+      ],
+      "requestedWidthM": 6,
+      "requestedHeightM": 4,
+      "baseMm": 74372,
+      "topMm": 78372,
+      "boundsMm": [
+        [
+          345722,
+          351083
+        ],
+        [
+          222014,
+          228286
+        ]
+      ],
+      "triangles": 216
+    },
+    {
+      "id": "west-ridge",
+      "sourceNode": "Rock_Formations_11",
+      "center": [
+        79,
+        321
+      ],
+      "requestedWidthM": 40,
+      "requestedHeightM": 31,
+      "baseMm": 65787,
+      "topMm": 96787,
+      "boundsMm": [
+        [
+          58599,
+          99658
+        ],
+        [
+          314829,
+          330380
+        ]
+      ],
+      "triangles": 532
+    },
+    {
+      "id": "west-ridge-foot",
+      "sourceNode": "Rock_Boulders_4",
+      "center": [
+        103,
+        334
+      ],
+      "requestedWidthM": 8,
+      "requestedHeightM": 5,
+      "baseMm": 65304,
+      "topMm": 70304,
+      "boundsMm": [
+        [
+          98996,
+          106755
+        ],
+        [
+          330152,
+          337512
+        ]
+      ],
+      "triangles": 212
+    },
+    {
+      "id": "west-ridge-talus",
+      "sourceNode": "Rock_Boulders_2",
+      "center": [
+        59,
+        340
+      ],
+      "requestedWidthM": 7,
+      "requestedHeightM": 8,
+      "baseMm": 67747,
+      "topMm": 75747,
+      "boundsMm": [
+        [
+          55641,
+          62017
+        ],
+        [
+          336826,
+          342940
+        ]
+      ],
+      "triangles": 292
+    },
+    {
+      "id": "needle-bend",
+      "sourceNode": "Rock_Formations_6",
+      "center": [
+        184,
+        302
+      ],
+      "requestedWidthM": 14,
+      "requestedHeightM": 35,
+      "baseMm": 10075,
+      "topMm": 45075,
+      "boundsMm": [
+        [
+          177689,
+          189806
+        ],
+        [
+          294712,
+          308441
+        ]
+      ],
+      "triangles": 164
+    },
+    {
+      "id": "needle-foot",
+      "sourceNode": "Rock_Boulders_4",
+      "center": [
+        200,
+        310
+      ],
+      "requestedWidthM": 8,
+      "requestedHeightM": 5,
+      "baseMm": 10100,
+      "topMm": 15100,
+      "boundsMm": [
+        [
+          195996,
+          203755
+        ],
+        [
+          306152,
+          313512
+        ]
+      ],
+      "triangles": 212
+    },
+    {
+      "id": "needle-talus",
+      "sourceNode": "Rock_Boulders_1",
+      "center": [
+        196,
+        288
+      ],
+      "requestedWidthM": 6,
+      "requestedHeightM": 4,
+      "baseMm": 9975,
+      "topMm": 13975,
+      "boundsMm": [
+        [
+          192982,
+          199240
+        ],
+        [
+          285008,
+          291236
+        ]
+      ],
+      "triangles": 180
+    },
+    {
+      "id": "south-saddle",
+      "sourceNode": "Rock_Formations_9",
+      "center": [
+        329,
+        342
+      ],
+      "requestedWidthM": 25,
+      "requestedHeightM": 27,
+      "baseMm": 55620,
+      "topMm": 82620,
+      "boundsMm": [
+        [
+          316961,
+          338831
+        ],
+        [
+          329759,
+          355004
+        ]
+      ],
+      "triangles": 182
+    },
+    {
+      "id": "south-saddle-foot",
+      "sourceNode": "Rock_Boulders_3",
+      "center": [
+        349,
+        354
+      ],
+      "requestedWidthM": 9,
+      "requestedHeightM": 9,
+      "baseMm": 76657,
+      "topMm": 85657,
+      "boundsMm": [
+        [
+          343573,
+          353519
+        ],
+        [
+          348998,
+          358818
+        ]
+      ],
+      "triangles": 252
+    },
+    {
+      "id": "south-saddle-talus",
+      "sourceNode": "Rock_Boulders_6",
+      "center": [
+        350,
+        366
+      ],
+      "requestedWidthM": 6,
+      "requestedHeightM": 4,
+      "baseMm": 77040,
+      "topMm": 81040,
+      "boundsMm": [
+        [
+          347313,
+          352954
+        ],
+        [
+          362864,
+          369148
+        ]
+      ],
+      "triangles": 216
+    }
+  ],
+  "surfaces": 81,
+  "sceneryTriangles": 6606,
+  "routes": [
+    {
+      "id": "retained-basin-circuit",
+      "halfWidth": 8,
+      "points": [
+        [
+          90,
+          28,
+          70
+        ],
+        [
+          190,
+          28,
+          70
+        ],
+        [
+          210,
+          28,
+          145
+        ],
+        [
+          130,
+          28,
+          190
+        ],
+        [
+          90,
+          28,
+          70
+        ]
+      ]
+    },
+    {
+      "id": "retained-gorge-approach",
+      "halfWidth": 6,
+      "points": [
+        [
+          170,
+          34,
+          155
+        ],
+        [
+          240,
+          34,
+          220
+        ],
+        [
+          210,
+          34,
+          300
+        ],
+        [
+          280,
+          34,
+          360
+        ]
+      ]
+    },
+    {
+      "id": "twin-spire-gap",
+      "halfWidth": 6,
+      "points": [
+        [
+          162,
+          18,
+          80
+        ],
+        [
+          162,
+          18,
+          128
+        ],
+        [
+          170,
+          22,
+          155
+        ]
+      ]
+    }
+  ],
+  "exactRenderCollision": true,
+  "flightReady": false
+}

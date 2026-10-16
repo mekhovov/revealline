@@ -1,0 +1,28 @@
+[
+  {
+    "packageId": "civilian-fpv",
+    "runtimeFiles": 62,
+    "runtimeBytes": 3999674,
+    "sourceFiles": 64,
+    "sourceBytes": 4016505,
+    "limits": {
+      "files": 64,
+      "bytes": 8388608
+    },
+    "publication": false,
+    "sourceBinding": "synthetic test-only; no release candidate written"
+  },
+  {
+    "packageId": "fpv-worlds",
+    "runtimeFiles": 93,
+    "runtimeBytes": 14442540,
+    "sourceFiles": 95,
+    "sourceBytes": 14464086,
+    "limits": {
+      "files": 96,
+      "bytes": 16777216
+    },
+    "publication": false,
+    "sourceBinding": "synthetic test-only; no release candidate written"
+  }
+]

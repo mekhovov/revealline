@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "kind": "overflight-creator-ci-receipt",
+  "repository": "mekhovov/revealline",
+  "pullRequest": 1112,
+  "sourceCommit": "9e7c03240666c98e0a084a11bf1889ef8a3012c9",
+  "workflow": "Industrial feature verification",
+  "runId": 37307237974,
+  "runUrl": "https://github.com/mekhovov/revealline/actions/runs/37307237974",
+  "job": {
+    "id": 111753891050,
+    "name": "feature (creator)",
+    "url": "https://github.com/mekhovov/revealline/actions/runs/37307237974/job/111753891050",
+    "status": "completed",
+    "conclusion": "success",
+    "startedAt": "2026-10-05T12:08:07Z",
+    "completedAt": "2026-10-05T12:12:03Z"
+  },
+  "creator": {
+    "command": "node scripts/verify-industrial-features.mjs --phase creator",
+    "tests": 216,
+    "pass": 216,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "exitCode": 0,
+    "signal": null,
+    "passed": true,
+    "reportedAt": "2026-10-05T12:11:59.7782385Z"
+  },
+  "verificationHarness": {
+    "tests": 12,
+    "pass": 12,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "note": "Separate workflow harness tests; not added to the Creator cohort total."
+  },
+  "artifact": {
+    "id": 11344192256,
+    "name": "industrial-creator-9e7c03240666c98e0a084a11bf1889ef8a3012c9",
+    "url": "https://github.com/mekhovov/revealline/actions/runs/37307237974/artifacts/11344192256",
+    "sizeBytes": 13690,
+    "sha256": "597c3c6759a802b5636d8e876b47aceb9d16ab3cd3dbbaa5c3e7494a5b1561ba",
+    "retentionDays": 14
+  },
+  "provenance": {
+    "method": "Read GitHub Actions run/job metadata and the completed Creator job log through the GitHub API; no local tests or builds run.",
+    "sourceBinding": "The job log records checkout ref and git log -1 as the exact sourceCommit above.",
+    "localLog": ".cache/overflight/ci-creator/pr1112-creator-fixed-job.log"
+  },
+  "scope": "Confirms this Creator CI job at the recorded source revision. Does not claim every job in the workflow passed, release admission, browser performance, hardware qualification, or human playtest acceptance."
+}

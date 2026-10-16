@@ -1,0 +1,18 @@
+node:fs:574
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/docs/qualification/overflight/maps-movement-20261014/progression-parity-aggregate.json.gz'
+    at Object.openSync (node:fs:574:18)
+    at readFileSync (node:fs:453:35)
+    at file:///Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/docs/qualification/overflight/maps-movement-20261014/progression-parity-pilots-probe.mjs:19:35
+    at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/oleksandr.mekhovov/.codex/worktrees/fpv-survivals-recovery/go_test/docs/qualification/overflight/maps-movement-20261014/progression-parity-aggregate.json.gz'
+}
+
+Node.js v20.19.5

@@ -1,0 +1,71 @@
+{
+  "format": "revealline-practice-candidate-evidence.v1",
+  "checkedAt": "2026-10-15T04:12:44.045Z",
+  "sourceRevision": "da0b0108206a0270b4b870e747f2d1bc0e6695cb",
+  "sourceTree": "69fac419ea9c23984d998b6da10ae5c9f1459e42",
+  "version": "v0.151.1",
+  "basePath": "/revealline/",
+  "candidateDirectory": "/Volumes/alex/CodexMigrationStaging/flight-practice-candidate-20261015.MVA2LZ/candidate",
+  "envelopeSha256": "4f4f0c78af851dfe5297097d87169b322f55704d85f6754b9ae12acb85b68926",
+  "verificationSha256": "4fffe5f1932607fe6f4cee92ad854de1fd174fff05173ca738512758107d7833",
+  "reviewSha256": "092af4ae22f4cef18c1b944d5bd2081667c5bd9fa0517b4a613f7b8414a3da41",
+  "preflight": "all-three-ready-no-errors",
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "independentWrittenArtifactReadmission": "passed",
+  "publicEligible": false,
+  "published": false,
+  "browserQualification": "not-assessed-by-this-build-receipt",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "revision": "62172270a3a4954296205c863bea97749de1543c9c2997759a28504941fe9ac6",
+      "admittedFiles": 94,
+      "admittedBytes": 3739893,
+      "limits": { "files": 96, "bytes": 8388608 },
+      "distributionBytes": 3753577,
+      "distributionSha256": "b5770869b8502850d412b34d17fe8a146b07a3d58b01f71ec4435af88c5c0c71",
+      "manifestSha256": "7a032b9ea5c99fb0d2f3b5acf4410270bee36755dc5e756abf5f415d20506e97",
+      "sourceArchiveSha256": "ba32ebadaa2b278fc67198b34f6dac5b96702c1a566977b453944adfb20a6d73",
+      "sourceInventorySha256": "d24aceaaa33a3c9626f07c09dc5ab70f4e00505dce970c39be415f7395095114",
+      "lockedEntryMarkup": true,
+      "accessGateScriptReference": true
+    },
+    {
+      "id": "civilian-fpv",
+      "revision": "a230eb55c7dd5a65d88b9c877e607a00507cc153be667e9f0e9cecfe299906f3",
+      "admittedFiles": 101,
+      "admittedBytes": 6752212,
+      "limits": { "files": 104, "bytes": 8388608 },
+      "distributionBytes": 6767230,
+      "distributionSha256": "c7f4566b2aa37ec290280c2187bdcd0a04b09ab8f1a3a81c0d93f878ce10e656",
+      "manifestSha256": "f88cffe3bba2d857ceb1b57c28f5c01b22b8a0583b5803d1982b6481ea0dacf9",
+      "sourceArchiveSha256": "14cc599500d58576c86e3d6c84d6918ca96370a15b280f75fef60da73dfe24c9",
+      "sourceInventorySha256": "b721f4b49e44d6550f34c9c987318bc0d99dfa3caec5f23e4d0f8d4c1bdf2d88",
+      "lockedEntryMarkup": true,
+      "accessGateScriptReference": true
+    },
+    {
+      "id": "fpv-worlds",
+      "revision": "7490b2ab984f64b05135cf13cc1a395ccfba4d597d75a6da140de140cec8ee91",
+      "admittedFiles": 160,
+      "admittedBytes": 17436760,
+      "limits": { "files": 162, "bytes": 20971520 },
+      "distributionBytes": 17462770,
+      "distributionSha256": "280ab43f471ae57c4751ad038db18c55097539f285e5b85d1e8268eaa4d379bf",
+      "manifestSha256": "bb6ebcd346dd96b2a6291458a08a54001aec9e89fab7b9c51f783b0ab976ae2e",
+      "sourceArchiveSha256": "933946d45ac8b01b79b2db378f51b53505d926ee1aba1856e01ee216dfdada60",
+      "sourceInventorySha256": "ad7c3ecabdfa10d0415cb45f5c678baac620d95e72181cbc951e9635427dee89",
+      "lockedEntryMarkup": true,
+      "accessGateScriptReference": true
+    }
+  ],
+  "reviewGates": "all-eight-pending-for-each-package",
+  "limitations": [
+    "This receipt binds only to the stated source and artifact hashes, not subsequent working-tree edits.",
+    "A successful build does not prove browser startup, offline relaunch, installed identity, hardware controls, performance or human learning.",
+    "Authorized normal-form access and browser observation are tracked separately; no gate metadata was changed.",
+    "No publication, selector change, full-site capacity check or hosting change was performed."
+  ]
+}

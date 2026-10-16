@@ -1,0 +1,370 @@
+TAP version 13
+# Subtest: fresh default and stored choice are synchronous, immutable and never auto-save
+ok 1 - fresh default and stored choice are synchronous, immutable and never auto-save
+  ---
+  duration_ms: 1.288916
+  ...
+# Subtest: invalid stored records stay untouched and do not migrate other settings
+ok 2 - invalid stored records stay untouched and do not migrate other settings
+  ---
+  duration_ms: 1.658208
+  ...
+# Subtest: explicit selection updates controls immediately and saves only the dedicated record
+ok 3 - explicit selection updates controls immediately and saves only the dedicated record
+  ---
+  duration_ms: 0.651791
+  ...
+# Subtest: unsupported patches, symbols and accessors reject without executing getters
+ok 4 - unsupported patches, symbols and accessors reject without executing getters
+  ---
+  duration_ms: 0.406958
+  ...
+# Subtest: storage events must match current storage, area and exact key without resaving
+ok 5 - storage events must match current storage, area and exact key without resaving
+  ---
+  duration_ms: 0.280917
+  ...
+# Subtest: failed saves preserve session intent through storage and restoration; explicit retry recovers
+ok 6 - failed saves preserve session intent through storage and restoration; explicit retry recovers
+  ---
+  duration_ms: 0.238417
+  ...
+# Subtest: read-only and unavailable storage remain usable without feedback owning the choice
+ok 7 - read-only and unavailable storage remain usable without feedback owning the choice
+  ---
+  duration_ms: 0.204083
+  ...
+# Subtest: back/forward restoration accepts only current valid stored intent
+ok 8 - back/forward restoration accepts only current valid stored intent
+  ---
+  duration_ms: 0.1625
+  ...
+# Subtest: listener failure cannot suppress other subscribers or saving accepted intent
+ok 9 - listener failure cannot suppress other subscribers or saving accepted intent
+  ---
+  duration_ms: 0.180917
+  ...
+# Subtest: disposal removes observers and rejects future actions
+ok 10 - disposal removes observers and rejects future actions
+  ---
+  duration_ms: 0.160667
+  ...
+# Subtest: shared display record overrides legacy synchronously and startup never writes
+ok 11 - shared display record overrides legacy synchronously and startup never writes
+  ---
+  duration_ms: 2.566334
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: not json
+ok 12 - invalid stored value preserves original bytes and legacy fallback: not json
+  ---
+  duration_ms: 0.363667
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: null
+ok 13 - invalid stored value preserves original bytes and legacy fallback: null
+  ---
+  duration_ms: 0.332541
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: []
+ok 14 - invalid stored value preserves original bytes and legacy fallback: []
+  ---
+  duration_ms: 0.138375
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"plain","textSize":"large"}
+ok 15 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"plain","textSize":"large"}
+  ---
+  duration_ms: 0.699084
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"serif","textSize":"standard","reducedEffec
+ok 16 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"serif","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.226417
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"huge","reducedEffects":
+ok 17 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"huge","reducedEffects":
+  ---
+  duration_ms: 0.18925
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 18 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.13675
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 19 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.549792
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+ok 20 - invalid stored value preserves original bytes and legacy fallback: {"textFace":"pixel","textSize":"standard","reducedEffec
+  ---
+  duration_ms: 0.350542
+  ...
+# Subtest: invalid stored value preserves original bytes and legacy fallback:
+ok 21 - invalid stored value preserves original bytes and legacy fallback:
+  ---
+  duration_ms: 5.696292
+  ...
+# Subtest: legacy seed reads only display fields; explicit change saves three fields before navigation
+ok 22 - legacy seed reads only display fields; explicit change saves three fields before navigation
+  ---
+  duration_ms: 1.032833
+  ...
+# Subtest: late legacy snapshots cannot replace explicit same-value intent or a newer seed
+ok 23 - late legacy snapshots cannot replace explicit same-value intent or a newer seed
+  ---
+  duration_ms: 0.202541
+  ...
+# Subtest: a current shared record wins a delayed legacy read even before its storage event
+ok 24 - a current shared record wins a delayed legacy read even before its storage event
+  ---
+  duration_ms: 0.46025
+  ...
+# Subtest: system reduction combines conservatively without changing raw intent or saving
+ok 25 - system reduction combines conservatively without changing raw intent or saving
+  ---
+  duration_ms: 1.157
+  ...
+# Subtest: injected and legacy media query APIs use current matches and detach on disposal
+ok 26 - injected and legacy media query APIs use current matches and detach on disposal
+  ---
+  duration_ms: 0.518666
+  ...
+# Subtest: missing media query capability still permits explicit reduction
+ok 27 - missing media query capability still permits explicit reduction
+  ---
+  duration_ms: 0.124875
+  ...
+# Subtest: storage events require exact key, area and still-current bounded raw bytes
+ok 28 - storage events require exact key, area and still-current bounded raw bytes
+  ---
+  duration_ms: 1.917166
+  ...
+# Subtest: practice mode changes memory with a warning and protects unsaved intent
+ok 29 - practice mode changes memory with a warning and protects unsaved intent
+  ---
+  duration_ms: 0.744875
+  ...
+# Subtest: quota failures preserve memory, and a later successful save restores sharing
+ok 30 - quota failures preserve memory, and a later successful save restores sharing
+  ---
+  duration_ms: 0.241583
+  ...
+# Subtest: unavailable storage and throwing warning callbacks cannot undo display intent
+ok 31 - unavailable storage and throwing warning callbacks cannot undo display intent
+  ---
+  duration_ms: 0.123875
+  ...
+# Subtest: patch validation is atomic and rejects accessors, symbols and hidden or unknown fields
+ok 32 - patch validation is atomic and rejects accessors, symbols and hidden or unknown fields
+  ---
+  duration_ms: 0.344291
+  ...
+# Subtest: subscribers see immutable current state and newer reentrant intent reaches storage
+ok 33 - subscribers see immutable current state and newer reentrant intent reaches storage
+  ---
+  duration_ms: 0.340125
+  ...
+# Subtest: a failed observer does not block other observers or persistence
+ok 34 - a failed observer does not block other observers or persistence
+  ---
+  duration_ms: 0.315416
+  ...
+# Subtest: reentrant explicit intent during legacy adoption wins and reports the seed superseded
+ok 35 - reentrant explicit intent during legacy adoption wins and reports the seed superseded
+  ---
+  duration_ms: 0.49025
+  ...
+# Subtest: disposal detaches both event sources and rejects later mutation or subscription
+ok 36 - disposal detaches both event sources and rejects later mutation or subscription
+  ---
+  duration_ms: 0.42575
+  ...
+# Subtest: persisted return reads current shared state and cap without resaving or duplicate notifications
+ok 37 - persisted return reads current shared state and cap without resaving or duplicate notifications
+  ---
+  duration_ms: 0.275125
+  ...
+# Subtest: persisted return preserves unsaved intent while refreshing current system reduction
+ok 38 - persisted return preserves unsaved intent while refreshing current system reduction
+  ---
+  duration_ms: 0.124875
+  ...
+# Subtest: persisted return ignores malformed and deleted shared data while updating only the effective cap
+ok 39 - persisted return ignores malformed and deleted shared data while updating only the effective cap
+  ---
+  duration_ms: 0.095791
+  ...
+# Subtest: ordinary pageshow and a disposed authority cannot consume restored-page changes
+ok 40 - ordinary pageshow and a disposed authority cannot consume restored-page changes
+  ---
+  duration_ms: 0.068084
+  ...
+# Subtest: persisted return respects a newer explicit choice made by an observer
+ok 41 - persisted return respects a newer explicit choice made by an observer
+  ---
+  duration_ms: 0.162833
+  ...
+# Subtest: strict record validates owned bounded data without invoking getters or coercion
+ok 42 - strict record validates owned bounded data without invoking getters or coercion
+  ---
+  duration_ms: 7.559125
+  ...
+# Subtest: default and saved intent load synchronously without writes to any record
+ok 43 - default and saved intent load synchronously without writes to any record
+  ---
+  duration_ms: 0.64675
+  ...
+# Subtest: corrupt or future raw bytes survive load, explicit choice and retry until repaired
+ok 44 - corrupt or future raw bytes survive load, explicit choice and retry until repaired
+  ---
+  duration_ms: 2.353208
+  ...
+# Subtest: set accepts only boolean intent and saves only the separate cosmetic record
+ok 45 - set accepts only boolean intent and saves only the separate cosmetic record
+  ---
+  duration_ms: 0.214416
+  ...
+# Subtest: storage events require the exact key, current storage area and still-current raw bytes
+ok 46 - storage events require the exact key, current storage area and still-current raw bytes
+  ---
+  duration_ms: 0.253083
+  ...
+# Subtest: persisted restoration reconciles current records; ordinary pageshow is inert
+ok 47 - persisted restoration reconciles current records; ordinary pageshow is inert
+  ---
+  duration_ms: 0.20375
+  ...
+# Subtest: storage clear requires the same area and a still-absent record, and preserves pending intent
+ok 48 - storage clear requires the same area and a still-absent record, and preserves pending intent
+  ---
+  duration_ms: 0.129792
+  ...
+# Subtest: read-only hosts retain local intent through events and restore, then explicit retry saves
+ok 49 - read-only hosts retain local intent through events and restore, then explicit retry saves
+  ---
+  duration_ms: 0.197084
+  ...
+# Subtest: quota storage failure retains intent and retry verifies the saved bytes
+ok 50 - quota storage failure retains intent and retry verifies the saved bytes
+  ---
+  duration_ms: 0.201083
+  ...
+# Subtest: silent storage failure retains intent and retry verifies the saved bytes
+ok 51 - silent storage failure retains intent and retry verifies the saved bytes
+  ---
+  duration_ms: 0.16025
+  ...
+# Subtest: read storage failure retains intent and retry verifies the saved bytes
+ok 52 - read storage failure retains intent and retry verifies the saved bytes
+  ---
+  duration_ms: 0.089417
+  ...
+# Subtest: unavailable storage and failed feedback keep the true default and usable local choices
+ok 53 - unavailable storage and failed feedback keep the true default and usable local choices
+  ---
+  duration_ms: 0.254042
+  ...
+# Subtest: reentrant observers publish current intent and a failing observer cannot block persistence
+ok 54 - reentrant observers publish current intent and a failing observer cannot block persistence
+  ---
+  duration_ms: 0.19925
+  ...
+# Subtest: warning callbacks can choose newer intent without stale notifications or writes
+ok 55 - warning callbacks can choose newer intent without stale notifications or writes
+  ---
+  duration_ms: 0.143208
+  ...
+# Subtest: reentrant storage reads cannot adopt older external state over new local intent
+ok 56 - reentrant storage reads cannot adopt older external state over new local intent
+  ---
+  duration_ms: 0.400916
+  ...
+# Subtest: reentrant storage writes retain newer unsaved intent until an explicit retry
+ok 57 - reentrant storage writes retain newer unsaved intent until an explicit retry
+  ---
+  duration_ms: 0.130208
+  ...
+# Subtest: readback cannot clear newer intent accepted inside the storage callback
+ok 58 - readback cannot clear newer intent accepted inside the storage callback
+  ---
+  duration_ms: 0.096166
+  ...
+# Subtest: a reentrant pre-write read or writable guard cannot persist obsolete intent
+ok 59 - a reentrant pre-write read or writable guard cannot persist obsolete intent
+  ---
+  duration_ms: 0.273416
+  ...
+# Subtest: same-value retries notify durability recovery without duplicate restore notifications
+ok 60 - same-value retries notify durability recovery without duplicate restore notifications
+  ---
+  duration_ms: 0.167166
+  ...
+# Subtest: disposal and unsubscription stop observers, late events and future mutation
+ok 61 - disposal and unsubscription stop observers, late events and future mutation
+  ---
+  duration_ms: 0.167834
+  ...
+# Subtest: disposal during storage access or notification prevents subsequent writes and observers
+ok 62 - disposal during storage access or notification prevents subsequent writes and observers
+  ---
+  duration_ms: 0.799542
+  ...
+# Subtest: four original speakers use bounded stable copy with no randomness or imported text
+ok 63 - four original speakers use bounded stable copy with no randomness or imported text
+  ---
+  duration_ms: 1.794125
+  ...
+# Subtest: unowned, live, failed, invalid and solo-draw contexts cannot produce reactions
+ok 64 - unowned, live, failed, invalid and solo-draw contexts cannot produce reactions
+  ---
+  duration_ms: 0.134041
+  ...
+# Subtest: reaction preference loading is read-only and shares one independent mode/release key
+ok 65 - reaction preference loading is read-only and shares one independent mode/release key
+  ---
+  duration_ms: 0.413709
+  ...
+# Subtest: strict records reject malformed, extra and future fields without invoking getters
+ok 66 - strict records reject malformed, extra and future fields without invoking getters
+  ---
+  duration_ms: 1.637208
+  ...
+# Subtest: future or damaged preference bytes are kept and do not prevent a session-only choice
+ok 67 - future or damaged preference bytes are kept and do not prevent a session-only choice
+  ---
+  duration_ms: 0.416666
+  ...
+# Subtest: quota failure and readback mismatch are truthful and explicit Retry can persist pending intent
+ok 68 - quota failure and readback mismatch are truthful and explicit Retry can persist pending intent
+  ---
+  duration_ms: 0.288958
+  ...
+# Subtest: cross-tab changes require current bytes/storage and bfcache refresh; disposed observers retire
+ok 69 - cross-tab changes require current bytes/storage and bfcache refresh; disposed observers retire
+  ---
+  duration_ms: 0.257417
+  ...
+# Subtest: solo- presenter is silent, text-only, optional and retires on a non-result
+ok 70 - solo- presenter is silent, text-only, optional and retires on a non-result
+  ---
+  duration_ms: 0.966834
+  ...
+# Subtest: race- presenter is silent, text-only, optional and retires on a non-result
+ok 71 - race- presenter is silent, text-only, optional and retires on a non-result
+  ---
+  duration_ms: 0.460167
+  ...
+# Subtest: coop- presenter is silent, text-only, optional and retires on a non-result
+ok 72 - coop- presenter is silent, text-only, optional and retires on a non-result
+  ---
+  duration_ms: 0.413542
+  ...
+1..72
+# tests 72
+# suites 0
+# pass 72
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 347.575917

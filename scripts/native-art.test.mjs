@@ -3,45 +3,20 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
-import { inflateSync } from 'node:zlib';
-import { crc32 } from './game-cli.mjs';
+import { decodeScreeningPNG } from './artwork-screening.mjs';
+import { decodeIconMaster, ICON_MASTER } from './brand-icons.mjs';
 import { nativeArt, makeICNS, ICNS_SIZES, manageNativeArt, parseArtArgs } from './native-art.mjs';
 
 let cached;
 const assets = () => (cached ??= nativeArt());
 function png(bytes) {
-  assert.deepEqual([...bytes.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-  const compressed = [];
-  let width, height, colorType, depth;
-  for (let offset = 8; offset < bytes.length; ) {
-    const size = bytes.readUInt32BE(offset),
-      type = bytes.subarray(offset + 4, offset + 8).toString();
-    assert.ok(offset + 12 + size <= bytes.length);
-    const payload = bytes.subarray(offset + 8, offset + 8 + size);
-    assert.equal(
-      crc32(bytes.subarray(offset + 4, offset + 8 + size)),
-      bytes.readUInt32BE(offset + 8 + size),
-    );
-    if (type === 'IHDR') {
-      width = payload.readUInt32BE(0);
-      height = payload.readUInt32BE(4);
-      depth = payload[8];
-      colorType = payload[9];
-    }
-    if (type === 'IDAT') compressed.push(payload);
-    offset += 12 + size;
-  }
-  const rows = inflateSync(Buffer.concat(compressed));
-  assert.equal(rows.length, height * (width * 3 + 1));
+  const { width, height, pixels } = decodeScreeningPNG(bytes);
   return {
     width,
     height,
-    depth,
-    colorType,
-    rows,
-    pixel: (x, y) => [
-      ...rows.subarray(y * (width * 3 + 1) + 1 + x * 3, y * (width * 3 + 1) + 4 + x * 3),
-    ],
+    depth: bytes[24],
+    colorType: bytes[25],
+    pixel: (x, y) => [...pixels.subarray((y * width + x) * 3, (y * width + x) * 3 + 3)],
   };
 }
 async function fixture(t) {
@@ -49,7 +24,8 @@ async function fixture(t) {
   t.after(() => fs.rm(root, { recursive: true, force: true }));
   return root;
 }
-test('iOS app icon and all splash slots decode as opaque RGB at the required dimensions', () => {
+test('iOS app icon and all splash slots preserve the generated master as opaque RGB', async () => {
+  const master = decodeIconMaster(await fs.readFile(new URL(`../${ICON_MASTER}`, import.meta.url)));
   const images = assets().filter((entry) => entry.name.endsWith('.png'));
   assert.equal(images.length, 4);
   for (const [index, entry] of images.entries()) {
@@ -59,11 +35,17 @@ test('iOS app icon and all splash slots decode as opaque RGB at the required dim
     assert.equal(decoded.height, size);
     assert.equal(decoded.depth, 8);
     assert.equal(decoded.colorType, 2);
-    assert.deepEqual(decoded.pixel(0, 0), [9, 19, 36]);
-    assert.deepEqual(
-      decoded.pixel(Math.ceil((size * 10) / 32), Math.ceil((size * 10) / 32)),
-      [83, 199, 232],
-    );
+    for (const [x, y] of [
+      [0, 0],
+      [Math.floor(size / 2), Math.floor(size / 2)],
+      [size - 1, size - 1],
+    ]) {
+      const source =
+        (Math.floor((y * master.height) / size) * master.width +
+          Math.floor((x * master.width) / size)) *
+        3;
+      assert.deepEqual(decoded.pixel(x, y), [...master.pixels.subarray(source, source + 3)]);
+    }
   }
   assert.deepEqual(images[1].bytes, images[2].bytes);
   assert.deepEqual(images[2].bytes, images[3].bytes);

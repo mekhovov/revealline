@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "previousRowsUnchanged": 8,
+  "exactNewPin": {
+    "url": "https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json",
+    "bytes": 6617,
+    "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce"
+  },
+  "remoteDescriptorVerified": true,
+  "remoteAssetsVerified": false,
+  "playerAdmission": false
+}

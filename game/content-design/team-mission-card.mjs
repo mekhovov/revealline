@@ -1,6 +1,8 @@
 import { paintMissionThumbnail } from './mission-card.mjs';
+import { contentText } from '../i18n/content.mjs';
+import { localizedText, t } from '../i18n/index.mjs';
 
-const presetName = (value) => value[0].toUpperCase() + value.slice(1);
+const difficulty = (value) => t(`interface:missionLibrary.difficulty.${value}`);
 
 /** Owned Journey decoration, injected by the selected Journey entry. Legacy
  * discovery does not import the content compiler or Solo simulation for cards.
@@ -14,30 +16,46 @@ export function createTeamMissionCardPresenter(journey, progress, { reviewCopy =
       receipt = profile?.clears.team[owned.mission.id];
     const detail = document.createElement('p');
     detail.className = 'team-mission-difficulty';
-    detail.textContent = `Challenge band ${diagram.band} · ${presetName(diagram.preset)}`;
+    localizedText(detail, () =>
+      t('interface:missionLibrary.team.challengeBand', {
+        band: diagram.band,
+        difficulty: difficulty(diagram.preset),
+      }),
+    );
     const completion = document.createElement('p');
     completion.className = 'team-mission-completion';
     if (receipt) {
       const edition = journey.row(owned.mission, receipt.difficulty);
-      completion.textContent =
-        `${receipt.gameplayId === edition?.simulationIdentity ? 'Cleared' : 'Earlier edition cleared'} on ${presetName(receipt.difficulty)}` +
-        (receipt.difficulty === owned.difficulty && receipt.gameplayId === owned.simulationIdentity
-          ? ' · selected edition'
-          : ' · no clear recorded for this selected edition');
+      localizedText(completion, () =>
+        t('interface:missionLibrary.team.clearStatus', {
+          state:
+            receipt.gameplayId === edition?.simulationIdentity
+              ? t('interface:missionLibrary.team.cleared')
+              : t('interface:missionLibrary.team.earlierEditionCleared'),
+          difficulty: difficulty(receipt.difficulty),
+          edition:
+            receipt.difficulty === owned.difficulty &&
+            receipt.gameplayId === owned.simulationIdentity
+              ? t('interface:missionLibrary.team.selectedEdition')
+              : t('interface:missionLibrary.team.noSelectedEditionClear'),
+        }),
+      );
     } else
-      completion.textContent = profile?.skipped.team.includes(owned.mission.id)
-        ? 'Skipped · revisit whenever you like'
-        : 'Not cleared';
+      localizedText(completion, () =>
+        profile?.skipped.team.includes(owned.mission.id)
+          ? t('interface:missionLibrary.team.skippedRevisit')
+          : t('interface:missionLibrary.team.notCleared'),
+      );
     const route = document.createElement('p');
     route.className = 'team-mission-route';
-    route.textContent = diagram.route;
+    localizedText(route, () => contentText(diagram, 'route'));
     const mastery = document.createElement('p');
     mastery.className = 'team-mission-mastery';
-    mastery.textContent = diagram.mastery;
+    localizedText(mastery, () => contentText(diagram, 'mastery'));
     const optional = document.createElement('details'),
       summary = document.createElement('summary');
     optional.className = 'team-mission-optional';
-    summary.textContent = 'Optional goal · not tracked';
+    localizedText(summary, () => t('interface:missionLibrary.team.optionalGoalNotTracked'));
     optional.append(summary, mastery);
     const figure = document.createElement('figure'),
       canvas = document.createElement('canvas'),
@@ -47,19 +65,24 @@ export function createTeamMissionCardPresenter(journey, progress, { reviewCopy =
     canvas.height = Math.round((288 * diagram.height) / diagram.width);
     canvas.setAttribute('aria-hidden', 'true');
     caption.className = 'team-discovery-teaser-message';
-    const artStatus = owned.background
-      ? reviewCopy
-        ? 'Original-art test; visual qualification pending.'
-        : 'Win to reveal the original artwork.'
-      : 'Original artwork pending.';
-    caption.textContent = `Starting map · craft 1 + 2. Not a capture prediction. ${artStatus}`;
+    const artStatus = () =>
+      owned.background
+        ? reviewCopy
+          ? t('interface:missionLibrary.team.artTestPending')
+          : t('interface:missionLibrary.team.winToRevealArtwork')
+        : t('interface:missionLibrary.team.artworkPending');
+    localizedText(caption, () =>
+      t('interface:missionLibrary.team.startingMapCaption', { artStatus: artStatus() }),
+    );
     try {
       const context = canvas.getContext('2d');
       if (!context) throw new Error('Canvas unavailable');
       paintMissionThumbnail(context, diagram, canvas.width);
     } catch {
       canvas.hidden = true;
-      caption.textContent = `Starting-map diagram unavailable. Route details and Play remain available. ${artStatus}`;
+      localizedText(caption, () =>
+        t('interface:missionLibrary.team.diagramUnavailable', { artStatus: artStatus() }),
+      );
     }
     figure.append(canvas, caption);
     card.append(detail, completion, figure, route, optional);

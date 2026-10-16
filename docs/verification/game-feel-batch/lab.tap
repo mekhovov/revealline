@@ -1,0 +1,80 @@
+TAP version 13
+# Subtest: clock holds, steps, seeks and repeats exactly without wall-clock dependencies
+ok 1 - clock holds, steps, seeks and repeats exactly without wall-clock dependencies
+  ---
+  duration_ms: 0.84475
+  ...
+# Subtest: seek and repeat share exact fixed-step poses; authored events are not toggle-dependent
+ok 2 - seek and repeat share exact fixed-step poses; authored events are not toggle-dependent
+  ---
+  duration_ms: 24.685833
+  ...
+# Subtest: actor toggle removes only accents, retaining heading, contact and status
+ok 3 - actor toggle removes only accents, retaining heading, contact and status
+  ---
+  duration_ms: 0.283208
+  ...
+# Subtest: capture is an independent underlay and no toggle rewrites scene inputs
+ok 4 - capture is an independent underlay and no toggle rewrites scene inputs
+  ---
+  duration_ms: 5.989958
+  ...
+# Subtest: reduced effects suppresses capture decoration while retaining live-line and threat paint
+ok 5 - reduced effects suppresses capture decoration while retaining live-line and threat paint
+  ---
+  duration_ms: 8.710167
+  ...
+# Subtest: capture toggle has no output outside the pulse lifetime; all samples remain bounded
+ok 6 - capture toggle has no output outside the pulse lifetime; all samples remain bounded
+  ---
+  duration_ms: 9.505833
+  ...
+# Subtest: draw-cost measurement excludes warmups, bounds work and reports pixel bytes separately
+ok 7 - draw-cost measurement excludes warmups, bounds work and reports pixel bytes separately
+  ---
+  duration_ms: 1.333667
+  ...
+# Subtest: measurement departure aborts before another draw or result can be published
+ok 8 - measurement departure aborts before another draw or result can be published
+  ---
+  duration_ms: 0.559833
+  ...
+# Subtest: preview lifecycle cancels RAF and tasks, restores paused once, and rejects stale callbacks
+ok 9 - preview lifecycle cancels RAF and tasks, restores paused once, and rejects stale callbacks
+  ---
+  duration_ms: 0.691542
+  ...
+# Subtest: measurement restores lost button focus only while owned and without intervening navigation
+ok 10 - measurement restores lost button focus only while owned and without intervening navigation
+  ---
+  duration_ms: 0.41575
+  ...
+# Subtest: photo selection is lazy, preserves the prior view, and rejects superseded completion
+ok 11 - photo selection is lazy, preserves the prior view, and rejects superseded completion
+  ---
+  duration_ms: 0.878042
+  ...
+# Subtest: departure releases a photo and invalidates late decodes across return and disposal
+ok 12 - departure releases a photo and invalidates late decodes across return and disposal
+  ---
+  duration_ms: 0.315875
+  ...
+# Subtest: photo loader checks local provenance and releases a decode completed after cancellation
+ok 13 - photo loader checks local provenance and releases a decode completed after cancellation
+  ---
+  duration_ms: 67.931917
+  ...
+# Subtest: photograph is contained without source cropping and clipped only to secured cells
+ok 14 - photograph is contained without source cropping and clipped only to secured cells
+  ---
+  duration_ms: 3.436625
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 513.606042

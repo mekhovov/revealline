@@ -1,0 +1,93 @@
+{
+  "format": "revealline-archive-public-acceptance.v1",
+  "archive": {
+    "id": "archive-87",
+    "repository": "mekhovov/revealline-archive-87",
+    "url": "https://mekhovov.github.io/revealline-archive-87/"
+  },
+  "preservedRelease": {
+    "version": "v0.130.0",
+    "sourceRevision": "5022108ca458e9355e9567efddfee50fb49af5c1",
+    "sourceTree": "ea7592b66f42ed51ede1745f659dd143aacf947e",
+    "tagObject": "c3d9aaf2874d754288cc25b6aa9fd004b2ef1991",
+    "releaseId": 396884148,
+    "distributionSha256": "95a4eddea07a2bbd4059b1b4b382714dc0bf4b9389ec02d5ceec2570b8a7cb2a"
+  },
+  "archiveSource": {
+    "pr": 1,
+    "head": "b4f133fa841fdc6272df76bd350f90998a49be20",
+    "mergeCommit": "6948342ee3292492c8027dc1df3e942b94f0d74e",
+    "mergeTree": "84c473eb1cbbe9e96d51bafb6c031d6a4feaf73c",
+    "review": "SAFE",
+    "reviewedExactHead": "b4f133fa841fdc6272df76bd350f90998a49be20"
+  },
+  "hosted": {
+    "exactHeadPrRun": 36206597701,
+    "exactMainRun": 36206659899,
+    "buildJob": 108304522825,
+    "deployJob": 108304626919,
+    "receiptsArtifact": {
+      "id": 10893684796,
+      "name": "archive87-verification-receipts",
+      "size_in_bytes": 65495,
+      "digest": "sha256:5945e3174d4c531c0dfeb25958ba9ff3cb4e1a9c2674a988122138ae3530615d"
+    },
+    "pagesArtifact": {
+      "id": 10894110723,
+      "name": "github-pages",
+      "size_in_bytes": 543726097,
+      "digest": "sha256:5a8024e2027507e26ef9b80b925380817ec89080ba92662d1aab25f1772ec4f4"
+    },
+    "deployment": {
+      "id": 6672829712,
+      "statusId": 18861599004,
+      "state": "success",
+      "environmentUrl": "https://mekhovov.github.io/revealline-archive-87/",
+      "createdAt": "2026-09-26T00:57:18Z"
+    },
+    "receipts": {
+      "expectedInventorySha256": "6825b89097544d328c69ccbff4cecb100d98918f2b902ffac0a5feceb74faf43",
+      "receiptSha256": "f8f2d325b906b6a34fd660a47b7c244e0fc6b4e3169e941fbc307adc2ca585da",
+      "zipReceiptSha256": "df4077f544b12aeab2e83b202deb55d111039c08194f9992bf76d834841c3811",
+      "files": 1242,
+      "bytes": 605943304,
+      "toolingCommit": "5022108ca458e9355e9567efddfee50fb49af5c1",
+      "status": "PASS"
+    }
+  },
+  "publicByteAudit": {
+    "status": "PASS",
+    "method": "GET every finite expected path; compare exact byte count and SHA-256 without retaining bodies",
+    "files": 1242,
+    "bytes": 605943304,
+    "failures": 0,
+    "transportRetries": 0,
+    "skips": 0,
+    "allFinalURLsExact": true,
+    "authorityUnchanged": true,
+    "verifiedAt": "2026-09-26T01:00:00Z"
+  },
+  "browserAcceptance": {
+    "status": "PASS",
+    "surface": "Codex in-app Chromium automation",
+    "base": "https://mekhovov.github.io/revealline-archive-87/",
+    "observations": [
+      "The Archive87 index identified the original v0.130.0 build and exposed its canonical game route.",
+      "The preserved route booted to the REVEAL / LINE title/home with Solo selected and Continue, Missions, Collection, Settings, More, and Sound controls.",
+      "Browser Back returned to the same Archive87 index without reload or retry."
+    ],
+    "reloads": 0,
+    "retries": 0
+  },
+  "testPolicy": {
+    "longSourceSuites": "waived",
+    "reportedAsPassed": false,
+    "blockingEvidence": [
+      "exact original release ZIP extraction",
+      "complete inventory reread",
+      "full public byte audit",
+      "bounded archive browser journey"
+    ]
+  },
+  "scope": "Immutable v0.130.0 preservation, exact public-byte audit, and bounded archive index, title/home, and Back navigation. Physical-device/controller, comprehensive offline, and extended gameplay acceptance are outside this archive admission."
+}

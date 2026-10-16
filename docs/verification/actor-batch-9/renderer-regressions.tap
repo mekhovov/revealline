@@ -1,0 +1,931 @@
+TAP version 13
+# Subtest: BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
+ok 1 - BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
+  ---
+  duration_ms: 0.895125
+  ...
+# Subtest: facing uses newly observed tick positions instead of a stale velocity field
+ok 2 - facing uses newly observed tick positions instead of a stale velocity field
+  ---
+  duration_ms: 0.396834
+  ...
+# Subtest: contour and outer patrols face their measured path without velocity fields
+ok 3 - contour and outer patrols face their measured path without velocity fields
+  ---
+  duration_ms: 0.161375
+  ...
+# Subtest: pause and classic freeze retain heading, banking and animation clocks
+ok 4 - pause and classic freeze retain heading, banking and animation clocks
+  ---
+  duration_ms: 0.424417
+  ...
+# Subtest: stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+ok 5 - stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+  ---
+  duration_ms: 0.156208
+  ...
+# Subtest: stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+ok 6 - stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+  ---
+  duration_ms: 0.135541
+  ...
+# Subtest: cosmetic size targets desktop/phone readability without altering contact radius
+ok 7 - cosmetic size targets desktop/phone readability without altering contact radius
+  ---
+  duration_ms: 0.098125
+  ...
+# Subtest: prepared sprite sizing uses occupied pixels plus rotor sweep, not transparent frame padding
+ok 8 - prepared sprite sizing uses occupied pixels plus rotor sweep, not transparent frame padding
+  ---
+  duration_ms: 0.236958
+  ...
+# Subtest: minimum-aware normal, boss and compact player frames remain finite and bounded
+ok 9 - minimum-aware normal, boss and compact player frames remain finite and bounded
+  ---
+  duration_ms: 0.36525
+  ...
+# Subtest: four themes have distinct geometric silhouettes even with identical colors
+ok 10 - four themes have distinct geometric silhouettes even with identical colors
+  ---
+  duration_ms: 0.950334
+  ...
+# Subtest: compact and detailed recipes differ; custom families resolve to the matching visual theme
+ok 11 - compact and detailed recipes differ; custom families resolve to the matching visual theme
+  ---
+  duration_ms: 0.140125
+  ...
+# Subtest: every actor override keeps its own body slot, facing and unscaled collision cue
+ok 12 - every actor override keeps its own body slot, facing and unscaled collision cue
+  ---
+  duration_ms: 0.282167
+  ...
+# Subtest: history is bounded and reset removes old headings; published frames cannot mutate history
+ok 13 - history is bounded and reset removes old headings; published frames cannot mutate history
+  ---
+  duration_ms: 0.666417
+  ...
+# Subtest: trail core and head remain visible with reduced effects; animated packet stays on the cut
+ok 14 - trail core and head remain visible with reduced effects; animated packet stays on the cut
+  ---
+  duration_ms: 0.301417
+  ...
+# Subtest: capture pulse touches only newly secured cells and is absent for reduced motion
+ok 15 - capture pulse touches only newly secured cells and is absent for reduced motion
+  ---
+  duration_ms: 0.147375
+  ...
+# Subtest: integrated renderer animates observed actors and capture effects without changing replay authority
+ok 16 - integrated renderer animates observed actors and capture effects without changing replay authority
+  ---
+  duration_ms: 44.631792
+  ...
+# Subtest: prepared player rotor paths visibly advance and hold on pause/reduced effects at 240px
+ok 17 - prepared player rotor paths visibly advance and hold on pause/reduced effects at 240px
+  ---
+  duration_ms: 30.672833
+  ...
+# Subtest: prepared player rotor paths visibly advance and hold on pause/reduced effects at 390px
+ok 18 - prepared player rotor paths visibly advance and hold on pause/reduced effects at 390px
+  ---
+  duration_ms: 47.448875
+  ...
+# Subtest: prepared player rotor paths visibly advance and hold on pause/reduced effects at 1152px
+ok 19 - prepared player rotor paths visibly advance and hold on pause/reduced effects at 1152px
+  ---
+  duration_ms: 9.480292
+  ...
+# Subtest: explicit original player pixels never inherit the prepared snapshot rotor rig
+ok 20 - explicit original player pixels never inherit the prepared snapshot rotor rig
+  ---
+  duration_ms: 7.299416
+  ...
+# Subtest: foundation craft keeps its contact cue without detached corner brackets
+ok 21 - foundation craft keeps its contact cue without detached corner brackets
+  ---
+  duration_ms: 310.794959
+  ...
+# Subtest: legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 22 - legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 37.135417
+  ...
+# Subtest: wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 23 - wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 42.304334
+  ...
+# Subtest: custom player art retains its aspect ratio without detached rotor overlays or enemy-slot coupling
+ok 24 - custom player art retains its aspect ratio without detached rotor overlays or enemy-slot coupling
+  ---
+  duration_ms: 1.395334
+  ...
+# Subtest: player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+ok 25 - player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+  ---
+  duration_ms: 3.311917
+  ...
+# Subtest: the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+ok 26 - the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+  ---
+  duration_ms: 2.747959
+  ...
+# Subtest: explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+ok 27 - explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+  ---
+  duration_ms: 8.343375
+  ...
+# Subtest: immutable held patch pins its base while the actual renderer retains newer adapters
+ok 28 - immutable held patch pins its base while the actual renderer retains newer adapters
+  ---
+  duration_ms: 7.433833
+  ...
+# Pinned renderer f93317fa0d48d862ecffa29d4cd3b854d04a35b9; patched renderer f731b54cf167c91adeea1df3203f3a56294524b5; patch SHA-256 c4fde0cb043e472517a7c0b22330bce42e3d34181d324ec15b1a0628abd846c9.
+# Subtest: absent and disabled combat preserve both historical and current command streams and authority exactly
+ok 29 - absent and disabled combat preserve both historical and current command streams and authority exactly
+  ---
+  duration_ms: 175.684541
+  ...
+# Subtest: absent and disabled combat leave current pursuit/interception warnings byte-for-command unchanged
+ok 30 - absent and disabled combat leave current pursuit/interception warnings byte-for-command unchanged
+  ---
+  duration_ms: 447.287916
+  ...
+# Subtest: malformed active combat throws before canvas, caches, animation or painter state changes
+ok 31 - malformed active combat throws before canvas, caches, animation or painter state changes
+  ---
+  duration_ms: 73.376416
+  ...
+# Subtest: actual warning bodies and rays sit below the live trail, ordinary keepers and craft
+ok 32 - actual warning bodies and rays sit below the live trail, ordinary keepers and craft
+  ---
+  duration_ms: 37.876708
+  ...
+# Subtest: actual painter layers trail-pursuer/immediate with sentry warning, shot and real capture cancellation
+ok 33 - actual painter layers trail-pursuer/immediate with sentry warning, shot and real capture cancellation
+  ---
+  duration_ms: 372.111458
+  ...
+# Subtest: actual painter layers trail-pursuer/grid-center with sentry warning, shot and real capture cancellation
+ok 34 - actual painter layers trail-pursuer/grid-center with sentry warning, shot and real capture cancellation
+  ---
+  duration_ms: 357.604125
+  ...
+# Subtest: actual painter layers heading-interceptor/immediate with sentry warning, shot and real capture cancellation
+ok 35 - actual painter layers heading-interceptor/immediate with sentry warning, shot and real capture cancellation
+  ---
+  duration_ms: 340.908708
+  ...
+# Subtest: actual painter layers heading-interceptor/grid-center with sentry warning, shot and real capture cancellation
+ok 36 - actual painter layers heading-interceptor/grid-center with sentry warning, shot and real capture cancellation
+  ---
+  duration_ms: 330.381958
+  ...
+# Subtest: actual fired projectiles draw above keepers and below the craft with a readable diamond
+ok 37 - actual fired projectiles draw above keepers and below the craft with a readable diamond
+  ---
+  duration_ms: 41.529833
+  ...
+# Subtest: real ram and terminal capture place inert scrap over the picture with no terminal live threats
+ok 38 - real ram and terminal capture place inert scrap over the picture with no terminal live threats
+  ---
+  duration_ms: 93.217875
+  ...
+# Subtest: small and reduced viewports retain warning and shot cues, including real freeze pickups and pause
+ok 39 - small and reduced viewports retain warning and shot cues, including real freeze pickups and pause
+  ---
+  duration_ms: 271.880416
+  ...
+# Subtest: the cosmetic scrap toggle cannot hide live warning bodies or projectiles
+ok 40 - the cosmetic scrap toggle cannot hide live warning bodies or projectiles
+  ---
+  duration_ms: 68.8515
+  ...
+# Subtest: a real terminal capture is immediately static even unreduced, while surviving sentries stay hidden
+ok 41 - a real terminal capture is immediately static even unreduced, while surviving sentries stay hidden
+  ---
+  duration_ms: 74.657042
+  ...
+# Subtest: one painter reuses a bounded sprite cache and resets it on setLevel and setLook
+ok 42 - one painter reuses a bounded sprite cache and resets it on setLevel and setLook
+  ---
+  duration_ms: 2440.052125
+  ...
+# Subtest: native pixel roles/poses differ without colour and all mask rectangles use bounded integer coordinates
+ok 43 - native pixel roles/poses differ without colour and all mask rectangles use bounded integer coordinates
+  ---
+  duration_ms: 17.117667
+  ...
+# Subtest: absent, disabled and explicitly invalid projections have no canvas or cache effects
+ok 44 - absent, disabled and explicitly invalid projections have no canvas or cache effects
+  ---
+  duration_ms: 0.303625
+  ...
+# Subtest: pixel body size, accurate footprint and opaque mandatory cues at 200px
+ok 45 - pixel body size, accurate footprint and opaque mandatory cues at 200px
+  ---
+  duration_ms: 1.335958
+  ...
+# Subtest: pixel body size, accurate footprint and opaque mandatory cues at 240px
+ok 46 - pixel body size, accurate footprint and opaque mandatory cues at 240px
+  ---
+  duration_ms: 0.606208
+  ...
+# Subtest: pixel body size, accurate footprint and opaque mandatory cues at 294px
+ok 47 - pixel body size, accurate footprint and opaque mandatory cues at 294px
+  ---
+  duration_ms: 0.334875
+  ...
+# Subtest: pixel body size, accurate footprint and opaque mandatory cues at 390px
+ok 48 - pixel body size, accurate footprint and opaque mandatory cues at 390px
+  ---
+  duration_ms: 0.23025
+  ...
+# Subtest: pixel body size, accurate footprint and opaque mandatory cues at 600px
+ok 49 - pixel body size, accurate footprint and opaque mandatory cues at 600px
+  ---
+  duration_ms: 0.878542
+  ...
+# Subtest: pixel body size, accurate footprint and opaque mandatory cues at 1152px
+ok 50 - pixel body size, accurate footprint and opaque mandatory cues at 1152px
+  ---
+  duration_ms: 0.596958
+  ...
+# Subtest: pixel cache is bounded by six role/pose frames and replaced on a palette change; repeat frames do not advance poses
+ok 51 - pixel cache is bounded by six role/pose frames and replaced on a palette change; repeat frames do not advance poses
+  ---
+  duration_ms: 2.270833
+  ...
+# Subtest: freeze/reduced effects and stationary phases use static bodies without deleting warning or projectile cues
+ok 52 - freeze/reduced effects and stationary phases use static bodies without deleting warning or projectile cues
+  ---
+  duration_ms: 1.839875
+  ...
+# Subtest: warning keeps locked cross, ray beyond the aim and static remaining segment in monochrome
+ok 53 - warning keeps locked cross, ray beyond the aim and static remaining segment in monochrome
+  ---
+  duration_ms: 0.36875
+  ...
+# Subtest: shots keep six-CSS-pixel core and direction tail, including frozen/reduced mode
+ok 54 - shots keep six-CSS-pixel core and direction tail, including frozen/reduced mode
+  ---
+  duration_ms: 0.508
+  ...
+# Subtest: warning countdown lies outside the complete painted body at every supported size
+ok 55 - warning countdown lies outside the complete painted body at every supported size
+  ---
+  duration_ms: 2.398875
+  ...
+# Subtest: scrap persists without authority changes; sparks expire, reduce and stop on terminal frames
+ok 56 - scrap persists without authority changes; sparks expire, reduce and stop on terminal frames
+  ---
+  duration_ms: 0.273
+  ...
+# Subtest: terminal views hide live threats but retain optional inert scrap
+ok 57 - terminal views hide live threats but retain optional inert scrap
+  ---
+  duration_ms: 0.125959
+  ...
+# Subtest: rendering real warning, shot and removal projections never changes simulation identity or state
+ok 58 - rendering real warning, shot and removal projections never changes simulation identity or state
+  ---
+  duration_ms: 324.002792
+  ...
+# Subtest: maximum presentation populations have bounded drawing work and finite minimum-scale geometry
+ok 59 - maximum presentation populations have bounded drawing work and finite minimum-scale geometry
+  ---
+  duration_ms: 0.792708
+  ...
+# Subtest: optional preparation preserves current pressure catalogue and every unrelated edition
+ok 60 - optional preparation preserves current pressure catalogue and every unrelated edition
+  ---
+  duration_ms: 1996.462292
+  ...
+# Subtest: v9 optional scout/sentry edits keep pressure recipes, independent populations and explicit on/off identities
+ok 61 - v9 optional scout/sentry edits keep pressure recipes, independent populations and explicit on/off identities
+  ---
+  duration_ms: 628.129541
+  ...
+# Subtest: trail-pursuer/immediate: independent locked attacks replay, restore and cancel on a real return
+ok 62 - trail-pursuer/immediate: independent locked attacks replay, restore and cancel on a real return
+  ---
+  duration_ms: 297.234542
+  ...
+# Subtest: trail-pursuer/grid-center: independent locked attacks replay, restore and cancel on a real return
+ok 63 - trail-pursuer/grid-center: independent locked attacks replay, restore and cancel on a real return
+  ---
+  duration_ms: 254.212667
+  ...
+# Subtest: heading-interceptor/immediate: independent locked attacks replay, restore and cancel on a real return
+ok 64 - heading-interceptor/immediate: independent locked attacks replay, restore and cancel on a real return
+  ---
+  duration_ms: 241.27975
+  ...
+# Subtest: heading-interceptor/grid-center: independent locked attacks replay, restore and cancel on a real return
+ok 65 - heading-interceptor/grid-center: independent locked attacks replay, restore and cancel on a real return
+  ---
+  duration_ms: 216.741625
+  ...
+# Subtest: combat projection is exact, owned, deeply frozen, and does not expose private simulation state
+ok 66 - combat projection is exact, owned, deeply frozen, and does not expose private simulation state
+  ---
+  duration_ms: 115.956541
+  ...
+# Subtest: absent and disabled descriptors are null; active empty populations remain valid
+ok 67 - absent and disabled descriptors are null; active empty populations remain valid
+  ---
+  duration_ms: 51.325958
+  ...
+# Subtest: only matching foundation-aware level/ruleset pairs are accepted
+ok 68 - only matching foundation-aware level/ruleset pairs are accepted
+  ---
+  duration_ms: 135.867334
+  ...
+# Subtest: warning progress, stationary phases, pause and freeze use authoritative actor ticks only
+ok 69 - warning progress, stationary phases, pause and freeze use authoritative actor ticks only
+  ---
+  duration_ms: 426.31675
+  ...
+# Subtest: warning ray passes its locked point and clips with the existing projectile radius envelope
+ok 70 - warning ray passes its locked point and clips with the existing projectile radius envelope
+  ---
+  duration_ms: 65.165209
+  ...
+# Subtest: projectile projection preserves direction and stays visible during freeze while actors use actual motion
+ok 71 - projectile projection preserves direction and stays visible during freeze while actors use actual motion
+  ---
+  duration_ms: 67.956458
+  ...
+# Subtest: eliminations project event positions once and terminal views retain inert records
+ok 72 - eliminations project event positions once and terminal views retain inert records
+  ---
+  duration_ms: 142.642042
+  ...
+# Subtest: a real winning closure at the exact recovery deadline preserves a valid static terminal actor
+ok 73 - a real winning closure at the exact recovery deadline preserves a valid static terminal actor
+  ---
+  duration_ms: 49.448875
+  ...
+# Subtest: malformed active descriptor, actor, clocks and geometry fail visibly instead of hiding hazards
+ok 74 - malformed active descriptor, actor, clocks and geometry fail visibly instead of hiding hazards
+  ---
+  duration_ms: 332.856542
+  ...
+# Subtest: projectile and elimination ownership, capacities and live/dead phases are validated
+ok 75 - projectile and elimination ownership, capacities and live/dead phases are validated
+  ---
+  duration_ms: 207.845333
+  ...
+# Subtest: maximum valid actor/elimination populations remain bounded and a ninth sentry is rejected
+ok 76 - maximum valid actor/elimination populations remain bounded and a ninth sentry is rejected
+  ---
+  duration_ms: 31.350875
+  ...
+# Subtest: accessors on nested descriptors, state, IDs, arrays and private fields are never executed
+ok 77 - accessors on nested descriptors, state, IDs, arrays and private fields are never executed
+  ---
+  duration_ms: 70.241625
+  ...
+# Subtest: suspend/restore reconstructs warning, shot and elimination projections without event replay
+ok 78 - suspend/restore reconstructs warning, shot and elimination projections without event replay
+  ---
+  duration_ms: 147.952542
+  ...
+# Subtest: contact style accepts one exact opt-in token and always returns a bounded visible stroke
+ok 79 - contact style accepts one exact opt-in token and always returns a bounded visible stroke
+  ---
+  duration_ms: 0.564667
+  ...
+# Subtest: Team prepared helper keeps exact circle, foreground colors and one CSS pixel core at all display sizes
+ok 80 - Team prepared helper keeps exact circle, foreground colors and one CSS pixel core at all display sizes
+  ---
+  duration_ms: 1.174333
+  ...
+# Subtest: Solo/Versus defaults and unsupported contact styles preserve complete commands (reduced=false)
+ok 81 - Solo/Versus defaults and unsupported contact styles preserve complete commands (reduced=false)
+  ---
+  duration_ms: 246.938667
+  ...
+# Subtest: Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (edge, reduced=false)
+ok 82 - Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (edge, reduced=false)
+  ---
+  duration_ms: 39.544208
+  ...
+# Subtest: Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (trail, reduced=false)
+ok 83 - Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (trail, reduced=false)
+  ---
+  duration_ms: 42.556458
+  ...
+# Subtest: Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (recovery, reduced=false)
+ok 84 - Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (recovery, reduced=false)
+  ---
+  duration_ms: 25.563417
+  ...
+# Subtest: Solo fallback bodies ignore fine contact (reduced=false)
+ok 85 - Solo fallback bodies ignore fine contact (reduced=false)
+  ---
+  duration_ms: 5.637667
+  ...
+# Subtest: Team defaults and unsupported styles preserve the complete command stream (reduced=false)
+ok 86 - Team defaults and unsupported styles preserve the complete command stream (reduced=false)
+  ---
+  duration_ms: 102.070333
+  ...
+# Subtest: Team only thins both prepared pilot backing strokes (edge, reduced=false)
+ok 87 - Team only thins both prepared pilot backing strokes (edge, reduced=false)
+  ---
+  duration_ms: 25.125167
+  ...
+# Subtest: Team only thins both prepared pilot backing strokes (recovery, reduced=false)
+ok 88 - Team only thins both prepared pilot backing strokes (recovery, reduced=false)
+  ---
+  duration_ms: 40.009542
+  ...
+# Subtest: Team only thins both prepared pilot backing strokes (downed, reduced=false)
+ok 89 - Team only thins both prepared pilot backing strokes (downed, reduced=false)
+  ---
+  duration_ms: 25.095833
+  ...
+# Subtest: Team fallback pilot identities ignore the comparison (reduced=false)
+ok 90 - Team fallback pilot identities ignore the comparison (reduced=false)
+  ---
+  duration_ms: 5.004833
+  ...
+# Subtest: Solo/Versus defaults and unsupported contact styles preserve complete commands (reduced=true)
+ok 91 - Solo/Versus defaults and unsupported contact styles preserve complete commands (reduced=true)
+  ---
+  duration_ms: 70.517834
+  ...
+# Subtest: Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (edge, reduced=true)
+ok 92 - Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (edge, reduced=true)
+  ---
+  duration_ms: 21.319541
+  ...
+# Subtest: Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (trail, reduced=true)
+ok 93 - Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (trail, reduced=true)
+  ---
+  duration_ms: 21.254125
+  ...
+# Subtest: Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (recovery, reduced=true)
+ok 94 - Solo/Versus fine contact preserves all other geometry, grace, hazards and checkpoint (recovery, reduced=true)
+  ---
+  duration_ms: 20.855416
+  ...
+# Subtest: Solo fallback bodies ignore fine contact (reduced=true)
+ok 95 - Solo fallback bodies ignore fine contact (reduced=true)
+  ---
+  duration_ms: 5.153583
+  ...
+# Subtest: Team defaults and unsupported styles preserve the complete command stream (reduced=true)
+ok 96 - Team defaults and unsupported styles preserve the complete command stream (reduced=true)
+  ---
+  duration_ms: 73.142166
+  ...
+# Subtest: Team only thins both prepared pilot backing strokes (edge, reduced=true)
+ok 97 - Team only thins both prepared pilot backing strokes (edge, reduced=true)
+  ---
+  duration_ms: 25.019916
+  ...
+# Subtest: Team only thins both prepared pilot backing strokes (recovery, reduced=true)
+ok 98 - Team only thins both prepared pilot backing strokes (recovery, reduced=true)
+  ---
+  duration_ms: 22.887208
+  ...
+# Subtest: Team only thins both prepared pilot backing strokes (downed, reduced=true)
+ok 99 - Team only thins both prepared pilot backing strokes (downed, reduced=true)
+  ---
+  duration_ms: 22.164167
+  ...
+# Subtest: Team fallback pilot identities ignore the comparison (reduced=true)
+ok 100 - Team fallback pilot identities ignore the comparison (reduced=true)
+  ---
+  duration_ms: 5.493042
+  ...
+# Subtest: Team prepared contacts paint exactly two foreground strokes and no filled dot even with an overlapping enemy (standard, reduced=false)
+ok 101 - Team prepared contacts paint exactly two foreground strokes and no filled dot even with an overlapping enemy (standard, reduced=false)
+  ---
+  duration_ms: 10.834542
+  ...
+# Subtest: Team prepared contacts paint exactly two foreground strokes and no filled dot even with an overlapping enemy (fine-outline, reduced=false)
+ok 102 - Team prepared contacts paint exactly two foreground strokes and no filled dot even with an overlapping enemy (fine-outline, reduced=false)
+  ---
+  duration_ms: 8.601792
+  ...
+# Subtest: Team prepared contacts paint exactly two foreground strokes and no filled dot even with an overlapping enemy (standard, reduced=true)
+ok 103 - Team prepared contacts paint exactly two foreground strokes and no filled dot even with an overlapping enemy (standard, reduced=true)
+  ---
+  duration_ms: 9.38225
+  ...
+# Subtest: Team prepared contacts paint exactly two foreground strokes and no filled dot even with an overlapping enemy (fine-outline, reduced=true)
+ok 104 - Team prepared contacts paint exactly two foreground strokes and no filled dot even with an overlapping enemy (fine-outline, reduced=true)
+  ---
+  duration_ms: 9.636917
+  ...
+# Subtest: legacy fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 105 - legacy fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 102.689708
+  ...
+# Subtest: legacy fpv cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 106 - legacy fpv cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 13.626916
+  ...
+# Subtest: legacy ukraine contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 107 - legacy ukraine contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 9.014791
+  ...
+# Subtest: legacy ukraine cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 108 - legacy ukraine cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 5.203959
+  ...
+# Subtest: legacy retro contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 109 - legacy retro contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 14.255959
+  ...
+# Subtest: legacy retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 110 - legacy retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 11.841791
+  ...
+# Subtest: legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 111 - legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 5.370583
+  ...
+# Subtest: legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 112 - legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 3.356917
+  ...
+# Subtest: Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 113 - Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 33.328625
+  ...
+# Subtest: Classic wide fpv cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 114 - Classic wide fpv cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 28.966542
+  ...
+# Subtest: Classic wide ukraine contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 115 - Classic wide ukraine contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 22.267833
+  ...
+# Subtest: Classic wide ukraine cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 116 - Classic wide ukraine cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 10.017916
+  ...
+# Subtest: Classic wide retro contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 117 - Classic wide retro contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 13.281375
+  ...
+# Subtest: Classic wide retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 118 - Classic wide retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 46.692375
+  ...
+# Subtest: Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 119 - Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 10.002167
+  ...
+# Subtest: Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 120 - Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 10.209875
+  ...
+# Subtest: absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit
+ok 121 - absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit
+  ---
+  duration_ms: 14.457167
+  ...
+# Subtest: immediate: a legal win and Collection gallery use the same image/fit without awarding or advancing simulation
+ok 122 - immediate: a legal win and Collection gallery use the same image/fit without awarding or advancing simulation
+  ---
+  duration_ms: 46.338125
+  ...
+# Subtest: grid-center: a legal win and Collection gallery use the same image/fit without awarding or advancing simulation
+ok 123 - grid-center: a legal win and Collection gallery use the same image/fit without awarding or advancing simulation
+  ---
+  duration_ms: 32.125042
+  ...
+# Subtest: compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+ok 124 - compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+  ---
+  duration_ms: 275.359084
+  ...
+# Subtest: compiled player sprites size their visible body and rotor sweep instead of transparent padding
+ok 125 - compiled player sprites size their visible body and rotor sweep instead of transparent padding
+  ---
+  duration_ms: 103.677333
+  ...
+# Subtest: phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+ok 126 - phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+  ---
+  duration_ms: 97.234167
+  ...
+# Subtest: compiled enemy bodies skip legacy image loads while explicit skins retain the original body path
+ok 127 - compiled enemy bodies skip legacy image loads while explicit skins retain the original body path
+  ---
+  duration_ms: 86.274292
+  ...
+# Subtest: current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+ok 128 - current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+  ---
+  duration_ms: 71.986292
+  ...
+# Subtest: an explicit prepared FPV actor view changes actors without replacing the authored world
+ok 129 - an explicit prepared FPV actor view changes actors without replacing the authored world
+  ---
+  duration_ms: 79.16325
+  ...
+# Subtest: the explicit actor view respects custom player and enemy bodies
+ok 130 - the explicit actor view respects custom player and enemy bodies
+  ---
+  duration_ms: 78.750459
+  ...
+# Subtest: FPV actor choice maps every active class without rewriting the authored body or class
+ok 131 - FPV actor choice maps every active class without rewriting the authored body or class
+  ---
+  duration_ms: 555.669334
+  ...
+# Subtest: campaign and historical actor paths remain identical; unprepared explicit FPV fails before paint
+ok 132 - campaign and historical actor paths remain identical; unprepared explicit FPV fails before paint
+  ---
+  duration_ms: 150.5255
+  ...
+# Subtest: actor preparation errors translate without advancing or painting the flight
+ok 133 - actor preparation errors translate without advancing or painting the flight
+  ---
+  duration_ms: 79.413375
+  ...
+# Subtest: published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+ok 134 - published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+  ---
+  duration_ms: 225.074459
+  ...
+# Subtest: enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+ok 135 - enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+  ---
+  duration_ms: 0.442458
+  ...
+# Subtest: terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+ok 136 - terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+  ---
+  duration_ms: 74.380916
+  ...
+# Subtest: classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+ok 137 - classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+  ---
+  duration_ms: 0.370959
+  ...
+# Subtest: compiled enemy defaults own their images while explicit original skins and manual uploads keep priority
+ok 138 - compiled enemy defaults own their images while explicit original skins and manual uploads keep priority
+  ---
+  duration_ms: 79.324125
+  ...
+# Subtest: compiled player selection keeps each class body and leaves unknown or other-world bodies unchanged
+ok 139 - compiled player selection keeps each class body and leaves unknown or other-world bodies unchanged
+  ---
+  duration_ms: 77.984125
+  ...
+# Subtest: Plain canvas text uses the selected system pair and switching back restores compiled fonts without authority changes
+ok 140 - Plain canvas text uses the selected system pair and switching back restores compiled fonts without authority changes
+  ---
+  duration_ms: 74.895084
+  ...
+# Subtest: cosmetic look status starts before image completion and an obsolete look cannot replace newer feedback
+ok 141 - cosmetic look status starts before image completion and an obsolete look cannot replace newer feedback
+  ---
+  duration_ms: 1.222625
+  ...
+# Subtest: 294px carrier bolt respects readable body scaling and the unchanged contact radius
+ok 142 - 294px carrier bolt respects readable body scaling and the unchanged contact radius
+  ---
+  duration_ms: 3.323416
+  ...
+# Subtest: 1152px carrier bolt respects readable body scaling and the unchanged contact radius
+ok 143 - 1152px carrier bolt respects readable body scaling and the unchanged contact radius
+  ---
+  duration_ms: 0.180666
+  ...
+# Subtest: R4 dark palette: 294px arena keeps light cut core and bounded readable width
+ok 144 - R4 dark palette: 294px arena keeps light cut core and bounded readable width
+  ---
+  duration_ms: 0.492042
+  ...
+# Subtest: R4 dark palette: 390px arena keeps light cut core and bounded readable width
+ok 145 - R4 dark palette: 390px arena keeps light cut core and bounded readable width
+  ---
+  duration_ms: 0.077125
+  ...
+# Subtest: R4 dark palette: 600px arena keeps light cut core and bounded readable width
+ok 146 - R4 dark palette: 600px arena keeps light cut core and bounded readable width
+  ---
+  duration_ms: 0.125667
+  ...
+# Subtest: R4 dark palette: 1152px arena keeps light cut core and bounded readable width
+ok 147 - R4 dark palette: 1152px arena keeps light cut core and bounded readable width
+  ---
+  duration_ms: 0.062875
+  ...
+# Subtest: dark picture: 240px cutting head has a plate, bright core and directional nose
+ok 148 - dark picture: 240px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.107542
+  ...
+# Subtest: dark picture: 390px cutting head has a plate, bright core and directional nose
+ok 149 - dark picture: 390px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.110542
+  ...
+# Subtest: dark picture: 1152px cutting head has a plate, bright core and directional nose
+ok 150 - dark picture: 1152px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.106959
+  ...
+# Subtest: light picture: 240px cutting head has a plate, bright core and directional nose
+ok 151 - light picture: 240px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.114542
+  ...
+# Subtest: light picture: 390px cutting head has a plate, bright core and directional nose
+ok 152 - light picture: 390px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.194833
+  ...
+# Subtest: light picture: 1152px cutting head has a plate, bright core and directional nose
+ok 153 - light picture: 1152px cutting head has a plate, bright core and directional nose
+  ---
+  duration_ms: 0.055041
+  ...
+# Subtest: 240px travelling fronts remain distinct and readable with reduced effects
+ok 154 - 240px travelling fronts remain distinct and readable with reduced effects
+  ---
+  duration_ms: 0.15225
+  ...
+# Subtest: 390px travelling fronts remain distinct and readable with reduced effects
+ok 155 - 390px travelling fronts remain distinct and readable with reduced effects
+  ---
+  duration_ms: 0.095917
+  ...
+# Subtest: 1152px travelling fronts remain distinct and readable with reduced effects
+ok 156 - 1152px travelling fronts remain distinct and readable with reduced effects
+  ---
+  duration_ms: 0.046583
+  ...
+# Subtest: travelling-front motion adds only a bounded pulse and never shifts the authoritative point
+ok 157 - travelling-front motion adds only a bounded pulse and never shifts the authoritative point
+  ---
+  duration_ms: 0.148208
+  ...
+# Subtest: 240px larger actor body leaves real contact and active-cut world coordinates unchanged
+ok 158 - 240px larger actor body leaves real contact and active-cut world coordinates unchanged
+  ---
+  duration_ms: 1.416709
+  ...
+# Subtest: fpv: actual observed movement animates microtile bodies; Pause holds the exact pose
+ok 159 - fpv: actual observed movement animates microtile bodies; Pause holds the exact pose
+  ---
+  duration_ms: 2.39
+  ...
+# Subtest: ukraine: actual observed movement animates microtile bodies; Pause holds the exact pose
+ok 160 - ukraine: actual observed movement animates microtile bodies; Pause holds the exact pose
+  ---
+  duration_ms: 0.749459
+  ...
+# Subtest: retro: actual observed movement animates microtile bodies; Pause holds the exact pose
+ok 161 - retro: actual observed movement animates microtile bodies; Pause holds the exact pose
+  ---
+  duration_ms: 0.792917
+  ...
+# Subtest: coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
+ok 162 - coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
+  ---
+  duration_ms: 2.14475
+  ...
+# Subtest: uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion
+ok 163 - uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion
+  ---
+  duration_ms: 2.117417
+  ...
+# Subtest: Classic dormant/warning brackets enclose the cosmetic body while contact size stays unchanged
+ok 164 - Classic dormant/warning brackets enclose the cosmetic body while contact size stays unchanged
+  ---
+  duration_ms: 0.29275
+  ...
+# Subtest: immediate: real painter places capture pulse below actors/live line and preserves authority
+ok 165 - immediate: real painter places capture pulse below actors/live line and preserves authority
+  ---
+  duration_ms: 40.276625
+  ...
+# Subtest: grid-center: real painter places capture pulse below actors/live line and preserves authority
+ok 166 - grid-center: real painter places capture pulse below actors/live line and preserves authority
+  ---
+  duration_ms: 3.750417
+  ...
+# Subtest: real optional pressure warning, commit and cooldown render distinct cues from owned targets
+ok 167 - real optional pressure warning, commit and cooldown render distinct cues from owned targets
+  ---
+  duration_ms: 36.101584
+  ...
+# Subtest: actual classic freeze retains the locked warning target and actor-clock countdown
+ok 168 - actual classic freeze retains the locked warning target and actor-clock countdown
+  ---
+  duration_ms: 56.761417
+  ...
+# Subtest: pursuit and interception stay text-distinct even in patrol, without changing authority
+ok 169 - pursuit and interception stay text-distinct even in patrol, without changing authority
+  ---
+  duration_ms: 52.270875
+  ...
+# Subtest: legacy actors acquire no pressure display and malformed getters are not executed
+ok 170 - legacy actors acquire no pressure display and malformed getters are not executed
+  ---
+  duration_ms: 11.499375
+  ...
+# Subtest: a host-owned contact cue keeps prepared pilot equipment clear without changing its paint transform
+ok 171 - a host-owned contact cue keeps prepared pilot equipment clear without changing its paint transform
+  ---
+  duration_ms: 1.526208
+  ...
+# Subtest: rotor blades and sweep preserve inherited downed opacity and restore caller state
+ok 172 - rotor blades and sweep preserve inherited downed opacity and restore caller state
+  ---
+  duration_ms: 2.148084
+  ...
+# Subtest: swept blades originate at each hub and stay inside its declared sweep
+ok 173 - swept blades originate at each hub and stay inside its declared sweep
+  ---
+  duration_ms: 0.507209
+  ...
+# Subtest: tapered blades originate at each hub and stay inside its declared sweep
+ok 174 - tapered blades originate at each hub and stay inside its declared sweep
+  ---
+  duration_ms: 0.545166
+  ...
+# Subtest: paddle blades originate at each hub and stay inside its declared sweep
+ok 175 - paddle blades originate at each hub and stay inside its declared sweep
+  ---
+  duration_ms: 0.106583
+  ...
+# Subtest: prepared geometry keeps exact radii and uses the densest declared blade pattern without mutating source recipes
+ok 176 - prepared geometry keeps exact radii and uses the densest declared blade pattern without mutating source recipes
+  ---
+  duration_ms: 1.03275
+  ...
+# Subtest: swept counter-rotating blades and tips mirror in their radial frame without moving the hub
+ok 177 - swept counter-rotating blades and tips mirror in their radial frame without moving the hub
+  ---
+  duration_ms: 3.277666
+  ...
+# Subtest: tapered counter-rotating blades and tips mirror in their radial frame without moving the hub
+ok 178 - tapered counter-rotating blades and tips mirror in their radial frame without moving the hub
+  ---
+  duration_ms: 0.946458
+  ...
+# Subtest: paddle counter-rotating blades and tips mirror in their radial frame without moving the hub
+ok 179 - paddle counter-rotating blades and tips mirror in their radial frame without moving the hub
+  ---
+  duration_ms: 1.495125
+  ...
+# Subtest: character paints signed rotation and matching handedness while preserving authored offsets and anchors
+ok 180 - character paints signed rotation and matching handedness while preserving authored offsets and anchors
+  ---
+  duration_ms: 2.806459
+  ...
+# Subtest: enemy paints signed rotation and matching handedness while preserving authored offsets and anchors
+ok 181 - enemy paints signed rotation and matching handedness while preserving authored offsets and anchors
+  ---
+  duration_ms: 2.613584
+  ...
+# Subtest: legacy character tuples and object anchors retain their established direction defaults
+ok 182 - legacy character tuples and object anchors retain their established direction defaults
+  ---
+  duration_ms: 0.757334
+  ...
+# Subtest: procedural patrol rotors retain signed motion and mirror their opposite blades
+ok 183 - procedural patrol rotors retain signed motion and mirror their opposite blades
+  ---
+  duration_ms: 1.287958
+  ...
+# Subtest: procedural contour rotors retain signed motion and mirror their opposite blades
+ok 184 - procedural contour rotors retain signed motion and mirror their opposite blades
+  ---
+  duration_ms: 0.313833
+  ...
+1..184
+# tests 184
+# suites 0
+# pass 184
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5651.644333

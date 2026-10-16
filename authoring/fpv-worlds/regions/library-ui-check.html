@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Regional Library interaction checks</title>
+    <script
+      src="../../../game/presentation/theme-bootstrap.mjs"
+      data-theme-density="studio"
+      data-theme-follow-context="true"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="../../../game/presentation/industrial-workshop.css"
+      data-industrial-workshop
+    />
+  </head>
+  <body>
+    <h1>Regional Library interaction checks</h1>
+    <p>
+      Production interface with an isolated deterministic store fixture. No real downloads or
+      flight.
+    </p>
+    <button id="run">Run interaction checks</button>
+    <pre id="result" role="status">Ready</pre>
+    <div id="fixture"></div>
+    <script type="module" src="../../../game/presentation/theme-entry.mjs"></script>
+    <script type="module" src="./library-ui-check.mjs"></script>
+  </body>
+</html>

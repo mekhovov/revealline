@@ -1,3 +1,4 @@
+import { getLocale, localizedText } from '../i18n/index.mjs';
 import { fieldKitCopy } from '../ui/field-kit-copy.mjs';
 
 /** Readable host text for map details that must not shrink with the canvas.
@@ -33,13 +34,20 @@ export function mapDiagnosticDescriptions(level, { locale = 'en' } = {}) {
 
 export function renderMapDiagnostics(list, level) {
   const doc = list.ownerDocument;
+  let locale = getLocale();
+  let descriptions = mapDiagnosticDescriptions(level, { locale });
+  const description = (index) => {
+    if (locale !== getLocale()) {
+      locale = getLocale();
+      descriptions = mapDiagnosticDescriptions(level, { locale });
+    }
+    return descriptions[index];
+  };
   list.replaceChildren(
-    ...mapDiagnosticDescriptions(level, { locale: doc.documentElement?.lang || 'en' }).map(
-      (description) => {
-        const item = doc.createElement('li');
-        item.textContent = description;
-        return item;
-      },
-    ),
+    ...descriptions.map((_, index) => {
+      const item = doc.createElement('li');
+      localizedText(item, () => description(index));
+      return item;
+    }),
   );
 }

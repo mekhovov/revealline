@@ -1,0 +1,65 @@
+TAP version 13
+# Subtest: V2 adds explicit editable combat while V1 preserves original durability and capabilities
+ok 1 - V2 adds explicit editable combat while V1 preserves original durability and capabilities
+  ---
+  duration_ms: 17.427541
+  ...
+# Subtest: shield facing, blocked overflow and internal blasts create reliable different approaches
+ok 2 - shield facing, blocked overflow and internal blasts create reliable different approaches
+  ---
+  duration_ms: 6.165875
+  ...
+# Subtest: each tank plate break opens recovery without adding durability or replaying rewards
+ok 3 - each tank plate break opens recovery without adding durability or replaying rewards
+  ---
+  duration_ms: 4.682041
+  ...
+# Subtest: defensive drafts and application reject shield/plating stacks in both modes
+ok 4 - defensive drafts and application reject shield/plating stacks in both modes
+  ---
+  duration_ms: 0.7315
+  ...
+# Subtest: seeded formation decks vary, never repeat, and author bounded relief
+ok 5 - seeded formation decks vary, never repeat, and author bounded relief
+  ---
+  duration_ms: 0.46825
+  ...
+# Subtest: relief waits for committed warnings then provides its full interval without new commitments
+ok 6 - relief waits for committed warnings then provides its full interval without new commitments
+  ---
+  duration_ms: 34.576208
+  ...
+# Subtest: fan gaps and temporal warning combinations retain a baseline escape at arena edges
+ok 7 - fan gaps and temporal warning combinations retain a baseline escape at arena edges
+  ---
+  duration_ms: 3.377834
+  ...
+# Subtest: cache groups stay finite, coexist, and require a deliberate physical reward entry
+ok 8 - cache groups stay finite, coexist, and require a deliberate physical reward entry
+  ---
+  duration_ms: 5.783
+  ...
+# Subtest: Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+ok 9 - Raid carriers fire a complete committed fan, while legacy carriers retain one projectile
+  ---
+  duration_ms: 26.444459
+  ...
+# Subtest: a full guard pool defers the objective until a genuine kill frees a slot
+ok 10 - a full guard pool defers the objective until a genuine kill frees a slot
+  ---
+  duration_ms: 5.416333
+  ...
+# Subtest: V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+ok 11 - V2 pulse charge requires displacement, so tiny loops cannot manufacture full power
+  ---
+  duration_ms: 20.441042
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 294.420083

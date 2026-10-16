@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { validateScenario } from '../content.mjs';
 import { RULESET } from '../core/registry.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import {
   validatePack,
   preparePack,
@@ -224,4 +225,73 @@ test('music descriptors accept the five procedural styles, reject payloads, inva
     { name: '' },
   ])
     assert.equal(validateMusicDescriptor({ ...base, ...patch }).valid, false);
+});
+
+test('pack and library validation follows the active locale', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  const music = readPack().music[0];
+  const wrongEngine = readPack();
+  wrongEngine.engine = `${RULESET}-future`;
+  const unsafeSource = readPack();
+  unsafeSource.metadata.sourceUrl = 'javascript:run()';
+  const duplicateTheme = readPack();
+  duplicateTheme.themes.push(structuredClone(duplicateTheme.themes[0]));
+  const unknownCampaignTheme = readPack();
+  unknownCampaignTheme.campaigns[0].themeId = 'missing-theme';
+  const duplicateLevel = readPack();
+  duplicateLevel.campaigns[0].levels.push(structuredClone(duplicateLevel.campaigns[0].levels[0]));
+  const unknownArtworkLevel = readPack();
+  unknownArtworkLevel.levelVisuals.push({ levelId: 'missing-level', visualOverrides: {} });
+
+  setLocale('uk', { persist: false });
+  assert.match(
+    validateMusicDescriptor({ ...music, genre: 'missing' }).errors.join(' '),
+    /Жанр музики/,
+  );
+  assert.match(validatePack(wrongEngine).errors.join(' '), /потрібен інший рушій/);
+  assert.match(validatePack(unsafeSource).errors.join(' '), /URL-адресою HTTP\(S\)/);
+  assert.match(
+    validatePack(duplicateTheme).errors.join(' '),
+    /Ідентифікатори тем мають бути унікальними/,
+  );
+  assert.match(validatePack(unknownCampaignTheme).errors.join(' '), /невідому тему/);
+  assert.match(validatePack(duplicateLevel).errors.join(' '), /Ідентифікатори рівнів.*унікальними/);
+  assert.match(
+    validatePack(unknownArtworkLevel).errors.join(' '),
+    /невідомий або повторюваний рівень/,
+  );
+  assert.throws(() => installPack(emptyPackLibrary(), readPack()), /підготовлений пакет/);
+  assert.throws(() => removePack(emptyPackLibrary(), 'bad id'), /Ідентифікатор пакета недійсний/);
+  const prepared = await ready();
+  assert.throws(() => resolvePackCampaign(prepared, 'missing'), /Невідома кампанія пакета/);
+  const pictured = readPack();
+  pictured.visualOverrides.player = { dataUrl: png };
+  await assert.rejects(
+    preparePack(pictured, {
+      decodeImage: async () => ({ naturalWidth: 2, naturalHeight: 1 }),
+    }),
+    /декодовані розміри не відповідають заголовку/,
+  );
+
+  setLocale('en', { persist: false });
+  assert.match(
+    validateMusicDescriptor({ ...music, genre: 'missing' }).errors.join(' '),
+    /Music genre/,
+  );
+  assert.match(validatePack(wrongEngine).errors.join(' '), /requires a different engine/);
+  assert.match(validatePack(unsafeSource).errors.join(' '), /HTTP\(S\) URL/);
+  assert.match(validatePack(duplicateTheme).errors.join(' '), /Theme IDs must be unique/);
+  assert.match(validatePack(unknownCampaignTheme).errors.join(' '), /unknown theme/);
+  assert.match(validatePack(duplicateLevel).errors.join(' '), /Level IDs must be unique/);
+  assert.match(validatePack(unknownArtworkLevel).errors.join(' '), /unknown or repeated level/);
+  assert.throws(() => installPack(emptyPackLibrary(), readPack()), /prepared pack/);
+  assert.throws(() => removePack(emptyPackLibrary(), 'bad id'), /Pack identity is invalid/);
+  assert.throws(() => resolvePackCampaign(prepared, 'missing'), /Unknown pack campaign/);
+  await assert.rejects(
+    preparePack(pictured, {
+      decodeImage: async () => ({ naturalWidth: 2, naturalHeight: 1 }),
+    }),
+    /decoded dimensions do not match the image header/,
+  );
 });

@@ -1,0 +1,299 @@
+{
+  "format": "FPVFreeWorldFlights.v1",
+  "verifiedAt": "2026-10-13T23:17:35.843Z",
+  "runtime": "unchanged current main 0a3e1fb",
+  "checks": [
+    {
+      "id": "cc0-castle-court",
+      "mode": "self-level",
+      "packSha256": "ee6d8ee8ea5d981f49cdeaa52282a33d36de3f98321883b0cb7cbcc630356ed0",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-castle-court",
+      "mode": "acro",
+      "packSha256": "ee6d8ee8ea5d981f49cdeaa52282a33d36de3f98321883b0cb7cbcc630356ed0",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-city-plaza",
+      "mode": "self-level",
+      "packSha256": "08dd572b3812ffeac3ba1e87ef1890afa7e3d3f127493c189197d1739f1e78ce",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-city-plaza",
+      "mode": "acro",
+      "packSha256": "08dd572b3812ffeac3ba1e87ef1890afa7e3d3f127493c189197d1739f1e78ce",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-construction-site",
+      "mode": "self-level",
+      "packSha256": "8d6f217d626c570815722fc23d04cd5297093ab0ff6a1f6886897a5d96ffe062",
+      "ticks": 4621,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "760316528a3220d1"
+    },
+    {
+      "id": "cc0-construction-site",
+      "mode": "acro",
+      "packSha256": "8d6f217d626c570815722fc23d04cd5297093ab0ff6a1f6886897a5d96ffe062",
+      "ticks": 4675,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "2cc60de6536a5da5"
+    },
+    {
+      "id": "cc0-frontier-camp",
+      "mode": "self-level",
+      "packSha256": "4c9b122ccfb6b28b46dd2b198b8d15477fde456d91a2f416498bf40948a5e92b",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-frontier-camp",
+      "mode": "acro",
+      "packSha256": "4c9b122ccfb6b28b46dd2b198b8d15477fde456d91a2f416498bf40948a5e92b",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-industrial-yard",
+      "mode": "self-level",
+      "packSha256": "74fc5afb38af089a0bf58740640b070532d36cdd181011b9ef2fb8742d496273",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-industrial-yard",
+      "mode": "acro",
+      "packSha256": "74fc5afb38af089a0bf58740640b070532d36cdd181011b9ef2fb8742d496273",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-orbital-workshop",
+      "mode": "self-level",
+      "packSha256": "916d8da5a1b2b29ddc20ef7bf090fbc38038ea926d7bdd1a0e560ce513c5e71c",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-orbital-workshop",
+      "mode": "acro",
+      "packSha256": "916d8da5a1b2b29ddc20ef7bf090fbc38038ea926d7bdd1a0e560ce513c5e71c",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-pine-clearing",
+      "mode": "self-level",
+      "packSha256": "59c448a1226ad03a3881322ff7d9d766cc7ca35ef888267665fe66399cfe8b3f",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-pine-clearing",
+      "mode": "acro",
+      "packSha256": "59c448a1226ad03a3881322ff7d9d766cc7ca35ef888267665fe66399cfe8b3f",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-platform-garden",
+      "mode": "self-level",
+      "packSha256": "019d00195bcb03dd9f202e12cd948d369cdda271517bf4d493e68440b8e406b0",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-platform-garden",
+      "mode": "acro",
+      "packSha256": "019d00195bcb03dd9f202e12cd948d369cdda271517bf4d493e68440b8e406b0",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-race-paddock",
+      "mode": "self-level",
+      "packSha256": "33443ec2cb18a9d4c8874f564e3644fd0cd36c03680d1b37cfd01bab1f9a949e",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-race-paddock",
+      "mode": "acro",
+      "packSha256": "33443ec2cb18a9d4c8874f564e3644fd0cd36c03680d1b37cfd01bab1f9a949e",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-road-lab",
+      "mode": "self-level",
+      "packSha256": "97fe29db831659500a8850ed0e0a0252c37b6a6c893b37536e1967404683c355",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-road-lab",
+      "mode": "acro",
+      "packSha256": "97fe29db831659500a8850ed0e0a0252c37b6a6c893b37536e1967404683c355",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-rock-grotto",
+      "mode": "self-level",
+      "packSha256": "8f4809f5f07d625046ec58f810fca9d52d14ad177b5564f16f0ee73da187a2f5",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-rock-grotto",
+      "mode": "acro",
+      "packSha256": "8f4809f5f07d625046ec58f810fca9d52d14ad177b5564f16f0ee73da187a2f5",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-ruined-halls",
+      "mode": "self-level",
+      "packSha256": "01eb7bd2874bb07ff7617f792fa765ca1d8d3e6cad72445013a4c72e8c21324a",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-ruined-halls",
+      "mode": "acro",
+      "packSha256": "01eb7bd2874bb07ff7617f792fa765ca1d8d3e6cad72445013a4c72e8c21324a",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-shipyard",
+      "mode": "self-level",
+      "packSha256": "5b3f2251ff0fcbdfbd645a7f6394b2f13d23f544adc57fe2b8a8ccdcdce14e98",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-shipyard",
+      "mode": "acro",
+      "packSha256": "5b3f2251ff0fcbdfbd645a7f6394b2f13d23f544adc57fe2b8a8ccdcdce14e98",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-skate-plaza",
+      "mode": "self-level",
+      "packSha256": "388c68e57c43b4d3d450c57890b112408c0316e4e5e2d0e9eae00d9cb151e03b",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-skate-plaza",
+      "mode": "acro",
+      "packSha256": "388c68e57c43b4d3d450c57890b112408c0316e4e5e2d0e9eae00d9cb151e03b",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-village-green",
+      "mode": "self-level",
+      "packSha256": "3ca6c466023b6b764c47c70c15013b64d0af7ca4577104ff777707527d4192af",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-village-green",
+      "mode": "acro",
+      "packSha256": "3ca6c466023b6b764c47c70c15013b64d0af7ca4577104ff777707527d4192af",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    },
+    {
+      "id": "cc0-woodland-camp",
+      "mode": "self-level",
+      "packSha256": "a7b0f6d52411131f6e03d25f5db1ef25209be2875422e0aad8fd0f155735b93c",
+      "ticks": 2452,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "7f4be02172472f24"
+    },
+    {
+      "id": "cc0-woodland-camp",
+      "mode": "acro",
+      "packSha256": "a7b0f6d52411131f6e03d25f5db1ef25209be2875422e0aad8fd0f155735b93c",
+      "ticks": 2479,
+      "contacts": 0,
+      "health": 100,
+      "finalStateIdentity": "dc0e4d13d38d233b"
+    }
+  ],
+  "limitations": [
+    "Content commands/replay verification; browser installation and visual inspection are separate.",
+    "No physical-device performance or human acceptance claim."
+  ]
+}

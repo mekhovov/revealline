@@ -1,0 +1,53 @@
+{
+  "format": "FPVAdventureActorEditorBrowser.v1",
+  "createdAt": "2026-10-02T07:10:12.082Z",
+  "checks": [
+    {
+      "name": "en: position/speed edit preserves follow objectives and bindings",
+      "passed": true
+    },
+    {
+      "name": "en: rival to civilian role change preserves tracking",
+      "passed": true
+    },
+    {
+      "name": "en: non-hostile role removes defeat criteria only",
+      "passed": true
+    },
+    {
+      "name": "en: explicit actor deletion removes tracking references in both modes",
+      "passed": true
+    },
+    {
+      "name": "en: deleting sole tracking subject leaves valid survivor criterion",
+      "passed": true
+    },
+    {
+      "name": "uk: position/speed edit preserves follow objectives and bindings",
+      "passed": true
+    },
+    {
+      "name": "uk: rival to civilian role change preserves tracking",
+      "passed": true
+    },
+    {
+      "name": "uk: non-hostile role removes defeat criteria only",
+      "passed": true
+    },
+    {
+      "name": "uk: explicit actor deletion removes tracking references in both modes",
+      "passed": true
+    },
+    {
+      "name": "uk: deleting sole tracking subject leaves valid survivor criterion",
+      "passed": true
+    }
+  ],
+  "sourceHashes": {
+    "world-actor-editor.mjs": "a157c824cbb5058059402e159d7571dfa394f4ae21b6aa28296e5deea7190159",
+    "world-catalogue.mjs": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6",
+    "world-model.mjs": "78f606f2d7acc02c0cacccfcf6566996658854666b1ad453a906e2fa94ed7208"
+  },
+  "limits": "Actual production actor editor DOM actions in the browser. No added unit coverage or physical-controller acceptance.",
+  "passed": true
+}

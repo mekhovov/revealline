@@ -1,0 +1,49 @@
+{
+  "checkedAt": "2026-10-15T14:40:57.368583+00:00",
+  "scope": "Exact packaged Alpine Library native admission; bounded desktop browser observations, not offline/public/device/final-art acceptance",
+  "pullRequest": 1427,
+  "sourceHead": "8cfd240f1f0b43b7baa3adff8ab857248d4cd5dc",
+  "packageHead": "59d3c1b9",
+  "artifact": 11980696138,
+  "run": 38748926926,
+  "origin": "http://127.0.0.1:9153",
+  "checks": {
+    "normalDownloadR2": true,
+    "savedReviewR2MiB": 20.6,
+    "savedReviewR1MiB": 20,
+    "bothVersionsRetainedAfterReload": true,
+    "cachedR2FlyAfterReload": "Unscored \u00b7 Ready to arm; 114.0 m, zero drift, Arm / resume available",
+    "starts": [
+      "Glacial valley",
+      "Snow saddle",
+      "Summit station"
+    ],
+    "snowOverviewElevationM": 424,
+    "summitOverviewElevationM": 564,
+    "fpvChaseOverview": true,
+    "explicitArmAndPause": true,
+    "modeChange": "Acro resets ready/disarmed at 564 m",
+    "portrait390x844": true,
+    "landscape844x390": true,
+    "viewportRestored": true
+  },
+  "findings": [
+    "Corrected snow/scree contours remove prior staircase appearance.",
+    "Summit FPV initially faces a close wall; safe spawn accepted, separate authored heading follow-up requested.",
+    "Landscape density and representative art remain open."
+  ],
+  "evidence": [
+    "alpine-contours-package-snow-overview-native-20261015.png",
+    "alpine-contours-package-portrait-native-20261015.png",
+    "alpine-contours-package-landscape-native-20261015.png",
+    "alpine-contours-package-summit-native-20261015.png",
+    "alpine-contours-package-summit-fpv-native-20261015.png",
+    "alpine-both-revisions-native-20261015.png",
+    "alpine-reload-cached-ready-native-20261015.png"
+  ],
+  "limitations": [
+    "No physical radio/controller/device acceptance.",
+    "No stopped-origin or network-wide offline claim.",
+    "Frozen package predates immediate response-status fix #1447; stale paused observer label not a new regression."
+  ]
+}
