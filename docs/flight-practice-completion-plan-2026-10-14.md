@@ -26,15 +26,24 @@ Main-entry return language is corrected without overwriting saved preferences;
 the actual EN/UK return documents now pass the native matrix. Outstanding-digest
 cancellation gains four deterministic worker regressions, not a native timing
 claim. EN/UK guides now explain that origin eviction may remove records as well
-as caches and require external exports; this guide-only input change requires a
-new reproduced/admitted candidate, not relabelled historical receipts.
+as caches and require external exports. Their guide-only candidate `11aa29782` /
+`4258044c…` reproduces twice, passes admission in local/external copies, and passes
+all six packaged guide/navigation checks with independent audit. No simulator
+code changes; old flight receipts are not relabelled. Expanded suites pass 402
+practice tests and 370 observer tests plus one explicit historical-fixture skip.
+
+A genuinely browser-managed eviction capability also passes on a disposable
+1 MiB fixture after Chrome's unchanged five-minute timer, with native counters
+and exact previously persisted bucket/cache loss. Its explicitly reduced pool,
+unavailable numeric baseline and ambient low disk are retained limitations—not
+default-policy or actual practice-backup recovery qualification. The next real-app
+lane has a concrete public-export/import recipe, not another simulated deletion.
 See [current receipts, limits and remaining priorities](flight-practice-continuation-2026-10-16.md).
 
 ### Current remaining priorities (supersede historical “next” notes below)
 
 | Priority | Remaining item                                                                                       | Why / benefit                                                                                                                              | Impact if omitted                                                                           |
 | -------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
-| P0       | Reproduce/admit the guide-warning follow-up and verify affected guide routes                         | Binds the updated recovery advice to downloadable bytes while preserving original evidence identities                                      | Latest source and tested package instructions could be confused                             |
 | P0       | Extend active-flight update continuity beyond Academy to Gym and Worlds                              | Proves a real changed-package update cannot replace the running document or lose its records; explicit pause/resume must remain safe       | All-app update safety would be assumed from one app only                                    |
 | P0       | Browser-managed eviction and exported-backup recovery                                                | Distinguishes browser-selected whole-origin loss from controlled quota denial or manually missing cache files; verifies honest recovery    | Players could be told records survive an event that can delete them                         |
 | P0       | Native cancellation while verification work is outstanding                                           | Complements native final-ready-response cancellation and deterministic delayed-digest unit coverage                                        | Native scheduling/UI timing remains unproven, even though late writes are regression-tested |
@@ -47,6 +56,15 @@ The unpublished fourth-app recipe, all-app distinct-payload migration/rollback,
 six restarted-offline flight routes and original-production six-case journey
 already have scoped evidence. Do not rerun or reopen them as if absent; rerun only
 what a changed input or remaining acceptance case actually affects.
+
+For the next restoration lane, use public exports/imports and compare stable
+proof/course/model/pack identities plus valid re-export/replay. Restored
+`savedAt`, `installedAt` and generation metadata legitimately change; do not reuse
+the exact database-retention predicate as a restoration-equivalence predicate.
+Gym's completion set is memory-only and its transcript has no public restore
+control, so no saved-completion restoration claim may be invented. The active
+Worlds lane can pin the native legacy first flight to avoid automatic recovery
+writes while measuring unchanged paused state; that is not all-world coverage.
 
 Fresh audited software progress: observer `8e29a04c3` passes real imported-model
 offline flight through both restarted Worlds routes, all-three final verification

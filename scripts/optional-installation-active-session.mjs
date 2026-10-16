@@ -92,14 +92,17 @@ export function historicalHUDSnapshot() {
 
 async function bound(work, ms, label) {
   assert(ms > 0, `Deadline exceeded: ${label}`);
+  const deadline = performance.now() + ms;
   let timer;
   try {
-    return await Promise.race([
+    const result = await Promise.race([
       Promise.resolve().then(work),
       new Promise((_, reject) => {
         timer = setTimeout(() => reject(Error(`Deadline exceeded: ${label}`)), ms);
       }),
     ]);
+    if (performance.now() >= deadline) throw Error(`Deadline exceeded: ${label}`);
+    return result;
   } finally {
     clearTimeout(timer);
   }
@@ -311,6 +314,8 @@ export async function prepareHistoricalAcademySession(
     void acquisition
       .then((handle) => {
         if (g.closed || g.failed) return handle.dispose();
+        // Retain ownership even if the operation's post-await deadline check fails.
+        g.document = handle;
       })
       .catch(() => {
         g.lateOwnershipFailure = true;
@@ -341,7 +346,9 @@ export async function prepareHistoricalAcademySession(
     if (startedUI.phase === 'disarmed') {
       // Old native Start can precede renderer readiness. Preserve that attempt,
       // then wait for the visible Arm button itself to become enabled.
-      await publicControl(g, '#academy-flight-resume', 'press', undefined, { waitEnabled: true });
+      await publicControl(g, '#academy-flight-resume', 'press', undefined, {
+        waitEnabled: true,
+      });
       receipt.startAttempt.additionalArmActivated = true;
     } else assert.equal(startedUI.phase, 'active', 'Unexpected result of explicit Start.');
     const initial = await read(g, 'active');

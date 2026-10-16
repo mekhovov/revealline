@@ -13,10 +13,16 @@ language setup now pass all six actual EN/UK source-shell return routes at
 `8c93b49ee`. Its independently audited C9 v3 software matrix passes 66 focus
 witnesses, native 200% zoom/reset and complete cleanup. One control has the
 explicit 0.390625-device-pixel residual; no zero-clipping/painted-outline/visual
-or spoken assistive claim is made. Current observer tests pass 367 with one
-explicit historical-fixture skip. Guide-only origin-eviction warnings and four
-deterministic outstanding-digest cancellation regressions are the next source
-follow-up; none relabel the original package receipts.
+or spoken assistive claim is made. Current suites pass 402 practice tests and 370
+observer tests plus one explicit historical-fixture skip. Guide-only candidate
+`11aa29782` / `4258044c…` reproduces twice, passes all three admissions and all six
+affected EN/UK guide/return journeys. Four deterministic digest-completion
+cancellation regressions and the active-session observer's monotonic deadline
+repair pass; no expanded native hashing/active-app claim follows. A disposable
+1 MiB fixture proves real browser-managed eviction under an explicit reduced
+pool after Chrome's unchanged timer; ambient low disk/counter-baseline limitations
+are retained, and actual app-backup recovery remains open. None of these results
+relabel the original package receipts or approve publication.
 
 **Latest 16 October checkpoint:** the [integrated continuation](flight-practice-continuation-2026-10-16.md)
 records independently audited six-route EN restarted-offline flight/pause and
