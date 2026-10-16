@@ -12,6 +12,7 @@ import {
   snapshotPausedAfterTransfer,
   verifyHistoricalSessionAfterUpdate,
   disposeHistoricalAcademySession,
+  historicalHeightIncreased,
 } from './optional-installation-active-session.mjs';
 
 const mode = 'academy-v0.142.4-98ad851';
@@ -72,6 +73,15 @@ test('strict visible HUD parser rejects hidden metrics, wrong phases and unsafe 
     { details: 'Speed 0.2 m/s · 1.2–2.4 m/s' },
   ])
     assert.throws(() => parseVisibleHistoricalHUD({ ...raw(), ...patch }, 'active'));
+});
+
+test('motion requires positive height gain and rejects gravity falls or reset to ground', () => {
+  assert(historicalHeightIncreased(0, 0.2, 0.2));
+  assert(historicalHeightIncreased(0.3, 0.4));
+  assert(!historicalHeightIncreased(0.3, 0));
+  assert(!historicalHeightIncreased(0.3, 0.2));
+  assert(!historicalHeightIncreased(0.3, 0.3));
+  assert.throws(() => historicalHeightIncreased(0, Infinity));
 });
 
 /** Synthetic public-DOM unit fixture. Not simulated flight or browser evidence. */
@@ -367,6 +377,23 @@ test('missing opt-in, out-of-order verification, and fabricated guards cannot qu
     f.state.phase = 'paused';
     await assert.rejects(snapshotPausedAfterTransfer(guard)); // No natural focus transfer.
     assert.equal(receipt.passed, false);
+  } finally {
+    await disposeHistoricalAcademySession(guard);
+  }
+});
+
+test('failed native focus transfer preserves one bounded last public snapshot', async () => {
+  const f = fixture(),
+    receipt = {};
+  const guard = await prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode });
+  try {
+    await assert.rejects(snapshotPausedAfterTransfer(guard), /1500ms/);
+    assert.equal(receipt.passed, false);
+    assert(receipt.transferDiagnostics.attempts > 0 && receipt.transferDiagnostics.attempts < 40);
+    assert.equal(receipt.transferDiagnostics.lastSnapshot.phase, 'active');
+    assert.equal(receipt.transferDiagnostics.lastSnapshot.focused, true);
+    assert.equal(receipt.transferDiagnostics.lastSnapshot.visibility, 'visible');
+    assert.equal(receipt.transferDiagnostics.maximumWaitMs, 1500);
   } finally {
     await disposeHistoricalAcademySession(guard);
   }
