@@ -173,3 +173,9 @@ The optional **Cross-stitch crossings** Journey was selected through its actual 
 ### Final main integration
 
 See [integration receipt](final-integration.json). Rebase onto `facf1627e` preserved the Solo host, engine, mission-library, flight-picture, Playground and both Neon pack bytes. Fresh native Gentle First Signal won again and automatically continued to Relay Orchard. Its later native Next target had already retired when clicked; that attempt is not counted as new manual-Next evidence. The earlier successful native manual-Next case remains scoped to the unchanged host. Refreshed source/image/catalog and rebuilt distribution audits passed. The rebuilt package is a local qualification candidate, not a public release.
+
+## Public Pages follow-up — 16 October 2026
+
+[Public receipt](public-pages-acceptance.json): PR #1502 merged through repository automation; Pages build, deploy and verify passed. Public build metadata reported the exact merge revision bd088581. Artwork gallery exposed 54 play links and Mosaic exposed 38 cards/play links. Current-rules Channels downloaded/activated and launched; Restart opened its original painting and resumed. After a natural idle loss, Retry started again and paused at 0:00 with three lives. Exact URL refresh retained the 75% Standard Channels briefing. The Copy action reported success, but no clipboard-byte claim is made.
+
+The public creator produced ready previews for DRONE AID (2,127 reachable / 241 bonus cells) and a native uploaded PNG cross (2,176 / 192), with Apply enabled. No Apply occurred. Initial public launch had one failed app.mjs fetch immediately after deployment; normal Reload recovered and the listed retests passed. Cause is unproven. Public offline/network faults, historical migration and controlled decoder delay were not repeated against that profile. The prior isolated-origin evidence remains separate.
