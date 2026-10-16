@@ -1,0 +1,73 @@
+TAP version 13
+# (node:89371) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/private/tmp/revealline-soundtrack-ledger-v106/scripts/.envelope-capacity-probe.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: P02 retains the published P01 history and appends audio7 under a new fpv24
+ok 1 - P02 retains the published P01 history and appends audio7 under a new fpv24 # SKIP test name does not match pattern
+  ---
+  duration_ms: 3.402459
+  ...
+# Subtest: P03 retains the measured fpv25 source-stage checkpoint after published P02
+ok 2 - P03 retains the measured fpv25 source-stage checkpoint after published P02 # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.115709
+  ...
+# Subtest: current P03 reproduction retains its measured source stage before any review successor
+ok 3 - current P03 reproduction retains its measured source stage before any review successor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040375
+  ...
+# Subtest: Journey music review retains fpv33 source evidence and every earlier immutable record
+ok 4 - Journey music review retains fpv33 source evidence and every earlier immutable record # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.057625
+  ...
+# Subtest: unchanged production preserves its exact document and appends changed revisions
+ok 5 - unchanged production preserves its exact document and appends changed revisions # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.062917
+  ...
+# Subtest: review evidence gets an immutable successor and normal reproduction keeps the review
+ok 6 - review evidence gets an immutable successor and normal reproduction keeps the review # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039584
+  ...
+# Subtest: production refuses silent slot contract mutation and can explicitly return to an old revision
+ok 7 - production refuses silent slot contract mutation and can explicitly return to an old revision # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06075
+  ...
+# Subtest: Journey feedback dependencies bind only the reviewed player-craft effects inputs
+ok 8 - Journey feedback dependencies bind only the reviewed player-craft effects inputs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040625
+  ...
+# Subtest: quick controls reopen UI and audio while retaining their exact previous reviews
+ok 9 - quick controls reopen UI and audio while retaining their exact previous reviews # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.104708
+  ...
+# Subtest: quick controls reopen screens, retaining prior screen and unchanged motion reviews
+ok 10 - quick controls reopen screens, retaining prior screen and unchanged motion reviews # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.222875
+  ...
+# Subtest: changed recipe inputs reopen every consuming group and preserve nonconsumers
+ok 11 - changed recipe inputs reopen every consuming group and preserve nonconsumers # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.103916
+  ...
+# Subtest: the whole production collection has capacity for immutable review successors
+ok 12 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 41492.248458
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 11
+# todo 0
+# duration_ms 41909.684416

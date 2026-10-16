@@ -1,0 +1,53 @@
+{
+  "format": "FPVCanyonPreparation.v1",
+  "extent": {
+    "widthM": 768,
+    "depthM": 768,
+    "targetWidthM": 8192,
+    "targetDepthM": 8192
+  },
+  "chunks": 36,
+  "assets": 72,
+  "sourceBytes": 1625685,
+  "terrainTriangles": 73728,
+  "sharedEdgesVerified": 60,
+  "heightRangeM": [6, 155.728],
+  "districts": 6,
+  "landmarks": 12,
+  "spawns": 3,
+  "routes": [
+    {
+      "id": "basin-circuit",
+      "samples": 1203,
+      "lengthM": 396,
+      "corridorWidthM": 16,
+      "minClearanceM": 22,
+      "requiredClearanceM": 8
+    },
+    {
+      "id": "gorge-run",
+      "samples": 2088,
+      "lengthM": 683,
+      "corridorWidthM": 12,
+      "minClearanceM": 20.428,
+      "requiredClearanceM": 8
+    },
+    {
+      "id": "fork-run",
+      "samples": 783,
+      "lengthM": 256,
+      "corridorWidthM": 8,
+      "minClearanceM": 20.365,
+      "requiredClearanceM": 8
+    }
+  ],
+  "manifestSHA256": "0828de82c5e29fbf61b79dc17b9dea419227faa3ee044cde23fc8b128d15aeb8",
+  "flightReady": false,
+  "limitations": [
+    "4 m heightfield has no caves or overhangs",
+    "Route checks are sampled geometric clearance, not flight simulation or scored lessons",
+    "Canonical terrain material remains the shared neutral material; sandstone tint is authoring preview only",
+    "No textures or candidate CC0 scenery admitted yet",
+    "8.192 km target is not implemented by this 768 m representative"
+  ]
+}

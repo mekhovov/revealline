@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-/** Local browser-game tooling. Node built-ins only; no package install needed. */
+import { validateLocalization } from './localization.mjs';
+/** Local browser-game tooling, including catalog validation for localized builds. */
 import { createHash } from 'node:crypto';
-import { deflateSync } from 'node:zlib';
 import { createServer } from 'node:http';
 import { createReadStream } from 'node:fs';
 import * as fs from 'node:fs/promises';
@@ -14,26 +14,34 @@ import {
   packNavigationSummary,
   validateNavigationCatalogs,
 } from './pack-indexes.mjs';
+import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
+import { generatedBrandIcons } from './brand-icons.mjs';
+import { writeBuildEntry } from './build-entry-writer.mjs';
+import {
+  isOptionalSpatialAudioBody,
+  isOptionalReactionVoiceBody,
+} from './offline-core-closure.mjs';
+import { isIncludedBundledMission } from '../game/mission-library/included-bundled-pack.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
 const FORMAT_VERSION = 1;
 export const PUBLIC_SECURITY_HEADERS = Object.freeze({
   'Content-Security-Policy':
-    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+    "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'no-referrer',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
   'Cache-Control': 'no-cache',
 });
-// Public Pages and the soundtrack archive share an origin. Local packaged
-// previews need only this code-admitted archive path added for verified fetches.
-const PREVIEW_SECURITY_HEADERS = Object.freeze({
+// Packaged previews allow HTTPS media/catalogue requests for explicitly added
+// soundtrack sources. Script/style/native package policy remains self-only; the
+// source manager validates user-selected URLs and recording identities before use.
+export const PREVIEW_SECURITY_HEADERS = Object.freeze({
   ...PUBLIC_SECURITY_HEADERS,
-  'Content-Security-Policy': PUBLIC_SECURITY_HEADERS['Content-Security-Policy'].replace(
-    "connect-src 'self';",
-    "connect-src 'self' https://mekhovov.github.io/revealline-soundtracks-01/;",
-  ),
+  'Content-Security-Policy': PUBLIC_SECURITY_HEADERS['Content-Security-Policy']
+    .replace("connect-src 'self';", "connect-src 'self' https:;")
+    .replace("media-src 'self' data: blob:;", "media-src 'self' data: blob: https:;"),
 });
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -51,6 +59,7 @@ const MIME = {
   '.mp3': 'audio/mpeg',
   '.ogg': 'audio/ogg',
   '.wav': 'audio/wav',
+  '.m4a': 'audio/mp4',
   '.ttf': 'font/ttf',
   '.woff2': 'font/woff2',
   '.txt': 'text/plain; charset=utf-8',
@@ -58,6 +67,11 @@ const MIME = {
   '.md': 'text/plain; charset=utf-8',
 };
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+async function sha256File(file) {
+  const hash = createHash('sha256');
+  for await (const chunk of createReadStream(file)) hash.update(chunk);
+  return hash.digest('hex');
+}
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
 const fail = (message) => {
   throw new Error(message);
@@ -205,21 +219,46 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
   return config;
 }
 
+export function isBuildInputPath(file) {
+  if (file.startsWith('game/test/') || file.startsWith('game/offline/')) return false;
+  if (file.split('/').some((part) => part.startsWith('.') || part === 'node_modules'))
+    fail(`Private path in build: ${file}`);
+  return true;
+}
+
 export async function collectBuildFiles(root = PROJECT_ROOT, config) {
   config ??= await readBuildConfig(root);
   const files = new Set();
   for (const included of config.include) {
     for (const file of await regularFiles(root, included)) {
-      if (file.startsWith('game/test/') || file === 'game/offline/service-worker.template.js')
-        continue;
-      if (file.split('/').some((p) => p.startsWith('.') || p === 'node_modules'))
-        fail(`Private path in build: ${file}`);
-      files.add(file);
+      if (isBuildInputPath(file)) files.add(file);
     }
   }
   if (!files.has(config.entry)) fail(`Build include does not contain entry ${config.entry}`);
   for (const name of config.optionalOffline ?? [])
     if (!files.has(name)) fail(`optionalOffline pack is not shipped: ${name}`);
+  if (files.has('game/audio/reactions/pilot.mjs')) {
+    const { REACTION_VOICE_PILOT: voices } = await import(
+      pathToFileURL(path.join(root, 'game/audio/reactions/pilot.mjs')).href
+    );
+    if (!Array.isArray(voices) || voices.length > 256) fail('Invalid reaction voice manifest');
+    const ids = new Set();
+    for (const voice of voices) {
+      if (
+        !['en', 'uk'].includes(voice.locale) ||
+        typeof voice.lineId !== 'string' ||
+        !/^[a-z0-9][a-z0-9-]*-(?:en|uk)\.m4a$/.test(voice.file)
+      )
+        fail('Invalid reaction voice entry');
+      const id = `${voice.lineId}|${voice.locale}`,
+        name = `game/audio/reactions/${voice.file}`;
+      if (ids.has(id) || !files.has(name)) fail(`Missing or duplicate reaction voice: ${id}`);
+      ids.add(id);
+      const bytes = await fs.readFile(await noSymlinkPath(root, name));
+      if (bytes.length !== voice.bytes || sha256(bytes) !== voice.sha256)
+        fail(`Reaction voice differs from its manifest: ${id}`);
+    }
+  }
   if (
     [
       'manifest.json',
@@ -391,7 +430,15 @@ async function assertOutput(root, out, inputs) {
   }
 }
 
-function publicPage(title, body, fieldKit = false, compiled = false) {
+function publicPage(title, body, fieldKit = false, compiled = false, localized = false) {
+  const titles = {
+    Play: 'website:page.playTitle',
+    'Privacy and local storage': 'website:page.privacyTitle',
+    'Credits and notices': 'website:page.creditsTitle',
+  };
+  const localization = localized
+    ? '<link rel="stylesheet" href="./game/i18n/style.css"><script src="./game/vendor/i18next-26.4.2.min.js"></script><script src="./game/i18n/catalogs.mjs"></script><script src="./game/i18n/bootstrap.mjs"></script>'
+    : '';
   const styles = fieldKit
     ? ['fonts', 'tokens', 'components', 'surfaces']
         .map((part) => `<link rel="stylesheet" href="./game/ui/field-kit-${part}.css">`)
@@ -400,10 +447,10 @@ function publicPage(title, body, fieldKit = false, compiled = false) {
   const presentation = compiled
     ? '<link rel="stylesheet" href="./game/ui/field-kit-compiled.css"><script type="module" src="./game/presentation/page-entry.mjs"></script>'
     : '';
-  const content = fieldKit ? body.replaceAll('<h1>', '<h1 class="field-kit-display">') : body;
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${html(title)} · Reveal Line</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style>${styles}${presentation}</head><body${fieldKit ? ' class="field-kit field-kit-support"' : ''}><main>${content}</main></body></html>\n`;
+  const content = fieldKit ? body.replaceAll('<h1', '<h1 class="field-kit-display"') : body;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title data-i18n="${titles[title]}">${html(title)} · FPV / LINE</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style>${localization}${styles}${presentation}</head><body${fieldKit ? ' class="field-kit field-kit-support"' : ''}><main>${localized ? '<div data-language-control></div><noscript><p lang="en">Enable JavaScript to switch languages.</p><p lang="uk">Увімкніть JavaScript, щоб змінити мову.</p></noscript>' : ''}${content}</main></body></html>\n`;
 }
-function addPublicEntries(entries, info) {
+export function addPublicEntries(entries, info) {
   const displayVersion = info.version.startsWith('v') ? info.version : `v${info.version}`;
   const has = (name) => entries.some((e) => e.name === name);
   const fieldKit = ['fonts', 'tokens', 'components', 'surfaces'].every((part) =>
@@ -411,13 +458,24 @@ function addPublicEntries(entries, info) {
   );
   const compiled =
     fieldKit && has('game/ui/field-kit-compiled.css') && has('game/presentation/page-entry.mjs');
+  const localized = [
+    'game/vendor/i18next-26.4.2.min.js',
+    'game/i18n/catalogs.mjs',
+    'game/i18n/bootstrap.mjs',
+    'game/i18n/style.css',
+  ].every(has);
+  const makePage = (title, body) => publicPage(title, body, fieldKit, compiled, localized);
   const links = [
-    `<a href="./${html(info.entry)}">Play solo</a>`,
-    ...(has('game/couch/index.html') ? ['<a href="./game/couch/">Couch duel</a>'] : []),
-    ...(has('game/replay-theater/index.html')
-      ? ['<a href="./game/replay-theater/">Replay Theater</a>']
+    `<a href="./${html(info.entry)}" data-i18n="website:page.playSolo">Play solo</a>`,
+    ...(has('game/couch/index.html')
+      ? ['<a href="./game/couch/" data-i18n="website:page.couchDuel">Couch duel</a>']
       : []),
-    ...(has('game/playground/index.html') ? ['<a href="./game/playground/">Playground</a>'] : []),
+    ...(has('game/replay-theater/index.html')
+      ? ['<a href="./game/replay-theater/" data-i18n="website:replayTheater">Replay Theater</a>']
+      : []),
+    ...(has('game/playground/index.html')
+      ? ['<a href="./game/playground/" data-i18n="website:page.playground">Playground</a>']
+      : []),
   ];
   const landing = entries.find((e) => e.name === 'site/index.html');
   if (landing) {
@@ -427,9 +485,8 @@ function addPublicEntries(entries, info) {
       .replaceAll('href="./landing.css"', 'href="./site/landing.css"')
       .replaceAll('src="./landing.mjs"', 'src="./site/landing.mjs"')
       .replaceAll('src="./launch.mjs"', 'src="./site/launch.mjs"')
-      .replaceAll('href="../game/boot.css"', 'href="./game/boot.css"')
-      .replaceAll('href="../game/ui/field-kit-', 'href="./game/ui/field-kit-')
-      .replaceAll('href="../game/"', 'href="./game/"');
+      .replaceAll('href="../game/', 'href="./game/')
+      .replaceAll('src="../game/', 'src="./game/');
     entries.splice(entries.indexOf(landing), 1);
     entries.push({ name: 'index.html', bytes: Buffer.from(rendered) });
     const about = entries.find((entry) => entry.name === 'site/about.html');
@@ -441,25 +498,27 @@ function addPublicEntries(entries, info) {
     entries.push({
       name: 'index.html',
       bytes: Buffer.from(
-        publicPage(
+        makePage(
           'Play',
-          `<small>REVEAL LINE · ${html(info.version)}</small><h1>Clear a path.<br>Reveal a world.</h1><p>Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html">Privacy and local storage</a> · <a href="./credits.html">Credits and notices</a></p><small>${info.sourceRevision ? `Saved source <code>${html(info.sourceRevision)}</code>` : 'Development distribution — source revision not recorded.'}</small>`,
+          `<small>FPV / LINE · ${html(info.version)}</small><h1 data-i18n-rich="website:page.tagline">Clear a path.<br data-i18n-slot="lineBreak">Reveal a world.</h1><p data-i18n="website:page.introduction">Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html" data-i18n="website:page.privacyLink">Privacy and local storage</a> · <a href="./credits.html" data-i18n="website:creditsAndNotices">Credits and notices</a></p>${info.sourceRevision ? `<small data-i18n-rich="website:page.savedSource">Saved source <code data-i18n-slot="revision">${html(info.sourceRevision)}</code></small>` : '<small data-i18n="website:page.developmentBuild">Development distribution — source revision not recorded.</small>'}`,
           fieldKit,
           compiled,
         ),
       ),
     });
-  const game = entries.find((entry) => entry.name === 'game/index.html');
-  if (game)
-    game.bytes = Buffer.from(
-      game.bytes.toString().replaceAll('__REVEALLINE_VERSION__', html(displayVersion)),
-    );
+  for (const name of ['game/index.html', 'game/couch/index.html', 'game/couch/relay-rescue.html']) {
+    const game = entries.find((entry) => entry.name === name);
+    if (game)
+      game.bytes = Buffer.from(
+        game.bytes.toString().replaceAll('__REVEALLINE_VERSION__', () => html(displayVersion)),
+      );
+  }
   entries.push({
     name: 'privacy.html',
     bytes: Buffer.from(
-      publicPage(
+      makePage(
         'Privacy and local storage',
-        '<p><a href="./">← Game home</a></p><h1>Your game stays here.</h1><p>This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p>The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs and uploaded MP3 libraries use IndexedDB. Custom soundtrack backups contain the original audio bytes; the player-library JSON alone is not a complete media backup. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p>Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p>A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p>Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
+        '<p><a href="./" data-i18n="website:gameHome">← Game home</a></p><h1 data-i18n="website:yourGameStaysHere">Your game stays here.</h1><p data-i18n="website:thisBuildHasNoAccountSystemAnalyticsSdkAdvertisingTracker">This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p data-i18n="website:theBrowserStoresPreferencesAchievementsLocalScoresAndASuspended">The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs and uploaded MP3 libraries use IndexedDB. Custom soundtrack backups contain the original audio bytes; the player-library JSON alone is not a complete media backup. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p data-i18n="website:exportThePlayerLibraryPacksAndSuspendedFlightWhenYou">Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p data-i18n="website:aPublicHostingProviderReceivesOrdinaryPageAndAssetRequests">A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p data-i18n="website:importedContentIsTreatedAsBoundedDataAndMediaInstalled">Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
         fieldKit,
         compiled,
       ),
@@ -468,11 +527,34 @@ function addPublicEntries(entries, info) {
   entries.push({
     name: 'credits.html',
     bytes: Buffer.from(
-      publicPage(
+      makePage(
         'Credits and notices',
-        '<p><a href="./">← Game home</a></p><h1>Credits and notices</h1><p>Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p>The included Phaser engine retains its <a href="./game/vendor/PHASER-LICENSE.md">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p>The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p>The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
+        '<p><a href="./" data-i18n="website:gameHome">← Game home</a></p><h1 data-i18n="website:creditsAndNotices">Credits and notices</h1><p data-i18n="website:revealLineIsAnOriginalTerritoryCaptureGameInspiredBy">FPV / LINE is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p data-i18n-rich="website:theIncludedPhaserEngineRetainsItsSlot0BuiltInMusic">The included Phaser engine retains its <a data-i18n-slot="slot0" href="./game/vendor/PHASER-LICENSE.md" data-i18n="website:mitLicenseAndCopyrightNotice">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p data-i18n="website:theWorldsBackgroundsAndCharacterRigsAreChangeableFpvGameplay">The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p data-i18n="website:theTelegramEmojiCollectionResearchedForInspirationIsNotIncluded">The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
+          (has('game/vendor/MEDIABUNNY-LICENSE.txt') && has('game/vendor/mediabunny-1.59.1.json')
+            ? '<p data-i18n-rich="website:page.mediabunnyNotice">The optional local video trimmer uses pinned Mediabunny 1.59.1 under its <a data-i18n-slot="license" data-i18n="website:page.mplLicense" href="./game/vendor/MEDIABUNNY-LICENSE.txt">MPL-2.0 license</a>; its <a data-i18n-slot="source" data-i18n="website:page.sourceChecksumRecord" href="./game/vendor/mediabunny-1.59.1.json">source and checksum record</a> is included.</p>'
+            : '') +
+          (has('game/audio/effects/licenses.html')
+            ? '<p><a href="./game/audio/effects/licenses.html" data-i18n="website:page.effectsCredits">Sound effects credits and source</a></p>'
+            : '') +
+          (localized
+            ? '<p data-i18n-rich="website:page.i18nextNotice">Localization uses i18next under its <a href="./game/vendor/I18NEXT-LICENSE.txt" data-i18n-slot="slot0" data-i18n="website:page.license">MIT license</a>.</p>'
+            : '') +
+          (has('game/vendor/QRCODEGEN-LICENSE.txt')
+            ? '<p data-i18n-rich="website:page.qrNotice">Offline QR rewards use Project Nayuki’s QR Code generator 1.8.0 under its <a href="./game/vendor/QRCODEGEN-LICENSE.txt" data-i18n-slot="license">MIT license</a>. Its <a href="./game/vendor/qrcodegen-1.8.0.json" data-i18n-slot="source">source and checksum record</a> is included.</p>'
+            : '') +
+          (has(
+            'game/audio/soundtracks/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58.mp3',
+          )
+            ? '<p data-i18n-rich="website:page.openingThemeNotice">Opening-theme music: <cite data-i18n-slot="title">Carol of the Bells (Metal Version)</cite> by <a data-i18n-slot="creator" href="https://creatorchords.com/music/carol-of-the-bells-metal-version/">Alexander Nakarada (CreatorChords)</a>, licensed under <a data-i18n-slot="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>. This is a modern metal adaptation of the melody associated with Mykola Leontovych’s <cite data-i18n-slot="shchedryk">Shchedryk</cite>; it does not claim traditional Ukrainian instrumentation.</p>'
+            : '') +
+          (localized && has('game/vendor/LZ-STRING-LICENSE.txt')
+            ? '<p data-i18n-rich="website:page.catalogCompressionNotice">Translation catalogs use lz-string by pieroxy under its <a href="./game/vendor/LZ-STRING-LICENSE.txt" data-i18n-slot="license" data-i18n="website:page.license">MIT license</a>.</p>'
+            : '') +
+          (has('game/ui/fonts/departure-mono/provenance.json')
+            ? '<p data-i18n-rich="website:page.menuFontNotice">Menu pixel type: Departure Mono 1.500 by Helena Zhang, self-hosted with full English and Ukrainian glyph coverage. <a data-i18n-slot="license" href="./game/ui/fonts/departure-mono/LICENSE">SIL Open Font License 1.1</a>; <a data-i18n-slot="source" href="./game/ui/fonts/departure-mono/provenance.json">source and checksum record</a>.</p>'
+            : '') +
           (has('game/ui/fonts/field-kit/provenance.json')
-            ? '<p>Display type: Handjet by the Handjet Project Authors (<a href="./game/ui/fonts/field-kit/Handjet-OFL.txt">OFL 1.1</a>), instantiated at weight 600, element shape 2 and element grid 1. Interface type: Exo 2 by the Exo 2 Project Authors (<a href="./game/ui/fonts/field-kit/Exo2-OFL.txt">OFL 1.1</a>), retaining weights 400–600. Numeric type: IBM Plex Mono by IBM Corp. (<a href="./game/ui/fonts/field-kit/IBMPlexMono-OFL.txt">OFL 1.1</a>), weight 500. All are self-hosted WOFF2 with full English and Ukrainian letter coverage. <a href="./game/ui/fonts/field-kit/provenance.json">Source versions, build recipe and file checksums</a>.</p>'
+            ? '<p data-i18n-rich="website:page.fontNotices">Pixel display type: Tiny5 by the Tiny5 Project Authors and designer Stefan Schmidt (<a data-i18n-slot="slot0" href="./game/ui/fonts/OFL.txt">OFL 1.1</a>), self-hosted and unmodified with Cyrillic and Ukrainian glyph coverage; <a data-i18n-slot="slot1" href="./game/ui/fonts/provenance.json" data-i18n="website:page.fontSource">source and checksum record</a>. Supporting display type: Handjet by the Handjet Project Authors (<a data-i18n-slot="slot2" href="./game/ui/fonts/field-kit/Handjet-OFL.txt">OFL 1.1</a>), instantiated at weight 600, element shape 2 and element grid 1. Interface type: Exo 2 by the Exo 2 Project Authors (<a data-i18n-slot="slot3" href="./game/ui/fonts/field-kit/Exo2-OFL.txt">OFL 1.1</a>), retaining weights 400–600. Numeric type: IBM Plex Mono by IBM Corp. (<a data-i18n-slot="slot4" href="./game/ui/fonts/field-kit/IBMPlexMono-OFL.txt">OFL 1.1</a>), weight 500. The supporting WOFF2 files retain full English and Ukrainian letter coverage. <a data-i18n-slot="slot5" href="./game/ui/fonts/field-kit/provenance.json" data-i18n="website:page.supportingFontSources">Supporting-font source versions, build recipe and file checksums</a>.</p>'
             : ''),
         fieldKit,
         compiled,
@@ -491,74 +573,72 @@ function addPublicEntries(entries, info) {
   });
 }
 
-/** Original pixel emblem. Fixed integer geometry; no source images are modified. */
+/** Install assets derive from the generated FPV / LINE master without redrawing it. */
 export function offlineIcons(sizes = [180, 192, 512]) {
-  if (
-    !Array.isArray(sizes) ||
-    sizes.length > 16 ||
-    sizes.some((size) => !Number.isSafeInteger(size) || size < 16 || size > 4096)
-  )
-    throw new Error('Icon sizes must be integers between 16 and 4096 pixels.');
-  const palette = ['#091324', '#203852', '#53c7e8', '#f1cd6f', '#eef4df'];
-  const grid = Array.from({ length: 32 }, () => Array(32).fill(0));
-  const box = (x, y, w, h, c) => {
-    for (let j = y; j < y + h; j++) for (let i = x; i < x + w; i++) grid[j][i] = c;
-  };
-  box(6, 6, 20, 20, 1);
-  box(8, 8, 16, 16, 0);
-  box(8, 8, 8, 16, 2);
-  box(16, 8, 8, 7, 1);
-  box(16, 8, 2, 16, 4);
-  box(16, 22, 8, 2, 4);
-  box(22, 15, 2, 9, 4);
-  box(21, 12, 4, 4, 3);
-  box(22, 11, 2, 6, 3);
-  box(20, 13, 6, 2, 3);
-  const rectangles = [];
-  for (let y = 0; y < 32; y++)
-    for (let x = 0; x < 32; x++)
-      if (grid[y][x])
-        rectangles.push(
-          `<rect x="${x}" y="${y}" width="1" height="1" fill="${palette[grid[y][x]]}"/>`,
-        );
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges"><rect width="32" height="32" fill="${palette[0]}"/>${rectangles.join('')}</svg>\n`;
-  const chunk = (kind, data) => {
-    const type = Buffer.from(kind),
-      header = Buffer.alloc(4),
-      sum = Buffer.alloc(4);
-    header.writeUInt32BE(data.length);
-    sum.writeUInt32BE(crc32(Buffer.concat([type, data])));
-    return Buffer.concat([header, type, data, sum]);
-  };
-  const png = (size) => {
-    const header = Buffer.alloc(13);
-    header.writeUInt32BE(size, 0);
-    header.writeUInt32BE(size, 4);
-    header[8] = 8;
-    header[9] = 2;
-    const rows = Buffer.alloc((size * 3 + 1) * size);
-    for (let y = 0; y < size; y++)
-      for (let x = 0; x < size; x++) {
-        const color = palette[grid[Math.floor((y * 32) / size)][Math.floor((x * 32) / size)]];
-        const offset = y * (size * 3 + 1) + 1 + x * 3;
-        for (let c = 0; c < 3; c++)
-          rows[offset + c] = parseInt(color.slice(1 + c * 2, 3 + c * 2), 16);
-      }
-    return Buffer.concat([
-      Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
-      chunk('IHDR', header),
-      chunk('IDAT', deflateSync(rows, { level: 9 })),
-      chunk('IEND', Buffer.alloc(0)),
-    ]);
-  };
-  return [
-    { name: 'icons/icon.svg', bytes: Buffer.from(svg) },
-    ...sizes.map((size) => ({ name: `icons/icon-${size}.png`, bytes: png(size) })),
-  ];
+  return generatedBrandIcons(sizes);
 }
 
 /** Adds a content-addressed offline app only when this source has its explicit UI helper. */
-async function addOfflineEntries(
+export function applyPublicationProfile(entries, catalogue, profile, optionalArtwork) {
+  if (profile === null) return optionalArtwork;
+  if (profile !== 'main-pages') fail(`Unknown publication profile: ${profile}`);
+  // Main Pages is the continuously deployed production/testing channel, not an
+  // archive mirror. Keep current gameplay and active tools there; exact archive
+  // inputs remain in Git and in complete release distributions.
+  const omittedGroupIDs = new Set(
+    catalogue.groups
+      .filter((group) => group.category === 'archive' || group.id === 'tooling:artwork')
+      .map((group) => group.id),
+  );
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const group of catalogue.groups)
+      if (!omittedGroupIDs.has(group.id) && group.requires.some((id) => omittedGroupIDs.has(id))) {
+        omittedGroupIDs.add(group.id);
+        changed = true;
+      }
+  }
+  const omittedGroups = catalogue.groups.filter((group) => omittedGroupIDs.has(group.id));
+  const retainedGroups = catalogue.groups.filter((group) => !omittedGroupIDs.has(group.id));
+  const retainedPaths = new Set(retainedGroups.flatMap((group) => group.files));
+  const omittedPaths = new Set(
+    omittedGroups.flatMap((group) => group.files).filter((path) => !retainedPaths.has(path)),
+  );
+  if (!omittedGroups.length || !omittedPaths.size)
+    fail('Main Pages profile found no exclusive archive or unused artwork to omit.');
+  const retainedGroupIDs = new Set(retainedGroups.map((group) => group.id));
+  const groupsRetained = (record) =>
+    [...(record.groups || []), ...(record.runtimeGroups || [])].every((id) =>
+      retainedGroupIDs.has(id),
+    );
+  catalogue.missions = (catalogue.missions || []).filter(groupsRetained);
+  if (Array.isArray(catalogue.destinations)) {
+    catalogue.destinations = catalogue.destinations.filter(groupsRetained);
+    const retainedRouteIDs = new Set(catalogue.destinations.map((record) => record.routeId));
+    if (Array.isArray(catalogue.navigationBootstraps))
+      catalogue.navigationBootstraps = catalogue.navigationBootstraps.filter(
+        (record) =>
+          retainedRouteIDs.has(record.routeId) &&
+          record.files.every((path) => !omittedPaths.has(path)),
+      );
+  }
+  entries.splice(0, entries.length, ...entries.filter((entry) => !omittedPaths.has(entry.name)));
+  catalogue.files = catalogue.files.filter((file) => !omittedPaths.has(file.path));
+  const retainedHashes = new Set(catalogue.files.map((file) => file.sha256));
+  if (Array.isArray(catalogue.originals))
+    catalogue.originals = catalogue.originals.filter((original) =>
+      retainedHashes.has(original.parent),
+    );
+  catalogue.groups = retainedGroups;
+  catalogue.sharedPolicy =
+    'The rolling main channel keeps current gameplay and active tools. Archived playable copies remain in Git and complete release distributions.';
+  // The summary promises every listed original is hosted, so optional artwork
+  // metadata is omitted together with preview-only files that are not retained.
+  return null;
+}
+
+export async function addOfflineEntries(
   root,
   entries,
   info,
@@ -566,8 +646,11 @@ async function addOfflineEntries(
   optionalDownloads = [],
   excludedBodyPaths = [],
   optionalArtwork = null,
+  publicationProfile = null,
 ) {
   if (!entries.some((e) => e.name === 'game/offline.mjs')) return;
+  const { projectDefaultRuntimeMetadata } = await import('./default-runtime-metadata.mjs');
+  await projectDefaultRuntimeMetadata(root, entries);
   if (optionalArtwork) {
     const { verifyOptionalArtworkEntries } = await import('./optional-artwork.mjs');
     verifyOptionalArtworkEntries(optionalArtwork, entries);
@@ -579,17 +662,67 @@ async function addOfflineEntries(
   if (!template.includes('__XONIX_OFFLINE_CONFIG__'))
     fail('Offline worker template has no configuration marker');
   entries.push(...offlineIcons());
+  const { addOfflineLauncher, addOfflineUpdater } = await import('./offline-launcher.mjs');
+  await addOfflineLauncher(root, entries, info.version, { sourceRevision: info.sourceRevision });
+  for (const entry of entries.filter((item) => item.name.endsWith('.html'))) {
+    const source = entry.bytes.toString();
+    if (/<link\b[^>]*\brel=(["'])(?:icon|shortcut icon)\1/i.test(source)) continue;
+    const relativeRoot = path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
+    const favicon = `<link rel="icon" type="image/png" sizes="192x192" href="${relativeRoot}/icons/icon-192.png">`;
+    if (source.includes('</head>'))
+      entry.bytes = Buffer.from(source.replace('</head>', `${favicon}</head>`));
+  }
+  // Project only the containing build's manifest; standalone archives keep local icons.
+  for (const practiceManifest of entries.filter((entry) =>
+    [
+      'optional-practice/civilian-fpv/app.webmanifest',
+      'optional-practice/fpv-worlds/app.webmanifest',
+    ].includes(entry.name),
+  )) {
+    const manifest = JSON.parse(practiceManifest.bytes);
+    if (
+      !Array.isArray(manifest.icons) ||
+      manifest.icons.length !== 2 ||
+      !manifest.icons.every((icon) => /^\.\/icons\/icon-(192|512)\.png$/.test(icon.src))
+    )
+      fail('Bundled FPV manifest icons differ from the admitted shared icons');
+    practiceManifest.bytes = Buffer.from(
+      JSON.stringify(
+        {
+          ...manifest,
+          icons: manifest.icons.map((icon) => ({ ...icon, src: '../../' + icon.src.slice(2) })),
+        },
+        null,
+        2,
+      ) + '\n',
+    );
+  }
+  // The bundled simulator owns a separate opt-in cache. Its HTML and shared
+  // modules are final here; later offline-marker injection changes game HTML only.
+  const { buildBundledOptionalPractice } = await import('./build-optional-practice.mjs');
+  const bundledPackages = [];
+  for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
+    const bundledPractice = buildBundledOptionalPractice(entries, { packageId });
+    if (bundledPractice) {
+      entries.push(...bundledPractice.entries);
+      bundledPackages.push({
+        packageId,
+        files: bundledPractice.files,
+        workerPath: `optional-practice/${packageId}/worker.js`,
+      });
+    }
+  }
   const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
     .filter((entry) => optional.has(entry.name))
     .map((entry) => {
       const pack = JSON.parse(entry.bytes);
-      return { path: entry.name, id: pack.id, name: pack.name };
+      return { path: entry.name, id: pack.id, name: pack.name, sha256: sha256(entry.bytes) };
     });
   const manifest = {
     id: './',
-    name: 'Reveal Line',
-    short_name: 'Reveal Line',
+    name: 'FPV / LINE',
+    short_name: 'FPV / LINE',
     description: 'A territory-capture arcade game with interchangeable worlds and characters.',
     start_url: './game/',
     scope: './',
@@ -605,37 +738,150 @@ async function addOfflineEntries(
     icons: [
       { src: './icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
       { src: './icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
-      { src: './icons/icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
+      { src: './icons/icon.svg', sizes: '64x64', type: 'image/svg+xml', purpose: 'any' },
     ],
   };
   entries.push({ name: 'manifest.webmanifest', bytes: Buffer.from(json(manifest)) });
+  const excluded = new Set([
+    ...optional,
+    ...excludedBodyPaths,
+    // Optional practice remains hosted and directly testable, but it is a
+    // separately loaded experience rather than part of the mandatory game boot.
+    ...entries
+      .filter((entry) => entry.name.startsWith('optional-practice/'))
+      .map((entry) => entry.name),
+    // Demo recordings and the large landing photograph remain published for
+    // online playback, but they are optional bodies rather than core offline boot.
+    // Excluding only their bodies preserves URLs, provenance and on-demand tests
+    // while keeping the 80 MiB service-worker cache bound.
+    ...entries
+      .filter(
+        (entry) =>
+          (entry.name.startsWith('game/demo-data/') && entry.name.endsWith('.replay.json')) ||
+          entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp' ||
+          // The current Social Drone reward uses the mobile-prepared v2 clip.
+          // Keep v1 hosted for retained presentations without charging every
+          // offline installation for both versions of the same recording.
+          entry.name === 'game/editions/assets/social-drone/sky-watch-v1.mp4' ||
+          // Creator examples are fetched only when the player explicitly opens
+          // one in Studio; the downloadable pack remains hosted and exact.
+          entry.name === 'game/creator/examples/social-drone-sky-watch.rlpack' ||
+          // Motion Lab source sheets are authoring inputs, while the prepared
+          // runtime artwork remains in the core game. Load sources on demand.
+          entry.name.startsWith('authoring/motion-lab/assets/'),
+      )
+      .map((entry) => entry.name),
+    // Recorded spatial effects stay hosted for online play and exact optional
+    // download, but are not charged to every installation's 80 MiB core.
+    ...entries.filter((entry) => isOptionalSpatialAudioBody(entry.name)).map((entry) => entry.name),
+    // The review gallery duplicates paintings already embedded in playable
+    // content. Host its source copies without charging the offline game twice.
+    ...entries
+      .filter((entry) =>
+        ['classic-reveal-artwork', 'neon-artwork', 'neon-mosaic', 'neon-reference-pack'].some(
+          (directory) => entry.name.startsWith(`authoring/library/${directory}/`),
+        ),
+      )
+      .map((entry) => entry.name),
+    ...entries
+      .filter((entry) => isOptionalReactionVoiceBody(entry.name))
+      .map((entry) => entry.name),
+    ...(optionalArtwork?.files.map((file) => file.path) ?? []),
+    // Recorded music is an optional enhancement. Keep even locally shipped
+    // recordings out of the bounded gameplay cache so procedural music and
+    // essential sound effects remain the complete offline baseline.
+    ...SOUNDTRACK_BUNDLED_ASSETS.map((asset) => asset.path),
+  ]);
+  // Small first-party chapter bodies are part of the mandatory offline game.
+  // Larger, optional, external and archived bodies retain explicit package
+  // ownership and download consent.
+  const missionIndex = entries.find(
+    (entry) => entry.name === 'game/content/mission-library-index.json',
+  );
+  if (missionIndex)
+    for (const mission of JSON.parse(missionIndex.bytes).missions)
+      if (mission.packId && !isIncludedBundledMission(mission))
+        excluded.add(mission.sourceFile.path);
+  const { buildOfflineContent } = await import('./offline-content.mjs');
+  const contentCatalogue = await buildOfflineContent(entries, excluded, info.version, {
+    bundledPackages,
+  });
+  const publishedOptionalArtwork = applyPublicationProfile(
+    entries,
+    contentCatalogue,
+    publicationProfile,
+    optionalArtwork,
+  );
+  const { finalizeOfflineContent } = await import('./offline-finalize.mjs');
+  // Derived catalogue data can be compact without changing any published
+  // descriptor, authored string, retained revision, or download dependency.
+  const catalogueBytes = () => Buffer.from(`${JSON.stringify(contentCatalogue)}\n`);
+  const contentEntry = { name: 'offline-content.json', bytes: catalogueBytes() };
+  entries.push(contentEntry);
+  const refreshCatalogue = () => {
+    finalizeOfflineContent(entries, contentCatalogue);
+    contentEntry.bytes = catalogueBytes();
+  };
+  // Pages only display the optional-artwork summary. Keep the full integrity
+  // descriptor in the worker/catalogue instead of repeating every file hash in
+  // each HTML document; all originals and build-time checks remain unchanged.
+  const optionalArtworkSummary = publishedOptionalArtwork
+    ? {
+        name: publishedOptionalArtwork.name,
+        availability: publishedOptionalArtwork.availability,
+        count: publishedOptionalArtwork.count,
+        bytes: publishedOptionalArtwork.bytes,
+      }
+    : null;
   const placeholder = '0'.repeat(64),
     injected = [];
   for (const entry of entries.filter(
     (e) => e.name.endsWith('.html') && e.name.startsWith('game/'),
   )) {
     const relativeRoot = path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
+    const source = entry.bytes.toString();
+    const communityShell = /<html\b[^>]*\bdata-community-entry\b/i.test(source);
     const marker = {
       format: 'revealline-offline.v1',
+      downloadCatalogue: true,
+      ...(contentCatalogue.format === 'revealline-offline-content.v2'
+        ? { packageConsent: true }
+        : {}),
       version: info.version,
       buildId: placeholder,
       scope: `${relativeRoot}/`,
       worker: `${relativeRoot}/service-worker.js`,
-      ...(optionalPacks.length ? { optionalPacks } : {}),
-      ...(optionalArtwork ? { optionalArtwork } : {}),
+      // The temporary shell is replaced by the complete shared host before any
+      // installer runs. Keep its scoped launch metadata, not seven redundant
+      // copies of the host's optional-download descriptors.
+      ...(!communityShell && optionalPacks.length ? { optionalPacks } : {}),
+      ...(!communityShell && optionalArtworkSummary
+        ? { optionalArtwork: optionalArtworkSummary }
+        : {}),
     };
-    const source = entry.bytes.toString();
     const appMode = source.includes('name="apple-mobile-web-app-capable"')
       ? ''
       : '<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">';
-    const head = `<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324">${appMode}<meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
+    // Friendly shells replace their document: install listeners must belong to
+    // the shared host, not the discarded shell's cached module instance.
+    const installEntry =
+      !communityShell && entries.some((entry) => entry.name === 'game/ui/install-entry.mjs');
+    const head = `${installEntry ? `<script type="module" src="${relativeRoot}/game/ui/install-entry.mjs"></script>` : ''}<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324">${appMode}<meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
     entry.bytes = Buffer.from(
       source.includes('</head>') ? source.replace('</head>', `${head}</head>`) : head + source,
     );
     injected.push(entry);
   }
-  // Placeholder metadata prevents a circular hash; all other shipped bytes,
-  // generated icon/manifest bytes and the worker logic participate in identity.
+  if (
+    entries
+      .find((entry) => entry.name === 'game/index.html')
+      ?.bytes.includes('revealline-access-id')
+  )
+    (await import('./access-pages.mjs')).protectPageEntries(entries);
+  // Hash a canonical placeholder form, including the optional HTML descriptors.
+  // Final build IDs and their derived catalogue hashes cannot hash themselves.
+  refreshCatalogue();
+  // All other shipped bytes, generated icons and worker logic participate in identity.
   const buildId = sha256(
     Buffer.from(
       json({
@@ -649,52 +895,82 @@ async function addOfflineEntries(
   );
   for (const entry of injected)
     entry.bytes = Buffer.from(entry.bytes.toString().replace(placeholder, buildId));
-  const excluded = new Set([
-    ...optional,
-    ...excludedBodyPaths,
-    ...(optionalArtwork?.files.map((file) => file.path) ?? []),
-  ]);
+  // Bind catalogue, worker and inventory to the final emitted optional bytes.
+  // The core digest list below must also see this final catalogue.
+  refreshCatalogue();
   const files = [...entries]
-    .filter((entry) => entry.name !== '_headers' && !excluded.has(entry.name))
+    // The complete generated catalog is cached. Canonical JSON sources are also
+    // distributed for contributors, but duplicating them in the offline cache
+    // would charge every player twice for the same translations.
+    .filter(
+      (entry) =>
+        entry.name !== '_headers' &&
+        !entry.name.startsWith('game/locales/') &&
+        !excluded.has(entry.name),
+    )
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
     .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
-  if (files.length > 2000 || files.reduce((n, f) => n + f.bytes, 0) > 64 * 1024 * 1024)
-    fail('Offline distribution exceeds 2000 files or 64 MiB; split optional content into packs');
+  const totalBytes = files.reduce((n, f) => n + f.bytes, 0);
+  if (files.length > 2000 || totalBytes > 80 * 1024 * 1024)
+    fail(
+      `Offline distribution exceeds 2000 files or 80 MiB (${files.length} files / ${totalBytes} bytes); split optional content into packs`,
+    );
   const config = {
     format: 'revealline-offline.v1',
     version: info.version,
     buildId,
     files,
+    downloadOriginals: contentCatalogue.originals,
+    ...(contentCatalogue.format === 'revealline-offline-content.v2'
+      ? { packageConsent: true, navigationBootstraps: contentCatalogue.navigationBootstraps }
+      : {}),
+    downloadFiles: contentCatalogue.files.filter((file) => file.kind === 'gameplay'),
     ...(optionalPacks.length ? { optionalPacks } : {}),
-    ...(optionalArtwork ? { optionalArtwork } : {}),
+    ...(publishedOptionalArtwork ? { optionalArtwork: publishedOptionalArtwork } : {}),
   };
-  entries.push({ name: 'offline-cache.json', bytes: Buffer.from(json(config)) });
+  entries.push({ name: 'offline-cache.json', bytes: Buffer.from(`${JSON.stringify(config)}\n`) });
   entries.push({
     name: 'service-worker.js',
     bytes: Buffer.from(template.replace('__XONIX_OFFLINE_CONFIG__', JSON.stringify(config))),
   });
+  addOfflineUpdater(entries, info, buildId);
+  if (entries.some((entry) => entry.name === 'game/installed-app.mjs')) {
+    const { buildOfflineInventory } = await import('./offline-content.mjs');
+    entries.push({
+      name: 'offline-inventory.json',
+      // This derived inventory carries every original descriptor; indentation is
+      // unnecessary distribution weight and is not part of its data format.
+      bytes: Buffer.from(
+        `${JSON.stringify(buildOfflineInventory(entries, contentCatalogue, files))}\n`,
+      ),
+    });
+  }
 }
 
-export async function buildProject({
+export async function prepareBuildProject({
   root = PROJECT_ROOT,
-  out = path.join(root, 'dist'),
+  out = null,
   version,
   sourceRevision = null,
+  publicationProfile = null,
 } = {}) {
   root = await fs.realpath(root);
-  out = path.resolve(out);
+  if (out !== null) out = path.resolve(out);
   const config = await readBuildConfig(root);
   version = safeVersion(version ?? config.version);
   if (sourceRevision !== null && !/^[0-9a-f]{40,64}$/.test(sourceRevision))
     fail('Source revision must be a full commit hash or null');
   const files = await collectBuildFiles(root, config);
+  // Historical releases and minimal build fixtures predate localization. Current
+  // localized distributions must reject missing translations and stale bundles.
+  if (files.includes('game/locales/en/website.json')) await validateLocalization(root);
   const optionalArtwork =
     config.optionalArtwork === undefined
       ? null
       : await (
           await import('./optional-artwork.mjs')
         ).readOptionalArtwork(root, config.optionalArtwork, files);
-  await assertOutput(root, out, config.include);
+  if (out !== null) await assertOutput(root, out, config.include);
   await validateBuildReferences(root, files);
   const { contentSnapshots = [] } = await validateContentSnapshots(root, files);
   if (files.includes('game/coop/library.mjs')) await validateCoopContent(root);
@@ -758,59 +1034,117 @@ export async function buildProject({
       fail('Soundtrack bodies must remain outside automatic includes and other downloads');
     declared.add(entry.name);
   }
+  const entries = [];
+  for (const name of files) entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
+  if (
+    missionIndexSnapshot &&
+    !entries
+      .find((entry) => entry.name === missionIndexSnapshot.path)
+      ?.bytes.equals(missionIndexSnapshot.bytes)
+  )
+    fail('Mission library index changed after validation; rebuild from stable source');
+  for (const snapshot of contentSnapshots) {
+    const entry = entries.find((candidate) => candidate.name === snapshot.file);
+    if (!entry || entry.bytes.length !== snapshot.bytes || sha256(entry.bytes) !== snapshot.sha256)
+      fail('Spatial snapshot changed after validation; rebuild from stable source');
+  }
+  entries.push(...optionalEntries, ...externalEntries, ...soundtrackEntries);
+  const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
+  const replace = (name, bytes) => {
+    const found = entries.find((e) => e.name === name);
+    if (found) found.bytes = Buffer.from(bytes);
+    else entries.push({ name, bytes: Buffer.from(bytes) });
+  };
+  replace('game/build-info.json', json(info));
+  addPublicEntries(entries, info);
+  if (
+    entries
+      .find((entry) => entry.name === 'game/index.html')
+      ?.bytes.includes('revealline-access-id')
+  )
+    (await import('./access-pages.mjs')).protectPageEntries(entries);
+  await addOfflineEntries(
+    root,
+    entries,
+    info,
+    config,
+    optionalEntries.map((entry) => entry.name),
+    [...externalEntries, ...soundtrackEntries].map((entry) => entry.name),
+    optionalArtwork,
+    publicationProfile,
+  );
+  entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+  const manifest = {
+    ...info,
+    totalBytes: entries.reduce((n, e) => n + e.bytes.length, 0),
+    files: entries.map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) })),
+  };
+  // Generated transport metadata is losslessly compact; authored inputs remain
+  // byte-exact and all descriptors still describe the final shipped bytes.
+  const manifestBytes = Buffer.from(`${JSON.stringify(manifest)}\n`);
+  entries.push({ name: 'manifest.json', bytes: manifestBytes });
+  return { root, out, version, sourceRevision, entries, manifest, manifestBytes };
+}
+
+/** Runs the same preparation and validation as a build, without allocating a
+ * ZIP or writing an expanded site. This inventory is not publication admission. */
+export async function inspectBuildProject(options = {}) {
+  const publicationProfile = options.publicationProfile ?? null;
+  const { version, sourceRevision, manifest, manifestBytes } = await prepareBuildProject({
+    root: options.root,
+    version: options.version,
+    sourceRevision: options.sourceRevision,
+    publicationProfile,
+  });
+  return {
+    format: 'revealline-default-build-inspection.v1',
+    version,
+    sourceRevision,
+    publicationProfile,
+    publicEligible: false,
+    promotable: false,
+    completeHostedOutput: false,
+    publicationAssessment: 'not-performed',
+    payloadBytesIncludingManifest: manifest.totalBytes + manifestBytes.length,
+    manifestDescriptor: {
+      path: 'manifest.json',
+      bytes: manifestBytes.length,
+      sha256: sha256(manifestBytes),
+    },
+    manifest,
+    missingComponents: [
+      'Pages root routes and publication metadata',
+      'Hosted edition versions, stable launchers and company hub',
+      'Hosted optional packages, launchers and any other generated files',
+    ],
+  };
+}
+
+export async function buildProject({
+  root = PROJECT_ROOT,
+  out = path.join(root, 'dist'),
+  version,
+  sourceRevision = null,
+  publicationProfile = null,
+} = {}) {
+  const prepared = await prepareBuildProject({
+    root,
+    out,
+    version,
+    sourceRevision,
+    publicationProfile,
+  });
+  ({ root, out, version, sourceRevision } = prepared);
+  const { entries, manifest } = prepared;
   await fs.mkdir(path.dirname(out), { recursive: true });
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
   try {
-    const entries = [];
-    for (const name of files)
-      entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
-    if (
-      missionIndexSnapshot &&
-      !entries
-        .find((entry) => entry.name === missionIndexSnapshot.path)
-        ?.bytes.equals(missionIndexSnapshot.bytes)
-    )
-      fail('Mission library index changed after validation; rebuild from stable source');
-    for (const snapshot of contentSnapshots) {
-      const entry = entries.find((candidate) => candidate.name === snapshot.file);
-      if (
-        !entry ||
-        entry.bytes.length !== snapshot.bytes ||
-        sha256(entry.bytes) !== snapshot.sha256
-      )
-        fail('Spatial snapshot changed after validation; rebuild from stable source');
-    }
-    entries.push(...optionalEntries, ...externalEntries, ...soundtrackEntries);
-    const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
-    const replace = (name, bytes) => {
-      const found = entries.find((e) => e.name === name);
-      if (found) found.bytes = Buffer.from(bytes);
-      else entries.push({ name, bytes: Buffer.from(bytes) });
-    };
-    replace('game/build-info.json', json(info));
-    addPublicEntries(entries, info);
-    await addOfflineEntries(
-      root,
-      entries,
-      info,
-      config,
-      optionalEntries.map((entry) => entry.name),
-      [...externalEntries, ...soundtrackEntries].map((entry) => entry.name),
-      optionalArtwork,
-    );
-    entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
-    const manifest = {
-      ...info,
-      totalBytes: entries.reduce((n, e) => n + e.bytes.length, 0),
-      files: entries.map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) })),
-    };
-    entries.push({ name: 'manifest.json', bytes: Buffer.from(json(manifest)) });
     const zip = createZip(entries);
     for (const entry of entries) {
       const target = path.join(staging, entry.name);
       await fs.mkdir(path.dirname(target), { recursive: true });
-      await fs.writeFile(target, entry.bytes);
+      await writeBuildEntry(path.join(root, entry.name), target, entry.bytes);
     }
     await fs.writeFile(path.join(staging, 'distribution.zip'), zip);
     await fs.writeFile(
@@ -1027,7 +1361,13 @@ export async function transferSnapshotArchive(
   }
 }
 
-export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}) {
+export async function releaseSnapshot({
+  root = PROJECT_ROOT,
+  ref,
+  version,
+  sourceFormat = 'tar',
+} = {}) {
+  if (!['tar', 'manifest'].includes(sourceFormat)) fail('Unknown source preservation format');
   if (typeof ref !== 'string' || !ref || ref.startsWith('-') || /[\x00-\x1f]/.test(ref))
     fail('Provide a trusted local commit, branch or tag with --ref');
   safeVersion(version);
@@ -1052,25 +1392,63 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
       fail('Another snapshot owns releases/.snapshot-lock; inspect it before retrying');
     throw e;
   }
-  // Node resolves an entry module's URL through directory symlinks. Older frozen
-  // CLIs compare that URL with argv[1], so pass the canonical path even when the
-  // temporary root is an alias such as macOS /var -> /private/var.
-  const temporary = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(), 'xonix-snapshot-')));
   const staging = await fs.mkdtemp(path.join(releases, '.snapshot-'));
+  let temporary;
   try {
-    const archivePath = path.join(temporary, 'source.tar');
-    command('git', ['archive', '--format=tar', `--output=${archivePath}`, commit], { cwd: root });
-    const archive = await fs.readFile(archivePath),
+    const checkedOutCommit = command('git', ['rev-parse', 'HEAD'], { cwd: root }).trim();
+    let archivePath, sourceArchiveSha256, sourceManifestSha256, sourceTree;
+    let source = root;
+    const cleanCheckout =
+      command('git', ['status', '--porcelain', '--untracked-files=normal'], {
+        cwd: root,
+      }).trim() === '';
+    if (sourceFormat === 'manifest') {
+      if (checkedOutCommit !== commit || !cleanCheckout)
+        fail('Manifest snapshots require a clean exact-commit checkout');
+      if (!/^v\d+\.\d+\.\d+$/.test(version)) fail('Manifest snapshots require a stable version');
+      const sourceManifest = path.join(staging, 'source-manifest.json');
+      command('python3', [
+        path.join(PROJECT_ROOT, 'publishing/utility/source_manifest.py'),
+        'create',
+        '--repo',
+        root,
+        '--commit',
+        commit,
+        '--manifest',
+        sourceManifest,
+      ]);
+      sourceManifestSha256 = await sha256File(sourceManifest);
+      sourceTree = command('git', ['rev-parse', `${commit}^{tree}`], { cwd: root }).trim();
+    } else if (checkedOutCommit === commit && cleanCheckout) {
+      // Qualification already checks out this exact immutable commit in a clean tree. Build there
+      // and stream its source tar directly into the staged snapshot: unpacking a
+      // multi-gigabyte archive solely to rebuild the same checkout exhausts the
+      // hosted runner without adding provenance.
+      archivePath = path.join(staging, 'source.tar');
+      command('git', ['archive', '--format=tar', `--output=${archivePath}`, commit], { cwd: root });
+      sourceArchiveSha256 = await sha256File(archivePath);
+    } else {
+      // Historical callers still build from the selected immutable tree, not the
+      // caller's checkout. Keep that defensive path for local archive tooling.
+      temporary = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(), 'xonix-snapshot-')));
+      archivePath = path.join(temporary, 'source.tar');
+      command('git', ['archive', '--format=tar', `--output=${archivePath}`, commit], { cwd: root });
+      const archive = await fs.readFile(archivePath);
       source = path.join(temporary, 'source');
-    await fs.mkdir(source);
-    for (const entry of readTarEntries(archive)) {
-      const target = path.join(source, entry.name);
-      await fs.mkdir(path.dirname(target), { recursive: true });
-      await fs.writeFile(target, entry.bytes);
+      await fs.mkdir(source);
+      for (const entry of readTarEntries(archive)) {
+        const target = path.join(source, entry.name);
+        await fs.mkdir(path.dirname(target), { recursive: true });
+        await fs.writeFile(target, entry.bytes);
+      }
+      sourceArchiveSha256 = sha256(archive);
     }
     const frozenCli = path.join(source, 'scripts/game-cli.mjs');
     if (!(await exists(frozenCli)))
       fail('Selected ref predates the playable build CLI; keep it as a source reference instead');
+    const sourceEligibility = path.join(source, 'scripts/check-edition-source.mjs');
+    if (await exists(sourceEligibility))
+      command(process.execPath, [sourceEligibility, source], { cwd: source });
     command(
       process.execPath,
       [
@@ -1088,16 +1466,23 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
     const zip = await fs.readFile(path.join(staging, 'site/distribution.zip'));
     const manifest = await fs.readFile(path.join(staging, 'site/manifest.json'));
     const release = {
-      formatVersion: FORMAT_VERSION,
+      formatVersion: sourceFormat === 'manifest' ? 2 : FORMAT_VERSION,
       version,
       sourceRevision: commit,
-      sourceArchiveSha256: sha256(archive),
+      ...(sourceFormat === 'manifest'
+        ? {
+            sourceTree,
+            sourceUrl: `https://github.com/mekhovov/revealline/archive/${commit}.tar.gz`,
+            sourceManifestSha256,
+          }
+        : { sourceArchiveSha256 }),
       distributionSha256: sha256(zip),
       manifestSha256: sha256(manifest),
       play: `${version}/site/game/`,
       download: `${version}/site/distribution.zip`,
     };
-    await transferSnapshotArchive(archivePath, staging);
+    if (sourceFormat === 'tar' && archivePath !== path.join(staging, 'source.tar'))
+      await transferSnapshotArchive(archivePath, staging);
     await fs.writeFile(path.join(staging, 'release.json'), json(release));
     // Only snapshot-owned labels enter the index. Invalid neighboring folders fail loudly.
     const prior = [];
@@ -1126,7 +1511,7 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
     await fs.rename(path.join(releases, '.index.html.tmp'), path.join(releases, 'index.html'));
     return { ...release, directory: destination };
   } finally {
-    await fs.rm(temporary, { recursive: true, force: true });
+    if (temporary) await fs.rm(temporary, { recursive: true, force: true });
     await fs.rm(staging, { recursive: true, force: true });
     await fs.rm(lock, { recursive: true, force: true });
   }
@@ -1138,12 +1523,12 @@ export function parseArguments(argv) {
   const allowed = {
     help: [],
     serve: ['root', 'port', 'host'],
-    build: ['out', 'version', 'revision'],
+    build: ['out', 'version', 'revision', 'publication-profile'],
     validate: [],
     test: [],
     generate: ['seed', 'out'],
     'inspect-goals': ['pack', 'out'],
-    'release-snapshot': ['ref', 'version'],
+    'release-snapshot': ['ref', 'version', 'source-format'],
   };
   if (!Object.hasOwn(allowed, action)) fail(`Unknown command: ${action}`);
   const options = {};
@@ -1162,7 +1547,7 @@ export async function main(argv = process.argv.slice(2)) {
   const { action, options } = parseArguments(argv);
   if (action === 'help') {
     process.stdout.write(
-      'Xonix game CLI (Node built-ins)\n  serve [--root DIR] [--host 127.0.0.1] [--port 8768]\n  build [--out dist] [--version LABEL]\n  validate\n  test\n  generate --seed TEXT --out FILE.json\n  inspect-goals --pack FILE.json [--out REPORT.json]\n  release-snapshot --ref REF --version LABEL\n',
+      'Xonix game CLI (Node built-ins)\n  serve [--root DIR] [--host 127.0.0.1] [--port 8768]\n  build [--out dist] [--version LABEL]\n  validate\n  test\n  generate --seed TEXT --out FILE.json\n  inspect-goals --pack FILE.json [--out REPORT.json]\n  release-snapshot --ref REF --version LABEL [--source-format tar|manifest]\n',
     );
     return;
   }
@@ -1182,12 +1567,19 @@ export async function main(argv = process.argv.slice(2)) {
           out: options.out ? path.resolve(options.out) : undefined,
           version: options.version,
           sourceRevision: options.revision ?? null,
+          publicationProfile: options['publication-profile'] ?? null,
         }),
       ),
     );
   else if (action === 'release-snapshot')
     process.stdout.write(
-      json(await releaseSnapshot({ ref: options.ref, version: options.version })),
+      json(
+        await releaseSnapshot({
+          ref: options.ref,
+          version: options.version,
+          sourceFormat: options['source-format'] || 'tar',
+        }),
+      ),
     );
   else if (action === 'test') {
     const files = [];
@@ -1314,6 +1706,20 @@ export async function validateLevels(root = PROJECT_ROOT) {
     if (ids.has(level.id)) fail(`Duplicate campaign level ID: ${level.id}`);
     ids.add(level.id);
   }
+  if (await exists(path.join(root, 'game/base-artwork.mjs'))) {
+    const { resolveBaseArtwork } = await import(
+      pathToFileURL(path.join(root, 'game/base-artwork.mjs')).href
+    );
+    resolveBaseArtwork(
+      JSON.parse(await fs.readFile(path.join(root, 'game/content/base-artwork.json'), 'utf8')),
+      {
+        ...campaign,
+        classRecipes: JSON.parse(
+          await fs.readFile(path.join(root, 'game/content/classes.json'), 'utf8'),
+        ),
+      },
+    );
+  }
   return { campaign: campaign.id, levels: campaign.levels.length };
 }
 
@@ -1406,6 +1812,7 @@ function packCatalogEntries(pack, tooling) {
       tooling.ENCOUNTER_PACK_VERSION,
       tooling.WIDE_PACK_VERSION,
       tooling.CLASSIC_PACK_VERSION,
+      tooling.FOUNDATION_PACK_VERSION,
     ].includes(pack.format)
       ? { masteries: pack.masteries.filter((definition) => definition.campaignId === source.id) }
       : {}),

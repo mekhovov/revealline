@@ -38,8 +38,8 @@ test('corrupt original identifies its exact asset and verification stage without
         error.message,
         /Still original "picture-a" failed byte\/header\/decode verification/,
       );
-      assert.match(error.message, /Only static PNG\/JPEG bytes are supported/);
-      assert.equal(error.cause.message, 'Only static PNG/JPEG bytes are supported.');
+      assert.match(error.message, /Only static PNG\/JPEG\/WebP bytes are supported/);
+      assert.equal(error.cause.message, 'Only static PNG/JPEG/WebP bytes are supported.');
       return true;
     },
   );

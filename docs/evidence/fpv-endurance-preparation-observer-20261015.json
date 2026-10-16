@@ -1,0 +1,91 @@
+{
+  "format": "FPVAuthoringPreparationObservationReview.v1",
+  "scope": "Authoring-only bounded preparation lifecycle receipts and synchronous frame coverage. Injected regression times, not elapsed flight or causal performance evidence.",
+  "baseRevision": "d452bda9e22acf705751f11584cdcd5b0a0d4640",
+  "sourceFiles": [
+    {
+      "path": "authoring/fpv-worlds/regions/endurance.mjs",
+      "bytes": 27559,
+      "sha256": "23b996854a7f1b4f16273a0cb59ffa566be033180d0f7e11ed0d88719d074e36"
+    },
+    {
+      "path": "authoring/fpv-worlds/regions/endurance-attribution.mjs",
+      "bytes": 16803,
+      "sha256": "938bfc34d0fb9fefe415309ee8e74665b8c8541aad1340dae343a6ccff5528de"
+    },
+    {
+      "path": "game/test/fpv-endurance-attribution.test.mjs",
+      "bytes": 15364,
+      "sha256": "ef690af8bb5dfa2bdc0205b6907b7d4f665a8ab187696a5951c383553b194d13"
+    }
+  ],
+  "existingNegativeAndNativeReportsPreserved": true,
+  "gapEvidence": {
+    "nativeRaw": "authored-urban-retention-five-minute-20261015.json",
+    "nativeRawSHA256": "5e1f3629985a6691e0183ebe3d6cf2b428469f889542692c0c510e065adc9da0",
+    "authoringRevision": "61106dee2a9f0d551d1031eadbfd7956678c10e3",
+    "productionRevision": "da5df4837f8db357a2094b9eb343692cbc511d0e",
+    "inRunPrepareSubmitSpans": 4,
+    "coincidentLoAFRows": 4,
+    "interpretation": "Initial submit excludes internal async continuations. Coincidence does not identify a costly descendant, compilation/driver wait, GC or scheduler cause."
+  },
+  "limits": {
+    "retainedPreparationReceipts": 8,
+    "preparationExamplesPerLoAF": 2,
+    "retainedLoAFs": 16,
+    "phaseSpans": 128,
+    "scriptsPerLoAF": 8,
+    "phaseOverlapExamplesPerLoAF": 12,
+    "saturatedDiagnosticPayloadBelowBytes": 131072
+  },
+  "localChecks": {
+    "focusedTests": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "report": {
+        "bytes": 3597,
+        "sha256": "266d37d6990df522141621c16c4f62e73908875c1ef9903ca6ec3ee3e136911b"
+      }
+    },
+    "unchangedMainRegression": {
+      "passed": 6,
+      "failed": 9,
+      "scope": "All nine new cases fail against the unchanged merged611 module; existing six retention cases pass.",
+      "report": {
+        "bytes": 11249,
+        "sha256": "97c5789a68543987241de8bdf1d35d6d41f0c4fc9e706681f608a49f24f1c79c"
+      }
+    },
+    "existingVerifier": {
+      "passed": true,
+      "groups": 7,
+      "report": {
+        "bytes": 1159,
+        "sha256": "92004ff3f13d2a28bc56b199761dddb0f87e10728bd77f71a1c7e02f478d3d7d"
+      }
+    },
+    "syntax": "passed",
+    "testESLint": "passed",
+    "format": "passed"
+  },
+  "preservedContracts": [
+    "Production renderer/streaming/physics unchanged",
+    "No compile/upload/adoption ordering or timer added",
+    "Existing preparation aggregate and prior raw reports retained",
+    "Clock uses unchanged 20ms ticks and 250ms gap threshold",
+    "No route, duration, focus or acceptance gate changed",
+    "No player storage access"
+  ],
+  "remaining": [
+    "Independent source review",
+    "Exact-head cloud checks",
+    "Fresh frozen exact-source stage and native bounded preparation receipt acceptance",
+    "Actual two-hour/full-route endurance",
+    "Expensive-descendant/GC/scheduling attribution",
+    "Physical-device and public acceptance"
+  ],
+  "nativeAcceptance": false
+}

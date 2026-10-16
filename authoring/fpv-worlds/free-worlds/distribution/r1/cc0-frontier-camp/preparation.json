@@ -1,0 +1,147 @@
+{
+  "format": "FPVFreeWorldPreparation.v1",
+  "id": "cc0-frontier-camp",
+  "title": [
+    "Frontier Camp",
+    "Табір на узліссі"
+  ],
+  "kit": "survival-kit",
+  "sourceURL": "https://kenney.nl/assets/survival-kit",
+  "downloadURL": "https://kenney.nl/media/pages/assets/survival-kit/4065a8185b-1712149243/kenney_survival-kit.zip",
+  "archiveSha256": "c3586341b5932c87eb43d75d915434f47daed168b17ed36a03e8ca9977c7443e",
+  "license": "CC0-1.0",
+  "tool": "@gltf-transform 4.5.1",
+  "modelBytes": 105992,
+  "modelSha256": "d655e47a1f17d6342e21c3638a5a37bf6591d3deb16517c62a54ac9b87298ea9",
+  "packBytes": 172377,
+  "packSha256": "4c9b122ccfb6b28b46dd2b198b8d15477fde456d91a2f416498bf40948a5e92b",
+  "collisionSurfaces": 12,
+  "collisionTriangles": 1402,
+  "validation": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "placements": [
+    {
+      "model": "Models/GLB format/structure.glb",
+      "sha256": "2ff24b6e283bc687c04cd3e0341049e34ce10fe2394a9856af89226a72eebd9d",
+      "placement": {
+        "model": "structure",
+        "x": -24,
+        "z": 0,
+        "size": 12,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 24.00000071525576
+    },
+    {
+      "model": "Models/GLB format/structure-roof.glb",
+      "sha256": "645e0454780d0b07084e3d5ffc6c5b164742f62b07b810e1cb838897c7ca83ac",
+      "placement": {
+        "model": "structure-roof",
+        "x": -24,
+        "z": 0,
+        "size": 12,
+        "yaw": 0,
+        "y": 12
+      },
+      "scale": 21.744857744985627
+    },
+    {
+      "model": "Models/GLB format/tent.glb",
+      "sha256": "2c1c5fcc213929af0904a84921084361599ffab5077423a44d3d72a81d8c87c6",
+      "placement": {
+        "model": "tent",
+        "x": 22,
+        "z": 10,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 14.260248305916084
+    },
+    {
+      "model": "Models/GLB format/tree-tall.glb",
+      "sha256": "c4822d1c6fc127701b2f7958c3e97c779103d6beaa19925ba439c99092ccea4c",
+      "placement": {
+        "model": "tree-tall",
+        "x": -26,
+        "z": -26,
+        "size": 10,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 18.08782741651104
+    },
+    {
+      "model": "Models/GLB format/tree-autumn.glb",
+      "sha256": "1945b56b6a17e57ade4f14716fac40d53c3c322e8855c3825d40825845bbfd92",
+      "placement": {
+        "model": "tree-autumn",
+        "x": 26,
+        "z": -26,
+        "size": 12,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 21.705392899813248
+    },
+    {
+      "model": "Models/GLB format/rock-a.glb",
+      "sha256": "343bab63ea4c51a5b6c881a9d546f165789cfc26e1f60c517d59e4baa384c82a",
+      "placement": {
+        "model": "rock-a",
+        "x": -24,
+        "z": 29,
+        "size": 9,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 14.479248288970211
+    },
+    {
+      "model": "Models/GLB format/rock-b.glb",
+      "sha256": "f0f4eec72f18722dee56f799c6045953835a91856929dff6fb71331602b12c2e",
+      "placement": {
+        "model": "rock-b",
+        "x": 30,
+        "z": 30,
+        "size": 8,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 9.584946851098486
+    },
+    {
+      "model": "Models/GLB format/workbench.glb",
+      "sha256": "bf72d2d535fa29127e5078a6c4c2023a74fa5cd7d02d91ad550e897e088e1dc8",
+      "placement": {
+        "model": "workbench",
+        "x": 17,
+        "z": -12,
+        "size": 4,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 12.283031999443152
+    },
+    {
+      "model": "Models/GLB format/resource-wood.glb",
+      "sha256": "1d5f559da9432f89bd323731ef76b60372e0deb261a96d0da8d5af570c485d80",
+      "placement": {
+        "model": "resource-wood",
+        "x": -14,
+        "z": -30,
+        "size": 5,
+        "yaw": 0,
+        "y": 0
+      },
+      "scale": 24.388850701292178
+    }
+  ]
+}

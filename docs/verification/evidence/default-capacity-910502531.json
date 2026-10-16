@@ -1,0 +1,121 @@
+{
+  "format": "RevealLineCandidateCapacityObservation.v3",
+  "sourceRevision": "9105025316c21bfe749ea8617dbb2220fd2b5530",
+  "sourceTree": "e11dd115342ceda5a30a81ea4cf49e15ae805198",
+  "version": "0.142.2",
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "default": {
+    "report": {
+      "path": "default-capacity.json",
+      "bytes": 425562,
+      "sha256": "54e581832cccff78fd87ab38e6b35878f6c98f9193dcb8da92634e719f367121"
+    },
+    "manifest": {
+      "path": "manifest.json",
+      "bytes": 402023,
+      "sha256": "e5778c2244ec68a1f6eefbccdc82f1697f5b1f21b6a1043334763f97d2991a29"
+    },
+    "manifestFiles": 2177,
+    "manifestContentBytes": 800592677,
+    "payloadBytesIncludingManifest": 800994700,
+    "includedInputs": {
+      "format": "revealline-default-build-inputs.v1",
+      "sourceRevision": "9105025316c21bfe749ea8617dbb2220fd2b5530",
+      "sourceTree": "e11dd115342ceda5a30a81ea4cf49e15ae805198",
+      "files": 2038,
+      "bytes": 587749308,
+      "note": "Included originals only; transitive producer inputs are checked by normal build preparation."
+    },
+    "availableCommittedSources": {
+      "files": 5122,
+      "bytes": 844125121,
+      "absentTrackedFiles": 15495,
+      "inventorySha256": "86e1ff46b23ecc8717a489589fd0c100441e88ee1b6eeb1abdecfc246898ff5b"
+    },
+    "sourceEligibility": {
+      "status": "verified",
+      "format": "revealline-public-source-eligibility.v1",
+      "files": 5134,
+      "assets": 294
+    },
+    "reproducibleBuilds": 0,
+    "buildPreparation": "passed",
+    "sourceBinding": "verified-clean-committed"
+  },
+  "archiveAdmission": {
+    "contentBudgetBytes": 800000000,
+    "observedManifestContentOverBudgetBytes": 592677,
+    "status": "would-reject-current-default",
+    "zipCreated": false,
+    "note": "Ordinary preparation success does not imply frozen archive admission. The manifest content alone exceeds the existing 800 MB extractor/metadata ceiling; no cap was raised."
+  },
+  "optional": {
+    "envelope": {
+      "bytes": 1830,
+      "sha256": "b04018ba1a0fe183fe78698fde7abd7a1d2f95849bac2f24a7a53733818dd481"
+    },
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "ff609d0f0e33f0b7a0098b47c87a610763188fe2a8db2bd8925e23a31d872a4b",
+        "files": 29,
+        "bytes": 178540,
+        "immutableBytes": 178540,
+        "stableLauncherOriginalsBytes": 19045
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "44e739eafac3f643bb595341e2c7e91e6fbf2b8d4b0bad800e8108533e36f134",
+        "files": 50,
+        "bytes": 2748040,
+        "immutableBytes": 2748040,
+        "stableLauncherOriginalsBytes": 19014
+      }
+    ],
+    "knownImmutableAndStableLauncherOriginalsBytes": 2964639,
+    "zipMembersVerified": true,
+    "reproducibleBuilds": 2
+  },
+  "selectedEdition": {
+    "capacityReport": {
+      "path": "capacity-inventory.json",
+      "bytes": 1721,
+      "sha256": "ccc63b61a0a7862544ef1ce206831818784471a413c182cf9a509d70d3a9d356"
+    },
+    "editionIds": ["fpv-learning"],
+    "knownImmutableAndActiveLauncherBytes": 33194210
+  },
+  "knownDefaultOptionalAndFPVLowerBoundBytes": 837153549,
+  "hostedBudgetBytes": 950000000,
+  "gapBeforeOmittedComponentsBytes": 112846451,
+  "missingComponents": [
+    "Optional generated current.json pointers and practice hub",
+    "Pages root routes and publication metadata",
+    "Company hub including download-only links",
+    "Retained edition/optional versions and launcher ownership",
+    "Any other selected company editions; prior eighteen-edition packet is a different source"
+  ],
+  "hydration": {
+    "files": 200,
+    "bytes": 378536384,
+    "receipt": "default-hydration.json",
+    "sparseConfigurationChanged": false
+  },
+  "failedPreflight": {
+    "path": "default-inputs.log",
+    "missingIncludedFiles": 138,
+    "missingIncludedBytes": 256214795
+  },
+  "recommendedNarrowReduction": {
+    "status": "read-only-proposal",
+    "path": "scripts/game-cli.mjs",
+    "target": "Emit derived offline-inventory.json compactly while preserving identical parsed data and schema; validate size in a new exact committed inspection",
+    "currentInventoryBytes": 4102558,
+    "requiresActualRemeasurement": true,
+    "assetRemoval": false,
+    "capChange": false
+  },
+  "limits": "No ZIP verification, default reproducibility, publication or whole-site fit claim. Optional packages built twice locally; selected FPV capacity metadata independently validated through the existing helper. All numbers refer only to source 910502531."
+}

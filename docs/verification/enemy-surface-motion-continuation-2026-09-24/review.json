@@ -1,0 +1,60 @@
+{
+  "format": "revealline-scoped-enemy-surface-motion-review.v1",
+  "status": "bounded functional effects review; Team recipe successor remains source-stage; frozen, public, physical-device and human acceptance pending",
+  "candidateBase": "4f5e427f65c46750f89c2db657c11491f8dd213b",
+  "scope": "Continue the ten required effects recipes after prepared FPV enemy bodies begin consuming the existing bounded surface-motion records. Record the related Team renderer source change without extending the older whole-Team recipe approval.",
+  "effects": {
+    "priorFingerprintSHA256": "abd3aeef12041b55e76be3b026b52180f11df0f5b7a7f2a25ea560dacab0fdf1",
+    "currentFingerprintSHA256": "654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7",
+    "changedInput": {
+      "path": "game/ui/render.mjs",
+      "priorSHA256": "d2228d79b3ab344b0092f606db729e0559051e5055d58148cd0f6baea4c1bbd3",
+      "currentSHA256": "29d0eae640925cd0d670f60341ee4eb657533880b1c8a3cd0359aa58a8d3ef58",
+      "assessment": "Passes the catalog's already-declared cosmetic bodyRecord to a prepared compiled enemy body and keeps all frames in the metadata request while preventing duplicate image acquisition. Movement, collision, role identity, trail impacts, difficulty, clocks and authoritative state remain unchanged."
+    },
+    "addedDependencies": [
+      {
+        "path": "game/ui/enemy-body-assets.mjs",
+        "sha256": "a5fbbca95cbff78ce436b82775f72f2155b4c318908c7f19bff5611c83fcf35b",
+        "reason": "Owns bounded catalog loading, prepared-image leases and the fail-closed record lookup used by render.mjs."
+      },
+      {
+        "path": "game/ui/enemy-body-motion.mjs",
+        "sha256": "b23cff03deada23ea77efe8d8834e31f693712775cafcb00aa236b629cb6a554",
+        "reason": "Owns the cosmetic tread, glint, rotor and motion treatment selected by the returned record."
+      }
+    ],
+    "continuedSlots": 10
+  },
+  "team": {
+    "currentFingerprintSHA256": "cc3009118ddd7525466a31b2282767655684e59c5dc9576e528a9b2053cb2170",
+    "changedInput": {
+      "path": "game/couch/coop-actor-presentation.mjs",
+      "priorSHA256": "71b03615300e6e08fcf6917d5fd72d658a2ef10a9bb9b5d98c6681df1ac7fcac",
+      "currentSHA256": "845bc92894cfef26dacc141528a016fe95503b82563783c9f126be452d1b1c7c",
+      "assessment": "Loads the same bounded enemy presentation catalog, maps existing Team identities to visual motion types, and supplies optional body records beneath existing warning, charge, recovery, downed and rescue cues. Failed metadata loading preserves the prepared body and functional cues."
+    },
+    "decision": "Retain this whole Team recipe fingerprint at source stage. This feature's focused renderer evidence does not silently inherit or broaden the older 37-recipe approval across unrelated intervening Team source changes."
+  },
+  "qualification": {
+    "focusedAutomated": [
+      "Sixty-seven focused checks passed across boot/build metadata, actor presentation, enemy body assets and motion, and Team actor presentation.",
+      "Prepared enemy tests verify metadata is retained without duplicate image decode, missing records fall back, and reduced-effects behavior remains bounded.",
+      "Team tests verify drifter and claimed-rover treatments, hunter catalog-declared static body behavior, asynchronous load cancellation and unchanged functional state cues."
+    ],
+    "sourceNative": "Team First Connection launched with the prepared FPV actors and was visually inspected. This is not frozen/public, subjective art or physical-device evidence.",
+    "longSuite": "Waived under the active user exception and not represented as passed."
+  },
+  "preservation": [
+    "No image, audio or font payload bytes are added or replaced.",
+    "Compiled bodies keep their existing geometry and collision-independent presentation size.",
+    "Historical production revisions, mission identities, progress, saved attempts, uploaded media and custom content remain unchanged."
+  ],
+  "excluded": [
+    "No whole-Team recipe approval or complete two-player mission qualification.",
+    "No subjective animation, enjoyment or difficulty claim.",
+    "No complete keyboard, controller, touch, reduced-effects, screen-reader, every-viewport or physical-device qualification.",
+    "No frozen-build, offline or public Pages acceptance."
+  ],
+  "decision": "Continue only the ten required effects recipes when the exact effects fingerprint and this review record match. Any effects input or review-byte change reopens the group."
+}

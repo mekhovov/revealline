@@ -1,0 +1,38 @@
+{
+  "status": "VALIDATED_PUBLIC_AUDIT_STARTED",
+  "donors": {
+    "http_audit.py": {
+      "source": "/Users/oleksandr.mekhovov/.codex/worktrees/player-ux-input/publishing/pages-controller/evidence/archive-59-v0900/auditor.py",
+      "sha256": "8cf5803ca17249314b963832b45c66407101ef68d4a9d5878d0721bbe5695e89",
+      "preparedSha256": "25eb3cd9ee7c630f965368e31ef303d6b273504cea2098281c175cb4fa1291d1"
+    },
+    "audit_binding.py": {
+      "source": "/Users/oleksandr.mekhovov/.codex/worktrees/player-ux-input/publishing/pages-controller/evidence/archive-59-v0900/audit_binding.py",
+      "sha256": "9a048c5e5759a6b543bf0c80c882cf67be5f63763cd7bc9314fe57d34f8dea38",
+      "preparedSha256": "961b44c415d20761ad776d68435388908d146beb0c574d383794b37beedbeea9"
+    }
+  },
+  "adaptation": "Exact Archive65 identities and immutable pins plus explicitly authorized finite RAM metadata budget. Four workers,64KiB streaming,25s socket,90s attempt,1800s overall and3attempt limits unchanged. Archive800MB/build3GiB limits unchanged.",
+  "publicRequests": 0,
+  "nativeAcceptance": false,
+  "tests": {
+    "total": 28,
+    "passed": 28,
+    "failed": 0,
+    "seconds": 0.035,
+    "command": "TMPDIR=/Volumes/RevealLineTemp/ux0-publisher/tmp python3 -B -m unittest discover -s http-tools -p 'test_*.py' -v",
+    "scope": "Offline transport, metadata bounds and exact local deployment/receipt binding; no public body requests."
+  },
+  "capacity": {
+    "freeMetadataGuardBytes": 33554432,
+    "persistedMetadataCapBytes": 29360128,
+    "maxLogLineBytes": 4096,
+    "maxSetupBytes": 3145728,
+    "maxReportBytes": 5242880,
+    "worstCaseBytes": 26738688,
+    "formula": "1120 * (3 attempt rows + 1 result row) * 4096 + 5 MiB report + 3 MiB setup",
+    "shortWritesAndENOSPC": "Raise before successful completion; existing logs retained; no partial PASS accepted.",
+    "payloadPersistence": false
+  },
+  "testSourceSha256": "05103723ee27f807ba2f0c61ff4029c0eb2c458ff185977a65f8c10093a179b6"
+}

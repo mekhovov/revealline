@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FPV flight presentation · before and after</title>
+  <style>
+    :root {
+      font: 15px system-ui;
+      color-scheme: dark;
+      background: #0b1724;
+      color: #e6eff4;
+    }
+    body {
+      margin: 20px;
+      max-width: 1400px;
+    }
+    h1 {
+      font-size: 23px;
+    }
+    p {
+      max-width: 110ch;
+      line-height: 1.45;
+    }
+    button,
+    select {
+      font: inherit;
+      min-height: 44px;
+      background: #1b3044;
+      color: inherit;
+      border: 1px solid #58778d;
+      border-radius: 6px;
+      padding: 8px 12px;
+    }
+    button:disabled {
+      opacity: 0.5;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+      align-items: center;
+    }
+    label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .pair {
+      display: flex;
+      gap: 14px;
+      overflow: auto;
+    }
+    figure {
+      margin: 0;
+      flex: none;
+    }
+    figcaption {
+      padding: 8px;
+      font-weight: 600;
+    }
+    .screen,
+    .screen canvas {
+      width: 640px;
+      height: 360px;
+      display: block;
+      background: #101923;
+    }
+    .screen {
+      border: 1px solid #526878;
+    }
+    textarea {
+      width: 100%;
+      height: 240px;
+      background: #101923;
+      color: #dce8f0;
+      font: 12px monospace;
+    }
+    small {
+      color: #aac0ce;
+    }
+    #status {
+      min-height: 25px;
+    }
+    #provenance {
+      font: 12px monospace;
+      overflow-wrap: anywhere;
+    }
+  </style>
+  <h1>FPV flight presentation comparison</h1>
+  <p>
+    Original drone and container geometry, frozen baseline versus candidate. World views use the
+    production renderer and actual installed GLB scenery. Drone close-ups use the production model
+    factory with identical inspection lighting. These static poses do not earn progress or qualify
+    flying skill, sustained FPS or physical devices.
+  </p>
+  <p id="provenance">Loading immutable inputs…</p>
+  <div class="controls">
+    <button id="run" disabled>Run visual qualification</button
+    ><button id="preview" disabled>Show selected view</button
+    ><button id="download" disabled>Download receipt</button
+    ><button id="download-image" disabled>Download comparison image</button>
+  </div>
+  <div class="controls">
+    <label
+      >Subject<select id="subject">
+        <option value="drone">Drone close-up</option>
+        <option value="container-yard">Container Yard</option>
+        <option value="field">Meadow regression</option>
+        <option value="courtyard">Courtyard regression</option>
+      </select></label
+    >
+    <label
+      >Drone<select id="drone">
+        <option value="racer">Racer</option>
+        <option value="utility">Utility</option>
+        <option value="pixel">Pixel</option>
+      </select></label
+    >
+    <label
+      >Quality<select id="quality">
+        <option value="low">Performance</option>
+        <option value="balanced">Balanced</option>
+        <option value="high" selected>Quality</option>
+      </select></label
+    >
+    <label
+      >Appearance<select id="appearance">
+        <option value="authored">Authored</option>
+        <option value="industrial-workshop">Industrial Workshop</option>
+      </select></label
+    >
+    <label
+      >Camera<select id="camera">
+        <option value="fpv">FPV</option>
+        <option value="chase">Chase</option>
+        <option value="overview">Overview</option>
+      </select></label
+    >
+    <label
+      >Detail<select id="pose">
+        <option value="front">Front / container doors</option>
+        <option value="side">Side / corrugated flank</option>
+        <option value="rear">Rear / stacked containers</option>
+      </select></label
+    >
+  </div>
+  <p id="status">Preparing…</p>
+  <div class="pair">
+    <figure>
+      <figcaption>Before · current main</figcaption>
+      <div class="screen" id="before"></div>
+    </figure>
+    <figure>
+      <figcaption>After · original model refinement</figcaption>
+      <div class="screen" id="after"></div>
+    </figure>
+  </div>
+  <p>
+    <small
+      >Readings are scene/draw/resource diagnostics. No GPU timestamp or hardware performance claim.
+      Frozen input hashes, pixel differences and limitations are retained in the receipt. Keep the
+      page visible while running.</small
+    >
+  </p>
+  <textarea id="receipt" aria-label="Visual qualification receipt" readonly></textarea>
+  <script type="module">
+    const $ = (id) => document.getElementById(id),
+      qualities = ['low', 'balanced', 'high'],
+      clone = (x) => JSON.parse(JSON.stringify(x)),
+      encode = JSON.stringify,
+      wait = () => new Promise(requestAnimationFrame);
+    const sha = async (value) =>
+      Array.from(
+        new Uint8Array(
+          await crypto.subtle.digest(
+            'SHA-256',
+            typeof value === 'string' ? new TextEncoder().encode(value) : value,
+          ),
+        ),
+        (b) => b.toString(16).padStart(2, '0'),
+      ).join('');
+    let manifest,
+      modules,
+      owners = [],
+      receipt,
+      busy = false,
+      ownerKind = '',
+      comparison = null;
+    const errors = [];
+    addEventListener('error', (e) => errors.push(e.message));
+    addEventListener('unhandledrejection', (e) => errors.push(String(e.reason)));
+    function status(text) {
+      $('status').textContent = text;
+    }
+    function publish() {
+      window.fpvFlightPresentationReceipt = receipt;
+      $('receipt').value = JSON.stringify(receipt, null, 2);
+      $('download').disabled = !receipt;
+    }
+    function check(pass, name, detail = {}) {
+      receipt.checks.push({ name, passed: !!pass, ...detail });
+      publish();
+      if (!pass) throw Error(name);
+    }
+    async function bounded(promise, label) {
+      let t;
+      try {
+        return await Promise.race([
+          promise,
+          new Promise(
+            (_, reject) => (t = setTimeout(() => reject(Error('Timeout ' + label)), 45000)),
+          ),
+        ]);
+      } finally {
+        clearTimeout(t);
+      }
+    }
+    function pick(index, environment) {
+      const m = modules[index];
+      const c = ['gym', 'field'].includes(environment)
+        ? m.catalogue.FLIGHT_COURSES.find((c) => c.environment === environment)
+        : (
+            m.worldCatalogue.WORLD_CATALOGUE.find((e) => e.id === environment + '-01') ??
+            m.worldCatalogue.WORLD_CATALOGUE.find(
+              (e) => e.course.environment === environment && !e.id.startsWith('snake-'),
+            )
+          )?.course;
+      if (!c) throw Error('Missing ' + environment);
+      return c;
+    }
+    function poseFor(environment, pose = 'front') {
+      const c = pick(0, environment),
+        m = modules[0],
+        flight = (
+          c.format === 'FlightCourse.v2' ? m.worldModel.createWorldFlight : m.model.createFlight
+        )({ course: c, mode: 'acro' }),
+        state = flight.snapshot();
+      flight.dispose?.();
+      let x = 0,
+        y = 2,
+        z = 0,
+        yaw = 0;
+      if (environment === 'container-yard') {
+        if (pose === 'front') {
+          x = -25;
+          y = 1.15;
+          z = -7;
+        }
+        if (pose === 'side') {
+          x = -19;
+          y = 1.15;
+          z = -18;
+          yaw = Math.PI / 2;
+        }
+        if (pose === 'rear') {
+          x = 25;
+          y = 3.2;
+          z = 12;
+        }
+      }
+      state.position = { x: x * 1000, y: y * 1000, z: z * 1000 };
+      state.orientation = [
+        0,
+        Math.round(Math.sin(yaw / 2) * 1e6),
+        0,
+        Math.round(Math.cos(yaw / 2) * 1e6),
+      ];
+      state.ticks = 100;
+      return state;
+    }
+    function disposeOwners() {
+      const rows = [];
+      if (receipt) receipt.disposing = true;
+      for (const o of owners) {
+        if (o.kind === 'world') {
+          o.runtime.dispose();
+          rows.push({ side: o.side, resources: o.runtime.resources() });
+        } else {
+          o.visuals.disposeSimVisualGroup(o.scene);
+          o.environment?.dispose();
+          o.renderer.dispose();
+          o.renderer.forceContextLoss();
+          rows.push({ side: o.side, disposed: true });
+        }
+      }
+      owners = [];
+      ((ownerKind = ''), (comparison = null));
+      if (receipt) delete receipt.disposing;
+      return rows;
+    }
+    function canvasFor(side) {
+      const c = document.createElement('canvas');
+      c.setAttribute('aria-label', side + ' rendered comparison');
+      $(side).replaceChildren(c);
+      return c;
+    }
+    function worldOwners() {
+      if (ownerKind === 'world') return;
+      disposeOwners();
+      owners = modules.map((m) => {
+        const canvas = canvasFor(m.side),
+          proto = m.THREE.Object3D.prototype,
+          original = proto.add;
+        let scene;
+        proto.add = function (...objects) {
+          if (!scene && this.isScene && objects.length === 8 && objects.every((o) => o.isGroup))
+            scene = this;
+          return original.apply(this, objects);
+        };
+        let runtime;
+        try {
+          runtime = m.assets.createFlightRenderer({
+            canvas,
+            window,
+            reducedMotion: true,
+            onContextLost: () => {
+              if (receipt && !receipt.disposing) receipt.contextLosses.push(m.side);
+            },
+          });
+        } finally {
+          proto.add = original;
+        }
+        if (!runtime.available || !scene) {
+          runtime.dispose();
+          throw Error('Production WebGL renderer unavailable');
+        }
+        return {
+          ...m,
+          kind: 'world',
+          canvas,
+          runtime,
+          scene,
+          world: scene.children[0],
+          aircraft: scene.children[2],
+          imported: scene.children[6],
+          gl: canvas.getContext('webgl2'),
+        };
+      });
+      ownerKind = 'world';
+    }
+    async function loadWorld(environment, quality, appearance = 'authored', drone = 'racer') {
+      worldOwners();
+      const result = [];
+      for (let i = 0; i < owners.length; i++) {
+        const o = owners[i],
+          c = pick(i, environment);
+        o.runtime.setCourse(c, 'acro', {
+          presentation: { collectionId: appearance, revision: 'r1' },
+        });
+        o.runtime.setQuality(quality);
+        o.runtime.setDrone(drone);
+        const glb = o.assets.builtinWorldScene(c);
+        let glbHash = null;
+        if (glb) {
+          glbHash = await sha(await glb.arrayBuffer());
+          await bounded(o.runtime.loadScene(glb), 'GLB');
+        }
+        if ((await bounded(o.runtime.prepare(), 'shader preparation')) === false)
+          throw Error('Preparation superseded');
+        o.scene.updateMatrixWorld(true);
+        result.push({
+          side: o.side,
+          glbHash,
+          importedChildren: o.imported.children.length,
+          fallbackVisible: o.world.getObjectByName('procedural-scenery-fallback')?.visible,
+        });
+      }
+      return result;
+    }
+    async function loadDrone(kind, quality, appearance) {
+      disposeOwners();
+      owners = modules.map((m) => {
+        const T = m.THREE,
+          canvas = canvasFor(m.side),
+          renderer = new T.WebGLRenderer({ canvas, antialias: true });
+        renderer.setPixelRatio(1);
+        renderer.setSize(640, 360, false);
+        renderer.outputColorSpace = T.SRGBColorSpace;
+        renderer.toneMapping = T.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.05;
+        renderer.shadowMap.enabled = quality !== 'low';
+        renderer.shadowMap.type = T.PCFShadowMap;
+        const scene = new T.Scene();
+        scene.background = new T.Color(0xb9c8ce);
+        const camera = new T.PerspectiveCamera(42, 640 / 360, 0.01, 20),
+          root = new T.Group();
+        scene.add(root);
+        const hemisphere = new T.HemisphereLight(0xe9f4f6, 0x56645a, 2),
+          key = new T.DirectionalLight(0xffead4, 3);
+        key.position.set(-1, 2, -1);
+        key.castShadow = quality !== 'low';
+        key.shadow.mapSize.set(1024, 1024);
+        Object.assign(key.shadow.camera, {
+          left: -0.45,
+          right: 0.45,
+          top: 0.45,
+          bottom: -0.45,
+          near: 0.1,
+          far: 5,
+        });
+        key.shadow.normalBias = 0.003;
+        scene.add(hemisphere, key);
+        const rim = new T.DirectionalLight(0xc2e2ff, 0.8);
+        rim.position.set(1, 0.6, 1);
+        scene.add(rim);
+        const material = (color, extras = {}) => new T.MeshStandardMaterial({ color, ...extras }),
+          mesh = (shape, paint, parent = root) => {
+            const v = new T.Mesh(shape, paint);
+            parent.add(v);
+            return v;
+          },
+          box = (size, at, color, parent = root) => {
+            const v = mesh(new T.BoxGeometry(...size), material(color), parent);
+            v.position.set(...at);
+            return v;
+          };
+        const visual = m.visuals.buildDroneVisual({
+          parent: root,
+          mesh,
+          material,
+          box,
+          kind,
+          quality,
+          collectionId: appearance === 'authored' ? null : appearance,
+          maxAnisotropy: renderer.capabilities.getMaxAnisotropy(),
+        });
+        const ground = mesh(new T.PlaneGeometry(2, 2), material(0x9aa9aa, { roughness: 1 }), scene);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.y = -0.051;
+        ground.receiveShadow = true;
+        const environment =
+          quality === 'low'
+            ? null
+            : m.visuals.createEnvironmentLight(renderer, {
+                sky: 0xc7d6dc,
+                ground: 0x718080,
+                indoor: false,
+              });
+        scene.environment = environment?.texture ?? null;
+        scene.environmentIntensity = 0.4;
+        return {
+          ...m,
+          kind: 'drone',
+          canvas,
+          renderer,
+          scene,
+          camera,
+          root,
+          visual,
+          environment,
+          gl: renderer.getContext(),
+        };
+      });
+      ownerKind = 'drone';
+      for (const o of owners) {
+        setDroneCamera(o, 'front');
+        await o.renderer.compileAsync(o.scene, o.camera);
+      }
+    }
+    function setDroneCamera(o, pose) {
+      const points = {
+        front: [0.34, 0.2, -0.43],
+        side: [0.44, 0.16, 0.05],
+        rear: [0.34, 0.22, 0.43],
+      };
+      o.camera.position.set(...points[pose]);
+      o.camera.lookAt(0, 0.028, 0);
+    }
+    function readPixels(o, state, camera, pose) {
+      const start = performance.now();
+      if (o.kind === 'world') {
+        const unchanged = encode(state);
+        o.runtime.draw(state, { cameraMode: camera, cameraFov: 82, cameraTilt: 0 });
+        if (encode(state) !== unchanged) throw Error('Renderer mutated pose');
+      } else {
+        setDroneCamera(o, pose);
+        o.renderer.render(o.scene, o.camera);
+      }
+      const submitMs = performance.now() - start,
+        g = o.gl,
+        rgba = new Uint8Array(g.drawingBufferWidth * g.drawingBufferHeight * 4);
+      g.readPixels(
+        0,
+        0,
+        g.drawingBufferWidth,
+        g.drawingBufferHeight,
+        g.RGBA,
+        g.UNSIGNED_BYTE,
+        rgba,
+      );
+      if (g.getError() !== g.NO_ERROR) throw Error('WebGL error');
+      return {
+        rgba,
+        submitMs,
+        resources:
+          o.kind === 'world'
+            ? o.runtime.resources()
+            : {
+                renderer: {
+                  calls: o.renderer.info.render.calls,
+                  triangles: o.renderer.info.render.triangles,
+                  textures: o.renderer.info.memory.textures,
+                  geometries: o.renderer.info.memory.geometries,
+                },
+              },
+      };
+    }
+    async function pair(
+      environment,
+      quality,
+      camera = 'fpv',
+      pose = 'front',
+      appearance = 'authored',
+      drone = 'racer',
+    ) {
+      await wait();
+      const state = environment === 'drone' ? null : poseFor(environment, pose),
+        a = readPixels(owners[0], state, camera, pose),
+        b = readPixels(owners[1], state, camera, pose);
+      if (a.rgba.length !== b.rgba.length) throw Error('Mismatched frame buffers');
+      comparison = {
+        frames: [a.rgba, b.rgba],
+        width: owners[0].gl.drawingBufferWidth,
+        height: owners[0].gl.drawingBufferHeight,
+        label: [environment, drone, quality, appearance, camera, pose].join(' · '),
+      };
+      $('download-image').disabled = false;
+      let changed = 0,
+        lit = 0;
+      for (let i = 0; i < a.rgba.length; i += 4) {
+        if (
+          a.rgba[i] !== b.rgba[i] ||
+          a.rgba[i + 1] !== b.rgba[i + 1] ||
+          a.rgba[i + 2] !== b.rgba[i + 2]
+        )
+          changed++;
+        if (b.rgba[i] + b.rgba[i + 1] + b.rgba[i + 2]) lit++;
+      }
+      return {
+        environment,
+        quality,
+        camera,
+        pose,
+        appearance,
+        drone,
+        changedPixels: changed,
+        litPixels: lit,
+        pixelHashes: [await sha(a.rgba), await sha(b.rgba)],
+        drawCalls: [a.resources.renderer.calls, b.resources.renderer.calls],
+        triangles: [a.resources.renderer.triangles, b.resources.renderer.triangles],
+        submitMs: [a.submitMs, b.submitMs],
+        resources: [a.resources, b.resources],
+      };
+    }
+    async function staticSignature(o) {
+      const rows = [];
+      o.world.updateMatrixWorld(true);
+      o.world.traverse((v) => {
+        if (!v.geometry) return;
+        const paints = Array.isArray(v.material) ? v.material : [v.material];
+        rows.push({
+          name: v.name,
+          type: v.type,
+          matrix: v.matrixWorld.toArray(),
+          visible: v.visible,
+          attributes: Object.fromEntries(
+            Object.entries(v.geometry.attributes).map(([k, a]) => [k, Array.from(a.array)]),
+          ),
+          index: v.geometry.index ? Array.from(v.geometry.index.array) : null,
+          instance: v.isInstancedMesh ? Array.from(v.instanceMatrix.array) : null,
+          materials: paints.map((p) => ({
+            type: p.type,
+            color: p.color?.toArray(),
+            roughness: p.roughness,
+            metalness: p.metalness,
+            transparent: p.transparent,
+            opacity: p.opacity,
+            maps: ['map', 'normalMap', 'roughnessMap'].map((k) => {
+              const t = p[k];
+              return t
+                ? {
+                    name: t.name,
+                    size: [t.image?.width, t.image?.height],
+                    bytes: t.image?.data ? Array.from(t.image.data) : null,
+                  }
+                : null;
+            }),
+          })),
+        });
+      });
+      return sha(encode(rows));
+    }
+    function yardInspection(o) {
+      const c = pick(0, 'container-yard'),
+        rows = [];
+      o.scene.updateMatrixWorld(true);
+      for (const obstacle of c.obstacles.filter((x) => /^container-/.test(x.id))) {
+        const v = o.world.getObjectByName(obstacle.id),
+          p = v.geometry.attributes.position,
+          size = ['x', 'y', 'z'].map((k) => (obstacle.max[k] - obstacle.min[k]) / 1000);
+        let inside = true;
+        for (let i = 0; i < p.count; i++)
+          for (let a = 0; a < 3; a++) inside &&= Math.abs(p.array[i * 3 + a]) <= size[a] / 2 + 1e-6;
+        const fittings = v.getObjectByName('container-door-hardware');
+        rows.push({
+          id: obstacle.id,
+          visible: v.visible,
+          inside,
+          opaque: !v.material.transparent && v.material.opacity === 1,
+          hardware: !!fittings,
+          distinctFinish: fittings ? fittings.material !== v.material : false,
+          noNewTexture: fittings
+            ? !fittings.material.map || fittings.material.map === v.material.map
+            : false,
+          steelRole: fittings?.userData.materialRole === 'steel',
+          shellFinish: {
+            roughness: v.material.roughness,
+            metalness: v.material.metalness,
+            normalScale: v.material.normalScale.toArray(),
+          },
+          hardwareFinish: fittings
+            ? {
+                color: fittings.material.color.toArray(),
+                roughness: fittings.material.roughness,
+                metalness: fittings.material.metalness,
+                mapName: fittings.material.map?.name ?? null,
+                collectionId: fittings.material.userData.collectionId ?? null,
+              }
+            : null,
+          vertices: p.count,
+          position: v.position.toArray(),
+        });
+      }
+      return rows;
+    }
+    function resourceKey(o) {
+      const r = o.runtime.resources();
+      return { registered: r.registered, renderer: r.renderer };
+    }
+    async function run() {
+      if (busy) return;
+      busy = true;
+      $('run').disabled = $('preview').disabled = true;
+      receipt = {
+        format: 'FPVFlightPresentationBrowser.v1',
+        manifest,
+        started: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        checks: [],
+        views: [],
+        cycles: [],
+        contextLosses: [],
+        limitations: [
+          'Static synthetic inspection poses; no gameplay completion or human art acceptance implied.',
+          'CPU submission timings and WebGL counts are diagnostic, not sustained FPS or GPU timing.',
+          'No named physical-device, controller, radio or novice qualification.',
+        ],
+      };
+      publish();
+      try {
+        await verifyHashes();
+        for (const appearance of ['authored', 'industrial-workshop'])
+          for (const quality of qualities) {
+            status('Container Yard · ' + quality + ' · ' + appearance);
+            const loaded = await loadWorld('container-yard', quality, appearance);
+            check(
+              loaded[0].glbHash === loaded[1].glbHash && loaded[1].importedChildren > 0,
+              'Exact installed scenery loaded',
+              { quality, appearance, loaded },
+            );
+            const y = yardInspection(owners[1]);
+            check(
+              y.length === 6 &&
+                y.every(
+                  (r) =>
+                    r.inside &&
+                    r.opaque &&
+                    r.visible &&
+                    r.hardware &&
+                    r.distinctFinish &&
+                    r.noNewTexture &&
+                    r.steelRole &&
+                    r.shellFinish.roughness === 0.82 &&
+                    r.shellFinish.metalness === 0.12 &&
+                    r.shellFinish.normalScale.every((v) => v === 0.08),
+                ),
+              'Six closed container bodies with distinct world-owned steel fittings and no new textures',
+              { quality, appearance, rows: y },
+            );
+            check(
+              loaded[1].fallbackVisible === false,
+              'Imported scenery hides only exterior fallback',
+              { quality, appearance },
+            );
+            for (const [camera, pose] of [
+              ['fpv', 'front'],
+              ['fpv', 'side'],
+              ['chase', 'rear'],
+              ['overview', 'front'],
+            ]) {
+              const row = await pair('container-yard', quality, camera, pose, appearance);
+              receipt.views.push(row);
+              check(
+                row.litPixels > 1000 && row.changedPixels > 0,
+                'Visible yard/drone presentation change',
+                { quality, appearance, camera, pose, changedPixels: row.changedPixels },
+              );
+            }
+          }
+        const environments = [
+          ...new Set(modules[0].worldCatalogue.WORLD_CATALOGUE.map((e) => e.course.environment)),
+        ].filter((e) => e !== 'container-yard');
+        for (const environment of environments) {
+          status('Unchanged environment · ' + environment);
+          await loadWorld(environment, 'balanced');
+          const signatures = await Promise.all(owners.map(staticSignature));
+          check(
+            signatures[0] === signatures[1],
+            'Other world static geometry, transforms and materials remain exact',
+            { environment, signatures },
+          );
+          if (environment === 'field' || environment === 'gym') {
+            const row = await pair(environment, 'balanced');
+            receipt.views.push(row);
+            check(row.changedPixels === 0, 'Unchanged non-yard FPV pixels', { environment });
+          }
+        }
+        for (let cycle = 0; cycle < 3; cycle++) {
+          const rows = [];
+          for (const quality of qualities) {
+            status('Resource cycle ' + (cycle + 1) + ' · ' + quality);
+            await loadWorld('container-yard', quality, 'industrial-workshop');
+            await pair('container-yard', quality);
+            rows.push(owners.map(resourceKey));
+          }
+          receipt.cycles.push(rows);
+        }
+        check(
+          encode(receipt.cycles[1]) === encode(receipt.cycles[2]),
+          'Repeated quality/reload resources plateau after warmup',
+        );
+        const released = disposeOwners();
+        check(
+          released.every(
+            (r) =>
+              r.resources.disposed && Object.values(r.resources.registered).every((n) => n === 0),
+          ),
+          'Production renderers release all registered resources',
+          { released },
+        );
+        for (const appearance of ['authored', 'industrial-workshop'])
+          for (const kind of ['racer', 'utility', 'pixel'])
+            for (const quality of qualities) {
+              status('Drone close-up · ' + kind + ' · ' + quality + ' · ' + appearance);
+              await loadDrone(kind, quality, appearance);
+              const row = await pair('drone', quality, 'chase', 'front', appearance, kind);
+              receipt.views.push(row);
+              check(
+                row.litPixels > 1000 &&
+                  (kind === 'pixel' ? row.changedPixels === 0 : row.changedPixels > 0),
+                'Drone close-up visible; Pixel unchanged',
+                {
+                  kind,
+                  quality,
+                  appearance,
+                  changedPixels: row.changedPixels,
+                  drawCalls: row.drawCalls,
+                },
+              );
+              if (kind !== 'pixel')
+                check(
+                  row.drawCalls[1] <= row.drawCalls[0],
+                  'Refined model does not increase draw calls',
+                  { kind, quality, appearance, drawCalls: row.drawCalls },
+                );
+            }
+        check(
+          errors.length === 0 && receipt.contextLosses.length === 0,
+          'No application/WebGL context errors',
+          { errors: [...errors] },
+        );
+        receipt.complete = true;
+        receipt.finished = new Date().toISOString();
+        status(
+          'PASS · ' +
+            receipt.checks.length +
+            ' checks · ' +
+            receipt.views.length +
+            ' rendered pairs. Select a view for screenshots.',
+        );
+      } catch (error) {
+        receipt.complete = false;
+        receipt.error = String(error.stack ?? error);
+        status('FAIL · ' + error.message);
+      } finally {
+        publish();
+        busy = false;
+        $('run').disabled = $('preview').disabled = false;
+      }
+    }
+    async function preview() {
+      if (busy) return;
+      busy = true;
+      $('run').disabled = $('preview').disabled = true;
+      try {
+        const subject = $('subject').value,
+          quality = $('quality').value,
+          appearance = $('appearance').value,
+          drone = $('drone').value,
+          camera = $('camera').value,
+          pose = $('pose').value;
+        if (subject === 'drone') await loadDrone(drone, quality, appearance);
+        else await loadWorld(subject, quality, appearance, drone);
+        await pair(subject, quality, camera, pose, appearance, drone);
+        status('Inspection · ' + subject + ' · ' + quality + ' · ' + appearance + ' · ' + pose);
+      } catch (error) {
+        status(String(error.stack ?? error));
+      } finally {
+        busy = false;
+        $('run').disabled = $('preview').disabled = false;
+      }
+    }
+    async function verifyHashes() {
+      for (const [side, files] of Object.entries(manifest.files))
+        for (const [path, expected] of Object.entries(files)) {
+          const r = await fetch('./' + side + '/' + path, { cache: 'no-store' });
+          if (!r.ok || (await sha(await r.arrayBuffer())) !== expected)
+            throw Error('Frozen input mismatch ' + path);
+        }
+      if (
+        (await sha(await (await fetch('./index.html', { cache: 'no-store' })).arrayBuffer())) !==
+        manifest.harnessSha256
+      )
+        throw Error('Harness changed');
+    }
+    async function initialize() {
+      manifest = await (await fetch('./fixture-manifest.json', { cache: 'no-store' })).json();
+      if (manifest.format !== 'FPVFlightPresentationFixture.v1') throw Error('Unknown manifest');
+      await verifyHashes();
+      modules = await Promise.all(
+        ['before', 'after'].map(async (side) => {
+          const base = new URL('./' + side + '/optional-practice/civilian-fpv/', location.href);
+          const [assets, catalogue, worldCatalogue, model, worldModel, visuals, THREE] =
+            await Promise.all(
+              [
+                'world-assets.mjs',
+                'catalogue.mjs',
+                'world-catalogue.mjs',
+                'model.mjs',
+                'world-model.mjs',
+                'world-visuals.mjs',
+                'vendor/three.module.js',
+              ].map((p) => import(new URL(p, base))),
+            );
+          await worldModel.initWorldRuntime();
+          return { side, assets, catalogue, worldCatalogue, model, worldModel, visuals, THREE };
+        }),
+      );
+      $('provenance').textContent =
+        'Baseline ' +
+        manifest.baseline +
+        ' · candidate visuals ' +
+        manifest.files.after['optional-practice/civilian-fpv/world-visuals.mjs'];
+      $('run').disabled = $('preview').disabled = false;
+      status('Ready · use Show selected view or Run visual qualification.');
+    }
+    $('run').onclick = run;
+    $('preview').onclick = preview;
+    $('download').onclick = () => {
+      const a = document.createElement('a'),
+        url = URL.createObjectURL(
+          new Blob([JSON.stringify(receipt, null, 2)], { type: 'application/json' }),
+        );
+      a.href = url;
+      a.download = 'fpv-flight-presentation-browser.json';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    };
+    $('download-image').onclick = () => {
+      if (!comparison) return;
+      const { frames, width, height, label } = comparison,
+        output = document.createElement('canvas');
+      output.width = width * 2;
+      output.height = height + 76;
+      const ctx = output.getContext('2d');
+      ctx.fillStyle = '#101b25';
+      ctx.fillRect(0, 0, output.width, output.height);
+      ctx.fillStyle = '#e8f1f5';
+      ctx.font = 'bold 20px system-ui';
+      ctx.fillText('Before', 18, 28);
+      ctx.fillText('After', width + 18, 28);
+      ctx.font = '14px system-ui';
+      ctx.fillText(label, 18, height + 64, output.width - 36);
+      frames.forEach((rgba, i) => {
+        const frame = document.createElement('canvas');
+        frame.width = width;
+        frame.height = height;
+        frame
+          .getContext('2d')
+          .putImageData(new ImageData(new Uint8ClampedArray(rgba), width, height), 0, 0);
+        ctx.save();
+        ctx.translate(i * width, height + 40);
+        ctx.scale(1, -1);
+        ctx.drawImage(frame, 0, 0);
+        ctx.restore();
+      });
+      output.toBlob((blob) => {
+        if (!blob) {
+          status('Comparison image could not be encoded.');
+          return;
+        }
+        const url = URL.createObjectURL(blob),
+          a = document.createElement('a');
+        a.href = url;
+        a.download = 'fpv-flight-presentation-comparison.png';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 0);
+      }, 'image/png');
+    };
+    initialize().catch((error) => status(String(error.stack ?? error)));
+  </script>
+</html>

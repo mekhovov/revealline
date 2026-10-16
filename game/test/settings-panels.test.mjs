@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { attachSettingsPanels, settingsTabOwnsKey } from '../ui/settings-panels.mjs';
+import {
+  attachSettingsPanels,
+  settingsTabOwnsKey,
+  settingsPanelBack,
+} from '../ui/settings-panels.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
 function fixture(document = new Document(), prefix = 'settings') {
@@ -33,6 +37,62 @@ const visiblePanels = (f) =>
   Object.entries(f.panels)
     .filter(([, panel]) => !panel.hidden && !panel.inert)
     .map(([name]) => name);
+
+test('vertical settings arrows select categories; compact Confirm enters and Back returns once', () => {
+  const f = fixture();
+  f.root.classList.add('native-settings');
+  f.document.defaultView.innerWidth = 390;
+  f.list.setAttribute('aria-orientation', 'vertical');
+  const input = f.document.createElement('input');
+  f.panels.display.append(input);
+  const panels = attachSettingsPanels(f);
+  f.tabs.audio.focus();
+  assert.equal(settingsTabOwnsKey({ key: 'ArrowRight', target: f.tabs.audio }, f.root), false);
+  assert.equal(settingsTabOwnsKey({ key: 'ArrowDown', target: f.tabs.audio }, f.root), true);
+  f.tabs.audio.emit('keydown', { key: 'ArrowDown' });
+  assert.equal(panels.selected(), f.tabs.display.id);
+  assert.equal(f.document.activeElement, f.tabs.display);
+  assert.equal(f.root.getAttribute('data-settings-view'), 'categories');
+  f.tabs.display.click();
+  assert.equal(f.root.getAttribute('data-settings-view'), 'panel');
+  assert.equal(f.document.activeElement, input);
+  f.root.hidden = true;
+  f.document.body.focus();
+  assert.equal(
+    settingsPanelBack(f.document.body),
+    false,
+    'a closed Settings screen cannot consume landing Back',
+  );
+  assert.equal(f.document.activeElement, f.document.body);
+  assert.equal(f.root.getAttribute('data-settings-view'), 'panel');
+  f.root.hidden = false;
+  assert.equal(settingsPanelBack(f.root), true);
+  assert.equal(f.root.getAttribute('data-settings-view'), 'categories');
+  assert.equal(f.document.activeElement, f.tabs.display);
+  assert.equal(settingsPanelBack(f.root), false);
+  panels.destroy();
+  assert.equal(settingsPanelBack(f.root), false);
+});
+
+test('compact native dialog cancellation returns to categories before allowing parent cancellation', () => {
+  const f = fixture();
+  f.root.classList.add('native-settings');
+  f.document.defaultView.innerWidth = 640;
+  const input = f.document.createElement('input');
+  f.panels.audio.append(input);
+  const panels = attachSettingsPanels(f);
+  let parentCancellations = 0;
+  f.root.addEventListener('cancel', () => parentCancellations++);
+  f.tabs.audio.click();
+  assert.equal(f.root.emit('cancel').defaultPrevented, true);
+  assert.equal(parentCancellations, 0, 'consumed Back cannot reach a later host dialog listener');
+  assert.equal(f.root.emit('cancel').defaultPrevented, false);
+  assert.equal(parentCancellations, 1, 'second Back belongs to the host close lifecycle');
+  f.document.defaultView.innerWidth = 1024;
+  f.tabs.audio.click();
+  assert.equal(settingsPanelBack(f.root), false, 'wide settings retain a single screen');
+  panels.destroy();
+});
 
 test('mount respects the authored category and keeps existing controls, values and focus', () => {
   const f = fixture(),

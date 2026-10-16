@@ -1,0 +1,22 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-67",
+  "infrastructureCommit": "8b59eeee4d57e35629259ad29c40993c5780f8f4",
+  "deploymentId": 6643093280,
+  "versions": [
+    "v0.98.0"
+  ],
+  "scope": "Historical online preservation only: exact archive routes, full-body hashes and bounded in-app-browser boot/version inspection. This is not renewed v0.98 gameplay acceptance.",
+  "evidence": [
+    {
+      "path": "evidence/archive-67-v0980/public-observation.json",
+      "sha256": "1f1f84878b9daf40b947b5927ffff4b4f8498781fb7ce0abeb3cbeaa77098c40"
+    }
+  ],
+  "limitations": [
+    "No physical controller, physical touch, screen reader, offline, full-mission, exhaustive selector or device-matrix qualification is claimed.",
+    "Another open game tab owned persistence, so the archived tab ran session-only during the observation.",
+    "No user data, historical release or accepted archive was modified by the read-only public checks."
+  ]
+}

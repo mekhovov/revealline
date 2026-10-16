@@ -1,0 +1,61 @@
+{
+  "status": "scoped native checks passed; broader qualification incomplete",
+  "source": "6c51b7e9bda575ac9e7e329784a3db0edfa8ddbd",
+  "initialLaneCssSha256": "577d658e7a27f55c73f3580941a328d0cc7885167aba50ad2f9a4f0026320117",
+  "finalCssSha256": "c90b860621aa747f7036264b8b5e89191c005a3a0012af6e8f3feb60f963bffa",
+  "implementation": "Portrait compact Arcade only, direction controls shown, not First Flight; CSS grid reserves HUD/arena/caption and steering space. Size container fits complete aspect-correct canvas inside remaining arena row. @supports preserves prior layout on unsupported engines.",
+  "actualGame": [
+    {
+      "viewport": [320, 568],
+      "preferences": "Large/Plain/large left D-pad",
+      "canvas": [65.984375, 195.1875, 188.03125, 94.015625],
+      "caption": [12, 297.203125, 296, 46.796875],
+      "dpad": [24, 352, 192, 192],
+      "gapCaptionToDpad": 8,
+      "documentWidth": 320,
+      "observation": "Loaded actual saved flight; current canvas and caption no longer overlap touch pad; Pause focuses Resume."
+    },
+    {
+      "viewport": [390, 844],
+      "observation": "Pointer Down caused a travelling-line loss; two lives remained, clear loss message. Fresh pointer Down after recovery completed50% capture,11900points; controls remain distinct from two-line caption.",
+      "scope": "Actual simulation, not a mocked event."
+    }
+  ],
+  "stressFixture": {
+    "path": "counter-stress.html",
+    "purpose": "Rendering geometry only; no simulated score, win or reward",
+    "values": {
+      "coverage": "99.9%",
+      "target": "100%",
+      "lives": 99,
+      "time": "99:59",
+      "score": 999999999
+    },
+    "retainedFailure": "Initial counter fixture wrapped target100% into a second line and shrank the field. Corrected nowrap target and reserved clock/life widths.",
+    "finalViewport": [320, 568],
+    "finalCanvas": [65.984375, 195.1875, 188.03125, 94.015625],
+    "documentWidth": 320,
+    "textBounds": {
+      "coverage": [32, 79.59375, 83.09375, 35],
+      "target": [12, 116.59375, 116.828125, 21.5],
+      "lives": [145.6875, 90.1015625, 38.1171875, 12.5],
+      "time": [217.6875, 86.09375, 90.3125, 35],
+      "score": [102.3515625, 150.6875, 162.5546875, 35]
+    },
+    "limits": "Legacy life-count text is smaller than other counters; not full typography acceptance. Fixture lacks the live theme asset bindings; it preserves HUD markup and ordered runtime styles."
+  },
+  "remaining": [
+    "Replay final CSS through actual flight after clock-width correction",
+    "First Flight and active warnings",
+    "Tactical manual equipment layouts",
+    "Other portrait heights, font choices and touch sizes/sides",
+    "Landscape high-counter checks",
+    "Integrated source gates and public release",
+    "Physical touch/controller qualification"
+  ],
+  "cleanup": {
+    "tabsClosed": [131, 132],
+    "viewportReset": true,
+    "server18814Stopped": true
+  }
+}

@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { contentStudioLinks, mountContentStudioLinks } from '../ui/content-studio-navigation.mjs';
+import {
+  contentStudioLinks,
+  mountContentStudioLinks,
+  snakeStudioReturnHref,
+} from '../ui/content-studio-navigation.mjs';
 import { WORKSHOP_TOOLS, workshopToolHref } from '../ui/workshop-return.mjs';
 
 const anchorAttributes = (html) =>
@@ -10,6 +14,37 @@ const anchorAttributes = (html) =>
       [...tag.matchAll(/\s+([^\s=/>]+)\s*=\s*"([^"]*)"/g)].map(([, name, value]) => [name, value]),
     ),
   );
+
+test('Snake Studio navigation and fixed preview return retain language without adopting preview data', () => {
+  for (const root of ['https://example.test/project/', 'capacitor://localhost/', 'file:///site/']) {
+    const source = `${root}game/studio/snake.html?journey=opening&lang=uk&project=private&community=untrusted`;
+    assert.deepEqual(contentStudioLinks(source), {
+      game: `${root}game/?journey=opening&lang=uk`,
+      playground: `${root}game/playground/?journey=opening&lang=uk`,
+      studio: `${root}game/studio/?journey=opening&lang=uk`,
+    });
+    assert.equal(
+      snakeStudioReturnHref(
+        `${root}game/snake/play.html?studio=snake&lang=uk&community=edition&level=mission&return=https://other.test/`,
+      ),
+      `${root}game/studio/snake.html?lang=uk`,
+    );
+    assert.equal(
+      snakeStudioReturnHref(`${root}game/snake/play.html?studio=snake&lang=uk&lang=en`),
+      `${root}game/studio/snake.html`,
+    );
+  }
+  for (const href of [
+    'invalid',
+    'javascript:alert(1)',
+    'https://user@example.test/game/snake/play.html?studio=snake',
+    'https://example.test/game/snake/?studio=snake',
+    'https://example.test/game/snake/play.html',
+    'https://example.test/game/snake/play.html?studio=snake&studio=snake',
+    'https://example.test/game/snake/play.html?studio=https://other.test',
+  ])
+    assert.equal(snakeStudioReturnHref(href), null, href);
+});
 
 test('new-tab link assertions distinguish real attributes from data-prefixed substitutes', () => {
   const [attributes] = anchorAttributes(
@@ -37,7 +72,13 @@ for (const prefix of [
             studio: `${prefix}game/studio/?journey=${journey}`,
           });
         }
-    assert.equal(WORKSHOP_TOOLS.length, 9, 'No duplicate or aliased Workshop opener.');
+    assert.equal(WORKSHOP_TOOLS.length, 10);
+    assert.equal(
+      new Set(WORKSHOP_TOOLS.map((tool) => tool.id)).size,
+      10,
+      'No duplicate Workshop opener.',
+    );
+    assert.ok(WORKSHOP_TOOLS.some((tool) => tool.id === 'controller-lab'));
     assert.equal(
       workshopToolHref(`${prefix}game/?journey=opening`, 'playground'),
       `${prefix}game/playground/?journey=opening`,
@@ -109,7 +150,7 @@ test('Studio preview has an exact owner and nearby returns while intentional new
   assert.match(playground, /data-content-studio-route="studio"/);
   assert.match(
     studio,
-    /<iframe[\s\S]*?<\/iframe>\s*<button id="preview-return">Return to draft<\/button>/,
+    /<iframe[\s\S]*?<\/iframe>\s*<button\b[^>]*\bid="preview-return"[^>]*>\s*Return to draft\s*<\/button>/,
   );
   for (const html of [studio, playground])
     assert.match(html, /content-studio-navigation-entry\.mjs/);

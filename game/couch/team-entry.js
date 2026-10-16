@@ -1,4 +1,4 @@
-// Runs after visible loading feedback, before the Arena control is parsed.
+// Runs after visible loading feedback, before the native setup controls are parsed.
 // Module loading must not replace a
 // native choice, including a deliberate choice equal to the markup default.
 (() => {
@@ -7,12 +7,18 @@
   let live = true,
     claimed = false,
     changed = false,
-    value;
+    value,
+    difficultyChanged = false,
+    difficultyValue;
   const selected = (event) => {
-    if (live && event.target?.id === 'coop-level') {
+    if (!live) return;
+    if (event.target?.id === 'coop-level') {
       claimed = true;
       changed = true;
       value = event.target.value;
+    } else if (event.target?.id === 'coop-difficulty') {
+      difficultyChanged = true;
+      difficultyValue = event.target.value;
     }
   };
   const claim = (event) => {
@@ -64,7 +70,12 @@
     take() {
       if (!live) return null;
       retire();
-      return Object.freeze({ claimed, changed, value });
+      return Object.freeze({
+        claimed,
+        changed,
+        value,
+        difficulty: Object.freeze({ changed: difficultyChanged, value: difficultyValue }),
+      });
     },
   });
 })();

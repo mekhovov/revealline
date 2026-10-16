@@ -4,14 +4,14 @@ import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { createTeamSpatialOriginalCandidates } from '../content-design/team-spatial-originals.mjs';
+import { createTeamCulturalSpecialistV2OriginalCandidates } from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { createCandidateTeamHost } from '../content-design/team-host.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { teamJourneyLibrarySource } from '../mission-library/team-source.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 
-const source = createTeamSpatialOriginalCandidates();
+const source = createTeamCulturalSpecialistV2OriginalCandidates();
 const journey = createCandidateTeamHost(source, {
   corePackIds: source.packs.map((pack) => pack.id),
 });
@@ -45,7 +45,8 @@ async function fixture(t, { difficulty = 'standard', beforeImport, holdAsset, ..
     ...options,
     beforeImport(context) {
       const { install } = context,
-        BaseImage = globalThis.Image;
+        BaseImage = globalThis.Image,
+        actorFetch = globalThis.fetch;
       context.$('coop-discovery-preview-canvas').getContext = () => ({
         drawImage() {},
         fillRect() {},
@@ -70,7 +71,7 @@ async function fixture(t, { difficulty = 'standard', beforeImport, holdAsset, ..
       install('fetch', {
         value: async (url) => {
           const asset = source.assets.find((row) => new URL(url).pathname.endsWith('/' + row.path));
-          assert(asset, 'Only registered Team artwork is fetched');
+          if (!asset) return actorFetch(url);
           reads.push(asset.id);
           await holdAsset?.(asset);
           return new Response(originals.get(asset.path));
@@ -99,6 +100,9 @@ async function play(f, name) {
   button.focus();
   f.tap('Enter');
   await waitFor(
+    () => f.$('coop-stage').textContent === name.toUpperCase() && !f.$('journey-chooser').open,
+  );
+  await waitFor(
     () =>
       f.$('coop-stage').textContent === name.toUpperCase() &&
       f.$('coop-overlay').hidden &&
@@ -123,7 +127,9 @@ test('Team unified chooser has12 missions plus2 retained arenas; browsing is art
 });
 
 test('explicit current Team handoff shows player-facing edition and retains every exact mission ID', async (t) => {
-  const f = await fixture(t, { href: `${base}?journey=team-spatial-originals-1` });
+  const f = await fixture(t, {
+    href: `${base}?journey=team-cultural-specialist-originals-2`,
+  });
   await open(f);
   const journeyCards = cards(f).filter((row) => row.textContent.includes('Journey'));
   assert.equal(journeyCards.length, 12);
@@ -138,7 +144,7 @@ test('explicit current Team handoff shows player-facing edition and retains ever
       /team-spatial-originals|visual qualification|Geometry test/,
     );
   }
-  assert.match(f.$('journey-campaign').textContent, /Horizon partners/);
+  assert.match(f.$('journey-campaign').textContent, /Foundation specialists/);
 });
 
 test('Team library plays an exact nonfirst mission at the selected Expert preset and keeps original Next', async (t) => {
@@ -157,7 +163,7 @@ test('Team library plays an exact nonfirst mission at the selected Expert preset
 test('incoming opaque Team ID resolves exact nonfirst mission before any artwork preparation', async (t) => {
   const target = model.missions.find((row) => row.name === 'Shared lookout');
   const params = new URLSearchParams({
-    journey: 'team-spatial-originals-1',
+    journey: 'team-cultural-specialist-originals-2',
     'library-mission': target.id,
   });
   const f = await fixture(t, { href: `${base}?${params}`, difficulty: 'expert' });
@@ -179,7 +185,13 @@ for (const query of ['library-mission=retired-visit', 'library-mission=x&library
 
 test('same-ID imported Team edition stays Custom and launches its own preset', async (t) => {
   const f = await fixture(t);
-  await f.selectFile(JSON.stringify(createTeamTestPack(source, 'twin-landings', 'expert')));
+  const text = JSON.stringify(createTeamTestPack(source, 'twin-landings', 'expert')),
+    file = new Blob([text], { type: 'application/json' });
+  Object.defineProperty(file, 'name', { value: 'team-campaign.json' });
+  f.$('coop-pack-file').closest('details').open = true;
+  f.$('coop-pack-file').files = [file];
+  await f.$('coop-pack-file').onchange();
+  assert.equal(f.$('coop-selection-status').textContent, '');
   await open(f);
   assert.equal(cards(f).length, 15);
   const same = cards(f).filter(
@@ -252,7 +264,7 @@ test('Legacy Team library contains currentJourney metadata and fixed exact hando
   target.click();
   await waitFor(() => f.visits.length === 1);
   const url = new URL(f.visits[0]);
-  assert.equal(url.searchParams.get('journey'), 'team-spatial-originals-1');
+  assert.equal(url.searchParams.get('journey'), 'team-cultural-specialist-originals-2');
   assert.equal(url.searchParams.get('library-mission'), target.dataset.missionId);
   assert.equal(f.reads.length, 0);
 });
@@ -263,7 +275,7 @@ for (const action of ['focus', 'key', 'blur'])
     t.after(() => gate.resolve());
     const target = model.missions.find((row) => row.name === 'Shared lookout');
     const params = new URLSearchParams({
-      journey: 'team-spatial-originals-1',
+      journey: 'team-cultural-specialist-originals-2',
       'library-mission': target.id,
     });
     let held = false;

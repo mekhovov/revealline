@@ -2,8 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { page } from './helpers/coop-host.mjs';
-import { earnTeamVictory, teamImage } from './helpers/coop-win.mjs';
+import { earnTeamVictory, replayTeamCommands, teamImage } from './helpers/coop-win.mjs';
+import { trial } from './helpers/coop-route-search.mjs';
+import { RELAY_YARD } from '../coop/relay-yard.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
+import { createCoop, startCoop, stepCoop } from '../coop/core.mjs';
+import { setLocale } from '../i18n/index.mjs';
 
 const options = { nativeFocus: true, nativeVisibility: true, capturePaint: true };
 const terminalMessage = (outcome) =>
@@ -84,7 +89,7 @@ async function emptyArena(t) {
   pack.levels[0].id = 'terminal-player-hud-coverage';
   pack.levels[0].enemies = [];
   await f.selectFile(JSON.stringify(pack));
-  f.$('coop-difficulty').value = 'expert';
+  await f.choose('coop-difficulty', 'expert');
   f.$('coop-start').focus();
   f.tap('Enter');
   f.tick(3);
@@ -92,6 +97,11 @@ async function emptyArena(t) {
 }
 function assertFinishedPlayers(f, outcome) {
   assert.equal(f.$('coop-controls').hidden, true, 'Terminal results keep flight controls hidden.');
+  assert.equal(
+    f.$('coop-message').dataset.coach,
+    undefined,
+    'Terminal results revoke teaching decoration.',
+  );
   assert.ok(f.touchPads.every((pad) => pad.hidden));
   assert.equal(f.$('coop-message').textContent, terminalMessage(outcome));
   for (const player of players(f)) {
@@ -135,8 +145,90 @@ test('legal shared loss ends both full and compact player instructions until an 
   assert.notEqual(f.$('coop-message').textContent, terminalMessage('lost'));
 });
 
+test('a Support pulse on the winning step is remembered while terminal copy stays final', async (t) => {
+  const values = new Map();
+  const storage = {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => values.set(key, value),
+  };
+  const f = await page(t, {
+    ...options,
+    beforeImport({ install }) {
+      install('localStorage', { value: storage, writable: true });
+    },
+  });
+  const pack = JSON.parse(
+    await readFile(new URL('./fixtures/team-terminal-hud-qa.json', import.meta.url), 'utf8'),
+  );
+  pack.levels[1].enemies = [
+    { id: 'support-marker', type: 'drifter', x: 35.5, y: 30.5, vx: -1, vy: 0, radius: 0.35 },
+  ];
+  // Rehearse the same public core inputs and fresh Expert tuning as the host.
+  // The marker must actually move within Support range on the winning step;
+  // a distant stationary marker only proved that an empty pulse was recorded.
+  const reference = startCoop(
+      createCoop(applyGameplayTuning(pack.levels[1], resolveGameplayTuning('expert')), {
+        seed: 17,
+        difficulty: 'expert',
+      }),
+    ),
+    neutral = { direction: null, boost: false, support: false },
+    right = { ...neutral, direction: 'right' };
+  // The first host frame establishes its clock; the next two advance the core.
+  for (let tick = 0; tick < 2; tick++) stepCoop(reference, [neutral, neutral]);
+  for (let tick = 0; tick < 957; tick++) {
+    stepCoop(reference, [right, neutral]);
+    assert.ok(!reference.events.some((event) => event.type === 'player.downed'));
+  }
+  assert.equal(reference.status, 'running');
+  stepCoop(reference, [{ ...right, support: true }, neutral]);
+  const pulse = reference.events.find((event) => event.type === 'support.pulse'),
+    completed = reference.events.find((event) => event.type === 'run.completed');
+  assert.deepEqual(
+    pulse?.slowedEnemies,
+    ['support-marker'],
+    'The final pulse slows a moving enemy rather than merely consuming Support.',
+  );
+  assert.equal(reference.players[0].support.slows, 1);
+  assert.equal(reference.status, 'won');
+  assert.ok(completed);
+  assert.equal(pulse.tick, completed.tick, 'The effective pulse shares the winning core step.');
+  await f.selectFile(JSON.stringify(pack));
+  await f.choose('coop-level', 'qa-terminal-win');
+  await f.choose('coop-difficulty', 'expert');
+  f.$('coop-experiment').value = 'full';
+  f.$('coop-start').focus();
+  f.tap('Enter');
+  f.tick(3);
+  f.tap('KeyD');
+  f.tick(957);
+  assert.equal(f.$('coop-overlay').hidden, true, 'The pulse is reserved for the winning step.');
+  assert.ok(
+    !JSON.parse(storage.getItem('revealline.team-contextual-teaching.v1')).completed.includes(
+      'support',
+    ),
+    'Support is not learned before its first effective pulse.',
+  );
+  f.press('KeyQ');
+  f.tick();
+  f.doc.activeElement.emit('keyup', { key: 'KeyQ', code: 'KeyQ' });
+  assertFinishedPlayers(f, 'won');
+  const teaching = JSON.parse(storage.getItem('revealline.team-contextual-teaching.v1'));
+  assert.ok(teaching.completed.includes('support'));
+  assert.doesNotMatch(f.$('coop-message').textContent, /SUPPORT READY/);
+  const terminal = snapshot(f);
+  f.tick(60);
+  assert.deepEqual(snapshot(f), terminal, 'The effective final pulse cannot advance Results.');
+  f.$('coop-retry').focus();
+  f.tap('Enter');
+  assert.equal(f.$('coop-message').dataset.coach, undefined);
+  assert.doesNotMatch(f.$('coop-message').textContent, /SUPPORT READY/);
+});
+
 for (const downed of [0, 1])
   test(`P${downed + 1} alone with zero reserves retains rescue guidance and keyboard Help returns without resuming`, async (t) => {
+    setLocale('en', { persist: false });
+    t.after(() => setLocale('en', { persist: false }));
     const f = await emptyArena(t);
     selfCross(f);
     f.tick(240);
@@ -155,6 +247,12 @@ for (const downed of [0, 1])
       f.$('coop-message').textContent,
       new RegExp(`${downed === 0 ? 'Sunflower' : 'Skyline'} needs a rescue\\. Hold Support nearby`),
     );
+    setLocale('uk', { persist: false });
+    const ukrainian = players(f);
+    assert.equal(ukrainian[downed].state, 'Збито · доступний безкоштовний порятунок');
+    assert.equal(ukrainian[downed].compactState, 'Порятунок');
+    assert.equal(ukrainian[downed].charge, 'Повзіть до напарника');
+    assert.equal(ukrainian[downed].compactCharge, 'До напарника');
     f.tap('Escape');
     const paused = snapshot(f);
     f.disclose('coop-help');
@@ -172,6 +270,8 @@ for (const downed of [0, 1])
     assert.deepEqual(snapshot(f), paused);
     f.tap('Enter');
     assert.equal(f.$('coop-overlay').hidden, true);
+    assert.deepEqual(players(f), ukrainian);
+    setLocale('en', { persist: false });
     assert.deepEqual(players(f), status);
   });
 
@@ -187,6 +287,8 @@ for (const level of ['first-connection', 'relay-yard'])
       initialMessage = f.$('coop-message').textContent,
       image = teamImage(f),
       messages = recordMessages(t, f);
+    assert.match(initialMessage, /FIRST CUT/);
+    assert.equal(f.$('coop-message').dataset.coach, 'cut');
     earnTeamVictory(t, f, level);
     assert.equal(f.$('coop-resume').hidden, true);
     assertFinishedPlayers(f, 'won');
@@ -200,7 +302,13 @@ for (const level of ['first-connection', 'relay-yard'])
     assert.equal(f.$('coop-overlay').hidden, true);
     assert.deepEqual(players(f), initial);
     assert.equal(teamImage(f), image);
-    assert.equal(f.$('coop-message').textContent, initialMessage);
+    assert.doesNotMatch(f.$('coop-message').textContent, /FIRST CUT/);
+    assert.notEqual(f.$('coop-message').textContent, initialMessage);
+    assert.equal(
+      f.$('coop-message').dataset.coach,
+      undefined,
+      'Retry keeps the ordinary arena guidance without repeating the introduced cue.',
+    );
   });
 
 for (const outcome of ['loss', 'win'])
@@ -210,7 +318,7 @@ for (const outcome of ['loss', 'win'])
       await readFile(new URL('./fixtures/team-terminal-hud-qa.json', import.meta.url), 'utf8'),
     );
     if (outcome === 'win') await f.choose('coop-level', 'qa-terminal-win');
-    f.$('coop-difficulty').value = 'expert';
+    await f.choose('coop-difficulty', 'expert');
     f.$('coop-experiment').value = 'full';
     f.$('coop-start').focus();
     f.tap('Enter');
@@ -228,7 +336,9 @@ for (const outcome of ['loss', 'win'])
       assert.match(f.$('coop-overlay-copy').textContent, /roaming enemy caught/);
     } else {
       f.tap('KeyD');
-      f.tick(450);
+      // v4 applies the shared craft speed to imported authored recipes too.
+      // Keep steering until the actual boundary capture, within ten seconds.
+      for (let frame = 0; frame < 1200 && f.$('coop-overlay').hidden; frame++) f.tick();
     }
     assert.equal(f.$('coop-overlay').hidden, false);
     assertFinishedPlayers(f, outcome === 'loss' ? 'lost' : 'won');
@@ -241,30 +351,42 @@ test('a legal active Relay Yard contact rescue retains its player-specific guida
   f.$('coop-experiment').value = 'full';
   f.$('coop-start').focus();
   f.tap('Enter');
-  f.tick(2);
   const messages = recordMessages(t, f);
-  // Independently recorded legal route used by the pilot-state/core tests.
-  // Bank both anchors, expose P1 to the authored patrol, then hold P2 Support.
-  for (const [ticks, first, second] of [
-    [140, 'KeyD', 'ArrowLeft'],
-    [70, 'KeyW', 'ArrowUp'],
-    [214, 'KeyD', 'ArrowLeft'],
-    [24, 'KeyA', null],
-    [35, 'KeyW', null],
-    [17, null, 'ArrowLeft'],
-  ]) {
-    for (let frame = 0; frame < ticks; frame++) {
-      if (first) f.tap(first);
-      if (second) f.tap(second);
-      // A bank releases held equipment. Replay fresh keyboard boost gestures
-      // just as the existing host victory trace does, not a private core flag.
-      f.press('ShiftLeft');
-      f.press('ShiftRight');
-      f.tick();
-      for (const key of ['ShiftLeft', 'ShiftRight'])
-        f.doc.activeElement.emit('keyup', { key, code: key });
-    }
-  }
+  // Rehearse current-speed legal steering on the unchanged arena: a joint cut
+  // creates a shared safe line, then an authored drifter catches P1's new trail
+  // beneath the shielded core. P2 remains beside the actual rescue anchor.
+  const route = trial(
+    applyGameplayTuning(RELAY_YARD, resolveGameplayTuning('standard')),
+    'standard',
+    {
+      boost: false,
+    },
+  );
+  const { run, stage, to, at } = route;
+  assert.ok(
+    stage(
+      'approach above pillars',
+      () => to('y', [13.5, 13.5]),
+      () => at('y', [13.5, 13.5]),
+    ),
+  );
+  assert.ok(
+    stage(
+      'bank a shared line',
+      ['right', 'left'],
+      () =>
+        run.players.every((player) => !player.cutting) &&
+        Math.abs(run.players[0].x - run.players[1].x) < 0.4,
+    ),
+  );
+  stage('P1 exposes a new trail', ['up', null], () => run.players[0].status === 'downed');
+  assert.ok(
+    route.events.some(
+      (event) =>
+        event.type === 'player.downed' && event.player === 0 && event.cause === 'enemy-trail',
+    ),
+  );
+  replayTeamCommands(f, route.log);
   assert.match(players(f)[0].state, /Rescue/);
   assert.ok(messages.writes.some((text) => /Sunflower needs a rescue/.test(text)));
   const reserves = f.$('coop-reserves').textContent;
@@ -278,6 +400,10 @@ test('a legal active Relay Yard contact rescue retains its player-specific guida
   assert.equal(f.$('coop-overlay').hidden, true);
   assert.equal(f.$('coop-reserves').textContent, reserves);
   assert.match(players(f)[0].state, /Recovery shield/);
+  assert.doesNotMatch(players(f)[1].charge, /rescuing/);
+  // The approach used a real Support pulse against the hunters. Rescue finishes
+  // before that pulse recharges; its ordinary cooldown must still reach Ready.
+  for (let frame = 0; frame < 240 && players(f)[1].charge !== 'Support ready'; frame++) f.tick();
   assert.equal(players(f)[1].charge, 'Support ready');
   assert.deepEqual(messages.terminalWrites, []);
 });

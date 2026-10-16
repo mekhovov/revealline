@@ -1,0 +1,43 @@
+{
+  "format": "PublicLibraryVisibilityNegative.v1",
+  "observedAt": "2026-10-15T23:14:32.789Z",
+  "source": "b11745223861c3973ad4bf440cc536198b8e0371",
+  "url": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/index.html?lang=en#packs",
+  "visibleSavedRegionRows": 0,
+  "previouslyObservedSavedRegionRows": 13,
+  "previouslyObservedWorldpacks": 20,
+  "refreshSavedRegions": "completed; Choose a world and Play",
+  "recordsShortcut": "opens Progress & Collection settings normally",
+  "profileReview": "No supported profile channels; this scans localStorage release channels, not a conclusive IDB inspection",
+  "noDeletionImportRestoreOrStorageClearAction": true,
+  "databaseIdentityOrDataLossObserved": false,
+  "cause": "unknown; do not assert scope change or eviction",
+  "previousRetentionPassesRemainHistorical": true,
+  "evidence": [
+    {
+      "file": "public-library-after-main-reopen-refresh.txt",
+      "bytes": 18646,
+      "sha256": "2fd09e6f7c9ad7556ab1fa981400a561155a78f302b583ade49773d3c234fe05"
+    },
+    {
+      "file": "public-library-zero-visible-saved.txt",
+      "bytes": 18655,
+      "sha256": "55b7e9fae10da4adb48b610030c42b2d0c043af891e3cb338cbe9cdecb80a2cb"
+    },
+    {
+      "file": "public-library-zero-visible-saved.png",
+      "bytes": 88087,
+      "sha256": "3312502f6bc48e4b836be7be7e1dfc9932f6314cbd91e5a819825497b64f8763"
+    },
+    {
+      "file": "public-records-shortcut-open.txt",
+      "bytes": 19137,
+      "sha256": "3e95106df45e189bc986ffb16479dd516e720ae70ebacbaa734132ca69f48bba"
+    },
+    {
+      "file": "public-records-shortcut-open.png",
+      "bytes": 63667,
+      "sha256": "51d040dee5514c9deb9fb2e3a46b91f036de0b14caf597cf45938ad7114703e9"
+    }
+  ]
+}

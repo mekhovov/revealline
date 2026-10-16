@@ -14,6 +14,17 @@ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const same = (a, b) => canonicalJSON(a) === canonicalJSON(b);
 const text = (value) => typeof value === 'string' && value.trim().length > 0;
 const timestamp = (value) => text(value) && Number.isFinite(Date.parse(value));
+const ownerPendingChecks = [
+  'fullTrack',
+  'repeatedSession',
+  'inGameTransition',
+  'warningAudibility',
+  'mono',
+  'smallSpeakers',
+  'physicalDevice',
+];
+const inventoryURL = (archive) =>
+  new URL(archive.inventoryPath ?? 'inventory.json', archive.baseURL).href;
 const licenses = new Map([
   ['CC0 1.0 Universal', 'https://creativecommons.org/publicdomain/zero/1.0/'],
   ['CC BY 3.0 Unported', 'https://creativecommons.org/licenses/by/3.0/'],
@@ -99,6 +110,7 @@ function rows(document, kind, id, tracks, extra = []) {
 }
 async function compileBatch(root, entry, edition) {
   fields(entry, ['id', 'status', ...pinKeys], 'approved soundtrack batch');
+  const ownerApproved = entry.status === 'owner-approved';
   const documents = {};
   for (const key of pinKeys) documents[key] = parse(await pinned(root, entry.id, entry[key]));
   const metadata = documents.metadata;
@@ -119,6 +131,10 @@ async function compileBatch(root, entry, edition) {
     'Reviewed soundtrack batch catalogue edition or format differs.',
   );
   const tracks = catalogue.tracks;
+  required(
+    new Set(tracks.map((track) => track.asset.sha256)).size === tracks.length,
+    'Reviewed batches cannot duplicate a recording hash.',
+  );
   const archive = resolveSoundtrackArchives([metadata.archive])[0];
   required(
     archive.inventorySha256 === entry.inventory.sha256,
@@ -138,7 +154,30 @@ async function compileBatch(root, entry, edition) {
   );
   const rights = rows(documents.rights, 'rights', entry.id, tracks);
   const technical = rows(documents.technical, 'technical', entry.id, tracks);
-  const review = rows(documents.review, 'review', entry.id, tracks);
+  const review = ownerApproved
+    ? rows(documents.review, 'owner-review', entry.id, tracks, ['authorization', 'pendingChecks'])
+    : rows(documents.review, 'review', entry.id, tracks);
+  if (ownerApproved) {
+    const decision = documents.review;
+    fields(
+      decision.authorization,
+      ['kind', 'approvedBy', 'approvedAt', 'request'],
+      'soundtrack owner authorization',
+    );
+    required(
+      decision.authorization.kind === 'explicit-project-owner-request' &&
+        text(decision.authorization.approvedBy) &&
+        timestamp(decision.authorization.approvedAt) &&
+        text(decision.authorization.request) &&
+        same(decision.pendingChecks, ownerPendingChecks) &&
+        tracks.every((track) =>
+          track.tags.genres.every((genre) => ['synth90s', 'metal'].includes(genre)),
+        ),
+      'Owner approval requires an exact Synth/Metal decision with all deferred checks pending.',
+    );
+    for (const identity of review.values())
+      fields(identity, ['id', 'sha256', 'bytes'], 'owner-approved recording identity');
+  }
   for (const track of tracks) {
     const grant = rights.get(track.id);
     fields(
@@ -172,9 +211,11 @@ async function compileBatch(root, entry, edition) {
         text(track.fileName) &&
         track.websites?.some((site) => site.url === grant.sourceURL) &&
         track.websites.some((site) => site.url === grant.licenseURL) &&
-        ['webPlayback', 'offlineCache', 'redistribute', 'modify', 'gameplayVideo'].every(
+        ['webPlayback', 'offlineCache', 'redistribute', 'modify'].every(
           (key) => track.policy[key] === 'allowed',
         ) &&
+        track.policy.gameplayVideo === (ownerApproved ? 'unknown' : 'allowed') &&
+        (!ownerApproved || track.policy.contentId === 'unknown') &&
         grant.contentId === track.policy.contentId,
       'Reviewed soundtrack rights or attribution differ from the exact licence evidence.',
     );
@@ -210,6 +251,9 @@ async function compileBatch(root, entry, edition) {
       'Reviewed soundtracks require a full native decode and accepted encoded loudness/true peaks.',
     );
     await pinned(root, entry.id, measured.evidence);
+    // The pinned owner decision binds every admitted ID/hash and explicitly
+    // records the checks still pending; it cannot claim completed listening.
+    if (ownerApproved) continue;
     const heard = review.get(track.id);
     fields(
       heard,
@@ -275,6 +319,7 @@ async function compileBatch(root, entry, edition) {
       'batchId',
       'baseURL',
       'inventorySha256',
+      ...(archive.inventoryPath === undefined ? [] : ['inventoryPath']),
       'verified',
       'verifiedAt',
       'deployRunURL',
@@ -287,9 +332,10 @@ async function compileBatch(root, entry, edition) {
       delivery.batchId === entry.id &&
       delivery.baseURL === archive.baseURL &&
       delivery.inventorySha256 === archive.inventorySha256 &&
+      delivery.inventoryPath === archive.inventoryPath &&
       delivery.verified === true &&
       timestamp(delivery.verifiedAt) &&
-      /^https:\/\/github\.com\/mekhovov\/revealline-soundtracks-[0-9]+\/actions\/runs\/[0-9]+$/.test(
+      /^https:\/\/github\.com\/mekhovov\/revealline-soundtracks(?:-[0-9]+)?\/actions\/runs\/[0-9]+$/.test(
         delivery.deployRunURL,
       ) &&
       new URL(delivery.deployRunURL).pathname.split('/')[2] ===
@@ -357,7 +403,9 @@ export async function compileReviewedSoundtrackBatches(
   for (const entry of manifest.batches) {
     exactKeys(entry, ['id', 'status', ...pinKeys], 'reviewed soundtrack batch');
     required(
-      stableId(entry.id) && !ids.has(entry.id) && ['pending', 'approved'].includes(entry.status),
+      stableId(entry.id) &&
+        !ids.has(entry.id) &&
+        ['pending', 'approved', 'owner-approved'].includes(entry.status),
       'Invalid or duplicate reviewed soundtrack batch.',
     );
     ids.add(entry.id);
@@ -378,7 +426,7 @@ export async function compileReviewedSoundtrackBatches(
   }
   for (const archive of result.archives) {
     const prior = allArchives.find(
-      (other) => other.id === archive.id || other.baseURL === archive.baseURL,
+      (other) => other.id === archive.id || inventoryURL(other) === inventoryURL(archive),
     );
     required(
       !prior || same(prior, archive),

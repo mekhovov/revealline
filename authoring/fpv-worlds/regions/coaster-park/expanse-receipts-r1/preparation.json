@@ -1,0 +1,579 @@
+{
+  "format": "FPVCoasterGardensPreparation.v1",
+  "id": "coaster-gardens-study",
+  "revision": "composition-r1",
+  "actualExtentM": [
+    2048,
+    2048
+  ],
+  "sampleSpacingM": 8,
+  "terrainCells": 64,
+  "seams": 112,
+  "sceneryCells": 26,
+  "knownEmptySceneryCells": 38,
+  "sourceBytes": 33878943,
+  "terrainManifestSHA256": "e8b0d7ebd1d3e0501d07eea8c4f7f61700da28667afee6e7d95f84ee101e6f36",
+  "sceneryManifestSHA256": "be355ce2f5233691763b9afc9b474c9a9fa1bbae756363327ef4b3c678644cc7",
+  "originalArchitecturePieces": 99,
+  "licensedPlacements": 98,
+  "maxNineCellResourceBytes": 3815084,
+  "maxRetainedCandidateResourceBytes": 7630168,
+  "districts": [
+    {
+      "id": "arrival-gardens",
+      "center": [
+        384,
+        384
+      ],
+      "role": "Entrance, ticket plaza and station approaches"
+    },
+    {
+      "id": "loop-meadow",
+      "center": [
+        1152,
+        384
+      ],
+      "role": "Loop landmark, open practice meadow and parallel gantries"
+    },
+    {
+      "id": "ridge-station",
+      "center": [
+        1664,
+        640
+      ],
+      "role": "Station terrace and elevated viewing frames"
+    },
+    {
+      "id": "service-courts",
+      "center": [
+        1408,
+        1408
+      ],
+      "role": "Service hall, narrow courts and canopy passes"
+    },
+    {
+      "id": "woodland-promenade",
+      "center": [
+        640,
+        1664
+      ],
+      "role": "Tree rows, picnic plazas and slalom opportunities"
+    },
+    {
+      "id": "river-gardens",
+      "center": [
+        384,
+        1152
+      ],
+      "role": "Low boardwalk, bridge frames and broad garden turns"
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "arrival-gardens-outer-landmark",
+      "position": [
+        640,
+        8,
+        448
+      ]
+    },
+    {
+      "id": "loop-meadow-outer-landmark",
+      "position": [
+        1408,
+        8,
+        448
+      ]
+    },
+    {
+      "id": "ridge-station-outer-landmark",
+      "position": [
+        1920,
+        8,
+        704
+      ]
+    },
+    {
+      "id": "service-courts-outer-landmark",
+      "position": [
+        1664,
+        8,
+        1472
+      ]
+    },
+    {
+      "id": "woodland-promenade-outer-landmark",
+      "position": [
+        896,
+        8,
+        1728
+      ]
+    },
+    {
+      "id": "river-gardens-outer-landmark",
+      "position": [
+        640,
+        8,
+        1216
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "arrival-gardens-cross-plaza",
+      "from": [
+        294,
+        14,
+        384
+      ],
+      "to": [
+        474,
+        14,
+        384
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "arrival-gardens-cross-garden",
+      "from": [
+        384,
+        14,
+        294
+      ],
+      "to": [
+        384,
+        14,
+        474
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "loop-meadow-cross-plaza",
+      "from": [
+        1062,
+        14,
+        384
+      ],
+      "to": [
+        1242,
+        14,
+        384
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "loop-meadow-cross-garden",
+      "from": [
+        1152,
+        14,
+        294
+      ],
+      "to": [
+        1152,
+        14,
+        474
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "ridge-station-cross-plaza",
+      "from": [
+        1574,
+        14,
+        640
+      ],
+      "to": [
+        1754,
+        14,
+        640
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "ridge-station-cross-garden",
+      "from": [
+        1664,
+        14,
+        550
+      ],
+      "to": [
+        1664,
+        14,
+        730
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "service-courts-cross-plaza",
+      "from": [
+        1318,
+        14,
+        1408
+      ],
+      "to": [
+        1498,
+        14,
+        1408
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "service-courts-cross-garden",
+      "from": [
+        1408,
+        14,
+        1318
+      ],
+      "to": [
+        1408,
+        14,
+        1498
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "woodland-promenade-cross-plaza",
+      "from": [
+        550,
+        14,
+        1664
+      ],
+      "to": [
+        730,
+        14,
+        1664
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "woodland-promenade-cross-garden",
+      "from": [
+        640,
+        14,
+        1574
+      ],
+      "to": [
+        640,
+        14,
+        1754
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "river-gardens-cross-plaza",
+      "from": [
+        294,
+        14,
+        1152
+      ],
+      "to": [
+        474,
+        14,
+        1152
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "river-gardens-cross-garden",
+      "from": [
+        384,
+        14,
+        1062
+      ],
+      "to": [
+        384,
+        14,
+        1242
+      ],
+      "halfWidth": 3
+    },
+    {
+      "id": "link-0-east-west",
+      "from": [
+        384,
+        14,
+        384
+      ],
+      "to": [
+        1152,
+        14,
+        384
+      ],
+      "halfWidth": 5
+    },
+    {
+      "id": "link-1-east-west",
+      "from": [
+        1152,
+        14,
+        384
+      ],
+      "to": [
+        1664,
+        14,
+        384
+      ],
+      "halfWidth": 5
+    },
+    {
+      "id": "link-1-north-south",
+      "from": [
+        1664,
+        14,
+        384
+      ],
+      "to": [
+        1664,
+        14,
+        640
+      ],
+      "halfWidth": 5
+    },
+    {
+      "id": "link-2-east-west",
+      "from": [
+        1664,
+        14,
+        640
+      ],
+      "to": [
+        1408,
+        14,
+        640
+      ],
+      "halfWidth": 5
+    },
+    {
+      "id": "link-2-north-south",
+      "from": [
+        1408,
+        14,
+        640
+      ],
+      "to": [
+        1408,
+        14,
+        1408
+      ],
+      "halfWidth": 5
+    },
+    {
+      "id": "link-3-east-west",
+      "from": [
+        1408,
+        14,
+        1408
+      ],
+      "to": [
+        640,
+        14,
+        1408
+      ],
+      "halfWidth": 5
+    },
+    {
+      "id": "link-3-north-south",
+      "from": [
+        640,
+        14,
+        1408
+      ],
+      "to": [
+        640,
+        14,
+        1664
+      ],
+      "halfWidth": 5
+    },
+    {
+      "id": "link-4-east-west",
+      "from": [
+        640,
+        14,
+        1664
+      ],
+      "to": [
+        384,
+        14,
+        1664
+      ],
+      "halfWidth": 5
+    },
+    {
+      "id": "link-4-north-south",
+      "from": [
+        384,
+        14,
+        1664
+      ],
+      "to": [
+        384,
+        14,
+        1152
+      ],
+      "halfWidth": 5
+    },
+    {
+      "id": "link-5-north-south",
+      "from": [
+        384,
+        14,
+        1152
+      ],
+      "to": [
+        384,
+        14,
+        384
+      ],
+      "halfWidth": 5
+    }
+  ],
+  "spawns": [
+    {
+      "id": "arrival-gardens",
+      "position": {
+        "x": 384000,
+        "y": 11000,
+        "z": 384000
+      }
+    },
+    {
+      "id": "loop-meadow",
+      "position": {
+        "x": 1152000,
+        "y": 11000,
+        "z": 384000
+      }
+    },
+    {
+      "id": "ridge-station",
+      "position": {
+        "x": 1664000,
+        "y": 11000,
+        "z": 640000
+      }
+    },
+    {
+      "id": "service-courts",
+      "position": {
+        "x": 1408000,
+        "y": 11000,
+        "z": 1408000
+      }
+    },
+    {
+      "id": "woodland-promenade",
+      "position": {
+        "x": 640000,
+        "y": 11000,
+        "z": 1664000
+      }
+    },
+    {
+      "id": "river-gardens",
+      "position": {
+        "x": 384000,
+        "y": 11000,
+        "z": 1152000
+      }
+    }
+  ],
+  "solidProbes": [
+    {
+      "id": "arrival-gardens-wall-solid",
+      "from": [
+        274,
+        13,
+        324
+      ],
+      "to": [
+        294,
+        13,
+        324
+      ]
+    },
+    {
+      "id": "loop-meadow-wall-solid",
+      "from": [
+        1042,
+        13,
+        324
+      ],
+      "to": [
+        1062,
+        13,
+        324
+      ]
+    },
+    {
+      "id": "ridge-station-wall-solid",
+      "from": [
+        1554,
+        13,
+        580
+      ],
+      "to": [
+        1574,
+        13,
+        580
+      ]
+    },
+    {
+      "id": "service-courts-wall-solid",
+      "from": [
+        1298,
+        13,
+        1348
+      ],
+      "to": [
+        1318,
+        13,
+        1348
+      ]
+    },
+    {
+      "id": "woodland-promenade-wall-solid",
+      "from": [
+        530,
+        13,
+        1604
+      ],
+      "to": [
+        550,
+        13,
+        1604
+      ]
+    },
+    {
+      "id": "river-gardens-wall-solid",
+      "from": [
+        274,
+        13,
+        1092
+      ],
+      "to": [
+        294,
+        13,
+        1092
+      ]
+    }
+  ],
+  "modelInputs": [
+    "park-entrance.glb",
+    "station.glb",
+    "stall-food.glb",
+    "stall-drinks.glb",
+    "coaster-steel-looping.glb",
+    "coaster-steel-straight.glb",
+    "tree-large.glb",
+    "support-large.glb"
+  ],
+  "playerReady": false,
+  "limitations": [
+    "Original source composition; no Library or final-art acceptance.",
+    "Eight-metre terrain samples; narrower flight openings use matching visible/collision geometry.",
+    "Six representative districts and routes, not an uninterrupted whole-map playtest.",
+    "Static original park composition, not a mechanically connected functioning rollercoaster. No moving rides or scored proof changes.",
+    "Four-kilometre target deferred until meaningful content density supports expansion. Original 160m pack unchanged."
+  ]
+}

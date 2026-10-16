@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "1081fb2372b72d4e9a3b59f223dfb16e113d9161",
+  "runtimeCommit": "ffe4fe89c7aaef1711194c78d7acda9323f45a36",
+  "sourceManifestSHA256": "dee66643576dd3413ade268408f049affb9da15a3b63c187779ab802015faeda",
+  "reviewOrigin": "http://127.0.0.1:9120/",
+  "method": "Parent-operated native browser; manual source appearance comparison with identical cameras and lights.",
+  "observations": [
+    "Balanced r4/r5 plaster comparison showed clearer stone/plaster distinction.",
+    "Balanced revised timber and courtyard arrival remained clear.",
+    "Quality roofs and Performance unchanged open house passage remained clear.",
+    "Explicit Dispose reported all owned resources and collision counts zero."
+  ],
+  "screenshots": {
+    "hillside-r5-plaster-native-20261015.png": {
+      "bytes": 76286,
+      "sha256": "e266509c9674af696fd8c9288590bf4dea528778a1ab73724e0f7ded1ad69d5f"
+    },
+    "hillside-r4-plaster-native-20261015.png": {
+      "bytes": 74288,
+      "sha256": "64474d468bc91ab65facb65cdbfbe660e2f60f71f3366655ff5066fee935e191"
+    },
+    "hillside-r5-timber-native-20261015.png": {
+      "bytes": 75624,
+      "sha256": "6ae135c890aa775a942f805c5d87485d75aa94bbb3d83e4b1588aaae6d339122"
+    },
+    "hillside-r5-passage-performance-native-20261015.png": {
+      "bytes": 71176,
+      "sha256": "f7bd24ef3cd2d216ee7bc7ceabbbe7a154c32480ac3f5b001eb19f23f49e35ea"
+    }
+  },
+  "boundedSourceAppearanceAccepted": true,
+  "libraryAdmission": false,
+  "representativeArtComplete": false,
+  "limits": "Sparse surrounds and white floors remain. No new player, package, offline, physical-device or FPS qualification."
+}

@@ -1,5 +1,16 @@
 # Playable archive hosting
 
+## Current hosting policy — 2026-09-27
+
+Future releases use only `mekhovov/revealline`. Do not create, allocate, append, deploy or admit a `revealline-archive-XX` repository as a release step. Historical archive deployment and per-PR publication are not prerequisites.
+
+Publish the exact qualified current game on the main Pages site and keep original immutable ZIPs, manifests, checksums and source evidence in the main repository's GitHub Releases. Unarchived historical editions become explicitly download-only, not broken Play links. Existing accepted archive links, repositories, tags, assets, saved data and evidence remain unchanged; their frozen registry is compatibility history, not a recurring remote-admission gate. Do not delete or republish them.
+
+Keep current-source qualification, reviewed selector, protected-main checks, frozen independent inspection, bounded extraction, full artifact/public-byte verification, latest-release validation and scoped player acceptance. Preserve explicit test waivers as SKIPPED. The main Pages budget remains 950,000,000 bytes; exceeding it requires a new reviewed decision, not another repository or a raised limit. See [main-repository publishing policy](main-repository-publishing.md).
+
+## Historical archive design (superseded; preservation reference only)
+
+
 The approved transition keeps current releases on the main Pages site and copies older frozen sites to bounded archive repositories on the same GitHub account. No frozen file, source archive, ZIP, manifest or tag is rewritten. The initial allocation is explicit in [pages-archives.json](../scripts/pages-archives.json): 31 versions through v0.26.0 belong to `mekhovov/revealline-archive-01`; v0.27.0 and newer remain on the main site. Repository creation, deployment and browser migration acceptance are release-owner steps, not outcomes of the local builder tests.
 
 ## Capacity and alternatives

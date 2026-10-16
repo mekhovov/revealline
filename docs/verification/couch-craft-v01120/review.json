@@ -1,0 +1,90 @@
+{
+  "format": "revealline-scoped-couch-craft-review.v1",
+  "status": "bounded functional player-motion and effects review; frozen, public, physical-device and human acceptance pending",
+  "candidateBase": "37d95ee01de6ef4aa96c6e603faeca082a8de8b5",
+  "scope": "Continue the seven player-motion and ten Solo effects recipes after the v0.112.0 Couch quick-start candidate removes detached procedural rotor brackets from prepared FPV bodies, sharpens the active cutting head and travelling line-impact fronts, and replaces framed wreck debris with compact solid fragments. Advance the exact Team picture association to presentation revision 78 while retaining revisions 58 through 77. Team recipes remain source-stage.",
+  "motion": {
+    "priorFingerprintSHA256": "c35fcf823a0923f27f1193afa247e2d0c93b6fc4161976a5d6a2b67a5bc143a9",
+    "currentFingerprintSHA256": "03a9b8a5eceb9eee63da578807becbb0f7770713d3eb2bd04affe5a75d3316f4",
+    "changedInput": {
+      "path": "game/ui/actor-presentation.mjs",
+      "priorSHA256": "8ed0b1a7335b15c05e76f6230b78ebeea18c232c2bb76ea560f9ecab4be9ef23",
+      "currentSHA256": "e51aad2aa5a7d0fdd048227282fc9f1e22dd18f10f162069dbd10e3e52ffc1e6",
+      "assessment": "Adds an explicit cosmetic rotor-visibility option and gives the active cutting head a high-contrast plate, direction nose and bounded moving packet. The player coordinate, collision radius, path cells, clocks and gameplay authority are unchanged."
+    },
+    "continuedSlots": 7
+  },
+  "effects": {
+    "priorFingerprintSHA256": "654fed2ce5b5e9b5e0c6bb79a6d7095093a4ed8128877b1a7f0658d830c275e7",
+    "currentFingerprintSHA256": "e23e228b4bf4ee68bb7cbbd231aaebe66d6e3da8965fbeae9b2c4acc90f9e053",
+    "changedInputs": [
+      {
+        "path": "game/ui/actor-presentation.mjs",
+        "priorSHA256": "8ed0b1a7335b15c05e76f6230b78ebeea18c232c2bb76ea560f9ecab4be9ef23",
+        "currentSHA256": "e51aad2aa5a7d0fdd048227282fc9f1e22dd18f10f162069dbd10e3e52ffc1e6",
+        "assessment": "Owns the bounded active-trail head, packet and travelling-front painters. Reduced effects keeps the essential marker while removing its pulse."
+      },
+      {
+        "path": "game/ui/classic-view.mjs",
+        "priorSHA256": "34f8c536e837fdcc86a32a7df3878421229bb63d33f234baa493a182cfda4f60",
+        "currentSHA256": "18cbb7f0fef160337efeb732564321b0a821b03ef18c5b316017b8b185ffbf86",
+        "assessment": "Delegates each authoritative line-impact coordinate to the shared cosmetic front painter and passes only time, scale and reduced-effects state."
+      },
+      {
+        "path": "game/ui/event-feedback.mjs",
+        "priorSHA256": "c558dbe6fbdc91e6e9aae51cf355e557cdebf6f9319cb5ab6d886c75b5760307",
+        "currentSHA256": "84188bd25a3c2da9bce2a0f48f2893d6ec4d9b5225a52dede17020019f1fa8ec",
+        "assessment": "Replaces four bright framed FPV wreck markers with compact solid fragments while retaining the existing bounded failure lifetime and reduced-effects behavior."
+      },
+      {
+        "path": "game/ui/render.mjs",
+        "priorSHA256": "29d0eae640925cd0d670f60341ee4eb657533880b1c8a3cd0359aa58a8d3ef58",
+        "currentSHA256": "23b924ea254b2e27adc626424280adef66fc65d99b588ef16bb70bf478751012",
+        "assessment": "Keeps prepared player sprites free of duplicate procedural blades and passes the established presentation clock and reduced-effects preference to travelling fronts. It does not change simulation, contact, score or mission state."
+      }
+    ],
+    "continuedSlots": 10
+  },
+  "team": {
+    "currentFingerprintSHA256": "0229867c05150db9c6a1ee1481ddf0bc346e7aa7fb5edac57e2fa24abe5fb140",
+    "decision": "Retain all whole-Team recipes at source stage. Couch quick-start and prepared-body changes do not broaden the earlier Team recipe approvals."
+  },
+  "capacity": {
+    "currentRevision78": {
+      "assets": 2184,
+      "logicalNodes": 84928
+    },
+    "completeReviewedSuccessorFixture": {
+      "assets": 2378,
+      "logicalNodes": 92665
+    },
+    "coordinatedReplacementFixture": {
+      "assets": 2572,
+      "logicalNodes": 100402
+    },
+    "decision": "Raise only the explicitly versioned logical document ceiling from 100000 to 125000 nodes. This admits the measured complete reviewed successor and coordinated replacement with bounded headroom. Raw legacy metadata remains capped at 100000 nodes and its historical RLTHM1/2 transfer envelope remains capped at 110000 nodes. Encoded 5 MiB, logical 8 MiB, 4096 records, depth 18, string 8192 and legacy array limits remain unchanged; over-limit and expanded-envelope bypass cases remain rejected."
+  },
+  "qualification": {
+    "focusedAutomated": [
+      "The exact candidate passed 202 of 202 checks across actor motion, prepared bodies, trail and impact rendering, enemy presentation, controller routing, Couch quick start, navigation and installed-picture parity.",
+      "The tests cover compact and desktop actor bounds, heading, reduced effects, fallback bodies, collision-independent presentation size, shared touch, controller confirmation and two-player entry.",
+      "The exact Team picture-identity cohort passed 84 of 84 checks across current revision 78, retained revisions 58 through 77, built-in arenas, historical imports and malformed or unsupported identities.",
+      "Transfer boundary coverage proves post-legacy logical history exports and imports through RLTHM3 while the same document is rejected under the frozen RLTHM1/2 inner limit."
+    ],
+    "sourceNative": "The source-native compact Home and live Solo board were inspected through launch, movement and capture with the cleaned FPV silhouette. This is bounded visual evidence, not public, physical-device or whole-campaign acceptance.",
+    "longSuite": "Waived under the active fast-release exception and not represented as passed."
+  },
+  "preservation": [
+    "No original image, audio or font payload bytes are replaced.",
+    "The presentation changes do not alter collision footprints, mission identities, progress, saved attempts, uploaded media or custom content.",
+    "Historical production revisions remain retained; revision 78 is an append-only successor.",
+    "The Team association reuses the same two reviewed picture hashes; it adds no artwork or gameplay behavior and keeps the finite historical authority explicit."
+  ],
+  "excluded": [
+    "No complete whole-Team recipe approval or all-mission qualification.",
+    "No claim that every craft, trail or failure state has final subjective art approval.",
+    "No complete keyboard, controller, touch, screen-reader, every-viewport or physical-device qualification.",
+    "No frozen-build, cold-offline, public Pages or release acceptance."
+  ],
+  "decision": "Continue only the seven motion and ten effects recipes when the exact fingerprints and this review record match. Any input or review-byte change reopens the affected group."
+}

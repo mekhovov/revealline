@@ -1,0 +1,3712 @@
+{
+  "format": "fpv-orchard-tree-surfaces-manual.v1",
+  "baseline": "a46aded0b56c612fbbfb1736cfb27ee0746c2b1f",
+  "candidate": "58c5eae096873e51b614dae134d7c35445944cbb",
+  "sourceSha256": {
+    "optional-practice/civilian-fpv/world-visuals.mjs": "16826b560e35ef25470c7805c9328a42991f5f87094be869579c078aa109cbf3"
+  },
+  "immutable": {
+    "optional-practice/civilian-fpv/README.md": "2e97f96dcd653804eedf49f6a1d073cc9c8a71399db0cc5d7d1cbfae0ae66774",
+    "optional-practice/civilian-fpv/app.mjs": "ae158a1837bbbf14b3276da6b4abfcef5393ddfa0c828a5d89e30cd87263e0de",
+    "optional-practice/civilian-fpv/app.webmanifest": "1f24cc04ce0b759c23a57f4349484dc16398234e09e8b036f97ec1844d13a2e0",
+    "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+    "optional-practice/civilian-fpv/copy.mjs": "075ee9dbcf7de69e7f5c9a22e80a42de7cc49b4b2f2d06e9245c2034914b3e89",
+    "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "optional-practice/civilian-fpv/expressive-hunt-courses.mjs": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+    "optional-practice/civilian-fpv/flight-fullscreen.css": "b9568785f441fbb52f78b6be3399688aa619183d89f38838f9de58f89d894de2",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "f60358ea99f70f1afe9ff16ce0323ad1b5d9a92e742ecf1544b241faa6e59efc",
+    "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "optional-practice/civilian-fpv/guide.html": "091186125c09f19e415c329d2a4183eeca3dc45bd2fe44e5ba2f3aa9170cf4f2",
+    "optional-practice/civilian-fpv/index.html": "db74aa6e180ce5d8ffa1caaf5e9f817878f9da05813ea9e20127b6ebf9e87772",
+    "optional-practice/civilian-fpv/input.mjs": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+    "optional-practice/civilian-fpv/offline.mjs": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444",
+    "optional-practice/civilian-fpv/package-info.json": "8ffc75a58ac9a66142c8e1ba71a65eba28de68e8e7f5d754a692ad4a04be2158",
+    "optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+    "optional-practice/civilian-fpv/preview.png": "31d4f28a15a75721dfeaf8d57ffd0559ef6540bd45ab528840d5f57f84ea6e2a",
+    "optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+    "optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+    "optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+    "optional-practice/civilian-fpv/renderer.mjs": "971243e0f3e6201654f53e2f4bffb6ceb93e099843ed509da36395b191009dcd",
+    "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "ef8890ad20ef190e0c7ef6c0d24d933ce587a752cb4f24f55877d353982409d5",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "a80ec4ac0f35170e7f18c4deea11bf9d25f328d374ec7af0e8af8ad30472ca81",
+    "optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+    "optional-practice/civilian-fpv/studio.mjs": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485",
+    "optional-practice/civilian-fpv/style.css": "fdf8a71b22970d3ec2c608d36dd58a213f14596f0c5cfa4690e2019d73b77e3c",
+    "optional-practice/civilian-fpv/vendor/LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+    "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+    "optional-practice/civilian-fpv/vendor/addons/provenance.json": "a87fc39c9dc00b9ca055b006600c51c3f5ebfcc2117f523486979af1d0040be1",
+    "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+    "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+    "optional-practice/civilian-fpv/vendor/rapier/LICENSE": "4c05555705e3efde601fb1252ae48f1d63992af8a8fb8947745b7fa834e8f519",
+    "optional-practice/civilian-fpv/vendor/rapier/provenance.json": "6dc04a5eca22760fd38665af7649222da26ce343ff67f5ca68e5ed244e30d074",
+    "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "optional-practice/civilian-fpv/world-actor-editor.mjs": "9ca630e6c850d85fd69959ee940195ddaa77daf9da2e31b397e1a6edc1e54350",
+    "optional-practice/civilian-fpv/world-app.mjs": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49",
+    "optional-practice/civilian-fpv/world-assets.mjs": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+    "optional-practice/civilian-fpv/world-audio.mjs": "104011e3e43091577ef2c740aaead7727fc45234fc2cbb2ce61fa3441dc63f8b",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-editor.mjs": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c",
+    "optional-practice/civilian-fpv/world-hangar.mjs": "759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef",
+    "optional-practice/civilian-fpv/world-hunt-reactions.mjs": "07a55c4d0018983b2174dfbf7363a584fff8641704a293adb49700147bf86f8d",
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-progress.mjs": "c7de9e847bc3dbbb8e1aee6da39887ab4778769c33476a428c4186c57b5c845d",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "b853b250484e91f4ca0fae6660605db134cac87aa47522aea07fd52c7fdbf1e2",
+    "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+    "optional-practice/civilian-fpv/world-store.mjs": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0",
+    "optional-practice/civilian-fpv/world-style.css": "fb8ebd479ba6c78bdba0206173295fb5d01f5a5cc8de1c14695c0cf4c15fed78",
+    "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+    "optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+    "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+    "game/presentation/theme-system.mjs": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+    "game/hunt/actor-catalog.mjs": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92",
+    "game/hunt/preferences.mjs": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324"
+  },
+  "courseIdentities": [
+    {
+      "course": "adventure-orchard-01",
+      "dataIdentity": "3fbba5dbad1c7a5f",
+      "sha256": "6e53676dc7e3de4627b4175c1dbfff32fce1d34cb173f215ec08abb65dc58522"
+    },
+    {
+      "course": "adventure-orchard-02",
+      "dataIdentity": "75bd9d390046da45",
+      "sha256": "12e9cf450908aaebb4cb6e5bb264b6fb514d1b089b34bd2a55d652d5b7ecd94b"
+    },
+    {
+      "course": "adventure-orchard-03",
+      "dataIdentity": "fb4a7db76791ecc1",
+      "sha256": "e5d0e383eb6a140c20f5ac6d6a18ca288e913dc15aa023b6ffdbecdb47f5c5e2"
+    },
+    {
+      "course": "adventure-orchard-04",
+      "dataIdentity": "0aec54d80c49a6f2",
+      "sha256": "bd0b662f08d112e1104cad9a667aee1ec608e0e834176e98cc07a4faf0232361"
+    },
+    {
+      "course": "adventure-orchard-05",
+      "dataIdentity": "003247497951654c",
+      "sha256": "7963a34072f6a526b7beb0b30c4b3a6fa656e5746ea5872801a40dc7f761cafc"
+    }
+  ],
+  "checks": [
+    {
+      "name": "tracked runtime/asset file list unchanged",
+      "passed": true
+    },
+    {
+      "name": "no untracked runtime assets",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/README.md: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/app.webmanifest: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/attempts.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/beginner-coach.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/catalogue.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/content-definitions.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/copy.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/demonstrations.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/expressive-hunt-courses.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.css: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-fullscreen.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/flight-sectors.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/guide.html: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/index.html: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/input.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/math.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/model.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/notebook.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/offline.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/package-info.json: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/playlists.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/preview.png: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-controls.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-guide.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-profile.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-runtime.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-session.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/radio-setup.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/renderer.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/rotation-table.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/sim-presentation.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/snake-hunt.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/studio.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/style.css: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/LICENSE.txt: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/provenance.json: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/LICENSE: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/provenance.json: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.core.js: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/vendor/three.module.js: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-actor-editor.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-app.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-assets.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-audio.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-catalogue.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-collision.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-content.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-demonstrations.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-editor.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hangar.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-hunt-reactions.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-model.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-progress.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-reaction-runtime.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-records.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-store.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-style.css: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-themes.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-zip.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "game/data-json.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "game/presentation/theme-system.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "game/hunt/actor-catalog.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "game/hunt/preferences.mjs: exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "five canonical Orchard activities",
+      "passed": true
+    },
+    {
+      "name": "all17 shared collections retained",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01: exact course/collision/actor/objective identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-01: no built-in GLB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02: exact course/collision/actor/objective identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02: no built-in GLB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03: exact course/collision/actor/objective identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03: no built-in GLB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04: exact course/collision/actor/objective identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04: no built-in GLB",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05: exact course/collision/actor/objective identity",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05: no built-in GLB",
+      "passed": true
+    },
+    {
+      "name": "entire renderer remains exact baseline bytes",
+      "passed": true
+    },
+    {
+      "name": "low/authored: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/authored: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 1179648
+      }
+    },
+    {
+      "name": "low/authored: exactly six maps in two existing shared surface owners",
+      "passed": true
+    },
+    {
+      "name": "low/authored: unchanged tier size/repeat/filter and opaque pixels",
+      "passed": true
+    },
+    {
+      "name": "low/authored: tree surface pixels change",
+      "passed": true
+    },
+    {
+      "name": "low/authored: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/pixel: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/pixel: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 294912
+      }
+    },
+    {
+      "name": "low/pixel: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/military-field: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/military-field: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/military-field: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/ember-foundry: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/ember-foundry: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/ember-foundry: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/polar-relay: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/polar-relay: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/polar-relay: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/industrial-workshop: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/industrial-workshop: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/industrial-workshop: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/vyshyvanka: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/vyshyvanka: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/vyshyvanka: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/dnipro-porcelain: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/dnipro-porcelain: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/dnipro-porcelain: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/tryzub: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/tryzub: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/tryzub: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/windows-classic: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/windows-classic: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/windows-classic: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/dos: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/dos: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/dos: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/orchard-workshop: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/orchard-workshop: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/orchard-workshop: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/neon-ruins: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/neon-ruins: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/neon-ruins: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/pocket-lcd: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/pocket-lcd: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/pocket-lcd: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/copper-observatory: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/copper-observatory: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/copper-observatory: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/sakura-station: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/sakura-station: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/sakura-station: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/obsidian-reliquary: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/obsidian-reliquary: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/obsidian-reliquary: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/deep-space: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/deep-space: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/deep-space: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "low/moonlit-grove: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "low/moonlit-grove: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "low/moonlit-grove: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/authored: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/authored: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "balanced/authored: exactly six maps in two existing shared surface owners",
+      "passed": true
+    },
+    {
+      "name": "balanced/authored: unchanged tier size/repeat/filter and opaque pixels",
+      "passed": true
+    },
+    {
+      "name": "balanced/authored: tree surface pixels change",
+      "passed": true
+    },
+    {
+      "name": "balanced/authored: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/pixel: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/pixel: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 294912
+      }
+    },
+    {
+      "name": "balanced/pixel: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/military-field: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/military-field: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/military-field: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/ember-foundry: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/ember-foundry: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/ember-foundry: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/polar-relay: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/polar-relay: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/polar-relay: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/industrial-workshop: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/industrial-workshop: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/industrial-workshop: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/vyshyvanka: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/vyshyvanka: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/vyshyvanka: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/dnipro-porcelain: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/dnipro-porcelain: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/dnipro-porcelain: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/tryzub: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/tryzub: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/tryzub: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/windows-classic: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/windows-classic: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/windows-classic: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/dos: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/dos: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/dos: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/orchard-workshop: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/orchard-workshop: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/orchard-workshop: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/neon-ruins: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/neon-ruins: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/neon-ruins: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/pocket-lcd: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/pocket-lcd: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/pocket-lcd: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/copper-observatory: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/copper-observatory: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/copper-observatory: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/sakura-station: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/sakura-station: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/sakura-station: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/obsidian-reliquary: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/obsidian-reliquary: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/obsidian-reliquary: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/deep-space: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/deep-space: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/deep-space: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "balanced/moonlit-grove: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "balanced/moonlit-grove: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "balanced/moonlit-grove: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/authored: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/authored: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 18874368
+      }
+    },
+    {
+      "name": "high/authored: exactly six maps in two existing shared surface owners",
+      "passed": true
+    },
+    {
+      "name": "high/authored: unchanged tier size/repeat/filter and opaque pixels",
+      "passed": true
+    },
+    {
+      "name": "high/authored: tree surface pixels change",
+      "passed": true
+    },
+    {
+      "name": "high/authored: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/pixel: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/pixel: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 294912
+      }
+    },
+    {
+      "name": "high/pixel: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/military-field: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/military-field: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/military-field: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/ember-foundry: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/ember-foundry: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/ember-foundry: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/polar-relay: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/polar-relay: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/polar-relay: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/industrial-workshop: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/industrial-workshop: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/industrial-workshop: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/vyshyvanka: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/vyshyvanka: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/vyshyvanka: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/dnipro-porcelain: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/dnipro-porcelain: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/dnipro-porcelain: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/tryzub: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/tryzub: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/tryzub: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/windows-classic: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/windows-classic: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/windows-classic: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/dos: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/dos: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/dos: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/orchard-workshop: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/orchard-workshop: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/orchard-workshop: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/neon-ruins: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/neon-ruins: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/neon-ruins: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/pocket-lcd: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/pocket-lcd: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/pocket-lcd: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/copper-observatory: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/copper-observatory: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/copper-observatory: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/sakura-station: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/sakura-station: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/sakura-station: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/obsidian-reliquary: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/obsidian-reliquary: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/obsidian-reliquary: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/deep-space: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/deep-space: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/deep-space: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "high/moonlit-grove: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "high/moonlit-grove: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      }
+    },
+    {
+      "name": "high/moonlit-grove: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "adventure-orchard-02: exactly six maps in two existing shared surface owners",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02: unchanged tier size/repeat/filter and opaque pixels",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02: tree surface pixels change",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-02: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "adventure-orchard-03: exactly six maps in two existing shared surface owners",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03: unchanged tier size/repeat/filter and opaque pixels",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03: tree surface pixels change",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-03: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "adventure-orchard-04: exactly six maps in two existing shared surface owners",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04: unchanged tier size/repeat/filter and opaque pixels",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04: tree surface pixels change",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-04: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "adventure-orchard-05: exactly six maps in two existing shared surface owners",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05: unchanged tier size/repeat/filter and opaque pixels",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05: tree surface pixels change",
+      "passed": true
+    },
+    {
+      "name": "adventure-orchard-05: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom custom course id: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom custom course id: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom custom course id: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom custom world id: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom custom world id: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom custom world id: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom custom bounds: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom custom bounds: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom custom bounds: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom renamed trunk: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom renamed trunk: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom renamed trunk: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom trunk resized: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom trunk resized: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom trunk resized: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom trunk translated: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom trunk translated: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom trunk translated: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom trunk rotated: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom trunk rotated: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom trunk rotated: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom explicit box: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom explicit box: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom explicit box: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom crown vertex changed: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom crown vertex changed: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom crown vertex changed: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom crown winding changed: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom crown winding changed: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom crown winding changed: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom missing tree: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom missing tree: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 84,
+        "materials": 91,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom missing tree: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom duplicate tree: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom duplicate tree: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom duplicate tree: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom additional timber: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom additional timber: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 88,
+        "materials": 95,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom additional timber: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom replaced barn with custom timber: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom replaced barn with custom timber: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 84,
+        "materials": 90,
+        "textures": 15,
+        "instances": 6,
+        "textureBytes": 3932160
+      }
+    },
+    {
+      "name": "custom replaced barn with custom timber: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "custom custom profile: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "custom custom profile: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      }
+    },
+    {
+      "name": "custom custom profile: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected stadium: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected stadium: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 29,
+        "materials": 20,
+        "textures": 12,
+        "instances": 3,
+        "textureBytes": 196608
+      }
+    },
+    {
+      "name": "unaffected stadium: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected warehouse: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected warehouse: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 138,
+        "materials": 19,
+        "textures": 9,
+        "instances": 3,
+        "textureBytes": 147456
+      }
+    },
+    {
+      "name": "unaffected warehouse: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected garage: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected garage: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 156,
+        "materials": 20,
+        "textures": 9,
+        "instances": 4,
+        "textureBytes": 2359296
+      }
+    },
+    {
+      "name": "unaffected garage: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected container-yard: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected container-yard: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 73,
+        "materials": 17,
+        "textures": 6,
+        "instances": 3,
+        "textureBytes": 1572864
+      }
+    },
+    {
+      "name": "unaffected container-yard: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected coast: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected coast: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 21,
+        "materials": 25,
+        "textures": 12,
+        "instances": 7,
+        "textureBytes": 3145728
+      }
+    },
+    {
+      "name": "unaffected coast: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected quarry: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected quarry: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 15,
+        "materials": 19,
+        "textures": 12,
+        "instances": 5,
+        "textureBytes": 3145728
+      }
+    },
+    {
+      "name": "unaffected quarry: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected rooftops: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected rooftops: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 16,
+        "materials": 20,
+        "textures": 12,
+        "instances": 6,
+        "textureBytes": 196608
+      }
+    },
+    {
+      "name": "unaffected rooftops: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected solar-farm: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected solar-farm: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 15,
+        "materials": 20,
+        "textures": 15,
+        "instances": 5,
+        "textureBytes": 3932160
+      }
+    },
+    {
+      "name": "unaffected solar-farm: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected rail-depot: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected rail-depot: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 16,
+        "materials": 21,
+        "textures": 15,
+        "instances": 6,
+        "textureBytes": 3932160
+      }
+    },
+    {
+      "name": "unaffected rail-depot: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected gym: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected gym: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 91,
+        "materials": 22,
+        "textures": 9,
+        "instances": 4,
+        "textureBytes": 2359296
+      }
+    },
+    {
+      "name": "unaffected gym: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected field: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected field: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 76,
+        "materials": 19,
+        "textures": 6,
+        "instances": 2,
+        "textureBytes": 1572864
+      }
+    },
+    {
+      "name": "unaffected field: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected woodland: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected woodland: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 80,
+        "materials": 20,
+        "textures": 15,
+        "instances": 34,
+        "textureBytes": 3932160
+      }
+    },
+    {
+      "name": "unaffected woodland: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "unaffected courtyard: exact scene including geometry/UV/materials outside six approved maps",
+      "passed": true
+    },
+    {
+      "name": "unaffected courtyard: exact owners/batches/texture allocation",
+      "passed": true,
+      "details": {
+        "geometries": 103,
+        "materials": 31,
+        "textures": 6,
+        "instances": 3,
+        "textureBytes": 1572864
+      }
+    },
+    {
+      "name": "unaffected courtyard: all owned resources disposed exactly once",
+      "passed": true
+    },
+    {
+      "name": "independent trees produce exact deterministic surface/scene bytes",
+      "passed": true
+    },
+    {
+      "name": "quality cycle returns exact scene and map bytes",
+      "passed": true
+    },
+    {
+      "name": "quality changes retain identical texture/material/geometry/instance owners",
+      "passed": true
+    },
+    {
+      "name": "optional-practice/civilian-fpv/world-visuals.mjs: stable during qualification",
+      "passed": true
+    }
+  ],
+  "scenes": [
+    {
+      "label": "low/authored",
+      "quality": "low",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 1179648
+      },
+      "sceneSha256": "e6f63ea87cd16266c5c09acfea269b0deff1bf35a28069cb3ae677fabb89d466",
+      "maps": [
+        {
+          "kind": "orchard-bark",
+          "width": 128,
+          "sha256": "cc463d456728fce991fee9d5cfc72768160055c9176f038d62c177e2e6226a49"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 128,
+          "sha256": "c9cd7d63b1ed92b041d2bf6df67f87319efc918b88b1a464b81fe4a4e0415fa1"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 128,
+          "sha256": "6b3e25374260ed2dddf60e8031f511adc6ab8b7905325f2e13a6e950d16fdba3"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 128,
+          "sha256": "0b2fec657d9a6793693cb3579d4971af4a424bf1df99ff12e43e23d7c87abae7"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 128,
+          "sha256": "a716a69aa81174884e1a1f60e0f1952c23ac88401d35645fd612871b3f50259d"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 128,
+          "sha256": "02341457913fc076ac4610a0190ef0753b6624766addd240df7f0572e799bf81"
+        }
+      ]
+    },
+    {
+      "label": "low/pixel",
+      "quality": "low",
+      "appearance": "pixel",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 294912
+      },
+      "sceneSha256": "e1bce79bd1513270d321b17e3a1feb37ecf1889dab0c0901c5e30f48dd597b5c",
+      "maps": []
+    },
+    {
+      "label": "low/military-field",
+      "quality": "low",
+      "appearance": "military-field",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "522c3ca70f81e5b046f75508111dd2965d85bc79616c9a74ca940fa3b7f0eb8e",
+      "maps": []
+    },
+    {
+      "label": "low/ember-foundry",
+      "quality": "low",
+      "appearance": "ember-foundry",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "16798172bc789d4c34a3365728f5e6bf23771e0a38f2a6e59cd2877b059d145d",
+      "maps": []
+    },
+    {
+      "label": "low/polar-relay",
+      "quality": "low",
+      "appearance": "polar-relay",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "f6065b62d3927276055e4a9422fdf76ce2d06d21073d57bffa65ff1176755425",
+      "maps": []
+    },
+    {
+      "label": "low/industrial-workshop",
+      "quality": "low",
+      "appearance": "industrial-workshop",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "b2b7a381ae3b7fed0e775da43f2dc3384f949a9cf76c509b0d1366e39f1b6636",
+      "maps": []
+    },
+    {
+      "label": "low/vyshyvanka",
+      "quality": "low",
+      "appearance": "vyshyvanka",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "913fc0be68a0c04aae6df03b0f48ae881bee8283a7801ba99cf272c5787e31cd",
+      "maps": []
+    },
+    {
+      "label": "low/dnipro-porcelain",
+      "quality": "low",
+      "appearance": "dnipro-porcelain",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "e297ce126dd221494562bb5fa87e2016130c912b77cf37bc1ef9d3d6ab27d3a8",
+      "maps": []
+    },
+    {
+      "label": "low/tryzub",
+      "quality": "low",
+      "appearance": "tryzub",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "1a5ed406a849e28f653115f329e92c4971e282f220f84d318214308cc36443a4",
+      "maps": []
+    },
+    {
+      "label": "low/windows-classic",
+      "quality": "low",
+      "appearance": "windows-classic",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "6e2e8d15c574b74c9a6c821454db1a637cc600c3fdb042fd72d6e2d54bc419ee",
+      "maps": []
+    },
+    {
+      "label": "low/dos",
+      "quality": "low",
+      "appearance": "dos",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "c16b58b293a82e3ec63abd6664749cab856dc4c3beb0858d4c44ff011a593b00",
+      "maps": []
+    },
+    {
+      "label": "low/orchard-workshop",
+      "quality": "low",
+      "appearance": "orchard-workshop",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "9a04af6d35ebfc9d1511662122df2491a834a6573f6b554296222c2ad376f08e",
+      "maps": []
+    },
+    {
+      "label": "low/neon-ruins",
+      "quality": "low",
+      "appearance": "neon-ruins",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "6af635f1086b1bc1c956dbb14c3ec42f37a7d990129de5cad05eccce42008f40",
+      "maps": []
+    },
+    {
+      "label": "low/pocket-lcd",
+      "quality": "low",
+      "appearance": "pocket-lcd",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "814334204ed97a45e861bb9684be0d5bb6a00f00c54311e480b9a0412ce94105",
+      "maps": []
+    },
+    {
+      "label": "low/copper-observatory",
+      "quality": "low",
+      "appearance": "copper-observatory",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "91d9a2be155b6d2773d2597298a1389ec40767d8eda75dfa0c5c18e8e04073ca",
+      "maps": []
+    },
+    {
+      "label": "low/sakura-station",
+      "quality": "low",
+      "appearance": "sakura-station",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "66bdcf041356d5abe1d088147fa5c11dbcfcb5b33421885a903caa123f4ddbd7",
+      "maps": []
+    },
+    {
+      "label": "low/obsidian-reliquary",
+      "quality": "low",
+      "appearance": "obsidian-reliquary",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "5913341bb76458d1e6404e442c8359722557d815e0eea4745e1fc4c9239e2136",
+      "maps": []
+    },
+    {
+      "label": "low/deep-space",
+      "quality": "low",
+      "appearance": "deep-space",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "3efe3098bf8562738767374ba8525a678297e19acf7ac35470fd06c46779a8cf",
+      "maps": []
+    },
+    {
+      "label": "low/moonlit-grove",
+      "quality": "low",
+      "appearance": "moonlit-grove",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "f55f432d2b4ee7f6f1d6ddf333a522aeefb8a860f9cd7a11c4654b9772147a8c",
+      "maps": []
+    },
+    {
+      "label": "balanced/authored",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "85c869c62da72c000c649d82848ad09e252fcd49adae03016745a9d7e0c899ba",
+      "maps": [
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "f0c2c35921c4f2f115aef629a65de9c07776b03e9a4bb6add87ddee4db4e7f69"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "649c19e9e37c8a3d12b0b33cd41118223ca9a97409c86eee2dfb121851831ffc"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "640737c97fadc13238d39c3762486f6d749f0400a95a0d9a2647c340e5e771ee"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "26d4439ae0dcafbe707b4af638fe9b4f99f25da6ca4eaf66d97db8da48e30f90"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "af2a797ba685128b590d7c07e6d15af7af54ccace24a99ae19af200b82db4130"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "cbe3d860b3c3f58a6bcfc230314401cacf6f9479433ceae342a0d5fac7b94141"
+        }
+      ]
+    },
+    {
+      "label": "balanced/pixel",
+      "quality": "balanced",
+      "appearance": "pixel",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 294912
+      },
+      "sceneSha256": "de4d6042b641b90b9a18aa54d740307d670696ea03ce6b4de873b7744a7125f0",
+      "maps": []
+    },
+    {
+      "label": "balanced/military-field",
+      "quality": "balanced",
+      "appearance": "military-field",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "45ab2d072c00e55768ac0c60a25db978d8c494a890de230427dd4e3aeaa361e9",
+      "maps": []
+    },
+    {
+      "label": "balanced/ember-foundry",
+      "quality": "balanced",
+      "appearance": "ember-foundry",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "5062fa18c1e252a88d149d6c43554565e3f822e3442203e0245fd545d5f41fc3",
+      "maps": []
+    },
+    {
+      "label": "balanced/polar-relay",
+      "quality": "balanced",
+      "appearance": "polar-relay",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "5c35be8752fdf5a6439122c44024ab7197dd301463089e345403b222209fcfe2",
+      "maps": []
+    },
+    {
+      "label": "balanced/industrial-workshop",
+      "quality": "balanced",
+      "appearance": "industrial-workshop",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "644ae943e65624570affcea4b94ac586f3967cbfbeb089d92f1bb672ee8bebd7",
+      "maps": []
+    },
+    {
+      "label": "balanced/vyshyvanka",
+      "quality": "balanced",
+      "appearance": "vyshyvanka",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "bc8177a664dd7102c6f0c66b237fc19e08c6ede17b879a968e02f97687d1cf1d",
+      "maps": []
+    },
+    {
+      "label": "balanced/dnipro-porcelain",
+      "quality": "balanced",
+      "appearance": "dnipro-porcelain",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "f57e3b80c0f732923a1fa5c6a8327686b29156bf0b8a0c8174aeb883e9c415f4",
+      "maps": []
+    },
+    {
+      "label": "balanced/tryzub",
+      "quality": "balanced",
+      "appearance": "tryzub",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "6fb6741d11e0b683cf81da69b1e5d1273bbbd409fd79769c3da576a2a9444160",
+      "maps": []
+    },
+    {
+      "label": "balanced/windows-classic",
+      "quality": "balanced",
+      "appearance": "windows-classic",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "d470f2ed8fee41f5b575b3d139c8243db052d85fb158809acc8a4545c20cbf19",
+      "maps": []
+    },
+    {
+      "label": "balanced/dos",
+      "quality": "balanced",
+      "appearance": "dos",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "7c0456ccef10fa4fdb73fda671a764cec7ced94328d3546555ccf84fcfecbe56",
+      "maps": []
+    },
+    {
+      "label": "balanced/orchard-workshop",
+      "quality": "balanced",
+      "appearance": "orchard-workshop",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "97d8d257161992e4d1dd5c73446fe86c3ef4ff70456ee517e1816f107075859f",
+      "maps": []
+    },
+    {
+      "label": "balanced/neon-ruins",
+      "quality": "balanced",
+      "appearance": "neon-ruins",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "01c7cce503dff146bce2cd29654b7c31ef662deead36abfdeae42346f3889cd5",
+      "maps": []
+    },
+    {
+      "label": "balanced/pocket-lcd",
+      "quality": "balanced",
+      "appearance": "pocket-lcd",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "15ae0788b8be889eff574a01e3b1852a7b28079d5601b88e4e7350090ccf9949",
+      "maps": []
+    },
+    {
+      "label": "balanced/copper-observatory",
+      "quality": "balanced",
+      "appearance": "copper-observatory",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "89e8da1bc12ef454216fc7db50ae6417890c837c09f8694537cc761019c8923b",
+      "maps": []
+    },
+    {
+      "label": "balanced/sakura-station",
+      "quality": "balanced",
+      "appearance": "sakura-station",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "f24468e2b9e7008312a594309828d21a08d67145d0b2b59c502fd15de14243db",
+      "maps": []
+    },
+    {
+      "label": "balanced/obsidian-reliquary",
+      "quality": "balanced",
+      "appearance": "obsidian-reliquary",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "1837a74bad45aaa878de068c6c18d071507f073105fd28606fb34dcb5917958d",
+      "maps": []
+    },
+    {
+      "label": "balanced/deep-space",
+      "quality": "balanced",
+      "appearance": "deep-space",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "eea5a5681c8b928b85eaa71f6c6ac078d71cdf03688fc337907a3f5939444371",
+      "maps": []
+    },
+    {
+      "label": "balanced/moonlit-grove",
+      "quality": "balanced",
+      "appearance": "moonlit-grove",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "0fa568a12902beed14d7b3bc0a6339535f68d3f5d897bed5f4b35d952005a7bd",
+      "maps": []
+    },
+    {
+      "label": "high/authored",
+      "quality": "high",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 18874368
+      },
+      "sceneSha256": "43a531f1d6c7605c8b4e2b12eb6343f79e323427811925753d208221c7b5251c",
+      "maps": [
+        {
+          "kind": "orchard-bark",
+          "width": 512,
+          "sha256": "10be8ead83d20a761f3d92d093fbfec9361221bd8228e56056048a653861d476"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 512,
+          "sha256": "98b59c95c8572793c8e69bc9bc59b3d405f8a7db1294c39aae306cb3658f9476"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 512,
+          "sha256": "1f33bdee6f5e6109a0d23b0f8227bb2ca779c657e5135d876b699e5771ff9433"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 512,
+          "sha256": "ed769667400c7b1f2ecf0bd46e7592c68edec7fb40bf46138f17faf4cde77011"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 512,
+          "sha256": "5d338c20d0942f22a954a1f70b01597bc17bb17bee6c048140c94413eb8249c0"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 512,
+          "sha256": "5419bbe4e7c89ed6bf43f7e1a96884c7996bd82e78372299ddc423e1124682a1"
+        }
+      ]
+    },
+    {
+      "label": "high/pixel",
+      "quality": "high",
+      "appearance": "pixel",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 294912
+      },
+      "sceneSha256": "ff102d6a78c4020a939fa1f0aef71fa7f1ed0a4fe4d48f9d8fde9bd39570dd3d",
+      "maps": []
+    },
+    {
+      "label": "high/military-field",
+      "quality": "high",
+      "appearance": "military-field",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "67493b188a1fb1d2aab61b039f76139fcfc7d6dcc079b1a0bed84c57b59852ee",
+      "maps": []
+    },
+    {
+      "label": "high/ember-foundry",
+      "quality": "high",
+      "appearance": "ember-foundry",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "34d9c713543bd5a8fa88e3e80035508c64fe742333babc942e167db735fed05b",
+      "maps": []
+    },
+    {
+      "label": "high/polar-relay",
+      "quality": "high",
+      "appearance": "polar-relay",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "5a99e1bde0e4a9be8cd86b2270420fb15a84c8aaac6a877657ecf7dccb5cdb37",
+      "maps": []
+    },
+    {
+      "label": "high/industrial-workshop",
+      "quality": "high",
+      "appearance": "industrial-workshop",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "032402b91933bc75d5cc166152915be97cbdaea42191e853bb2281dbab8c929f",
+      "maps": []
+    },
+    {
+      "label": "high/vyshyvanka",
+      "quality": "high",
+      "appearance": "vyshyvanka",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "4038b386bdcbdb9879aae407f69d557ae1f3deb42a1effe33e8e9b2ffb7b6c1d",
+      "maps": []
+    },
+    {
+      "label": "high/dnipro-porcelain",
+      "quality": "high",
+      "appearance": "dnipro-porcelain",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "ed32b243b678becaa53550ed5a16007c5dc8678d705530012cb55567f65be8a8",
+      "maps": []
+    },
+    {
+      "label": "high/tryzub",
+      "quality": "high",
+      "appearance": "tryzub",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "0e3ef508e897de0bf5a3f52838866bc9e276a8a70212aca1be044c3324c29502",
+      "maps": []
+    },
+    {
+      "label": "high/windows-classic",
+      "quality": "high",
+      "appearance": "windows-classic",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "cd8d975e005dd49bd825abb1483efe83d016ad32e8e7b94444c623521bd7c504",
+      "maps": []
+    },
+    {
+      "label": "high/dos",
+      "quality": "high",
+      "appearance": "dos",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "37c4492e5fca796df891d63be58d83db10b200ae417a92c689906644a8e93e02",
+      "maps": []
+    },
+    {
+      "label": "high/orchard-workshop",
+      "quality": "high",
+      "appearance": "orchard-workshop",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "f031bc8385c8dbbba7513f8dff64caa8b4d721667465cc01beeee3a14169e22a",
+      "maps": []
+    },
+    {
+      "label": "high/neon-ruins",
+      "quality": "high",
+      "appearance": "neon-ruins",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "a73a5cf32ab5f04af9b6021b8a07e0133f2c496149dcabab15141c69dbe2ab43",
+      "maps": []
+    },
+    {
+      "label": "high/pocket-lcd",
+      "quality": "high",
+      "appearance": "pocket-lcd",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "9b1c1c967d217258694e09e93f4451cc362a48ad5b6812cfb1b415fa07549b5c",
+      "maps": []
+    },
+    {
+      "label": "high/copper-observatory",
+      "quality": "high",
+      "appearance": "copper-observatory",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "fa1cd2762fc7e375a7bc76e7cd5a064556ac6a87c2f183d1cf4cafad67fef6ce",
+      "maps": []
+    },
+    {
+      "label": "high/sakura-station",
+      "quality": "high",
+      "appearance": "sakura-station",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "dcd5d89f00f21f5f0a2e1d17ef9a0ec9dcc547668b4e02285078e3f8fd7f5045",
+      "maps": []
+    },
+    {
+      "label": "high/obsidian-reliquary",
+      "quality": "high",
+      "appearance": "obsidian-reliquary",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "0735870e021655d25dbca818d0aacb1784f38b4b9c84ab8baa9ce00f24e047f6",
+      "maps": []
+    },
+    {
+      "label": "high/deep-space",
+      "quality": "high",
+      "appearance": "deep-space",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "0b02110367856c53029edbfc3d754bf9adcf63b93a814cbd5666e251b572f3ed",
+      "maps": []
+    },
+    {
+      "label": "high/moonlit-grove",
+      "quality": "high",
+      "appearance": "moonlit-grove",
+      "counts": {
+        "geometries": 87,
+        "materials": 93,
+        "textures": 5,
+        "instances": 7,
+        "textureBytes": 327680
+      },
+      "sceneSha256": "a7f9909e8cf1554ea689be6fc087e40676c16b37406885594c491b5fb4531994",
+      "maps": []
+    },
+    {
+      "label": "adventure-orchard-02",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "85c869c62da72c000c649d82848ad09e252fcd49adae03016745a9d7e0c899ba",
+      "maps": [
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "f0c2c35921c4f2f115aef629a65de9c07776b03e9a4bb6add87ddee4db4e7f69"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "649c19e9e37c8a3d12b0b33cd41118223ca9a97409c86eee2dfb121851831ffc"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "640737c97fadc13238d39c3762486f6d749f0400a95a0d9a2647c340e5e771ee"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "26d4439ae0dcafbe707b4af638fe9b4f99f25da6ca4eaf66d97db8da48e30f90"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "af2a797ba685128b590d7c07e6d15af7af54ccace24a99ae19af200b82db4130"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "cbe3d860b3c3f58a6bcfc230314401cacf6f9479433ceae342a0d5fac7b94141"
+        }
+      ]
+    },
+    {
+      "label": "adventure-orchard-03",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "85c869c62da72c000c649d82848ad09e252fcd49adae03016745a9d7e0c899ba",
+      "maps": [
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "f0c2c35921c4f2f115aef629a65de9c07776b03e9a4bb6add87ddee4db4e7f69"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "649c19e9e37c8a3d12b0b33cd41118223ca9a97409c86eee2dfb121851831ffc"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "640737c97fadc13238d39c3762486f6d749f0400a95a0d9a2647c340e5e771ee"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "26d4439ae0dcafbe707b4af638fe9b4f99f25da6ca4eaf66d97db8da48e30f90"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "af2a797ba685128b590d7c07e6d15af7af54ccace24a99ae19af200b82db4130"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "cbe3d860b3c3f58a6bcfc230314401cacf6f9479433ceae342a0d5fac7b94141"
+        }
+      ]
+    },
+    {
+      "label": "adventure-orchard-04",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "85c869c62da72c000c649d82848ad09e252fcd49adae03016745a9d7e0c899ba",
+      "maps": [
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "f0c2c35921c4f2f115aef629a65de9c07776b03e9a4bb6add87ddee4db4e7f69"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "649c19e9e37c8a3d12b0b33cd41118223ca9a97409c86eee2dfb121851831ffc"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "640737c97fadc13238d39c3762486f6d749f0400a95a0d9a2647c340e5e771ee"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "26d4439ae0dcafbe707b4af638fe9b4f99f25da6ca4eaf66d97db8da48e30f90"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "af2a797ba685128b590d7c07e6d15af7af54ccace24a99ae19af200b82db4130"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "cbe3d860b3c3f58a6bcfc230314401cacf6f9479433ceae342a0d5fac7b94141"
+        }
+      ]
+    },
+    {
+      "label": "adventure-orchard-05",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "85c869c62da72c000c649d82848ad09e252fcd49adae03016745a9d7e0c899ba",
+      "maps": [
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "f0c2c35921c4f2f115aef629a65de9c07776b03e9a4bb6add87ddee4db4e7f69"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "649c19e9e37c8a3d12b0b33cd41118223ca9a97409c86eee2dfb121851831ffc"
+        },
+        {
+          "kind": "orchard-bark",
+          "width": 256,
+          "sha256": "640737c97fadc13238d39c3762486f6d749f0400a95a0d9a2647c340e5e771ee"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "26d4439ae0dcafbe707b4af638fe9b4f99f25da6ca4eaf66d97db8da48e30f90"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "af2a797ba685128b590d7c07e6d15af7af54ccace24a99ae19af200b82db4130"
+        },
+        {
+          "kind": "orchard-foliage",
+          "width": 256,
+          "sha256": "cbe3d860b3c3f58a6bcfc230314401cacf6f9479433ceae342a0d5fac7b94141"
+        }
+      ]
+    },
+    {
+      "label": "custom custom course id",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "69601ad84df057a19c903d42fa80ce089d786bfed11e5675fff268c37f741685",
+      "maps": []
+    },
+    {
+      "label": "custom custom world id",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "69601ad84df057a19c903d42fa80ce089d786bfed11e5675fff268c37f741685",
+      "maps": []
+    },
+    {
+      "label": "custom custom bounds",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "605a6b7566ae49fed349668d62919928e3ed0986519b456d25eb31bab611a7c6",
+      "maps": []
+    },
+    {
+      "label": "custom renamed trunk",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "690d0ff58b0f5c66490965e87bb98a1db2b157c2a41d596dc5f24c6a721f98b2",
+      "maps": []
+    },
+    {
+      "label": "custom trunk resized",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "dbbc3a077989b6484acba4de3a1000e3aacbdb59f18f666e3e346d410cd6149d",
+      "maps": []
+    },
+    {
+      "label": "custom trunk translated",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "2f79ae8e2390c73bf5798f879faecedff52487d9ea767567e760e0c750edbdcb",
+      "maps": []
+    },
+    {
+      "label": "custom trunk rotated",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "69601ad84df057a19c903d42fa80ce089d786bfed11e5675fff268c37f741685",
+      "maps": []
+    },
+    {
+      "label": "custom explicit box",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "69601ad84df057a19c903d42fa80ce089d786bfed11e5675fff268c37f741685",
+      "maps": []
+    },
+    {
+      "label": "custom crown vertex changed",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "4792de6f96f9f648e1128bb3d75ed08a96bd9fbdd4a15ce73b59e80c81eb593c",
+      "maps": []
+    },
+    {
+      "label": "custom crown winding changed",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "6ac4290180edbd484c4fff0457c667ee677a7aabc43b4195437baf5e1e37a3b4",
+      "maps": []
+    },
+    {
+      "label": "custom missing tree",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 84,
+        "materials": 91,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "4b3ad8dbe57cbb588f1dec83a24613d2cceaf8b106673c911157b1d90e7a1105",
+      "maps": []
+    },
+    {
+      "label": "custom duplicate tree",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "09e8a2f0889694fc048b8381588d6f0db63a97ab3610ed182130ac97f7a16001",
+      "maps": []
+    },
+    {
+      "label": "custom additional timber",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 88,
+        "materials": 95,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "08cea2bb3ea4327a433ba0a0797afe72c865b97269c293f2915f08d791df4851",
+      "maps": []
+    },
+    {
+      "label": "custom replaced barn with custom timber",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 84,
+        "materials": 90,
+        "textures": 15,
+        "instances": 6,
+        "textureBytes": 3932160
+      },
+      "sceneSha256": "189241668eded4909e76c120e88f9927909a35c1a4091eddc523fcf4af55e738",
+      "maps": []
+    },
+    {
+      "label": "custom custom profile",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 86,
+        "materials": 93,
+        "textures": 18,
+        "instances": 6,
+        "textureBytes": 4718592
+      },
+      "sceneSha256": "2b0e36ec39c50721ccc93fda52eb330b24fdc8a370aab3c0fefbce86e61f0ece",
+      "maps": []
+    },
+    {
+      "label": "unaffected stadium",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 29,
+        "materials": 20,
+        "textures": 12,
+        "instances": 3,
+        "textureBytes": 196608
+      },
+      "sceneSha256": "1b476cdfea27f8d2f18746d0c632a8c62fdccce93ec8dc20ec521ad476d3e738",
+      "maps": []
+    },
+    {
+      "label": "unaffected warehouse",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 138,
+        "materials": 19,
+        "textures": 9,
+        "instances": 3,
+        "textureBytes": 147456
+      },
+      "sceneSha256": "cd8e3c6d7a14beda5a7d11343f7999f6b6f53c51e0b3a553cd28e375aad4e119",
+      "maps": []
+    },
+    {
+      "label": "unaffected garage",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 156,
+        "materials": 20,
+        "textures": 9,
+        "instances": 4,
+        "textureBytes": 2359296
+      },
+      "sceneSha256": "61f598e7678ad7cf7ecda32451edd4be3412d261dfc1647e2f056b463e456a48",
+      "maps": []
+    },
+    {
+      "label": "unaffected container-yard",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 73,
+        "materials": 17,
+        "textures": 6,
+        "instances": 3,
+        "textureBytes": 1572864
+      },
+      "sceneSha256": "848333f0264a8a8e8705ebe815463ab67d2c10b8eefc749746fe6e7e7b7103f9",
+      "maps": []
+    },
+    {
+      "label": "unaffected coast",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 21,
+        "materials": 25,
+        "textures": 12,
+        "instances": 7,
+        "textureBytes": 3145728
+      },
+      "sceneSha256": "8fb275bdb06b1b1276de7941ed808150c89bb9cbe1c3aac80528e93aaccdf241",
+      "maps": []
+    },
+    {
+      "label": "unaffected quarry",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 15,
+        "materials": 19,
+        "textures": 12,
+        "instances": 5,
+        "textureBytes": 3145728
+      },
+      "sceneSha256": "1ac88feffd8fa4f164f753d6f60b382c033e0dcfa08329ee68edbb418b2c22d0",
+      "maps": []
+    },
+    {
+      "label": "unaffected rooftops",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 16,
+        "materials": 20,
+        "textures": 12,
+        "instances": 6,
+        "textureBytes": 196608
+      },
+      "sceneSha256": "4be9cf8489d940b46e7cba079a9824c8732e22f33bf2a91d8192bb92d2f8b0d6",
+      "maps": []
+    },
+    {
+      "label": "unaffected solar-farm",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 15,
+        "materials": 20,
+        "textures": 15,
+        "instances": 5,
+        "textureBytes": 3932160
+      },
+      "sceneSha256": "881884bee8ea97d96042136bafa10a5f0f4b6755f644f9cfcf0fe5d543c74d67",
+      "maps": []
+    },
+    {
+      "label": "unaffected rail-depot",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 16,
+        "materials": 21,
+        "textures": 15,
+        "instances": 6,
+        "textureBytes": 3932160
+      },
+      "sceneSha256": "85fa7bbd4d660de23b2dbdcf523d5e2f0a8a7fd0f2b632ce7062885b2919f11b",
+      "maps": []
+    },
+    {
+      "label": "unaffected gym",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 91,
+        "materials": 22,
+        "textures": 9,
+        "instances": 4,
+        "textureBytes": 2359296
+      },
+      "sceneSha256": "ffb2cf13585b721cb6ddb0cc18947ef2e44452d30a25adda790f621ea0ef3a8b",
+      "maps": []
+    },
+    {
+      "label": "unaffected field",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 76,
+        "materials": 19,
+        "textures": 6,
+        "instances": 2,
+        "textureBytes": 1572864
+      },
+      "sceneSha256": "4ba255a1861faa857eac64dfd046e66da1debc339728ae13735e291c77239db7",
+      "maps": []
+    },
+    {
+      "label": "unaffected woodland",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 80,
+        "materials": 20,
+        "textures": 15,
+        "instances": 34,
+        "textureBytes": 3932160
+      },
+      "sceneSha256": "ee1a59b9de42705adaab2f241fe5a38511f31b22964367ec477ce6a66783f3c1",
+      "maps": []
+    },
+    {
+      "label": "unaffected courtyard",
+      "quality": "balanced",
+      "appearance": "authored",
+      "counts": {
+        "geometries": 103,
+        "materials": 31,
+        "textures": 6,
+        "instances": 3,
+        "textureBytes": 1572864
+      },
+      "sceneSha256": "4ecaf6cf623b4714bcbeacd5c28f27d95be01d56c4f706728d790b87242c5cfe",
+      "maps": []
+    }
+  ],
+  "passed": true,
+  "scope": "Real Three world objects and exact renderer obstacle/UV/panel functions. Complete geometry/UV/material/resource equality except six canonical Orchard map byte arrays and their surface recipe identifiers. No actual WebGL/FPS or fresh replay claimed; all course/collision/actor/recording inputs remain byte-bound."
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "family": "legacy",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "industrial-workshop",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "vyshyvanka",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "dnipro-porcelain",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "tryzub",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "windows-classic",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "dos",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "orchard-workshop",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "neon-ruins",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "pocket-lcd",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "copper-observatory",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "sakura-station",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "obsidian-reliquary",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "deep-space",
+    "status": "passed",
+    "checks": 16
+  },
+  {
+    "family": "moonlit-grove",
+    "status": "passed",
+    "checks": 16
+  }
+]

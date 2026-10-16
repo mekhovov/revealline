@@ -1,0 +1,361 @@
+{
+  "format": "fpv-controls-browser-projection-verification.v1",
+  "createdAt": "2026-10-01T22:37:26.099Z",
+  "url": "http://127.0.0.1:8789/dist/fpv-controls-verification/index.html",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "scope": "Actual browser SVG geometry + actual fixed-point flight integrator; controlled inputs, no physical-radio or performance acceptance.",
+  "passed": true,
+  "checks": [
+    {
+      "name": "Neutral rear view is level, with front farther away",
+      "passed": true,
+      "front": [110, 52.35596389035547],
+      "rear": [110, 76.9218423307113],
+      "browserBounds": {
+        "width": 1198,
+        "height": 871.265625
+      }
+    },
+    {
+      "name": "Positive roll lowers right side",
+      "passed": true,
+      "left": [83.56806973692781, 53.013507602907936],
+      "right": [134.75303978478038, 80.09810518221715]
+    },
+    {
+      "name": "Positive pitch moves nose down",
+      "passed": true,
+      "front": [110, 66.43382736298393],
+      "rear": [110, 57.74621174595716]
+    },
+    {
+      "name": "Positive yaw stays visible relative to start",
+      "passed": true,
+      "front": [142.71392391206703, 63.002043898680704],
+      "rear": [79.10327572275662, 63.002624490993476]
+    },
+    {
+      "name": "Negative roll lowers left side",
+      "passed": true,
+      "left": [85.24696021521962, 80.09810518221715],
+      "right": [136.4319302630722, 53.013507602907936]
+    },
+    {
+      "name": "Negative pitch moves nose up",
+      "passed": true,
+      "front": [110, 40.669422467907964],
+      "rear": [110, 92.07273259124023]
+    },
+    {
+      "name": "Negative yaw stays visible relative to start",
+      "passed": true,
+      "front": [77.28607608793297, 63.002043898680704],
+      "rear": [140.89672427724338, 63.002624490993476]
+    },
+    {
+      "name": "Full Acro roll inversion is retained",
+      "passed": true,
+      "inverted": true
+    },
+    {
+      "name": "Full Acro pitch inversion is retained",
+      "passed": true,
+      "inverted": true
+    },
+    {
+      "name": "Initial heading compensation keeps rear view and subsequent pitch truthful",
+      "passed": true,
+      "front": [110.00001934768723, 66.43382986376946],
+      "expected": [110, 66.43382736298393]
+    },
+    {
+      "name": "Actual flight integrator roll input agrees",
+      "passed": true,
+      "orientation": [0, 0, -78811, 996890]
+    },
+    {
+      "name": "Actual flight integrator pitch input agrees",
+      "passed": true,
+      "orientation": [-78811, 0, 0, 996890]
+    },
+    {
+      "name": "Actual flight integrator yaw input agrees",
+      "passed": true,
+      "orientation": [0, -78811, 0, 996890]
+    },
+    {
+      "name": "Measured world drift respects fixed start heading",
+      "passed": true,
+      "path": "M110.00 118.00L110.00 100.18M114.00 107.18L110.00 100.18L106.00 107.18"
+    },
+    {
+      "name": "Follow heading -180° keeps rear view and local control signs",
+      "passed": true,
+      "front": [110, 52.35596389035547],
+      "rear": [110, 76.92184233071131],
+      "cameraHeading": 3.141568653589794,
+      "headingDelta": 3.141568653589794
+    },
+    {
+      "name": "Follow heading -90° keeps rear view and local control signs",
+      "passed": true,
+      "front": [110, 52.35596389035547],
+      "rear": [110, 76.9218423307113],
+      "cameraHeading": -1.5707722851887769,
+      "headingDelta": -1.5707722851887769
+    },
+    {
+      "name": "Follow heading 0° keeps rear view and local control signs",
+      "passed": true,
+      "front": [110, 52.35596389035547],
+      "rear": [110, 76.9218423307113],
+      "cameraHeading": 0,
+      "headingDelta": 0
+    },
+    {
+      "name": "Follow heading 90° keeps rear view and local control signs",
+      "passed": true,
+      "front": [110, 52.35596389035547],
+      "rear": [110, 76.9218423307113],
+      "cameraHeading": 1.5707722851887769,
+      "headingDelta": 1.5707722851887769
+    },
+    {
+      "name": "Follow heading 180° keeps rear view and local control signs",
+      "passed": true,
+      "front": [110, 52.35596389035547],
+      "rear": [110, 76.92184233071131],
+      "cameraHeading": -3.141568653589794,
+      "headingDelta": -3.141568653589794
+    },
+    {
+      "name": "Follow heading 270° keeps rear view and local control signs",
+      "passed": true,
+      "front": [110, 52.35596389035547],
+      "rear": [110, 76.9218423307113],
+      "cameraHeading": -1.570833096336136,
+      "headingDelta": -1.570833096336136
+    },
+    {
+      "name": "Follow heading retains full pitch inversion after turn",
+      "passed": true,
+      "inverted": true,
+      "front": [110.0000000010004, 59.3363957178629],
+      "rear": [110.00000000137625, 85.97391861135594]
+    },
+    {
+      "name": "Follow heading retains full roll inversion after turn",
+      "passed": true,
+      "inverted": true,
+      "front": [109.99991677764605, 59.33700842888582],
+      "rear": [109.99988551059649, 85.9732664231189]
+    },
+    {
+      "name": "Vertical and near-vertical nose hold last valid camera heading",
+      "passed": true,
+      "cameraHeading": 1.5707722851887769,
+      "verticalHeading": 1.5707722851887769,
+      "nearVerticalHeading": 1.5707722851887769
+    },
+    {
+      "name": "Ground reference turns, signed yaw stays readable, actual forward drift stays away",
+      "passed": true,
+      "ground": "M72.00 133.68L82.84 106.80L135.46 106.80L145.63 133.68ZM110.00 133.68L110.00 106.80M139.70 118.00L78.32 118.00L84.92 119.04L78.32 118.00L85.57 116.98",
+      "drift": "M110.00 118.00L110.00 100.18M114.00 107.18L110.00 100.18L106.00 107.18",
+      "headingDelta": 1.5707722851887769
+    },
+    {
+      "name": "Follow heading preserves nonzero start reference",
+      "passed": true,
+      "headingDelta": 0
+    },
+    {
+      "name": "Ground arrow and grid stay inside viewBox above heading text at every 15° turn",
+      "passed": true,
+      "bounds": [
+        {
+          "yaw": 0,
+          "x": 71.51000213623047,
+          "y": 107.08999633789062,
+          "width": 76.9800033569336,
+          "height": 24.910003662109375
+        },
+        {
+          "yaw": 15,
+          "x": 74.2699966430664,
+          "y": 104.97000122070312,
+          "width": 79.4800033569336,
+          "height": 31.350006103515625
+        },
+        {
+          "yaw": 30,
+          "x": 68.2300033569336,
+          "y": 103.68000030517578,
+          "width": 87.07999420166016,
+          "height": 35.730003356933594
+        },
+        {
+          "yaw": 45,
+          "x": 64.33000183105469,
+          "y": 103.22000122070312,
+          "width": 89.30999755859375,
+          "height": 37.529998779296875
+        },
+        {
+          "yaw": 60,
+          "x": 63.27000045776367,
+          "y": 103.58999633789062,
+          "width": 86.08999633789062,
+          "height": 36.529998779296875
+        },
+        {
+          "yaw": 75,
+          "x": 65.66999816894531,
+          "y": 104.7699966430664,
+          "width": 77.44999694824219,
+          "height": 32.849998474121094
+        },
+        {
+          "yaw": 90,
+          "x": 72,
+          "y": 106.80000305175781,
+          "width": 73.6300048828125,
+          "height": 26.879989624023438
+        },
+        {
+          "yaw": 105,
+          "x": 75.08999633789062,
+          "y": 104.91999816894531,
+          "width": 77.19000244140625,
+          "height": 33.02000427246094
+        },
+        {
+          "yaw": 120,
+          "x": 68.83999633789062,
+          "y": 103.8499984741211,
+          "width": 86.30999755859375,
+          "height": 36.920005798339844
+        },
+        {
+          "yaw": 135,
+          "x": 64.66000366210938,
+          "y": 103.58999633789062,
+          "width": 89.91999816894531,
+          "height": 38.100006103515625
+        },
+        {
+          "yaw": 150,
+          "x": 63.220001220703125,
+          "y": 104.13999938964844,
+          "width": 87.95999145507812,
+          "height": 36.38999938964844
+        },
+        {
+          "yaw": 165,
+          "x": 65.19000244140625,
+          "y": 105.51000213623047,
+          "width": 80.38999938964844,
+          "height": 31.98999786376953
+        },
+        {
+          "yaw": 180,
+          "x": 71.05000305175781,
+          "y": 107.68000030517578,
+          "width": 77.89999389648438,
+          "height": 25.43000030517578
+        },
+        {
+          "yaw": 195,
+          "x": 74.41999816894531,
+          "y": 105.51000213623047,
+          "width": 80.38999938964844,
+          "height": 31.98999786376953
+        },
+        {
+          "yaw": 210,
+          "x": 68.81999969482422,
+          "y": 104.13999938964844,
+          "width": 87.95999908447266,
+          "height": 36.38999938964844
+        },
+        {
+          "yaw": 225,
+          "x": 65.41999816894531,
+          "y": 103.58999633789062,
+          "width": 89.91999816894531,
+          "height": 38.100006103515625
+        },
+        {
+          "yaw": 240,
+          "x": 64.8499984741211,
+          "y": 103.8499984741211,
+          "width": 86.31000518798828,
+          "height": 36.920005798339844
+        },
+        {
+          "yaw": 255,
+          "x": 67.72000122070312,
+          "y": 104.91999816894531,
+          "width": 77.19000244140625,
+          "height": 33.02000427246094
+        },
+        {
+          "yaw": 270,
+          "x": 74.37000274658203,
+          "y": 106.80000305175781,
+          "width": 73.62999725341797,
+          "height": 26.879989624023438
+        },
+        {
+          "yaw": 285,
+          "x": 76.87999725341797,
+          "y": 104.7699966430664,
+          "width": 77.45000457763672,
+          "height": 32.849998474121094
+        },
+        {
+          "yaw": 300,
+          "x": 70.63999938964844,
+          "y": 103.58999633789062,
+          "width": 86.08999633789062,
+          "height": 36.529998779296875
+        },
+        {
+          "yaw": 315,
+          "x": 66.36000061035156,
+          "y": 103.22000122070312,
+          "width": 89.30000305175781,
+          "height": 37.529998779296875
+        },
+        {
+          "yaw": 330,
+          "x": 64.69000244140625,
+          "y": 103.68000030517578,
+          "width": 87.08000183105469,
+          "height": 35.730003356933594
+        },
+        {
+          "yaw": 345,
+          "x": 66.25,
+          "y": 104.97000122070312,
+          "width": 79.47999572753906,
+          "height": 31.350006103515625
+        }
+      ]
+    },
+    {
+      "name": "Disposal removes owned SVG without removing host",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "74ae9293ebcc7d27694e60addb41f9913ee35cb5691ada8c7a4911a13eb80681",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/model.mjs": "c8c562a61ecab4c1d6fdc60ec3ddc72a011b8a9a0c4c629450095103b0a976af",
+    "optional-practice/civilian-fpv/style.css": "c7f796a1f8e5563b6134d6d4cf438b5f5161c8fe48040d1b5ee760fe4a3f812c"
+  }
+}

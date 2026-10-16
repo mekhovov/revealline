@@ -1,4 +1,5 @@
 import { createFlightInformationBridge } from './flight-information-bridge.mjs';
+import { render } from '../i18n/index.mjs';
 
 // The next HUD presenter reads the same accepted source as the existing caption.
 // Exposing only an immutable reading does not give consumers warning/run authority.
@@ -55,8 +56,8 @@ export function attachFlightInformation({ element, getState, writeWarning }) {
   const commitWarning = (expected, fullText, cue = null, role = 'host.unknown', options) =>
     bridge.commitWarning(
       expected,
-      { fullText, cue },
-      (text, nextCue) => warning(text, nextCue, role),
+      { fullText: render(fullText), cue },
+      (_text, nextCue) => warning(fullText, nextCue, role),
       options,
     );
   return Object.freeze({

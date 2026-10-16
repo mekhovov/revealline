@@ -4,7 +4,9 @@ import { readFile } from 'node:fs/promises';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { createRun, stepRun, releaseInputs, FIXED_DT } from '../core/index.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { couchPage as page } from './helpers/couch-host.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const base = await read('../content/campaign.json');
@@ -19,12 +21,50 @@ const pad = (index) => ({
   buttons: Array.from({ length: 16 }, () => ({ pressed: false, value: 0 })),
 });
 
+function visibleControl(f, id) {
+  const control = f.$(id);
+  assert.ok(control?.getClientRects().length, `${id} must be rendered`);
+  assert.equal(control.closest('[hidden],[inert]'), null, `${id} must be in the active menu`);
+  assert.equal(control.disabled, false, `${id} must be enabled`);
+  return control;
+}
+
+function activateMenu(f, id, input = 'controller') {
+  const control = visibleControl(f, id);
+  f.focus(id);
+  assert.equal(f.doc.activeElement, control);
+  if (input === 'controller') f.pulse(0, 0);
+  else if (input === 'keyboard') {
+    f.key('Enter', true, control);
+    f.key('Enter', false, control);
+  } else control.click();
+  f.frame(0);
+}
+
+function openSettings(f, category, input = 'controller') {
+  if (f.$('race-options-panel').hidden) activateMenu(f, 'race-options', input);
+  activateMenu(f, `race-settings-tab-${category}`, input);
+  assert.equal(f.$(`race-settings-panel-${category}`).hidden, false);
+  assert.equal(f.$(`race-settings-panel-${category}`).inert, false);
+}
+
+function openSetup(f, input = 'controller') {
+  openSettings(f, 'gameplay', input);
+  activateMenu(f, 'race-focus', input);
+  visibleControl(f, 'race-level');
+}
+
+function closeSettings(f, input = 'controller') {
+  activateMenu(f, 'race-options-back', input);
+  assert.equal(f.$('race-options-panel').hidden, true);
+  visibleControl(f, 'race-start');
+}
+
 // Join the actual menu activation when Next prepares a fresh exact picture.
 // Keep controller dispatch and every core route/checkpoint assertion unchanged.
 async function nextAction(f, activate) {
   const button = f.$('race-start'),
-    handler = button.onclick,
-    preparingNext = f.state() === 'finished';
+    handler = button.onclick;
   let operation;
   button.onclick = (event) => (operation = handler(event));
   try {
@@ -33,7 +73,8 @@ async function nextAction(f, activate) {
   } finally {
     button.onclick = handler;
   }
-  if (preparingNext) f.frame(0);
+  // Settle the accepted Ready or rematch cue before a route supplies held input.
+  f.frame(0);
 }
 
 test('two sparse pads deliberately claim one menu; join/held Confirm cannot start or leak flight actions', async (t) => {
@@ -77,8 +118,7 @@ test('actual select previews cancel without replacing the duel and commit once t
   f.join(0);
   const run = f.renders[0],
     original = f.$('race-level').value;
-  f.$('race-focus').click();
-  f.frame();
+  openSetup(f);
   f.focus('race-level');
   f.pulse(0, 0);
   f.pulse(0, 13);
@@ -87,10 +127,26 @@ test('actual select previews cancel without replacing the duel and commit once t
   f.pulse(0, 1);
   assert.equal(f.editors().length, 0);
   assert.equal(f.renders[0], run);
+  const handler = f.$('race-level').onchange;
+  let preparation;
+  f.$('race-level').onchange = (event) => (preparation = handler(event));
   f.pulse(0, 0);
   f.pulse(0, 13);
-  f.pulse(0, 0);
+  try {
+    f.pulse(0, 0);
+    await preparation;
+    f.frame(0);
+  } finally {
+    f.$('race-level').onchange = handler;
+  }
   assert.notEqual(f.$('race-level').value, original);
+  await waitFor(
+    () => {
+      f.frame(0);
+      return f.renders[0] !== run;
+    },
+    { message: 'The committed native select change did not finish staging its replacement.' },
+  );
   assert.notEqual(f.renders[0], run);
   const newRun = f.renders[0];
   f.frames(30);
@@ -103,8 +159,7 @@ test('Back and Menu cancel previews or focus the primary action without starting
   const f = await page(t, { pads: [pad(0)] });
   f.join(0);
   for (const button of [1, 9]) {
-    f.$('race-focus').click();
-    f.frame();
+    openSetup(f);
     f.focus('race-turn');
     f.pulse(0, 0);
     f.pulse(0, 13);
@@ -115,6 +170,7 @@ test('Back and Menu cancel previews or focus the primary action without starting
     assert.equal(f.doc.activeElement.id, 'race-focus');
     assert.equal(f.state(), 'ready');
   }
+  closeSettings(f);
   f.focus('race-start');
   f.pulse(0, 0);
   f.frame();
@@ -136,8 +192,7 @@ test('Back and Menu cancel previews or focus the primary action without starting
 test('native menu focus cancels a held D-pad repeat until neutral without clearing either flight keyboard', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
-  f.$('race-focus').click();
-  f.frame();
+  openSetup(f);
   f.button(0, 13, true);
   f.frame();
   f.focus('race-class');
@@ -147,6 +202,7 @@ test('native menu focus cancels a held D-pad repeat until neutral without cleari
   f.button(0, 13, false);
   f.frame();
   f.pulse(0, 1);
+  closeSettings(f);
   f.focus('race-start');
   f.pulse(0, 0);
   f.frame();
@@ -160,6 +216,10 @@ test('native menu focus cancels a held D-pad repeat until neutral without cleari
 
 test('Ready slot loss consumes another pad Confirm; the surviving player keeps its slot', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
+  f.join(0);
+  f.join(1);
+  // Give the second assigned player the shared menu explicitly.
+  f.$('race-menu-release').onclick();
   f.join(1);
   f.setPads([null, f.pads()[1]]);
   f.button(1, 0, true);
@@ -168,7 +228,7 @@ test('Ready slot loss consumes another pad Confirm; the surviving player keeps i
   assert.equal(f.tick(), 0);
   assert.match(
     f.$('race-pad-status').textContent,
-    /Player 1: keyboard\/touch · Player 2: pad slot 1/,
+    /Player 1: Keyboard \/ touch · Player 2: pad slot 1/,
   );
   f.frames(10);
   assert.equal(f.state(), 'ready');
@@ -182,6 +242,7 @@ for (const eventLoss of [false, true]) {
   test(`${eventLoss ? 'disconnect event' : 'descriptor change'} at the same index pauses flight and requires neutral plus a new menu join`, async (t) => {
     const f = await page(t, { pads: [pad(0), pad(1)] });
     f.join(0);
+    f.join(1);
     f.pulse(0, 0);
     f.frame();
     f.pads()[0].axes[0] = 1;
@@ -211,14 +272,17 @@ for (const eventLoss of [false, true]) {
 test('explicit menu release permits the other player to join, never transfers a held edge', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
-  f.$('race-options').click();
-  f.$('race-settings-tab-controls').click();
+  f.join(1);
+  f.focus('race-options');
+  f.pulse(0, 0);
+  f.focus('race-settings-tab-controls');
+  f.pulse(0, 0);
   f.frame();
   f.focus('race-menu-release');
   f.pulse(0, 0);
   assert.equal(f.$('race-menu-release').hidden, true);
   assert.equal(f.state(), 'ready');
-  f.$('race-options-back').click();
+  f.key('Escape');
   f.frame();
   f.join(1);
   assert.match(f.$('race-menu-status').textContent, /Player 2 controller has the menu/);
@@ -272,8 +336,7 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
   f.frame();
   assert.equal(f.state(), 'ready');
   assert.match(f.$('race-start').textContent, /Start race/);
-  f.$('race-focus').click();
-  f.frame();
+  openSetup(f);
   f.focus('race-level');
   f.pulse(0, 0);
   assert.equal(f.editors().length, 1);
@@ -283,6 +346,7 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
   assert.equal(f.state(), 'ready');
   assert.equal(f.tick(), 0);
   f.pulse(0, 1);
+  closeSettings(f);
   f.focus('race-start');
   f.pulse(0, 0);
   f.frame();
@@ -294,11 +358,96 @@ test('persisted return and Ready Escape preserve the true state and cancel a pen
   assert.deepEqual(f.checkpoint(), checkpoint);
 });
 
+for (const adapter of ['keyboard', 'controller']) {
+  test(`${adapter}: visible reaction settings and storage retry are reachable without starting either board`, async (t) => {
+    const preferenceKey = 'revealline.journey-reactions.v1',
+      values = new Map(),
+      writes = [];
+    let unavailable = true;
+    const f = await page(t, {
+      pads: adapter === 'controller' ? [pad(0)] : [],
+      nativeKeyboard: true,
+      storage: {
+        getItem: (key) => values.get(key) ?? null,
+        setItem(key, value) {
+          if (key === preferenceKey) {
+            writes.push(value);
+            if (unavailable) throw new Error('Storage temporarily unavailable');
+          }
+          values.set(key, value);
+        },
+      },
+    });
+    if (adapter === 'controller') f.join(0);
+    openSettings(f, 'display', adapter);
+    f.frame();
+    const before = f.checkpoint();
+    const next = () => {
+      if (adapter === 'controller') f.pulse(0, 13);
+      else {
+        const target = f.doc.activeElement;
+        target.emit('keydown', { key: 'Tab', code: 'Tab', repeat: false });
+        target.emit('keyup', { key: 'Tab', code: 'Tab' });
+      }
+    };
+    const activate = () => {
+      if (adapter === 'controller') f.pulse(0, 0);
+      else {
+        const target = f.doc.activeElement;
+        if (target.type === 'checkbox') {
+          const event = target.emit('keydown', { key: ' ', code: 'Space', repeat: false });
+          assert.equal(
+            event.defaultPrevented,
+            false,
+            'Checkbox activation keeps browser ownership',
+          );
+          target.emit('keyup', { key: ' ', code: 'Space' });
+          target.click(); // Browser default Space activation, after the real navigation handler.
+        } else {
+          f.key('Enter', true, target);
+          f.key('Enter', false, target);
+        }
+      }
+    };
+    assert.equal(
+      f.$('race-menu-ornaments').getClientRects().length,
+      0,
+      'The shared appearance controls replace the retained legacy ornament selector',
+    );
+    visibleControl(f, 'race-enemy-remains');
+    f.focus('race-enemy-remains');
+    next();
+    assert.equal(f.doc.activeElement.id, 'race-journey-reactions-enabled');
+    assert.equal(f.doc.activeElement.checked, true);
+    activate();
+    assert.equal(f.$('race-journey-reactions-enabled').checked, false);
+    assert.equal(writes.length, 1);
+    assert.equal(f.$('race-journey-reactions-retry').hidden, false);
+    next();
+    assert.equal(f.doc.activeElement.id, 'race-journey-reactions-retry');
+    unavailable = false;
+    activate();
+    assert.equal(writes.length, 2);
+    assert.equal(JSON.parse(values.get(preferenceKey)).enabled, false);
+    assert.equal(f.$('race-journey-reactions-retry').hidden, true);
+    f.focus('race-enemy-remains');
+    next();
+    next();
+    assert.notEqual(
+      f.doc.activeElement.id,
+      'race-journey-reactions-retry',
+      'Hidden recovery cannot be selected',
+    );
+    assert.equal(f.state(), 'ready');
+    assert.deepEqual(f.checkpoint(), before);
+  });
+}
+
 test('API errors and unsupported pads remain usable with keyboard and truthful Ready status', async (t) => {
   const unsupported = pad(0);
   unsupported.mapping = '';
   const f = await page(t, { pads: [unsupported] });
-  assert.match(f.$('race-menu-status').textContent, /no standard mapping/);
+  assert.match(f.$('race-menu-status').textContent, /Configure/);
   f.setError(new DOMException('Denied', 'SecurityError'));
   f.frame();
   assert.match(f.$('race-menu-status').textContent, /unavailable/);
@@ -312,28 +461,38 @@ test('API errors and unsupported pads remain usable with keyboard and truthful R
 for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: actual Sentinel round win and First to two rematch retain legal core route results`, async (t) => {
     const f = await page(t, { campaign: sentinel.campaigns[0], turnPolicy, pads: [pad(0)] });
-    f.$('race-focus').click();
+    openSetup(f, 'pointer');
     f.$('race-format').value = 'first-to-two';
     await f.$('race-format').onchange();
     f.$('race-setup-back').click();
+    closeSettings(f, 'pointer');
     f.frame(0);
     f.join(0);
     const route = sentinelRoutes.routes.find(
       (r) => r.variant === 'ordinary' && r.classId === 'scout' && r.turnPolicy === turnPolicy,
     );
     for (let round = 1; round <= 2; round++) {
+      // Settings Back restores its opener. Deliberately choose Start rather
+      // than assuming controller ownership discards that native focus.
+      visibleControl(f, 'race-start');
+      f.focus('race-start');
+      assert.equal(f.doc.activeElement, f.$('race-start'));
       await nextAction(f, () => {
         f.button(0, 0, true);
         f.frame();
         f.button(0, 0, false);
       });
+      assert.equal(f.state(), 'running', 'The route starts only after the real Start action.');
       assert.equal(f.tick(), 0);
-      const oracle = createRun(sentinel.campaigns[0].levels[0], {
-        seed: 2026,
-        classId: 'scout',
-        turnPolicy,
-        classRecipes: await read('../content/classes.json'),
-      });
+      const oracle = createRun(
+        applyGameplayTuning(sentinel.campaigns[0].levels[0], resolveGameplayTuning()),
+        {
+          seed: 2026,
+          classId: 'scout',
+          turnPolicy,
+          classRecipes: await read('../content/classes.json'),
+        },
+      );
       let direction = null;
       for (const [index, segment] of route.segments.entries()) {
         if (direction)
@@ -343,9 +502,12 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         // Pause would freeze the clocks and cannot substitute for these waits.
         direction = segment.input.direction ?? (index === 2 ? 'up' : 'down');
         if (direction) f.key({ up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' }[direction]);
-        f.frames(segment.ticks);
-        for (let i = 0; i < segment.ticks; i++)
-          stepRun(oracle, { ...segment.input, direction }, FIXED_DT);
+        // v4 reference pacing reaches the same legal release cut a few ticks
+        // later. Extend only the final held direction; the immutable v3 replay
+        // remains covered by its own historical replay tests.
+        const ticks = segment.ticks + (index === route.segments.length - 1 ? 16 : 0);
+        f.frames(ticks);
+        for (let i = 0; i < ticks; i++) stepRun(oracle, { ...segment.input, direction }, FIXED_DT);
       }
       if (direction)
         f.key({ up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' }[direction], false);
@@ -353,7 +515,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       assert.equal(f.state(), 'finished');
       assert.equal(f.renders[0].lives, 3);
       assert.equal(f.renders[0].score, route.expected.score);
-      assert.equal(f.renders[0].tick, route.expected.tick);
+      assert.equal(f.renders[0].tick, turnPolicy === 'immediate' ? 1796 : 1800);
       releaseInputs(oracle);
       assert.deepEqual(authoritativeCheckpoint(f.renders[0]), authoritativeCheckpoint(oracle));
       f.frame();
@@ -370,7 +532,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 test('one lost craft does not expose shared menu; both ended draws retain explicit Next', async (t) => {
   const { level } = retryFixture('self-contact');
   const f = await page(t, {
-    campaign: { ...base, briefs: [], levels: [level] },
+    campaign: { ...base, id: 'navigation-fixture', briefs: [], levels: [level] },
     pads: [pad(0), pad(1)],
   });
   f.join(0);
@@ -407,6 +569,7 @@ test('one lost craft does not expose shared menu; both ended draws retain explic
 test('native checkboxes and both held touch pads stay independent after leaving controller navigation', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1)] });
   f.join(0);
+  f.frames(151);
   f.$('race-options').click();
   f.$('race-settings-tab-controls').click();
   f.frame();
@@ -414,8 +577,9 @@ test('native checkboxes and both held touch pads stay independent after leaving 
     f.$(`race-touch-${i}`).value = 'always';
     f.$(`race-touch-${i}`).emit('change');
   }
-  f.$('race-settings-tab-display').click();
+  f.$('race-settings-tab-accessibility').click();
   f.frame();
+  visibleControl(f, 'race-reduced');
   f.focus('race-reduced');
   f.pulse(0, 0);
   assert.equal(f.$('race-reduced').checked, true);
@@ -423,26 +587,51 @@ test('native checkboxes and both held touch pads stay independent after leaving 
   f.focus('race-start');
   f.pulse(0, 0);
   f.frame();
+  // The controller owns its committed Confirm through the finite Steam Input
+  // echo window. A later direct touch is a new gesture, not the mirrored click.
+  f.frames(151);
   const pads = f.doc.querySelectorAll('.race-pad');
   const right = pads[0].querySelector('.touch-surface');
   const left = pads[1].querySelector('.touch-surface');
   for (const surface of [right, left])
     surface.getBoundingClientRect = () => ({ left: 0, top: 0, width: 156, height: 156 });
-  right.emit('pointerdown', { pointerId: 41, button: 0, clientX: 78, clientY: 78 });
-  left.emit('pointerdown', { pointerId: 42, button: 0, clientX: 78, clientY: 78 });
-  right.emit('pointermove', { pointerId: 41, clientX: 120, clientY: 78 });
-  left.emit('pointermove', { pointerId: 42, clientX: 30, clientY: 78 });
+  right.emit('pointerdown', {
+    pointerId: 41,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 78,
+    clientY: 78,
+  });
+  left.emit('pointerdown', {
+    pointerId: 42,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 78,
+    clientY: 78,
+  });
+  right.emit('pointermove', {
+    pointerId: 41,
+    pointerType: 'touch',
+    clientX: 120,
+    clientY: 78,
+  });
+  left.emit('pointermove', {
+    pointerId: 42,
+    pointerType: 'touch',
+    clientX: 30,
+    clientY: 78,
+  });
   f.frames(20);
   assert.ok(f.renders[0].player.x > f.renders[0].level.spawn.x);
   assert.ok(f.renders[1].player.x < f.renders[1].level.spawn.x);
-  right.emit('pointerup', { pointerId: 41 });
-  left.emit('pointerup', { pointerId: 42 });
+  right.emit('pointerup', { pointerId: 41, pointerType: 'touch' });
+  left.emit('pointerup', { pointerId: 42, pointerType: 'touch' });
   const positions = f.renders.map((run) => run.player.x);
   f.frames(8);
   assert.ok(f.renders[0].player.x > positions[0]);
   assert.ok(f.renders[1].player.x < positions[1]);
-  right.emit('pointerdown', { pointerId: 43, button: 0 });
-  right.emit('pointercancel', { pointerId: 43 });
+  right.emit('pointerdown', { pointerId: 43, pointerType: 'touch', button: 0 });
+  right.emit('pointercancel', { pointerId: 43, pointerType: 'touch' });
   f.frame();
   assert.equal(f.state(), 'paused');
 });
@@ -490,7 +679,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: real recovery clears only that player's continuous intent before later substeps`, async (t) => {
     const { level } = retryFixture('enemy-player');
     level.rules = { ...level.rules, lives: 3, respawnSeconds: 0.1, graceSeconds: 0 };
-    const f = await page(t, { campaign: { ...base, briefs: [], levels: [level] }, turnPolicy });
+    const f = await page(t, {
+      campaign: { ...base, id: 'navigation-fixture', briefs: [], levels: [level] },
+      turnPolicy,
+    });
     f.$('race-start').click();
     f.frame();
     f.key('KeyD');
@@ -529,9 +721,14 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 test('timeout draw keeps series at zero and needs a fresh explicit Next gesture', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1), pad(2)] });
   f.frame();
-  f.pulse(2, 0);
-  assert.equal(f.$('race-menu-release').hidden, true);
   f.join(0);
+  f.join(1);
+  f.pulse(2, 0);
+  assert.equal(
+    f.$('race-menu-release').hidden,
+    false,
+    'Unassigned third pad does not change the menu owner.',
+  );
   f.button(0, 0, true);
   f.frame();
   f.button(0, 0, false);
@@ -567,7 +764,9 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         classic: { version: 'classic.v1', terrain: [], powerups: [] },
         spawn: { x: 36.5, y: 0.5 },
         goal: { coverage: 0.99 },
-        enemies: [{ id: 'seed', type: 'bouncer', x: 60.5, y: 18.5, vx: 1, vy: 0 }],
+        // Keep the capture seed in the far column regardless of reference-paced
+        // enemy speed; this fixture isolates per-player cut release, not combat.
+        enemies: [{ id: 'seed', type: 'bouncer', x: 60.5, y: 18.5, vx: 0, vy: 1 }],
         rules: {
           moveSpeed: 13,
           lives: 3,
@@ -577,10 +776,14 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         },
       };
       const f = await page(t, {
-        campaign: { ...base, briefs: [], levels: [level] },
+        campaign: { ...base, id: 'navigation-fixture', briefs: [], levels: [level] },
         turnPolicy,
         pads: adapter === 'controller' ? [pad(0)] : [],
       });
+      if (adapter === 'controller') {
+        f.frame();
+        f.pulse(0, 3);
+      }
       f.$('race-start').click();
       f.frames(2);
       if (adapter === 'controller') f.pads()[0].axes[1] = 1;
@@ -617,7 +820,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       assert.equal(first.player.cutting, false);
       assert.ok(first.claimedCount > 0);
       assert.equal(f.renders[1].claimedCount, 0);
-      assert.ok(Math.abs(f.renders[1].player.y - otherY - 24 * 13 * FIXED_DT) < 1e-8);
+      assert.ok(
+        Math.abs(f.renders[1].player.y - otherY - 24 * f.renders[1].rules.moveSpeed * FIXED_DT) <
+          1e-8,
+      );
       const stops = f.observedEvents.filter((event) => event.type === 'capture.stopped');
       assert.equal(stops.length, 1);
       assert.equal(

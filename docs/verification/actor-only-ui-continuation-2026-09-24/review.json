@@ -1,0 +1,52 @@
+{
+  "format": "revealline-scoped-functional-ui-review-successor.v1",
+  "status": "bounded functional source and browser review; complete navigation and physical-device review pending",
+  "candidateBase": "c56f4b390c8d03a6da2a94c8f28c8bca37cabd5e",
+  "scope": "Continue only the 24 unchanged UI recipe approvals after reviewing the exact actor-only presentation-host addition. No Team recipe, equipment, trail/effect or artwork approval.",
+  "priorReview": {
+    "path": "docs/verification/team-host-ui-continuation/review.json",
+    "sha256": "9bedba528191f2948259714d0f39fbcc369b6cccfa53ea1a5ee7ae397b1fc6db",
+    "fingerprintSHA256": "6a18141c9ebae43c58feee7dd1c8ea6529a333bd80a43935624f45c482fcf865"
+  },
+  "fingerprint": {
+    "group": "ui",
+    "paths": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/presentation/team-runtime-slots.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs; game/presentation/dom-ownership.mjs",
+    "sha256": "4b7db79dd3f6931dd72c0ae702f15a5a5d8ff2b7044aca5a2e02886e8e61636a",
+    "algorithm": "SHA256 of ordered raw source bytes concatenated, matching fieldKitRecipeSources"
+  },
+  "changedInput": {
+    "path": "game/presentation/host.mjs",
+    "priorSHA256": "f15fc7910c5646462a3f3d8839a2d7a67d8c6764c11ff5f8356d0dc4a7564c2c",
+    "currentSHA256": "66f0658ad11f3b46f2ecfc4f4d75d03dd08cb700905fe63aa60e04e395d534e3",
+    "assessment": "Adds an explicit actors profile with a fixed registered image-slot vocabulary. Full remains the default profile and keeps existing loading, cropping, CSS ownership, audio, picture and apply behavior. The actors profile decodes only registered actor images, creates no CSS URLs and fails closed for apply, audio and picture operations."
+  },
+  "unchangedInputs": [
+    "game/ui/field-kit-components.css",
+    "game/ui/field-kit-compiled.css",
+    "game/presentation/team-runtime-slots.mjs",
+    "game/ui/operation-status.css",
+    "game/ui/operation-status.mjs",
+    "game/presentation/dom-ownership.mjs"
+  ],
+  "qualification": {
+    "automated": [
+      "The actor-appearance lease suite verifies the fixed slot set, exact manifest identity, independent leases, cancellation and fail-closed actor-only restrictions.",
+      "Retained-presentation tests preserve exact prior runtime payloads and reject missing or corrupt originals.",
+      "The current production-history test binds all 24 UI recipes to this exact successor fingerprint and review bytes."
+    ],
+    "nativeBrowser": [
+      "The fresh-origin Team entry rendered existing panels, selects, buttons, mission-library dialog, search/filter controls, role HUD and focus without actor-profile CSS ownership.",
+      "Twin depots loaded FPV actors through the independent actor lease while retaining its authored picture and Field Kit UI.",
+      "The full-profile UI remained the visible page owner; the actor-only path did not apply a page theme or replace audio/picture ownership."
+    ],
+    "screenshots": "Inspected inline and not persisted as release evidence."
+  },
+  "unchangedBindings": "All 24 UI recipe payloads, Field Kit tokens and DOM ownership contracts remain byte-identical to the prior review. This successor changes no UI recipe or artwork bytes.",
+  "excluded": [
+    "No complete keyboard/controller/touch navigation or physical-device qualification.",
+    "No forced-colour, screen-reader, every-viewport or every-page acceptance.",
+    "No Team recipe/equipment, trail/effect, audio, artwork, frozen-build, offline, public Pages or release approval.",
+    "No human validation; browser observations and automated tests are technical evidence only."
+  ],
+  "decision": "Continue the bounded functional approval for the exact 24 UI recipes only when this fingerprint and review bytes match. Any UI dependency change reopens the group."
+}

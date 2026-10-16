@@ -45,7 +45,13 @@ test('the committed generated Studio metadata passes its exact format and invent
   ]);
   const before = new Uint8Array(studio);
   const result = await checkPresentationMetadata(studio, manifest, { config: config ?? {} });
-  assert.equal(result.formatting, 'prettier');
+  const document = JSON.parse(studio);
+  const pretty = Buffer.from(await format(canonicalJSON(document), { parser: 'json' }));
+  assert.equal(
+    result.formatting,
+    pretty.length <= LIMITS.manifestBytes ? 'prettier' : 'bounded-canonical',
+    'the committed document uses the bounded encoding selected for its exact evidence bytes',
+  );
   assert.equal(result.sha256, hash(studio));
   assert.deepEqual(new Uint8Array(studio), before);
 });

@@ -1,0 +1,255 @@
+TAP version 13
+# Subtest: all 18 themes resolve explicitly, company mapping works, unknown IDs safely fall back
+ok 1 - all 18 themes resolve explicitly, company mapping works, unknown IDs safely fall back
+  ---
+  duration_ms: 0.635625
+  ...
+# Subtest: fpv mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+ok 2 - fpv mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+  ---
+  duration_ms: 0.148084
+  ...
+# Subtest: ukraine mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+ok 3 - ukraine mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+  ---
+  duration_ms: 0.130625
+  ...
+# Subtest: retro mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+ok 4 - retro mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+  ---
+  duration_ms: 0.056708
+  ...
+# Subtest: coupa mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+ok 5 - coupa mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
+  ---
+  duration_ms: 0.054375
+  ...
+# Subtest: fpv mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+ok 6 - fpv mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+  ---
+  duration_ms: 2.587083
+  ...
+# Subtest: ukraine mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+ok 7 - ukraine mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+  ---
+  duration_ms: 0.684834
+  ...
+# Subtest: retro mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+ok 8 - retro mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+  ---
+  duration_ms: 0.352
+  ...
+# Subtest: coupa mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+ok 9 - coupa mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
+  ---
+  duration_ms: 0.422917
+  ...
+# Subtest: every scene retains bounded artwork anchors and one shared image/canvas plane without moving stickers
+ok 10 - every scene retains bounded artwork anchors and one shared image/canvas plane without moving stickers
+  ---
+  duration_ms: 2.806792
+  ...
+# Subtest: actual portrait and landscape crops retain a visible full-strength artwork motion region
+ok 11 - actual portrait and landscape crops retain a visible full-strength artwork motion region
+  ---
+  duration_ms: 8.614291
+  ...
+# Subtest: every landing has restrained signal styling, with all drone and technical scenes stronger
+ok 12 - every landing has restrained signal styling, with all drone and technical scenes stronger
+  ---
+  duration_ms: 0.466625
+  ...
+# Subtest: the CSS noise atlas is reproducible, small, opaque monochrome and contains four distinct frames
+ok 13 - the CSS noise atlas is reproducible, small, opaque monochrome and contains four distinct frames
+  ---
+  duration_ms: 46.267209
+  ...
+# Subtest: scene files and provenance match checksums and fit 2 MiB including the shared atlas
+ok 14 - scene files and provenance match checksums and fit 2 MiB including the shared atlas
+  ---
+  duration_ms: 71.16925
+  ...
+# Subtest: fpv mode originals, style references and prompts are bound to their delivered derivatives
+ok 15 - fpv mode originals, style references and prompts are bound to their delivered derivatives
+  ---
+  duration_ms: 23.79675
+  ...
+# Subtest: ukraine mode originals, style references and prompts are bound to their delivered derivatives
+ok 16 - ukraine mode originals, style references and prompts are bound to their delivered derivatives
+  ---
+  duration_ms: 30.676
+  ...
+# Subtest: retro mode originals, style references and prompts are bound to their delivered derivatives
+ok 17 - retro mode originals, style references and prompts are bound to their delivered derivatives
+  ---
+  duration_ms: 28.119416
+  ...
+# Subtest: coupa mode originals, style references and prompts are bound to their delivered derivatives
+ok 18 - coupa mode originals, style references and prompts are bound to their delivered derivatives
+  ---
+  duration_ms: 29.48025
+  ...
+# Subtest: DroneAid lossless runtime derivative retains the exact supplied original and pixel provenance
+ok 19 - DroneAid lossless runtime derivative retains the exact supplied original and pixel provenance
+  ---
+  duration_ms: 3.563625
+  ...
+# Subtest: DroneAid photograph keeps a full static source in both orientations and WebGL fallback
+ok 20 - DroneAid photograph keeps a full static source in both orientations and WebGL fallback
+  ---
+  duration_ms: 3.060667
+  ...
+# Subtest: mode requests on a Solo-only edition preserve focus, the artwork source and a single renderer
+ok 21 - mode requests on a Solo-only edition preserve focus, the artwork source and a single renderer
+  ---
+  duration_ms: 0.511167
+  ...
+# Subtest: a ready decoded image creates one renderer and handoff follows its readiness without taking focus
+ok 22 - a ready decoded image creates one renderer and handoff follows its readiness without taking focus
+  ---
+  duration_ms: 0.310417
+  ...
+# Subtest: receiver interference samples the original artwork into its own canvas and keeps that source after handoff
+ok 23 - receiver interference samples the original artwork into its own canvas and keeps that source after handoff
+  ---
+  duration_ms: 0.21125
+  ...
+# Subtest: receiver source generation resets on changed artwork but not resize, pause or repeated load
+ok 24 - receiver source generation resets on changed artwork but not resize, pause or repeated load
+  ---
+  duration_ms: 0.26125
+  ...
+# Subtest: hidden defers renderer creation until a loaded scene can actually animate
+ok 25 - hidden defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.220375
+  ...
+# Subtest: pagehide defers renderer creation until a loaded scene can actually animate
+ok 26 - pagehide defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.115042
+  ...
+# Subtest: reduced defers renderer creation until a loaded scene can actually animate
+ok 27 - reduced defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.112792
+  ...
+# Subtest: local-setting defers renderer creation until a loaded scene can actually animate
+ok 28 - local-setting defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.113042
+  ...
+# Subtest: gameplay defers renderer creation until a loaded scene can actually animate
+ok 29 - gameplay defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.089375
+  ...
+# Subtest: body-effects defers renderer creation until a loaded scene can actually animate
+ok 30 - body-effects defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.130708
+  ...
+# Subtest: body-reduced-effects defers renderer creation until a loaded scene can actually animate
+ok 31 - body-reduced-effects defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.27025
+  ...
+# Subtest: html-reduced-motion defers renderer creation until a loaded scene can actually animate
+ok 32 - html-reduced-motion defers renderer creation until a loaded scene can actually animate
+  ---
+  duration_ms: 0.239708
+  ...
+# Subtest: reduced motion, local setting, hidden menu, gameplay and background tab stop ambient motion
+ok 33 - reduced motion, local setting, hidden menu, gameplay and background tab stop ambient motion
+  ---
+  duration_ms: 0.31175
+  ...
+# Subtest: portrait selection, error fallback and cleanup never replace interactive content
+ok 34 - portrait selection, error fallback and cleanup never replace interactive content
+  ---
+  duration_ms: 0.958625
+  ...
+# Subtest: visible decoration keeps moving without keyboard focus, but stops while hidden or suspended
+ok 35 - visible decoration keeps moving without keyboard focus, but stops while hidden or suspended
+  ---
+  duration_ms: 0.202875
+  ...
+# Subtest: a sibling settings dialog pauses the actual visible landing owner and closes without recreating it
+ok 36 - a sibling settings dialog pauses the actual visible landing owner and closes without recreating it
+  ---
+  duration_ms: 0.255042
+  ...
+# Subtest: the image/canvas plane stays registered to original artwork through cover crops and orientation changes
+ok 37 - the image/canvas plane stays registered to original artwork through cover crops and orientation changes
+  ---
+  duration_ms: 0.148834
+  ...
+# Subtest: storage denial retains current-page preference and cross-tab updates are applied
+ok 38 - storage denial retains current-page preference and cross-tab updates are applied
+  ---
+  duration_ms: 0.1745
+  ...
+# Subtest: interface backdrops replace only fallback decoration and stop hidden artwork renderers
+ok 39 - interface backdrops replace only fallback decoration and stop hidden artwork renderers
+  ---
+  duration_ms: 0.1515
+  ...
+# Subtest: first-paint seed is generated from the exact admitted registry and shared migration parser
+ok 40 - first-paint seed is generated from the exact admitted registry and shared migration parser
+  ---
+  duration_ms: 89.2425
+  ...
+# Subtest: every admitted appearance paints exact paired tokens and frames before module execution
+ok 41 - every admitted appearance paints exact paired tokens and frames before module execution
+  ---
+  duration_ms: 42.944958
+  ...
+# Subtest: retained and current context pins paint their exact installed revision before runtime
+ok 42 - retained and current context pins paint their exact installed revision before runtime
+  ---
+  duration_ms: 14.184459
+  ...
+# Subtest: read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+ok 43 - read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+  ---
+  duration_ms: 2.49975
+  ...
+# Subtest: first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+ok 44 - first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+  ---
+  duration_ms: 1.906083
+  ...
+# Subtest: every production game, authoring and site entry seeds appearance before other scripts and styles
+ok 45 - every production game, authoring and site entry seeds appearance before other scripts and styles
+  ---
+  duration_ms: 84.2625
+  ...
+# Subtest: profile-owned players seed appearance without acquiring an auxiliary host lease
+ok 46 - profile-owned players seed appearance without acquiring an auxiliary host lease
+  ---
+  duration_ms: 1.335583
+  ...
+# Subtest: all official missions have gameplay-only closure and soundtrack groups exactly match Audio settings
+ok 47 - all official missions have gameplay-only closure and soundtrack groups exactly match Audio settings
+  ---
+  duration_ms: 507.155209
+  ...
+# Subtest: hosted extras stay selectable without entering shared or all-current gameplay downloads
+ok 48 - hosted extras stay selectable without entering shared or all-current gameplay downloads
+  ---
+  duration_ms: 489.289583
+  ...
+# Subtest: publisher copies only the frozen lightweight launcher and points at the immutable edition
+ok 49 - publisher copies only the frozen lightweight launcher and points at the immutable edition
+  ---
+  duration_ms: 186.617
+  ...
+1..49
+# tests 49
+# suites 0
+# pass 49
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1421.495416

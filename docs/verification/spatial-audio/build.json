@@ -1,0 +1,9 @@
+{
+  "buildSha256": "1516e3a830be847a4c3f2e0fc148946401bed1f2e9572b6d55b7437b4af4411b",
+  "sourceRevision": null,
+  "implementationCommit": "8e98ed04f14128455e3dd2d9c8ecba1dde6e256a",
+  "effectsInCoreCache": 43,
+  "effectBytesMatchSource": true,
+  "menuModuleMatchesCurrentSource": true,
+  "qualification": "Local packaging check only; not an immutable exact-source release certificate."
+}

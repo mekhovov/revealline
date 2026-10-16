@@ -1,8 +1,12 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 // Actual solo host, saved replay and fixed-step input; DOM/paint are modeled.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { soloPage, SoloElement, settle } from './helpers/solo-dom.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 
@@ -27,8 +31,10 @@ async function fixture(t, cause = 'self-contact') {
     classRecipes: classes,
     levels: [level],
   };
-  const page = await soloPage(t, { campaign });
-  page.$('start-button').click();
+  const page = await soloPage(t, { campaign, waitForPictures: false });
+  await activateHostAction(page.$('start-button'));
+  page.frame(0);
+  assert.equal(page.rendered.paused, false);
   return page;
 }
 
@@ -41,7 +47,7 @@ for (const newerNotice of [false, true])
     page.$('pause-button').click();
     page.frame(0);
     const saved = JSON.parse(page.storage.getItem(sessionKey));
-    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
     const checkpoint = authoritativeCheckpoint(page.rendered.run);
     assert.equal(page.rendered.run.player.cutting, true);
     await page.$('continue-saved').onclick();
@@ -62,7 +68,7 @@ for (const newerNotice of [false, true])
       assert.doesNotMatch(page.$('run-message').textContent, /Press Resume/);
     }
     tick(page);
-    assert.ok(page.rendered.run.tick > saved.replay.ticks);
+    assert.ok(page.rendered.run.tick > nativeSession(saved).replay.ticks);
     assert.deepEqual(page.errors, []);
   });
 
@@ -102,7 +108,10 @@ for (const newerNotice of [false, true])
     if (newerNotice) assert.equal(page.$('run-message').textContent, beforeCut);
     else assert.match(page.$('run-message').textContent, /^Live line exposed\./);
     page.$('pause-button').click();
-    assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeSession(JSON.parse(page.storage.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });
 
@@ -171,11 +180,26 @@ for (const stopOnCapture of [false, true])
       page.frame(0);
       assert.equal(page.rendered.run.ruleset, 'xonix-core.v5');
       assert.equal(page.rendered.run.rules.stopOnCapture, stopOnCapture);
+      const approvedLevel = applyGameplayTuning(level, resolveGameplayTuning('standard'));
+      assert.deepEqual(page.rendered.run.level, approvedLevel);
+      const expected = createRun(approvedLevel, { seed: 1, classId: 'scout' });
       page.$('start-button').click();
       await settle(() => page.doc.body.dataset.flightState === 'running');
       page.key('ArrowDown');
-      until(page, () => page.rendered.run.claimedCount > 0, 450);
+      // The current Standard recipe crosses this 34-cell field at tick 469.
+      // Keep the host and pure simulation exact; the old 450-tick bound
+      // stopped before capture after the approved movement tuning changed.
+      for (let n = 0; n < 469; n++) {
+        tick(page);
+        stepRun(expected, { direction: 'down' }, FIXED_DT);
+      }
       page.key('ArrowDown', false);
+      assert.equal(expected.tick, 469);
+      assert.equal(expected.claimedCount, 816);
+      assert.deepEqual(
+        authoritativeCheckpoint(page.rendered.run),
+        authoritativeCheckpoint(expected),
+      );
       assert.equal(page.rendered.run.status, 'running');
       assert.equal(page.rendered.run.player.cutting, false);
       assert.equal(page.rendered.run.lives, 3);
@@ -219,6 +243,9 @@ for (const stopOnCapture of [false, true])
         assert.doesNotMatch(page.$('run-message').textContent, /Line secured|Tap a direction/);
       }
       page.$('pause-button').click();
-      assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+      assert.equal(
+        verifyReplay(nativeSession(JSON.parse(page.storage.getItem(sessionKey))).replay).match,
+        true,
+      );
       assert.deepEqual(page.errors, []);
     });

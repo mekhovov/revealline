@@ -1,0 +1,64 @@
+{
+  "file": "game/test/coop-picture-host.test.mjs",
+  "kind": "head",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/coop-picture-host.test.mjs"
+  ],
+  "cwd": "/tmp/appearance-head-f4545d6-8ng8t16s",
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 21.87,
+  "failures": [
+    {
+      "test": "Back cancels the initial actual picture read; late bytes cannot ready the arena and explicit Retry retains the exact identity",
+      "location": "/privategame/test/coop-picture-host.test.mjs:92:1",
+      "detail": "\n  ---\n  duration_ms: 51.317334\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:92:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + ''\n    - 'coop-picture-retry'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'coop-picture-retry'\n  actual: ''\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:102:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "Cancel during decode releases only that image; its late decode cannot replace or release a newer Retry",
+      "location": "/privategame/test/coop-picture-host.test.mjs:120:1",
+      "detail": "\n  ---\n  duration_ms: 54.827167\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:120:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly deep-equal:\n    + actual - expected\n    \n    + []\n    - [\n    -   'blob:team-fixture-1'\n    - ]\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n    0: 'blob:team-fixture-1'\n  actual:\n    0: 'blob:team-fixture-1'\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:133:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "blur retires preparation and cannot revive Start or focus after returning",
+      "location": "/privategame/test/coop-picture-host.test.mjs:166:3",
+      "detail": "\n  ---\n  duration_ms: 5079.701666\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:166:3'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. Picture loading cancelled. Retry picture when you are ready.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:191:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "hidden retires preparation and cannot revive Start or focus after returning",
+      "location": "/privategame/test/coop-picture-host.test.mjs:166:3",
+      "detail": "\n  ---\n  duration_ms: 5087.174291\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:166:3'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. Picture loading cancelled. Retry picture when you are ready.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:191:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "pagehide retires preparation and cannot revive Start or focus after returning",
+      "location": "/privategame/test/coop-picture-host.test.mjs:166:3",
+      "detail": "\n  ---\n  duration_ms: 5081.251667\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:166:3'\n  failureType: 'testCodeFailure'\n  error: 'Observable Team condition did not settle. Picture loading cancelled. Retry picture when you are ready.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/wait-for.mjs:15:12)\n    async waitFor (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/helpers/coop-presentation-fixture.mjs:42:5)\n    async TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:191:5)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "required decode failure exposes Retry with no procedural fallback or automatic start",
+      "location": "/privategame/test/coop-picture-host.test.mjs:240:1",
+      "detail": "\n  ---\n  duration_ms: 44.297333\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:240:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    + actual - expected\n    \n    + ''\n    - 'coop-picture-retry'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 'coop-picture-retry'\n  actual: ''\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:260:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    },
+    {
+      "test": "paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes",
+      "location": "/privategame/test/coop-picture-host.test.mjs:380:1",
+      "detail": "\n  ---\n  duration_ms: 906.865958\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:380:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly deep-equal:\n    + actual - expected\n    \n      [\n        'revealline.actor-style.v1',\n        'revealline.audio-master.v1',\n    +   'revealline.couch-radio-setup.v1',\n    +   'revealline.display.v1',\n    +   'revealline.encounter-display.v1',\n    +   'revealline.gameplay-tuning.v1',\n    +   'revealline.installed-app.v1',\n    +   'revealline.journey-preferences.v1',\n    +   'revealline.journey-reactions.v1',\n    +   'revealline.menu-style.v1',\n    +   'revealline.team-arena.v1',\n    +   'revealline.team-contextual-teaching.v1',\n    -   'revealline.display.v1',\n    -   'revealline.gameplay-tuning.v1',\n    -   'revealline.journey-preferences.v1',\n    -   'revealline.journey-reactions.v1',\n    -   'revealline.menu-style.v1',\n    -   'revealline.team-arena.v1',\n        'revealline.touch.v1'\n      ]\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n    0: 'revealline.actor-style.v1'\n    1: 'revealline.audio-master.v1'\n    2: 'revealline.display.v1'\n    3: 'revealline.gameplay-tuning.v1'\n    4: 'revealline.journey-preferences.v1'\n    5: 'revealline.journey-reactions.v1'\n    6: 'revealline.menu-style.v1'\n    7: 'revealline.team-arena.v1'\n    8: 'revealline.touch.v1'\n  actual:\n    0: 'revealline.actor-style.v1'\n    1: 'revealline.audio-master.v1'\n    2: 'revealline.couch-radio-setup.v1'\n    3: 'revealline.display.v1'\n    4: 'revealline.encounter-display.v1'\n    5: 'revealline.gameplay-tuning.v1'\n    6: 'revealline.installed-app.v1'\n    7: 'revealline.journey-preferences.v1'\n    8: 'revealline.journey-reactions.v1'\n    9: 'revealline.menu-style.v1'\n    10: 'revealline.team-arena.v1'\n    11: 'revealline.team-contextual-teaching.v1'\n    12: 'revealline.touch.v1'\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:428:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/te"
+    },
+    {
+      "test": "picture waiting and checked mode departure have separate owners with reachable Cancel and fixed links",
+      "location": "/privategame/test/coop-picture-host.test.mjs:445:1",
+      "detail": "\n  ---\n  duration_ms: 47.893167\n  location: '/private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:445:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly deep-equal:\n    + actual - expected\n    \n    + []\n    - [\n    -   'http://localhost/game/?journey=legacy'\n    - ]\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n    0: 'http://localhost/game/?journey=legacy'\n  actual:\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/tmp/appearance-head-f4545d6-8ng8t16s/game/test/coop-picture-host.test.mjs:461:10)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)"
+    }
+  ],
+  "summary": [
+    "# tests 19",
+    "# pass 11",
+    "# fail 8",
+    "# cancelled 0",
+    "# skipped 0",
+    "# duration_ms 21840.06025"
+  ]
+}

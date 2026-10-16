@@ -1,0 +1,48 @@
+{
+  "format": "multiplayer-expansion-distribution-check.v1",
+  "modes": [
+    {
+      "mode": "team",
+      "missions": 96,
+      "chapters": 12
+    },
+    {
+      "mode": "versus",
+      "missions": 72,
+      "chapters": 12
+    }
+  ],
+  "files": 3291,
+  "offlineCoreBytes": 71579702,
+  "checkedFiles": 82,
+  "verifiedOn": "2026-10-14",
+  "buildVersion": "0.151.1",
+  "sourceRevision": null,
+  "sourceStatus": "Local uncommitted implementation rebased onto 5f126d6105be5708948dbaff6907ca5cd7e15baf; not published.",
+  "zipSha256": "843702d50240e78b64e6bafc6c722e74397348187f9d8fc5c06b52e8950291ec",
+  "offlineCoreBudgetBytes": 83886080,
+  "checks": [
+    "All 168 new missions own the correct current-mode chapter.",
+    "All 24 chapters include referenced artwork and required runtime source.",
+    "82 referenced artifact files match actual byte lengths and SHA-256 digests.",
+    "All 24 chapter download labels exist in English and Ukrainian.",
+    "Studio snapshot, focused editor and shared environment renderer are packaged.",
+    "Offline core stays within existing 80 MiB and 2000-file budgets."
+  ],
+  "browserOfflineCheck": {
+    "selectedChapters": [
+      "Team \u00b7 Horizon Harbors",
+      "Team \u00b7 Relay Archive",
+      "Duel \u00b7 Horizon Harbors"
+    ],
+    "downloadDisplayedMiB": 128.1,
+    "includes": ["shared runtime", "required Solo Starter", "original artwork"],
+    "serverStopped": true,
+    "independentConnectionCheck": "Connection refused at 127.0.0.1:8787",
+    "downloadPageReload": "Selected chapters ready offline; 0.0 MiB remain.",
+    "duel": "Reopened; both players banked cuts: 0.3%, 3 lives, 70 points each.",
+    "team": "Reopened Harbor Handoff; both pilots accepted controls and banked territory. Switched through the chooser to Partner First Link with required relay/gate.",
+    "scope": "Partial native browser runs on this host. Not complete offline clears of all chapters or physical-target certification.",
+    "serverRestored": true
+  }
+}

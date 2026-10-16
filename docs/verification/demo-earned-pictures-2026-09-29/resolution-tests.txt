@@ -1,0 +1,195 @@
+TAP version 13
+# Subtest: an exact earned Journey original is clear, owns the actual candidate image, and never changes progress
+ok 1 - an exact earned Journey original is clear, owns the actual candidate image, and never changes progress
+  ---
+  duration_ms: 9.766958
+  ...
+# Subtest: the retained first-earned original survives a later legitimate win and another installed difficulty
+ok 2 - the retained first-earned original survives a later legitimate win and another installed difficulty
+  ---
+  duration_ms: 3.993625
+  ...
+# Subtest: missing, malformed, foreign and wrong-mode receipts retain the current image but cannot reveal it
+ok 3 - missing, malformed, foreign and wrong-mode receipts retain the current image but cannot reveal it
+  ---
+  duration_ms: 35.1115
+  ...
+# Subtest: a foreign company cannot authorize the same exact asset through a matching historical campaign
+ok 4 - a foreign company cannot authorize the same exact asset through a matching historical campaign
+  ---
+  duration_ms: 4.721917
+  ...
+# Subtest: a current replacement original supplies the concealed backdrop without inheriting the old earned receipt
+ok 5 - a current replacement original supplies the concealed backdrop without inheriting the old earned receipt
+  ---
+  duration_ms: 156.106791
+  ...
+# Subtest: unowned entries, changed levels, foreign mission context and unavailable backgrounds fail before acquisition
+ok 6 - unowned entries, changed levels, foreign mission context and unavailable backgrounds fail before acquisition
+  ---
+  duration_ms: 7.245708
+  ...
+# Subtest: acquisition failures and bindings owned by another display never become clear or steal ownership
+ok 7 - acquisition failures and bindings owned by another display never become clear or steal ownership
+  ---
+  duration_ms: 7.937125
+  ...
+# Subtest: cancellation releases a late verified decode once and does not display an earned original
+ok 8 - cancellation releases a late verified decode once and does not display an earned original
+  ---
+  duration_ms: 4.817958
+  ...
+# Subtest: an earned release original stays clear when its retained history has no persistent assignment
+ok 9 - an earned release original stays clear when its retained history has no persistent assignment
+  ---
+  duration_ms: 218.539875
+  ...
+# Subtest: earned-original fallback fails concealed and releases mismatched or cancelled acquisitions
+ok 10 - earned-original fallback fails concealed and releases mismatched or cancelled acquisitions
+  ---
+  duration_ms: 197.853292
+  ...
+# Subtest: earned session originals use their combined view adapter while explicit acquisition overrides stay authoritative
+ok 11 - earned session originals use their combined view adapter while explicit acquisition overrides stay authoritative
+  ---
+  duration_ms: 177.067041
+  ...
+# Subtest: only the exact earned assignment reveals a picture, including shared Standard/Gentle identity
+ok 12 - only the exact earned assignment reveals a picture, including shared Standard/Gentle identity
+  ---
+  duration_ms: 67.390417
+  ...
+# Subtest: a later current assignment stays blurred even when its map has an earned older original
+ok 13 - a later current assignment stays blurred even when its map has an earned older original
+  ---
+  duration_ms: 123.999458
+  ...
+# Subtest: implicit earned legacy originals use the retained art seed and exact installed owner
+ok 14 - implicit earned legacy originals use the retained art seed and exact installed owner
+  ---
+  duration_ms: 50.132042
+  ...
+# Subtest: read failures, foreign pins and invalid earned receipts never authorize clear artwork
+ok 15 - read failures, foreign pins and invalid earned receipts never authorize clear artwork
+  ---
+  duration_ms: 61.107875
+  ...
+# Subtest: cancelled late acquisition releases its bitmap, and resolved ownership disposes once
+ok 16 - cancelled late acquisition releases its bitmap, and resolved ownership disposes once
+  ---
+  duration_ms: 71.704708
+  ...
+# Subtest: blur reduces real high-frequency detail without modifying its source pixels
+ok 17 - blur reduces real high-frequency detail without modifying its source pixels
+  ---
+  duration_ms: 1.6805
+  ...
+# Subtest: the box blur preserves analytic edge-clamped averages with wide kernels and repeated passes
+ok 18 - the box blur preserves analytic edge-clamped averages with wide kernels and repeated passes
+  ---
+  duration_ms: 0.276625
+  ...
+# Subtest: the weak signal retains subdued scene composition while obscuring original fine detail
+ok 19 - the weak signal retains subdued scene composition while obscuring original fine detail
+  ---
+  duration_ms: 46.130958
+  ...
+# Subtest: different scene compositions produce different recognizable signal impressions
+ok 20 - different scene compositions produce different recognizable signal impressions
+  ---
+  duration_ms: 43.98225
+  ...
+# Subtest: muted broad color distinguishes warm and cool pictures without restoring full chroma
+ok 21 - muted broad color distinguishes warm and cool pictures without restoring full chroma
+  ---
+  duration_ms: 3.938875
+  ...
+# Subtest: equally lit pictures keep distinct subdued palettes, not only different brightness
+ok 22 - equally lit pictures keep distinct subdued palettes, not only different brightness
+  ---
+  duration_ms: 5.950166
+  ...
+# Subtest: transparent picture silhouettes cannot survive through the concealed alpha channel
+ok 23 - transparent picture silhouettes cannot survive through the concealed alpha channel
+  ---
+  duration_ms: 2.669708
+  ...
+# Subtest: concealment supports tiny and nondivisible images and rejects invalid pixel bounds
+ok 24 - concealment supports tiny and nondivisible images and rejects invalid pixel bounds
+  ---
+  duration_ms: 229.485334
+  ...
+# Subtest: filter caches one bounded blurred source and fails closed for undecoded/unreadable replacements
+ok 25 - filter caches one bounded blurred source and fails closed for undecoded/unreadable replacements
+  ---
+  duration_ms: 48.516958
+  ...
+# Subtest: an unreadable source is quarantined until replacement or explicit cache reset
+ok 26 - an unreadable source is quarantined until replacement or explicit cache reset
+  ---
+  duration_ms: 0.381541
+  ...
+# Subtest: the cached picture filter presents concealed pixels while clear pictures retain their original
+ok 27 - the cached picture filter presents concealed pixels while clear pictures retain their original
+  ---
+  duration_ms: 13.056417
+  ...
+# Subtest: receiver snow is monochrome with localized horizontal impulse streaks
+ok 28 - receiver snow is monochrome with localized horizontal impulse streaks
+  ---
+  duration_ms: 23.983333
+  ...
+# Subtest: animated snow reuses its bitmap, freezes by time and keeps concealed geometry across frames
+ok 29 - animated snow reuses its bitmap, freezes by time and keeps concealed geometry across frames
+  ---
+  duration_ms: 11.304959
+  ...
+# Subtest: demo noise evolves independently for pictures with different broad palettes
+ok 30 - demo noise evolves independently for pictures with different broad palettes
+  ---
+  duration_ms: 6.627541
+  ...
+# Subtest: muted color never restores source chromatic detail, including by averaging animated frames
+ok 31 - muted color never restores source chromatic detail, including by averaging animated frames
+  ---
+  duration_ms: 9.25725
+  ...
+# Subtest: actual painter protects first frame, late backdrop, victory and gallery while leaving the player sharp
+ok 32 - actual painter protects first frame, late backdrop, victory and gallery while leaving the player sharp
+  ---
+  duration_ms: 362.095417
+  ...
+# Subtest: disposing a painter clears its blur cache and rejects late setLook asset adoption
+ok 33 - disposing a painter clears its blur cache and rejects late setLook asset adoption
+  ---
+  duration_ms: 39.578167
+  ...
+# Subtest: empty session history preserves the exact branded durable media object
+ok 34 - empty session history preserves the exact branded durable media object
+  ---
+  duration_ms: 69.699792
+  ...
+# Subtest: Collection view separates storage generations and preserves manual assignments without writes
+ok 35 - Collection view separates storage generations and preserves manual assignments without writes
+  ---
+  duration_ms: 61.083917
+  ...
+# Subtest: durable acquisition receives its original branded snapshot, never the combined view
+ok 36 - durable acquisition receives its original branded snapshot, never the combined view
+  ---
+  duration_ms: 62.187083
+  ...
+# Subtest: view merge rejects conflicting immutable history without mutating either source
+ok 37 - view merge rejects conflicting immutable history without mutating either source
+  ---
+  duration_ms: 54.589916
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3198.643958

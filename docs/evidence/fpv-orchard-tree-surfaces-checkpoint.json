@@ -1,0 +1,124 @@
+{
+  "format": "FPVOrchardQualificationCheckpoint.v1",
+  "candidate": "27e15dd0d5fa9e45e58f7c7ae802a0976bd5a83a",
+  "sourceSha256": "7313e7328635ac5d662eae9676b8d75fbbd9de848ffe461a4deb35aebadf7417",
+  "cpu": {
+    "checks": 378,
+    "scenes": 89
+  },
+  "existingChecks": {
+    "passed": 30,
+    "failed": 0,
+    "files": [
+      "game/test/fpv-acceptance-workflow.test.mjs",
+      "game/test/fpv-world-textures.test.mjs",
+      "game/test/fpv-workshop-visuals.test.mjs"
+    ]
+  },
+  "fullValidate": {
+    "command": "npm --logs-max=0 run validate",
+    "exit": 0,
+    "node": "20.19.5",
+    "note": "Ran during the v1-to-v2 texture/preview refinement; generated-module/assets checks byte-identical. Final source receives focused checks and exact committed admission separately.",
+    "finalFocusedChecks": "Final v2 manual378/89, existing30, ESLint and Prettier pass; only texture math/preview poses changed during full validation, no generated/i18n inputs."
+  },
+  "replay": {
+    "candidate": "58c5eae096873e51b614dae134d7c35445944cbb",
+    "summary": {
+      "courses": 5,
+      "modes": [
+        "acro",
+        "self-level"
+      ],
+      "recordings": 10,
+      "ticks": 39525,
+      "completed": 10,
+      "replayed": 10,
+      "contacts": 0,
+      "fullHealth": true,
+      "finalBlockedActors": 0,
+      "collisionWorldsCreated": 10,
+      "collisionWorldsFreed": 10,
+      "peakLiveCollisionWorlds": 1,
+      "liveCollisionWorldsAfter": 0
+    },
+    "allOtherRuntimeInputsExact": true,
+    "changedSinceReplay": [
+      "optional-practice/civilian-fpv/world-visuals.mjs"
+    ],
+    "sourceInputBytes": 690883,
+    "sourceInputSha256": "195089dc842bd1b97c678cdbeb3701022a3c8fe11bbacd5fd1c27d43ef04c59c",
+    "archiveBytes": 73445,
+    "archiveSha256": "56a856de543009603b6a5d00c66984f156c0751e9add33cd2ba873906479a212"
+  },
+  "retained": {
+    "fpv-orchard-tree-surfaces-cpu-v1.json": {
+      "bytes": 110756,
+      "sha256": "f50f28ab89f5468e44f07e4f56f522a424bcdc68994d9bf02de92dd444f3dc17"
+    },
+    "fpv-orchard-tree-surfaces-cpu-v2.json": {
+      "bytes": 110756,
+      "sha256": "dc376b01fe8ee7a3c8c112a4f444c7214e1bf8c07bcf8209dbd3bf34706905c1"
+    },
+    "fpv-orchard-tree-surfaces-replay.json": {
+      "bytes": 63523,
+      "sha256": "626ded45fd72cc063c35a1ad72063853ee04a1ccc88c82a4feb001649bd87c2c"
+    },
+    "fpv-orchard-tree-surfaces-replay-probe.mjs": {
+      "bytes": 11138,
+      "sha256": "0f1912e8b0bd3a2d27df57e27728356218405d1ecc6e4ac8390416b499e1344d"
+    },
+    "fpv-orchard-bark-v1-review.png": {
+      "bytes": 91763,
+      "sha256": "5971c9e4fb4e9ca365d5baf0093fb4937b4a982f550cd04e3054ebaffe9c9547"
+    },
+    "fpv-orchard-crown-v1-review.png": {
+      "bytes": 82796,
+      "sha256": "e13612ab25fe8720cc2ebddf6d99ad5a9563e773370a4c0ae5103457d545199e"
+    },
+    "fpv-orchard-tree-surfaces-harness-v1.html": {
+      "bytes": 23554,
+      "sha256": "5e963bc3b0b120dc3cc769418dc9c2736cfffc7142845e88a86870184d1794ac"
+    }
+  },
+  "visual": {
+    "v1": "Not accepted: overly fine foliage, uniform bark; original screenshots retained. No source matrix run.",
+    "v2": "Root reviewed genuine close bark/crown and avenue views. Accepted bounded improvement: broken bark plates, visible broad leaf groups, route/guide clear. Closed simple tree forms remain; no complete-world realism claim. Source matrix now running.",
+    "sourceMatrix": {
+      "passed": true,
+      "checks": 96,
+      "imagePairs": 43
+    },
+    "packageMatrix": {
+      "passed": true,
+      "checks": 96,
+      "imagePairs": 43,
+      "exactFunctionalComparison": true
+    },
+    "actualPlayer": {
+      "passed": true,
+      "files": 102,
+      "settings": [
+        "Authored",
+        "Balanced",
+        "Self-level",
+        "Keyboard"
+      ],
+      "armSeconds": 0.2,
+      "pauseSeconds": 0.3,
+      "warningErrors": []
+    }
+  },
+  "limitations": [
+    "CPU replay preserves actual outcomes, not hardware or art acceptance.",
+    "Original replay format carries the inherited OrchardFacade label; input/member hashes and actual Orchard courses are explicit.",
+    "No unit coverage added."
+  ],
+  "admission": {
+    "sourceRevision": "480a2a19a37357466700d36cc5e78728a75c1736",
+    "allThreePassed": true,
+    "reproducibleBuilds": 2,
+    "inputBytes": 16765728,
+    "headroom": 11488
+  }
+}

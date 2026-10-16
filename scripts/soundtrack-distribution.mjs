@@ -6,6 +6,9 @@ import { exactKeys, required, canonicalJSON } from '../game/data-json.mjs';
 import { applySoundtrackArchiveAdmissions } from './soundtrack-archive-admissions.mjs';
 import { compileHostedSoundtracks } from './hosted-soundtrack-publication.mjs';
 import { compileReviewedSoundtrackBatches } from './reviewed-soundtrack-batches.mjs';
+import { compileCoreSoundtrack } from './core-soundtrack-publication.mjs';
+import { resolveSoundtrackArchives } from '../game/soundtrack-archive.mjs';
+import { resolveSoundtrackCollections } from '../game/soundtrack.mjs';
 
 export function validateSoundtrackDistributionConfig(value) {
   exactKeys(value, ['format', 'catalog', 'originalCatalogue'], 'Soundtrack distribution config');
@@ -134,7 +137,8 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
     pathToFileURL(path.join(root, 'authoring/library/revealline-original-soundtrack/build.mjs'))
   );
   const originals = await buildOriginalSoundtrackCatalogue();
-  const tracks = [...originals.catalogue.tracks],
+  const core = await compileCoreSoundtrack(root, originals.catalogue.edition);
+  const tracks = [...originals.catalogue.tracks, core.track],
     files = [...originals.files];
   // Optional in older authoring checkouts; this edition keeps an empty approval
   // register until the supplied recordings and artwork have been cleared.
@@ -241,10 +245,12 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
     files,
     albums: { format: 'revealline-soundtrack-albums.v1', albums: [] },
     archives: [],
+    collections: [core.collection],
+    bundled: [core.bundled],
   };
   // Source delivery contains recordings produced by this repository. Already
   // published hosted assets have their own exact source/archive history.
-  if (delivery === 'source') return { ...built, collections: [] };
+  if (delivery === 'source') return built;
   const delivered = await applySoundtrackArchiveAdmissions(root, built);
   const hosted = await compileHostedSoundtracks(root, originals.catalogue.edition);
   const reviewed = await compileReviewedSoundtrackBatches(root, originals.catalogue.edition, {
@@ -264,6 +270,12 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
     ...delivered.catalogue,
     tracks: [...delivered.catalogue.tracks, ...hosted.tracks, ...reviewed.tracks],
   });
+  const admittedUkrainianTrackIds = [
+    core.track.id,
+    ...combined.tracks
+      .filter((track) => track.id !== core.track.id && track.tags.genres.includes('ukrainian'))
+      .map((track) => track.id),
+  ];
   required(
     combined.tracks.every((track) => {
       const rights = soundtrackRights(track, { catalogue: combined });
@@ -274,19 +286,35 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
   return {
     ...delivered,
     catalogue: combined,
-    archives: [...delivered.archives, ...hosted.archives, ...reviewed.archives],
-    collections: [...hosted.collections, ...reviewed.collections],
+    archives: resolveSoundtrackArchives([
+      ...delivered.archives,
+      ...hosted.archives,
+      ...reviewed.archives,
+    ]),
+    collections: resolveSoundtrackCollections([
+      ...hosted.collections,
+      ...reviewed.collections,
+      { ...core.collection, trackIds: admittedUkrainianTrackIds },
+    ]),
+    bundled: [core.bundled],
   };
 }
-export function soundtrackCatalogueModule(catalogue, archives = [], collections = []) {
-  return `// Generated from pinned soundtrack publication metadata; listening status stays in source evidence.\nexport const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue, null, 2)};\nexport const SOUNDTRACK_ARCHIVES = ${JSON.stringify(archives)};\nexport const SOUNDTRACK_COLLECTIONS = ${JSON.stringify(collections)};\n`;
+export function soundtrackCatalogueModule(
+  catalogue,
+  archives = [],
+  collections = [],
+  bundled = [],
+) {
+  // Keep generated data compact without changing its ordered values or strings.
+  // Declaration-level directives make normal regeneration/formatting byte-stable.
+  return `// Generated from pinned soundtrack publication metadata; listening status stays in source evidence.\n// prettier-ignore\nexport const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue)};\n// prettier-ignore\nexport const SOUNDTRACK_ARCHIVES = ${JSON.stringify(archives)};\n// prettier-ignore\nexport const SOUNDTRACK_COLLECTIONS = ${JSON.stringify(collections)};\n// prettier-ignore\nexport const SOUNDTRACK_BUNDLED_ASSETS = ${JSON.stringify(bundled)};\n`;
 }
 export async function writePublishedSoundtrackMetadata(root) {
   const { format, resolveConfig } = await import('prettier');
   const built = await compilePublishedSoundtracks(root);
   const modulePath = path.join(root, 'game/content/soundtrack-catalogue.mjs');
   const moduleSource = await format(
-    soundtrackCatalogueModule(built.catalogue, built.archives, built.collections),
+    soundtrackCatalogueModule(built.catalogue, built.archives, built.collections, built.bundled),
     {
       ...(await resolveConfig(modulePath)),
       filepath: modulePath,
@@ -329,7 +357,8 @@ async function readPublishedSoundtrackEntries(root, option) {
   required(
     canonicalJSON(runtime.SOUNDTRACK_CATALOGUE) === canonicalJSON(built.catalogue) &&
       canonicalJSON(runtime.SOUNDTRACK_ARCHIVES) === canonicalJSON(built.archives) &&
-      canonicalJSON(runtime.SOUNDTRACK_COLLECTIONS ?? []) === canonicalJSON(built.collections),
+      canonicalJSON(runtime.SOUNDTRACK_COLLECTIONS ?? []) === canonicalJSON(built.collections) &&
+      canonicalJSON(runtime.SOUNDTRACK_BUNDLED_ASSETS ?? []) === canonicalJSON(built.bundled),
     'Code-owned soundtrack catalogue differs from reviewed production.',
   );
   return built.files.map(({ name, bytes }) => ({ name, bytes: Buffer.from(bytes) }));

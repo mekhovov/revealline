@@ -1,0 +1,1461 @@
+{
+  "format": "FPVD1ProductionTimingAnalysis.v1",
+  "receiptSha256": "abb38414fb27d4211cd22fc614af01e3fe3db6e8de8fa1b3d8a7c06ed26347e2",
+  "sourceHead": "e572026ba357f3194bf47e7137a0817cacb1a640",
+  "quantileMethod": "Sorted observations; floor((n-1)*p), matching harness. Rounded to 0.001 ms. Draw/RAF aggregates pool individual samples, not per-view medians. Generation/load deduplicated by (round,id,path).",
+  "notes": [
+    "Each natural view is a fixed physics snapshot: first draw, one RAF wait, then eight sampled RAF/draw iterations.",
+    "Controls contain only two sampled iterations each and are excluded from natural timing aggregates.",
+    "Draw submission and first draw are elapsed CPU-side runtime.draw() calls, not GPU completion measurements.",
+    "RAF wall intervals are performance.now() differences at successive RAF resumes and may include rendering, browser scheduling, and other work. They are not isolated GPU timings or hardware FPS.",
+    "Prepare is wall time awaiting compileAsync and checking linked programs; setQuality and setCourse work is outside the prepare stopwatch.",
+    "Generation times builtinWorldScene construction; load times runtime.loadScene. Values are copied across three quality records and deduplicated here.",
+    "Round 1 is first-pass data in one run, not a controlled cold-cache/device baseline. All rounds use one runtime; qualities and views run in fixed order.",
+    "WebGL renderer/vendor strings are generic; no device/GPU identification, VRAM, thermal or human acceptance conclusion. No timing threshold is asserted.",
+    "Visibility is recorded at run start and at the end of each renderCase; it is not a continuous visibility/event trace. RAF outlier causes cannot be identified from this receipt.",
+    "There are 21 natural RAF intervals above 1000 ms. This is a descriptive count, not an acceptance threshold. Tail outliers are retained in all aggregates."
+  ],
+  "counts": {
+    "uniqueViewConfigurations": 90,
+    "sampleRecords": 90,
+    "naturalViews": 270,
+    "naturalDrawSamples": 2160,
+    "naturalRafIntervals": 2160,
+    "controls": 60,
+    "rafIntervalsOver1000Ms": 21
+  },
+  "overall": {
+    "views": 270,
+    "drawSubmissionMs": {
+      "count": 2160,
+      "min": 0.1,
+      "median": 0.9,
+      "p95": 1.7,
+      "max": 5.1
+    },
+    "rafWallIntervalMs": {
+      "count": 2160,
+      "min": 0,
+      "median": 8.2,
+      "p95": 10.2,
+      "max": 32861.5
+    },
+    "firstDrawMs": {
+      "count": 270,
+      "min": 0.8,
+      "median": 4.2,
+      "p95": 102.8,
+      "max": 204.6
+    },
+    "prepareMs": {
+      "count": 90,
+      "min": 1.2,
+      "median": 43.4,
+      "p95": 247.8,
+      "max": 16194.2
+    }
+  },
+  "byPathQuality": {
+    "imported/low": {
+      "views": 45,
+      "drawSubmissionMs": {
+        "count": 360,
+        "min": 0.1,
+        "median": 0.7,
+        "p95": 1.1,
+        "max": 5.1
+      },
+      "rafWallIntervalMs": {
+        "count": 360,
+        "min": 0.3,
+        "median": 8.2,
+        "p95": 10.3,
+        "max": 32861.5
+      },
+      "firstDrawMs": {
+        "count": 45,
+        "min": 0.8,
+        "median": 1.6,
+        "p95": 44.1,
+        "max": 62.5
+      },
+      "prepareMs": {
+        "count": 15,
+        "min": 29.5,
+        "median": 32.7,
+        "p95": 46.9,
+        "max": 162.3
+      }
+    },
+    "imported/balanced": {
+      "views": 45,
+      "drawSubmissionMs": {
+        "count": 360,
+        "min": 0.5,
+        "median": 0.9,
+        "p95": 1.8,
+        "max": 2.4
+      },
+      "rafWallIntervalMs": {
+        "count": 360,
+        "min": 0.3,
+        "median": 8.3,
+        "p95": 10,
+        "max": 1970.6
+      },
+      "firstDrawMs": {
+        "count": 45,
+        "min": 0.8,
+        "median": 5.9,
+        "p95": 62,
+        "max": 87.1
+      },
+      "prepareMs": {
+        "count": 15,
+        "min": 51.6,
+        "median": 138.7,
+        "p95": 209.1,
+        "max": 948.9
+      }
+    },
+    "imported/high": {
+      "views": 45,
+      "drawSubmissionMs": {
+        "count": 360,
+        "min": 0.2,
+        "median": 1,
+        "p95": 2.1,
+        "max": 3.6
+      },
+      "rafWallIntervalMs": {
+        "count": 360,
+        "min": 0.1,
+        "median": 8.2,
+        "p95": 10.3,
+        "max": 18612.1
+      },
+      "firstDrawMs": {
+        "count": 45,
+        "min": 0.8,
+        "median": 5.1,
+        "p95": 150.3,
+        "max": 174.7
+      },
+      "prepareMs": {
+        "count": 15,
+        "min": 1.5,
+        "median": 2.4,
+        "p95": 4.9,
+        "max": 6.3
+      }
+    },
+    "fallback/low": {
+      "views": 45,
+      "drawSubmissionMs": {
+        "count": 360,
+        "min": 0.1,
+        "median": 0.7,
+        "p95": 1.1,
+        "max": 2.9
+      },
+      "rafWallIntervalMs": {
+        "count": 360,
+        "min": 0.2,
+        "median": 8.3,
+        "p95": 10.2,
+        "max": 28068.5
+      },
+      "firstDrawMs": {
+        "count": 45,
+        "min": 0.8,
+        "median": 1.5,
+        "p95": 19.2,
+        "max": 95.4
+      },
+      "prepareMs": {
+        "count": 15,
+        "min": 31.9,
+        "median": 147.1,
+        "p95": 2424.6,
+        "max": 16194.2
+      }
+    },
+    "fallback/balanced": {
+      "views": 45,
+      "drawSubmissionMs": {
+        "count": 360,
+        "min": 0.2,
+        "median": 0.9,
+        "p95": 1.6,
+        "max": 1.9
+      },
+      "rafWallIntervalMs": {
+        "count": 360,
+        "min": 0.5,
+        "median": 8.3,
+        "p95": 10.2,
+        "max": 9173.2
+      },
+      "firstDrawMs": {
+        "count": 45,
+        "min": 0.8,
+        "median": 4.8,
+        "p95": 35,
+        "max": 58.3
+      },
+      "prepareMs": {
+        "count": 15,
+        "min": 33.8,
+        "median": 127.7,
+        "p95": 247.8,
+        "max": 409.3
+      }
+    },
+    "fallback/high": {
+      "views": 45,
+      "drawSubmissionMs": {
+        "count": 360,
+        "min": 0.3,
+        "median": 1,
+        "p95": 1.8,
+        "max": 2.3
+      },
+      "rafWallIntervalMs": {
+        "count": 360,
+        "min": 0,
+        "median": 8.2,
+        "p95": 10.1,
+        "max": 20515.6
+      },
+      "firstDrawMs": {
+        "count": 45,
+        "min": 0.9,
+        "median": 5.1,
+        "p95": 149.5,
+        "max": 204.6
+      },
+      "prepareMs": {
+        "count": 15,
+        "min": 1.2,
+        "median": 1.6,
+        "p95": 4.1,
+        "max": 4.3
+      }
+    }
+  },
+  "byRound": {
+    "1": {
+      "views": 90,
+      "drawSubmissionMs": {
+        "count": 720,
+        "min": 0.1,
+        "median": 0.8,
+        "p95": 1.6,
+        "max": 2.8
+      },
+      "rafWallIntervalMs": {
+        "count": 720,
+        "min": 0.1,
+        "median": 8.2,
+        "p95": 10.1,
+        "max": 5676.6
+      },
+      "firstDrawMs": {
+        "count": 90,
+        "min": 0.8,
+        "median": 4.4,
+        "p95": 62.5,
+        "max": 95.4
+      },
+      "prepareMs": {
+        "count": 30,
+        "min": 1.2,
+        "median": 40.2,
+        "p95": 409.3,
+        "max": 2424.6
+      }
+    },
+    "2": {
+      "views": 90,
+      "drawSubmissionMs": {
+        "count": 720,
+        "min": 0.3,
+        "median": 0.9,
+        "p95": 1.8,
+        "max": 5.1
+      },
+      "rafWallIntervalMs": {
+        "count": 720,
+        "min": 0.3,
+        "median": 8.2,
+        "p95": 10.2,
+        "max": 23008.1
+      },
+      "firstDrawMs": {
+        "count": 90,
+        "min": 0.8,
+        "median": 4.2,
+        "p95": 102.8,
+        "max": 118.7
+      },
+      "prepareMs": {
+        "count": 30,
+        "min": 1.5,
+        "median": 43.4,
+        "p95": 147.1,
+        "max": 16194.2
+      }
+    },
+    "3": {
+      "views": 90,
+      "drawSubmissionMs": {
+        "count": 720,
+        "min": 0.1,
+        "median": 0.8,
+        "p95": 1.7,
+        "max": 3.1
+      },
+      "rafWallIntervalMs": {
+        "count": 720,
+        "min": 0,
+        "median": 8.3,
+        "p95": 10.2,
+        "max": 32861.5
+      },
+      "firstDrawMs": {
+        "count": 90,
+        "min": 0.8,
+        "median": 3.8,
+        "p95": 157.1,
+        "max": 204.6
+      },
+      "prepareMs": {
+        "count": 30,
+        "min": 1.6,
+        "median": 43.3,
+        "p95": 204.9,
+        "max": 247.8
+      }
+    }
+  },
+  "byRoundPathQuality": {
+    "1/imported/low": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.3,
+        "median": 0.7,
+        "p95": 1.1,
+        "max": 2.1
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.3,
+        "median": 8.1,
+        "p95": 9.9,
+        "max": 4663.5
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.8,
+        "median": 1.2,
+        "p95": 49.7,
+        "max": 62.5
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 29.5,
+        "median": 40.2,
+        "p95": 46.9,
+        "max": 162.3
+      }
+    },
+    "2/imported/low": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.3,
+        "median": 0.7,
+        "p95": 0.9,
+        "max": 5.1
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.8,
+        "median": 8.1,
+        "p95": 18.4,
+        "max": 21623
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 1,
+        "median": 1.6,
+        "p95": 44.1,
+        "max": 44.7
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 30.5,
+        "median": 32.7,
+        "p95": 35.4,
+        "max": 43.4
+      }
+    },
+    "3/imported/low": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.1,
+        "median": 0.7,
+        "p95": 1.1,
+        "max": 3.1
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.5,
+        "median": 8.2,
+        "p95": 10.1,
+        "max": 32861.5
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.8,
+        "median": 1.9,
+        "p95": 35.6,
+        "max": 40.7
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 30.1,
+        "median": 32,
+        "p95": 35.3,
+        "max": 43.3
+      }
+    },
+    "1/imported/balanced": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.5,
+        "median": 0.9,
+        "p95": 1.7,
+        "max": 2.4
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.3,
+        "median": 8.3,
+        "p95": 9.9,
+        "max": 1970.6
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.8,
+        "median": 6.1,
+        "p95": 71.4,
+        "max": 87.1
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 51.6,
+        "median": 64.1,
+        "p95": 84.7,
+        "max": 948.9
+      }
+    },
+    "2/imported/balanced": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.6,
+        "median": 1,
+        "p95": 1.8,
+        "max": 2.1
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 1.2,
+        "median": 8.3,
+        "p95": 9.9,
+        "max": 10.4
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 1,
+        "median": 5.8,
+        "p95": 41.3,
+        "max": 50.1
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 92.9,
+        "median": 125.8,
+        "p95": 138.7,
+        "max": 139.7
+      }
+    },
+    "3/imported/balanced": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.5,
+        "median": 0.9,
+        "p95": 1.9,
+        "max": 2.2
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 1.2,
+        "median": 8.2,
+        "p95": 10.1,
+        "max": 10.3
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.9,
+        "median": 5.9,
+        "p95": 44.7,
+        "max": 62
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 166,
+        "median": 180.5,
+        "p95": 193.8,
+        "max": 209.1
+      }
+    },
+    "1/imported/high": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.5,
+        "median": 1,
+        "p95": 1.9,
+        "max": 2.2
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.2,
+        "median": 8.3,
+        "p95": 10.2,
+        "max": 5247.1
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.8,
+        "median": 5.1,
+        "p95": 48,
+        "max": 50.8
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 1.5,
+        "median": 2.3,
+        "p95": 2.4,
+        "max": 6.3
+      }
+    },
+    "2/imported/high": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.5,
+        "median": 1.1,
+        "p95": 2.2,
+        "max": 3.6
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 1.3,
+        "median": 8.1,
+        "p95": 10.3,
+        "max": 18612.1
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.9,
+        "median": 5.2,
+        "p95": 100.3,
+        "max": 114.9
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 1.7,
+        "median": 2.3,
+        "p95": 2.5,
+        "max": 4.2
+      }
+    },
+    "3/imported/high": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.2,
+        "median": 1,
+        "p95": 2,
+        "max": 2.5
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.1,
+        "median": 8.3,
+        "p95": 10.4,
+        "max": 18.4
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 1,
+        "median": 4.4,
+        "p95": 161.3,
+        "max": 174.7
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 1.6,
+        "median": 2.6,
+        "p95": 2.8,
+        "max": 4.9
+      }
+    },
+    "1/fallback/low": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.1,
+        "median": 0.6,
+        "p95": 1,
+        "max": 2.8
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.2,
+        "median": 8.1,
+        "p95": 9.8,
+        "max": 10.4
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.8,
+        "median": 1.4,
+        "p95": 22.8,
+        "max": 95.4
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 31.9,
+        "median": 65.3,
+        "p95": 255.6,
+        "max": 2424.6
+      }
+    },
+    "2/fallback/low": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.3,
+        "median": 0.7,
+        "p95": 1.1,
+        "max": 2.9
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.7,
+        "median": 8.3,
+        "p95": 10.1,
+        "max": 23008.1
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.8,
+        "median": 1.6,
+        "p95": 17,
+        "max": 18.6
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 105.3,
+        "median": 128.6,
+        "p95": 147.1,
+        "max": 16194.2
+      }
+    },
+    "3/fallback/low": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.2,
+        "median": 0.6,
+        "p95": 1.1,
+        "max": 2.8
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.8,
+        "median": 8.3,
+        "p95": 10.3,
+        "max": 28068.5
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.8,
+        "median": 1.5,
+        "p95": 19.2,
+        "max": 22.4
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 146.9,
+        "median": 184.4,
+        "p95": 195.2,
+        "max": 204.9
+      }
+    },
+    "1/fallback/balanced": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.2,
+        "median": 0.9,
+        "p95": 1.3,
+        "max": 1.8
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.5,
+        "median": 8.3,
+        "p95": 10.2,
+        "max": 5676.6
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.8,
+        "median": 4.8,
+        "p95": 46.1,
+        "max": 58.3
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 33.8,
+        "median": 56.6,
+        "p95": 63.6,
+        "max": 409.3
+      }
+    },
+    "2/fallback/balanced": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.4,
+        "median": 0.9,
+        "p95": 1.7,
+        "max": 1.9
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 1.7,
+        "median": 8.2,
+        "p95": 10,
+        "max": 9173.2
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.9,
+        "median": 7.2,
+        "p95": 35,
+        "max": 35.7
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 94.6,
+        "median": 122.9,
+        "p95": 127.7,
+        "max": 149.8
+      }
+    },
+    "3/fallback/balanced": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.4,
+        "median": 0.8,
+        "p95": 1.5,
+        "max": 1.8
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 1.6,
+        "median": 8.3,
+        "p95": 10.3,
+        "max": 11.7
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 1,
+        "median": 4.3,
+        "p95": 27.2,
+        "max": 31.9
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 179.8,
+        "median": 193.1,
+        "p95": 196.2,
+        "max": 247.8
+      }
+    },
+    "1/fallback/high": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.5,
+        "median": 0.9,
+        "p95": 1.7,
+        "max": 2
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.1,
+        "median": 8.1,
+        "p95": 9.9,
+        "max": 4386
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.9,
+        "median": 5.6,
+        "p95": 50.3,
+        "max": 70.1
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 1.2,
+        "median": 1.5,
+        "p95": 1.6,
+        "max": 3.4
+      }
+    },
+    "2/fallback/high": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.3,
+        "median": 1,
+        "p95": 1.9,
+        "max": 2.3
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0.3,
+        "median": 8.3,
+        "p95": 10,
+        "max": 20515.6
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 0.9,
+        "median": 5.1,
+        "p95": 114.2,
+        "max": 118.7
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 1.5,
+        "median": 1.6,
+        "p95": 2.1,
+        "max": 4.1
+      }
+    },
+    "3/fallback/high": {
+      "views": 15,
+      "drawSubmissionMs": {
+        "count": 120,
+        "min": 0.4,
+        "median": 1,
+        "p95": 1.8,
+        "max": 2
+      },
+      "rafWallIntervalMs": {
+        "count": 120,
+        "min": 0,
+        "median": 8.2,
+        "p95": 10.1,
+        "max": 11.1
+      },
+      "firstDrawMs": {
+        "count": 15,
+        "min": 1.1,
+        "median": 4.8,
+        "p95": 160.9,
+        "max": 204.6
+      },
+      "prepareMs": {
+        "count": 5,
+        "min": 1.6,
+        "median": 1.8,
+        "p95": 2.3,
+        "max": 4.3
+      }
+    }
+  },
+  "firstVersusLaterRounds": {
+    "firstPass": {
+      "views": 90,
+      "drawSubmissionMs": {
+        "count": 720,
+        "min": 0.1,
+        "median": 0.8,
+        "p95": 1.6,
+        "max": 2.8
+      },
+      "rafWallIntervalMs": {
+        "count": 720,
+        "min": 0.1,
+        "median": 8.2,
+        "p95": 10.1,
+        "max": 5676.6
+      },
+      "firstDrawMs": {
+        "count": 90,
+        "min": 0.8,
+        "median": 4.4,
+        "p95": 62.5,
+        "max": 95.4
+      },
+      "prepareMs": {
+        "count": 30,
+        "min": 1.2,
+        "median": 40.2,
+        "p95": 409.3,
+        "max": 2424.6
+      }
+    },
+    "laterPasses": {
+      "views": 180,
+      "drawSubmissionMs": {
+        "count": 1440,
+        "min": 0.1,
+        "median": 0.9,
+        "p95": 1.8,
+        "max": 5.1
+      },
+      "rafWallIntervalMs": {
+        "count": 1440,
+        "min": 0,
+        "median": 8.3,
+        "p95": 10.2,
+        "max": 32861.5
+      },
+      "firstDrawMs": {
+        "count": 180,
+        "min": 0.8,
+        "median": 4,
+        "p95": 136.3,
+        "max": 204.6
+      },
+      "prepareMs": {
+        "count": 60,
+        "min": 1.5,
+        "median": 43.4,
+        "p95": 204.9,
+        "max": 16194.2
+      }
+    }
+  },
+  "generationLoadImported": {
+    "overall": {
+      "generationMs": {
+        "count": 15,
+        "min": 1.1,
+        "median": 1.3,
+        "p95": 1.5,
+        "max": 30.2
+      },
+      "loadMs": {
+        "count": 15,
+        "min": 21.5,
+        "median": 213.8,
+        "p95": 991.6,
+        "max": 17827.1
+      }
+    },
+    "round1": {
+      "generationMs": {
+        "count": 5,
+        "min": 1.1,
+        "median": 1.4,
+        "p95": 1.5,
+        "max": 30.2
+      },
+      "loadMs": {
+        "count": 5,
+        "min": 21.5,
+        "median": 130.2,
+        "p95": 341.7,
+        "max": 807.2
+      }
+    },
+    "round2": {
+      "generationMs": {
+        "count": 5,
+        "min": 1.2,
+        "median": 1.3,
+        "p95": 1.4,
+        "max": 1.4
+      },
+      "loadMs": {
+        "count": 5,
+        "min": 99.9,
+        "median": 581.2,
+        "p95": 991.6,
+        "max": 17827.1
+      }
+    },
+    "round3": {
+      "generationMs": {
+        "count": 5,
+        "min": 1.2,
+        "median": 1.3,
+        "p95": 1.3,
+        "max": 1.4
+      },
+      "loadMs": {
+        "count": 5,
+        "min": 180.1,
+        "median": 213.8,
+        "p95": 214.7,
+        "max": 322.1
+      }
+    }
+  },
+  "worst": {
+    "draw": [
+      {
+        "round": 2,
+        "id": "container-yard-08",
+        "path": "imported",
+        "quality": "low",
+        "camera": "chase",
+        "sampleIndexOneBased": 1,
+        "valueMs": 5.1,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 0.4,
+          "median": 0.7,
+          "p95": 0.8,
+          "max": 5.1
+        }
+      },
+      {
+        "round": 2,
+        "id": "snake-hunt-chase-06",
+        "path": "imported",
+        "quality": "high",
+        "camera": "overview",
+        "sampleIndexOneBased": 5,
+        "valueMs": 3.6,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 1.5,
+          "median": 2.1,
+          "p95": 3,
+          "max": 3.6
+        }
+      },
+      {
+        "round": 3,
+        "id": "snake-hunt-chase-06",
+        "path": "imported",
+        "quality": "low",
+        "camera": "chase",
+        "sampleIndexOneBased": 2,
+        "valueMs": 3.1,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 0.9,
+          "median": 1.2,
+          "p95": 1.7,
+          "max": 3.1
+        }
+      },
+      {
+        "round": 2,
+        "id": "snake-hunt-chase-06",
+        "path": "imported",
+        "quality": "high",
+        "camera": "overview",
+        "sampleIndexOneBased": 6,
+        "valueMs": 3,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 1.5,
+          "median": 2.1,
+          "p95": 3,
+          "max": 3.6
+        }
+      },
+      {
+        "round": 2,
+        "id": "woodland-08",
+        "path": "imported",
+        "quality": "high",
+        "camera": "overview",
+        "sampleIndexOneBased": 7,
+        "valueMs": 3,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 0.7,
+          "median": 1.1,
+          "p95": 1.2,
+          "max": 3
+        }
+      },
+      {
+        "round": 2,
+        "id": "beginner-37",
+        "path": "fallback",
+        "quality": "low",
+        "camera": "overview",
+        "sampleIndexOneBased": 6,
+        "valueMs": 2.9,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 0.4,
+          "median": 0.5,
+          "p95": 1.3,
+          "max": 2.9
+        }
+      }
+    ],
+    "raf": [
+      {
+        "round": 3,
+        "id": "woodland-08",
+        "path": "imported",
+        "quality": "low",
+        "camera": "chase",
+        "sampleIndexOneBased": 3,
+        "valueMs": 32861.5,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 0.8,
+          "median": 8,
+          "p95": 9.5,
+          "max": 32861.5
+        }
+      },
+      {
+        "round": 3,
+        "id": "snake-hunt-chase-06",
+        "path": "fallback",
+        "quality": "low",
+        "camera": "overview",
+        "sampleIndexOneBased": 8,
+        "valueMs": 28068.5,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 6.6,
+          "median": 8.3,
+          "p95": 10.3,
+          "max": 28068.5
+        }
+      },
+      {
+        "round": 2,
+        "id": "beginner-37",
+        "path": "fallback",
+        "quality": "low",
+        "camera": "overview",
+        "sampleIndexOneBased": 3,
+        "valueMs": 23008.1,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 0.7,
+          "median": 6.6,
+          "p95": 52.2,
+          "max": 23008.1
+        }
+      },
+      {
+        "round": 2,
+        "id": "beginner-37",
+        "path": "imported",
+        "quality": "low",
+        "camera": "chase",
+        "sampleIndexOneBased": 2,
+        "valueMs": 21623,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 1.2,
+          "median": 7.6,
+          "p95": 11.6,
+          "max": 21623
+        }
+      },
+      {
+        "round": 2,
+        "id": "beginner-40",
+        "path": "fallback",
+        "quality": "high",
+        "camera": "overview",
+        "sampleIndexOneBased": 2,
+        "valueMs": 20515.6,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 1.3,
+          "median": 8.1,
+          "p95": 10.2,
+          "max": 20515.6
+        }
+      },
+      {
+        "round": 2,
+        "id": "beginner-40",
+        "path": "imported",
+        "quality": "high",
+        "camera": "overview",
+        "sampleIndexOneBased": 5,
+        "valueMs": 18612.1,
+        "viewDistributionMs": {
+          "count": 8,
+          "min": 1.3,
+          "median": 8.2,
+          "p95": 9.4,
+          "max": 18612.1
+        }
+      }
+    ],
+    "firstDrawMs": [
+      {
+        "round": 3,
+        "id": "beginner-40",
+        "path": "fallback",
+        "quality": "high",
+        "camera": "fpv",
+        "valueMs": 204.6
+      },
+      {
+        "round": 3,
+        "id": "container-yard-08",
+        "path": "imported",
+        "quality": "high",
+        "camera": "fpv",
+        "valueMs": 174.7
+      },
+      {
+        "round": 3,
+        "id": "beginner-37",
+        "path": "imported",
+        "quality": "high",
+        "camera": "fpv",
+        "valueMs": 161.3
+      },
+      {
+        "round": 3,
+        "id": "beginner-37",
+        "path": "fallback",
+        "quality": "high",
+        "camera": "fpv",
+        "valueMs": 160.9
+      },
+      {
+        "round": 3,
+        "id": "beginner-40",
+        "path": "imported",
+        "quality": "high",
+        "camera": "fpv",
+        "valueMs": 160.4
+      },
+      {
+        "round": 3,
+        "id": "woodland-08",
+        "path": "fallback",
+        "quality": "high",
+        "camera": "fpv",
+        "valueMs": 157.1
+      }
+    ],
+    "prepareMs": [
+      {
+        "round": 2,
+        "id": "container-yard-08",
+        "path": "fallback",
+        "quality": "low",
+        "valueMs": 16194.2
+      },
+      {
+        "round": 1,
+        "id": "container-yard-08",
+        "path": "fallback",
+        "quality": "low",
+        "valueMs": 2424.6
+      },
+      {
+        "round": 1,
+        "id": "woodland-08",
+        "path": "imported",
+        "quality": "balanced",
+        "valueMs": 948.9
+      },
+      {
+        "round": 1,
+        "id": "snake-hunt-chase-06",
+        "path": "fallback",
+        "quality": "balanced",
+        "valueMs": 409.3
+      },
+      {
+        "round": 1,
+        "id": "snake-hunt-chase-06",
+        "path": "fallback",
+        "quality": "low",
+        "valueMs": 255.6
+      },
+      {
+        "round": 3,
+        "id": "beginner-37",
+        "path": "fallback",
+        "quality": "balanced",
+        "valueMs": 247.8
+      }
+    ],
+    "generationMs": [
+      {
+        "round": 1,
+        "id": "snake-hunt-chase-06",
+        "path": "imported",
+        "valueMs": 30.2
+      },
+      {
+        "round": 1,
+        "id": "woodland-08",
+        "path": "imported",
+        "valueMs": 1.5
+      },
+      {
+        "round": 1,
+        "id": "beginner-40",
+        "path": "imported",
+        "valueMs": 1.4
+      },
+      {
+        "round": 2,
+        "id": "woodland-08",
+        "path": "imported",
+        "valueMs": 1.4
+      },
+      {
+        "round": 2,
+        "id": "beginner-40",
+        "path": "imported",
+        "valueMs": 1.4
+      },
+      {
+        "round": 3,
+        "id": "snake-hunt-chase-06",
+        "path": "imported",
+        "valueMs": 1.4
+      }
+    ],
+    "loadMs": [
+      {
+        "round": 2,
+        "id": "beginner-40",
+        "path": "imported",
+        "valueMs": 17827.1
+      },
+      {
+        "round": 2,
+        "id": "beginner-37",
+        "path": "imported",
+        "valueMs": 991.6
+      },
+      {
+        "round": 1,
+        "id": "woodland-08",
+        "path": "imported",
+        "valueMs": 807.2
+      },
+      {
+        "round": 2,
+        "id": "container-yard-08",
+        "path": "imported",
+        "valueMs": 581.2
+      },
+      {
+        "round": 1,
+        "id": "beginner-37",
+        "path": "imported",
+        "valueMs": 341.7
+      },
+      {
+        "round": 3,
+        "id": "container-yard-08",
+        "path": "imported",
+        "valueMs": 322.1
+      }
+    ]
+  },
+  "controlsSeparate": {
+    "pixel": {
+      "draw": {
+        "count": 60,
+        "min": 0.4,
+        "median": 0.9,
+        "p95": 1.5,
+        "max": 2.3
+      },
+      "raf": {
+        "count": 60,
+        "min": 0.1,
+        "median": 5.3,
+        "p95": 9.7,
+        "max": 12.5
+      },
+      "firstDraw": {
+        "count": 30,
+        "min": 1.7,
+        "median": 15.6,
+        "p95": 46,
+        "max": 61.4
+      },
+      "prepare": {
+        "count": 30,
+        "min": 1.1,
+        "median": 29.6,
+        "p95": 246.1,
+        "max": 310.5
+      }
+    },
+    "linear-theme": {
+      "draw": {
+        "count": 60,
+        "min": 0.5,
+        "median": 0.9,
+        "p95": 1.8,
+        "max": 2
+      },
+      "raf": {
+        "count": 60,
+        "min": 0.2,
+        "median": 4.9,
+        "p95": 10.2,
+        "max": 14.6
+      },
+      "firstDraw": {
+        "count": 30,
+        "min": 4.6,
+        "median": 17.3,
+        "p95": 47.4,
+        "max": 50.3
+      },
+      "prepare": {
+        "count": 30,
+        "min": 1.1,
+        "median": 28.9,
+        "p95": 259.9,
+        "max": 278.5
+      }
+    }
+  }
+}

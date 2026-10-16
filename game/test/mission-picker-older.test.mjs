@@ -3,10 +3,18 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
 import { attachMissionPicker } from '../ui/mission-picker.mjs';
-import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import {
+  authoritativeCheckpoint,
+  verifyReplay,
+  createRecorder,
+  recordInput,
+  exportReplay,
+} from '../replay.mjs';
 import { PNGImage as ChapterImage } from './helpers/png-image.mjs';
 import { loadLibrary } from '../library.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { createRun, stepRun, releaseInputs, FIXED_DT } from '../core/index.mjs';
+import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 
 const oldIds = ['fpv-arcade-r4', 'fpv-arcade-r3', 'fpv-arcade-r2', 'fpv-arcade'];
 const ids = (parent) => [...parent.children].map((node) => node.getAttribute('data-pack'));
@@ -18,6 +26,18 @@ const ticks = (page, count) => {
   for (let n = 0; n < count; n++) page.frame();
 };
 const sessionKey = 'revealline.suspended.dev.v1';
+
+// This retained native picker is distinct from the current public Missions
+// gallery. Pause through the real host before opening its existing component;
+// never create an asynchronous gallery owner behind the disclosure under test.
+function openRetainedPicker(page) {
+  page.$('shell-menu').click();
+  page.$('shell-home').close();
+  page.$('shell-missions').showModal();
+  attachMissionPicker({ document: page.doc }).focusSelectedChapter();
+  assert.equal(page.$('shell-missions').open, true);
+  assert.equal(page.$('journey-chooser')?.open ?? false, false);
+}
 
 // Actual app, shell and controller handlers execute. Only browser summary,
 // keyboard default actions, image decoding and physical pad samples are modeled.
@@ -136,7 +156,7 @@ test('native keyboard defaults, pointer activation and exact disclosure focus le
   const page = await soloPage(t),
     summary = nativeSummary(page),
     older = page.$('mission-picker-older');
-  page.$('shell-packs').click();
+  openRetainedPicker(page);
   page.frame(0);
   const checkpoint = authoritativeCheckpoint(page.rendered.run),
     stored = new Map(page.storage.map),
@@ -220,7 +240,7 @@ test('actual host controller navigation excludes closed cards, reaches all four 
   const page = await soloPage(t),
     summary = nativeSummary(page),
     input = padInput(page, t);
-  page.$('shell-packs').click();
+  openRetainedPicker(page);
   page.frame(0);
   const checkpoint = authoritativeCheckpoint(page.rendered.run),
     stored = new Map(page.storage.map);
@@ -260,7 +280,7 @@ test('a failed older-card request preserves a paused cut and its disclosure; a n
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 13);
-  page.$('shell-packs').click();
+  openRetainedPicker(page);
   page.frame(0);
   summary.click();
   const run = page.rendered.run,
@@ -347,7 +367,7 @@ test('a failed older-card request preserves a paused cut and its disclosure; a n
   page.frame(0);
   const newer = page.rendered.run;
   assert.notEqual(newer, run, 'Only the confirmed restart creates the newer attempt');
-  page.$('shell-packs').click();
+  openRetainedPicker(page);
   page.frame(0);
   const newerCheckpoint = authoritativeCheckpoint(newer),
     status = page.$('content-select-status').textContent,
@@ -374,27 +394,57 @@ test('an installed original R4 keeps its saved v4 flight, ordinary win, Collecti
   });
   const page = await soloPage(t, { pictures: { Image: ChapterImage } }),
     summary = nativeSummary(page);
-  page.$('shell-packs').click();
+  openRetainedPicker(page);
   summary.click();
   const target = card(page, oldIds[0]);
   target.click();
   await settle(() => !page.$('pack-select').disabled);
   page.frame(0);
   assert.equal(page.$('pack-select').value, oldIds[0]);
-  assert.equal(page.rendered.run.level.revision, '4');
+  const source = JSON.parse(
+    await readFile(new URL('../content/packs/fpv-arcade-r4.json', import.meta.url)),
+  );
+  assert.equal(source.campaigns[0].levels[0].revision, '4');
+  const reference = createRun(
+    applyGameplayTuning(source.campaigns[0].levels[0], resolveGameplayTuning('standard')),
+    { seed: 1, classId: 'scout', classRecipes: source.classRecipes, turnPolicy: 'immediate' },
+  );
+  const recorder = createRecorder(reference.level, {
+    seed: 1,
+    classId: 'scout',
+    classRecipes: source.classRecipes,
+    turnPolicy: 'immediate',
+  });
+  assert.deepEqual(page.rendered.run.level, reference.level);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(reference));
+  const advance = (direction, count, fresh = true) => {
+    if (fresh && direction) {
+      const code = `Arrow${direction[0].toUpperCase()}${direction.slice(1)}`;
+      page.key(code);
+      page.key(code, false);
+    }
+    for (let tick = 0; tick < count; tick++) {
+      recordInput(recorder, { direction });
+      stepRun(reference, { direction }, FIXED_DT);
+      page.frame();
+    }
+    assert.equal(page.rendered.run.lives, 3);
+    assert.deepEqual(
+      authoritativeCheckpoint(page.rendered.run),
+      authoritativeCheckpoint(reference),
+    );
+  };
   const campaign = page.$('campaign-select').value;
   assert.equal(campaign, 'fpv-first-light-r4/4/0295a1eae3e180ec');
   assert.equal(card(page, oldIds[0]), target);
   page.$('shell-briefing').click();
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
-  page.key('ArrowLeft');
-  page.key('ArrowLeft', false);
-  ticks(page, 72);
-  page.key('ArrowDown');
-  page.key('ArrowDown', false);
-  ticks(page, 13);
-  page.$('shell-packs').click();
+  advance(null, 120);
+  advance('right', 326);
+  advance('down', 13);
+  openRetainedPicker(page);
+  releaseInputs(reference);
   page.frame(0);
   const checkpoint = authoritativeCheckpoint(page.rendered.run),
     oldY = page.rendered.run.player.y,
@@ -416,7 +466,7 @@ test('an installed original R4 keeps its saved v4 flight, ordinary win, Collecti
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.equal(page.storage.getItem(sessionKey), savedRaw);
-  page.$('shell-packs').click();
+  openRetainedPicker(page);
   page.frame(0);
   assert.equal(page.$('mission-picker-older').open, true);
   assert.equal(page.doc.activeElement, target);
@@ -427,40 +477,40 @@ test('an installed original R4 keeps its saved v4 flight, ordinary win, Collecti
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
-  ticks(page, 8);
+  advance('down', 8, false);
   assert.equal(page.rendered.run.tick, saved.replay.ticks + 8);
   assert.ok(page.rendered.run.player.y > oldY);
   page.$('pause-button').click();
+  releaseInputs(reference);
   const resumed = JSON.parse(page.storage.getItem(sessionKey));
   assert.equal(resumed.campaignKey, campaign);
   assert.deepEqual(resumed.presentationPins, saved.presentationPins);
   assert.equal(verifyReplay(resumed.replay).match, true);
-  // Finish the unchanged R4 orchard-window route from its saved direction.
-  // These are the existing standard/immediate seed-1 route's ordinary inputs.
+  // The authored R4 original is retained; fresh attempts use the approved
+  // pressure.v4/immediate recipe. Complete a legal lossless route from the
+  // exact saved cut, with an independently stepped reference throughout.
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
-  ticks(page, 255);
-  ticks(page, 1);
-  for (const [direction, count] of [
-    ['Down', 4],
-    ['Up', 280],
-    ['Right', 200],
-    ['Down', 276],
-  ]) {
-    page.key(`Arrow${direction}`);
-    page.key(`Arrow${direction}`, false);
-    ticks(page, count);
-  }
+  advance('down', 448, false);
+  advance(null, 240);
+  advance('down', 7);
+  advance('left', 299);
+  advance('up', 537);
+  advance('down', 7);
+  advance('up', 14);
+  advance('left', 271);
+  advance('down', 395);
   assert.equal(page.rendered.run.status, 'won');
-  assert.equal(page.rendered.run.tick, 1109);
-  assert.equal(page.rendered.run.score, 17680);
+  assert.equal(page.rendered.run.tick, 2685);
+  assert.equal(page.rendered.run.score, 18020);
+  assert.equal(verifyReplay(exportReplay(recorder, reference)).match, true);
   const library = () => loadLibrary(page.storage, 'revealline.library.dev.v1').library;
   await settle(() => library().gallery.length === 1);
   const earned = structuredClone(library().gallery[0]);
   assert.equal(earned.campaignKey, campaign);
   assert.equal(earned.levelId, 'orchard-window');
   assert.equal(earned.levelRevision, '4');
-  assert.equal(earned.score, 17680);
+  assert.equal(earned.score, 18020);
   page.$('shell-collection').click();
   await settle(
     () =>
@@ -481,10 +531,10 @@ test('an installed original R4 keeps its saved v4 flight, ordinary win, Collecti
   page.frame(0);
   assert.equal(page.$('pack-select').value, oldIds[0]);
   assert.equal(page.$('campaign-select').value, campaign);
-  assert.equal(page.rendered.run.level.revision, '4');
+  assert.deepEqual(page.rendered.run.level, reference.level);
   assert.equal(page.rendered.run.tick, 0);
   assert.deepEqual(library().gallery[0], earned);
-  page.$('shell-packs').click();
+  openRetainedPicker(page);
   page.frame(0);
   assert.equal(page.$('mission-picker-older').open, true);
   assert.equal(page.doc.activeElement, target);

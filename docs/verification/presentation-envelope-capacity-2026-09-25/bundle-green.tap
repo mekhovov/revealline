@@ -1,0 +1,165 @@
+TAP version 13
+# Subtest: the complete semantic registry covers every screen and resolves procedural baselines
+ok 1 - the complete semantic registry covers every screen and resolves procedural baselines
+  ---
+  duration_ms: 97.886291
+  ...
+# Subtest: future theme IDs inherit a complete base without enumerating four worlds
+ok 2 - future theme IDs inherit a complete base without enumerating four worlds
+  ---
+  duration_ms: 174.466
+  ...
+# Subtest: unknown fields, executable recipes, CSS injection and accessor data are refused
+ok 3 - unknown fields, executable recipes, CSS injection and accessor data are refused
+  ---
+  duration_ms: 270.739292
+  ...
+# Subtest: missing references, mismatched kinds and incomplete base coverage are refused
+ok 4 - missing references, mismatched kinds and incomplete base coverage are refused
+  ---
+  duration_ms: 331.684792
+  ...
+# Subtest: inheritance and derivative cycles cannot enter a resolved theme
+ok 5 - inheritance and derivative cycles cannot enter a resolved theme
+  ---
+  duration_ms: 241.57025
+  ...
+# Subtest: collections replace their declared set atomically and drafts override them last
+ok 6 - collections replace their declared set atomically and drafts override them last
+  ---
+  duration_ms: 350.184
+  ...
+# Subtest: collections cannot silently cross world identity
+ok 7 - collections cannot silently cross world identity
+  ---
+  duration_ms: 91.227042
+  ...
+# Subtest: compare-and-swap and immutable revision history reject stale or destructive successors
+ok 8 - compare-and-swap and immutable revision history reject stale or destructive successors
+  ---
+  duration_ms: 334.251
+  ...
+# Subtest: image bindings require the slot exact dimensions
+ok 9 - image bindings require the slot exact dimensions
+  ---
+  duration_ms: 176.527208
+  ...
+# Subtest: theme transfer retains exact bytes and produces deterministic output
+ok 10 - theme transfer retains exact bytes and produces deterministic output
+  ---
+  duration_ms: 346.936084
+  ...
+# Subtest: invalid hash, corrupt image bytes and extra payloads fail before adoption
+ok 11 - invalid hash, corrupt image bytes and extra payloads fail before adoption
+  ---
+  duration_ms: 526.380292
+  ...
+# Subtest: failed decoding and cancellation never return an accepted candidate
+ok 12 - failed decoding and cancellation never return an accepted candidate
+  ---
+  duration_ms: 481.31025
+  ...
+# Subtest: runtime tokens map to shared Field Kit styles and preserve gameplay palette vocabulary
+ok 13 - runtime tokens map to shared Field Kit styles and preserve gameplay palette vocabulary
+  ---
+  duration_ms: 60.880167
+  ...
+# Subtest: compiler emits deterministic allowlisted local assets without source paths or code
+ok 14 - compiler emits deterministic allowlisted local assets without source paths or code
+  ---
+  duration_ms: 248.729334
+  ...
+# Subtest: production adapter preserves the exact v1 document and read-only binding history
+ok 15 - production adapter preserves the exact v1 document and read-only binding history
+  ---
+  duration_ms: 16.278916
+  ...
+# Subtest: frame, occupied bounds, rotor envelopes, nine-slice center and slot budgets are checked
+ok 16 - frame, occupied bounds, rotor envelopes, nine-slice center and slot budgets are checked
+  ---
+  duration_ms: 358.4155
+  ...
+# Subtest: frame-local rig conversion preserves pivot and leaves source and physics untouched
+ok 17 - frame-local rig conversion preserves pivot and leaves source and physics untouched
+  ---
+  duration_ms: 174.688583
+  ...
+# Subtest: bindings reject geometry controls that their renderer cannot apply
+ok 18 - bindings reject geometry controls that their renderer cannot apply
+  ---
+  duration_ms: 363.230709
+  ...
+# Subtest: rotor geometry permits only blade counts supported by the registered renderer
+ok 19 - rotor geometry permits only blade counts supported by the registered renderer
+  ---
+  duration_ms: 185.8025
+  ...
+# Subtest: source recipe coverage is not a completed production-art claim
+ok 20 - source recipe coverage is not a completed production-art claim
+  ---
+  duration_ms: 130.003959
+  ...
+# Subtest: portable bundles compile through the CLI without rewriting their asset bytes
+ok 21 - portable bundles compile through the CLI without rewriting their asset bytes
+  ---
+  duration_ms: 1087.829875
+  ...
+# Subtest: every current base, playable archive, optional and external picture owner has a stable slot
+ok 22 - every current base, playable archive, optional and external picture owner has a stable slot
+  ---
+  duration_ms: 13655.688916
+  ...
+# Subtest: fitting v1 exports retain exact legacy bytes, sorted unique payloads and duplicate history
+ok 23 - fitting v1 exports retain exact legacy bytes, sorted unique payloads and duplicate history
+  ---
+  duration_ms: 397.985
+  ...
+# Subtest: only oversized v1 envelopes fall back to deterministic v2 without changing document or original bytes
+ok 24 - only oversized v1 envelopes fall back to deterministic v2 without changing document or original bytes
+  ---
+  duration_ms: 1683.739
+  ...
+# Subtest: both headers reject malformed manifests, bad lengths, missing payloads and trailing bytes
+ok 25 - both headers reject malformed manifests, bad lengths, missing payloads and trailing bytes
+  ---
+  duration_ms: 1127.868542
+  ...
+# Subtest: inconsistent same-hash file metadata fails before accepting any payload in either format
+ok 26 - inconsistent same-hash file metadata fails before accepting any payload in either format
+  ---
+  duration_ms: 829.861916
+  ...
+# Subtest: v2 keeps finite structural and string limits and honours cancellation during decoding
+ok 27 - v2 keeps finite structural and string limits and honours cancellation during decoding
+  ---
+  duration_ms: 270.9385
+  ...
+# Subtest: V3 carries more than 2048 immutable records while retaining exact original payloads and deterministic re-export
+ok 28 - V3 carries more than 2048 immutable records while retaining exact original payloads and deterministic re-export
+  ---
+  duration_ms: 1587.33875
+  ...
+# Subtest: V3 direct raw metadata accepts exactly 5 MiB without charging an unused outer wrapper
+ok 29 - V3 direct raw metadata accepts exactly 5 MiB without charging an unused outer wrapper
+  ---
+  duration_ms: 1185.474958
+  ...
+# Subtest: V3 rejects invalid codec references, semantic file conflicts, corrupt/truncated/trailing bytes and oversized framing before acceptance
+ok 30 - V3 rejects invalid codec references, semantic file conflicts, corrupt/truncated/trailing bytes and oversized framing before acceptance
+  ---
+  duration_ms: 2105.178625
+  ...
+# Subtest: V3 cancellation and failed decoding cannot return a partial accepted document
+ok 31 - V3 cancellation and failed decoding cannot return a partial accepted document
+  ---
+  duration_ms: 1228.259083
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19799.992292

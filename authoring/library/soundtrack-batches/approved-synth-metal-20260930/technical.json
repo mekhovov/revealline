@@ -1,0 +1,96 @@
+{
+  "format": "revealline-soundtrack-batch-technical.v1",
+  "batchId": "approved-synth-metal-20260930",
+  "tracks": [
+    {
+      "id": "builtin.catalog.bogart-vgm.retroracing-nightlife",
+      "sha256": "24bfa4c75bcf80b3a81c3329a414221eebb8db650309aeb14935104d7ad36f70",
+      "bytes": 5199456,
+      "decoder": "FFmpeg",
+      "decoderVersion": "9.0.2",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -2.59,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/measurements.json",
+        "bytes": 3748,
+        "sha256": "15664d34b78028d72f21a8f18ca6d7496216b86019b697ecc5a04702201a31f5"
+      }
+    },
+    {
+      "id": "builtin.catalog.davidkbd.agony-space-deep",
+      "sha256": "991084035ebf50e3a27833148f57de8db7930e54b6ab549162f825efcfeae94d",
+      "bytes": 9048860,
+      "decoder": "FFmpeg",
+      "decoderVersion": "9.0.2",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -5.06,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/measurements.json",
+        "bytes": 3748,
+        "sha256": "15664d34b78028d72f21a8f18ca6d7496216b86019b697ecc5a04702201a31f5"
+      }
+    },
+    {
+      "id": "builtin.catalog.davidkbd.god-of-darkness",
+      "sha256": "ccd3b29e315ca6db5871f709baeea9b9a08bc1d5915382f44338d592402e32c0",
+      "bytes": 6281970,
+      "decoder": "FFmpeg",
+      "decoderVersion": "9.0.2",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -5.92,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/measurements.json",
+        "bytes": 3748,
+        "sha256": "15664d34b78028d72f21a8f18ca6d7496216b86019b697ecc5a04702201a31f5"
+      }
+    },
+    {
+      "id": "builtin.catalog.davidkbd.suffocation",
+      "sha256": "c3efaac83f71f4fcd9d2e5d3a752507893c1950ac5db6be7bced5e1bb71e2fae",
+      "bytes": 6880488,
+      "decoder": "FFmpeg",
+      "decoderVersion": "9.0.2",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -5.28,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/measurements.json",
+        "bytes": 3748,
+        "sha256": "15664d34b78028d72f21a8f18ca6d7496216b86019b697ecc5a04702201a31f5"
+      }
+    },
+    {
+      "id": "builtin.catalog.yannz.pixel-damnation",
+      "sha256": "a4f87f13d432a75d9bd852f88ab575ad1b0bec050e23650cef1c817ad4328bde",
+      "bytes": 4302515,
+      "decoder": "FFmpeg",
+      "decoderVersion": "9.0.2",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -5.81,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/measurements.json",
+        "bytes": 3748,
+        "sha256": "15664d34b78028d72f21a8f18ca6d7496216b86019b697ecc5a04702201a31f5"
+      }
+    },
+    {
+      "id": "builtin.catalog.yannz.revenges-waiting",
+      "sha256": "a5d0198843a7cef37f1919a094e99dc7b33c5fcac799f265eeaac647db9effec",
+      "bytes": 1538133,
+      "decoder": "FFmpeg",
+      "decoderVersion": "9.0.2",
+      "fullFileDecoded": true,
+      "integratedLUFS": -16,
+      "truePeakDbTP": -2.52,
+      "evidence": {
+        "path": "authoring/library/soundtrack-batches/approved-synth-metal-20260930/measurements.json",
+        "bytes": 3748,
+        "sha256": "15664d34b78028d72f21a8f18ca6d7496216b86019b697ecc5a04702201a31f5"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "manifestSHA256": "74fbf90c62eafc79e2ba25a4375f5e1d5da5ec25b758da4b3c78cf64c95067d6",
+  "sourceBytes": 47596480,
+  "extentM": [8192, 8192],
+  "canonicalGLBs": 1024,
+  "deterministicallyRegeneratedAssets": 2048,
+  "exactSeams": 1984,
+  "windows": 188,
+  "transitions": 384,
+  "maxResidentCells": 9,
+  "peakGeometryBytes": 456408,
+  "clearCorridorSweeps": 2313,
+  "actualLandmarkContacts": 18,
+  "clearAuthoredStarts": 6,
+  "disposedGeometryBytes": 0,
+  "commandedFlightVerified": false,
+  "playerAdmission": false
+}

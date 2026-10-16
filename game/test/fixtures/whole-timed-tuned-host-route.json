@@ -1,0 +1,117 @@
+{
+  "id": "behind-the-patrol",
+  "difficulty": "standard",
+  "turnPolicy": "immediate",
+  "delaySeconds": 0,
+  "seed": 1,
+  "status": "won",
+  "ticks": 3534,
+  "lives": 3,
+  "coverage": 0.7680170575692964,
+  "cuts": 2,
+  "searchSteps": 2,
+  "searchWaitTicks": [0, 60, 120, 240, 600, 960],
+  "checkpoint": "415d1d79099d1b5a",
+  "events": [
+    [1813, "cut.closed", null],
+    [3534, "cut.closed", null]
+  ],
+  "closures": [
+    [1813, 0.09211087420042643],
+    [3534, 0.7680170575692964]
+  ],
+  "segments": [
+    {
+      "direction": "left",
+      "ticks": 244
+    },
+    {
+      "direction": "down",
+      "ticks": 475
+    },
+    {
+      "direction": "right",
+      "ticks": 339
+    },
+    {
+      "direction": "up",
+      "ticks": 326
+    },
+    {
+      "direction": "right",
+      "ticks": 109
+    },
+    {
+      "direction": "down",
+      "ticks": 320
+    },
+    {
+      "direction": null,
+      "ticks": 960
+    },
+    {
+      "direction": "down",
+      "ticks": 7
+    },
+    {
+      "direction": "right",
+      "ticks": 285
+    },
+    {
+      "direction": "up",
+      "ticks": 469
+    }
+  ],
+  "format": "WholeTimedTunedHostRouteV1",
+  "scope": "Fresh Standard pressure.v4 keyboard host route; one bonus collection and lossless real win, verified same-runtime public replay. Historical authored route remains unchanged. Technical feasibility, not human balance evidence.",
+  "authoredIdentity": "6a32f686c3062c92",
+  "gameplayIdentity": "6e7e7df7b59e172e",
+  "rawCheckpointWitness": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "node": "20.19.5",
+    "v8": "11.3.244.8-node.30"
+  },
+  "routeEvidence": {
+    "format": "RouteEvidenceCheckpointV1",
+    "maxAbsoluteError": 1e-12,
+    "paths": [
+      "player.x",
+      "player.y",
+      "enemies[].x",
+      "enemies[].y",
+      "enemies[].vx",
+      "enemies[].vy",
+      "enemies[].perimeter",
+      "classic.actorTime",
+      "time",
+      "result.time"
+    ],
+    "checkpoints": {
+      "behind-the-patrol": {
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v6",
+          "hash": "415d1d79099d1b5a",
+          "sections": {
+            "identity": "ebd39afbe4d3bb0f",
+            "configuration": "a5267815f046fd94",
+            "board": "274a10dcbc3dd11a",
+            "player": "241dffa8b400e65b",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "1801ec822f08ac59",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "0f2dbcc8a5123a19",
+            "continuation": "a9d828ced6380d30",
+            "result": "1c587b75aec9f764",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "1ef93c3eb9a99b02",
+            "foundations": "16ec8d97befe590d"
+          }
+        },
+        "scalars": []
+      }
+    }
+  }
+}

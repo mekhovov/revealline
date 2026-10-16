@@ -183,10 +183,12 @@ test('native summary and chapter cards use the existing controller adapter; curr
   t.after(() => nav.destroy());
   let changes = 0;
   h.$('pack-select').addEventListener('change', () => changes++);
-  // The finite host starts on the paused field. Enter Missions through its
-  // actual header action before asking the adapter to activate chapter cards.
+  // Exercise the retained native picker after a real pause, without giving
+  // the asynchronous unified gallery simultaneous ownership of menu input.
   assert.equal(h.$('shell-missions').open, false);
-  h.$('shell-packs').click();
+  h.$('shell-menu').click();
+  h.$('shell-home').close();
+  h.$('shell-missions').showModal();
   assert.equal(h.$('shell-missions').open, true);
   assert.equal(picker.focusSelectedChapter(), true);
   nav.engage();

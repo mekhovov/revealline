@@ -1,0 +1,50 @@
+{
+  "status": "design-arithmetic-and-references-only",
+  "districts": 6,
+  "landmarks": 12,
+  "routePolylines": 12,
+  "difficultyCounts": {
+    "beginner": 4,
+    "intermediate": 5,
+    "advanced": 3
+  },
+  "connectedDesignDistricts": 6,
+  "terrainCells": 36,
+  "terrainSamples": 39204,
+  "startDistances": [
+    {
+      "id": "mare-apron",
+      "nearestLandmarkDistanceMm": 75472
+    },
+    {
+      "id": "ejecta-fan",
+      "nearestLandmarkDistanceMm": 87727
+    },
+    {
+      "id": "sinuous-rille",
+      "nearestLandmarkDistanceMm": 111140
+    },
+    {
+      "id": "terraced-crater",
+      "nearestLandmarkDistanceMm": 136000
+    },
+    {
+      "id": "fractured-highland",
+      "nearestLandmarkDistanceMm": 113208
+    },
+    {
+      "id": "observatory-ridge",
+      "nearestLandmarkDistanceMm": 111140
+    }
+  ],
+  "notVerified": [
+    "Geometry",
+    "Terrain-resolved route Y",
+    "Collision clearance",
+    "Resource use",
+    "Flight",
+    "Native appearance",
+    "Delivery",
+    "Library admission"
+  ]
+}

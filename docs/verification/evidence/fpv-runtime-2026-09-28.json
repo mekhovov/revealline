@@ -1,0 +1,805 @@
+{
+  "format": "FlightRuntimeObservation.v1",
+  "createdAt": "2026-09-28T20:45:08.733Z",
+  "passed": true,
+  "browser": "154.0.8037.57",
+  "scope": "Exact compiled modules in instrumented host, production-style headers. Scoped headless timing and registered resource counts; not hardware, full heap-retainer, installed-app or release qualification. Three retains a shared lookup-texture accounting entry after disposal; the GL context is explicitly lost.",
+  "runtimeRevision": "28417e4f5748b6a0c29c915eb0b593ed4480bb4b4e3a4a8d4c874440214fa0f6",
+  "instrumentation": {
+    "observerSha256": "13b5edbbfe5b4c8c04c6eaf6b76fb2008c1d26c33f818e9c23e987c35c871f7a",
+    "htmlSha256": "5d83e20d95734157b3d73d92bb1ea706bf2b90afd5faa9334f399cef08bb488b",
+    "wrapperSha256": "9a6244a53e25f45e50b1c690358d6824acd3da8ae8aa7b88847eece3517b1228"
+  },
+  "runtimeFiles": [
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 5108,
+      "sha256": "c238667bfb7315a93a76fb798b53b06a684c9438750faeffc0f8b032b272483a"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "bytes": 13117,
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 3219,
+      "sha256": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "bytes": 417,
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/key-bindings.mjs",
+      "bytes": 13649,
+      "sha256": "9f0ccc8a21fb88618f93ca12742bf908e027ab4f05ae69f98fff05a92bef30a2"
+    },
+    {
+      "path": "game/profile-database.mjs",
+      "bytes": 152,
+      "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+    },
+    {
+      "path": "game/profile-storage.mjs",
+      "bytes": 6205,
+      "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+    },
+    {
+      "path": "game/rewards/audio-groups.mjs",
+      "bytes": 2937,
+      "sha256": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b"
+    },
+    {
+      "path": "game/rewards/exploration.mjs",
+      "bytes": 9341,
+      "sha256": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd"
+    },
+    {
+      "path": "game/rewards/learning-profiles.mjs",
+      "bytes": 1519,
+      "sha256": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d"
+    },
+    {
+      "path": "game/rewards/model.mjs",
+      "bytes": 34442,
+      "sha256": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92"
+    },
+    {
+      "path": "game/rewards/store.mjs",
+      "bytes": 17038,
+      "sha256": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f"
+    },
+    {
+      "path": "game/ui/reward-knowledge.mjs",
+      "bytes": 2251,
+      "sha256": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "game/vendor/I18NEXT-LICENSE.txt",
+      "bytes": 1082,
+      "sha256": "1cd0a2b02a6cc40ef8ee16310d13eeffdd7b5de4a562fd3ee7c921d8eb54f60a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "bytes": 23779,
+      "sha256": "354c81b84549d215064e66c303ab38c64c03086616c65d859f971682ba35e243"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.webmanifest",
+      "bytes": 513,
+      "sha256": "1f24cc04ce0b759c23a57f4349484dc16398234e09e8b036f97ec1844d13a2e0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/attempts.mjs",
+      "bytes": 11259,
+      "sha256": "29e7376488703566e0995612464e0256747561896dd366497828c6f8f9349a8c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/copy.mjs",
+      "bytes": 12886,
+      "sha256": "f01b02317a6771d3636026a8638e9944b1f5e7a037edec9a8bd8d648d64ce03f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/icons/icon-192.png",
+      "bytes": 608,
+      "sha256": "a8f31c77674e13440ed3cb812dba4485bd7f5af4dda919f5b74042b001375cb8"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/icons/icon-512.png",
+      "bytes": 2987,
+      "sha256": "c65fa7947235ff38f49d5389762441ce00c9e749ca4e1bc6433bebe29c8f6dbc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/index.html",
+      "bytes": 7273,
+      "sha256": "dc88666e1dbcb596e4cd0006c2ac41bfa26198f221bcf05d7955a3a7a0fa82ed"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "bytes": 4971,
+      "sha256": "a905d26b4b147bb39f701531a27c695499463b7eb8849c209018d0ea79779c0f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "bytes": 16717,
+      "sha256": "922a2c819ddb6a26af90addf9fa866aceda700af9ad7eba755f416d9ac576060"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/notebook.mjs",
+      "bytes": 18359,
+      "sha256": "966745ecf19f49568fcb454c9fe6aa7ca86bb8717834b6eb424c730600425a8c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/offline.mjs",
+      "bytes": 2359,
+      "sha256": "cab65ff2adab654958f9fede86a9fc19a807e06fcd174047ecbd91da02c5c997"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "bytes": 8607,
+      "sha256": "a9f2f829a05062e6b1fa712eaec445edc106320c0abef5eb48e106695bd3ce0e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-runtime.mjs",
+      "bytes": 5852,
+      "sha256": "00882477ee8fe8a3f716148d1a243d5a08e45c2448f4f218b20ffa7a9606fda9"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-setup.mjs",
+      "bytes": 22119,
+      "sha256": "b44b4b210fe8a0ee72c9c3540ee988337fc24b5ee6c367d8e72d35dd5a4664b7"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/README.md",
+      "bytes": 4367,
+      "sha256": "002d2d0327949da1a125fd72d33432c56d9166d8577f5ba5f0ca68b18c390d52"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 14837,
+      "sha256": "01f7c5b141bde07d5b8a22929007463139564305f462a66a38d7027d6b44e925"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "bytes": 7509,
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/studio.mjs",
+      "bytes": 17754,
+      "sha256": "71f6cfd1ccc41e3fce1e59a1cae26455f6927ba599966d595e74f4f32d899485"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/style.css",
+      "bytes": 10865,
+      "sha256": "9e2f61c26cdc30a46b9a6e8ea99276d1a3b18d24c3dad7e7ece150ac606ba93b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "bytes": 1458113,
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "bytes": 662772,
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/worker.js",
+      "bytes": 8635,
+      "sha256": "470e8fd632771318276602b76f4b1759782f5731ad3b7011e158122f6f303e5d"
+    },
+    {
+      "path": "optional-practice/install-context.mjs",
+      "bytes": 4273,
+      "sha256": "7745cad36e9c003d0745b361744d4fea1dee3edb4653a66fd666944683c0cddb"
+    }
+  ],
+  "headers": {
+    "cache-control": "no-cache",
+    "connection": "keep-alive",
+    "content-length": "7282",
+    "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob: https://github.com https://release-assets.githubusercontent.com; font-src 'self'; connect-src 'self' https://mekhovov.github.io/revealline-soundtracks/; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+    "content-type": "text/html; charset=utf-8",
+    "date": "Mon, 28 Sep 2026 20:44:53 GMT",
+    "keep-alive": "timeout=5",
+    "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    "referrer-policy": "no-referrer",
+    "x-content-type-options": "nosniff"
+  },
+  "initial": {
+    "available": true,
+    "disposed": false,
+    "registered": {
+      "geometries": 52,
+      "materials": 52,
+      "textures": 4
+    },
+    "renderer": {
+      "geometries": 34,
+      "textures": 2,
+      "programs": 4,
+      "contextLost": false
+    }
+  },
+  "cycles": [
+    {
+      "cycle": 1,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 52,
+          "materials": 52,
+          "textures": 4
+        },
+        "renderer": {
+          "geometries": 34,
+          "textures": 2,
+          "programs": 4,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 2,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 52,
+          "materials": 52,
+          "textures": 4
+        },
+        "renderer": {
+          "geometries": 34,
+          "textures": 2,
+          "programs": 4,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 3,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 58,
+          "materials": 58,
+          "textures": 4
+        },
+        "renderer": {
+          "geometries": 38,
+          "textures": 2,
+          "programs": 6,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 4,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 58,
+          "materials": 58,
+          "textures": 4
+        },
+        "renderer": {
+          "geometries": 34,
+          "textures": 2,
+          "programs": 4,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 5,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 52,
+          "materials": 52,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 20,
+          "textures": 1,
+          "programs": 3,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 6,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 56,
+          "materials": 62,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 25,
+          "textures": 1,
+          "programs": 5,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 7,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 50,
+          "materials": 50,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 22,
+          "textures": 1,
+          "programs": 3,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 8,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 52,
+          "materials": 52,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 24,
+          "textures": 1,
+          "programs": 5,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 9,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 54,
+          "materials": 56,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 25,
+          "textures": 1,
+          "programs": 5,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 10,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 54,
+          "materials": 58,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 25,
+          "textures": 1,
+          "programs": 5,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 11,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 60,
+          "materials": 70,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 25,
+          "textures": 1,
+          "programs": 5,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 12,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 58,
+          "materials": 64,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 25,
+          "textures": 1,
+          "programs": 5,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 13,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 52,
+          "materials": 52,
+          "textures": 4
+        },
+        "renderer": {
+          "geometries": 34,
+          "textures": 2,
+          "programs": 4,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 14,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 52,
+          "materials": 52,
+          "textures": 4
+        },
+        "renderer": {
+          "geometries": 34,
+          "textures": 2,
+          "programs": 4,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 15,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 58,
+          "materials": 58,
+          "textures": 4
+        },
+        "renderer": {
+          "geometries": 38,
+          "textures": 2,
+          "programs": 6,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 16,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 58,
+          "materials": 58,
+          "textures": 4
+        },
+        "renderer": {
+          "geometries": 34,
+          "textures": 2,
+          "programs": 4,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 17,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 52,
+          "materials": 52,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 20,
+          "textures": 1,
+          "programs": 3,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 18,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 56,
+          "materials": 62,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 25,
+          "textures": 1,
+          "programs": 5,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 19,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 50,
+          "materials": 50,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 22,
+          "textures": 1,
+          "programs": 3,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    },
+    {
+      "cycle": 20,
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "registered": {
+          "geometries": 52,
+          "materials": 52,
+          "textures": 0
+        },
+        "renderer": {
+          "geometries": 24,
+          "textures": 1,
+          "programs": 5,
+          "contextLost": false
+        }
+      },
+      "nodes": {
+        "canvases": 1,
+        "dialogs": 5
+      }
+    }
+  ],
+  "returned": {
+    "available": true,
+    "disposed": false,
+    "registered": {
+      "geometries": 52,
+      "materials": 52,
+      "textures": 4
+    },
+    "renderer": {
+      "geometries": 34,
+      "textures": 2,
+      "programs": 4,
+      "contextLost": false
+    }
+  },
+  "layouts": [
+    {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "scrollHeight": 900,
+      "canvas": {
+        "x": 0,
+        "y": 145,
+        "width": 1440,
+        "height": 697
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "scrollHeight": 844,
+      "canvas": {
+        "x": 0,
+        "y": 175,
+        "width": 390,
+        "height": 613
+      }
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "scrollHeight": 390,
+      "canvas": {
+        "x": 0,
+        "y": 82,
+        "width": 844,
+        "height": 260
+      }
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "scrollWidth": 768,
+      "scrollHeight": 1024,
+      "canvas": {
+        "x": 0,
+        "y": 145,
+        "width": 768,
+        "height": 818
+      }
+    }
+  ],
+  "pacing": {
+    "scenario": "final-circuit demonstrated flight, 1440 × 900, headless Chrome",
+    "duration": 8016.400000000001,
+    "samples": 475,
+    "p95": 16.700000000000728,
+    "max": 116.69999999999982,
+    "longTasks": []
+  },
+  "playback": {
+    "before": {
+      "status": "Verified example · observation only",
+      "height": "Height 0.0 m",
+      "speed": "Speed 0.0 m/s",
+      "step": 0
+    },
+    "after": {
+      "status": "Verified example · observation only",
+      "height": "Height 4.5 m",
+      "speed": "Speed 2.6 m/s",
+      "step": 2
+    }
+  },
+  "contextLoss": {
+    "beforeTicks": 14,
+    "method": "WEBGL_lose_context.loseContext(), actual isContextLost() confirmed",
+    "frozenTicks": 14,
+    "afterTicks": 14,
+    "beforeStatus": "active",
+    "afterStatus": "paused"
+  },
+  "disposed": {
+    "available": true,
+    "disposed": true,
+    "registered": {
+      "geometries": 0,
+      "materials": 0,
+      "textures": 0
+    },
+    "renderer": {
+      "geometries": 0,
+      "textures": 1,
+      "programs": 0,
+      "contextLost": true
+    }
+  },
+  "errors": []
+}
