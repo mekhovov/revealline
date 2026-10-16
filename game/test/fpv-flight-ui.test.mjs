@@ -1682,7 +1682,8 @@ for (const clock of ['animation timestamp', 'callback execution']) {
       'A stalled frame must not load the next lesson.',
     );
     assert.deepEqual(f.view.exportAttempt(), proof);
-    assert.equal(flow.hidden, true, 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.style.visibility, 'hidden', 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
   });
 }
 

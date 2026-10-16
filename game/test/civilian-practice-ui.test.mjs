@@ -693,6 +693,7 @@ for (const clock of ['animation timestamp', 'callback execution']) {
     f.tick(4);
     assert.deepEqual(f.view.snapshot(), completed, 'A stalled frame must not change drills.');
     assert.deepEqual(f.view.trace(), trace);
-    assert.equal(flow.hidden, true, 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.style.visibility, 'hidden', 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
   });
 }
