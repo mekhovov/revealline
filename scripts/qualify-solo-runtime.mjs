@@ -20,6 +20,7 @@ import {
   FRAME_BOUNDS,
 } from './solo-qualification.mjs';
 import {
+  readPrePlayReadiness,
   calibrateReadyCadence,
   externalQualificationBudgets,
   aggregateQualificationGates,
@@ -284,6 +285,9 @@ try {
     });
   if (audioProof) await page.addInitScript(installAudioProof);
   await page.addInitScript(
+    `window.soloQualificationReadiness = ${readPrePlayReadiness.toString()};`,
+  );
+  await page.addInitScript(
     ({ bounds, workProbe }) => {
       const phases = ['boot', 'briefing', 'running', 'paused', 'result', 'picture', 'other'];
       const counts = phases.map(() => new Float64Array(bounds.length));
@@ -321,18 +325,7 @@ try {
         calibrationCount = 0,
         calibration = null,
         frameBudget = null;
-      const readyState = () => ({
-        ready:
-          document.documentElement.dataset.bootState === 'ready' &&
-          document.body?.dataset.flightState !== 'running' &&
-          !['pending', 'loading', 'preparing'].includes(document.body?.dataset.pictureState) &&
-          !document.querySelector('#start-button')?.disabled &&
-          !document.hidden,
-        boot: document.documentElement.dataset.bootState,
-        phase: document.body?.dataset.flightState,
-        picture: document.body?.dataset.pictureState ?? null,
-        visibility: document.visibilityState,
-      });
+      const readyState = () => window.soloQualificationReadiness();
       // Capture the constructed owner once. Never wrap update/draw, evaluate
       // drawOptions, or recompute presentation ownership during active play.
       Object.defineProperty(window, 'Phaser', {
@@ -576,11 +569,24 @@ try {
   }
   async function prepareObservation(label) {
     if (!workProbe) return;
-    await page.waitForFunction(
-      () => window.soloQualificationProbe?.calibrationProgress().state.ready,
-      null,
-      { timeout: 60000 },
-    );
+    try {
+      await page.waitForFunction(
+        () => window.soloQualificationProbe?.calibrationProgress().state.ready,
+        null,
+        { timeout: 60000 },
+      );
+    } catch (error) {
+      const progress = await page.evaluate(() =>
+        window.soloQualificationProbe?.calibrationProgress(),
+      );
+      report.prePlayCalibrations.push({
+        label,
+        url: page.url(),
+        ...calibrateReadyCadence(progress?.samples ?? [], progress?.state),
+        deadlineFailure: String(error.message),
+      });
+      throw error;
+    }
     await page.evaluate(() => window.soloQualificationProbe.startApplicationProbe());
     let deadlineFailure = null;
     try {
@@ -961,6 +967,7 @@ try {
       report.finalState = await page.evaluate(() => ({
         state: document.body?.dataset.flightState,
         boot: document.documentElement.dataset.bootState,
+        readiness: window.soloQualificationProbe?.calibrationProgress().state ?? null,
         display: {
           width: window.innerWidth,
           height: window.innerHeight,
