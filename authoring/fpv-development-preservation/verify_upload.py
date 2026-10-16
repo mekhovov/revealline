@@ -108,9 +108,12 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--local-receipt', required=True)
     p.add_argument('--work', required=True)
-    p.add_argument('--receipt-output', required=True)
+    p.add_argument('--receipt-output')
+    p.add_argument('--published-plan-output')
     p.add_argument('--verify-only', action='store_true')
     a = p.parse_args()
+    if not a.verify_only and bool(a.receipt_output) == bool(a.published_plan_output):
+        p.error('Choose either a verified receipt or a pending published-plan output')
     local = json.loads(Path(a.local_receipt).read_text())
     archive, work = Path(local['archive']), Path(a.work)
     work.mkdir()
@@ -138,6 +141,17 @@ def main():
     if asset['size'] != local['bytes'] or asset.get('digest') != 'sha256:' + local['sha256']:
         raise ValueError('Server digest/size differ from local sealed part')
     print(json.dumps({'event': 'server-digest-pass', 'assetId': asset['id'], 'bytes': asset['size']}), flush=True)
+    if a.published_plan_output:
+        plan = {'format': 'FPVCASPartPublished.v1', 'repo': REPO, 'releaseId': RELEASE_ID,
+                'assetId': asset['id'], 'assetName': asset['name'], 'assetURL': asset['browser_download_url'],
+                'bytes': local['bytes'], 'sha256': local['sha256'], 'partManifest': local['partManifest'],
+                'sourceChecks': local['sources'], 'localSourceReceiptSHA256': digest(a.local_receipt),
+                'verificationPending': True}
+        with Path(a.published_plan_output).open('x') as f:
+            json.dump(plan, f, indent=2)
+            f.write('\n')
+        print(json.dumps({'event': 'published-plan-pending-cloud-verification', 'assetId': asset['id']}), flush=True)
+        return
     download = work / name.replace('.tar.zst', '.authenticated-readback.tar.zst')
     readback(asset, download, local)
     print(json.dumps({'event': 'readback-pass', 'assetId': asset['id']}), flush=True)

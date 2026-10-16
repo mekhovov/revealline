@@ -6,6 +6,7 @@ from pathlib import Path
 import time
 from pack import digest, load_clearances, privacy_hold, rows, safe_relative
 from verify_upload import validate_header
+from github_dependencies import from_reviewed_recipe
 
 
 def cleared(row, clearances):
@@ -122,10 +123,22 @@ def main():
     p.add_argument('--inventory-set-final', action='store_true',
                    help='Root-confirmed complete set includes primary, flat, ignored payload and final delta manifests')
     p.add_argument('--output', required=True)
+    p.add_argument('--github-link-mapping')
+    p.add_argument('--github-link-coverage')
     a = p.parse_args()
     clearances = load_clearances(a.clearances)
     result = build(a.manifest, a.inventory_state, a.verified_receipt, a.library_manifest,
                    a.catalogue, a.source_root, clearances, a.inventory_set_final)
+    if bool(a.github_link_mapping) != bool(a.github_link_coverage):
+        p.error('Both reviewed GitHub mapping and exact coverage are required')
+    if a.github_link_mapping:
+        recipe = json.loads(Path(a.github_link_mapping).read_text())
+        if recipe['sourceRoot'] != result['sourceRoot']:
+            raise ValueError('Reviewed recipe describes a different captured source root')
+        dependency = from_reviewed_recipe(recipe, json.loads(Path(a.github_link_coverage).read_text()), result['symlinks'])
+        result['githubLinkDependencies'] = [dependency]
+        result['dependencyProofInputs'] = [{'name': Path(p).name, 'sha256': digest(p)}
+                                          for p in [a.github_link_mapping, a.github_link_coverage]]
     with Path(a.output).open('x') as f:
         json.dump(result, f, indent=2)
         f.write('\n')

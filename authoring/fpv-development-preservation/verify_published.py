@@ -3,6 +3,8 @@
 import argparse
 import json
 from pathlib import Path
+import re
+import shutil
 import time
 from pack import digest, safe_relative
 from verify_upload import REPO, RELEASE_ID, TAG, gh_json, readback, restore_part, validate_header
@@ -12,6 +14,12 @@ def verify_plan(plan):
     if (plan.get('format') != 'FPVCASPartPublished.v1' or plan.get('repo') != REPO
             or plan.get('releaseId') != RELEASE_ID):
         raise ValueError('Unsupported published preservation plan')
+    sha = plan.get('sha256', '')
+    if (not re.fullmatch(r'[0-9a-f]{64}', sha)
+            or type(plan.get('assetId')) is not int or plan['assetId'] <= 0
+            or type(plan.get('bytes')) is not int or not 0 <= plan['bytes'] < 2 * 1024 ** 3
+            or plan.get('assetName') != 'fpv-cas-' + sha + '.tar.zst'):
+        raise ValueError('Unsafe published asset identity or size')
     validate_header(plan['partManifest'])
     expected = {x['sha256']: x['bytes'] for x in plan['partManifest']['objects']}
     checks = plan['sourceChecks']
@@ -36,6 +44,7 @@ def main():
     verify_plan(plan)
     work = Path(a.work)
     work.mkdir()
+    free_before = shutil.disk_usage(work).free
     # The sealed plan binds this immutable asset ID to the approved draft release.
     # Direct asset reads avoid the separate push-access requirement for draft listings.
     asset = gh_json('api', f'repos/{REPO}/releases/assets/{plan["assetId"]}')
@@ -55,6 +64,7 @@ def main():
                'sourceBeforeAfterChecks': len(plan['sourceChecks']), 'sourceChecks': plan['sourceChecks'],
                'localSourceReceiptSHA256': plan['localSourceReceiptSHA256'],
                'publishedPlanSHA256': digest(a.plan), 'executionEnvironment': 'fresh GitHub Actions runner',
+               'freeDiskBytesBeforeReadback': free_before, 'freeDiskBytesAfterRestore': shutil.disk_usage(work).free,
                'verifiedAtUnix': time.time()}
     with Path(a.receipt).open('x') as f:
         json.dump(receipt, f, indent=2)

@@ -7,12 +7,16 @@ import subprocess
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
+import base64
+import copy
 
 from pack import safe_relative, privacy_hold, pack_part
 from verify_upload import restore_part
 from restore import link_target, restore
 from build_index import build
 from verify_published import verify_plan
+from github_dependencies import git_identity, manifest_tree
 
 
 class PreservationTests(unittest.TestCase):
@@ -219,12 +223,60 @@ class PreservationTests(unittest.TestCase):
         check = {'path': 'packages/original.zip', 'sha256': sha, 'bytes': 5,
                  'sourceBeforeAndAfterSHA256Match': True}
         plan = {'format': 'FPVCASPartPublished.v1', 'repo': 'mekhovov/revealline',
-                'releaseId': 414505790, 'partManifest': header, 'sourceChecks': [check]}
+                'releaseId': 414505790, 'partManifest': header, 'sourceChecks': [check],
+                'sha256': 'a' * 64, 'assetId': 1, 'bytes': 100,
+                'assetName': 'fpv-cas-' + 'a' * 64 + '.tar.zst'}
         verify_plan(plan)
         for checks in [[], [check, check], [dict(check, sourceBeforeAndAfterSHA256Match=False)],
                        [dict(check, path='../outside')], [dict(check, bytes=6)]]:
             with self.assertRaises(ValueError):
                 verify_plan(dict(plan, sourceChecks=checks))
+        with self.assertRaisesRegex(ValueError, 'Unsafe published asset'):
+            verify_plan(dict(plan, assetId='../../other-endpoint'))
+        inventory, state, catalogue, pending = [self.root / x for x in ['inventory.jsonl', 'state.json', 'catalogue.json', 'pending.json']]
+        inventory.write_text('')
+        state.write_text('{"complete":true}')
+        catalogue.write_text('{"releases":[]}')
+        pending.write_text(json.dumps(plan))
+        with self.assertRaisesRegex(ValueError, 'Unverified CAS receipt'):
+            build([inventory], state, [pending], [], catalogue, '/old/root', inventory_set_final=True)
+
+    def test_reviewed_git_dependency_restores_link_and_refuses_mismatch(self):
+        raw = b'known published GitHub dependency'
+        row = {'path': 'delivery.json', 'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest(),
+               'gitBlobSHA1': git_identity('blob', raw), 'mode': '100644'}
+        tree, _ = manifest_tree([row])
+        dep = {'linkPath': 'review/link', 'originalTargetExact': '/outside/unavailable/subtree',
+               'targetWithinRoot': '_github-review-dependencies/test', 'repo': 'example/example',
+               'commit': 'b' * 40, 'subtree': 'published/subtree', 'treeGitSHA1': tree, 'files': [row]}
+        index = {'format': 'FPVPreservationIndex.v1', 'repo': 'example/example', 'sourceRoot': '/old/root',
+                 'parts': {}, 'files': [], 'coverageComplete': True,
+                 'symlinks': [{'path': dep['linkPath'], 'target': dep['originalTargetExact']}],
+                 'githubLinkDependencies': [dep]}
+
+        def api(*args):
+            endpoint = args[-1]
+            if '/contents/' in endpoint:
+                return [{'name': 'delivery.json', 'sha': row['gitBlobSHA1'], 'type': 'file'}]
+            return {'encoding': 'base64', 'sha': row['gitBlobSHA1'], 'content': base64.b64encode(raw).decode()}
+
+        with patch('github_dependencies.gh_json', side_effect=api):
+            result = restore(index, self.root / 'cache', self.root / 'output', self.root / 'receipt.json')
+        self.assertTrue(result['complete'])
+        self.assertEqual(result['githubDependencyFileCount'], 1)
+        self.assertEqual((self.root / 'output/review/link/delivery.json').read_bytes(), raw)
+        self.assertFalse((self.root / 'output/review/link').readlink().is_absolute())
+        bad = copy.deepcopy(index)
+        bad['githubLinkDependencies'][0]['originalTargetExact'] = '/different/source'
+        with patch('github_dependencies.gh_json') as request:
+            with self.assertRaisesRegex(ValueError, 'exact captured link'):
+                restore(bad, self.root / 'unused-cache', self.root / 'bad-map', self.root / 'unused.json')
+            request.assert_not_called()
+        bad = copy.deepcopy(index)
+        bad['githubLinkDependencies'][0]['files'][0]['sha256'] = hashlib.sha256(b'different').hexdigest()
+        with patch('github_dependencies.gh_json', side_effect=api):
+            with self.assertRaisesRegex(ValueError, 'Downloaded Git blob bytes differ'):
+                restore(bad, self.root / 'wrong-cache', self.root / 'wrong-blob', self.root / 'wrong.json')
 
 
 if __name__ == '__main__':
