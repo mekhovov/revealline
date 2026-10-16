@@ -1,0 +1,26 @@
+[
+  {
+    "original": "worker-retirement-red.log",
+    "originalBytes": 2542,
+    "originalSHA256": "a5e635be63ad0a6a4c13a2bef1f8f50825c46630bc1886e99e35805cc08153d5",
+    "archive": "worker-retirement-red.log.gz",
+    "archiveBytes": 774,
+    "archiveSHA256": "ec56c61c58cf55deda0c138475647694b9e89916942fc97a38d9f7914bfbb543"
+  },
+  {
+    "original": "observer-regressions-red.log",
+    "originalBytes": 5185,
+    "originalSHA256": "0e40957148d472a9fc804b70f21d8b89ea2e8d61ec2105db1f8e1ff2fd8e478f",
+    "archive": "observer-regressions-red.log.gz",
+    "archiveBytes": 1312,
+    "archiveSHA256": "462325289411193d7250df4bb542d5204d470a2dba471450b7c919a01d8184ac"
+  },
+  {
+    "original": "observer-final-save-red.log",
+    "originalBytes": 4643,
+    "originalSHA256": "c9fba58e89557ac4ecaf03b6843a3b7d6f309cb05231448bdf289e7d130520e1",
+    "archive": "observer-final-save-red.log.gz",
+    "archiveBytes": 1322,
+    "archiveSHA256": "51e9e1685ca3289def659acf0502ef84da6f0f2fd61e3e33ef12fd3842961a48"
+  }
+]

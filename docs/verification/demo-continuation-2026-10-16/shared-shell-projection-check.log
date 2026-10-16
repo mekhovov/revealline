@@ -1,0 +1,9 @@
+file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/refresh-fpv-play-shell.mjs:213
+  if (check && next !== old) throw new Error(`Shared shell projection differs: ${file}`);
+                                   ^
+
+Error: Shared shell projection differs: optional-practice/civilian-fpv/flight-fullscreen.mjs
+    at replace (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/refresh-fpv-play-shell.mjs:213:36)
+    at async file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/refresh-fpv-play-shell.mjs:216:1
+
+Node.js v20.19.5

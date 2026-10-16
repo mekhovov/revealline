@@ -58,6 +58,8 @@ const cases = [
   ['coupa-all', 'coupa-developer-integration', 'coupa-developer-integration-03', 'grid-center'],
   ['journey', 'fractured-grid', 'staggered-reserve', 'immediate'],
   ['journey', 'fractured-grid', 'staggered-reserve', 'grid-center'],
+  ['journey', 'neon-contours', 'side-door-bays', 'immediate'],
+  ['journey', 'neon-contours', 'side-door-bays', 'grid-center'],
   ['journey', 'sentinel-crown', 'first-relay', 'immediate'],
   ['journey', 'sentinel-crown', 'first-relay', 'grid-center'],
   ['journey', 'sentinel-crown', 'relay-perimeter', 'immediate'],

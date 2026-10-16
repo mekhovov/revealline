@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: mounted observer exports bounded incomplete checkpoints with hashes and recovers without starting or steering
+ok 1 - mounted observer exports bounded incomplete checkpoints with hashes and recovers without starting or steering # SKIP test name does not match pattern
+  ---
+  duration_ms: 2.695542
+  ...
+# Subtest: finalization detects changed sources and stores the finalized report separately from its preliminary checkpoint
+ok 2 - finalization detects changed sources and stores the finalized report separately from its preliminary checkpoint # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.192625
+  ...
+# Subtest: cancelling source preparation aborts ownership without creating or replacing saved evidence
+ok 3 - cancelling source preparation aborts ownership without creating or replacing saved evidence # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.242292
+  ...
+# Subtest: quota failure is bounded and leaves current DOM/download observation available
+ok 4 - quota failure is bounded and leaves current DOM/download observation available # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.152958
+  ...
+# Subtest: disabled IndexedDB and a failed terminal inventory never prevent export or imply completion
+ok 5 - disabled IndexedDB and a failed terminal inventory never prevent export or imply completion # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.067125
+  ...
+# Subtest: store enforces serialized byte budget before opening and closes late opens after timeout
+ok 6 - store enforces serialized byte budget before opening and closes late opens after timeout # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.047667
+  ...
+# Subtest: observer storage reopens a closed connection, close notification true
+ok 7 - observer storage reopens a closed connection, close notification true # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.32925
+  ...
+# Subtest: observer storage reopens a closed connection, close notification false
+ok 8 - observer storage reopens a closed connection, close notification false # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.135292
+  ...
+# Subtest: repeated transaction-creation failure has one bounded reconnect and no failing write retries
+ok 9 - repeated transaction-creation failure has one bounded reconnect and no failing write retries # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.473375
+  ...
+# Subtest: child navigation finalizes invalid evidence immediately and retains only bounded control intent
+ok 10 - child navigation finalizes invalid evidence immediately and retains only bounded control intent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.183042
+  ...
+# Subtest: leaving the demo ends its observation without blocking the game or certifying another session
+not ok 11 - leaving the demo ends its observation without blocking the game or certifying another session
+  ---
+  duration_ms: 607.946417
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-watch-checkpoints.test.mjs:511:1'
+  failureType: 'testCodeFailure'
+  error: 'Mounted observer did not reach the expected state.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    until (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-watch-checkpoints.test.mjs:28:10)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-watch-checkpoints.test.mjs:517:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: disposal during preparation aborts the source request and detaches listeners without a late start
+ok 12 - disposal during preparation aborts the source request and detaches listeners without a late start # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.99525
+  ...
+# Subtest: a slow checkpoint cannot drop the queued final report, and pending clear cannot erase a newly started run
+ok 13 - a slow checkpoint cannot drop the queued final report, and pending clear cannot erase a newly started run # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.102
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 12
+# todo 0
+# duration_ms 1043.85325

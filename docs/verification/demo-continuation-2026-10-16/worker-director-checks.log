@@ -1,0 +1,219 @@
+TAP version 13
+# Subtest: live whitelist pins actual standard maps, rules and roster while allowing translated names
+ok 1 - live whitelist pins actual standard maps, rules and roster while allowing translated names
+  ---
+  duration_ms: 7.597125
+  ...
+# Subtest: orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 2 - orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 8524.360583
+  ...
+# {"seed":1,"ticks":7425,"status":"won","coverage":0.8272184300341296,"captures":10,"bends":14,"maxPlanningMs":411}
+# {"seed":2,"ticks":8838,"status":"won","coverage":0.685580204778157,"captures":11,"bends":20,"maxPlanningMs":332}
+# {"seed":3,"ticks":5920,"status":"won","coverage":0.6838737201365188,"captures":8,"bends":13,"maxPlanningMs":495}
+# Subtest: orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 3 - orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 7968.807292
+  ...
+# {"seed":1,"ticks":7697,"status":"won","coverage":0.6924061433447098,"captures":12,"bends":19,"maxPlanningMs":527}
+# {"seed":2,"ticks":8358,"status":"won","coverage":0.7781569965870307,"captures":12,"bends":19,"maxPlanningMs":329}
+# {"seed":3,"ticks":2647,"status":"won","coverage":0.6992320819112628,"captures":4,"bends":5,"maxPlanningMs":330}
+# Subtest: courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 4 - courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 7207.9855
+  ...
+# {"seed":1,"ticks":6624,"status":"won","coverage":0.7586505190311419,"captures":13,"bends":19,"maxPlanningMs":384}
+# {"seed":2,"ticks":2536,"status":"won","coverage":0.7698961937716263,"captures":3,"bends":4,"maxPlanningMs":243}
+# {"seed":3,"ticks":4857,"status":"won","coverage":0.7629757785467128,"captures":9,"bends":10,"maxPlanningMs":300}
+# Subtest: courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 5 - courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 5768.21825
+  ...
+# {"seed":1,"ticks":4325,"status":"won","coverage":0.8858131487889274,"captures":7,"bends":11,"maxPlanningMs":322}
+# {"seed":2,"ticks":2531,"status":"won","coverage":0.7698961937716263,"captures":3,"bends":4,"maxPlanningMs":178}
+# {"seed":3,"ticks":5335,"status":"won","coverage":0.754757785467128,"captures":11,"bends":13,"maxPlanningMs":371}
+# Subtest: planning is deterministic and declines an exposed cut without changing it
+ok 6 - planning is deterministic and declines an exposed cut without changing it
+  ---
+  duration_ms: 363.089459
+  ...
+# Subtest: actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+ok 7 - actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+  ---
+  duration_ms: 4244.073375
+  ...
+# Subtest: background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+ok 8 - background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+  ---
+  duration_ms: 726.997625
+  ...
+# Subtest: background budget releases a rejected stale result to the unchanged fault boundary
+ok 9 - background budget releases a rejected stale result to the unchanged fault boundary
+  ---
+  duration_ms: 381.996792
+  ...
+# Subtest: background budget never bypasses the existing planning watchdog
+ok 10 - background budget never bypasses the existing planning watchdog
+  ---
+  duration_ms: 378.405875
+  ...
+# Subtest: missing Worker, abort and planning watchdog fail closed and release every worker
+ok 11 - missing Worker, abort and planning watchdog fail closed and release every worker
+  ---
+  duration_ms: 19.767792
+  ...
+# Subtest: future search exhaustion ends only after the current safe macro, never runs an old heading
+ok 12 - future search exhaustion ends only after the current safe macro, never runs an old heading
+  ---
+  duration_ms: 410.17475
+  ...
+# Subtest: a stale future plan remains a fault, not a successful exhaustion handoff
+ok 13 - a stale future plan remains a fault, not a successful exhaustion handoff
+  ---
+  duration_ms: 339.968208
+  ...
+# Subtest: live playback crosses the old 60 second cutoff without claiming completion
+ok 14 - live playback crosses the old 60 second cutoff without claiming completion
+  ---
+  duration_ms: 542.11225
+  ...
+# Subtest: full live admission now finishes the formerly exhausted seed and resets before display
+ok 15 - full live admission now finishes the formerly exhausted seed and resets before display
+  ---
+  duration_ms: 6185.75075
+  ...
+# Subtest: rotation begins approachable and avoids consecutive same-level replay/bot scenes
+ok 16 - rotation begins approachable and avoids consecutive same-level replay/bot scenes
+  ---
+  duration_ms: 2.420709
+  ...
+# Subtest: failed sources are skipped once for this director session
+ok 17 - failed sources are skipped once for this director session
+  ---
+  duration_ms: 1.65625
+  ...
+# Subtest: late cancelled preparation cannot replace a newer player and releases its ownership
+ok 18 - late cancelled preparation cannot replace a newer player and releases its ownership
+  ---
+  duration_ms: 0.300417
+  ...
+# Subtest: suspension cancels loading and requires an explicit play gesture after lifecycle return
+ok 19 - suspension cancels loading and requires an explicit play gesture after lifecycle return
+  ---
+  duration_ms: 0.393209
+  ...
+# Subtest: completion remains available for a host-owned dwell, pause survives asynchronous load
+ok 20 - completion remains available for a host-owned dwell, pause survives asynchronous load
+  ---
+  duration_ms: 0.144666
+  ...
+# Subtest: visible stalls skip spectator time and repeated completed scenes keep rotating without input
+ok 21 - visible stalls skip spectator time and repeated completed scenes keep rotating without input
+  ---
+  duration_ms: 1.007917
+  ...
+# Subtest: empty or wholly unavailable rotation has a stable terminal state
+ok 22 - empty or wholly unavailable rotation has a stable terminal state
+  ---
+  duration_ms: 0.254791
+  ...
+# Subtest: source exceptions during playback skip only that source and preserve next-source ownership
+ok 23 - source exceptions during playback skip only that source and preserve next-source ownership
+  ---
+  duration_ms: 7.161292
+  ...
+# Subtest: expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+ok 24 - expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+  ---
+  duration_ms: 0.505583
+  ...
+# Subtest: a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+ok 25 - a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+  ---
+  duration_ms: 0.536833
+  ...
+# (node:53322) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+ok 26 - the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+  ---
+  duration_ms: 501.554667
+  ...
+# Subtest: no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+ok 27 - no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+  ---
+  duration_ms: 0.341541
+  ...
+# Subtest: preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+ok 28 - preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+  ---
+  duration_ms: 0.227041
+  ...
+# Subtest: Next cancels a preparation which never returns and retains only its newer owner
+ok 29 - Next cancels a preparation which never returns and retains only its newer owner
+  ---
+  duration_ms: 0.22425
+  ...
+# Subtest: dispose settles preparation immediately and disposes its ignored-abort late adapter once
+ok 30 - dispose settles preparation immediately and disposes its ignored-abort late adapter once
+  ---
+  duration_ms: 0.101167
+  ...
+# Subtest: wholly timed-out recordings end unavailable after one bounded attempt per source
+ok 31 - wholly timed-out recordings end unavailable after one bounded attempt per source
+  ---
+  duration_ms: 0.137083
+  ...
+# Subtest: reset joins retiring Worker before creating its replacement
+ok 32 - reset joins retiring Worker before creating its replacement
+  ---
+  duration_ms: 517.212833
+  ...
+# Subtest: disposing during an asynchronous reset cannot revive a Worker
+ok 33 - disposing during an asynchronous reset cannot revive a Worker
+  ---
+  duration_ms: 185.621583
+  ...
+# Subtest: only the newest overlapping reset may create a replacement Worker
+ok 34 - only the newest overlapping reset may create a replacement Worker
+  ---
+  duration_ms: 362.985292
+  ...
+# Subtest: a new scene joins the preceding player Worker retirement before creating another thread
+ok 35 - a new scene joins the preceding player Worker retirement before creating another thread
+  ---
+  duration_ms: 302.254042
+  ...
+# Subtest: cancelling a scene while it joins a retiring Worker cannot start another thread
+ok 36 - cancelling a scene while it joins a retiring Worker cannot start another thread
+  ---
+  duration_ms: 159.956792
+  ...
+# Subtest: standalone planner loads without bootstrapping UI translations and retains validation errors
+ok 37 - standalone planner loads without bootstrapping UI translations and retains validation errors
+  ---
+  duration_ms: 45.551
+  ...
+# Subtest: lightweight defaults stay identical to the English catalogue
+ok 38 - lightweight defaults stay identical to the English catalogue
+  ---
+  duration_ms: 4.072958
+  ...
+# Subtest: a booted validator follows live Ukrainian/English locale changes
+ok 39 - a booted validator follows live Ukrainian/English locale changes
+  ---
+  duration_ms: 199.312833
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 45835.687625

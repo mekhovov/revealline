@@ -10,6 +10,10 @@ import {
 import { supportsDemoBot, BOT_LIMITS } from './demo-bot.mjs';
 
 const MAX_FRAME_SECONDS = 0.25;
+// One scene's disposed adapter may still own a real retiring thread. The next
+// live source in this realm must join it, including cancelled/late preparations.
+// Native browser Worker.terminate() returns void and adds no asynchronous wait.
+const retiringWorkers = new Set();
 const abortError = () => Object.assign(new Error('Autoplay cancelled.'), { name: 'AbortError' });
 function checkAbort(signal) {
   if (signal?.aborted) throw abortError();
@@ -29,6 +33,14 @@ function workerTransport(WorkerClass, watchdogMs) {
     if (!terminated) {
       terminated = true;
       termination = worker.terminate();
+      if (termination && typeof termination.then === 'function') {
+        termination = Promise.resolve(termination);
+        retiringWorkers.add(termination);
+        termination.then(
+          () => retiringWorkers.delete(termination),
+          () => {}, // Keep an unacknowledged retirement as a failed startup barrier.
+        );
+      }
     }
     return termination;
   }
@@ -157,6 +169,7 @@ export async function prepareBotPlayer(
     segmentTick = 0,
     decision = 0,
     disposed = false,
+    disposal,
     ready = false,
     finalCheckpoint = null,
     pending = null;
@@ -209,7 +222,7 @@ export async function prepareBotPlayer(
     checkAbort(signal);
     if (disposed) throw abortError();
     const version = ++generation;
-    const retirement = transport?.dispose();
+    transport?.dispose();
     phase = 'paused';
     ready = false;
     failure = null;
@@ -228,7 +241,7 @@ export async function prepareBotPlayer(
     try {
       // Native browser termination is synchronous. Adapters with a retirement
       // acknowledgement must finish before reset starts another CPU owner.
-      if (retirement && typeof retirement.then === 'function') await retirement;
+      if (retiringWorkers.size) await Promise.all([...retiringWorkers]);
       checkAbort(signal);
       if (disposed || generation !== version) throw abortError();
       transport = workerTransport(WorkerClass, watchdogMs);
@@ -361,13 +374,14 @@ export async function prepareBotPlayer(
     };
   }
   function dispose() {
-    if (disposed) return;
+    if (disposed) return disposal;
     disposed = true;
     generation++;
     ready = false;
     pause();
-    transport?.dispose();
+    disposal = transport?.dispose();
     signal?.removeEventListener('abort', dispose);
+    return disposal;
   }
   signal?.addEventListener('abort', dispose, { once: true });
   try {

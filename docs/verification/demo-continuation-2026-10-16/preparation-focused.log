@@ -1,0 +1,114 @@
+TAP version 13
+# Subtest: an unavailable objective approach still permits normal capture search
+ok 1 - an unavailable objective approach still permits normal capture search
+  ---
+  duration_ms: 1917.419959
+  ...
+# Subtest: immediate: purposeful routes vary, close cuts and only lose to believable hazards
+ok 2 - immediate: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 33050.441834
+  ...
+# {"seed":123,"captures":17,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":19,"ticks":11331}
+# {"seed":987654321,"captures":4,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":10,"ticks":3854}
+# Subtest: grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+ok 3 - grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 38265.833917
+  ...
+# {"seed":123,"captures":11,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":17,"ticks":8151}
+# {"seed":987654321,"captures":27,"losses":2,"causes":["enemy-trail","boss-lane"],"bends":29,"ticks":15891}
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 4 - improvised preparation respects cancellation before it owns a player
+  ---
+  duration_ms: 5.751458
+  ...
+# Subtest: cancellation during route planning stops before publishing a recording
+ok 5 - cancellation during route planning stops before publishing a recording
+  ---
+  duration_ms: 123.664083
+  ...
+# Subtest: journey/neutral-ground/immediate: formerly stalled performance reaches a real result
+ok 6 - journey/neutral-ground/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 14765.510042
+  ...
+# Subtest: journey/neutral-ground/grid-center: formerly stalled performance reaches a real result
+ok 7 - journey/neutral-ground/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 12653.715209
+  ...
+# Subtest: journey/crossbar-depot/immediate: formerly stalled performance reaches a real result
+ok 8 - journey/crossbar-depot/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 4186.45
+  ...
+# Subtest: journey/crossbar-depot/grid-center: formerly stalled performance reaches a real result
+ok 9 - journey/crossbar-depot/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 6463.638083
+  ...
+# Subtest: coupa-all/coupa-developer-integration-03/immediate: formerly stalled performance reaches a real result
+ok 10 - coupa-all/coupa-developer-integration-03/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 8547.428166
+  ...
+# Subtest: coupa-all/coupa-developer-integration-03/grid-center: formerly stalled performance reaches a real result
+ok 11 - coupa-all/coupa-developer-integration-03/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 7738.410542
+  ...
+# Subtest: journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+ok 12 - journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 14968.839333
+  ...
+# Subtest: journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+ok 13 - journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 9994.1795
+  ...
+# Subtest: journey/first-relay/immediate: formerly stalled performance reaches a real result
+ok 14 - journey/first-relay/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 6228.774625
+  ...
+# Subtest: journey/first-relay/grid-center: formerly stalled performance reaches a real result
+ok 15 - journey/first-relay/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 7351.787834
+  ...
+# Subtest: journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+ok 16 - journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 5017.007792
+  ...
+# Subtest: journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+ok 17 - journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 5116.684166
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+ok 18 - droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 3374.188042
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+ok 19 - droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 4451.764125
+  ...
+# Subtest: coupa-all/coupa-developer-integration-02/grid-center: formerly stalled performance reaches a real result
+ok 20 - coupa-all/coupa-developer-integration-02/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 3387.234292
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 130277.14025
