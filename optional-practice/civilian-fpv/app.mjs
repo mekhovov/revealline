@@ -1630,9 +1630,10 @@ export function mountFlightApp({
         menuHint.hidden = true;
         return;
       }
-      // Suspending device input must not reflow an open shared menu beneath
-      // the pointer. Its instructions remain valid while the page is blurred.
-      if (!value && context?.root.dataset.modeSurface) return;
+      // Suspending device input must not reflow an open menu or native tool
+      // dialog beneath the pointer. Instructions remain valid while blurred;
+      // removing them here can move the next click between press and release.
+      if (!value && context) return;
       menuHint.hidden = !context;
       const hintContainer =
         context?.root === playShell?.elements.dialogs.settings
@@ -2123,6 +2124,7 @@ export function mountFlightApp({
         shellSettings.querySelector('.sim-appearance-controls'),
       ],
       accessibility: [
+        shellSettings.querySelector('[data-sim-hud-preferences]'),
         settingLabel('academy-stick-display'),
         settingLabel('academy-drone-guide'),
         settingLabel('academy-guide-scale'),
