@@ -106,7 +106,16 @@ export function attachDemoHost({
     adoptedPlayer = null,
     handoffGeneration = 0,
     handoffPending = false,
-    transitionAge = 0;
+    transitionAge = 0,
+    lastPaint = null,
+    displayRevision = 0,
+    controlsRun = null,
+    controlsSecond = null,
+    controlsCoverage = null,
+    controlsLives = null,
+    controlsStatus = null,
+    controlsCaption = null,
+    controlsController = null;
   const owners = new WeakMap(),
     listeners = [];
   const listen = (element, type, fn, options) => {
@@ -140,7 +149,15 @@ export function attachDemoHost({
     fullscreen.refresh();
     dialog.classList.toggle('is-practice', !!practice);
     const state = currentRun(),
-      terminal = ['won', 'lost'].includes(state?.status);
+      terminal = ['won', 'lost'].includes(state?.status),
+      current = getContext();
+    controlsRun = state;
+    controlsSecond = Math.floor(state?.time ?? 0);
+    controlsCoverage = Math.round((state?.coverage ?? 0) * 100);
+    controlsLives = state?.lives;
+    controlsStatus = state?.status;
+    controlsCaption = caption;
+    controlsController = current.controller?.id ?? null;
     const loading = busy || !director?.player;
     dialog.dataset.scene = loading ? 'loading' : 'playing';
     const audioState = audio?.snapshot?.(),
@@ -161,7 +178,7 @@ export function attachDemoHost({
     $('demo-guide-label').hidden = !guideVisible;
     const portrait =
       REACTION_PORTRAITS.guide[
-        !getContext().reduced &&
+        !current.reduced &&
         !interrupted &&
         !loading &&
         ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption)
@@ -231,7 +248,8 @@ export function attachDemoHost({
     text('demo-panel-caption', $('demo-caption').textContent);
     text('demo-panel-status', $('demo-status').textContent);
     $('demo-panel').hidden = !detailsOpen && !interrupted && !practice;
-    dialog.dataset.details = $('demo-panel').hidden ? 'closed' : 'open';
+    const details = $('demo-panel').hidden ? 'closed' : 'open';
+    if (dialog.dataset.details !== details) dialog.dataset.details = details;
     $('demo-details-close').hidden = interrupted || !!practice;
     $('demo-details-toggle').setAttribute('aria-expanded', String(!$('demo-panel').hidden));
     text('demo-details-toggle', t('demo:details'));
@@ -265,7 +283,7 @@ export function attachDemoHost({
     $('demo-pickup').hidden = !capabilities.manualPickup;
     $('demo-boost').hidden = !capabilities.manualBoost;
     $('demo-craft').hidden = !practice || !state?.hangars?.length;
-    const keys = bindingLabels(getContext().preferences.keyboardBindings);
+    const keys = bindingLabels(current.preferences.keyboardBindings);
     text(
       'demo-bound-controls',
       t('demo:boundControls', {
@@ -277,7 +295,6 @@ export function attachDemoHost({
             .join(' / ') || t('common:actions.pause'),
       }),
     );
-    const current = getContext();
     $('demo-pad-controls').hidden = !current.controller;
     if (current.controller) {
       const pad = controllerBindingLabels(
@@ -295,6 +312,42 @@ export function attachDemoHost({
     for (const action of ['boost', 'ability', 'pickup'])
       text(`demo-${action}`, `${t(`demo:${action}`)} · ${keys[action]}`);
   }
+  function refreshReadout() {
+    const state = currentRun();
+    if (
+      state !== controlsRun ||
+      Math.floor(state?.time ?? 0) !== controlsSecond ||
+      Math.round((state?.coverage ?? 0) * 100) !== controlsCoverage ||
+      state?.lives !== controlsLives ||
+      state?.status !== controlsStatus ||
+      caption !== controlsCaption
+    )
+      renderControls();
+  }
+  const invalidateDisplay = () => {
+    if (active) displayRevision++;
+  };
+  listen(doc.defaultView, 'resize', invalidateDisplay);
+  listen(doc, 'fullscreenchange', invalidateDisplay);
+  const preferencesChanged = () => {
+    if (!active) return;
+    invalidateDisplay();
+    renderControls();
+  };
+  listen(doc, 'change', (event) => {
+    // Demo's own controls already publish their precise change synchronously.
+    if (event.target?.id?.startsWith('demo-') || event.target?.closest?.('[data-demo-ui]')) return;
+    preferencesChanged();
+  });
+  listen(doc.defaultView, 'storage', preferencesChanged);
+  listen(canvas, 'contextrestored', () => {
+    context = null;
+    invalidateDisplay();
+  });
+  const displayObserver = doc.defaultView?.ResizeObserver
+    ? new doc.defaultView.ResizeObserver(invalidateDisplay)
+    : null;
+  displayObserver?.observe(canvas);
   function clear() {
     clearInput();
     input.clear();
@@ -349,7 +402,7 @@ export function attachDemoHost({
     adoptedPlayer = null;
     director?.dispose();
     director = null;
-    painter = picture = source = practice = context = null;
+    painter = picture = source = practice = context = lastPaint = null;
     armed = false;
     busy = false;
     clear();
@@ -768,6 +821,7 @@ export function attachDemoHost({
     };
     setCollect(settings.collect);
     if (settings.hidePictures) reward.reset();
+    renderControls();
     paint(0);
     idle.activity();
     try {
@@ -775,7 +829,6 @@ export function attachDemoHost({
     } catch {
       text('demo-settings-status', t('demo:settingsSessionOnly'));
     }
-    paint(0);
   };
   $('demo-auto').checked = settings.auto;
   $('demo-collect').checked = settings.collect;
@@ -838,7 +891,7 @@ export function attachDemoHost({
         });
     }
     if (!practice && !interrupted) caption = captions.advance(seconds, result?.events);
-    if (!doc.hidden) renderControls();
+    if (!doc.hidden) refreshReadout();
     if (!practice && !interrupted && director.phase === 'complete') {
       dwell += Math.min(seconds, 0.25);
       const holding = reward.update({
@@ -862,22 +915,54 @@ export function attachDemoHost({
   }
 
   function paint(seconds) {
+    if (!active || doc.hidden) return;
     const state = currentRun();
-    if (active && !doc.hidden) sceneTransition.paint(seconds, getContext().reduced);
-    if (!active || !painter || !state || doc.hidden) return;
-    renderControls();
+    const current = getContext();
+    if (lastPaint && lastPaint.reduced !== current.reduced) renderControls();
+    sceneTransition.paint(seconds, current.reduced);
+    if (!painter || !state) return;
+    const options = current.renderOptions ?? {},
+      paused = practice ? practice.phase !== 'playing' : director.phase !== 'playing',
+      animated =
+        !interrupted &&
+        (practice
+          ? practice.phase === 'playing'
+          : ['playing', 'complete'].includes(director.phase)),
+      visibility = pictureVisibility();
+    // Paused presentation retains its accepted pixels. Explicit UI, sizing,
+    // preference and asynchronous painter changes still invalidate this record.
+    if (
+      !animated &&
+      lastPaint?.state === state &&
+      lastPaint.tick === state.tick &&
+      lastPaint.painter === painter &&
+      lastPaint.generation === painter.preparationGeneration &&
+      lastPaint.paintRevision === painter.paintRevision &&
+      lastPaint.displayRevision === displayRevision &&
+      lastPaint.paused === paused &&
+      lastPaint.interrupted === interrupted &&
+      lastPaint.detailsOpen === detailsOpen &&
+      lastPaint.reduced === current.reduced &&
+      lastPaint.visibility === visibility &&
+      lastPaint.textFace === options.textFace &&
+      lastPaint.showGrid === options.showGrid &&
+      lastPaint.showCombatScrap === options.showCombatScrap &&
+      lastPaint.brutal === options.brutal &&
+      lastPaint.blood === options.blood
+    )
+      return;
     if (state.status === 'won')
       rewardAge = advanceRewardAge(rewardAge, seconds, interrupted || !foreground());
     const expanded = state.status === 'won' && rewardAge >= REWARD_BOARD_SECONDS && !practice;
     if (expanded && dialog.dataset.reward !== 'expanded') {
       const from = canvas.getBoundingClientRect();
       dialog.dataset.reward = 'expanded';
-      animateRewardArrival(canvas, from, getContext().reduced);
+      animateRewardArrival(canvas, from, current.reduced);
     } else if (!expanded) delete dialog.dataset.reward;
     context ??= canvas.getContext('2d');
-    if (context)
+    if (context) {
       painter.draw(context, state, Math.min(seconds, 0.1), {
-        ...getContext().renderOptions,
+        ...options,
         actorAppearance: owners.get(director.player)?.actors
           ? {
               style: owners.get(director.player).actors.pin().style,
@@ -888,11 +973,11 @@ export function attachDemoHost({
           canvas.clientHeight > 0
             ? Math.min(canvas.clientWidth, (canvas.clientHeight * canvas.width) / canvas.height)
             : canvas.clientWidth,
-        paused: practice ? practice.phase !== 'playing' : director.phase !== 'playing',
-        reduced: getContext().reduced,
+        paused,
+        reduced: current.reduced,
         fullReveal: state.status === 'won',
         backdrop: picture?.backdrop,
-        pictureVisibility: pictureVisibility(),
+        pictureVisibility: visibility,
         pictureInterference: true,
         celebrationPaused: interrupted,
         defeatEffectsRunning: !interrupted,
@@ -902,8 +987,26 @@ export function attachDemoHost({
           !interrupted &&
           (state.status === 'lost' ||
             (practice ? practice.phase === 'playing' : director.phase === 'playing')),
-        demoTransition: getContext().reduced ? 0 : Math.max(0, 1 - transitionAge / 0.55),
+        demoTransition: current.reduced ? 0 : Math.max(0, 1 - transitionAge / 0.55),
       });
+      lastPaint ??= {};
+      lastPaint.state = state;
+      lastPaint.tick = state.tick;
+      lastPaint.painter = painter;
+      lastPaint.generation = painter.preparationGeneration;
+      lastPaint.paintRevision = painter.paintRevision;
+      lastPaint.displayRevision = displayRevision;
+      lastPaint.paused = paused;
+      lastPaint.interrupted = interrupted;
+      lastPaint.detailsOpen = detailsOpen;
+      lastPaint.reduced = current.reduced;
+      lastPaint.visibility = visibility;
+      lastPaint.textFace = options.textFace;
+      lastPaint.showGrid = options.showGrid;
+      lastPaint.showCombatScrap = options.showCombatScrap;
+      lastPaint.brutal = options.brutal;
+      lastPaint.blood = options.blood;
+    }
   }
   function updateAudio() {
     const state = currentRun();
@@ -945,7 +1048,7 @@ export function attachDemoHost({
       saveSettings();
     },
   });
-  const unsubscribe = onLocaleChange(renderControls);
+  const unsubscribe = onLocaleChange(preferencesChanged);
   const unsubscribeAudio = audio?.subscribe?.(renderControls);
   const unsubscribeGuide = guidePreferences.subscribe(renderControls);
   return {
@@ -980,6 +1083,7 @@ export function attachDemoHost({
     activity: () => idle.activity(),
     controller(frame) {
       input.controller(frame);
+      if ((frame.assigned?.id ?? null) !== controlsController) renderControls();
     },
     update(seconds) {
       if (!active) {
@@ -1005,6 +1109,7 @@ export function attachDemoHost({
       input.destroy();
       fullscreen.dispose();
       layout.dispose();
+      displayObserver?.disconnect();
       unsubscribe?.();
       unsubscribeAudio?.();
       unsubscribeGuide?.();
