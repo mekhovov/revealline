@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-10-16T12:16:24.163601+00:00",
-  "status": "Incomplete repository regression inventory. Historical local failure groups are classified; remote continuation includes unresolved failures. No full-suite success claim.",
+  "updatedAt": "2026-10-16T13:41:06.224638+00:00",
+  "status": "Incomplete repository regression inventory:1805/1948 original files have complete mixed-source observations;143 remain unobserved. Complete failures, resource stops and source-scoped supplementary proofs remain explicit.",
   "scope": "Separate historical local inventory, mixed-source remote continuation/recovery, added tooling, exact baseline comparisons, and later fixture/runtime-boundary retests. Raw failures, cancellations and unobserved work remain visible.",
   "baselineCommit": "b11745223861c3973ad4bf440cc536198b8e0371",
   "frozenRuntimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
@@ -2673,34 +2673,40 @@
     "No physical iPhone17Pro Safari or SteamDeckOLED qualification is implied."
   ],
   "remoteContinuation": {
-    "checkpointAt": "2026-10-16T12:16:24.163601+00:00",
-    "currentRuntimeContext": "2990a7d013b3ba2657de2482f326a51209769b9c",
+    "checkpointAt": "2026-10-16T13:41:06.224638+00:00",
+    "currentRuntimeContext": "Verified production source8c727777; later aa88d829 contains four test-only fixture corrections. Historical observations retain their recorded runtime revisions.",
     "originalInventoryFiles": 1948,
     "historicalLocalCompleteFiles": 1233,
-    "remoteUniqueCompleteFiles": 525,
-    "totalUniqueOriginalFilesObserved": 1758,
-    "originalFilesStillUnobserved": 190,
+    "remoteUniqueCompleteFiles": 572,
+    "totalUniqueOriginalFilesObserved": 1805,
+    "originalFilesStillUnobserved": 143,
     "overlap": [],
     "original715": {
       "runId": 38865274741,
       "url": "https://github.com/mekhovov/revealline/actions/runs/38865274741",
       "sourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
       "runtimeRevision": "49c0b6c1f9cfbc66c2a0fbf0a262eed95cc1ac9b",
-      "completedFiles": 456,
-      "passedFiles": 324,
+      "completedFiles": 458,
+      "passedFiles": 326,
       "failedFiles": 132,
-      "retainedArtifacts": 154,
+      "retainedArtifacts": 157,
       "proof": {
-        "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/retained-artifacts-1147.json",
-        "bytes": 535715,
-        "sha256": "f0c0567c5f98473d28ba8db39034f65c7fbc8ac98b0f94a53dd0a03542fa3174"
+        "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/retained-artifacts-final.json",
+        "bytes": 540460,
+        "sha256": "0511c6b6662e2657f25d824ededcbbaac7b07439573a50a85f310ca6fe18730c"
       },
       "failureDetails": {
         "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/failed-groups-202610160857242445530000.json",
         "bytes": 260251,
         "sha256": "3093a14c4d7b6c27e21652cb9a46a3bd8796936825813a4f037e98fc83470c77"
       },
-      "failureDetailsAsOf": "2026-10-16T08:57:24Z; historical detailed subset, later full outcome names are in the checkpoint proof."
+      "failureDetailsAsOf": "2026-10-16T08:57:24Z; historical detailed subset, later full outcome names are in the checkpoint proof.",
+      "previousCheckpoint": {
+        "path": ".cache/solo-followup/regression-audit/remote-remaining-38865274741/retained-artifacts-1147.json",
+        "bytes": 535715,
+        "sha256": "f0c0567c5f98473d28ba8db39034f65c7fbc8ac98b0f94a53dd0a03542fa3174"
+      },
+      "status": "Original workflow completed; its incomplete attempts remain incomplete. Subsequent recovery and focused proofs are separately deduplicated."
     },
     "recovery70": {
       "runId": 38873117238,
@@ -4204,6 +4210,330 @@
     "latestSourceBoundary": {
       "revision": "2990a7d013b3ba2657de2482f326a51209769b9c",
       "scope": "Preparation-invalidation app fix and new host test are later than the queued d56/a159 remote targets. Their targeted10/10 correctness result is separately owned and is not attributed to those historical sources."
+    },
+    "earlierCheckpoint1216": {
+      "checkpointAt": "2026-10-16T12:16:24.163601+00:00",
+      "remoteUniqueCompleteFiles": 525,
+      "totalUniqueOriginalFilesObserved": 1758,
+      "originalFilesStillUnobserved": 190
+    },
+    "missingOnly179Latest": {
+      "runId": 38898131413,
+      "workflowRevision": "b010df818d9c76e67afd071846e8454b07c262b6",
+      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+      "completeFiles": 41,
+      "passedFiles": 27,
+      "failedFiles": 14,
+      "resourceIncompleteFiles": 7,
+      "retainedArtifacts": 58,
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/retained-recovery-1323.json",
+        "bytes": 136336,
+        "sha256": "bbf829b677f25b306d646d379695cd03b360c61c96311a5741102a808f1ba5e1"
+      },
+      "resourceIncompletePaths": [
+        "game/test/controller-practice-pause-host.test.mjs",
+        "game/test/coop-host.test.mjs",
+        "game/test/coop-shared-settings.test.mjs",
+        "game/test/couch-encounter-help.test.mjs",
+        "game/test/couch-gameplay-pressure-host.test.mjs",
+        "game/test/couch-installed-chapters.test.mjs",
+        "game/test/field-kit-retained-runtime.test.mjs"
+      ],
+      "limits": "As-of retained checkpoint only; later running/queued jobs have no completion credit. Exact active-file mapping correction is retained separately.",
+      "liveMappingCorrection": {
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/live-stall-allocation-correction-01.json",
+        "bytes": 1620,
+        "sha256": "71b1053bc88cbe731d144e19211891196a3d8472d5a424c2a9786e99189ae119"
+      }
+    },
+    "focusedCI8c": {
+      "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "node": "v22.13.1",
+      "completeFiles": 54,
+      "counts": {
+        "tests": 535,
+        "pass": 535,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "uniqueOriginalFilesAdded": [
+        "game/test/story-dialog.test.mjs",
+        "scripts/test-curated-appearance-package.mjs",
+        "scripts/test-optional-fpv-package.mjs",
+        "scripts/test-world-texture-acceptance.mjs"
+      ],
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/ci-focused-8c727777-38901373460.json",
+        "bytes": 21677,
+        "sha256": "a61a17e7b892b0d77166cd9af1fe69fede48104f0a4d68cf4f8af8ff268c520c"
+      },
+      "scope": "535/535 complete focused tests,0fail/skip/cancel. Fifty files overlap existing observations; only four add unique original coverage. Not a full repository result."
+    },
+    "newFailureGroups1323": {
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/new-failures-1323.json",
+        "bytes": 39487,
+        "sha256": "b70c0bf7cdbd110e029e5b6fe515923f316b413c78caeba2ccff97f960315062"
+      },
+      "missingBaselineAudit": {
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/new-ten-baseline-coverage-01.json",
+        "bytes": 10243,
+        "sha256": "011c8b86772457ddc36a4789a255f8fe85bc49b6419f4df9ff2e86d9c6c4ddbb"
+      },
+      "symlinkBaselineAudit": {
+        "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/new-ten-baseline-symlink-search-01.json",
+        "bytes": 5140,
+        "sha256": "587e517ffdf6f22b8508c8227e974c2147c3897fe3d490eaf9e42bd8e1e892b5"
+      },
+      "files": [
+        {
+          "file": "game/test/display-preferences-host.test.mjs",
+          "counts": {
+            "tests": 9,
+            "suites": 0,
+            "pass": 4,
+            "fail": 5,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 35768.35967
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "2171440c573f181540c34491dd00d9e038438062066b8c342fedbbb3763abdee",
+          "tapSHA256": "e7bf017d944374ba4b3c645aff27d8ca0e89acb9fb979169331d3a4520f577cc",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        },
+        {
+          "file": "game/test/enemy-guide-edition-host.test.mjs",
+          "counts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 0,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 12121.889025
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "20686c70d480ba7fc21250c659d0bb847935b099a3fd48d54cc9f5713f01c7d7",
+          "tapSHA256": "5482d5ac6240194735bfb839d17e9d9a6b028cb75ea53c6eec2b3290e4eb3c6e",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        },
+        {
+          "file": "game/test/enemy-guide-host.test.mjs",
+          "counts": {
+            "tests": 29,
+            "suites": 0,
+            "pass": 0,
+            "fail": 29,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 113253.739671
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "622881288325e128a692da208020d7d0a85a4faafd934d5dbd20772424cab0af",
+          "tapSHA256": "b71e717f27748feca0595c2e7ab465633b4ecfc00b44b3d0d74fcf3c3803d6d3",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        },
+        {
+          "file": "game/test/external-chapter-app.test.mjs",
+          "counts": {
+            "tests": 21,
+            "suites": 0,
+            "pass": 12,
+            "fail": 9,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 676810.495748
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "e8c7a49c85ae4aa526fa73a4eb29a16d3989dfe18d85d8147c46184d38a42538",
+          "tapSHA256": "2d2c8d2110222c90a2c1612a9fec1302e4aee143783bd50b7f952ef926899d29",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        },
+        {
+          "file": "game/test/flight-pictures-host.test.mjs",
+          "counts": {
+            "tests": 22,
+            "suites": 0,
+            "pass": 20,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 180647.644282
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "73c1d1d8308e0ad3d90d9e1675ad2518b1f6aa85729b68c13cbc62f7f83cc3aa",
+          "tapSHA256": "0d25ba88e71b4a60bcc0df0a02c53b0f8b130b1212ce214e272604384367871f",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        },
+        {
+          "file": "game/test/flight-preparation-status-host.test.mjs",
+          "counts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 1,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 70500.077927
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "402e754f7223301d787d59e5da809bac3ec92a5d0596e0474218aec2bd306463",
+          "tapSHA256": "a08c17b0976eeb2aab461cd8642984dc1cf579f00cf0b51e14a6afc50d2fdc7f",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        },
+        {
+          "file": "game/test/fracture-spatial-candidates.test.mjs",
+          "counts": {
+            "tests": 10,
+            "suites": 0,
+            "pass": 9,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 9713.240673
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "984e786d08d29716232baa48eb67975e56d9fec89fa9f1aa24405839471a096d",
+          "tapSHA256": "529786332c42c66d72408300be6230ce7cc75847d8179f3d286a37cdda5ece92",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        },
+        {
+          "file": "game/test/gentle-routes.test.mjs",
+          "counts": {
+            "tests": 64,
+            "suites": 0,
+            "pass": 63,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 66376.685757
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "69c6404642cc34979772e5f0784e5883298f2f0e872b82cbe82f7d3122b52dc9",
+          "tapSHA256": "6c6d28f534818c9ec07e8c9cc10e1f0b2055e850d9b84d04a25a37d0acd96fec",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        },
+        {
+          "file": "game/test/hud-numeric-values.test.mjs",
+          "counts": {
+            "tests": 2,
+            "suites": 0,
+            "pass": 0,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 17691.867515
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "2144b959a74c6e2be4cd6f2d561bca075e7eff71bc5421d69ec686e451c6ea53",
+          "tapSHA256": "ef1fe784b9a4819ff9086522bacba306971f2b48a9522d9bc00d4422fcc1e9ab",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        },
+        {
+          "file": "game/test/hud-status-cues.test.mjs",
+          "counts": {
+            "tests": 8,
+            "suites": 0,
+            "pass": 6,
+            "fail": 2,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0,
+            "duration_ms": 157023.740414
+          },
+          "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+          "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+          "testSHA256": "ef84b1f5442402576d8c7fc40ee96c11c65faf0e94586062a8665795f82a1bca",
+          "tapSHA256": "673e0bda188829263203ad81d0c7b3e87d10affbdb867eb690d7271ae8b2473a",
+          "status": "Complete failure; exact baseline pending, no runtime cause inferred from fixture hypothesis."
+        }
+      ]
+    },
+    "customLifetimeAfterAudit": {
+      "proof": {
+        "path": ".cache/solo-followup/regression-audit/device-controls-teardown-01/collector-audit.json",
+        "bytes": 1591,
+        "sha256": "e1b7c7ec499e039aecf51787329ab75e4d66d970d107acf02fc0b0bb37de7a78"
+      },
+      "files": [
+        "game/test/settings-assists-host.test.mjs",
+        "game/test/text-size-host.test.mjs",
+        "game/test/device-controls-host.test.mjs"
+      ],
+      "finding": "Exactly three custom collectors overwrite registered callbacks. soloPage has three accumulating after registrations; these mocks discard page retirement and waitingHosts deletion. Candidate active-handle attribution remains pending.",
+      "canonicalFixCommit": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "status": "FIFO awaited fixture corrections committed; complete canonical remote observations pending. Active historical device observer is neither interrupted nor duplicated.",
+      "staticReady": {
+        "path": ".cache/solo-followup/regression-audit/four-fixtures-static-ready.json",
+        "bytes": 1171,
+        "sha256": "33096f5bc918612d44d2cc49b08d584179798e75e90f13f884f4dcffde38b77b"
+      },
+      "scopedLint": {
+        "path": ".cache/solo-followup/four-fixtures-lint-aa88/receipt.json",
+        "bytes": 1145,
+        "sha256": "2ebd4212cae7eae884a0b0da26033c87bd170e0e189019af369cad9921b8bbe7",
+        "scope": "Root ran scoped ESLint on exact four aa88 fixture files; exit0, no complete tests executed."
+      }
+    },
+    "stillWorkshopFixtureClosure": {
+      "file": "game/test/still-workshop-build.test.mjs",
+      "commit": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "status": "Only isolated fixture dependency copier now includes literal dynamic imports via pinned parser. Assertions/deadlines unchanged; canonical full file pending. Baseline5/6/current1/6 retained, not a production payload defect.",
+      "proposal": {
+        "path": ".cache/solo-followup/regression-audit/still-workshop-closure-01/proposal.json",
+        "bytes": 928,
+        "sha256": "5d03dba72cc341a4e67340d01e30ff0fec015799775bc14f2c24b970a87e4923"
+      },
+      "peerReview": {
+        "path": ".cache/solo-followup/regression-audit/still-workshop-closure-01/peer-review.json",
+        "bytes": 793,
+        "sha256": "7797a560ecba7c7703f54472c0754b11a07eec59f63e0c817d730b88c1f3b078"
+      }
+    },
+    "nextGuarded33Plan": {
+      "status": "Prepared, not yet committed/pushed/dispatched at this documentation checkpoint.",
+      "manifest": "docs/performance/solo-regression-memory-diagnostic.json",
+      "manifestSHA256": "a99036c794f8b37d3f69ce38757fa3f952f705d7f53451250decc2589a5d2ef0",
+      "workflow": ".github/workflows/solo-regression-memory-temporary.yml",
+      "workflowSHA256": "208f5f158442e3fb8282018fe15141548f11f88789558b508346331fd1b47774",
+      "groups": {
+        "correctedCanonical": 3,
+        "neverLaunchedCanonical": 6,
+        "pairedDiagnosticTargets": 10,
+        "exactBaselineTargets": 14,
+        "total": 33
+      },
+      "canonicalSourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "artifactRuntimeSourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "deferredActive": [
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/device-controls-host.test.mjs",
+        "game/test/gallery-return-host.test.mjs"
+      ],
+      "scope": "Three canonical repairs plus six never-launched originals; ten diagnostic targets grant no canonical coverage; fourteen exact-baseline classifications retain failures. Device canonical awaits current observer exit. Existing outer guards and max2 retained."
     }
   }
 }

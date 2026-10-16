@@ -1,21 +1,605 @@
 {
-  "format": "SoloUkraineClockFixtureManifestV1",
-  "purpose": "Complete the reviewed canonical Ukraine appearance fixture after its one public-readiness neutral-frame correction; preserve prior candidate and exact-baseline failures.",
+  "format": "SoloGuardedCanonicalBaselineAndIdentityManifestV1",
+  "purpose": "Three reviewed canonical fixture repairs, six never-launched original files, five paired selected-identity diagnostics, and fourteen exact original-main baseline classifications. Device canonical repair is deferred while its historical observer remains active.",
   "entries": [
     {
       "label": "candidate",
-      "case": "ukraine-role-host",
+      "case": "still-workshop-build",
       "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "game/test/still-workshop-build.test.mjs",
+      "testSHA256": "f87b59b7719b55bff0915615abc1ef5ac8ba709b77dffa92457c7920b04ffe53",
+      "bytes": 35766,
+      "role": "Corrected complete canonical fixture, assertions and deadlines unchanged"
+    },
+    {
+      "label": "candidate",
+      "case": "settings-assists-host",
+      "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "game/test/settings-assists-host.test.mjs",
+      "testSHA256": "0a2ffba001b2a208d797e0d044abbc46380cf96d9b965acef39dc16e52c9674c",
+      "bytes": 5808,
+      "role": "Corrected complete canonical fixture, assertions and deadlines unchanged"
+    },
+    {
+      "label": "candidate",
+      "case": "text-size-host",
+      "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "game/test/text-size-host.test.mjs",
+      "testSHA256": "5e1037470e18537f69abbd0e97872a646bde4033b72b3ec11805a80b6f19cd6a",
+      "bytes": 12564,
+      "role": "Corrected complete canonical fixture, assertions and deadlines unchanged"
+    },
+    {
+      "label": "candidate",
+      "case": "team-pressure-opening-routes",
+      "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "game/test/team-pressure-opening-routes.test.mjs",
+      "testSHA256": "ccbe7d7e10577d4b305c4a621ffb4f7e3e411c1d11a56ce17f4f7abed268d887",
+      "bytes": 4505,
+      "role": "Previously never-launched original inventory file; complete canonical execution"
+    },
+    {
+      "label": "candidate",
+      "case": "versus-continuous-next-host",
+      "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "game/test/versus-continuous-next-host.test.mjs",
+      "testSHA256": "ce5cf06902fff1b1d82ba45487f7335c77a7aba9166d75a198cd69a3bb1a4274",
+      "bytes": 21197,
+      "role": "Previously never-launched original inventory file; complete canonical execution"
+    },
+    {
+      "label": "candidate",
+      "case": "native-cli",
+      "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "scripts/native-cli.test.mjs",
+      "testSHA256": "bba9b780c6955b2f1b5edf8c341ebdef6044aaba3c07590bade80f31123bb0c6",
+      "bytes": 25685,
+      "role": "Previously never-launched original inventory file; complete canonical execution"
+    },
+    {
+      "label": "candidate",
+      "case": "fpv-content",
+      "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "scripts/test-fpv-content.mjs",
+      "testSHA256": "3209e24de5e5b00b4b246c7dde29566d70ba92bd8583a5322d379efbc26e30e7",
+      "bytes": 1845,
+      "role": "Previously never-launched original inventory file; complete canonical execution"
+    },
+    {
+      "label": "candidate",
+      "case": "practice-capacity",
+      "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "scripts/test-practice-capacity.mjs",
+      "testSHA256": "5d35cc06db1a654713e5855ed4671123c01ae30b174cc1c0222d06ed3d71a48a",
+      "bytes": 8099,
+      "role": "Previously never-launched original inventory file; complete canonical execution"
+    },
+    {
+      "label": "candidate",
+      "case": "whole-spatial-snapshot",
+      "mode": "original",
+      "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+      "runtimeRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "file": "scripts/test-whole-spatial-snapshot.mjs",
+      "testSHA256": "e207184ff42c52ceea93c78f7596c033b7e84fd8d8a0662756c4f15a43164b74",
+      "bytes": 10599,
+      "role": "Previously never-launched original inventory file; complete canonical execution"
+    },
+    {
+      "label": "baseline",
+      "case": "controller-practice-pause-host",
+      "mode": "selected-object-identity",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/controller-practice-pause-host.test.mjs",
+      "testSHA256": "04b26a93be7026493056f11fb9d93fbfd6f22e7f5079d20b39731162616f8dbb",
+      "bytes": 11685,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "72943d7c4787b77a0e23c3485989fead78218f0ef544262c3469ce018d660629",
+        "selectedCallReplacements": [
+          {
+            "line": 150,
+            "before": "  assert.equal(page.doc.activeElement, page.$('overlay-restart'));\n",
+            "after": "  boundedIdentity(page.doc.activeElement, page.$('overlay-restart'));\n"
+          },
+          {
+            "line": 152,
+            "before": "  assert.equal(page.doc.activeElement, page.$('journey-skip'));\n",
+            "after": "  boundedIdentity(page.doc.activeElement, page.$('journey-skip'));\n"
+          },
+          {
+            "line": 154,
+            "before": "  assert.equal(page.doc.activeElement, page.$('overlay-missions'));\n",
+            "after": "  boundedIdentity(page.doc.activeElement, page.$('overlay-missions'));\n"
+          },
+          {
+            "line": 158,
+            "before": "  assert.equal(page.doc.activeElement, page.$('overlay-missions'));\n",
+            "after": "  boundedIdentity(page.doc.activeElement, page.$('overlay-missions'));\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "candidate",
+      "case": "controller-practice-pause-host",
+      "mode": "selected-object-identity",
       "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
       "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
-      "file": "game/test/ukraine-role-host.test.mjs",
-      "testSHA256": "334a58f3b3e5209850a9d132c4dfec9de96fa845f21ed74efe9c3bda8608380a",
-      "bytes": 9842,
-      "resourceBoundary": {
-        "maximumOwnedGroupRSSBytes": 4294967296,
-        "maximumWallSeconds": 600
-      },
-      "purpose": "One p.frame(0) follows actual running readiness before ArrowDown; all12positivecallbacks, appearance, checkpoint, saved envelope, no-write and reload assertions remain exact."
+      "file": "game/test/controller-practice-pause-host.test.mjs",
+      "testSHA256": "04b26a93be7026493056f11fb9d93fbfd6f22e7f5079d20b39731162616f8dbb",
+      "bytes": 11685,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "72943d7c4787b77a0e23c3485989fead78218f0ef544262c3469ce018d660629",
+        "selectedCallReplacements": [
+          {
+            "line": 150,
+            "before": "  assert.equal(page.doc.activeElement, page.$('overlay-restart'));\n",
+            "after": "  boundedIdentity(page.doc.activeElement, page.$('overlay-restart'));\n"
+          },
+          {
+            "line": 152,
+            "before": "  assert.equal(page.doc.activeElement, page.$('journey-skip'));\n",
+            "after": "  boundedIdentity(page.doc.activeElement, page.$('journey-skip'));\n"
+          },
+          {
+            "line": 154,
+            "before": "  assert.equal(page.doc.activeElement, page.$('overlay-missions'));\n",
+            "after": "  boundedIdentity(page.doc.activeElement, page.$('overlay-missions'));\n"
+          },
+          {
+            "line": 158,
+            "before": "  assert.equal(page.doc.activeElement, page.$('overlay-missions'));\n",
+            "after": "  boundedIdentity(page.doc.activeElement, page.$('overlay-missions'));\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "coop-shared-settings",
+      "mode": "selected-object-identity",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/coop-shared-settings.test.mjs",
+      "testSHA256": "d6074aee15ea6d924fbc78a68ce7f667e28e2c3f7f522d3486f560c58edd2401",
+      "bytes": 15828,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "1af6442008f6334c4a958bb5ef54a8c23d956187650e0d91e297f3bb1e63e3aa",
+        "selectedCallReplacements": [
+          {
+            "line": 90,
+            "before": "  assert.equal(f.doc.activeElement, tab(f, 'display'));\n",
+            "after": "  boundedIdentity(f.doc.activeElement, tab(f, 'display'));\n"
+          },
+          {
+            "line": 91,
+            "before": "  assert.equal(f.$('coop-options').closest('#coop-tools'), null);\n",
+            "after": "  boundedIdentity(f.$('coop-options').closest('#coop-tools'), null);\n"
+          },
+          {
+            "line": 100,
+            "before": "  for (const node of controls) assert.equal(f.$(node.id), node);\n",
+            "after": "  for (const node of controls) boundedIdentity(f.$(node.id), node);\n"
+          },
+          {
+            "line": 102,
+            "before": "    assert.equal(f.$(id).parentNode, f.$('coop-settings-panel-accessibility'));\n",
+            "after": "    boundedIdentity(f.$(id).parentNode, f.$('coop-settings-panel-accessibility'));\n"
+          },
+          {
+            "line": 103,
+            "before": "    assert.equal(\n",
+            "after": "    boundedIdentity(\n"
+          },
+          {
+            "line": 108,
+            "before": "  assert.equal(f.$('coop-system-reduction').parentNode, f.$('coop-settings-panel-accessibility'));\n",
+            "after": "  boundedIdentity(f.$('coop-system-reduction').parentNode, f.$('coop-settings-panel-accessibility'));\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "candidate",
+      "case": "coop-shared-settings",
+      "mode": "selected-object-identity",
+      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+      "file": "game/test/coop-shared-settings.test.mjs",
+      "testSHA256": "d6074aee15ea6d924fbc78a68ce7f667e28e2c3f7f522d3486f560c58edd2401",
+      "bytes": 15828,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "1af6442008f6334c4a958bb5ef54a8c23d956187650e0d91e297f3bb1e63e3aa",
+        "selectedCallReplacements": [
+          {
+            "line": 90,
+            "before": "  assert.equal(f.doc.activeElement, tab(f, 'display'));\n",
+            "after": "  boundedIdentity(f.doc.activeElement, tab(f, 'display'));\n"
+          },
+          {
+            "line": 91,
+            "before": "  assert.equal(f.$('coop-options').closest('#coop-tools'), null);\n",
+            "after": "  boundedIdentity(f.$('coop-options').closest('#coop-tools'), null);\n"
+          },
+          {
+            "line": 100,
+            "before": "  for (const node of controls) assert.equal(f.$(node.id), node);\n",
+            "after": "  for (const node of controls) boundedIdentity(f.$(node.id), node);\n"
+          },
+          {
+            "line": 102,
+            "before": "    assert.equal(f.$(id).parentNode, f.$('coop-settings-panel-accessibility'));\n",
+            "after": "    boundedIdentity(f.$(id).parentNode, f.$('coop-settings-panel-accessibility'));\n"
+          },
+          {
+            "line": 103,
+            "before": "    assert.equal(\n",
+            "after": "    boundedIdentity(\n"
+          },
+          {
+            "line": 108,
+            "before": "  assert.equal(f.$('coop-system-reduction').parentNode, f.$('coop-settings-panel-accessibility'));\n",
+            "after": "  boundedIdentity(f.$('coop-system-reduction').parentNode, f.$('coop-settings-panel-accessibility'));\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "coop-host",
+      "mode": "selected-object-identity",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/coop-host.test.mjs",
+      "testSHA256": "4c56d10f9cd4799b3b49aa7d88b81656436043fd01afb926038489af9380192e",
+      "bytes": 66129,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "b25f78b525137a8c5217e8c853a3bcedbba2bb603dfa103e3b810477a1e9a1e0",
+        "selectedCallReplacements": [
+          {
+            "line": 1594,
+            "before": "    assert.equal(\n",
+            "after": "    boundedIdentity(\n"
+          },
+          {
+            "line": 1603,
+            "before": "    assert.equal(f.doc.activeElement, region);\n",
+            "after": "    boundedIdentity(f.doc.activeElement, region);\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "candidate",
+      "case": "coop-host",
+      "mode": "selected-object-identity",
+      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+      "file": "game/test/coop-host.test.mjs",
+      "testSHA256": "4c56d10f9cd4799b3b49aa7d88b81656436043fd01afb926038489af9380192e",
+      "bytes": 66129,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "b25f78b525137a8c5217e8c853a3bcedbba2bb603dfa103e3b810477a1e9a1e0",
+        "selectedCallReplacements": [
+          {
+            "line": 1594,
+            "before": "    assert.equal(\n",
+            "after": "    boundedIdentity(\n"
+          },
+          {
+            "line": 1603,
+            "before": "    assert.equal(f.doc.activeElement, region);\n",
+            "after": "    boundedIdentity(f.doc.activeElement, region);\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "couch-encounter-help",
+      "mode": "selected-object-identity",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/couch-encounter-help.test.mjs",
+      "testSHA256": "02665cd4dd93ac3f52be5037ef42b6a238d94c777f228a9be07383f3083419bc",
+      "bytes": 11071,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "497ec5aa4fc1fdf7c49a9c27aab9406e7f3050b9857cd0f27ecc6321256f8d6b",
+        "selectedCallReplacements": [
+          {
+            "line": 156,
+            "before": "  assert.equal(p.doc.activeElement, reader);\n",
+            "after": "  boundedIdentity(p.doc.activeElement, reader);\n"
+          },
+          {
+            "line": 159,
+            "before": "  assert.equal(p.doc.activeElement, reader);\n",
+            "after": "  boundedIdentity(p.doc.activeElement, reader);\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "candidate",
+      "case": "couch-encounter-help",
+      "mode": "selected-object-identity",
+      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+      "file": "game/test/couch-encounter-help.test.mjs",
+      "testSHA256": "02665cd4dd93ac3f52be5037ef42b6a238d94c777f228a9be07383f3083419bc",
+      "bytes": 11071,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "497ec5aa4fc1fdf7c49a9c27aab9406e7f3050b9857cd0f27ecc6321256f8d6b",
+        "selectedCallReplacements": [
+          {
+            "line": 156,
+            "before": "  assert.equal(p.doc.activeElement, reader);\n",
+            "after": "  boundedIdentity(p.doc.activeElement, reader);\n"
+          },
+          {
+            "line": 159,
+            "before": "  assert.equal(p.doc.activeElement, reader);\n",
+            "after": "  boundedIdentity(p.doc.activeElement, reader);\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "couch-gameplay-pressure-host",
+      "mode": "selected-object-identity",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/couch-gameplay-pressure-host.test.mjs",
+      "testSHA256": "f5e2326c2ec2029ad9710be535c6788580e2e053aff97020d51b66226d9c189d",
+      "bytes": 7980,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "a246e1eccb34df8effb0e7873608e593a39cd807bd688dbfa30cd9e8dea1aa77",
+        "selectedCallReplacements": [
+          {
+            "line": 161,
+            "before": "  assert.equal(p.$('coop-difficulty').closest('[hidden]'), null);\n",
+            "after": "  boundedIdentity(p.$('coop-difficulty').closest('[hidden]'), null);\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "candidate",
+      "case": "couch-gameplay-pressure-host",
+      "mode": "selected-object-identity",
+      "sourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+      "runtimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+      "file": "game/test/couch-gameplay-pressure-host.test.mjs",
+      "testSHA256": "f5e2326c2ec2029ad9710be535c6788580e2e053aff97020d51b66226d9c189d",
+      "bytes": 7980,
+      "selectedIdentityOverlay": {
+        "diagnosticSHA256": "a246e1eccb34df8effb0e7873608e593a39cd807bd688dbfa30cd9e8dea1aa77",
+        "selectedCallReplacements": [
+          {
+            "line": 161,
+            "before": "  assert.equal(p.$('coop-difficulty').closest('[hidden]'), null);\n",
+            "after": "  boundedIdentity(p.$('coop-difficulty').closest('[hidden]'), null);\n"
+          }
+        ],
+        "helperInsertion": {
+          "after": "import assert from 'node:assert/strict';\n",
+          "source": "// Diagnostic copy only: identical strict-identity truth with bounded mismatch labels.\nfunction boundedIdentity(actual, expected, message) {\n  if (Object.is(actual, expected)) return;\n  const label = (value) => {\n    if (value === null) return 'null';\n    if (value === undefined) return 'undefined';\n    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);\n    return [value.tagName, value.id].filter((part) => typeof part === 'string')\n      .map((part) => part.slice(0, 80)).join('#') || typeof value;\n  };\n  assert.ok(false, (message ?? 'Strict identity mismatch.') +\n    ' Actual: ' + label(actual) + '; expected: ' + label(expected) + '.');\n}\n"
+        },
+        "scope": "Original canonical source unchanged. Only selected DOM strict-identity assertion callees replaced; actual/expected arguments evaluated once, exact Object.is truth retained. Scalar paint hashes and deep equality assertions untouched; later unpatched formatter failures remain possible."
+      }
+    },
+    {
+      "label": "baseline",
+      "case": "content-studio-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/content-studio-host.test.mjs",
+      "testSHA256": "f09f877921df0cfc480e8a53762419a20e6c3f80721df6a39c34a0c68d325b3c",
+      "bytes": 26314
+    },
+    {
+      "label": "baseline",
+      "case": "coop-entry-memory",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/coop-entry-memory.test.mjs",
+      "testSHA256": "6688fd2874ce3b3e25470b1c2c79b4b32a3a89e8a79af20bac908b9c8ce10732",
+      "bytes": 11762
+    },
+    {
+      "label": "baseline",
+      "case": "coop-import-next",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/coop-import-next.test.mjs",
+      "testSHA256": "3703b1c6834bd118ba41ad1a316e35d067fd1f284a3cf6dbaddc96b242f4b00b",
+      "bytes": 11455
+    },
+    {
+      "label": "baseline",
+      "case": "couch-encounter",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/couch-encounter.test.mjs",
+      "testSHA256": "f736738b3e649fc15c19baed2da5ddd7efbb648a0aca9e6445b591650ef76a10",
+      "bytes": 6405
+    },
+    {
+      "label": "baseline",
+      "case": "display-preferences-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/display-preferences-host.test.mjs",
+      "testSHA256": "2171440c573f181540c34491dd00d9e038438062066b8c342fedbbb3763abdee",
+      "bytes": 15671,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
+    },
+    {
+      "label": "baseline",
+      "case": "enemy-guide-edition-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/enemy-guide-edition-host.test.mjs",
+      "testSHA256": "20686c70d480ba7fc21250c659d0bb847935b099a3fd48d54cc9f5713f01c7d7",
+      "bytes": 10555,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
+    },
+    {
+      "label": "baseline",
+      "case": "enemy-guide-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/enemy-guide-host.test.mjs",
+      "testSHA256": "622881288325e128a692da208020d7d0a85a4faafd934d5dbd20772424cab0af",
+      "bytes": 46633,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
+    },
+    {
+      "label": "baseline",
+      "case": "external-chapter-app",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/external-chapter-app.test.mjs",
+      "testSHA256": "e8c7a49c85ae4aa526fa73a4eb29a16d3989dfe18d85d8147c46184d38a42538",
+      "bytes": 40785,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
+    },
+    {
+      "label": "baseline",
+      "case": "flight-pictures-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/flight-pictures-host.test.mjs",
+      "testSHA256": "73c1d1d8308e0ad3d90d9e1675ad2518b1f6aa85729b68c13cbc62f7f83cc3aa",
+      "bytes": 30173,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
+    },
+    {
+      "label": "baseline",
+      "case": "flight-preparation-status-host",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/flight-preparation-status-host.test.mjs",
+      "testSHA256": "402e754f7223301d787d59e5da809bac3ec92a5d0596e0474218aec2bd306463",
+      "bytes": 3366,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
+    },
+    {
+      "label": "baseline",
+      "case": "fracture-spatial-candidates",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/fracture-spatial-candidates.test.mjs",
+      "testSHA256": "984e786d08d29716232baa48eb67975e56d9fec89fa9f1aa24405839471a096d",
+      "bytes": 6149,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
+    },
+    {
+      "label": "baseline",
+      "case": "gentle-routes",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/gentle-routes.test.mjs",
+      "testSHA256": "69c6404642cc34979772e5f0784e5883298f2f0e872b82cbe82f7d3122b52dc9",
+      "bytes": 11087,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
+    },
+    {
+      "label": "baseline",
+      "case": "hud-numeric-values",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/hud-numeric-values.test.mjs",
+      "testSHA256": "2144b959a74c6e2be4cd6f2d561bca075e7eff71bc5421d69ec686e451c6ea53",
+      "bytes": 3305,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
+    },
+    {
+      "label": "baseline",
+      "case": "hud-status-cues",
+      "mode": "original",
+      "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "runtimeRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+      "file": "game/test/hud-status-cues.test.mjs",
+      "testSHA256": "ef84b1f5442402576d8c7fc40ee96c11c65faf0e94586062a8665795f82a1bca",
+      "bytes": 11073,
+      "role": "Missing exact original-main baseline classification of completed candidate failure"
     }
   ],
   "nodeVersion": "v22.22.2",
@@ -37,20 +621,42 @@
     "--test-reporter=tap",
     "selectedTestPath"
   ],
-  "diagnosticOverlay": "None. Exact canonical test bytes at the pinned revision, no observer or runtime injection.",
-  "scope": "Supplementary fixture correctness only, separate from179 missing inventory files. Complete failures remain failures, no full-suite pass or device claim.",
+  "diagnosticOverlay": "Only selected-object-identity entries create copies. Original source hash, exact original line text, helper insertion and final overlay hash are checked. No change to Object.is truth, evaluated arguments, assertions outside selected sites, production code, or deadlines.",
+  "scope": "Full canonical original-mode files may count toward inventory at their exact source after complete proof. Diagnostic copies never grant canonical coverage. Original failures, resource stops, and earlier source identities remain retained; no assertions or deadlines are changed.",
   "priorEvidence": {
-    "baselineRunId": 38888826217,
-    "candidateRunId": 38865274741,
-    "baselineSourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-    "candidateSourceRevision": "90f4d1a07ac032e3b57466e88c731e5f74ba1a69",
-    "baselineOutcome": "8pass/1unrelatedCouchfailure. Old candidate additionally saves11ticks then expects12 and its dependent reload cannot reach12.",
-    "rawComparisonPath": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/regression-audit/remote-cadence-baseline-38888826217/classification-1145.json",
-    "rawComparisonSHA256": "84a14fcfc8c5053094cc9b903ddac4a726dfb84829955aee63a7e47aec2e4929"
+    "candidateRunId": 38898131413,
+    "candidateWorkflowRevision": "b010df818d9c76e67afd071846e8454b07c262b6",
+    "candidateSourceRevision": "d56bc4c4e5168b95b191f8bd425c7f7ec875b85b",
+    "candidateRuntimeRevision": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+    "proofPath": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/retained-recovery-1223.json",
+    "proofSHA256": "797e5d34e1ac12793c2143da6edd779700fab6107fef13158659c2cfdfaa4f87",
+    "scope": "Four complete failing files; exact diagnostic comparisons pending baseline execution."
   },
-  "independentOngoingBaselineRun": {
-    "runId": 38888826217,
-    "workflowRevision": "96ecd57bb420a300d68e9358ceef8d8dcde1a746",
-    "scope": "Its46 exact-baseline targets continue independently; this manifest does not supersede those results."
+  "dispatchGroups": {
+    "correctedCanonical": 3,
+    "neverLaunchedCanonical": 6,
+    "pairedDiagnosticTargets": 10,
+    "exactBaselineTargets": 14,
+    "total": 33
+  },
+  "candidateAuthority": {
+    "sourceRevision": "aa88d829b5f0aa1d06ee93c5e05752fba8c0f544",
+    "artifactRuntimeSourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+    "lastRuntimeChangeRevision": "2990a7d013b3ba2657de2482f326a51209769b9c",
+    "scope": "Four test-only fixes after exact8c; this dispatch runs three and defers device-controls to avoid duplicate active observation."
+  },
+  "deferredActive": [
+    "game/test/couch-static-picture-host.test.mjs",
+    "game/test/device-controls-host.test.mjs",
+    "game/test/gallery-return-host.test.mjs"
+  ],
+  "removedFromNeverLaunchedByVerifiedCIFocusedProof": ["game/test/story-dialog.test.mjs"],
+  "coverageProof": {
+    "path": ".cache/solo-followup/regression-audit/ci-focused-8c727777-38901373460.json",
+    "sha256": "a61a17e7b892b0d77166cd9af1fe69fede48104f0a4d68cf4f8af8ff268c520c"
+  },
+  "newFailureProof": {
+    "path": ".cache/solo-followup/regression-audit/remote-recovery-38898131413/retained-recovery-1323.json",
+    "sha256": "bbf829b677f25b306d646d379695cd03b360c61c96311a5741102a808f1ba5e1"
   }
 }
