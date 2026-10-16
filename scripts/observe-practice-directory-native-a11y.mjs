@@ -24,7 +24,7 @@ export const A11Y_CASES = Object.freeze(
   ),
 );
 export const A11Y_POLICY = Object.freeze({
-  id: 'practice-directory-native-zoom-a11y.v1',
+  id: 'practice-directory-native-zoom-a11y.v2',
   caseMs: 90000,
   overallMs: 600000,
   actionMs: 10000,
@@ -162,23 +162,61 @@ export function readNativeFocusWitness(el) {
     documentWidth: doc.documentElement.scrollWidth,
   };
 }
+/** Approximate border-box geometry only, not complete painted-outline visibility.
+ * Native integer innerHeight can omit a fractional visual viewport remainder.
+ * Keep both raw measurements and the old decision; allow strictly less than half
+ * one device pixel beyond the measured visual edge, never half a CSS pixel. */
+export function nativeFocusGeometry(w, zoom) {
+  const v = w.viewport;
+  assert(Number.isInteger(v.width) && v.width > 0);
+  assert(Number.isInteger(v.height) && v.height > 0);
+  assert(Number.isFinite(v.visualWidth) && v.visualWidth > 0);
+  assert(Number.isFinite(v.visualHeight) && v.visualHeight > 0);
+  assert(Number.isFinite(v.dpr) && v.dpr >= 1);
+  assert.equal(v.visualScale, 1);
+  assert.equal(v.visualOffsetLeft, 0);
+  assert.equal(v.visualOffsetTop, 0);
+  assert(Math.abs(v.visualWidth - v.width) < 1);
+  assert(Math.abs(v.visualHeight - v.height) < 1);
+  assert(Math.abs(v.dpr - zoom.dpr) < 0.01);
+  const { x, y, width, height } = w.rect;
+  assert([x, y, width, height].every(Number.isFinite));
+  const rightOverflowCss = Math.max(0, x + width - v.visualWidth),
+    bottomOverflowCss = Math.max(0, y + height - v.visualHeight),
+    rightOverflowDevicePixels = rightOverflowCss * v.dpr,
+    bottomOverflowDevicePixels = bottomOverflowCss * v.dpr;
+  return {
+    policy: 'visual-viewport-half-device-pixel.v1',
+    allowanceCss: 0.5 / v.dpr,
+    rightOverflowCss,
+    bottomOverflowCss,
+    rightOverflowDevicePixels,
+    bottomOverflowDevicePixels,
+    legacyIntegerBoundsPassed:
+      x >= 0 &&
+      y >= 0 &&
+      width > 0 &&
+      height > 0 &&
+      x + width <= v.width + 0.5 &&
+      y + height <= v.height + 0.5,
+    toleranceUsed: rightOverflowCss > 0 || bottomOverflowCss > 0,
+    // Tiny inward guard makes an exact half-pixel fail despite IEEE rounding.
+    withinPrecision:
+      x >= 0 &&
+      y >= 0 &&
+      width > 0 &&
+      height > 0 &&
+      rightOverflowDevicePixels < 0.5 - 1e-9 &&
+      bottomOverflowDevicePixels < 0.5 - 1e-9,
+  };
+}
 export function assertNativeFocusWitness(w, zoom) {
   assert(
     w.active && w.focusVisible && w.visible && w.centerHit,
     'Focused control must be visible, active and unobscured.',
   );
   assert(w.text, 'Focused control needs visible/accessible text witness.');
-  const { x, y, width, height } = w.rect;
-  assert([x, y, width, height].every(Number.isFinite));
-  assert(
-    x >= 0 &&
-      y >= 0 &&
-      width > 0 &&
-      height > 0 &&
-      x + width <= w.viewport.width + 0.5 &&
-      y + height <= w.viewport.height + 0.5,
-    'Focused control is clipped.',
-  );
+  assert(nativeFocusGeometry(w, zoom).withinPrecision, 'Focused control is clipped.');
   assert(
     parseFloat(w.outline.width) > 0 &&
       !['none', 'hidden'].includes(w.outline.style) &&
@@ -209,6 +247,7 @@ export async function keyboardReach(page, target, run, receipt, zoom) {
       const entry = { tabs: i + 1, ...witness, passed: false };
       receipt.push(entry);
       try {
+        entry.geometry = nativeFocusGeometry(witness, zoom);
         assertNativeFocusWitness(witness, zoom);
         entry.passed = true;
       } catch (error) {
@@ -547,6 +586,14 @@ export async function runNativeA11yCase({
     await run('Main return Home', () =>
       launcher.locator('#shell-home[open]').waitFor({ state: 'visible', timeout: 10000 }),
     );
+    result.mainReturnLocale = await run('Read actual main return language', () =>
+      launcher.locator('html').getAttribute('lang'),
+    );
+    assert.equal(
+      result.mainReturnLocale,
+      spec.locale,
+      'Main return must retain requested language.',
+    );
     await run('Close owned details tab', () => launcher.close());
     launcher = null;
     await run('Return to original directory', () => page.bringToFront());
@@ -572,6 +619,7 @@ export async function runNativeA11yCase({
     result.escapeFocusWitness = await run('Read visible restored opener focus', () =>
       page.locator('#shell-home-practice').evaluate(readNativeFocusWitness),
     );
+    result.escapeFocusGeometry = nativeFocusGeometry(result.escapeFocusWitness, zoom);
     assertNativeFocusWitness(result.escapeFocusWitness, zoom);
     result.guideAndReturn = true;
     result.passed = result.errors.length === 0;
@@ -610,6 +658,7 @@ export async function observeNativeDirectoryA11y({
     zoomActions: [],
     limitations: [
       'Computed outlines, hit testing and media styles do not establish human readability, contrast quality or spoken screen-reader announcements.',
+      'Border-box edge measurements use the fractional visual viewport with strictly less than half a device pixel tolerance; residuals and legacy decisions are retained. This is not literal zero clipping or complete painted-outline visibility.',
       'Keyboard Tab only; no human, physical controller, touch, VoiceOver or OS preference/device qualification.',
       'Native zoom screenshots can be cropped by the browser; locator images and page corroboration require independent visual review.',
       'Full committed source shell plus admitted package overlay only, never a production build fallback. Play destinations are inspected but no flight is started.',
