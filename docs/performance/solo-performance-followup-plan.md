@@ -55,3 +55,13 @@ The old runtime completed thirty minutes of legal opening-border movement: 108,0
 | F    | iPhone 17 Pro Safari and Steam Deck OLED are the target devices. Exact OS/browser and selected Deck cadence are still unconfirmed; physical execution remains unavailable here. Narrow desktop WebKit/DPR stress is explicitly supplementary.                                                                  |
 
 All raw follow-up attempts, including failed fixture runs, failed audio downloads and the intentionally interrupted observer smoke, are retained under `.cache/solo-followup/` for the final evidence archive. These checkpoint results are not an aggregate release pass.
+
+### Subsequent audit and packaging checkpoint
+
+The current runtime freeze is `21c36651d4ae9990ad4aa839a9ba1735897fcf62`. Two foreground-admission defects found after `a406a1a8` are repaired: a terminal frame cannot override suspended preparation before the focus guard, and visible-but-unfocused restoration cannot reopen admission. All four tests in the admission host file pass, including real wins and unchanged checkpoints. The earlier candidate packaging attempts were stopped and recorded; neither is presented as a verified runnable artifact.
+
+The exact original-main build is complete and independently verified: 3,493 payload files, 1,072,067,283 payload bytes, all 3,494 ZIP members and exact production CSP. Its ZIP SHA-256 is `1e9bb6ad49ced329fecd66f9976c024dad2949bdf4b008f376ee50d6bbf36290`, and manifest SHA-256 is `2a19dfb7227e5d528fe4f072d1eef9e753ac987396a8f5b8248247483814e8a8`. The archive and metadata were copied to the artifact volume, read back and verified before removing only the redundant local ZIP. The expanded local baseline remains available for native comparison.
+
+The first baseline native pilot exposed a harness deadlock: packaged missions defer required picture preparation until public Start. Cadence measurement now distinguishes a stable, foreground, boot-ready title window with an enabled public launch from asset readiness. It labels deferred preparation explicitly and retains the original variance/spread checks. No loaded-gameplay recalibration or extra warming run is used. The warm-reload recipe warms document/runtime HTTP resources; it does not claim that the original artwork was already cached.
+
+The corrected pilot completed all eight public actions through a real victory and replay export, without page errors. Its strict offline replay check failed the enemy checkpoint identically under original-main and current Node verifiers; the recording is unchanged and the overall scenario remains failed pending same-engine diagnosis. These pilots ran under concurrent test load and are excluded from performance qualification.

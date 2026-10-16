@@ -2,13 +2,15 @@
 
 Base: `b11745223861c3973ad4bf440cc536198b8e0371` (`origin/main`, freshly fetched before implementation). This immutable hash identifies the baseline even if another checkout subsequently updates the shared remote-tracking ref.
 Implementation branch: `codex/solo-performance`, in a separate checkout. The existing FPV branch and its unfinished edits were not rebased or edited. The implementation checkout is `/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test`.
-Current runtime revision: `a406a1a80d63a97ed368d20486c24e9d0d3b88c7`. Historical artifact and timing sections below refer to `1c505dcd038ed908c9f0ede696143d4f6d59251e` unless explicitly stated. Subsequent test, tooling and documentation commits do not change the runtime.
+Current runtime revision: `21c36651d4ae9990ad4aa839a9ba1735897fcf62`. Historical artifact and timing sections below refer to `1c505dcd038ed908c9f0ede696143d4f6d59251e` unless explicitly stated. Subsequent test, tooling and documentation commits do not change the runtime.
 
 The branch implements the timing, preparation, rendering and recovery changes from phases 0–4. Measurement limits and incomplete qualification are listed below; this report does not label the candidate release-qualified.
 
 The [2026-10-16 follow-up plan](solo-performance-followup-plan.md) records the subsequent research, regression closure and remaining execution gates. The historical observations below retain their original runtime identities; later corrections do not turn earlier runs into final-candidate qualification.
 
 The follow-up fixed an immediate Retry/Next regression found during reward verification: structural run identity/status transitions now notify the interface immediately, while ordinary polling stays at 10 Hz. The complete reward regression group passes 8/8; the Solo performance host file passes 6/6, including changing 30/40/45/60/90/120/144 Hz schedules and twenty earned retries; the isolated release CLI group passes 43/43. Full lint and content/localization/generated-output validation pass. A complete 1,948-file test inventory and corrected production artifact qualification are in progress. These counts describe separate test groups, not a green full-suite aggregate.
+
+A subsequent foreground-admission audit fixed two related paths: terminal frames could reopen suspended media preparation before the focus guard, and a visibility restoration could admit work while the window still lacked focus. Both now preserve suspension until foreground ownership returns. The complete admission host file passes 4/4, including real keyboard wins, hidden/unfocused terminal frames, visible-but-unfocused restoration and unchanged authoritative checkpoints. The candidate is rebuilt at `21c36651d`; the earlier `a406a1a8` packaging attempts were interrupted and retained, not qualified.
 
 ## Implemented changes
 
