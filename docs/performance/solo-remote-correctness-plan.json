@@ -1,0 +1,148 @@
+{
+  "format": "SoloHostedCorrectnessPlan.v1",
+  "cohort": "linux-correctness-2ec-v1",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rows": [
+    {
+      "id": "candidate-worker-chromium",
+      "kind": "worker",
+      "engine": "chromium",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-worker-webkit",
+      "kind": "worker",
+      "engine": "webkit",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-paused-chromium",
+      "kind": "paused",
+      "engine": "chromium",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-paused-webkit",
+      "kind": "paused",
+      "engine": "webkit",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "baseline-first30-chromium",
+      "kind": "first30",
+      "engine": "chromium",
+      "source": "baseline",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-first30-chromium",
+      "kind": "first30",
+      "engine": "chromium",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "baseline-first30-webkit",
+      "kind": "first30",
+      "engine": "webkit",
+      "source": "baseline",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-first30-webkit",
+      "kind": "first30",
+      "engine": "webkit",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    }
+  ],
+  "fixture": {
+    "path": "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+    "bytes": 6387,
+    "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5",
+    "authority": "Exact byte copy of qualification-first30-prospective-03/cold-first30.qualification.json; independent test recipe, not production identity."
+  },
+  "candidate": {
+    "revision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
+    "tree": "c4d176a8d5af6dfc0becc70e2a5a42a40ce5a367",
+    "run": 38963874667,
+    "artifact": 12074887637,
+    "outer": {
+      "bytes": 1090917792,
+      "sha256": "22a0d121c0afe086392aaaec392af3d15c544b920c36d96422c84043259aa33f"
+    },
+    "inner": {
+      "bytes": 1073304249,
+      "sha256": "7049aedea080d135bb83101861cf30e7ca350333a2e0bd8cf75b02003fb012e9"
+    },
+    "manifestSHA256": "64d8a4bc84d2869c87856935a6d65ca2897c693c8bc46908c1a90110e5e9422c",
+    "producer": "Exact retained Appearance CI package, Node22.13.1 Linux; 819/819 focused checks across65completefiles. No substitute rebuild."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "producer": "Fresh exact-source normal Linux build under Node22.13.1, original source flags/budgets. New archive/manifest identity; not the historical macOS baseline artifact.",
+    "historicalArtifactInvestigation": {
+      "mainRun": 38817575550,
+      "pagesArtifact": 12011437947,
+      "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
+      "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
+    }
+  },
+  "acceptance": {
+    "core": "Unchanged worker/paused report passes with exit0, exact source/CSP proof and clean owned closure.",
+    "first30": "Unchanged scenario pass and strict same-engine/version artifact replay pass, exact recipe/source and clean closure. Raw numerical performance status/exit2 retained separately; this cohort provides no timing pass.",
+    "failures": "No retries. Retain failed, partial, setup-failed and not-run rows. Continue to next declared row only after clean owned closure; forced cleanup makes that row fail. Ambiguous/surviving processes stop the cohort.",
+    "scope": "Linux Chromium/WebKit correctness only. Persistent WebKit observation uses the existing owner; replay uses unchanged ephemeral verifier. No macOS/Safari/iPhone/SteamDeck, GPU, thermal, installed-PWA, authentication or sustained-performance claim.",
+    "access": "Existing localhost access fixture only: server fixture for first30; unchanged route fixture for core. Original artifact HTML and CSP bytes remain independently verified.",
+    "unchangedGates": "No mutation to scenario actions, replay requirements, source build budgets, observed phase counters, numerical thresholds or240s row deadlines. CPU1; no calibration or performance inference.",
+    "setupOrdering": "Candidate archive/source verification precedes the first four core rows. Only then build/verify normal b117. A baseline setup failure is retained and later first30 rows remain not-run; no build-budget increase or publication-profile substitution."
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "300s artifact transfer;600s each outer/inner verification and baseline build;480s each source proof;75min helper inside120min job with fixed setup/upload margin. No artifact/profile upload; only bounded evidence.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824
+  },
+  "guidance": [
+    {
+      "url": "https://playwright.dev/docs/ci",
+      "application": "One serial worker and helper deadline below job deadline so partial reports can upload. Version1.62.1 is explicitly pinned instead of following current documentation examples."
+    },
+    {
+      "url": "https://playwright.dev/docs/browsers",
+      "application": "Record exact pinned browser builds; Linux WebKit is a separate platform stratum, not Safari/iOS."
+    },
+    {
+      "url": "https://developer.chrome.com/blog/devtools-grounded-real-world",
+      "application": "CPU stress does not reproduce device GPU, memory or thermal conditions; this CPU1 correctness cohort is not physical-device qualification."
+    }
+  ]
+}
