@@ -191,6 +191,26 @@ export function validateQualification(scenario) {
       );
       integer(value, 1, 1000000, 'replay feature minimum');
     }
+  if (scenario.replayIdentity !== undefined) {
+    assert.equal(scenario.replayIdentity, 'exact-public-bytes-pair');
+    const exports = scenario.actions
+      .map((action, index) => (action.type === 'exportReplay' ? index : -1))
+      .filter((index) => index >= 0);
+    const reloads = scenario.actions
+      .map((action, index) => (action.type === 'reload' ? index : -1))
+      .filter((index) => index >= 0);
+    assert.equal(exports.length, 2, 'Identity requires exactly two top-level public exports');
+    assert.equal(reloads.length, 1, 'Identity requires exactly one public reload');
+    assert(
+      exports[0] < reloads[0] && reloads[0] < exports[1],
+      'Reload must separate public exports',
+    );
+    assert.equal(
+      exports[1],
+      scenario.actions.length - 1,
+      'Restored export must finish the scenario',
+    );
+  }
   let expanded = 0;
   function actions(list, multiplier = 1, depth = 0) {
     assert(Array.isArray(list) && list.length > 0 && depth < 5, 'Invalid action list');
@@ -244,6 +264,8 @@ export function validateQualification(scenario) {
         if (action.attribute !== undefined) string(action.attribute, 'attribute');
         if (action.value !== undefined) assert(['string', 'boolean'].includes(typeof action.value));
       }
+      if (scenario.replayIdentity && ['exportReplay', 'reload'].includes(action.type))
+        assert.equal(depth, 0, 'Identity export/reload cannot repeat');
       if (action.type === 'snapshot') string(action.group, 'snapshot group');
       if (action.type === 'resize') {
         integer(action.width, 240, 3840, 'viewport width');
