@@ -29,38 +29,11 @@ jobs:
       matrix:
         include:
           - label: candidate
-            case: shared-settings-reading
-            source: d12fcb94535fdb87619da18d63df7e76ee178610
-          - label: candidate
-            case: storage-retention-host
-            source: d12fcb94535fdb87619da18d63df7e76ee178610
-          - label: candidate
-            case: optional-chapters-navigation-host
-            source: d12fcb94535fdb87619da18d63df7e76ee178610
-          - label: candidate
-            case: settings-panels-locale-host
-            source: d12fcb94535fdb87619da18d63df7e76ee178610
-          - label: candidate
-            case: settings-restoration-host
-            source: d12fcb94535fdb87619da18d63df7e76ee178610
+            case: couch-static-picture-host-finite-owner
+            source: 6b9dadba4fab8717681f320e0495e1dd63e6d1b5
           - label: baseline
-            case: viewport-startup-host
+            case: couch-static-picture-host-finite-owner
             source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: visual-theme-lease
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: whole-timed-host
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: workshop-art-integration
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: baseline
-            case: couch-encounter-case5-stages
-            source: b11745223861c3973ad4bf440cc536198b8e0371
-          - label: candidate
-            case: couch-encounter-case5-stages
-            source: d56bc4c4e5168b95b191f8bd425c7f7ec875b85b
     env:
       CI: '1'
       SOLO_LABEL: ${{ matrix.label }}
