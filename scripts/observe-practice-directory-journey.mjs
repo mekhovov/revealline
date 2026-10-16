@@ -39,6 +39,15 @@ export const DIRECTORY_JOURNEY_PROTOCOL = Object.freeze({
   actionMs: 10_000,
   viewport: Object.freeze({ width: 1440, height: 900 }),
 });
+export const DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL = Object.freeze({
+  ...DIRECTORY_JOURNEY_PROTOCOL,
+  id: 'practice-directory-personal-appearance.v1',
+});
+export function directoryJourneyProtocol(plan) {
+  if (plan.protocol === DIRECTORY_JOURNEY_PROTOCOL.id) return DIRECTORY_JOURNEY_PROTOCOL;
+  assert.equal(plan.protocol, DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id);
+  return DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL;
+}
 const SHELLS = Object.freeze({
   'civilian-flight': 'gym-shell',
   'civilian-fpv': 'academy-shell',
@@ -90,8 +99,13 @@ export function validateDirectoryJourneyPlan(input) {
   ];
   assert(plan && !Array.isArray(plan) && typeof plan === 'object');
   assert.deepEqual(Object.keys(plan).sort(), fields.sort(), 'Unexpected directory plan fields.');
-  assert.equal(plan.format, 'revealline-practice-directory-journey-plan.v1');
-  assert.equal(plan.protocol, DIRECTORY_JOURNEY_PROTOCOL.id);
+  const personal = directoryJourneyProtocol(plan) === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL;
+  assert.equal(
+    plan.format,
+    personal
+      ? 'revealline-practice-directory-personal-appearance-plan.v1'
+      : 'revealline-practice-directory-journey-plan.v1',
+  );
   assert.match(plan.caseId, /^[a-z0-9-]{1,64}$/);
   for (const key of ['shellRevision', 'shellTree']) assert.match(plan[key], /^[a-f0-9]{40}$/);
   for (const [key, max] of [
@@ -317,9 +331,70 @@ export async function openDirectoryPopup(page, link) {
 export function assertDirectoryPageCount(context, expected) {
   assert.equal(context.pages().length, expected, 'Unexpected extra or missing browser tab.');
 }
-export async function openMainGamePractice(page, activate) {
+export function validatePersonalAppearanceWitness(witness) {
+  assert.equal(witness.family, 'tryzub');
+  assert.equal(witness.interface, 'tryzub');
+  for (const key of ['appearance', 'sim'])
+    assert(
+      typeof witness[key] === 'string' && witness[key].length <= 1024,
+      'Missing or oversized appearance preference witness.',
+    );
+  assert.deepEqual(JSON.parse(witness.appearance), {
+    familyId: 'tryzub',
+    arcadeArt: 'follow-game',
+    highContrast: false,
+    opaqueHud: false,
+    ornaments: 'theme',
+  });
+  assert.deepEqual(JSON.parse(witness.sim), {
+    format: 'SimAppearancePreferences.v1',
+    interface: 'follow-game',
+    world: 'follow-game',
+  });
+  return witness;
+}
+export async function observePersonalAppearance(page) {
+  await page
+    .locator('html[data-theme-family="tryzub"][data-interface-theme="tryzub"]')
+    .waitFor({ state: 'visible' });
+  // Read only the two public preference records. No storage mutation or runtime API calls.
+  return validatePersonalAppearanceWitness(
+    await page.evaluate(() => {
+      const read = (key) => {
+        const value = localStorage.getItem(key);
+        if (value !== null && value.length > 1024)
+          throw new Error('Oversized appearance preference.');
+        return value;
+      };
+      return {
+        family: globalThis.document.documentElement.dataset.themeFamily,
+        interface: globalThis.document.documentElement.dataset.interfaceTheme,
+        appearance: read('revealline.appearance.v2'),
+        sim: read('revealline.fpv.appearance.v1'),
+      };
+    }),
+  );
+}
+export function assertPersonalAppearanceURL(href) {
+  const url = new URL(href);
+  for (const key of ['appearanceFamily', 'appearanceRevision'])
+    assert.equal(
+      url.searchParams.has(key),
+      false,
+      'Personal preferences must not invent an edition appearance URL pin.',
+    );
+}
+export async function openMainGamePractice(page, activate, onPersonalAppearance = null) {
   await activate(page, '#shell-options');
   await page.locator('#settings-dialog[open]').waitFor({ state: 'visible' });
+  if (onPersonalAppearance) {
+    await activate(page, '#settings-tab-display');
+    await page.locator('#settings-panel-display').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#theme-card-tryzub').getAttribute('aria-pressed'), 'false');
+    await activate(page, '#theme-card-tryzub');
+    assert.equal(await page.locator('#theme-card-tryzub').getAttribute('aria-pressed'), 'true');
+    await onPersonalAppearance();
+  }
   await activate(page, '#settings-tab-extras');
   await activate(page, '#shell-home-practice');
 }
@@ -369,7 +444,17 @@ async function runJourney(page, spec, fixture, report, output, password) {
     result.unlocked = true;
     await page.locator('#shell-home[open]').waitFor({ state: 'visible' });
     assert.equal(await page.locator('html').getAttribute('lang'), spec.locale);
-    await openMainGamePractice(page, click);
+    const personal = report.protocol.id === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id;
+    await openMainGamePractice(
+      page,
+      click,
+      personal
+        ? async () => {
+            result.personalAppearance = { main: await observePersonalAppearance(page) };
+            await screenshot(page, spec.id + '-main-appearance.png');
+          }
+        : null,
+    );
     const dialog = page.locator('#optional-practice-dialog[open]');
     await dialog.waitFor({ state: 'visible' });
     const rows = dialog.locator('.optional-practice-packages > li');
@@ -435,6 +520,7 @@ async function runJourney(page, spec, fixture, report, output, password) {
       locale: spec.locale,
       play: true,
     });
+    if (personal) assertPersonalAppearanceURL(result.playLink.href);
     const app = await openDirectoryPopup(page, play);
     observe(app);
     result.playActions = 1;
@@ -463,6 +549,13 @@ async function runJourney(page, spec, fixture, report, output, password) {
         new URL(app.url()).searchParams.get(key),
         new URL(result.playLink.href).searchParams.get(key),
       );
+    if (personal) {
+      assertPersonalAppearanceURL(app.url());
+      result.personalAppearance.app = await observePersonalAppearance(app);
+      assert.deepEqual(result.personalAppearance.app, result.personalAppearance.main);
+      result.personalAppearance.scope =
+        'Personal preference transfer; no edition URL-pin qualification.';
+    }
     await screenshot(app, spec.id + '-app-home.png');
     await app.close();
     assertDirectoryPageCount(page.context(), 1);
@@ -529,9 +622,12 @@ export async function observePracticeDirectoryJourney({
   await mkdir(output);
   const scrub = (s) => (password ? String(s).split(password).join('[REDACTED]') : String(s));
   const report = {
-    format: 'PracticeDirectoryJourneyObservation.v1',
+    format:
+      plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id
+        ? 'PracticeDirectoryPersonalAppearanceObservation.v1'
+        : 'PracticeDirectoryJourneyObservation.v1',
     plan,
-    protocol: DIRECTORY_JOURNEY_PROTOCOL,
+    protocol: directoryJourneyProtocol(plan),
     createdAt: new Date().toISOString(),
     completed: false,
     qualified: false,
@@ -545,7 +641,9 @@ export async function observePracticeDirectoryJourney({
       'Missing documentation producer inputs still block full build collection. No build, hosting or release-review guard is weakened.',
       'Locally admitted practice package bytes with an explicit unpublished catalogue/current.json fixture; not a reviewed selector or public release.',
       'Six EN/UK one-Play start-screen and guide/navigation journeys only; no arming, exercise, installation, human learning or physical accessibility qualification.',
-      'Default validated appearance handoff only, not all appearance themes or physical inputs.',
+      plan.protocol === DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id
+        ? 'Fixed Tryzub personal preference transfer through visible Settings only. Null edition URL pins are expected; positive compiled-edition URL-pair qualification remains open. No all-theme or rendered-world qualification.'
+        : 'Default validated appearance handoff only, not all appearance themes or physical inputs.',
     ],
   };
   let server, browser;

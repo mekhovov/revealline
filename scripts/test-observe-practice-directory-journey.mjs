@@ -13,6 +13,11 @@ import {
   openDirectoryPopup,
   assertDirectoryPageCount,
   openMainGamePractice,
+  DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL,
+  directoryJourneyProtocol,
+  validatePersonalAppearanceWitness,
+  observePersonalAppearance,
+  assertPersonalAppearanceURL,
 } from './observe-practice-directory-journey.mjs';
 
 test('popup click and late waiter failures stay owned without unhandled rejection', async () => {
@@ -86,6 +91,149 @@ test('one-action browser journey rejects extra or missing tabs', () => {
   assertDirectoryPageCount({ pages: () => [{}, {}] }, 2);
   assert.throws(() => assertDirectoryPageCount({ pages: () => [{}, {}, {}] }, 2));
   assert.throws(() => assertDirectoryPageCount({ pages: () => [{}] }, 2));
+});
+
+const appearanceWitness = () => ({
+  family: 'tryzub',
+  interface: 'tryzub',
+  appearance: JSON.stringify({
+    familyId: 'tryzub',
+    arcadeArt: 'follow-game',
+    highContrast: false,
+    opaqueHud: false,
+    ornaments: 'theme',
+  }),
+  sim: JSON.stringify({
+    format: 'SimAppearancePreferences.v1',
+    interface: 'follow-game',
+    world: 'follow-game',
+  }),
+});
+test('personal appearance protocol is fixed, separately named, bounded and backward compatible', () => {
+  const personal = {
+    ...plan(),
+    protocol: DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.id,
+    format: 'revealline-practice-directory-personal-appearance-plan.v1',
+  };
+  assert.deepEqual(validateDirectoryJourneyPlan(personal), personal);
+  assert.equal(directoryJourneyProtocol(personal), DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL);
+  assert.equal(directoryJourneyProtocol(plan()), DIRECTORY_JOURNEY_PROTOCOL);
+  assert.equal(DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.caseMs, 90000);
+  assert.equal(DIRECTORY_PERSONAL_APPEARANCE_PROTOCOL.overallMs, 600000);
+  assert.deepEqual(personal.cases, plan().cases);
+  for (const patch of [
+    { format: plan().format },
+    { protocol: 'unknown' },
+    { theme: 'dos' },
+    { script: 'custom' },
+    { cases: personal.cases.slice(0, 1) },
+  ])
+    assert.throws(() => validateDirectoryJourneyPlan({ ...personal, ...patch }));
+  assert.throws(() => validateDirectoryJourneyPlan({ ...plan(), format: personal.format }));
+});
+test('personal appearance witnesses reject defaults, missing storage, overrides and oversized records', () => {
+  assert.deepEqual(validatePersonalAppearanceWitness(appearanceWitness()), appearanceWitness());
+  for (const patch of [
+    { family: 'legacy' },
+    { interface: 'dos' },
+    { appearance: null },
+    { sim: null },
+    { appearance: 'x'.repeat(1025) },
+    { sim: '{}' },
+    { appearance: appearanceWitness().appearance.replace('tryzub', 'follow-game') },
+    { sim: appearanceWitness().sim.replace('follow-game', 'dos') },
+  ])
+    assert.throws(() => validatePersonalAppearanceWitness({ ...appearanceWitness(), ...patch }));
+  assertPersonalAppearanceURL('https://example.test/app?lang=uk&action=play');
+  for (const suffix of [
+    'appearanceFamily=tryzub',
+    'appearanceRevision=r1',
+    'appearanceFamily=tryzub&appearanceRevision=r1',
+    'appearanceFamily=',
+  ])
+    assert.throws(() => assertPersonalAppearanceURL('https://example.test/app?' + suffix));
+});
+test('personal appearance uses ordinary Settings selection before Extras in both locales', async () => {
+  for (const locale of ['en', 'uk']) {
+    const actions = [];
+    let chosen = false;
+    const page = {
+      locale,
+      locator: (selector) => ({
+        waitFor: async ({ state }) => {
+          assert.equal(state, 'visible');
+          assert(['#settings-dialog[open]', '#settings-panel-display'].includes(selector));
+        },
+        getAttribute: async (key) => {
+          assert.equal(selector, '#theme-card-tryzub');
+          assert.equal(key, 'aria-pressed');
+          return String(chosen);
+        },
+      }),
+    };
+    await openMainGamePractice(
+      page,
+      async (owner, selector) => {
+        assert.equal(owner, page);
+        actions.push(selector);
+        if (selector === '#theme-card-tryzub') chosen = true;
+      },
+      async () => {
+        assert(chosen);
+        actions.push('appearance witness');
+      },
+    );
+    assert.deepEqual(actions, [
+      '#shell-options',
+      '#settings-tab-display',
+      '#theme-card-tryzub',
+      'appearance witness',
+      '#settings-tab-extras',
+      '#shell-home-practice',
+    ]);
+  }
+});
+test('appearance observer waits for actual DOM resolution and reads only two bounded preference records', async () => {
+  const expected = appearanceWitness(),
+    reads = [];
+  const previous = { document: globalThis.document, localStorage: globalThis.localStorage };
+  try {
+    globalThis.document = {
+      documentElement: { dataset: { themeFamily: 'tryzub', interfaceTheme: 'tryzub' } },
+    };
+    globalThis.localStorage = {
+      getItem(key) {
+        reads.push(key);
+        if (key === 'revealline.appearance.v2') return expected.appearance;
+        assert.equal(key, 'revealline.fpv.appearance.v1');
+        return expected.sim;
+      },
+    };
+    let waited = false;
+    const page = {
+      locator: (selector) => {
+        assert.equal(selector, 'html[data-theme-family="tryzub"][data-interface-theme="tryzub"]');
+        return {
+          waitFor: async () => {
+            waited = true;
+          },
+        };
+      },
+      evaluate: async (read) => {
+        assert(waited);
+        return read();
+      },
+    };
+    assert.deepEqual(await observePersonalAppearance(page), expected);
+    assert.deepEqual(reads, ['revealline.appearance.v2', 'revealline.fpv.appearance.v1']);
+    globalThis.localStorage.getItem = () => 'x'.repeat(1025);
+    await assert.rejects(observePersonalAppearance(page), /Oversized/);
+  } finally {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete globalThis[key];
+      else globalThis[key] = value;
+    }
+  }
 });
 
 test('directory protocol requires exact six-case EN/UK matrix and two independent source bindings', () => {
