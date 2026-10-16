@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const CONFIG = __XONIX_OFFLINE_CONFIG__;
-  const MAX_BYTES = 64 * 1024 * 1024;
+  const MAX_BYTES = 80 * 1024 * 1024;
   const DOWNLOAD_CONCURRENCY = 4;
   if (!Array.isArray(CONFIG.files) || CONFIG.files.length > 2000)
     throw new Error('Offline inventory exceeds its file budget');
@@ -55,6 +55,30 @@
     return new Response(blob.slice(start, end + 1), { status: 206, headers });
   }
   const PROTOCOL = 'revealline.offline-progress.v1';
+  function authorizedSource(event) {
+    if (!event.source?.url) return false;
+    let source;
+    try {
+      source = new URL(event.source.url);
+    } catch {
+      return false;
+    }
+    if (sameScope(source)) return true;
+    // The stable launcher prepares immutable editions from outside their game
+    // scope. This single document must name the exact worker/build explicitly;
+    // older same-scope callers retain their existing message compatibility.
+    const release = scope.pathname.indexOf('/releases/');
+    const root = release >= 0 ? scope.pathname.slice(0, release + 1) : scope.pathname;
+    return (
+      source.origin === scope.origin &&
+      !source.username &&
+      !source.password &&
+      source.pathname === `${root}app/update.html` &&
+      event.data?.protocol === PROTOCOL &&
+      event.data.scope === scope.href &&
+      event.data.buildId === CONFIG.buildId
+    );
+  }
   const subscribers = new Set();
   const MAX_SUBSCRIBERS = 64;
   const SUBSCRIBER_LIFETIME = 5 * 60 * 1000;
@@ -401,16 +425,26 @@
     if (optional) {
       event.respondWith(
         (async () => {
-          const cache = await caches.open('revealline-official-content-v1');
-          const hit = await cache.match(officialKey(optional.sha256));
-          if (
-            hit &&
-            hit.status === 200 &&
-            Number(hit.headers.get('Content-Length')) === optional.bytes
-          )
-            return requestedRange(hit, event.request);
-          // Ordinary online play can still fetch an unselected chapter or picture.
-          // A miss never downloads an album or marks this group ready.
+          // The downloader has already found a missing or corrupt file. Serving
+          // a same-sized damaged cache entry again would make repair impossible.
+          // Only its explicit request bypasses local bytes; verification and
+          // the durable replacement remain the downloader's responsibility.
+          if (CONFIG.packageConsent && event.request.cache === 'no-store')
+            return fetch(event.request);
+          // Prepared bytes are an optimization, never permission to play.
+          // A normal request may load online without saving an offline package.
+          try {
+            const cache = await caches.open('revealline-official-content-v1');
+            const hit = await cache.match(officialKey(optional.sha256));
+            if (
+              hit &&
+              hit.status === 200 &&
+              Number(hit.headers.get('Content-Length')) === optional.bytes
+            )
+              return requestedRange(hit, event.request);
+          } catch {
+            // Private browsing or unavailable storage must not prevent online play.
+          }
           return fetch(event.request);
         })(),
       );
@@ -420,16 +454,21 @@
     if (!file) return;
     event.respondWith(
       (async () => {
-        const cache = await caches.open(cacheName),
-          hit = await cache.match(url.href);
-        if (hit) return requestedRange(hit, event.request);
+        let cache;
+        try {
+          cache = await caches.open(cacheName);
+          const hit = await cache.match(url.href);
+          if (hit) return requestedRange(hit, event.request);
+        } catch {
+          // The network remains usable when local storage is denied.
+        }
         try {
           const owned = await downloadVerified(url.href, file);
-          await cache.put(url.href, ownedResponse(owned));
+          await cache?.put(url.href, ownedResponse(owned)).catch(() => {});
           return requestedRange(ownedResponse(owned), event.request);
         } catch {
           return new Response(
-            'This offline file is unavailable. Reconnect and prepare this game version again.',
+            'This file is unavailable. Reconnect to play, or choose a chapter already downloaded for offline play.',
             { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } },
           );
         }
@@ -438,11 +477,7 @@
   });
   self.addEventListener('message', (event) => {
     if (event.data?.type === 'revealline.offline-pause') {
-      if (
-        event.data.buildId === CONFIG.buildId &&
-        event.source?.url &&
-        sameScope(new URL(event.source.url))
-      )
+      if (event.data.buildId === CONFIG.buildId && authorizedSource(event))
         durableController?.abort();
       return;
     }
@@ -451,7 +486,7 @@
       !event.ports?.[0]
     )
       return;
-    if (!event.source?.url || !sameScope(new URL(event.source.url))) return;
+    if (!authorizedSource(event)) return;
     const port = event.ports[0],
       request = event.data,
       streaming = request.protocol === PROTOCOL;

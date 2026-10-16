@@ -1,0 +1,599 @@
+{
+  "format": "revealline-historical-source-recovery.v1",
+  "sourcePullRequest": 757,
+  "sourceCommit": "541d7fcde298ccddffe3f683698bf890212db766",
+  "acceptedMain": "f46ab6124a830bb60c9a267e99d93c901b148333",
+  "classification": "historical-only; not current test or product acceptance",
+  "originalFiles": 84,
+  "originalBytes": 1228648,
+  "originals": [
+    {
+      "originalPath": "docs/player-first-team-more-navigation.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/player-first-team-more-navigation.md",
+      "blob": "8db571dd845eb9a19089e040308d06176c7e271b",
+      "bytes": 6460,
+      "sha256": "26af00215b3b29ca00056430d29eea38929b9d8bfdb9ab42bbbb5af3a59de0ea"
+    },
+    {
+      "originalPath": "docs/team-cue-overflow.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/team-cue-overflow.md",
+      "blob": "72bbc2ad48df81a6a827e193337eeefd6adbc9d0",
+      "bytes": 3272,
+      "sha256": "e9bbfc7efea01c81e1344cf26eaa984bb51ead52efe86af6f16a3d5cdb0da8a5"
+    },
+    {
+      "originalPath": "docs/verification/team-bonus-slow-cue-20260929/README.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-bonus-slow-cue-20260929/README.md",
+      "blob": "7d2af31a671b41bbadead23e25fb76d9e2bd8b34",
+      "bytes": 3424,
+      "sha256": "036db161f9e90c8e581512d3c82fcdbd7c6a406dc0534e244d5ea59fa5d91100"
+    },
+    {
+      "originalPath": "docs/verification/team-bonus-slow-cue-20260929/baseline-red.tap.gz",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-bonus-slow-cue-20260929/baseline-red.tap.gz",
+      "blob": "07445cfb160a7cb23fe6a0f82cf5f36daa8ee174",
+      "bytes": 917,
+      "sha256": "e4e98c9f9197ada7a771610febc6862028883a55c9d2cfaf6bde8ee43bced589"
+    },
+    {
+      "originalPath": "docs/verification/team-bonus-slow-cue-20260929/focused.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-bonus-slow-cue-20260929/focused.tap",
+      "blob": "7087ae6850b7ff9a41dd1d3892a30c2f1bd28b92",
+      "bytes": 17216,
+      "sha256": "fa8924417db31a1ed9133512ec35675235aef5efe2c0cca20cfd21234bd82102"
+    },
+    {
+      "originalPath": "docs/verification/team-bonus-slow-cue-20260929/manifest.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-bonus-slow-cue-20260929/manifest.json",
+      "blob": "810f4ed04e56a62332f7638df99e4c2c6f845cc3",
+      "bytes": 1848,
+      "sha256": "663ac0681e088ffb5d77d998fb08a09aafd43d00869e34f03425d55b9f4bea66"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/README.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/README.md",
+      "blob": "e5a183128fd714f7d280df32b6e71d1eac37929e",
+      "bytes": 6438,
+      "sha256": "ac6f7d8b8869f3c2f74770f1a74569085aa0a0cd247a11c65bcd9b50b10effdc"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/commands.txt",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/commands.txt",
+      "blob": "c18db1de076f267256ad715aee8c29185e289b81",
+      "bytes": 557,
+      "sha256": "89e71f3721a5549842e8e08b19ba7a765b0382939d4769d8840d121f628440f0"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/focused-final.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/focused-final.tap",
+      "blob": "191895e81e9b15c3b294352b606cdda9eed44ca8",
+      "bytes": 38011,
+      "sha256": "9b86a6ea5ecc3c0de24c6380a5900437ac0b03b940d16409c732daa438ea7f6a"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/help-uk.txt",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/help-uk.txt",
+      "blob": "2ab1a62dfcea4318632ea5e0ce23f4f381d2f83c",
+      "bytes": 10964,
+      "sha256": "1ce68c3d25ecbe421936555a840adee06a0febd06b0a63133d96be876061874b"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/idle-only-policy-red.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/idle-only-policy-red.tap",
+      "blob": "96a993bafb819aae56d28fe8f6f0b00596ad8124",
+      "bytes": 34415,
+      "sha256": "3a66e83145829e11c6de116392532db388ea0a4f238f6986154510e247630c2b"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/manifest.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/manifest.json",
+      "blob": "dba8e3695ea61ef94613f355834412d47450d986",
+      "bytes": 4671,
+      "sha256": "213d728659f83db6a36f85cbf5d236e511ffe00619217c4d5e6f5335038eb783"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/original-red.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/original-red.tap",
+      "blob": "725db97b043104bc5225ee54fdd1e4e4a007a0c1",
+      "bytes": 16186,
+      "sha256": "340b1f41d0de61d5255d4f5813f3c41e5798941f1f42a050f9c87dd8187efd66"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/relay-downed-390-uk-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/relay-downed-390-uk-large.json",
+      "blob": "5b15499e09a6203911a8147d33a35aa968fbfc05",
+      "bytes": 2792,
+      "sha256": "c8f66b2195ff7c69b5a56fd7b9818e9c5343d7a11a92c7e4c41d52507f5e8822"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/relay-downed-390-uk-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/relay-downed-390-uk-large.png",
+      "blob": "10fbb4eb652fc58398caf0df9702fbe0644fa687",
+      "bytes": 46489,
+      "sha256": "e312c2553122453e0c9e0d9f89c255d8f7c260977983ff019b1024b8f32331ea"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/relay-downed-568-uk-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/relay-downed-568-uk-large.json",
+      "blob": "7279e00bcd2593498a49f27adf90c234a5ce57d4",
+      "bytes": 2778,
+      "sha256": "6053fbab7e7fb9985e822a707564c24fbe95917b5ca146f01b3d0cf3cdc43e78"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/relay-downed-568-uk-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/relay-downed-568-uk-large.png",
+      "blob": "7c0ed65ead84a56ff304625224924babb35df6bb",
+      "bytes": 38528,
+      "sha256": "dff528e123cc1875f261dab95e05a2542a4978986b95f959c0b5b07a792aa6e6"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/relay-patrol-568-uk-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/relay-patrol-568-uk-large.json",
+      "blob": "81afeebd4de84010fa3de6a8902b65ea576736c5",
+      "bytes": 2785,
+      "sha256": "3c74a644907eb1dc110e2c234dabcc7e7f6de7ec70bb9b4b457c8a8b32d44cb3"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/relay-patrol-568-uk-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/relay-patrol-568-uk-large.png",
+      "blob": "7cc8afa76123bdb624dfca38e82ff02b84538daa",
+      "bytes": 37245,
+      "sha256": "cfb8bcb58f107da34dab28a3f3f1e1dfe4bda233329cccf4f4d92d20a47fc3ff"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-layout-20260929/unconsolidated-states-red.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-layout-20260929/unconsolidated-states-red.tap",
+      "blob": "48412ae3b2ed48d26c01bb3be8fdca96e4be7e87",
+      "bytes": 22381,
+      "sha256": "9254e9f5616db434f754e258d0eb575cde1f5dd52d5f1989c490e228844b9d54"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-localization-20260929/README.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-localization-20260929/README.md",
+      "blob": "fe5afd86454d407abef1d728a30cbb2d516f3ffd",
+      "bytes": 3806,
+      "sha256": "0e85475efbef79c594b141a53d819e8cbbf0fddacd7c3674d9720c4c3ae23ab2"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-localization-20260929/catalog-check.txt",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-localization-20260929/catalog-check.txt",
+      "blob": "5268f9cdb4246a5833c504f7e050476677113fba",
+      "bytes": 280,
+      "sha256": "65268f0b6856b833d1ae357958d3e6965ead5327947eaa5969b0fe1bb0edbeab"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-localization-20260929/focused.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-localization-20260929/focused.tap",
+      "blob": "056abff7b329b696ab164057e851b018416f7910",
+      "bytes": 16180,
+      "sha256": "ba4fbabc1c11fe99c6e8401e4e712c01841df5e7518749a74350d68f86ff7fcd"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-localization-20260929/layout.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-localization-20260929/layout.tap",
+      "blob": "f3d8ae20b4fff871d12c820281f6c3531fc88f80",
+      "bytes": 6856,
+      "sha256": "f17d02a97bbc96863ac1fae71b32db10428111c6892b4c954f345763e5d261a1"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-localization-20260929/manifest.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-localization-20260929/manifest.json",
+      "blob": "aa06607b410ce3c9aef4d6b4ced7dc5536be7a1c",
+      "bytes": 3433,
+      "sha256": "8b06efca100a9b40c2d0256ea8ad34583fec583a2b8633a8eeccdee1051ce50b"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-localization-20260929/parent-label-red.tap.gz",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-localization-20260929/parent-label-red.tap.gz",
+      "blob": "8ded8406cbfff9ff2fe95173db234233e211cd3d",
+      "bytes": 956,
+      "sha256": "59c3182a9e2368022851cc32f0983c8ab1ee8cbbd4432bb64bf155c5633eb7ab"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-localization-20260929/stale-layout-expectations.tap.gz",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-localization-20260929/stale-layout-expectations.tap.gz",
+      "blob": "e71f1a4be5e7238bbf063e374ed5e73d571f03d9",
+      "bytes": 2294,
+      "sha256": "c42a8461e96eae2862ed2c604aac540f901e8e86248e5a5906432c57ae2ff281"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-overflow-20260929/README.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-overflow-20260929/README.md",
+      "blob": "e05d91c7a6b9bd97f7b689cd96ddf9c88e4ffa9c",
+      "bytes": 3293,
+      "sha256": "09db0aeeedfe6ca5b003464fb1ed919132850a0abe5bf372776c0ac5699a7605"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-overflow-20260929/adjacent-hosts.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-overflow-20260929/adjacent-hosts.tap",
+      "blob": "644706c67d6a1a68fc29e33935b2d93bf89e8b94",
+      "bytes": 39500,
+      "sha256": "e03b070ca5df1bfe6abcb2114ea819bd4877bf424548543b233ff0a13e740994"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-overflow-20260929/dense-import.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-overflow-20260929/dense-import.json",
+      "blob": "47cbd63f1ab0ca50ad4779d5ccd69ae73957909c",
+      "bytes": 6439,
+      "sha256": "9481fe22f9df8bd7de003ed549b84a2e57adb2465864d0af74aa106b3a2c5980"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-overflow-20260929/focused.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-overflow-20260929/focused.tap",
+      "blob": "49a128f0879aa8a65f84ae2c415f033849585c92",
+      "bytes": 12767,
+      "sha256": "a0fc7588f1bbeeea0a56da6bde5a0fc36635ed109e0558226706e4df3ee1fd2b"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-overflow-20260929/initial-focused.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-overflow-20260929/initial-focused.tap",
+      "blob": "1f38d3fbd8f56577896a6305e64b1fdf44f2c778",
+      "bytes": 12765,
+      "sha256": "54752153d54abec74dbffaab0ebb7489027e8a330ac8198a2485e7191ea24c80"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-overflow-20260929/landscape-568.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-overflow-20260929/landscape-568.png",
+      "blob": "43d8b4f2df149cd7aff7a222b18ded589fb7eeff",
+      "bytes": 34063,
+      "sha256": "d6ea5b48ee5fba004dbdb5dfc874607e07d6376b02c1ed11653c49c025624110"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-overflow-20260929/manifest.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-overflow-20260929/manifest.json",
+      "blob": "1ace84b1828cd38ba3eee50963ed44ffa18e2937",
+      "bytes": 3697,
+      "sha256": "ce0d8f8667c720f2ffb821a476e47890ceab708a7a90118704e25bd9f7f84fbe"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-overflow-20260929/portrait-reader-390.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-overflow-20260929/portrait-reader-390.png",
+      "blob": "a36f1be6b6bd4981ccf381b864bd3040e6bd5453",
+      "bytes": 50488,
+      "sha256": "a498036e410d93740f5d5cf0a4a5acc2c842bc63e083d2a6451c768888fbfe67"
+    },
+    {
+      "originalPath": "docs/verification/team-cue-overflow-20260929/rotation-reader.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-cue-overflow-20260929/rotation-reader.json",
+      "blob": "d3f7e02c8645f42edcb8d4887c3c8bee7870d790",
+      "bytes": 1774,
+      "sha256": "bc654c95bbb19228692a36ea8bfb2f7beab4620d4bbbe2891b24ecf52e6f2001"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/README.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/README.md",
+      "blob": "35d335ef539ab9f3c0471a5f9553e24c7c7b74fe",
+      "bytes": 6757,
+      "sha256": "1d75db581fc026cf4f25a6b6505e5d3ae1959850eea26e81b53e6d0d0e6eed5d"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/catalog-verification.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/catalog-verification.json",
+      "blob": "d1cfbb657707f8154343ba43702198e156b615f9",
+      "bytes": 578,
+      "sha256": "fd67b3f275bfc49c2c429c58d723c730da485f169ae0216714680e702def9f3a"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/connection-both-568-en-standard.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/connection-both-568-en-standard.json",
+      "blob": "5896551e2d9359db673f02ad52cb22965f04db39",
+      "bytes": 8832,
+      "sha256": "b34370be556bf99c13302413ee3c0296066e4a07e8ca6a1f8729a1afbab1f995"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/connection-both-568-en-standard.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/connection-both-568-en-standard.png",
+      "blob": "1f58c373d46aadbbe8b3518c5ce8ff3e99aca2aa",
+      "bytes": 21230,
+      "sha256": "c571de2469de23de86ac233925e4eaa88ea0d1f699a37082369a600c3c894c16"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/css-isolation.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/css-isolation.json",
+      "blob": "c01aecb54c2d33bb58b35959625a79dee15284ad",
+      "bytes": 1473,
+      "sha256": "328526d0d610e7cae16e158bf93fb63f03f7f8ae18a1392e4fb5bd6c3c62a4ce"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/departure-cancel-focus-after.txt",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/departure-cancel-focus-after.txt",
+      "blob": "00fb49c0044f52a222d80f629639c86bad6ca7b7",
+      "bytes": 4144,
+      "sha256": "5ef68b416224cd2134aaf2c8d53e05905765db9c149c7a75bbf016ab9f4f3359"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/departure-live-uk-after.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/departure-live-uk-after.png",
+      "blob": "eb8762961882eb029121779b79ecc12603bfd794",
+      "bytes": 29671,
+      "sha256": "a97be71923230a93d81cf744d05ab3b4e566c4e79c2cbdeb02c4b1cd1b7e61a4"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/departure-live-uk-after.txt",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/departure-live-uk-after.txt",
+      "blob": "b29d98ae1ab35a63793034d9f8d34a9f8b87e419",
+      "bytes": 1337,
+      "sha256": "78f4e64d1fccbc9df5916639fc2c1885cdb4c350671c5e9a47b0369193963624"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/evidence.tar.gz",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/evidence.tar.gz",
+      "blob": "95012128030d7cb8384260d8f6df5306b7ae8e90",
+      "bytes": 21527,
+      "sha256": "ef71f7b3476038d5642b721b4c1b69f49270ac50f48575ba7b210fc87f2a8346"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/final-browser-scale.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/final-browser-scale.json",
+      "blob": "033da37f50757530feea937b49934fe26c744142",
+      "bytes": 276,
+      "sha256": "231e1e394b65754cd4df26f5bf412dd356b065539cf409ecc6b295cdaeca1c4d"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/manifest.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/manifest.json",
+      "blob": "c836eece43da288d8f117bd068927e7118912f22",
+      "bytes": 11732,
+      "sha256": "d079edb9c4f4a19bb02fcecd1d78957494276d6e67b6ee4d0a41f3cb170f48bb"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-1280-uk-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-1280-uk-large.json",
+      "blob": "a95bb4a3383ed07a4c4c1ba409b147d1a912f6f5",
+      "bytes": 10651,
+      "sha256": "c675112c7012f8006b11f9b9335aee66b77a9f43c991b4ba7a6d2d04f7c2a493"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-1280-uk-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-1280-uk-large.png",
+      "blob": "513bf2722a27a14a70623ce6892a32c31aed5fd4",
+      "bytes": 90261,
+      "sha256": "f793ede2cb7724b2562a8874083e0a6ae9722cca2d413743183af977a2da92c4"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-390-uk-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-390-uk-large.json",
+      "blob": "0943dd61634bbcdc8be34296f8fab641cc377fad",
+      "bytes": 10504,
+      "sha256": "1e02561efc334dfc434f825c22b52eaf98caaf82617bf641c1ad8a70f9d17e71"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-390-uk-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-390-uk-large.png",
+      "blob": "8639bbe8e7939ed9515cebd50dc3db2b717d105d",
+      "bytes": 45300,
+      "sha256": "a96943e259b5f4a59df06466516056c36650ed22f15fa87cddc3cbb9a7659218"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-844-uk-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-844-uk-large.json",
+      "blob": "12e58bcc34ebcb86433d2efc11a5631bb9351507",
+      "bytes": 10514,
+      "sha256": "2bea4a54a5841a5ec0cab548f5cd70456a18c3357c7c082d82a723916e83c593"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-844-uk-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-844-uk-large.png",
+      "blob": "c851d5a0a1929ad38757b5df2975e999bf1eb390",
+      "bytes": 51345,
+      "sha256": "f4b9db142cfc65ebcd1e2ebf046a1af5b7ea7098d2994cd676060e1fc15f8df9"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-downed-568-en-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-downed-568-en-large.json",
+      "blob": "e7a4972f30a5eeeaf309ae61e81fea4d2a5992bd",
+      "bytes": 9601,
+      "sha256": "619927813558056529a146fbc4a079b97337b6ad312b047d703c7b6abfacac05"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-downed-568-en-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-downed-568-en-large.png",
+      "blob": "65a88f2801d3abb7f80a88d23e38d20160de8787",
+      "bytes": 35903,
+      "sha256": "2c094ee02ca2f4bc61b58fa03e3f14ddf5b14b4d0974ed2769dbb44cc11f93f6"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-downed-568-uk-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-downed-568-uk-large.json",
+      "blob": "e35d05be0beb28497238850670f181461b75c158",
+      "bytes": 10620,
+      "sha256": "72f9ef37843cce1446419eef02f464c343e95e9a6776f47ce6aa8314b8214c23"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-downed-568-uk-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-downed-568-uk-large.png",
+      "blob": "d1dd27d098a325ab61bec73f979bfd0bbd0b2289",
+      "bytes": 37855,
+      "sha256": "2c39011438e97d196023c96383f15c6dd5650fb01709ee5aaf0ddc63589bb1e5"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-downed-before-568-uk-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-downed-before-568-uk-large.json",
+      "blob": "1c7668b22a3e6e41313ab00dc3f7b9293cec0b97",
+      "bytes": 10697,
+      "sha256": "2f537452a8d03a3f155d25a57180c085b47327728738823f137730137162ed54"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-downed-before-568-uk-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-downed-before-568-uk-large.png",
+      "blob": "c087bbf253b1b6c82ea864df35605647425d786b",
+      "bytes": 29817,
+      "sha256": "9ef2b1f0151586b548d2e9653f71f798657a8e36b1f21a54bc79f44c4dd63ceb"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-recovery-568-uk-large.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-recovery-568-uk-large.json",
+      "blob": "d5779e5d8b89ecd7d9d88eee5a33ca147118c4ae",
+      "bytes": 10516,
+      "sha256": "d945c891830150f923d20906b9b92a1f80c6a0ce7ce9d60b011a0d767347bf53"
+    },
+    {
+      "originalPath": "docs/verification/team-hud-wrap-20260929/relay-recovery-568-uk-large.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hud-wrap-20260929/relay-recovery-568-uk-large.png",
+      "blob": "580002d5de557ca7369ecc056e64507f5e1bca76",
+      "bytes": 38469,
+      "sha256": "4d81919abda586b719f4489249bf5c78d95752c5d51b31fc6a631d4db103f1fc"
+    },
+    {
+      "originalPath": "docs/verification/team-hunter-composition-20260929/README.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hunter-composition-20260929/README.md",
+      "blob": "d9d093d1f681a9681662b5e76e441a5d6593aa24",
+      "bytes": 2845,
+      "sha256": "1570e6c0040fa337ddf2e4be9c296454b4553ddaddc96b50f31b2f952731919a"
+    },
+    {
+      "originalPath": "docs/verification/team-hunter-composition-20260929/focused.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hunter-composition-20260929/focused.tap",
+      "blob": "f34082e9a8f16ce4687f4e8d00029f73a69ad231",
+      "bytes": 12466,
+      "sha256": "fd575ce6331d7d8775f99f39903d0e69cf4b492fc87f85b2ab8e3da774a20e1e"
+    },
+    {
+      "originalPath": "docs/verification/team-hunter-composition-20260929/manifest.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-hunter-composition-20260929/manifest.json",
+      "blob": "0d9c2e9e0966a10859765bbe661cbc91a773f885",
+      "bytes": 2082,
+      "sha256": "dcd750958cc52ff072b21a065472317cbd17dc4129040a64504a9515970c055a"
+    },
+    {
+      "originalPath": "docs/verification/team-import-hunter-tuning-2026-09-29.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-import-hunter-tuning-2026-09-29.md",
+      "blob": "c8d72efe89973e80474016fbc80e3b2da7d34f17",
+      "bytes": 7214,
+      "sha256": "835565885ef1877a4afe097cca88e9b260caaaff603cff065cfa00b912de7b6e"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/README.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/README.md",
+      "blob": "23b417a18de6470cb692c25c75ad2ff49b07667a",
+      "bytes": 6122,
+      "sha256": "4f26f28c74c8681025224ae30f414efd1b406cbf6be5d9d017c1530ad4c1145d"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/combined-team.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/combined-team.tap",
+      "blob": "d18910b8caa865ecfbebea47d2bcdfb6ae6d1c55",
+      "bytes": 26848,
+      "sha256": "3ce289931c3b0fadb17daff7b070920c7e67e4dd0a08a3de74c7db640822e733"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/display-controller-fixture-notes.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/display-controller-fixture-notes.md",
+      "blob": "6b3feed16545d260b44391ef91a7d7a729b362a4",
+      "bytes": 1491,
+      "sha256": "5c995fafa905286aa4bc91e0e85d090a438b4da63a8d6b08dd10c49b417dbb08"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/display-original-controller-observed-red.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/display-original-controller-observed-red.tap",
+      "blob": "4cba12be89025c2e9e2aac13e8e1703f9b581434",
+      "bytes": 1288,
+      "sha256": "d391103841d0e504f64287ba7d5060b3d0f7ba372ac970157338878d2d3972ea"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/display-original-controller-red.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/display-original-controller-red.tap",
+      "blob": "93f30c8d6909169388062f88c021f693b59255a7",
+      "bytes": 1087,
+      "sha256": "06481ee57940b44f02d92902faeb3f7bea36a38dc700888807e7704cef22157c"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/display-preferences-host-final.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/display-preferences-host-final.tap",
+      "blob": "d087b3aee52ee39902a540c4801293c2002a8928",
+      "bytes": 2194,
+      "sha256": "b08f69a4a7ee4a9b2284269a8faee21e481dfe23695e4ce6113561d870bdcc00"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/first-connection-large-390x844.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/first-connection-large-390x844.png",
+      "blob": "b15f3fd40e3be2da35df416bf8b8c1fd590adaaa",
+      "bytes": 32540,
+      "sha256": "a969adccedc593fdaeb9892ade1f7b3b580e8782ee69698e744af58aec572c07"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/first-connection-large-844x390.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/first-connection-large-844x390.png",
+      "blob": "b7d8fb92c5ed36eb711869822d35950eddf4eb9e",
+      "bytes": 38433,
+      "sha256": "1207edc04f8404e948eb9e6589bc61ae504959f130071ccfda73f1d9eefa0adc"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/manifest.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/manifest.json",
+      "blob": "079fd8eff80a69aaeb941d97ab13aa55b1819c85",
+      "bytes": 2671,
+      "sha256": "914d795ebaed5024eea89a476d80f599cb316f221d5bae644e961fe7d5466a35"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/more-original-red.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/more-original-red.tap",
+      "blob": "b096a938f30b4152307e9eabb4bf9c81f23ec17a",
+      "bytes": 1014,
+      "sha256": "68efa90f48faf73f362b99edff06e316b6e7e5015cc34c43aa687018dae73100"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/presentation-metadata.log",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/presentation-metadata.log",
+      "blob": "a45069e96b588eb2ec81769d10c944e0a54b3138",
+      "bytes": 161,
+      "sha256": "fe891b5949feec25294bba8096a17c05295205f23250e9ad40c7aa9e5ec0db93"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/relay-yard-large-uk-390x844.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/relay-yard-large-uk-390x844.png",
+      "blob": "996d1fbff9db58a4e997084b913baf16dbae6ed6",
+      "bytes": 37129,
+      "sha256": "215750e011f172dec6c847d25d3fa92685006791027552cd0dbce26eeaeee14f"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/relay-yard-large-uk-568x320-known-hud-limit.png",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/relay-yard-large-uk-568x320-known-hud-limit.png",
+      "blob": "065f3bf1da1a4e9c9d5b9fc8420d82da88976b15",
+      "bytes": 33119,
+      "sha256": "27c72f13602e1ebf39df4996b483b4126ade6aec61ad0caa2147ad17efe6f1ef"
+    },
+    {
+      "originalPath": "docs/verification/team-readability-20260929/source-dependency-tests.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-readability-20260929/source-dependency-tests.tap",
+      "blob": "8fc12ed546efd83a78ef8e2bffb50cf867b7b697",
+      "bytes": 566,
+      "sha256": "be48310aa31720c45bc41048b01cb3cdd5d7ba34e29ec1cf6ece94b28db7de4a"
+    },
+    {
+      "originalPath": "docs/verification/team-resume-rescue-guidance-2026-09-29.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-resume-rescue-guidance-2026-09-29.md",
+      "blob": "f755129347d7f1fa53915817021d8c81164fb82e",
+      "bytes": 3334,
+      "sha256": "ab3bcc05b8f18e271b5968aec79f2710fc2b1958aafe16a69623eb7a13b6bc61"
+    },
+    {
+      "originalPath": "docs/verification/team-trail-help-20260929/README.md",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-trail-help-20260929/README.md",
+      "blob": "1a49ef43deee002e57b527e62ddd5a8e090b755a",
+      "bytes": 1513,
+      "sha256": "033831847b2e3401c5f03e1becaa172fac6687ba30ae1cbe8e38db93ea54707a"
+    },
+    {
+      "originalPath": "docs/verification/team-trail-help-20260929/focused.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-trail-help-20260929/focused.tap",
+      "blob": "42dadbea3fa22b69a8f52baf5fa1748fe250d02b",
+      "bytes": 5963,
+      "sha256": "5e9abed416dc1e837e2c2afde422f7655a52829b9801ea42e8c4c4d9cd2baa8d"
+    },
+    {
+      "originalPath": "docs/verification/team-trail-help-20260929/hunter-start-diagnostic.tap",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-trail-help-20260929/hunter-start-diagnostic.tap",
+      "blob": "f9c06fb98cf19cecc344c6a56b7fdb03b5437509",
+      "bytes": 1273,
+      "sha256": "85c6dd4af4bfa97409f4c0ed278365b79704586a96f200887e26f8c9f3bd09de"
+    },
+    {
+      "originalPath": "docs/verification/team-trail-help-20260929/manifest.json",
+      "path": "docs/verification/pr757-historical-recovery-20260930/original/docs/verification/team-trail-help-20260929/manifest.json",
+      "blob": "a9b011b05a19527cfab656532eeaf61fc1da3e13",
+      "bytes": 1717,
+      "sha256": "a105a95f8ac3fc2d8649ccd275af88113d6da69e2049585143b8d87cc3fda847"
+    }
+  ]
+}

@@ -24,10 +24,10 @@ function harness(
     dataset: {},
     listeners: new Map(),
     closest() {
-      return this.hidden || this.inert ? this : null;
+      return this.hidden || this.inert ? this : (this.parent?.closest() ?? null);
     },
     getClientRects() {
-      return this.hidden ? [] : [{}];
+      return this.hidden || this.displayContents ? [] : [{}];
     },
     addEventListener(type, fn) {
       this.listeners.set(type, fn);
@@ -36,7 +36,19 @@ function harness(
       this.listeners.delete(type);
     },
   });
-  const outer = new Map(['game', 'status', 'log', 'load', 'mode'].map((id) => [id, element(id)]));
+  const outer = new Map(
+    [
+      'game',
+      'status',
+      'log',
+      'load',
+      'mode',
+      'sample',
+      'edition',
+      'multiplayer-target',
+      'sample-scope',
+    ].map((id) => [id, element(id)]),
+  );
   const nodes = new Map(
     [
       'shell-continue',
@@ -48,6 +60,18 @@ function harness(
       'journey-cards',
       'level-select',
       'race-level',
+      'coop-start',
+      'coop-resume',
+      'coop-level',
+      'coop-pause',
+      'coop-play',
+      'coop-canvas',
+      'coop-overlay',
+      'coop-picture-status',
+      'coop-selection-status',
+      'coop-stage',
+      'coop-clock',
+      'coop-coverage',
       'race-start',
       'race-pause',
       'race-boards',
@@ -60,15 +84,24 @@ function harness(
     ...element('doc'),
     documentElement: { dataset: { [mode === 'solo' ? 'bootState' : 'toolState']: 'ready' } },
     body: { dataset: {} },
+    focused: true,
+    hasFocus() {
+      return this.focused;
+    },
     getElementById: (id) => nodes.get(id),
   };
   nodes.get('race-pause').textContent = 'Pause';
+  nodes.get('coop-play').hidden = true;
+  nodes.get('coop-play').displayContents = true;
+  nodes.get('coop-canvas').parent = nodes.get('coop-play');
+  nodes.get('coop-overlay').hidden = true;
   nodes.get('journey-cards').querySelector = () => nodes.get('journey-library-card');
   nodes.set('journey-library-card', element('journey-library-card'));
   const root = { ...element('root'), querySelector: (id) => outer.get(id.slice(1)) };
   const win = {
     ...element('win'),
     performance: {
+      now: () => clock,
       getEntriesByType: (type) => performanceEntries[type] || [],
       ...(memory ? { memory } : {}),
     },
@@ -459,4 +492,373 @@ test('title fresh mission errors and visible focus departure discard the pending
   h.frame();
   assert.match(h.records().at(-1).outcome, /focus left/);
   assert.equal(h.records().at(-1).ms, null);
+});
+
+test('bounded passive frame samples record distributions without pretending unsupported counters are zero', () => {
+  const h = harness();
+  h.frame();
+  h.frame();
+  h.outer.get('sample').listeners.get('click')();
+  assert.equal(h.outer.get('sample').disabled, true);
+  for (let i = 0; i < 1876; i++) h.frame(16);
+  const sample = h.records().at(-1);
+  assert.equal(sample.action, 'Frame sample');
+  assert.equal(sample.frameIntervals.p95Ms, 16);
+  assert.equal(sample.frameIntervals.medianMs, 16);
+  assert.ok(sample.frameIntervals.count >= 1800);
+  assert.deepEqual(sample.longTasks, { supported: false });
+  assert.equal(h.outer.get('sample').disabled, false);
+  assert.deepEqual(h.doc.body.dataset, {});
+});
+
+test('frame observation discards hidden and navigation samples and detaches its controls', () => {
+  for (const reason of ['visibility', 'navigation']) {
+    const h = harness();
+    h.frame();
+    h.frame();
+    h.outer.get('sample').listeners.get('click')();
+    for (let i = 0; i < 100; i++) h.frame();
+    if (reason === 'visibility') {
+      h.doc.hidden = true;
+      h.doc.listeners.get('visibilitychange')();
+    } else h.outer.get('game').onload();
+    const samples = h.records().filter((entry) => entry.action === 'Frame sample');
+    assert.equal(samples.length, 1);
+    assert.match(samples[0].outcome, /discarded/);
+    assert.equal(samples[0].frameIntervals, undefined);
+    if (reason === 'navigation') assert.equal(h.outer.get('sample').listeners.has('click'), false);
+  }
+});
+
+test('observer edition selection is bounded and cannot change versus navigation', () => {
+  const h = harness();
+  h.outer.get('edition').value = 'fpv-learning';
+  h.outer.get('load').listeners.get('click')();
+  assert.equal(h.outer.get('game').src, '../../game/?journey=1&edition=fpv-learning');
+  h.outer.get('edition').value = 'https://unrelated.invalid/';
+  h.outer.get('load').listeners.get('click')();
+  assert.equal(h.outer.get('game').src, '../../game/?journey=1');
+  h.outer.get('edition').value = 'fpv-learning';
+  h.outer.get('mode').value = 'versus';
+  h.outer.get('load').listeners.get('click')();
+  assert.equal(h.outer.get('game').src, '../../game/couch/?journey=1');
+});
+
+test('supported long-task observations include only this sample and disconnect on completion', () => {
+  const h = harness();
+  h.frame();
+  h.frame();
+  let callback,
+    disconnected = false,
+    options;
+  h.win.PerformanceObserver = class {
+    static supportedEntryTypes = ['longtask'];
+    constructor(fn) {
+      callback = fn;
+    }
+    observe(value) {
+      options = value;
+    }
+    takeRecords() {
+      return [{ startTime: 250, duration: 51 }];
+    }
+    disconnect() {
+      disconnected = true;
+    }
+  };
+  h.outer.get('sample').listeners.get('click')();
+  assert.equal(options.type, 'longtask');
+  assert.equal(options.buffered, false);
+  callback({
+    getEntries: () => [
+      { startTime: 0, duration: 200 },
+      { startTime: 100, duration: 75 },
+    ],
+  });
+  for (let i = 0; i < 1876; i++) h.frame(16);
+  assert.deepEqual(h.records().at(-1).longTasks, {
+    supported: true,
+    count: 2,
+    over50Ms: 2,
+    maxMs: 75,
+  });
+  assert.equal(disconnected, true);
+});
+
+test('Team observes the actual canvas under its display:contents wrapper, not a paused overlay', () => {
+  const h = harness('team');
+  assert.equal(
+    h.outer.get('game').src,
+    '../../game/couch/relay-rescue.html?journey=team-cultural-specialist-originals-2',
+  );
+  h.frame();
+  h.frame();
+  assert.equal(h.records().at(-1).action, 'Load to playable menu');
+  h.click('coop-start');
+  h.frame();
+  h.frame();
+  assert.equal(h.records().length, 2);
+  h.nodes.get('coop-play').hidden = false;
+  assert.equal(h.nodes.get('coop-play').getClientRects().length, 0);
+  h.nodes.get('coop-canvas').hidden = true;
+  h.frame();
+  h.frame();
+  assert.equal(h.records().length, 2, 'A hidden canvas is not active play.');
+  h.nodes.get('coop-canvas').hidden = false;
+  h.nodes.get('coop-play').inert = true;
+  h.frame();
+  h.frame();
+  assert.equal(h.records().length, 2, 'An inert ancestor still vetoes a visible canvas.');
+  h.nodes.get('coop-play').inert = false;
+  h.nodes.get('coop-overlay').hidden = false;
+  h.frame();
+  h.frame();
+  assert.equal(h.records().length, 2);
+  h.nodes.get('coop-overlay').hidden = true;
+  h.frame();
+  h.frame();
+  assert.equal(h.records().at(-1).action, 'Start');
+});
+
+test('explicit finale links only select the exact native library mission and never start a game', () => {
+  for (const [mode, prefix] of [
+    ['team', 'team'],
+    ['versus', 'versus'],
+  ]) {
+    const h = harness(mode);
+    h.outer.get('multiplayer-target').value = 'aurora';
+    h.outer.get('load').listeners.get('click')();
+    const params = new URL(h.outer.get('game').src, 'https://local.invalid/docs/verification/')
+      .searchParams;
+    assert.equal(params.get('journey'), `${mode === 'team' ? 'team' : 'duel'}-expedition-v1`);
+    assert.equal(params.get('library-intent'), 'select');
+    const identity = JSON.parse(params.get('library-mission'));
+    assert.equal(identity[0], `journey:${mode === 'team' ? 'team' : 'duel'}-expedition-v1`);
+    assert.equal(
+      identity[2],
+      JSON.stringify([
+        'candidate',
+        `${prefix}-expedition-aurora-pack`,
+        `${prefix}-expedition-aurora${mode === 'versus' ? '-part-5' : ''}`,
+      ]),
+    );
+    assert.equal(
+      identity[3],
+      `candidate/${prefix}-expedition-aurora-pack/${prefix}-expedition-aurora${mode === 'versus' ? '-part-5' : ''}/${prefix}-expedition-${mode === 'team' ? 'homecoming' : 'decider'}`,
+    );
+    h.outer.get('multiplayer-target').value = 'https://unrelated.invalid';
+    h.outer.get('load').listeners.get('click')();
+    assert.equal(h.outer.get('game').src.includes('library-mission'), false);
+  }
+});
+
+test('active profile waits for foreground play, then records both seats and truthful memory limits', () => {
+  const h = harness('team');
+  h.frame();
+  h.frame();
+  h.outer.get('sample-scope').value = 'active';
+  h.outer.get('sample').listeners.get('click')();
+  h.frame(10000);
+  assert.equal(h.records().filter((r) => r.action === 'Frame sample').length, 0);
+  h.nodes.get('coop-play').hidden = false;
+  h.doc.focused = false;
+  h.frame(10000);
+  h.doc.focused = true;
+  h.nodes.get('coop-level').value = 'team-expedition-homecoming';
+  h.nodes.get('coop-coverage').textContent = '12%';
+  h.doc.querySelectorAll = (selector) =>
+    selector === 'canvas'
+      ? [{ id: 'coop-canvas', width: 100, height: 50 }]
+      : [{ complete: true, naturalWidth: 10, naturalHeight: 10 }];
+  h.frame();
+  h.doc.listeners.get('keydown')({ code: 'KeyD', isTrusted: true });
+  h.doc.listeners.get('keydown')({ code: 'ArrowLeft', isTrusted: true });
+  h.doc.listeners.get('keydown')({ code: 'KeyQ', isTrusted: false });
+  h.doc.listeners.get('keydown')({ code: 'KeyZ', isTrusted: true });
+  h.nodes.get('coop-coverage').textContent = '31%';
+  for (let i = 0; i < 1876; i++) h.frame();
+  const sample = h.records().at(-1);
+  assert.equal(sample.scope, 'active');
+  assert.equal(sample.mission, 'team-expedition-homecoming');
+  assert.equal(sample.hudBefore['coop-coverage'], '12%');
+  assert.equal(sample.hudAfter['coop-coverage'], '31%');
+  assert.equal(sample.activity[0].hud['coop-coverage'], '12%');
+  assert.equal(sample.activity.at(-1).hud['coop-coverage'], '31%');
+  assert.ok(sample.activity.length > 50 && sample.activity.length <= 120);
+  assert.deepEqual(sample.inputs, {
+    player1Keydowns: 2,
+    player2Keydowns: 1,
+    trustedKeydowns: 2,
+    untrustedKeydowns: 1,
+  });
+  assert.equal(sample.mediaAfter.canvasRGBAEstimateBytes, 20000);
+  assert.equal(sample.mediaAfter.domImageRGBAEstimateBytes, 400);
+  assert.equal(sample.mediaAfter.decodedMediaMemory.supported, false);
+  assert.equal(sample.frameIntervals.p99Ms, 16);
+  assert.equal(h.doc.listeners.has('keydown'), false);
+});
+
+test('active profile rejects pauses, focus loss, mission changes and an expired arm', () => {
+  for (const reason of ['pause', 'focus', 'mission', 'arm-timeout']) {
+    const h = harness('team');
+    h.frame();
+    h.frame();
+    h.outer.get('sample-scope').value = 'active';
+    h.outer.get('sample').listeners.get('click')();
+    if (reason === 'arm-timeout') h.frame(60001);
+    else {
+      h.nodes.get('coop-play').hidden = false;
+      h.frame();
+      for (let i = 0; i < 80; i++) h.frame();
+      if (reason === 'pause') h.nodes.get('coop-overlay').hidden = false;
+      if (reason === 'focus') h.doc.focused = false;
+      if (reason === 'mission') h.nodes.get('coop-level').value = 'different';
+      h.frame();
+    }
+    const sample = h.records().at(-1);
+    assert.equal(sample.action, 'Frame sample');
+    assert.match(sample.outcome, /discarded/);
+    assert.equal(sample.frameIntervals, undefined);
+    assert.equal(h.outer.get('sample').disabled, false);
+  }
+});
+
+test('active sample rechecks focus even when its deadline runs before the next frame', () => {
+  const h = harness('team');
+  h.frame();
+  h.frame();
+  h.outer.get('sample-scope').value = 'active';
+  h.outer.get('sample').listeners.get('click')();
+  h.nodes.get('coop-play').hidden = false;
+  h.frame();
+  for (let i = 0; i < 1874; i++) h.frame();
+  h.doc.focused = false;
+  h.frame(16);
+  assert.match(h.records().at(-1).outcome, /discarded/);
+  assert.equal(h.records().at(-1).frameIntervals, undefined);
+});
+
+test('an expired arm reports genuine DOM focus and native activation without admitting menu frames', () => {
+  const h = harness('team');
+  h.frame();
+  h.frame();
+  h.doc.focused = false;
+  h.doc.visibilityState = 'visible';
+  h.doc.activeElement = h.nodes.get('coop-start');
+  h.doc.documentElement.dataset.accessState = 'unlocked';
+  h.outer.get('sample-scope').value = 'active';
+  h.outer.get('sample').listeners.get('click')();
+  h.click('coop-start', true);
+  h.frame(60001);
+  const record = h.records().find((row) => row.action === 'Frame sample');
+  assert.equal(record.observedFrames, 0);
+  assert.equal(record.frameIntervals, undefined);
+  assert.equal(record.focusAtArm.game.focused, false);
+  assert.equal(record.focusAtFinish.game.visibility, 'visible');
+  assert.equal(record.focusAtFinish.game.activeControl.id, 'coop-start');
+  assert.equal(record.focusAtFinish.accessState, 'unlocked');
+  assert.equal(record.focusAtFinish.toolState, 'ready');
+  assert.equal(record.focusAtFinish.controls['coop-start'].disabled, false);
+  assert.equal(record.focusAtFinish.controls['coop-play'].shown, false);
+  assert.ok(
+    record.focusEvents.some((row) => row.type === 'activate:coop-start' && row.trusted === true),
+  );
+  assert.equal(h.doc.focused, false);
+  assert.equal(h.nodes.get('coop-play').hidden, true);
+  const start = h.records().find((row) => row.action === 'Start');
+  assert.equal(start.trustedActivation, true);
+  assert.equal(start.focusAtActivation.game.focused, false);
+});
+
+test('named presets cannot silently sample another mission and accept only their native suffixes', () => {
+  for (const mode of ['team', 'versus']) {
+    const h = harness(mode);
+    h.outer.get('multiplayer-target').value = 'aurora';
+    h.outer.get('load').listeners.get('click')();
+    h.outer.get('game').onload();
+    h.outer.get('sample-scope').value = 'active';
+    const control = h.nodes.get(mode === 'team' ? 'coop-level' : 'race-level');
+    control.value =
+      mode === 'team'
+        ? 'team-harbor-homecoming'
+        : 'candidate/versus-expedition-harbors-pack/versus-expedition-harbors/versus-harbor-gambit/standard/authored';
+    h.outer.get('sample').listeners.get('click')();
+    const rejected = h.records().at(-1);
+    assert.equal(rejected.observedFrames, 0);
+    assert.equal(rejected.frameIntervals, undefined);
+    assert.match(rejected.outcome, /not armed/);
+    assert.match(
+      h.outer.get('status').textContent,
+      /Choose Expedition (Homecoming|Decider) in game before observing/,
+    );
+    assert.equal(h.outer.get('sample').disabled, false);
+    control.value =
+      mode === 'team'
+        ? 'team-expedition-homecoming'
+        : 'candidate/versus-expedition-aurora-pack/versus-expedition-aurora-part-5/versus-expedition-decider/standard/authored';
+    h.nodes.get('coop-play').hidden = false;
+    h.outer.get('sample').listeners.get('click')();
+    h.frame();
+    for (let i = 0; i < 1876; i++) h.frame();
+    const sample = h.records().at(-1);
+    assert.equal(sample.action, 'Frame sample');
+    assert.equal(sample.scope, 'active');
+    assert.equal(sample.frameIntervals.p95Ms, 16);
+    assert.ok(sample.mission.startsWith(sample.requestedMission));
+  }
+});
+
+test('a preset changed after arming still cannot start sampling a different field', () => {
+  const h = harness('team');
+  h.outer.get('multiplayer-target').value = 'aurora';
+  h.outer.get('load').listeners.get('click')();
+  h.outer.get('game').onload();
+  h.outer.get('sample-scope').value = 'active';
+  h.nodes.get('coop-level').value = 'team-expedition-homecoming';
+  h.outer.get('sample').listeners.get('click')();
+  h.nodes.get('coop-level').value = 'team-harbor-homecoming';
+  h.nodes.get('coop-play').hidden = false;
+  h.frame();
+  assert.match(h.records().at(-1).outcome, /requested mission changed/);
+  assert.equal(h.records().at(-1).observedFrames, 0);
+  assert.equal(h.records().at(-1).frameIntervals, undefined);
+});
+
+test('all six shortcut identities name the actual authored chapter finale', async () => {
+  const { createTeamExpansionCandidates, createDuelExpansionCandidates } = await import(
+    '../game/content-design/multiplayer-expansion.mjs'
+  );
+  for (const [mode, source] of [
+    ['team', createTeamExpansionCandidates()],
+    ['versus', createDuelExpansionCandidates()],
+  ]) {
+    const h = harness(mode);
+    for (const family of ['aurora', 'sentinel', 'fracture']) {
+      h.outer.get('multiplayer-target').value = family;
+      h.outer.get('load').listeners.get('click')();
+      const params = new URL(h.outer.get('game').src, 'https://local.invalid/docs/verification/')
+        .searchParams;
+      const identity = JSON.parse(params.get('library-mission'));
+      const campaignId = JSON.parse(identity[2])[2];
+      const campaign = source.campaigns.find((row) => row.id === campaignId);
+      assert.ok(campaign, campaignId);
+      assert.equal(identity[3].split('/').at(-1), campaign.missionIds.at(-1));
+      assert.ok(
+        source.missions.some(
+          (row) => row.id === campaign.missionIds.at(-1) && row.modes.includes(mode),
+        ),
+      );
+    }
+  }
+});
+
+test('development observer stays outside the player release include list', async () => {
+  const config = JSON.parse(
+    await readFile(new URL('../game/build-config.json', import.meta.url), 'utf8'),
+  );
+  assert.ok(
+    !config.include.some(
+      (path) => path === 'docs' || path.startsWith('docs/verification/journey-performance'),
+    ),
+  );
 });

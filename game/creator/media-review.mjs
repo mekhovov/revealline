@@ -1,4 +1,5 @@
 import { prepareCreatorMediaIntake } from './media-intake.mjs';
+import { prepareMobileCreatorVideo } from './video-mobile.mjs';
 import {
   formatNumber,
   localizedAttribute,
@@ -14,6 +15,8 @@ const VIDEO_EXTENSIONS = /\.(?:mp4|webm)$/i;
 const MEDIA_BUNDLE_LIMIT_BYTES = 256 * 1024 * 1024;
 const MEDIA_BUNDLE_OVERHEAD_BYTES = 1024 * 1024;
 const natural = new Intl.Collator('en', { numeric: true, sensitivity: 'base' });
+// Runtime hashes still identify exported assets. Review choices belong to the selected source.
+const choiceIdentity = (item) => item.sourceSha256 ?? item.assetSha256;
 
 function classify(file) {
   if (IMAGE_TYPES.has(file.type) || (!file.type && IMAGE_EXTENSIONS.test(file.name)))
@@ -91,6 +94,7 @@ export function createCreatorMediaReviewController({
   document,
   nodes,
   prepareIntake = prepareCreatorMediaIntake,
+  prepareVideo = prepareMobileCreatorVideo,
   createObjectURL = (blob) => URL.createObjectURL(blob),
   revokeObjectURL = (url) => URL.revokeObjectURL(url),
   onPrepared = () => {},
@@ -172,7 +176,7 @@ export function createCreatorMediaReviewController({
       radio.disabled = !!running;
       radio.onchange = () => {
         if (!radio.checked) return;
-        posterTimes.set(item.assetSha256, candidate.capture.requestedTime);
+        posterTimes.set(choiceIdentity(item), candidate.capture.requestedTime);
         invalidate();
       };
       const asset = assets.get(candidate.sha256);
@@ -207,7 +211,7 @@ export function createCreatorMediaReviewController({
     custom.input.max = String(detail.video.durationSeconds);
     custom.input.step = '0.01';
     custom.input.value = String(
-      posterTimes.get(item.assetSha256) ??
+      posterTimes.get(choiceIdentity(item)) ??
         detail.posterCandidates.find(
           (candidate) => candidate.sha256 === detail.selectedPosterSha256,
         )?.capture.requestedTime ??
@@ -215,7 +219,7 @@ export function createCreatorMediaReviewController({
     );
     custom.input.disabled = !!running;
     custom.input.onchange = () => {
-      posterTimes.set(item.assetSha256, Number(custom.input.value));
+      posterTimes.set(choiceIdentity(item), Number(custom.input.value));
       invalidate();
     };
     card.append(heading, candidates, custom.wrapper);
@@ -225,7 +229,7 @@ export function createCreatorMediaReviewController({
     if (!detail) return;
     const fields = document.createElement('div');
     fields.className = 'creator-playback-range';
-    const selected = playbackRanges.get(item.assetSha256) ?? detail.playbackRange;
+    const selected = playbackRanges.get(choiceIdentity(item)) ?? detail.playbackRange;
     const start = control(document, 'number', localizedMessage('interface:creator.playbackBegins'));
     const end = control(document, 'number', localizedMessage('interface:creator.playbackEnds'));
     for (const field of [start.input, end.input]) {
@@ -237,7 +241,7 @@ export function createCreatorMediaReviewController({
     start.input.value = String(selected.startSeconds);
     end.input.value = String(selected.endSeconds);
     const update = () => {
-      playbackRanges.set(item.assetSha256, {
+      playbackRanges.set(choiceIdentity(item), {
         startSeconds: Number(start.input.value),
         endSeconds: Number(end.input.value),
         retainsCompleteOriginal: true,
@@ -270,22 +274,22 @@ export function createCreatorMediaReviewController({
     const pairLabel = document.createElement('label');
     localizedText(pairLabel, () => t('interface:creator.revealPoster'));
     const pair = document.createElement('select');
-    const unresolved = item.pairing?.status === 'ambiguous' && !pairing.has(item.assetSha256);
+    const unresolved = item.pairing?.status === 'ambiguous' && !pairing.has(choiceIdentity(item));
     if (unresolved)
       pair.append(option(document, '', localizedMessage('interface:creator.chooseMatchingImage')));
     pair.append(
       option(document, '__frame__', localizedMessage('interface:creator.captureFrameFromVideo')),
     );
     for (const image of images) pair.append(option(document, image.assetSha256, imageLabel(image)));
-    const currentPair = pairing.has(item.assetSha256)
-      ? pairing.get(item.assetSha256)
+    const currentPair = pairing.has(choiceIdentity(item))
+      ? pairing.get(choiceIdentity(item))
       : (item.video?.selectedPairingAssetSha256 ??
         (item.pairing?.status === 'suggested' ? item.pairing.candidateAssetSha256s[0] : null));
     pair.value = unresolved ? '' : (currentPair ?? '__frame__');
     pair.disabled = !!running;
     pair.onchange = () => {
-      if (!pair.value) pairing.delete(item.assetSha256);
-      else pairing.set(item.assetSha256, pair.value === '__frame__' ? null : pair.value);
+      if (!pair.value) pairing.delete(choiceIdentity(item));
+      else pairing.set(choiceIdentity(item), pair.value === '__frame__' ? null : pair.value);
       invalidate();
     };
     pairLabel.append(pair);
@@ -534,14 +538,15 @@ export function createCreatorMediaReviewController({
       included.map(({ name, kind, blob }) => ({ name, kind, blob })),
       {
         signal: aborter.signal,
+        prepareVideo,
         preserveOrder: true,
-        pairingFor: ({ assetSha256 }) => pairing.get(assetSha256),
-        posterTimeFor: ({ video, assetSha256 }) =>
-          posterTimes.get(assetSha256) ?? video.durationSeconds * 0.5,
-        playbackRangeFor: ({ video, assetSha256 }) =>
-          playbackRanges.get(assetSha256) ?? {
+        pairingFor: (item) => pairing.get(choiceIdentity(item)),
+        posterTimeFor: (item) =>
+          posterTimes.get(choiceIdentity(item)) ?? item.video.durationSeconds * 0.5,
+        playbackRangeFor: (item) =>
+          playbackRanges.get(choiceIdentity(item)) ?? {
             startSeconds: 0,
-            endSeconds: video.durationSeconds,
+            endSeconds: item.video.durationSeconds,
             retainsCompleteOriginal: true,
           },
       },
@@ -561,12 +566,12 @@ export function createCreatorMediaReviewController({
         if (source) source.item = item;
         if (!item.video) continue;
         posterTimes.set(
-          item.assetSha256,
+          choiceIdentity(item),
           item.video.posterCandidates.find(
             (candidate) => candidate.sha256 === item.video.selectedPosterSha256,
           )?.capture.requestedTime ?? item.video.video.durationSeconds * 0.5,
         );
-        playbackRanges.set(item.assetSha256, item.video.playbackRange);
+        playbackRanges.set(choiceIdentity(item), item.video.playbackRange);
       }
       capacity = capacityFor(included, prepared);
       if (prepared.items.some((item) => item.errors.length) || capacity.fits) onPrepared(prepared);

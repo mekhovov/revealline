@@ -7,6 +7,8 @@ import { applySoundtrackArchiveAdmissions } from './soundtrack-archive-admission
 import { compileHostedSoundtracks } from './hosted-soundtrack-publication.mjs';
 import { compileReviewedSoundtrackBatches } from './reviewed-soundtrack-batches.mjs';
 import { compileCoreSoundtrack } from './core-soundtrack-publication.mjs';
+import { resolveSoundtrackArchives } from '../game/soundtrack-archive.mjs';
+import { resolveSoundtrackCollections } from '../game/soundtrack.mjs';
 
 export function validateSoundtrackDistributionConfig(value) {
   exactKeys(value, ['format', 'catalog', 'originalCatalogue'], 'Soundtrack distribution config');
@@ -284,12 +286,16 @@ export async function compilePublishedSoundtracks(root, { delivery = 'runtime' }
   return {
     ...delivered,
     catalogue: combined,
-    archives: [...delivered.archives, ...hosted.archives, ...reviewed.archives],
-    collections: [
+    archives: resolveSoundtrackArchives([
+      ...delivered.archives,
+      ...hosted.archives,
+      ...reviewed.archives,
+    ]),
+    collections: resolveSoundtrackCollections([
       ...hosted.collections,
       ...reviewed.collections,
       { ...core.collection, trackIds: admittedUkrainianTrackIds },
-    ],
+    ]),
     bundled: [core.bundled],
   };
 }
@@ -299,7 +305,9 @@ export function soundtrackCatalogueModule(
   collections = [],
   bundled = [],
 ) {
-  return `// Generated from pinned soundtrack publication metadata; listening status stays in source evidence.\nexport const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue, null, 2)};\nexport const SOUNDTRACK_ARCHIVES = ${JSON.stringify(archives)};\nexport const SOUNDTRACK_COLLECTIONS = ${JSON.stringify(collections)};\nexport const SOUNDTRACK_BUNDLED_ASSETS = ${JSON.stringify(bundled)};\n`;
+  // Keep generated data compact without changing its ordered values or strings.
+  // Declaration-level directives make normal regeneration/formatting byte-stable.
+  return `// Generated from pinned soundtrack publication metadata; listening status stays in source evidence.\n// prettier-ignore\nexport const SOUNDTRACK_CATALOGUE = ${JSON.stringify(catalogue)};\n// prettier-ignore\nexport const SOUNDTRACK_ARCHIVES = ${JSON.stringify(archives)};\n// prettier-ignore\nexport const SOUNDTRACK_COLLECTIONS = ${JSON.stringify(collections)};\n// prettier-ignore\nexport const SOUNDTRACK_BUNDLED_ASSETS = ${JSON.stringify(bundled)};\n`;
 }
 export async function writePublishedSoundtrackMetadata(root) {
   const { format, resolveConfig } = await import('prettier');

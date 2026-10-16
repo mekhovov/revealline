@@ -1,4 +1,6 @@
+import { isStudioActorSlot, studioActorImage, studioActorCanvas } from './actor-resources.mjs';
 import { t, localizedText, localizedAttribute } from '../../game/i18n/index.mjs';
+import { assetStudioErrorMessage } from './error-copy.mjs';
 import { startPreviewMotion } from './preview-motion.mjs';
 import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createRun } from '../../game/core/index.mjs';
@@ -17,6 +19,8 @@ import { drawActiveTrail, drawCapturePulse } from '../../game/ui/actor-presentat
 import { drawEventFeedback } from '../../game/ui/event-feedback.mjs';
 import { CURRENT_ART_SOURCES } from '../../game/presentation/current-art-sources.mjs';
 import { crossModeContextPreview, stageBoardPreviewEffect } from './cross-mode-preview.mjs';
+import { actorArtReviewRevision } from '../../game/hunt/preferences.mjs';
+import { getArcadeCollection } from '../../game/presentation/industrial-arcade.mjs';
 const text = (tag, value, className = '', hostRole = null) => {
   const node = document.createElement(tag);
   localizedText(node, typeof value === 'function' ? value : () => value);
@@ -143,9 +147,10 @@ export function createStudioContextPresentation(resolved, decoded, selectedPlaye
   });
 }
 
-async function croppedImage(asset, blobs, options) {
+export async function croppedImage(asset, blobs, options, own) {
   const blob = blobs.get(asset.file.sha256);
   if (!blob) throw new Error(t('tools:previewMediaIsMissing'));
+  if (isStudioActorSlot(options.slotId)) return studioActorImage(asset, blob, options, own);
   const bitmap = await createImageBitmap(blob),
     f = asset.geometry.frame,
     canvas = document.createElement('canvas');
@@ -179,11 +184,11 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
   options.onStatus?.(() => t('tools:studio.scenePreview.decodingPlayerArtwork'), 'decoding');
   let body = structuredClone(presets.characters[bodyId]);
   const recipe = structuredClone(presets.animationRecipes[body.animationRecipe]);
-  const imageAsset =
-    resolved.assets[`player.${classId}.${slot.id.endsWith('detailed') ? 'detailed' : 'compact'}`];
+  const imageSlot = `player.${classId}.${slot.id.endsWith('detailed') ? 'detailed' : 'compact'}`,
+    imageAsset = resolved.assets[imageSlot];
   let image;
   if (imageAsset?.kind === 'image') {
-    image = await croppedImage(imageAsset, blobs, options);
+    image = await croppedImage(imageAsset, blobs, { ...options, slotId: imageSlot }, own);
     if (!options.isCurrent()) return;
     const geometry = imagePresentation(imageAsset);
     body.rotors = geometry.rotors;
@@ -194,9 +199,18 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
     await image.decode();
   }
   if (!options.isCurrent()) return;
-  const canvas = document.createElement('canvas');
-  canvas.width = 320;
-  canvas.height = 220;
+  const canvas =
+    imageAsset?.kind === 'image'
+      ? await studioActorCanvas(320, 220, options, own)
+      : document.createElement('canvas');
+  if (!options.isCurrent()) return;
+  if (imageAsset?.kind !== 'image') {
+    canvas.width = 320;
+    canvas.height = 220;
+    own(() => {
+      canvas.width = canvas.height = 0;
+    });
+  }
   surface.append(
     canvas,
     text(
@@ -246,7 +260,8 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       context: (id, owner) => fixtureLoader.context(id, owner),
       bodyIds,
       imageRoles,
-      decode: croppedImage,
+      decode: (candidate, bytes, context, resourceOwner = own) =>
+        croppedImage(candidate, bytes, context, resourceOwner),
       presentation: createStudioContextPresentation,
       loop,
     });
@@ -276,7 +291,10 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     painter.enemyBodies.clear();
     return;
   }
-  painter.setLevel(level, { seed: pictureOwner?.descriptor?.seed ?? 42 });
+  painter.setLevel(level, {
+    seed: pictureOwner?.descriptor?.seed ?? 42,
+    arcadeCollection: actorArtReviewRevision() ? getArcadeCollection('military-field', 'r1') : null,
+  });
   stageBoardPreviewEffect(painter, slot, run);
   const scoped = { ...resolved.assets, [slot.id]: asset },
     decoded = new Map();
@@ -288,7 +306,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       role = 'background';
     if (!role) continue;
     options.onStatus?.(() => t('tools:studio.scenePreview.decodingAsset', { id }), 'decoding');
-    const image = await croppedImage(candidate, blobs, options);
+    const image = await croppedImage(candidate, blobs, { ...options, slotId: id }, own);
     if (!options.isCurrent()) return;
     if (role === 'background') painter.images.background = image;
     else decoded.set(id, { asset: candidate, image });
@@ -379,7 +397,12 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
   }
   loop(own, render, options);
 }
-export function audioRecipePreview(surface, slot, own, { audioMaster = null } = {}) {
+export function audioRecipePreview(
+  surface,
+  slot,
+  own,
+  { audioMaster = null, readAudio = null } = {},
+) {
   const player = new Soundscape({ audioMaster }),
     box = text('div', '', 'recipe-sample'),
     play = text(
@@ -395,6 +418,7 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
       '',
       'control',
     );
+  if (readAudio) player.setPublishedAudio(readAudio);
   play.type = 'button';
   stop.type = 'button';
   box.append(text('h3', slot.label, '', 'heading'), play, stop, result);
@@ -458,12 +482,40 @@ export function audioRecipePreview(surface, slot, own, { audioMaster = null } = 
           focus: 'class.switched',
           cancel: 'craft.redeployed',
         }[cue];
-        player.event({ type: event, won: true, tick: performance.now() });
+        if (cue.startsWith('human-reaction-')) {
+          if (readAudio) await player.publishedAudio.prepare([cue]);
+          else await player.feedbackDirector.load(cue);
+          if (!alive || request !== audition) return;
+          const options = {
+            board: 'studio',
+            gain: 0.45,
+            priority: 2,
+            feedback: true,
+            humanReaction: true,
+            maxDuration: 0.7,
+          };
+          const played = readAudio
+            ? player.publishedAudio.play(cue, options)
+            : player.feedbackDirector.play(cue, options);
+          if (!played) throw new Error(t('tools:audioIsUnavailable'));
+        } else if (cue.startsWith('destroy-')) {
+          const name = cue;
+          if (readAudio) {
+            await player.publishedAudio.prepare([name]);
+            if (!player.publishedAudio.has(name)) throw new Error(t('tools:audioIsUnavailable'));
+          } else
+            await Promise.all(
+              [name, `${name}-1`, `${name}-2`].map((id) => player.feedbackDirector.load(id)),
+            );
+          if (!alive || request !== audition) return;
+          player.encounter('catch', { category: cue.slice(8), board: 'studio' });
+        } else player.event({ type: event, won: true, tick: performance.now() });
       }
       playbackLease = lease;
       lease.finish({ message: playbackCaption() });
     } catch (error) {
-      if (alive && request === audition) lease.finish({ message: error.message, state: 'error' });
+      if (alive && request === audition)
+        lease.finish({ message: assetStudioErrorMessage(error), state: 'error' });
     }
   };
   stop.onclick = () => {

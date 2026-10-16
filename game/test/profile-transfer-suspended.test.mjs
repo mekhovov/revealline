@@ -17,6 +17,8 @@ import {
 import { attachProfileTransferPanel } from '../ui/profile-transfer-panel.mjs';
 import { commitBackup } from '../backup-storage.mjs';
 import { Document } from './helpers/couch-dom.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
+import { createOperationStatus } from '../ui/operation-status.mjs';
 
 const level = {
   version: 'xonix-level.v1',
@@ -506,4 +508,166 @@ test('a cancelled transfer read cannot hide the next review controls or publish 
   assert.match($('transfer-preview').textContent, /one saved flight/);
   assert.equal($('transfer-cancel').hidden, true);
   assert.deepEqual(f.local, before);
+});
+
+function localizedPanel(t, f, overrides = {}) {
+  const doc = new Document(),
+    prior = Object.getOwnPropertyDescriptor(globalThis, 'document'),
+    locale = getLocale();
+  Object.defineProperty(globalThis, 'document', { value: doc, configurable: true });
+  setLocale('en', { persist: false });
+  const $ = (id) => doc.getElementById(id);
+  let presenter;
+  const status = (message, state = 'ready') => {
+    presenter ??= createOperationStatus($('transfer-status'));
+    const lease = presenter.begin({ message });
+    if (state !== 'busy') lease.finish({ message, state });
+  };
+  t.after(() => {
+    presenter?.dispose();
+    setLocale(locale, { persist: false });
+    if (prior) Object.defineProperty(globalThis, 'document', prior);
+    else delete globalThis.document;
+  });
+  const controls = [];
+  attachProfileTransferPanel({
+    api: { profileTransfer: f.options },
+    container: doc.body,
+    backupOptions: () => ({ campaigns: [campaign] }),
+    task: (_id, work) => {
+      const controller = new AbortController();
+      controls.push(controller);
+      return work({
+        controller,
+        signal: controller.signal,
+        check: () => controller.signal.throwIfAborted(),
+        phase: (message) => status(message, 'busy'),
+        commit() {},
+      });
+    },
+    applyPrepared: () => assert.fail('No copy was requested.'),
+    ...overrides,
+    setStatus: status,
+  });
+  return { doc, $, controls, status: () => $('transfer-status').textContent };
+}
+
+for (const withSession of [false, true])
+  test(`transfer locale changes retain reviewed facts and copy safety (${withSession ? 'saved flight' : 'profile only'})`, async (t) => {
+    const f = source();
+    f.local.set(f.k.profileKey, exportLibrary(emptyLibrary()));
+    if (withSession) f.local.set(f.k.sessionKey, JSON.stringify(live().session));
+    f.local.set(keys('release').profileKey, 'Only discovery inspects this legacy candidate.');
+    const before = structuredClone(f.local),
+      result = { undo: withSession, warning: 'Original warning Ω: keep /source/id unchanged.' };
+    let copies = 0;
+    const p = localizedPanel(t, f, {
+      applyPrepared: async (_prepared, _operation, { verifySource }) => {
+        copies++;
+        await verifySource();
+        return result;
+      },
+    });
+    const select = p.$('transfer-source');
+    select.value = f.id;
+    const options = [...select.children];
+    const legacy = options.find((option) => option.value === 'release');
+    assert.match(legacy.textContent, /\(legacy\)/);
+    await p.$('transfer-review').onclick();
+    const english = p.$('transfer-preview').textContent;
+    assert.match(english, withSession ? /one saved flight/ : /no saved flight/);
+    const preview = p.$('transfer-preview'),
+      reads = f.reads.length;
+    p.$('transfer-copy').focus();
+    p.$('profile-transfer').scrollTop = 23;
+    for (const locale of ['uk', 'en', 'uk']) {
+      setLocale(locale, { persist: false });
+      assert.equal(select.value, f.id);
+      assert.deepEqual(select.children, options);
+      assert.equal(p.$('transfer-preview'), preview);
+      assert.equal(p.doc.activeElement, p.$('transfer-copy'));
+      assert.equal(p.$('profile-transfer').scrollTop, 23);
+      assert.equal(f.reads.length, reads, 'Language changes must not inspect the source again.');
+      assert.equal(copies, 0);
+      if (locale === 'en') {
+        assert.equal(preview.textContent, english);
+        assert.match(legacy.textContent, /\(legacy\)/);
+        assert.match(p.status(), /Verified/);
+      } else {
+        assert.doesNotMatch(preview.textContent, /one saved flight|no saved flight/);
+        assert.match(preview.textContent, /збережен/);
+        assert.doesNotMatch(legacy.textContent, /legacy/);
+        assert.doesNotMatch(p.status(), /Verified/);
+      }
+    }
+    await p.$('transfer-copy').onclick();
+    assert.equal(copies, 1, 'Locale changes must retain the original reviewed fingerprint.');
+    assert.deepEqual(f.local, before);
+    const copiedReads = f.reads.length;
+    // Later changes to a result object must not rewrite the completed operation.
+    result.undo = !withSession;
+    result.warning = 'Not part of the completed copy.';
+    f.options.currentVersion = '99.0.0';
+    for (const locale of ['en', 'uk', 'en']) {
+      setLocale(locale, { persist: false });
+      assert.equal(copies, 1);
+      assert.equal(f.reads.length, copiedReads);
+      assert.match(p.status(), /Original warning Ω: keep \/source\/id unchanged\./);
+      assert.doesNotMatch(p.status(), /Not part of the completed copy/);
+      assert.doesNotMatch(preview.textContent, /99\.0\.0/);
+      if (locale === 'en') {
+        assert.match(p.status(), /Copied from v0\.29\.2/);
+        assert.match(
+          p.status(),
+          withSession ? /Undo game-data import restores/ : /could not form a verified backup/,
+        );
+        assert.equal(/saved flight is ready to load, paused/.test(p.status()), withSession);
+      } else assert.doesNotMatch(p.status(), /Copied from|Undo game-data import/);
+    }
+  });
+
+test('transfer busy and cancelled statuses translate without restarting or completing the read', async (t) => {
+  const f = source();
+  f.local.set(f.k.sessionKey, JSON.stringify(live().session));
+  let release;
+  const p = localizedPanel(t, f, {
+    backupOptions: () => new Promise((resolve) => (release = resolve)),
+  });
+  p.$('transfer-source').value = f.id;
+  const pending = p.$('transfer-review').onclick();
+  assert.match(p.status(), /Checking the earlier collection/);
+  setLocale('uk', { persist: false });
+  assert.doesNotMatch(p.status(), /Checking the earlier collection/);
+  assert.equal(p.controls.length, 1);
+  assert.equal(f.reads.length, 0);
+  p.$('transfer-cancel').onclick();
+  assert.equal(p.controls[0].signal.aborted, true);
+  setLocale('en', { persist: false });
+  assert.match(p.status(), /Check cancelled/);
+  setLocale('uk', { persist: false });
+  assert.doesNotMatch(p.status(), /Check cancelled/);
+  assert.equal(p.$('transfer-cancel').hidden, false);
+  assert.equal(p.$('transfer-preview').textContent, '');
+  release({ campaigns: [campaign] });
+  await assert.rejects(pending, { name: 'AbortError' });
+  assert.equal(f.reads.length, 0);
+  assert.equal(p.$('transfer-cancel').hidden, true);
+});
+
+test('unknown transfer discovery errors remain exact across locale changes', (t) => {
+  const f = source(),
+    detail = 'Unrecognized source Ω /opaque/channel — keep this diagnostic.';
+  Object.defineProperty(f.options.storage, 'length', {
+    get() {
+      throw new Error(detail);
+    },
+  });
+  const p = localizedPanel(t, f);
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.equal(p.status(), detail);
+    assert.equal(p.$('transfer-source').disabled, true);
+    assert.equal(p.$('transfer-review').disabled, true);
+    assert.equal(p.$('transfer-copy').disabled, true);
+  }
 });

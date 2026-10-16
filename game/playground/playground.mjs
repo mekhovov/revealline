@@ -1,5 +1,12 @@
+import { loadBaseArtwork } from '../base-artwork.mjs';
+import { snakeBrief } from '../snake/copy.mjs';
+import { huntText } from '../hunt/copy.mjs';
+import { generateSymbolLevel } from './symbol-level.mjs';
+import { textSymbolMask, imageSymbolMask } from './symbol-source.mjs';
+import { analyzeRouteCoverage, ROUTE_COVERAGE } from '../core/coverage.mjs';
 import {
   t,
+  getLocale,
   localizedMessage,
   localizedText,
   localizedAttribute,
@@ -7,6 +14,7 @@ import {
 } from '../i18n/index.mjs';
 globalThis.RevealLineToolLaunch?.attached();
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { createGridEditorAdapter, registerAuthoringEditor } from '../ui/authoring-editors.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { paintEditorMap, editorCellFromPointer } from './board-view.mjs';
 import { renderMapDiagnostics } from './map-diagnostics.mjs';
@@ -38,7 +46,12 @@ import { generateLevel } from '../generator.mjs';
 import { resolvePreviewSize } from './viewport.mjs';
 import { captureControlGeometry } from './control-geometry.mjs';
 import { firstFlightPreviewURL } from '../ui/first-flight-preview.mjs';
+import { openRecordingVerificationSection } from '../ui/recording-verification.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
+import {
+  LOCAL_MATCH_RECORDINGS,
+  verifyLocalMatchRecordingAsync,
+} from '../multiplayer-recording.mjs';
 const $ = (id) => document.getElementById(id),
   clone = (v) => structuredClone(v);
 // A page rail needs viewport bounds, rather than the modal-only clearance helper.
@@ -248,6 +261,25 @@ function checkPreviewReady() {
   }
 }
 status(t('tools:loadingCampaignsThemesAndClassRecipes'), false, true);
+let symbolPreview = null;
+function invalidateSymbolPreview() {
+  symbolPreview = null;
+  $('symbol-apply').disabled = true;
+  $('symbol-preview').hidden = true;
+  $('symbol-preview-status').textContent = '';
+}
+function symbolOptions() {
+  return {
+    source: $('symbol-source').value,
+    text: $('symbol-text').value,
+    title: $('symbol-title').value,
+    material: $('symbol-material').value,
+    layout: $('symbol-layout').value,
+    seed: $('seed-input').value,
+    threshold: Number($('symbol-threshold').value),
+    invert: $('symbol-invert').checked,
+  };
+}
 const remember = () => {
   editRevision++;
   history.push({ current: clone(current), catalog, activeKey, packLibrary });
@@ -298,6 +330,17 @@ async function adoptDocument(candidate, message, ticket = beginImport()) {
   }
 }
 function sync() {
+  invalidateSymbolPreview();
+  const routeSupported = ['xonix-level.v4', 'xonix-level.v5'].includes(current.level.version);
+  $('route-coverage').disabled = !routeSupported;
+  $('route-coverage').checked = !!current.level.classic?.coverage;
+  const budget = current.level.classic?.coverage ? analyzeRouteCoverage(current.level) : null;
+  localizedText($('route-coverage-status'), () =>
+    budget
+      ? t('tools:routeCoverageCounts', { count: budget.total, excluded: budget.excluded })
+      : t(routeSupported ? 'tools:routeCoverageHelp' : 'tools:routeCoverageUnsupported'),
+  );
+
   $('campaign-select').replaceChildren(
     ...catalog.map((entry) => localizedOption(() => entry.label, entry.key)),
   );
@@ -318,37 +361,52 @@ function sync() {
     'xonix-playground.v7',
     'xonix-playground.v8',
     'xonix-playground.v9',
+    'xonix-playground.v10',
+    'xonix-playground.v11',
+    'xonix-playground.v12',
+    'xonix-playground.v13',
+    'xonix-playground.v14',
+    'xonix-playground.v15',
   ].includes(current.format);
   $('mastery-json').value = definition ? JSON.stringify(definition, null, 2) : '';
   localizedText($('mastery-readout'), () =>
-    current.format === 'xonix-playground.v9'
-      ? t('tools:sentinelEditionCaptureEveryShieldRelayBeforeTheCoreOpening')
-      : current.format === 'xonix-playground.v8'
-        ? t('tools:directionalEditionMarkedUnclaimedFieldsChangeCraftSpeedWithOr')
-        : current.format === 'xonix-playground.v7'
-          ? t('tools:relayEditionCaptureEachLinkedObjectiveToOpenPermanentReclaimed')
-          : current.format === 'xonix-playground.v6'
-            ? t('tools:foundationEditionReclaimedIslandsAndLanesArePermanentReturnGround')
-            : current.format === 'xonix-playground.v5'
-              ? t('tools:classicEditionTerrainContactPickupsAndEnemyRolesStayIn')
-              : current.format === 'xonix-playground.v4'
-                ? t('tools:wideEditionOptionalEquipmentGoalsAreUnavailableTheMapRetains')
-                : current.format === 'xonix-playground.v3'
-                  ? t('tools:stagedEncounterThisRulesetHasNoOptionalEquipmentGoalsIts')
-                  : current.format === 'xonix-playground.v2'
-                    ? definition
-                      ? t('tools:referencesValidateAgainstThisMapAndRosterPlayTheRoute', {
-                          value1: definition.name,
-                          value2: definition.description,
-                        })
-                      : t('tools:noOptionalGoalThisExplicitChoiceIsRetainedInPractice')
-                    : t('tools:legacyScenarioOnlyExactShippedContentCanUseItsBuilt'),
+    current.level.pursuit
+      ? getLocale() === 'uk'
+        ? 'Маршрути переслідування та правила хвоста закріплені у версії. Цей редактор зберігає й експортує всю місію без змін ШІ. Для редагування цілей і маршрутів використовуйте головну Студію. Зміни оформлення доступні; несумісні зміни ігрових правил буде відхилено.'
+        : 'Pursuit routes and tail rules are pinned to this edition. This editor preserves and exports the complete mission. Edit target goals and routes in the main Studio. Presentation edits remain available; incompatible gameplay edits are rejected.'
+      : current.format === 'xonix-playground.v11'
+        ? snakeBrief(current.level)
+        : current.format === 'xonix-playground.v10'
+          ? huntText('hint')
+          : current.format === 'xonix-playground.v9'
+            ? t('tools:sentinelEditionCaptureEveryShieldRelayBeforeTheCoreOpening')
+            : current.format === 'xonix-playground.v8'
+              ? t('tools:directionalEditionMarkedUnclaimedFieldsChangeCraftSpeedWithOr')
+              : current.format === 'xonix-playground.v7'
+                ? t('tools:relayEditionCaptureEachLinkedObjectiveToOpenPermanentReclaimed')
+                : current.format === 'xonix-playground.v6'
+                  ? t('tools:foundationEditionReclaimedIslandsAndLanesArePermanentReturnGround')
+                  : current.format === 'xonix-playground.v5'
+                    ? t('tools:classicEditionTerrainContactPickupsAndEnemyRolesStayIn')
+                    : current.format === 'xonix-playground.v4'
+                      ? t('tools:wideEditionOptionalEquipmentGoalsAreUnavailableTheMapRetains')
+                      : current.format === 'xonix-playground.v3'
+                        ? t('tools:stagedEncounterThisRulesetHasNoOptionalEquipmentGoalsIts')
+                        : current.format === 'xonix-playground.v2'
+                          ? definition
+                            ? t('tools:referencesValidateAgainstThisMapAndRosterPlayTheRoute', {
+                                value1: definition.name,
+                                value2: definition.description,
+                              })
+                            : t('tools:noOptionalGoalThisExplicitChoiceIsRetainedInPractice')
+                          : t('tools:legacyScenarioOnlyExactShippedContentCanUseItsBuilt'),
   );
   $('use-campaign-goal').disabled = noMasteries || !entryMastery(selectedEntry(), current.level.id);
   $('apply-mastery').disabled = noMasteries;
   $('clear-goal').disabled = noMasteries;
   const encounter = current.level.encounter;
-  $('encounter-fields').disabled = !encounter || encounter.version === 'xonix-encounter.v2';
+  $('encounter-fields').disabled =
+    !!current.level.pursuit || !encounter || encounter.version === 'xonix-encounter.v2';
   localizedText($('encounter-readout'), () =>
     encounter?.version === 'xonix-encounter.v2'
       ? t('tools:playground.sentinelEncounter', {
@@ -518,6 +576,12 @@ function drawAssets() {
     'xonix-playground.v7',
     'xonix-playground.v8',
     'xonix-playground.v9',
+    'xonix-playground.v10',
+    'xonix-playground.v11',
+    'xonix-playground.v12',
+    'xonix-playground.v13',
+    'xonix-playground.v14',
+    'xonix-playground.v15',
   ].includes(current.format)
     ? [...VISUAL_ROLES, ...CLASSIC_VISUAL_ROLES]
     : VISUAL_ROLES;
@@ -851,21 +915,34 @@ try {
     fetch('../content/themes.json').then((r) => r.json()),
   ]);
   const recipes = await fetch('../content/classes.json').then((r) => r.json());
+  const baseArtwork = await loadBaseArtwork({ ...campaign, classRecipes: recipes });
   current = {
     format:
-      campaign.levels[0].version === 'xonix-level.v8'
-        ? 'xonix-playground.v9'
-        : campaign.levels[0].version === 'xonix-level.v7'
-          ? 'xonix-playground.v8'
-          : campaign.levels[0].version === 'xonix-level.v6'
-            ? 'xonix-playground.v7'
-            : campaign.levels[0].version === 'xonix-level.v5'
-              ? 'xonix-playground.v6'
-              : campaign.levels[0].version === 'xonix-level.v4'
-                ? 'xonix-playground.v5'
-                : campaign.levels[0].version === 'xonix-level.v3'
-                  ? 'xonix-playground.v4'
-                  : 'xonix-playground.v1',
+      campaign.levels[0].version === 'xonix-level.v15'
+        ? 'xonix-playground.v15'
+        : campaign.levels[0].version === 'xonix-level.v14'
+          ? 'xonix-playground.v14'
+          : campaign.levels[0].version === 'xonix-level.v13'
+            ? 'xonix-playground.v13'
+            : campaign.levels[0].version === 'xonix-level.v12'
+              ? 'xonix-playground.v12'
+              : campaign.levels[0].version === 'xonix-level.v11'
+                ? 'xonix-playground.v11'
+                : campaign.levels[0].version === 'xonix-level.v9'
+                  ? 'xonix-playground.v10'
+                  : campaign.levels[0].version === 'xonix-level.v8'
+                    ? 'xonix-playground.v9'
+                    : campaign.levels[0].version === 'xonix-level.v7'
+                      ? 'xonix-playground.v8'
+                      : campaign.levels[0].version === 'xonix-level.v6'
+                        ? 'xonix-playground.v7'
+                        : campaign.levels[0].version === 'xonix-level.v5'
+                          ? 'xonix-playground.v6'
+                          : campaign.levels[0].version === 'xonix-level.v4'
+                            ? 'xonix-playground.v5'
+                            : campaign.levels[0].version === 'xonix-level.v3'
+                              ? 'xonix-playground.v4'
+                              : 'xonix-playground.v1',
     ...([
       'xonix-level.v3',
       'xonix-level.v4',
@@ -873,6 +950,12 @@ try {
       'xonix-level.v6',
       'xonix-level.v7',
       'xonix-level.v8',
+      'xonix-level.v9',
+      'xonix-level.v11',
+      'xonix-level.v12',
+      'xonix-level.v13',
+      'xonix-level.v14',
+      'xonix-level.v15',
     ].includes(campaign.levels[0].version)
       ? { masteryDefinition: null }
       : {}),
@@ -881,7 +964,7 @@ try {
     settings: { classId: 'scout', turnPolicy: 'immediate', seed: 1 },
     classRecipes: recipes,
     presentation: { style: 'hybrid', showGrid: false },
-    visualOverrides: {},
+    visualOverrides: baseArtwork.levelVisuals[0].visualOverrides,
   };
   current = editorScenario(current);
   baseEntry = {
@@ -892,8 +975,7 @@ try {
     campaign,
     themes: themes.themes,
     classRecipes: recipes,
-    visualOverrides: {},
-    levelVisuals: [],
+    ...baseArtwork,
     music: [],
   };
   catalog = [baseEntry];
@@ -1161,6 +1243,81 @@ try {
       status(t('tools:editRejected', { value1: error.message }), true);
     }
   };
+  $('route-coverage').onchange = () => {
+    try {
+      const classic = { ...current.level.classic };
+      if ($('route-coverage').checked) classic.coverage = { version: ROUTE_COVERAGE };
+      else delete classic.coverage;
+      const next = editScenario(current, { level: { ...current.level, classic } });
+      remember();
+      current = next;
+      sync();
+    } catch (error) {
+      sync();
+      status(error.message, true);
+    }
+  };
+  $('symbol-generator').addEventListener('input', () => {
+    invalidateSymbolPreview();
+    $('symbol-image-fields').hidden = $('symbol-source').value !== 'image';
+    $('symbol-text-field').hidden = $('symbol-source').value !== 'text';
+  });
+  $('seed-input').addEventListener('input', invalidateSymbolPreview);
+  $('symbol-preview-button').onclick = async () => {
+    const ticket = beginImport(t('tools:symbolPreparing'));
+    const options = symbolOptions(),
+      file = $('symbol-file').files[0];
+    invalidateSymbolPreview();
+    try {
+      const mask =
+        options.source === 'image'
+          ? await imageSymbolMask(file, options)
+          : await textSymbolMask(options.text);
+      assertImportCurrent(ticket);
+      if (
+        JSON.stringify(options) !== JSON.stringify(symbolOptions()) ||
+        file !== $('symbol-file').files[0]
+      )
+        throw new Error(t('tools:symbolChanged'));
+      const level = generateSymbolLevel(mask, options);
+      const candidate = editScenario(current, {
+        format: 'xonix-playground.v6',
+        level,
+        masteryDefinition: null,
+        visualOverrides: visualsForLevelReplacement(current, 'xonix-playground.v6'),
+      });
+      paintEditorMap($('symbol-preview'), candidate);
+      $('symbol-preview').hidden = false;
+      symbolPreview = { candidate, before: JSON.stringify(current), editRevision };
+      $('symbol-apply').disabled = false;
+      const budget = analyzeRouteCoverage(level);
+      $('symbol-preview-status').textContent = t('tools:routeCoverageCounts', {
+        count: budget.total,
+        excluded: budget.excluded,
+      });
+      status(t('tools:symbolReady'));
+    } catch (error) {
+      if (importCurrent(ticket)) status(error.message, true);
+    } finally {
+      finishImport(ticket);
+    }
+  };
+  $('symbol-apply').onclick = () => {
+    if (
+      !symbolPreview ||
+      symbolPreview.editRevision !== editRevision ||
+      symbolPreview.before !== JSON.stringify(current)
+    ) {
+      invalidateSymbolPreview();
+      status(t('tools:symbolChanged'), true);
+      return;
+    }
+    const candidate = symbolPreview.candidate;
+    remember();
+    current = candidate;
+    sync();
+    status(t('tools:symbolApplied'));
+  };
   $('generate-button').onclick = async () => {
     const ticket = beginImport(t('tools:generatingAndValidatingTheNewMap'));
     try {
@@ -1175,6 +1332,12 @@ try {
           'xonix-playground.v7',
           'xonix-playground.v8',
           'xonix-playground.v9',
+          'xonix-playground.v10',
+          'xonix-playground.v11',
+          'xonix-playground.v12',
+          'xonix-playground.v13',
+          'xonix-playground.v14',
+          'xonix-playground.v15',
         ].includes(current.format)
           ? {
               format: 'xonix-playground.v2',
@@ -1237,6 +1400,26 @@ try {
     if (cell) paintAt(cell.x, cell.y);
   });
   $('paint-cell').onclick = () => paintAt(Number($('paint-x').value), Number($('paint-y').value));
+  registerAuthoringEditor(
+    $('map-editor'),
+    createGridEditorAdapter({
+      element: $('map-editor'),
+      dimensions: () => [Number($('paint-x').max) + 1, Number($('paint-y').max) + 1],
+      position: () => [Number($('paint-x').value), Number($('paint-y').value)],
+      move: ([x, y]) => {
+        $('paint-x').value = x;
+        $('paint-y').value = y;
+      },
+      apply: () => paintAt(Number($('paint-x').value), Number($('paint-y').value)),
+      changed: () => {
+        $('map-editor').setAttribute(
+          'aria-label',
+          `${t('tools:mapEditedPlayConfigurationToTestTheActualBehavior')} X ${$('paint-x').value}, Y ${$('paint-y').value}`,
+        );
+      },
+    }),
+    { keyboard: true },
+  );
   $('undo-button').onclick = () => {
     const undo = $('undo-button'),
       ownedFocus = document.activeElement === undo,
@@ -1480,7 +1663,11 @@ try {
       if (text.length > MAX_REPLAY_BYTES) throw new Error(t('tools:replayExceedsTheImportBudget'));
       if (epoch !== replayEpoch) return;
       lease.update({ message: t('tools:verifyingRecordedSimulation') });
-      const result = await verifyReplayAsync(text, {
+      const source = JSON.parse(text);
+      const verify = LOCAL_MATCH_RECORDINGS.includes(source.format)
+        ? verifyLocalMatchRecordingAsync
+        : verifyReplayAsync;
+      const result = await verify(source, {
         signal,
         onProgress: (p) => {
           if (epoch === replayEpoch)
@@ -1492,15 +1679,29 @@ try {
       if (epoch !== replayEpoch) return;
       localizedText($('replay-result'), () =>
         JSON.stringify(
-          { match: result.match, diagnostics: result.diagnostics, actual: result.actual.summary },
+          {
+            match: result.match,
+            verificationScope: result.verificationScope,
+            exactStateMatch: result.exactStateMatch,
+            terminalObservationMatch: result.terminalObservationMatch,
+            diagnostics: result.diagnostics,
+            actual: result.actual.summary,
+          },
           null,
           2,
         ),
       );
       lease.finish({
-        message: result.match
-          ? t('tools:replayMatchesItsFullRecordedSimulationState')
-          : t('tools:replayDiffersCheckTheReportedStateSections'),
+        message:
+          result.terminalObservationMatch !== undefined && result.terminalObservationMatch !== null
+            ? t(
+                result.match
+                  ? 'tools:recordingTerminalObservationsMatch'
+                  : 'tools:recordingTerminalObservationsDiffer',
+              )
+            : result.match
+              ? t('tools:replayMatchesItsFullRecordedSimulationState')
+              : t('tools:replayDiffersCheckTheReportedStateSections'),
         state: result.match ? 'ready' : 'error',
       });
     } catch (error) {
@@ -1566,4 +1767,15 @@ try {
     element.removeAttribute('aria-busy');
   });
   $('boot-status').hidden = true;
+  openRecordingVerificationSection({
+    document,
+    location: window.location,
+    focus:
+      !document.activeElement ||
+      document.activeElement === document.body ||
+      document.activeElement === document.documentElement,
+  });
 }
+window.addEventListener('hashchange', () =>
+  openRecordingVerificationSection({ document, location: window.location, focus: true }),
+);

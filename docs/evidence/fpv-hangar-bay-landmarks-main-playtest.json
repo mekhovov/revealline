@@ -1,0 +1,10 @@
+{
+  "format": "FPVPlaytestBuild.v1",
+  "entry": "optional-practice/fpv-worlds/index.html",
+  "files": 94,
+  "bytes": 15402587,
+  "zipSha256": "775594f1b8cd3b373726bb27db40b6aabfcc0b3bb182f3ac729873546c429503",
+  "qualification": "development-playtest",
+  "unitTests": "deferred-to-final-phase",
+  "releaseQualified": false
+}

@@ -1,0 +1,278 @@
+TAP version 13
+# Subtest: Studio links keep the exact release route under http://localhost/
+ok 1 - Studio links keep the exact release route under http://localhost/
+  ---
+  duration_ms: 1.546834
+  ...
+# Subtest: Studio links keep the exact release route under https://mekhovov.github.io/revealline/releases/v0.69.1/site/
+ok 2 - Studio links keep the exact release route under https://mekhovov.github.io/revealline/releases/v0.69.1/site/
+  ---
+  duration_ms: 0.206458
+  ...
+# Subtest: Studio links keep the exact release route under https://mekhovov.github.io/revealline-archive-36/releases/v0.68.2/site/
+ok 3 - Studio links keep the exact release route under https://mekhovov.github.io/revealline-archive-36/releases/v0.68.2/site/
+  ---
+  duration_ms: 0.270209
+  ...
+# Subtest: navigation hints cannot supply arbitrary destinations, launch commands or duplicate context
+ok 4 - navigation hints cannot supply arbitrary destinations, launch commands or duplicate context
+  ---
+  duration_ms: 0.649791
+  ...
+# Subtest: consuming the UI hint preserves history state and the Journey route, without storage
+ok 5 - consuming the UI hint preserves history state and the Journey route, without storage
+  ---
+  duration_ms: 2.207125
+  ...
+# Subtest: actual Solo boot returns to the Studio opener and Back restores Workshop on Home without starting
+ok 6 - actual Solo boot returns to the Studio opener and Back restores Workshop on Home without starting
+  ---
+  duration_ms: 2561.160834
+  ...
+# Subtest: actual Solo outgoing Studio link preserves its authored Journey route
+ok 7 - actual Solo outgoing Studio link preserves its authored Journey route
+  ---
+  duration_ms: 1222.702666
+  ...
+# Subtest: Workshop restoration does not cover a newer dialog owner
+ok 8 - Workshop restoration does not cover a newer dialog owner
+  ---
+  duration_ms: 2080.454
+  ...
+# Subtest: Workshop restoration does not cover a newer dispose owner
+ok 9 - Workshop restoration does not cover a newer dispose owner
+  ---
+  duration_ms: 1833.774875
+  ...
+# Subtest: Workshop restoration does not cover a newer hidden owner
+ok 10 - Workshop restoration does not cover a newer hidden owner
+  ---
+  duration_ms: 1584.333833
+  ...
+# Subtest: Workshop restoration does not cover a newer blurred owner
+ok 11 - Workshop restoration does not cover a newer blurred owner
+  ---
+  duration_ms: 1427.376958
+  ...
+# Subtest: Workshop restoration does not cover a newer focus owner
+ok 12 - Workshop restoration does not cover a newer focus owner
+  ---
+  duration_ms: 1278.297375
+  ...
+# Subtest: early Studio entry enables links only after assigning their complete fixed destinations
+ok 13 - early Studio entry enables links only after assigning their complete fixed destinations
+  ---
+  duration_ms: 1.079625
+  ...
+# Subtest: Theme Studio opens the real workspace editor and shared material gallery without editing a theme
+ok 14 - Theme Studio opens the real workspace editor and shared material gallery without editing a theme
+  ---
+  duration_ms: 650.410458
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+ok 15 - saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+  ---
+  duration_ms: 2739.996709
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+ok 16 - saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+  ---
+  duration_ms: 2591.261875
+  ...
+# Subtest: missing exact basis stays portable and editable without silently becoming latest Industrial
+ok 17 - missing exact basis stays portable and editable without silently becoming latest Industrial
+  ---
+  duration_ms: 941.352875
+  ...
+# Subtest: v1 native data remains exact and malformed or unversioned basis metadata is rejected
+ok 18 - v1 native data remains exact and malformed or unversioned basis metadata is rejected
+  ---
+  duration_ms: 878.492
+  ...
+# Subtest: workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+ok 19 - workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+  ---
+  duration_ms: 803.209791
+  ...
+# Subtest: Studio chrome lists and immediately applies admitted custom themes without editing the workspace
+ok 20 - Studio chrome lists and immediately applies admitted custom themes without editing the workspace
+  ---
+  duration_ms: 272.978834
+  ...
+# Subtest: role inspector uses runtime semantics without inline paint or stealing selector focus
+ok 21 - role inspector uses runtime semantics without inline paint or stealing selector focus
+  ---
+  duration_ms: 879.82575
+  ...
+# Subtest: duplicate flattens selected appearance without carrying theme history
+ok 22 - duplicate flattens selected appearance without carrying theme history
+  ---
+  duration_ms: 540.1155
+  ...
+# Subtest: workspace migration is atomic, idempotent and leaves the legacy recovery copy
+ok 23 - workspace migration is atomic, idempotent and leaves the legacy recovery copy
+  ---
+  duration_ms: 1761.876167
+  ...
+# Subtest: independent workspaces reject identity collisions and stale saves without growing each other
+ok 24 - independent workspaces reject identity collisions and stale saves without growing each other
+  ---
+  duration_ms: 1985.799583
+  ...
+# Subtest: failed independent workspace creation publishes neither entry nor bytes
+ok 25 - failed independent workspace creation publishes neither entry nor bytes
+  ---
+  duration_ms: 398.462417
+  ...
+# Subtest: explicit replacement preserves imported identity and a recoverable prior generation
+ok 26 - explicit replacement preserves imported identity and a recoverable prior generation
+  ---
+  duration_ms: 1651.407333
+  ...
+# Subtest: inspection reports exact role provenance and token contrast without claiming visual approval
+ok 27 - inspection reports exact role provenance and token contrast without claiming visual approval
+  ---
+  duration_ms: 271.316833
+  ...
+# Subtest: maximum-length identities migrate and replace into bounded loadable recovery IDs
+ok 28 - maximum-length identities migrate and replace into bounded loadable recovery IDs
+  ---
+  duration_ms: 2110.508458
+  ...
+# Subtest: snapshot drops unbound historical assets while preserving derivative provenance
+ok 29 - snapshot drops unbound historical assets while preserving derivative provenance
+  ---
+  duration_ms: 433.583667
+  ...
+# Subtest: edition navigation retains the exact tool-return owner inside its installed root
+ok 30 - edition navigation retains the exact tool-return owner inside its installed root
+  ---
+  duration_ms: 3.957
+  ...
+# Subtest: retained presentation stays scoped across game and replay/controller tool returns
+ok 31 - retained presentation stays scoped across game and replay/controller tool returns
+  ---
+  duration_ms: 0.90075
+  ...
+# Subtest: all ten tools retain exact edition routes under http://localhost/
+ok 32 - all ten tools retain exact edition routes under http://localhost/
+  ---
+  duration_ms: 3.047875
+  ...
+# Subtest: all ten tools retain exact edition routes under https://example.test/releases/v0.69.3/site/
+ok 33 - all ten tools retain exact edition routes under https://example.test/releases/v0.69.3/site/
+  ---
+  duration_ms: 1.59175
+  ...
+# Subtest: all ten tools retain exact edition routes under https://example.test/archive/releases/v0.68.2/site/
+ok 34 - all ten tools retain exact edition routes under https://example.test/archive/releases/v0.68.2/site/
+  ---
+  duration_ms: 3.196875
+  ...
+# Subtest: finite tools and competing launch owners cannot be overridden by a return hint
+ok 35 - finite tools and competing launch owners cannot be overridden by a return hint
+  ---
+  duration_ms: 5.89025
+  ...
+# Subtest: Theme Studio is a fixed shared-editor view with its own return owner
+ok 36 - Theme Studio is a fixed shared-editor view with its own return owner
+  ---
+  duration_ms: 0.733291
+  ...
+# Subtest: history consumption preserves unrelated route and state and tolerates unavailable history
+ok 37 - history consumption preserves unrelated route and state and tolerates unavailable history
+  ---
+  duration_ms: 2.281541
+  ...
+# Subtest: every standalone tool keeps a same-edition game exit before any module loads
+ok 38 - every standalone tool keeps a same-edition game exit before any module loads
+  ---
+  duration_ms: 24.058583
+  ...
+# Subtest: all standalone pages prepare both returns before enabling and retain cross-tool hints
+ok 39 - all standalone pages prepare both returns before enabling and retain cross-tool hints
+  ---
+  duration_ms: 13.871458
+  ...
+# Subtest: actual Solo boot returns asset-studio to its own Workshop opener without advancing or saving
+ok 40 - actual Solo boot returns asset-studio to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 2661.054375
+  ...
+# Subtest: actual Solo boot returns theme-studio to its own Workshop opener without advancing or saving
+ok 41 - actual Solo boot returns theme-studio to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 2067.017583
+  ...
+# Subtest: actual Solo boot returns playground to its own Workshop opener without advancing or saving
+ok 42 - actual Solo boot returns playground to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1807.126375
+  ...
+# Subtest: actual Solo boot returns enemy-catalog to its own Workshop opener without advancing or saving
+ok 43 - actual Solo boot returns enemy-catalog to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1796.890583
+  ...
+# Subtest: actual Solo boot returns motion-lab to its own Workshop opener without advancing or saving
+ok 44 - actual Solo boot returns motion-lab to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1515.725792
+  ...
+# Subtest: actual Solo boot returns still-media to its own Workshop opener without advancing or saving
+ok 45 - actual Solo boot returns still-media to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1298.714292
+  ...
+# Subtest: actual Solo boot returns video-poster to its own Workshop opener without advancing or saving
+ok 46 - actual Solo boot returns video-poster to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1215.6265
+  ...
+# Subtest: actual Solo boot returns design-atlas to its own Workshop opener without advancing or saving
+ok 47 - actual Solo boot returns design-atlas to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1306.373834
+  ...
+# Subtest: actual Solo boot returns replay-theater to its own Workshop opener without advancing or saving
+ok 48 - actual Solo boot returns replay-theater to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1036.264833
+  ...
+# Subtest: actual Solo boot returns controller-lab to its own Workshop opener without advancing or saving
+not ok 49 - actual Solo boot returns controller-lab to its own Workshop opener without advancing or saving
+  ---
+  duration_ms: 1090.593584
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/workshop-return.test.mjs:286:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'shell-guide'
+    - 'shell-controller-lab'
+             ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'shell-controller-lab'
+  actual: 'shell-guide'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/appearance-publish-20261002/game/test/workshop-return.test.mjs:291:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: company tool routes retain only a valid single edition through exact-release return
+ok 50 - company tool routes retain only a valid single edition through exact-release return
+  ---
+  duration_ms: 1.614458
+  ...
+1..50
+# tests 50
+# suites 0
+# pass 49
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23951.516875

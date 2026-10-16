@@ -1,0 +1,49 @@
+{
+  "format": "revealline-discovery-comparison-record.v1",
+  "qualified": false,
+  "baselineCommit": "a0eefe5780756bf063f5e13af536da0e75010740",
+  "candidateCommit": "de4cec8ba208ba01caac6aa9fdbdbc0e2073dff8",
+  "baselineDistributionSha256": "35adf3aeb8a5fd6058d136d96d0858a871fec95f72bf2bf1f0e278b4eff6ad99",
+  "candidateDistributionSha256": "16ba0548d23f9390982ee95dbad73882a0d9eb21d3bf2ea4c6a98f2121ebb018",
+  "observerCommit": "a0eefe5780756bf063f5e13af536da0e75010740",
+  "files": [
+    {
+      "path": "discovery-2026-09-28-baseline-active-play.json",
+      "bytes": 7051,
+      "sha256": "e94087c0bd1112be6397668f95046a7575e8ea60d3979306074396addae3f702"
+    },
+    {
+      "path": "discovery-2026-09-28-baseline-result-entry.json",
+      "bytes": 7113,
+      "sha256": "9d5e4d16052f30b46a34f87cc16734fe02c5f001ffa73e8b19accf6b5468b4cd"
+    },
+    {
+      "path": "discovery-2026-09-28-current-active-play.json",
+      "bytes": 5040,
+      "sha256": "c5db2c1f5aa32caf3a50771b911666ac1e1580c7b2197aa2a76e797b707b7ae7"
+    },
+    {
+      "path": "discovery-2026-09-28-current-result-entry.json",
+      "bytes": 11153,
+      "sha256": "d0616efd7e51c3eef0d0198858e39ad67182bc06900ad2a66e7db6a0f41d697f"
+    },
+    {
+      "path": "discovery-2026-09-28-comparison-active-play.json",
+      "bytes": 915,
+      "sha256": "8b1760678e474783d7bb47b0377d4cba31aac4be9c0f1704132562b33735695b"
+    },
+    {
+      "path": "discovery-2026-09-28-comparison-result-entry.json",
+      "bytes": 917,
+      "sha256": "1690c5ae2650d58b3668c8d855c710e20711bb2dd6d9bf177ca952b348b60fef"
+    }
+  ],
+  "method": "Two exact independently admitted FPV Learning distributions, same local Mac/browser/viewport/settings and identical frozen passive observer. Separate fresh browser profiles; ordinary trusted controls; first accepted 20-second sample per scenario. Raw reports preserve rejected attempts. No progress injection.",
+  "limitations": [
+    "A single accepted sample per case does not establish statistical confidence or general responsiveness.",
+    "Stationary active play does not represent sustained player input; routes and final scores differed in the normal-win samples.",
+    "Page-wide long tasks do not isolate reward-rendering time. Detached owners, object URLs and decoder retention remain unverified.",
+    "Neither report establishes installation, physical-device, human review or publication qualification.",
+    "The current CI run completed checks, compilation and upload but ended cancelled at its job time limit; these desktop observations do not override that conclusion."
+  ]
+}

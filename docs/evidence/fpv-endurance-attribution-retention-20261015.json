@@ -1,0 +1,75 @@
+{
+  "format": "FPVEnduranceAttributionRetentionReceipt.v1",
+  "testedUTC": "2026-10-15T19:37:59.393547+00:00",
+  "sourceBase": "a201b3789b21b74340e752108b650633cc73d4c4",
+  "node": "v20.19.5",
+  "scope": "Deterministic authoring diagnostic retention correction only. Injected observer times are not elapsed flight, browser performance, caller or GC attribution. Fresh exact-head native gate remains open.",
+  "priorNativeReport": {
+    "file": "authored-urban-five-minute-attribution-20261015.json",
+    "bytes": 195323,
+    "sha256": "67c26fd91a8ea640dc2ad5195fab4a039f084d2049d8054eac8d7812721d6fe5",
+    "longAnimationFrames": 4,
+    "rowsWithEmptyOverlaps": 4,
+    "finalOldestSpanElapsedMs": 299758.10000000894,
+    "overwrittenSpans": 153435,
+    "preservedUnchanged": true,
+    "notRetroactivelyRepaired": true
+  },
+  "redRegression": {
+    "file": "d6-attribution-retention-red-20261015.tap",
+    "sha256": "d23821d48aec96013ea1c04fc1b83cc00a417f80191056c627f58bde6b562c5b",
+    "delayedSnapshotReproducedLostEarlyAssociations": true
+  },
+  "focusedTests": {
+    "command": "node --test game/test/fpv-endurance-attribution.test.mjs",
+    "summary": {
+      "tests": 6,
+      "pass": 6,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "tapSHA256": "1ec43ebb12d4aeca83e580254c9e8b7de3db89f99d026a1a0b78307e48bfab7e"
+  },
+  "existingAttributionVerifier": {
+    "passed": true,
+    "groups": 7,
+    "receiptSHA256": "92004ff3f13d2a28bc56b199761dddb0f87e10728bd77f71a1c7e02f478d3d7d",
+    "unchangedClockRejectsGapAbove250ms": true
+  },
+  "files": [
+    {
+      "path": "authoring/fpv-worlds/regions/endurance-attribution.mjs",
+      "bytes": 12056,
+      "sha256": "fcfbf3e0519bebefdd1ced6596924d394f60176ed48146310ff120e58ef65d40"
+    },
+    {
+      "path": "game/test/fpv-endurance-attribution.test.mjs",
+      "bytes": 6392,
+      "sha256": "616b3562b9ef9b275702850c279a7690f385ea0003d17b89ba0190afa31080fd"
+    }
+  ],
+  "bounds": {
+    "spanWindow": 128,
+    "retainedLoAFs": 16,
+    "scriptsPerFrame": 8,
+    "overlapExamplesPerFrame": 12
+  },
+  "lint": "new unit file passed with zero warnings; authoring module Node syntax check passed",
+  "formatting": "repository Prettier configuration passed",
+  "unchanged": [
+    "production runtime",
+    "clock/duration/route behavior",
+    "250ms acceptance gate",
+    "root1510durationbranch",
+    "raw native reports and frozen origins",
+    "player data"
+  ],
+  "remaining": [
+    "exact-head cloud recordings and normal repository checks",
+    "independent source review",
+    "root serial fresh exact native diagnostic",
+    "actual two-hour reliability and physical/device qualification"
+  ]
+}

@@ -11,8 +11,12 @@ release claims.
 - Creator hardening: PR #564, merged as
   `5d6c97c850a648c5ebe93d3cf57731aeb67d0bbb`.
 - Creator baseline release: `v0.141.0`, frozen from that exact creator-hardening source.
-- Current stable release: `v0.141.2`, frozen from community-hardening source
-  `12978e5fd3fe0ce70bbee96aa543f569f64622d4` and selected on Pages by PR #677.
+- Current cumulative immutable GitHub release: `v0.142.3`, frozen from exact source
+  `b5ab06e12542f72e33c45b973ba693a5e1509c1c`. Git ancestry confirms that it contains the creator
+  baseline, community hardening and production-session automation. The
+  [v0.141.6 public acceptance record](../../docs/community-v01416-public-acceptance.md) remains the
+  latest creator-specific exact deployed-byte and built-in-browser evidence; ancestry alone does
+  not extend that acceptance to later releases.
 - Creator-baseline predecessor preservation: Archive 94 publicly preserves `v0.132.5`.
 - Creator-baseline production selector: PR #673, merged as
   `44a6ce672632a2d30cbf94374b172e213b75063c`.
@@ -35,6 +39,13 @@ fault proxy, source-to-target recovery rehearsal, and bounded deployed two-user 
 already released community API. Exact-head local coverage passes 556/556, including the direct
 63/63 service suite. Live infrastructure execution remains a separate acceptance record. See the
 bounded [v0.141.2 publication evidence](v0.141.2-publication-evidence.md).
+
+Verified production-session automation merged through PR #723 as
+`fdccf4a4d6eae8470fe42ff225fac6fd61cc26c3` and is contained in `v0.142.0` through `v0.142.3`.
+It bounds sign-in response bodies and timeouts, rejects ambiguous credentials, exchanges verified
+accounts for short-lived session cookies and keeps passwords and cookies out of receipts. Live
+TLS/proxy, mail delivery, administrator browser moderation and selected-volume restore remain
+environment-dependent acceptance rather than missing source implementation.
 
 ## Included behavior
 
@@ -254,6 +265,8 @@ The remaining acceptance is environment-dependent: live community infrastructure
 two-user journey need 0.5–1 day after PostgreSQL/proxy/mail/blob infrastructure is available;
 Firefox, Safari, physical mobile, physical-speaker and broader-codec qualification need 1–2 days
 when those environments are available. Genuine browser-wide quota exhaustion, deliberate storage
-corruption and measured peak-memory acceptance also remain unclaimed. `v0.141.3` is the highest
-published stable release, while Pages still selects `v0.141.2`; earlier working allocations are stale. Future candidates require
-fresh allocation after checking the open `v0.142.0` through `v0.149.x` ranges.
+corruption and measured peak-memory acceptance also remain unclaimed. `v0.141.6` is the highest
+published stable release and the accepted Pages edition. Archive99 preserves v0.141.5, and selector
+PR #703 plus production run `36272082479` completed the exact public-byte audit. Earlier working
+allocations are stale. Future candidates require fresh allocation after checking the open `v0.142.0`
+through `v0.149.x` ranges.

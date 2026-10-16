@@ -12,6 +12,7 @@ import {
   applyJourneyPictureEvent,
   journeyPictureCompletion,
 } from '../journey/pictures.mjs';
+import { emptyJourneyStars } from '../journey/stars.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 function completion(overrides = {}) {
@@ -82,6 +83,36 @@ test('strict historical profile receipts remain unchanged; exact picture descrip
   assert.deepEqual(await createJourneyBackend(disk).read(), emptyJourneyProfile());
 });
 
+test('picture and star sidecars commit and round-trip together without changing v1 receipts', async () => {
+  const disk = managedIndexedDB(),
+    { backend, profile } = store(disk);
+  await profile.load();
+  disk.failAnyPutAt = 3;
+  profile.record({ ...completion(), stars: 3 });
+  assert.equal(await profile.flush(), false);
+  assert.deepEqual(await backend.readState(), {
+    profile: emptyJourneyProfile(),
+    pictures: emptyJourneyPictures(),
+    stars: emptyJourneyStars(),
+  });
+  const exported = profile.export();
+  assert.equal(JSON.parse(exported).format, 'revealline-journey-backup.v5');
+  disk.failAnyPutAt = null;
+  assert.equal(await profile.flush(), true);
+  const restored = store(managedIndexedDB()).profile;
+  restored.restore(exported);
+  assert.equal(await restored.flush(), true);
+  assert.deepEqual(restored.pictures(), profile.pictures());
+  assert.deepEqual(restored.stars(), profile.stars());
+  assert.equal(restored.bestStars('solo', 'candidate/p/c/l'), 3);
+  assert.deepEqual(restored.snapshot(), profile.snapshot());
+  assert.deepEqual(Object.keys(restored.snapshot().clears.solo['candidate/p/c/l']), [
+    'runId',
+    'gameplayId',
+    'difficulty',
+  ]);
+});
+
 test('failure of the second write rolls back both receipts; session original exports and retries atomically', async () => {
   const disk = managedIndexedDB(),
     { backend, profile } = store(disk);
@@ -92,6 +123,7 @@ test('failure of the second write rolls back both receipts; session original exp
   assert.deepEqual(await backend.readState(), {
     profile: emptyJourneyProfile(),
     pictures: emptyJourneyPictures(),
+    stars: emptyJourneyStars(),
   });
   assert.equal(profile.pictures().records[0].asset.sha256, 'a'.repeat(64));
   const backup = JSON.parse(profile.export());

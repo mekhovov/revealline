@@ -1,0 +1,5087 @@
+{
+  "format": "FPVSchoolAlternateBrowserReceipt.v1",
+  "status": "passed",
+  "candidateHostSha256": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49",
+  "sourceFiles": {
+    "optional-practice/civilian-fpv/world-app.mjs": "053dbfb4a3e0f2fbf8dfe3685a865368e314d845f8dc451fe9e59a275f52ae49",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "14f8523c829e9bdfdf8db5efb59169075be6045425222c615b846817694d24cc",
+    "game/data-json.mjs": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+    "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+    "game/vendor/i18next-26.4.2.min.js": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+    "game/i18n/catalogs.mjs": "150f60e0ee7d0c281f026ccf76b11d02d73b6022e0097dec89875987e844fb3b",
+    "game/i18n/bootstrap.mjs": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933",
+    "optional-practice/civilian-fpv/math.mjs": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+    "optional-practice/civilian-fpv/rotation-table.mjs": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+    "optional-practice/civilian-fpv/flight-sectors.mjs": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs": "a77f55d138fadd3642ae4cd20326d6f9ab8fc9fdce34a2497d6741b51ea3897a",
+    "optional-practice/civilian-fpv/expressive-hunt-courses.mjs": "732c6d72dded07e7541965b3c250cfe339dd98ea49d22d2085b856cb869b9ede",
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "a80ec4ac0f35170e7f18c4deea11bf9d25f328d374ec7af0e8af8ad30472ca81",
+    "game/hunt/presentation-catalog.mjs": "cf39bc033b1f3263f21481f04c7595bac7a06a4613759b90594855834d067796",
+    "game/hunt/actor-catalog.mjs": "a9d232092d58262ccd1008577b27ef8a99cb41abf8e3e962a2f34f3b8bc0df92",
+    "game/hunt/preferences.mjs": "1dcc93e3b50f8964150731f97c22335d73aae413114712c0528b012acabb4324",
+    "game/encounter-display-preferences.mjs": "6cd94187c299eaaa4cb14790c12d84388fb8d8dd4a5b48902dadd74dc6475b03",
+    "optional-practice/civilian-fpv/demonstrations.mjs": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa",
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114",
+    "optional-practice/civilian-fpv/world-model.mjs": "ce94192472f8cc0be1a70ec2dcdf7dc728956f55f589bb84335c851737f54d3e",
+    "optional-practice/civilian-fpv/world-themes.mjs": "67abda8ff53ba18e9aede45c57a8f9ec599dc0ddf7c977ce1d8ad2524e6c5549",
+    "game/presentation/theme-system.mjs": "317e107e509f94449050c52f1756bd8436691f0d92bb8185aed697b3ba3127d6",
+    "optional-practice/civilian-fpv/snake-hunt.mjs": "39ce47e8aaae6d7f3e70b8708d52fe2d22e90119318383f8298d8d0c4cc568da",
+    "optional-practice/civilian-fpv/world-collision.mjs": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32",
+    "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+    "optional-practice/civilian-fpv/beginner-coach.mjs": "20978a85d7f6e2a2e516bfcbbd08eb7798557b25b3aa9c48878473d694d2a39c",
+    "optional-practice/civilian-fpv/input.mjs": "2d2bb875278e727f589de4e71300ebe1a3640b278abea8f067a79ba06f1d159a",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "ef8890ad20ef190e0c7ef6c0d24d933ce587a752cb4f24f55877d353982409d5",
+    "game/ui/native-menu-icons.mjs": "8a0a3b8c739e3c55708f8b634df6292103cbc37324313969b2d8346be5ab49db",
+    "optional-practice/civilian-fpv/radio-runtime.mjs": "3d908c7f6f1295fddacb952fadfc327206153248dbf5222ef31677eb4ff8f71b",
+    "optional-practice/civilian-fpv/radio-session.mjs": "98fdd029f1deb9eb6b51f2ae2f8fb5c441e2b3a7a2aca520a7e9ce5e267e80ef",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "d4c091a8539221e71e39a12436af45a681a21e13f5468b8b4ecccd1b4c05e7d6",
+    "optional-practice/civilian-fpv/radio-controls.mjs": "ec81c8b2d7cfe8586a7b73ef0887972019c7c1c39e64e6f32ea0d39437d7d4fb",
+    "optional-practice/civilian-fpv/radio-guide.mjs": "52685411b2099492a1bb26ffed12911c2a006fae971229a08147c0ddfd81a2b1",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "f60358ea99f70f1afe9ff16ce0323ad1b5d9a92e742ecf1544b241faa6e59efc",
+    "optional-practice/civilian-fpv/notebook.mjs": "74159518b1c79be1c2858503cd8ddee79aed8796e9b21bf6a9a8721d5099a129",
+    "game/rewards/model.mjs": "1f7ac62d4c5e9a01d1435e93116d7b59eb9bac8c4714769a9abaaba98d790d92",
+    "game/rewards/learning-profiles.mjs": "f24f81f972c921c7d3f89713c8a470086affd0b420783c1ab97cb15c6de4dc1d",
+    "game/rewards/exploration.mjs": "e997a52802aee1410f06faa75ca4984958fd979d495b1b34b0ee2582c5628ccd",
+    "game/rewards/audio-groups.mjs": "85e1340e57dc925927830d6dd436d7b3da4b459f781e5f989d8efbbe54a44b6b",
+    "game/rewards/store.mjs": "0d12e0e1b83e55a8103c9efe9bfde90291005150dac766af7ee42bd51f91521f",
+    "game/profile-storage.mjs": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec",
+    "game/profile-database.mjs": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c",
+    "game/ui/reward-knowledge.mjs": "77232a28c5112c0d20c291ca629bebbd908ca9945344bb997e0a4b392a8e931b",
+    "optional-practice/civilian-fpv/attempts.mjs": "5353e993c615dbb7091ab5d50497db82e71d3970f1587e6bb1398cc565be2494",
+    "optional-practice/civilian-fpv/playlists.mjs": "ed81b450bc268cf8096fe14a7c1a46e9a5fca0c32ff8fdedad3c356955280a77",
+    "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27",
+    "optional-practice/civilian-fpv/world-content.mjs": "aa3788b42d2e6379be68a4d76abb10667e7adb260fe00580a963ab09324f0df0",
+    "optional-practice/civilian-fpv/content-definitions.mjs": "e3808d22cc3dc294311533a16164aced16f342eb9d4b1b22b77d279b2e8dcbfd",
+    "optional-practice/civilian-fpv/world-zip.mjs": "874b371c817810a5869bc3ba37c94ff6fae4fc5cd418298f35340d2ce09039c8",
+    "optional-practice/civilian-fpv/world-store.mjs": "67aca935d0dd889db2310e2df9a4649d6755901e3d82990905b27ba15dde69b0",
+    "optional-practice/civilian-fpv/offline.mjs": "7baa069758975eaa133ca9625e8ff0b903a92089f5e7ed0f172ba5e525a6f444",
+    "optional-practice/install-context.mjs": "b07afe79491b3f58775b131d59986c581d8df1275ae9d3d148f0a5bd49ea85a3",
+    "optional-practice/civilian-fpv/world-editor.mjs": "06cd81f0036641ca5d3bfe408f843e4db446b9d61c8ca58778e01ee468c9c85c",
+    "optional-practice/civilian-fpv/world-assets.mjs": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+    "optional-practice/civilian-fpv/renderer.mjs": "10577460f906c2f68d611a6ec2b2fbc4b6b652242bc8e89503cb486fa708e680",
+    "optional-practice/civilian-fpv/vendor/three.module.js": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+    "optional-practice/civilian-fpv/vendor/three.core.js": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+    "optional-practice/civilian-fpv/world-visuals.mjs": "053f74a1d42db8373994350010f347ff0d306dfebd05cbdd9bf7df838b73d9e0",
+    "optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js": "03952cb129d558f92b8e6c757fbf7c1f718b3126c4d34f264d574b40ea36054f",
+    "optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js": "259085a7dac89e0840393a9347c77123fbc4206ec2146bf0c29ffc72e14a2800",
+    "optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js": "28017bf37d0ecb0c4be6048db759ff14df729a562464830b064d4cc239c5af17",
+    "optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js": "10f6d3e4c108dff62110f61a76749f9a1826c9781df9c3eb4ca0b5d9d2f5c4a8",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "b853b250484e91f4ca0fae6660605db134cac87aa47522aea07fd52c7fdbf1e2",
+    "game/hunt/actor-art.mjs": "c1373ba06450ee95be32d530f0bc85311d4f38d82244a65fc52d252c920e746b",
+    "game/fpv-entry.mjs": "f994c064b82e04c2f218f748b9e745800fc6cc32163c51b40876a572c3c4fd42",
+    "optional-practice/fpv-worlds/index.html": "14c95d4de571c8eccd5f091edcd9c0da345b7a2ca0f5c444252032d309b04d7b"
+  },
+  "archives": [
+    {
+      "file": "archives/fpv-school-acro-proof-part-1-of-1.json",
+      "input": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-acro-proof-part-1-of-1.json",
+      "sha256": "81f5a88402188a5632991e53ed3e5fbabd919ffcdbeb7916c0acc91ca0937422",
+      "bytes": 176551,
+      "mode": "acro",
+      "part": 1,
+      "parts": 1,
+      "archiveId": "a25cb76a965972ffa13da62542dc4c574f9356f53efe8eba7681c1f6d7500a96",
+      "records": 12
+    },
+    {
+      "file": "archives/fpv-school-self-level-proof-part-1-of-1.json",
+      "input": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-self-level-proof-part-1-of-1.json",
+      "sha256": "db03219d3e9925b34e7d99769af3ba630ac94f8148365d906b3d88a200ad4c2b",
+      "bytes": 603794,
+      "mode": "self-level",
+      "part": 1,
+      "parts": 1,
+      "archiveId": "059a87575dba77e3847605262f4278e1b7216884ecdf501df9a8855a456d619b",
+      "records": 16
+    }
+  ],
+  "sourceRevision": "8f5a97373e10c289f2bec8d120f21b2179fe564c",
+  "candidateInput": "dist/fpv-railworks-wagon-admitted-player-9efa36364",
+  "expectedPairs": [
+    {
+      "id": "beginner-01",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-02",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-03",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-04",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-05",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-06",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-07",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-08",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-09",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-10",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-11",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-12",
+      "mode": "acro"
+    },
+    {
+      "id": "beginner-27",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-28",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-29",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-30",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-31",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-32",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-33",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-34",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-35",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-36",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-37",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-38",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-39",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-40",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-41",
+      "mode": "self-level"
+    },
+    {
+      "id": "beginner-42",
+      "mode": "self-level"
+    }
+  ],
+  "reusedPlayer": {
+    "path": "dist/fpv-railworks-wagon-admitted-player-9efa36364",
+    "receipt": "docs/evidence/fpv-railworks-admitted-player.json",
+    "receiptSha256": "c299580adde8c028d110fc93ba6b8e4c2406488cde5f42e18349feef221876c0",
+    "sourceRevision": "9efa36364425e2846002748bb29478b378d2b5cb",
+    "zip": {
+      "bytes": 15572755,
+      "path": "distribution-optional-fpv-worlds.zip",
+      "sha256": "67d3a9f526dd39d8e011a9d38efc5a8710128123a4e7d481757badec733b208b"
+    },
+    "files": 102,
+    "bytes": 15556649
+  },
+  "core": {
+    "world": 154,
+    "flight": 24,
+    "worldSha256": "37043fdaa14931a1379e14c435b5192182d05a227336d91ef43df31f533d68be",
+    "flightSha256": "e85bdeed3f0cbf0c4febdd0274e6788c783844f5934b9dd0315ebaa3e51672de"
+  },
+  "fixtureFiles": {
+    "archives/fpv-school-acro-proof-part-1-of-1.json": "81f5a88402188a5632991e53ed3e5fbabd919ffcdbeb7916c0acc91ca0937422",
+    "archives/fpv-school-self-level-proof-part-1-of-1.json": "db03219d3e9925b34e7d99769af3ba630ac94f8148365d906b3d88a200ad4c2b",
+    "index.html": "cdcebb6578576b468b74cde71afdb1125c186ee91d6c3f22b5b13a2f020c624f",
+    "player.html": "465c6c376f7cb504fc846d7faa99c9fa0eee6772e02c25b0b898c7bab74f0797"
+  },
+  "elapsedMs": 60838,
+  "passed": 393,
+  "total": 393,
+  "checks": [
+    {
+      "name": "Exact School fixture format",
+      "passed": true
+    },
+    {
+      "name": "Frozen candidate, complete admitted asset tree, harness and archives match their hashes",
+      "passed": true
+    },
+    {
+      "name": "Exact approved 28 course/mode pairs",
+      "passed": true
+    },
+    {
+      "name": "Both archive cohorts contain exactly 28 distinct approved pairs",
+      "passed": true
+    },
+    {
+      "name": "Authenticated archive flags never grant trusted verification",
+      "passed": true
+    },
+    {
+      "name": "acro archive declared parts are complete",
+      "passed": true
+    },
+    {
+      "name": "self-level archive declared parts are complete",
+      "passed": true
+    },
+    {
+      "name": "All 178 core recordings retain their exact content",
+      "passed": true
+    },
+    {
+      "name": "Core registry remains 154 World plus 24 Flight examples",
+      "passed": true
+    },
+    {
+      "name": "beginner-01:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-02:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-03:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-04:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-05:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-06:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-07:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-08:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-09:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-10:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-11:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-12:acro is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-27:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-28:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-29:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-30:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-31:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-32:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-33:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-34:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-35:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-36:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-37:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-38:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-39:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-40:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-41:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "beginner-42:self-level is an exact eligible missing dependency pair",
+      "passed": true
+    },
+    {
+      "name": "Full current catalogue is retained",
+      "passed": true,
+      "catalogue": 196
+    },
+    {
+      "name": "acro alternate School actions initially absent",
+      "passed": true
+    },
+    {
+      "name": "acro original recommended examples remain available",
+      "passed": true
+    },
+    {
+      "name": "self-level alternate School actions initially absent",
+      "passed": true
+    },
+    {
+      "name": "self-level original recommended examples remain available",
+      "passed": true
+    },
+    {
+      "name": "Missing exact installed pack never becomes verified",
+      "passed": true
+    },
+    {
+      "name": "Changed normalized course is rejected by actual importer",
+      "passed": true
+    },
+    {
+      "name": "Valid transport checksum cannot authorize a forged replay final state",
+      "passed": true
+    },
+    {
+      "name": "acro invalid or missing records do not unlock examples",
+      "passed": true
+    },
+    {
+      "name": "self-level invalid or missing records do not unlock examples",
+      "passed": true
+    },
+    {
+      "name": "Rejected records preserve progress, recovery and bookmark",
+      "passed": true
+    },
+    {
+      "name": "Every record in archive part 1/1 was processed",
+      "passed": true,
+      "mode": "acro",
+      "status": "Imported 12/12 records or examples; 12 verified."
+    },
+    {
+      "name": "Every record in archive part 1/1 was processed",
+      "passed": true,
+      "mode": "self-level",
+      "status": "Imported 16/16 records or examples; 16 verified."
+    },
+    {
+      "name": "All 28 imported records independently replay to completion",
+      "passed": true
+    },
+    {
+      "name": "Authenticated import replaces the same-content missing-pack record without duplication",
+      "passed": true
+    },
+    {
+      "name": "beginner-01:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-02:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-03:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-04:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-05:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-06:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-07:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-08:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-09:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-10:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-11:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-12:acro stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-27:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-28:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-29:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-30:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-31:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-32:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-33:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-34:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-35:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-36:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-37:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-38:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-39:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-40:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-41:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "beginner-42:self-level stores the exact authenticated pack, course and proof",
+      "passed": true
+    },
+    {
+      "name": "Both distinct changed-course and forged-state controls remain invalid",
+      "passed": true
+    },
+    {
+      "name": "Invalid control bytes remain exact: caa627208bdc2fc9",
+      "passed": true
+    },
+    {
+      "name": "Invalid control bytes remain exact: d4dd2107e48b0750",
+      "passed": true
+    },
+    {
+      "name": "Import awards no progress or rewards",
+      "passed": true
+    },
+    {
+      "name": "beginner-01:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-01:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-02:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-02:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-03:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-03:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-04:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-04:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-05:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-05:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-06:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-06:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-07:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-07:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-08:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-08:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-09:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-09:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-10:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-10:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-11:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-11:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-12:acro School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-12:acro catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-27:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-27:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-28:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-28:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-29:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-29:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-30:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-30:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-31:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-31:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-32:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-32:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-33:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-33:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-34:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-34:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-35:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-35:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-36:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-36:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-37:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-37:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-38:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-38:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-39:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-39:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-40:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-40:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-41:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-41:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "beginner-42:self-level School action uses selected mode",
+      "passed": true
+    },
+    {
+      "name": "beginner-42:self-level catalogue example is available",
+      "passed": true
+    },
+    {
+      "name": "Import never completes a School lesson",
+      "passed": true
+    },
+    {
+      "name": "Repeat imports preserve exact records, pins and saved times",
+      "passed": true
+    },
+    {
+      "name": "beginner-01:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-01",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-01:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-01:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 55,
+      "triangles": 1968,
+      "ticks": 360
+    },
+    {
+      "name": "beginner-01:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-02:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-02",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.199999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-02:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-02:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 54,
+      "triangles": 1966,
+      "ticks": 564
+    },
+    {
+      "name": "beginner-02:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-03:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-03",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.200000017881393,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-03:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-03:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 54,
+      "triangles": 1966,
+      "ticks": 561
+    },
+    {
+      "name": "beginner-03:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-04:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-04",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7.299999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-04:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-04:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 56,
+      "triangles": 1966,
+      "ticks": 696
+    },
+    {
+      "name": "beginner-04:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-05:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-05",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.699999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-05:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-05:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 41,
+      "triangles": 886,
+      "ticks": 655
+    },
+    {
+      "name": "beginner-05:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-06:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-06",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-06:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-06:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 49,
+      "triangles": 970,
+      "ticks": 832
+    },
+    {
+      "name": "beginner-06:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-07:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-07",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.199999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-07:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-07:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 55,
+      "triangles": 1004,
+      "ticks": 958
+    },
+    {
+      "name": "beginner-07:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-08:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-08",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.5999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-08:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-08:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 36,
+      "triangles": 2220,
+      "ticks": 827
+    },
+    {
+      "name": "beginner-08:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-09:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-09",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-09:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-09:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 28,
+      "triangles": 2080,
+      "ticks": 903
+    },
+    {
+      "name": "beginner-09:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-10:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-10",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-10:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-10:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 38,
+      "triangles": 2234,
+      "ticks": 755
+    },
+    {
+      "name": "beginner-10:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-11:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-11",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.5999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.300000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-11:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-11:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 33,
+      "triangles": 2196,
+      "ticks": 948
+    },
+    {
+      "name": "beginner-11:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-12:acro lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-12",
+      "mode": "acro",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.5999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-12:acro rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-12:acro actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 27,
+      "triangles": 2056,
+      "ticks": 1045
+    },
+    {
+      "name": "beginner-12:acro selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-27:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-27",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-27:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-27:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 16,
+      "triangles": 1852,
+      "ticks": 1382
+    },
+    {
+      "name": "beginner-27:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-28:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-28",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.700000017881393,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.5999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-28:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-28:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 62,
+      "triangles": 1184,
+      "ticks": 1151
+    },
+    {
+      "name": "beginner-28:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-29:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-29",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.799999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-29:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-29:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 17,
+      "triangles": 1840,
+      "ticks": 1596
+    },
+    {
+      "name": "beginner-29:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-30:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-30",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.800000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 5.699999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-30:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-30:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 56,
+      "triangles": 3328,
+      "ticks": 1280
+    },
+    {
+      "name": "beginner-30:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-31:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-31",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.699999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-31:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-31:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 77,
+      "triangles": 4692,
+      "ticks": 1853
+    },
+    {
+      "name": "beginner-31:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-32:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-32",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-32:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-32:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 37,
+      "triangles": 1902,
+      "ticks": 1723
+    },
+    {
+      "name": "beginner-32:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-33:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-33",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 8.299999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.600000023841858,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-33:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-33:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 114,
+      "triangles": 6532,
+      "ticks": 2086
+    },
+    {
+      "name": "beginner-33:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-34:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-34",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.800000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.300000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-34:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-34:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 66,
+      "triangles": 3440,
+      "ticks": 2447
+    },
+    {
+      "name": "beginner-34:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-35:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-35",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 10.099999994039536,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 8.300000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-35:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-35:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 32,
+      "triangles": 1554,
+      "ticks": 1898
+    },
+    {
+      "name": "beginner-35:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-36:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-36",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-36:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-36:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 98,
+      "triangles": 7350,
+      "ticks": 1817
+    },
+    {
+      "name": "beginner-36:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-37:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-37",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.799999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.100000023841858,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-37:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-37:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 39,
+      "triangles": 11742,
+      "ticks": 2300
+    },
+    {
+      "name": "beginner-37:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-38:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-38",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 11.099999994039536,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-38:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-38:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 95,
+      "triangles": 7314,
+      "ticks": 1768
+    },
+    {
+      "name": "beginner-38:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-39:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-39",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 10.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-39:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-39:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 95,
+      "triangles": 6368,
+      "ticks": 2030
+    },
+    {
+      "name": "beginner-39:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-40:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-40",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.799999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.100000023841858,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-40:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-40:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 61,
+      "triangles": 3362,
+      "ticks": 2004
+    },
+    {
+      "name": "beginner-40:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-41:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-41",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.899999976158142,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-41:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-41:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 113,
+      "triangles": 1862,
+      "ticks": 2517
+    },
+    {
+      "name": "beginner-41:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "beginner-42:self-level lab preview leaves real flight paused",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-42",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-42:self-level rendered replay reaches exact final identity without contact or health loss",
+      "passed": true
+    },
+    {
+      "name": "beginner-42:self-level actual WebGL renderer submitted the replay frame",
+      "passed": true,
+      "calls": 76,
+      "triangles": 3590,
+      "ticks": 2805
+    },
+    {
+      "name": "beginner-42:self-level selected mode and demonstration result remain explicit",
+      "passed": true
+    },
+    {
+      "name": "All 28 replays preserve proof bytes and pins",
+      "passed": true
+    },
+    {
+      "name": "All lab previews and full replays preserve player progress",
+      "passed": true
+    },
+    {
+      "name": "Watching all 28 examples never earns lesson completion",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-07",
+      "mode": "acro",
+      "sectionIndex": 2,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 2.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 294
+        },
+        {
+          "pulse": 1,
+          "wallMs": 1.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 294
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-07:acro exact recorded section completes",
+      "passed": true
+    },
+    {
+      "name": "Section watch cannot export a scored attempt beginner-07",
+      "passed": true
+    },
+    {
+      "name": "Exact playback identity is paused before deliberate Arm",
+      "passed": true
+    },
+    {
+      "name": "Two bounded paused preparation frames before deliberate Arm",
+      "passed": true,
+      "id": "beginner-27",
+      "mode": "self-level",
+      "sectionIndex": 2,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 3,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 351
+        },
+        {
+          "pulse": 1,
+          "wallMs": 1.2000000178813934,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 351
+        }
+      ]
+    },
+    {
+      "name": "Playback deliberately armed after paused preparation",
+      "passed": true
+    },
+    {
+      "name": "Final rendered state agrees with the completed actual host snapshot",
+      "passed": true
+    },
+    {
+      "name": "beginner-27:self-level exact recorded section completes",
+      "passed": true
+    },
+    {
+      "name": "Section watch cannot export a scored attempt beginner-27",
+      "passed": true
+    },
+    {
+      "name": "Section replay preserves player progress and recovery",
+      "passed": true
+    },
+    {
+      "name": "Native reload retains all records and pins",
+      "passed": true
+    },
+    {
+      "name": "acro originals and imported alternates survive native reload",
+      "passed": true
+    },
+    {
+      "name": "self-level originals and imported alternates survive native reload",
+      "passed": true
+    },
+    {
+      "name": "All 16 Acro-skill lessons still have no scored Self-level example",
+      "passed": true
+    },
+    {
+      "name": "beginner-12:acro removal invalidates optional lookup",
+      "passed": true
+    },
+    {
+      "name": "beginner-12 original recommended example remains after optional removal",
+      "passed": true
+    },
+    {
+      "name": "beginner-42:self-level removal invalidates optional lookup",
+      "passed": true
+    },
+    {
+      "name": "beginner-42 original recommended example remains after optional removal",
+      "passed": true
+    },
+    {
+      "name": "Removal and mode changes preserve recovery, rewards and bookmark",
+      "passed": true
+    },
+    {
+      "name": "Core 178 recordings are byte-equivalent after all workflows",
+      "passed": true
+    },
+    {
+      "name": "No uncaught host or WebGL application errors",
+      "passed": true
+    }
+  ],
+  "phases": [
+    {
+      "ms": 0,
+      "label": "Verify frozen modules, admitted assets and all archive parts"
+    },
+    {
+      "ms": 1257,
+      "label": "Reject missing dependencies, changed course and forged final identity"
+    },
+    {
+      "ms": 1376,
+      "label": "Import every authoritative mode archive through the actual File input"
+    },
+    {
+      "ms": 3289,
+      "label": "Pin and reimport without changing stored records"
+    },
+    {
+      "ms": 5692,
+      "label": "All 28 whole-lesson lab previews and full actual rendered replays"
+    },
+    {
+      "ms": 59152,
+      "label": "Recorded section playback in both selected flight modes"
+    },
+    {
+      "ms": 60132,
+      "label": "Native iframe reload retains both mode cohorts and original recordings"
+    },
+    {
+      "ms": 60511,
+      "label": "Remove one alternate in each mode without affecting its original"
+    }
+  ],
+  "playback": [
+    {
+      "id": "beginner-01",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 360,
+      "totalTicks": 360,
+      "pulses": 37,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 16.30000001192093,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 470
+    },
+    {
+      "id": "beginner-02",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 564,
+      "totalTicks": 564,
+      "pulses": 58,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 18.5,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.199999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 627
+    },
+    {
+      "id": "beginner-03",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 561,
+      "totalTicks": 561,
+      "pulses": 58,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 21.099999994039536,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.200000017881393,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 651
+    },
+    {
+      "id": "beginner-04",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 696,
+      "totalTicks": 696,
+      "pulses": 71,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 22.69999998807907,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7.299999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 786
+    },
+    {
+      "id": "beginner-05",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 655,
+      "totalTicks": 655,
+      "pulses": 67,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 23.599999994039536,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.699999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 741
+    },
+    {
+      "id": "beginner-06",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 832,
+      "totalTicks": 832,
+      "pulses": 85,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 24.299999982118607,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 897
+    },
+    {
+      "id": "beginner-07",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 958,
+      "totalTicks": 958,
+      "pulses": 97,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 26.400000005960464,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.199999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 1006
+    },
+    {
+      "id": "beginner-08",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 827,
+      "totalTicks": 827,
+      "pulses": 84,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 27.099999994039536,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.5999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 908
+    },
+    {
+      "id": "beginner-09",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 903,
+      "totalTicks": 903,
+      "pulses": 92,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 29.69999998807907,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 974
+    },
+    {
+      "id": "beginner-10",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 755,
+      "totalTicks": 755,
+      "pulses": 77,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 33.30000001192093,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 848
+    },
+    {
+      "id": "beginner-11",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 948,
+      "totalTicks": 948,
+      "pulses": 96,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 32.80000001192093,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.5999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.300000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 1081
+    },
+    {
+      "id": "beginner-12",
+      "mode": "acro",
+      "sectionIndex": null,
+      "ticks": 1045,
+      "totalTicks": 1045,
+      "pulses": 106,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 33.599999994039536,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.5999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 1154
+    },
+    {
+      "id": "beginner-27",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 1382,
+      "totalTicks": 1382,
+      "pulses": 140,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 33.80000001192093,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 1497
+    },
+    {
+      "id": "beginner-28",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 1151,
+      "totalTicks": 1151,
+      "pulses": 117,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 34.099999994039536,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.700000017881393,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.5999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 1261
+    },
+    {
+      "id": "beginner-29",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 1596,
+      "totalTicks": 1596,
+      "pulses": 161,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 36.900000005960464,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.799999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 1624
+    },
+    {
+      "id": "beginner-30",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 1280,
+      "totalTicks": 1280,
+      "pulses": 129,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 37.099999994039536,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.800000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 5.699999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 1373
+    },
+    {
+      "id": "beginner-31",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 1853,
+      "totalTicks": 1853,
+      "pulses": 187,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 40.5,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.699999988079071,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2035
+    },
+    {
+      "id": "beginner-32",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 1723,
+      "totalTicks": 1723,
+      "pulses": 174,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 39.20000001788139,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 1840
+    },
+    {
+      "id": "beginner-33",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 2086,
+      "totalTicks": 2086,
+      "pulses": 210,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 44.80000001192093,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 8.299999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.600000023841858,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2259
+    },
+    {
+      "id": "beginner-34",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 2447,
+      "totalTicks": 2447,
+      "pulses": 246,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 43.70000001788139,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.800000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.300000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2670
+    },
+    {
+      "id": "beginner-35",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 1898,
+      "totalTicks": 1898,
+      "pulses": 191,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 44.900000005960464,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 10.099999994039536,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 8.300000011920929,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2034
+    },
+    {
+      "id": "beginner-36",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 1817,
+      "totalTicks": 1817,
+      "pulses": 183,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 47.599999994039536,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2032
+    },
+    {
+      "id": "beginner-37",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 2300,
+      "totalTicks": 2300,
+      "pulses": 231,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 53.60000002384186,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.799999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.100000023841858,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2614
+    },
+    {
+      "id": "beginner-38",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 1768,
+      "totalTicks": 1768,
+      "pulses": 178,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 54.400000005960464,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 11.099999994039536,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.0999999940395355,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2082
+    },
+    {
+      "id": "beginner-39",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 2030,
+      "totalTicks": 2030,
+      "pulses": 204,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 52.79999998211861,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 10.5,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2370
+    },
+    {
+      "id": "beginner-40",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 2004,
+      "totalTicks": 2004,
+      "pulses": 202,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 53.19999998807907,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.799999982118607,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7.100000023841858,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2372
+    },
+    {
+      "id": "beginner-41",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 2517,
+      "totalTicks": 2517,
+      "pulses": 253,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 58.70000001788139,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6.899999976158142,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 7,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 2992
+    },
+    {
+      "id": "beginner-42",
+      "mode": "self-level",
+      "sectionIndex": null,
+      "ticks": 2805,
+      "totalTicks": 2805,
+      "pulses": 282,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 60.400000005960464,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 6,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        },
+        {
+          "pulse": 1,
+          "wallMs": 6.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 0
+        }
+      ],
+      "elapsedMs": 3106
+    },
+    {
+      "id": "beginner-07",
+      "mode": "acro",
+      "sectionIndex": 2,
+      "ticks": 484,
+      "totalTicks": 958,
+      "pulses": 20,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 53.599999994039536,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 2.9000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 294
+        },
+        {
+          "pulse": 1,
+          "wallMs": 1.4000000059604645,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 294
+        }
+      ],
+      "elapsedMs": 263
+    },
+    {
+      "id": "beginner-27",
+      "mode": "self-level",
+      "sectionIndex": 2,
+      "ticks": 541,
+      "totalTicks": 1382,
+      "pulses": 20,
+      "stalledPulses": 0,
+      "maxPulseGapMs": 57.20000001788139,
+      "warmup": [
+        {
+          "pulse": 0,
+          "wallMs": 3,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 351
+        },
+        {
+          "pulse": 1,
+          "wallMs": 1.2000000178813934,
+          "status": "Playback paused. Resume to continue.",
+          "ticks": 351
+        }
+      ],
+      "elapsedMs": 257
+    }
+  ],
+  "activePlayback": null,
+  "focusEvents": [
+    {
+      "ms": 1143,
+      "kind": "mounted",
+      "owner": "frame",
+      "visibility": "visible",
+      "focused": true,
+      "frameVisibility": "visible",
+      "frameFocused": true
+    },
+    {
+      "ms": 60190,
+      "kind": "visibilitychange",
+      "owner": "frame",
+      "visibility": "visible",
+      "focused": true,
+      "frameVisibility": "hidden",
+      "frameFocused": true
+    },
+    {
+      "ms": 60385,
+      "kind": "mounted",
+      "owner": "frame",
+      "visibility": "visible",
+      "focused": true,
+      "frameVisibility": "visible",
+      "frameFocused": true
+    },
+    {
+      "ms": 60828,
+      "kind": "visibilitychange",
+      "owner": "frame",
+      "visibility": "visible",
+      "focused": true,
+      "frameVisibility": "hidden",
+      "frameFocused": true
+    }
+  ],
+  "snapshotCosts": [
+    {
+      "label": "paused lesson guide beginner-01",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-01",
+      "wallMs": 17.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-01",
+      "wallMs": 16.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-01",
+      "wallMs": 15.100000023841858,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-01/acro",
+      "wallMs": 14.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-01/acro",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-02",
+      "wallMs": 14.600000023841858,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-02",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-02",
+      "wallMs": 16.30000001192093,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-02",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-02/acro",
+      "wallMs": 14.5,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-02/acro",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-03",
+      "wallMs": 15.300000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-03",
+      "wallMs": 15.600000023841858,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-03",
+      "wallMs": 15.300000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-03",
+      "wallMs": 15.700000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-03/acro",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-03/acro",
+      "wallMs": 16.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-04",
+      "wallMs": 16.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-04",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-04",
+      "wallMs": 17,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-04",
+      "wallMs": 15.800000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-04/acro",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-04/acro",
+      "wallMs": 17.30000001192093,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-05",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-05",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-05",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-05",
+      "wallMs": 16.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-05/acro",
+      "wallMs": 14.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-05/acro",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-06",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-06",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-06",
+      "wallMs": 15.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-06",
+      "wallMs": 16.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-06/acro",
+      "wallMs": 14.800000011920929,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-06/acro",
+      "wallMs": 15.799999982118607,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-07",
+      "wallMs": 24.19999998807907,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-07",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-07",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-07",
+      "wallMs": 15.700000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-07/acro",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-07/acro",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-08",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-08",
+      "wallMs": 15.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-08",
+      "wallMs": 15.699999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-08",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-08/acro",
+      "wallMs": 16,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-08/acro",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-09",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-09",
+      "wallMs": 16.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-09",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-09",
+      "wallMs": 15.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-09/acro",
+      "wallMs": 16,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-09/acro",
+      "wallMs": 14.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-10",
+      "wallMs": 14.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-10",
+      "wallMs": 15.299999982118607,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-10",
+      "wallMs": 15.200000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-10",
+      "wallMs": 15.799999982118607,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-10/acro",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-10/acro",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-11",
+      "wallMs": 16.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-11",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-11",
+      "wallMs": 15.700000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-11",
+      "wallMs": 17.19999998807907,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-11/acro",
+      "wallMs": 16,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-11/acro",
+      "wallMs": 16.200000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-12",
+      "wallMs": 16.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-12",
+      "wallMs": 16.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-12",
+      "wallMs": 16.200000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-12",
+      "wallMs": 15.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-12/acro",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-12/acro",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-27",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-27",
+      "wallMs": 15.199999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-27",
+      "wallMs": 15.299999982118607,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-27",
+      "wallMs": 15.100000023841858,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-27/self-level",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-27/self-level",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-28",
+      "wallMs": 15.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-28",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-28",
+      "wallMs": 15.699999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-28",
+      "wallMs": 15.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-28/self-level",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-28/self-level",
+      "wallMs": 16,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-29",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-29",
+      "wallMs": 16.19999998807907,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-29",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-29",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-29/self-level",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-29/self-level",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-30",
+      "wallMs": 14.700000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-30",
+      "wallMs": 15.199999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-30",
+      "wallMs": 15.300000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-30",
+      "wallMs": 15.199999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-30/self-level",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-30/self-level",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-31",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-31",
+      "wallMs": 16.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-31",
+      "wallMs": 16.799999982118607,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-31",
+      "wallMs": 17.30000001192093,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-31",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-31",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-31/self-level",
+      "wallMs": 14.800000011920929,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-31/self-level",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-32",
+      "wallMs": 15.200000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-32",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-32",
+      "wallMs": 15.300000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-32",
+      "wallMs": 15.399999976158142,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-32",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-32",
+      "wallMs": 15.300000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-32/self-level",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-32/self-level",
+      "wallMs": 15.800000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-33",
+      "wallMs": 15.200000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-33",
+      "wallMs": 16.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-33",
+      "wallMs": 15.199999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-33",
+      "wallMs": 15.700000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-33",
+      "wallMs": 15.200000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-33",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-33/self-level",
+      "wallMs": 15.300000011920929,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-33/self-level",
+      "wallMs": 14.800000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-34",
+      "wallMs": 16.600000023841858,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-34",
+      "wallMs": 17.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-34",
+      "wallMs": 14.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-34",
+      "wallMs": 14.699999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-34",
+      "wallMs": 15.199999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-34",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-34",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-34/self-level",
+      "wallMs": 15.699999988079071,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-34/self-level",
+      "wallMs": 14.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-35",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-35",
+      "wallMs": 17.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-35",
+      "wallMs": 14.800000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-35",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-35",
+      "wallMs": 14.800000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-35",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-35/self-level",
+      "wallMs": 15.200000017881393,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-35/self-level",
+      "wallMs": 16.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-36",
+      "wallMs": 15.199999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-36",
+      "wallMs": 17.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-36",
+      "wallMs": 14.900000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-36",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-36",
+      "wallMs": 14.899999976158142,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-36",
+      "wallMs": 15.300000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-36/self-level",
+      "wallMs": 14.899999976158142,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-36/self-level",
+      "wallMs": 16.200000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-37",
+      "wallMs": 15.300000011920929,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-37",
+      "wallMs": 17,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-37",
+      "wallMs": 15.299999982118607,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-37",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-37",
+      "wallMs": 15.699999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-37",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-37",
+      "wallMs": 15.600000023841858,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-37/self-level",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-37/self-level",
+      "wallMs": 16,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-38",
+      "wallMs": 15.699999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-38",
+      "wallMs": 15.700000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-38",
+      "wallMs": 15.299999982118607,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-38",
+      "wallMs": 19.100000023841858,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-38",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-38",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-38/self-level",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-38/self-level",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-39",
+      "wallMs": 16.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-39",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-39",
+      "wallMs": 15.100000023841858,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-39",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-39",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-39",
+      "wallMs": 16.19999998807907,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-39/self-level",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-39/self-level",
+      "wallMs": 16,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-40",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-40",
+      "wallMs": 16.700000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-40",
+      "wallMs": 15.200000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-40",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-40",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-40",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-40",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-40/self-level",
+      "wallMs": 14.800000011920929,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-40/self-level",
+      "wallMs": 15.700000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-41",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-41",
+      "wallMs": 17.30000001192093,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-41",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-41",
+      "wallMs": 15.199999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-41",
+      "wallMs": 15.400000005960464,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-41",
+      "wallMs": 15.700000017881393,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-41/self-level",
+      "wallMs": 16.5,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-41/self-level",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-42",
+      "wallMs": 15.199999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-42",
+      "wallMs": 16.399999976158142,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-42",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-42",
+      "wallMs": 15.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson guide beginner-42",
+      "wallMs": 14.599999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused lesson lab beginner-42",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-42/self-level",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-42/self-level",
+      "wallMs": 15.699999988079071,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-07/acro",
+      "wallMs": 15.5,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-07/acro",
+      "wallMs": 15.099999994039536,
+      "records": 30
+    },
+    {
+      "label": "paused before beginner-27/self-level",
+      "wallMs": 15,
+      "records": 30
+    },
+    {
+      "label": "completed beginner-27/self-level",
+      "wallMs": 14.900000005960464,
+      "records": 30
+    }
+  ],
+  "rafReceipts": [
+    {
+      "callbacks": 4734,
+      "owners": [
+        {
+          "name": "frame",
+          "calls": 4706,
+          "lastAt": 59286.29999998212,
+          "maxGapMs": 236.59999999403954
+        },
+        {
+          "name": "previewFrame",
+          "calls": 28,
+          "lastAt": 55042.79999998212,
+          "maxGapMs": 3365.0999999940395
+        }
+      ],
+      "first": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 338.5,
+          "gapMs": 0,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 448.19999998807907,
+          "gapMs": 109.69999998807907,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 476.69999998807907,
+          "gapMs": 28.5,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 504.09999999403954,
+          "gapMs": 27.400000005960464,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 589.5,
+          "gapMs": 85.40000000596046,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 604.6999999880791,
+          "gapMs": 15.199999988079071,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 624.5999999940395,
+          "gapMs": 19.900000005960464,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 643,
+          "gapMs": 18.400000005960464,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 665.7999999821186,
+          "gapMs": 22.799999982118607,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 685.5999999940395,
+          "gapMs": 19.80000001192093,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 710.0999999940395,
+          "gapMs": 24.5,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 731,
+          "gapMs": 20.900000005960464,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 750.6999999880791,
+          "gapMs": 19.69999998807907,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 767.1999999880791,
+          "gapMs": 16.5,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 789.8999999761581,
+          "gapMs": 22.69999998807907,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 812,
+          "gapMs": 22.100000023841858,
+          "stamp": 9.099999994039536,
+          "delta": 0,
+          "status": ""
+        }
+      ],
+      "slow": [
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 5832.5999999940395,
+          "gapMs": 714.7000000178814,
+          "stamp": 7449.0999999940395,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 6698.699999988079,
+          "gapMs": 866.0999999940395,
+          "stamp": 19069.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 7604.699999988079,
+          "gapMs": 906,
+          "stamp": 30689.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 8645,
+          "gapMs": 1040.300000011921,
+          "stamp": 44909.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 9637.09999999404,
+          "gapMs": 992.0999999940395,
+          "stamp": 58329.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 10795.799999982119,
+          "gapMs": 1158.699999988079,
+          "stamp": 75349.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 12097.299999982119,
+          "gapMs": 1301.5,
+          "stamp": 94769.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 13260.899999976158,
+          "gapMs": 1163.5999999940395,
+          "stamp": 111589.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 14480.799999982119,
+          "gapMs": 1219.9000000059605,
+          "stamp": 130009.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 15591.5,
+          "gapMs": 1110.7000000178814,
+          "stamp": 145429.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 16941.69999998808,
+          "gapMs": 1350.199999988079,
+          "stamp": 164649.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 18362.59999999404,
+          "gapMs": 1420.9000000059605,
+          "stamp": 185869.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 20139.5,
+          "gapMs": 1776.9000000059605,
+          "stamp": 213889.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 21686.899999976158,
+          "gapMs": 1547.3999999761581,
+          "stamp": 237309.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 23562.59999999404,
+          "gapMs": 1875.7000000178814,
+          "stamp": 269529.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 25409.19999998808,
+          "gapMs": 1846.5999999940395,
+          "stamp": 295349.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 27779.79999998212,
+          "gapMs": 2370.5999999940395,
+          "stamp": 332769.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 30042.5,
+          "gapMs": 2262.7000000178814,
+          "stamp": 367589.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 32746.09999999404,
+          "gapMs": 2703.5999999940395,
+          "stamp": 409609.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 35760.59999999404,
+          "gapMs": 3014.5,
+          "stamp": 458829.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 38155.09999999404,
+          "gapMs": 2394.5,
+          "stamp": 497049.09999999404,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 40622.69999998808,
+          "gapMs": 2467.5999999940395,
+          "stamp": 533669.099999994,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 43608.89999997616,
+          "gapMs": 2986.199999988079,
+          "stamp": 579889.099999994,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 46081.39999997616,
+          "gapMs": 2472.5,
+          "stamp": 615509.099999994,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 48877,
+          "gapMs": 2795.600000023842,
+          "stamp": 656329.099999994,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 51677.69999998808,
+          "gapMs": 2800.699999988079,
+          "stamp": 696749.099999994,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        },
+        {
+          "owner": 1,
+          "name": "previewFrame",
+          "at": 55042.79999998212,
+          "gapMs": 3365.0999999940395,
+          "stamp": 747369.099999994,
+          "delta": 20,
+          "status": "Ready. Choose your controls, then arm."
+        }
+      ],
+      "last": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58664.69999998808,
+          "gapMs": 7.5,
+          "stamp": 806969.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58672.59999999404,
+          "gapMs": 7.9000000059604645,
+          "stamp": 807169.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58679.89999997616,
+          "gapMs": 7.299999982118607,
+          "stamp": 807369.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58687,
+          "gapMs": 7.100000023841858,
+          "stamp": 807569.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58693.89999997616,
+          "gapMs": 6.899999976158142,
+          "stamp": 807769.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58799.69999998808,
+          "gapMs": 105.80000001192093,
+          "stamp": 807769.099999994,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58800.29999998212,
+          "gapMs": 0.5999999940395355,
+          "stamp": 807769.099999994,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58971.69999998808,
+          "gapMs": 171.40000000596046,
+          "stamp": 807769.099999994,
+          "delta": 0,
+          "status": "Playback paused. Resume when you are ready."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58995.29999998212,
+          "gapMs": 23.599999994039536,
+          "stamp": 807769.099999994,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58998.29999998212,
+          "gapMs": 3,
+          "stamp": 807769.099999994,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 58999.69999998808,
+          "gapMs": 1.4000000059604645,
+          "stamp": 807969.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59009.39999997616,
+          "gapMs": 9.699999988079071,
+          "stamp": 808169.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59058,
+          "gapMs": 48.60000002384186,
+          "stamp": 808369.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59062.19999998808,
+          "gapMs": 4.199999988079071,
+          "stamp": 808569.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59069,
+          "gapMs": 6.800000011920929,
+          "stamp": 808769.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59076.5,
+          "gapMs": 7.5,
+          "stamp": 808969.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59083.69999998808,
+          "gapMs": 7.199999988079071,
+          "stamp": 809169.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59091.19999998808,
+          "gapMs": 7.5,
+          "stamp": 809369.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59099.79999998212,
+          "gapMs": 8.599999994039536,
+          "stamp": 809569.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59107,
+          "gapMs": 7.200000017881393,
+          "stamp": 809769.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59115.19999998808,
+          "gapMs": 8.199999988079071,
+          "stamp": 809969.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59123.5,
+          "gapMs": 8.300000011920929,
+          "stamp": 810169.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59131.29999998212,
+          "gapMs": 7.799999982118607,
+          "stamp": 810369.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59138.19999998808,
+          "gapMs": 6.9000000059604645,
+          "stamp": 810569.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59145.59999999404,
+          "gapMs": 7.4000000059604645,
+          "stamp": 810769.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59152.79999998212,
+          "gapMs": 7.199999988079071,
+          "stamp": 810969.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59159.5,
+          "gapMs": 6.700000017881393,
+          "stamp": 811169.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59165.89999997616,
+          "gapMs": 6.399999976158142,
+          "stamp": 811369.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59173.29999998212,
+          "gapMs": 7.4000000059604645,
+          "stamp": 811569.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59181.89999997616,
+          "gapMs": 8.599999994039536,
+          "stamp": 811769.099999994,
+          "delta": 200,
+          "status": "Playback active · no rewards."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59285.79999998212,
+          "gapMs": 103.90000000596046,
+          "stamp": 811769.099999994,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 59286.29999998212,
+          "gapMs": 0.5,
+          "stamp": 811769.099999994,
+          "delta": 0,
+          "status": "Playback paused. Resume to continue."
+        }
+      ]
+    },
+    {
+      "callbacks": 7,
+      "owners": [
+        {
+          "name": "frame",
+          "calls": 7,
+          "lastAt": 627.5999999940395,
+          "maxGapMs": 122.59999999403954
+        }
+      ],
+      "first": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 245,
+          "gapMs": 0,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 297.09999999403954,
+          "gapMs": 52.099999994039536,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 419.69999998807907,
+          "gapMs": 122.59999999403954,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 450.5,
+          "gapMs": 30.80000001192093,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 483.59999999403954,
+          "gapMs": 33.099999994039536,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 531.3000000119209,
+          "gapMs": 47.70000001788139,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 627.5999999940395,
+          "gapMs": 96.2999999821186,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        }
+      ],
+      "slow": [],
+      "last": [
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 245,
+          "gapMs": 0,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 297.09999999403954,
+          "gapMs": 52.099999994039536,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 419.69999998807907,
+          "gapMs": 122.59999999403954,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 450.5,
+          "gapMs": 30.80000001192093,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 483.59999999403954,
+          "gapMs": 33.099999994039536,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 531.3000000119209,
+          "gapMs": 47.70000001788139,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        },
+        {
+          "owner": 0,
+          "name": "frame",
+          "at": 627.5999999940395,
+          "gapMs": 96.2999999821186,
+          "stamp": 59.5,
+          "delta": 0,
+          "status": ""
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "failure": null,
+  "offline": "Not measured: reload uses live HTTP; only IndexedDB persistence was checked.",
+  "controls": "Scripted File inputs, buttons and controlled animation clock. Before the single deliberate Arm, up to ten zero-time frames remain paused with unchanged ticks until two frames take at most 250 ms each; all timings remain recorded. Transparent renderer forwarding observes existing draw states during active playback; full host snapshots run only outside active playback and the final snapshot identity must equal the final draw. Actual RAF callback-entry gaps are recorded without changing the performance clock. Production focus/pause guards remain active, with no automatic resume. No physical-device or player acceptance claim.",
+  "lifecycle": "Native iframe reload and teardown only; no explicit app.dispose qualification or WebGL leak claim."
+}

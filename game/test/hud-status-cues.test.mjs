@@ -1,3 +1,5 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 // Actual solo host, saved replay and fixed-step input; DOM/paint are modeled.
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -29,8 +31,10 @@ async function fixture(t, cause = 'self-contact') {
     classRecipes: classes,
     levels: [level],
   };
-  const page = await soloPage(t, { campaign });
-  page.$('start-button').click();
+  const page = await soloPage(t, { campaign, waitForPictures: false });
+  await activateHostAction(page.$('start-button'));
+  page.frame(0);
+  assert.equal(page.rendered.paused, false);
   return page;
 }
 
@@ -43,7 +47,7 @@ for (const newerNotice of [false, true])
     page.$('pause-button').click();
     page.frame(0);
     const saved = JSON.parse(page.storage.getItem(sessionKey));
-    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.equal(verifyReplay(nativeSession(saved).replay).match, true);
     const checkpoint = authoritativeCheckpoint(page.rendered.run);
     assert.equal(page.rendered.run.player.cutting, true);
     await page.$('continue-saved').onclick();
@@ -64,7 +68,7 @@ for (const newerNotice of [false, true])
       assert.doesNotMatch(page.$('run-message').textContent, /Press Resume/);
     }
     tick(page);
-    assert.ok(page.rendered.run.tick > saved.replay.ticks);
+    assert.ok(page.rendered.run.tick > nativeSession(saved).replay.ticks);
     assert.deepEqual(page.errors, []);
   });
 
@@ -104,7 +108,10 @@ for (const newerNotice of [false, true])
     if (newerNotice) assert.equal(page.$('run-message').textContent, beforeCut);
     else assert.match(page.$('run-message').textContent, /^Live line exposed\./);
     page.$('pause-button').click();
-    assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+    assert.equal(
+      verifyReplay(nativeSession(JSON.parse(page.storage.getItem(sessionKey))).replay).match,
+      true,
+    );
     assert.deepEqual(page.errors, []);
   });
 
@@ -236,6 +243,9 @@ for (const stopOnCapture of [false, true])
         assert.doesNotMatch(page.$('run-message').textContent, /Line secured|Tap a direction/);
       }
       page.$('pause-button').click();
-      assert.equal(verifyReplay(JSON.parse(page.storage.getItem(sessionKey)).replay).match, true);
+      assert.equal(
+        verifyReplay(nativeSession(JSON.parse(page.storage.getItem(sessionKey))).replay).match,
+        true,
+      );
       assert.deepEqual(page.errors, []);
     });

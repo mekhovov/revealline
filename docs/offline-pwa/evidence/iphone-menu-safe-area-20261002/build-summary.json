@@ -1,0 +1,28 @@
+{
+  "format": "revealline-default-build-inspection.v1",
+  "version": "0.142.4",
+  "sourceRevision": null,
+  "publicEligible": false,
+  "promotable": false,
+  "completeHostedOutput": false,
+  "publicationAssessment": "not-performed",
+  "payloadBytesIncludingManifest": 958763342,
+  "manifestDescriptor": {
+    "path": "manifest.json",
+    "bytes": 406485,
+    "sha256": "21efedcf4b3bb2c915652664a2b3303413730d79d8d5a040ce45252d8bd6c14a"
+  },
+  "missingComponents": [
+    "Pages root routes and publication metadata",
+    "Hosted edition versions, stable launchers and company hub",
+    "Hosted optional packages, launchers and any other generated files"
+  ],
+  "files": 2719,
+  "changedAssets": [
+    {
+      "path": "game/ui/native-menu.css",
+      "bytes": 31029,
+      "sha256": "5d2b2a2ec91b7fa8c32a51b698d2d27d14463a9d465e3aaa37f97fe64bf2b189"
+    }
+  ]
+}

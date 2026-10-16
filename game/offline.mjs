@@ -1,4 +1,5 @@
 import { nativePlatform } from './platform.mjs';
+import { readGameUpdateContext } from './game-updates.mjs';
 import { CONTENT_PROJECT_ITEM_LIMITS, CONTENT_ASSET_MAX_BYTES } from './content-design/limits.mjs';
 /** Explicit preparation of a generated distribution's declared core cache. */
 const MARKER = 'meta[name="revealline-offline"]';
@@ -33,7 +34,8 @@ function configFromPage(documentRef = globalThis.document, locationRef = globalT
   if (
     config.optionalPacks !== undefined &&
     (!Array.isArray(config.optionalPacks) ||
-      config.optionalPacks.length > 12 ||
+      // These are descriptive published entries, not imported-pack slots.
+      // New official packs must not make a valid release lose offline support.
       config.optionalPacks.some(
         (p) => !p || typeof p.name !== 'string' || !p.name.length || p.name.length > 120,
       ))
@@ -60,7 +62,8 @@ function configFromPage(documentRef = globalThis.document, locationRef = globalT
   if (
     scope.origin !== page.origin ||
     worker.origin !== page.origin ||
-    !page.pathname.startsWith(scope.pathname) ||
+    (!page.pathname.startsWith(scope.pathname) &&
+      readGameUpdateContext(documentRef, locationRef)?.scope !== scope.href) ||
     worker.pathname !== `${scope.pathname}service-worker.js`
   )
     return null;
@@ -100,6 +103,7 @@ export function offlineAvailability({
     version: config.version,
     buildId: config.buildId,
     scope: config.scope,
+    packageConsent: config.packageConsent === true,
     optionalPacks: config.optionalPacks ?? [],
     optionalArtwork: config.optionalArtwork ?? null,
     ...(optionalNote(config) ? { note: optionalNote(config).trim() } : {}),
@@ -206,7 +210,12 @@ function requestReport(worker, registration, config, options) {
     };
     const aborted = () => {
       if (preparing && config.downloadCatalogue && options.cancelPreparation)
-        worker.postMessage({ type: 'revealline.offline-pause', buildId: config.buildId });
+        worker.postMessage({
+          type: 'revealline.offline-pause',
+          protocol: PROTOCOL,
+          scope: config.scope,
+          buildId: config.buildId,
+        });
       finish(null, abortError());
     };
     const changed = () => {
@@ -348,6 +357,64 @@ function requireConfig(env) {
   if (!available.available) throw offlineError(available.messageCode, available.reason);
   return configFromPage(env.documentRef, env.locationRef);
 }
+/** The narrow launcher worker controls the updater, so the game worker can
+ * activate naturally. Never force it past another live game client. */
+function waitForUpdaterActivation(worker, registration, config, options) {
+  throwIfAborted(options.signal);
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const finish = (state, error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      worker.removeEventListener?.('statechange', changed);
+      registration.removeEventListener?.('updatefound', changed);
+      options.signal?.removeEventListener('abort', aborted);
+      error ? reject(error) : resolve(state);
+    };
+    const aborted = () => {
+      try {
+        if (config.downloadCatalogue && options.cancelPreparation)
+          worker.postMessage({
+            type: 'revealline.offline-pause',
+            protocol: PROTOCOL,
+            scope: config.scope,
+            buildId: config.buildId,
+          });
+      } catch {
+        // A disappearing worker must not prevent observer cancellation.
+      }
+      finish(null, abortError());
+    };
+    const changed = () => {
+      if (worker.state === 'redundant')
+        finish(
+          null,
+          offlineError('downloadFailed', 'The updated offline worker could not activate.'),
+        );
+      else if (!workerMatches(worker, registration, config))
+        finish(
+          null,
+          offlineError('workerChanged', 'The offline worker changed during activation.'),
+        );
+      else if (worker.state === 'activated' && registration.active === worker) finish('ready');
+    };
+    const timer = setTimeout(() => {
+      changed();
+      if (!settled)
+        finish(
+          registration.waiting === worker || worker.state === 'installed'
+            ? 'waiting'
+            : 'unconfirmed',
+        );
+    }, options.activationTimeout ?? 30000);
+    worker.addEventListener?.('statechange', changed);
+    registration.addEventListener?.('updatefound', changed);
+    options.signal?.addEventListener('abort', aborted, { once: true });
+    if (options.signal?.aborted) aborted();
+    else changed();
+  });
+}
 /** The caller must connect this function to a deliberate player action. No startup side effects.
  * signal normally detaches this observer. The downloads screen explicitly opts
  * into cancelPreparation for the durable worker, whose verified files survive.
@@ -355,6 +422,7 @@ function requireConfig(env) {
 export async function prepareOffline(options = {}) {
   const env = environment(options),
     config = requireConfig(env),
+    updatePage = Boolean(readGameUpdateContext(env.documentRef, env.locationRef)),
     status = options.onStatus ?? (() => {});
   throwIfAborted(options.signal);
   status({
@@ -367,18 +435,27 @@ export async function prepareOffline(options = {}) {
     scope: config.scope,
     updateViaCache: 'none',
   });
-  if (config.downloadCatalogue && options.cancelPreparation)
-    registering
-      .then((registration) => {
-        if (options.signal?.aborted)
-          selectedWorker(registration)?.postMessage({
-            type: 'revealline.offline-pause',
-            buildId: config.buildId,
-          });
-      })
-      .catch(() => {});
+  const pauseIfCancelled = (registration) => {
+    if (config.downloadCatalogue && options.cancelPreparation && options.signal?.aborted)
+      selectedWorker(registration)?.postMessage({
+        type: 'revealline.offline-pause',
+        protocol: PROTOCOL,
+        scope: config.scope,
+        buildId: config.buildId,
+      });
+  };
+  registering.then(pauseIfCancelled).catch(() => {});
   const registration = await observePromise(registering, options.signal);
   throwIfAborted(options.signal);
+  if (updatePage) {
+    // register() can return an existing same-URL worker before its background
+    // update check discovers this build. The explicit updater holds the profile
+    // locks here; await the real check before choosing the candidate worker.
+    const updating = registration.update();
+    updating.then(() => pauseIfCancelled(registration)).catch(() => {});
+    await observePromise(updating, options.signal);
+    throwIfAborted(options.signal);
+  }
   const worker = selectedWorker(registration);
   if (!worker || !workerMatches(worker, registration, config))
     throw offlineError(
@@ -400,7 +477,18 @@ export async function prepareOffline(options = {}) {
       report.messageCode ?? 'verificationFailed',
       report.message ?? 'Offline files could not be verified. Reconnect and try again.',
     );
-  const waiting = registration.waiting === worker || worker.state === 'installed';
+  const activation = updatePage
+    ? await waitForUpdaterActivation(worker, registration, config, options)
+    : null;
+  throwIfAborted(options.signal);
+  if (activation === 'unconfirmed') {
+    const result = { ...report, ...unfinished(worker, null) };
+    status(result);
+    return result;
+  }
+  const waiting = updatePage
+    ? activation === 'waiting'
+    : registration.waiting === worker || worker.state === 'installed';
   const result = {
     ...report,
     status: waiting ? 'waiting' : 'ready',

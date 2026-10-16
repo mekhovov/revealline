@@ -1,0 +1,1677 @@
+{
+  "format": "FPVMeadowGrovesReplayEvidence.v1",
+  "generatedAt": "2026-10-02T18:40:13.971Z",
+  "sourceHead": "1975948b32aa4c3b016cb58b987a15b1f98e5661",
+  "source": {
+    "optional-practice/civilian-fpv/model.mjs": {
+      "bytes": 17641,
+      "sha256": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6"
+    },
+    "optional-practice/civilian-fpv/world-model.mjs": {
+      "bytes": 53026,
+      "sha256": "d6e0939daf77a2a1459687dd8ba900719b78b02a1b3fe5fab862773bd6109551"
+    },
+    "optional-practice/civilian-fpv/world-collision.mjs": {
+      "bytes": 12256,
+      "sha256": "2899c7c84f9eae14b9a3434f585a8e873f4a1361e8f3ce4026ef27f44bdeef32"
+    },
+    "optional-practice/civilian-fpv/math.mjs": {
+      "bytes": 3062,
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    "optional-practice/civilian-fpv/radio-profile.mjs": {
+      "bytes": 18097,
+      "sha256": "f588fd5cda96ed9627a483f49ca843ace8d99a68fae42b0a4239c2cd0ab81933"
+    },
+    "optional-practice/civilian-fpv/world-themes.mjs": {
+      "bytes": 7637,
+      "sha256": "8331dc6931299043e14620fe312affddd382b551607db5ff6fae85f14b627bc7"
+    },
+    "optional-practice/civilian-fpv/flight-sectors.mjs": {
+      "bytes": 2673,
+      "sha256": "5b1b54bde4e578e61da7d59f4a80a86db9aafbc78b4523d2ba2b540277a0a16d"
+    },
+    "optional-practice/civilian-fpv/catalogue.mjs": {
+      "bytes": 10565,
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997"
+    },
+    "optional-practice/civilian-fpv/world-catalogue.mjs": {
+      "bytes": 239978,
+      "sha256": "d901363b623193f4896100f9381c7579946796e741554f012581ebb93f9ea8a6"
+    },
+    "optional-practice/civilian-fpv/demonstrations.mjs": {
+      "bytes": 221646,
+      "sha256": "92bb4365c46d94f5c1fea9808ec4e24fb9014d35640ee488959c4e0f4b6c5cfa"
+    },
+    "optional-practice/civilian-fpv/world-demonstrations.mjs": {
+      "bytes": 2207074,
+      "sha256": "c9f2d0ee5c571507ae1dce4f48898554cb2ad179218f1905cdc8013db2e2c114"
+    },
+    "game/data-json.mjs": {
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    }
+  },
+  "sourceUnchangedFromHead": true,
+  "sourceUnchangedDuringRun": true,
+  "scope": "Actual fixed-step replay of the 154 installed v2 and 24 legacy v1 demonstrations. V2 exact dependency identities and final recorded state hashes validate in the production replay API. V1 exact identities, complete status and tick counts match the previous Hangar receipt; all bound model/catalogue/recording bytes match the starting commit.",
+  "limits": [
+    "No new unit-test coverage.",
+    "No browser/GPU/art-readability, physical-radio, novice-player, performance or deployment qualification.",
+    "Legacy v1 proofs do not contain a final-state hash."
+  ],
+  "passed": 178,
+  "total": 178,
+  "v2": 154,
+  "legacy": 24,
+  "frames": 327795,
+  "results": [
+    {
+      "key": "woodland-01/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1184,
+      "finalStateIdentity": "560de860d30125d5",
+      "courseIdentity": "78d139a1585ffb9e",
+      "pass": true
+    },
+    {
+      "key": "woodland-01/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1186,
+      "finalStateIdentity": "ace617d5f8f16fe2",
+      "courseIdentity": "78d139a1585ffb9e",
+      "pass": true
+    },
+    {
+      "key": "woodland-02/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2020,
+      "finalStateIdentity": "12d706863c6dd530",
+      "courseIdentity": "645b2d1979cda564",
+      "pass": true
+    },
+    {
+      "key": "woodland-02/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2018,
+      "finalStateIdentity": "ac8a69cecd009860",
+      "courseIdentity": "645b2d1979cda564",
+      "pass": true
+    },
+    {
+      "key": "woodland-03/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2271,
+      "finalStateIdentity": "c0544887083cd5de",
+      "courseIdentity": "af9c9b5d5f76b6e0",
+      "pass": true
+    },
+    {
+      "key": "woodland-03/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2274,
+      "finalStateIdentity": "3551e9a798ce311a",
+      "courseIdentity": "af9c9b5d5f76b6e0",
+      "pass": true
+    },
+    {
+      "key": "woodland-04/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1732,
+      "finalStateIdentity": "27808821fde2c647",
+      "courseIdentity": "9b6763bff0477a20",
+      "pass": true
+    },
+    {
+      "key": "woodland-04/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1738,
+      "finalStateIdentity": "026b368003db28e8",
+      "courseIdentity": "9b6763bff0477a20",
+      "pass": true
+    },
+    {
+      "key": "woodland-05/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2582,
+      "finalStateIdentity": "b901838a3ead4945",
+      "courseIdentity": "de6cb9ce9ea2882a",
+      "pass": true
+    },
+    {
+      "key": "woodland-05/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2586,
+      "finalStateIdentity": "e4771796064b5c62",
+      "courseIdentity": "de6cb9ce9ea2882a",
+      "pass": true
+    },
+    {
+      "key": "woodland-06/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2468,
+      "finalStateIdentity": "601ae64f9c03c7ef",
+      "courseIdentity": "e9a43d6815cdac8d",
+      "pass": true
+    },
+    {
+      "key": "woodland-06/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2469,
+      "finalStateIdentity": "569400443beef1b1",
+      "courseIdentity": "e9a43d6815cdac8d",
+      "pass": true
+    },
+    {
+      "key": "woodland-07/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2178,
+      "finalStateIdentity": "4065f81960dd5a68",
+      "courseIdentity": "d4ddd3b23cf61e3d",
+      "pass": true
+    },
+    {
+      "key": "woodland-07/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2183,
+      "finalStateIdentity": "27ba751d6a29c6bf",
+      "courseIdentity": "d4ddd3b23cf61e3d",
+      "pass": true
+    },
+    {
+      "key": "woodland-08/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2230,
+      "finalStateIdentity": "4c868574cbad50c1",
+      "courseIdentity": "8164cc42c8e5d330",
+      "pass": true
+    },
+    {
+      "key": "woodland-08/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2233,
+      "finalStateIdentity": "9fcd10c956824dbe",
+      "courseIdentity": "8164cc42c8e5d330",
+      "pass": true
+    },
+    {
+      "key": "courtyard-01/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1207,
+      "finalStateIdentity": "8911b4283479fcc6",
+      "courseIdentity": "2858a4b086cb96ad",
+      "pass": true
+    },
+    {
+      "key": "courtyard-01/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1207,
+      "finalStateIdentity": "d7fde3f672df5f0d",
+      "courseIdentity": "2858a4b086cb96ad",
+      "pass": true
+    },
+    {
+      "key": "courtyard-02/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2238,
+      "finalStateIdentity": "3113c2b1d8710607",
+      "courseIdentity": "c4000108eed8f3fd",
+      "pass": true
+    },
+    {
+      "key": "courtyard-02/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2238,
+      "finalStateIdentity": "03463677bc1321e7",
+      "courseIdentity": "c4000108eed8f3fd",
+      "pass": true
+    },
+    {
+      "key": "courtyard-03/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2528,
+      "finalStateIdentity": "2839f1e407724222",
+      "courseIdentity": "0efa48961080087d",
+      "pass": true
+    },
+    {
+      "key": "courtyard-03/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2519,
+      "finalStateIdentity": "25446be8b4b1648e",
+      "courseIdentity": "0efa48961080087d",
+      "pass": true
+    },
+    {
+      "key": "courtyard-04/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1891,
+      "finalStateIdentity": "5199d9ccfa5d72df",
+      "courseIdentity": "a6d58bc3a171fd0b",
+      "pass": true
+    },
+    {
+      "key": "courtyard-04/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1895,
+      "finalStateIdentity": "877d78092b581238",
+      "courseIdentity": "a6d58bc3a171fd0b",
+      "pass": true
+    },
+    {
+      "key": "courtyard-05/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2482,
+      "finalStateIdentity": "df8c48177890d68c",
+      "courseIdentity": "07f7c76b60fb5357",
+      "pass": true
+    },
+    {
+      "key": "courtyard-05/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2480,
+      "finalStateIdentity": "9b05732bb716360e",
+      "courseIdentity": "07f7c76b60fb5357",
+      "pass": true
+    },
+    {
+      "key": "courtyard-06/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2832,
+      "finalStateIdentity": "6bbdd386e3d6ded3",
+      "courseIdentity": "8ece3dcb19a7bc02",
+      "pass": true
+    },
+    {
+      "key": "courtyard-06/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2849,
+      "finalStateIdentity": "c29bd2c2087b7dee",
+      "courseIdentity": "8ece3dcb19a7bc02",
+      "pass": true
+    },
+    {
+      "key": "courtyard-07/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2397,
+      "finalStateIdentity": "f53d7be347d8057c",
+      "courseIdentity": "bc3eb0f6a025635a",
+      "pass": true
+    },
+    {
+      "key": "courtyard-07/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2400,
+      "finalStateIdentity": "74ab30c5bd5d693c",
+      "courseIdentity": "bc3eb0f6a025635a",
+      "pass": true
+    },
+    {
+      "key": "courtyard-08/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2095,
+      "finalStateIdentity": "e8b1abdd29eeb18e",
+      "courseIdentity": "bee176b383947d01",
+      "pass": true
+    },
+    {
+      "key": "courtyard-08/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2095,
+      "finalStateIdentity": "77d4322cef539ad7",
+      "courseIdentity": "bee176b383947d01",
+      "pass": true
+    },
+    {
+      "key": "warehouse-01/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1210,
+      "finalStateIdentity": "41db103acc80925b",
+      "courseIdentity": "b0ab361f4528dbea",
+      "pass": true
+    },
+    {
+      "key": "warehouse-01/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1210,
+      "finalStateIdentity": "15d951253dc8d4d9",
+      "courseIdentity": "b0ab361f4528dbea",
+      "pass": true
+    },
+    {
+      "key": "warehouse-02/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2405,
+      "finalStateIdentity": "d518873da8cc66b5",
+      "courseIdentity": "9d4361a50ebfb229",
+      "pass": true
+    },
+    {
+      "key": "warehouse-02/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2421,
+      "finalStateIdentity": "85c8bac3a2033e45",
+      "courseIdentity": "9d4361a50ebfb229",
+      "pass": true
+    },
+    {
+      "key": "warehouse-03/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2786,
+      "finalStateIdentity": "66b0ecfef252cf72",
+      "courseIdentity": "b99ebf98e61c260e",
+      "pass": true
+    },
+    {
+      "key": "warehouse-03/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2794,
+      "finalStateIdentity": "bde7bda4e031151a",
+      "courseIdentity": "b99ebf98e61c260e",
+      "pass": true
+    },
+    {
+      "key": "warehouse-04/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2538,
+      "finalStateIdentity": "a19ec1aba40becbd",
+      "courseIdentity": "d7b23b106e65541f",
+      "pass": true
+    },
+    {
+      "key": "warehouse-04/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2546,
+      "finalStateIdentity": "a0777336d75a5f36",
+      "courseIdentity": "d7b23b106e65541f",
+      "pass": true
+    },
+    {
+      "key": "warehouse-05/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2823,
+      "finalStateIdentity": "36ef3ac03410ced6",
+      "courseIdentity": "9ad44767f4fb82c9",
+      "pass": true
+    },
+    {
+      "key": "warehouse-05/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2832,
+      "finalStateIdentity": "eaa43473fd3d1b38",
+      "courseIdentity": "9ad44767f4fb82c9",
+      "pass": true
+    },
+    {
+      "key": "warehouse-06/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2984,
+      "finalStateIdentity": "ed2326d7dcf10c27",
+      "courseIdentity": "e2508efc62d3cf48",
+      "pass": true
+    },
+    {
+      "key": "warehouse-06/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2994,
+      "finalStateIdentity": "e66baef405ba7adc",
+      "courseIdentity": "e2508efc62d3cf48",
+      "pass": true
+    },
+    {
+      "key": "warehouse-07/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2602,
+      "finalStateIdentity": "742f22d7565f1526",
+      "courseIdentity": "9b60ce129fcd0579",
+      "pass": true
+    },
+    {
+      "key": "warehouse-07/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2608,
+      "finalStateIdentity": "876eadd302310117",
+      "courseIdentity": "9b60ce129fcd0579",
+      "pass": true
+    },
+    {
+      "key": "warehouse-08/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2918,
+      "finalStateIdentity": "2e379faf2409bef2",
+      "courseIdentity": "5194469ce22bf5fc",
+      "pass": true
+    },
+    {
+      "key": "warehouse-08/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2932,
+      "finalStateIdentity": "2f8f89557acbeb08",
+      "courseIdentity": "5194469ce22bf5fc",
+      "pass": true
+    },
+    {
+      "key": "stadium-01/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1331,
+      "finalStateIdentity": "299120ad1b2310e9",
+      "courseIdentity": "1949d4414e7ce568",
+      "pass": true
+    },
+    {
+      "key": "stadium-01/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1329,
+      "finalStateIdentity": "b3dfdad088a55854",
+      "courseIdentity": "1949d4414e7ce568",
+      "pass": true
+    },
+    {
+      "key": "stadium-02/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2899,
+      "finalStateIdentity": "9d38c4579c8cc50e",
+      "courseIdentity": "8f212b09f52f21a9",
+      "pass": true
+    },
+    {
+      "key": "stadium-02/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2911,
+      "finalStateIdentity": "8afcc27153128b28",
+      "courseIdentity": "8f212b09f52f21a9",
+      "pass": true
+    },
+    {
+      "key": "stadium-03/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3699,
+      "finalStateIdentity": "ddd2c34488da36ed",
+      "courseIdentity": "55db9c6cc04b28b5",
+      "pass": true
+    },
+    {
+      "key": "stadium-03/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3708,
+      "finalStateIdentity": "409f62bc36aabce0",
+      "courseIdentity": "55db9c6cc04b28b5",
+      "pass": true
+    },
+    {
+      "key": "stadium-04/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2828,
+      "finalStateIdentity": "53e1209d3057f2af",
+      "courseIdentity": "e27fc6b089370b4d",
+      "pass": true
+    },
+    {
+      "key": "stadium-04/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2844,
+      "finalStateIdentity": "4629ab07fd4b6fe1",
+      "courseIdentity": "e27fc6b089370b4d",
+      "pass": true
+    },
+    {
+      "key": "stadium-05/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3897,
+      "finalStateIdentity": "7385b857cccd991a",
+      "courseIdentity": "c017803f25506882",
+      "pass": true
+    },
+    {
+      "key": "stadium-05/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3919,
+      "finalStateIdentity": "c5d74eb7a141c81c",
+      "courseIdentity": "c017803f25506882",
+      "pass": true
+    },
+    {
+      "key": "stadium-06/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2146,
+      "finalStateIdentity": "966cf29e075f1f32",
+      "courseIdentity": "fd07028ea6c44ada",
+      "pass": true
+    },
+    {
+      "key": "stadium-06/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2153,
+      "finalStateIdentity": "ed808a86b8b73d0d",
+      "courseIdentity": "fd07028ea6c44ada",
+      "pass": true
+    },
+    {
+      "key": "stadium-07/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2484,
+      "finalStateIdentity": "e5b5a3b37ad6cf51",
+      "courseIdentity": "18fed55a7960eda1",
+      "pass": true
+    },
+    {
+      "key": "stadium-07/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2498,
+      "finalStateIdentity": "ee92f866d422686d",
+      "courseIdentity": "18fed55a7960eda1",
+      "pass": true
+    },
+    {
+      "key": "stadium-08/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2923,
+      "finalStateIdentity": "6b092dfa3f4d5fad",
+      "courseIdentity": "348185605415817c",
+      "pass": true
+    },
+    {
+      "key": "stadium-08/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2929,
+      "finalStateIdentity": "79447b77bac33275",
+      "courseIdentity": "348185605415817c",
+      "pass": true
+    },
+    {
+      "key": "container-yard-01/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1282,
+      "finalStateIdentity": "ddacc183c3ff0a5a",
+      "courseIdentity": "52e0b40805abaed9",
+      "pass": true
+    },
+    {
+      "key": "container-yard-01/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1282,
+      "finalStateIdentity": "9c9674541ca10911",
+      "courseIdentity": "52e0b40805abaed9",
+      "pass": true
+    },
+    {
+      "key": "container-yard-02/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2867,
+      "finalStateIdentity": "0dc7cc513295c60f",
+      "courseIdentity": "67f4b62219e9287b",
+      "pass": true
+    },
+    {
+      "key": "container-yard-02/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2883,
+      "finalStateIdentity": "84a9a113c32d05a4",
+      "courseIdentity": "67f4b62219e9287b",
+      "pass": true
+    },
+    {
+      "key": "container-yard-03/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2750,
+      "finalStateIdentity": "99677880cb075b52",
+      "courseIdentity": "04ebefb617e346dc",
+      "pass": true
+    },
+    {
+      "key": "container-yard-03/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2756,
+      "finalStateIdentity": "bfa9419f3790ffe3",
+      "courseIdentity": "04ebefb617e346dc",
+      "pass": true
+    },
+    {
+      "key": "container-yard-04/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1285,
+      "finalStateIdentity": "15864780f35fcf9f",
+      "courseIdentity": "30fec45af1073f6b",
+      "pass": true
+    },
+    {
+      "key": "container-yard-04/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1292,
+      "finalStateIdentity": "3aaed09ef76b9004",
+      "courseIdentity": "30fec45af1073f6b",
+      "pass": true
+    },
+    {
+      "key": "container-yard-05/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1707,
+      "finalStateIdentity": "89d94e30baab33d4",
+      "courseIdentity": "7a81181aab83825b",
+      "pass": true
+    },
+    {
+      "key": "container-yard-05/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1714,
+      "finalStateIdentity": "48fd4678f37081ba",
+      "courseIdentity": "7a81181aab83825b",
+      "pass": true
+    },
+    {
+      "key": "container-yard-06/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2128,
+      "finalStateIdentity": "bfe50e07a3707d3f",
+      "courseIdentity": "705554d4675f2666",
+      "pass": true
+    },
+    {
+      "key": "container-yard-06/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2132,
+      "finalStateIdentity": "0829e0ec0e3ce870",
+      "courseIdentity": "705554d4675f2666",
+      "pass": true
+    },
+    {
+      "key": "container-yard-07/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1794,
+      "finalStateIdentity": "9eb041f89f1547d4",
+      "courseIdentity": "55048116afbbb047",
+      "pass": true
+    },
+    {
+      "key": "container-yard-07/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1799,
+      "finalStateIdentity": "fbef4ea6a731e041",
+      "courseIdentity": "55048116afbbb047",
+      "pass": true
+    },
+    {
+      "key": "container-yard-08/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 4100,
+      "finalStateIdentity": "4a04da70a3db1916",
+      "courseIdentity": "e9425c207b9db555",
+      "pass": true
+    },
+    {
+      "key": "container-yard-08/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 4112,
+      "finalStateIdentity": "2b0cd84e7c6c3c64",
+      "courseIdentity": "e9425c207b9db555",
+      "pass": true
+    },
+    {
+      "key": "beginner-15/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 360,
+      "finalStateIdentity": "a263ee9df3245fc6",
+      "courseIdentity": "64cb3790368fd49f",
+      "pass": true
+    },
+    {
+      "key": "beginner-16/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 712,
+      "finalStateIdentity": "98a71c96624ef754",
+      "courseIdentity": "7c82554759bb825f",
+      "pass": true
+    },
+    {
+      "key": "beginner-13/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 654,
+      "finalStateIdentity": "11f9978ff8f10766",
+      "courseIdentity": "e11e0d68eb94ec8b",
+      "pass": true
+    },
+    {
+      "key": "beginner-17/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 608,
+      "finalStateIdentity": "e31f382df014b710",
+      "courseIdentity": "cd044f601dc841af",
+      "pass": true
+    },
+    {
+      "key": "beginner-14/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 757,
+      "finalStateIdentity": "fe32539fa7036a87",
+      "courseIdentity": "f25196443b3771db",
+      "pass": true
+    },
+    {
+      "key": "beginner-18/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 961,
+      "finalStateIdentity": "c3cb25ef47210af2",
+      "courseIdentity": "3270ae9caa20443d",
+      "pass": true
+    },
+    {
+      "key": "beginner-19/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 973,
+      "finalStateIdentity": "4278125617729278",
+      "courseIdentity": "436a7aa56b6d2a27",
+      "pass": true
+    },
+    {
+      "key": "beginner-20/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 908,
+      "finalStateIdentity": "85322821714cc6d5",
+      "courseIdentity": "bbcfd364ac80b320",
+      "pass": true
+    },
+    {
+      "key": "beginner-21/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 959,
+      "finalStateIdentity": "f68bc332fde2cd48",
+      "courseIdentity": "b676ddba4b300abd",
+      "pass": true
+    },
+    {
+      "key": "beginner-22/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1763,
+      "finalStateIdentity": "1eed4ab679368ff7",
+      "courseIdentity": "5fa689aa14791a05",
+      "pass": true
+    },
+    {
+      "key": "beginner-23/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1057,
+      "finalStateIdentity": "2845a2ff4aec8315",
+      "courseIdentity": "b19adee76b4c1b89",
+      "pass": true
+    },
+    {
+      "key": "beginner-24/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1031,
+      "finalStateIdentity": "7524261f630f7a40",
+      "courseIdentity": "79616097cade2d2f",
+      "pass": true
+    },
+    {
+      "key": "beginner-25/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 676,
+      "finalStateIdentity": "d8840ecf804778f1",
+      "courseIdentity": "a2c3885d71a20c01",
+      "pass": true
+    },
+    {
+      "key": "beginner-26/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1407,
+      "finalStateIdentity": "e0364f091e3eb2a4",
+      "courseIdentity": "3c71e622d8ec4fed",
+      "pass": true
+    },
+    {
+      "key": "beginner-01/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 360,
+      "finalStateIdentity": "9c5c44ff0f549053",
+      "courseIdentity": "593f2abcf4bb8e39",
+      "pass": true
+    },
+    {
+      "key": "beginner-02/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 564,
+      "finalStateIdentity": "f79e1ebe9e9f5a3b",
+      "courseIdentity": "ac0c4582c01659a5",
+      "pass": true
+    },
+    {
+      "key": "beginner-03/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 561,
+      "finalStateIdentity": "df7c0c7ddcbe98f8",
+      "courseIdentity": "2ac6f66ed1158c7d",
+      "pass": true
+    },
+    {
+      "key": "beginner-04/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 696,
+      "finalStateIdentity": "2b02d54e3f436aa4",
+      "courseIdentity": "b5ef1ded9180fabd",
+      "pass": true
+    },
+    {
+      "key": "beginner-05/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 654,
+      "finalStateIdentity": "7b57e5174cee28c4",
+      "courseIdentity": "70a14232a3405cf5",
+      "pass": true
+    },
+    {
+      "key": "beginner-06/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 828,
+      "finalStateIdentity": "e2cdac9d77db8835",
+      "courseIdentity": "75f77e0eae74812d",
+      "pass": true
+    },
+    {
+      "key": "beginner-07/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 948,
+      "finalStateIdentity": "52ca8f0f6d942fda",
+      "courseIdentity": "86c50a44c1516751",
+      "pass": true
+    },
+    {
+      "key": "beginner-08/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 830,
+      "finalStateIdentity": "502bfd5fba0dd1fa",
+      "courseIdentity": "b695bdea941aa401",
+      "pass": true
+    },
+    {
+      "key": "beginner-09/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 899,
+      "finalStateIdentity": "fd81a13164a8da78",
+      "courseIdentity": "c8b8f8a252ef2039",
+      "pass": true
+    },
+    {
+      "key": "beginner-10/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 732,
+      "finalStateIdentity": "573b969949ebedb6",
+      "courseIdentity": "c2a6ed66121e8f68",
+      "pass": true
+    },
+    {
+      "key": "beginner-11/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 945,
+      "finalStateIdentity": "d22d2c0ed2f3769e",
+      "courseIdentity": "3fd62162af20846b",
+      "pass": true
+    },
+    {
+      "key": "beginner-12/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1032,
+      "finalStateIdentity": "4d5e90cdbe3cccac",
+      "courseIdentity": "cb3815fcf3929727",
+      "pass": true
+    },
+    {
+      "key": "beginner-27/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1379,
+      "finalStateIdentity": "a18a122f726dfe48",
+      "courseIdentity": "8b384cbb81ea2708",
+      "pass": true
+    },
+    {
+      "key": "beginner-28/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1151,
+      "finalStateIdentity": "4126e0a2e80d49ae",
+      "courseIdentity": "7277f2d67ccd27c6",
+      "pass": true
+    },
+    {
+      "key": "beginner-29/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1597,
+      "finalStateIdentity": "cc775be8808698bd",
+      "courseIdentity": "37079d5461bf5272",
+      "pass": true
+    },
+    {
+      "key": "beginner-30/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1277,
+      "finalStateIdentity": "12ff1f943cd2eccf",
+      "courseIdentity": "2595d431aff67fe3",
+      "pass": true
+    },
+    {
+      "key": "beginner-31/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1840,
+      "finalStateIdentity": "a9d39bddf15619d9",
+      "courseIdentity": "874c1f2ef2b7892c",
+      "pass": true
+    },
+    {
+      "key": "beginner-32/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1709,
+      "finalStateIdentity": "77c17e1155019e55",
+      "courseIdentity": "c67ac5ce2b28fccf",
+      "pass": true
+    },
+    {
+      "key": "beginner-33/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2091,
+      "finalStateIdentity": "88d6cc9efa4bbd1a",
+      "courseIdentity": "521461c427c0ed84",
+      "pass": true
+    },
+    {
+      "key": "beginner-34/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2446,
+      "finalStateIdentity": "783d9ac33d8dd03f",
+      "courseIdentity": "a039758b251a40e6",
+      "pass": true
+    },
+    {
+      "key": "beginner-35/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1902,
+      "finalStateIdentity": "8c29b29d69e761ab",
+      "courseIdentity": "8817c9d3e1049ffd",
+      "pass": true
+    },
+    {
+      "key": "beginner-36/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1796,
+      "finalStateIdentity": "ad7aa5de2e99f9fe",
+      "courseIdentity": "8579c5dbb73c5081",
+      "pass": true
+    },
+    {
+      "key": "beginner-37/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2312,
+      "finalStateIdentity": "c4496bc85f21f7b4",
+      "courseIdentity": "e6241b38ad01e61a",
+      "pass": true
+    },
+    {
+      "key": "beginner-38/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1769,
+      "finalStateIdentity": "cabf135da49422b0",
+      "courseIdentity": "322e996d552bf8fa",
+      "pass": true
+    },
+    {
+      "key": "beginner-39/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2028,
+      "finalStateIdentity": "c3c3eed9622e8f82",
+      "courseIdentity": "5959472f4599c4d9",
+      "pass": true
+    },
+    {
+      "key": "beginner-40/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2007,
+      "finalStateIdentity": "7c4a810a0a8ab6e0",
+      "courseIdentity": "1f6f425010b35617",
+      "pass": true
+    },
+    {
+      "key": "beginner-41/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2510,
+      "finalStateIdentity": "3d33e5a01e58079c",
+      "courseIdentity": "a3f3f3dd2cef97dd",
+      "pass": true
+    },
+    {
+      "key": "beginner-42/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2784,
+      "finalStateIdentity": "52dc63ca74fabe94",
+      "courseIdentity": "b640b8e1957538e3",
+      "pass": true
+    },
+    {
+      "key": "beginner-43/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1657,
+      "finalStateIdentity": "c272e62e0a9e6d02",
+      "courseIdentity": "adac20dba7b5e335",
+      "pass": true
+    },
+    {
+      "key": "beginner-44/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1657,
+      "finalStateIdentity": "774cd1ede8a1f63e",
+      "courseIdentity": "47e48707ace795fa",
+      "pass": true
+    },
+    {
+      "key": "beginner-45/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1045,
+      "finalStateIdentity": "23393f68b2059498",
+      "courseIdentity": "d9e3fa1532520b22",
+      "pass": true
+    },
+    {
+      "key": "beginner-46/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1527,
+      "finalStateIdentity": "21110474859f0887",
+      "courseIdentity": "56d80312780b1f1a",
+      "pass": true
+    },
+    {
+      "key": "beginner-47/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1678,
+      "finalStateIdentity": "9c8306ffaf6dcc89",
+      "courseIdentity": "db618b049661729f",
+      "pass": true
+    },
+    {
+      "key": "beginner-48/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1845,
+      "finalStateIdentity": "b58df5e614999bda",
+      "courseIdentity": "826799bde7983342",
+      "pass": true
+    },
+    {
+      "key": "beginner-49/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1752,
+      "finalStateIdentity": "ce1234ce0817c6b8",
+      "courseIdentity": "bcb699b825cfaaab",
+      "pass": true
+    },
+    {
+      "key": "beginner-50/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1846,
+      "finalStateIdentity": "5d1a9e28acad2504",
+      "courseIdentity": "b16f7a738ebb1906",
+      "pass": true
+    },
+    {
+      "key": "beginner-51/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2018,
+      "finalStateIdentity": "7a49fb39bcb506c3",
+      "courseIdentity": "8f4af1bcb2ca0c2d",
+      "pass": true
+    },
+    {
+      "key": "beginner-52/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2793,
+      "finalStateIdentity": "83ec857c83cdb077",
+      "courseIdentity": "a8a231f48961f95a",
+      "pass": true
+    },
+    {
+      "key": "beginner-53/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2491,
+      "finalStateIdentity": "83168bd78a32adf5",
+      "courseIdentity": "4038f7b5c69b2166",
+      "pass": true
+    },
+    {
+      "key": "beginner-54/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1542,
+      "finalStateIdentity": "2f94f3b6491254c7",
+      "courseIdentity": "acbec1aacca6a125",
+      "pass": true
+    },
+    {
+      "key": "beginner-55/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2075,
+      "finalStateIdentity": "ffe2815daa8a832f",
+      "courseIdentity": "cb6d91c850e174a7",
+      "pass": true
+    },
+    {
+      "key": "beginner-56/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 2622,
+      "finalStateIdentity": "863576bd05ea03e6",
+      "courseIdentity": "95de7e820fc92bac",
+      "pass": true
+    },
+    {
+      "key": "beginner-57/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3212,
+      "finalStateIdentity": "def0ca53a5dcd820",
+      "courseIdentity": "2c27d3c6244b15df",
+      "pass": true
+    },
+    {
+      "key": "beginner-58/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 5285,
+      "finalStateIdentity": "19644e21a6648a57",
+      "courseIdentity": "1bafe39678faaa1b",
+      "pass": true
+    },
+    {
+      "key": "garage-01/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1285,
+      "finalStateIdentity": "609edeb258b70d73",
+      "courseIdentity": "2ba9e26716a27206",
+      "pass": true
+    },
+    {
+      "key": "garage-01/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1280,
+      "finalStateIdentity": "ea531d66c8ed2fe5",
+      "courseIdentity": "2ba9e26716a27206",
+      "pass": true
+    },
+    {
+      "key": "garage-02/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3292,
+      "finalStateIdentity": "fa5476f8e37b5044",
+      "courseIdentity": "2ac271c5c91d7530",
+      "pass": true
+    },
+    {
+      "key": "garage-02/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3204,
+      "finalStateIdentity": "ab307058c45e2fb8",
+      "courseIdentity": "2ac271c5c91d7530",
+      "pass": true
+    },
+    {
+      "key": "garage-03/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3160,
+      "finalStateIdentity": "cd48b495f0204883",
+      "courseIdentity": "63251c67bfff595d",
+      "pass": true
+    },
+    {
+      "key": "garage-03/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3182,
+      "finalStateIdentity": "6560c09cbddb494b",
+      "courseIdentity": "63251c67bfff595d",
+      "pass": true
+    },
+    {
+      "key": "garage-04/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1364,
+      "finalStateIdentity": "d9e797e2b9f7ce26",
+      "courseIdentity": "20cbd3e3cad61eed",
+      "pass": true
+    },
+    {
+      "key": "garage-04/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1381,
+      "finalStateIdentity": "b98d544fb8d517a0",
+      "courseIdentity": "20cbd3e3cad61eed",
+      "pass": true
+    },
+    {
+      "key": "garage-05/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1532,
+      "finalStateIdentity": "eaddebb3ffe0a98f",
+      "courseIdentity": "9bb22c0484e06db1",
+      "pass": true
+    },
+    {
+      "key": "garage-05/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1646,
+      "finalStateIdentity": "0649d04fe9020e34",
+      "courseIdentity": "9bb22c0484e06db1",
+      "pass": true
+    },
+    {
+      "key": "garage-06/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1785,
+      "finalStateIdentity": "9764832eca622d9f",
+      "courseIdentity": "50f38d475ff40c92",
+      "pass": true
+    },
+    {
+      "key": "garage-06/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1799,
+      "finalStateIdentity": "72c8eacb496e36c1",
+      "courseIdentity": "50f38d475ff40c92",
+      "pass": true
+    },
+    {
+      "key": "garage-07/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1779,
+      "finalStateIdentity": "879fabcaa232b5d8",
+      "courseIdentity": "b9c0903c49860859",
+      "pass": true
+    },
+    {
+      "key": "garage-07/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 1812,
+      "finalStateIdentity": "45e75f04771f21fe",
+      "courseIdentity": "b9c0903c49860859",
+      "pass": true
+    },
+    {
+      "key": "garage-08/self-level",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3606,
+      "finalStateIdentity": "0d8cf1a2fcf7bb11",
+      "courseIdentity": "6bc9b81fffa44fc8",
+      "pass": true
+    },
+    {
+      "key": "garage-08/acro",
+      "format": "FlightAttempt.v2",
+      "status": "complete",
+      "ticks": 3634,
+      "finalStateIdentity": "29ac18478b582675",
+      "courseIdentity": "6bc9b81fffa44fc8",
+      "pass": true
+    },
+    {
+      "key": "flight-01/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 239,
+      "courseIdentity": "573db8b71fe99103",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-01/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 239,
+      "courseIdentity": "573db8b71fe99103",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-02/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 383,
+      "courseIdentity": "8f671907feda67c9",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-02/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 383,
+      "courseIdentity": "8f671907feda67c9",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-03/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 433,
+      "courseIdentity": "1b240bb932f3f649",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-03/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 433,
+      "courseIdentity": "1b240bb932f3f649",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-04/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 433,
+      "courseIdentity": "9f0f8cfdac49a166",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-04/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 433,
+      "courseIdentity": "9f0f8cfdac49a166",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-05/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 435,
+      "courseIdentity": "dec5e82c56c5d299",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-05/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 435,
+      "courseIdentity": "dec5e82c56c5d299",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-06/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 899,
+      "courseIdentity": "80e5b607f33f1a75",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-06/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 900,
+      "courseIdentity": "80e5b607f33f1a75",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-07/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 498,
+      "courseIdentity": "923c2d912d5f865c",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-07/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 488,
+      "courseIdentity": "923c2d912d5f865c",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-08/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 491,
+      "courseIdentity": "0a44f9386d8f14eb",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-08/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 491,
+      "courseIdentity": "0a44f9386d8f14eb",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-09/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 638,
+      "courseIdentity": "6a883e6da14ef864",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-09/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 638,
+      "courseIdentity": "6a883e6da14ef864",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-10/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 610,
+      "courseIdentity": "17c60cf6ab703346",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-10/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 610,
+      "courseIdentity": "17c60cf6ab703346",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-11/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 1243,
+      "courseIdentity": "c1dba4037a711cbe",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-11/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 1243,
+      "courseIdentity": "c1dba4037a711cbe",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-12/self-level",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 1126,
+      "courseIdentity": "52cfa145bb51eee1",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    },
+    {
+      "key": "flight-12/acro",
+      "format": "FlightAttempt.v1",
+      "status": "complete",
+      "ticks": 1126,
+      "courseIdentity": "52cfa145bb51eee1",
+      "unchangedFromHangarReceipt": true,
+      "pass": true
+    }
+  ],
+  "integration": {
+    "mergedPrerequisite": 959,
+    "previousEvidence": "docs/evidence/fpv-meadow-groves-replay.json",
+    "reason": "Repeat actual replay after rebasing the unpublished C2 candidate onto main including the merged touch/mode changes."
+  }
+}

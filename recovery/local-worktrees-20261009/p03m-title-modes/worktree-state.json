@@ -1,0 +1,28 @@
+{
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03m-title-modes",
+  "branch": "codex/p03m-title-modes",
+  "head": "abdca9a71f82f5d97101aae7bb3179574eee5ce4",
+  "status": [
+    "?? game/ui/mode-choice.css",
+    "?? game/ui/mode-choice.mjs"
+  ],
+  "localCommitCountOutsideOriginMain": 1,
+  "artifacts": {
+    "workingTreePatch": {
+      "path": "working-tree.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "untrackedArchive": {
+      "path": "untracked.tar.gz",
+      "sha256": "df7bbb3e8d5c13fe47f1cb9b910ed3f93effde236b1eabda743660459c77a9f3",
+      "bytes": 1458
+    },
+    "localCommitPatch": {
+      "path": "local-commits.patch",
+      "sha256": "b7381e0d9aa1c373d99ddb89191f247f91ac49abae0bcb04fb94828148f8230f",
+      "bytes": 1002210
+    },
+    "conflictStages": 0
+  }
+}

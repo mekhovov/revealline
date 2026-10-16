@@ -87,7 +87,7 @@ export function createBonusEditor({ document, getSource, getMission, apply }) {
         };
       }
       const candidate = editContentBonus(getSource(), getMission()?.id, command);
-      if (apply(candidate) === false) return;
+      if (apply(candidate, () => commit(action)) === false) return;
       key = null;
       sync();
       $('select').value = action === 'remove' ? '' : id;

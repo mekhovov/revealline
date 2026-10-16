@@ -56,12 +56,25 @@ async function currentJourneySources(root) {
   const { createContentExecutionCatalog } = await moduleAt('content-design/execution.mjs');
   const { createJourneyCatalog } = await moduleAt('journey/catalog.mjs');
   const { createMissionCard } = await moduleAt('content-design/mission-card.mjs');
+  const { applyGameplayTuning, resolveGameplayTuning } = await moduleAt('gameplay-tuning.mjs');
   const sources = [];
   const add = (source, data) => sources.push({ source, data });
   const registerExecution = (source, data, mode) => {
     add(`${source}#source`, data);
     const executions = createContentExecutionCatalog(data, { mode });
     add(`${source}#executions/${mode}`, executions.entries);
+    // Capture HUDs own the accepted pressure recipe, not the untuned catalogue
+    // level. Register only default first-party projections; custom edits never
+    // gain translation authority by reusing a title or ID.
+    if (source.includes('pursuit-'))
+      add(
+        `${source}#accepted/${mode}`,
+        executions.entries.flatMap((entry) =>
+          entry.campaign.levels.map((level) =>
+            applyGameplayTuning(level, resolveGameplayTuning(entry.difficulty)),
+          ),
+        ),
+      );
     // Match the navigation adapters' exact serializable records, including
     // source ownership and mode. A same-named custom mission cannot opt in.
     const catalog = createJourneyCatalog(
@@ -112,6 +125,30 @@ async function currentJourneySources(root) {
         mode,
       );
     }
+  }
+  // Optional first-party routes remain launchable by their explicit Journey
+  // URL before they become the default or enter retained history. Register
+  // their presentation identities now without changing authored route data.
+  for (const routeId of [
+    'whole-spatial-v34',
+    'snake-hunt-v1',
+    'pursuit-pilots-v1',
+    'pursuit-campaigns-v1',
+  ]) {
+    if (
+      history.has(routeId) ||
+      [DEFAULT_JOURNEY_ROUTES.solo, DEFAULT_JOURNEY_ROUTES.versus].includes(routeId)
+    )
+      continue;
+    const route = await loadAuthoredJourneyRoute(routeId);
+    if (!route) throw new Error(`Unregistered optional Journey route: ${routeId}`);
+    add(`game/content-design/route-definition.mjs#${routeId}`, route);
+    registerExecution(`game/content-design/route-definition.mjs#${routeId}`, route.source, 'solo');
+    registerExecution(
+      `game/content-design/route-definition.mjs#${routeId}`,
+      route.source,
+      'versus',
+    );
   }
   const themes = JSON.parse(
     await fs.readFile(path.join(root, 'game/content-design/themes.json'), 'utf8'),
@@ -166,11 +203,49 @@ async function currentJourneySources(root) {
   const [file, factory] = team;
   const module = await moduleAt(`content-design/${file}`);
   registerExecution(`game/content-design/${file}#${factory}`, module[factory](), 'team');
+  const { createTeamSnakeHuntCandidates } = await moduleAt(
+    'content-design/team-snake-hunt-candidates.mjs',
+  );
+  registerExecution(
+    'game/content-design/team-snake-hunt-candidates.mjs#createTeamSnakeHuntCandidates',
+    createTeamSnakeHuntCandidates(),
+    'team',
+  );
+  const { createPursuitPilotCandidates } = await moduleAt(
+    'content-design/pursuit-pilot-candidates.mjs',
+  );
+  const { createPursuitCampaignCandidates } = await moduleAt(
+    'content-design/pursuit-campaign-candidates.mjs',
+  );
+  registerExecution(
+    'game/content-design/pursuit-pilot-candidates.mjs#createPursuitPilotCandidates',
+    createPursuitPilotCandidates({ team: true }),
+    'team',
+  );
+  registerExecution(
+    'game/content-design/pursuit-campaign-candidates.mjs#createPursuitCampaignCandidates',
+    createPursuitCampaignCandidates({ team: true }),
+    'team',
+  );
+  const { createMultiplayerExpansionCandidates } = await moduleAt(
+    'content-design/multiplayer-expansion.mjs',
+  );
+  for (const mode of ['team', 'versus']) {
+    registerExecution(
+      `game/content-design/multiplayer-expansion.mjs#${mode}`,
+      createMultiplayerExpansionCandidates({ mode }),
+      mode,
+    );
+  }
   return sources;
 }
 export async function contentSources(root) {
   const sources = [];
   async function walk(relative) {
+    // Company editions own an English-first content catalog and are compiled
+    // separately. Their authored text must not enter the default game's shared
+    // locale/history registry (or leak other audiences into standalone builds).
+    if (['game/content/company-boot', 'game/content/company-campaigns'].includes(relative)) return;
     for (const item of await fs.readdir(path.join(root, relative), { withFileTypes: true })) {
       const name = path.posix.join(relative, item.name);
       if (item.isDirectory()) await walk(name);
@@ -294,8 +369,13 @@ export async function extractContent(root, register) {
           'hazeLabel',
           'budgetLabel',
         ].includes(key);
+      const snakePresentation =
+        (source.includes('snake-hunt') ||
+          source.includes('pursuit-') ||
+          source.includes('multiplayer-expansion')) &&
+        ['lesson', 'counterplay', 'captureConsequence', 'memorableMoment'].includes(key);
       if (
-        (CONTENT_FIELDS.has(key) || motionPresentation) &&
+        (CONTENT_FIELDS.has(key) || motionPresentation || snakePresentation) &&
         !(motionPreset && key === 'outcome') &&
         (key !== 'motion' || typeof child === 'string')
       )
@@ -303,7 +383,13 @@ export async function extractContent(root, register) {
       if (key === 'metadata' && child?.description)
         leaves(child.description, 'metadata.description');
       if (key === 'design' && child && typeof child === 'object')
-        for (const field of ['routeDecision', 'mastery'])
+        for (const field of [
+          'routeDecision',
+          'mastery',
+          ...(source.includes('snake-hunt') || source.includes('pursuit-')
+            ? ['lesson', 'counterplay', 'captureConsequence', 'memorableMoment']
+            : []),
+        ])
           if (typeof child[field] === 'string') leaves(child[field], `design.${field}`);
     }
     if (source === 'game/content/mission-library-index.json' && typeof value.edition === 'string')

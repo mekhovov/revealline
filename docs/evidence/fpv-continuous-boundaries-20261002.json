@@ -1,0 +1,3350 @@
+{
+  "format": "FPVWholeLessonPlaybackEvidence.v1",
+  "method": "Exact canonical commands advance the ordinary v2 runtime without state edits or per-step reset. Every genuine objective transition is captured.",
+  "summary": {
+    "lessons": 26,
+    "steps": 122,
+    "selfLevel": 12,
+    "acro": 14,
+    "maxFrames": 1763,
+    "minStepTicks": 32
+  },
+  "results": [
+    {
+      "id": "beginner-01",
+      "mode": "self-level",
+      "frameCount": 360,
+      "sourceIdentity": "5b7652234b696e5a",
+      "finalStateIdentity": "9c5c44ff0f549053",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Ready on the launch pad",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 40
+        },
+        {
+          "step": 1,
+          "tick": 40,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "durationTicks": 108
+        },
+        {
+          "step": 2,
+          "tick": 148,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 1008,
+            "z": 0
+          },
+          "durationTicks": 212
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 40,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 148,
+          "position": {
+            "x": 0,
+            "y": 1008,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 295,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 360,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-02",
+      "mode": "self-level",
+      "frameCount": 564,
+      "sourceIdentity": "e50fcbdb6764bd0f",
+      "finalStateIdentity": "f79e1ebe9e9f5a3b",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 126
+        },
+        {
+          "step": 1,
+          "tick": 126,
+          "title": "Climb to the upper ribbon",
+          "position": {
+            "x": 0,
+            "y": 1415,
+            "z": 0
+          },
+          "durationTicks": 152
+        },
+        {
+          "step": 2,
+          "tick": 278,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 3475,
+            "z": 0
+          },
+          "durationTicks": 286
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 126,
+          "position": {
+            "x": 0,
+            "y": 1415,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 290,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 278,
+          "position": {
+            "x": 0,
+            "y": 3475,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 252,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 564,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-03",
+      "mode": "self-level",
+      "frameCount": 561,
+      "sourceIdentity": "20c47db382d75bc5",
+      "finalStateIdentity": "df7c0c7ddcbe98f8",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 1,
+          "tick": 149,
+          "title": "Keep the hover calm",
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "durationTicks": 150
+        },
+        {
+          "step": 2,
+          "tick": 299,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 2474,
+            "z": 0
+          },
+          "durationTicks": 262
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 149,
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 299,
+          "position": {
+            "x": 0,
+            "y": 2474,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 27,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 561,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-04",
+      "mode": "self-level",
+      "frameCount": 696,
+      "sourceIdentity": "bbce5a92237477b8",
+      "finalStateIdentity": "2b02d54e3f436aa4",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 1,
+          "tick": 149,
+          "title": "Face right",
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "durationTicks": 88
+        },
+        {
+          "step": 2,
+          "tick": 237,
+          "title": "Face left",
+          "position": {
+            "x": 0,
+            "y": 2410,
+            "z": 0
+          },
+          "durationTicks": 109
+        },
+        {
+          "step": 3,
+          "tick": 346,
+          "title": "Face forward",
+          "position": {
+            "x": 0,
+            "y": 2478,
+            "z": 0
+          },
+          "durationTicks": 88
+        },
+        {
+          "step": 4,
+          "tick": 434,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 2478,
+            "z": 0
+          },
+          "durationTicks": 262
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 149,
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 237,
+          "position": {
+            "x": 0,
+            "y": 2410,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 77,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 346,
+          "position": {
+            "x": 0,
+            "y": 2478,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 24,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "tick": 434,
+          "position": {
+            "x": 0,
+            "y": 2478,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 24,
+            "z": 0
+          }
+        },
+        {
+          "index": 4,
+          "tick": 696,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-05",
+      "mode": "self-level",
+      "frameCount": 654,
+      "sourceIdentity": "29eb33e8d0941bc0",
+      "finalStateIdentity": "7b57e5174cee28c4",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 1,
+          "tick": 149,
+          "title": "Nose forward, move forward",
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 2,
+          "tick": 310,
+          "title": "Level, then slow the drift",
+          "position": {
+            "x": 0,
+            "y": 2472,
+            "z": -6021
+          },
+          "durationTicks": 83
+        },
+        {
+          "step": 3,
+          "tick": 393,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 2472,
+            "z": -8104
+          },
+          "durationTicks": 261
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 149,
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 310,
+          "position": {
+            "x": 0,
+            "y": 2472,
+            "z": -6021
+          },
+          "velocity": {
+            "x": 0,
+            "y": 23,
+            "z": -1613
+          }
+        },
+        {
+          "index": 2,
+          "tick": 393,
+          "position": {
+            "x": 0,
+            "y": 2472,
+            "z": -8104
+          },
+          "velocity": {
+            "x": 0,
+            "y": 23,
+            "z": -891
+          }
+        },
+        {
+          "index": 3,
+          "tick": 654,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": -9783
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-06",
+      "mode": "self-level",
+      "frameCount": 828,
+      "sourceIdentity": "e1520c67b8bab038",
+      "finalStateIdentity": "e2cdac9d77db8835",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 1,
+          "tick": 149,
+          "title": "Slide right",
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "durationTicks": 162
+        },
+        {
+          "step": 2,
+          "tick": 311,
+          "title": "Slide left",
+          "position": {
+            "x": 4101,
+            "y": 2479,
+            "z": 0
+          },
+          "durationTicks": 255
+        },
+        {
+          "step": 3,
+          "tick": 566,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": -4116,
+            "y": 2479,
+            "z": 0
+          },
+          "durationTicks": 262
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 149,
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 311,
+          "position": {
+            "x": 4101,
+            "y": 2479,
+            "z": 0
+          },
+          "velocity": {
+            "x": 897,
+            "y": 24,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 566,
+          "position": {
+            "x": -4116,
+            "y": 2479,
+            "z": 0
+          },
+          "velocity": {
+            "x": -883,
+            "y": 13,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "tick": 828,
+          "position": {
+            "x": -5782,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-07",
+      "mode": "self-level",
+      "frameCount": 948,
+      "sourceIdentity": "96b61727c33609cb",
+      "finalStateIdentity": "52ca8f0f6d942fda",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 1,
+          "tick": 149,
+          "title": "Build a little speed",
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "durationTicks": 145
+        },
+        {
+          "step": 2,
+          "tick": 294,
+          "title": "Brake into the box",
+          "position": {
+            "x": 0,
+            "y": 2470,
+            "z": -5024
+          },
+          "durationTicks": 184
+        },
+        {
+          "step": 3,
+          "tick": 478,
+          "title": "Reverse, then settle",
+          "position": {
+            "x": 0,
+            "y": 2470,
+            "z": -9026
+          },
+          "durationTicks": 208
+        },
+        {
+          "step": 4,
+          "tick": 686,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 2470,
+            "z": -4381
+          },
+          "durationTicks": 262
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 149,
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 294,
+          "position": {
+            "x": 0,
+            "y": 2470,
+            "z": -5024
+          },
+          "velocity": {
+            "x": 0,
+            "y": 25,
+            "z": -1603
+          }
+        },
+        {
+          "index": 2,
+          "tick": 478,
+          "position": {
+            "x": 0,
+            "y": 2470,
+            "z": -9026
+          },
+          "velocity": {
+            "x": 0,
+            "y": 24,
+            "z": -458
+          }
+        },
+        {
+          "index": 3,
+          "tick": 686,
+          "position": {
+            "x": 0,
+            "y": 2470,
+            "z": -4381
+          },
+          "velocity": {
+            "x": 0,
+            "y": 19,
+            "z": 641
+          }
+        },
+        {
+          "index": 4,
+          "tick": 948,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": -3149
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-08",
+      "mode": "self-level",
+      "frameCount": 830,
+      "sourceIdentity": "df81ed3f34a3b642",
+      "finalStateIdentity": "502bfd5fba0dd1fa",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 1,
+          "tick": 161,
+          "title": "Travel and climb a little",
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "durationTicks": 201
+        },
+        {
+          "step": 2,
+          "tick": 362,
+          "title": "Travel into the lower box",
+          "position": {
+            "x": 0,
+            "y": 3921,
+            "z": -6111
+          },
+          "durationTicks": 217
+        },
+        {
+          "step": 3,
+          "tick": 579,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 2100,
+            "z": -14124
+          },
+          "durationTicks": 251
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 161,
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 289,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 362,
+          "position": {
+            "x": 0,
+            "y": 3921,
+            "z": -6111
+          },
+          "velocity": {
+            "x": 0,
+            "y": 70,
+            "z": -884
+          }
+        },
+        {
+          "index": 2,
+          "tick": 579,
+          "position": {
+            "x": 0,
+            "y": 2100,
+            "z": -14124
+          },
+          "velocity": {
+            "x": 0,
+            "y": -81,
+            "z": -884
+          }
+        },
+        {
+          "index": 3,
+          "tick": 830,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": -15769
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-09",
+      "mode": "self-level",
+      "frameCount": 899,
+      "sourceIdentity": "a76f372299d61107",
+      "finalStateIdentity": "fd81a13164a8da78",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 1,
+          "tick": 149,
+          "title": "Fly to the corner",
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "durationTicks": 202
+        },
+        {
+          "step": 2,
+          "tick": 351,
+          "title": "Turn the nose right",
+          "position": {
+            "x": 0,
+            "y": 2480,
+            "z": -6108
+          },
+          "durationTicks": 98
+        },
+        {
+          "step": 3,
+          "tick": 449,
+          "title": "Fly the new straight",
+          "position": {
+            "x": 0,
+            "y": 2480,
+            "z": -7244
+          },
+          "durationTicks": 189
+        },
+        {
+          "step": 4,
+          "tick": 638,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 8012,
+            "y": 2480,
+            "z": -7884
+          },
+          "durationTicks": 261
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 149,
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 351,
+          "position": {
+            "x": 0,
+            "y": 2480,
+            "z": -6108
+          },
+          "velocity": {
+            "x": 0,
+            "y": 24,
+            "z": -884
+          }
+        },
+        {
+          "index": 2,
+          "tick": 449,
+          "position": {
+            "x": 0,
+            "y": 2480,
+            "z": -7244
+          },
+          "velocity": {
+            "x": 0,
+            "y": 23,
+            "z": -348
+          }
+        },
+        {
+          "index": 3,
+          "tick": 638,
+          "position": {
+            "x": 8012,
+            "y": 2480,
+            "z": -7884
+          },
+          "velocity": {
+            "x": 1635,
+            "y": 13,
+            "z": -71
+          }
+        },
+        {
+          "index": 4,
+          "tick": 899,
+          "position": {
+            "x": 11534,
+            "y": 2,
+            "z": -7991
+          },
+          "velocity": {
+            "x": 1,
+            "y": 0,
+            "z": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-10",
+      "mode": "self-level",
+      "frameCount": 732,
+      "sourceIdentity": "6c6745619ebc45cf",
+      "finalStateIdentity": "573b969949ebedb6",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 1,
+          "tick": 149,
+          "title": "Approach the front landmark",
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "durationTicks": 183
+        },
+        {
+          "step": 2,
+          "tick": 332,
+          "title": "Slide to the side landmark",
+          "position": {
+            "x": 0,
+            "y": 2479,
+            "z": -5106
+          },
+          "durationTicks": 138
+        },
+        {
+          "step": 3,
+          "tick": 470,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 3102,
+            "y": 2479,
+            "z": -6481
+          },
+          "durationTicks": 262
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 149,
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 332,
+          "position": {
+            "x": 0,
+            "y": 2479,
+            "z": -5106
+          },
+          "velocity": {
+            "x": 0,
+            "y": 24,
+            "z": -896
+          }
+        },
+        {
+          "index": 2,
+          "tick": 470,
+          "position": {
+            "x": 3102,
+            "y": 2479,
+            "z": -6481
+          },
+          "velocity": {
+            "x": 878,
+            "y": 14,
+            "z": -251
+          }
+        },
+        {
+          "index": 3,
+          "tick": 732,
+          "position": {
+            "x": 4789,
+            "y": 2,
+            "z": -6972
+          },
+          "velocity": {
+            "x": 1,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-11",
+      "mode": "self-level",
+      "frameCount": 945,
+      "sourceIdentity": "6cdbd35333c04b69",
+      "finalStateIdentity": "d22d2c0ed2f3769e",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 1,
+          "tick": 149,
+          "title": "Pass gate 1",
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 2,
+          "tick": 310,
+          "title": "Pass gate 2",
+          "position": {
+            "x": 0,
+            "y": 2472,
+            "z": -6021
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 3,
+          "tick": 471,
+          "title": "Pass gate 3",
+          "position": {
+            "x": 1425,
+            "y": 2472,
+            "z": -12025
+          },
+          "durationTicks": 213
+        },
+        {
+          "step": 4,
+          "tick": 684,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": -1346,
+            "y": 2472,
+            "z": -18001
+          },
+          "durationTicks": 261
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 149,
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 310,
+          "position": {
+            "x": 0,
+            "y": 2472,
+            "z": -6021
+          },
+          "velocity": {
+            "x": 0,
+            "y": 23,
+            "z": -1613
+          }
+        },
+        {
+          "index": 2,
+          "tick": 471,
+          "position": {
+            "x": 1425,
+            "y": 2472,
+            "z": -12025
+          },
+          "velocity": {
+            "x": 276,
+            "y": 20,
+            "z": -1594
+          }
+        },
+        {
+          "index": 3,
+          "tick": 684,
+          "position": {
+            "x": -1346,
+            "y": 2472,
+            "z": -18001
+          },
+          "velocity": {
+            "x": -297,
+            "y": 19,
+            "z": -1620
+          }
+        },
+        {
+          "index": 4,
+          "tick": 945,
+          "position": {
+            "x": -1940,
+            "y": 2,
+            "z": -21537
+          },
+          "velocity": {
+            "x": -1,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-12",
+      "mode": "self-level",
+      "frameCount": 1032,
+      "sourceIdentity": "43f761053d0d99c5",
+      "finalStateIdentity": "4d5e90cdbe3cccac",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 1,
+          "tick": 149,
+          "title": "Begin your first straight",
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 2,
+          "tick": 310,
+          "title": "Slow and face the turn",
+          "position": {
+            "x": 0,
+            "y": 2472,
+            "z": -6021
+          },
+          "durationTicks": 113
+        },
+        {
+          "step": 3,
+          "tick": 423,
+          "title": "Take the second straight",
+          "position": {
+            "x": 12,
+            "y": 2472,
+            "z": -9110
+          },
+          "durationTicks": 202
+        },
+        {
+          "step": 4,
+          "tick": 625,
+          "title": "Hover above home",
+          "position": {
+            "x": 9020,
+            "y": 2472,
+            "z": -10715
+          },
+          "durationTicks": 157
+        },
+        {
+          "step": 5,
+          "tick": 782,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 12745,
+            "y": 2066,
+            "z": -10927
+          },
+          "durationTicks": 250
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 149,
+          "position": {
+            "x": 0,
+            "y": 2127,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 310,
+          "position": {
+            "x": 0,
+            "y": 2472,
+            "z": -6021
+          },
+          "velocity": {
+            "x": 0,
+            "y": 23,
+            "z": -1613
+          }
+        },
+        {
+          "index": 2,
+          "tick": 423,
+          "position": {
+            "x": 12,
+            "y": 2472,
+            "z": -9110
+          },
+          "velocity": {
+            "x": -4,
+            "y": 22,
+            "z": -868
+          }
+        },
+        {
+          "index": 3,
+          "tick": 625,
+          "position": {
+            "x": 9020,
+            "y": 2472,
+            "z": -10715
+          },
+          "velocity": {
+            "x": 1627,
+            "y": 18,
+            "z": -127
+          }
+        },
+        {
+          "index": 4,
+          "tick": 782,
+          "position": {
+            "x": 12745,
+            "y": 2066,
+            "z": -10927
+          },
+          "velocity": {
+            "x": 584,
+            "y": -52,
+            "z": -31
+          }
+        },
+        {
+          "index": 5,
+          "tick": 1032,
+          "position": {
+            "x": 13846,
+            "y": 2,
+            "z": -10965
+          },
+          "velocity": {
+            "x": 1,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-13",
+      "mode": "acro",
+      "frameCount": 654,
+      "sourceIdentity": "69bdf9a4ac73a31e",
+      "finalStateIdentity": "11f9978ff8f10766",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 182
+        },
+        {
+          "step": 1,
+          "tick": 182,
+          "title": "Tip, then centre",
+          "position": {
+            "x": 0,
+            "y": 3628,
+            "z": 0
+          },
+          "durationTicks": 32
+        },
+        {
+          "step": 2,
+          "tick": 214,
+          "title": "Actively return to level",
+          "position": {
+            "x": 0,
+            "y": 4075,
+            "z": -145
+          },
+          "durationTicks": 112
+        },
+        {
+          "step": 3,
+          "tick": 326,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 5955,
+            "z": -378
+          },
+          "durationTicks": 328
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 182,
+          "position": {
+            "x": 0,
+            "y": 3628,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 287,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 214,
+          "position": {
+            "x": 0,
+            "y": 4075,
+            "z": -145
+          },
+          "velocity": {
+            "x": 0,
+            "y": 836,
+            "z": -601
+          }
+        },
+        {
+          "index": 2,
+          "tick": 326,
+          "position": {
+            "x": 0,
+            "y": 5955,
+            "z": -378
+          },
+          "velocity": {
+            "x": 0,
+            "y": 423,
+            "z": 312
+          }
+        },
+        {
+          "index": 3,
+          "tick": 654,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": -17
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-14",
+      "mode": "acro",
+      "frameCount": 757,
+      "sourceIdentity": "cea3c2b2d9a5dc24",
+      "finalStateIdentity": "fe32539fa7036a87",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 1,
+          "tick": 161,
+          "title": "Set a small forward tilt",
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "durationTicks": 176
+        },
+        {
+          "step": 2,
+          "tick": 337,
+          "title": "Counter-rotate and brake",
+          "position": {
+            "x": 0,
+            "y": 2745,
+            "z": -7030
+          },
+          "durationTicks": 146
+        },
+        {
+          "step": 3,
+          "tick": 483,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 2967,
+            "z": -10626
+          },
+          "durationTicks": 274
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 161,
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 289,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 337,
+          "position": {
+            "x": 0,
+            "y": 2745,
+            "z": -7030
+          },
+          "velocity": {
+            "x": 0,
+            "y": 7,
+            "z": -1696
+          }
+        },
+        {
+          "index": 2,
+          "tick": 483,
+          "position": {
+            "x": 0,
+            "y": 2967,
+            "z": -10626
+          },
+          "velocity": {
+            "x": 0,
+            "y": 33,
+            "z": -634
+          }
+        },
+        {
+          "index": 3,
+          "tick": 757,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": -11866
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-15",
+      "mode": "acro",
+      "frameCount": 360,
+      "sourceIdentity": "451ad6d46ab40e85",
+      "finalStateIdentity": "a263ee9df3245fc6",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Ground check",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 40
+        },
+        {
+          "step": 1,
+          "tick": 40,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "durationTicks": 108
+        },
+        {
+          "step": 2,
+          "tick": 148,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 1008,
+            "z": 0
+          },
+          "durationTicks": 212
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 40,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 148,
+          "position": {
+            "x": 0,
+            "y": 1008,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 295,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 360,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-16",
+      "mode": "acro",
+      "frameCount": 712,
+      "sourceIdentity": "5f480be5552a4896",
+      "finalStateIdentity": "98a71c96624ef754",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 126
+        },
+        {
+          "step": 1,
+          "tick": 126,
+          "title": "Climb, then ease off",
+          "position": {
+            "x": 0,
+            "y": 1415,
+            "z": 0
+          },
+          "durationTicks": 170
+        },
+        {
+          "step": 2,
+          "tick": 296,
+          "title": "Catch the descent",
+          "position": {
+            "x": 0,
+            "y": 4177,
+            "z": 0
+          },
+          "durationTicks": 163
+        },
+        {
+          "step": 3,
+          "tick": 459,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 2275,
+            "z": 0
+          },
+          "durationTicks": 253
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 126,
+          "position": {
+            "x": 0,
+            "y": 1415,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 290,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 296,
+          "position": {
+            "x": 0,
+            "y": 4177,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 250,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 459,
+          "position": {
+            "x": 0,
+            "y": 2275,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": -219,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "tick": 712,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-17",
+      "mode": "acro",
+      "frameCount": 608,
+      "sourceIdentity": "1cefa1a39dc2964d",
+      "finalStateIdentity": "e31f382df014b710",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 182
+        },
+        {
+          "step": 1,
+          "tick": 182,
+          "title": "Set a small tilt and release",
+          "position": {
+            "x": 0,
+            "y": 3628,
+            "z": 0
+          },
+          "durationTicks": 32
+        },
+        {
+          "step": 2,
+          "tick": 214,
+          "title": "Level and stop the drift",
+          "position": {
+            "x": 0,
+            "y": 3968,
+            "z": -120
+          },
+          "durationTicks": 100
+        },
+        {
+          "step": 3,
+          "tick": 314,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 4073,
+            "z": -384
+          },
+          "durationTicks": 294
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 182,
+          "position": {
+            "x": 0,
+            "y": 3628,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 287,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 214,
+          "position": {
+            "x": 0,
+            "y": 3968,
+            "z": -120
+          },
+          "velocity": {
+            "x": 0,
+            "y": 616,
+            "z": -500
+          }
+        },
+        {
+          "index": 2,
+          "tick": 314,
+          "position": {
+            "x": 0,
+            "y": 4073,
+            "z": -384
+          },
+          "velocity": {
+            "x": 0,
+            "y": -57,
+            "z": 303
+          }
+        },
+        {
+          "index": 3,
+          "tick": 608,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": 14
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-18",
+      "mode": "acro",
+      "frameCount": 961,
+      "sourceIdentity": "01b84b1aaae8d520",
+      "finalStateIdentity": "c3cb25ef47210af2",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 1,
+          "tick": 161,
+          "title": "Slide right and brake",
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "durationTicks": 218
+        },
+        {
+          "step": 2,
+          "tick": 379,
+          "title": "Slide left and brake",
+          "position": {
+            "x": 4877,
+            "y": 2974,
+            "z": 0
+          },
+          "durationTicks": 309
+        },
+        {
+          "step": 3,
+          "tick": 688,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": -4788,
+            "y": 2974,
+            "z": 0
+          },
+          "durationTicks": 273
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 161,
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 289,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 379,
+          "position": {
+            "x": 4877,
+            "y": 2974,
+            "z": 0
+          },
+          "velocity": {
+            "x": 494,
+            "y": 21,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 688,
+          "position": {
+            "x": -4788,
+            "y": 2974,
+            "z": 0
+          },
+          "velocity": {
+            "x": -585,
+            "y": 19,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "tick": 961,
+          "position": {
+            "x": -5886,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-19",
+      "mode": "acro",
+      "frameCount": 973,
+      "sourceIdentity": "80dc8d60a229d28f",
+      "finalStateIdentity": "4278125617729278",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 1,
+          "tick": 161,
+          "title": "Face east",
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "durationTicks": 103
+        },
+        {
+          "step": 2,
+          "tick": 264,
+          "title": "Face west",
+          "position": {
+            "x": 0,
+            "y": 2926,
+            "z": 0
+          },
+          "durationTicks": 125
+        },
+        {
+          "step": 3,
+          "tick": 389,
+          "title": "Face north again",
+          "position": {
+            "x": 0,
+            "y": 2978,
+            "z": 0
+          },
+          "durationTicks": 103
+        },
+        {
+          "step": 4,
+          "tick": 492,
+          "title": "Now travel north",
+          "position": {
+            "x": 0,
+            "y": 2978,
+            "z": 0
+          },
+          "durationTicks": 207
+        },
+        {
+          "step": 5,
+          "tick": 699,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 2978,
+            "z": -5493
+          },
+          "durationTicks": 274
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 161,
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 289,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 264,
+          "position": {
+            "x": 0,
+            "y": 2926,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 63,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 389,
+          "position": {
+            "x": 0,
+            "y": 2978,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 24,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "tick": 492,
+          "position": {
+            "x": 0,
+            "y": 2978,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 24,
+            "z": 0
+          }
+        },
+        {
+          "index": 4,
+          "tick": 699,
+          "position": {
+            "x": 0,
+            "y": 2978,
+            "z": -5493
+          },
+          "velocity": {
+            "x": 0,
+            "y": 16,
+            "z": -651
+          }
+        },
+        {
+          "index": 5,
+          "tick": 973,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": -6841
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-20",
+      "mode": "acro",
+      "frameCount": 908,
+      "sourceIdentity": "1b0ad0ea2b94f32f",
+      "finalStateIdentity": "85322821714cc6d5",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 1,
+          "tick": 161,
+          "title": "Climb while moving",
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "durationTicks": 175
+        },
+        {
+          "step": 2,
+          "tick": 336,
+          "title": "Descend while moving",
+          "position": {
+            "x": 0,
+            "y": 3204,
+            "z": -7013
+          },
+          "durationTicks": 160
+        },
+        {
+          "step": 3,
+          "tick": 496,
+          "title": "Settle after the gates",
+          "position": {
+            "x": 0,
+            "y": 2588,
+            "z": -15026
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 4,
+          "tick": 645,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 0,
+            "y": 2522,
+            "z": -18660
+          },
+          "durationTicks": 263
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 161,
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 289,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 336,
+          "position": {
+            "x": 0,
+            "y": 3204,
+            "z": -7013
+          },
+          "velocity": {
+            "x": 0,
+            "y": 38,
+            "z": -1711
+          }
+        },
+        {
+          "index": 2,
+          "tick": 496,
+          "position": {
+            "x": 0,
+            "y": 2588,
+            "z": -15026
+          },
+          "velocity": {
+            "x": 0,
+            "y": -73,
+            "z": -1650
+          }
+        },
+        {
+          "index": 3,
+          "tick": 645,
+          "position": {
+            "x": 0,
+            "y": 2522,
+            "z": -18660
+          },
+          "velocity": {
+            "x": 0,
+            "y": -22,
+            "z": -612
+          }
+        },
+        {
+          "index": 4,
+          "tick": 908,
+          "position": {
+            "x": 0,
+            "y": 2,
+            "z": -19844
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-21",
+      "mode": "acro",
+      "frameCount": 959,
+      "sourceIdentity": "6e525e60ae7a9fd7",
+      "finalStateIdentity": "f68bc332fde2cd48",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 1,
+          "tick": 161,
+          "title": "Approach the corner",
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "durationTicks": 167
+        },
+        {
+          "step": 2,
+          "tick": 328,
+          "title": "Enter the right turn",
+          "position": {
+            "x": 0,
+            "y": 2977,
+            "z": -4868
+          },
+          "durationTicks": 183
+        },
+        {
+          "step": 3,
+          "tick": 511,
+          "title": "Exit through a left turn",
+          "position": {
+            "x": 5822,
+            "y": 2977,
+            "z": -8886
+          },
+          "durationTicks": 175
+        },
+        {
+          "step": 4,
+          "tick": 686,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 11909,
+            "y": 2977,
+            "z": -14820
+          },
+          "durationTicks": 273
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 161,
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 289,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 328,
+          "position": {
+            "x": 0,
+            "y": 2977,
+            "z": -4868
+          },
+          "velocity": {
+            "x": 0,
+            "y": 21,
+            "z": -971
+          }
+        },
+        {
+          "index": 2,
+          "tick": 511,
+          "position": {
+            "x": 5822,
+            "y": 2977,
+            "z": -8886
+          },
+          "velocity": {
+            "x": 953,
+            "y": 14,
+            "z": -474
+          }
+        },
+        {
+          "index": 3,
+          "tick": 686,
+          "position": {
+            "x": 11909,
+            "y": 2977,
+            "z": -14820
+          },
+          "velocity": {
+            "x": 915,
+            "y": 16,
+            "z": -963
+          }
+        },
+        {
+          "index": 4,
+          "tick": 959,
+          "position": {
+            "x": 13771,
+            "y": 2,
+            "z": -16762
+          },
+          "velocity": {
+            "x": 1,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-22",
+      "mode": "acro",
+      "frameCount": 1763,
+      "sourceIdentity": "f2fee45d782060e4",
+      "finalStateIdentity": "1eed4ab679368ff7",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 171
+        },
+        {
+          "step": 1,
+          "tick": 171,
+          "title": "Loop marker 1 of 8",
+          "position": {
+            "x": 0,
+            "y": 3123,
+            "z": 0
+          },
+          "durationTicks": 149
+        },
+        {
+          "step": 2,
+          "tick": 320,
+          "title": "Loop marker 2 of 8",
+          "position": {
+            "x": -4487,
+            "y": 3472,
+            "z": -4426
+          },
+          "durationTicks": 169
+        },
+        {
+          "step": 3,
+          "tick": 489,
+          "title": "Loop marker 3 of 8",
+          "position": {
+            "x": -11379,
+            "y": 3477,
+            "z": -1554
+          },
+          "durationTicks": 162
+        },
+        {
+          "step": 4,
+          "tick": 651,
+          "title": "Loop marker 4 of 8",
+          "position": {
+            "x": -8633,
+            "y": 3477,
+            "z": 4390
+          },
+          "durationTicks": 163
+        },
+        {
+          "step": 5,
+          "tick": 814,
+          "title": "Loop marker 5 of 8",
+          "position": {
+            "x": -2603,
+            "y": 3477,
+            "z": 1618
+          },
+          "durationTicks": 169
+        },
+        {
+          "step": 6,
+          "tick": 983,
+          "title": "Loop marker 6 of 8",
+          "position": {
+            "x": 4384,
+            "y": 3477,
+            "z": -4511
+          },
+          "durationTicks": 171
+        },
+        {
+          "step": 7,
+          "tick": 1154,
+          "title": "Loop marker 7 of 8",
+          "position": {
+            "x": 11379,
+            "y": 3477,
+            "z": -1522
+          },
+          "durationTicks": 162
+        },
+        {
+          "step": 8,
+          "tick": 1316,
+          "title": "Loop marker 8 of 8",
+          "position": {
+            "x": 8630,
+            "y": 3477,
+            "z": 4388
+          },
+          "durationTicks": 163
+        },
+        {
+          "step": 9,
+          "tick": 1479,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 2612,
+            "y": 3477,
+            "z": 1615
+          },
+          "durationTicks": 284
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 171,
+          "position": {
+            "x": 0,
+            "y": 3123,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 290,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 320,
+          "position": {
+            "x": -4487,
+            "y": 3472,
+            "z": -4426
+          },
+          "velocity": {
+            "x": -1244,
+            "y": 25,
+            "z": -1307
+          }
+        },
+        {
+          "index": 2,
+          "tick": 489,
+          "position": {
+            "x": -11379,
+            "y": 3477,
+            "z": -1554
+          },
+          "velocity": {
+            "x": -1184,
+            "y": 16,
+            "z": 698
+          }
+        },
+        {
+          "index": 3,
+          "tick": 651,
+          "position": {
+            "x": -8633,
+            "y": 3477,
+            "z": 4390
+          },
+          "velocity": {
+            "x": 762,
+            "y": 16,
+            "z": 1224
+          }
+        },
+        {
+          "index": 4,
+          "tick": 814,
+          "position": {
+            "x": -2603,
+            "y": 3477,
+            "z": 1618
+          },
+          "velocity": {
+            "x": 1211,
+            "y": 17,
+            "z": -753
+          }
+        },
+        {
+          "index": 5,
+          "tick": 983,
+          "position": {
+            "x": 4384,
+            "y": 3477,
+            "z": -4511
+          },
+          "velocity": {
+            "x": 1176,
+            "y": 16,
+            "z": -1130
+          }
+        },
+        {
+          "index": 6,
+          "tick": 1154,
+          "position": {
+            "x": 11379,
+            "y": 3477,
+            "z": -1522
+          },
+          "velocity": {
+            "x": 1173,
+            "y": 16,
+            "z": 675
+          }
+        },
+        {
+          "index": 7,
+          "tick": 1316,
+          "position": {
+            "x": 8630,
+            "y": 3477,
+            "z": 4388
+          },
+          "velocity": {
+            "x": -758,
+            "y": 17,
+            "z": 1219
+          }
+        },
+        {
+          "index": 8,
+          "tick": 1479,
+          "position": {
+            "x": 2612,
+            "y": 3477,
+            "z": 1615
+          },
+          "velocity": {
+            "x": -1212,
+            "y": 17,
+            "z": -748
+          }
+        },
+        {
+          "index": 9,
+          "tick": 1763,
+          "position": {
+            "x": 271,
+            "y": 2,
+            "z": 160
+          },
+          "velocity": {
+            "x": -1,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-23",
+      "mode": "acro",
+      "frameCount": 1057,
+      "sourceIdentity": "ed45d8e143324668",
+      "finalStateIdentity": "2845a2ff4aec8315",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 1,
+          "tick": 161,
+          "title": "Approach the northern marker",
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "durationTicks": 227
+        },
+        {
+          "step": 2,
+          "tick": 388,
+          "title": "Move sideways with the same view",
+          "position": {
+            "x": 0,
+            "y": 2973,
+            "z": -6485
+          },
+          "durationTicks": 197
+        },
+        {
+          "step": 3,
+          "tick": 585,
+          "title": "Keep the horizon calm",
+          "position": {
+            "x": 4657,
+            "y": 2973,
+            "z": -7748
+          },
+          "durationTicks": 199
+        },
+        {
+          "step": 4,
+          "tick": 784,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 5817,
+            "y": 2973,
+            "z": -12635
+          },
+          "durationTicks": 273
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 161,
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 289,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 388,
+          "position": {
+            "x": 0,
+            "y": 2973,
+            "z": -6485
+          },
+          "velocity": {
+            "x": 0,
+            "y": 22,
+            "z": -668
+          }
+        },
+        {
+          "index": 2,
+          "tick": 585,
+          "position": {
+            "x": 4657,
+            "y": 2973,
+            "z": -7748
+          },
+          "velocity": {
+            "x": 576,
+            "y": 19,
+            "z": -100
+          }
+        },
+        {
+          "index": 3,
+          "tick": 784,
+          "position": {
+            "x": 5817,
+            "y": 2973,
+            "z": -12635
+          },
+          "velocity": {
+            "x": 86,
+            "y": 19,
+            "z": -590
+          }
+        },
+        {
+          "index": 4,
+          "tick": 1057,
+          "position": {
+            "x": 5984,
+            "y": 2,
+            "z": -13887
+          },
+          "velocity": {
+            "x": 1,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-24",
+      "mode": "acro",
+      "frameCount": 1031,
+      "sourceIdentity": "89edd7ed96c134ec",
+      "finalStateIdentity": "7524261f630f7a40",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 1,
+          "tick": 161,
+          "title": "Gate 1: look through the opening",
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "durationTicks": 160
+        },
+        {
+          "step": 2,
+          "tick": 321,
+          "title": "Gate 2: look through the opening",
+          "position": {
+            "x": 0,
+            "y": 2745,
+            "z": -6001
+          },
+          "durationTicks": 202
+        },
+        {
+          "step": 3,
+          "tick": 523,
+          "title": "Gate 3: look through the opening",
+          "position": {
+            "x": 2430,
+            "y": 2981,
+            "z": -13012
+          },
+          "durationTicks": 246
+        },
+        {
+          "step": 4,
+          "tick": 769,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": -1356,
+            "y": 2529,
+            "z": -21004
+          },
+          "durationTicks": 262
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 161,
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 289,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 321,
+          "position": {
+            "x": 0,
+            "y": 2745,
+            "z": -6001
+          },
+          "velocity": {
+            "x": 0,
+            "y": 7,
+            "z": -1796
+          }
+        },
+        {
+          "index": 2,
+          "tick": 523,
+          "position": {
+            "x": 2430,
+            "y": 2981,
+            "z": -13012
+          },
+          "velocity": {
+            "x": 268,
+            "y": 16,
+            "z": -1879
+          }
+        },
+        {
+          "index": 3,
+          "tick": 769,
+          "position": {
+            "x": -1356,
+            "y": 2529,
+            "z": -21004
+          },
+          "velocity": {
+            "x": -301,
+            "y": -21,
+            "z": -1928
+          }
+        },
+        {
+          "index": 4,
+          "tick": 1031,
+          "position": {
+            "x": -1927,
+            "y": 2,
+            "z": -24539
+          },
+          "velocity": {
+            "x": -1,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-25",
+      "mode": "acro",
+      "frameCount": 676,
+      "sourceIdentity": "5b7fdad9ec9b8949",
+      "finalStateIdentity": "d8840ecf804778f1",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 190
+        },
+        {
+          "step": 1,
+          "tick": 190,
+          "title": "Create a small, recoverable tilt",
+          "position": {
+            "x": 0,
+            "y": 4126,
+            "z": 0
+          },
+          "durationTicks": 36
+        },
+        {
+          "step": 2,
+          "tick": 226,
+          "title": "Level, brake, return",
+          "position": {
+            "x": 248,
+            "y": 4515,
+            "z": 0
+          },
+          "durationTicks": 174
+        },
+        {
+          "step": 3,
+          "tick": 400,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 264,
+            "y": 3178,
+            "z": 0
+          },
+          "durationTicks": 276
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 190,
+          "position": {
+            "x": 0,
+            "y": 4126,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 288,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 226,
+          "position": {
+            "x": 248,
+            "y": 4515,
+            "z": 0
+          },
+          "velocity": {
+            "x": 909,
+            "y": 609,
+            "z": 0
+          }
+        },
+        {
+          "index": 2,
+          "tick": 400,
+          "position": {
+            "x": 264,
+            "y": 3178,
+            "z": 0
+          },
+          "velocity": {
+            "x": -79,
+            "y": -137,
+            "z": 0
+          }
+        },
+        {
+          "index": 3,
+          "tick": 676,
+          "position": {
+            "x": 56,
+            "y": 2,
+            "z": 0
+          },
+          "velocity": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "beginner-26",
+      "mode": "acro",
+      "frameCount": 1407,
+      "sourceIdentity": "616326c6a2c3dcc6",
+      "finalStateIdentity": "e0364f091e3eb2a4",
+      "steps": [
+        {
+          "step": 0,
+          "tick": 0,
+          "title": "Lift gently",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "durationTicks": 161
+        },
+        {
+          "step": 1,
+          "tick": 161,
+          "title": "The opening straight",
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "durationTicks": 176
+        },
+        {
+          "step": 2,
+          "tick": 337,
+          "title": "Right toward the next gate",
+          "position": {
+            "x": 0,
+            "y": 2745,
+            "z": -7030
+          },
+          "durationTicks": 123
+        },
+        {
+          "step": 3,
+          "tick": 460,
+          "title": "Cross the eastern gate",
+          "position": {
+            "x": 22,
+            "y": 2944,
+            "z": -10899
+          },
+          "durationTicks": 189
+        },
+        {
+          "step": 4,
+          "tick": 649,
+          "title": "Left onto the final line",
+          "position": {
+            "x": 8002,
+            "y": 2775,
+            "z": -12628
+          },
+          "durationTicks": 123
+        },
+        {
+          "step": 5,
+          "tick": 772,
+          "title": "The final gate",
+          "position": {
+            "x": 11888,
+            "y": 2955,
+            "z": -12894
+          },
+          "durationTicks": 190
+        },
+        {
+          "step": 6,
+          "tick": 962,
+          "title": "Hold over home",
+          "position": {
+            "x": 13632,
+            "y": 2776,
+            "z": -21017
+          },
+          "durationTicks": 183
+        },
+        {
+          "step": 7,
+          "tick": 1145,
+          "title": "Settle onto the pad",
+          "position": {
+            "x": 13959,
+            "y": 2522,
+            "z": -25008
+          },
+          "durationTicks": 262
+        }
+      ],
+      "completionEvents": [
+        {
+          "index": 0,
+          "tick": 161,
+          "position": {
+            "x": 0,
+            "y": 2624,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 289,
+            "z": 0
+          }
+        },
+        {
+          "index": 1,
+          "tick": 337,
+          "position": {
+            "x": 0,
+            "y": 2745,
+            "z": -7030
+          },
+          "velocity": {
+            "x": 0,
+            "y": 7,
+            "z": -1696
+          }
+        },
+        {
+          "index": 2,
+          "tick": 460,
+          "position": {
+            "x": 22,
+            "y": 2944,
+            "z": -10899
+          },
+          "velocity": {
+            "x": -27,
+            "y": 43,
+            "z": -1036
+          }
+        },
+        {
+          "index": 3,
+          "tick": 649,
+          "position": {
+            "x": 8002,
+            "y": 2775,
+            "z": -12628
+          },
+          "velocity": {
+            "x": 1654,
+            "y": -20,
+            "z": -170
+          }
+        },
+        {
+          "index": 4,
+          "tick": 772,
+          "position": {
+            "x": 11888,
+            "y": 2955,
+            "z": -12894
+          },
+          "velocity": {
+            "x": 1042,
+            "y": 36,
+            "z": -43
+          }
+        },
+        {
+          "index": 5,
+          "tick": 962,
+          "position": {
+            "x": 13632,
+            "y": 2776,
+            "z": -21017
+          },
+          "velocity": {
+            "x": 176,
+            "y": -21,
+            "z": -1640
+          }
+        },
+        {
+          "index": 6,
+          "tick": 1145,
+          "position": {
+            "x": 13959,
+            "y": 2522,
+            "z": -25008
+          },
+          "velocity": {
+            "x": 50,
+            "y": -24,
+            "z": -441
+          }
+        },
+        {
+          "index": 7,
+          "tick": 1407,
+          "position": {
+            "x": 13997,
+            "y": 2,
+            "z": -25913
+          },
+          "velocity": {
+            "x": -1,
+            "y": 0,
+            "z": -1
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "verifiedAt": "2026-09-30T17:17:55.877596+00:00",
+  "pullRequest": "https://github.com/mekhovov/revealline-soundtracks/pull/66",
+  "mergeCommit": "d90ba83687200637fefa9e7e0802f5336889e5eb",
+  "deployRunURL": "https://github.com/mekhovov/revealline-soundtracks/actions/runs/36749654475",
+  "files": [
+    {
+      "url": "https://mekhovov.github.io/revealline-soundtracks/README.md",
+      "bytes": 3929,
+      "sha256": "cdc74aa7074b2d261442488732dda524dbaa6921575f1ef675df13f6bef7fe24",
+      "matchesReviewedSource": true
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline-soundtracks/UPLOAD_GUIDE.md",
+      "bytes": 10802,
+      "sha256": "eb0961c61e9015d5cee2f3f35a264696eebf897900b0dd5a562532d032ed0f23",
+      "matchesReviewedSource": true
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline-soundtracks/upload-guide/index.html",
+      "bytes": 10863,
+      "sha256": "54c128b4688d6fed99b2c7c7dccdfa429b279efa89e3718bbbea8c205b206efe",
+      "matchesReviewedSource": true
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline-soundtracks/catalogue.json",
+      "bytes": 561012,
+      "sha256": "c746c7da0940684186f5c3277396b47c5c14868f865b4e4656fa432177cf2019",
+      "matchesReviewedSource": true
+    }
+  ],
+  "tests": {
+    "passed": 67,
+    "failed": 0
+  },
+  "liveExistingVolumesVerified": 42,
+  "liveExistingAssetsVerified": 261,
+  "gameSourceObservation": {
+    "verifiedAt": "2026-09-30T17:13:25.596760+00:00",
+    "release": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "5e23fa8a62accf7a719cca5dd45c0702b52d37a5",
+      "sourceCommittedAt": "2026-09-30T19:03:51+02:00",
+      "buildVersion": "main-5e23fa8a62ac",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    },
+    "files": [
+      {
+        "url": "https://mekhovov.github.io/revealline/game/content/soundtrack-catalogue.json",
+        "bytes": 139446,
+        "sha256": "d785175d3bbf1979715745eeb2d80210a095c84173a55de1b30f079701c53794",
+        "matchesLocal": true
+      },
+      {
+        "url": "https://mekhovov.github.io/revealline/game/content/soundtrack-catalogue.mjs",
+        "bytes": 148255,
+        "sha256": "5fa28b6718f0b1963a4b45ca7cb476b077d617a4e891297516538d9e91c3bcb6",
+        "matchesLocal": true
+      }
+    ]
+  }
+}

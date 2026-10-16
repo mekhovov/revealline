@@ -1,5 +1,14 @@
 # Temporary fast-release mode
 
+## Current hosting policy — 2026-09-27
+
+Future releases use only `mekhovov/revealline`. Do not create, allocate, append, deploy or admit a `revealline-archive-XX` repository as a release step. Historical archive deployment and per-PR publication are not prerequisites.
+
+Publish the exact qualified current game on the main Pages site and keep original immutable ZIPs, manifests, checksums and source evidence in the main repository's GitHub Releases. Unarchived historical editions become explicitly download-only, not broken Play links. Existing accepted archive links, repositories, tags, assets, saved data and evidence remain unchanged; their frozen registry is compatibility history, not a recurring remote-admission gate. Do not delete or republish them.
+
+Keep current-source qualification, reviewed selector, protected-main checks, frozen independent inspection, bounded extraction, full artifact/public-byte verification, latest-release validation and scoped player acceptance. Preserve explicit test waivers as SKIPPED. The main Pages budget remains 950,000,000 bytes; exceeding it requires a new reviewed decision, not another repository or a raised limit. See [main-repository publishing policy](main-repository-publishing.md).
+
+
 Fast-release mode is active by explicit owner direction from **24 September 2026**. It remains the
 repository default until the owner explicitly asks to restore the full pipeline. Deferred checks
 have not passed and must never be described as passing.
@@ -117,7 +126,7 @@ need to be re-enabled.
 
 ## What still blocks GitHub Pages
 
-Fast pull-request previews validate the selector, highest stable release match, admitted archives,
+Fast pull-request previews validate the selector, highest stable release match, frozen legacy compatibility pins,
 metadata, and bounded extraction rules without assembling the complete Pages artifact. Exact
 artifact assembly and the independent reread of every prepared byte are deferred to the main
 publication, where they remain mandatory together with the final latest-release recheck and the
@@ -190,7 +199,7 @@ Existing matching objects are reused; absent draft objects are created; mismatch
 assets, lightweight tags, incomplete published releases and digestless assets stop. Published assets
 are never overwritten. The write permission exists only on the final publication job. The reusable
 qualifier and the shadow path remain read-only. A release event hands the accepted publication to
-the existing archive/selector/Pages route; archive admission, selector review, production assembly,
+the main-repository-only selector/Pages route; selector review, production assembly,
 deployment, public-byte audit and player journeys remain blocking and are not claimed by release
 publication alone.
 

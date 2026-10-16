@@ -2,7 +2,7 @@
 
 Status: implemented through PR [#465](https://github.com/mekhovov/revealline/pull/465), merged in
 the combined creator PR [#564](https://github.com/mekhovov/revealline/pull/564), and published in
-`v0.141.0`. The current `v0.141.2` Pages release retains this behavior. This record preserves the
+`v0.141.0`. The current `v0.141.6` Pages release retains this behavior. This record preserves the
 Phase 2 evidence and the remaining browser/device limits below.
 
 ## Automated evidence completed

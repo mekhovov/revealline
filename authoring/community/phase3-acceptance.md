@@ -3,7 +3,7 @@
 Status: the mixed-media creator, portable video dependencies and installed runtime are implemented
 through PR [#465](https://github.com/mekhovov/revealline/pull/465), merged in the combined creator
 PR [#564](https://github.com/mekhovov/revealline/pull/564), and published in `v0.141.0`. The
-current `v0.141.2` Pages release retains this behavior. This record preserves the Phase 3 evidence
+current `v0.141.6` Pages release retains this behavior. This record preserves the Phase 3 evidence
 and the browser/device limits below.
 
 ## Completed evidence
