@@ -31,9 +31,16 @@ and offline rollback. Its narrowly pinned historical diagnostic authority leaves
 current publishing strict. Active-flight protection and Gym/Worlds migrations
 are not covered.
 
-Next: distinct-release active-session protection and current timeout/
-cancellation recovery. Personal-appearance catalogue journeys now have a separate
-strict observer; native execution remains pending. Real hardware is
+Current continuation: six personal-appearance source-shell journeys and all six
+native 30-second idle/download-cancel cases pass; the temporary fourth-app recipe
+also passes. See the [integrated-main report](flight-practice-continuation-2026-10-16.md)
+for original failures, exact sources, preserved records and remaining scope.
+Separate active-session and real five-minute observers are implemented but their
+native execution remains pending. The full build's second attempt was cancelled
+at a cross-volume file-cloning bottleneck, not accepted as a distribution pass.
+A narrow same-device writer guard preserves exact-byte checks and fallbacks.
+Next: retry the full production build/player journey and run those separate
+historical active-session/overall-timeout lanes. Real hardware is
 deferred at the owner's subsequent request; hosting remains deferred. SIM flight
 mechanics, lessons and rendering remain outside this workstream.
 

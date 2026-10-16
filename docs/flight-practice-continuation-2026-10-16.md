@@ -100,7 +100,33 @@ retains its original code. The shared client has a documented “Download stalle
 for 30 seconds” outcome absent from the observer's terminal patterns. Regressions
 now recognize that known outcome and fail promptly on unexpected stalls; improved
 failure diagnostics read bounded offline status/progress text, never form values.
-The next unchanged-package native run must confirm the complete journey.
+The next unchanged-package native run confirms the complete journey below.
+
+### All six short native fault cases now pass
+
+The [third original receipt](flight-practice-continuation-20261016/download-passed.json)
+has SHA-256 `daa492fb2863a51747bcc5c1bf06618091f36f6ed64b83ce1a5e11115465a0f5`.
+It passes 22 checkpoints, all six faults, all three pristine retry/removals,
+genuine historical Academy upgrade/rollback, three-app restart and five exact
+World project/card witnesses. Chrome is 155.0.8059.80. Idle termination is
+30,007.6 ms (Gym), 30,005.0 ms (Academy) and 30,005.5 ms (Worlds).
+Academy's visible status confirms the documented 30-second stalled outcome.
+Native cancellation aborts the held request after 81.0/76.7/74.0 ms respectively;
+observed click-to-settlement is 60.9/67.3/53.4 ms. Every case has one exact request,
+one original byte, no retry and an app-side abort, not a server safety deadline.
+
+All six original caches and 351 admitted dependency pins remain exact, as do
+the seeded proof/profile and populated World fingerprints. Independent review
+verified those pins and all nine post-fault/retry World witnesses. Cleanup,
+authority/source stability and all installed-app removals succeed. The complete
+[ten-file authority archive](flight-practice-continuation-20261016/download-passed-authority.tgz)
+has SHA-256 `b63758130c89cabdde69a60d57e6435886fc159daabaad8b8f08da5c20bb2942`.
+
+This is the short download lane, not verification-phase cancellation, the real
+five-minute limit, eviction or human flight. Its server uses preview security
+headers. Optional status instrumentation forwards production APIs but can affect
+scheduling; this is diagnostic functional evidence, not a performance claim.
+Gym's records are unpopulated. The two earlier failed receipts remain unchanged.
 
 ## Maintainer recipe and tests
 
@@ -113,10 +139,20 @@ not a new public application or human package approval. It is never published.
 Its source is a working-tree fixture based on `b6706a9912ed0c94489f4926f90daa4ebecd7fe1`,
 not the frozen candidate above. Cleanup passes.
 
-The integrated-main/phase-fix practice suite passes **360 tests, zero failures or
-skips**. The later expanded observer suite passes **143 tests**, with one explicit
-external-historical-bundle test skipped by default; that opt-in real-bundle suite
-separately passes **7/7**. Focused preservation and fault-helper tests also pass.
+The current integrated-main practice suite passes **362 tests, zero failures or
+skips**. Earlier 360-test and 143-test observer logs remain historical. A later
+153-test observer run has one flaky fake-DOM progress assertion failure, preserved
+in `observer-first-fixture-failure.log`; its unchanged focused retry passed 8/8.
+The fake wait incorrectly asserted before the HTTP client's first data event and
+could leave its first-data promise unresolved after an early abort. Bounded polling,
+settled error/abort/end paths and joined fixture promises repair that harness;
+delayed-data and pre-data-abort regressions are deterministic. No production
+deadline or Cancel acceptance bound is increased.
+
+The expanded suite now passes **168 tests**, with one explicit external historical
+bundle skip; the opt-in real-bundle suite separately passes **7/7**. The actual-body
+writer and installation-observer regression run passes **32/32**. The new active-session
+helper's **11/11** tests are synthetic and independently reviewed, not native proof.
 Scoped formatting, lint and whitespace checks pass. Original logs are retained
 alongside this report; a name-filtered sample run is not a second full suite.
 
@@ -126,19 +162,36 @@ The Couch verification document and FPV baseline images are committed and availa
 This worktree's non-cone sparse patterns excluded `docs/verification`; earlier
 missing-file errors were real, but attributing them to unavailable producer inputs
 was wrong. Only the exact required document and baseline directory (about 416 KiB)
-were materialized from Git. No user's primary-checkout files were copied, changed
+were materialized from Git. The first ordinary build then reached two further
+committed soundtrack review records under `docs/verification/music-publication-2026-09-21`.
+Those exact `rights-audit.json` and `public-delivery.json` files were restored too;
+their existing compiler passes 70 tracks, one archive and fifteen collections.
+No listening/license approval is added. No user's primary-checkout files were copied, changed
 or published; no evidence was fabricated or build rule removed.
 
 Build collection now reads all **3,310** declared source files. The ordinary
 [main validation result](flight-practice-continuation-20261016/main-validation.json)
 passes reference/content, campaign, theme, class, pack and cooperative checks.
-This is not yet a completed production build or production browser journey; those
-are now feasible next checks, separate from hosting and capacity decisions.
+The second build reached staging but spent many seconds per Darwin `cp -c`
+between local device 16777235 and remote device 905969668. Local free space also
+fell to about 1.6 GiB; moving the whole output locally was not a safe alternative.
+The exact owned build process group was verified and terminated (exit 143).
+Its partial staging directory is retained, not published or silently deleted.
+[Attempt dispositions](flight-practice-continuation-20261016/build-attempts.json)
+distinguish failure, cancellation and a completed distribution.
+
+The maintained writer now attempts clones only on known matching devices; known
+cross-device copies use the existing exact prepared-byte write. Source validation,
+post-clone equality, changed/generated fallback and write errors remain intact.
+Synthetic actual-function-body tests cover both platforms, corrupted/failed clones,
+unavailable filesystem checks and surfaced writes; the real-file independence tests
+remain. A full rebuilt distribution and native production journey are still next,
+not implied by this infrastructure repair. Hosting/capacity remain separate.
 
 ## Still open
 
 The acceptance checklist remains authoritative. Priorities are the corrected
-native download-fault retry and production-distribution player journey, then
+production-distribution player journey, then
 distinct-release **active-flight** protection and Gym/Worlds migrations. Actual
 verification-phase cancellation, the real five-minute overall limit, imported
 assets/offline flight, actual eviction, broader browser accessibility/performance

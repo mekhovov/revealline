@@ -55,8 +55,49 @@ This lane does **not** establish cancellation during local verification, the rea
 five-minute overall limit, actual quota exhaustion/eviction or real hardware.
 Network delay cannot deterministically pause local hashing/cache writes; a
 Verifying label alone is insufficient evidence. The fixed real trickle transport
-is available for a separately bounded five-minute lane, not a shortened-clock
-substitute or three five-minute cases inside this ten-minute journey.
+is used by the separately bounded lane below, never by a shortened-clock substitute.
+
+## Separate real five-minute lane
+
+Use exactly one of `overall-civilian-flight`, `overall-civilian-fpv` or
+`overall-fpv-worlds` as `OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS`, with the same
+saved-world seed. Each invocation runs one app's real overall-timeout case and
+one pristine retry/removal. Run all three separately to cover all apps. The
+default and six-case `all-short` journey are unchanged. Quota faults cannot be
+combined with this lane. The existing ten-minute aggregate limit is not increased;
+at least 390 seconds must remain before attaching its fault.
+
+The owned server writes successive original dependency bytes every five seconds.
+Acceptance requires approximately five-minute client termination (295–315 seconds),
+at least 55 contiguous original-byte writes, no 30-second write gap, no silent
+retry, and no server safety/cleanup termination or Cancel. This measures server
+transmission plus native client failure, not direct browser receipt of every byte.
+Generic failure text cannot identify the internal timer. All existing pointer,
+worker, six-cache admitted pin, proof/profile and World retention checks recur
+after failure and retry/removal. Native execution is still required; synthetic
+timing regressions are not five-minute qualification.
+
+## Separate historical active-session lane
+
+With the pinned historical admission above, set
+`OPTIONAL_INSTALLATION_ACTIVE_SESSION=academy-v0.142.4-98ad851`. Do not combine it
+with download/quota faults. The retained historical standalone window uses normal
+Settings, keyboard selection and Detailed HUD, explicit Start/Arm, visible Height
+movement and explicit pause/resume. An initially disarmed Start is retained; the
+observer waits for the public Arm control's enabled state rather than hidden
+renderer state. No completed course/proof is manufactured.
+
+Foregrounding the separate update tab naturally pauses the historical flight.
+Only then does the real current package prepare and advance active/previous
+pointers. The old window must retain its immutable URL, document identity and time
+origin, remain paused with stable visible height after focus returns, and move
+again only after explicit resume. The whole helper, including update, has one
+30-second budget. Native input ownership, pending actions and cleanup are checked;
+the parent also requires actual B preparation and exact record retention.
+An original paused screenshot and source hash are retained. This is historical
+Academy session continuity, not uninterrupted background flight, exact simulation
+tick continuity, all-app migration or a human/physical-input review. Native results
+must be recorded separately from its synthetic unit tests.
 
 ## Default journey and evidence boundaries
 
@@ -66,7 +107,8 @@ modes reserve `v0.0.1` for a deliberately truncated dependency. Fixture paths mu
 not collide with either candidate version. They are never published releases.
 
 The observer uses installed Chrome, a temporary persistent browser profile and an
-isolated loopback server with production-style headers. It never opens the user's
+isolated loopback server with the existing preview security headers (which allow
+validated HTTPS media/catalogue connections). It never opens the user's
 normal browser profile. All three test apps are uninstalled and the temporary profile
 removed on completion. Cleanup failures retain that directory and identify it in
 the receipt instead of hiding the failure.

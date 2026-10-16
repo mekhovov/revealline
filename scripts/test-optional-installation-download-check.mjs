@@ -6,6 +6,8 @@ import { runInNewContext } from 'node:vm';
 import { setTimeout as pause } from 'node:timers/promises';
 import {
   selectInstallationDownloadFaults,
+  installationDownloadFaultMatrix,
+  requireInstallationDownloadFaultBudget,
   assertDownloadFaultTiming,
   readPreparedCacheFingerprints,
   observeInstallationDownloadFault,
@@ -28,6 +30,96 @@ test('short download matrix requires exact explicit opt-in', () => {
   assert.equal(selectInstallationDownloadFaults('all-short'), true);
   for (const value of ['', true, 'all', 'idle', 'cancel-hold', 'overall-trickle'])
     assert.throws(() => selectInstallationDownloadFaults(value));
+});
+
+test('fixed overall selections retain short/default behavior and require time for recovery', () => {
+  assert.equal(installationDownloadFaultMatrix(undefined), null);
+  const short = installationDownloadFaultMatrix('all-short');
+  assert.equal(short.ids.length * short.modes.length, 6);
+  for (const id of ['civilian-flight', 'civilian-fpv', 'fpv-worlds']) {
+    const matrix = installationDownloadFaultMatrix('overall-' + id);
+    assert.equal(selectInstallationDownloadFaults(matrix.selection), true);
+    assert.deepEqual(matrix.ids, [id]);
+    assert.deepEqual(matrix.modes, ['overall-trickle']);
+    requireInstallationDownloadFaultBudget(matrix, 390000);
+    assert.throws(() => requireInstallationDownloadFaultBudget(matrix, 389999));
+  }
+});
+
+function overallReceipt(heldMs = 300000) {
+  const events = Array.from({ length: 60 }, (_, index) => ({
+    kind: 'body-byte-written',
+    offset: index,
+    bytesSent: index + 1,
+    elapsedMs: index * 5000,
+  }));
+  events.push({ kind: 'ended', elapsedMs: heldMs });
+  return {
+    mode: 'overall-trickle',
+    heldMs,
+    status: 'Download exceeded five minutes. Retry online.',
+    fault: {
+      outcome: 'request-aborted',
+      bytesSent: 60,
+      delegatedTargetRequests: 0,
+      dependency: { bytes: 1000 },
+      events,
+    },
+  };
+}
+
+test('overall timing requires continued original writes and an app abort, never an idle/server deadline', () => {
+  for (const time of [295000, 300000, 315000])
+    assert.equal(assertDownloadFaultTiming(overallReceipt(time), '#transfer-status'), true);
+  for (const time of [30000, 294999, 315001, 325000, NaN])
+    assert.throws(() => assertDownloadFaultTiming(overallReceipt(time), '#transfer-status'));
+  const changes = [
+    (r) => {
+      r.status = 'Download cancelled';
+    },
+    (r) => {
+      r.status = 'Ready offline';
+    },
+    (r) => {
+      r.cancelAction = 'a click';
+    },
+    (r) => {
+      r.fault.outcome = 'fault-safety-deadline';
+    },
+    (r) => {
+      r.fault.outcome = 'observer-cleanup';
+    },
+    (r) => {
+      r.fault.delegatedTargetRequests = 1;
+    },
+    (r) => {
+      r.fault.bytesSent = 59;
+    },
+    (r) => {
+      r.fault.dependency.bytes = 60;
+    },
+    (r) => {
+      r.fault.events[1].offset = 0;
+    },
+    (r) => {
+      r.fault.events[1].bytesSent = 8;
+    },
+    (r) => {
+      r.fault.events[1].elapsedMs = 30000;
+    },
+    (r) => {
+      r.fault.events[59].elapsedMs = 270000;
+    },
+    (r) => {
+      r.fault.events.splice(0, 10);
+      r.fault.bytesSent = 50;
+    },
+  ];
+  for (const change of changes) {
+    const receipt = overallReceipt();
+    change(receipt);
+    assert.throws(() => assertDownloadFaultTiming(receipt, '#transfer-status'));
+  }
 });
 
 test('mode-specific timing rejects late or no-op Cancel and distinguishes the documented Gym copy', () => {
@@ -224,12 +316,74 @@ test('invalid or oversized pinned inventories reject before reading browser stor
  * Real activateOfflineAction callbacks run against a persistent isolated VM.
  * A Cancel action aborts the actual request, not a fabricated fault snapshot.
  */
+function firstFixtureData(
+  url,
+  { onClient, onResponse, onData, firstDataDelayMs = 0, abortBeforeData = false } = {},
+) {
+  return new Promise((resolve, reject) => {
+    let response,
+      timer,
+      settled = false;
+    const ignoreError = () => {};
+    const finish = (error) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      client.removeListener('error', failed);
+      client.removeListener('abort', aborted);
+      client.removeListener('close', closed);
+      response?.removeListener('data', data);
+      response?.removeListener('end', ended);
+      response?.removeListener('aborted', aborted);
+      response?.removeListener('error', failed);
+      response?.removeListener('close', closed);
+      error ? reject(error) : resolve();
+    };
+    const failed = (error) => finish(error);
+    const aborted = () => finish(new Error('Fixture request aborted before first data'));
+    const closed = () => finish(new Error('Fixture connection closed before first data'));
+    const ended = () => finish(new Error('Fixture response ended before first data'));
+    const data = () => {
+      try {
+        onData?.();
+        finish();
+      } catch (error) {
+        finish(error);
+      }
+    };
+    const client = get(url, (res) => {
+      response = res;
+      onResponse?.(res);
+      // A later deliberate Cancel may emit errors after the first-data promise
+      // settled. Keep their sink until socket close, independently of this promise.
+      res.on('error', ignoreError);
+      res.once('close', () => res.removeListener('error', ignoreError));
+      if (firstDataDelayMs || abortBeforeData) res.pause();
+      res.once('data', data);
+      res.once('end', ended);
+      res.once('aborted', aborted);
+      res.once('error', failed);
+      res.once('close', closed);
+      if (abortBeforeData) res.destroy();
+      else if (firstDataDelayMs) timer = setTimeout(() => res.resume(), firstDataDelayMs);
+    });
+    client.on('error', ignoreError);
+    client.once('close', () => client.removeListener('error', ignoreError));
+    client.once('error', failed);
+    client.once('abort', aborted);
+    client.once('close', closed);
+    onClient?.(client);
+  });
+}
+
 async function exerciseCancel({
   actionFails = false,
   beforeRequestFails = false,
   disabledCancel = false,
   noopCancel = false,
   wrongPhase = false,
+  firstDataDelayMs = 0,
+  abortBeforeData = false,
 } = {}) {
   const body = Buffer.alloc(256, 37),
     pathname = '/revealline/practice/civilian-fpv/releases/v0.0.1/site/game/example.mjs';
@@ -243,7 +397,19 @@ async function exerciseCancel({
     progress = false,
     busy = false,
     disconnected = false,
-    cancelClicks = 0;
+    cancelClicks = 0,
+    progressWaitIterations = 0;
+  const fixturePromises = [];
+  const own = (promise, kind = 'first-data') => {
+    // Attach a rejection handler immediately, then join every fixture operation.
+    fixturePromises.push(
+      promise.then(
+        () => ({ kind, fulfilled: true }),
+        (error) => ({ kind, fulfilled: false, message: error.message }),
+      ),
+    );
+    return promise;
+  };
   const statusNode = { textContent: 'Ready offline', contains: () => false };
   const emit = (text) => {
     statusNode.textContent = text;
@@ -284,7 +450,13 @@ async function exerciseCancel({
   };
   const panel = {
     waitFor: async ({ state }) => {
-      assert.equal(progress, state === 'visible', 'Progress panel state mismatch');
+      assert(['visible', 'hidden'].includes(state));
+      const end = Date.now() + 1000;
+      while (progress !== (state === 'visible')) {
+        progressWaitIterations++;
+        assert(Date.now() < end, `Unit progress panel did not become ${state}`);
+        await pause(5);
+      }
     },
     innerText: async () => (wrongPhase ? 'Verifying · unit fixture' : 'Downloading · unit fixture'),
     getByRole: (role, options) => {
@@ -313,30 +485,38 @@ async function exerciseCancel({
         assert.equal(key, 'Enter');
         if (beforeRequestFails) throw Error('Native action failed before a request');
         busy = true;
-        await new Promise((resolve, reject) => {
-          client = get(origin + pathname, (res) => {
-            response = res;
-            res.on('error', () => {});
-            res.once('data', () => {
+        await own(
+          firstFixtureData(origin + pathname, {
+            firstDataDelayMs,
+            abortBeforeData,
+            onClient: (request) => {
+              client = request;
+            },
+            onResponse: (res) => {
+              response = res;
+            },
+            onData: () => {
               progress = true;
               emit('Downloading');
-              resolve();
-            });
-          });
-          client.on('error', reject);
-        });
+            },
+          }),
+        );
         if (actionFails) throw Error('Native prepare action failed');
       },
     };
   };
-  page.waitForFunction = async (fn, input) => {
-    const end = Date.now() + 1000;
-    while (true) {
-      if (await page.evaluate(fn, input)) return;
-      if (Date.now() >= end) throw Error('Unit DOM condition did not settle');
-      await pause(5);
-    }
-  };
+  page.waitForFunction = (fn, input) =>
+    own(
+      (async () => {
+        const end = Date.now() + 1000;
+        while (true) {
+          if (await page.evaluate(fn, input)) return;
+          if (Date.now() >= end) throw Error('Unit DOM condition did not settle');
+          await pause(5);
+        }
+      })(),
+      'dom-condition',
+    );
   const receipt = {};
   let error;
   try {
@@ -358,6 +538,7 @@ async function exerciseCancel({
     client?.destroy();
     server.closeAllConnections();
     await new Promise((resolve) => server.close(resolve));
+    await Promise.all(fixturePromises);
   }
   assert.equal(server.listeners('request').length, 1);
   assert.equal(server.listeners('request')[0], original);
@@ -366,7 +547,13 @@ async function exerciseCancel({
   assert.deepEqual(receipt.fault.cleanupErrors, []);
   assert.equal(disconnected, true);
   assert.equal(page.browser.__optionalInstallationWitness, undefined);
-  return { receipt, error, cancelClicks };
+  return {
+    receipt,
+    error,
+    cancelClicks,
+    progressWaitIterations,
+    fixtureResults: await Promise.all(fixturePromises),
+  };
 }
 
 test('actual short fault plus real action witness cancels one HTTP request and cleans up', async () => {
@@ -395,8 +582,47 @@ test('native action failure and disabled Cancel preserve failure and remove owne
 });
 
 test('a no-op Cancel followed by timeout must not qualify cancellation', async () => {
-  const { receipt, error, cancelClicks } = await exerciseCancel({ noopCancel: true });
+  const { receipt, error, cancelClicks } = await exerciseCancel({
+    noopCancel: true,
+  });
   assert.equal(cancelClicks, 1);
   assert(error, 'Generic timeout after a Cancel click must be rejected.');
   assert.notEqual(receipt.passed, true);
+});
+
+test('delayed first HTTP data waits for visible progress rather than racing server receipt', async () => {
+  const result = await exerciseCancel({ firstDataDelayMs: 100 });
+  assert.equal(result.error, undefined);
+  assert.equal(result.receipt.passed, true);
+  assert.equal(result.cancelClicks, 1);
+  assert(result.progressWaitIterations > 0);
+  assert.deepEqual(
+    result.fixtureResults.filter((row) => row.kind === 'first-data'),
+    [{ kind: 'first-data', fulfilled: true }],
+  );
+  assert(result.fixtureResults.every((row) => row.fulfilled));
+});
+
+test('abort before first HTTP data settles and joins the fixture without false Cancel qualification', async () => {
+  const result = await exerciseCancel({ abortBeforeData: true });
+  assert(result.error);
+  assert.equal(result.cancelClicks, 0);
+  assert.notEqual(result.receipt.passed, true);
+  const requests = result.fixtureResults.filter((row) => row.kind === 'first-data');
+  assert.equal(requests.length, 1);
+  assert.equal(requests[0].fulfilled, false);
+  assert.match(requests[0].message, /before first data/);
+});
+
+test('first-data fixture rejects empty response and connection errors instead of leaving pending promises', async () => {
+  const server = createServer((_request, response) => response.end());
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  const url = `http://127.0.0.1:${server.address().port}/`;
+  try {
+    await assert.rejects(firstFixtureData(url), /ended before first data/);
+  } finally {
+    server.closeAllConnections();
+    await new Promise((resolve) => server.close(resolve));
+  }
+  await assert.rejects(firstFixtureData(url), /ECONNREFUSED|ECONNRESET|socket hang up/);
 });
