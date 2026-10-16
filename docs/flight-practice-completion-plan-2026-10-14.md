@@ -10,8 +10,15 @@ All three changed packages reproduce twice and pass admission. The original
 failed matrix and observer correction remain retained. This is not a complete
 Phase 1/public release or a human/hardware qualification.
 
-Next: populated Worlds offline process restart, distinct-release active-session
-update/rollback, and current timeout/cancellation recovery. Real hardware is
+The [populated-world continuation](flight-practice-world-restart-2026-10-16.md)
+also passes five exact saved-project/card witnesses through offline browser and
+standalone-window restart, plus nine existing installation/recovery checkpoints.
+It is not offline-flight, imported-asset or distinct-release migration evidence.
+
+Next: distinct-release active-session update/rollback and current timeout/
+cancellation recovery. A genuine `v0.142.4` historical candidate now reproduces,
+but needs a narrowly pinned historical admission/UI adapter; current publisher
+contracts remain strict. Real hardware is
 deferred at the owner's subsequent request; hosting remains deferred. SIM flight
 mechanics, lessons and rendering remain outside this workstream.
 
@@ -197,10 +204,10 @@ arbitrary destination or executable query parameter.
 
 | Area                | Implemented                                                                                                                                                         | Remaining proof or refinement                                                                              |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details; component browser focus/layout checks passed | Public selection still empty; qualify full-shell behavior and real released bytes                          |
+| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details; six full-source-shell journeys pass | Public selection, complete production build and positive custom-appearance handoff remain unqualified |
 | Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                                                                   | Repeat current public compatibility checks after deployment                                                |
 | Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation; component browser failure/cache/retry checks passed                                             | Full-shell and released-package offline checks remain                                                      |
-| Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal; all-three observer                    | Authorized real-candidate installation/recovery observation and physical/browser matrix remain             |
+| Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal; all-three restart and nonempty World project evidence | Distinct-release migration, current cancellation/timing, imported assets/offline flight and wider browser checks remain; hardware deferred |
 | Publishing          | Three-app reproducibility/admission, existing publisher/selector; repaired main workflow deployed and empty catalogue verified                                      | Full retained-site capacity and reviewed release selection remain                                          |
 | Guides              | Corrected EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe and parity tests                                                | Follow guides from scratch on the qualified real candidate and collect current screenshots/device evidence |
 | Fourth app          | Automated registration and six-checkpoint real-browser launch/start/pause/retry, installation/update/offline reopen/rollback/retirement                             | Complete for the unpublished fixture; does not qualify the three real apps and must never be published     |

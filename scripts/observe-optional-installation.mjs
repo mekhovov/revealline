@@ -10,6 +10,16 @@ import { startServer } from './game-cli.mjs';
 import { installOptionalStatusDiagnostics } from './optional-installation-diagnostics.mjs';
 import { withOptionalQuotaDeny } from './optional-installation-quota-probe.mjs';
 import {
+  INSTALLATION_WORLD_SEED,
+  selectInstallationWorldSeed,
+  installationWorldReader,
+  assertInstallationWorldSeed,
+  assertInstallationWorldRetention,
+  openInstallationWorldTab,
+  readInstallationWorldCard,
+  seedInstallationWorld,
+} from './optional-installation-world-seed.mjs';
+import {
   OBSERVED_PACKAGES,
   OPERATION_TIMEOUT_MS,
   OBSERVATION_TIMEOUT_MS,
@@ -87,6 +97,7 @@ const version = envelope.version,
   priorVersion = previous?.envelope.version ?? 'v0.0.0',
   failedFixture = 'v0.0.1';
 const quotaPackageIds = selectQuotaPackages(process.env.OPTIONAL_INSTALLATION_QUOTA_PACKAGES);
+const worldSeedEnabled = selectInstallationWorldSeed(process.env.OPTIONAL_INSTALLATION_WORLD_SEED);
 assert.ok(
   new Set([version, priorVersion, failedFixture]).size === 3,
   'Candidate, previous and failed-fixture versions must differ.',
@@ -115,6 +126,28 @@ const { chromium } = await import(pathToFileURL(path.resolve(modulePath)).href);
 const harnessSha256 = sha(await readFile(fileURLToPath(import.meta.url)));
 const helperURL = new URL('./optional-installation-observer-helpers.mjs', import.meta.url);
 const helperSha256 = sha(await readFile(helperURL));
+const worldSeedURL = new URL('./optional-installation-world-seed.mjs', import.meta.url);
+const continuityURL = new URL(
+  '../authoring/fpv-worlds/storage-continuity/observe.mjs',
+  import.meta.url,
+);
+const worldSeedSourceSha256 = worldSeedEnabled ? sha(await readFile(worldSeedURL)) : null;
+const continuitySource = worldSeedEnabled ? await readFile(continuityURL, 'utf8') : null;
+const continuitySourceSha256 = worldSeedEnabled ? sha(continuitySource) : null;
+const readWorldExpression = worldSeedEnabled ? installationWorldReader(continuitySource) : null;
+const worldSeed = worldSeedEnabled
+  ? {
+      format: 'OptionalInstallationWorldSeed.v1',
+      mode: INSTALLATION_WORLD_SEED,
+      sourceSha256: worldSeedSourceSha256,
+      continuitySourceSha256,
+      preparedBeforeInstallation: false,
+      passed: false,
+      checks: [],
+      scope:
+        'One template copied, named and installed through public Workshop controls; visible Library identity plus read-only exact World Studio database fingerprints. Browser-context offline and process restart only: no machine-wide outage, OS reboot, imported .rlpack/assets, human flight or physical-device qualification.',
+    }
+  : null;
 const password = process.env.OPTIONAL_INSTALLATION_PASSWORD;
 const transition = {
   kind: previous ? 'distinct-frozen-candidates' : 'same-payload-path-fixture',
@@ -430,6 +463,34 @@ try {
         await page.locator('[data-close="setup-dialog"]').click();
         return value;
       }
+      async function readWorldDatabase(target) {
+        requireObservationTime();
+        const database = await boundedOperation('Read-only saved-world fingerprints', () =>
+          target.evaluate(readWorldExpression),
+        );
+        requireObservationTime();
+        return database;
+      }
+      async function verifyWorldSeed(target, label) {
+        if (!worldSeedEnabled) return;
+        currentStep = `saved world retention: ${label}`;
+        const state = await boundedOperation(
+          'Visible saved world and read-only fingerprint verification',
+          async () => {
+            requireObservationTime();
+            await openInstallationWorldTab(target, 'packs');
+            requireObservationTime();
+            return {
+              card: await readInstallationWorldCard(target),
+              database: await readWorldDatabase(target),
+            };
+          },
+        );
+        requireObservationTime();
+        assertInstallationWorldSeed(state, worldSeed.baseline);
+        worldSeed.checks.push({ label, ...state });
+        if (!worldSeed.baseline) worldSeed.baseline = state;
+      }
       await open(fpv, priorVersion);
       await prepare(fpv);
       const demonstrations = await import(
@@ -522,6 +583,18 @@ try {
       await open(gym);
       await prepare(gym);
       await open(worlds);
+      if (worldSeedEnabled) {
+        currentStep = 'create saved world through public Workshop UI';
+        const seed = await boundedOperation('Public Workshop project creation', () =>
+          seedInstallationWorld(page, readWorldDatabase),
+        );
+        requireObservationTime();
+        worldSeed.template = seed.template;
+        await open(worlds);
+        await verifyWorldSeed(page, 'before-installation');
+        worldSeed.preparedBeforeInstallation = true;
+        await open(worlds);
+      }
       await prepare(worlds);
       const both = await inspect('all-three-prepared');
       assert.equal(installed(both, fpv).active.version, priorVersion);
@@ -594,6 +667,7 @@ try {
           );
           await unlockObservedPage(page, password);
           await page.locator(OBSERVED_PACKAGES[id].mounted).waitFor();
+          if (id === worlds) await verifyWorldSeed(page, `closed-window-round-${round}`);
         }
         coldRounds.push({ round, closedPageCount, packages: packageIds, passed: true });
       }
@@ -630,6 +704,7 @@ try {
           url: globalThis.location.href,
         }));
         assert.equal(app.offlineWindow.standalone, true);
+        if (app.id === worlds) await verifyWorldSeed(appWindow, 'offline-standalone-window');
       }
       await open(gym);
       await open(fpv, priorVersion);
@@ -651,7 +726,10 @@ try {
       page = context.pages()[0] ?? (await context.newPage());
       page.on('pageerror', (error) => errors.push(error.message));
       cdp = await context.newCDPSession(page);
-      for (const id of packageIds) await openPrepared(page, id);
+      for (const id of packageIds) {
+        await openPrepared(page, id);
+        if (id === worlds) await verifyWorldSeed(page, 'browser-process-restart-launcher');
+      }
       for (const app of osApps.filter((row) => row.installed)) {
         const pendingWindow = context
           .waitForEvent('page', { timeout: OPERATION_TIMEOUT_MS })
@@ -666,6 +744,8 @@ try {
           url: globalThis.location.href,
         }));
         assert.equal(app.restartedOfflineWindow.standalone, true);
+        if (app.id === worlds)
+          await verifyWorldSeed(appWindow, 'browser-process-restart-standalone');
       }
       await open(fpv, priorVersion);
       assert.equal(await exportedProof(), savedProof);
@@ -1014,6 +1094,20 @@ try {
     ...(cleanupErrors.length ? { retainedDirectory: work } : { temporaryProfileRemoved: true }),
   };
   report.passed &&= !cleanupErrors.length;
+  if (worldSeedEnabled) {
+    worldSeed.sourceStable =
+      worldSeedSourceSha256 === sha(await readFile(worldSeedURL)) &&
+      continuitySourceSha256 === sha(await readFile(continuityURL));
+    try {
+      worldSeed.passed =
+        assertInstallationWorldRetention(worldSeed, coldRelaunchRounds) && worldSeed.sourceStable;
+    } catch (error) {
+      worldSeed.passed = false;
+      worldSeed.failure = error.message;
+    }
+    report.worldSeed = worldSeed;
+    report.passed &&= worldSeed.passed;
+  }
   if (quotaProbeEnabled) {
     report.quotaProbe = {
       enabled: true,
