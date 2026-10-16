@@ -1,3 +1,4 @@
+import './i18n/main-entry.mjs';
 import { loadBaseArtwork } from './base-artwork.mjs';
 import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
