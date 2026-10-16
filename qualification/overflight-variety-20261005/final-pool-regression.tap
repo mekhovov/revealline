@@ -1,0 +1,180 @@
+TAP version 13
+# Subtest: explicit start, fixed ticks, paused upgrades, and confirm/boost release
+ok 1 - explicit start, fixed ticks, paused upgrades, and confirm/boost release # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.538375
+  ...
+# Subtest: approved primary payload keeps release distance, delay, radius and damage
+ok 2 - approved primary payload keeps release distance, delay, radius and damage # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042291
+  ...
+# Subtest: movement normalizes diagonals, retains heading and uses approved boost values
+ok 3 - movement normalizes diagonals, retains heading and uses approved boost values # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035041
+  ...
+# Subtest: dense area damage visits all 2500 candidates, rewards once and merges overflow XP
+ok 4 - dense area damage visits all 2500 candidates, rewards once and merges overflow XP # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033583
+  ...
+# Subtest: area grid boundaries agree with brute-force circle oracle including oversized bodies
+ok 5 - area grid boundaries agree with brute-force circle oracle including oversized bodies # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.107166
+  ...
+# Subtest: three combat slots, one support, admitted modules and guaranteed evolution
+ok 6 - three combat slots, one support, admitted modules and guaranteed evolution # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035708
+  ...
+# Subtest: queued choices stop at ten, rerolls stop at two, draft RNG does not change encounter RNG
+ok 7 - queued choices stop at ten, rerolls stop at two, draft RNG does not change encounter RNG # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032708
+  ...
+# Subtest: arrival warning prevents contact and attack damage, contact is 20 with .75s protection
+ok 8 - arrival warning prevents contact and attack damage, contact is 20 with .75s protection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036125
+  ...
+# Subtest: priority attacks have at least one second warning, cap at two, cancel when owner dies
+ok 9 - priority attacks have at least one second warning, cap at two, cancel when owner dies # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.091042
+  ...
+# Subtest: sprinter telegraphs for one second, locks its burst heading, and preserves four-second travel
+ok 10 - sprinter telegraphs for one second, locks its burst heading, and preserves four-second travel # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.10325
+  ...
+# Subtest: courier and refuge rewards remain optional, exact-once and conserved through pickup overflow
+ok 11 - courier and refuge rewards remain optional, exact-once and conserved through pickup overflow # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03925
+  ...
+# Subtest: radar support is bounded to eight sources, non-stacking, and cancels immediately on death
+ok 12 - radar support is bounded to eight sources, non-stacking, and cancels immediately on death # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043667
+  ...
+# Subtest: relay rally has a full warning, a bounded flank bias, and cancels on death without an extra attack
+ok 13 - relay rally has a full warning, a bounded flank bias, and cancels on death without an extra attack # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027584
+  ...
+# Subtest: family behavior phases are deterministic and do not consume encounter or draft randomness
+ok 14 - family behavior phases are deterministic and do not consume encounter or draft randomness # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.072167
+  ...
+# Subtest: relay and radar within attack range never create aimed threats
+ok 15 - relay and radar within attack range never create aimed threats # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033667
+  ...
+# Subtest: three-airframe replacement preserves build, world, XP and cooldown with safe protection
+ok 16 - three-airframe replacement preserves build, world, XP and cooldown with safe protection
+  ---
+  duration_ms: 9.162584
+  ...
+# Subtest: regular spawn expiry continues play and final death wins before hostile damage in the same tick
+ok 17 - regular spawn expiry continues play and final death wins before hostile damage in the same tick
+  ---
+  duration_ms: 17.975666
+  ...
+# Subtest: ordinary pursuit decisions stagger at 10Hz while every actor moves each fixed tick
+ok 18 - ordinary pursuit decisions stagger at 10Hz while every actor moves each fixed tick # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.13925
+  ...
+# Subtest: nonpiercing shots hit first collision surface rather than nearest center
+ok 19 - nonpiercing shots hit first collision surface rather than nearest center # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044417
+  ...
+# Subtest: piercing shots hit all crossed bodies once and projectile pool exhaustion defers launch
+ok 20 - piercing shots hit all crossed bodies once and projectile pool exhaustion defers launch
+  ---
+  duration_ms: 9.472834
+  ...
+# Subtest: identical seeds, decisions and inputs produce identical simulation and summary
+ok 21 - identical seeds, decisions and inputs produce identical simulation and summary # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.040125
+  ...
+# Subtest: reference fixture simulates every actor for 1000 ticks with stable alive/visible counts
+ok 22 - reference fixture simulates every actor for 1000 ticks with stable alive/visible counts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02825
+  ...
+# Subtest: stress fixture simulates every actor for 1000 ticks with stable alive/visible counts
+ok 23 - stress fixture simulates every actor for 1000 ticks with stable alive/visible counts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022542
+  ...
+# Subtest: stationary slow fields persist at departure and reduce ordinary travel
+ok 24 - stationary slow fields persist at departure and reduce ordinary travel # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02175
+  ...
+# Subtest: return pulse is a delayed second opportunity at the first pulse location
+ok 25 - return pulse is a delayed second opportunity at the first pulse location # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021125
+  ...
+# Subtest: pulse charge comes from admitted flight, is consumed, and cannot refill against arena bounds or on upgrade
+ok 26 - pulse charge comes from admitted flight, is consumed, and cannot refill against arena bounds or on upgrade # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020875
+  ...
+# Subtest: first pulse remains chip damage even at full flight charge, and every nearby enemy is affected
+ok 27 - first pulse remains chip damage even at full flight charge, and every nearby enemy is affected # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020042
+  ...
+# Subtest: overlapping slow fields share one damage cadence and never multiply the slow
+ok 28 - overlapping slow fields share one damage cadence and never multiply the slow # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020584
+  ...
+# Subtest: earning two or three pulse ranks cannot sustain stationary survival through the opening encounters
+ok 29 - earning two or three pulse ranks cannot sustain stationary survival through the opening encounters # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02
+  ...
+# Subtest: scanner prioritizes machinery, increases marked damage and caps chain to three targets
+ok 30 - scanner prioritizes machinery, increases marked damage and caps chain to three targets # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020417
+  ...
+# Subtest: evolved shield uses boost departure pulse and recharges after absorbing one hit
+ok 31 - evolved shield uses boost departure pulse and recharges after absorbing one hit # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019666
+  ...
+# Subtest: fixture defeat recycling waits for the next movement/grid phase
+ok 32 - fixture defeat recycling waits for the next movement/grid phase # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.074625
+  ...
+# Subtest: reference fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+ok 33 - reference fixture retains broad distinct silhouettes beyond fifteen simulated minutes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.072875
+  ...
+# Subtest: stress fixture retains broad distinct silhouettes beyond fifteen simulated minutes
+ok 34 - stress fixture retains broad distinct silhouettes beyond fifteen simulated minutes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021917
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 31
+# todo 0
+# duration_ms 224.377125

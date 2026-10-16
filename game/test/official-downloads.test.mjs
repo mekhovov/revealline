@@ -6,11 +6,14 @@ import {
   createOfficialDownloads,
   assetDigest,
   OFFICIAL_CACHE,
+  DOWNLOAD_STATE_CACHE,
   officialAssetURL,
   verifiedDownload,
   withOptionalMusicDownload,
 } from '../official-downloads.mjs';
 import { downloadFiles } from '../download-catalogue.mjs';
+import { downloadErrorMessage } from '../offline-download-session.mjs';
+import { getLocale, setLocale, t } from '../i18n/index.mjs';
 
 if (!globalThis.crypto) globalThis.crypto = webcrypto;
 const origin = 'https://game.example';
@@ -163,6 +166,93 @@ test('updates reuse hashes across editions and removal retains shared references
   );
   assert.deepEqual(h.calls, [a.path, b.path]);
 });
+
+for (const operation of ['remove', 'retain']) {
+  test(`${operation} preserves all files and checkpoints when another owner's metadata is unreadable`, async () => {
+    for (const invalid of [
+      '{truncated',
+      'null',
+      JSON.stringify({ edition: 'saved-references', group: 'flight', complete: true }),
+      JSON.stringify({
+        edition: 'saved-references',
+        group: 'flight',
+        complete: true,
+        hashes: ['invalid-hash'],
+      }),
+    ]) {
+      const h = setup();
+      await h.store.download(job);
+      const metadata = await h.caches.open(DOWNLOAD_STATE_CACHE);
+      const ownerURL = `${origin}/.revealline-official/owners/saved-flight`;
+      await metadata.put(ownerURL, new Response(invalid));
+      const snapshot = async () =>
+        Promise.all(
+          (await metadata.keys()).map(async (key) => [
+            key.url,
+            await (await metadata.match(key)).text(),
+          ]),
+        );
+      const before = await snapshot();
+      const reopened = createOfficialDownloads({
+        ...h.options,
+        fetch: () => {
+          throw new Error('Network blocked');
+        },
+      });
+      const remove = () =>
+        operation === 'remove'
+          ? reopened.remove(job.edition, job.group)
+          : reopened.retain({ ...job, files: [], selection: [] });
+      await assert.rejects(remove(), /ownership could not be read/);
+      assert.deepEqual(await snapshot(), before, 'do not erase ownership before validating it');
+      assert.equal((await reopened.inspect(job.files, { verify: true })).ready, true);
+      assert.equal(
+        (await reopened.states()).length,
+        1,
+        'damaged metadata is not readiness evidence',
+      );
+      // Restoring the exact owner's checkpoint permits cleanup while retaining its bytes.
+      await metadata.put(
+        ownerURL,
+        new Response(
+          JSON.stringify({
+            edition: 'saved-references',
+            group: 'flight',
+            complete: false,
+            hashes: [a.sha256],
+          }),
+        ),
+      );
+      await remove();
+      assert.equal((await reopened.inspect([a], { verify: true })).ready, true);
+      assert.equal((await reopened.inspect([b], { verify: true })).ready, false);
+      assert.deepEqual(h.calls, [a.path, b.path]);
+    }
+  });
+
+  test(`${operation} preserves data when its ownership mutation fails`, async () => {
+    const h = setup();
+    await h.store.download(job);
+    const before = await h.store.states();
+    const originalOpen = h.caches.open;
+    h.caches.open = async (name) => {
+      const cache = await originalOpen(name);
+      if (name === DOWNLOAD_STATE_CACHE)
+        cache[operation === 'remove' ? 'delete' : 'put'] = async () => {
+          throw new DOMException('Storage unavailable', 'QuotaExceededError');
+        };
+      return cache;
+    };
+    await assert.rejects(
+      operation === 'remove'
+        ? h.store.remove(job.edition, job.group)
+        : h.store.retain({ ...job, files: [], selection: [] }),
+      { name: 'QuotaExceededError' },
+    );
+    assert.deepEqual(await h.store.states(), before);
+    assert.equal((await h.store.inspect(job.files, { verify: true })).ready, true);
+  });
+}
 test('failed music leaves game readiness intact and imported bytes avoid a network request', async () => {
   const h = setup();
   await h.store.download({ ...job, files: [a] });
@@ -215,4 +305,115 @@ test('game closure includes shared artwork without including or depending on sou
   );
   catalogue.groups[0].requires.push('album');
   assert.throws(() => downloadFiles(catalogue, ['chapter']), /dependency/);
+});
+
+test('played chapter retains its complete runtime and artwork after deselection while unplayed bytes are freed', async () => {
+  const h = setup(),
+    runtime = { ...(await file('runtime.mjs', 'exact chapter runtime')), kind: 'gameplay' },
+    chapter = { ...a, kind: 'gameplay' },
+    artwork = { ...b, kind: 'gameplay' },
+    unplayed = { ...(await file('unplayed.json', 'unplayed chapter')), kind: 'gameplay' };
+  bodies.set(runtime.path, 'exact chapter runtime');
+  bodies.set(unplayed.path, 'unplayed chapter');
+  const files = [runtime, chapter, artwork, unplayed];
+  await h.store.download({ ...job, files });
+  await (await h.caches.open('user-imports')).put(`${origin}/owned`, new Response('user bytes'));
+  await h.store.pin({
+    edition: job.edition,
+    group: 'solo:chapter',
+    files: [runtime, chapter, artwork],
+  });
+  await h.store.pin({
+    edition: job.edition,
+    group: 'solo:chapter',
+    files: [runtime, chapter, artwork],
+  });
+  assert.equal(
+    (await h.store.states()).filter((state) => state.edition === 'played-dependencies').length,
+    1,
+  );
+  await h.store.retain({ ...job, files: [], selection: [] });
+  assert.equal((await h.store.inspect([runtime, chapter, artwork], { verify: true })).ready, true);
+  assert.equal((await h.store.inspect([unplayed], { verify: true })).ready, false);
+  await h.store.remove(job.edition, job.group);
+  const offline = createOfficialDownloads({
+    ...h.options,
+    fetch: () => {
+      throw new Error('Network blocked');
+    },
+  });
+  await offline.pin({
+    edition: job.edition,
+    group: 'solo:chapter',
+    files: [runtime, chapter, artwork],
+  });
+  assert.equal((await offline.inspect([runtime, chapter, artwork], { verify: true })).ready, true);
+  assert.equal(
+    await (await (await h.caches.open('user-imports')).match(`${origin}/owned`)).text(),
+    'user bytes',
+  );
+  assert.deepEqual(
+    h.calls,
+    files.map((item) => item.path),
+  );
+});
+
+test('missing, corrupt, aborted and soundtrack files cannot acquire a played chapter owner', async () => {
+  const h = setup(),
+    files = [
+      { ...a, kind: 'gameplay' },
+      { ...b, kind: 'gameplay' },
+    ],
+    pin = { edition: job.edition, group: 'solo:chapter', files };
+  await assert.rejects(h.store.pin(pin), /Verify this complete chapter/);
+  await h.store.download(job);
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(h.store.pin({ ...pin, signal: controller.signal }), { name: 'AbortError' });
+  await assert.rejects(
+    h.store.pin({ ...pin, files: [{ ...a, kind: 'soundtrack' }] }),
+    /Gameplay retention/,
+  );
+  await (
+    await h.caches.open(OFFICIAL_CACHE)
+  ).put(
+    officialAssetURL(a.sha256, origin),
+    new Response('x'.repeat(a.bytes), { headers: { 'Content-Length': String(a.bytes) } }),
+  );
+  await assert.rejects(h.store.pin(pin), /Verify this complete chapter/);
+  assert.equal(
+    (await h.store.states()).some((state) => state.edition === 'played-dependencies'),
+    false,
+  );
+});
+
+test('damaged download ownership keeps its recovery message live in English and Ukrainian', async () => {
+  const h = setup();
+  await h.store.download(job);
+  const metadata = await h.caches.open(DOWNLOAD_STATE_CACHE);
+  await metadata.put(origin + '/.revealline-official/owners/damaged', new Response('{broken'));
+  let failure;
+  await assert.rejects(h.store.remove(job.edition, job.group), (error) => {
+    failure = error;
+    return /ownership could not be read/.test(error.message);
+  });
+  assert.equal(failure.localization?.key, 'interface:downloads.ownershipUnreadable');
+  assert.equal((await h.store.inspect(job.files, { verify: true })).ready, true);
+  const previous = getLocale();
+  try {
+    for (const language of ['en', 'uk']) {
+      await setLocale(language);
+      const message = downloadErrorMessage(failure, t);
+      assert.equal(message, t('interface:downloads.ownershipUnreadable'));
+      assert.notEqual(message, 'downloads.ownershipUnreadable');
+      if (language === 'en') assert.equal(message, failure.message);
+      else {
+        assert.notEqual(message, failure.message);
+        assert.match(message, /Не вдалося/);
+        assert.match(message, /Нічого не видалено/);
+      }
+    }
+  } finally {
+    await setLocale(previous);
+  }
 });

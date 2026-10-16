@@ -63,14 +63,9 @@ for (const [width, height] of [
 ])
   test(`failed picture → Retry → pending Cancel is visible at ${width}×${height} without starting a flight`, async (t) => {
     const f = await waiting(t, { width, height });
-    assert.deepEqual(f.scrolls, [
-      {
-        id: 'coop-picture-cancel',
-        options: nearest,
-        active: 'coop-picture-cancel',
-        level: 'relay-yard',
-      },
-    ]);
+    assert.equal(f.doc.activeElement, f.doc.body);
+    assert.equal(f.$('coop-picture-cancel').hidden, false);
+    assert.deepEqual(f.scrolls, [], 'Passive preparation keeps Cancel secondary.');
     f.scrolls.length = 0;
     const error = missing();
     f.gates[0].reject(error);
@@ -116,6 +111,7 @@ test('visible recovery controls retain their viewport and explicit Cancel reveal
   const f = await waiting(t, { visible: true });
   assert.deepEqual(f.scrolls, []);
   f.$('coop-picture-retry')._rect.y = 921;
+  f.$('coop-picture-cancel').focus();
   f.tap('Enter');
   assert.equal(f.$('coop-picture-status').dataset.state, 'cancelled');
   assert.deepEqual(f.scrolls, [
@@ -262,7 +258,7 @@ test('a pending reveal exception cannot prevent the real picture read or later r
       });
     },
   });
-  assert.equal(attempts, 1);
+  assert.equal(attempts, 0, 'Passive preparation never reveals or focuses Cancel.');
   assert.equal(f.artwork.calls.reads.length, 1);
   f.gates[0].reject(missing());
   await settle(f, 'error');
@@ -270,6 +266,7 @@ test('a pending reveal exception cannot prevent the real picture read or later r
   f.$('coop-picture-retry').focus();
   f.tap('Enter');
   await waitFor(() => f.artwork.calls.reads.length === 2);
+  assert.equal(attempts, 1, 'Explicit Retry owns the pending Cancel reveal.');
   f.gates[1].resolve();
   await settle(f, 'ready');
   assert.equal(f.$('coop-start').disabled, false);
@@ -307,11 +304,19 @@ test('newer focus during pending Cancel remains authoritative even after returni
       });
     },
   });
+  assert.equal(moved, false, 'Passive preparation does not hand focus to Cancel.');
+  assert.equal(f.doc.activeElement, f.doc.body);
+  f.gates[0].reject(missing());
+  await settle(f, 'error');
+  f.scrolls.length = 0;
+  f.$('coop-picture-retry').focus();
+  f.tap('Enter');
+  await waitFor(() => f.artwork.calls.reads.length === 2);
   assert.equal(moved, true);
   assert.equal(f.doc.activeElement, f.doc.body);
   const attempts = f.focusAttempts.length;
   assert.deepEqual(f.scrolls, []);
-  f.gates[0].resolve();
+  f.gates[1].resolve();
   await settle(f, 'ready');
   assert.equal(f.doc.activeElement, f.doc.body);
   assert.equal(f.focusAttempts.length, attempts, 'Completion cannot revive the retired handoff');

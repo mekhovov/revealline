@@ -1,0 +1,3685 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-29 01:12:30 UTC",
+  "pinnedMain": "afb19ebd06db336d32dfe4660c43aa0f6711dca5",
+  "scope": "Read-only local branch content triage; not product approval or a complete semantic equivalence proof.",
+  "localBranchCount": 1164,
+  "localCommitsNotReachableFromCachedRemoteRefs": 2503,
+  "branchesWithNotRemoteReachableHeads": 303,
+  "remoteHistoryObjectCount": 62298,
+  "counts": {
+    "allChangedBlobsInCachedRemoteHistory": 88,
+    "onlyUnmatchedDocumentationOrGuidance": 43,
+    "requiresSemanticGrouping": 172,
+    "errors": 0
+  },
+  "limitations": [
+    "Active refs changed during collection; rows bind the observed head, not a later branch tip.",
+    "Cached remote refs are not a full live GitHub inventory. A novel commit ID does not prove unpushed source.",
+    "Blob equivalence proves retained bytes, not current gameplay adoption or feature approval.",
+    "productPaths contains at most the first eight unmatched paths and is a triage sample, not a complete diff.",
+    "No files deleted, tests run, builds performed, runtime code imported, media decoded or missing Git objects fetched.",
+    "Missing objects were listed with --missing=print. No missing object was treated as source absence.",
+    "Semantic dispositions and scoped PR ownership are recorded in remaining-branches.md; unresolved donors are preserved."
+  ],
+  "rows": [
+    {
+      "branch": "art/retro-role-presentations",
+      "head": "fbd314d7190c81e2ff67981e9006c49993d35d43",
+      "unknown": 32,
+      "product": 31,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/retro-role-presentations/inspection/east-auto-transition.jpg",
+        "authoring/library/retro-role-presentations/inspection/east-pixelated-settled.jpg",
+        "authoring/library/retro-role-presentations/inspection/game-scale-receipt.json",
+        "authoring/library/retro-role-presentations/inspection/index.html",
+        "authoring/library/retro-role-presentations/inspection/inspect-alpha.py",
+        "authoring/library/retro-role-presentations/inspection/north-auto.jpg",
+        "authoring/library/retro-role-presentations/originals/bomber.png",
+        "authoring/library/retro-role-presentations/originals/carrier.png"
+      ]
+    },
+    {
+      "branch": "art/spend-role-presentations",
+      "head": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
+      "unknown": 34,
+      "product": 33,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/spend-role-presentations/inspection/east-pixelated.jpg",
+        "authoring/library/spend-role-presentations/inspection/game-scale-receipt.json",
+        "authoring/library/spend-role-presentations/inspection/index.html",
+        "authoring/library/spend-role-presentations/inspection/inspect-alpha.py",
+        "authoring/library/spend-role-presentations/inspection/north-auto.jpg",
+        "authoring/library/spend-role-presentations/originals/bomber.png",
+        "authoring/library/spend-role-presentations/originals/carrier.png",
+        "authoring/library/spend-role-presentations/originals/fiber.png"
+      ]
+    },
+    {
+      "branch": "art/ukraine-enemy-presentations",
+      "head": "53d553485b8d7dc0f912959892947819a19d9803",
+      "unknown": 34,
+      "product": 33,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/ukraine-enemy-presentations/inspection/east-pixelated.jpg",
+        "authoring/library/ukraine-enemy-presentations/inspection/game-scale-receipt.json",
+        "authoring/library/ukraine-enemy-presentations/inspection/index.html",
+        "authoring/library/ukraine-enemy-presentations/inspection/inspect-alpha.py",
+        "authoring/library/ukraine-enemy-presentations/inspection/north-auto.jpg",
+        "authoring/library/ukraine-enemy-presentations/originals/border-patrol.png",
+        "authoring/library/ukraine-enemy-presentations/originals/bouncer.png",
+        "authoring/library/ukraine-enemy-presentations/originals/claimed-rover.png"
+      ]
+    },
+    {
+      "branch": "backup/pr657-pre-main-20260926",
+      "head": "6459e8fbc2e11f0c3bd6d735885c674c9e7295b8",
+      "unknown": 0,
+      "product": 0,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "backup/pr669-pre-main-20260926",
+      "head": "359d3452f749649ea60e25078c3f1f8091f84271",
+      "unknown": 0,
+      "product": 0,
+      "known": 1,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "backup/pr701-local-rebase-20260926",
+      "head": "f9da4962bbdc903a69317fa34249bfafe5632d00",
+      "unknown": 0,
+      "product": 0,
+      "known": 6,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/actor-upload-geometry-oracle",
+      "head": "948959769e61bde0ca6ce0070106aceb3ed8eb0c",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/apex-cultural-routes-v25",
+      "head": "66ab973e9d809bb01a42c95e5fd48d334c0e3960",
+      "unknown": 0,
+      "product": 0,
+      "known": 78,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/appearance-asset-review-surfaces-v1",
+      "head": "581144922e567e6b98726d20c3d7ff85f023aeea",
+      "unknown": 3,
+      "product": 3,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs", "game/couch/couch.mjs", "game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/appearance-resolver-v1",
+      "head": "9351060a4fc71f22e8ea6aab95d2c64d811451a2",
+      "unknown": 3,
+      "product": 3,
+      "known": 4,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs", "game/couch/couch.mjs", "game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/appearance-supporting-surfaces-v1",
+      "head": "84b1d2e6d17100066aa2494e2dd322dfbaadb70d",
+      "unknown": 3,
+      "product": 3,
+      "known": 8,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs", "game/couch/couch.mjs", "game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/appearance-ukraine-review-surfaces-v1",
+      "head": "e57cb2dcb3fbc94ad5a7867ad40bf3999ea9377a",
+      "unknown": 3,
+      "product": 3,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs", "game/couch/couch.mjs", "game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/audio-menu-music-picker",
+      "head": "ab14d884adf80e61856882c7c6eab7946c5983ca",
+      "unknown": 15,
+      "product": 14,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/index.html",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/online-soundtrack-styles.mjs",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/soundtrack-settings-player.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/backup-cultural-pre-8f7ea",
+      "head": "82f308d1073def49d1e89ceba282fad476f5dd7a",
+      "unknown": 0,
+      "product": 0,
+      "known": 126,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/backup-fracture-apex-pre-a888",
+      "head": "2811905d8eb4865460c853419abd3b8265e31f62",
+      "unknown": 0,
+      "product": 0,
+      "known": 119,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/border-cultural-completion-v37",
+      "head": "3578369582ced82d27c1cd6f0812dac59686b870",
+      "unknown": 0,
+      "product": 0,
+      "known": 129,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/border-cultural-v012",
+      "head": "b1dc17bb3d599ecbeee93551c2f32dea384da087",
+      "unknown": 0,
+      "product": 0,
+      "known": 38,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/border-frontier-pocket-v38",
+      "head": "167729a2dfff5663ce5c2c09a7df530088e023a6",
+      "unknown": 4,
+      "product": 4,
+      "known": 128,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/relay-rescue.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/border-signal-cultural-v013",
+      "head": "18d59a9a227a51cd869778f7c005efeadf9afa18",
+      "unknown": 0,
+      "product": 0,
+      "known": 41,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/canonical-soundtrack-library",
+      "head": "66eff728617786a650fa12ce39cca5cbbb485f9d",
+      "unknown": 1,
+      "product": 0,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/ci-balanced-shards-20260922",
+      "head": "95fa082d3907ee012decae60bb023abb2fc8abd2",
+      "unknown": 8,
+      "product": 4,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "scripts/file-timing-reporter.mjs",
+        "scripts/run-test-shard.mjs",
+        "scripts/test-file-timing-reporter.mjs",
+        "scripts/test-run-test-shard.mjs"
+      ]
+    },
+    {
+      "branch": "codex/community-abuse-controls",
+      "head": "4dd241ca1ef262828c636807240d92df15f40b60",
+      "unknown": 0,
+      "product": 0,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/community-authoring-guide-current",
+      "head": "9268bea26260af8313d86465b06915d3f74a2b90",
+      "unknown": 0,
+      "product": 0,
+      "known": 18,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/community-deployed-journey",
+      "head": "5c781524fa85a55cdf13e565e26ab60c1dcb5a98",
+      "unknown": 2,
+      "product": 1,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": ["services/community/package.json"]
+    },
+    {
+      "branch": "codex/community-deployment-preflight",
+      "head": "841cc6b78f608cfde0d0ef1f6bf9af24e2359b16",
+      "unknown": 3,
+      "product": 2,
+      "known": 10,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/delivery-plan.md",
+        "authoring/community/phase5-acceptance.md"
+      ]
+    },
+    {
+      "branch": "codex/community-guide-contracts",
+      "head": "661be3bf58c2c5504d94657775aa0e4b1f07b657",
+      "unknown": 9,
+      "product": 0,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/community-production-hardening",
+      "head": "48fad8b2f7f7a7546e3f15a6366ef7130e21d2e4",
+      "unknown": 0,
+      "product": 0,
+      "known": 8,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/community-recovery-rehearsal",
+      "head": "aebb40c25139bab8c85dbeb8c03ce99d8e78ad5a",
+      "unknown": 2,
+      "product": 1,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": ["services/community/package.json"]
+    },
+    {
+      "branch": "codex/community-tus-fault-proxy",
+      "head": "02be41a0cd8860fb4251a2d22f3bbd38c4a52b38",
+      "unknown": 2,
+      "product": 1,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": ["services/community/package.json"]
+    },
+    {
+      "branch": "codex/core-soundtracks-20260924",
+      "head": "99c75e600d5c14d9ed85dee0872a01cb60026a9e",
+      "unknown": 0,
+      "product": 0,
+      "known": 201,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/couch-nav-v1413-candidate",
+      "head": "e1dba137ad7fd16c874cb511cbc801ce6ce309f7",
+      "unknown": 7,
+      "product": 3,
+      "known": 15,
+      "deletions": 0,
+      "productPaths": [
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/couch-quickstart-parity",
+      "head": "e03026b451ca0ce194c4bc42ed58355a6d6dda9f",
+      "unknown": 10,
+      "product": 9,
+      "known": 19,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/fpv-field-kit/production.rltheme",
+        "game/couch/coop-picture-bindings.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/presentation/compiled/manifest.json",
+        "game/presentation/compiled/runtime.json",
+        "game/presentation/compiled/studio.json",
+        "game/test/coop-historical-import-picture.test.mjs",
+        "game/test/coop-picture-bindings.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/couch-quickstart-v112-after-v1111-local",
+      "head": "99fa7f323ff2c49a3d5db0d3106f6a3d4fa7d243",
+      "unknown": 1,
+      "product": 0,
+      "known": 20,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/couch-quickstart-v112-ready",
+      "head": "50b6fa1841f53983ff30a40f4d4279db60271853",
+      "unknown": 3,
+      "product": 2,
+      "known": 43,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/coop-picture-bindings.test.mjs",
+        "game/test/coop-reviewed-successor-picture.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/couch-quickstart-v112-reconciled",
+      "head": "1fd63337ba1d1635d117877bf16c3e95d83a4167",
+      "unknown": 1,
+      "product": 0,
+      "known": 20,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/couch-quickstart-v112-release",
+      "head": "bba3c33114e5bbebfe0c05e726d13f0f028791ae",
+      "unknown": 1,
+      "product": 0,
+      "known": 20,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/couch-secondary-nav-v135-local",
+      "head": "cfed9d51524f3d3ca5c8aaf749b6ac5c32f29188",
+      "unknown": 16,
+      "product": 11,
+      "known": 15,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/couch/relay-rescue.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/coop-host.test.mjs",
+        "game/test/helpers/coop-host.mjs",
+        "game/test/mission-library-chooser.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/creator-complete-release",
+      "head": "6642161faf886bc1f9dc04a1c59e0bcb6114b370",
+      "unknown": 7,
+      "product": 7,
+      "known": 46,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/relay-rescue.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/errors.json",
+        "game/locales/en/interface.json",
+        "game/locales/uk/errors.json",
+        "game/locales/uk/interface.json",
+        "game/test/still-workshop-build.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/creator-enemy-template-tests",
+      "head": "df235ab283791b1024133a69e5cca44a80f6d616",
+      "unknown": 7,
+      "product": 7,
+      "known": 32,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/creator-bundle-reference.md",
+        "authoring/community/delivery-plan.md",
+        "authoring/community/image-campaign-guide.md",
+        "game/app.mjs",
+        "game/creator/studio.mjs",
+        "game/creator/templates.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/creator-phase2-batch",
+      "head": "a9718c0377981359038d839e02b9ed170a625a12",
+      "unknown": 1,
+      "product": 1,
+      "known": 32,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs"]
+    },
+    {
+      "branch": "codex/creator-phase2-bundle",
+      "head": "243120d0871da691e550727e46c7fbb910c3aa40",
+      "unknown": 3,
+      "product": 3,
+      "known": 32,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/creator/templates.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/creator-phase2-pre-phase1-rebase",
+      "head": "acb54c294b94a50ab63023ce6f8aa08d9507f573",
+      "unknown": 7,
+      "product": 7,
+      "known": 32,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/batch-image-campaign-guide.md",
+        "authoring/community/creator-bundle-reference.md",
+        "authoring/community/delivery-plan.md",
+        "authoring/community/image-campaign-guide.md",
+        "authoring/community/phase2-acceptance.md",
+        "game/app.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/creator-phase3-pre-phase2-rebase",
+      "head": "a7c677b28ea3c7400910e2463e57478dd6192ec2",
+      "unknown": 7,
+      "product": 7,
+      "known": 44,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/batch-image-campaign-guide.md",
+        "authoring/community/creator-bundle-reference.md",
+        "authoring/community/delivery-plan.md",
+        "authoring/community/image-campaign-guide.md",
+        "authoring/community/phase2-acceptance.md",
+        "game/app.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/creator-phase6-versus",
+      "head": "648eed00d8c7a4eae9fc2cfb6849e8074b02499f",
+      "unknown": 8,
+      "product": 8,
+      "known": 34,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/batch-image-campaign-guide.md",
+        "authoring/community/creator-bundle-reference.md",
+        "authoring/community/delivery-plan.md",
+        "authoring/community/image-campaign-guide.md",
+        "authoring/community/phase2-acceptance.md",
+        "game/app.mjs",
+        "game/creator/bundle.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/creator-phase7-team",
+      "head": "798d9032288914ac43eae6e94ce562ccac5856c7",
+      "unknown": 8,
+      "product": 8,
+      "known": 37,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/batch-image-campaign-guide.md",
+        "authoring/community/creator-bundle-reference.md",
+        "authoring/community/delivery-plan.md",
+        "authoring/community/image-campaign-guide.md",
+        "authoring/community/phase2-acceptance.md",
+        "game/app.mjs",
+        "game/creator/bundle.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/crosswind-cultural-completion-v33",
+      "head": "07b670bcb896d116a4563dd32aa9ad05ed8eb359",
+      "unknown": 0,
+      "product": 0,
+      "known": 116,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/crosswind-cultural-routes-v23",
+      "head": "29aa21f8b26ba257f5013d7bd6e2c5ec20f4e78c",
+      "unknown": 0,
+      "product": 0,
+      "known": 72,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/cultural-library-fixtures-v30",
+      "head": "db340bbc8b7bb7e3260547218229b6ec0b10eb9e",
+      "unknown": 0,
+      "product": 0,
+      "known": 106,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/current-journey-pacing-v31",
+      "head": "88b893629c4ae6f4e297694774902ba8c06b9a90",
+      "unknown": 4,
+      "product": 4,
+      "known": 105,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/relay-rescue.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/discovery-before-main-20260928-7acf6af53",
+      "head": "7acf6af53143c75f0ae99e09c25e326c1141c3e8",
+      "unknown": 21,
+      "product": 21,
+      "known": 665,
+      "deletions": 0,
+      "productPaths": [
+        ".gitattributes",
+        "game/app.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/en/tools.json",
+        "game/locales/en/website.json",
+        "game/locales/uk/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/discovery-before-main-20260929",
+      "head": "308745195375d4dd5f659558e4b379ea161d5691",
+      "unknown": 16,
+      "product": 16,
+      "known": 772,
+      "deletions": 0,
+      "productPaths": [
+        ".gitattributes",
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/couch/coop-presentation.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/index.html",
+        "game/locales/en/interface.json",
+        "game/locales/en/tools.json"
+      ]
+    },
+    {
+      "branch": "codex/discovery-before-main-20260929b",
+      "head": "4d5677991dbe41125603e8e8eb98adc69c68d3b7",
+      "unknown": 8,
+      "product": 8,
+      "known": 807,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/i18n/catalogs.mjs",
+        "game/index.html",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/helpers/couch-dom.mjs",
+        "package.json"
+      ]
+    },
+    {
+      "branch": "codex/discovery-before-priority-batches-22e3a7cc6",
+      "head": "22e3a7cc627e970d49bac561b999b4c2f4e7feb1",
+      "unknown": 15,
+      "product": 15,
+      "known": 694,
+      "deletions": 0,
+      "productPaths": [
+        ".gitattributes",
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/couch/coop-presentation.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/en/tools.json",
+        "game/locales/uk/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/discovery-media-before-rebase-20260928",
+      "head": "77115f7e558000817c75f6207eafaa532742895a",
+      "unknown": 21,
+      "product": 21,
+      "known": 641,
+      "deletions": 0,
+      "productPaths": [
+        ".gitattributes",
+        "game/app.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/en/tools.json",
+        "game/locales/en/website.json",
+        "game/locales/uk/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/discovery-pre-main813-20260928",
+      "head": "6b3c35835d948632fd3ba0e8bed3e783f5f7a8db",
+      "unknown": 20,
+      "product": 20,
+      "known": 435,
+      "deletions": 0,
+      "productPaths": [
+        ".gitattributes",
+        "game/app.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/en/tools.json",
+        "game/locales/en/website.json",
+        "game/locales/uk/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/early-cultural-routes-v014",
+      "head": "c0a13be0f9fd332d5968d96a01c20047fcdda982",
+      "unknown": 0,
+      "product": 0,
+      "known": 44,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/english-ukrainian-localization",
+      "head": "9bb42f2801c053ac99d4660421b6cae1d99db07d",
+      "unknown": 0,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/fastline-draft-discovery",
+      "head": "8e2d03970ae3a61db57c3f5c6204a6af3acfb3e3",
+      "unknown": 2,
+      "product": 2,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "publishing/fastline-release-objects.mjs",
+        "publishing/fastline-release-objects.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/fastline-evidence-job-collision",
+      "head": "3c3811a4e54b3f2892c90dd25f700ccc3cebe166",
+      "unknown": 1,
+      "product": 1,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": ["publishing/utility/test_assemble_waived_qualification.py"]
+    },
+    {
+      "branch": "codex/fastline-release-automation",
+      "head": "3f27517be05109dc03536684600fa361541c6480",
+      "unknown": 0,
+      "product": 0,
+      "known": 18,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/fpv-redesign",
+      "head": "677b091681d424198de17c6f7e864795d2618880",
+      "unknown": 11,
+      "product": 10,
+      "known": 36,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/index.html",
+        "game/ui/audio.mjs",
+        "game/ui/device-controls.css",
+        "game/ui/soundtrack-panel.mjs",
+        "game/ui/soundtrack-player.mjs",
+        "package-lock.json"
+      ]
+    },
+    {
+      "branch": "codex/fracture-apex-cultural-completion-v34",
+      "head": "ed085190eb92a9154a6f233ea20a5ef2f9890416",
+      "unknown": 0,
+      "product": 0,
+      "known": 119,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/fracture-cultural-routes-v19",
+      "head": "36035af19e47cce59f276b9528a3a61415720442",
+      "unknown": 0,
+      "product": 0,
+      "known": 59,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/game-dynamic-localization-audit",
+      "head": "3541d619c9b2cb453b56f900c6f02e1dbf184952",
+      "unknown": 5,
+      "product": 5,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": [
+        "game/i18n/catalogs.mjs",
+        "game/journey/profile.mjs",
+        "game/locales/en/errors.json",
+        "game/locales/uk/errors.json",
+        "game/test/journey.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/gameplay-reduced-effects-v41",
+      "head": "1b02386498201858c82f1e664629271cd5848e92",
+      "unknown": 0,
+      "product": 0,
+      "known": 145,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/gentle-campaign",
+      "head": "fb4dcc0f288c7735f334a83a06407e7d908295cd",
+      "unknown": 0,
+      "product": 0,
+      "known": 1,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/global-settings-before-motion-c3fb",
+      "head": "c3fb3296085656d61b3a296e2f37c1520fd322e0",
+      "unknown": 7,
+      "product": 3,
+      "known": 59,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/test/field-kit-surfaces.test.mjs",
+        "game/ui/field-kit-copy.mjs"
+      ]
+    },
+    {
+      "branch": "codex/global-settings-rebase-diagnostic-6a087013",
+      "head": "6a0870133fb0abd34560bdfd1477862cb7764414",
+      "unknown": 5,
+      "product": 3,
+      "known": 61,
+      "deletions": 0,
+      "productPaths": ["game/build-config.json", "package-lock.json", "package.json"]
+    },
+    {
+      "branch": "codex/horizon-spatial-next",
+      "head": "ad845cdb1dc9bbe2f7e6a8c8445c11fcba8be051",
+      "unknown": 1,
+      "product": 1,
+      "known": 27,
+      "deletions": 0,
+      "productPaths": ["game/couch/index.html"]
+    },
+    {
+      "branch": "codex/journey-combat-c2",
+      "head": "f2bef7fd743b44b474a38dac074201175b0b50fa",
+      "unknown": 33,
+      "product": 30,
+      "known": 52,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/combat-preferences.mjs",
+        "game/content-design/combat-host.mjs",
+        "game/content-design/mission-card.mjs",
+        "game/content-design/project.mjs",
+        "game/content-design/route.mjs",
+        "game/content-design/team-runtime.mjs",
+        "game/content-design/themes.json"
+      ]
+    },
+    {
+      "branch": "codex/journey-performance-snapshot-v42-pre-publisher-fix",
+      "head": "90c49ecf7dea422dc2bc9a4dd36f7542812a55fc",
+      "unknown": 1,
+      "product": 0,
+      "known": 144,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/journey-performance-snapshot-v42-pre-s3-recovery",
+      "head": "91fd0bfb487c60e43960af42613a4081e474ce58",
+      "unknown": 1,
+      "product": 0,
+      "known": 144,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/journey-performance-snapshot-v42-pre-s3-recovery-full",
+      "head": "f9ee011cbcbb7d0f0454d388b675860792c3b76f",
+      "unknown": 1,
+      "product": 0,
+      "known": 144,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/journey-performance-snapshot-v42-pre-v1415",
+      "head": "549dae1f294f8f9b66ad7d4b45e8edfea6051811",
+      "unknown": 1,
+      "product": 0,
+      "known": 144,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/journey-performance-snapshot-v42-pre-v1416-acceptance",
+      "head": "592573339c5a0a65ecedfaa84260a39e69ead7d5",
+      "unknown": 1,
+      "product": 0,
+      "known": 144,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/journey-performance-snapshot-v42-pre-v1416-selector",
+      "head": "88465eb0128211f55cc3901ec8c1856d5d589675",
+      "unknown": 1,
+      "product": 0,
+      "known": 144,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/journey-performance-snapshot-v42-pre-v1416-source",
+      "head": "0c54ce5490bae045b02d2b33a25af4dcce89a672",
+      "unknown": 1,
+      "product": 0,
+      "known": 144,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/livewire-cultural-routes-v21",
+      "head": "bd95a93edb0dbfffb853744b9c2a664516ebb6f0",
+      "unknown": 0,
+      "product": 0,
+      "known": 66,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/local-reconcile-pr545-safety",
+      "head": "003fed661bec318efad823e88fdd2e9764200d00",
+      "unknown": 1,
+      "product": 1,
+      "known": 4,
+      "deletions": 0,
+      "productPaths": ["game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/media-audio-trim",
+      "head": "1178c939471c6114f9b74c9afafe30c416364171",
+      "unknown": 0,
+      "product": 0,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/media-visual-trim-evidence",
+      "head": "026963a886503b043cc17672d8a317c36b64e225",
+      "unknown": 0,
+      "product": 0,
+      "known": 9,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/mission-caption-followup",
+      "head": "71e2995bedac5aa9597117307106ed535c2397c8",
+      "unknown": 2,
+      "product": 1,
+      "known": 231,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs"]
+    },
+    {
+      "branch": "codex/mission-gallery-v133-pre-v141-reconcile",
+      "head": "38271ab0314a1aed17792286af45d5c9b2b62628",
+      "unknown": 5,
+      "product": 2,
+      "known": 12,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/mission-library-chooser.test.mjs",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/mission-gallery-v133-rebase-final",
+      "head": "21fe432c5abdeb9f98d5173f4541d2b06f236ecb",
+      "unknown": 5,
+      "product": 2,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/mission-library-chooser.test.mjs",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/mission-gallery-v133-reconcile-safety",
+      "head": "623a9d65f6f9195e6d8eac0f4200f1601ac0ff08",
+      "unknown": 2,
+      "product": 2,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": ["game/couch/couch.mjs", "game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/mission-gallery-v133-reconciled",
+      "head": "ded6374dacde76f9373b923321a3f6ba28dcfc20",
+      "unknown": 0,
+      "product": 0,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/mission-gallery-v1411-pre-squash",
+      "head": "9a8d120474c9dbbb6cf98c3f6da0547e747419b8",
+      "unknown": 5,
+      "product": 2,
+      "known": 12,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/mission-library-chooser.test.mjs",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/mission-library-accessibility-v40",
+      "head": "a433ee6048c1e2911878e4f881630263e27538f3",
+      "unknown": 0,
+      "product": 0,
+      "known": 141,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/mission-library-index-performance-v39",
+      "head": "f5b6d5f6dd72da98f4e3703675450e003bc18b59",
+      "unknown": 1,
+      "product": 1,
+      "known": 135,
+      "deletions": 0,
+      "productPaths": ["game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/mission-selector-level-cards",
+      "head": "9e0bf4f69081a38f23514e006239891cd3c62942",
+      "unknown": 4,
+      "product": 4,
+      "known": 25,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/mission-library/classic-source.mjs"
+      ]
+    },
+    {
+      "branch": "codex/mobile-ux-latest",
+      "head": "f1666eca60ea853dce135cb02ff3468d047a27fc",
+      "unknown": 61,
+      "product": 17,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/index.html",
+        "game/input-presentation.mjs",
+        "game/test/boot-build.test.mjs",
+        "game/test/compact-arena-layout.test.mjs",
+        "game/test/flight-layout.test.mjs",
+        "game/test/fullscreen-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/named-result-destinations-v139-local",
+      "head": "05563cb03b67355666ce4060f82a2f690a9f5641",
+      "unknown": 69,
+      "product": 60,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs"
+      ]
+    },
+    {
+      "branch": "codex/neon-cultural-completion-v35",
+      "head": "f5ae1753c0cf50dcf4167c49a1b20118b459e1a8",
+      "unknown": 0,
+      "product": 0,
+      "known": 122,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/neon-cultural-routes-v16",
+      "head": "9fe2e41614da97e45743179ebe72ad5344a6f43b",
+      "unknown": 0,
+      "product": 0,
+      "known": 50,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/neon-cultural-routes-v17",
+      "head": "1bf880720f156158f41d119c1846839e93662ad6",
+      "unknown": 0,
+      "product": 0,
+      "known": 53,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/online-soundtrack-archive",
+      "head": "53007108b6286782857c54d1cd4316213389ffb3",
+      "unknown": 21,
+      "product": 19,
+      "known": 13,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/fpv-field-kit/production.rltheme",
+        "game/couch/coop-picture-bindings.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/couch/coop-terrain-trail.mjs",
+        "game/presentation/compiled/manifest.json",
+        "game/presentation/compiled/runtime.json",
+        "game/presentation/compiled/studio.json",
+        "game/test/candidate-solo-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/opening-theme-fallback",
+      "head": "48242c67cde9fd68bc7bde76400ecbfa3b9684ca",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p03-gallery-return",
+      "head": "7fedeef11991ed7be19bdb1d5841f6aed00dfb09",
+      "unknown": 5,
+      "product": 2,
+      "known": 32,
+      "deletions": 0,
+      "productPaths": ["game/ui/library-panel.mjs", "game/ui/operation-focus.mjs"]
+    },
+    {
+      "branch": "codex/p03-library-pagers",
+      "head": "0368f58f8b866d9ae9e716536e7b914d4a6af818",
+      "unknown": 6,
+      "product": 2,
+      "known": 10,
+      "deletions": 0,
+      "productPaths": ["game/test/gallery-focus.test.mjs", "game/ui/library-panel.mjs"]
+    },
+    {
+      "branch": "codex/p03-library-row-focus",
+      "head": "9d43ca97dd641932b08b9162718a56c2c93377b1",
+      "unknown": 4,
+      "product": 2,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": ["game/ui/library-panel.mjs", "game/ui/operation-focus.mjs"]
+    },
+    {
+      "branch": "codex/p03a1-mode-departure",
+      "head": "c6b57e89ac95935907a77259e81b29752c1ab8cc",
+      "unknown": 2,
+      "product": 0,
+      "known": 49,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p03b-title-entry",
+      "head": "83152ee216c8f586b522f297cc6aaf896744b372",
+      "unknown": 4,
+      "product": 2,
+      "known": 63,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs", "game/index.html"]
+    },
+    {
+      "branch": "codex/p03d-story-focus",
+      "head": "e71d7c4b32341de2acb7b4b30798e71caac1fb5e",
+      "unknown": 1,
+      "product": 0,
+      "known": 8,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p03i-team-departure",
+      "head": "59e6c55456cc891c947cfe888e014a86df0d2665",
+      "unknown": 2,
+      "product": 0,
+      "known": 38,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p03j-workshop-restart",
+      "head": "613dbeed68bd3da08504685de35149ba19bdd847",
+      "unknown": 2,
+      "product": 0,
+      "known": 30,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p03k-course-selection",
+      "head": "346ce26bba5687f206a2466a911377473b7e9070",
+      "unknown": 3,
+      "product": 1,
+      "known": 17,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs"]
+    },
+    {
+      "branch": "codex/p03l-common-lobby",
+      "head": "8078796de87ba64ae49076a81e7a444915f5e720",
+      "unknown": 4,
+      "product": 1,
+      "known": 32,
+      "deletions": 0,
+      "productPaths": ["game/test/couch-shell.test.mjs"]
+    },
+    {
+      "branch": "codex/p03m-title-modes",
+      "head": "abdca9a71f82f5d97101aae7bb3179574eee5ce4",
+      "unknown": 2,
+      "product": 0,
+      "known": 51,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p03r3-library-launch",
+      "head": "3f7d735d9cfe10c352eafef33e2ebd477dc7449d",
+      "unknown": 3,
+      "product": 1,
+      "known": 76,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs"]
+    },
+    {
+      "branch": "codex/p03r5-ready-focus",
+      "head": "5b8629e1706b5a63ddf27039e432c5953c054552",
+      "unknown": 2,
+      "product": 0,
+      "known": 32,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p03r5-versus-focus",
+      "head": "5822500b4d5821047be21d03ba824afafeac668a",
+      "unknown": 46,
+      "product": 12,
+      "known": 78,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/test/couch-initial-focus.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/p04-stale-crop-guard",
+      "head": "86618bfc5291142e78ff1ce923282a3e8242f33e",
+      "unknown": 1,
+      "product": 0,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p04-studio-metadata-review",
+      "head": "499d716ee3f4124e32e43e6fc963b1fcdeeb8476",
+      "unknown": 1,
+      "product": 0,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p04-upload-medium-help",
+      "head": "f951fda8f3692c2cbf4646714cff3f10a7487482",
+      "unknown": 4,
+      "product": 3,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/asset-studio/index.html",
+        "game/studio/index.html",
+        "game/studio/studio.css"
+      ]
+    },
+    {
+      "branch": "codex/p05-canonical-startup-fonts",
+      "head": "95dac12f65c2856cd912cc7079198f34a054b116",
+      "unknown": 15,
+      "product": 10,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/asset-studio/index.html",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/studio/index.html",
+        "game/studio/studio.css",
+        "game/test/boot-build.test.mjs",
+        "game/test/presentation-fonts.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/p05-solo-header",
+      "head": "d09b5ffd4b3eda65aed7e58012fb069fac41d337",
+      "unknown": 10,
+      "product": 3,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/device-controls-host.test.mjs",
+        "game/ui/device-controls.css",
+        "game/ui/field-kit-surfaces.css"
+      ]
+    },
+    {
+      "branch": "codex/p05-team-portrait-controls",
+      "head": "ef815bc019a413840fb975fd2f2fce39b2189c46",
+      "unknown": 9,
+      "product": 6,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/asset-studio/index.html",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/studio/index.html",
+        "game/studio/studio.css"
+      ]
+    },
+    {
+      "branch": "codex/p05-team-responsive-controls",
+      "head": "f55cb6672033c46721d829a4659c1165a2902a1b",
+      "unknown": 7,
+      "product": 4,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/asset-studio/index.html",
+        "game/couch/relay-rescue.css",
+        "game/studio/index.html",
+        "game/studio/studio.css"
+      ]
+    },
+    {
+      "branch": "codex/p05-team-short-landscape",
+      "head": "41fe6eae654c4f7a9646eb9109f39aa971850cc0",
+      "unknown": 8,
+      "product": 1,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": ["game/couch/relay-rescue.css"]
+    },
+    {
+      "branch": "codex/p05a-display-preferences",
+      "head": "5d3560ec8ba491c303236353521c364d2422356e",
+      "unknown": 10,
+      "product": 8,
+      "known": 56,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/test/display-preferences-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/p07-campaign-tour",
+      "head": "74e2c9baec91462e68cee130c952550d82d611d0",
+      "unknown": 19,
+      "product": 11,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch-installed-chapters.mjs",
+        "game/couch/couch-progression.mjs",
+        "game/couch/couch-shell.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/test/couch-installed-chapters.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-progression-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/p08-team-bindings",
+      "head": "0c5ee5fc866eecec6e924c1030b0078bce0f6531",
+      "unknown": 0,
+      "product": 0,
+      "known": 33,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p08a-static-pictures",
+      "head": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+      "unknown": 15,
+      "product": 11,
+      "known": 76,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/test/couch-shell.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/p08a-team-presentation",
+      "head": "e5b2b91e480b235a6c24ba1fd44ba6e42415c743",
+      "unknown": 16,
+      "product": 11,
+      "known": 102,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/test/couch-shell.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/p17-community-authoring-guide",
+      "head": "56e42b740aa8ce16919ae248c5428378ddbdec36",
+      "unknown": 1,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/p17-community-studio-help",
+      "head": "d1cf026c9cd0c7b08b17ff9f9f54534068c3e120",
+      "unknown": 3,
+      "product": 2,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": ["game/studio/index.html", "game/studio/studio.css"]
+    },
+    {
+      "branch": "codex/pack-launch-selectors",
+      "head": "576593819ac28c87f412e6d67908e9ad38e2738a",
+      "unknown": 0,
+      "product": 0,
+      "known": 17,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pages-authority-concurrency-preparation-20260923",
+      "head": "0d99fdd1bfb689973f1aaa6aec3e543841bb3093",
+      "unknown": 4,
+      "product": 4,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "publishing/pages-controller/archive-authority-concurrency.md",
+        "publishing/pages-controller/archive-authority.mjs",
+        "publishing/pages-controller/archive-authority.test.mjs",
+        "publishing/pages-controller/publish.mjs"
+      ]
+    },
+    {
+      "branch": "codex/pages-v01160-archive84",
+      "head": "175d4fb3cec844db6fa4fb0875f6fdca9aefa4bf",
+      "unknown": 10,
+      "product": 10,
+      "known": 10,
+      "deletions": 0,
+      "productPaths": [
+        "publishing/pages-controller/evidence/archive-84-v01151/archive-run-artifacts.json",
+        "publishing/pages-controller/evidence/archive-84-v01151/browser-admission.json",
+        "publishing/pages-controller/evidence/archive-84-v01151/deployment-statuses.json",
+        "publishing/pages-controller/evidence/archive-84-v01151/http-20260925T1720Z/http-attempts.jsonl",
+        "publishing/pages-controller/evidence/archive-84-v01151/http-20260925T1720Z/http-report.json",
+        "publishing/pages-controller/evidence/archive-84-v01151/http-20260925T1720Z/http-results.jsonl",
+        "publishing/pages-controller/evidence/archive-84-v01151/http-audit.py",
+        "publishing/pages-controller/evidence/archive-84-v01151/infrastructure-commit.json"
+      ]
+    },
+    {
+      "branch": "codex/pages-v01415-controller",
+      "head": "0aa7abee61b2e0d8aae78fde9ebec447c1721a48",
+      "unknown": 13,
+      "product": 13,
+      "known": 10,
+      "deletions": 0,
+      "productPaths": [
+        "publishing/pages-controller/evidence/archive-98-v01414/attempt-reconciliation.json",
+        "publishing/pages-controller/evidence/archive-98-v01414/authority-reconciliation.json",
+        "publishing/pages-controller/evidence/archive-98-v01414/browser-admission.json",
+        "publishing/pages-controller/evidence/archive-98-v01414/controller-browser-admission.json",
+        "publishing/pages-controller/evidence/archive-98-v01414/controller-http-admission.json",
+        "publishing/pages-controller/evidence/archive-98-v01414/evidence-index.json",
+        "publishing/pages-controller/evidence/archive-98-v01414/hosted-receipts-original.zip",
+        "publishing/pages-controller/evidence/archive-98-v01414/http-attempts.jsonl"
+      ]
+    },
+    {
+      "branch": "codex/pages-v081",
+      "head": "1cc9360652504526a9c1c0aebc7e1a3ffbf97a5d",
+      "unknown": 6,
+      "product": 6,
+      "known": 9,
+      "deletions": 0,
+      "productPaths": [
+        "publishing/pages-controller/evidence/archive-48-v0803/browser-admission.json",
+        "publishing/pages-controller/evidence/archive-48-v0803/http-report-original.json",
+        "publishing/pages-controller/evidence/archive-48-v0803/http-report.json",
+        "publishing/pages-controller/evidence/archive-48-v0803/native-observation.json",
+        "publishing/pages-controller/evidence/archive-48-v0803/workflow-run.json",
+        "publishing/pages-controller/publication.json"
+      ]
+    },
+    {
+      "branch": "codex/pages-v0950",
+      "head": "a781c469d14c4fdab70dc4403f278cb2e2580536",
+      "unknown": 5,
+      "product": 5,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": [
+        "publishing/pages-controller/evidence/archive-63-v0940/browser-admission.json",
+        "publishing/pages-controller/evidence/archive-63-v0940/http-report.json",
+        "publishing/pages-controller/evidence/archive-63-v0940/http-results.jsonl",
+        "publishing/pages-controller/evidence/archive-63-v0940/native/observation.json",
+        "publishing/pages-controller/publication.json"
+      ]
+    },
+    {
+      "branch": "codex/pages-v108-selector",
+      "head": "04ab70a461b980b60a7ad85c29270fa239d248ba",
+      "unknown": 4,
+      "product": 4,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": [
+        "publishing/pages-controller/evidence/archive-72-v01070/browser-admission.json",
+        "publishing/pages-controller/evidence/archive-72-v01070/http-report.json",
+        "publishing/pages-controller/evidence/archive-72-v01070/public-observation.json",
+        "publishing/pages-controller/publication.json"
+      ]
+    },
+    {
+      "branch": "codex/pause-menu-universal-skip",
+      "head": "65147e0ccd422356ab87dff7c1badf6dca5e9e04",
+      "unknown": 10,
+      "product": 10,
+      "known": 44,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/index.html",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/quick-music-controls.test.mjs",
+        "game/test/solo-continuation-admission.test.mjs",
+        "game/test/steamdeck-menu-confirm-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/phase2-batch-creator-ui",
+      "head": "45c72109617492620e2bb17d07d936a1955b163f",
+      "unknown": 3,
+      "product": 3,
+      "known": 31,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/image-campaign-guide.md",
+        "game/app.mjs",
+        "game/creator/studio.mjs"
+      ]
+    },
+    {
+      "branch": "codex/phase2-template-families",
+      "head": "ffc946da4c85da6df85dcfe8e5099644c8f5244d",
+      "unknown": 3,
+      "product": 3,
+      "known": 28,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/creator/templates.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/phase3-player-victory-story",
+      "head": "3d88b242268072cd93dfac5a27d99c7258a81fc9",
+      "unknown": 0,
+      "product": 0,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/phase3-production-adapter",
+      "head": "6b8960d873663dd62db3e002959c2c824e595c99",
+      "unknown": 7,
+      "product": 7,
+      "known": 44,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/batch-image-campaign-guide.md",
+        "authoring/community/creator-bundle-reference.md",
+        "authoring/community/delivery-plan.md",
+        "authoring/community/image-campaign-guide.md",
+        "authoring/community/phase2-acceptance.md",
+        "game/app.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/phase3-story-ui-bug",
+      "head": "67bb7c4a63f414f9ad95f428a9c3cb7db3053514",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/phase3-video-bundle",
+      "head": "f5a27a5d780dc64492e2464e99e08e4dbac3ea6c",
+      "unknown": 7,
+      "product": 6,
+      "known": 41,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/image-campaign-guide.md",
+        "game/app.mjs",
+        "game/creator/creator.css",
+        "game/creator/studio.mjs",
+        "game/creator/templates.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/phase3-video-core",
+      "head": "c9fbbda294a23b440044c31c2d820923c5f9ff4f",
+      "unknown": 1,
+      "product": 1,
+      "known": 32,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs"]
+    },
+    {
+      "branch": "codex/phase3-video-ui",
+      "head": "15654c562057657c07d7c4e944f58f795a988c61",
+      "unknown": 7,
+      "product": 6,
+      "known": 36,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/community/image-campaign-guide.md",
+        "game/app.mjs",
+        "game/creator/creator.css",
+        "game/creator/studio.mjs",
+        "game/creator/templates.mjs",
+        "game/test/creator-templates.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/phase4-submission-service",
+      "head": "a836018d561b706a748ded77a1f97978b315fd83",
+      "unknown": 0,
+      "product": 0,
+      "known": 22,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/phase5-community-store",
+      "head": "cfe405edc21fdcbfdebbd8c052a1355bd2b54507",
+      "unknown": 12,
+      "product": 11,
+      "known": 52,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/community/client.mjs",
+        "game/community/community.css",
+        "game/community/index.html",
+        "game/community/library.mjs",
+        "game/community/page.mjs",
+        "game/community/publisher.mjs",
+        "game/community/state.mjs"
+      ]
+    },
+    {
+      "branch": "codex/phase5-community-store-corrected",
+      "head": "4d58531a039510f88b811067754d71bc449ff02a",
+      "unknown": 2,
+      "product": 1,
+      "known": 13,
+      "deletions": 0,
+      "productPaths": ["authoring/community/delivery-plan.md"]
+    },
+    {
+      "branch": "codex/phase8-media-editor",
+      "head": "e16c55649cefd5c032941a582030248c4a69c609",
+      "unknown": 2,
+      "product": 1,
+      "known": 10,
+      "deletions": 0,
+      "productPaths": ["authoring/community/delivery-plan.md"]
+    },
+    {
+      "branch": "codex/phaseworks-cultural-routes-v20",
+      "head": "29774941ce290df55b4492ce88313df8d69f2500",
+      "unknown": 0,
+      "product": 0,
+      "known": 63,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/plan-feedback-completion",
+      "head": "c4fddecc0199f0ce564824bd52f2d8e02e34709a",
+      "unknown": 0,
+      "product": 0,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/plan-status-20260923",
+      "head": "4b2d077c835b14b19ef0350d5977b28d25fbcc5b",
+      "unknown": 0,
+      "product": 0,
+      "known": 4,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/plan-status-refresh-20260925b",
+      "head": "5c067144cd07a0f49c626a070a9221aff738a9e7",
+      "unknown": 1,
+      "product": 0,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/player-ux-return-focus-v140-local",
+      "head": "e7c359226dc2b06fd8e9ebaad2e38e5e04502ba2",
+      "unknown": 72,
+      "product": 62,
+      "known": 12,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs"
+      ]
+    },
+    {
+      "branch": "codex/post-v076-team-lobby",
+      "head": "17de30bbfe9ff15d961fd9e8a444da3a93e842e7",
+      "unknown": 1,
+      "product": 0,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr231-current-main-preparation-20260923",
+      "head": "f812c29d82ad67938dc90ac34b9fd07b3036f9b1",
+      "unknown": 1,
+      "product": 0,
+      "known": 4,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr237-current-main-preparation-20260923",
+      "head": "3dda4b0c14e16ab41bd0a472249de8740254ad2d",
+      "unknown": 1,
+      "product": 0,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr258-current-main-preparation-20260923",
+      "head": "3bab3ed8ec7f9e6a0f48c169f3be24334b944f07",
+      "unknown": 1,
+      "product": 0,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr260-current-main-preparation-20260923",
+      "head": "ac1271cf4a04a38252d807b6745015615885bd02",
+      "unknown": 0,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr261-current-main-preparation-20260923",
+      "head": "6ff4e837cae1cec5176cd5fb7706a8d3686c8e9d",
+      "unknown": 3,
+      "product": 0,
+      "known": 8,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr262-current-main-preparation-20260923",
+      "head": "fb12f16c450095643c5aa0ac6e7cbfffb64462d9",
+      "unknown": 1,
+      "product": 0,
+      "known": 20,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr331-source-adapter-reconcile-20260925",
+      "head": "c5b27d610d8f04a463a51a181f927d2b9a834246",
+      "unknown": 0,
+      "product": 0,
+      "known": 31,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr333-latest-reconcile-20260925",
+      "head": "7885c6ebf056379f76749ae2c4993079e7680fe4",
+      "unknown": 0,
+      "product": 0,
+      "known": 39,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr370-latest-reconcile-20260925",
+      "head": "7cbf5771f69917dd9b24cc88e9687fec77f2a876",
+      "unknown": 0,
+      "product": 0,
+      "known": 20,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr485-restore-picture-validation",
+      "head": "a030378eadb89aa768f536b4232b76202008dd2f",
+      "unknown": 0,
+      "product": 0,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr485-retry-focus",
+      "head": "e6378d4eb786a5ed81ec76a12d4d530fc5705c87",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr485-rewards-perf-fixture",
+      "head": "a964587f0fbae9e89ef20c986e1408297ed11d31",
+      "unknown": 1,
+      "product": 1,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": ["game/journey/profile.mjs"]
+    },
+    {
+      "branch": "codex/pr573-live-switch-safety",
+      "head": "9edc59ba952d5affb9832c3a9aefc6fc88dff3d0",
+      "unknown": 0,
+      "product": 0,
+      "known": 6,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/pr576-structural-localization-safety",
+      "head": "0d909100f6a8e6aa6caa25ef8d8c0b00e927e6ad",
+      "unknown": 1,
+      "product": 1,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": ["game/i18n/catalogs.mjs"]
+    },
+    {
+      "branch": "codex/presentation-control-lifetime",
+      "head": "97063f0ed85087c438a238ad864ed24bead2ee17",
+      "unknown": 5,
+      "product": 2,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": ["game/presentation/host.mjs", "game/test/presentation-ui.test.mjs"]
+    },
+    {
+      "branch": "codex/quick-music-controls-pre370-backup",
+      "head": "60b73d2e995192ee7681464d1a4be72e5a8fb310",
+      "unknown": 4,
+      "product": 3,
+      "known": 15,
+      "deletions": 0,
+      "productPaths": ["game/app.mjs", "game/index.html", "game/test/soundtrack-host.test.mjs"]
+    },
+    {
+      "branch": "codex/quick-music-controls-reconcile",
+      "head": "41cbf2be98969b462ced59382e1d2671eb07423a",
+      "unknown": 24,
+      "product": 21,
+      "known": 28,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/fpv-field-kit/production.rltheme",
+        "game/app.mjs",
+        "game/couch/coop-picture-bindings.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/couch/coop-terrain-trail.mjs",
+        "game/index.html",
+        "game/presentation/compiled/manifest.json",
+        "game/presentation/compiled/runtime.json"
+      ]
+    },
+    {
+      "branch": "codex/relay-cultural-completion-v32",
+      "head": "76a7cbad156ae3b8cf9c5eb3179d180368cef6a7",
+      "unknown": 4,
+      "product": 4,
+      "known": 109,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/relay-rescue.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/relay-cultural-routes-v22",
+      "head": "2f830ee26776b69786a7113bf658f6be5f76c674",
+      "unknown": 0,
+      "product": 0,
+      "known": 69,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/relay-rescue-phase2-qualified",
+      "head": "761f2afdea4224c29a1cc493b5e4bd1c30991a76",
+      "unknown": 13,
+      "product": 12,
+      "known": 51,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/index.html",
+        "game/test/helpers/couch-host.mjs",
+        "game/ui/device-controls.css",
+        "game/ui/soundtrack-panel.mjs"
+      ]
+    },
+    {
+      "branch": "codex/relay-rescue-pre-rebase-0.46.0",
+      "head": "38ad5618d9ad2ea4703f6b4d3bb12bfb102c5a50",
+      "unknown": 12,
+      "product": 10,
+      "known": 77,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/index.html",
+        "game/test/helpers/couch-host.mjs",
+        "game/ui/device-controls.css",
+        "game/ui/soundtrack-panel.mjs"
+      ]
+    },
+    {
+      "branch": "codex/release-utility-filtered-checkout",
+      "head": "59aa58dc126232b3006d8fa5445238d209398451",
+      "unknown": 0,
+      "product": 0,
+      "known": 1,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/release-v01325",
+      "head": "f3e6cd355c91dc25d5c358cb236176b4ae068863",
+      "unknown": 0,
+      "product": 0,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/rover-cultural-completion-v36",
+      "head": "dd1ffa1ef0ed1d1ee4b754892f7b19cbafdbcae6",
+      "unknown": 0,
+      "product": 0,
+      "known": 126,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/rover-cultural-routes-v18",
+      "head": "94e477719ebfb764fb49e903813a845f224f1b00",
+      "unknown": 0,
+      "product": 0,
+      "known": 56,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/safety-gallery-v133-87b96",
+      "head": "87b96ee990093f15fd8a4369d7ab67d332814335",
+      "unknown": 5,
+      "product": 2,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/mission-library-chooser.test.mjs",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/safety-gallery-v133-db964",
+      "head": "db9649ff3e98b7fc0ea4bec666a4a481f5266af0",
+      "unknown": 5,
+      "product": 2,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/mission-library-chooser.test.mjs",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/sentinel-cultural-routes-v24",
+      "head": "67dd095e75db38ef2df43321ce408e8a6d2b0c00",
+      "unknown": 0,
+      "product": 0,
+      "known": 75,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/shchedryk-bundled-source-reconcile",
+      "head": "b24470a6b2b22fcaecfd642e70e4636d9e059643",
+      "unknown": 21,
+      "product": 19,
+      "known": 22,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/fpv-field-kit/production.rltheme",
+        "game/couch/coop-picture-bindings.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/couch/coop-terrain-trail.mjs",
+        "game/presentation/compiled/manifest.json",
+        "game/presentation/compiled/runtime.json",
+        "game/presentation/compiled/studio.json",
+        "game/test/candidate-solo-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/shchedryk-source-pre-v106-ba804",
+      "head": "ba8044f42e7ec7eee6b3dd2f070dbfd7f1ccc7f7",
+      "unknown": 5,
+      "product": 4,
+      "known": 6,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/fpv-field-kit/production.rltheme",
+        "game/presentation/compiled/manifest.json",
+        "game/presentation/compiled/runtime.json",
+        "game/presentation/compiled/studio.json"
+      ]
+    },
+    {
+      "branch": "codex/signal-cultural-routes-v15",
+      "head": "99464f607733c37ed5d4b9938d02bbef0ff432a1",
+      "unknown": 0,
+      "product": 0,
+      "known": 47,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/soundtrack-expansion-36",
+      "head": "52e5d5458174e727e6d48d567ca69dbb3bc9e4a7",
+      "unknown": 98,
+      "product": 76,
+      "known": 59,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/licensed-audio/build.mjs",
+        "authoring/library/licensed-audio/derivatives/3xBlast - Babe, You Look Poggers Tonight! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - If You're Thinking About Giving Up, Think Again Beause I Believe In You! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - Let's Go, Olive Boy! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - Now This Is A Waterpark! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - The Best Move Is To Keep Going (Looped).mp3",
+        "authoring/library/licensed-audio/originals/3xblast/3xBlast - A Band of Jellyfish (Looped).ogg",
+        "authoring/library/licensed-audio/originals/3xblast/3xBlast - Babe, You Look Poggers Tonight! (Looped).ogg"
+      ]
+    },
+    {
+      "branch": "codex/soundtrack-v3-before-v077-rebase",
+      "head": "02b4925ed5e7d05b2162e8d3bdd0bcdbf9939997",
+      "unknown": 4,
+      "product": 4,
+      "known": 367,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs"
+      ]
+    },
+    {
+      "branch": "codex/source-identity-checker-362e5bf",
+      "head": "3d2e75bb3621aacfbd9b7a931cd1f8ff917a7ba6",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/source-manifest-contract",
+      "head": "156aa4594b54b8f40df3cd770104dc63ea3ca566",
+      "unknown": 8,
+      "product": 8,
+      "known": 12,
+      "deletions": 0,
+      "productPaths": [
+        ".github/workflows/fastline-release.yml",
+        ".github/workflows/qualify-release-source.yml",
+        "publishing/SOURCE-MANIFEST-CONTRACT.md",
+        "publishing/fastline-release-publisher.mjs",
+        "publishing/fastline-release-publisher.test.mjs",
+        "publishing/pages-controller/metadata.mjs",
+        "publishing/pages-controller/metadata.test.mjs",
+        "scripts/game-cli.mjs"
+      ]
+    },
+    {
+      "branch": "codex/spatial-next-batch",
+      "head": "2c0cfbd044b6b16ad30ea18314dfac31ef67de56",
+      "unknown": 0,
+      "product": 0,
+      "known": 33,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/standalone-ux-integration-preparation-20260923",
+      "head": "3d2d8443eaed1c11d8b722d9a96956b5cf7ed7ad",
+      "unknown": 2,
+      "product": 0,
+      "known": 42,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/steamdeck-confirm-gate-fix",
+      "head": "23771611f841fc87303525d9c25e6c876f0449f6",
+      "unknown": 7,
+      "product": 6,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/controller-confirm-guard.test.mjs",
+        "game/test/controller-navigation.test.mjs",
+        "game/test/controller-router-bindings.test.mjs",
+        "game/test/controller-router.test.mjs",
+        "game/test/touchscreen-controller-host.test.mjs",
+        "game/ui/controller-router.mjs"
+      ]
+    },
+    {
+      "branch": "codex/team-complete-current-rules-v26",
+      "head": "6905be7c8b3612908b6d2bf6ed1cc3845a713f92",
+      "unknown": 1,
+      "product": 1,
+      "known": 96,
+      "deletions": 0,
+      "productPaths": ["game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/team-cultural-routes-v27",
+      "head": "8d5194a751becae98c7cfdd490daea95750da463",
+      "unknown": 1,
+      "product": 1,
+      "known": 100,
+      "deletions": 0,
+      "productPaths": ["game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/team-cultural-routes-v28",
+      "head": "7e91017356dadc0488e1450b3ab593c08af7b2c3",
+      "unknown": 1,
+      "product": 1,
+      "known": 105,
+      "deletions": 0,
+      "productPaths": ["game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/team-cultural-routes-v29",
+      "head": "1121288af1a53988482c0acd2c23bb5af60b8046",
+      "unknown": 1,
+      "product": 1,
+      "known": 105,
+      "deletions": 0,
+      "productPaths": ["game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/team-installed-continuation",
+      "head": "40ff13501beb56c5c6242b818d5a77e10a6f8acf",
+      "unknown": 0,
+      "product": 0,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/team-original-fixtures-post370",
+      "head": "881d4a023ab52339e6f35d29ee2fe1af25edfaef",
+      "unknown": 4,
+      "product": 3,
+      "known": 21,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/team-originals-host.test.mjs",
+        "game/test/team-pressure-originals-host.test.mjs",
+        "game/test/team-timed-originals-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/team-quickstart-v134-contract",
+      "head": "cdb6b2a86f93f0c871495da4c03b4dc17a6573e1",
+      "unknown": 14,
+      "product": 10,
+      "known": 13,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/coop-host.test.mjs",
+        "game/test/helpers/coop-host.mjs",
+        "game/test/mission-library-chooser.test.mjs",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/team-quickstart-v134-local",
+      "head": "23841ae0f92195b45af70d2615ad611f5690857d",
+      "unknown": 8,
+      "product": 6,
+      "known": 20,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "package-lock.json",
+        "package.json"
+      ]
+    },
+    {
+      "branch": "codex/team-quickstart-v134-prepared",
+      "head": "7dd4399879fe6a76dfbb12bdb6f8d3674414a271",
+      "unknown": 7,
+      "product": 6,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/relay-rescue.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/coop-host.test.mjs",
+        "game/test/helpers/coop-host.mjs"
+      ]
+    },
+    {
+      "branch": "codex/team-quickstart-v1412-donor-safety",
+      "head": "7dd4399879fe6a76dfbb12bdb6f8d3674414a271",
+      "unknown": 7,
+      "product": 6,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/relay-rescue.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/coop-host.test.mjs",
+        "game/test/helpers/coop-host.mjs"
+      ]
+    },
+    {
+      "branch": "codex/team-quickstart-v1412-final-parent",
+      "head": "2904091ca99400529a39c1491b0770037fffc00e",
+      "unknown": 6,
+      "product": 3,
+      "known": 10,
+      "deletions": 0,
+      "productPaths": [
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/team-quickstart-v1412-pre-547e",
+      "head": "43ccf1ce5d33c2c7f98bb999e5d7df8c0126fef2",
+      "unknown": 9,
+      "product": 5,
+      "known": 19,
+      "deletions": 0,
+      "productPaths": [
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/mission-library-chooser.test.mjs",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/team-quickstart-v1412-prepared",
+      "head": "43ccf1ce5d33c2c7f98bb999e5d7df8c0126fef2",
+      "unknown": 9,
+      "product": 5,
+      "known": 19,
+      "deletions": 0,
+      "productPaths": [
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/mission-library-chooser.test.mjs",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/team-remote-neutral-fixture-v43",
+      "head": "01872585b2026235bea34f0f889117ff042431dd",
+      "unknown": 0,
+      "product": 0,
+      "known": 1,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/team-remote-neutral-fixture-v43-pre-v1415",
+      "head": "4250151be74806be4b3256d4f7c4fe0d8a4f7c3f",
+      "unknown": 0,
+      "product": 0,
+      "known": 1,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/team-specialist-pair-v1",
+      "head": "9557d072eba69bf9e5c5e72a741dd3a326d4dc45",
+      "unknown": 0,
+      "product": 0,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/team-specialist-pair-v117-stack",
+      "head": "eb69af7302bf098196ec9af46d00c8799439a3a3",
+      "unknown": 3,
+      "product": 3,
+      "known": 41,
+      "deletions": 0,
+      "productPaths": ["game/build-config.json", "package-lock.json", "package.json"]
+    },
+    {
+      "branch": "codex/team-specialist-pair-v118-stack",
+      "head": "762c0abef819f1fe4bbf5af41156775d444d2ede",
+      "unknown": 3,
+      "product": 3,
+      "known": 43,
+      "deletions": 0,
+      "productPaths": ["game/build-config.json", "package-lock.json", "package.json"]
+    },
+    {
+      "branch": "codex/team-specialist-pair-v119-stack",
+      "head": "4292a444ba50b5c208e32a95a452185522027029",
+      "unknown": 3,
+      "product": 3,
+      "known": 45,
+      "deletions": 0,
+      "productPaths": ["game/build-config.json", "package-lock.json", "package.json"]
+    },
+    {
+      "branch": "codex/team-specialist-pair-v2",
+      "head": "34a8711ce7d4a0e8c32a87aa1794851a0babd4c7",
+      "unknown": 0,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/team-specialist-pair-v3",
+      "head": "6c6288a201140bc2000691588126ff08eb6e09ac",
+      "unknown": 0,
+      "product": 0,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/team-specialist-pair-v4",
+      "head": "3445c571f9f84ab7d7806060d8ed2f9029685333",
+      "unknown": 0,
+      "product": 0,
+      "known": 9,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/team-specialist-pair-v5",
+      "head": "8a6a1929803066fff72a7ddb6deccc0635b40bf2",
+      "unknown": 0,
+      "product": 0,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/team-teaching-v134-rebuild",
+      "head": "810b9a5607049ef87b757d07882922e09521b046",
+      "unknown": 25,
+      "product": 19,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/gameplay.json"
+      ]
+    },
+    {
+      "branch": "codex/team-teaching-v1414-candidate",
+      "head": "0907375fc5f0fb2f3eaae3502b991b01152ff5fa",
+      "unknown": 17,
+      "product": 12,
+      "known": 13,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/gameplay.json",
+        "game/locales/en/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/team-teaching-v1415-candidate",
+      "head": "57bfaa567c62def3eae222c8feb69ddc4fc8039c",
+      "unknown": 14,
+      "product": 10,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/gameplay.json",
+        "game/locales/uk/gameplay.json"
+      ]
+    },
+    {
+      "branch": "codex/team-terminal-retry-v137-local",
+      "head": "53ed4f036856424686dba4ed66971f7a8a15c4ff",
+      "unknown": 30,
+      "product": 23,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/gameplay.json"
+      ]
+    },
+    {
+      "branch": "codex/test-fixture-efficiency",
+      "head": "2f7e31cdb87864df54a2db1fb39999794427f12a",
+      "unknown": 0,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/trail-after-quickstart-local",
+      "head": "5dbbdae1830ef83e48ba472d18ab127e74d3ddcc",
+      "unknown": 3,
+      "product": 2,
+      "known": 49,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/coop-picture-bindings.test.mjs",
+        "game/test/coop-reviewed-successor-picture.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/trail-after-v111-local",
+      "head": "1b8ab65605aed3d42bf7e7df0e0d83e5acc0cad9",
+      "unknown": 1,
+      "product": 0,
+      "known": 26,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/trail-after-v112-quickstart-local",
+      "head": "17e58b7a1d3c7e3923bc903fb688f2c4f21df4a6",
+      "unknown": 1,
+      "product": 0,
+      "known": 26,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/trail-impact-presentation-v1",
+      "head": "a25e4796461d8647091d3b04f9062b8f08400d68",
+      "unknown": 0,
+      "product": 0,
+      "known": 9,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/trail-readability-rev78-reconciled",
+      "head": "b053a71b9940c8696c4a7fd822723a7150df892e",
+      "unknown": 10,
+      "product": 9,
+      "known": 8,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/fpv-field-kit/production.rltheme",
+        "game/couch/coop-picture-bindings.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/presentation/compiled/manifest.json",
+        "game/presentation/compiled/runtime.json",
+        "game/presentation/compiled/studio.json",
+        "game/test/coop-picture-bindings.test.mjs",
+        "game/test/presentation-production-history.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/unified-experience-local-20260929",
+      "head": "517df7649b01d77cd7b25ff185183a22acf0688a",
+      "unknown": 10,
+      "product": 10,
+      "known": 547,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/index.html",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/couch-composite-menu-navigation.test.mjs",
+        "game/test/steamdeck-menu-confirm-host.test.mjs",
+        "game/ui/controller-navigation.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux-chapter-retry-recovery",
+      "head": "7e1c84484049cca424b939f302f943061d23505d",
+      "unknown": 1,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/ux-plan-checkpoint",
+      "head": "b2201473cc98036c80d6b0a847a2acf85cf67444",
+      "unknown": 2,
+      "product": 0,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/ux-replay-preference-restoration",
+      "head": "b4a4a5b5ba317c7da48ee9160bd824cf8ec6cbc1",
+      "unknown": 1,
+      "product": 0,
+      "known": 4,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/ux1-a1-rewards-after-v111-local",
+      "head": "9def2a0a7f822719a892eadc5542c4fe1cf5ecc6",
+      "unknown": 2,
+      "product": 0,
+      "known": 36,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/ux1-a1-rewards-local-20260925",
+      "head": "91f6e6d04dfedf5cb2d50ae848f241938af891de",
+      "unknown": 2,
+      "product": 0,
+      "known": 62,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/ux1-a2-rewards-after-v111-local",
+      "head": "76c4a4a7b25fa47847ec1ff3801382bfede55bc5",
+      "unknown": 9,
+      "product": 6,
+      "known": 37,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/test/candidate-versus-host.test.mjs",
+        "game/test/coop-picture-bindings.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux1-a2-rewards-local-20260925",
+      "head": "7bd328e8d8d32cda87d60e4f735942ff0dc52702",
+      "unknown": 10,
+      "product": 7,
+      "known": 66,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/test/candidate-versus-host.test.mjs",
+        "game/test/coop-picture-bindings.test.mjs",
+        "game/test/coop-reviewed-successor-picture.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux1-cross-mode-rewards-b1de",
+      "head": "dad1be437bd10676996a3b75d72a7561abe15d91",
+      "unknown": 1,
+      "product": 1,
+      "known": 28,
+      "deletions": 0,
+      "productPaths": ["game/ui/journey.css"]
+    },
+    {
+      "branch": "codex/ux1b-compact-gallery-v1",
+      "head": "da99c4886ca4b84d31b9eecce965ffa908505c48",
+      "unknown": 6,
+      "product": 5,
+      "known": 37,
+      "deletions": 0,
+      "productPaths": [
+        "game/test/mission-library-chooser.test.mjs",
+        "game/test/mission-library-compact.test.mjs",
+        "game/test/mission-library-controller-host.test.mjs",
+        "game/ui/journey.css",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux1b-gallery-after-rewards-local",
+      "head": "ca076020c6e8b8d0bcb04f7b5e46bd29df48acec",
+      "unknown": 14,
+      "product": 12,
+      "known": 26,
+      "deletions": 0,
+      "productPaths": [
+        "game/mission-library/journey-source.mjs",
+        "game/mission-library/remote-solo-versus.mjs",
+        "game/test/candidate-versus-host.test.mjs",
+        "game/test/mission-library-chooser.test.mjs",
+        "game/test/mission-library-compact.test.mjs",
+        "game/test/mission-library-controller-host.test.mjs",
+        "game/test/mission-library-remote-solo-versus.test.mjs",
+        "game/test/mission-library-solo-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux2-home-lobbies-compact",
+      "head": "87f6b880c39fec04e2fae461208fe3dd3544d1cd",
+      "unknown": 12,
+      "product": 11,
+      "known": 8,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch-shell.mjs",
+        "game/couch/couch.css",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/test/candidate-versus-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux2-nav-on-quickstart-20260926",
+      "head": "f5c7be05ae9db2837bd665e15e5da96768264f68",
+      "unknown": 5,
+      "product": 4,
+      "known": 9,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch-shell.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/shared-pause-hierarchy.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux2-nav-on-quickstart-current",
+      "head": "638d1e48b9e74058767470d3fdf0d96d0a1f4c7b",
+      "unknown": 5,
+      "product": 4,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch-shell.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/shared-pause-hierarchy.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux2-player-lobby-cleanup",
+      "head": "723df27d9fda8e09d33469d17c2195bcfffdf7c3",
+      "unknown": 4,
+      "product": 3,
+      "known": 1,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/test/couch-quickstart-parity.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux2-shell-after-quickstart",
+      "head": "d01978f952189c338fb7fa344dba3b94bcf625d0",
+      "unknown": 9,
+      "product": 7,
+      "known": 50,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch.css",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/test/coop-picture-bindings.test.mjs",
+        "game/test/coop-reviewed-successor-picture.test.mjs",
+        "game/test/couch-quickstart-parity.test.mjs",
+        "game/test/versus-default-entry.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux2-shell-after-v112",
+      "head": "cdd89bcd54c987af2eea397e4e0f91cd6a8eeae1",
+      "unknown": 6,
+      "product": 5,
+      "known": 31,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch.css",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/test/couch-quickstart-parity.test.mjs",
+        "game/test/versus-default-entry.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux2-shell-current-main",
+      "head": "3acc06314e56bad8fab7c0c62cd7b3b90c7d6f50",
+      "unknown": 4,
+      "product": 4,
+      "known": 20,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch.css",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.mjs",
+        "game/test/couch-quickstart-parity.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux2-shell-post-v112-safety",
+      "head": "d4129a0bea518762ce9d4717791becf8a6b43ccc",
+      "unknown": 6,
+      "product": 5,
+      "known": 28,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/couch.css",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/test/couch-quickstart-parity.test.mjs",
+        "game/test/versus-default-entry.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux3-gameplay-clearance",
+      "head": "29d3dcee79873c700851af17e97afc11a759dbb4",
+      "unknown": 1,
+      "product": 1,
+      "known": 4,
+      "deletions": 0,
+      "productPaths": ["game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/ux3-gameplay-hud-v1",
+      "head": "7cdfb458b977af907f6fc2410533b845c7d03493",
+      "unknown": 14,
+      "product": 14,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/couch.css",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html"
+      ]
+    },
+    {
+      "branch": "codex/ux3-hud-after-quickstart-local",
+      "head": "a595a575c10cfaae08bf6f56558296863d300a5d",
+      "unknown": 17,
+      "product": 16,
+      "known": 37,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/couch.css",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html"
+      ]
+    },
+    {
+      "branch": "codex/ux3-hud-after-quickstart-reconciled",
+      "head": "55d7c598a7e085a2d1a097a956ec9123e4cfb0cd",
+      "unknown": 15,
+      "product": 14,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/couch.css",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html"
+      ]
+    },
+    {
+      "branch": "codex/ux3-hud-after-v112-local",
+      "head": "5c63b60d787f6968ffb518b81f0d5a2d37d4af40",
+      "unknown": 16,
+      "product": 15,
+      "known": 14,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/couch.css",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html"
+      ]
+    },
+    {
+      "branch": "codex/ux4-deliberate-terminal-retry",
+      "head": "a3f383a91929ea9386cf01fece0e48055fdb268a",
+      "unknown": 4,
+      "product": 3,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/relay-rescue.mjs",
+        "game/test/content-team-recovery-host.test.mjs",
+        "game/test/team-journey-next-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux4-terminal-after-quickstart-local",
+      "head": "b3686eef359f664f1d12f74448f9e71911f6b61e",
+      "unknown": 20,
+      "product": 18,
+      "known": 42,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/test/actor-appearance-solo-host.test.mjs",
+        "game/test/content-team-recovery-host.test.mjs",
+        "game/test/coop-picture-bindings.test.mjs",
+        "game/test/coop-reviewed-successor-picture.test.mjs",
+        "game/test/defeat-presentation-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux4-terminal-after-v111-local",
+      "head": "0df21aef6333d7a24735a025efb9369bc30d4627",
+      "unknown": 18,
+      "product": 16,
+      "known": 19,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/test/actor-appearance-solo-host.test.mjs",
+        "game/test/content-team-recovery-host.test.mjs",
+        "game/test/defeat-presentation-host.test.mjs",
+        "game/test/difficulty-host.test.mjs",
+        "game/test/first-journey-entry-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux4-terminal-after-v112-quickstart-local",
+      "head": "8cf0d9b85d988f42d421d67acc6c27a61201b88f",
+      "unknown": 18,
+      "product": 16,
+      "known": 19,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/test/actor-appearance-solo-host.test.mjs",
+        "game/test/content-team-recovery-host.test.mjs",
+        "game/test/defeat-presentation-host.test.mjs",
+        "game/test/difficulty-host.test.mjs",
+        "game/test/first-journey-entry-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux4-terminal-failure-v1",
+      "head": "ab96375aeae648763380e9210402dbe53b06c6d4",
+      "unknown": 17,
+      "product": 16,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/index.html",
+        "game/test/actor-appearance-solo-host.test.mjs",
+        "game/test/content-team-recovery-host.test.mjs",
+        "game/test/defeat-presentation-host.test.mjs",
+        "game/test/difficulty-host.test.mjs",
+        "game/test/first-journey-entry-host.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux5-settings-return-after-v111-local",
+      "head": "9bad0fee02c152ea33057484bfe20342beae6298",
+      "unknown": 8,
+      "product": 6,
+      "known": 20,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/test/coop-shared-settings.test.mjs",
+        "game/test/pause-menu-host.test.mjs",
+        "game/test/shared-settings-solo.test.mjs",
+        "game/test/shared-settings-versus.test.mjs",
+        "game/ui/game-shell.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux5-settings-return-after-v112",
+      "head": "eabd38ef9f31ee8c101f547c42d602f2d12722b9",
+      "unknown": 8,
+      "product": 6,
+      "known": 20,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/test/coop-shared-settings.test.mjs",
+        "game/test/pause-menu-host.test.mjs",
+        "game/test/shared-settings-solo.test.mjs",
+        "game/test/shared-settings-versus.test.mjs",
+        "game/ui/game-shell.mjs"
+      ]
+    },
+    {
+      "branch": "codex/ux5-settings-return-v1",
+      "head": "864afa3ec886db5286ef4cd7f2e14855a589e36e",
+      "unknown": 7,
+      "product": 6,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/test/coop-shared-settings.test.mjs",
+        "game/test/pause-menu-host.test.mjs",
+        "game/test/shared-settings-solo.test.mjs",
+        "game/test/shared-settings-versus.test.mjs",
+        "game/ui/game-shell.mjs"
+      ]
+    },
+    {
+      "branch": "codex/v0118-team-library-current",
+      "head": "db0af0e78c2c70e28d35af5678e2cf2706cd0b6b",
+      "unknown": 0,
+      "product": 0,
+      "known": 9,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/v0131-localization-followup",
+      "head": "a964e358fd3c7e600ba9139f286e639167f4d0ef",
+      "unknown": 0,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/v042-async-host-correction",
+      "head": "5c065b3824160a26b6ce093c0b4ba347990aeaa4",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/v042-source-import-waits",
+      "head": "85128992a9669a1263f538f22ec943af2434640a",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/v108-steamdeck-pages",
+      "head": "52052595ae1b70e105ecdd00abf152645395166e",
+      "unknown": 4,
+      "product": 4,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": [
+        "publishing/pages-controller/evidence/archive-72-v01070/browser-admission.json",
+        "publishing/pages-controller/evidence/archive-72-v01070/http-report.json",
+        "publishing/pages-controller/evidence/archive-72-v01070/public-observation.json",
+        "publishing/pages-controller/publication.json"
+      ]
+    },
+    {
+      "branch": "codex/v1101-team-authority-hotfix-local",
+      "head": "4667129122f57c360abbfc028dc3746ec3d1b7f5",
+      "unknown": 5,
+      "product": 5,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/coop-picture-bindings.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/test/coop-historical-import-picture.test.mjs",
+        "game/test/coop-picture-bindings.test.mjs",
+        "game/test/coop-reviewed-successor-picture.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/v112-trail-local",
+      "head": "c6de9aff9d12e3d0199328eaec22ce8d90f4d1bf",
+      "unknown": 13,
+      "product": 11,
+      "known": 26,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/fpv-field-kit/production.rltheme",
+        "game/couch/coop-picture-bindings.mjs",
+        "game/couch/coop-presentation.mjs",
+        "game/presentation/compiled/manifest.json",
+        "game/presentation/compiled/runtime.json",
+        "game/presentation/compiled/studio.json",
+        "game/test/coop-historical-import-picture.test.mjs",
+        "game/test/coop-picture-bindings.test.mjs"
+      ]
+    },
+    {
+      "branch": "codex/v112-trail-on-v111",
+      "head": "f76947e023f112fe2b9fe7b5103eaf1ce575efbd",
+      "unknown": 1,
+      "product": 0,
+      "known": 26,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "codex/v135-replay-audit",
+      "head": "651b78756039f48d332a97528503193d9111c382",
+      "unknown": 14,
+      "product": 10,
+      "known": 12,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/test/coop-host.test.mjs",
+        "game/test/helpers/coop-host.mjs",
+        "game/test/mission-library-chooser.test.mjs",
+        "game/ui/mission-library-chooser.mjs"
+      ]
+    },
+    {
+      "branch": "codex/v136-teaching-audit",
+      "head": "7f0205ceea38a820a37a88344a45fdc7371a2eda",
+      "unknown": 25,
+      "product": 19,
+      "known": 17,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/gameplay.json"
+      ]
+    },
+    {
+      "branch": "codex/v136-teaching-pre-v141-reconcile",
+      "head": "7f0205ceea38a820a37a88344a45fdc7371a2eda",
+      "unknown": 25,
+      "product": 19,
+      "known": 17,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/gameplay.json"
+      ]
+    },
+    {
+      "branch": "codex/v140-return-focus-correction",
+      "head": "b272bec9d30155a3fa51857c01a2810e4b55ccd0",
+      "unknown": 72,
+      "product": 62,
+      "known": 12,
+      "deletions": 0,
+      "productPaths": [
+        "game/app.mjs",
+        "game/build-config.json",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs"
+      ]
+    },
+    {
+      "branch": "codex/v1414-team-teaching-audit",
+      "head": "1895ce218e95efed04057cb65790afa76e607673",
+      "unknown": 17,
+      "product": 12,
+      "known": 13,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/gameplay.json",
+        "game/locales/en/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/v1415-terminal-audit-sequence",
+      "head": "f358e8cdba663844a58f3a459e1e4f685a0c5cb2",
+      "unknown": 22,
+      "product": 16,
+      "known": 13,
+      "deletions": 0,
+      "productPaths": [
+        "game/couch/coop-briefing.mjs",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs",
+        "game/i18n/catalogs.mjs",
+        "game/locales/en/gameplay.json",
+        "game/locales/en/interface.json"
+      ]
+    },
+    {
+      "branch": "codex/v1418-failure-continuation",
+      "head": "22d187db746e2b246485eafa9a1c268c51b74f5e",
+      "unknown": 1,
+      "product": 1,
+      "known": 4,
+      "deletions": 0,
+      "productPaths": ["game/couch/relay-rescue.mjs"]
+    },
+    {
+      "branch": "codex/versus-countdown-go-interruption-v138",
+      "head": "9360ef07279400c59bb7c7111e7015738b84df02",
+      "unknown": 64,
+      "product": 56,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs"
+      ]
+    },
+    {
+      "branch": "codex/versus-countdown-v138",
+      "head": "49fcf3dbc7c37a190774da4b1f20e0efc214514f",
+      "unknown": 64,
+      "product": 56,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": [
+        "game/build-config.json",
+        "game/couch/coop-briefing.mjs",
+        "game/couch/couch.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.css",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/couch/team-contextual-teaching.mjs"
+      ]
+    },
+    {
+      "branch": "feat/chapter-download-management",
+      "head": "06c7f15db4afe4334d6ae5685be009612c128438",
+      "unknown": 2,
+      "product": 2,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": ["game/still-residency.mjs", "game/test/still-residency.test.mjs"]
+    },
+    {
+      "branch": "feat/collection-result-labels",
+      "head": "618998fdac058150e4b7c66816c14cf13445ddc4",
+      "unknown": 0,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/dawn-signal-story",
+      "head": "5fa9e74ce7d1b8d4a8d8f965941de7a81c95c8c1",
+      "unknown": 0,
+      "product": 0,
+      "known": 13,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/explicit-soundtrack-download",
+      "head": "ceab10901be3cf7d2c39ba9565ff6315f366d826",
+      "unknown": 0,
+      "product": 0,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/fpv-enemy-atlas-study",
+      "head": "2ce8d1a67baa8fe5ed23ad93f7ed617c1416cde5",
+      "unknown": 9,
+      "product": 7,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/fpv-enemy-atlas-study/PROMPTS.md",
+        "authoring/library/fpv-enemy-atlas-study/RESEARCH.md",
+        "authoring/library/fpv-enemy-atlas-study/SOURCE-PLAN.md",
+        "authoring/library/fpv-enemy-atlas-study/index.html",
+        "authoring/library/fpv-enemy-atlas-study/originals/seven-enemies-v1.png",
+        "authoring/library/fpv-enemy-atlas-study/preview.mjs",
+        "authoring/library/fpv-enemy-atlas-study/study.json"
+      ]
+    },
+    {
+      "branch": "feat/fpv-enemy-presentations",
+      "head": "a997bab5bb5272b57767545dedc5232a51cc7a47",
+      "unknown": 1,
+      "product": 1,
+      "known": 33,
+      "deletions": 0,
+      "productPaths": ["game/build-config.json"]
+    },
+    {
+      "branch": "feat/guided-backup-set-e421",
+      "head": "148362bab537ad88b39281ebb0c690a4d88bb48d",
+      "unknown": 1,
+      "product": 0,
+      "known": 31,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/licensed-audio-albums",
+      "head": "03159cc150282b9c5f7512fc2931cdc406aa203c",
+      "unknown": 48,
+      "product": 41,
+      "known": 13,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/licensed-audio/build.mjs",
+        "authoring/library/licensed-audio/derivatives/3xBlast - Babe, You Look Poggers Tonight! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - If You're Thinking About Giving Up, Think Again Beause I Believe In You! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - Let's Go, Olive Boy! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - Now This Is A Waterpark! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - The Best Move Is To Keep Going (Looped).mp3",
+        "authoring/library/licensed-audio/originals/3xblast/3xBlast - A Band of Jellyfish (Looped).ogg",
+        "authoring/library/licensed-audio/originals/3xblast/3xBlast - Babe, You Look Poggers Tonight! (Looped).ogg"
+      ]
+    },
+    {
+      "branch": "feat/licensed-audio-integration",
+      "head": "41be167b6a353db96c478f3d36b3b644f069015a",
+      "unknown": 48,
+      "product": 41,
+      "known": 13,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/licensed-audio/build.mjs",
+        "authoring/library/licensed-audio/derivatives/3xBlast - Babe, You Look Poggers Tonight! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - If You're Thinking About Giving Up, Think Again Beause I Believe In You! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - Let's Go, Olive Boy! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - Now This Is A Waterpark! (Looped).mp3",
+        "authoring/library/licensed-audio/derivatives/3xBlast - The Best Move Is To Keep Going (Looped).mp3",
+        "authoring/library/licensed-audio/originals/3xblast/3xBlast - A Band of Jellyfish (Looped).ogg",
+        "authoring/library/licensed-audio/originals/3xblast/3xBlast - Babe, You Look Poggers Tonight! (Looped).ogg"
+      ]
+    },
+    {
+      "branch": "feat/moving-edges",
+      "head": "1dc861d6bf4cc4d49c5dcc2e419075d9afd7c19e",
+      "unknown": 13,
+      "product": 12,
+      "known": 0,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/moving-edges/AI-REQUEST.md",
+        "authoring/library/moving-edges/build.mjs",
+        "authoring/library/moving-edges/controls.mjs",
+        "authoring/library/moving-edges/layouts.json",
+        "authoring/library/moving-edges/mechanic-cases.json",
+        "authoring/library/moving-edges/mechanics-plan.json",
+        "authoring/library/moving-edges/mechanics-proof.json",
+        "authoring/library/moving-edges/mechanics.mjs"
+      ]
+    },
+    {
+      "branch": "feat/moving-edges-art",
+      "head": "15882073cd8329b0c117c4716694b588ac4c4d05",
+      "unknown": 58,
+      "product": 55,
+      "known": 10,
+      "deletions": 0,
+      "productPaths": [
+        "authoring/library/moving-edges-art/derivatives.json",
+        "authoring/library/moving-edges-art/generation-results.json",
+        "authoring/library/moving-edges-art/index.html",
+        "authoring/library/moving-edges-art/layout-briefs.json",
+        "authoring/library/moving-edges-art/manifest.json",
+        "authoring/library/moving-edges-art/originals/breakwater-return-coupa.png",
+        "authoring/library/moving-edges-art/originals/breakwater-return-fpv.png",
+        "authoring/library/moving-edges-art/originals/breakwater-return-retro.png"
+      ]
+    },
+    {
+      "branch": "feat/post034-plan",
+      "head": "a05ae1b0106711aac53b911a2c2d5c745193a610",
+      "unknown": 0,
+      "product": 0,
+      "known": 6,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/presentation-media-bindings",
+      "head": "feae2e75de3d33878b3e1c7f0298785163c0112f",
+      "unknown": 2,
+      "product": 0,
+      "known": 31,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/short-landscape-arena",
+      "head": "d646e47c186e1552bf67410e45fa875c3006b58a",
+      "unknown": 0,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/sprite-derivative-tool",
+      "head": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",
+      "unknown": 1,
+      "product": 0,
+      "known": 27,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/title-settings-return",
+      "head": "eb17b205b807a2ec3be3ca60e77c6a2051c26a95",
+      "unknown": 0,
+      "product": 0,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/touch-steering-hand",
+      "head": "87fc6c1dd237d1b2634335e117023f4075f3118b",
+      "unknown": 0,
+      "product": 0,
+      "known": 9,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/ukraine-role-presentations",
+      "head": "dce317f1862ea73a6a8033ad8b70087b653e353e",
+      "unknown": 0,
+      "product": 0,
+      "known": 40,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "feat/ukraine-role-runtime",
+      "head": "bc53b9f1b46944739881419a567b104f14678a05",
+      "unknown": 3,
+      "product": 2,
+      "known": 50,
+      "deletions": 0,
+      "productPaths": ["game/build-config.json", "game/test/still-workshop-build.test.mjs"]
+    },
+    {
+      "branch": "fix/collection-guide-native-polish",
+      "head": "981c441121b2ba5feb2a1becb084b90f87960785",
+      "unknown": 1,
+      "product": 0,
+      "known": 11,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "fix/course-shell-navigation",
+      "head": "b9f55d2bc6ca828cf059f8dfaa79b241eb919843",
+      "unknown": 1,
+      "product": 0,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "fix/dpad-landscape-clearance",
+      "head": "9fa3e3e3366a932104278a0140a550439a73a2f2",
+      "unknown": 0,
+      "product": 0,
+      "known": 3,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "fix/field-kit-production-ledger",
+      "head": "492423b140d4dc0a2d0dabcc01e8ff7d66b441d4",
+      "unknown": 0,
+      "product": 0,
+      "known": 1,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "fix/missions-back-context-80eb",
+      "head": "f61309ddc1f9a773d2bded369fc3abf9450631d9",
+      "unknown": 0,
+      "product": 0,
+      "known": 7,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "fix/optional-chapter-descriptions",
+      "head": "a9b3ac8e049b13cbdf8710ba606c38531a8bb13c",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "fix/relay-rescue-field-kit-68abd",
+      "head": "ea9ba01338eaaab8cecb500d8a0cba9e1193dd09",
+      "unknown": 1,
+      "product": 0,
+      "known": 5,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "fix/snapshot-archive-transfer",
+      "head": "809f5a91c18c9eeb777ecc1b452637f861d92795",
+      "unknown": 0,
+      "product": 0,
+      "known": 4,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "fix/v042-distribution-fixtures",
+      "head": "443dae763c0d77ad25575dbfba6d04dd5b66471f",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "fix/v042-test-concurrency",
+      "head": "d5c04916964f037f00548558d41ab594b8b623ee",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "prepare/archive10-controller-admission",
+      "head": "a97f808486105264866e53b5dda63f8d4a4dc3c9",
+      "unknown": 0,
+      "product": 0,
+      "known": 56,
+      "deletions": 0,
+      "productPaths": []
+    },
+    {
+      "branch": "short-landscape-warning",
+      "head": "f08325cbbf2725c8cf46e7cc64a5390f03823906",
+      "unknown": 0,
+      "product": 0,
+      "known": 2,
+      "deletions": 0,
+      "productPaths": []
+    }
+  ]
+}

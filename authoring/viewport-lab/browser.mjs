@@ -27,15 +27,24 @@ let loadedTarget = null;
 function selectionChanged() {
   const selected = targets[target.value];
   direct.href = selected.path;
-  localizedText(direct, () =>t("tools:openDirectly", { value1: selected.name }));
+  localizedText(direct, () => t('tools:openDirectly', { value1: selected.name }));
   load.disabled = target.value === loadedTarget;
-  localizedText(load, () =>load.disabled ? t("tools:isLoaded", { value1: selected.name }) : t("tools:loadSelectedGame"));
+  localizedText(load, () =>
+    load.disabled ? t('tools:isLoaded', { value1: selected.name }) : t('tools:loadSelectedGame'),
+  );
   if (loadedTarget && !load.disabled) {
-    localizedText(status, () =>t("tools:remainsLoadedLoadExplicitlyToReplaceItSaveAndPause", { value1: targets[loadedTarget].name, value2: selected.name }));
+    localizedText(status, () =>
+      t('tools:remainsLoadedLoadExplicitlyToReplaceItSaveAndPause', {
+        value1: targets[loadedTarget].name,
+        value2: selected.name,
+      }),
+    );
   } else {
-    localizedText(status, () =>loadedTarget
-      ? t("tools:sizeChangesKeepThisGameLoadedResumeExplicitlyInsideThe")
-      : t("tools:chooseAGameThenLoadItSizeChangesKeepThe"));
+    localizedText(status, () =>
+      loadedTarget
+        ? t('tools:sizeChangesKeepThisGameLoadedResumeExplicitlyInsideThe')
+        : t('tools:chooseAGameThenLoadItSizeChangesKeepThe'),
+    );
   }
 }
 
@@ -48,20 +57,24 @@ function resize() {
   dimensions.value = `${width} × ${height} CSS px`;
 }
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
+// Enter in a native select can implicitly submit its surrounding form. Loading
+// or replacing a running child belongs only to the explicit Load action.
+form.addEventListener('submit', (event) => event.preventDefault());
+load.addEventListener('click', () => {
   if (target.value === loadedTarget) return;
   const selected = targets[target.value];
   loadedTarget = target.value;
-  localizedAttribute(frame, "title", () => t("tools:viewportPreview", { value1: selected.name }));
+  localizedAttribute(frame, 'title', () => t('tools:viewportPreview', { value1: selected.name }));
   frame.src = selected.path;
   frame.hidden = false;
   empty.hidden = true;
-  localizedText(loadedLabel, () =>t("tools:preview3", { value1: selected.name }));
+  localizedText(loadedLabel, () => t('tools:preview3', { value1: selected.name }));
   const returnToSelector = document.activeElement === load;
   selectionChanged();
   if (returnToSelector) target.focus();
-  localizedText(status, () =>t("tools:requestedEnterThePreviewToUseTheGameSOwn", { value1: selected.name }));
+  localizedText(status, () =>
+    t('tools:requestedEnterThePreviewToUseTheGameSOwn', { value1: selected.name }),
+  );
 });
 
 target.addEventListener('change', selectionChanged);

@@ -53,11 +53,16 @@ async function fixture(t) {
   };
   await put('game/index.html', '<html><head></head><body>Audio fixture</body></html>');
   await put('game/offline.mjs', 'export const offline = true;');
+  await put(
+    'game/i18n/index.mjs',
+    'export const t = (key, values = {}) => String(key).replace(/\\{\\{(\\w+)\\}\\}/g, (_, name) => values[name] ?? name);',
+  );
   await put('game/content/soundtrack-catalogue.mjs', 'export const SOUNDTRACK_COLLECTIONS = [];');
   for (const name of [
     'game/offline/service-worker.template.js',
     'game/soundtrack-albums.mjs',
     'game/soundtrack-bundle.mjs',
+    'game/soundtrack-download-volumes.mjs',
     'game/soundtrack-portable.mjs',
     'game/soundtrack.mjs',
     'game/soundtrack-rights.mjs',
@@ -158,6 +163,11 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
   const f = await fixture(t);
   for (const name of [
     'scripts/game-cli.mjs',
+    'scripts/brand-icons.mjs',
+    'game/ui/art/identity/fpv-line/icon-master.png',
+    'scripts/offline-content.mjs',
+    'scripts/offline-finalize.mjs',
+    'scripts/offline-launcher.mjs',
     'scripts/pack-indexes.mjs',
     'scripts/soundtrack-distribution.mjs',
     'scripts/soundtrack-archive-admissions.mjs',
@@ -165,10 +175,20 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
     'scripts/reviewed-soundtrack-batches.mjs',
     'scripts/core-soundtrack-publication.mjs',
     'game/content-launch.mjs',
+    'game/edition-context.mjs',
     'game/soundtrack-archive.mjs',
     'game/soundtrack-album-download.mjs',
   ])
     await f.put(name, await readFile(path.join(source, name)));
+  await f.put(
+    'scripts/localization.mjs',
+    'export async function validateLocalization() { return { valid: true }; }',
+  );
+  await f.put('scripts/offline-launcher.mjs', 'export async function addOfflineLauncher() {}');
+  await f.put(
+    'scripts/offline-content.mjs',
+    "export async function buildOfflineContent() { return { format: 'revealline-offline-content.v1', originals: [], files: [] }; } export function buildOfflineInventory() { return { format: 'revealline-offline-inventory.v1', files: [] }; }",
+  );
   await installCoreFixture(f);
   const catalogue = {
     format: 'revealline-soundtrack-catalogue.v2',
@@ -420,7 +440,10 @@ test('all 70 hosted registrations retain provenance without inventing listening 
   const catalogue = JSON.parse(
     await readFile(path.join(source, 'game/content/soundtrack-catalogue.json'), 'utf8'),
   );
-  assert.equal(catalogue.tracks.length, 71);
+  assert.equal(
+    catalogue.tracks.filter((track) => track.archiveId === 'licensed-preview-01').length,
+    70,
+  );
   assert.deepEqual(
     new Set(
       catalogue.tracks

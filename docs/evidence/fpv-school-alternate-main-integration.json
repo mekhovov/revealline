@@ -1,0 +1,219 @@
+{
+  "format": "FPVSchoolAlternateMainIntegration.v1",
+  "baseline": "bf167a4fdfc81d7327fd94518da65ac82d64eb7e",
+  "frozen": "fbda6494c54cd2ebecb98ecc2a3bc29ec3f9de78",
+  "integratedMain": "5e4abe27305ef06f4bbecb8f9365c218dee55979",
+  "head": "114011bead19c5114ebf7c4273bcf1bb3fda4a3f",
+  "productionDelta": [
+    "optional-practice/civilian-fpv/world-visuals.mjs"
+  ],
+  "files": [
+    {
+      "path": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-acro-proof-part-1-of-1.json",
+      "bytes": 176551,
+      "sha256": "81f5a88402188a5632991e53ed3e5fbabd919ffcdbeb7916c0acc91ca0937422"
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-self-level-proof-part-1-of-1.json",
+      "bytes": 603794,
+      "sha256": "db03219d3e9925b34e7d99769af3ba630ac94f8148365d906b3d88a200ad4c2b"
+    },
+    {
+      "path": "docs/evidence/fpv-school-alternate-acro-physics.json",
+      "bytes": 6090,
+      "sha256": "da7ae549ed6a1c3442daee2a097686914cf6b5d57071dc590b4fa3ebcb3014b3"
+    },
+    {
+      "path": "docs/evidence/fpv-school-alternate-eligibility-probe.mjs",
+      "bytes": 7627,
+      "sha256": "b05a67ba088b00e39facf124e47f2564017266a974e81b1e0b5bff61d2fd61ab"
+    },
+    {
+      "path": "docs/evidence/fpv-school-alternate-eligibility.json",
+      "bytes": 23010,
+      "sha256": "c54386fc8172a048d7a5fb90969a65a4a6170e41e009187231774b237f900f7d"
+    },
+    {
+      "path": "docs/evidence/fpv-school-alternate-harness.html",
+      "bytes": 36275,
+      "sha256": "617e42ded0a5c4f73a96d35c6431be58f817ee262bb0d5857ca7a8c8cfff5ea3"
+    },
+    {
+      "path": "docs/evidence/fpv-school-alternate-self-level-physics.json",
+      "bytes": 7729,
+      "sha256": "0ca1535c795533169d782319e8cf833705a18bd809012091aa8a4be8b42f3305"
+    },
+    {
+      "path": "docs/fpv-school-alternate-examples.md",
+      "bytes": 4973,
+      "sha256": "8a0caae710f7ff43415c7a70f7792b966fd99bf361ba768b1c575a0fc4f6c526"
+    },
+    {
+      "path": "scripts/prepare-fpv-school-alternate-verification.mjs",
+      "bytes": 20009,
+      "sha256": "9ff82e2853c3d6cff3faebc66ea2a7f1c0c2f21d2f051cc709891ab4f6685ecd"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Only incoming Orchard surface module changes production",
+      "passed": true
+    },
+    {
+      "name": "School candidate has zero production delta against integrated main",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-acro-proof-part-1-of-1.json preserves exact frozen bytes",
+      "passed": true
+    },
+    {
+      "name": "authoring/fpv-worlds/demonstrations/optional/school-alternates-v1/fpv-school-self-level-proof-part-1-of-1.json preserves exact frozen bytes",
+      "passed": true
+    },
+    {
+      "name": "docs/evidence/fpv-school-alternate-acro-physics.json preserves exact frozen bytes",
+      "passed": true
+    },
+    {
+      "name": "docs/evidence/fpv-school-alternate-eligibility-probe.mjs preserves exact frozen bytes",
+      "passed": true
+    },
+    {
+      "name": "docs/evidence/fpv-school-alternate-eligibility.json preserves exact frozen bytes",
+      "passed": true
+    },
+    {
+      "name": "docs/evidence/fpv-school-alternate-harness.html preserves exact frozen bytes",
+      "passed": true
+    },
+    {
+      "name": "docs/evidence/fpv-school-alternate-self-level-physics.json preserves exact frozen bytes",
+      "passed": true
+    },
+    {
+      "name": "docs/fpv-school-alternate-examples.md preserves exact frozen bytes",
+      "passed": true
+    },
+    {
+      "name": "scripts/prepare-fpv-school-alternate-verification.mjs preserves exact frozen bytes",
+      "passed": true
+    },
+    {
+      "name": "beginner-01 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-02 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-03 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-04 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-05 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-06 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-07 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-08 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-09 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-10 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-11 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-12 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-27 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-28 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-29 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-30 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-31 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-32 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-33 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-34 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-35 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-36 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-37 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-38 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-39 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-40 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-41 cannot activate incoming Orchard artwork",
+      "passed": true
+    },
+    {
+      "name": "beginner-42 cannot activate incoming Orchard artwork",
+      "passed": true
+    }
+  ],
+  "semanticReview": "Incoming Orchard selection requires adventure-orchard-01 through05, canonical obstacles and authored Ukrainian profile. Every selected School ID fails that guard. Added texture branches use only new orchard-bark/foliage kinds; original kinds and shared Themes retain their existing path. Catalogue, model, records, response, host, renderer and178core recordings stay exact. No production file differs from integrated main.",
+  "limitations": [
+    "Browser runs retain the exact historical102-file admitted9efa player; this integration audit does not claim a new package build or current-main browser renderer run."
+  ]
+}

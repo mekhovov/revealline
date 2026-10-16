@@ -1,0 +1,52 @@
+{
+  "format": "FPVUrbanDeliveryProvenance.v1",
+  "id": "urban-earthworks-study",
+  "revision": "review-r2",
+  "sourceIdentity": "mixed-r4",
+  "descriptor": {
+    "path": "delivery.json",
+    "bytes": 6603,
+    "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a"
+  },
+  "terrain": {
+    "path": "region.json",
+    "bytes": 5778,
+    "sha256": "66ef229f0812c31432bb8b3daac6f16e3dcaea19f44be00395a614bfa587afd7"
+  },
+  "scenery": {
+    "path": "region.json",
+    "bytes": 5793,
+    "sha256": "9ae41033e9a73261eeee3ff2339ceaa0e2f6b47367b212fc1f2de470ca8dacb6"
+  },
+  "records": [
+    {
+      "path": "License.txt",
+      "bytes": 708,
+      "sha256": "60a8c5c31191256ec9779dc18745dea6d69c46f4b29703459ce064c1765a59ea"
+    },
+    {
+      "path": "license-provenance.json",
+      "bytes": 2733,
+      "sha256": "68ec564541de04d76afd571df44cd7e90557cdb351feebc97ac6be5b57b78373"
+    },
+    {
+      "path": "original-provenance.json",
+      "bytes": 761,
+      "sha256": "27562e2c7d4a85127b56cd2eb6bb10540e2915e03d106236001c69222b87d0f3"
+    },
+    {
+      "path": "preparation.json",
+      "bytes": 11036,
+      "sha256": "5a87ea09102d2939041aa34494a8d56e2ddb5c5b3a236a549e4448cf90bb5c15"
+    }
+  ],
+  "provenance": "Original authored Urban architecture/earthworks/loading courts/trusses/parking ramps plus adapted Kenney City Kit Industrial CC0 props. Historical source provenance is preserved without rewriting its earlier acceptance claims.",
+  "licenseScope": "License.txt is the unmodified upstream Kenney CC0 license. It does not relicense unrelated repository code. Original authoring is retained under existing project terms.",
+  "deliveryScope": "Only the38 files declared by delivery.json are installed. These adjacent license and provenance records are archival review documents, not implicit extra runtime fetches.",
+  "playerAdmission": false,
+  "limitations": [
+    "384m by384m bounded preview, not an unlimited world.",
+    "Colour-only geometry study; final material/lighting review is separate.",
+    "Default Library row and installed review-r1 remain unchanged."
+  ]
+}

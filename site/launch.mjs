@@ -1,7 +1,9 @@
 // Classic script so a downloaded file can explain how to launch even when ES
 // modules are blocked. Only the current origin's game is entered automatically.
-(() => {
+(async () => {
   const host = globalThis;
+  const scriptURL = host.document.currentScript.src;
+  await host.RevealLineAccess?.ready;
   const fallback = {
     'errors:thisIsADownloadedCopyChoosePlayOnlineOrStart':
       'This is a downloaded copy. Choose Play online, or start a local server to play this copy.',
@@ -9,7 +11,6 @@
   };
   const t = (key) => host.RevealLineI18n?.t(key) || fallback[key];
   const doc = host.document;
-  const scriptURL = doc.currentScript.src;
   const target = new URL('../game/', scriptURL);
   const current = new URL(host.location.href);
   const game = doc.getElementById('launch-game');

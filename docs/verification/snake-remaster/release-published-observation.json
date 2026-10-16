@@ -1,0 +1,27 @@
+{
+  "format": "snake-published-interaction-observation.v1",
+  "checkedAt": "2026-10-14T14:02:23.436Z",
+  "deployment": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "2abfd20bdee39369b3480ed3013074a8dfac3006",
+    "sourceCommittedAt": "2026-10-14T15:43:31+02:00",
+    "buildVersion": "main-2abfd20bdee3",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "includesPR": 1208,
+  "records": [
+    {
+      "path": "game/snake/classic-app.mjs",
+      "publishedSha256": "0fcd0378b174c7ee98d441d9dbfa60bba611732ec973b4556144926a6432da9e",
+      "tokensMatchSource": true
+    },
+    {
+      "path": "game/ui/audio.mjs",
+      "publishedSha256": "ae8b5a15a71f3ea61ec55f1251f016aa528d5c10b1cbd1d681aa37fb2e13328d",
+      "tokensMatchSource": true
+    }
+  ],
+  "scope": "HTTP deployment identity and token-equivalent delivered modules; not physical-controller or audible playback qualification"
+}

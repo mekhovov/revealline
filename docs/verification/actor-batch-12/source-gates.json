@@ -1,0 +1,62 @@
+{
+  "parent": "5253247e774a2bd5cb7a6ddc0bfed8c0311095e9",
+  "results": [
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    {
+      "name": "format",
+      "command": "npm run format:check",
+      "exitCode": 0
+    },
+    {
+      "name": "native-format",
+      "command": "npm run format:native:check",
+      "exitCode": 0
+    },
+    {
+      "name": "validate",
+      "command": "npm run validate",
+      "exitCode": 0
+    },
+    {
+      "name": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "exitCode": 0
+    },
+    {
+      "name": "production-guard",
+      "command": "node --test game/test/team-production-review.test.mjs game/test/presentation-runtime-readiness.test.mjs",
+      "exitCode": 1
+    }
+  ],
+  "longSuites": "Waived by committed temporary policy; not passed.",
+  "notes": [
+    "Initial guard named the wrong companion path and exercised only Team production review: 1 pass / 1 fail. Corrected production-review-durable.tap runs both intended files: 6 pass / 2 fail; changed Team source approvals remain blocking.",
+    "The final Team adapter was corrected after the whole-source gates. Independent final scoped lint/format and 134/134 Team evidence plus ordinary build follow that correction."
+  ],
+  "finalAdditions": [
+    {
+      "name": "ordinary-build",
+      "exitCode": 0,
+      "command": "npm run build -- --out /private/tmp/revealline-actor-batch-12-build"
+    },
+    {
+      "name": "final-affected-lint-format",
+      "exitCode": 0,
+      "logs": [
+        "recovery-final-lint.txt",
+        "recovery-final-format.txt"
+      ]
+    },
+    {
+      "name": "production-review-durable",
+      "exitCode": 1,
+      "pass": 6,
+      "fail": 2,
+      "log": "production-review-durable.tap"
+    }
+  ]
+}

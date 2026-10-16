@@ -1,0 +1,95 @@
+{
+  "format": "FPVCoasterIndexedSourceVerification.v1",
+  "passed": true,
+  "tool": "Node20.19.5 / gltf-transform4.5.1 / gltf-validator",
+  "scale": 6,
+  "sourceFilesPreserved": true,
+  "palettePixelsPreserved": true,
+  "doubleSidedFacesBaked": true,
+  "records": [
+    {
+      "name": "park-entrance.glb",
+      "sceneBytes": 392132,
+      "sourceBytes": 620272,
+      "textureBytes": 1398100,
+      "attributeBytes": 65360,
+      "triangles": 1884,
+      "sha256": "dc8de3618cb8e52c1c7108b0c7a17f0826849a8c7827bf4b873e9dea7d5cf632"
+    },
+    {
+      "name": "station.glb",
+      "sceneBytes": 274012,
+      "sourceBytes": 366667,
+      "textureBytes": 1398100,
+      "attributeBytes": 4800,
+      "triangles": 120,
+      "sha256": "252c9d7011c5021986012d8541faf641475e757c2bae96f499754256f4b66a4e"
+    },
+    {
+      "name": "stall-food.glb",
+      "sceneBytes": 316944,
+      "sourceBytes": 473259,
+      "textureBytes": 1398100,
+      "attributeBytes": 26800,
+      "triangles": 760,
+      "sha256": "4e052496d3eec7cbd83d07a7a50a1b0adeaddace4ee239393e635b3ee9fc6f8f"
+    },
+    {
+      "name": "stall-drinks.glb",
+      "sceneBytes": 301564,
+      "sourceBytes": 424069,
+      "textureBytes": 1398100,
+      "attributeBytes": 18800,
+      "triangles": 548,
+      "sha256": "062829598118d5d268ae4f55c928c76529679cf6497270d6516a0e6518cc1fe4"
+    },
+    {
+      "name": "coaster-steel-looping.glb",
+      "sceneBytes": 471460,
+      "sourceBytes": 935043,
+      "textureBytes": 1398100,
+      "attributeBytes": 104400,
+      "triangles": 3288,
+      "sha256": "59fd1b081a5c5db888d194446546032a5e2cf2eb1bbe3ebf0fdba96e339ad709"
+    },
+    {
+      "name": "coaster-steel-straight.glb",
+      "sceneBytes": 336068,
+      "sourceBytes": 511657,
+      "textureBytes": 1398100,
+      "attributeBytes": 36000,
+      "triangles": 1128,
+      "sha256": "947dd41f6f3ff9bbac6e03ae5be6e181a4b40e3e078dcbc985ba206227eec352"
+    },
+    {
+      "name": "tree-large.glb",
+      "sceneBytes": 305564,
+      "sourceBytes": 451435,
+      "textureBytes": 1398100,
+      "attributeBytes": 21120,
+      "triangles": 568,
+      "sha256": "abc15ccf03fead838f3c21f2300522c778b3874361389f38c0645405fc4f6281"
+    },
+    {
+      "name": "support-large.glb",
+      "sceneBytes": 271104,
+      "sourceBytes": 362947,
+      "textureBytes": 1398100,
+      "attributeBytes": 3200,
+      "triangles": 88,
+      "sha256": "8c23aa93a8f685ef463611ab747898d77c4f989b533eed337635229ce36d80ad"
+    }
+  ],
+  "rejected": [
+    {
+      "name": "coaster-wood-straight-hill-complete.glb",
+      "reason": "Millimetre quantization collapses a source triangle; original preserved, not admitted and no triangles silently removed."
+    },
+    {
+      "name": "coaster-hanging-corner-large.glb",
+      "reason": "Millimetre quantization collapses a source triangle; original preserved, not admitted and no triangles silently removed."
+    }
+  ],
+  "playerReady": false,
+  "limitations": "Original modular assets only; assembled regional layout, route/collision, native visual, package and Library qualification remain required."
+}

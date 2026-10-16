@@ -1,0 +1,2066 @@
+{
+  "format": "FPVCreatorStarterBrowserQualification.v1",
+  "startedAt": "2026-10-04T04:29:16.526Z",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "Admitted asset checksum: game/data-json.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/encounter-display-preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/fpv-entry.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/hunt/actor-art.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/hunt/actor-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/hunt/preferences.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/hunt/presentation-catalog.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/i18n/bootstrap.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/i18n/catalogs.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/i18n/index.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/presentation/theme-system.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/profile-database.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/profile-storage.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/audio-groups.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/exploration.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/learning-profiles.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/rewards/store.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/art/identity/fpv-line/wordmark.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/art/menu-scenes/fpv-portrait.webp",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/art/menu-scenes/fpv.webp",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/native-menu-icons.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/ui/reward-knowledge.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/vendor/i18next-26.4.2.min.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: game/vendor/I18NEXT-LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/app.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/context.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/index.html",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: launcher/worker.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/attempts.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/beginner-coach.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/content-definitions.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/flight-sectors.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/input.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/math.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/notebook.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/offline.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/playlists.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-controls.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-profile.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-session.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/radio-setup.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/README.md",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/rotation-table.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/sim-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/snake-hunt.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/style.css",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/controls/TransformControls.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/loaders/GLTFLoader.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/utils/BufferGeometryUtils.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/addons/utils/SkeletonUtils.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/LICENSE.txt",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/rapier/LICENSE",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/rapier/provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/three.core.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/vendor/three.module.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-app.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-assets.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-catalogue.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-collision.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-content.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-editor.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-model.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-records.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-store.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-style.css",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-themes.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-visuals.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/civilian-fpv/world-zip.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/app.webmanifest",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/guide.html",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/icons/icon-192.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/icons/icon-512.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/index.html",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/package-info.json",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/preview.png",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/README.md",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/SCENERY-LICENSES.txt",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/scenery-provenance.json",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/fpv-worlds/worker.js",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/guide.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/install-context.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-practice/navigation.mjs",
+      "passed": true
+    },
+    {
+      "name": "Admitted asset checksum: optional-package.json",
+      "passed": true
+    },
+    {
+      "name": "Instrumented HTML checksum",
+      "passed": true
+    },
+    {
+      "name": "Harness checksum: index.html",
+      "passed": true
+    },
+    {
+      "name": "Harness checksum: browser-harness.mjs",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 source qualification",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-chicane",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-chicane",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-chicane",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-chicane",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-climb",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-climb",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-climb",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-climb",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-split-level",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-split-level",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-split-level",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-split-level",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-industrial-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-industrial-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-industrial-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-industrial-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-chicane",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-chicane",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-chicane",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-chicane",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-climb",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-climb",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-climb",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-climb",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-hairpin",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-split-level",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-split-level",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-split-level",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-split-level",
+      "passed": true
+    },
+    {
+      "name": "Exact r5 editable ZIP: creator-natural-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Standalone editable identity: creator-natural-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Actual admitted compiler parity: creator-natural-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Independent mode routes: creator-natural-sweeper",
+      "passed": true
+    },
+    {
+      "name": "Unmodified automatic mount guard",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: actual public import keeps exact course",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: divergent mode scope visible",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: movable gate exists",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: numeric move changes only selected Self-level gate",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: numeric Undo exact",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: numeric Redo exact",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: one editable course",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: both mode arrays and exact course identity",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: id retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: revision retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: authoring retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: source retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: provenance retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric ZIP: edited definitions compile exactly",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric install: pack export exact course",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric install: edited revision active",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric install: original revision retained",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper numeric install: retained original course unchanged",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: public ZIP reimport retains numeric edit",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: reimport preserves active pack hash",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: exact original self-level proof",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: original self-level proof completes on admitted engine",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: exact original acro proof",
+      "passed": true
+    },
+    {
+      "name": "creator-natural-sweeper: original acro proof completes on admitted engine",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: actual public import keeps exact course",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: divergent mode scope visible",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: movable gate exists",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: numeric move changes only selected Self-level gate",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: numeric Undo exact",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: numeric Redo exact",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: one editable course",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: both mode arrays and exact course identity",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: id retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: revision retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: authoring retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: source retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: provenance retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric ZIP: edited definitions compile exactly",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric install: pack export exact course",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric install: edited revision active",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric install: original revision retained",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level numeric install: retained original course unchanged",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: public ZIP reimport retains numeric edit",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: reimport preserves active pack hash",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: exact original self-level proof",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: original self-level proof completes on admitted engine",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: exact original acro proof",
+      "passed": true
+    },
+    {
+      "name": "creator-industrial-split-level: original acro proof completes on admitted engine",
+      "passed": true
+    },
+    {
+      "name": "Previous host has no uncaught errors",
+      "passed": true
+    },
+    {
+      "name": "Unmodified automatic mount guard",
+      "passed": true
+    },
+    {
+      "name": "Reopened project has an active native revision",
+      "passed": true
+    },
+    {
+      "name": "Reopened native project retains exact edited course before UI action",
+      "passed": true
+    },
+    {
+      "name": "Each native IDB reader returns records in its own window realm",
+      "passed": true
+    },
+    {
+      "name": "Host native IDB read retains exact edited course",
+      "passed": true
+    },
+    {
+      "name": "Reopened installed project has a connected Library row",
+      "passed": true
+    },
+    {
+      "name": "Reopened public Edit button is connected and enabled",
+      "passed": true
+    },
+    {
+      "name": "Public Edit click reached the selected installed row",
+      "passed": true
+    },
+    {
+      "name": "Online reopening retains exact edited course",
+      "passed": true
+    },
+    {
+      "name": "Actual host has no uncaught errors",
+      "passed": true
+    },
+    {
+      "name": "Trusted pointer drag reached the real canvas",
+      "passed": true
+    },
+    {
+      "name": "Manual spatial drag committed a course edit",
+      "passed": true
+    },
+    {
+      "name": "Spatial translation changes only selected Self-level gate; Acro and identities unchanged",
+      "passed": true
+    },
+    {
+      "name": "Spatial delta is a bounded integer-millimetre edit",
+      "passed": true,
+      "delta": {
+        "x": 3500,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "name": "Spatial Undo exact",
+      "passed": true
+    },
+    {
+      "name": "Spatial Redo exact",
+      "passed": true
+    },
+    {
+      "name": "Spatial ZIP: one editable course",
+      "passed": true
+    },
+    {
+      "name": "Spatial ZIP: both mode arrays and exact course identity",
+      "passed": true
+    },
+    {
+      "name": "Spatial ZIP: id retained",
+      "passed": true
+    },
+    {
+      "name": "Spatial ZIP: revision retained",
+      "passed": true
+    },
+    {
+      "name": "Spatial ZIP: authoring retained",
+      "passed": true
+    },
+    {
+      "name": "Spatial ZIP: source retained",
+      "passed": true
+    },
+    {
+      "name": "Spatial ZIP: provenance retained",
+      "passed": true
+    },
+    {
+      "name": "Spatial ZIP: edited definitions compile exactly",
+      "passed": true
+    },
+    {
+      "name": "Spatial install: pack export exact course",
+      "passed": true
+    },
+    {
+      "name": "Spatial install: edited revision active",
+      "passed": true
+    },
+    {
+      "name": "Spatial install: original revision retained",
+      "passed": true
+    },
+    {
+      "name": "Spatial install: retained original course unchanged",
+      "passed": true
+    },
+    {
+      "name": "Public ZIP reimport retains spatial edit and both routes",
+      "passed": true
+    },
+    {
+      "name": "Spatial reimport preserves installed exact hash",
+      "passed": true
+    },
+    {
+      "name": "Previous host has no uncaught errors",
+      "passed": true
+    },
+    {
+      "name": "Unmodified automatic mount guard",
+      "passed": true
+    },
+    {
+      "name": "Reopened project has an active native revision",
+      "passed": true
+    },
+    {
+      "name": "Reopened native project retains exact edited course before UI action",
+      "passed": true
+    },
+    {
+      "name": "Each native IDB reader returns records in its own window realm",
+      "passed": true
+    },
+    {
+      "name": "Host native IDB read retains exact edited course",
+      "passed": true
+    },
+    {
+      "name": "Reopened installed project has a connected Library row",
+      "passed": true
+    },
+    {
+      "name": "Reopened public Edit button is connected and enabled",
+      "passed": true
+    },
+    {
+      "name": "Public Edit click reached the selected installed row",
+      "passed": true
+    },
+    {
+      "name": "Online reopening retains exact edited course",
+      "passed": true
+    },
+    {
+      "name": "Final actual host has no uncaught errors",
+      "passed": true
+    }
+  ],
+  "exports": [
+    {
+      "label": "creator-natural-sweeper numeric ZIP",
+      "filename": "creator-natural-sweeper.zip",
+      "bytes": 13478,
+      "sha256": "180ef1b8ea560994c096704acd16d02a74e91ec501f0a7dc100109503d3f6a59"
+    },
+    {
+      "label": "creator-industrial-split-level numeric ZIP",
+      "filename": "creator-industrial-split-level.zip",
+      "bytes": 17131,
+      "sha256": "9b9a3acc1e9ca8d3415e7eb927ee1fac3ce116183e411a0d78d88ef1a43faeb7"
+    },
+    {
+      "label": "Spatial ZIP",
+      "filename": "creator-industrial-split-level.zip",
+      "bytes": 17127,
+      "sha256": "29ef8cd6012b267b302806ca75d7d97934622d427c09813a8c1cfc75b3bd20ca"
+    }
+  ],
+  "packRevisions": [
+    {
+      "label": "creator-natural-sweeper numeric install",
+      "id": "creator-natural-sweeper",
+      "original": "6b694e25e27b7cecc49c5bb7abc1eb4aa339fdd8825ec87c1c508722ee56f120",
+      "edited": "8d17b55604e652301c7e04bc7e431f592112756a0a2707490f55719d03db182c",
+      "retained": 2
+    },
+    {
+      "label": "creator-industrial-split-level numeric install",
+      "id": "creator-industrial-split-level",
+      "original": "311b04890037f6b5681dd1fd0067f72292a888bfd2e8cb5b605e8de707aa8711",
+      "edited": "693305b08b3c9db3280bf8667973e3116448f6618c2780709d61e643f3a58104",
+      "retained": 2
+    },
+    {
+      "label": "Spatial install",
+      "id": "creator-industrial-split-level",
+      "original": "311b04890037f6b5681dd1fd0067f72292a888bfd2e8cb5b605e8de707aa8711",
+      "edited": "dd7200ce5f7bb63ee8d0e9fa503ee80c3181fcecf4bb5232020ef94888685c5c",
+      "retained": 3
+    }
+  ],
+  "replays": [
+    {
+      "id": "creator-natural-sweeper",
+      "mode": "self-level",
+      "ticks": 2108,
+      "stateIdentity": "40d812661d495a25"
+    },
+    {
+      "id": "creator-natural-sweeper",
+      "mode": "acro",
+      "ticks": 2081,
+      "stateIdentity": "d9787d1a7f83c99e"
+    },
+    {
+      "id": "creator-industrial-split-level",
+      "mode": "self-level",
+      "ticks": 4024,
+      "stateIdentity": "c6a52efd455aeefa"
+    },
+    {
+      "id": "creator-industrial-split-level",
+      "mode": "acro",
+      "ticks": 3670,
+      "stateIdentity": "4a4560272f8dc41a"
+    }
+  ],
+  "limitations": [
+    "Online native-IDB reopening; no installed-worker or offline claim.",
+    "Actual pointer drag required for spatial acceptance.",
+    "Explicit Acro spatial mode chooser remains follow-on; current divergent route UI edits Self-level.",
+    "No physical-controller, novice or performance acceptance."
+  ],
+  "message": "PASS 237/237. Two actual editor workflows, four admitted-engine replays, trusted spatial drag and online native-IDB reopening. Offline and explicit mode selection remain open.",
+  "fixtureSha256": "6de8fa86aaf3bad2b396d9976413f2db2ce41af14149e48ca8b24f986ddb32b6",
+  "admittedHost": {
+    "source": "d9ad2561ee1d7685ef97961478b7de30278c1e48",
+    "sha256": "6bd30bcd11caa83ccdb36d9bb7c826a9735b5d4549bb49008494921a6a0ba4cc",
+    "packageRevision": "b866d9b4145da43a01e9699e0383ef2fb29143bdf9723bb09d3c381967030bd4"
+  },
+  "storagePrefix": "fpv-creator-editor-4f38f299-423c-4d63-8404-5ff4f63f1a74:",
+  "reopenDiagnostics": [
+    {
+      "id": "creator-industrial-split-level",
+      "startedAt": "2026-10-04T04:29:21.183Z",
+      "phases": [
+        {
+          "phase": "Before persisted read",
+          "at": "2026-10-04T04:29:21.183Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/host.html?token=6dc28685-b0e0-4ef3-960d-6f7640f49dae#packs",
+            "creatorHidden": true,
+            "packsHidden": false,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "",
+            "creatorIdentity": {
+              "id": "custom-mutbn9zc-kmdco",
+              "revision": "r1",
+              "world": "studio-mutbn9zc-x1mdh",
+              "selfLevelSteps": 1,
+              "acroSteps": 1
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · 693305b08b3cEditExport packRemoveRestore revision 311b04890037"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Before public Edit click",
+          "at": "2026-10-04T04:29:21.186Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/host.html?token=6dc28685-b0e0-4ef3-960d-6f7640f49dae#packs",
+            "creatorHidden": true,
+            "packsHidden": false,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "",
+            "creatorIdentity": {
+              "id": "custom-mutbn9zc-kmdco",
+              "revision": "r1",
+              "world": "studio-mutbn9zc-x1mdh",
+              "selfLevelSteps": 1,
+              "acroSteps": 1
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · 693305b08b3cEditExport packRemoveRestore revision 311b04890037"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Public Edit click delivered",
+          "at": "2026-10-04T04:29:21.186Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/host.html?token=6dc28685-b0e0-4ef3-960d-6f7640f49dae#packs",
+            "creatorHidden": true,
+            "packsHidden": false,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "",
+            "creatorIdentity": {
+              "id": "custom-mutbn9zc-kmdco",
+              "revision": "r1",
+              "world": "studio-mutbn9zc-x1mdh",
+              "selfLevelSteps": 1,
+              "acroSteps": 1
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · 693305b08b3cEditExport packRemoveRestore revision 311b04890037"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Exact edited course visible in Challenge JSON",
+          "at": "2026-10-04T04:29:21.462Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/player/optional-practice/fpv-worlds/#creator",
+            "creatorHidden": false,
+            "packsHidden": true,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "Installed project loaded. Export or install to keep subsequent changes.",
+            "creatorIdentity": {
+              "id": "creator-industrial-split-level-route",
+              "revision": "r1",
+              "world": "creator-industrial-split-level",
+              "selfLevelSteps": 10,
+              "acroSteps": 11
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · 693305b08b3cEditExport packRemoveRestore revision 311b04890037"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Workshop panel shown",
+          "at": "2026-10-04T04:29:21.463Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/player/optional-practice/fpv-worlds/#creator",
+            "creatorHidden": false,
+            "packsHidden": true,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "Installed project loaded. Export or install to keep subsequent changes.",
+            "creatorIdentity": {
+              "id": "creator-industrial-split-level-route",
+              "revision": "r1",
+              "world": "creator-industrial-split-level",
+              "selfLevelSteps": 10,
+              "acroSteps": 11
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · 693305b08b3cEditExport packRemoveRestore revision 311b04890037"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Public Edit wait ended",
+          "at": "2026-10-04T04:29:21.463Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/player/optional-practice/fpv-worlds/#creator",
+            "creatorHidden": false,
+            "packsHidden": true,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "Installed project loaded. Export or install to keep subsequent changes.",
+            "creatorIdentity": {
+              "id": "creator-industrial-split-level-route",
+              "revision": "r1",
+              "world": "creator-industrial-split-level",
+              "selfLevelSteps": 10,
+              "acroSteps": 11
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · 693305b08b3cEditExport packRemoveRestore revision 311b04890037"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        }
+      ],
+      "nativeRealm": {
+        "hostObject": true,
+        "hostArray": true,
+        "parentObject": true,
+        "parentArray": true,
+        "sha256": "693305b08b3c9db3280bf8667973e3116448f6618c2780709d61e643f3a58104"
+      },
+      "target": {
+        "rowId": "creator-industrial-split-level",
+        "rowText": "Industrial starter · Split level1 challenges · 693305b08b3cEditExport packRemoveRestore revision 311b04890037",
+        "connected": true,
+        "html": "<button type=\"button\">Edit</button>"
+      },
+      "click": {
+        "delivered": true,
+        "connected": true,
+        "targetHTML": "<button type=\"button\">Edit</button>"
+      },
+      "originalRowStillConnected": true,
+      "originalButtonStillConnected": true
+    },
+    {
+      "id": "creator-industrial-split-level",
+      "startedAt": "2026-10-04T04:31:37.371Z",
+      "phases": [
+        {
+          "phase": "Before persisted read",
+          "at": "2026-10-04T04:31:37.371Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/host.html?token=8d2a868d-4bf2-4fdd-b7ab-2afe99bbb065#packs",
+            "creatorHidden": true,
+            "packsHidden": false,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "",
+            "creatorIdentity": {
+              "id": "custom-mutbq72n-er5u0",
+              "revision": "r1",
+              "world": "studio-mutbq72n-a2my3",
+              "selfLevelSteps": 1,
+              "acroSteps": 1
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · dd7200ce5f7bEditExport packRemoveRestore revision 311b04890037Restore revision 693305b08b3c"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Before public Edit click",
+          "at": "2026-10-04T04:31:37.375Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/host.html?token=8d2a868d-4bf2-4fdd-b7ab-2afe99bbb065#packs",
+            "creatorHidden": true,
+            "packsHidden": false,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "",
+            "creatorIdentity": {
+              "id": "custom-mutbq72n-er5u0",
+              "revision": "r1",
+              "world": "studio-mutbq72n-a2my3",
+              "selfLevelSteps": 1,
+              "acroSteps": 1
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · dd7200ce5f7bEditExport packRemoveRestore revision 311b04890037Restore revision 693305b08b3c"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Public Edit click delivered",
+          "at": "2026-10-04T04:31:37.375Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/host.html?token=8d2a868d-4bf2-4fdd-b7ab-2afe99bbb065#packs",
+            "creatorHidden": true,
+            "packsHidden": false,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "",
+            "creatorIdentity": {
+              "id": "custom-mutbq72n-er5u0",
+              "revision": "r1",
+              "world": "studio-mutbq72n-a2my3",
+              "selfLevelSteps": 1,
+              "acroSteps": 1
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · dd7200ce5f7bEditExport packRemoveRestore revision 311b04890037Restore revision 693305b08b3c"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Exact edited course visible in Challenge JSON",
+          "at": "2026-10-04T04:31:37.679Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/player/optional-practice/fpv-worlds/#creator",
+            "creatorHidden": false,
+            "packsHidden": true,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "Installed project loaded. Export or install to keep subsequent changes.",
+            "creatorIdentity": {
+              "id": "creator-industrial-split-level-route",
+              "revision": "r1",
+              "world": "creator-industrial-split-level",
+              "selfLevelSteps": 10,
+              "acroSteps": 11
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · dd7200ce5f7bEditExport packRemoveRestore revision 311b04890037Restore revision 693305b08b3c"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Workshop panel shown",
+          "at": "2026-10-04T04:31:37.680Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/player/optional-practice/fpv-worlds/#creator",
+            "creatorHidden": false,
+            "packsHidden": true,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "Installed project loaded. Export or install to keep subsequent changes.",
+            "creatorIdentity": {
+              "id": "creator-industrial-split-level-route",
+              "revision": "r1",
+              "world": "creator-industrial-split-level",
+              "selfLevelSteps": 10,
+              "acroSteps": 11
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · dd7200ce5f7bEditExport packRemoveRestore revision 311b04890037Restore revision 693305b08b3c"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        },
+        {
+          "phase": "Public Edit wait ended",
+          "at": "2026-10-04T04:31:37.680Z",
+          "state": {
+            "url": "http://127.0.0.1:8885/player/optional-practice/fpv-worlds/#creator",
+            "creatorHidden": false,
+            "packsHidden": true,
+            "studioStatus": "",
+            "storageStatus": "Worlds and recordings are saved on this device. Export backups before clearing browser data.",
+            "importReport": "Installed project loaded. Export or install to keep subsequent changes.",
+            "creatorIdentity": {
+              "id": "creator-industrial-split-level-route",
+              "revision": "r1",
+              "world": "creator-industrial-split-level",
+              "selfLevelSteps": 10,
+              "acroSteps": 11
+            },
+            "uncaughtErrors": [],
+            "rows": [
+              {
+                "id": "creator-industrial-split-level",
+                "connected": true,
+                "text": "Industrial starter · Split level1 challenges · dd7200ce5f7bEditExport packRemoveRestore revision 311b04890037Restore revision 693305b08b3c"
+              },
+              {
+                "id": "creator-natural-sweeper",
+                "connected": true,
+                "text": "Natural starter · Sweeper1 challenges · 8d17b55604e6EditExport packRemoveRestore revision 6b694e25e27b"
+              }
+            ]
+          }
+        }
+      ],
+      "nativeRealm": {
+        "hostObject": true,
+        "hostArray": true,
+        "parentObject": true,
+        "parentArray": true,
+        "sha256": "dd7200ce5f7bb63ee8d0e9fa503ee80c3181fcecf4bb5232020ef94888685c5c"
+      },
+      "target": {
+        "rowId": "creator-industrial-split-level",
+        "rowText": "Industrial starter · Split level1 challenges · dd7200ce5f7bEditExport packRemoveRestore revision 311b04890037Restore revision 693305b08b3c",
+        "connected": true,
+        "html": "<button type=\"button\">Edit</button>"
+      },
+      "click": {
+        "delivered": true,
+        "connected": true,
+        "targetHTML": "<button type=\"button\">Edit</button>"
+      },
+      "originalRowStillConnected": true,
+      "originalButtonStillConnected": true
+    }
+  ],
+  "nativeDatabases": [
+    "fpv-creator-editor-4f38f299-423c-4d63-8404-5ff4f63f1a74:revealline-fpv-worlds-v1",
+    "fpv-creator-editor-4f38f299-423c-4d63-8404-5ff4f63f1a74:revealline.fpv.world-records.v1",
+    "fpv-creator-editor-4f38f299-423c-4d63-8404-5ff4f63f1a74:revealline-journey-v1"
+  ],
+  "manualSelection": {
+    "project": "creator-industrial-split-level",
+    "mode": "self-level",
+    "index": 7,
+    "criterion": {
+      "at": 15000,
+      "axis": "z",
+      "direction": 1,
+      "maxSide": 3000,
+      "maxY": 8500,
+      "minSide": -3000,
+      "minY": 6500,
+      "type": "gate"
+    }
+  },
+  "spatial": {
+    "delta": {
+      "x": 3500,
+      "y": 0,
+      "z": 0
+    },
+    "trustedEvents": [
+      {
+        "type": "pointermove",
+        "x": 632,
+        "y": 435.8125,
+        "buttons": 0
+      },
+      {
+        "type": "pointerdown",
+        "x": 632,
+        "y": 435.8125,
+        "buttons": 1
+      },
+      {
+        "type": "pointermove",
+        "x": 634,
+        "y": 436.8125,
+        "buttons": 1
+      },
+      {
+        "type": "pointermove",
+        "x": 635,
+        "y": 437.8125,
+        "buttons": 1
+      },
+      {
+        "type": "pointermove",
+        "x": 637,
+        "y": 438.8125,
+        "buttons": 1
+      },
+      {
+        "type": "pointermove",
+        "x": 638,
+        "y": 439.8125,
+        "buttons": 1
+      },
+      {
+        "type": "pointermove",
+        "x": 640,
+        "y": 439.8125,
+        "buttons": 1
+      },
+      {
+        "type": "pointermove",
+        "x": 641,
+        "y": 440.8125,
+        "buttons": 1
+      },
+      {
+        "type": "pointermove",
+        "x": 643,
+        "y": 441.8125,
+        "buttons": 1
+      },
+      {
+        "type": "pointermove",
+        "x": 644,
+        "y": 442.8125,
+        "buttons": 1
+      },
+      {
+        "type": "pointerup",
+        "x": 644,
+        "y": 442.8125,
+        "buttons": 0
+      }
+    ],
+    "finalCourse": {
+      "format": "FlightCourse.v2",
+      "id": "creator-industrial-split-level-route",
+      "revision": "r1",
+      "environment": "container-yard",
+      "world": {
+        "id": "creator-industrial-split-level",
+        "theme": "academy",
+        "style": "industrial",
+        "themeProfile": {
+          "format": "ThemeProfile.v1",
+          "id": "academy",
+          "revision": "r1",
+          "title": {
+            "en": "Flight Academy",
+            "uk": "Льотна академія"
+          },
+          "palette": {
+            "sky": 11916770,
+            "fog": 12965849,
+            "ground": 5400931,
+            "wall": 3625316,
+            "accent": 11135933,
+            "warm": 15054977
+          },
+          "textureFilter": "linear",
+          "drone": "racer",
+          "characters": "civilian",
+          "assets": {
+            "gate": "builtin:gate",
+            "marker": "builtin:beacon",
+            "enemy": "builtin:sentry",
+            "vehicle": "builtin:vehicle"
+          },
+          "audio": {
+            "ambience": "hangar",
+            "motor": "quad",
+            "gate": "chime"
+          },
+          "ui": {
+            "accent": "#a2dfcf",
+            "font": "system-ui",
+            "borderRadius": 12
+          }
+        }
+      },
+      "locales": {
+        "en": {
+          "brief": "Use the open side zone to change height. Self-level passes below then above the deck; Acro reverses that order. Finish on the ground pad. These are editable starter routes, not timed mastery tests.",
+          "lesson": "Gate openings are objective regions, not collision guarantees. Keep at least 0.5 m of extra nominal clearance around the 0.22 m drone radius. Height is measured at the drone lower point. Recheck every edited route in both modes.",
+          "title": "Industrial starter · Split level"
+        },
+        "uk": {
+          "brief": "Змінюйте висоту у відкритій бічній зоні. Самовирівнювання проходить під настилом, потім над ним; Acro змінює порядок. Завершіть посадкою на землі. Це редаговані шаблони маршрутів, а не іспити на швидкість.",
+          "lesson": "Отвори воріт — це області цілей, а не гарантія відсутності зіткнень. Залишайте принаймні 0,5 м додаткового запасу навколо радіуса дрона 0,22 м. Висота вимірюється за нижньою точкою дрона. Перевіряйте кожен змінений маршрут в обох режимах.",
+          "title": "Промисловий шаблон · Два рівні"
+        }
+      },
+      "spawn": {
+        "x": -24000,
+        "y": 0,
+        "z": 24000
+      },
+      "bounds": {
+        "max": {
+          "x": 38000,
+          "y": 16000,
+          "z": 38000
+        },
+        "min": {
+          "x": -38000,
+          "y": 0,
+          "z": -38000
+        }
+      },
+      "obstacles": [
+        {
+          "id": "west-stack",
+          "max": {
+            "x": -27000,
+            "y": 5000,
+            "z": 4000
+          },
+          "min": {
+            "x": -33000,
+            "y": 0,
+            "z": -4000
+          }
+        },
+        {
+          "id": "east-stack",
+          "max": {
+            "x": 33000,
+            "y": 4000,
+            "z": 4000
+          },
+          "min": {
+            "x": 27000,
+            "y": 0,
+            "z": -4000
+          }
+        },
+        {
+          "id": "north-store",
+          "max": {
+            "x": 8000,
+            "y": 4000,
+            "z": -31000
+          },
+          "min": {
+            "x": -8000,
+            "y": 0,
+            "z": -35000
+          }
+        },
+        {
+          "id": "practice-deck",
+          "max": {
+            "x": 7000,
+            "y": 5000,
+            "z": 10000
+          },
+          "min": {
+            "x": -7000,
+            "y": 4000,
+            "z": -10000
+          }
+        },
+        {
+          "id": "deck-west-support",
+          "max": {
+            "x": -6000,
+            "y": 4000,
+            "z": 1000
+          },
+          "min": {
+            "x": -7000,
+            "y": 0,
+            "z": -1000
+          }
+        },
+        {
+          "id": "deck-east-support",
+          "max": {
+            "x": 7000,
+            "y": 4000,
+            "z": 1000
+          },
+          "min": {
+            "x": 6000,
+            "y": 0,
+            "z": -1000
+          }
+        }
+      ],
+      "steps": {
+        "self-level": [
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": -22500,
+              "y": 3650,
+              "z": 25500
+            },
+            "maxSpeed": 2500,
+            "maxTilt": 4000,
+            "min": {
+              "x": -25500,
+              "y": 2350,
+              "z": 22500
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "at": 15000,
+            "axis": "z",
+            "direction": -1,
+            "maxSide": 3250,
+            "maxY": 3000,
+            "minSide": -2750,
+            "minY": 1000,
+            "type": "gate"
+          },
+          {
+            "at": 0,
+            "axis": "z",
+            "direction": -1,
+            "maxSide": 3000,
+            "maxY": 3000,
+            "minSide": -3000,
+            "minY": 1000,
+            "type": "gate"
+          },
+          {
+            "at": -15000,
+            "axis": "z",
+            "direction": -1,
+            "maxSide": 3000,
+            "maxY": 3000,
+            "minSide": -3000,
+            "minY": 1000,
+            "type": "gate"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 19500,
+              "y": 2650,
+              "z": -19500
+            },
+            "maxSpeed": 2500,
+            "maxTilt": 4000,
+            "min": {
+              "x": 16500,
+              "y": 1350,
+              "z": -22500
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 19500,
+              "y": 8150,
+              "z": -15500
+            },
+            "maxSpeed": 2500,
+            "maxTilt": 4000,
+            "min": {
+              "x": 16500,
+              "y": 6850,
+              "z": -18500
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "at": 0,
+            "axis": "z",
+            "direction": 1,
+            "maxSide": 3000,
+            "maxY": 8500,
+            "minSide": -3000,
+            "minY": 6500,
+            "type": "gate"
+          },
+          {
+            "at": 15000,
+            "axis": "z",
+            "direction": 1,
+            "maxSide": 6500,
+            "maxY": 8500,
+            "minSide": 500,
+            "minY": 6500,
+            "type": "gate"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 22500,
+              "y": 8150,
+              "z": 24500
+            },
+            "maxSpeed": 2500,
+            "maxTilt": 4000,
+            "min": {
+              "x": 19500,
+              "y": 6850,
+              "z": 21500
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 25500,
+              "y": 500,
+              "z": 25500
+            },
+            "maxSpeed": 1300,
+            "maxTilt": 4000,
+            "min": {
+              "x": 22500,
+              "y": 0,
+              "z": 22500
+            },
+            "minTilt": 0,
+            "surface": "$floor",
+            "ticks": 30,
+            "type": "land"
+          }
+        ],
+        "acro": [
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": -22500,
+              "y": 3650,
+              "z": 25500
+            },
+            "maxSpeed": 2500,
+            "maxTilt": 4000,
+            "min": {
+              "x": -25500,
+              "y": 2350,
+              "z": 22500
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": -16500,
+              "y": 8150,
+              "z": 20500
+            },
+            "maxSpeed": 2500,
+            "maxTilt": 4000,
+            "min": {
+              "x": -19500,
+              "y": 6850,
+              "z": 17500
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "at": 15000,
+            "axis": "z",
+            "direction": -1,
+            "maxSide": 2250,
+            "maxY": 8500,
+            "minSide": -2250,
+            "minY": 6500,
+            "type": "gate"
+          },
+          {
+            "at": -15000,
+            "axis": "z",
+            "direction": -1,
+            "maxSide": 2250,
+            "maxY": 8500,
+            "minSide": -2250,
+            "minY": 6500,
+            "type": "gate"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 19500,
+              "y": 8150,
+              "z": -19500
+            },
+            "maxSpeed": 2500,
+            "maxTilt": 4000,
+            "min": {
+              "x": 16500,
+              "y": 6850,
+              "z": -22500
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 19500,
+              "y": 2650,
+              "z": -19500
+            },
+            "maxSpeed": 2500,
+            "maxTilt": 4000,
+            "min": {
+              "x": 16500,
+              "y": 1350,
+              "z": -22500
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "at": -15000,
+            "axis": "z",
+            "direction": 1,
+            "maxSide": 2250,
+            "maxY": 3000,
+            "minSide": -2250,
+            "minY": 1000,
+            "type": "gate"
+          },
+          {
+            "at": 0,
+            "axis": "z",
+            "direction": 1,
+            "maxSide": 2250,
+            "maxY": 3000,
+            "minSide": -2250,
+            "minY": 1000,
+            "type": "gate"
+          },
+          {
+            "at": 15000,
+            "axis": "z",
+            "direction": 1,
+            "maxSide": 2250,
+            "maxY": 3000,
+            "minSide": -2250,
+            "minY": 1000,
+            "type": "gate"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 22500,
+              "y": 2650,
+              "z": 24500
+            },
+            "maxSpeed": 2500,
+            "maxTilt": 4000,
+            "min": {
+              "x": 19500,
+              "y": 1350,
+              "z": 21500
+            },
+            "minTilt": 0,
+            "ticks": 30,
+            "type": "hold"
+          },
+          {
+            "centred": false,
+            "heading": null,
+            "max": {
+              "x": 25500,
+              "y": 500,
+              "z": 25500
+            },
+            "maxSpeed": 1300,
+            "maxTilt": 4000,
+            "min": {
+              "x": 22500,
+              "y": 0,
+              "z": 22500
+            },
+            "minTilt": 0,
+            "surface": "$floor",
+            "ticks": 30,
+            "type": "land"
+          }
+        ]
+      },
+      "actors": [],
+      "rules": {
+        "seed": 1,
+        "maxTicks": 36000,
+        "droneRadius": 220,
+        "playerHealth": 100,
+        "collisionDamage": 0,
+        "playerDamage": 25,
+        "fireCooldown": 8,
+        "projectileSpeed": 20000,
+        "projectileTicks": 150
+      },
+      "conditions": {
+        "profile": "clear",
+        "revision": "r1"
+      }
+    }
+  },
+  "completedAt": "2026-10-04T04:31:37.680Z"
+}

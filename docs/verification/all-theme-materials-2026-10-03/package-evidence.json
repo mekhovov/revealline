@@ -1,0 +1,66 @@
+{
+  "format": "AllThemeMaterialOptionalPackageEvidence.v1",
+  "command": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node scripts/bundle-optional-practice.mjs --out /private/tmp/all-theme-materials-20261003-optional --packages civilian-flight,civilian-fpv,fpv-worlds",
+  "exitCode": 0,
+  "output": "/private/tmp/all-theme-materials-20261003-optional",
+  "version": "v0.142.4",
+  "sourceRevision": "fa95b6e62947fb560d49e10758720d16f3de97a1",
+  "sourceTree": "5dc9762f3088f9b3664b2be92184100bcb933af1",
+  "reproducibleBuilds": 2,
+  "committedInputsVerified": true,
+  "zipMembersVerified": true,
+  "publicEligible": false,
+  "envelopeSha256": "c5f84f8b783e471b7b7416aae4cead029e7c7c5059ed975e66975fcea5f453d1",
+  "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "revision": "57a3ee701bbd19ccaf65e8e1967fa5519fc04fb1c6f2fcc0c57c3b5e286e852d",
+      "runtimeFiles": 35,
+      "runtimeBytes": 546048,
+      "sourceFiles": 37,
+      "sourceBytes": 569611,
+      "limits": {
+        "files": 64,
+        "bytes": 8388608
+      },
+      "runtimeSpareFiles": 29,
+      "sourceSpareFiles": 27,
+      "runtimeSpareBytes": 7842560,
+      "sourceSpareBytes": 7818997
+    },
+    {
+      "id": "civilian-fpv",
+      "revision": "1c2ac6a61e0ea653a8ae2cba10713731d64f62014e049fcb15181a8af0b6e899",
+      "runtimeFiles": 67,
+      "runtimeBytes": 4211668,
+      "sourceFiles": 69,
+      "sourceBytes": 4239925,
+      "limits": {
+        "files": 72,
+        "bytes": 8388608
+      },
+      "runtimeSpareFiles": 5,
+      "sourceSpareFiles": 3,
+      "runtimeSpareBytes": 4176940,
+      "sourceSpareBytes": 4148683
+    },
+    {
+      "id": "fpv-worlds",
+      "revision": "efe479a06fd5e63423a88b67fc4def473ddbacb0f4592b994a948b4106df0ccb",
+      "runtimeFiles": 102,
+      "runtimeBytes": 14546374,
+      "sourceFiles": 104,
+      "sourceBytes": 14579809,
+      "limits": {
+        "files": 104,
+        "bytes": 16777216
+      },
+      "runtimeSpareFiles": 2,
+      "sourceSpareFiles": 0,
+      "runtimeSpareBytes": 2230842,
+      "sourceSpareBytes": 2197407
+    }
+  ],
+  "measurement": "Uncompressed archive members, including manifest and source inventory metadata."
+}

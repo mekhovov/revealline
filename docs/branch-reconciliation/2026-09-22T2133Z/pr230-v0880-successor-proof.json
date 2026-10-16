@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-23T01:11:31.619Z",
+  "originalPr": 230,
+  "successorPr": 284,
+  "base": "41099ae0094bb6797383018cd0ac27cccba37693",
+  "original": "283f4e1033505ad6b625dc687a1b83b0ce644c40",
+  "candidate": "935373f4075599e1917f65439cdb3ff20c031e2d",
+  "scope": "Two error-copy changes only; not a PNG/JPEG fix",
+  "featureCoverage": [
+    {
+      "path": "authoring/prompts/chapter-download-retry.md",
+      "proof": "exact-original-postimage",
+      "originalSha256": "1d75f17a222b48d7f9aa17284bb66af51eb5310fb4536d1ebeac94e886998e7f",
+      "candidateSha256": "1d75f17a222b48d7f9aa17284bb66af51eb5310fb4536d1ebeac94e886998e7f",
+      "bytes": 595,
+      "passed": true
+    },
+    {
+      "path": "docs/chapter-download-retry.md",
+      "proof": "exact-original-postimage",
+      "originalSha256": "b8a620fcc35b8ed887e24e49be3d7ba2fabf7f4bfb4aaaa8b34d783e648ec57d",
+      "candidateSha256": "b8a620fcc35b8ed887e24e49be3d7ba2fabf7f4bfb4aaaa8b34d783e648ec57d",
+      "bytes": 973,
+      "passed": true
+    },
+    {
+      "path": "game/chapter-download.mjs",
+      "proof": "exact-original-postimage",
+      "originalSha256": "c77c7df729d6cc934ec1db8f68185afd30be775064dc7f4860212c01543ecf26",
+      "candidateSha256": "c77c7df729d6cc934ec1db8f68185afd30be775064dc7f4860212c01543ecf26",
+      "bytes": 1328,
+      "passed": true
+    },
+    {
+      "path": "game/test/chapter-download.test.mjs",
+      "proof": "exact-original-postimage",
+      "originalSha256": "765531b9ea3e933cdb66300ad61904c92e780181fc563eae2cc12577723e3e24",
+      "candidateSha256": "765531b9ea3e933cdb66300ad61904c92e780181fc563eae2cc12577723e3e24",
+      "bytes": 3180,
+      "passed": true
+    },
+    {
+      "path": "game/test/title-operation-status-host.test.mjs",
+      "proof": "exact-original-postimage",
+      "originalSha256": "45b7043211e2c079a19495573e08ecc2059393138f459901945becd59d420453",
+      "candidateSha256": "45b7043211e2c079a19495573e08ecc2059393138f459901945becd59d420453",
+      "bytes": 5592,
+      "passed": true
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "proof": "current-main-prefix-plus-exact-original-appendix",
+      "baseSha256": "fa3c485ee8b333dce93ee56c08f6e8a7d3f18e36fac2cf6ecd0f2e8fb74db52f",
+      "appendixSha256": "af8814206193bd370e9ed3e7c8880a83a69507530ee9fb8bc14f75c187851ce2",
+      "appendixBytes": 604,
+      "candidateSha256": "7396d22007f291f93636d3b73b22430fe694874b02354f93538777cf8642d999",
+      "passed": true
+    }
+  ],
+  "versions": [
+    {
+      "path": "package.json",
+      "version": "0.88.0",
+      "versionOnly": true
+    },
+    {
+      "path": "package-lock.json",
+      "version": "0.88.0",
+      "versionOnly": true
+    },
+    {
+      "path": "game/build-config.json",
+      "version": "0.88.0",
+      "versionOnly": true
+    }
+  ],
+  "classification": "represented-by-open-draft-successor",
+  "releaseAccepted": false,
+  "originalRetained": true,
+  "checks": {
+    "fourPureDownloadTests": "passed by coordinator",
+    "independentExactHeadReview": "no blockers",
+    "hostedPreflightBuild": "pending run35805147386",
+    "longSuitesAndExtendedMatrices": "waived/deferred, not passed"
+  },
+  "complete": true
+}

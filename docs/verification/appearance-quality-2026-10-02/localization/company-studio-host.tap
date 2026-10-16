@@ -1,0 +1,210 @@
+TAP version 13
+# Subtest: Company appearance translates live without changing staged choices, focus or catalog JSON
+ok 1 - Company appearance translates live without changing staged choices, focus or catalog JSON
+  ---
+  duration_ms: 175.603167
+  ...
+# Subtest: Company appearance validation remains translated while unapplied JSON stays untouched
+ok 2 - Company appearance validation remains translated while unapplied JSON stays untouched
+  ---
+  duration_ms: 62.421167
+  ...
+# Subtest: Studio candidate handoff is reviewed before registration and exports only after explicit Apply
+ok 3 - Studio candidate handoff is reviewed before registration and exports only after explicit Apply
+  ---
+  duration_ms: 307.269875
+  ...
+# Subtest: unavailable one-use Studio candidate leaves the source draft usable and reports a localized recovery
+ok 4 - unavailable one-use Studio candidate leaves the source draft usable and reports a localized recovery
+  ---
+  duration_ms: 68.975875
+  ...
+# Subtest: actual Company Studio exports a valid complete source packet and explicitly reopens it
+ok 5 - actual Company Studio exports a valid complete source packet and explicitly reopens it
+  ---
+  duration_ms: 78.87225
+  ...
+# Subtest: actual Company Studio rejects unapplied or invalid JSON without changing its applied draft
+ok 6 - actual Company Studio rejects unapplied or invalid JSON without changing its applied draft
+  ---
+  duration_ms: 36.176666
+  ...
+# Subtest: a delayed source export cannot claim or replace a newer unapplied edit
+ok 7 - a delayed source export cannot claim or replace a newer unapplied edit
+  ---
+  duration_ms: 43.041
+  ...
+# Subtest: a delayed source import cannot erase JSON entered after the read started
+ok 8 - a delayed source import cannot erase JSON entered after the read started
+  ---
+  duration_ms: 51.623167
+  ...
+# Subtest: the newest source import wins when two file reads complete out of order
+ok 9 - the newest source import wins when two file reads complete out of order
+  ---
+  duration_ms: 86.120583
+  ...
+# Subtest: an older pending read cannot clear the newer replacement consent handler
+ok 10 - an older pending read cannot clear the newer replacement consent handler
+  ---
+  duration_ms: 109.523042
+  ...
+# Subtest: a rejected old import cannot replace status after a newer raw form edit
+ok 11 - a rejected old import cannot replace status after a newer raw form edit
+  ---
+  duration_ms: 142.577
+  ...
+# Subtest: controller step selection owns a reachable control after neutral polling
+ok 12 - controller step selection owns a reachable control after neutral polling
+  ---
+  duration_ms: 112.4215
+  ...
+# Subtest: every Company setup step selects a reachable local control under the real controller owner
+ok 13 - every Company setup step selects a reachable local control under the real controller owner
+  ---
+  duration_ms: 422.69925
+  ...
+# Subtest: pending Company import cannot commit after blur
+ok 14 - pending Company import cannot commit after blur
+  ---
+  duration_ms: 43.619625
+  ...
+# Subtest: pending Company import cannot commit after hidden
+ok 15 - pending Company import cannot commit after hidden
+  ---
+  duration_ms: 39.07875
+  ...
+# Subtest: pending Company import cannot commit after pagehide
+ok 16 - pending Company import cannot commit after pagehide
+  ---
+  duration_ms: 41.291917
+  ...
+# Subtest: pending Company import cannot commit after new focus
+ok 17 - pending Company import cannot commit after new focus
+  ---
+  duration_ms: 39.689375
+  ...
+# Subtest: pending Company import cannot commit after raw identity edit
+ok 18 - pending Company import cannot commit after raw identity edit
+  ---
+  duration_ms: 46.8855
+  ...
+# Subtest: native cancel cancels pending Company export and restores its owned opener
+ok 19 - native cancel cancels pending Company export and restores its owned opener
+  ---
+  duration_ms: 44.906625
+  ...
+# Subtest: controller Back cancels pending Company export and restores its owned opener
+ok 20 - controller Back cancels pending Company export and restores its owned opener
+  ---
+  duration_ms: 70.169583
+  ...
+# Subtest: controller Confirm cancels pending Company export and restores its owned opener
+ok 21 - controller Confirm cancels pending Company export and restores its owned opener
+  ---
+  duration_ms: 65.6085
+  ...
+# Subtest: reopening an exported Company packet is explicit, cancelable and byte-preserving
+ok 22 - reopening an exported Company packet is explicit, cancelable and byte-preserving
+  ---
+  duration_ms: 121.923167
+  ...
+# Subtest: prepared import consent expires when an underlying form changes
+ok 23 - prepared import consent expires when an underlying form changes
+  ---
+  duration_ms: 49.791375
+  ...
+# Subtest: failed Company collection settles its busy owner and permits a fresh valid export
+ok 24 - failed Company collection settles its busy owner and permits a fresh valid export
+  ---
+  duration_ms: 44.882833
+  ...
+# Subtest: invalid imported source retains the complete current applied and unapplied draft
+ok 25 - invalid imported source retains the complete current applied and unapplied draft
+  ---
+  duration_ms: 39.267959
+  ...
+# Subtest: oversized source imports are rejected before reading any file bytes
+ok 26 - oversized source imports are rejected before reading any file bytes
+  ---
+  duration_ms: 29.8355
+  ...
+# Subtest: a catalog-only import cannot partially replace the draft when a declared source fails
+ok 27 - a catalog-only import cannot partially replace the draft when a declared source fails
+  ---
+  duration_ms: 38.348542
+  ...
+# Subtest: delayed compiler report import cannot revive a report for an edited draft
+ok 28 - delayed compiler report import cannot revive a report for an edited draft
+  ---
+  duration_ms: 34.95675
+  ...
+# Subtest: Company compiler commands support explicit controller reading and exact Back return
+ok 29 - Company compiler commands support explicit controller reading and exact Back return
+  ---
+  duration_ms: 105.8755
+  ...
+# Subtest: leaving an active Company reading region does not steal newer focus
+ok 30 - leaving an active Company reading region does not steal newer focus
+  ---
+  duration_ms: 89.677208
+  ...
+# Subtest: actual transfer practice enters a readable brief and returns exactly after controller Back
+ok 31 - actual transfer practice enters a readable brief and returns exactly after controller Back
+  ---
+  duration_ms: 23.338959
+  ...
+# Subtest: incomplete practice commit leads to readable feedback and leaves a retryable handoff
+ok 32 - incomplete practice commit leads to readable feedback and leaves a retryable handoff
+  ---
+  duration_ms: 21.353084
+  ...
+# Subtest: completed transfer practice remains readable, exports task cards only and clears answers on restart
+ok 33 - completed transfer practice remains readable, exports task cards only and clears answers on restart
+  ---
+  duration_ms: 28.446
+  ...
+# Subtest: leaving transfer practice removes its readers and clears in-memory answers
+ok 34 - leaving transfer practice removes its readers and clears in-memory answers
+  ---
+  duration_ms: 19.723542
+  ...
+# Subtest: completed practice controller navigation skips inherited disabled fields and reaches Restart
+ok 35 - completed practice controller navigation skips inherited disabled fields and reaches Restart
+  ---
+  duration_ms: 52.258667
+  ...
+# Subtest: actual Company cached-page return retains the same unstaged guided lesson fields
+ok 36 - actual Company cached-page return retains the same unstaged guided lesson fields
+  ---
+  duration_ms: 44.48825
+  ...
+# Subtest: Company cached departure fences late preview success
+ok 37 - Company cached departure fences late preview success
+  ---
+  duration_ms: 48.619459
+  ...
+# Subtest: Company cached departure fences late preview failure
+ok 38 - Company cached departure fences late preview failure
+  ---
+  duration_ms: 40.897958
+  ...
+# Subtest: Company terminal departure fences late preview success
+ok 39 - Company terminal departure fences late preview success
+  ---
+  duration_ms: 41.639417
+  ...
+# Subtest: Company terminal departure fences late preview failure
+ok 40 - Company terminal departure fences late preview failure
+  ---
+  duration_ms: 40.863083
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3314.477458

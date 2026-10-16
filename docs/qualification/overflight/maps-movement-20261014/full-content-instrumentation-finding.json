@@ -1,0 +1,36 @@
+{
+  "sourceRevision": "ed46c2b72e1735940acd70337f4ca5826506b1cc",
+  "raw": "docs/qualification/overflight/maps-movement-20261014/native/full-survivor-draft-interruption.json.gz",
+  "rawSha256": "8efc7ad59f89e2452490563ab710d4f1ae1c389aa1745bc1d5cc5a8f973275a1",
+  "status": "invalid; retained",
+  "reason": [
+    "interrupted"
+  ],
+  "viewportRequested": {
+    "width": 1920,
+    "height": 1080
+  },
+  "viewportReported": {
+    "width": 936,
+    "height": 1143,
+    "devicePixelRatio": 2
+  },
+  "windows": [
+    {
+      "index": 1,
+      "complete": true,
+      "measuredSeconds": 119.99819999999926,
+      "cadenceMs": {
+        "samples": 14398,
+        "p50": 8.300000000745058,
+        "p95": 10.5,
+        "p99": 12.900000000372529,
+        "worst": 17.299999998882413
+      },
+      "cadenceHz": 119.98513311033074,
+      "slowFraction": 0,
+      "passes": true
+    }
+  ],
+  "finding": "Normal earned upgrade selections set renderer frameActive false and invalidate the full-content trial as interrupted. Numeric cadence is not an acceptance pass. A narrow instrumentation change will include all normal draft frames continuously while retaining manual/lifecycle invalidations and long foreground intervals."
+}

@@ -1,0 +1,14 @@
+{
+  "format": "FPVFestivalNativeHistoricalObservation.v1",
+  "source": "Root actual CUA observations after controlled311 matrix; raw screenshots retained",
+  "runtime": "364fb78c3dc7e268b84b0a13349af32864bca802",
+  "scope": "Native RAF/performance in the historical53907 fixture with renderer observer/private storage namespace, not the unmodified standalone entry",
+  "guide": "Public1x Watch completed at displayed41.3s; screenshot captures completion, not a successful subject close view",
+  "cart": "Paused at30s; no completion claim",
+  "limits": "Screenshots missed tracking phase and do not qualify actual actor appearance. Clipped1280px iframe header blocked a locator; Escape worked. This is fixture visibility, not product diagnosis.",
+  "next": "Current0b54 unmodified native subject views and true-offline qualification remain pending",
+  "shots": [
+    "r5-guide-native-historical.png",
+    "r5-cart-native-historical.png"
+  ]
+}

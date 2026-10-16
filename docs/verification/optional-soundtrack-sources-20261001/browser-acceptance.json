@@ -1,0 +1,26 @@
+{
+  "kind": "development-browser-acceptance",
+  "verifiedAt": "2026-09-30T23:55:40.357176+00:00",
+  "url": "http://127.0.0.1:18840/game/",
+  "environment": "Codex in-app desktop browser; source preview with live deployed catalogues",
+  "notPublicGameRelease": true,
+  "observations": [
+    "Initial main-only source loaded123 eligible recordings. Existing style filters showed121.",
+    "Adding not-yet-deployed FPV source reported Failed to fetch; current Drama by Holizna continued playing, visible clock advanced past95seconds.",
+    "After FPV publication refresh loaded123main+73FPV=196 recordings.",
+    "All styles plus TRENCH ORDERLY search showed7of196; source/artist labels preserved, no false CC license or offline action.",
+    "Played Збий дрон by TRENCH ORDERLY in same tab; visible playback clock advanced to1:09of2:44.",
+    "Disabling main reduced results to7of73 without interrupting current FPV song.",
+    "Disabling FPV while playing removed all remote songs; mixed queue advanced to bundled Carol of the Bells, remaining remote result count0of0.",
+    "Reload restored both saved source toggles Off and preserved mute. Music sources button focused catalogue URL input.",
+    "Re-enabling FPV restored73 recordings without unmuting/starting; checkbox retained focus after rerender.",
+    "Returning to top-level Audio added Ukrainian · UA and ФПВ styles while preserving previous style selections.",
+    "From top-level Audio, Clear then select only ФПВ and Play selected styles chose Іван Ганзера from the optional source; Studio clock advanced to0:41of1:54 while preserving master mute, then explicit Pause worked. This verifies transport progress, not audibility under mute."
+  ],
+  "notVerified": [
+    "Physical iPhone/controller",
+    "Cold server-stopped offline restart on final source",
+    "Published game acceptance",
+    "New full-track cultural/listening review"
+  ]
+}

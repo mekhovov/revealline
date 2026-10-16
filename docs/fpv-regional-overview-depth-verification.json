@@ -1,0 +1,182 @@
+{
+  "passed": true,
+  "scope": "CPU camera projections and source vertices; no GPU/rendered-art acceptance",
+  "baselineSHA256": "96401355601fc338fc2a5ca7afd49b8e201fe3886523e5e3ac714e621a3bf845",
+  "rendererSHA256": "acaed63709dd6f9186113f0ea5c0338bc7d25b77fbd64cfbb4bf4e3fa2b0492c",
+  "exactFlightComparisons": 2016,
+  "boundedViews": 144,
+  "visibleBoundaryPoints": 17412,
+  "inspectedVertices": 488896,
+  "visibleSourceVertices": 488770,
+  "sceneryManifestSHA256": "6267731197ea142b0cf4a99380953108aca11ae01db69aabda866388029b037d",
+  "separation": [
+    {
+      "spawn": "arrival-gardens",
+      "aspect": 0.46208530805687204,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "arrival-gardens",
+      "aspect": 2.164102564102564,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "arrival-gardens",
+      "aspect": 1.6,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "arrival-gardens",
+      "aspect": 1.7777777777777777,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "loop-meadow",
+      "aspect": 0.46208530805687204,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "loop-meadow",
+      "aspect": 2.164102564102564,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "loop-meadow",
+      "aspect": 1.6,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "loop-meadow",
+      "aspect": 1.7777777777777777,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "ridge-station",
+      "aspect": 0.46208530805687204,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "ridge-station",
+      "aspect": 2.164102564102564,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "ridge-station",
+      "aspect": 1.6,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "ridge-station",
+      "aspect": 1.7777777777777777,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "service-courts",
+      "aspect": 0.46208530805687204,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "service-courts",
+      "aspect": 2.164102564102564,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "service-courts",
+      "aspect": 1.6,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "service-courts",
+      "aspect": 1.7777777777777777,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "woodland-promenade",
+      "aspect": 0.46208530805687204,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "woodland-promenade",
+      "aspect": 2.164102564102564,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "woodland-promenade",
+      "aspect": 1.6,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "woodland-promenade",
+      "aspect": 1.7777777777777777,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "river-gardens",
+      "aspect": 0.46208530805687204,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "river-gardens",
+      "aspect": 2.164102564102564,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "river-gardens",
+      "aspect": 1.6,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    },
+    {
+      "spawn": "river-gardens",
+      "aspect": 1.7777777777777777,
+      "near": 10,
+      "estimated24BitDepthStepsBefore": 0.040448250632092175,
+      "estimated24BitDepthStepsAfter": 11.614513344756423
+    }
+  ]
+}

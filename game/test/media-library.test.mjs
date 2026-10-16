@@ -291,7 +291,7 @@ test('strict references, duplicate IDs, pixel limits and still-only fields rejec
     assert.throws(() => validateMediaLibrary(source, f));
   }
   for (const patch of [
-    { mime: 'image/webp' },
+    { mime: 'image/gif' },
     { width: 8193 },
     { width: 8192, height: 8192 },
     { bytes: MEDIA_LIMITS.assetBytes + 1 },

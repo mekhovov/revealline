@@ -1,0 +1,190 @@
+{
+  "format": "FPVEndlessPracticeBrowserVerification.v1",
+  "passed": true,
+  "createdAt": "2026-10-02T00:14:13.479Z",
+  "checks": [
+    {
+      "name": "Deliberate calibrated radio motion takes over only the isolated practice",
+      "passed": true,
+      "ticks": 5,
+      "controls": {
+        "throttle": 1,
+        "yaw": 0,
+        "pitch": 0,
+        "roll": 0
+      }
+    },
+    {
+      "name": "Ceiling contact at80m preserves continuous practice",
+      "passed": true,
+      "ticks": 505,
+      "height": 80000,
+      "contacts": 264
+    },
+    {
+      "name": "Rotation and ground contact preserve control ownership and simulation",
+      "passed": true,
+      "ticks": 1155,
+      "contacts": 265,
+      "orientation": [
+        -648365,
+        0,
+        0,
+        -761330
+      ]
+    },
+    {
+      "name": "Manual practice passes13minutes without timeout, reset, looping or scoring",
+      "passed": true,
+      "ticks": 39100,
+      "simulatedSeconds": 782,
+      "contacts": 265,
+      "hostStarts": 0,
+      "hostPauses": 1
+    },
+    {
+      "name": "Reset during running practice starts grounded and continues immediately",
+      "passed": true,
+      "ticks": 10
+    },
+    {
+      "name": "Fullscreen practice button preserves pose and selects640×360 drone-centered scene",
+      "passed": true,
+      "viewBox": "0 0 640 360",
+      "pose": {
+        "ticks": 60,
+        "position": {
+          "x": 0,
+          "y": 1393,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "velocity": {
+          "x": 0,
+          "y": 2618,
+          "z": 0
+        }
+      },
+      "callback": {
+        "enabled": true,
+        "clock": 783400
+      }
+    },
+    {
+      "name": "Back to lesson restores the same guide pose and leaves practice paused",
+      "passed": true,
+      "pose": {
+        "ticks": 60,
+        "position": {
+          "x": 0,
+          "y": 1393,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "velocity": {
+          "x": 0,
+          "y": 2618,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "Focus loss pauses without background catch-up or implicit resumption",
+      "passed": true,
+      "ticks": 70
+    },
+    {
+      "name": "Radio disconnect releases practice; reconnect stays paused",
+      "passed": true,
+      "ticks": 80
+    },
+    {
+      "name": "Explicit resume and Reset while paused remain predictable; disposal releases resources",
+      "passed": true,
+      "transitions": [
+        {
+          "enabled": true,
+          "clock": 783400
+        },
+        {
+          "enabled": false,
+          "clock": 783400
+        }
+      ]
+    },
+    {
+      "name": "Delayed entry cannot override explicit Play then Pause",
+      "passed": true,
+      "preserved": {
+        "ticks": 10,
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "Stale rejected entry cannot pause a newer active practice session",
+      "passed": true,
+      "ticksBefore": 10,
+      "ticksAfter": 15
+    },
+    {
+      "name": "Leaving coach focus during delayed entry prevents implicit resume",
+      "passed": true,
+      "preserved": {
+        "ticks": 5,
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "orientation": [
+          0,
+          0,
+          0,
+          1000000
+        ],
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "name": "Disposal during pending entry ignores late resolve and rejection",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "beginner-coach.mjs": "6b0804152563ee67e1f9010d1e499fbe671a5dd7b17f0a71581f215af25a9cbe",
+    "sim-presentation.mjs": "0125f49e0ed93c75f2fcb604733a4883ba87e8326290c9769f1f3d38865dab3f",
+    "model.mjs": "9e4cd11cfdde2dd43b437069b8cb7a359a8132495db806cb5f68e8674d48aaf6",
+    "style.css": "eb388f40541cf1fb0ffc48f01e31cc77d3031ffbd46eee422d2bf841a9209fce",
+    "world-style.css": "0d5837bf1c36c8a4015d4e68832ddefaaae0502d40753173c0912ca68c5a4ddf"
+  },
+  "scope": "Actual browser DOM, SVG and production coach/flight integrator,100ms controlled frame clock with yielded chunks; normalized synthetic radio, synthetic blur and stubbed host fullscreen callback. No physical hardware/native-fullscreen permission/performance/player acceptance claim."
+}

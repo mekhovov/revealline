@@ -1,0 +1,23 @@
+{
+  "url": "http://127.0.0.1:8878/dist/fpv-reaction-capacity-admitted-player-45d673d36/optional-practice/fpv-worlds/index.html",
+  "source": "45d673d3641b16d4dd8c51daa0eb7ce12ba96a4a",
+  "course": "Clearing check-in",
+  "initial": "Existing retained session at0.6s and Sound:on",
+  "steps": [
+    "Sound off then on",
+    "Continue retained flight",
+    "Explicit Resume advanced time0.6→0.9s",
+    "Pause",
+    "Menu→Continue resumed existing flight",
+    "Pause final",
+    "Sound off then on restored initial setting"
+  ],
+  "firstPause": "Clearing check-in\n\nArm / resume\n+\n0.0 m · 0 m/s · 17.9 s · ♥ 100\n1/3 · Hold position\n\nPaused. Arm deliberately to continue.\n\n×\n\nDrone upright",
+  "finalPause": "Clearing check-in\n\nArm / resume\n+\n0.0 m · 0 m/s · 73.7 s · ♥ 100\n1/3 · Hold position\n\nPaused. Arm deliberately to continue.\n\n×\n\nDrone upright",
+  "logs": [],
+  "limitations": [
+    "Normal admitted UI/render/control/audio-toggle integration only",
+    "No audible perception, voice-family coverage, physical-device or sustained FPS claim",
+    "Retained session, not a fresh course start"
+  ]
+}

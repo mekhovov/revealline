@@ -1,0 +1,35 @@
+{
+  "retrieved": "2026-09-29",
+  "brandbook": "https://www.canva.com/design/DAGeyOGjAKI/HUJ_tyQ6RihkjinchUuisg/edit",
+  "logoFolder": "https://drive.google.com/drive/folders/1Jvf0yVzw8t3u3b9hRSMPTH1puTPE8-oH",
+  "assets": [
+    {
+      "file": "background-original.png",
+      "sourceName": "DroneAid Hamburg cover11.png",
+      "sourceUrl": "https://drive.google.com/file/d/1LMt7I1Xe1DuWs1PjW2BrUT3Mj2m3aikH/view",
+      "bytes": 880307,
+      "sha256": "836c883d4eee658aab610f113eb4fec34f40ed1c963b4a759c52ec37990a8515"
+    },
+    {
+      "file": "wordmark-dark.svg",
+      "sourceName": "DroneAid dark.svg",
+      "sourceUrl": "https://drive.google.com/file/d/13r1FmPPPkHraYhvMie9WKNDPGjMBRF5Y/view",
+      "bytes": 119252,
+      "sha256": "cecf8a67c455d4a7f931594e2ffc4481c473c3475a3316b8cdd876c39abb1e5b"
+    },
+    {
+      "file": "wordmark-light.svg",
+      "sourceName": "DroneAid light.svg",
+      "sourceUrl": "https://drive.google.com/file/d/1lrFWqdvdzLANIzF2aVbNXXiUYoMPSXVi/view",
+      "bytes": 216724,
+      "sha256": "173e0f58ed85904a5b1a3b84a1b9c222ee768cb71a5d95b79fab2343b9425a6d"
+    },
+    {
+      "file": "logomark-light.svg",
+      "sourceName": "Logomark-color-light.svg",
+      "sourceUrl": "https://drive.google.com/file/d/1U8AGSRrXvoJFHeMAQNtdA_4ur-olydby/view",
+      "bytes": 2300,
+      "sha256": "534941cf335b5c2c9af316f813d4268644cb9449b78d995854f88625ae3cf328"
+    }
+  ]
+}

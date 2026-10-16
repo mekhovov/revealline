@@ -1,0 +1,30 @@
+{
+  "scope": "Manual local browser observations, not physical-device or public-release qualification",
+  "sourceRevision": "9d6a18e7e73079536da0a039d9535bfc21281e23",
+  "automatedSuites": "waived-not-run",
+  "observations": [
+    {
+      "surface": "Compiled Coupa Foundations / Settings / Audio",
+      "result": "English optional 24-clip pack progressed from Available online through Downloading to Verified for offline speech; Remove download returned it to Available online. Ukrainian remained separately available. Master sound remained muted. No console errors observed."
+    },
+    {
+      "surface": "Academy unfinished recording",
+      "result": "A production-recorder fixture with 50 neutral input frames ended at Step 1/2. Menu offered Retry and Results, without Continue or Arm. Results retained the unfinished native recording outcome."
+    },
+    {
+      "surface": "FPV Worlds demonstration",
+      "result": "Finished demonstration returned through Menu to retained Results and native actions; no nonfunctional Continue action remained."
+    },
+    {
+      "surface": "Final compiled Coupa Foundations in two browser tabs",
+      "sourceRevision": "bae630ebc2df89f80db82963e2a4020552f165ec",
+      "result": "English downloaded in tab A and showed Verified in both tabs. Removal in tab B updated tab A to Available online and disabled Remove. Sound remained muted; neither tab reported console errors."
+    }
+  ],
+  "notClaimed": [
+    "physical offline installation",
+    "EN/UK listening approval",
+    "all layout completion routes",
+    "physical input-device qualification"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "OverflightEffectsReviewV1",
+  "sourceRevision": "3a1e1f7d916fa8685b2338894229d8700b94fa10",
+  "layout": "chalk-quarry-haul-switchbacks",
+  "seed": 17031991,
+  "operation": "Single Drone",
+  "build": "Fan",
+  "difficulty": "Standard",
+  "airframes": 3,
+  "pilot": "native tight review pilot; earned upgrades",
+  "audio": "master muted",
+  "method": "Ordinary shared Settings > Accessibility > Reduced effects changed during pause, then simulation resumed. Restored normal afterward.",
+  "boundary": "Consecutive segments of one run, not identical simulation snapshots or a performance comparison. Normal starts at159s with Fan4/Slow3/Side1; reduced starts at204s with Fan4/Slow3/Side2. Later observations occur after the20s recording.",
+  "clips": [
+    {
+      "file": "quarry-fan-mid-normal.webm",
+      "sha256": "96a7840918f5bc8bc70aef35639719aaa7e418e6d62a9c721cf5afac8fff5463",
+      "quality": "normal",
+      "hudAtStartSeconds": 159,
+      "laterObservationSeconds": 204
+    },
+    {
+      "file": "quarry-fan-mid-reduced.webm",
+      "sha256": "589316dbdcc06b4459fdeb8acc00819d38ddc736443f03e2806475a157f7a728",
+      "quality": "reduced",
+      "hudAtStartSeconds": 204,
+      "laterObservationSeconds": 239
+    }
+  ]
+}

@@ -1,0 +1,536 @@
+{
+  "format": "revealline-candidate-artifact-evidence.v1",
+  "observedOn": "2026-09-28",
+  "scope": "Downloaded CI artifact verification and automated job inspection only. This receipt grants no release slot, publication, installation, physical radio, human learning or complete hosted-capacity qualification.",
+  "sourceRevision": "c1a62377abe93ca390bec79ac4417db513e898b3",
+  "sourceTree": "316f353beed98ee6f1e296240916fc9a9e4d77f6",
+  "candidateVersion": "v0.142.1",
+  "publicEligible": false,
+  "promotable": false,
+  "runs": {
+    "candidate": {
+      "id": 36481526267,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/36481526267",
+      "conclusion": "success",
+      "jobs": {
+        "candidate": "success",
+        "optionalPractice": "success"
+      }
+    },
+    "communityHosted": {
+      "id": 36481526136,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/36481526136",
+      "conclusion": "success",
+      "scope": "Production-shaped Community service acceptance with interrupted tus upload, preserved-state restart, two-user publication/isolation, exact download, normal play, moderation and offline journey. This is not optional-PWA OS installation or public Pages deployment."
+    },
+    "pages": {
+      "id": 36481572234,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/36481572234",
+      "conclusion": "failure",
+      "failedJob": "release-ready",
+      "failedJobId": 109128383783,
+      "failedStep": "Apply the selected PR gate policy",
+      "admission": "hold",
+      "message": "This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.",
+      "preflight": "success",
+      "productBuild": "skipped",
+      "fullTests": "skipped",
+      "focused": "skipped",
+      "interpretation": "Release admission policy stopped this workflow before the product build. This does not negate the separate successful candidate checks."
+    }
+  },
+  "artifacts": {
+    "capacity": {
+      "id": 10997807548,
+      "name": "company-capacity-c1a62377abe93ca390bec79ac4417db513e898b3",
+      "bytes": 584833,
+      "sha256": "69e6c97704baad4daaed245e0844ab030378f4a96a1ad951b6a5a9d9dbb7a24d",
+      "downloadDigestMatchedGitHub": true,
+      "extractedFiles": 22,
+      "extractedBytes": 1540921,
+      "validatedWith": "publishing/edition-capacity.mjs:editionCapacityPacket"
+    },
+    "optional": {
+      "id": 10995889615,
+      "name": "optional-flight-candidate-c1a62377abe93ca390bec79ac4417db513e898b3",
+      "bytes": 1301477,
+      "sha256": "8997b74136c9be31b503f659661c736678dd2cafc2f51325304e08e88cc3d2a5",
+      "downloadDigestMatchedGitHub": true,
+      "extractedFiles": 12,
+      "extractedBytes": 5946181,
+      "validatedWith": "publishing/optional-package-admission.mjs:validateOptionalPackageAdmission"
+    },
+    "communityHosted": {
+      "id": 10996714118,
+      "name": "community-hosted-acceptance-receipts",
+      "bytes": 1585,
+      "sha256": "e306e7563eafbf1e05006b3e5729f9805fd5628338ba62eca96c99735a80ad11",
+      "downloadDigestMatchedGitHub": true,
+      "receiptStatuses": ["hosted-tus.json:passed", "hosted-two-user.json:passed"],
+      "sourceRevisionMatched": true
+    },
+    "bulkCompany": {
+      "id": 10998107614,
+      "bytes": 910245590,
+      "sha256": "359273971d056e08114b7bb3241399245f5a6d0a0bb18af13fd402c9c5598cbb",
+      "downloadedForThisInspection": false
+    }
+  },
+  "candidateChecks": {
+    "companyTests": {
+      "passed": 919,
+      "failed": 0
+    },
+    "additionalNodeSuites": [
+      {
+        "purpose": "Company qualification review",
+        "passed": 16
+      },
+      {
+        "purpose": "Actor appearance and replay presentation",
+        "passed": 54
+      },
+      {
+        "purpose": "Installation, profile transfer and offline publication",
+        "passed": 45
+      },
+      {
+        "purpose": "Soundtrack private intake and panel",
+        "passed": 115
+      },
+      {
+        "purpose": "Source release formats and admission",
+        "passed": 80
+      }
+    ],
+    "sourceReleasePythonTests": {
+      "passed": 63
+    },
+    "optionalPracticeTests": {
+      "passed": 144,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "generatedCompanyFilesVerified": 186,
+    "publicSourceEligibility": {
+      "files": 20566,
+      "assets": 294,
+      "status": "verified"
+    },
+    "editionCandidateReceipt": {
+      "format": "revealline-edition-candidate-verification.v1",
+      "bytes": 13692,
+      "sha256": "d69004a322976a20cb7fe45170cdd0d084b1b91d73ba9b54f5532e6fa14b422d",
+      "envelopeSha256": "1f97be6ae118501c59dffcf1b648b26e19331bad6c85bdb80b7772a028bdae37",
+      "sourceRevision": "c1a62377abe93ca390bec79ac4417db513e898b3",
+      "sourceTree": "316f353beed98ee6f1e296240916fc9a9e4d77f6",
+      "reproducibleBuilds": 2,
+      "admissionStatus": "verified-candidate-members",
+      "zipMembersVerified": true,
+      "editions": 18,
+      "presentationReceipts": 18,
+      "sourceEligibility": {
+        "assets": 294,
+        "files": 20578,
+        "format": "revealline-public-source-eligibility.v1",
+        "status": "verified"
+      },
+      "requiredExternalQualification": [
+        "human-artwork-and-brand-review",
+        "human-learning-and-pacing-review",
+        "install-offline-upgrade-rollback-matrix",
+        "performance-and-accessibility-review",
+        "downloaded-release-byte-verification"
+      ],
+      "publicEligible": false
+    },
+    "limitation": "The metadata packet was independently validated locally; the 18 distribution/source ZIP pairs were checked by CI and were not downloaded or re-inspected locally in this receipt."
+  },
+  "optional": {
+    "envelope": {
+      "bytes": 1830,
+      "sha256": "51268c7b735171995a3d1cc19392aa97bc8ad2399babaa0443b8f8993e288d20"
+    },
+    "checksums": {
+      "bytes": 1580,
+      "sha256": "c614cb118e4bedb12a0b65c48b896669fa5eee272807775ff847b7e66293a106"
+    },
+    "admission": {
+      "format": "revealline-optional-package-admission.v1",
+      "version": "v0.142.1",
+      "sourceRevision": "c1a62377abe93ca390bec79ac4417db513e898b3",
+      "sourceTree": "316f353beed98ee6f1e296240916fc9a9e4d77f6",
+      "packages": [
+        {
+          "id": "civilian-flight",
+          "revision": "bff3a4edada5c899cf81d64abb704af9f51e9d4b4abace6e7b515c43f0f3e0cc",
+          "files": 29,
+          "bytes": 178540
+        },
+        {
+          "id": "civilian-fpv",
+          "revision": "86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58",
+          "files": 50,
+          "bytes": 2747250
+        }
+      ],
+      "zipMembersVerified": true,
+      "publicEligible": false
+    },
+    "verification": {
+      "admission": {
+        "format": "revealline-optional-package-admission.v1",
+        "packages": [
+          {
+            "bytes": 178540,
+            "files": 29,
+            "id": "civilian-flight",
+            "revision": "bff3a4edada5c899cf81d64abb704af9f51e9d4b4abace6e7b515c43f0f3e0cc"
+          },
+          {
+            "bytes": 2747250,
+            "files": 50,
+            "id": "civilian-fpv",
+            "revision": "86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58"
+          }
+        ],
+        "publicEligible": false,
+        "sourceRevision": "c1a62377abe93ca390bec79ac4417db513e898b3",
+        "sourceTree": "316f353beed98ee6f1e296240916fc9a9e4d77f6",
+        "version": "v0.142.1",
+        "zipMembersVerified": true
+      },
+      "committedInputsVerified": true,
+      "envelopeSha256": "51268c7b735171995a3d1cc19392aa97bc8ad2399babaa0443b8f8993e288d20",
+      "format": "revealline-optional-package-candidate-verification.v1",
+      "note": "Artifact admission does not qualify installed identity, device behavior or human learning. Review gates remain pending.",
+      "publicEligible": false,
+      "reproducibleBuilds": 2,
+      "sourceRevision": "c1a62377abe93ca390bec79ac4417db513e898b3",
+      "sourceTree": "316f353beed98ee6f1e296240916fc9a9e4d77f6",
+      "version": "v0.142.1"
+    },
+    "localCommittedInputsVerified": {
+      "sourceRevision": "c1a62377abe93ca390bec79ac4417db513e898b3",
+      "uniqueFiles": 55,
+      "bytes": 4178741,
+      "method": "SHA-256 and byte length of git show <exact sourceRevision>:<declared input path>, independently compared with both admitted source inventories"
+    },
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "revision": "bff3a4edada5c899cf81d64abb704af9f51e9d4b4abace6e7b515c43f0f3e0cc",
+        "entry": "optional-practice/civilian-flight/index.html",
+        "installation": {
+          "basePath": "/revealline/",
+          "id": "/revealline/practice/civilian-flight/",
+          "scope": "/revealline/practice/civilian-flight/",
+          "startURL": "/revealline/practice/civilian-flight/app/",
+          "launcherRoot": "launcher/"
+        },
+        "limits": {
+          "files": 64,
+          "bytes": 8388608
+        },
+        "runtime": {
+          "files": 29,
+          "bytes": 178540,
+          "includesOwnManifest": true
+        },
+        "source": {
+          "files": 31,
+          "bytes": 190044,
+          "includesOwnInventory": true
+        },
+        "originalInputCount": 21,
+        "distribution": {
+          "bytes": 182692,
+          "path": "distribution-optional-civilian-flight.zip",
+          "sha256": "db2f5bd57d375ba7627fbc0cd97687618f49f85ee04bdd6a6ff5fadd4b1c020b"
+        },
+        "manifest": {
+          "bytes": 5631,
+          "path": "manifest-optional-civilian-flight.json",
+          "sha256": "9c58eac2bf2d09e98e72a5b81748f77fde09de1e7ba1f3d86e8203cb5e1744a1"
+        },
+        "sourceInventory": {
+          "bytes": 8686,
+          "path": "source-inventory-optional-civilian-flight.json",
+          "sha256": "59c5d5ca9fb91ac20e3e1edd292ee6e6d3b31258a24a8710c86a3315f7dc562c"
+        },
+        "sourceArchive": {
+          "bytes": 194532,
+          "path": "source-optional-civilian-flight.zip",
+          "sha256": "4494bb7fecdda429003270f8251390e28eaa207f2195e7f169bb6eb9ae9a1145"
+        }
+      },
+      {
+        "id": "civilian-fpv",
+        "revision": "86ad5dc2048d4c3f1f8f30930be57dd219808cf60e3ad33069e810d7ba424a58",
+        "entry": "optional-practice/civilian-fpv/index.html",
+        "installation": {
+          "basePath": "/revealline/",
+          "id": "/revealline/practice/civilian-fpv/",
+          "scope": "/revealline/practice/civilian-fpv/",
+          "startURL": "/revealline/practice/civilian-fpv/app/",
+          "launcherRoot": "launcher/"
+        },
+        "limits": {
+          "files": 64,
+          "bytes": 8388608
+        },
+        "runtime": {
+          "files": 50,
+          "bytes": 2747250,
+          "includesOwnManifest": true
+        },
+        "source": {
+          "files": 52,
+          "bytes": 2761644,
+          "includesOwnInventory": true
+        },
+        "originalInputCount": 44,
+        "distribution": {
+          "bytes": 2754548,
+          "path": "distribution-optional-civilian-fpv.zip",
+          "sha256": "cb622f24f4dd931750c5964839bbf34ac37aa15e4bd2db789d89d09fcaaba6d8"
+        },
+        "manifest": {
+          "bytes": 9242,
+          "path": "manifest-optional-civilian-fpv.json",
+          "sha256": "3fe24c21eaeff81fe0a2c65d34270fe08e4df13c35ef3315c4840863bb080569"
+        },
+        "sourceInventory": {
+          "bytes": 15182,
+          "path": "source-inventory-optional-civilian-fpv.json",
+          "sha256": "c16195ade39dcabafae0cd4100eeda83023f044885db3d803f270404d95cc5bd"
+        },
+        "sourceArchive": {
+          "bytes": 2769246,
+          "path": "source-optional-civilian-fpv.zip",
+          "sha256": "e1bddfce9eee7bfc670ffd27621b804e09e91bc415f6adebade1cf4fdab524cd"
+        }
+      }
+    ],
+    "review": {
+      "templateExactlyMatched": true,
+      "promotionAttemptWithPendingReviewRejected": true,
+      "packageIds": ["civilian-flight", "civilian-fpv"],
+      "allGatesPending": [
+        "automated-validation",
+        "content-accuracy",
+        "asset-and-license-review",
+        "keyboard-controller-accessibility",
+        "installed-isolation",
+        "update-and-rollback",
+        "same-device-performance",
+        "human-learning-and-pacing"
+      ],
+      "qualificationStatus": "The downloaded template remains pending even where automated supporting evidence now exists. No reviewer attestation was fabricated or changed."
+    }
+  },
+  "capacity": {
+    "report": {
+      "bytes": 11094,
+      "sha256": "0f9b49b68b64758c4a8a5efd0df26e69ef84eac4d1cd220315722ed6b78b2580"
+    },
+    "checksums": {
+      "bytes": 10412,
+      "sha256": "757470b856c455258e4f4940b66869d0b0e161146ebe21feac2a2b73bc0e2ea1"
+    },
+    "units": "bytes",
+    "includes": "Each candidate edition immutable site, including its manifest, plus one exact active stable launcher; no deduplication across distinct immutable edition roots.",
+    "editions": [
+      {
+        "id": "coupa-adventure",
+        "immutableBytes": 26047417,
+        "stableLauncherBytes": 237439,
+        "combinedBytes": 26284856
+      },
+      {
+        "id": "coupa-all",
+        "immutableBytes": 60447218,
+        "stableLauncherBytes": 237387,
+        "combinedBytes": 60684605
+      },
+      {
+        "id": "coupa-culture",
+        "immutableBytes": 24771998,
+        "stableLauncherBytes": 237440,
+        "combinedBytes": 25009438
+      },
+      {
+        "id": "coupa-developers",
+        "immutableBytes": 27915786,
+        "stableLauncherBytes": 237466,
+        "combinedBytes": 28153252
+      },
+      {
+        "id": "coupa-foundations",
+        "immutableBytes": 27238820,
+        "stableLauncherBytes": 237468,
+        "combinedBytes": 27476288
+      },
+      {
+        "id": "coupa-operations",
+        "immutableBytes": 26297122,
+        "stableLauncherBytes": 237441,
+        "combinedBytes": 26534563
+      },
+      {
+        "id": "droneaid-community",
+        "immutableBytes": 25622809,
+        "stableLauncherBytes": 226287,
+        "combinedBytes": 25849096
+      },
+      {
+        "id": "droneaid-nl-careful-handoff",
+        "immutableBytes": 27869876,
+        "stableLauncherBytes": 41866,
+        "combinedBytes": 27911742
+      },
+      {
+        "id": "droneaid-nl-community",
+        "immutableBytes": 64914236,
+        "stableLauncherBytes": 41829,
+        "combinedBytes": 64956065
+      },
+      {
+        "id": "droneaid-nl-makers-together",
+        "immutableBytes": 27737646,
+        "stableLauncherBytes": 41846,
+        "combinedBytes": 27779492
+      },
+      {
+        "id": "droneaid-nl-parts-in-motion",
+        "immutableBytes": 28249684,
+        "stableLauncherBytes": 41846,
+        "combinedBytes": 28291530
+      },
+      {
+        "id": "droneaid-nl-shared-horizon",
+        "immutableBytes": 28072162,
+        "stableLauncherBytes": 41834,
+        "combinedBytes": 28113996
+      },
+      {
+        "id": "droneaid-nl-signals-of-support",
+        "immutableBytes": 27885853,
+        "stableLauncherBytes": 41882,
+        "combinedBytes": 27927735
+      },
+      {
+        "id": "droneaid-nl-workshop-lights",
+        "immutableBytes": 26555825,
+        "stableLauncherBytes": 41846,
+        "combinedBytes": 26597671
+      },
+      {
+        "id": "fpv-learning",
+        "immutableBytes": 33159873,
+        "stableLauncherBytes": 12685,
+        "combinedBytes": 33172558
+      },
+      {
+        "id": "social-drone-ua",
+        "immutableBytes": 25354459,
+        "stableLauncherBytes": 12721,
+        "combinedBytes": 25367180
+      },
+      {
+        "id": "ukraine-culture",
+        "immutableBytes": 42043414,
+        "stableLauncherBytes": 12761,
+        "combinedBytes": 42056175
+      },
+      {
+        "id": "victory-drones",
+        "immutableBytes": 21628264,
+        "stableLauncherBytes": 12709,
+        "combinedBytes": 21640973
+      }
+    ],
+    "totals": {
+      "four": {
+        "editionIds": ["social-drone-ua", "victory-drones", "ukraine-culture", "fpv-learning"],
+        "bytes": 122236886
+      },
+      "six": {
+        "editionIds": [
+          "coupa-all",
+          "droneaid-nl-community",
+          "social-drone-ua",
+          "victory-drones",
+          "ukraine-culture",
+          "fpv-learning"
+        ],
+        "bytes": 247877556
+      },
+      "all": {
+        "editionIds": [
+          "coupa-adventure",
+          "coupa-all",
+          "coupa-culture",
+          "coupa-developers",
+          "coupa-foundations",
+          "coupa-operations",
+          "droneaid-community",
+          "droneaid-nl-careful-handoff",
+          "droneaid-nl-community",
+          "droneaid-nl-makers-together",
+          "droneaid-nl-parts-in-motion",
+          "droneaid-nl-shared-horizon",
+          "droneaid-nl-signals-of-support",
+          "droneaid-nl-workshop-lights",
+          "fpv-learning",
+          "social-drone-ua",
+          "ukraine-culture",
+          "victory-drones"
+        ],
+        "bytes": 573807215
+      }
+    },
+    "completeHostedOutput": false,
+    "publicationAssessment": "not-performed",
+    "hostedBudgetBytes": 950000000,
+    "missingComponents": [
+      "Exact future default artifact and generated root routes",
+      "Previously retained edition versions and launcher ownership",
+      "Selected-edition hub including download-only links",
+      "Optional packages, launchers and any other hosted files"
+    ],
+    "limitation": "Do not add an older default artifact and call this an exact same-source fit. A complete staged publisher inventory remains required."
+  },
+  "remaining": {
+    "automatedAndRelease": [
+      "Assign and qualify an immutable release through the existing release coordinator when eligible; this inspection does not allocate or promote one.",
+      "Freeze and review exact final source artifacts for the selected edition and optional envelopes. Candidates using v0.142.1 do not reserve or replace that release.",
+      "Record reviewed evidence for every required gate, then stage the complete default, retained edition, hub, optional and generated-route output through the existing publisher and recheck its 950,000,000-byte cap.",
+      "Verify installed isolation, update/rollback, downloaded-versus-published bytes and same-device performance against the exact final artifact; separate browser/local evidence cannot silently substitute for these scopes."
+    ],
+    "deliberatelyDeferredHumanAndDevice": [
+      "Physical USB radio mapping, arming, disconnect/reconnect and supported-device ergonomics.",
+      "Human learning, pacing, content/art review and device accessibility/installation coverage as required by the release review."
+    ],
+    "existingLocalStagingCommands": [
+      "node publishing/pages-controller/publish.mjs build --preview",
+      "node publishing/pages-controller/publish.mjs verify-artifact --preview"
+    ],
+    "stagingPrerequisite": "These nonpublishing commands require already reviewed frozen releases/selectors and preserve their ordinary admission gates. Do not substitute this unqualified candidate or invent review receipts."
+  },
+  "inspectedLogPins": {
+    "candidate": {
+      "bytes": 504932,
+      "sha256": "212f158acbfbbf3c3c05b75f59d3e899d885196ced39d33c3b2c2f1fed3a30eb"
+    },
+    "optional": {
+      "bytes": 80929,
+      "sha256": "40d9703ef0695909624b9f184d174bae4eb7ea0afc36fe7398b7d0e283332e3a"
+    },
+    "pagesReleaseReady": {
+      "bytes": 5022,
+      "sha256": "1689912816df2a2202be89582a961c4c5afefbdbc7f0a9dbc30a4fae572722d4"
+    }
+  }
+}

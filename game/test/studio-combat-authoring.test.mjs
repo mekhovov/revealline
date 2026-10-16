@@ -163,6 +163,39 @@ test('rejected preparation or toggle adoption leaves the owner draft intact', ()
   }
 });
 
+test('current pressure draft keeps v9 recipes through optional preparation, actor editing and explicit enable', () => {
+  const source = createStarterProject();
+  source.actorCatalogId = 'journey-actors-v9';
+  source.difficultyCatalogId = 'journey-difficulty-v2';
+  source.missions[0].actors[0].role = 'trail-pursuer';
+  const originalPressure = resolveMission(compileContentProject(source), 'nearby-shore').level
+    .classic.enemyPressure;
+  const f = fixture({ source });
+  f.combat('prepare').onclick();
+  assert.equal(f.source().actorCatalogId, 'journey-actors-v9');
+  assert(roleValues(f).includes('optional-sentry'));
+  selectRole(f, 'trail-pursuer');
+  assert.match(f.actor('position-help').textContent, /0.75s.*1.2s.*2.5s/);
+  fillActor(f, { role: 'optional-sentry', x: '44.5', y: '10.5' });
+  submit(f);
+  assert.doesNotMatch(f.actor('result').textContent, /Not applied/);
+  assert.equal(mission(f).combat.enabled, false, 'Adding an actor does not activate it.');
+  f.combat('enabled').checked = true;
+  f.combat('apply').onclick();
+  const accepted = resolveMission(compileContentProject(f.source()), 'nearby-shore');
+  assert.equal(accepted.level.classic.combatPatrols.enabled, true);
+  assert.deepEqual(accepted.level.classic.enemyPressure, originalPressure);
+  const edited = structuredClone(f.source());
+  edited.actorCatalogId = 'journey-actors-v8';
+  f.update(edited, false);
+  const attempts = f.attempts();
+  f.combat('enabled').checked = false;
+  f.combat('apply').onclick();
+  assert.match(f.combat('result').textContent, /context changed/);
+  assert.equal(f.attempts(), attempts, 'A catalogue switch invalidates stale controls.');
+  assert.deepEqual(f.source(), edited);
+});
+
 test('combat controls reject stale maps, flags and mission selections until refreshed', () => {
   for (const change of [
     (source) => {
@@ -233,7 +266,7 @@ test('both editors initialize before deferred source adoption without reading a 
   assert.equal(mission(f).combat.enabled, false);
 });
 
-test('optional actor choices require both catalogue v8 and a prepared mission setting', () => {
+test('optional actor choices require a capable catalogue and a prepared mission setting', () => {
   const f = fixture();
   const absent = () => {
     assert(!roleValues(f).includes('optional-scout'));

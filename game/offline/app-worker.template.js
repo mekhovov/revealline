@@ -2,48 +2,59 @@
 const CONFIG = __REVEALLINE_LAUNCHER_CONFIG__;
 const scope = self.registration.scope;
 const name = `revealline-launcher:${encodeURIComponent(scope)}:${CONFIG.id}`;
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    (async () => {
-      const cache = await caches.open(name);
-      for (const file of CONFIG.files) {
-        const url = new URL(file.path, scope).href,
-          response = await fetch(url, { cache: 'reload' });
-        if (
-          !response.ok ||
-          response.redirected ||
-          response.status !== 200 ||
-          file.bytes > 128 * 1024
-        )
-          throw new Error('Launcher download failed.');
-        const reader = response.body.getReader(),
-          bytes = new Uint8Array(file.bytes);
-        let length = 0;
-        try {
-          for (;;) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            if (length + value.length > bytes.length)
-              throw new Error('Launcher exceeded its file budget.');
-            bytes.set(value, length);
-            length += value.length;
-          }
-        } finally {
-          await reader.cancel().catch(() => {});
-        }
-        const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
-          .map((byte) => byte.toString(16).padStart(2, '0'))
-          .join('');
-        if (length !== file.bytes || hash !== file.sha256)
-          throw new Error('Launcher integrity check failed.');
-        const headers = new Headers(response.headers);
-        headers.delete('Content-Encoding');
-        headers.set('Content-Length', String(length));
-        await cache.put(url, new Response(bytes, { headers }));
+const hash = async (bytes) =>
+  [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+async function checked(response, file) {
+  if (
+    !response ||
+    !response.ok ||
+    response.redirected ||
+    response.status !== 200 ||
+    file.bytes > 128 * 1024
+  )
+    throw new Error('Launcher download failed.');
+  const reader = response.body.getReader(),
+    bytes = new Uint8Array(file.bytes);
+  let length = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (length + value.length > bytes.length)
+        throw new Error('Launcher exceeded its file budget.');
+      bytes.set(value, length);
+      length += value.length;
+    }
+  } finally {
+    await reader.cancel().catch(() => {});
+  }
+  if (length !== file.bytes || (await hash(bytes)) !== file.sha256)
+    throw new Error('Launcher integrity check failed.');
+  const headers = new Headers(response.headers);
+  headers.delete('Content-Encoding');
+  headers.set('Content-Length', String(length));
+  return new Response(bytes, { headers });
+}
+async function verify({ repair = false } = {}) {
+  const cache = await caches.open(name),
+    missing = [];
+  for (const file of CONFIG.files) {
+    const url = new URL(file.path, scope).href;
+    try {
+      await checked(await cache.match(url), file);
+    } catch {
+      if (!repair) {
+        missing.push(file.path);
+        continue;
       }
-    })(),
-  );
-});
+      await cache.put(url, await checked(await fetch(url, { cache: 'reload' }), file));
+    }
+  }
+  return { status: missing.length ? 'incomplete' : 'ready', missing };
+}
+self.addEventListener('install', (event) => event.waitUntil(verify({ repair: true })));
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
@@ -54,15 +65,63 @@ self.addEventListener('activate', (event) => {
     })(),
   );
 });
+self.addEventListener('message', (event) => {
+  if (
+    !['revealline.launcher-check', 'revealline.launcher-prepare'].includes(event.data?.type) ||
+    !event.ports?.[0]
+  )
+    return;
+  event.waitUntil(
+    (async () => {
+      let report;
+      try {
+        report = await verify({ repair: event.data.type === 'revealline.launcher-prepare' });
+      } catch (error) {
+        report = { status: 'incomplete', message: error.message };
+      }
+      event.ports[0].postMessage({
+        ...report,
+        launcherBuildId: CONFIG.id,
+        format: 'revealline.launcher-health.v1',
+        requestId: event.data.requestId,
+      });
+    })(),
+  );
+});
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
-  if (!url.href.startsWith(scope)) return;
-  url.search = '';
-  url.hash = '';
-  if (url.pathname.endsWith('/')) url.pathname += 'index.html';
-  if (!CONFIG.files.some((file) => new URL(file.path, scope).href === url.href)) return;
+  if (url.origin !== new URL(scope).origin) return;
+  // Update management is an explicitly online action. Its document must come
+  // from the current publication, never the launcher's older frozen shell.
+  if (url.pathname === new URL('update.html', scope).pathname) {
+    event.respondWith(fetch(event.request, { cache: 'no-store' }));
+    return;
+  }
   event.respondWith(
-    (async () => (await (await caches.open(name)).match(url.href)) || fetch(event.request))(),
+    (async () => {
+      const client = event.clientId ? await self.clients.get(event.clientId) : null;
+      // The update document imports the newly published game modules. Its
+      // entire same-origin graph must bypass the HTTP cache as well as the old
+      // gameplay worker. Returning to the cached launcher is a navigation,
+      // not part of that graph, even when its initiating client is the updater.
+      const launcherNavigation =
+        event.request.mode === 'navigate' &&
+        (url.pathname === new URL(scope).pathname ||
+          url.pathname === new URL('index.html', scope).pathname);
+      if (
+        !launcherNavigation &&
+        client &&
+        new URL(client.url).pathname === new URL('update.html', scope).pathname
+      )
+        return fetch(event.request, { cache: 'no-store' });
+      if (!url.href.startsWith(scope)) return fetch(event.request);
+      url.search = '';
+      url.hash = '';
+      if (url.pathname.endsWith('/')) url.pathname += 'index.html';
+      if (!CONFIG.files.some((file) => new URL(file.path, scope).href === url.href))
+        return fetch(event.request);
+      return (await (await caches.open(name)).match(url.href)) || fetch(event.request);
+    })(),
   );
 });

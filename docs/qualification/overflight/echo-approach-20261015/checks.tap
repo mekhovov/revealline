@@ -1,0 +1,280 @@
+TAP version 13
+# Subtest: native Echo preparation shows all released centers and expires with each actual queued impact
+ok 1 - native Echo preparation shows all released centers and expires with each actual queued impact
+  ---
+  duration_ms: 674.231625
+  ...
+# Subtest: native Fan preparation shows five lateral footprints at the release heading
+ok 2 - native Fan preparation shows five lateral footprints at the release heading
+  ---
+  duration_ms: 129.426167
+  ...
+# Subtest: older escort snapshots keep their single beam while inactive shots draw nothing
+ok 3 - older escort snapshots keep their single beam while inactive shots draw nothing
+  ---
+  duration_ms: 0.141041
+  ...
+# Subtest: mastery follows completed actions, preserves earned flags and compares the prior same-seed run
+ok 4 - mastery follows completed actions, preserves earned flags and compares the prior same-seed run
+  ---
+  duration_ms: 468.765666
+  ...
+# Subtest: all six battlefield worlds persist mastery across reopened stores and retain legacy entries
+ok 5 - all six battlefield worlds persist mastery across reopened stores and retain legacy entries
+  ---
+  duration_ms: 791.428292
+  ...
+# Subtest: Riy requires reached attack range and Raid requires an earned chain, not selected upgrades
+ok 6 - Riy requires reached attack range and Raid requires an earned chain, not selected upgrades
+  ---
+  duration_ms: 18.781167
+  ...
+# Subtest: world artwork does not split mastery for unchanged authored encounters or legacy rules
+ok 7 - world artwork does not split mastery for unchanged authored encounters or legacy rules
+  ---
+  duration_ms: 39.875
+  ...
+# Subtest: report distinguishes earned, collected, ground salvage and upgrade gaps without claiming reachability
+ok 8 - report distinguishes earned, collected, ground salvage and upgrade gaps without claiming reachability
+  ---
+  duration_ms: 10.735167
+  ...
+# Subtest: flight report shows actual final armor and hull without treating missing targets as defeated
+ok 9 - flight report shows actual final armor and hull without treating missing targets as defeated
+  ---
+  duration_ms: 21.80225
+  ...
+# Subtest: failed profile writes retain session achievements; review fixtures never write
+ok 10 - failed profile writes retain session achievements; review fixtures never write
+  ---
+  duration_ms: 26.451333
+  ...
+# Subtest: Marathon is recorded only after banking and its mode stays separate from Single Raid
+ok 11 - Marathon is recorded only after banking and its mode stays separate from Single Raid
+  ---
+  duration_ms: 56.132292
+  ...
+# Subtest: mastery evicts the oldest context at capacity while retaining recently replayed achievements
+ok 12 - mastery evicts the oldest context at capacity while retaining recently replayed achievements
+  ---
+  duration_ms: 599.138708
+  ...
+# Subtest: Marathon mastery totals damage and airframe loss across contracts exactly once
+ok 13 - Marathon mastery totals damage and airframe loss across contracts exactly once
+  ---
+  duration_ms: 60.952583
+  ...
+# Subtest: native report presents three goals, measured progression and understandable prior-run differences
+ok 14 - native report presents three goals, measured progression and understandable prior-run differences
+  ---
+  duration_ms: 26.284958
+  ...
+# Subtest: Raid records keep score and fastest successful clear independent
+ok 15 - Raid records keep score and fastest successful clear independent
+  ---
+  duration_ms: 11.20475
+  ...
+# Subtest: record identity separates content, seed and gameplay settings but shares cosmetics
+ok 16 - record identity separates content, seed and gameplay settings but shares cosmetics
+  ---
+  duration_ms: 7.116583
+  ...
+# Subtest: storage failure is session-only and can recover without losing the previous record
+ok 17 - storage failure is session-only and can recover without losing the previous record
+  ---
+  duration_ms: 5.326
+  ...
+# Subtest: nonterminal, nonfinite and review attempts cannot set records
+ok 18 - nonterminal, nonfinite and review attempts cannot set records
+  ---
+  duration_ms: 0.680334
+  ...
+# Subtest: failed writes preserve stronger durable records in session results and later reads
+ok 19 - failed writes preserve stronger durable records in session results and later reads
+  ---
+  duration_ms: 35.170167
+  ...
+# Subtest: Raid launch preserves same-build locale and artwork, rejects unknown paths
+ok 20 - Raid launch preserves same-build locale and artwork, rejects unknown paths
+  ---
+  duration_ms: 6.134417
+  ...
+# Subtest: Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+ok 21 - Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+  ---
+  duration_ms: 11.732291
+  ...
+# Subtest: Raid commentator never promises salvage on the ground and only announces first earned Rush
+ok 22 - Raid commentator never promises salvage on the ground and only announces first earned Rush
+  ---
+  duration_ms: 5.000375
+  ...
+# Subtest: V2 records write durably beside untouched legacy history and isolate difficulty
+ok 23 - V2 records write durably beside untouched legacy history and isolate difficulty
+  ---
+  duration_ms: 58.281375
+  ...
+# Subtest: V4 records have an independent durable bucket and never overwrite V3 results
+ok 24 - V4 records have an independent durable bucket and never overwrite V3 results
+  ---
+  duration_ms: 281.721042
+  ...
+# Subtest: Survivor records separate fastest victories, most cleared, failure details and chosen branches
+ok 25 - Survivor records separate fastest victories, most cleared, failure details and chosen branches
+  ---
+  duration_ms: 29.720333
+  ...
+# Subtest: mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+ok 26 - mode, authored identity, balance, seed, difficulty, flight and assistance partition records; cosmetics do not
+  ---
+  duration_ms: 17.200667
+  ...
+# Subtest: storage failures retain session achievements and recover without dropping a stronger record
+ok 27 - storage failures retain session achievements and recover without dropping a stronger record
+  ---
+  duration_ms: 15.002875
+  ...
+# Subtest: record captures result before asynchronous profile access or retry changes the run
+ok 28 - record captures result before asynchronous profile access or retry changes the run
+  ---
+  duration_ms: 4.065958
+  ...
+# Subtest: invalid and review results cannot overwrite records; disposal closes access
+ok 29 - invalid and review results cannot overwrite records; disposal closes access
+  ---
+  duration_ms: 9.100125
+  ...
+# Subtest: rules 3 sweeper selects a clear follow target instead of firing into cover
+ok 30 - rules 3 sweeper selects a clear follow target instead of firing into cover
+  ---
+  duration_ms: 76.928583
+  ...
+# Subtest: rules 3 breaker selects a clear follow target instead of firing into cover
+ok 31 - rules 3 breaker selects a clear follow target instead of firing into cover
+  ---
+  duration_ms: 267.590334
+  ...
+# Subtest: rules 4 sweeper selects a clear follow target instead of firing into cover
+ok 32 - rules 4 sweeper selects a clear follow target instead of firing into cover
+  ---
+  duration_ms: 89.581375
+  ...
+# Subtest: rules 4 breaker selects a clear follow target instead of firing into cover
+ok 33 - rules 4 breaker selects a clear follow target instead of firing into cover
+  ---
+  duration_ms: 111.35975
+  ...
+# Subtest: blocked follow attack preserves its weapon cycle until a clear shot exists
+ok 34 - blocked follow attack preserves its weapon cycle until a clear shot exists
+  ---
+  duration_ms: 192.505667
+  ...
+# Subtest: a covered chain victim cannot take a damage share or bridge to another victim behind the wall
+ok 35 - a covered chain victim cannot take a damage share or bridge to another victim behind the wall
+  ---
+  duration_ms: 17.239208
+  ...
+# Subtest: chain divides the unchanged damage budget only among reachable link victims
+ok 36 - chain divides the unchanged damage budget only among reachable link victims
+  ---
+  duration_ms: 249.550792
+  ...
+# Subtest: chain can turn around a corner when every individual link has clear line of fire
+ok 37 - chain can turn around a corner when every individual link has clear line of fire
+  ---
+  duration_ms: 247.630125
+  ...
+# Subtest: a burst second hit respects newly obstructed contact without drawing a false beam
+ok 38 - a burst second hit respects newly obstructed contact without drawing a false beam
+  ---
+  duration_ms: 99.526542
+  ...
+# Subtest: Focus can approach a covered target while blocked weapons wait for line of fire
+ok 39 - Focus can approach a covered target while blocked weapons wait for line of fire
+  ---
+  duration_ms: 22.091291
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 40 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 2385.367459
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 41 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 1282.677458
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 42 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 618.141916
+  ...
+# Subtest: actual native menu imports and styles remain in each mode offline closure
+ok 43 - actual native menu imports and styles remain in each mode offline closure
+  ---
+  duration_ms: 729.391458
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 44 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 257.829417
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 45 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 614.348833
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 46 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 460.257833
+  ...
+# Subtest: Solo startup graph retains boot styles and production assets while mode hosts stay separate
+ok 47 - Solo startup graph retains boot styles and production assets while mode hosts stay separate
+  ---
+  duration_ms: 2.956875
+  ...
+# Subtest: catalogue references never pull selected chapter or soundtrack bytes back into core
+ok 48 - catalogue references never pull selected chapter or soundtrack bytes back into core
+  ---
+  duration_ms: 0.400834
+  ...
+# Subtest: public community entries own their shared loader offline without opting into creator tools or company artwork
+ok 49 - public community entries own their shared loader offline without opting into creator tools or company artwork
+  ---
+  duration_ms: 2.050542
+  ...
+# Subtest: decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+ok 50 - decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+  ---
+  duration_ms: 6.665125
+  ...
+# Subtest: effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+ok 51 - effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+  ---
+  duration_ms: 3.152541
+  ...
+# Subtest: radio redistribution metadata stays core while source recordings remain selectable
+ok 52 - radio redistribution metadata stays core while source recordings remain selectable
+  ---
+  duration_ms: 1.507125
+  ...
+# Subtest: Riy operation keeps its dynamic runtime and authored package graph in offline core
+ok 53 - Riy operation keeps its dynamic runtime and authored package graph in offline core
+  ---
+  duration_ms: 207.53375
+  ...
+# Subtest: six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+ok 54 - six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+  ---
+  duration_ms: 234.634916
+  ...
+1..54
+# tests 54
+# suites 0
+# pass 54
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8925.926083

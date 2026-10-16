@@ -1,0 +1,22 @@
+{
+  "sourceType": "original-project-authored",
+  "sourceCommit": "03e5b140b5a5eb2b5bbd4b73762364f6f297b6cc",
+  "sourceRevision": "composition-r2",
+  "terrain": "Original fictional analytic relief; exact canonical triangles and collision.",
+  "scenery": "Original survey structures and rock meshes; exact canonical triangles and collision.",
+  "thirdPartyAssets": [],
+  "copiedGeographicData": false,
+  "copiedSimulatorAssets": false,
+  "referenceOnly": [
+    "https://science.nasa.gov/moon/facts/",
+    "https://science.nasa.gov/moon/composition/",
+    "https://www.lpi.usra.edu/lunar/rilles/"
+  ],
+  "physics": "Existing terrestrial FPV flight physics; fictional setting, no lunar-gravity or vacuum simulation.",
+  "actualSizeM": [
+    768,
+    768
+  ],
+  "representativeArtComplete": false,
+  "libraryAdmission": false
+}

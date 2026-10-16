@@ -1,0 +1,8828 @@
+{
+  "kind": "offline-probe-history-not-balanced-design-certificate",
+  "base": "da0b0108",
+  "team": [
+    {
+      "missionId": "team-harbor-homecoming",
+      "attempts": [
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 5427,
+          "closed": [
+            1,
+            2
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 257
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "lost",
+          "tick": 4897,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 242
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 5427,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 204
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 5427,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 204
+        },
+        {
+          "index": 10,
+          "delta": -120,
+          "status": "running",
+          "tick": 5427,
+          "closed": [
+            3,
+            3
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 204
+        },
+        {
+          "index": 12,
+          "delta": -120,
+          "status": "running",
+          "tick": 5427,
+          "closed": [
+            5,
+            5
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 198
+        },
+        {
+          "index": 14,
+          "delta": -120,
+          "status": "won",
+          "tick": 5427,
+          "closed": [
+            9,
+            5
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 182
+        }
+      ]
+    },
+    {
+      "missionId": "team-garden-reunion",
+      "attempts": [
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "lost",
+          "tick": 3802,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 398
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "lost",
+          "tick": 4454,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 423
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 4666,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 227
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 4666,
+          "closed": [
+            3,
+            3
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 227
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "running",
+          "tick": 4666,
+          "closed": [
+            3,
+            3
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 227
+        },
+        {
+          "index": 10,
+          "delta": -120,
+          "status": "running",
+          "tick": 4666,
+          "closed": [
+            4,
+            3
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 227
+        },
+        {
+          "index": 12,
+          "delta": -120,
+          "status": "won",
+          "tick": 4666,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 388
+        }
+      ]
+    },
+    {
+      "missionId": "team-night-junction",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 644
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            8,
+            1
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 382
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 352
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 330
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 348
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 10,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 12,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 14,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 16,
+          "delta": -120,
+          "status": "running",
+          "tick": 3519,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 330
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 330
+        },
+        {
+          "index": 8,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 9,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 10,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 11,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 12,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 13,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 239
+        },
+        {
+          "index": 14,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 15,
+          "delta": 120,
+          "status": "running",
+          "tick": 3759,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 16,
+          "delta": 120,
+          "status": "won",
+          "tick": 3639,
+          "closed": [
+            9,
+            2
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 644
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            5,
+            1
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 382
+        },
+        {
+          "index": 3,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 348
+        },
+        {
+          "index": 4,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 352
+        },
+        {
+          "index": 6,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 330
+        },
+        {
+          "index": 8,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 338
+        },
+        {
+          "index": 9,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 10,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 12,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 14,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 16,
+          "delta": -60,
+          "status": "running",
+          "tick": 3579,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 1,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 2,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 3,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 4,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 5,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 330
+        },
+        {
+          "index": 6,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 7,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 344
+        },
+        {
+          "index": 8,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 9,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 10,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 11,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 12,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 13,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 240
+        },
+        {
+          "index": 14,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 15,
+          "delta": 60,
+          "status": "running",
+          "tick": 3699,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 98
+        },
+        {
+          "index": 16,
+          "delta": 60,
+          "status": "won",
+          "tick": 3639,
+          "closed": [
+            9,
+            2
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -240,
+          "status": "running",
+          "tick": 3399,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 644
+        },
+        {
+          "index": 2,
+          "delta": -240,
+          "status": "won",
+          "tick": 2487,
+          "closed": [
+            6,
+            1
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 1364
+        }
+      ]
+    },
+    {
+      "missionId": "team-all-hands-home",
+      "attempts": [
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 4406,
+          "closed": [
+            1,
+            2
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 929
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 4406,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 929
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 4406,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 929
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 4406,
+          "closed": [
+            4,
+            3
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 929
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "won",
+          "tick": 4406,
+          "closed": [
+            4,
+            7
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 929
+        }
+      ]
+    },
+    {
+      "missionId": "team-observatory-accord",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 507
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 296
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            2,
+            1
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 234
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            2,
+            1
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 234
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 212
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 212
+        },
+        {
+          "index": 10,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            8,
+            3
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 181
+        },
+        {
+          "index": 12,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            7,
+            5
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 156
+        },
+        {
+          "index": 14,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            5,
+            5
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 156
+        },
+        {
+          "index": 16,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            8,
+            4
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 150
+        },
+        {
+          "index": 18,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            7,
+            5
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 150
+        },
+        {
+          "index": 20,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            6,
+            5
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 96
+        },
+        {
+          "index": 22,
+          "delta": -120,
+          "status": "running",
+          "tick": 5687,
+          "closed": [
+            7,
+            5
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 96
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 5927,
+          "closed": [
+            2,
+            3
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 265
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 5927,
+          "closed": [
+            2,
+            3
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 265
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 5927,
+          "closed": [
+            2,
+            3
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 265
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 5927,
+          "closed": [
+            2,
+            3
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 265
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 5927,
+          "closed": [
+            2,
+            3
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 265
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "won",
+          "tick": 5558,
+          "closed": [
+            7,
+            5
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 807
+        }
+      ]
+    },
+    {
+      "missionId": "team-foundry-handshake",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 504
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            2,
+            4
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 329
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 465
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            5,
+            3
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 481
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            5,
+            3
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 523
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            4,
+            3
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 523
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            4,
+            4
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 523
+        },
+        {
+          "index": 10,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 194
+        },
+        {
+          "index": 12,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            6,
+            3
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 272
+        },
+        {
+          "index": 14,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            5,
+            4
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 136
+        },
+        {
+          "index": 16,
+          "delta": -120,
+          "status": "running",
+          "tick": 4475,
+          "closed": [
+            6,
+            4
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 84
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "won",
+          "tick": 3790,
+          "closed": [
+            5,
+            4
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1013
+        }
+      ]
+    },
+    {
+      "missionId": "team-archive-home-route",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 997
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 997
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            8,
+            1
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 997
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            8,
+            1
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 997
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 997
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 997
+        },
+        {
+          "index": 10,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 997
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "won",
+          "tick": 3592,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 162
+        }
+      ]
+    },
+    {
+      "missionId": "team-highland-reunion",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 465,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 465,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 705,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 525,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 525,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 1,
+          "delta": 60,
+          "status": "running",
+          "tick": 645,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": 60,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -240,
+          "status": "running",
+          "tick": 345,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 1,
+          "delta": 240,
+          "status": "running",
+          "tick": 825,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": 240,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -30,
+          "status": "running",
+          "tick": 555,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": -30,
+          "status": "running",
+          "tick": 555,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 1,
+          "delta": 30,
+          "status": "running",
+          "tick": 615,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2144
+        },
+        {
+          "index": 2,
+          "delta": 30,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": 360,
+          "status": "running",
+          "tick": 945,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2144
+        },
+        {
+          "index": 2,
+          "delta": 360,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        }
+      ]
+    },
+    {
+      "missionId": "team-watchtower-accord",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "won",
+          "tick": 4641,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 730
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "won",
+          "tick": 4641,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 459
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 682
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            4,
+            3
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 563
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            5,
+            5
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            6,
+            3
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "lost",
+          "tick": 3832,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 13,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            6,
+            3
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 15,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            5,
+            4
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 19,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            6,
+            5
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 25,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            3
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 446
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            8,
+            3
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 446
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            4
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            3
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 8,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 9,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            5
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 10,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            5,
+            3
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 11,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            5
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 12,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            5
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 440
+        },
+        {
+          "index": 13,
+          "delta": 120,
+          "status": "won",
+          "tick": 4881,
+          "closed": [
+            8,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 816
+        }
+      ]
+    },
+    {
+      "missionId": "team-coastal-repair-pact",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 4763,
+          "closed": [
+            1,
+            2
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 573
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 4763,
+          "closed": [
+            2,
+            3
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 515
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 4763,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 515
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 4763,
+          "closed": [
+            10,
+            1
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 548
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 4763,
+          "closed": [
+            3,
+            3
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 515
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "won",
+          "tick": 4763,
+          "closed": [
+            9,
+            3
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 533
+        }
+      ]
+    },
+    {
+      "missionId": "team-citadel-shared-crown",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "won",
+          "tick": 4147,
+          "closed": [
+            7,
+            4
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 1050
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "won",
+          "tick": 4147,
+          "closed": [
+            7,
+            4
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 1050
+        }
+      ]
+    },
+    {
+      "missionId": "team-expedition-homecoming",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 10291,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 22,
+          "maxChangedCells": 612
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 10291,
+          "closed": [
+            9,
+            2
+          ],
+          "differentCaptures": 21,
+          "maxChangedCells": 470
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "won",
+          "tick": 3568,
+          "closed": [
+            2,
+            5
+          ],
+          "differentCaptures": 20,
+          "maxChangedCells": 1029
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 10291,
+          "closed": [
+            3,
+            5
+          ],
+          "differentCaptures": 19,
+          "maxChangedCells": 470
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 10291,
+          "closed": [
+            8,
+            6
+          ],
+          "differentCaptures": 18,
+          "maxChangedCells": 470
+        },
+        {
+          "index": 7,
+          "delta": -120,
+          "status": "running",
+          "tick": 10291,
+          "closed": [
+            8,
+            6
+          ],
+          "differentCaptures": 17,
+          "maxChangedCells": 470
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "won",
+          "tick": 3568,
+          "closed": [
+            6,
+            5
+          ],
+          "differentCaptures": 16,
+          "maxChangedCells": 509
+        }
+      ]
+    },
+    {
+      "missionId": "team-highland-reunion",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 465,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 465,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 705,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 525,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 525,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 1,
+          "delta": 60,
+          "status": "running",
+          "tick": 645,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": 60,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -240,
+          "status": "running",
+          "tick": 345,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 1,
+          "delta": 240,
+          "status": "running",
+          "tick": 825,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": 240,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -30,
+          "status": "running",
+          "tick": 555,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 2,
+          "delta": -30,
+          "status": "running",
+          "tick": 555,
+          "closed": [
+            0,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2158
+        },
+        {
+          "index": 1,
+          "delta": 30,
+          "status": "running",
+          "tick": 615,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2144
+        },
+        {
+          "index": 2,
+          "delta": 30,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": 360,
+          "status": "running",
+          "tick": 945,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 2144
+        },
+        {
+          "index": 2,
+          "delta": 360,
+          "status": "won",
+          "tick": 585,
+          "closed": [
+            1,
+            1
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "source": "gentle",
+          "status": "running",
+          "tick": 3284,
+          "closed": [
+            3,
+            3
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 2182
+        },
+        {
+          "source": "expert",
+          "status": "won",
+          "tick": 6910,
+          "closed": [
+            6,
+            7
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 1925
+        }
+      ]
+    },
+    {
+      "missionId": "team-archive-home-route",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 47
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            8,
+            1
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 34
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            8,
+            1
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 41
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 34
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 25
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 21
+        },
+        {
+          "index": 10,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "won",
+          "tick": 3592,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 162,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 13,
+          "delta": -120,
+          "status": "running",
+          "tick": 3592,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 17
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 8,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 9,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 10,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 11,
+          "delta": 120,
+          "status": "running",
+          "tick": 3832,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 12,
+          "delta": 120,
+          "status": "won",
+          "tick": 3712,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 13,
+          "delta": 120,
+          "status": "won",
+          "tick": 3712,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 47
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 36
+        },
+        {
+          "index": 3,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 34
+        },
+        {
+          "index": 4,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            8,
+            1
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 5,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 6,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 30
+        },
+        {
+          "index": 7,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 23
+        },
+        {
+          "index": 8,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 9,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 16
+        },
+        {
+          "index": 10,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 11,
+          "delta": -60,
+          "status": "won",
+          "tick": 3652,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 162,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 12,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 13,
+          "delta": -60,
+          "status": "running",
+          "tick": 3652,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 1,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 2,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 3,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 4,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 5,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 27
+        },
+        {
+          "index": 6,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 7,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 8,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 9,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 10,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 11,
+          "delta": 60,
+          "status": "running",
+          "tick": 3772,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 12,
+          "delta": 60,
+          "status": "won",
+          "tick": 3712,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 13,
+          "delta": 60,
+          "status": "won",
+          "tick": 3712,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -240,
+          "status": "running",
+          "tick": 3472,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 47
+        },
+        {
+          "index": 2,
+          "delta": -240,
+          "status": "running",
+          "tick": 3472,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 3,
+          "delta": -240,
+          "status": "running",
+          "tick": 3472,
+          "closed": [
+            8,
+            1
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 34
+        },
+        {
+          "index": 4,
+          "delta": -240,
+          "status": "running",
+          "tick": 3472,
+          "closed": [
+            8,
+            1
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 5,
+          "delta": -240,
+          "status": "running",
+          "tick": 3472,
+          "closed": [
+            3,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 23
+        },
+        {
+          "index": 11,
+          "delta": -240,
+          "status": "running",
+          "tick": 3472,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 13,
+          "delta": -240,
+          "status": "running",
+          "tick": 3472,
+          "closed": [
+            7,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 15
+        },
+        {
+          "index": 1,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 2,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 3,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 4,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 5,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 21
+        },
+        {
+          "index": 6,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 7,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 8,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 9,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 10,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 11,
+          "delta": 240,
+          "status": "running",
+          "tick": 3952,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 820,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 12,
+          "delta": 240,
+          "status": "won",
+          "tick": 3712,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 13,
+          "delta": 240,
+          "status": "won",
+          "tick": 3712,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -30,
+          "status": "running",
+          "tick": 3682,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 47
+        },
+        {
+          "index": 2,
+          "delta": -30,
+          "status": "running",
+          "tick": 3682,
+          "closed": [
+            2,
+            2
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 34
+        },
+        {
+          "index": 3,
+          "delta": -30,
+          "status": "running",
+          "tick": 3682,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 34
+        },
+        {
+          "index": 4,
+          "delta": -30,
+          "status": "running",
+          "tick": 3682,
+          "closed": [
+            8,
+            1
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 5,
+          "delta": -30,
+          "status": "running",
+          "tick": 3682,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 23
+        },
+        {
+          "index": 6,
+          "delta": -30,
+          "status": "running",
+          "tick": 3682,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 25
+        },
+        {
+          "index": 7,
+          "delta": -30,
+          "status": "running",
+          "tick": 3682,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 997,
+          "maxChangedTrailCells": 18
+        },
+        {
+          "index": 8,
+          "delta": -30,
+          "status": "won",
+          "tick": 3424,
+          "closed": [
+            6,
+            2
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1283,
+          "maxChangedTrailCells": 16
+        }
+      ]
+    },
+    {
+      "missionId": "team-watchtower-accord",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "won",
+          "tick": 4641,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 730,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "won",
+          "tick": 4641,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 459,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 682,
+          "maxChangedTrailCells": 53
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            4,
+            3
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 563,
+          "maxChangedTrailCells": 53
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            5,
+            5
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            6,
+            3
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "lost",
+          "tick": 3832,
+          "closed": [
+            4,
+            2
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 34
+        },
+        {
+          "index": 13,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            6,
+            3
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 15,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            5,
+            4
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 34
+        },
+        {
+          "index": 19,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            6,
+            5
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 44
+        },
+        {
+          "index": 25,
+          "delta": -120,
+          "status": "running",
+          "tick": 4641,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            3
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 446,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            8,
+            3
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 446,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            4
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 42
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            3
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 59
+        },
+        {
+          "index": 8,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 9,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            5
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 51
+        },
+        {
+          "index": 10,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            5,
+            3
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 53
+        },
+        {
+          "index": 11,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            5
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 51
+        },
+        {
+          "index": 12,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            4,
+            5
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 51
+        },
+        {
+          "index": 13,
+          "delta": 120,
+          "status": "won",
+          "tick": 4881,
+          "closed": [
+            8,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 816,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 14,
+          "delta": 120,
+          "status": "won",
+          "tick": 4767,
+          "closed": [
+            8,
+            5
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 564,
+          "maxChangedTrailCells": 56
+        },
+        {
+          "index": 15,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 16,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            4
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 17,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 18,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 19,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 20,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 21,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 22,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            5
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 23,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 24,
+          "delta": 120,
+          "status": "running",
+          "tick": 4881,
+          "closed": [
+            7,
+            6
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 25,
+          "delta": 120,
+          "status": "won",
+          "tick": 4761,
+          "closed": [
+            8,
+            6
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            3,
+            5
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 730,
+          "maxChangedTrailCells": 77
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            4,
+            5
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 459,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 3,
+          "delta": -60,
+          "status": "lost",
+          "tick": 4328,
+          "closed": [
+            7,
+            1
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 58
+        },
+        {
+          "index": 4,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            5,
+            2
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 6,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            4,
+            3
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 8,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            6,
+            3
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 33
+        },
+        {
+          "index": 11,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            8,
+            2
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 44
+        },
+        {
+          "index": 13,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 15,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            6,
+            6
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 42
+        },
+        {
+          "index": 17,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            7,
+            4
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 44
+        },
+        {
+          "index": 19,
+          "delta": -60,
+          "status": "running",
+          "tick": 4701,
+          "closed": [
+            6,
+            5
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 440,
+          "maxChangedTrailCells": 51
+        },
+        {
+          "index": 20,
+          "delta": -60,
+          "status": "won",
+          "tick": 4701,
+          "closed": [
+            8,
+            5
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 455,
+          "maxChangedTrailCells": 38
+        }
+      ]
+    }
+  ],
+  "versus": [
+    {
+      "missionId": "versus-horizon-photo-finish",
+      "attempts": [
+        {
+          "index": 0,
+          "delta": -120,
+          "status": "finished",
+          "tick": 1711,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 310
+        },
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 302
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 302
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 208
+        },
+        {
+          "index": 7,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 196
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 202
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 114
+        },
+        {
+          "index": 13,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 114
+        },
+        {
+          "index": 15,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 114
+        },
+        {
+          "index": 17,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 106
+        },
+        {
+          "index": 18,
+          "delta": -120,
+          "status": "running",
+          "tick": 5425,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 102
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 413
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 302
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 262
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 196
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 372
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "finished",
+          "tick": 5665,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 257
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 114
+        },
+        {
+          "index": 8,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 200
+        },
+        {
+          "index": 9,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 136
+        },
+        {
+          "index": 10,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 183
+        },
+        {
+          "index": 11,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 114
+        },
+        {
+          "index": 12,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 114
+        },
+        {
+          "index": 13,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 114
+        },
+        {
+          "index": 14,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 114
+        },
+        {
+          "index": 15,
+          "delta": 120,
+          "status": "running",
+          "tick": 5665,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 114
+        },
+        {
+          "index": 16,
+          "delta": 120,
+          "status": "finished",
+          "tick": 5545,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 412
+        }
+      ]
+    },
+    {
+      "missionId": "versus-signal-sprint-finale",
+      "attempts": [
+        {
+          "index": 0,
+          "delta": -120,
+          "status": "finished",
+          "tick": 3403,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 526
+        },
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 4869,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 492
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 4869,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 436
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 4869,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 272
+        },
+        {
+          "index": 7,
+          "delta": -120,
+          "status": "running",
+          "tick": 4869,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "running",
+          "tick": 4869,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "running",
+          "tick": 4869,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 13,
+          "delta": -120,
+          "status": "running",
+          "tick": 4869,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 14,
+          "delta": -120,
+          "status": "running",
+          "tick": 4869,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 16,
+          "delta": -120,
+          "status": "running",
+          "tick": 4869,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "running",
+          "tick": 5109,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 272
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "finished",
+          "tick": 3212,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 1157
+        }
+      ]
+    },
+    {
+      "missionId": "versus-neon-switch-final",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 7,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 189
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 87
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 556
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 556
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 202
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 8,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 556
+        },
+        {
+          "index": 9,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 87
+        },
+        {
+          "index": 10,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 87
+        },
+        {
+          "index": 11,
+          "delta": 120,
+          "status": "finished",
+          "tick": 3296,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 0,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 3,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 5,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 7,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 8,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 9,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 579
+        },
+        {
+          "index": 11,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 87
+        },
+        {
+          "index": 0,
+          "delta": 60,
+          "status": "finished",
+          "tick": 3356,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 58
+        }
+      ]
+    },
+    {
+      "missionId": "versus-dockyard-decider",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "finished",
+          "tick": 3293,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 463
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "finished",
+          "tick": 3047,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 257
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 5251,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 269
+        },
+        {
+          "index": 7,
+          "delta": -120,
+          "status": "running",
+          "tick": 5251,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 296
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 5251,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 215
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "running",
+          "tick": 5251,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 215
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "running",
+          "tick": 5251,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 215
+        },
+        {
+          "index": 13,
+          "delta": -120,
+          "status": "running",
+          "tick": 5251,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 215
+        },
+        {
+          "index": 15,
+          "delta": -120,
+          "status": "running",
+          "tick": 5251,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 191
+        },
+        {
+          "index": 17,
+          "delta": -120,
+          "status": "finished",
+          "tick": 5132,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 90
+        }
+      ]
+    },
+    {
+      "missionId": "versus-prism-photo-finish",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "finished",
+          "tick": 6755,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 18,
+          "maxChangedCells": 1654
+        }
+      ]
+    },
+    {
+      "missionId": "versus-afterglow-finish",
+      "attempts": [
+        {
+          "index": 0,
+          "delta": -120,
+          "status": "finished",
+          "tick": 954,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 15,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "finished",
+          "tick": 1485,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "finished",
+          "tick": 2956,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 7,
+          "delta": -120,
+          "status": "finished",
+          "tick": 2956,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "finished",
+          "tick": 3463,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "finished",
+          "tick": 3463,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 13,
+          "delta": -120,
+          "status": "running",
+          "tick": 4708,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 14,
+          "delta": -120,
+          "status": "running",
+          "tick": 4708,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 15,
+          "delta": -120,
+          "status": "running",
+          "tick": 4708,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 19,
+          "delta": -120,
+          "status": "running",
+          "tick": 4708,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 20,
+          "delta": -120,
+          "status": "running",
+          "tick": 4708,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 22,
+          "delta": -120,
+          "status": "running",
+          "tick": 4708,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 23,
+          "delta": -120,
+          "status": "running",
+          "tick": 4708,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "finished",
+          "tick": 1942,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "finished",
+          "tick": 3463,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "finished",
+          "tick": 3148,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "finished",
+          "tick": 3463,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "finished",
+          "tick": 3463,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 8,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 9,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 10,
+          "delta": 120,
+          "status": "finished",
+          "tick": 3463,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 11,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 12,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 13,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 14,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 15,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 16,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 17,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 18,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 19,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 20,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            13,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 21,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 22,
+          "delta": 120,
+          "status": "running",
+          "tick": 4948,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 23,
+          "delta": 120,
+          "status": "finished",
+          "tick": 4828,
+          "closed": [
+            15,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 0,
+          "delta": -60,
+          "status": "finished",
+          "tick": 1137,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 15,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "finished",
+          "tick": 1997,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "finished",
+          "tick": 2956,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 4,
+          "delta": -60,
+          "status": "finished",
+          "tick": 3440,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 5,
+          "delta": -60,
+          "status": "finished",
+          "tick": 2956,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 6,
+          "delta": -60,
+          "status": "finished",
+          "tick": 3518,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 7,
+          "delta": -60,
+          "status": "finished",
+          "tick": 2964,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 8,
+          "delta": -60,
+          "status": "finished",
+          "tick": 3515,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 9,
+          "delta": -60,
+          "status": "finished",
+          "tick": 3515,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 10,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 11,
+          "delta": -60,
+          "status": "finished",
+          "tick": 3511,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 12,
+          "delta": -60,
+          "status": "finished",
+          "tick": 3671,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 13,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 14,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 15,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 17,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 19,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 20,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 21,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            13,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 22,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 23,
+          "delta": -60,
+          "status": "running",
+          "tick": 4768,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 0,
+          "delta": 60,
+          "status": "finished",
+          "tick": 1942,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 1,
+          "delta": 60,
+          "status": "finished",
+          "tick": 3791,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 2,
+          "delta": 60,
+          "status": "finished",
+          "tick": 2484,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 4,
+          "delta": 60,
+          "status": "finished",
+          "tick": 3791,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 5,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 6,
+          "delta": 60,
+          "status": "finished",
+          "tick": 3791,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 7,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 8,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 9,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 10,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 11,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 12,
+          "delta": 60,
+          "status": "finished",
+          "tick": 3791,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 13,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 14,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 96
+        },
+        {
+          "index": 15,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 16,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 17,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 18,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 19,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 20,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 21,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 22,
+          "delta": 60,
+          "status": "running",
+          "tick": 4888,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 23,
+          "delta": 60,
+          "status": "finished",
+          "tick": 4828,
+          "closed": [
+            15,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 0,
+          "delta": -240,
+          "status": "finished",
+          "tick": 1465,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 15,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 1,
+          "delta": -240,
+          "status": "finished",
+          "tick": 1465,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 9,
+          "delta": -240,
+          "status": "running",
+          "tick": 4588,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 11,
+          "delta": -240,
+          "status": "finished",
+          "tick": 3463,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 13,
+          "delta": -240,
+          "status": "running",
+          "tick": 4588,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 14,
+          "delta": -240,
+          "status": "running",
+          "tick": 4588,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 15,
+          "delta": -240,
+          "status": "running",
+          "tick": 4588,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 23,
+          "delta": -240,
+          "status": "running",
+          "tick": 4588,
+          "closed": [
+            13,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 0,
+          "delta": 240,
+          "status": "finished",
+          "tick": 1980,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 1,
+          "delta": 240,
+          "status": "finished",
+          "tick": 3970,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 2,
+          "delta": 240,
+          "status": "finished",
+          "tick": 1981,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 4,
+          "delta": 240,
+          "status": "finished",
+          "tick": 3463,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 5,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 6,
+          "delta": 240,
+          "status": "finished",
+          "tick": 3463,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 7,
+          "delta": 240,
+          "status": "finished",
+          "tick": 3970,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 8,
+          "delta": 240,
+          "status": "finished",
+          "tick": 3970,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 9,
+          "delta": 240,
+          "status": "finished",
+          "tick": 3970,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 10,
+          "delta": 240,
+          "status": "finished",
+          "tick": 3970,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 11,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 12,
+          "delta": 240,
+          "status": "finished",
+          "tick": 3970,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 13,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 14,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 15,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 16,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 17,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 18,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 19,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 20,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            13,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 21,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 22,
+          "delta": 240,
+          "status": "running",
+          "tick": 5068,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 23,
+          "delta": 240,
+          "status": "finished",
+          "tick": 4828,
+          "closed": [
+            15,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 0,
+          "delta": -30,
+          "status": "finished",
+          "tick": 1167,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 15,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 1,
+          "delta": -30,
+          "status": "finished",
+          "tick": 1996,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 2,
+          "delta": -30,
+          "status": "finished",
+          "tick": 2956,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 4,
+          "delta": -30,
+          "status": "finished",
+          "tick": 3514,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 5,
+          "delta": -30,
+          "status": "finished",
+          "tick": 2956,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 6,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 7,
+          "delta": -30,
+          "status": "finished",
+          "tick": 2994,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 8,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 9,
+          "delta": -30,
+          "status": "finished",
+          "tick": 3514,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 10,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 11,
+          "delta": -30,
+          "status": "finished",
+          "tick": 3502,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 12,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 13,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 14,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 15,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 16,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            15,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 18
+        },
+        {
+          "index": 17,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 99
+        },
+        {
+          "index": 18,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 19,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 99
+        },
+        {
+          "index": 20,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 21,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 22,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 23,
+          "delta": -30,
+          "status": "running",
+          "tick": 4798,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 0,
+          "delta": 30,
+          "status": "finished",
+          "tick": 1995,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 1,
+          "delta": 30,
+          "status": "finished",
+          "tick": 3761,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 2,
+          "delta": 30,
+          "status": "finished",
+          "tick": 2972,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 4,
+          "delta": 30,
+          "status": "finished",
+          "tick": 3761,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 5,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 6,
+          "delta": 30,
+          "status": "finished",
+          "tick": 3761,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 7,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 8,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 9,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 549
+        },
+        {
+          "index": 10,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            15,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 65
+        },
+        {
+          "index": 11,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 12,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 13,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 525
+        },
+        {
+          "index": 14,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 99
+        },
+        {
+          "index": 15,
+          "delta": 30,
+          "status": "finished",
+          "tick": 4858,
+          "closed": [
+            15,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 16,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 17,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 18,
+          "delta": 30,
+          "status": "finished",
+          "tick": 4858,
+          "closed": [
+            15,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 19,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 20,
+          "delta": 30,
+          "status": "running",
+          "tick": 4858,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 95
+        },
+        {
+          "index": 21,
+          "delta": 30,
+          "status": "finished",
+          "tick": 4858,
+          "closed": [
+            15,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 33
+        }
+      ]
+    },
+    {
+      "missionId": "versus-archive-decider",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 780,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1789
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 780,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1789
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "running",
+          "tick": 1020,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1789
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 1020,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1789
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 1020,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1783
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 1020,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1727
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "finished",
+          "tick": 900,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 0,
+          "delta": -60,
+          "status": "running",
+          "tick": 840,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1789
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 840,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1789
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 840,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1817
+        },
+        {
+          "index": 3,
+          "delta": -60,
+          "status": "running",
+          "tick": 840,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1819
+        },
+        {
+          "index": 4,
+          "delta": -60,
+          "status": "running",
+          "tick": 840,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1789
+        },
+        {
+          "index": 0,
+          "delta": 60,
+          "status": "finished",
+          "tick": 618,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1845
+        }
+      ]
+    },
+    {
+      "missionId": "versus-highland-finish",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 731,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1848
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 731,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1848
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "running",
+          "tick": 971,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1848
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 971,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1848
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 971,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1848
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "finished",
+          "tick": 851,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 0,
+          "delta": -60,
+          "status": "running",
+          "tick": 791,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1848
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 791,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1848
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 791,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1848
+        },
+        {
+          "index": 3,
+          "delta": -60,
+          "status": "running",
+          "tick": 791,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1848
+        },
+        {
+          "index": 0,
+          "delta": 60,
+          "status": "finished",
+          "tick": 618,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1848
+        }
+      ]
+    },
+    {
+      "missionId": "versus-watch-line-finish",
+      "attempts": [
+        {
+          "index": 0,
+          "delta": -120,
+          "status": "running",
+          "tick": 2341,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 2341,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 2341,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 2341,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 7,
+          "delta": -120,
+          "status": "running",
+          "tick": 2341,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "running",
+          "tick": 2581,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 2581,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 2581,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 2581,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 2581,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 2581,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "running",
+          "tick": 2581,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "finished",
+          "tick": 2461,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 0,
+          "delta": -60,
+          "status": "running",
+          "tick": 2401,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 2401,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 2401,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 3,
+          "delta": -60,
+          "status": "running",
+          "tick": 2401,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 4,
+          "delta": -60,
+          "status": "running",
+          "tick": 2401,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 5,
+          "delta": -60,
+          "status": "running",
+          "tick": 2401,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 7,
+          "delta": -60,
+          "status": "running",
+          "tick": 2401,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 0,
+          "delta": 60,
+          "status": "running",
+          "tick": 2521,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 1,
+          "delta": 60,
+          "status": "running",
+          "tick": 2521,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 2,
+          "delta": 60,
+          "status": "running",
+          "tick": 2521,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1300
+        },
+        {
+          "index": 3,
+          "delta": 60,
+          "status": "running",
+          "tick": 2521,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 4,
+          "delta": 60,
+          "status": "running",
+          "tick": 2521,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1300
+        },
+        {
+          "index": 5,
+          "delta": 60,
+          "status": "running",
+          "tick": 2521,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 6,
+          "delta": 60,
+          "status": "running",
+          "tick": 2521,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1208
+        },
+        {
+          "index": 7,
+          "delta": 60,
+          "status": "finished",
+          "tick": 2461,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": -240,
+          "status": "running",
+          "tick": 2221,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 3,
+          "delta": -240,
+          "status": "running",
+          "tick": 2221,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 5,
+          "delta": -240,
+          "status": "running",
+          "tick": 2221,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 7,
+          "delta": -240,
+          "status": "running",
+          "tick": 2221,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 0,
+          "delta": 240,
+          "status": "running",
+          "tick": 2701,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 1,
+          "delta": 240,
+          "status": "running",
+          "tick": 2701,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 2,
+          "delta": 240,
+          "status": "running",
+          "tick": 2701,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 3,
+          "delta": 240,
+          "status": "running",
+          "tick": 2701,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 4,
+          "delta": 240,
+          "status": "running",
+          "tick": 2701,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 5,
+          "delta": 240,
+          "status": "running",
+          "tick": 2701,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1351
+        },
+        {
+          "index": 6,
+          "delta": 240,
+          "status": "running",
+          "tick": 2701,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 7,
+          "delta": 240,
+          "status": "finished",
+          "tick": 2461,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 0,
+          "delta": -30,
+          "status": "running",
+          "tick": 2431,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 1,
+          "delta": -30,
+          "status": "running",
+          "tick": 2431,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 2,
+          "delta": -30,
+          "status": "running",
+          "tick": 2431,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 3,
+          "delta": -30,
+          "status": "running",
+          "tick": 2431,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 4,
+          "delta": -30,
+          "status": "running",
+          "tick": 2431,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 5,
+          "delta": -30,
+          "status": "running",
+          "tick": 2431,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 6,
+          "delta": -30,
+          "status": "running",
+          "tick": 2431,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1265
+        },
+        {
+          "index": 7,
+          "delta": -30,
+          "status": "running",
+          "tick": 2431,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 0,
+          "delta": 30,
+          "status": "running",
+          "tick": 2491,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 1,
+          "delta": 30,
+          "status": "running",
+          "tick": 2491,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 2,
+          "delta": 30,
+          "status": "running",
+          "tick": 2491,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 3,
+          "delta": 30,
+          "status": "running",
+          "tick": 2491,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1222
+        },
+        {
+          "index": 4,
+          "delta": 30,
+          "status": "finished",
+          "tick": 2461,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 56
+        }
+      ]
+    },
+    {
+      "missionId": "versus-unbroken-finish",
+      "attempts": [
+        {
+          "index": 0,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            16,
+            0
+          ],
+          "differentCaptures": 14,
+          "maxChangedCells": 717
+        },
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "finished",
+          "tick": 2123,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "finished",
+          "tick": 3108,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 11,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            8,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            9,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 10,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 12,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 14,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 16,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 18,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 19,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            13,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 887
+        },
+        {
+          "index": 20,
+          "delta": -120,
+          "status": "running",
+          "tick": 5369,
+          "closed": [
+            13,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 44
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "finished",
+          "tick": 2363,
+          "closed": [
+            1,
+            0
+          ],
+          "differentCaptures": 13,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 12,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 10,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 9,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 8,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 8,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 9,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 10,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 11,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            12,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 12,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            10,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 13,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            15,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 780
+        },
+        {
+          "index": 14,
+          "delta": 120,
+          "status": "running",
+          "tick": 5609,
+          "closed": [
+            11,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 696
+        },
+        {
+          "index": 15,
+          "delta": 120,
+          "status": "finished",
+          "tick": 5566,
+          "closed": [
+            14,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 751
+        }
+      ]
+    },
+    {
+      "missionId": "versus-crown-photo-finish",
+      "attempts": [
+        {
+          "index": 0,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 1399
+        },
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1399
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1412
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1394
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1367
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 248
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "finished",
+          "tick": 2351,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "finished",
+          "tick": 2351,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 2351,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1606
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "finished",
+          "tick": 2351,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 38
+        }
+      ]
+    },
+    {
+      "missionId": "versus-expedition-decider",
+      "attempts": [
+        {
+          "index": 0,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 1365
+        },
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            2,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 1365
+        },
+        {
+          "index": 2,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1378
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1360
+        },
+        {
+          "index": 4,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1333
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 248
+        },
+        {
+          "index": 6,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 8,
+          "delta": -120,
+          "status": "running",
+          "tick": 2111,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 231
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "finished",
+          "tick": 2351,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "finished",
+          "tick": 2351,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 2351,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 1572
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "finished",
+          "tick": 2351,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 38
+        }
+      ]
+    },
+    {
+      "missionId": "versus-neon-switch-final",
+      "attempts": [
+        {
+          "index": 1,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 86
+        },
+        {
+          "index": 3,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 54
+        },
+        {
+          "index": 5,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 7,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 189,
+          "maxChangedTrailCells": 51
+        },
+        {
+          "index": 9,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 11,
+          "delta": -120,
+          "status": "running",
+          "tick": 3176,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 87,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 0,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 1,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 2,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 556,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 3,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 4,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 5,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 556,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 6,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 202,
+          "maxChangedTrailCells": 51
+        },
+        {
+          "index": 7,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 8,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 556,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 9,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 87,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 10,
+          "delta": 120,
+          "status": "running",
+          "tick": 3416,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 87,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 11,
+          "delta": 120,
+          "status": "finished",
+          "tick": 3296,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 0,
+          "maxChangedCells": 0,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 0,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            4,
+            0
+          ],
+          "differentCaptures": 7,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 76
+        },
+        {
+          "index": 1,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 6,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 86
+        },
+        {
+          "index": 2,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 68
+        },
+        {
+          "index": 3,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 5,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 5,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            3,
+            0
+          ],
+          "differentCaptures": 4,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 52
+        },
+        {
+          "index": 7,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 8,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 9,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            5,
+            0
+          ],
+          "differentCaptures": 2,
+          "maxChangedCells": 579,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 11,
+          "delta": -60,
+          "status": "running",
+          "tick": 3236,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 87,
+          "maxChangedTrailCells": 29
+        },
+        {
+          "index": 0,
+          "delta": 60,
+          "status": "finished",
+          "tick": 3356,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 58,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 1,
+          "delta": 60,
+          "status": "finished",
+          "tick": 3356,
+          "closed": [
+            7,
+            0
+          ],
+          "differentCaptures": 1,
+          "maxChangedCells": 58,
+          "maxChangedTrailCells": 0
+        },
+        {
+          "index": 2,
+          "delta": 60,
+          "status": "finished",
+          "tick": 2915,
+          "closed": [
+            6,
+            0
+          ],
+          "differentCaptures": 3,
+          "maxChangedCells": 108,
+          "maxChangedTrailCells": 68
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Early probes compared capture yield only; final retained routes additionally require distinct drawn trail geometry. A won probe is not automatically an accepted alternative.",
+    "Three timing-only alternatives (Team Archive Home Route, Team Watchtower Accord and Duel Neon Switch Final) were rejected and searched again.",
+    "Team Highland Reunion span-only probes did not find a second clear; the existing Expert command trace was independently replayed successfully under Standard rules.",
+    "Probe rows include unsuccessful partial/lost results and repeat searches; only finale-strategies.json defines the retained qualification inputs."
+  ]
+}

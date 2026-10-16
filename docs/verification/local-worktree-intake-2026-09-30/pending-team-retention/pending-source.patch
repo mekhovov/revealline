@@ -1,0 +1,493 @@
+diff --git a/docs/verification/team-public-retention/README.md b/docs/verification/team-public-retention/README.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..ff037eeec3eed880a10d5cff90a7c8b6b87feb81
+--- /dev/null
++++ b/docs/verification/team-public-retention/README.md
+@@ -0,0 +1,9 @@
++# Retain both published Team presentations
++
++The proposed Team renderer previously recognized only fpv38. A real fpv50 envelope from the accepted v0.78 presentation was rejected after changing the page default. The retained failing test records that regression.
++
++A code-owned exact association registry now covers both published manifests. Restoration selects the corresponding complete picture/audio context; it never substitutes the current or older manifest. Build validation requires both original manifests and their complete core-offline dependencies.
++
++The complete ownership and packager cohorts pass43 tests on each Node20.19.5 and22.22.2 after formatting. They include actual envelope export-byte preservation, wrong-manifest rejection, missing/corrupt/excluded fpv50 files, cancellation/disposal and packaging. Browser/device acceptance is separate.
++
++Current source-stage51 was compiled from accepted music ledger50 with the Team additions. All accepted historical records and audio selection remain intact; both published runtime byte streams are retained exactly. This is unreviewed integration work, not an accepted or published game release.
+diff --git a/docs/verification/team-public-retention/public-retention-final-node20.tap.json b/docs/verification/team-public-retention/public-retention-final-node20.tap.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..05729fb5756dc731a33b28d1675aa3443e741638
+--- /dev/null
++++ b/docs/verification/team-public-retention/public-retention-final-node20.tap.json
+@@ -0,0 +1,5 @@
++{
++  "bytes": 10601,
++  "sha256": "1e2f0e1a03b434c9a79f843c7e2fe52f06c9b3b670a8048825deb53bedce11fb",
++  "text": "TAP version 13\n# (node:87224) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:\n# --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"./.cache/shared-device-r1/team-after-music/loader.mjs\", pathToFileURL(\"./\"));'\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: known legacy association is the exact shipped runtime, independent of next defaults\nok 1 - known legacy association is the exact shipped runtime, independent of next defaults\n  ---\n  duration_ms: 1.144042\n  ...\n# Subtest: matching current immutable legacy snapshot is borrowed; Retry/confirm share image and do not close page\nok 2 - matching current immutable legacy snapshot is borrowed; Retry/confirm share image and do not close page\n  ---\n  duration_ms: 46.473333\n  ...\n# Subtest: fpv38 envelope under newer default owns exact retained theme + original picture without editing receipt\nok 3 - fpv38 envelope under newer default owns exact retained theme + original picture without editing receipt\n  ---\n  duration_ms: 34.14825\n  ...\n# Subtest: fresh non-envelope attempt uses new page snapshot and matching default picture policy\nok 4 - fresh non-envelope attempt uses new page snapshot and matching default picture policy\n  ---\n  duration_ms: 19.975625\n  ...\n# Subtest: foreign receipt and unauthenticated owner fail before any theme transport or decoder\nok 5 - foreign receipt and unauthenticated owner fail before any theme transport or decoder\n  ---\n  duration_ms: 12.245208\n  ...\n# Subtest: wrong legacy source/hash never borrows; missing retained manifest fails without fallback\nok 6 - wrong legacy source/hash never borrows; missing retained manifest fails without fallback\n  ---\n  duration_ms: 12.842875\n  ...\n# Subtest: retained transport cannot substitute the latest manifest or wrong source revision\nok 7 - retained transport cannot substitute the latest manifest or wrong source revision\n  ---\n  duration_ms: 13.203542\n  ...\n# Subtest: failed preparation keeps previous picture, theme and exact confirmation usable\nok 8 - failed preparation keeps previous picture, theme and exact confirmation usable\n  ---\n  duration_ms: 27.468083\n  ...\n# Subtest: failed later picture decode releases staged theme and retains accepted owner\nok 9 - failed later picture decode releases staged theme and retains accepted owner\n  ---\n  duration_ms: 38.758459\n  ...\n# Subtest: cancelled late theme load closes once and leaves previous borrowed attempt usable\nok 10 - cancelled late theme load closes once and leaves previous borrowed attempt usable\n  ---\n  duration_ms: 24.262084\n  ...\n# Subtest: stale late decoder releases its picture and theme once while newer selection wins\nok 11 - stale late decoder releases its picture and theme once while newer selection wins\n  ---\n  duration_ms: 34.68225\n  ...\n# Subtest: signal after adopted readiness does not close retained owner; dispose during decode owns late cleanup\nok 12 - signal after adopted readiness does not close retained owner; dispose during decode owns late cleanup\n  ---\n  duration_ms: 43.819542\n  ...\n# Subtest: ready callback cancellation cannot publish the staged result or replace accepted owner\nok 13 - ready callback cancellation cannot publish the staged result or replace accepted owner\n  ---\n  duration_ms: 34.262\n  ...\n# Subtest: snapshot replacement rejects borrowed confirmation; exact retained reader remains independent\nok 14 - snapshot replacement rejects borrowed confirmation; exact retained reader remains independent\n  ---\n  duration_ms: 50.610458\n  ...\n# Subtest: request copies precede async preparation; changed same attempt cannot reuse a retained picture\nok 15 - request copies precede async preparation; changed same attempt cannot reuse a retained picture\n  ---\n  duration_ms: 21.917833\n  ...\n# Subtest: same pending request shares operation; successful successor retires previous exact owners once\nok 16 - same pending request shares operation; successful successor retires previous exact owners once\n  ---\n  duration_ms: 41.336209\n  ...\n# Subtest: configuration is captured at wrapper creation and borrowed apply cleanup retires once\nok 17 - configuration is captured at wrapper creation and borrowed apply cleanup retires once\n  ---\n  duration_ms: 18.908334\n  ...\n# Subtest: unsupported collection and missing page readiness never create a retained host\nok 18 - unsupported collection and missing page readiness never create a retained host\n  ---\n  duration_ms: 22.35875\n  ...\n# Subtest: reserved starter pack import retains exact historical rows without allowing same-ID gameplay replacement\nok 19 - reserved starter pack import retains exact historical rows without allowing same-ID gameplay replacement\n  ---\n  duration_ms: 44.824459\n  ...\n# Subtest: Retry cleanup reentry cannot return an accepted binding disposed by staged-theme cleanup\nok 20 - Retry cleanup reentry cannot return an accepted binding disposed by staged-theme cleanup\n  ---\n  duration_ms: 27.62125\n  ...\n# Subtest: borrowed snapshot-reader disposal reentry aborts confirm/apply/audio before owner access\nok 21 - borrowed snapshot-reader disposal reentry aborts confirm/apply/audio before owner access\n  ---\n  duration_ms: 58.496208\n  ...\n# Subtest: published v0.78 Team envelope retains exact fpv50 picture and audio after a newer default\nok 22 - published v0.78 Team envelope retains exact fpv50 picture and audio after a newer default\n  ---\n  duration_ms: 35.132666\n  ...\n# Subtest: exact published fpv50 page is borrowed without fetching an archived theme\nok 23 - exact published fpv50 page is borrowed without fetching an archived theme\n  ---\n  duration_ms: 18.274708\n  ...\n# Subtest: a retained fpv38 transport cannot substitute for a published fpv50 receipt\nok 24 - a retained fpv38 transport cannot substitute for a published fpv50 receipt\n  ---\n  duration_ms: 13.124041\n  ...\n# (node:88007) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:\n# --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"./.cache/shared-device-r1/team-after-music/loader.mjs\", pathToFileURL(\"./\"));'\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: current fpv38 uses its own pin directly while retaining the separately published fpv50\nok 25 - current fpv38 uses its own pin directly while retaining the separately published fpv50\n  ---\n  duration_ms: 2698.85175\n  ...\n# Subtest: a successor authenticates the original archive and deduplicates all current/lazy dependencies\nok 26 - a successor authenticates the original archive and deduplicates all current/lazy dependencies\n  ---\n  duration_ms: 223.226208\n  ...\n# Subtest: retained build rejects missing fpv50 archive before creating the output parent\nok 27 - retained build rejects missing fpv50 archive before creating the output parent\n  ---\n  duration_ms: 173.129125\n  ...\n# Subtest: retained build rejects wrong fpv50 archive hash before creating the output parent\nok 28 - retained build rejects wrong fpv50 archive hash before creating the output parent\n  ---\n  duration_ms: 188.825625\n  ...\n# Subtest: retained build rejects excluded fpv50 archive before creating the output parent\nok 29 - retained build rejects excluded fpv50 archive before creating the output parent\n  ---\n  duration_ms: 138.172875\n  ...\n# Subtest: retained build rejects missing archive before creating the output parent\nok 30 - retained build rejects missing archive before creating the output parent\n  ---\n  duration_ms: 104.284\n  ...\n# Subtest: retained build rejects wrong archive hash before creating the output parent\nok 31 - retained build rejects wrong archive hash before creating the output parent\n  ---\n  duration_ms: 133.668166\n  ...\n# Subtest: retained build rejects malformed archive before creating the output parent\nok 32 - retained build rejects malformed archive before creating the output parent\n  ---\n  duration_ms: 104.376041\n  ...\n# Subtest: retained build rejects malformed current before creating the output parent\nok 33 - retained build rejects malformed current before creating the output parent\n  ---\n  duration_ms: 49.968041\n  ...\n# Subtest: retained build rejects missing lazy original before creating the output parent\nok 34 - retained build rejects missing lazy original before creating the output parent\n  ---\n  duration_ms: 87.24175\n  ...\n# Subtest: retained build rejects corrupt lazy original before creating the output parent\nok 35 - retained build rejects corrupt lazy original before creating the output parent\n  ---\n  duration_ms: 87.473875\n  ...\n# Subtest: retained build rejects excluded archive before creating the output parent\nok 36 - retained build rejects excluded archive before creating the output parent\n  ---\n  duration_ms: 89.737208\n  ...\n# Subtest: retained build rejects excluded lazy original before creating the output parent\nok 37 - retained build rejects excluded lazy original before creating the output parent\n  ---\n  duration_ms: 68.300709\n  ...\n# Subtest: wrong archived identity cannot be authorized by rehashing the current file or its filename\nok 38 - wrong archived identity cannot be authorized by rehashing the current file or its filename\n  ---\n  duration_ms: 175.069875\n  ...\n# Subtest: a missing original used only by the retained runtime cannot escape current-runtime verification\nok 39 - a missing original used only by the retained runtime cannot escape current-runtime verification\n  ---\n  duration_ms: 181.157625\n  ...\n# Subtest: a symlink cannot supply a retained manifest even with identical target bytes\nok 40 - a symlink cannot supply a retained manifest even with identical target bytes\n  ---\n  duration_ms: 95.429167\n  ...\n# Subtest: packaged rereads must still contain every verified byte exactly once\nok 41 - packaged rereads must still contain every verified byte exactly once\n  ---\n  duration_ms: 209.322791\n  ...\n# Subtest: actual packaging carries current and both retained manifests with all offline dependencies\nok 42 - actual packaging carries current and both retained manifests with all offline dependencies\n  ---\n  duration_ms: 500.449625\n  ...\n# Subtest: builds without the owned Team host preserve their existing opt-in boundary\nok 43 - builds without the owned Team host preserve their existing opt-in boundary\n  ---\n  duration_ms: 0.102708\n  ...\n1..43\n# tests 43\n# suites 0\n# pass 43\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 8247.465958\n"
++}
+diff --git a/docs/verification/team-public-retention/public-retention-final-node22.tap.json b/docs/verification/team-public-retention/public-retention-final-node22.tap.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..ac7ac04fb475c20d205be1e5438032ce54c63e69
+--- /dev/null
++++ b/docs/verification/team-public-retention/public-retention-final-node22.tap.json
+@@ -0,0 +1,5 @@
++{
++  "bytes": 11251,
++  "sha256": "2e3f865a40b85ee03a9d0519ba5311bdd40f4b13a150b3eadd3f75630319e911",
++  "text": "TAP version 13\n# (node:98656) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:\n# --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"./.cache/shared-device-r1/team-after-music/loader.mjs\", pathToFileURL(\"./\"));'\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: known legacy association is the exact shipped runtime, independent of next defaults\nok 1 - known legacy association is the exact shipped runtime, independent of next defaults\n  ---\n  duration_ms: 1.77475\n  type: 'test'\n  ...\n# Subtest: matching current immutable legacy snapshot is borrowed; Retry/confirm share image and do not close page\nok 2 - matching current immutable legacy snapshot is borrowed; Retry/confirm share image and do not close page\n  ---\n  duration_ms: 62.124375\n  type: 'test'\n  ...\n# Subtest: fpv38 envelope under newer default owns exact retained theme + original picture without editing receipt\nok 3 - fpv38 envelope under newer default owns exact retained theme + original picture without editing receipt\n  ---\n  duration_ms: 37.792666\n  type: 'test'\n  ...\n# Subtest: fresh non-envelope attempt uses new page snapshot and matching default picture policy\nok 4 - fresh non-envelope attempt uses new page snapshot and matching default picture policy\n  ---\n  duration_ms: 32.706541\n  type: 'test'\n  ...\n# Subtest: foreign receipt and unauthenticated owner fail before any theme transport or decoder\nok 5 - foreign receipt and unauthenticated owner fail before any theme transport or decoder\n  ---\n  duration_ms: 17.287375\n  type: 'test'\n  ...\n# Subtest: wrong legacy source/hash never borrows; missing retained manifest fails without fallback\nok 6 - wrong legacy source/hash never borrows; missing retained manifest fails without fallback\n  ---\n  duration_ms: 17.250334\n  type: 'test'\n  ...\n# Subtest: retained transport cannot substitute the latest manifest or wrong source revision\nok 7 - retained transport cannot substitute the latest manifest or wrong source revision\n  ---\n  duration_ms: 16.114708\n  type: 'test'\n  ...\n# Subtest: failed preparation keeps previous picture, theme and exact confirmation usable\nok 8 - failed preparation keeps previous picture, theme and exact confirmation usable\n  ---\n  duration_ms: 33.164917\n  type: 'test'\n  ...\n# Subtest: failed later picture decode releases staged theme and retains accepted owner\nok 9 - failed later picture decode releases staged theme and retains accepted owner\n  ---\n  duration_ms: 40.946458\n  type: 'test'\n  ...\n# Subtest: cancelled late theme load closes once and leaves previous borrowed attempt usable\nok 10 - cancelled late theme load closes once and leaves previous borrowed attempt usable\n  ---\n  duration_ms: 30.022458\n  type: 'test'\n  ...\n# Subtest: stale late decoder releases its picture and theme once while newer selection wins\nok 11 - stale late decoder releases its picture and theme once while newer selection wins\n  ---\n  duration_ms: 37.270042\n  type: 'test'\n  ...\n# Subtest: signal after adopted readiness does not close retained owner; dispose during decode owns late cleanup\nok 12 - signal after adopted readiness does not close retained owner; dispose during decode owns late cleanup\n  ---\n  duration_ms: 53.228959\n  type: 'test'\n  ...\n# Subtest: ready callback cancellation cannot publish the staged result or replace accepted owner\nok 13 - ready callback cancellation cannot publish the staged result or replace accepted owner\n  ---\n  duration_ms: 34.906292\n  type: 'test'\n  ...\n# Subtest: snapshot replacement rejects borrowed confirmation; exact retained reader remains independent\nok 14 - snapshot replacement rejects borrowed confirmation; exact retained reader remains independent\n  ---\n  duration_ms: 51.581583\n  type: 'test'\n  ...\n# Subtest: request copies precede async preparation; changed same attempt cannot reuse a retained picture\nok 15 - request copies precede async preparation; changed same attempt cannot reuse a retained picture\n  ---\n  duration_ms: 43.416708\n  type: 'test'\n  ...\n# Subtest: same pending request shares operation; successful successor retires previous exact owners once\nok 16 - same pending request shares operation; successful successor retires previous exact owners once\n  ---\n  duration_ms: 46.149084\n  type: 'test'\n  ...\n# Subtest: configuration is captured at wrapper creation and borrowed apply cleanup retires once\nok 17 - configuration is captured at wrapper creation and borrowed apply cleanup retires once\n  ---\n  duration_ms: 20.508125\n  type: 'test'\n  ...\n# Subtest: unsupported collection and missing page readiness never create a retained host\nok 18 - unsupported collection and missing page readiness never create a retained host\n  ---\n  duration_ms: 26.235333\n  type: 'test'\n  ...\n# Subtest: reserved starter pack import retains exact historical rows without allowing same-ID gameplay replacement\nok 19 - reserved starter pack import retains exact historical rows without allowing same-ID gameplay replacement\n  ---\n  duration_ms: 57.086084\n  type: 'test'\n  ...\n# Subtest: Retry cleanup reentry cannot return an accepted binding disposed by staged-theme cleanup\nok 20 - Retry cleanup reentry cannot return an accepted binding disposed by staged-theme cleanup\n  ---\n  duration_ms: 37.218291\n  type: 'test'\n  ...\n# Subtest: borrowed snapshot-reader disposal reentry aborts confirm/apply/audio before owner access\nok 21 - borrowed snapshot-reader disposal reentry aborts confirm/apply/audio before owner access\n  ---\n  duration_ms: 77.08475\n  type: 'test'\n  ...\n# Subtest: published v0.78 Team envelope retains exact fpv50 picture and audio after a newer default\nok 22 - published v0.78 Team envelope retains exact fpv50 picture and audio after a newer default\n  ---\n  duration_ms: 38.081\n  type: 'test'\n  ...\n# Subtest: exact published fpv50 page is borrowed without fetching an archived theme\nok 23 - exact published fpv50 page is borrowed without fetching an archived theme\n  ---\n  duration_ms: 21.388834\n  type: 'test'\n  ...\n# Subtest: a retained fpv38 transport cannot substitute for a published fpv50 receipt\nok 24 - a retained fpv38 transport cannot substitute for a published fpv50 receipt\n  ---\n  duration_ms: 16.712833\n  type: 'test'\n  ...\n# (node:99405) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:\n# --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"./.cache/shared-device-r1/team-after-music/loader.mjs\", pathToFileURL(\"./\"));'\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: current fpv38 uses its own pin directly while retaining the separately published fpv50\nok 25 - current fpv38 uses its own pin directly while retaining the separately published fpv50\n  ---\n  duration_ms: 2913.509625\n  type: 'test'\n  ...\n# Subtest: a successor authenticates the original archive and deduplicates all current/lazy dependencies\nok 26 - a successor authenticates the original archive and deduplicates all current/lazy dependencies\n  ---\n  duration_ms: 217.711625\n  type: 'test'\n  ...\n# Subtest: retained build rejects missing fpv50 archive before creating the output parent\nok 27 - retained build rejects missing fpv50 archive before creating the output parent\n  ---\n  duration_ms: 172.334959\n  type: 'test'\n  ...\n# Subtest: retained build rejects wrong fpv50 archive hash before creating the output parent\nok 28 - retained build rejects wrong fpv50 archive hash before creating the output parent\n  ---\n  duration_ms: 191.333583\n  type: 'test'\n  ...\n# Subtest: retained build rejects excluded fpv50 archive before creating the output parent\nok 29 - retained build rejects excluded fpv50 archive before creating the output parent\n  ---\n  duration_ms: 152.58925\n  type: 'test'\n  ...\n# Subtest: retained build rejects missing archive before creating the output parent\nok 30 - retained build rejects missing archive before creating the output parent\n  ---\n  duration_ms: 132.187166\n  type: 'test'\n  ...\n# Subtest: retained build rejects wrong archive hash before creating the output parent\nok 31 - retained build rejects wrong archive hash before creating the output parent\n  ---\n  duration_ms: 162.503958\n  type: 'test'\n  ...\n# Subtest: retained build rejects malformed archive before creating the output parent\nok 32 - retained build rejects malformed archive before creating the output parent\n  ---\n  duration_ms: 116.191583\n  type: 'test'\n  ...\n# Subtest: retained build rejects malformed current before creating the output parent\nok 33 - retained build rejects malformed current before creating the output parent\n  ---\n  duration_ms: 60.757708\n  type: 'test'\n  ...\n# Subtest: retained build rejects missing lazy original before creating the output parent\nok 34 - retained build rejects missing lazy original before creating the output parent\n  ---\n  duration_ms: 94.040208\n  type: 'test'\n  ...\n# Subtest: retained build rejects corrupt lazy original before creating the output parent\nok 35 - retained build rejects corrupt lazy original before creating the output parent\n  ---\n  duration_ms: 93.101792\n  type: 'test'\n  ...\n# Subtest: retained build rejects excluded archive before creating the output parent\nok 36 - retained build rejects excluded archive before creating the output parent\n  ---\n  duration_ms: 95.559917\n  type: 'test'\n  ...\n# Subtest: retained build rejects excluded lazy original before creating the output parent\nok 37 - retained build rejects excluded lazy original before creating the output parent\n  ---\n  duration_ms: 78.075833\n  type: 'test'\n  ...\n# Subtest: wrong archived identity cannot be authorized by rehashing the current file or its filename\nok 38 - wrong archived identity cannot be authorized by rehashing the current file or its filename\n  ---\n  duration_ms: 179.937584\n  type: 'test'\n  ...\n# Subtest: a missing original used only by the retained runtime cannot escape current-runtime verification\nok 39 - a missing original used only by the retained runtime cannot escape current-runtime verification\n  ---\n  duration_ms: 177.193667\n  type: 'test'\n  ...\n# Subtest: a symlink cannot supply a retained manifest even with identical target bytes\nok 40 - a symlink cannot supply a retained manifest even with identical target bytes\n  ---\n  duration_ms: 87.443041\n  type: 'test'\n  ...\n# Subtest: packaged rereads must still contain every verified byte exactly once\nok 41 - packaged rereads must still contain every verified byte exactly once\n  ---\n  duration_ms: 207.362167\n  type: 'test'\n  ...\n# Subtest: actual packaging carries current and both retained manifests with all offline dependencies\nok 42 - actual packaging carries current and both retained manifests with all offline dependencies\n  ---\n  duration_ms: 550.643208\n  type: 'test'\n  ...\n# Subtest: builds without the owned Team host preserve their existing opt-in boundary\nok 43 - builds without the owned Team host preserve their existing opt-in boundary\n  ---\n  duration_ms: 0.12775\n  type: 'test'\n  ...\n1..43\n# tests 43\n# suites 0\n# pass 43\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 8801.953875\n"
++}
+diff --git a/docs/verification/team-public-retention/public50-baseline-red.tap.json b/docs/verification/team-public-retention/public50-baseline-red.tap.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..2fe394eb4b3660142710d09046210e9a52fc9a21
+--- /dev/null
++++ b/docs/verification/team-public-retention/public50-baseline-red.tap.json
+@@ -0,0 +1,5 @@
++{
++  "bytes": 8028,
++  "sha256": "6e9714695eb20a2ed1ee2ee2b91290f9b7a7ccc9be50cec005a765dfa74dcfcf",
++  "text": "TAP version 13\n# (node:57516) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:\n# --import 'data:text/javascript,import { register } from \"node:module\"; import { pathToFileURL } from \"node:url\"; register(\"./.cache/shared-device-r1/team-after-music/loader.mjs\", pathToFileURL(\"./\"));'\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: known legacy association is the exact shipped runtime, independent of next defaults\nok 1 - known legacy association is the exact shipped runtime, independent of next defaults # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.318625\n  ...\n# Subtest: matching current immutable legacy snapshot is borrowed; Retry/confirm share image and do not close page\nok 2 - matching current immutable legacy snapshot is borrowed; Retry/confirm share image and do not close page # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.041208\n  ...\n# Subtest: fpv38 envelope under newer default owns exact retained theme + original picture without editing receipt\nok 3 - fpv38 envelope under newer default owns exact retained theme + original picture without editing receipt # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.032625\n  ...\n# Subtest: fresh non-envelope attempt uses new page snapshot and matching default picture policy\nok 4 - fresh non-envelope attempt uses new page snapshot and matching default picture policy # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.029291\n  ...\n# Subtest: foreign receipt and unauthenticated owner fail before any theme transport or decoder\nok 5 - foreign receipt and unauthenticated owner fail before any theme transport or decoder # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.073708\n  ...\n# Subtest: wrong legacy source/hash never borrows; missing retained manifest fails without fallback\nok 6 - wrong legacy source/hash never borrows; missing retained manifest fails without fallback # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.027667\n  ...\n# Subtest: retained transport cannot substitute the latest manifest or wrong source revision\nok 7 - retained transport cannot substitute the latest manifest or wrong source revision # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.024083\n  ...\n# Subtest: failed preparation keeps previous picture, theme and exact confirmation usable\nok 8 - failed preparation keeps previous picture, theme and exact confirmation usable # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.066458\n  ...\n# Subtest: failed later picture decode releases staged theme and retains accepted owner\nok 9 - failed later picture decode releases staged theme and retains accepted owner # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.073083\n  ...\n# Subtest: cancelled late theme load closes once and leaves previous borrowed attempt usable\nok 10 - cancelled late theme load closes once and leaves previous borrowed attempt usable # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.074541\n  ...\n# Subtest: stale late decoder releases its picture and theme once while newer selection wins\nok 11 - stale late decoder releases its picture and theme once while newer selection wins # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.0305\n  ...\n# Subtest: signal after adopted readiness does not close retained owner; dispose during decode owns late cleanup\nok 12 - signal after adopted readiness does not close retained owner; dispose during decode owns late cleanup # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.027625\n  ...\n# Subtest: ready callback cancellation cannot publish the staged result or replace accepted owner\nok 13 - ready callback cancellation cannot publish the staged result or replace accepted owner # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.0245\n  ...\n# Subtest: snapshot replacement rejects borrowed confirmation; exact retained reader remains independent\nok 14 - snapshot replacement rejects borrowed confirmation; exact retained reader remains independent # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.063084\n  ...\n# Subtest: request copies precede async preparation; changed same attempt cannot reuse a retained picture\nok 15 - request copies precede async preparation; changed same attempt cannot reuse a retained picture # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.034666\n  ...\n# Subtest: same pending request shares operation; successful successor retires previous exact owners once\nok 16 - same pending request shares operation; successful successor retires previous exact owners once # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.026917\n  ...\n# Subtest: configuration is captured at wrapper creation and borrowed apply cleanup retires once\nok 17 - configuration is captured at wrapper creation and borrowed apply cleanup retires once # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.027208\n  ...\n# Subtest: unsupported collection and missing page readiness never create a retained host\nok 18 - unsupported collection and missing page readiness never create a retained host # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.124542\n  ...\n# Subtest: reserved starter pack import retains exact historical rows without allowing same-ID gameplay replacement\nok 19 - reserved starter pack import retains exact historical rows without allowing same-ID gameplay replacement # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.035333\n  ...\n# Subtest: Retry cleanup reentry cannot return an accepted binding disposed by staged-theme cleanup\nok 20 - Retry cleanup reentry cannot return an accepted binding disposed by staged-theme cleanup # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.027167\n  ...\n# Subtest: borrowed snapshot-reader disposal reentry aborts confirm/apply/audio before owner access\nok 21 - borrowed snapshot-reader disposal reentry aborts confirm/apply/audio before owner access # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.061833\n  ...\n# Subtest: published v0.78 Team envelope retains exact fpv50 picture and audio after a newer default\nnot ok 22 - published v0.78 Team envelope retains exact fpv50 picture and audio after a newer default\n  ---\n  duration_ms: 27.811375\n  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-after-music/game/test/coop-owned-presentation.test.mjs:645:1'\n  failureType: 'testCodeFailure'\n  error: 'No trusted exact retained presentation for this Team receipt.'\n  code: 'ERR_TEST_FAILURE'\n  name: 'TypeError'\n  stack: |-\n    required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-after-music/game/data-json.mjs:103:25)\n    prepare (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-after-music/game/couch/coop-owned-presentation.mjs:180:9)\n    file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-after-music/game/couch/coop-owned-presentation.mjs:324:52\n    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/team-after-music/game/test/coop-owned-presentation.test.mjs:649:18)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ...\n# Subtest: exact published fpv50 page is borrowed without fetching an archived theme\nok 23 - exact published fpv50 page is borrowed without fetching an archived theme # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.442584\n  ...\n# Subtest: a retained fpv38 transport cannot substitute for a published fpv50 receipt\nok 24 - a retained fpv38 transport cannot substitute for a published fpv50 receipt # SKIP test name does not match pattern\n  ---\n  duration_ms: 0.030833\n  ...\n1..24\n# tests 24\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 23\n# todo 0\n# duration_ms 1374.74025\n"
++}
+diff --git a/docs/verification/team-public-retention/report.json b/docs/verification/team-public-retention/report.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..a6bbcc7a234b36521a19117b07583125c4eb4d34
+--- /dev/null
++++ b/docs/verification/team-public-retention/report.json
+@@ -0,0 +1,71 @@
++{
++  "scope": "Local Team integration correction; production source-stage51 remains unreviewed/unpublished",
++  "base": "595fdadd",
++  "publishedAssociations": [
++    {
++      "tag": "v0.76.1",
++      "revision": 38,
++      "runtimeSHA256": "a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584"
++    },
++    {
++      "tag": "v0.78.0",
++      "revision": 50,
++      "runtimeSHA256": "29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed"
++    }
++  ],
++  "tests": {
++    "baseline": {
++      "fail": 1,
++      "skip": 23
++    },
++    "Node20.19.5": 43,
++    "Node22.22.2": 43
++  },
++  "source": [
++    {
++      "path": "game/couch/coop-retained-presentation.mjs",
++      "bytes": 3880,
++      "sha256": "3bef52a204d8e1f480ace16bc1caf0b3d92492100b093d4de1558db93023c694"
++    },
++    {
++      "path": "game/couch/coop-owned-presentation.mjs",
++      "bytes": 13607,
++      "sha256": "0789e1c5dd070ec77873e393b7f19f6001a56a9e1fc1ee1b26306bd0ffc0cc16"
++    },
++    {
++      "path": "game/test/coop-owned-presentation.test.mjs",
++      "bytes": 23289,
++      "sha256": "ca8d706861f87367fa0189fd3d34ade320c9ef7ba2a1c1c927a4d585c1f1e412"
++    },
++    {
++      "path": "scripts/retained-team-presentation.mjs",
++      "bytes": 4073,
++      "sha256": "df4191357a5ddad853a20170d0f8214f7b6402421eda48653c1337145977a384"
++    },
++    {
++      "path": "scripts/test-retained-team-presentation.mjs",
++      "bytes": 12329,
++      "sha256": "b43563db64ae22969c01e816f973da2117a733fe7277368ff088bb1afb1f4641"
++    }
++  ],
++  "originalLogs": {
++    "public50-baseline-red.tap": {
++      "bytes": 8028,
++      "sha256": "6e9714695eb20a2ed1ee2ee2b91290f9b7a7ccc9be50cec005a765dfa74dcfcf"
++    },
++    "public-retention-final-node20.tap": {
++      "bytes": 10601,
++      "sha256": "1e2f0e1a03b434c9a79f843c7e2fe52f06c9b3b670a8048825deb53bedce11fb"
++    },
++    "public-retention-final-node22.tap": {
++      "bytes": 11251,
++      "sha256": "2e3f865a40b85ee03a9d0519ba5311bdd40f4b13a150b3eadd3f75630319e911"
++    }
++  },
++  "remaining": [
++    "Reopened production recipe reviews and current picture bindings",
++    "Complete combined Team host/native and source qualification",
++    "Public and offline acceptance",
++    "Physical input and device gates"
++  ]
++}
+diff --git a/game/couch/coop-owned-presentation.mjs b/game/couch/coop-owned-presentation.mjs
+index f21d9340044857f081c9143f7c3fc6420cd2426e..ebc9e8d8a534efc805dad314c092724668ac22b7 100644
+--- a/game/couch/coop-owned-presentation.mjs
++++ b/game/couch/coop-owned-presentation.mjs
+@@ -13,11 +13,7 @@ import {
+ import { prepareVisualThemeLease } from '../presentation/visual-theme-lease.mjs';
+ import { createPresentationHost } from '../presentation/host.mjs';
+ import { createCoopPresentation } from './coop-presentation.mjs';
+-import {
+-  RETAINED_FPV38_PRESENTATION,
+-  RETAINED_FPV38_PICTURE_BINDINGS,
+-  RETAINED_FPV38_IMPORT_POLICY,
+-} from './coop-retained-presentation.mjs';
++import { RETAINED_TEAM_PRESENTATIONS } from './coop-retained-presentation.mjs';
+ 
+ const aborted = () =>
+   new DOMException('Team presentation preparation was cancelled.', 'AbortError');
+@@ -87,7 +83,6 @@ function presentationOf(snapshot) {
+     sha256: snapshot.manifestSha256,
+   };
+ }
+-const legacyTheme = { ...RETAINED_FPV38_PRESENTATION.theme, collection: null };
+ 
+ /** An attempt owns picture + optional retained theme together. No storage, global
+  * preference, production-default or simulation mutation occurs in this wrapper.
+@@ -170,12 +165,19 @@ export function createOwnedCoopPresentation({
+       const pageSnapshot = getSnapshot();
+       check(state);
+       const currentTheme = themeOf(pageSnapshot);
+-      const legacy = receipt && same(receipt.theme, legacyTheme);
++      const legacy =
++        receipt &&
++        RETAINED_TEAM_PRESENTATIONS.find((entry) =>
++          same(receipt.theme, {
++            ...entry.presentation.theme,
++            collection: entry.presentation.collection,
++          }),
++        );
+       let retained = false;
+       if (
+         receipt &&
+         (!same(receipt.theme, currentTheme) ||
+-          (legacy && !same(presentationOf(pageSnapshot), RETAINED_FPV38_PRESENTATION)))
++          (legacy && !same(presentationOf(pageSnapshot), legacy.presentation)))
+       ) {
+         required(legacy, 'No trusted exact retained presentation for this Team receipt.');
+         report(state, {
+@@ -194,7 +196,10 @@ export function createOwnedCoopPresentation({
+           { signal: state.controller.signal },
+         );
+         check(state);
+-        const selection = { id: 'team-legacy-fpv38', revision: 1 };
++        const selection = {
++          id: `team-legacy-fpv${legacy.presentation.theme.revision}`,
++          revision: 1,
++        };
+         const catalogue = createVisualThemeCatalogue({
+           format: VISUAL_THEME_CATALOGUE_FORMAT,
+           id: 'team-retained',
+@@ -203,7 +208,7 @@ export function createOwnedCoopPresentation({
+             {
+               ...selection,
+               name: 'Retained FPV field kit',
+-              presentation: RETAINED_FPV38_PRESENTATION,
++              presentation: legacy.presentation,
+               coverage: [content],
+             },
+           ],
+@@ -211,7 +216,7 @@ export function createOwnedCoopPresentation({
+         state.theme = await prepareVisualThemeLease(
+           { catalogue, selection, content, requiredSlots: ['scene.reveal.wide'] },
+           {
+-            createHost: () => createHost(RETAINED_FPV38_PRESENTATION),
++            createHost: () => createHost(legacy.presentation),
+             signal: state.controller.signal,
+             onStatus: (status) => {
+               if (status.status !== 'ready') report(state, status);
+@@ -233,10 +238,10 @@ export function createOwnedCoopPresentation({
+       );
+       // Legacy matching page snapshots also use immutable legacy bindings; future
+       // default bindings cannot alter historical import or reserved-pack authority.
+-      const legacyBindings = legacy && same(presentationOf(snapshot), RETAINED_FPV38_PRESENTATION);
++      const legacyBindings = legacy && same(presentationOf(snapshot), legacy.presentation);
+       state.picture = createCoopPresentation({
+-        bindings: legacyBindings ? RETAINED_FPV38_PICTURE_BINDINGS : ownedBindings,
+-        historicalImportPolicy: legacyBindings ? RETAINED_FPV38_IMPORT_POLICY : ownedPolicy,
++        bindings: legacyBindings ? legacy.bindings : ownedBindings,
++        historicalImportPolicy: legacyBindings ? legacy.historicalImportPolicy : ownedPolicy,
+         getSnapshot: retained ? () => snapshot : () => getSnapshot(),
+         readPicture: retained ? (...args) => state.theme.readPicture(...args) : readPicture,
+         decodeImage,
+diff --git a/game/couch/coop-retained-presentation.mjs b/game/couch/coop-retained-presentation.mjs
+index 72d7a76a93640f99d21c580d95c34ea857654da3..324b4bb4e1d05c0b4ef89b27312a442dd119bee8 100644
+--- a/game/couch/coop-retained-presentation.mjs
++++ b/game/couch/coop-retained-presentation.mjs
+@@ -80,3 +80,25 @@ export const RETAINED_FPV38_PRESENTATION = freezePresentation({
+   collection: null,
+   sha256: 'a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584',
+ });
++
++/** The accepted v0.78 original is a separate exact association, never a revision range.
++ * Its picture bytes equal fpv38; audio/recipe metadata retain their own full manifest.
++ */
++export const RETAINED_FPV50_PRESENTATION = freezePresentation({
++  source: { id: 'field-kit', revision: 50 },
++  theme: { id: 'fpv', revision: 50 },
++  collection: null,
++  sha256: '29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed',
++});
++export const RETAINED_TEAM_PRESENTATIONS = freezePresentation([
++  {
++    presentation: RETAINED_FPV38_PRESENTATION,
++    bindings: RETAINED_FPV38_PICTURE_BINDINGS,
++    historicalImportPolicy: RETAINED_FPV38_IMPORT_POLICY,
++  },
++  {
++    presentation: RETAINED_FPV50_PRESENTATION,
++    bindings: RETAINED_FPV38_PICTURE_BINDINGS.map((binding) => ({ ...binding, themeRevision: 50 })),
++    historicalImportPolicy: { ...RETAINED_FPV38_IMPORT_POLICY, themeRevision: 50 },
++  },
++]);
+diff --git a/game/test/coop-owned-presentation.test.mjs b/game/test/coop-owned-presentation.test.mjs
+index ba94a4ba0ff425a63124f59e511520e52e91781d..5319e0f3dcec5c9bbfa81571498bfc367d38e0d9 100644
+--- a/game/test/coop-owned-presentation.test.mjs
++++ b/game/test/coop-owned-presentation.test.mjs
+@@ -88,6 +88,7 @@ async function envelope(pack, theme = { id: 'fpv', revision: 38, collection: nul
+ }
+ async function fixture({
+   pageRevision = 39,
++  retainedRevision = 38,
+   theme,
+   createHostOverride,
+   decodeOverride,
+@@ -97,12 +98,30 @@ async function fixture({
+ } = {}) {
+   const pack = clone(COOP_STARTER_PACK);
+   pack.id = 'local-owned-fixture';
+-  const imported = await envelope(pack, theme);
+-  const oldSnapshot = { ...clone(manifest), manifestSha256: sha(runtimeBytes) };
++  const retainedAssociation =
++    retainedRevision === 38
++      ? RETAINED_FPV38_PRESENTATION
++      : {
++          source: { id: 'field-kit', revision: 50 },
++          theme: { id: 'fpv', revision: 50 },
++          collection: null,
++          sha256: '29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed',
++        };
++  const retainedBytes = await readFile(
++    new URL(`../presentation/compiled/runtime.${retainedAssociation.sha256}.json`, import.meta.url),
++  );
++  assert.equal(sha(retainedBytes), retainedAssociation.sha256);
++  const retainedManifest = JSON.parse(retainedBytes);
++  assert.deepEqual(retainedManifest.source, retainedAssociation.source);
++  const imported = await envelope(
++    pack,
++    theme ?? { ...retainedAssociation.theme, collection: null },
++  );
++  const oldSnapshot = { ...clone(retainedManifest), manifestSha256: sha(retainedBytes) };
+   const pageSnapshot = clone(oldSnapshot);
+   pageSnapshot.source.revision = pageRevision;
+   pageSnapshot.resolved.theme.revision = pageRevision;
+-  if (pageRevision !== 38) pageSnapshot.manifestSha256 = '9'.repeat(64);
++  if (pageRevision !== retainedRevision) pageSnapshot.manifestSha256 = '9'.repeat(64);
+   let page = pageSnapshot,
+     hosts = 0,
+     hostCloses = 0,
+@@ -126,13 +145,13 @@ async function fixture({
+   };
+   const createHost = (association) => {
+     hosts++;
+-    assert.deepEqual(association, RETAINED_FPV38_PRESENTATION);
++    assert.deepEqual(association, retainedAssociation);
+     if (createHostOverride) return createHostOverride(association);
+     let snapshot = null;
+     return {
+       current: () => snapshot,
+       async load(options) {
+-        assert.equal(options.expectedManifestSha256, sha(runtimeBytes));
++        assert.equal(options.expectedManifestSha256, sha(retainedBytes));
+         snapshot = oldSnapshot;
+         return snapshot;
+       },
+@@ -629,3 +648,47 @@ test('borrowed snapshot-reader disposal reentry aborts confirm/apply/audio befor
+     close(f);
+   }
+ });
++
++test('published v0.78 Team envelope retains exact fpv50 picture and audio after a newer default', async () => {
++  const f = await fixture({ pageRevision: 51, retainedRevision: 50 });
++  const originalReceipt = canonicalJSON(f.imported.owner.receipt);
++  const originalBytes = Buffer.from(await f.imported.input.arrayBuffer());
++  const result = await f.owner.select(f.request);
++  assert.equal(result.snapshot, f.oldSnapshot);
++  assert.equal(result.choice.themeRevision, 50);
++  assert.equal((await f.owner.readAudio('audio.capture')).snapshot, f.oldSnapshot);
++  assert.equal(await f.owner.select(f.request), result);
++  assert.equal(f.owner.confirm(f.request), result);
++  assert.equal(canonicalJSON(f.imported.owner.receipt), originalReceipt);
++  assert.deepEqual(
++    Buffer.from(await exportCoopPresentationEnvelope(f.imported.owner).arrayBuffer()),
++    originalBytes,
++  );
++  close(f);
++  counts(f, { hosts: 1, hostCloses: 1, pictureReleases: 1, decodes: 1 });
++});
++
++test('exact published fpv50 page is borrowed without fetching an archived theme', async () => {
++  const f = await fixture({ pageRevision: 50, retainedRevision: 50 });
++  const result = await f.owner.select(f.request);
++  assert.equal(result.snapshot, f.pageSnapshot);
++  assert.equal(result.choice.themeRevision, 50);
++  counts(f, { hosts: 0, decodes: 1 });
++  close(f);
++});
++
++test('a retained fpv38 transport cannot substitute for a published fpv50 receipt', async () => {
++  const f = await fixture({
++    pageRevision: 51,
++    retainedRevision: 50,
++    createHostOverride: () => ({
++      current: () => null,
++      load: async () => ({ ...clone(manifest), manifestSha256: sha(runtimeBytes) }),
++      close() {},
++    }),
++  });
++  await assert.rejects(f.owner.select(f.request));
++  assert.equal(f.owner.current(), null);
++  counts(f, { decodes: 0 });
++  close(f);
++});
+diff --git a/scripts/retained-team-presentation.mjs b/scripts/retained-team-presentation.mjs
+index 3cbb65ee564c7cd89586e2965963ed236088985b..adb846f5dc9248f3ed4088bc199373d7d0dbd577 100644
+--- a/scripts/retained-team-presentation.mjs
++++ b/scripts/retained-team-presentation.mjs
+@@ -5,11 +5,11 @@ import { canonicalJSON, required } from '../game/data-json.mjs';
+ import { LIMITS } from '../game/presentation/model.mjs';
+ import { verifyPresentationDependencies } from '../game/presentation/dependencies.mjs';
+ import { presentationManifestPath } from '../game/presentation/manifest-path.mjs';
+-import { RETAINED_FPV38_PRESENTATION } from '../game/couch/coop-retained-presentation.mjs';
++import { RETAINED_TEAM_PRESENTATIONS } from '../game/couch/coop-retained-presentation.mjs';
+ 
+ const prefix = 'game/presentation/compiled/';
+ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+-const supported = [RETAINED_FPV38_PRESENTATION];
++const supported = RETAINED_TEAM_PRESENTATIONS.map((entry) => entry.presentation);
+ 
+ /** Build-only code-owned associations. Files must also belong to the core offline
+  * inventory; a worker cannot detect a required file omitted from its CONFIG. */
+diff --git a/scripts/test-retained-team-presentation.mjs b/scripts/test-retained-team-presentation.mjs
+index 95a805f0e3d2ddb859019d354f8648a07f6b15f5..06478f3e098a379875e58060f424f4fa53dbefda 100644
+--- a/scripts/test-retained-team-presentation.mjs
++++ b/scripts/test-retained-team-presentation.mjs
+@@ -10,10 +10,14 @@ import {
+   verifyRetainedTeamPresentationEntries,
+ } from './retained-team-presentation.mjs';
+ import { inspectPresentationDependencies } from '../game/presentation/dependencies.mjs';
+-import { RETAINED_FPV38_PRESENTATION } from '../game/couch/coop-retained-presentation.mjs';
++import {
++  RETAINED_FPV38_PRESENTATION,
++  RETAINED_FPV50_PRESENTATION,
++} from '../game/couch/coop-retained-presentation.mjs';
+ 
+ const prefix = 'game/presentation/compiled/';
+ const archive = `${prefix}runtime.${RETAINED_FPV38_PRESENTATION.sha256}.json`;
++const archive50 = `${prefix}runtime.${RETAINED_FPV50_PRESENTATION.sha256}.json`;
+ const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+ let source;
+ async function originals() {
+@@ -37,7 +41,17 @@ async function originals() {
+         prefix + file.path,
+         await fs.readFile(new URL('../game/presentation/compiled/' + file.path, import.meta.url)),
+       );
+-    return { runtime, inventory, entries };
++    const runtime50 = await fs.readFile(new URL('../' + archive50, import.meta.url));
++    assert.equal(sha(runtime50), RETAINED_FPV50_PRESENTATION.sha256);
++    const inventory50 = await inspectPresentationDependencies(runtime50);
++    assert.deepEqual(inventory50.source, RETAINED_FPV50_PRESENTATION.source);
++    entries.set(archive50, runtime50);
++    for (const file of inventory50.files) {
++      const body = await fs.readFile(new URL('../' + prefix + file.path, import.meta.url));
++      if (entries.has(prefix + file.path)) assert.deepEqual(entries.get(prefix + file.path), body);
++      entries.set(prefix + file.path, body);
++    }
++    return { runtime, inventory, entries, runtime50, inventory50 };
+   })();
+   return source;
+ }
+@@ -82,11 +96,16 @@ async function fixture(t, { successor = false } = {}) {
+   return { directory, entries, original, write, included: () => [...entries.keys()] };
+ }
+ 
+-test('exact current fpv38 satisfies its supported pin without demanding an archive', async (t) => {
++test('current fpv38 uses its own pin directly while retaining the separately published fpv50', async (t) => {
+   const f = await fixture(t);
+   const result = await readRetainedTeamPresentation(f.directory, f.included());
+-  assert.equal(result.files.length, f.original.inventory.files.length + 1);
++  assert.equal(result.files.length, f.original.entries.size);
+   assert(!result.files.some((file) => file.path === archive));
++  assert(
++    result.files.some(
++      (file) => file.path === archive50 && file.sha256 === RETAINED_FPV50_PRESENTATION.sha256,
++    ),
++  );
+   assert(
+     result.files.some(
+       (file) =>
+@@ -99,7 +118,7 @@ test('exact current fpv38 satisfies its supported pin without demanding an archi
+ test('a successor authenticates the original archive and deduplicates all current/lazy dependencies', async (t) => {
+   const f = await fixture(t, { successor: true });
+   const result = await readRetainedTeamPresentation(f.directory, f.included());
+-  assert.equal(result.files.length, f.original.inventory.files.length + 2);
++  assert.equal(result.files.length, f.original.entries.size + 1);
+   assert(
+     result.files.some(
+       (file) => file.path === archive && file.sha256 === RETAINED_FPV38_PRESENTATION.sha256,
+@@ -114,6 +133,9 @@ test('a successor authenticates the original archive and deduplicates all curren
+ });
+ 
+ for (const failure of [
++  'missing fpv50 archive',
++  'wrong fpv50 archive hash',
++  'excluded fpv50 archive',
+   'missing archive',
+   'wrong archive hash',
+   'malformed archive',
+@@ -128,13 +150,18 @@ for (const failure of [
+     const lazy =
+       prefix +
+       f.original.inventory.files.find((file) => file.slots.includes('scene.reveal.wide')).path;
++    const failedArchive = failure.includes('fpv50') ? archive50 : archive,
++      archiveFailure = failure.replace('fpv50 ', '');
+     let excluded = [];
+-    if (failure === 'missing archive') {
+-      f.entries.delete(archive);
+-      await fs.rm(path.join(f.directory, archive));
++    if (archiveFailure === 'missing archive') {
++      f.entries.delete(failedArchive);
++      await fs.rm(path.join(f.directory, failedArchive));
+     }
+-    if (failure === 'wrong archive hash')
+-      await f.write(archive, Buffer.concat([f.original.runtime, Buffer.from('\n')]));
++    if (archiveFailure === 'wrong archive hash')
++      await f.write(
++        failedArchive,
++        Buffer.concat([f.entries.get(failedArchive), Buffer.from('\n')]),
++      );
+     if (failure === 'malformed archive') await f.write(archive, Buffer.from('{}'));
+     if (failure === 'malformed current') await f.write(prefix + 'runtime.json', Buffer.from('{}'));
+     if (failure === 'missing lazy original') {
+@@ -146,7 +173,7 @@ for (const failure of [
+       bytes[bytes.length - 1] ^= 1;
+       await f.write(lazy, bytes);
+     }
+-    if (failure === 'excluded archive') excluded = [archive];
++    if (archiveFailure === 'excluded archive') excluded = [failedArchive];
+     if (failure === 'excluded lazy original') excluded = [lazy];
+     if (excluded.length)
+       await assert.rejects(
+@@ -237,7 +264,7 @@ test('packaged rereads must still contain every verified byte exactly once', asy
+     );
+ });
+ 
+-test('actual packaging carries both manifests and the complete dependency set into offline config', async (t) => {
++test('actual packaging carries current and both retained manifests with all offline dependencies', async (t) => {
+   const f = await fixture(t, { successor: true });
+   const expected = await readRetainedTeamPresentation(f.directory, f.included());
+   const out = path.join(f.directory, 'built');
