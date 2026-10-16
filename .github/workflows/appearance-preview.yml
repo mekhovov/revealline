@@ -57,6 +57,8 @@ on:
       - 'game/test/solo-render-submission.test.mjs'
       - 'game/test/demo-audio.test.mjs'
       - 'game/test/demo-audio-host.test.mjs'
+      - 'game/test/demo-context-recovery-host.test.mjs'
+      - 'game/test/demo-retained-presentation-host.test.mjs'
       - 'game/test/soundtrack-panel.test.mjs'
       - 'game/test/soundtrack-host.test.mjs'
       - 'game/test/enemy-guide-panel.test.mjs'
@@ -150,6 +152,8 @@ jobs:
         game/test/solo-render-submission.test.mjs
         game/test/demo-audio.test.mjs
         game/test/demo-audio-host.test.mjs
+        game/test/demo-context-recovery-host.test.mjs
+        game/test/demo-retained-presentation-host.test.mjs
         game/test/soundtrack-panel.test.mjs
         game/test/soundtrack-host.test.mjs
         game/test/enemy-guide-panel.test.mjs
