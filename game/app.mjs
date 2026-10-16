@@ -8122,6 +8122,21 @@ try {
     settledPictureRemaining = 0;
   }
   function clearResultAutoAdvance({ dismiss = false } = {}) {
+    const notice = $('result-auto-next');
+    if (
+      dismiss &&
+      run?.status === 'won' &&
+      !notice.hidden &&
+      !$('game-overlay').hidden &&
+      $('game-overlay').dataset.kind === 'won'
+    )
+      // Removing this row during pointerdown moves the action out from under
+      // the release. Keep its occupied slot for this result only, while hiding
+      // the cancelled countdown from both sight and live announcements.
+      notice.dataset.reserveSpace = 'true';
+    else if (!dismiss) delete notice.dataset.reserveSpace;
+    notice.setAttribute('aria-hidden', 'true');
+    notice.setAttribute('aria-live', 'off');
     if (dismiss && run?.status === 'won') resultAutoAdvanceDismissedRun = run;
     resultAutoAdvanceRun = null;
     resultAutoAdvanceRemaining = 0;
@@ -8146,6 +8161,12 @@ try {
   }
   function refreshResultAutoAdvance() {
     const active = resultAutoAdvanceRun === run && automaticResultContinuationAvailable();
+    const notice = $('result-auto-next');
+    if (active && (notice.hidden || notice.dataset.reserveSpace)) {
+      delete notice.dataset.reserveSpace;
+      notice.removeAttribute('aria-hidden');
+      notice.setAttribute('aria-live', 'polite');
+    }
     show('result-auto-next', active);
     if (!active) return;
     const seconds = Math.max(1, Math.ceil(resultAutoAdvanceRemaining));
