@@ -1,5 +1,36 @@
 import { evaluateQualificationBudgets } from './solo-qualification.mjs';
 
+/** rAF timestamps describe frame time, which can precede observer registration.
+ * Only two callbacks establish an interval. Preserve later gaps unchanged. */
+export function createRafIntervalClock(
+  registeredAtMs,
+  callbackClock = () => globalThis.performance.now(),
+) {
+  let previous = null,
+    first = null;
+  return {
+    observe(timestampMs) {
+      if (previous === null) {
+        const callbackAtMs = callbackClock();
+        first = {
+          registeredAtMs,
+          timestampMs,
+          callbackAtMs,
+          registrationToFirstCallbackMs: callbackAtMs - registeredAtMs,
+          timestampMinusRegistrationMs: timestampMs - registeredAtMs,
+        };
+        previous = timestampMs;
+        return null;
+      }
+      const elapsed = timestampMs - previous;
+      previous = timestampMs;
+      return elapsed;
+    },
+    snapshot: () =>
+      first ? { ...first } : { registeredAtMs, timestampMs: null, callbackAtMs: null },
+  };
+}
+
 /** Self-contained for installation before page scripts. Cadence eligibility is
  * not application/asset readiness: packaged title launches prepare on Start. */
 export function readPrePlayReadiness(documentRef = globalThis.document) {

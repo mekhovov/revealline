@@ -4,6 +4,8 @@ Create a new fixture directory with `node scripts/prepare-solo-qualification.mjs
 
 Native replay correctness is checked after the gameplay browser and context close. A fresh instance of the same engine must report exactly the same full `browser.version()`. It visits only the observed build's `build-info.json`, requires identical metadata bytes/source revision and production CSP, then imports that artifact's strict replay, core and mechanic-view modules. A dependency-free shared inspector verifies the unchanged checkpoints before reconstructing mechanic counts. Module hashes and every failure are retained; no reviewed-demo exception or rewritten enemy checkpoint is allowed. This separate verification is excluded from gameplay timing. Node reconstruction remains a separately labeled portability result: native trigonometry can produce a different enemy checkpoint across engines, so a Node mismatch cannot replace the strict same-engine result. Missing identity, changed browser version, native mismatch or missing required mechanics fails the scenario. Old failed reports are never relabeled after a supplementary diagnostic succeeds.
 
+Consecutive-rAF observations begin at the second callback. The first frame timestamp, actual callback time and registration-to-callback delay are separate fields, because a frame timestamp can precede observer registration. Historical reports through tooling `2939bc0cc` may contain one negative boot interval from subtracting registration time from that timestamp; retain those reports and exclude that boot-only artifact from interpretation. Later lifecycle intervals are neither clamped nor removed. Application scene timing is unchanged.
+
 The prepared cases cover:
 
 - `first-return`: a real capture and win.
