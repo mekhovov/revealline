@@ -78,6 +78,7 @@ export function createAdvancedWorkerClient({
     snapshot: () => request('snapshot'),
     restore: (snapshot) => request('restore', { snapshot }),
     recording: () => request('recording'),
+    verifyRecording: (recording) => request('verify-recording', { recording }),
     reset: () => request('reset'),
     dispose,
   };

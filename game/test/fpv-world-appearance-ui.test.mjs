@@ -1764,6 +1764,32 @@ async function openWorldTuning(h) {
   assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
 }
 
+test('World tuning retains the committed keyboard sample and never presents radio data for that owner', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const h = fixture(t);
+  await h.app.ready;
+  const entry = WORLD_CATALOGUE.find((item) => !item.legacy && !item.beginner && item.activity !== 'hunt');
+  await h.app.startFlight(entry);
+  h.$('world-arm').click();
+  h.tick(2);
+  h.win.emit('keydown', { code: 'ArrowRight', key: 'ArrowRight', target: h.$('world-viewport'), repeat: false });
+  h.tick(4);
+  const committed = h.app.snapshot().state;
+  assert.ok(committed.ticks > 0);
+  assert.equal(committed.lastInput.roll, 500);
+  await openWorldTuning(h);
+  h.tick(40);
+  const text = h.doc.querySelector('[aria-label="Input diagnostics"]').textContent;
+  assert.match(text, /Input source: Keyboard/);
+  assert.match(text, /Last committed flight input; flight is paused/);
+  assert.match(text, /Raw input: \{"keys":\["ArrowRight"\]\}/);
+  assert.match(text, /Calibrated: \{"roll":0.5/);
+  assert.match(text, new RegExp(`Flight tick: ${committed.ticks}`));
+  assert.match(text, /Browser sample age \(ms\): unavailable/);
+});
+
 // These exercise the mounted host and its real recording exporter. The renderer
 // is a fixture; they do not claim browser rendering or physical-controller qualification.
 test('World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration', async (t) => {

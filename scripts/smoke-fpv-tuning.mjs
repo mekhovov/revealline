@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { isDeepStrictEqual } from 'node:util';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const check = (condition, message) => {
@@ -203,8 +204,11 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               (await page.evaluate(() => window.qualificationStore.export())) === beforeImport,
               'Malformed import changed storage',
             );
-            await transfer.fill('set roll_rc_rate = 12\nset yaw_expo = 30');
+            const importSource = 'set roll_rc_rate = 12\nset yaw_expo = 30\nset p_roll = 80';
+            await transfer.fill(importSource);
             await button('Preview import').click();
+            // SHA-256 source receipts finish asynchronously; never click Save
+            // merely because the pointer action itself has completed.
             await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
             await button('Save import as new profile').click();
             await page.waitForFunction(
@@ -217,6 +221,44 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               ),
               'Import silently reassigned the drone',
             );
+            const imported = await page.evaluate(() =>
+              window.qualificationStore.snapshot().profiles.at(-1),
+            );
+            const sourceHash = createHash('sha256').update(importSource).digest('hex');
+            check(
+              imported.provenance?.source.sha256 === sourceHash &&
+                imported.provenance.firmware.origin === 'manual' &&
+                imported.provenance.firmware.version === '2025.12.5' &&
+                imported.provenance.operation === 'patch' &&
+                imported.provenance.baseline.profileId === profileId &&
+                imported.provenance.review.ignored.entries.some((item) => item.includes('p_roll')),
+              'Import did not persist the selected firmware/baseline/source receipt',
+            );
+            await page.getByText('Import receipt', { exact: true }).click();
+            check(
+              (await page.locator('details[open] pre').filter({ hasText: sourceHash }).count()) > 0,
+              'Saved import receipt is not visible as inert text',
+            );
+            await button('Backup complete library').click();
+            const receiptBackup = JSON.parse(await transfer.inputValue());
+            check(
+              receiptBackup.profiles.find((profile) => profile.id === imported.id).provenance.source
+                .sha256 === sourceHash,
+              'Complete library backup dropped the receipt',
+            );
+            await button('Restore library backup').click();
+            await page.waitForFunction(
+              (revision) => window.qualificationStore.snapshot().revision > revision,
+              receiptBackup.revision,
+            );
+            evidence.checks.importReceipt = {
+              sourceSha256: sourceHash,
+              sourceBytes: Buffer.byteLength(importSource),
+              firmware: imported.provenance.firmware,
+              operation: imported.provenance.operation,
+              ignoredSettings: imported.provenance.review.ignored.total,
+              backupRestore: true,
+            };
             evidence.checks.importAtomicAndExplicitAssignment = true;
             evidence.checks.download = true;
 
@@ -245,6 +287,17 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               'Reload lost profile assignment or camera',
             );
             evidence.checks.reloadPersistence = true;
+            const restoredReceipt = await page.evaluate(
+              (id) =>
+                window.qualificationStore.snapshot().profiles.find((profile) => profile.id === id)
+                  .provenance,
+              imported.id,
+            );
+            check(
+              isDeepStrictEqual(restoredReceipt, imported.provenance),
+              'Reload lost or changed the exact import receipt',
+            );
+            evidence.checks.importReceipt.reloadPersistence = true;
             await page.evaluate(() => {
               window.qualificationLocale = 'uk';
               window.qualificationUI.refresh();
