@@ -1,0 +1,116 @@
+{
+  "format": "CompleteAppGitCommitInventoryClosure.v1",
+  "createdUTC": "2026-10-16T05:03:51.497440+00:00",
+  "commonStores": 16,
+  "completeInitialNativeStores": 13,
+  "completedObjectOnlyRetryStores": 1,
+  "completedByOwnIndexAndIdentityClassificationStores": 2,
+  "allSixteenCommitObjectInventoriesAccounted": true,
+  "uniqueCommitObjects": 16318,
+  "additionalCommitObjectsFromRetries": [
+    "15b7bc75f5b77e8397de30a77985ccf9e4b16fb0",
+    "1711fd052b02e1bb583bece4c2fbce147e1fc276",
+    "2bfe33aaa4a63402ce78f24a78fa317ab8ed909e",
+    "2c84af0c8776fe3ca57f374ebadd360bc422be4b",
+    "30e0d94b453bc0739971d48b9766a3127c64ab20",
+    "36a28a40df2cd84162fead2b7092c794a7c91850",
+    "4846d4d666511a17c3873af89e270cecf84812a5",
+    "4b762e46631af2b0a79b401c6ad644e6eec1398c",
+    "53bc7746d20421a8dee16ccc1f7d14fd08a31a1e",
+    "5f757cf3edc6f3e37509da9407f61530c5273289",
+    "63f33705bb403556d71bb71ca8dcf9b92f0c6410",
+    "6c3b1bea4e1bec28582b57eb9b273dc410dad438",
+    "71762b4981cb18b20613adee3937f6d56564fb8c",
+    "91d0a76021c7136982be3752f3fc9db1a1f7278b",
+    "9907848cbe8831645d264273a043df9caa9b9b4b",
+    "b3775029597f420a4ca22e4995df251fb6db4e71",
+    "bfd4cb2e677845e1f300e779fb1ad3c07e724676",
+    "c2e18b4bb9b0efd27bae9a795a06c415fa4291f9",
+    "c4bbf77cac94e4aada6c69afbf794f493023412e",
+    "cb2a941f7310569b0a7f071e746a97ee2e5baf1a",
+    "d587a3e25f562c381e06eda5f128cbcb932a319f",
+    "dc13ec3dd5422e18c79f694c8c95246fb094aceb",
+    "dc45d02b57555df6b8afd9b1b65246ca1fe86ab1",
+    "df49c1789f189bcb308c94f50bf6d3933a466357",
+    "ee54c554e3d8643bb715551d8df0502ca20a8dd0",
+    "f587acd99c0ef0e6dfd4c2a017b38145db86ba33"
+  ],
+  "publicCommitObjects": 13526,
+  "privateCommitObjects": 2792,
+  "privateRawExcludedCommitObjects": [
+    "042733a8cae3d5926dfbb7577c6dba44321e8ba2",
+    "52e015e4831048b12f7fa69b3110f8d112ad73f7",
+    "8dc2818d315526507119ef036da4c9aee3d510b9",
+    "f095979b40906fd95f1c0dbfd841d77ceb7434f2"
+  ],
+  "privateSourceGraphCommits": 2792,
+  "selectedCommitGraphCount": 2790,
+  "selectedSafeTrackedReplacements": [
+    {
+      "originalCommit": "8dc2818d315526507119ef036da4c9aee3d510b9",
+      "safeSnapshotCommit": "d1b6f2774eca0a5f9796cf2c4bb1ae56e9116291",
+      "tree": "2783f5c4e94758847f32da47e133d87055077517",
+      "parents": [
+        "a89a34b52ad6be291347b68ebde7e9ebcf8b8e45",
+        "69c5a21d392461c630749a878f8b88c89ff49788"
+      ]
+    },
+    {
+      "originalCommit": "f095979b40906fd95f1c0dbfd841d77ceb7434f2",
+      "safeSnapshotCommit": "db03b309ee2fdd6c97f5c6b68a3b402abcc818d6",
+      "tree": "d14de4955dc2855ba8584cf893b12be35aa16956",
+      "parents": [
+        "e4b323f6ba940e9bebeb766367d08baaefac052c",
+        "9d8a1f86e2c8aa494e603a8657e34aef8d0f156f"
+      ]
+    }
+  ],
+  "newUnclassifiedCommitObjects": [],
+  "distinctAnnotatedTagObjects": 175,
+  "allAnnotatedTagsAlreadyGitHubReadable": true,
+  "unknownPackedObjectHeaderGap": {
+    "count": 183,
+    "GitHubTypes": {
+      "Blob": 180,
+      "Tree": 3
+    },
+    "noCommitOrTag": true
+  },
+  "inputs": [
+    {
+      "file": "all-local-commit-object-inventory.json",
+      "sha256": "45b114600fd7effcc555b8ea74571c83373aa395e5256b9465b87d24c328e24d"
+    },
+    {
+      "file": "all-object-shadow-retry-reports.json",
+      "sha256": "aa454407eddb2232d48c1fe3b8dc9358ce66f4c50b2bc55a3d500b27ab26bfa3"
+    },
+    {
+      "file": "object-store-identity-reconciliation.json",
+      "sha256": "ae8c6a81c9e5009851606db82b6306b5c8103f3a739b0d92b3b6ed8549133be5"
+    },
+    {
+      "file": "packed-gap-GitHub-type-classification.json",
+      "sha256": "38405bb1df2d12dc8e723dfe0d708bc4ce1a79a0983d72942e114381c256c804"
+    },
+    {
+      "file": "all-object-final-commit-reconciliation-preflight.json",
+      "sha256": "cc83417268deb20042f5e323b9dfbe58b80bbc268be2e0c3d9770e600a8d568b"
+    },
+    {
+      "file": "complete-local-ancestry.json",
+      "sha256": "6e277eb42ff8ccbe5c398e5fd419d02d2b620e006712c459590580fbe43d9831"
+    },
+    {
+      "file": "selected-local-ancestry.json",
+      "sha256": "ba581b0c53fe893111dd17521c2dc8cb3c8ff1ce47c36446338696ff19c98368"
+    },
+    {
+      "file": "referenced-annotated-tags-accounting.json",
+      "sha256": "693703aa47409c76fec6fad636e435548ce42fe877b0db2fddb159456cabc914"
+    }
+  ],
+  "sourceMutation": false,
+  "privateConfigHooksOrBrowserStorageIncluded": false,
+  "method": "Union all native complete commit header inventories, the successful regional object-only retry, and both timed-out stores own pack indices plus exact complete-primary identity classification and unique loose-object header types. All 183 remaining packed IDs were classified by GitHub as Blob/Tree. No additional commit or ancestry gap remains; all 26 retry-added commit IDs were already in the private graph or independently public metadata. This proves captured commit-object inventory closure, not byte-level backup acceptance."
+}

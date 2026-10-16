@@ -1,0 +1,18 @@
+{
+  "format": "GitHubOnlyPublicBaselineClosure.v2",
+  "createdUTC": "2026-10-16T05:05:55.276595+00:00",
+  "originalExactPublicCommitTrees": 554,
+  "additionalExactPublicCommitTree": "702f934dddad9d85e7255782700c2e245ebafa84",
+  "publicPrerequisiteCount": 555,
+  "additionalVerifiedTrees": 3207,
+  "newIDsBeyondOriginalClosure": 79,
+  "declaredReachableObjectIDs": 56541,
+  "all183PackedGapObjectsNamedByVerifiedPublicTrees": true,
+  "gitlinks": [],
+  "originalClosureReceiptSHA256": "9008d99db8ade5f368497f2a4dcd289b236c1a64d9a24c29dd3019d946603fdd",
+  "objectAllowlistSHA256": "6bab0727362768c67bc57359c91d4efb8c33322b417d42b59c556d7576513937",
+  "allLoadedRawCommitAndTreeHashesVerified": true,
+  "noOriginalStoresOrAlternates": true,
+  "publicBlobBodiesFetched": false,
+  "proof": "Original 554 exact public commit tree closures plus the GitHub-fetched 702f archival public object tree. Every tree edge loaded from GitHub-only local packs with object/pack/index hashes verified; blob IDs are exact leaf references, not an assumption that all fetched pack objects are declared public prerequisites."
+}
