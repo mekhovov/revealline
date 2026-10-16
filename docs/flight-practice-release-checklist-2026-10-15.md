@@ -2,6 +2,23 @@
 
 ## Decision boundary and current baseline
 
+**Latest 16 October checkpoint:** the [integrated continuation](flight-practice-continuation-2026-10-16.md)
+records independently audited six-route EN restarted-offline flight/pause and
+historical Academy installed-PWA activation/update/return/resume passes on exact
+`b8aec0821` bytes at observer `57d3b748c`. All three fresh five-minute failures name
+the time limit and preserve prepared copies/records through public retry/removal.
+The full practice suite passes 388/388 and that observer suite passes 317 plus
+one explicit fixture skip. The later paragraphs below are historical checkpoints,
+not assertions that these scoped results are still absent.
+
+The production build still lacks its complete six-case player journey. Its latest
+identical-byte diagnostic isolates sensitivity to request-time file delivery, not
+a simulator startup fix: original-file reads miss ten seconds, verified memory
+reaches Home in 7.47 seconds. No public host, deadline or app bytes were changed.
+Native zoom control/geometry passes do not qualify cropped screenshots, package
+readability, spoken assistive behavior or physical inputs. Hardware and hosting
+remain owner-deferred; human/package/performance approvals remain unsigned.
+
 **16 October populated-world continuation:** [exact restart evidence](flight-practice-world-restart-2026-10-16.md)
 passes nine installation/recovery checkpoints plus five unchanged nonempty World
 project/card witnesses across offline launcher, standalone-window and persistent-
@@ -284,11 +301,13 @@ own issue/evidence and SIM/UI ownership, not a hidden observer workaround.
 
 ### C4 — Three-app preparation, closed windows, process restart and full-network offline
 
-Latest: [real imported-model offline flight](flight-practice-continuation-20261016/imported-offline-flight-passed.json)
-passes on candidate `b8aec0821`: five exact populated model/project/revision
-witnesses and both restarted Worlds launcher/standalone flights. Original pack
-and GLB independently match the asset fingerprint. Gym/Academy offline flight,
-whole-machine network loss and OS reboot remain separate gaps.
+Latest: [all six offline flight routes](flight-practice-continuation-20261016/all-six-offline-independent-audit.json)
+pass on candidate `b8aec0821` at observer `57d3b748c`: all three stable launchers
+and actual installed standalone windows explicitly lift/pause after process
+restart and browser-wide network denial. Five exact populated World/content/card
+witnesses and original pack/GLB-derived asset fingerprints pass. These are English
+short flights, not completed lessons, Acro, physical input, whole-machine network
+loss or OS reboot. Academy's same-byte alias in this lane is not C5 migration.
 
 Progress: the `90d8443b2` candidate passes the existing nine-checkpoint
 installation/recovery journey with five additional exact nonempty World project,
@@ -335,8 +354,11 @@ active-session attempts remain failed before update. The
 [separate ordinary-browser run](flight-practice-continuation-20261016/ordinary-update-continuity-passed.json)
 now passes real motion, focus-loss pause, genuine update, document identity,
 paused return, explicit resume and cleanup. Ordinary run 5's cleanup failure is
-retained. Installed-PWA continuity and all-app active-flight coverage remain open;
-do not mark all of C5 closed.
+retained. The [separate installed-PWA activation run](flight-practice-continuation-20261016/pwa-activation-independent-audit.json)
+now passes actual standalone historical Academy focus-loss pause, genuine update,
+native focus return, stable same-document continuation and explicit resumed lift
+inside 7.5 seconds, with complete cleanup. This does not repair failed minimization
+or qualify every app's active flight; do not mark all of C5 closed.
 
 Progress: the [genuine historical Academy observation](flight-practice-historical-upgrade-2026-10-16.md)
 passes old/current launcher and runtime upgrade, exact proof/profile preservation,
@@ -370,9 +392,11 @@ Latest: [all-three final verification response cancellation](flight-practice-con
 passes 22 checkpoints on `b8aec0821`, with original dependency hashes, unchanged
 pointers/seeded records and public retry/removal. This is controlled latency of
 an unchanged original ready reply after hashing, not hash-in-progress interruption.
-English native cancellation is qualified narrowly; Ukrainian cancellation and
-actual browser eviction remain separate gaps. Earlier five-minute passes retain
-their original pre-feedback candidate identities.
+English native cancellation is qualified narrowly; Ukrainian cancellation,
+hash-in-progress interruption and actual browser eviction remain separate gaps.
+The [fresh all-three five-minute audit](flight-practice-continuation-20261016/feedback-overall-independent-audit.json)
+binds explicit five-minute reasons, retry/removal and retained prepared copies/data
+to the newer feedback candidate. Earlier passes keep their original identities.
 
 Latest [integrated-main continuation](flight-practice-continuation-2026-10-16.md):
 all six real 30-second idle/native download-cancel cases pass on the unchanged
