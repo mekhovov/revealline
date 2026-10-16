@@ -1574,6 +1574,73 @@ test('selection reuse follows owned library, context and override changes and re
   assert.equal(h.player.snapshot().desired, false);
 });
 
+for (const localPlayback of [false, true])
+  test(`scene transitions reuse validated library metadata with local playback ${localPlayback}`, async (t) => {
+    const tracks = Array.from({ length: 256 }, (_, index) => ({
+      ...original.track,
+      id: `builtin.catalog.context-${index}`,
+      edition: 'test-context',
+      path: `objects/context-${index}.mp3`,
+      tags: { genres: ['ukrainian'], role: 'any', energy: 3, themes: [] },
+    }));
+    const base = setCatalogueTracks(emptySoundtrackLibrary(), tracks);
+    const library = {
+      ...base,
+      playlists: [
+        {
+          id: 'test.context',
+          title: 'Context playlist',
+          trackIds: [tracks[0].id],
+          order: 'ordered',
+          repeat: 'all',
+        },
+      ],
+    };
+    const h = setup({ library, localPlayback, localRecordingIds: tracks.map((track) => track.id) });
+    t.after(() => h.player.dispose());
+    const assertNoLibraryTraversal = (action) => {
+      let copies = 0;
+      const descriptors = Object.getOwnPropertyDescriptors;
+      const observer = t.mock.method(Object, 'getOwnPropertyDescriptors', (value) => {
+        if (Object.hasOwn(value, 'catalogTracks')) copies++;
+        return descriptors(value);
+      });
+      try {
+        action();
+        assert.equal(copies, 0, 'Changing scene must not traverse the full 256-track library.');
+      } finally {
+        observer.mock.restore();
+      }
+    };
+    assertNoLibraryTraversal(() => {
+      h.player.setContext({ scene: 'menu' });
+      h.player.setContext({ scene: 'gameplay', themeId: 'theme-0' });
+    });
+    await h.player.selectPlaylist('test.context');
+    assert.deepEqual(h.player.snapshot().queue, [tracks[0].id]);
+    assertNoLibraryTraversal(() => {
+      h.player.setContext({ scene: 'menu' });
+      h.player.setContext({ scene: 'gameplay', themeId: 'theme-1' });
+      const before = h.player.snapshot();
+      assert.throws(() => h.player.setContext({ scene: 'invalid' }), /scene/);
+      assert.deepEqual(h.player.snapshot(), before);
+    });
+
+    // Replacing the saved library must also invalidate a cached override.
+    h.player.setLibrary({
+      ...library,
+      playlists: [{ ...library.playlists[0], trackIds: [tracks[1].id] }],
+    });
+    await h.player.next();
+    assert.deepEqual(h.player.snapshot().queue, [tracks[1].id]);
+    assertNoLibraryTraversal(() => h.player.setContext({ scene: 'gameplay', themeId: 'theme-2' }));
+    assert.equal(
+      library.listening.installedOnly,
+      false,
+      'Local-only policy never edits saved preferences.',
+    );
+  });
+
 test('selection reuse invalidates installed IDs and listening permissions while snapshots retain live position', async (t) => {
   const other = await fixture('selection-installed');
   const catalogue = resolveSoundtrackCatalogue(permissionCatalogue([original, other]));
