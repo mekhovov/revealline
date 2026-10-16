@@ -8,6 +8,7 @@ import { pathToFileURL } from 'node:url';
 import { arch, release, loadavg } from 'node:os';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import { installAudioProof, evaluateAudioProof } from './solo-qualification-audio.mjs';
+import { verifyNativeQualificationReplay } from './solo-qualification-native-replay.mjs';
 import {
   validateQualification,
   qualificationDisplayOptions,
@@ -42,6 +43,12 @@ const engine = option('browser', 'chromium'),
   cpu = Number(option('cpu', '1'));
 const memoryProfile = flags.includes('--memory-profile'),
   audioProof = flags.includes('--audio-proof');
+const exportsReplay = (actions) =>
+  actions.some(
+    (action) =>
+      action.type === 'exportReplay' || (action.type === 'repeat' && exportsReplay(action.actions)),
+  );
+const needsReplayIdentity = exportsReplay(scenario.actions);
 assert(
   !(memoryProfile && audioProof),
   'Audio identity profiling retains media elements; run memory profiling separately',
@@ -188,7 +195,7 @@ async function save() {
   await rename(temporary, target);
 }
 await save();
-let browser, context, page, deadline, nativeReplay, cdp;
+let browser, context, page, deadline, nativeReplay, cdp, playwright;
 let memorySnapshots = 0;
 async function profileMemory() {
   if (!memoryProfile) return undefined;
@@ -226,11 +233,12 @@ async function profileMemory() {
   return result;
 }
 try {
-  const playwright = await import(pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href);
+  playwright = await import(pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href);
   browser = await playwright[engine].launch({
     ...(engine === 'chromium' ? { executablePath: process.env.CHROME_EXECUTABLE } : {}),
     headless: !flags.includes('--headed'),
   });
+  report.environment.browserVersion = browser.version();
   context = await browser.newContext({
     ...display,
     reducedMotion: 'no-preference',
@@ -543,7 +551,7 @@ try {
     await page.waitForFunction(() => document.documentElement.dataset.bootState === 'ready', null, {
       timeout: 120000,
     });
-  if (report.sourceRevision) {
+  if (report.sourceRevision || needsReplayIdentity) {
     const identityURL = new URL('build-info.json', url).href;
     const identity = await page.evaluate(async (address) => {
       const response = await fetch(address, { cache: 'no-store' });
@@ -561,11 +569,13 @@ try {
       version: parsed.version,
       sha256: createHash('sha256').update(identity).digest('hex'),
     };
-    assert.equal(
-      parsed.sourceRevision,
-      report.sourceRevision,
-      'Generated build identity does not match requested revision',
-    );
+    assert(/^[0-9a-f]{40}$/.test(parsed.sourceRevision), 'Generated full source identity required');
+    if (report.sourceRevision)
+      assert.equal(
+        parsed.sourceRevision,
+        report.sourceRevision,
+        'Generated build identity does not match requested revision',
+      );
   }
   async function prepareObservation(label) {
     if (!workProbe) return;
@@ -1041,15 +1051,47 @@ try {
         sha256: createHash('sha256').update(nativeReplay).digest('hex'),
         bytes: Buffer.byteLength(nativeReplay),
       };
-      const { inspectQualificationReplay } = await import('./solo-qualification-replay.mjs');
-      report.replay.observation = inspectQualificationReplay(
-        JSON.parse(nativeReplay),
-        scenario.replayRequirements,
-      );
+      try {
+        const { inspectQualificationReplayPortability } = await import(
+          './solo-qualification-replay.mjs'
+        );
+        const observation = inspectQualificationReplayPortability(
+          JSON.parse(nativeReplay),
+          scenario.replayRequirements,
+        );
+        report.replay.nodePortability = {
+          status: observation.match ? 'match' : 'mismatch',
+          nodeVersion: process.version,
+          observation,
+          scope:
+            'Current-checkout Node reconstruction, retained as cross-engine portability evidence. It is not the authority for native gameplay correctness.',
+        };
+      } catch (error) {
+        report.replay.nodePortability = {
+          status: 'failed',
+          nodeVersion: process.version,
+          failure: String(error.stack ?? error),
+        };
+      }
+      report.replay.nativeVerification = await verifyNativeQualificationReplay({
+        playwright,
+        engine,
+        executablePath: process.env.CHROME_EXECUTABLE,
+        observedBrowserClosed: Boolean(browser && !browser.isConnected()),
+        expected: {
+          browserVersion: report.environment.browserVersion,
+          buildIdentity: report.buildIdentity,
+          csp: report.csp,
+        },
+        recordingText: nativeReplay,
+        requirements: scenario.replayRequirements,
+        mirror,
+      });
+      report.replay.observation = report.replay.nativeVerification.observation ?? null;
       assert.equal(
-        report.replay.observation.status,
+        report.replay.nativeVerification.status,
         'pass',
-        'Native recording did not exercise required mechanics',
+        'Strict same-engine replay/mechanic verification failed',
       );
     } catch (error) {
       report.scenarioStatus = 'fail';

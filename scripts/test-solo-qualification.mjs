@@ -2,6 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { webcrypto } from 'node:crypto';
+import { inspectReplayMechanics } from './solo-qualification-replay-core.mjs';
+import {
+  assertReplayVerificationIdentity,
+  verifyNativeQualificationReplay,
+  replayVerificationRequestAllowed,
+} from './solo-qualification-native-replay.mjs';
+import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 import {
   installAudioProof,
   evaluateAudioProof,
@@ -328,6 +335,116 @@ test('offline native-recording inspection verifies actual captures and rejects a
   const tampered = structuredClone(replay);
   tampered.segments[0].ticks++;
   assert.throws(() => inspectQualificationReplay(tampered));
+});
+
+test('shared mechanic inspector uses only supplied artifact dependencies and never counts a rejected replay', () => {
+  const diagnostics = [{ code: 'state-mismatch', section: 'enemies' }];
+  let checked = 0;
+  const dependencies = {
+    verifyReplay(recording) {
+      checked++;
+      assert.equal(recording.checkpoint.hash, 'original');
+      return { match: false, diagnostics, actual: { checkpoint: { hash: 'other' } } };
+    },
+    createRun() {
+      assert.fail('Rejected recording must never produce mechanic counts');
+    },
+  };
+  const recording = { replay: { checkpoint: { hash: 'original' } } };
+  const original = JSON.stringify(recording);
+  // The browser receives this exact function source, without Node imports or
+  // access to the current checkout's simulation or demo compatibility helper.
+  const result = vm.runInNewContext(
+    `(${inspectReplayMechanics.toString()})(recording, requirements, dependencies)`,
+    { recording, requirements: { closures: 1 }, dependencies },
+  );
+  assert.equal(checked, 1);
+  assert.equal(result.match, false);
+  assert.equal(result.status, 'fail');
+  assert.equal(result.features, null);
+  assert.equal(result.diagnostics, diagnostics);
+  assert.equal(JSON.stringify(recording), original);
+});
+
+test('same-engine verification rejects changed version, artifact, origin or CSP and an open observation browser', async () => {
+  const expected = {
+    browserVersion: '155.0.8059.80',
+    buildIdentity: {
+      sourceRevision: 'a'.repeat(40),
+      sha256: 'b'.repeat(64),
+      url: 'http://127.0.0.1:8777/game/build-info.json',
+    },
+    csp: PUBLIC_SECURITY_HEADERS['Content-Security-Policy'],
+  };
+  const actual = { ...structuredClone(expected), url: expected.buildIdentity.url };
+  assert.doesNotThrow(() => assertReplayVerificationIdentity(expected, actual));
+  for (const replacement of [
+    { browserVersion: '155.0.8059.81' },
+    { buildIdentity: { ...actual.buildIdentity, sourceRevision: 'c'.repeat(40) } },
+    { buildIdentity: { ...actual.buildIdentity, sha256: 'd'.repeat(64) } },
+    { url: 'http://127.0.0.1:8778/game/build-info.json' },
+    { csp: 'default-src *' },
+  ])
+    assert.throws(() => assertReplayVerificationIdentity(expected, { ...actual, ...replacement }));
+  assert.throws(() =>
+    assertReplayVerificationIdentity({ ...expected, browserVersion: null }, actual),
+  );
+  let launches = 0;
+  await assert.rejects(
+    verifyNativeQualificationReplay({
+      observedBrowserClosed: false,
+      playwright: {
+        chromium: {
+          launch() {
+            launches++;
+          },
+        },
+      },
+    }),
+    /Close the gameplay browser/,
+  );
+  assert.equal(launches, 0);
+});
+
+test('verification admits original vendor JS and sibling artifact modules but never boots another game document', () => {
+  const identity = 'https://example.test/deploy/game/build-info.json';
+  for (const path of [
+    '/deploy/game/replay.mjs',
+    '/deploy/game/vendor/i18next-26.4.2.min.js',
+    '/deploy/authoring/shared.mjs',
+  ])
+    assert.equal(
+      replayVerificationRequestAllowed(identity, new URL(path, identity).href, 'script'),
+      true,
+    );
+  assert.equal(replayVerificationRequestAllowed(identity, identity, 'document'), true);
+  for (const path of [
+    '/deploy/game/',
+    '/deploy/game/index.html',
+    '/deploy/game/app.mjs',
+    '/other/shared.mjs',
+    '/deploy/game/recording.mp3',
+  ])
+    assert.equal(
+      replayVerificationRequestAllowed(identity, new URL(path, identity).href, 'script'),
+      false,
+    );
+  assert.equal(
+    replayVerificationRequestAllowed(
+      identity,
+      'https://other.test/deploy/game/replay.mjs',
+      'script',
+    ),
+    false,
+  );
+  assert.equal(
+    replayVerificationRequestAllowed(
+      identity,
+      'https://example.test/deploy/game/replay.mjs',
+      'document',
+    ),
+    false,
+  );
 });
 
 test('packaged title cadence accepts the actual launch without inventing asset readiness', () => {
