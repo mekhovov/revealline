@@ -8,6 +8,7 @@ import { createCombatCandidates } from '../game/content-design/combat-candidates
 import { compileContentProject, resolveMission } from '../game/content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../game/gameplay-tuning.mjs';
 import { createRun, stepRun, getSummary, FIXED_DT } from '../game/core/index.mjs';
+import { normalizedLevel } from '../game/core/level.mjs';
 import {
   createRecorder,
   recordInput,
@@ -130,11 +131,15 @@ for (const id of ['first-return', 'long-rail']) {
 }
 workloads.push({
   id: 'signal-07',
-  level: campaign.levels.find((row) => row.id === 'signal-07'),
+  // The editor adds missing collection arrays and the public recorder uses the
+  // core-normalized definition. Make those existing defaults explicit in the
+  // submitted fixture as well; keep every authored field and the strict checks.
+  level: normalizedLevel(campaign.levels.find((row) => row.id === 'signal-07')),
   segments: [[null, 3600]],
   themeId: 'horizon',
   expected: 'running',
-  basis: 'game/content/campaign.json unchanged shipped level; 30 seconds neutral input',
+  basis:
+    'game/content/campaign.json shipped level with existing core defaults made explicit by normalizedLevel; no gameplay tuning; 30 seconds neutral input',
   coverage: ['lane-warning', 'active-lane', 'jammer-picture'],
 });
 
@@ -562,8 +567,22 @@ await put(
   );
 }
 const sentinel = await json('../game/content/packs/sentinel-relay.json');
-const sentinelLevel = sentinel.campaigns[0].levels[0];
+// Ordinary linked-pack Start applies the selected Standard recipe. Practice
+// imports bypass that projection, so the raw authored pack is not this route's
+// accepted replay definition. Keep the complete tuned level for model and native
+// verification; the earlier raw-definition mismatch remains failed evidence.
+const sentinelLevel = applyGameplayTuning(
+  sentinel.campaigns[0].levels[0],
+  resolveGameplayTuning('standard'),
+);
 assert.equal(sentinelLevel.id, 'sentinel-relay-01');
+assert.equal(sentinelLevel.rules.moveSpeed, 8.84);
+assert.equal(sentinelLevel.rules.switchCooldownSeconds, 2);
+assert.equal(sentinelLevel.encounter.shielded.restTicks, 248);
+assert.equal(
+  sentinelLevel.revision,
+  'gp4s-3ff00000000000003ff00000000000003ff0000000000000-eb108d8cc7e0ab11',
+);
 expectedDefinitions.set('original-art-sentinel-relay-jamming', definition(sentinelLevel));
 assert(
   sentinel.levelVisuals.some(
@@ -1028,21 +1047,24 @@ await put(
       { type: 'wait', phase: 'running', timeoutMs: 60000 },
       { type: 'click', selector: '#pause-button' },
       { type: 'wait', phase: 'paused' },
-      { type: 'click', selector: '#library-button' },
-      { type: 'click', selector: '[data-library-panel=\"saves\"]' },
+      ...publicSettings,
+      { type: 'click', selector: '#settings-tab-data' },
+      { type: 'click', selector: '#settings-saves' },
       { type: 'upload', selector: '#save-file', file: 'large-profile.library.json' },
       { type: 'expect', selector: '#undo-library:not(:disabled)', timeoutMs: 60000 },
       { type: 'expect', selector: '#library-capacity', contains: '480' },
       { type: 'snapshot', group: 'imported-large-profile' },
       { type: 'reload', timeoutMs: 120000 },
-      { type: 'click', selector: '#shell-featured', timeoutMs: 60000 },
+      { type: 'click', selector: '#shell-continue', timeoutMs: 60000 },
       { type: 'wait', phase: 'running', timeoutMs: 60000 },
       { type: 'click', selector: '#pause-button' },
       { type: 'wait', phase: 'paused' },
-      { type: 'click', selector: '#library-button' },
-      { type: 'click', selector: '[data-library-panel=\"saves\"]' },
+      ...publicSettings,
+      { type: 'click', selector: '#settings-tab-data' },
+      { type: 'click', selector: '#settings-saves' },
       { type: 'expect', selector: '#library-capacity', contains: '480' },
       { type: 'click', selector: '[data-close=\"library-dialog\"]' },
+      ...closePublicSettings,
       ...start,
       {
         type: 'repeat',
@@ -1063,6 +1085,62 @@ await put('index.json', {
   evidenceKind:
     'prepared inputs plus separately identified model correctness; no native execution yet',
   files: saved.slice(),
+  definitionProjections: {
+    sources: await Promise.all(
+      [
+        'game/content/packs/sentinel-relay.json',
+        'game/content/campaign.json',
+        'game/gameplay-tuning.mjs',
+        'game/core/level.mjs',
+        'game/core/index.mjs',
+        'game/replay.mjs',
+        'game/playground/model.mjs',
+        'game/ui/field-kit-surfaces.mjs',
+        'game/ui/game-shell.mjs',
+      ].map(async (path) => ({
+        path,
+        sha256: createHash('sha256')
+          .update(await readFile(new URL(`../${path}`, import.meta.url)))
+          .digest('hex'),
+      })),
+    ),
+    sentinel: {
+      authoredSource: 'game/content/packs/sentinel-relay.json: campaigns[0].levels[0]',
+      sourceFunctions: [
+        'game/gameplay-tuning.mjs: resolveGameplayTuning(standard)',
+        'game/gameplay-tuning.mjs: applyGameplayTuning',
+      ],
+      authoredIdentity: dataIdentity(sentinel.campaigns[0].levels[0]),
+      acceptedIdentity: dataIdentity(sentinelLevel),
+      acceptedRevision: sentinelLevel.revision,
+      scope:
+        'Ordinary linked-pack Start applies the existing Standard recipe. Full projected definition is shared by model and native expectation. Inputs, art and mechanic minimums remain unchanged; prior raw-definition mismatch remains failed.',
+    },
+    signal07: {
+      authoredSource: 'game/content/campaign.json: levels[id=signal-07]',
+      sourceFunctions: [
+        'game/core/level.mjs: normalizedLevel',
+        'game/playground/model.mjs: editorScenario (adds missing collection arrays at import)',
+        'game/core/index.mjs: createRun (normalizes the accepted definition)',
+        'game/replay.mjs: createRecorder (retains the normalized run level)',
+      ],
+      authoredIdentity: dataIdentity(campaign.levels.find((level) => level.id === 'signal-07')),
+      acceptedIdentity: dataIdentity(
+        workloads.find((workload) => workload.id === 'signal-07').level,
+      ),
+      inheritedScenarios: ['signal-07', 'enabled-audio', 'recovery'],
+      scope:
+        'Existing engine defaults are explicit in submitted upload, model and full native expectation. No Standard gameplay tuning is applied to this practice import. Prior missing-array import failures remain failed. Other validated fixture definitions are unchanged.',
+    },
+    largeProfileNavigation: {
+      sourceFunctions: [
+        'game/ui/field-kit-surfaces.mjs: openLibrary through settings-saves',
+        'game/ui/game-shell.mjs: openHome, refreshHomeCopy, shell-continue',
+      ],
+      scope:
+        'Navigation-only correction: Home → Options → Data → Saves & recovery opens the existing public Library import. Close Library then Settings and Home before Resume; after reload use Continue for the established Journey. Full profile bytes, record counts, reload, capacity assertions and native controls are preserved. Earlier hidden-control failures remain failed.',
+    },
+  },
   audioFixtureStatus: audioDirectory
     ? 'speech and local streaming actions prepared; separate native audio-proof run still required'
     : 'speech prepared; local streaming scenario not prepared (supply --audio-fixtures)',
